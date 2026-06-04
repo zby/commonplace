@@ -33,7 +33,9 @@ sage-wiki, from `xoai/sage-wiki`, is a Go implementation of an LLM-compiled pers
 ## Artifact analysis
 
 - **Storage substrate:** `sqlite` - The central behavior-shaping state lives in `.sage/wiki.db`: FTS5 entries, vector blobs, chunk tables, ontology entities/relations, compile tiers, learned entries, and output trust state. Files remain important as source and presentation artifacts, but search, graph traversal, tiering, and trust decisions are database-mediated.
-- **Representational form:** `mixed` - Source and generated wiki content are prose Markdown; configuration, manifests, compile tiers, ontology records, trust records, MCP schemas, and indexes are symbolic; embeddings are distributed-parametric retrieval state.
+- **Representational form:** `prose` `symbolic` `parametric` - Source and generated wiki content are prose Markdown; configuration, manifests, compile tiers, ontology records, trust records, MCP schemas, and indexes are symbolic; embeddings are distributed-parametric retrieval state.
+- **Lineage:** `authored` `imported` `trace-extracted` - Sources and learnings can be authored or imported through user/agent write paths, while session-scribe ontology records are trace-extracted from Claude Code session JSONL.
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `ranking` `learning` - Wiki content and outputs serve as knowledge; generated skills instruct agents; trust gates enforce output promotion; manifests, tiers, indexes, ontology, and search state route, validate, rank, and learn behavior-shaping records.
 
 **Raw sources and captures.** Storage substrate: project files under configured source paths, plus `raw/captures/*.md` for CLI/MCP capture ([cmd/sage-wiki/capture.go](https://github.com/xoai/sage-wiki/blob/c8761cbec4effa6c8db21cc392ab9f1bfaa8e498/cmd/sage-wiki/capture.go), [internal/mcp/tools_write.go](https://github.com/xoai/sage-wiki/blob/c8761cbec4effa6c8db21cc392ab9f1bfaa8e498/internal/mcp/tools_write.go)). Representational form: prose or mixed document formats, normalized to extracted text for compilation. Lineage: authored/imported by users, copied in by `ingest`/`add-source`, or extracted from captured conversation/text. Behavioral authority: source knowledge artifacts until the compiler or scribe derives summaries, concepts, ontology, or learnings.
 
@@ -87,6 +89,14 @@ The biggest divergence is context activation. sage-wiki can make a large wiki se
 **Do not borrow database-only authority for core methodology claims.** A methodology KB needs reviewable, diffable arguments. SQLite is useful for retrieval and staging, but durable claims and high-authority instructions should remain visible in typed files.
 
 ## Trace-derived learning placement
+
+**Trace source:** `session-logs` - `sage-wiki scribe <session-file>` consumes Claude Code session JSONL after filtering non-message records.
+
+**Learning scope:** `per-project` `cross-task` - Scribed entities and relations land in the project wiki's durable ontology and can affect later ontology queries and graph-expanded retrieval.
+
+**Learning timing:** `offline` - The inspected trigger is an explicit `scribe <session-file>` command or explicit capture call, not an automatic online hook.
+
+**Distilled form:** `symbolic` `prose` - The scribe distills compressed session text into ontology entity/relation records with prose definitions.
 
 **Trace source.** sage-wiki qualifies as trace-derived because `sage-wiki scribe <session-file>` consumes Claude Code session JSONL. The compression path keeps user/assistant text, strips thinking tags, skips tool-use/tool-result/thinking records, and caps entity extraction to reduce noise ([internal/scribe/session.go](https://github.com/xoai/sage-wiki/blob/c8761cbec4effa6c8db21cc392ab9f1bfaa8e498/internal/scribe/session.go)). `wiki_capture` can also consume conversation excerpts or text and write extracted items to `raw/captures/`, but that path depends on the caller supplying the excerpt rather than automatically mining a session log ([internal/mcp/tools_write.go](https://github.com/xoai/sage-wiki/blob/c8761cbec4effa6c8db21cc392ab9f1bfaa8e498/internal/mcp/tools_write.go)).
 

@@ -32,7 +32,9 @@ Engraph, from devwhodevs' `engraph` repository, is a Rust CLI and local server t
 ## Artifact analysis
 
 - **Storage substrate:** `files` — The user's local vault directory
-- **Representational form:** `mixed` — Prose markdown with YAML frontmatter, tags, Obsidian wikilinks, headings, tasks, and date-bearing filenames or frontmatter
+- **Representational form:** `prose` `symbolic` `parametric` — Vault prose and frontmatter feed symbolic SQLite/API state plus vector embeddings and local model artifacts
+- **Lineage:** `authored` `imported` — Vault notes and configuration are user-authored or externally edited, while derived index, identity, cache, and placement state are regenerated from vault files, model outputs, write operations, and watcher events
+- **Behavioral authority:** `knowledge` `instruction` `routing` `validation` `ranking` `learning` — Notes advise agents, APIs and skills define operations, health/write tools route and validate work, retrieval/model state ranks context, and placement corrections influence later folder choice
 
 **Markdown vault.** The storage substrate is the user's local vault directory. The representational form is prose markdown with YAML frontmatter, tags, Obsidian wikilinks, headings, tasks, and date-bearing filenames or frontmatter. Lineage is authored or externally edited source material; Engraph treats these files as the source of truth and rebuilds derived index state from file content, hashes, mtimes, and path changes. Behavioral authority is mostly knowledge artifact authority: notes become evidence, context, and editable material for agents, but a note does not by itself instruct the agent until a tool reads it into context.
 

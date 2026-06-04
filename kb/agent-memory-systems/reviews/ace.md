@@ -33,7 +33,9 @@ ACE, from the `ace-agent/ace` repository, is an agentic context-engineering fram
 ## Artifact analysis
 
 - **Storage substrate:** `in-memory` — An in-memory Python string during a run, with durable snapshots as `final_playbook.txt`, `best_playbook.txt`, and intermediate `*_playbook.txt` files under the configured results directory
-- **Representational form:** `mixed` — Mixed prose plus symbolic structure: section headers, bullet ids, helpful/harmful counters, and free-text advice
+- **Representational form:** `prose` `symbolic` — Free-text advice and diagnostics carried in sectioned playbook bullets, plus symbolic section headers, bullet ids, helpful/harmful counters, JSON operations, tags, metrics, and result records
+- **Lineage:** `authored` `imported` `trace-extracted` — Authored framework prompts and processors, optional imported initial playbooks, and playbook bullets/counters derived from task attempts, reflections, curation, deduplication, and validation selection
+- **Behavioral authority:** `knowledge` `instruction` `validation` `ranking` `learning` — Logs, reflections, and metrics serve as evidence; prompt templates and playbook bullets instruct Generator behavior; task processors and validation accuracy select outputs; counters and optional similarity analysis rank or maintain advice; curator operations mutate learned playbook state
 
 **Playbook text and saved playbook files.** Storage substrate: an in-memory Python string during a run, with durable snapshots as `final_playbook.txt`, `best_playbook.txt`, and intermediate `*_playbook.txt` files under the configured results directory. Representational form: mixed prose plus symbolic structure: section headers, bullet ids, helpful/harmful counters, and free-text advice. Lineage: initialized from the default empty template or an imported `--initial_playbook_path`, then derived from task attempts, reflections, curator operations, optional deduplication, and validation selection. Behavioral authority: the playbook is a system-definition artifact when embedded in Generator prompts because it instructs future answers; it is also a knowledge artifact when inspected as accumulated task advice.
 
@@ -66,6 +68,12 @@ The useful contrast is ACE's willingness to operationalize small learning cycles
 
 **Read-back:** `push` — The retained playbook is pushed by coarse always-load: every Generator call receives the whole playbook in prompt context. There is no instance-targeted signal or relevance-gated push activation in this commit
 
+**Read-back signal:** `coarse` — Every Generator call receives the whole retained playbook; the review finds no instance-targeted selector or relevance-gated signal.
+
+**Read-back timing:** `pre-action` — The playbook is inserted into the Generator prompt before the model produces the next answer.
+
+**Faithfulness tested:** `no` — ACE tracks validation accuracy and selected playbooks, but the review does not find a with/without read-back ablation proving the injected playbook changes behavior.
+
 ### Borrowable Ideas
 
 **Treat local failures as candidate instruction deltas.** ACE's loop from wrong answer to reflection to curator operation would map well to Commonplace workshops: repeated validation or review failures could produce proposed rule bullets. Ready as a workshop report pattern; not ready for automatic promotion into instructions.
@@ -79,6 +87,14 @@ The useful contrast is ACE's willingness to operationalize small learning cycles
 **Run deduplication as a maintenance pass, not a hidden write path.** The optional analyzer separates growth from cleanup. Commonplace could borrow this for candidate link or note consolidation reports, but automatic merges should stay behind review until lineage and semantic checks are stronger.
 
 ## Trace-derived learning placement
+
+**Trace source:** `session-logs` `trajectories` — Task-level Generator attempts, reasoning responses, correctness feedback, reflection rounds, and retained LLM/usage logs supply the learning signal.
+
+**Learning scope:** `per-task` — The saved playbook is task-specific and benchmark/run-oriented rather than project- or corpus-global.
+
+**Learning timing:** `online` `offline` `staged` — ACE supports offline training/validation selection, online windowed adaptation, and staged Generator -> Reflector -> Curator updates inside a run.
+
+**Distilled form:** `prose` `symbolic` — The durable distilled artifact is a textual playbook with free-text advice plus section headings, bullet ids, counters, and curator operation structure.
 
 **Trace source.** ACE qualifies as trace-derived learning. The qualifying traces are task-level Generator attempts: question/context, generated reasoning response, extracted final answer, bullet ids cited by the Generator, correctness feedback from a `DataProcessor`, optional ground truth, and subsequent reflection rounds. Detailed LLM call logs and usage logs are retained run artifacts when logging paths are enabled.
 

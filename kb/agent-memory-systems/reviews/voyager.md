@@ -35,7 +35,9 @@ Voyager, from MineDojo, is an embodied lifelong-learning agent for Minecraft. Th
 ## Artifact analysis
 
 - **Storage substrate:** `files` — JSON files under `ckpt/events/`, plus Mineflayer observation modules that define the emitted event surface
-- **Representational form:** `mixed` — Mixed symbolic JSON and prose chat/error text
+- **Representational form:** `prose` `symbolic` `parametric` — prose descriptions, QA answers, chat/error text, and prompts; symbolic JSON, executable JavaScript, parsers, task lists, and harness code; Chroma embeddings over skill descriptions and QA questions
+- **Lineage:** `authored` `imported` `trace-extracted` — prompts, parsers, and the harness are authored; supplied skill libraries can be loaded through `skill_library_dir`; active skills, curriculum state, events, and QA/cache records derive from rollouts, critic outcomes, and model-generated summaries
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `ranking` `learning` — raw traces and QA records are evidence/context; prompts and selected skills instruct action; parsers, retry limits, and critic gates constrain promotion; Chroma routes and ranks skills; the rollout-to-skill path mutates future behavior
 
 **Raw event records.** Storage substrate: JSON files under `ckpt/events/`, plus Mineflayer observation modules that define the emitted event surface. Representational form: mixed symbolic JSON and prose chat/error text. Lineage: captured from each action attempt and task label by `EventRecorder.record(...)`; source changes in observation code or environment setup change what later traces contain. Behavioral authority: knowledge artifact for audit, debugging, and possible resume analysis; raw events do not by themselves become future action authority.
 
@@ -84,6 +86,11 @@ The main design contrast is authority. Voyager's raw traces, QA answers, chest m
 
 ## Trace-derived learning placement
 
+- **Trace source:** `event-streams` `trajectories` — embodied rollout event records and task-attempt trajectories carry observations, chat, errors, inventory/status changes, nearby world state, generated code, execution, and critic judgment
+- **Learning scope:** `per-task` `cross-task` — each successful task can promote a skill, and the resulting skill library is reused across later tasks or transferred through `skill_library_dir`
+- **Learning timing:** `online` — during `learn()`, successful rollouts update skill and curriculum memory before future tasks
+- **Distilled form:** `prose` `symbolic` `parametric` — accepted rollouts become executable JavaScript, generated prose descriptions, JSON state, and Chroma embedding indexes
+
 **Trace source.** Voyager qualifies as trace-derived learning. The raw trace source is an embodied rollout: task and context, generated JavaScript, Mineflayer execution, chat logs, execution errors, observations, inventory/status changes, nearby blocks/entities/chests, save events, and final critic judgment. The trigger boundary is one rollout attempt series inside `Voyager.rollout(...)`, with retries until critic success or retry exhaustion.
 
 **Extraction.** Extraction is success-gated. The action agent parses the final async JavaScript function from an LLM response, the environment executes it, and the critic judges task success from observations. Only successful rollouts pass code into `SkillManager.add_new_skill(...)`; failed attempts remain event records and failed-task entries. The skill manager then asks an LLM to summarize the accepted code into a retrieval description.
@@ -97,6 +104,12 @@ The main design contrast is authority. Voyager's raw traces, QA answers, chest m
 ## Read-back placement
 
 **Direction.** Push. The acting `ActionAgent` does not choose to search memory; Voyager's orchestration layer retrieves skills before rendering the action-agent system message. The retrieval call is pull from the orchestrator's implementation perspective, but it is push for the receiving agent.
+
+**Read-back signal:** `coarse` `inferred / embedding` — Chroma selects skills by embedding similarity over current task/chat context, while the full active skill set is also made coarsely available to Mineflayer execution.
+
+**Read-back timing:** `pre-action` — retrieval runs before the next action-agent LLM call and before Mineflayer executes the submitted program.
+
+**Faithfulness tested:** `no` — the review found injection and execution wiring, but no with/without-skill ablation or replay test in the inspected codebase.
 
 **Targeting and signal.** The action-prompt push is `instance`-targeted. Skill retrieval fires at task reset using the current task context and again after each step using context plus summarized chat-log needs; `SkillManager.retrieve_skills(...)` runs Chroma similarity over generated skill descriptions and returns the matching skill code, bounded by `retrieval_top_k`. The signal is `inferred / embedding`, because relevance is derived from the current task/chat content rather than from an assigned task or skill identifier. Separately, each Mineflayer `/step` receives `self.skill_manager.programs`, which makes the full active skill set available to execution; that execution-side availability is `coarse` rather than instance-selected.
 

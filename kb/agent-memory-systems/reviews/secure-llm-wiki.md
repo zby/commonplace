@@ -32,7 +32,9 @@ Secure LLM-Wiki, from `NicoBleh/secure-llm-wiki`, is a Python CLI for building a
 ## Artifact analysis
 
 - **Storage substrate:** `repo` - The central retained memory lives in a separate git repository rooted at `wiki_data`, with active claims under `pages/`, blocked or pending claims under `quarantine/`, and `trust_rules.yaml` as a user-editable policy file; embeddings are colocated JSON files under `wiki_data/embeddings/` but are described as reproducible and not git-tracked ([src/secure_wiki/store/wiki_store.py](https://github.com/NicoBleh/secure-llm-wiki/blob/dfbc60e37487b61e9a5cbce1271a13576a776d51/src/secure_wiki/store/wiki_store.py), [src/secure_wiki/store/embedding_store.py](https://github.com/NicoBleh/secure-llm-wiki/blob/dfbc60e37487b61e9a5cbce1271a13576a776d51/src/secure_wiki/store/embedding_store.py)).
-- **Representational form:** `mixed` - Accepted memory is prose claim text wrapped in symbolic YAML frontmatter; policy is symbolic YAML; gate history and trust/status are symbolic fields; duplicate/conflict checks use distributed vector embeddings as an operational cache rather than the primary readable memory.
+- **Representational form:** `prose` `symbolic` `parametric` - Accepted memory is prose claim text wrapped in symbolic YAML frontmatter; policy is symbolic YAML; gate history and trust/status are symbolic fields; duplicate/conflict checks use distributed vector embeddings as an operational cache rather than the primary readable memory.
+- **Lineage:** `authored` `imported` - Claim files derive from imported source documents, while trust rules, prompt builders, gate code, and user-editable policy are authored system-definition artifacts.
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `ranking` - Active claims are knowledge context; prompt builders instruct; gates and read hygiene enforce; trust/status route eligibility; sanitizer/adversarial/write gates validate; embeddings and similarity checks rank or compare candidates.
 
 **Source texts.** Storage substrate: external files/URLs read at ingestion time, with local file and URL support plus PDF/HTML text extraction. Representational form: prose or semi-structured document text. Lineage: imported source material, truncated to `_MAX_CHARS` before extraction. Behavioral authority: untrusted knowledge-artifact input only; the prompt and sanitizer explicitly prevent it from becoming an instruction channel ([src/secure_wiki/__main__.py](https://github.com/NicoBleh/secure-llm-wiki/blob/dfbc60e37487b61e9a5cbce1271a13576a776d51/src/secure_wiki/__main__.py), [src/secure_wiki/prompts.py](https://github.com/NicoBleh/secure-llm-wiki/blob/dfbc60e37487b61e9a5cbce1271a13576a776d51/src/secure_wiki/prompts.py)).
 
@@ -62,6 +64,12 @@ Secure LLM-Wiki is closest to Commonplace in its bias toward readable files, git
 The interesting borrow is not "use an LLM to maintain a wiki"; it is the channel discipline around hostile source material. Secure LLM-Wiki assumes imported text is actively adversarial, prevents it from becoming a trusted instruction channel, and repeats that hygiene at read time. Commonplace has stronger source citation and review practice, but less explicit injection treatment when source snapshots or external text are loaded into an agent's context.
 
 **Read-back:** `push` - Retained claims reach the query model because `secure-wiki query` builds a system prompt containing the entire eligible wiki context block before the user asks questions; `secure-wiki context` is a pull surface for humans/tools, but the acting query model receives memory by coarse session-level push.
+
+**Read-back signal:** `coarse` - The query path loads the eligible wiki context block by status/trust hygiene rather than by per-question identifier or inferred relevance.
+
+**Read-back timing:** `pre-action` - The retained claims are placed in the query model's system prompt before it answers the user's question.
+
+**Faithfulness tested:** `no` - The review cites read-hygiene and trust tests, but not a with/without ablation or behavioral faithfulness check proving the pushed context changes model behavior.
 
 ### Borrowable Ideas
 

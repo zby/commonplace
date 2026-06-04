@@ -31,7 +31,9 @@ Agent Skills for Context Engineering, from Muratcan Koylan's `muratcankoylan/Age
 ## Artifact analysis
 
 - **Storage substrate:** `repo` — Git-tracked directories under `skills/`, each centered on a `SKILL.md` file with optional `references/` files
-- **Representational form:** `mixed` — Mixed prose and symbolic metadata; frontmatter names/descriptions are routing handles, while the body is instructional prose with examples and references
+- **Representational form:** `prose` `symbolic` — Skill bodies, docs, rubrics, benchmark reports, traces, prompts, and generated references are prose plus symbolic frontmatter, manifests, JSON/JSONL, scripts, fixtures, and metrics; the review says there is no vector store, database, or retained embedding/model-weight surface
+- **Lineage:** `authored` `imported` `trace-extracted` — Skill packages and manifests are mostly authored, researcher artifacts incorporate external source-derived claims and evaluations, and the interleaved-thinking example derives traces and generated skills from agent execution traces
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `ranking` `learning` — Docs, ledgers, traces, and reports serve as knowledge; installed skills instruct; manifests route; validators, rubrics, locked surfaces, activation tests, and benchmarks validate, enforce, and rank activation behavior; the trace optimizer learns generated skill material from traces
 
 **Skill packages.** Storage substrate: Git-tracked directories under `skills/`, each centered on a `SKILL.md` file with optional `references/` files. Representational form: mixed prose and symbolic metadata; frontmatter names/descriptions are routing handles, while the body is instructional prose with examples and references. Lineage: mostly authored and manually revised; some skill mechanisms cite external sources and internal claims through the researcher corpus. Behavioral authority: system-definition artifacts when a host agent loads the skill as instructions; knowledge artifacts when a maintainer reads them as reference material. The promotion path is from idea or research source to mechanism record to skill prose to validated manifest entry.
 
@@ -76,6 +78,14 @@ The researcher subsystem is the strongest convergence. It resembles a smaller Co
 **Preserve generated skill references beside the skill.** The trace optimizer writes optimization summaries, final prompts, and detected patterns under the generated skill directory. A Commonplace analogue would keep derivation bundles beside generated instructions until review decides whether to promote them. Ready for generated drafts and AutoReason-style loops.
 
 ## Trace-derived learning placement
+
+**Trace source:** `tool-traces` `trajectories` — The interleaved-thinking example captures thinking blocks, tool calls, tool results, final responses, success/error status, token counts, and timestamps from agent executions.
+
+**Learning scope:** `per-task` — The review describes the trace loop as task-local and iterative, with generated skills remaining example outputs unless a maintainer promotes them.
+
+**Learning timing:** `offline` `staged` — Captured traces are analyzed and optimized in an iterative loop, then saved under `optimization_artifacts/` and optionally promoted to generated skills.
+
+**Distilled form:** `prose` `symbolic` — Trace analysis becomes prompt changes, generated `SKILL.md` prose, and JSON/text reference artifacts.
 
 **Trace source.** The repo qualifies through the `examples/interleaved-thinking` system. `TraceCapture` records MiniMax M2.1 thinking blocks, tool calls, tool results, final response, success/error status, token counts, and timestamps into a `ReasoningTrace` object ([examples/interleaved-thinking/reasoning_trace_optimizer/capture.py](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering/blob/25e1fa79a33f0985793bcab3c64dde8d020c5132/examples/interleaved-thinking/reasoning_trace_optimizer/capture.py)). These are agent execution traces, not external research sources.
 

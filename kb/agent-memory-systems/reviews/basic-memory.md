@@ -35,7 +35,9 @@ Basic Memory, from Basic Machines' `basicmachines-co/basic-memory` repository, i
 ## Artifact analysis
 
 - **Storage substrate:** `files` — The central retained source is user-owned Markdown files under configured Basic Memory project directories, with SQLite/Postgres/search/vector state as derived projections.
-- **Representational form:** `mixed` — Basic Memory combines prose Markdown, symbolic frontmatter/Picoschema/relations/tool schemas, and distributed-parametric embeddings for semantic retrieval.
+- **Representational form:** `prose` `symbolic` `parametric` — Basic Memory combines prose Markdown, symbolic frontmatter/Picoschema/relations/tool schemas, and distributed-parametric embeddings for semantic retrieval.
+- **Lineage:** `authored` `imported` `trace-extracted` — Notes can be authored by humans or agents, imported from conversation exports, or trace-extracted by Claude Code plugin hooks; indexes and vectors are derived projections.
+- **Behavioral authority:** `knowledge` `instruction` `routing` `validation` `ranking` `learning` — Notes and imports advise as knowledge, output styles instruct, project/tool metadata routes, schemas validate, search/vector indexes rank, and trace/session capture feeds future read-back.
 
 **Project Markdown notes.** Storage substrate: filesystem Markdown under configured project roots. Representational form: prose Markdown with symbolic frontmatter, observations, relations, wikilinks, tags, permalinks, and optional schema metadata. Lineage: authored by humans, agents, MCP tools, importers, shared skills, cloud sync, or plugin hooks; invalidated by file edits, file moves, permalink changes, or explicit delete/move/write operations. Behavioral authority: usually knowledge artifacts when read, searched, or used as evidence; stronger system-definition artifacts when notes are loaded as instructions, schemas, tasks, decisions, or session checkpoints.
 
@@ -89,6 +91,11 @@ The Claude Code plugin is the most relevant activation contrast. Commonplace has
 
 ## Trace-derived learning placement
 
+- **Trace source:** `session-logs` — Claude Code JSONL transcripts and imported ChatGPT/Claude conversation exports are the trace sources described here.
+- **Learning scope:** `per-project` `cross-task` — Captured sessions are mapped to configured Basic Memory projects and can brief later sessions or tasks in that project.
+- **Learning timing:** `offline` `staged` — Conversation import is offline bulk ingestion, while PreCompact capture and later SessionStart recall form a staged lifecycle.
+- **Distilled form:** `prose` `symbolic` — The implemented checkpoint output is Markdown prose with symbolic type, tags, observations, status, and project metadata.
+
 **Trace source.** Basic Memory qualifies as trace-derived. The strongest implemented path is the Claude Code plugin's `PreCompact` hook: it receives a hook payload with `transcript_path`, parses Claude Code JSONL turns, filters meta/tool-result records, and extracts user/assistant prose before compaction ([plugins/claude-code/hooks/pre-compact.sh](https://github.com/basicmachines-co/basic-memory/blob/fc2ee07076eb397b09db7b2681e5213002df0d70/plugins/claude-code/hooks/pre-compact.sh)). Conversation importers provide a second, more archival trace source: ChatGPT and Claude export JSON can be converted into `type: conversation` Markdown files.
 
 **Extraction.** The implemented `PreCompact` hook is extractive, not a learned summarizer. It selects the opening request and recent user messages, writes a `type: session` checkpoint with observations such as context and next step, and tags it as `session` and `auto-capture`. The plugin design document discusses a future summarized path, but the reviewed hook code still implements the fast extractive path ([plugins/claude-code/DESIGN.md](https://github.com/basicmachines-co/basic-memory/blob/fc2ee07076eb397b09db7b2681e5213002df0d70/plugins/claude-code/DESIGN.md), [plugins/claude-code/hooks/pre-compact.sh](https://github.com/basicmachines-co/basic-memory/blob/fc2ee07076eb397b09db7b2681e5213002df0d70/plugins/claude-code/hooks/pre-compact.sh)). The oracle is mostly deterministic filtering plus the host's compaction trigger; there is no implemented LLM judge or reviewer deciding whether a checkpoint is high quality.
@@ -100,6 +107,12 @@ The Claude Code plugin is the most relevant activation contrast. Commonplace has
 ## Read-back placement
 
 **Direction.** Both. Agents can explicitly pull memory through `search_notes`, `read_note`, `build_context`, `recent_activity`, and related MCP/CLI/API surfaces. With the Claude Code plugin installed, retained Basic Memory state is also pushed into Claude's context at `SessionStart` without the receiving agent first calling a tool.
+
+**Read-back signal:** `identifier` — SessionStart push keys on cwd, project references, note type, status, and date windows rather than semantic inference over the first prompt.
+
+**Read-back timing:** `pre-action` `post-action` — SessionStart briefs before the future Claude session acts, while PreCompact captures after accumulated work for future read-back.
+
+**Faithfulness tested:** `no` — The review found no implemented ablation or post-action audit proving that the pushed session brief changes Claude behavior.
 
 **Targeting and signal.** The plugin's push is `instance`-targeted at the project/session level. It reads `.claude/settings*.json` under the current `cwd`, resolves `primaryProject`, `secondaryProjects`, `teamProjects`, `recallTimeframe`, and placement conventions, then queries active tasks, open decisions, and recent sessions for the selected projects ([plugins/claude-code/hooks/session-start.sh](https://github.com/basicmachines-co/basic-memory/blob/fc2ee07076eb397b09db7b2681e5213002df0d70/plugins/claude-code/hooks/session-start.sh)). The signal is mainly `identifier`: cwd, project ref, note type, status, and date window. It is not semantic query inference over the user's first prompt.
 

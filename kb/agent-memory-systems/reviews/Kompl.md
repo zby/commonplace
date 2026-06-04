@@ -33,7 +33,9 @@ Kompl, from tuirk's `tuirk/Kompl` repository, is a local "knowledge compiler" th
 ## Artifact analysis
 
 - **Storage substrate:** `sqlite` - Kompl's central retained behavior-shaping state spans SQLite tables plus page/source files and Chroma vectors, but SQLite is the coordinating substrate that records sources, pages, provenance, aliases, plans, activity, chat, draft, mention, link, and settings state.
-- **Representational form:** `mixed` - The system combines prose Markdown wiki pages and drafts, symbolic SQLite rows/frontmatter/page links/aliases/settings, LLM output JSON, vector embeddings, and authored TypeScript/Python routing logic.
+- **Representational form:** `prose` `symbolic` `parametric` - The system combines prose Markdown wiki pages and drafts, symbolic SQLite rows/frontmatter/page links/aliases/settings, LLM output JSON, vector embeddings, and authored TypeScript/Python routing logic.
+- **Lineage:** `authored` `imported` `trace-extracted` - Raw source records are imported from connectors and files, authored routes/settings define the integration and pipeline behavior, and chat/session/activity/lint traces can produce pending drafts or maintenance signals.
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `ranking` `learning` - Compiled pages and sources act as knowledge; routes, tool schemas, status gates, approval paths, lint/archive checks, retrieval scores, and query-generated drafts shape instruction, enforcement, routing, validation, ranking, and learning paths.
 
 **Raw source records and files.** Storage substrate: SQLite `sources` rows plus gzip-compressed raw markdown under `/data/raw`. Representational form: prose source text wrapped by symbolic metadata and content hashes. Lineage: imported from connectors such as URLs, files, Twitter/bookmarks, GitHub README fetches, YouTube transcripts, or text inputs, then stored as source material for compilation. Behavioral authority: knowledge artifacts as preserved evidence; system-definition inputs when source status, session id, title source, and compile status determine which pipeline steps can run.
 
@@ -83,6 +85,14 @@ Kompl is stronger on end-user activation. Its compiled pages flow into browser s
 
 ## Trace-derived learning placement
 
+**Trace source:** `session-logs` `event-streams` - Kompl's trace-derived loop uses chat/session records plus compile progress, activity, lint, and digest events rather than agent tool trajectories.
+
+**Learning scope:** `cross-task` - Approved query-generated drafts enter the local wiki and can be retrieved by later chat or MCP sessions beyond the originating question.
+
+**Learning timing:** `online` `staged` - Chat traces can create pending drafts immediately after an answer, while approval and commit are staged before durable page-level authority.
+
+**Distilled form:** `prose` `symbolic` `parametric` - Trace-derived candidates are prose drafts with symbolic page metadata/citations/page references, and approval adds FTS/vector retrieval indexes.
+
 **Trace source.** Kompl qualifies for trace-derived placement, but the qualifying loop is secondary. Its primary learning loop is source-derived compilation from imported documents and URLs. The trace-derived loop comes from chat/session and operational traces: user questions, assistant answers, pages used, compile progress, activity events, lint results, and weekly activity windows. `/api/chat` stores user and assistant messages, citations, and `pages_used`; when a chat answer used three or more pages, it creates a pending `query-generated` draft from the question, answer, and cited pages ([app/src/app/api/chat/route.ts](https://github.com/tuirk/Kompl/blob/ec1616fabc6ff2092215c2cfa9d44883b6dd16ae/app/src/app/api/chat/route.ts)).
 
 **Extraction.** The chat-derived extraction is simple: the already-produced grounded answer becomes a draft page candidate with `page_type: query-generated`, `draft_status: pending_approval`, and `pages_referenced`. Approval then uses the same commit path as other drafts, adding page rows, page files, provenance where available, FTS, wikilinks, and vector upserts. The weekly digest path summarizes recent activity into a Telegram message, and lint logs maintenance findings; those are trace summaries, but they are mainly human-facing governance artifacts unless a later workflow turns them into wiki changes ([app/src/lib/approve-plan.ts](https://github.com/tuirk/Kompl/blob/ec1616fabc6ff2092215c2cfa9d44883b6dd16ae/app/src/lib/approve-plan.ts), [app/src/app/api/digest/generate/route.ts](https://github.com/tuirk/Kompl/blob/ec1616fabc6ff2092215c2cfa9d44883b6dd16ae/app/src/app/api/digest/generate/route.ts), [app/src/app/api/wiki/lint-pass/route.ts](https://github.com/tuirk/Kompl/blob/ec1616fabc6ff2092215c2cfa9d44883b6dd16ae/app/src/app/api/wiki/lint-pass/route.ts)).
@@ -94,6 +104,12 @@ Kompl is stronger on end-user activation. Its compiled pages flow into browser s
 ## Read-back placement
 
 **Direction.** Kompl has both pull and push read-back over retained memory. External agents pull through MCP tools: `search_wiki`, `read_page`, `list_pages`, and `wiki_stats`. The browser UI and HTTP routes also expose pull surfaces for index, graph, page data, and search. The built-in chat route performs push from the synthesizing model's perspective: it retrieves retained wiki pages from the current question and sends selected page content into `/chat/synthesize` before the answer is generated.
+
+**Read-back signal:** `inferred / lexical` `inferred / embedding` `inferred / judgment` - Chat push selects retained pages by LLM judgment over a small page index or by hybrid FTS/vector relevance for larger wikis.
+
+**Read-back timing:** `pre-action` - Built-in chat retrieval sends selected page content before answer synthesis; post-answer drafts are learning candidates rather than read-back into the same action.
+
+**Faithfulness tested:** `no` - The review found exposure records and citations, but no ablation or perturbation test proving loaded pages changed model behavior.
 
 **Targeting and signal.** The chat push is instance-targeted and inferred. Small wikis use LLM judgment over the page index to choose page ids; larger wikis use FTS lexical retrieval plus vector similarity, then merge scores with source count and recency. MCP pull starts from the agent's explicit query or page id, so it is pull even when `search_wiki` performs relevance ranking. `read_page` is identifier-based pull over a known `page_id`.
 

@@ -33,7 +33,9 @@ REM, from satyammistari, is an open-source "Recursive Episodic Memory" service f
 ## Artifact analysis
 
 - **Storage substrate:** `graph` — Postgres `episodes` rows, Qdrant `episodes` vectors, Neo4j `Episode` nodes, and Redis-published consolidation jobs
-- **Representational form:** `mixed` — Mixed raw prose trace, symbolic metadata, and distributed-parametric embeddings
+- **Representational form:** `prose` `symbolic` `parametric` — raw prose traces and facts, symbolic metadata/schemas/prompts/routes, and distributed-parametric embeddings
+- **Lineage:** `authored` `imported` `trace-extracted` — authored policies and wrappers, imported episode inputs from agents/integrations, and trace-derived parsed/consolidated memories
+- **Behavioral authority:** `knowledge` `instruction` `routing` `validation` `ranking` `learning` — records advise as knowledge, prompts and wrappers instruct, routes select paths, schemas validate, retrieval scores rank, and consolidation learns semantic facts
 
 **Episode records.** Storage substrate: Postgres `episodes` rows, Qdrant `episodes` vectors, Neo4j `Episode` nodes, and Redis-published consolidation jobs. Representational form: mixed raw prose trace, symbolic metadata, and distributed-parametric embeddings. Lineage: imported from an agent or integration after a task, enriched by LLM parsing and embedding, linked to prior episodes by insertion order, and later marked consolidated when the intended consolidation path succeeds. Behavioral authority: knowledge artifact when listed, retrieved, or used as source evidence; ranking artifact through vector similarity, recency, retrieval count, graph adjacency, and consolidation state.
 
@@ -78,6 +80,11 @@ The largest design difference is the authority boundary. REM can put memory back
 
 ## Trace-derived learning placement
 
+- **Trace source:** `session-logs` `trajectories` — REM stores agent episodes and LangChain human/assistant turns after tasks or framework turns
+- **Learning scope:** `per-task` `cross-task` — episodes are written per task or turn and retained under agent/user/session identifiers for later retrieval
+- **Learning timing:** `online` `staged` — write-path parsing and embedding happen synchronously, while consolidation is queued or scheduled
+- **Distilled form:** `prose` `symbolic` `parametric` — semantic memories are prose facts with symbolic metadata/source ids and embeddings
+
 **Trace source.** REM qualifies as trace-derived. The core trace is an agent episode: content submitted after a task or framework turn through `write()`, `save_context()`, or the episodes API. LangChain `save_context()` stores a combined human/assistant turn after model output, and the worker's scheduled tasks fetch unconsolidated episodes for consolidation ([langchain.py](https://github.com/satyammistari/REM/blob/935e8be0a1fca5b23dbabfe16c48b562c1cd24cc/sdk/python/rem_memory/integrations/langchain.py), [tasks.py](https://github.com/satyammistari/REM/blob/935e8be0a1fca5b23dbabfe16c48b562c1cd24cc/python-worker/workers/tasks.py)).
 
 **Extraction.** The raw episode first gets parsed into intent, entities, domain, emotion, and importance. Consolidation then groups unconsolidated episodes by domain and overlapping intent keywords, limits cluster size, prompts an LLM for 1-5 durable facts, and records confidence, fact type, domain, evidence count, and source episode ids. The extraction oracle is the configured OpenAI chat model plus parser/compressor prompts; there is no reviewer acceptance gate in the code.
@@ -91,6 +98,12 @@ The largest design difference is the authority boundary. REM can put memory back
 ## Read-back placement
 
 **Read-back:** `both` — Direct API/SDK retrieval is pull. LangChain memory injection is push to the receiving chain because the framework calls `load_memory_variables()` before the LLM invocation and supplies returned retained episodes and semantic memories as `relevant_memories`.
+
+**Read-back signal:** `identifier` `inferred / embedding` — LangChain push uses the configured `agent_id` as an identifier filter and embeds the current invocation input for Qdrant episode and semantic-memory retrieval.
+
+**Read-back timing:** `pre-action` `post-action` — LangChain memory loading runs before model invocation, while `save_context()` writes the completed turn afterward for later retrieval.
+
+**Faithfulness tested:** `no` — tests and benchmarks inspect retrieval and `injection_prompt` contents, but the review found no with/without-memory behavior ablation.
 
 **Targeting and signal.** Pull retrieval triggers on `POST /api/v1/retrieve` or `REMClient.retrieve()`. LangChain push targets the current invocation instance: the framework's pre-invoke memory loading step derives a query from the current `input`, `question`, or `human_input`, uses the configured `agent_id` as an identifier filter, and sends the resulting prompt to that chain call. The final relevance selector is `inferred / embedding`: REM embeds the current query, searches Qdrant episode and semantic-memory collections under the `agent_id` filter, then uses graph-neighbor expansion, recency, retrieval count, and `top_k` to shape the returned set. Precision, recall, and context dilution are not verified from code.
 

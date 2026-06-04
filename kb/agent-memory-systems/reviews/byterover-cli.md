@@ -33,7 +33,9 @@ ByteRover CLI, by campfirein/ByteRover, is a TypeScript/Oclif CLI and daemon for
 ## Artifact analysis
 
 - **Storage substrate:** `files` — Project-local files under `.brv/context-tree/`, currently primarily HTML `<bv-topic>` files written by `writeHtmlTopic`, with legacy Markdown still indexed
-- **Representational form:** `mixed` — Mixed prose and symbolic HTML elements; `<bv-rule>`, `<bv-decision>`, `<bv-fact>`, `path`, `related`, `tags`, and timestamps are symbolic enough for validation, routing, indexing, and rendering, while the bodies remain prose
+- **Representational form:** `prose` `symbolic` — Prose topic bodies, summaries, and log fields plus symbolic HTML elements, JSON envelopes, runtime signals, Git state, connector config, validation grammar, and indexes
+- **Lineage:** `authored` `trace-extracted` — Topics and connector artifacts are authored or template-generated, while runtime signals, logs, review backups, and dream state are extracted from query, curate, review, and task events
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `ranking` `learning` — Topics and logs provide knowledge; connector prompts instruct; writers and review paths enforce/validate; derived artifacts route and budget context; signals rank, prune, and carry learned operational state
 
 **Context-tree topic files.** Storage substrate: project-local files under `.brv/context-tree/`, currently primarily HTML `<bv-topic>` files written by `writeHtmlTopic`, with legacy Markdown still indexed. Representational form: mixed prose and symbolic HTML elements; `<bv-rule>`, `<bv-decision>`, `<bv-fact>`, `path`, `related`, `tags`, and timestamps are symbolic enough for validation, routing, indexing, and rendering, while the bodies remain prose. Lineage: authored by a calling agent from a user intent, MCP input, or in-daemon curate prompt; `createdat`/`updatedat` are system-managed, but the topic body usually does not preserve a source transcript or proof object. Behavioral authority: knowledge artifact when returned by search/query as evidence or context; system-definition artifact when installed connector rules tell an agent to query or curate from it, when high-impact `meta` creates pending review, or when topic element types and attributes drive validation, navigation, ranking, and UI behavior.
 
@@ -83,6 +85,14 @@ ByteRover is ahead on productized adoption. It has connectors for existing agent
 **Do not borrow usage-based maturity as trust.** ByteRover maturity is useful for ranking and pruning. Commonplace should not let repeated retrieval alone increase epistemic or governance status; review and source lineage should carry that promotion.
 
 ## Trace-derived learning placement
+
+**Trace source:** `tool-traces` `event-streams` — Search hits, curate outcomes, query metadata, review/dream choices, and task lifecycle events are the trace inputs named by the review.
+
+**Learning scope:** `per-project` `cross-task` — Signals are project-scoped, and the resulting ranking/lifecycle state plus curated topics can shape later tasks in that project.
+
+**Learning timing:** `online` `offline` `staged` — Query and curate paths update signals online, query-log summaries are offline operator views, and dream is a staged maintenance loop.
+
+**Distilled form:** `prose` `symbolic` — Trace-derived state becomes prose/symbolic topic files, symbolic runtime signals, JSON logs, and dream candidate/archive records.
 
 **Trace source.** ByteRover consumes several trace classes: search result hits returned by `SearchKnowledgeService`, curate add/update/merge/delete outcomes, query task metadata and matched docs, high-impact curate metadata, review decisions/backups, dream scan/finalize choices, and task lifecycle events. The strongest behavior-shaping trace path is not full transcript mining; it is small operational traces converted into runtime signals and logs.
 

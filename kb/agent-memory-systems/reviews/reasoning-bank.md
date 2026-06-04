@@ -33,7 +33,9 @@ ReasoningBank, from Google Research's `google-research/reasoning-bank` repositor
 ## Artifact analysis
 
 - **Storage substrate:** `files` — WebArena writes website- and mode-scoped JSONL files such as `memories_reasoningbank/{website}.jsonl`, `memories_awm/{website}.jsonl`, `memories_synapse/{website}.jsonl`, and `memories_scaling/{website}.jsonl`; SWE-Bench writes `./memory/{model}.jsonl` under the mini-SWE-agent working tree
-- **Representational form:** `mixed` — Mixed symbolic JSON wrapper plus prose or Markdown memory items; WebArena records also preserve query, task id, template id, status, and sometimes raw `think_list` and `action_list`
+- **Representational form:** `prose` `symbolic` `parametric` — prose or Markdown memory items, symbolic JSON wrappers/metadata/prompts/judges, and distributed-parametric embedding vectors in the cache
+- **Lineage:** `authored` `trace-extracted` — authored extraction prompts and benchmark harness code derive memory banks, embedding caches, and selected-memory handoffs from benchmark trajectories and evaluator/judge outcomes
+- **Behavioral authority:** `knowledge` `instruction` `validation` `ranking` `learning` — stored memories and raw trajectories are evidence; prompt suffixes instruct the receiving agent; evaluators/judges label traces; embeddings rank read-back; extraction prompts create learned memory
 
 **Reasoning memory JSONL records.** Storage substrate: WebArena writes website- and mode-scoped JSONL files such as `memories_reasoningbank/{website}.jsonl`, `memories_awm/{website}.jsonl`, `memories_synapse/{website}.jsonl`, and `memories_scaling/{website}.jsonl`; SWE-Bench writes `./memory/{model}.jsonl` under the mini-SWE-agent working tree. Representational form: mixed symbolic JSON wrapper plus prose or Markdown memory items; WebArena records also preserve query, task id, template id, status, and sometimes raw `think_list` and `action_list`. Lineage: trace-derived from benchmark result directories, step pickle files or trajectory JSON, task configs, auto-evaluation or LLM judge outcomes, and an LLM extraction prompt; the JSONL line is a distilled view, not the raw trace. Behavioral authority: knowledge artifact when inspected as evidence of prior experience; system-definition artifact when retrieved and injected into a later agent's system context as advice that can change the next action.
 
@@ -80,6 +82,14 @@ ReasoningBank also makes the read-back boundary unusually explicit. The selected
 
 ## Trace-derived learning placement
 
+**Trace source:** `session-logs` `tool-traces` `trajectories` — WebArena and SWE-Bench consume logs/messages, action traces, and benchmark trajectories from prior runs
+
+**Learning scope:** `per-task` `cross-task` — memory is induced after individual tasks or same-task scaling trials, then reused across later benchmark tasks within website/mode or model-scoped banks
+
+**Learning timing:** `online` `staged` — the pipeline updates memory after each benchmark task, while the scaling path distills after a staged set of parallel trials
+
+**Distilled form:** `prose` `symbolic` `parametric` — distilled lessons are prose/Markdown in JSONL records, with symbolic metadata and embedding vectors used for selection
+
 **Trace source.** ReasoningBank qualifies as trace-derived learning in both benchmark paths. WebArena consumes result directories containing task configs, step pickle files, action/reasoning traces, summary rewards, and autoeval outputs. SWE-Bench consumes mini-SWE-agent trajectory JSON messages, model outputs, and an LLM success/failure judgment.
 
 **Extraction.** WebArena extracts `think` and `action` sequences, prepends the task query, adds success/failure evidence, and calls a model with success, failure, AWM, Synapse, or parallel-scaling prompts. SWE-Bench joins non-system trajectory messages, asks an LLM judge whether the task succeeded, and then calls success or failure memory prompts. The extraction oracle is therefore split: benchmark/evaluator result first, LLM summarizer second.
@@ -91,6 +101,12 @@ ReasoningBank also makes the read-back boundary unusually explicit. The selected
 ## Read-back placement
 
 **Direction.** ReasoningBank uses both pull and push over retained memory. The harness performs a pull-style embedding lookup over the memory bank, but the selected memory is pushed into the WebArena or SWE-Bench agent before the agent chooses actions.
+
+**Read-back signal:** `inferred / embedding` — the pushed memory is selected by embedding similarity between the current query or problem statement and cached prior task embeddings.
+
+**Read-back timing:** `pre-action` — selected memory is written or appended before the WebArena or SWE-Bench action loop starts.
+
+**Faithfulness tested:** `no` — the review found benchmark comparisons but no code-grounded audit that the selected memory changed model behavior faithfully.
 
 **Targeting and signal.** Targeting is `instance`: task start with a configured memory path or benchmark memory mode causes the harness to select a memory for this WebArena task or SWE-Bench instance. The signal is `inferred / embedding`: relevance is derived from embedding similarity between the current query or problem statement and cached prior task embeddings, with an instruction-aware query embedding used for scoring. The deployed code requests one memory entry. Precision, recall, and context dilution are runtime properties not verified by the code.
 

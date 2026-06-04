@@ -33,6 +33,8 @@ last-checked: "2026-06-01"
 
 - **Storage substrate:** `files` — Repository files under `.claude-plugin/`
 - **Representational form:** `symbolic` — Symbolic JSON metadata
+- **Lineage:** `authored` `imported` — Manifests, settings, skills, scripts, specs, Warden config, and subagents are authored repository artifacts, with some adapted or vendored skill/source material
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `validation` — Skill references and side files advise maintainers, while manifests, settings, loaded skills, helper scripts, subagent definitions, and Warden checks instruct, constrain, validate, or gate agent behavior
 
 **Plugin and marketplace manifests.** The storage substrate is repository files under `.claude-plugin/`. The representational form is symbolic JSON metadata. Lineage is authored repository configuration. Behavioral authority is system-definition authority at install time: it identifies the plugin package and makes root-level skills and agents installable through Claude Code's marketplace flow. It does not perform runtime selection itself.
 

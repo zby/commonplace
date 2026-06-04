@@ -33,7 +33,9 @@ AI Context OS, distributed as MEMM from Alex DC's `alexdcd/AI-Context-OS` reposi
 ## Artifact analysis
 
 - **Storage substrate:** `files` — Canonical memory, task, journal, rule, skill, source, scratch, router, adapter, index, catalog, inbox, and proposal artifacts live as workspace files; SQLite and JSON cache files support observability and usage but do not replace the file tree as the memory source of truth.
-- **Representational form:** `mixed` — The central artifacts combine prose Markdown memory content with symbolic YAML frontmatter, generated route/index records, Rust scoring logic, SQLite trace tables, JSON proposal records, and tool schemas.
+- **Representational form:** `prose` `symbolic` — The central artifacts combine prose Markdown memory content with symbolic YAML frontmatter, generated route/index records, Rust scoring logic, SQLite trace tables, JSON proposal records, and tool schemas.
+- **Lineage:** `authored` `imported` `trace-extracted` — Memories are authored by users or the app, imported through inbox/source proposals, and trace-extracted through context-serving logs, usage records, session events, and optimizer suggestions.
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `ranking` `learning` — Memories act as knowledge when retrieved, rules/adapters/context packages instruct and route agents, protected/generated paths enforce boundaries, governance validates, scoring ranks, and trace-derived optimizations advise future maintenance.
 
 **Canonical memory files.** Storage substrate: Markdown files under the workspace, excluding transient or system-managed directories where the scanner says they do not participate. Representational form: mixed prose body plus symbolic frontmatter. Lineage: authored by the human, written through the app, saved through MCP, imported from inbox proposals, or routed to `sources/`; derived fields such as `folder_category`, `system_role`, access count, and last access are injected at scan time rather than serialized into the canonical file. Behavioral authority: knowledge artifacts when searched or opened as background; system-definition artifacts when `system_role = rule` or `skill`, when dependency fields force-load related memories, when the chat or MCP context engine injects them, or when `protected` prevents direct mutation.
 
@@ -81,6 +83,11 @@ Another difference is where structured state earns its place. Commonplace mostly
 
 ## Trace-derived learning placement
 
+- **Trace source:** `session-logs` `tool-traces` `event-streams` — The review identifies session events, MCP context-serving traces, served/not-loaded memory events, access telemetry, daily inbox/proposal events, and provider/chat debug context.
+- **Learning scope:** `per-project` `cross-task` — Trace-derived governance is workspace-local and uses usage across context requests to produce future maintenance suggestions.
+- **Learning timing:** `online` `offline` — MCP serving, skill loading, access tracking, and session logging happen online; optimization extraction is offline or user-triggered.
+- **Distilled form:** `prose` `symbolic` — Distilled outputs are maintenance suggestions with prose recommendations recorded as symbolic optimization rows or proposal records.
+
 **Trace source.** AI Context OS qualifies as trace-derived learning, but in a modest governance-advisory form. Raw traces include MCP context requests, served memories, not-loaded memories, access counts, last-access times, session events written through `log_session`, daily inbox/proposal events, and provider/chat debug context. Structured MCP traces are logged to SQLite; memory access telemetry is kept in `.cache/memory-usage.json`; session and daily events live under `.ai/journal/`.
 
 **Extraction.** The clearest extraction path is `run_optimizations`: it reads usage statistics, unused-memory records, recent not-loaded rows, memory token sizes, tags, and decay scores, then emits pending `OptimizationRecord` rows. The extracted suggestions are mostly maintenance candidates, not new operating rules: compress an oversized L1, archive an unused low-importance memory, promote frequently served low-importance memory, downgrade repeated L2 loads to L1, remove decayed low-importance memory, merge high tag-overlap memories, or nudge near-threshold memories. Inbox proposal generation is a separate source-ingestion loop over captured items; it may use an LLM provider, but it is source-derived rather than trace-derived unless the captured item is itself a session record.
@@ -92,6 +99,12 @@ Another difference is where structured state earns its place. Commonplace mostly
 ## Read-back placement
 
 **Direction.** AI Context OS uses both pull and push over retained memory. Pull is explicit through MCP `get_context`, MCP `get_skill`, app simulation, memory CRUD, generated indexes, and direct file navigation. Push appears in the local chat path: if vault context is enabled and no context prompt arrives from the frontend, `chat_completion` queries the engine on the latest user message, assembles a context prompt, and prepends it to the provider conversation. Static adapter files are also a coarse push surface when a host tool always loads them.
+
+**Read-back signal:** `coarse` `identifier` `inferred / lexical` — Static adapters are coarse always-present memory/routing context, skill dependency force-loads key on visible dependency IDs, and chat auto-assembly uses lexical/heuristic relevance from the latest user turn.
+
+**Read-back timing:** `pre-action` — Chat, MCP context packages, and static adapters are assembled before the provider or receiving agent acts.
+
+**Faithfulness tested:** `no` — The review found exposure/observability records but no per-memory behavioral ablation showing that loaded memory changed a model action.
 
 **Targeting and signal.** The engineered push path is `instance` targeted with an `inferred / lexical` signal, broadened by symbolic metadata and graph structure. The current user turn supplies the query; BM25, query expansion, tag/L0 overlap, ontology bonus, recency, importance, access frequency, and PPR graph proximity rank memories; token budget then chooses L1 or L2. Skill dependency force-loads use an `identifier` signal once a scored skill's `requires` or `optional` IDs are visible. Static adapters are `coarse`: they always expose the memory roster and reading rules, not a specific instance's relevant content.
 

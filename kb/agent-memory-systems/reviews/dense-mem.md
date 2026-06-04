@@ -33,7 +33,9 @@ Dense-Mem, by markhuangai, is a self-hosted Go memory server for MCP and REST cl
 ## Artifact analysis
 
 - **Storage substrate:** `graph` - The central retained memory persists in Neo4j as `SourceFragment`, `Claim`, `Fact`, and `Community` nodes plus scoped relationships; Postgres and Redis support control, audit, locks, metrics, import ledgers, and runtime coordination rather than serving as the primary knowledge substrate.
-- **Representational form:** `mixed` - Dense-Mem combines prose evidence, symbolic triples/statuses/policies/schemas, vector embeddings on fragments, deterministic community summaries, and JSON skill-pack artifacts.
+- **Representational form:** `prose` `symbolic` `parametric` - Dense-Mem combines prose evidence, symbolic triples/statuses/policies/schemas, vector embeddings on fragments, deterministic community summaries, and JSON skill-pack artifacts.
+- **Lineage:** `authored` `imported` `trace-extracted` - Authored gates, schemas, registry code, and policies shape the system; conversation, document, observation, manual, historical-summary, and skill-pack inputs are imported; live and historical conversation evidence is trace-extracted into fragments, claims, and facts.
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `ranking` `learning` - Fragments, claims, facts, and communities advise recall; tool schemas, scopes, profile guards, promotion gates, verifier schemas, embedding/index configuration, import decisions, and fact state transitions instruct, constrain, route, validate, rank, and learn durable memory from supplied traces.
 
 **Source fragments.** Storage substrate: Neo4j `SourceFragment` nodes with content, source metadata, labels, classification JSON, content hash, idempotency key, embedding vector, embedding model, dimensions, and creator fields. Representational form: mixed prose plus symbolic metadata plus distributed-vector embedding. Lineage: imported from conversation, document, observation, or manual inputs; the high-level `remember` path marks live chat evidence as `source_type="conversation"` and `authority="primary"`, while `import_memories` marks historical summaries as secondary document evidence ([memory.go](https://github.com/markhuangai/dense-mem/blob/96158d8b672883d1239f4acc7ab0b7296638d0d7/internal/service/memoryservice/memory.go), [create.go](https://github.com/markhuangai/dense-mem/blob/96158d8b672883d1239f4acc7ab0b7296638d0d7/internal/service/fragmentservice/create.go)). Behavioral authority: knowledge artifact authority when returned as evidence or tier-2 recall; system-definition influence through embeddings, dedupe hashes, source quality, retraction state, and support-gate counts.
 
@@ -83,6 +85,14 @@ The architectural divergence is where truth is made explicit. Commonplace preser
 **Do not borrow verifier-backed promotion as a substitute for review.** Dense-Mem's verifier is appropriate for operational personal memory. Commonplace methodology claims need source-grounded review and argument quality, not only entailment against a fragment.
 
 ## Trace-derived learning placement
+
+**Trace source:** `session-logs` - Dense-Mem consumes current conversation evidence and summarized historical conversations rather than full transcripts, tool logs, event streams, or trajectories.
+
+**Learning scope:** `cross-task` - The loop is profile-scoped and can carry facts across later conversations and skill-pack transfers, while the review does not identify project- or task-bounded learning semantics.
+
+**Learning timing:** `online` `staged` - Live `remember` calls process current conversation evidence online; historical imports and skill-pack imports use staged review/trusted modes.
+
+**Distilled form:** `prose` `symbolic` - Raw conversational evidence is distilled into prose-bearing fragments and symbolic claims/facts/skill-pack JSON, with embeddings used for stored fragment retrieval rather than as the distilled artifact itself.
 
 **Trace source.** Dense-Mem qualifies as trace-derived because the normal `remember` path consumes current conversation evidence and host-extracted typed claims, while `import_memories` consumes summarized historical conversations. The raw trace boundary is intentionally outside the server: Dense-Mem receives one granular evidence string and optional structured claims rather than full transcripts or tool logs.
 

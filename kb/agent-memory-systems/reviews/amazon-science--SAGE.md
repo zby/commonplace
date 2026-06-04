@@ -35,7 +35,9 @@ SAGE, from `amazon-science/SAGE`, is a research implementation of Skill Augmente
 ## Artifact analysis
 
 - **Storage substrate:** `files` — Filesystem JSONL under `predefined_skill_library/skill_library_functions.jsonl` when present, plus generated `skill_library_functions.jsonl` files in AppWorld output directories
-- **Representational form:** `mixed` — Symbolic JSON records carrying prose task ids and executable Python function text
+- **Representational form:** `prose` `symbolic` `parametric` — prose task ids, prompts, and assistant code text; symbolic JSON records, Python functions, configs, reward code, and metadata; and distributed-parametric embeddings and model weights
+- **Lineage:** `authored` `imported` `trace-extracted` — authored templates/configs/reward code, imported predefined skill libraries when present, and trace-extracted skills, datasets, embeddings, and checkpoints from AppWorld rollouts and logs
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `ranking` `learning` — retained artifacts serve as experiment evidence, prompt instructions, execution-checked code, selector inputs, viability checks, retrieval/ranking state, and SFT/GRPO learning signal
 
 **Predefined skill-library JSONL.** Storage substrate: filesystem JSONL under `predefined_skill_library/skill_library_functions.jsonl` when present, plus generated `skill_library_functions.jsonl` files in AppWorld output directories. Representational form: symbolic JSON records carrying prose task ids and executable Python function text. Lineage: extracted from successful or accepted agent trajectories by AST parsing generated code; imported predefined libraries have weaker visible provenance in this repo. Behavioral authority: system-definition artifact at read-back time because selected functions are inserted into the prompt and executed in the AppWorld environment before the next task.
 
@@ -81,6 +83,14 @@ The biggest divergence is authority. In SAGE, retained skill code crosses into t
 
 ## Trace-derived learning placement
 
+**Trace source:** `session-logs` `tool-traces` `trajectories` — AppWorld rollouts include generated code, environment outputs, completion/reward signals, `lm_calls.jsonl` conversation logs, and paired-subtask skill-use traces.
+
+**Learning scope:** `per-task` `cross-task` — traces are task/scenario-scoped during extraction and rollout, then can become cross-task skill libraries, datasets, and policy weights.
+
+**Learning timing:** `offline` `staged` — expert-data/SFT and persisted skill-library paths run offline, while the GRPO loop stages first-subtask skills into the second subtask before reward updates.
+
+**Distilled form:** `prose` `symbolic` `parametric` — distilled outputs include assistant/code text, executable function records and activation metadata, embeddings, and trained model checkpoints.
+
 **Trace source.** SAGE qualifies as trace-derived learning. The raw signals are AppWorld agent trajectories: generated code snippets, environment execution output, task completion status, evaluator rewards, `lm_calls.jsonl` conversation logs, and rollout-level skill-use counts. In SAGE training, paired subtasks within a scenario also provide a local trace source: functions generated in the first subtask can be tested through use in the second.
 
 **Extraction.** Extraction is mostly syntactic and reward-gated. The skill code parses generated Python with `ast`, keeps function definitions and imports, deduplicates by function name, and writes function records when runs are accepted. Expert-data extraction reads final LLM-call records from successful rollouts and converts them into SFT conversations. GRPO then uses task reward plus a skill-use bonus as the oracle for updating model weights.
@@ -92,6 +102,12 @@ The biggest divergence is authority. In SAGE, retained skill code crosses into t
 ## Read-back placement
 
 **Direction.** SAGE uses push from the acting agent's perspective. Retrieved or staged retained functions are inserted into the initial prompt before code generation; the agent does not choose a separate memory-search action.
+
+**Read-back signal:** `identifier` `inferred / lexical` `inferred / embedding` — default and GRPO paths key on scenario/task or rollout slots, while optional n-gram and embedding modes infer relevance from task text, query text, or function text.
+
+**Read-back timing:** `pre-action` — retained functions are inserted before the acting AppWorld agent's first code action for the task or paired subtask.
+
+**Faithfulness tested:** `yes` — SAGE executes retrieved skill blocks, counts later function-name use, and makes skill use reward-relevant, while still not proving causal contribution to task success.
 
 **Targeting and signal.** The push is instance-targeted. In the deployed evaluation config, the selector matches the current task's scenario group to retained skill `task_id` values, so the signal is `identifier`. Optional skill-embedding retrieval uses `inferred / embedding` over the current instruction and retained function text; optional query-embedding retrieval uses `inferred / embedding` to select prior query ids and then joins skills by `task_id`; optional n-gram retrieval is `inferred / lexical` followed by the same task-id join. In the GRPO loop, first-subtask skills are carried to the paired second subtask through the rollout's subtask schedule and per-environment skill-library slot, an instance-scoped identifier/schedule signal. The code gives thresholds and top-k limits for some modes, but precision and recall are not verified from code.
 

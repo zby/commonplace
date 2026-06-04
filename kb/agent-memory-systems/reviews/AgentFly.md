@@ -33,7 +33,9 @@ AgentFly, from the `Agent-on-the-Fly/AgentFly` repository, is published in the R
 ## Artifact analysis
 
 - **Storage substrate:** `files` — Filesystem JSONL files such as `memory/memory.jsonl` or the configured `MEMORY_JSONL_PATH`
-- **Representational form:** `mixed` — Symbolic JSON records containing prose questions, serialized planner JSON, and positive/negative labels or rewards
+- **Representational form:** `prose` `symbolic` `parametric` — prose questions, plans, traces, and prompts; symbolic JSON records, labels, rewards, scores, and prompt templates; distributed-parametric embeddings and retriever checkpoints
+- **Lineage:** `authored` `trace-extracted` — authored prompt/framework code and seeded examples combine with trace-derived rows appended after judged benchmark runs and retriever-training data derived from those runs
+- **Behavioral authority:** `knowledge` `instruction` `ranking` `learning` — cases and result logs serve as evidence, prompt templates instruct planner/executor behavior, retrievers rank which cases are selected, and training rows/checkpoints drive selector learning
 
 **Case-bank JSONL.** Storage substrate: filesystem JSONL files such as `memory/memory.jsonl` or the configured `MEMORY_JSONL_PATH`. Representational form: symbolic JSON records containing prose questions, serialized planner JSON, and positive/negative labels or rewards. Lineage: seeded examples plus trace-derived rows appended after judged benchmark runs. Behavioral authority: knowledge artifacts when inspected as examples; system-definition artifacts at read-back time because selected rows are transformed into planner context that biases the next decomposition.
 
@@ -81,6 +83,14 @@ The tradeoff is auditability versus immediacy. AgentFly can improve the next run
 
 ## Trace-derived learning placement
 
+**Trace source:** `tool-traces` `trajectories` — benchmark runs include planner outputs, executor/tool-call history, final answers, ground-truth comparisons, and judge rationales.
+
+**Learning scope:** `cross-task` — accumulated benchmark cases and selector-training rows are reused across later benchmark questions, not confined to the same task instance.
+
+**Learning timing:** `online` `offline` `staged` — CBR clients append memory rows during batch processing, while parametric retriever improvement is a staged offline training step used by later runs.
+
+**Distilled form:** `prose` `symbolic` `parametric` — trace runs distill into prose planning cases, symbolic labels/rewards/training rows, and optional neural retriever weights.
+
 **Trace source.** AgentFly qualifies as trace-derived learning. The raw signals are benchmark question runs: planner outputs, executor results, tool-call history, final answers, ground-truth comparisons, and LLM-judge rationales in the CBR clients' result records. The memory rows keep only a smaller slice: question, generated plan, and reward or case label.
 
 **Extraction.** Extraction is simple and mostly automatic. After each run, the non-parametric path appends the current question and plan to the memory pool with reward 1 or 0. The parametric path appends a positive or negative case row for the current query, and also writes training pairs connecting each retrieved case to whether the current answer was correct. A separate training script turns those pair records into a classifier checkpoint.
@@ -92,6 +102,12 @@ The tradeoff is auditability versus immediacy. AgentFly can improve the next run
 ## Read-back placement
 
 **Direction.** AgentFly uses push from the planner's perspective. The agent does not issue a memory query as an action; the host client retrieves cases from the current user query and inserts the resulting examples into `shared_history` before the planner call.
+
+**Read-back signal:** `inferred / embedding` `inferred / judgment` — the non-parametric path selects by SimCSE embedding similarity, while the parametric path uses a trained neural classifier over the current query and candidate case text.
+
+**Read-back timing:** `pre-action` — selected cases enter `shared_history` before the planner decomposes the task.
+
+**Faithfulness tested:** `no` — benchmark logs and retriever metrics exist, but the review found no ablation or perturbation test proving the planner used an injected case.
 
 **Targeting and signal.** Targeting is `instance`: the client selects cases for the current benchmark query, not a generic always-load bundle. The signal is `inferred`, keyed on content rather than an assigned identifier: the non-parametric path uses SimCSE embedding similarity over case questions, and the parametric path uses a trained neural classifier over the current query and candidate case text, then sorts by predicted relevance score. Precision and recall are not established by code alone.
 

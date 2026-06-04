@@ -33,7 +33,9 @@ Self-Training-LLM, from `wj210/Self-Training-LLM`, is a research codebase for fa
 ## Artifact analysis
 
 - **Storage substrate:** `model-weights` — Local `data/wiki/` JSONL and pickle files, plus intermediate `data/embeddings/accepted_topic_doc.pkl` and topic split pickles
-- **Representational form:** `parametric` — Prose documents and questions wrapped in symbolic JSON/Python objects
+- **Representational form:** `prose` `symbolic` `parametric` — readable/generated corpora, symbolic JSON/pickle/policy records, and trained model weights
+- **Lineage:** `authored` `imported` `trace-extracted` — authored scorer/prompt/training code imports Wikimedia data and extracts generated QA traces into training rows and checkpoints
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `validation` `ranking` `learning` — source/traces act as evidence; prompts instruct generation; filters and thresholds gate, validate, and rank examples; trainers promote selected traces into learned weights
 
 **Wikipedia source documents and generated questions.** Storage substrate: local `data/wiki/` JSONL and pickle files, plus intermediate `data/embeddings/accepted_topic_doc.pkl` and topic split pickles. Representational form: prose documents and questions wrapped in symbolic JSON/Python objects. Lineage: imported from the Hugging Face Wikimedia dataset, filtered by length and predefined topic categories, then chunked and transformed into questions. Behavioral authority: knowledge artifacts for corpus evidence during generation; system-definition artifacts only when the scripts use them to decide training/test splits and prompts.
 
@@ -66,6 +68,12 @@ The strongest alignment is the trace-derived split. Both systems distinguish raw
 
 **Read-back:** `push` — By checkpoint selection/always-load rather than retrieval. Targeting is `coarse`, signal n/a: once the caller loads an SFT or DPO checkpoint, the learned behavior is always active in generation. The `rag` mode inserts the current test document into the prompt, but that is evaluation-time document context rather than retained memory read-back. This commit does not implement relevance-gated memory/context injection, so `push-activation` is not warranted.
 
+**Read-back signal:** `coarse` — loaded checkpoint behavior is always active once selected, without per-instance memory retrieval.
+
+**Read-back timing:** `pre-action` — checkpoint selection happens before answer generation and can change the next answer.
+
+**Faithfulness tested:** `yes` — pairwise evaluation compares post-training checkpoint responses against baseline responses, though it does not preserve item-level attribution from a response back to the training trace.
+
 ### Borrowable Ideas
 
 **Separate evidence generation from promotion policy.** Commonplace could mirror the pipeline shape for review experiments: generate candidate examples, score or classify them, then promote only the selected material. Ready now as a workshop pattern, not as automatic library mutation.
@@ -79,6 +87,14 @@ The strongest alignment is the trace-derived split. Both systems distinguish raw
 **Use pairwise evaluation for artifact variants.** The baseline-vs-post-training comparison shape could transfer to generated instructions or review rewrites: compare old/new outputs on fixed tasks before adoption. Needs a benchmark set and a calibrated judge, otherwise it becomes another ungrounded LLM vote.
 
 ## Trace-derived learning placement
+
+**Trace source:** `trajectories` — generated QA examples, sampled answers, scored training rows, response JSONL, and pairwise judge outputs are the retained generation/evaluation trajectories.
+
+**Learning scope:** `cross-task` — the trained checkpoint carries behavior across later factual-QA generations rather than one deployed session or project.
+
+**Learning timing:** `offline` `staged` — the loop generates data, scores/filters, trains SFT or DPO, and then evaluates; it is not an online deployed-agent memory loop.
+
+**Distilled form:** `parametric` — selected traces are ultimately promoted into SFT/DPO model weights.
 
 **Trace source.** Self-Training-LLM qualifies as trace-derived learning. The qualifying traces are generated Wikipedia QA examples, context-grounded answers, raw sampled no-context answers, TGI/HF generation details and logprobs, NLI/self-check scores, SFT/DPO training rows, response JSONL, and pairwise judge outputs ([wiki generation](https://github.com/wj210/Self-Training-LLM/blob/97839b29d0fd8bb474f5549fa3e9d6ca504732e0/uncertainty/wiki_generation.py), [scorer](https://github.com/wj210/Self-Training-LLM/blob/97839b29d0fd8bb474f5549fa3e9d6ca504732e0/uncertainty/scorer.py), [pairwise eval](https://github.com/wj210/Self-Training-LLM/blob/97839b29d0fd8bb474f5549fa3e9d6ca504732e0/uncertainty/pairwise_eval.py)).
 

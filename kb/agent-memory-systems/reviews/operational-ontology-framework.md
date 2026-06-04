@@ -33,6 +33,8 @@ Operational Ontology Framework is FSTech Digital's public reference for structur
 
 - **Storage substrate:** `files` — Markdown files in the public GitHub repository under `README.md` and `docs/`
 - **Representational form:** `symbolic` — Prose, with small tables for concepts and failure modes
+- **Lineage:** `authored` — Public docs, templates, example schemas, and policy files are authored reference material rather than generated from operational traces in the inspected checkout.
+- **Behavioral authority:** `knowledge` `instruction` `routing` `validation` — Docs and templates advise adopters, while Pins, Specs, Skills, schemas, guardrails, decision routes, and repository policies can instruct, route, constrain, or validate downstream work when adopted.
 
 **Framework docs.** Storage substrate: Markdown files in the public GitHub repository under `README.md` and `docs/`. Representational form: prose, with small tables for concepts and failure modes. Lineage: authored public reference material, not generated from operational traces in the inspected checkout. Behavioral authority: system-definition artifact for adopters at design time; it instructs architects and agents to model Data, Logic, Action, write-back, and guardrails explicitly, but has no direct runtime authority unless copied into a host system's instructions or process.
 

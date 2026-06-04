@@ -33,7 +33,9 @@ G-Memory, from bingreeky's `GMemory` repository, is the official implementation 
 ## Artifact analysis
 
 - **Storage substrate:** `vector` — A LangChain Chroma store under the run-specific `.db` working directory
-- **Representational form:** `mixed` — Mixed: page content is the task main text, metadata serializes task description, trajectory prose, Boolean outcome label, JSON extra fields, and a JSON-serialized NetworkX state chain (https://github.com/bingreeky/GMemory/blob/7b581c51d993bd600df14691d101d7e601040cc6/mas/memory/mas_memory/GMemory.py, https://github.com/bingreeky/GMemory/blob/7b581c51d993bd600df14691d101d7e601040cc6/mas/memory/common.py)
+- **Representational form:** `prose` `symbolic` `parametric` — Task text, trajectories, and insight rules are prose; state chains, JSON metadata, graphs, scores, and prompt/workflow code are symbolic; Chroma embeddings and embedding-derived similarity state are parametric (https://github.com/bingreeky/GMemory/blob/7b581c51d993bd600df14691d101d7e601040cc6/mas/memory/mas_memory/GMemory.py, https://github.com/bingreeky/GMemory/blob/7b581c51d993bd600df14691d101d7e601040cc6/mas/memory/common.py)
+- **Lineage:** `authored` `trace-extracted` — Prompt assembly and workflow code are authored system definitions, while task memories, state chains, task graph edges, insights, and scores derive from completed MAS task traces.
+- **Behavioral authority:** `knowledge` `instruction` `routing` `ranking` `learning` — Stored traces serve as evidence/examples, injected insights and prompt templates instruct, the task graph routes retrieval, similarity/reranking/scores rank candidates, and trace-derived rules learn from outcomes.
 
 **Chroma task memory.** The storage substrate is a LangChain Chroma store under the run-specific `.db` working directory. The representational form is mixed: page content is the task main text, metadata serializes task description, trajectory prose, Boolean outcome label, JSON extra fields, and a JSON-serialized NetworkX state chain (https://github.com/bingreeky/GMemory/blob/7b581c51d993bd600df14691d101d7e601040cc6/mas/memory/mas_memory/GMemory.py, https://github.com/bingreeky/GMemory/blob/7b581c51d993bd600df14691d101d7e601040cc6/mas/memory/common.py). Lineage is direct runtime trace capture from completed benchmark tasks, lightly transformed by `_extract_mas_message`. Behavioral authority is knowledge artifact authority while stored as evidence and examples; it gains ranking and prompt-example authority when selected by retrieval.
 
@@ -84,6 +86,14 @@ The systems also differ in their tolerance for opaque storage. Chroma and pickle
 
 ## Trace-derived learning placement
 
+**Trace source:** `session-logs` `tool-traces` `trajectories` — Completed MAS task contexts include agent messages, system/user instructions, action/observation/reward steps, final labels, environment feedback, and graph-linked trajectories.
+
+**Learning scope:** `per-task` `cross-task` — Raw contexts are captured per completed task, while related-task retrieval, insight finetuning, correlations, and cluster merges reuse traces across tasks within the run-local benchmark memory.
+
+**Learning timing:** `online` `staged` — Task traces are captured during execution and at task save time; insight finetuning and merge passes run later after memory-count thresholds.
+
+**Distilled form:** `prose` `symbolic` `parametric` — Distillation produces prose key steps, failure reasons, and insight rules; symbolic state chains, graph/rule metadata, scores, and correlations; and embedding-indexed task memory for similarity retrieval.
+
 **Trace source.** G-Memory qualifies as trace-derived learning. Raw traces are completed MAS task contexts: task text, agent messages, system/user instructions, action/observation sequences, rewards, final labels, environment feedback, and graph links among agents or nodes (https://github.com/bingreeky/GMemory/blob/7b581c51d993bd600df14691d101d7e601040cc6/mas/memory/common.py, https://github.com/bingreeky/GMemory/blob/7b581c51d993bd600df14691d101d7e601040cc6/tasks/mas_workflow/macnet/graph_mas.py).
 
 **Extraction.** Extraction is staged. `_extract_mas_message` removes negative-reward states from successful traces, creates `clean_traj`, extracts key steps with an LLM, and records failure reasons for failed traces. `finetune_insights` samples stored memories, compares success/failure trajectories or successful chunks, asks an LLM for rule operations, parses those operations, and updates scored insights. `merge_insights` clusters tasks with FINCH and asks an LLM to merge related rules (https://github.com/bingreeky/GMemory/blob/7b581c51d993bd600df14691d101d7e601040cc6/mas/memory/mas_memory/GMemory.py, https://github.com/bingreeky/GMemory/blob/7b581c51d993bd600df14691d101d7e601040cc6/mas/memory/mas_memory/prompt.py).
@@ -95,6 +105,12 @@ The systems also differ in their tolerance for opaque storage. Chroma and pickle
 **Survey placement.** G-Memory belongs in the trace-to-rules plus trace-to-examples family. It strengthens the survey distinction between raw trace retention and distilled behavior-shaping artifacts: trajectories are reusable examples, while insights are generalized rules with stronger prompt authority. It also illustrates the governance gap: trace-derived rules can become prompt guidance without item-level source lineage.
 
 ## Read-back placement
+
+**Read-back signal:** `inferred / embedding` `inferred / judgment` — Push selection is keyed to the current task through embedding similarity, graph-expanded similar tasks, cosine thresholds, and LLM judgment reranking.
+
+**Read-back timing:** `pre-action` — Retrieval and prompt assembly happen before task solving and before each action prompt consumes the selected trajectories and insights.
+
+**Faithfulness tested:** `no` — The review found task outcomes and score updates, but no item-level with/without ablation proving that a specific injected memory changed behavior.
 
 **Direction.** Read-back is push from the acting agent's perspective. The MAS workflow retrieves memory before task solving and inserts selected successful trajectories and insights into the prompt; agents do not issue a memory lookup themselves (https://github.com/bingreeky/GMemory/blob/7b581c51d993bd600df14691d101d7e601040cc6/tasks/mas_workflow/autogen/autogen.py, https://github.com/bingreeky/GMemory/blob/7b581c51d993bd600df14691d101d7e601040cc6/tasks/mas_workflow/format.py).
 

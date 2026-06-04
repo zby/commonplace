@@ -32,7 +32,9 @@ A-mem, from AGI Research's `agiresearch/A-mem` repository, is a Python library f
 ## Artifact analysis
 
 - **Storage substrate:** `vector` — Python `MemoryNote` objects in `AgenticMemorySystem.memories`, with serialized copies of their fields stored as Chroma metadata in the active collection
-- **Representational form:** `mixed` — Mixed prose and symbolic metadata; content/context are prose, while ids, timestamps, tags, keywords, links, category, retrieval count, and history are symbolic fields
+- **Representational form:** `prose` `symbolic` `parametric` — content/context and prompt instructions are prose; ids, timestamps, tags, links, categories, counters, JSON shapes, and retriever metadata are symbolic; Chroma embeddings are distributed-parametric
+- **Lineage:** `authored` — notes are authored or host-supplied at `add_note` time, while semantic metadata, links, embeddings, and copied collections are derived from those retained note surfaces rather than from agent traces
+- **Behavioral authority:** `knowledge` `instruction` `routing` `ranking` `learning` — notes return as advisory knowledge; the evolution prompt instructs metadata mutation; tags, links, contexts, and Chroma results route and rank later recall; LLM evolution learns softer topology and metadata for future retrieval
 
 **Memory notes.** Storage substrate: Python `MemoryNote` objects in `AgenticMemorySystem.memories`, with serialized copies of their fields stored as Chroma metadata in the active collection. Representational form: mixed prose and symbolic metadata; content/context are prose, while ids, timestamps, tags, keywords, links, category, retrieval count, and history are symbolic fields. Lineage: notes are authored or host-supplied at `add_note` time; semantic metadata may be caller-supplied or LLM-derived; link/context/tag changes may be derived from neighbor retrieval and the LLM evolution prompt. Behavioral authority: notes are knowledge artifacts when returned to a caller as evidence or context; links, tags, keywords, and context also have ranking and routing influence because search and evolution consume them.
 

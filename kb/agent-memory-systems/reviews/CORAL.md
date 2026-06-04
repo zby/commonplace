@@ -33,13 +33,15 @@ CORAL, from Human-Agent-Society, is an orchestration system for autonomous codin
 ## Artifact analysis
 
 - **Storage substrate:** `files` — `.coral/public/attempts/<commit>.json` files, written atomically
-- **Representational form:** `mixed` — Symbolic JSON wrapping prose titles and grader feedback
+- **Representational form:** `prose` `symbolic` — prose notes, prompts, feedback, roles, and skills wrapped by symbolic JSON, frontmatter, configs, commits, scripts, and checkpoint metadata
+- **Lineage:** `authored` `imported` `trace-extracted` — authored notes/skills/roles and heartbeat configs, imported seeded templates and user config, and trace-extracted attempts, logs, eval results, checkpoints, and derived synthesis
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `ranking` `learning` — shared artifacts inform agents, heartbeat and generated files instruct, manager/grader paths enforce and validate, roles/skills/configs route attention, scores rank attempts, and eval traces drive learning artifacts
 
 **Attempt JSON records.** Storage substrate: `.coral/public/attempts/<commit>.json` files, written atomically. Representational form: symbolic JSON wrapping prose titles and grader feedback. Lineage: generated from `coral eval`, a git commit, a parent commit, optional shared-state checkpoint hashes, grader output, and budget metadata. Behavioral authority: knowledge artifacts when agents or humans inspect leaderboard history; system-definition artifacts when the manager uses score, status, budget class, timestamp, and eval count to trigger heartbeat prompts, plateau pressure, stall exemptions, and CLI filtering.
 
 **Shared notes and synthesis files.** Storage substrate: Markdown files under `.coral/public/notes/`, symlinked into each runtime's shared directory. Representational form: prose with lightweight YAML frontmatter. Lineage: agent-authored from research, eval results, teammate attempts, and heartbeat-directed reflection/consolidation; invalidation is manual unless a later note or attempt supersedes it. Behavioral authority: knowledge artifacts when read as evidence, context, advice, or coordination state. They become weak system-definition artifacts only when a prompt instructs agents to treat them as planning inputs.
 
-**Shared skills.** Storage substrate: directories under `.coral/public/skills/` with `SKILL.md` descriptors and optional scripts or references. Representational form: mixed prose instructions, symbolic frontmatter, and executable files. Lineage: seeded from bundled template skills, copied from user config, or agent-authored during a run. Behavioral authority: stronger than notes: a skill is a system-definition artifact when loaded by an agent runtime as procedure, tool-routing guidance, or executable workflow; it is also a knowledge artifact when merely inspected.
+**Shared skills.** Storage substrate: directories under `.coral/public/skills/` with `SKILL.md` descriptors and optional scripts or references. Representational form: prose instructions, symbolic frontmatter, and executable files. Lineage: seeded from bundled template skills, copied from user config, or agent-authored during a run. Behavioral authority: stronger than notes: a skill is a system-definition artifact when loaded by an agent runtime as procedure, tool-routing guidance, or executable workflow; it is also a knowledge artifact when merely inspected.
 
 **Roles, focus notes, and team posture documents.** Storage substrate: `.coral/public/roles/<agent>.md` plus notes such as focus files and roster summaries. Representational form: prose with conventional frontmatter and cited evidence. Lineage: role files are seeded at run setup and are owned by their agent; focus and roster notes are written during work. Behavioral authority: coordination memory. They shape future task allocation and duplication avoidance by advice and social routing, not by hard enforcement.
 
@@ -84,11 +86,19 @@ CORAL is stronger as a scheduler around trace-derived learning. It has a real fe
 
 ## Trace-derived learning placement
 
+**Trace source:** `session-logs` `tool-traces` `event-streams` — commits, eval messages, attempt records, grader outputs, runtime logs, eval logs, checkpoints, role updates, and shared notes form the run trace around each eval event.
+
+**Learning scope:** `per-task` `per-project` `cross-task` — learning is per CORAL run/task and shared project/team state, while notes, skills, roles, and synthesis can transfer findings across sibling agents and future attempts.
+
+**Learning timing:** `online` — attempts are graded, manager-visible events are processed, and heartbeat-triggered extraction happens while the optimization run continues.
+
+**Distilled form:** `prose` `symbolic` — extracted lessons become Markdown notes, role/focus/synthesis files, heartbeat-directed prose, skill instructions, JSON/frontmatter metadata, configs, scripts, and checkpoint/attempt identifiers; the review found no distributed-parametric learning layer.
+
 **Trace source.** CORAL qualifies as trace-derived learning. Raw signals include agent commits, eval messages, attempt JSON records, grader scores, status classifications, feedback text, runtime logs, eval logs, shared-state checkpoints, role updates, focus notes, and teammate notes. The central trace boundary is the eval: each `coral eval` produces a commit, an attempt record, a grader result, and a manager-visible event.
 
 **Extraction.** Extraction is mostly agent-mediated rather than an automatic summarizer. The generated instructions tell agents to update notes or skills after every eval, to write research summaries, to inspect top attempts, and to maintain role/focus artifacts. Heartbeat prompts make that extraction more forceful: `reflect` asks for experiment notes, `consolidate` asks for synthesis, connections, open questions, and role audits, `pivot` asks agents to read prior attempts and notes before choosing a new lane, and `lint_wiki` delegates note cleanup to a librarian subagent ([reflect prompt](https://github.com/Human-Agent-Society/CORAL/blob/fc4252d4b9fb9b0c5532c8a6dd293f29dfac971d/coral/hub/prompts/reflect.md), [consolidate prompt](https://github.com/Human-Agent-Society/CORAL/blob/fc4252d4b9fb9b0c5532c8a6dd293f29dfac971d/coral/hub/prompts/consolidate.md), [pivot prompt](https://github.com/Human-Agent-Society/CORAL/blob/fc4252d4b9fb9b0c5532c8a6dd293f29dfac971d/coral/hub/prompts/pivot.md), [wiki-lint prompt](https://github.com/Human-Agent-Society/CORAL/blob/fc4252d4b9fb9b0c5532c8a6dd293f29dfac971d/coral/hub/prompts/lint_wiki.md)).
 
-**Storage substrate and representational form.** Raw traces persist as JSON attempt files, git commits, text logs, checkpoint commits, and grader artifacts. Distilled artifacts persist as Markdown notes, role files, synthesis files, and mixed skill directories. The operative forms are mixed: prose for lessons and instructions, symbolic JSON/frontmatter for routing and metadata, executable scripts inside skills, and git commits for lineage. There is no distributed-parametric learning layer in the inspected implementation.
+**Storage substrate and representational form.** Raw traces persist as JSON attempt files, git commits, text logs, checkpoint commits, and grader artifacts. Distilled artifacts persist as Markdown notes, role files, synthesis files, and skill directories with prose and symbolic/executable parts. The operative forms are prose for lessons and instructions, symbolic JSON/frontmatter for routing and metadata, executable scripts inside skills, and git commits for lineage. There is no distributed-parametric learning layer in the inspected implementation.
 
 **Lineage.** Attempt lineage is strong: commit hash, parent hash, agent id, timestamp, score/status, feedback, budget class, and optional shared-state checkpoint hashes are all recorded. Distilled-note lineage is weaker: prompts ask agents to cite attempts and evidence, but the note format and note hub do not enforce source-attribution fields. Skills similarly can contain scripts and references, but the inspected code does not require a skill to cite the attempts that motivated it.
 
@@ -101,6 +111,12 @@ CORAL is stronger as a scheduler around trace-derived learning. It has a real fe
 ## Read-back placement
 
 **Direction.** CORAL is both pull and push from the agent's perspective. The agent pulls attempts, diffs, notes, skills, logs, and checkpoint history with CLI commands or file reads. The manager pushes retained eval-result memory after scored attempts: the resumed prompt includes the score, commit id, attempt title, and grader feedback from the finalized attempt. Generated startup instructions and bundled heartbeat prompt templates are pushed context, but they ship with the system and are not retained-memory read-back.
+
+**Read-back signal:** `identifier` — the manager targets the matching live agent by `agent_id` from the finalized attempt and selects heartbeat actions from symbolic eval-count, budget-class, score-history, plateau, score-direction, and epsilon signals.
+
+**Read-back timing:** `pre-action` `post-action` — eval-result push happens after grading, then interrupts/resumes the agent before its next work segment can proceed.
+
+**Faithfulness tested:** `no` — CORAL measures downstream scores, but the review found no ablation showing that a specific pushed note, heartbeat prompt, or skill changed agent behavior.
 
 **Targeting and signal.** The memory push is instance-targeted by identifier. The manager watches new finalized attempt files, reads the attempt's `agent_id`, and interrupts/resumes the matching live agent with that attempt's score, title, commit id, budget class, and feedback. Heartbeat action selection adds engineered control signals: per-agent eval count, global eval count, real-versus-tune budget class, score history, plateau streak, score direction, and optional epsilon thresholds. These signals choose a prompt class (`reflect`, `consolidate`, `pivot`, `lint_wiki`, or custom actions), not specific note, skill, or attempt bodies beyond the current eval-result header.
 

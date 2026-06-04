@@ -34,7 +34,9 @@ napkin, from Michaelliv's `Michaelliv/napkin` repository, is a local-first TypeS
 ## Artifact analysis
 
 - **Storage substrate:** `files` — Project filesystem under the vault content root, excluding hidden/system directories such as `.napkin/`, `.obsidian/`, `.git/`, `.trash/`, and `node_modules` during listing ([src/utils/files.ts](https://github.com/Michaelliv/napkin/blob/ffd2b04c628e0ccf946002909dbe36a5c751a473/src/utils/files.ts))
-- **Representational form:** `mixed` — Prose Markdown with optional YAML frontmatter, headings, tasks, tags, wikilinks, and Obsidian-compatible structures
+- **Representational form:** `prose` `symbolic` — Prose Markdown plus YAML frontmatter, headings, tasks, tags, wikilinks, JSON config/cache records, command contracts, and Obsidian-compatible structures
+- **Lineage:** `authored` `imported` — Authored or imported through file edits, CLI/SDK operations, templates, daily-note commands, external Obsidian editing, and generated views derived from the current vault files/config
+- **Behavioral authority:** `knowledge` `instruction` `routing` `ranking` — Notes and reads provide advisory knowledge; templates, command hints, config, and SDK/CLI contracts instruct and route access; MiniSearch/backlinks/recency rank returned snippets
 
 **Vault Markdown notes.** Storage substrate: project filesystem under the vault content root, excluding hidden/system directories such as `.napkin/`, `.obsidian/`, `.git/`, `.trash/`, and `node_modules` during listing ([src/utils/files.ts](https://github.com/Michaelliv/napkin/blob/ffd2b04c628e0ccf946002909dbe36a5c751a473/src/utils/files.ts)). Representational form: prose Markdown with optional YAML frontmatter, headings, tasks, tags, wikilinks, and Obsidian-compatible structures. Lineage: authored or imported by users and agents through file edits, CLI CRUD commands, templates, daily-note commands, or external Obsidian editing; Napkin itself preserves files rather than canonicalizing them into another store. Behavioral authority: knowledge artifacts when searched/read as evidence or context; weak system-definition artifacts when a host treats a note as instruction.
 

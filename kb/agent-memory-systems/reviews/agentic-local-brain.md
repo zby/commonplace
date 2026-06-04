@@ -33,7 +33,9 @@ Agentic Local Brain, from `agent-creativity/agentic-local-brain`, is a personal 
 ## Artifact analysis
 
 - **Storage substrate:** `sqlite` - The central operational memory is SQLite: knowledge metadata, tags, chunk records, entity graph tables, document relations, topic clusters, reading history, wiki registries, and RAG conversation databases. Markdown files and Chroma vectors are important side substrates, but SQLite is where the system composes most behavior-shaping state.
-- **Representational form:** `mixed` - LocalBrain combines prose Markdown captures, symbolic SQLite rows/frontmatter/config/tool schemas, graph and topic tables, JSONL run logs, executable Python pipelines, and distributed-parametric embeddings in ChromaDB and SQLite BLOBs.
+- **Representational form:** `prose` `symbolic` `parametric` - LocalBrain combines prose Markdown captures, symbolic SQLite rows/frontmatter/config/tool schemas, graph and topic tables, JSONL run logs, executable Python pipelines, and distributed-parametric embeddings in ChromaDB and SQLite BLOBs.
+- **Lineage:** `authored` `imported` `trace-extracted` - Collection imports user/source material, skill and API contracts are authored repository artifacts, and usage/conversation rows are trace-extracted from views, searches, RAG queries, and generated turns.
+- **Behavioral authority:** `knowledge` `instruction` `routing` `ranking` `learning` - Captures, wiki articles, and conversation turns act as knowledge; the skill/API/config instruct and route collection and retrieval; vectors, graph/topic/history state, and recommendations rank and learn from retained content and traces.
 
 **Collected Markdown files.** Storage substrate: files under the configured data directory, especially collection subdirectories such as files, URLs, papers, bookmarks, emails, and notes. Representational form: prose Markdown with YAML frontmatter. Lineage: imported from user files, fetched webpages, email/bookmark/paper sources, or direct notes; invalidated by source edits, duplicate hashes, refetches, or manual file changes that are not automatically reconciled into every derived projection. Behavioral authority: knowledge artifacts for later search, reading, RAG context, and wiki synthesis.
 
@@ -87,6 +89,14 @@ LocalBrain's context assembly is more automated than Commonplace's current searc
 
 ## Trace-derived learning placement
 
+**Trace source:** `session-logs` `event-streams` - Conversation turns are retained session memory, while item views, searches, RAG query events, and mining-run records are usage event streams.
+
+**Learning scope:** `per-task` `cross-task` - Conversation read-back is per RAG session, while reading-history personalization and recommendations can carry across later interactions in the same local database.
+
+**Learning timing:** `online` `offline` - View/search/RAG event recording and prompt injection happen online; mining and wiki compilation are described as offline/batch work.
+
+**Distilled form:** `prose` `symbolic` `parametric` - Conversation turns and wiki/text outputs are prose, reading-history and ranking effects are symbolic, and recommendation profiles are described as transient parametric summaries.
+
 **Trace source.** LocalBrain qualifies as trace-derived through usage and conversation traces, not through autonomous agent skill learning. The implemented traces are item view events, search queries, RAG query events, RAG conversation turns, and mining-run history records ([kb/query/reading_history.py](https://github.com/agent-creativity/agentic-local-brain/blob/d1e5f846351a8433edea54053ddb5fc3158229c6/kb/query/reading_history.py), [kb/query/conversation.py](https://github.com/agent-creativity/agentic-local-brain/blob/d1e5f846351a8433edea54053ddb5fc3158229c6/kb/query/conversation.py), [kb/processors/mining_runner.py](https://github.com/agent-creativity/agentic-local-brain/blob/d1e5f846351a8433edea54053ddb5fc3158229c6/kb/processors/mining_runner.py)). It does not appear to mine Claude/Codex tool transcripts into rules or patches.
 
 **Extraction.** The strongest trace-to-behavior path is lightweight and mostly deterministic. Web routes record events; `ReadingHistory` stores them; the enhanced retrieval pipeline uses recent views to boost matching retrieved chunks; the recommendation engine computes a time-decayed average embedding over recently read documents to recommend similar unread documents; the conversation manager stores user/assistant turns and formats recent turns into the next prompt for the same session ([kb/web/routes/search.py](https://github.com/agent-creativity/agentic-local-brain/blob/d1e5f846351a8433edea54053ddb5fc3158229c6/kb/web/routes/search.py), [kb/processors/recommendation.py](https://github.com/agent-creativity/agentic-local-brain/blob/d1e5f846351a8433edea54053ddb5fc3158229c6/kb/processors/recommendation.py), [kb/query/retrieval_pipeline.py](https://github.com/agent-creativity/agentic-local-brain/blob/d1e5f846351a8433edea54053ddb5fc3158229c6/kb/query/retrieval_pipeline.py)). The oracle is user behavior plus recency/similarity heuristics, not an LLM judge deciding that a trace should become a validated rule.
@@ -98,6 +108,12 @@ LocalBrain's context assembly is more automated than Commonplace's current searc
 ## Read-back placement
 
 **Direction.** Both. Explicit CLI/API searches and RAG queries are pull. Enhanced RAG also pushes retained session history into the LLM prompt and lets recent reading history influence retrieval ranking without the answering model issuing a separate memory lookup.
+
+**Read-back signal:** `coarse` `identifier` `inferred / lexical` `inferred / embedding` - Conversation history is selected by `session_id`; reading-history boosts are coarse user-recency signals over retrieved chunks; the RAG context itself is selected by lexical and vector relevance from the current question.
+
+**Read-back timing:** `pre-action` `post-action` - Conversation history and retrieved context are assembled before answer generation, while views/searches/RAG calls are recorded afterward for later recommendations or RAG runs.
+
+**Faithfulness tested:** `no` - The review found no implemented ablation, perturbation test, or post-answer audit proving that retained history or personalization changes model behavior.
 
 **Targeting and signal.** Conversation read-back is `instance`-targeted by `session_id`; the relevant identifier already exists in the chat request. Reading-history ranking boost is coarser: it favors documents recently viewed by the user if they also appear in the current retrieved chunk set. Retrieval itself is inferred lexical/vector relevance from the question plus optional tags.
 

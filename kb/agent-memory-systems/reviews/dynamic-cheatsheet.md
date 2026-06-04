@@ -34,6 +34,8 @@ Dynamic Cheatsheet, from Mirac Suzgun's `dynamic-cheatsheet` repository, is a li
 
 - **Storage substrate:** `in-memory` — An in-memory string during `advanced_generate`, with durable snapshots in benchmark result JSONL records as `final_cheatsheet` and optional seed/resume paths through `--initialize_cheatsheet_path` and `--continue_from_last_run_path` (https://github.com/suzgunmirac/dynamic-cheatsheet/blob/5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9/run_benchmark.py, https://github.com/suzgunmirac/dynamic-cheatsheet/tree/5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9/results)
 - **Representational form:** `prose` — Prose with light XML-like tags, section headings, examples, and usage-count conventions
+- **Lineage:** `authored` `imported` `trace-extracted` — Authored prompt templates, imported benchmark inputs and embedding CSVs, and solver traces distilled into cheatsheets and previous-solution packets
+- **Behavioral authority:** `knowledge` `instruction` `ranking` `learning` — Cheatsheets and previous solutions act as advice/evidence, prompt templates instruct solver and curator behavior, embedding similarity ranks prior examples, and trace distillation updates later prompt memory
 
 **Cumulative cheatsheet.** The storage substrate is an in-memory string during `advanced_generate`, with durable snapshots in benchmark result JSONL records as `final_cheatsheet` and optional seed/resume paths through `--initialize_cheatsheet_path` and `--continue_from_last_run_path` (https://github.com/suzgunmirac/dynamic-cheatsheet/blob/5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9/run_benchmark.py, https://github.com/suzgunmirac/dynamic-cheatsheet/tree/5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9/results). The representational form is prose with light XML-like tags, section headings, examples, and usage-count conventions. Lineage is trace-derived: current question, generator output, previous cheatsheet, and sometimes prior answers are transformed by an LLM curator into a replacement cheatsheet. Behavioral authority is system-definition artifact authority at read-back because the generator prompt instructs the solver to analyze and apply the cheatsheet; it is also a knowledge artifact because its entries act as evidence, examples, and advice rather than enforced rules.
 
@@ -80,6 +82,14 @@ The main divergence is trust. The curator prompt asks the model to include "test
 
 ## Trace-derived learning placement
 
+**Trace source:** `session-logs` `trajectories` — Sequential solver runs produce per-example prompt/output/answer/cheatsheet records and ordered benchmark trajectories
+
+**Learning scope:** `per-task` `cross-task` — Retrieval-synthesis is per-query/transient, while cumulative cheatsheets carry lessons forward across later benchmark examples in the run
+
+**Learning timing:** `online` — Each example can update the retained cheatsheet for the next example in the same sequential run
+
+**Distilled form:** `prose` — Solver traces are distilled into cheatsheet text; retrieval embeddings select examples but are not the final distilled memory form
+
 **Trace source.** Dynamic Cheatsheet qualifies as trace-derived learning. The qualifying traces are sequential solver runs: current questions, generator prompts, generator outputs, extracted final answers, previous answers, current and new cheatsheets, and result JSONL rows written after each example (https://github.com/suzgunmirac/dynamic-cheatsheet/blob/5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9/run_benchmark.py, https://github.com/suzgunmirac/dynamic-cheatsheet/blob/5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9/dynamic_cheatsheet/language_model.py).
 
 **Extraction.** Extraction is LLM-mediated for cheatsheets and deterministic for retrieval packets. The cumulative curator consumes the current input, model answer, and previous cheatsheet, then emits a replacement `<cheatsheet>` block; if parsing fails, the old cheatsheet remains. Retrieval modes use precomputed input embeddings and cosine similarity to select prior input-output traces, then either pass them directly to the solver or synthesize a task-local cheatsheet with a curator prompt (https://github.com/suzgunmirac/dynamic-cheatsheet/blob/5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9/prompts/curator_prompt_for_dc_cumulative.txt, https://github.com/suzgunmirac/dynamic-cheatsheet/blob/5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9/prompts/curator_prompt_for_dc_retrieval_synthesis.txt, https://github.com/suzgunmirac/dynamic-cheatsheet/blob/5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9/dynamic_cheatsheet/language_model.py).
@@ -91,6 +101,12 @@ The main divergence is trust. The curator prompt asks the model to include "test
 **Survey placement.** Dynamic Cheatsheet belongs in the trace-to-prompt-artifact family. It strengthens the survey claim that test-time learning can be implemented without fine-tuning or a vector store as the durable memory: traces become an editable prose artifact that later changes prompt behavior. It also exposes the main risk in that family: authority rises faster than reviewability unless correctness, provenance, and invalidation are attached to the extracted memory items.
 
 ## Read-back placement
+
+**Read-back signal:** `coarse` `inferred / embedding` — Cumulative mode pushes the whole current cheatsheet, while retrieval modes push top-k prior examples selected by input-embedding similarity
+
+**Read-back timing:** `pre-action` — The selected cheatsheet or previous-solution packet is placed inside the generator prompt before the solver answers
+
+**Faithfulness tested:** `no` — Benchmark comparisons exist, but the review finds no per-memory with/without ablation or item-level faithfulness test
 
 **Direction.** From the solver model's perspective, read-back is push. The runner and `advanced_generate` construct the prompt with whatever cheatsheet or retrieved examples the selected approach supplies; the solver does not call a memory tool or decide whether to retrieve (https://github.com/suzgunmirac/dynamic-cheatsheet/blob/5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9/dynamic_cheatsheet/language_model.py).
 

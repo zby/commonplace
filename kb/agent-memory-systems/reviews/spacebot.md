@@ -33,7 +33,9 @@ Spacebot, by Spacedrive, is a Rust agent harness for team and community agents. 
 ## Artifact analysis
 
 - **Storage substrate:** `sqlite` — SQLite `memories` and `associations` tables plus LanceDB embeddings/FTS rows
-- **Representational form:** `mixed` — Mixed symbolic/prose/distributed-parametric: typed rows and graph edges carry symbolic structure, memory `content` is prose, and LanceDB vectors/FTS indexes are derived retrieval state
+- **Representational form:** `prose` `symbolic` `parametric` — typed rows and graph edges carry symbolic structure, memory `content` is prose, and LanceDB vectors/FTS indexes are derived retrieval state
+- **Lineage:** `authored` `imported` `trace-extracted` — retained state comes from user/agent authored rows, imported skill/wiki/ingestion inputs, and traces distilled from conversations, worker/process events, persistence branches, and cortex synthesis
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `ranking` `learning` — memories, wiki pages, and transcripts provide knowledge; skills/prompts instruct; task/cron and contract rows constrain and route work; validation contracts check persistence; ranking, synthesis, and maintenance decide what is retained or shown
 
 **Graph memories and associations.** Storage substrate: SQLite `memories` and `associations` tables plus LanceDB embeddings/FTS rows. Representational form: mixed symbolic/prose/distributed-parametric: typed rows and graph edges carry symbolic structure, memory `content` is prose, and LanceDB vectors/FTS indexes are derived retrieval state. Lineage: authored or trace-extracted through `memory_save`, ingestion, compaction-adjacent persistence, branch/cortex tools, or API calls; embeddings and indexes are derived and invalidated by memory content or embedding model changes. Behavioral authority: knowledge artifact when recalled as evidence/context; ranking authority when importance, access counters, graph relations, RRF scores, and type filters decide what is shown.
 
@@ -82,6 +84,14 @@ The context-efficiency contrast is useful. Commonplace keeps canonical artifacts
 
 ## Trace-derived learning placement
 
+**Trace source:** `session-logs` `tool-traces` `event-streams` — channel conversations, worker transcripts, tool-mediated memory saves, branch/cortex completions, cron/task events, persistence-branch extractions, and ingestion chunks all feed retained memory or synthesis layers.
+
+**Learning scope:** `per-project` `cross-task` — memory is service-owned per agent with channel/user metadata, multi-agent links, task state, wiki input, and synthesis layers that can affect later work across channels and tasks.
+
+**Learning timing:** `online` `staged` — prompt assembly, event capture, persistence branches, compaction, cortex synthesis, cron runs, and maintenance run during service operation, with synthesis and maintenance staged by cadence, thresholds, or dirty-version state.
+
+**Distilled form:** `prose` `symbolic` `parametric` — trace outputs include prose graph memories, working-memory syntheses, daily summaries, and knowledge synthesis; symbolic event/type/task/status/association rows; and LanceDB embedding state derived from memory content.
+
 **Trace source.** Spacebot qualifies as trace-derived learning. Raw signals include channel conversations, branch conclusions, worker lifecycle/results, cron executions, memory saves, explicit decisions in replies, persistence-branch extractions, conversation logs, worker transcripts, task status changes, and ingestion chunks. Trigger boundaries are per turn, process completion, compaction threshold, persistence threshold, cortex synthesis cadence, maintenance pass, cron wake, and ingestion chunk ([src/agent/channel.rs](https://github.com/spacedriveapp/spacebot/blob/ac52277404d3813045aa053b78c95810ab85e7c5/src/agent/channel.rs), [src/agent/channel_dispatch.rs](https://github.com/spacedriveapp/spacebot/blob/ac52277404d3813045aa053b78c95810ab85e7c5/src/agent/channel_dispatch.rs), [src/tools/memory_persistence_complete.rs](https://github.com/spacedriveapp/spacebot/blob/ac52277404d3813045aa053b78c95810ab85e7c5/src/tools/memory_persistence_complete.rs), [src/agent/ingestion.rs](https://github.com/spacedriveapp/spacebot/blob/ac52277404d3813045aa053b78c95810ab85e7c5/src/agent/ingestion.rs)).
 
 **Extraction.** Extraction is split across deterministic emitters and LLM branches. Deterministic emitters record process and decision events; memory tools let branches/cortex save typed graph memories; persistence branches run silently after message, time, or event-density thresholds and must close through a terminal contract; cortex gathers memory/task sections and generates a compact knowledge synthesis. The primary oracles are tool/schema validation, ID matching in the completion contract, memory importance/type choices, maintenance thresholds, and LLM judgment inside branch/cortex prompts. Effective semantic quality is not verified from code.
@@ -91,6 +101,12 @@ The context-efficiency contrast is useful. Commonplace keeps canonical artifacts
 **Survey placement.** On the [trace-derived learning survey](../trace-derived-learning-techniques-in-related-systems.md), Spacebot belongs in the service-owned trace backend family, near systems that turn live agent activity into symbolic/prose artifacts and then push distilled context back into future sessions. It strengthens the survey's "raw trace plus derived working memory" axis: the raw event log, graph memories, working-memory syntheses, knowledge synthesis, and prompt renderers are distinct operative layers. It also weakens any simple equation of trace-derived learning with "skill writing"; at this commit the inspected code clearly implements trace-to-memory and trace-to-synthesis, while autonomous skill capture is claimed in README prose but not found as a concrete save-skill path.
 
 ## Read-back placement
+
+**Read-back signal:** `coarse` `identifier` `inferred / lexical` `inferred / embedding` — prompt assembly pushes coarse service-level bulletins and synthesis caches, identifier-scoped channel/user/day/event/task layers, and graph-memory recall that combines FTS, vector search, keyword-seeded graph expansion, type filters, and top-k curation.
+
+**Read-back timing:** `pre-action` `post-action` — channel and worker prompts receive memory before the next LLM call, while persistence, compaction, synthesis, cron, and maintenance run after activity and shape later turns.
+
+**Faithfulness tested:** `no` — the review found no read-back faithfulness test proving that injected working memory or knowledge synthesis changes downstream behavior.
 
 **Direction.** Both. `memory_recall`, wiki tools, task tools, channel recall, and API surfaces are pull paths. Channel prompt assembly pushes retained memory through the memory bulletin, knowledge synthesis, working-memory rendering, channel activity maps, participant context, and, where installed for the instance, skills. Worker ambient memory likewise pushes knowledge synthesis and working memory into worker prompts. Static prompt fragments, built-in tool docs, adapter prompts, worker capabilities, and status scaffolding are baseline context surfaces, not memory read-back.
 

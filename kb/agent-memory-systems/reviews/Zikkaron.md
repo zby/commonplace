@@ -33,7 +33,9 @@ Zikkaron, from amanhij, is a local Python MCP server and hook package for Claude
 ## Artifact analysis
 
 - **Storage substrate:** `sqlite` — SQLite tables plus `sqlite-vec` virtual tables and FTS5
-- **Representational form:** `mixed` — Mixed prose memory content, symbolic metadata and scores, distributed-parametric embeddings/HDC vectors, and FTS tokens
+- **Representational form:** `prose` `symbolic` `parametric` — prose memory content, symbolic metadata/scores/graph edges/rules, and distributed-parametric embeddings/HDC vectors plus FTS tokens
+- **Lineage:** `authored` `imported` `trace-extracted` — authored via `remember`, imported by seed scans of project files, and trace-extracted from action logs; consolidation abstracts derived views
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `ranking` `learning` — recall returns knowledge/advisory context; policies instruct; hard rules enforce by filtering candidates; retrieval routes; classification validates; heat/embeddings/rerankers rank; consolidation learns schemas
 
 **Memory rows and vector/FTS indexes.** Storage substrate: SQLite tables plus `sqlite-vec` virtual tables and FTS5. Representational form: mixed prose memory content, symbolic metadata and scores, distributed-parametric embeddings/HDC vectors, and FTS tokens. Lineage: authored via `remember`, generated from seed scans, derived from action logs, or abstracted by consolidation; file changes, model changes, compression, curation, and consolidation can invalidate or regenerate derived views. Behavioral authority: knowledge artifact when returned by recall; ranking artifact through heat, embeddings, graph signals, rules, rerankers, and metacognitive trimming; advisory context when hooks or tools print memories into Claude context.
 
@@ -78,6 +80,11 @@ Commonplace is stronger as a governed knowledge substrate. Its retained artifact
 
 ## Trace-derived learning placement
 
+- **Trace source:** `session-logs` `tool-traces` `event-streams` — `PostToolUse` action rows, compaction/session traces, and hook event streams
+- **Learning scope:** `per-project` `cross-task` — directory/project-scoped action memories plus cross-task semantic schemas from consolidation
+- **Learning timing:** `online` `staged` — the action hook captures online; consolidation is staged until idle or explicit `consolidate_now`
+- **Distilled form:** `prose` `symbolic` `parametric` — compressed prose memories, symbolic schemas/rules, and embedding/HDC vectors
+
 **Trace source.** Zikkaron qualifies as trace-derived. The clearest trace source is Claude Code `PostToolUse` input: tool name, selected input summary, current directory, session id, and timestamp are stored in `action_log`. Compaction/session traces are captured through checkpoints, pre-compact drain, restore, and session-start context. Manual `remember` calls can also store task outcomes, but the code-grounded automatic trace path is the hook action stream.
 
 **Extraction.** The hot path records only compact event summaries. During consolidation, unprocessed actions are grouped by directory and 30-minute window; groups with at least three actions become low-heat memories tagged `_action_stream` and `_auto`. Other extraction paths derive entities, relationships, semantic schemas, profiles, beliefs, and compression summaries from memory content using regexes, embeddings, clustering, enrichment engines, and heuristics rather than a human review oracle.
@@ -91,6 +98,12 @@ Commonplace is stronger as a governed knowledge substrate. Its retained artifact
 ## Read-back placement
 
 **Direction.** Zikkaron is both pull and push. MCP tools such as `recall`, `get_project_context`, `restore`, `memory_stats`, and `get_rules` are pull. Installed Claude hooks push retained memory on `SessionStart`, `UserPromptSubmit`, and post-compaction restore; `PreCompact` and `PostToolUse` capture memory for later read-back rather than themselves returning memory to the agent.
+
+**Read-back signal:** `coarse` `identifier` `inferred / lexical` `inferred / embedding` — mixed push targeting: `SessionStart` and post-compaction restore carry `coarse` session/anchor state and `identifier` directory selection for hot project memories, while `UserPromptSubmit` adds `inferred / lexical` (FTS5 over prompt terms) and `inferred / embedding` (sqlite-vec over the prompt embedding) recall.
+
+**Read-back timing:** `pre-action` `post-action` — `SessionStart`/`UserPromptSubmit`/restore inject before the receiving turn acts; `PostToolUse` and `PreCompact` capture after an action, shaping only later turns.
+
+**Faithfulness tested:** `no` — the repo ships tests and benchmark scripts, but there is no code-grounded with/without ablation proving injected context changes downstream behavior.
 
 **Targeting and signal.** Zikkaron has mixed push targeting. The `UserPromptSubmit` hook is `instance`-targeted: it extracts the current prompt, runs FTS5 over prompt terms (`inferred / lexical`) and optionally sqlite-vec over the prompt embedding (`inferred / embedding`), then boosts current-directory, non-action-stream, and high-heat memories within result, character, and time budgets. The `SessionStart` hook is mixed but mostly `instance`: it uses `cwd` as an `identifier` for hot project memories, always includes protected anchors globally, and includes the latest active checkpoint and recent actions as coarse session context. Post-compaction restore is also mixed: active checkpoint and recent/anchored memories are coarse or session-carried state, hot project memories are `identifier`-selected by directory, and SR prediction uses checkpoint task or directory text as an inferred query. Precision, recall, and context dilution are not verified from code.
 

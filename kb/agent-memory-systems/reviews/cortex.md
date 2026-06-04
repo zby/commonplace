@@ -33,7 +33,9 @@ Cortex, by Abbacus Group's `abbacusgroup/cortex` repository, is a local Python k
 ## Artifact analysis
 
 - **Storage substrate:** `graph` — The lead substrate is Oxigraph/RocksDB graph storage at `graph.db`, paired with SQLite/WAL content, FTS, embedding, config, and log storage at `cortex.db`; generated service config under `~/.cortex/.env` and process/service files support deployment.
-- **Representational form:** `mixed` — Central artifacts combine prose object content and summaries, symbolic RDF triples/OWL classes/SPARQL rules/SQLite rows/tool schemas, and distributed-parametric embedding vectors when embeddings are installed.
+- **Representational form:** `prose` `symbolic` `parametric` — Central artifacts combine prose object content and summaries, symbolic RDF triples/OWL classes/SPARQL rules/SQLite rows/tool schemas, and distributed-parametric embedding vectors when embeddings are installed.
+- **Lineage:** `authored` `imported` `trace-extracted` — Knowledge arrives through authored captures, V1/Obsidian imports, pipeline-derived graph/index state, and query/read/feedback traces that update logs, counters, and tiers.
+- **Behavioral authority:** `knowledge` `instruction` `routing` `validation` `ranking` `learning` — Stored objects and query logs advise future work; ontology, tool schemas, service boundaries, pipeline stages, retrieval indexes, tiers, and feedback-derived access state shape classification, retrieval, presentation, and lifecycle behavior.
 
 **Knowledge objects.** Storage substrate: dual-written Oxigraph triples plus SQLite `documents` rows, with `raw_markdown`, content, type, project, tags, summary, tier, pipeline stage, confidence, provenance, and timestamps in SQLite. Representational form: mixed prose and symbolic metadata. Lineage: captured through CLI, MCP, REST/dashboard, V1 import, Obsidian import, or templates; LLM or agent-supplied classification can derive summaries, tags, entities, and properties. Behavioral authority: knowledge artifact when searched/read as evidence or context; system-definition artifact when its type, tier, confidence, relationships, and pipeline stage affect ranking, reasoning, alerts, or downstream classification.
 
@@ -79,6 +81,14 @@ The strongest divergence is trust. Cortex can classify, link, infer, and retriev
 **Do not borrow access-count trust.** Cortex's `reflex` promotion is operationally sensible, but Commonplace should not treat repeated reads as evidence that a note is correct or instruction-worthy. Usage can prioritize review; it should not replace review.
 
 ## Trace-derived learning placement
+
+**Trace source:** `tool-traces` `event-streams` — Cortex consumes query/search calls, object reads, and explicit feedback events rather than full conversation transcripts.
+
+**Learning scope:** `per-project` `cross-task` — The loop is local to a Cortex data directory and object/project metadata, while accumulated access state can affect later searches across tasks in that store.
+
+**Learning timing:** `online` — Query logging, read access counting, positive feedback, and tier promotion happen during normal MCP/CLI use.
+
+**Distilled form:** `symbolic` — Trace-derived state is retained as query-log rows, JSON/counter config records, timestamps, and tier values rather than prose lessons or model weights.
 
 **Trace source.** Cortex consumes search traces through `query_log`, read traces through `record_access()`, and explicit relevance traces through `cortex_feedback`. The trace boundary is small and tool-level: query text/result ids/duration/session id, object reads, and positive feedback events, not full conversation transcripts.
 

@@ -33,7 +33,9 @@ SkillX, from `zjunlp/SkillX`, is a framework for constructing reusable skill kno
 ## Artifact analysis
 
 - **Storage substrate:** `in-memory` — JSON or JSONL files loaded by `TrajectoryLoader`, plus in-memory dictionaries during pipeline execution
-- **Representational form:** `mixed` — Symbolic/prose interaction histories with roles, tool calls, user task, reward, task id, and metadata
+- **Representational form:** `prose` `symbolic` `parametric` — prose plans, documents, task descriptions, prompt templates, and trajectory messages; symbolic roles, tool calls, tool lists, schemas, rewards, task metadata, checkpoints, and formatter contracts; parametric embeddings and in-memory retrieval indexes
+- **Lineage:** `authored` `imported` `trace-extracted` — authored framework prompts/formatters and schemas, imported benchmark or exploration traces, and trace-extracted plans/skills/metadata distilled from successful and failed trajectories
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `ranking` `learning` — trajectories act as construction evidence; selected plans/skills and prompt templates instruct; filters enforce candidate rejection; retrieval routes and ranks; schema/LLM checks validate; expansion and extraction update the retained library
 
 **Trajectory records.** Storage substrate: JSON or JSONL files loaded by `TrajectoryLoader`, plus in-memory dictionaries during pipeline execution. Representational form: symbolic/prose interaction histories with roles, tool calls, user task, reward, task id, and metadata. Lineage: imported benchmark or exploration traces; long tool responses may be summarized into derived trace views before extraction. Behavioral authority: knowledge artifacts during construction, because they provide evidence for extraction; evaluation authority comes from reward filtering. They are not the prompt artifact consumed by future agents unless a host separately loads them.
 
@@ -83,6 +85,14 @@ The important divergence is the quality oracle. SkillX uses benchmark reward and
 
 ## Trace-derived learning placement
 
+**Trace source:** `session-logs` `tool-traces` `trajectories` — interaction histories carry role/content messages, tool calls and responses, rewards, metadata, and exploration trajectories
+
+**Learning scope:** `per-task` `cross-task` — extraction starts from task-level trajectories and plans, then promotes reusable plans, functional skills, and atomic skills across later tasks in the benchmark/domain library
+
+**Learning timing:** `offline` `staged` — extraction is an offline epoch-based pipeline with checkpoints and optional staged expansion between epochs
+
+**Distilled form:** `prose` `symbolic` `parametric` — distilled plans and skills are readable prompt artifacts with step markers/tool lists/metadata, plus embedding indexes for retrieval
+
 **Trace source.** SkillX qualifies as trace-derived learning. The qualifying traces are agent interaction histories with user task, role/content messages, tool calls, tool responses, rewards, and metadata; expansion can add environment exploration trajectories and synthetic task stubs. The default extraction boundary is successful trajectories with reward above the configured threshold, with failed trajectories used for contrast in atomic extraction and expansion analysis.
 
 **Extraction.** Extraction is staged and mostly LLM-mediated. Long tool feedback is summarized; successful trajectories become reusable plans; plan steps become functional skills; missing observed tools become atomic skills; filters reject low-quality or schema-invalid skills; DBSCAN clusters similar skill texts; an LLM merger consolidates redundant clusters. The oracle is a mixture of reward threshold, prompt compliance, tool schema availability, embedding similarity, and LLM judgment.
@@ -94,6 +104,12 @@ The important divergence is the quality oracle. SkillX uses benchmark reward and
 ## Read-back placement
 
 **Direction.** SkillX uses both pull and push. The host or service pulls from a skill library through retrieval APIs, but the selected artifacts are retained memory, not shipped baseline documentation, and they are pushed into the receiving agent's prompt before it acts.
+
+**Read-back signal:** `identifier` `inferred / embedding` `inferred / judgment` — tool-name filters narrow by identifiers, embedding retrieval selects plans and skills by current task or plan steps, and optional LLM selection judges oversized candidate sets
+
+**Read-back timing:** `pre-action` — `prepare_prompt()` formats selected plans and skills into the system prompt before task execution
+
+**Faithfulness tested:** `no` — the review found retrieval and formatting machinery but no code-grounded ablation or perturbation test proving retrieved skills changed downstream behavior
 
 **Targeting and signal.** The memory push is `instance`-targeted. Plans are retrieved by embedding similarity to the current task, and skills are retrieved by embedding similarity to the retrieved plan steps or directly to the task, so the primary signal is `inferred / embedding`. Available-tool filtering can narrow candidates by tool-name identifiers, and the optional `SkillSelector` can apply an LLM relevance `judgment` when the candidate set exceeds `max_skills`; precision, recall, and context dilution are not verified from code.
 

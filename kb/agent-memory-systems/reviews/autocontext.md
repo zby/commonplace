@@ -35,7 +35,9 @@ Autocontext, from Grey Haven AI's `greyhaven-ai/autocontext` repository, is an a
 ## Artifact analysis
 
 - **Storage substrate:** `sqlite` — SQLite tables plus per-run filesystem directories under `runs/`
-- **Representational form:** `symbolic` — Symbolic rows and JSON/markdown artifacts containing strategies, scores, validation results, agent outputs, replays, reports, context-selection decisions, and compaction ledgers
+- **Representational form:** `prose` `symbolic` `parametric` — prose playbooks, hints, reports, and prompt fragments; symbolic rows, JSON, validators, tools, datasets, and context-selection records; and optional distilled model checkpoints
+- **Lineage:** `authored` `imported` `trace-extracted` — authored seeds and repo instructions, imported scenario/application evidence, and run/runtime/production traces are transformed into later knowledge, datasets, mutations, and checkpoints
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `ranking` `learning` — retained artifacts can serve as evidence, prompt instructions, validators and completion checks, context selectors, score gates, budgeted/ranked prompt components, and training inputs
 
 **Run, generation, match, and agent-output records.** Storage substrate: SQLite tables plus per-run filesystem directories under `runs/`. Representational form: symbolic rows and JSON/markdown artifacts containing strategies, scores, validation results, agent outputs, replays, reports, context-selection decisions, and compaction ledgers. Lineage: generated from scenario execution, provider calls, verifier results, and prompt assembly during a concrete run. Behavioral authority: knowledge artifacts when inspected as evidence; system-definition artifacts when later export, training, analysis, context selection, or promotion workflows consume them to shape future prompts or models.
 
@@ -85,6 +87,14 @@ The two systems converge on an important design claim: retained state matters on
 
 ## Trace-derived learning placement
 
+**Trace source:** `session-logs` `tool-traces` `event-streams` `trajectories` — run generations, role outputs, runtime prompt/tool/child-task/compaction events, production traces, replay narratives, and score trajectories are retained as learning evidence.
+
+**Learning scope:** `per-task` `per-project` `cross-task` — learning is task/run aware, scenario-scoped through `knowledge/<scenario>/`, and target-family or dataset/model workflows can carry behavior across tasks.
+
+**Learning timing:** `online` `offline` `staged` — runtime sessions log online, coach/analyst/architect/context-selection work happens between generations or runs, and dataset generation plus model training are offline control-plane workflows.
+
+**Distilled form:** `prose` `symbolic` `parametric` — traces become playbooks, hints, lessons, reports, mutation specs, validators, datasets, and optional model checkpoints.
+
 **Trace source.** Autocontext qualifies as trace-derived learning. Qualifying traces include run generations, match results, validation errors, agent role outputs, score trajectories, replay narratives, runtime-session prompt/tool/child-task events, compaction events, production traces, Hermes curator reports, and task/mission artifacts.
 
 **Extraction.** Extraction is staged and heterogeneous. The coach converts generation outcomes into replacement playbooks, operational lessons, and competitor hints. The analyst and curator provide analysis, ratings, and consolidation. The architect proposes tools, validators, and harness mutations. Context-selection code records which prompt components survived budget/compaction. Production trace tooling ingests and clusters application traces into datasets. Training exporters turn run histories plus playbook/hint context into supervised records.
@@ -96,6 +106,12 @@ The two systems converge on an important design claim: retained state matters on
 ## Read-back placement
 
 **Direction.** Autocontext uses push and pull over retained memory. Push is the important memory path for acting agents: the harness reads scenario knowledge and run-derived artifacts, builds role prompts, applies active harness mutations, and records selected prompt components before the role acts. Pull exists through status, replay, runtime-session, knowledge, production-trace, and MCP/API inspection surfaces. Runtime repo instructions, bundled role instructions, runtime skill manifests, and tool affordances are context layers, but they are shipped or workspace baseline surfaces rather than accumulated memory.
+
+**Read-back signal:** `identifier` — prompt push is selected by known scenario, run, generation, role, mutation status, target role/component/tool, and target-family identifiers rather than lexical, embedding, or judgment relevance.
+
+**Read-back timing:** `pre-action` — retained scenario knowledge, run-derived artifacts, active mutations, and selected history are assembled into prompts before the receiving role generates.
+
+**Faithfulness tested:** `no` — outcome evaluation, ablation knobs, and context-selection telemetry exist, but the review did not find a per-memory test proving that a loaded lesson or mutation changed the next action.
 
 **Targeting and signal.** The main prompt push is `instance` targeted with an `identifier` signal. The already-known `scenario_name` selects the playbook, hints, lessons, dead ends, progress, protocol, mutation log, and active harness mutations for that scenario; `run_id` and `generation` select trajectories, reports, feedback, attribution, freshness windows, and context-selection records; `role` selects the final competitor, analyst, coach, or architect prompt; active mutation status plus target role/component/tool name determines which mutation content is applied. The TypeScript operational-memory-pack API is also identifier-targeted by target family, status, integrity, risk, quarantine state, and capacity, but that is a control-plane capability surface rather than evidence that memory packs are wired into the main Python run loop. I did not find embedding, keyword, or LLM-judgment relevance selection in the core prompt-assembly path; compaction and context budgets trim or remove components after the identifier-selected candidates are assembled. Precision/recall, context dilution, and effective authority of those selections are not verified by static code.
 

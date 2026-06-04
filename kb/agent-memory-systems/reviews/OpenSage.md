@@ -32,8 +32,10 @@ OpenSage, by opensage-agent/OpenSage, is a Python agent framework on top of Goog
 
 ## Artifact analysis
 
-- **Storage substrate:** `in-memory` — JSON files under `agent_storage_path`, defaulting to `~/.local/opensage/dynamic_agents`, plus in-memory `_agents` and `_metadata` maps during a session
-- **Representational form:** `symbolic` — Symbolic JSON metadata for name, status, creator, model string, tool names, `enabled_skills`, parent/children ids, and timestamps
+- **Storage substrate:** `files` `graph` `in-memory` — dynamic-agent JSON, Skills, sandbox memory files, saved sessions, per-task outputs, Neo4j history/memory graphs, and in-memory ADK/session manager state
+- **Representational form:** `prose` `symbolic` `parametric` — Markdown plans and Skill guidance, JSON/TOML/graph/plugin/code structures, embeddings, token/loss-mask arrays, rewards, and RL training inputs
+- **Lineage:** `authored` `trace-extracted` — built-in and generated Skills/plugins/configs are authored, while history, memory graph entities, summaries, evaluation traces, and RL samples derive from session/tool/rollout traces
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `ranking` `learning` — retained surfaces advise through files/history/search, instruct through Skills and prompts, block or mutate via plugins, route/rank retrieval, constrain through schemas/indexes/guards, and feed evaluation/RL learning
 
 **Dynamic subagent metadata.** Storage substrate: JSON files under `agent_storage_path`, defaulting to `~/.local/opensage/dynamic_agents`, plus in-memory `_agents` and `_metadata` maps during a session. Representational form: symbolic JSON metadata for name, status, creator, model string, tool names, `enabled_skills`, parent/children ids, and timestamps. Lineage: created by `create_subagent` from the caller agent's tool context and model/tool selections. Behavioral authority: system-definition artifact authority while loaded, because metadata configures a future runnable agent; effective cross-session authority is weaker because automatic reload is not fully active in the inspected code.
 
@@ -84,6 +86,14 @@ OpenSage is stronger where the memory must sit inside an active agent framework.
 
 ## Trace-derived learning placement
 
+**Trace source:** `session-logs` `tool-traces` `event-streams` `trajectories` — ADK session events, tool calls/responses, plugin callback streams, benchmark task outputs, and RL rollout interactions
+
+**Learning scope:** `per-task` `cross-task` — evaluation and RL adapters operate per benchmark task or rollout, while Neo4j memory and session/history stores can be reused across later agent work
+
+**Learning timing:** `online` `offline` — memory observation and history compaction run during agent execution; evaluation export and RL adapter handoff happen after benchmark or rollout execution
+
+**Distilled form:** `prose` `symbolic` `parametric` — summaries and warnings, graph entities/relationships/indexed records, embeddings, token/loss-mask arrays, rewards, and training-framework samples
+
 **Trace source.** OpenSage consumes several trace classes: ADK session events, tool calls/responses, subagent calls, sandbox command outputs, web-session state, benchmark task outputs, Neo4j history exports, and RL rollout interactions. The most direct durable learning path is `memory_observer_plugin`, which fires after tool execution and treats the tool result as candidate memory. Evaluation and RL adapters use task rollouts as training/evaluation payloads rather than as ordinary agent memory.
 
 **Extraction.** Extraction is layered. `StorageDecider` optionally asks an LLM whether a tool result should be stored and may summarize it. `MemoryUpdateController` then extracts entities, discovers relationships, writes graph nodes/edges, and creates indexes/embeddings. Separately, history summarization creates compaction events from bounded windows of session events, and RL adapters convert trajectories into reward-bearing samples, token arrays, loss masks, and framework metadata.
@@ -95,6 +105,12 @@ OpenSage is stronger where the memory must sit inside an active agent framework.
 ## Read-back placement
 
 **Read-back:** `both` — Long-term Neo4j memory is explicit pull through `search_memory` or the memory-management agent, while configured Skills, history/session summaries, and ensemble message-board diffs can arrive without the receiving agent making a memory lookup.
+
+**Read-back signal:** `coarse` `identifier` — history compaction pushes coarse session summaries, and the ensemble message-board diff selects unread JSONL records by board and receiving agent identifiers
+
+**Read-back timing:** `post-action` — the identified message-board push and compaction surfaces run after a tool call or history-budget trigger and shape later turns rather than the just-completed action
+
+**Faithfulness tested:** `no` — the review notes no built-in check proving pushed or retrieved memories change downstream behavior
 
 The strongest memory push is the ensemble message-board path. `message_board_diff_plugin` runs after a tool call, resolves the receiving agent instance id and current board id, reads unread JSONL records with a per-agent cursor, and appends the diff into the tool result. Targeting is `instance`; the signal is `identifier`, because selection keys on `board_id` plus the receiving `agent_id`/instance id rather than semantic similarity. It is after-tool rather than pre-action, so it can shape the next model turn rather than the tool call that just completed; scope is capped by `read_diff(max_bytes=32000)`. Precision, context dilution, and effective authority are not verified from code.
 

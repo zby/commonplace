@@ -32,7 +32,9 @@ TraceCraft, from Arrmlet's `tracecraft` repository, is a CLI-first coordination 
 ## Artifact analysis
 
 - **Storage substrate:** `files` — Project-scoped bucket objects under `memory/<key path>.json`
-- **Representational form:** `mixed` — Symbolic JSON carrying a prose scalar value plus `set_by` and `set_at` metadata
+- **Representational form:** `prose` `symbolic` — Symbolic JSON envelopes carry prose values, messages, handoff notes, transcript rows, and instruction files; there is no embedding or learned parameter store
+- **Lineage:** `authored` `imported` `trace-extracted` — Agents author memory, messages, claims, registry rows, and examples; artifact uploads import local files; session mirroring copies harness transcripts and metadata from trace stores
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` — Most retained objects advise as context or evidence, loaded examples instruct agents, conditional claims and waits gate work, and messages, handoffs, claims, and registry rows coordinate recipients and task ownership
 
 **Shared memory entries.** Storage substrate: project-scoped bucket objects under `memory/<key path>.json`. Representational form: symbolic JSON carrying a prose scalar value plus `set_by` and `set_at` metadata. Lineage: authored directly by an agent or script through `tracecraft memory set`; listing and dotted-path conversion are derived views, not separate durable artifacts. Behavioral authority: knowledge artifact authority. A later agent can use the value as shared context or evidence, but TraceCraft does not promote it into an instruction, validator, or automatic prompt input.
 

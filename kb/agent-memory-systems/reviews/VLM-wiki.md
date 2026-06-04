@@ -32,7 +32,9 @@ VLM-wiki, from `VeniVeci/VLM-wiki`, is a small file-first personal knowledge-bas
 ## Artifact analysis
 
 - **Storage substrate:** `files` — The central retained state is the project filesystem: `raw/` media and diary/text files, `wiki/` Markdown articles/index/log, `references/` templates, `.vlmwiki/config.json`, and local script outputs.
-- **Representational form:** `mixed` — Raw binary media, symbolic JSON/config/frontmatter, prose Markdown articles, Obsidian links, and Python scripts all participate in the memory path.
+- **Representational form:** `prose` `symbolic` — prose Markdown/articles/logs/instructions/analysis outputs and symbolic JSON/config/frontmatter/links/templates/scripts participate in the memory path; raw media remains file evidence rather than a controlled representational-form token.
+- **Lineage:** `authored` `imported` — raw files are authored, imported, or captured by the user, while analysis notes, compiled wiki articles, index/log entries, templates, config, scripts, and instructions are authored or derived from imported raw material.
+- **Behavioral authority:** `knowledge` `instruction` `routing` — raw material, analysis outputs, and compiled articles serve as knowledge/context; `AGENTS.md`, templates, config, and scripts instruct the host agent; `wiki/index.md` routes lookup toward selected articles.
 
 **Raw material files.** Storage substrate: files under `raw/images/`, `raw/videos/`, `raw/audio/`, `raw/text/`, and `raw/diary/` ([README.md](https://github.com/VeniVeci/VLM-wiki/blob/9813fb12de9b82c9279a47c537a8c94a68292de0/README.md), [AGENTS.md](https://github.com/VeniVeci/VLM-wiki/blob/9813fb12de9b82c9279a47c537a8c94a68292de0/AGENTS.md), [raw/diary/2023-05-06.md](https://github.com/VeniVeci/VLM-wiki/blob/9813fb12de9b82c9279a47c537a8c94a68292de0/raw/diary/2023-05-06.md)). Representational form: mixed binary media and prose text. Lineage: authored, imported, or captured by the user; `AGENTS.md` says raw files are immutable and wiki pages should cite them. Behavioral authority: knowledge artifacts as source evidence for later article writing and question answering.
 

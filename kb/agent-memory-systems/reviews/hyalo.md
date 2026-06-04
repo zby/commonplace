@@ -32,7 +32,9 @@ hyalo, from `ractive/hyalo`, is a Rust CLI for operating Markdown knowledge base
 ## Artifact analysis
 
 - **Storage substrate:** `files` — User-owned filesystem/repository files under the configured vault directory
-- **Representational form:** `mixed` — Mostly prose plus symbolic YAML frontmatter, tags, links, headings, and task checkboxes
+- **Representational form:** `prose` `symbolic` — Markdown prose plus symbolic YAML frontmatter, tags, links, headings, task checkboxes, TOML config, snapshot indexes, schemas, lint rules, command outputs, and generated Claude instructions
+- **Lineage:** `authored` `imported` — Authored vault notes, config, templates, rules, and dogfood knowledgebase files, with imported or scanned Markdown metadata compiled into derived indexes and command outputs
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `ranking` — Notes and outputs serve as knowledge; generated Claude rules instruct; schemas and lint enforce/validate; links, saved views, filters, hints, and BM25 route or rank later agent access
 
 **Markdown knowledgebase files.** Storage substrate: user-owned filesystem/repository files under the configured vault directory. Representational form: mostly prose plus symbolic YAML frontmatter, tags, links, headings, and task checkboxes. Lineage: authored or imported by humans and agents; hyalo can scaffold, mutate metadata, rewrite links, and lint them, but it does not claim source authority for the prose. Behavioral authority: knowledge artifacts when read as evidence/reference/context; system-definition artifacts when frontmatter, tags, task state, or links drive command selection, validation, routing, or future agent instructions.
 

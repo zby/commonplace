@@ -33,7 +33,9 @@ Semiont, from The AI Alliance, is an open source semantic knowledge platform for
 ## Artifact analysis
 
 - **Storage substrate:** `files` — Project-local event log, content store, and generated state directories described in the system docs and implemented through `EventStore` plus Stower
-- **Representational form:** `mixed` — Symbolic event payloads plus source files/documents; annotations are W3C-shaped JSON with prose bodies and selectors
+- **Representational form:** `prose` `symbolic` `parametric` — prose source/document and annotation bodies, symbolic W3C/event/view/graph/skill structures, and distributed-parametric embeddings/vector indexes
+- **Lineage:** `authored` `imported` `trace-extracted` — participant-authored commands, imported source resources, and trace-derived event projections all feed retained artifacts
+- **Behavioral authority:** `knowledge` `instruction` `routing` `validation` `ranking` — resources and gathered context advise; skills instruct; flows route; event state validates; graph/vector/matcher outputs rank
 
 **Persisted domain events and content files.** Storage substrate: project-local event log, content store, and generated state directories described in the system docs and implemented through `EventStore` plus Stower. Representational form: symbolic event payloads plus source files/documents; annotations are W3C-shaped JSON with prose bodies and selectors. Lineage: authored, imported, or agent-generated commands become persisted domain events with user/generator attribution where available; content checksums and storage URIs connect resources to bytes. Behavioral authority: source events are system-definition artifacts for reconstruction, validation of current state, graph/vector projection, and live domain-event broadcast; retained resources and annotations are knowledge artifacts when later read as evidence or context.
 
@@ -80,6 +82,14 @@ The major design divergence is where semantics live. Commonplace makes the durab
 
 ## Trace-derived learning placement
 
+**Trace source:** `event-streams` — persisted semantic domain events such as yield, mark, frame, entity-tag, and job lifecycle events are the durable raw signal.
+
+**Learning scope:** `per-project` — the review identifies project and resource-scoped projection, with no broader cross-task scope established.
+
+**Learning timing:** `online` `offline` — projections update online from events, while rebuild paths can regenerate derived state from the retained event log.
+
+**Distilled form:** `prose` `symbolic` `parametric` — events distill into views, graph state, embedding files, vector indexes, and gathered context.
+
 **Trace source.** Semiont qualifies under the current rule because durable projections are derived from event streams. The raw trace is not a free-form chat transcript; it is a persisted stream of semantic domain events such as `yield:created`, `mark:added`, `mark:body-updated`, entity-tag events, frame events, and job lifecycle events ([packages/core/src/persisted-events.ts](https://github.com/The-AI-Alliance/semiont/blob/7e3f183b0b7619ce6be964d2e30c8e5eb6f207df/packages/core/src/persisted-events.ts)). Those events may come from humans, AI workers, scripts, or skills.
 
 **Extraction.** The extraction path is mixed. Some outputs are deterministic projections: views and graph updates are derived from event payloads. Some outputs are distributed-parametric: Smelter embeds resource chunks and annotation exact text after resource/annotation events. Some outputs are LLM-assisted before persistence: agent skills and job workers can produce annotations or generated resources, which then enter the same event stream.
@@ -93,6 +103,12 @@ The major design divergence is where semantics live. Commonplace makes the durab
 ## Read-back placement
 
 **Direction.** Both. Agents and scripts can explicitly pull memory with `browse`, `gather`, `match`, and `listen`. The resource viewer also has an engineered push path: `bind:initiate` updates wizard state and emits `gather:requested`; the gather state unit turns that local event into `client.gather.annotation(...)`, so context is prepared for the resolution workflow before the user explicitly runs search or generation.
+
+**Read-back signal:** `identifier` `inferred / embedding` `inferred / judgment` — the push keys on annotation/resource identifiers, then may add vector-similar annotations and an LLM relationship summary.
+
+**Read-back timing:** `pre-action` — pushed gather context arrives before the bind/generate/compose decision in the wizard.
+
+**Faithfulness tested:** `no` — the review did not find a built-in ablation or post-action audit proving gathered context changed behavior.
 
 **Targeting and signal.** The automatic gather push is `instance`-targeted. It keys first on identifiers the workflow already carries: annotation id and resource id from `bind:initiate`, with the default title and entity types traveling as workflow metadata. Inside that identified frame, gathered context is mixed: identifier-selected source annotation/resource state is combined with graph neighbors, entity-type statistics, optional `inferred / embedding` similar annotations from the selected span, and optional `inferred / judgment` relationship summary. Precision and recall are not verified from code.
 

@@ -32,7 +32,9 @@ Voiden, from VoidenHQ, is an offline, Git-native API workspace for building, tes
 ## Artifact analysis
 
 - **Storage substrate:** `files` — Ordinary project files, intended to be edited, searched, diffed, and committed with Git
-- **Representational form:** `mixed` — Mixed Markdown prose, YAML frontmatter, symbolic `void` block nodes, UIDs, attrs, tables, links, variables, and script/assertion blocks
+- **Representational form:** `prose` `symbolic` — Markdown prose, YAML frontmatter, symbolic `void` block nodes, UIDs, attrs, tables, links, variables, and script/assertion blocks
+- **Lineage:** `authored` `imported` — Workspace files, metadata, extensions, skills, and configs are authored or edited by humans and agents, while imported API specs, captured history, search views, and stitch results derive from runtime or external inputs.
+- **Behavioral authority:** `knowledge` `instruction` `routing` `validation` — `.void` files, request history, and search output advise users or agents, while request blocks, environments, extension manifests, plugin code, skills, CLI/editor surfaces, scripts, assertions, and stitch config instruct, route, or validate API execution.
 
 **`.void` workspace files.** Storage substrate: ordinary project files, intended to be edited, searched, diffed, and committed with Git. Representational form: mixed Markdown prose, YAML frontmatter, symbolic `void` block nodes, UIDs, attrs, tables, links, variables, and script/assertion blocks. Lineage: authored in the editor, created from sample projects, imported from Postman/OpenAPI, exported from history, or edited by humans/agents; parser/serializer and plugin node schemas determine how file changes regenerate editor state. Behavioral authority: knowledge artifacts as API documentation and examples; system-definition artifacts when request blocks, environment references, scripts, assertions, and stitch config drive request execution.
 

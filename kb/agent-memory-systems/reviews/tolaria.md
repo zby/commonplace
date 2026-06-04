@@ -37,7 +37,9 @@ Tolaria is RefactoringHQ's local-first desktop app for managing markdown knowled
 ## Artifact analysis
 
 - **Storage substrate:** `repo` — User-owned vault files on disk, usually in a git repository
-- **Representational form:** `mixed` — Markdown prose with YAML frontmatter, wikilinks, editable text files, and binary assets
+- **Representational form:** `prose` `symbolic` — Markdown prose plus symbolic YAML frontmatter, wikilinks, saved-view filters, JSON snapshots, tool schemas, config, git records, and app code
+- **Lineage:** `authored` `imported` — Vault artifacts are authored by humans, agents, app save operations, Tolaria-managed templates, imports, migrations, and filesystem/git scans; caches and UI state are derived views
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `ranking` — Notes and git history advise as knowledge; root guidance and prompts instruct; permission/path boundaries enforce; views, links, filters, snapshots, and MCP tools route and order context
 
 **Vault notes and assets.** Storage substrate: user-owned vault files on disk, usually in a git repository. Representational form: markdown prose with YAML frontmatter, wikilinks, editable text files, and binary assets. Lineage: authored by humans, agents, import flows, or app save operations; filesystem content is source-of-truth, while cache and UI state are derived. Behavioral authority: knowledge artifacts when read as evidence/context/reference; soft system-definition artifacts when a note is consumed as a procedure, template, or instruction by an agent or UI path.
 
@@ -91,6 +93,12 @@ The strongest Commonplace-relevant contribution is the activation layer around l
 ## Read-back placement
 
 **Direction.** Tolaria is both pull and push. Pull comes from MCP `search_notes`, `get_vault_context`, `list_vaults`, and `get_note`, plus normal file/git access. Push comes from the built-in AI panel and CLI-agent launch path: the user opens an AI session, and Tolaria injects active vault memory from the UI context before the receiving agent responds. The same prompt path also includes shipped Tolaria product docs and generic vault-use instructions, but those are baseline context surfaces rather than read-back.
+
+**Read-back signal:** `identifier` `inferred / lexical` — pushed memory keys on active note path, open-tab paths, note-list type/filter state, and inline wikilink references; a visible note list narrowed by free-text UI query adds lexical inference.
+
+**Read-back timing:** `pre-action` — the context snapshot and agent prompt are built before the receiving model or CLI agent acts.
+
+**Faithfulness tested:** `no` — the review found structure, prompt, truncation, and launcher tests, but no ablation showing that injected UI context changes downstream behavior.
 
 **Targeting and signal.** Targeting is `instance`: the pushed memory is selected for the current UI instance rather than always loaded. The primary signal is `identifier`, because the snapshot keys on active note path, open-tab paths, note-list type/filter state, and inline wikilink references already present in the user interface. If the visible note list was narrowed by a free-text UI query, that sub-path is `inferred / lexical`; the implemented push path itself does not use embedding retrieval or an LLM relevance judge. Precision/recall quality and context dilution are not verifiable from code, but the selection mechanism is implemented.
 

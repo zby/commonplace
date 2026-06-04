@@ -36,7 +36,9 @@ Archie is Gabriel Chamon's repo-backed Arch Linux desktop configuration and main
 ## Artifact analysis
 
 - **Storage substrate:** `repo` — The Git repository, with live deployment as symlinks or copied files under home, XDG config, `/etc`, and `/usr/share/xkeyboard-config-2`
-- **Representational form:** `mixed` — Mostly symbolic/procedural configuration with some prose comments
+- **Representational form:** `prose` `symbolic` — Markdown guides, work items, ADRs, bug notes, and agent briefs plus symbolic/procedural configuration, shell, Bash, Python, package trees, structured statuses, and tests
+- **Lineage:** `authored` — The reviewed artifacts are maintainer-authored repo files, guide-backed scripts, task briefs, ADR/work-item history, and code-to-doc pairs rather than generated trace products
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` — Guides, work items, ADRs, bug notes, and Codex-log docs inform future maintainers; AGENTS.md, task briefs, deployment config, shell files, scripts, and CLI code instruct or directly change host behavior
 
 **Deployment packages and copied system files.** The storage substrate is the Git repository, with live deployment as symlinks or copied files under home, XDG config, `/etc`, and `/usr/share/xkeyboard-config-2`. The representational form is mostly symbolic/procedural configuration with some prose comments. Lineage is authored and guide-backed, with Stow packages derived from the desired runtime layout and `copy-deployed-files/` reserved for consumers such as `systemd-logind` that cannot follow home-directory symlinks ([copy-deployed-files README](https://github.com/gchamon/archie/blob/698900ee209f471698987adb595df72b4a4a5961/copy-deployed-files/README.md)). Behavioral authority is system-definition authority over the desktop session and system services once deployed.
 

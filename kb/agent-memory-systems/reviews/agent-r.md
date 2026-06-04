@@ -33,7 +33,9 @@ Agent-R, from ByteDance Seed's `ByteDance-Seed/Agent-R` repository, is a researc
 ## Artifact analysis
 
 - **Storage substrate:** `model-weights` — JSON files written under `mcts_result/{Task}/{model_name}/` through `ExtendedMCTS.save`, using `mmengine.dump` on the root node
-- **Representational form:** `parametric` — Mixed symbolic and prose traces: tree topology, visits, values, rewards, actions, observations, full conversation messages, terminal flags, and disaster flags
+- **Representational form:** `prose` `symbolic` `parametric` — conversation text and revision thoughts, symbolic tree/training/evaluation fields, and distributed-parametric fine-tuned weights
+- **Lineage:** `authored` `imported` `trace-extracted` — authored verifier prompts and splice policy, imported task/base-model inputs, and trace-extracted MCTS trees, revision JSONL, and intended fine-tuned model behavior
+- **Behavioral authority:** `knowledge` `instruction` `validation` `ranking` `learning` — saved trees and evaluations are audit knowledge; prompts/splice policy instruct extraction; rewards, thresholds, and verifier judgments validate and rank candidates; JSONL and weights carry learning authority
 
 **MCTS result trees.** Storage substrate: JSON files written under `mcts_result/{Task}/{model_name}/` through `ExtendedMCTS.save`, using `mmengine.dump` on the root node. Representational form: mixed symbolic and prose traces: tree topology, visits, values, rewards, actions, observations, full conversation messages, terminal flags, and disaster flags. Lineage: derived from sampled model actions, environment observations/rewards, task data, MCTS parameters from environment variables, and task-specific action cleanup. Behavioral authority: knowledge artifacts while inspected as search evidence; system-definition artifacts on the offline learning path because `path_collection.py` loads them to select which trajectories become trainable examples.
 
@@ -65,6 +67,9 @@ The strongest contrast is reviewability. Commonplace can inspect the exact rule,
 The context-cost tradeoff also differs. Agent-R pays the cost offline in rollout generation, path pairing, verifier calls, and training. At runtime it does not load past trajectories, so it avoids prompt bloat. Commonplace pays a smaller ongoing retrieval/navigation cost and keeps the loaded material explainable.
 
 **Read-back:** `push` — Coarse always-on parameterization after fine-tuning; the code does not implement pull retrieval or instance-targeted push activation over stored trajectories
+**Read-back signal:** `coarse` — after fine-tuning the retained lesson is always-on model parameterization, not an identifier or inferred retrieval signal over stored trajectories
+**Read-back timing:** `pre-action` — the fine-tuned checkpoint influences generation before each later action rather than auditing after the action
+**Faithfulness tested:** `no` — the review records evaluation rollouts, but no code-grounded with/without read-back ablation over the learned parameter influence
 
 ### Borrowable Ideas
 
@@ -79,6 +84,11 @@ The context-cost tradeoff also differs. Agent-R pays the cost offline in rollout
 **Use loss masks as authority markers.** The `loss: False` and `loss: True` flags distinguish context to condition on from tokens to train. A prose-artifact analogue would mark evidence, proposed rule text, and non-authoritative commentary distinctly. Needs a use case in generated training or evaluation corpora.
 
 ## Trace-derived learning placement
+
+**Trace source:** `trajectories` — MCTS rollouts over task environments preserve conversation state, actions, observations, rewards, terminal flags, and tree statistics
+**Learning scope:** `cross-task` — the review describes benchmark/task-family training data and a promoted model behavior, not project-local memory
+**Learning timing:** `offline` `staged` — generation, path extraction, external fine-tuning, and evaluation are separate offline stages
+**Distilled form:** `prose` `symbolic` `parametric` — revision conversations and thoughts, JSONL fields/loss masks, and final fine-tuned weights
 
 **Trace source.** Agent-R qualifies as trace-derived learning. The raw traces are task rollouts produced by MCTS over WebShop, SciWorld, and TextCraft environments: conversation state, sampled model responses, parsed actions, observations, environment rewards, terminal flags, and tree statistics. Optional verifier calls add action-level judgments over bad paths.
 

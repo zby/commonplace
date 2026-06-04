@@ -33,7 +33,9 @@ Hindsight is Vectorize.io's agent memory system: a server, embedded package, cli
 ## Artifact analysis
 
 - **Storage substrate:** `rdbms` — `documents`, `chunks`, and `memory_units` tables in the Hindsight API database, plus host transcript files before retain in integrations such as Claude Code
-- **Representational form:** `mixed` — Prose or JSON-shaped conversation/tool traces, with symbolic metadata, tags, document ids, timestamps, and update modes
+- **Representational form:** `prose` `symbolic` `parametric` — prose facts, observations, mental models, and directives; symbolic metadata, tags, links, budgets, hooks, and validators; embeddings and vector indexes
+- **Lineage:** `authored` `imported` `trace-extracted` — authored directives/templates and mental models, imported files/client calls/transcripts, and LLM-extracted facts and observations from retained traces
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `ranking` `learning` — retained facts are evidence, directives instruct and constrain reflect, validators and budgets govern operations, and indexes/links/consolidation route, rank, and learn
 
 **Raw retained documents and transcript windows.** Storage substrate: `documents`, `chunks`, and `memory_units` tables in the Hindsight API database, plus host transcript files before retain in integrations such as Claude Code. Representational form: prose or JSON-shaped conversation/tool traces, with symbolic metadata, tags, document ids, timestamps, and update modes. Lineage: imported from client calls, files, or host transcripts; document ids, content hashes, metadata, and source tags preserve coarse lineage, while exact source offsets are not the main retained unit. Behavioral authority: knowledge artifacts as evidence for extraction, recall, reflect, and audit; they gain ranking influence through embeddings, text indexes, entity links, and graph links.
 
@@ -84,6 +86,14 @@ The biggest divergence is reviewability. Hindsight has more automatic adaptation
 
 ## Trace-derived learning placement
 
+**Trace source:** `session-logs` `tool-traces` — client-supplied conversations, Claude Code JSONL transcripts, and optional formatted tool content are submitted to retain
+
+**Learning scope:** `per-task` `per-project` `cross-task` — bank, tag, project/session/user metadata, tenant schema, and host config can scope retained traces from one task through shared banks
+
+**Learning timing:** `online` `staged` — retain can run synchronously or asynchronously as traces arrive, while consolidation and mental-model refresh run as later operations
+
+**Distilled form:** `prose` `symbolic` `parametric` — observations and mental models are prose, carry symbolic proof/source/tag/history metadata, and are embedded for retrieval
+
 **Trace source.** Hindsight qualifies as trace-derived learning. Qualifying traces include client-supplied conversation/task content, retained files, and integration transcripts. The Claude Code plugin reads the host JSONL transcript on `Stop` and `SessionEnd`, strips injected memory blocks to avoid feedback loops, formats allowed roles and optional tool content, and submits the result to `retain` ([hindsight-integrations/claude-code/scripts/retain.py](https://github.com/vectorize-io/hindsight/blob/867b7b4ab632c2ac0655de6dce2d3451ff4d483f/hindsight-integrations/claude-code/scripts/retain.py), [hindsight-integrations/claude-code/scripts/lib/content.py](https://github.com/vectorize-io/hindsight/blob/867b7b4ab632c2ac0655de6dce2d3451ff4d483f/hindsight-integrations/claude-code/scripts/lib/content.py)).
 
 **Extraction.** Retain first extracts/stores facts from submitted content using an LLM or chunk mode, embeddings, entity resolution, and link creation. Consolidation then reads unconsolidated facts and asks an LLM to create, update, or delete observations. Mental-model refresh optionally re-runs a stored source query through the reflect agent and stores synthesized content, with full or delta refresh modes. The extraction oracle is therefore mostly LLM-mediated, bounded by bank config, tags/scopes, prompts, batch sizes, and operation validators.
@@ -97,6 +107,12 @@ The biggest divergence is reviewability. Hindsight has more automatic adaptation
 ## Read-back placement
 
 **Direction.** Hindsight is both pull and push. The REST/SDK/MCP surfaces are pull: the agent or host explicitly calls recall, reflect, or mental-model tools. The Claude Code integration is push from the receiving agent's perspective: `UserPromptSubmit` automatically queries Hindsight and injects `additionalContext` before Claude acts on the user's prompt.
+
+**Read-back signal:** `identifier` `inferred / lexical` `inferred / embedding` — push recall narrows by bank/config/fact-type identifiers, then selects from the current prompt using BM25, semantic embeddings, graph/temporal expansion, and reranking
+
+**Read-back timing:** `pre-action` `post-action` — auto-recall injects before the next prompt is answered, while auto-retain records the completed turn for later read-back
+
+**Faithfulness tested:** `no` — the review found implementation tests and tracing, but no with/without ablation showing injected memories changed downstream behavior
 
 **Targeting and signal.** The engineered push trigger is a host hook on user prompt submission, but the selected memories are instance-targeted rather than coarse always-load. The hook narrows by identifiers such as the selected bank, optional dynamic bank id, additional banks, and configured fact types, then uses the current prompt plus optional prior turns as a content query. The final relevance signal is mixed: identifier narrowing followed by inferred content selection through semantic embeddings, BM25 lexical matching, graph/temporal expansion, and reranking ([hindsight-integrations/claude-code/scripts/recall.py](https://github.com/vectorize-io/hindsight/blob/867b7b4ab632c2ac0655de6dce2d3451ff4d483f/hindsight-integrations/claude-code/scripts/recall.py), [hindsight-integrations/claude-code/settings.json](https://github.com/vectorize-io/hindsight/blob/867b7b4ab632c2ac0655de6dce2d3451ff4d483f/hindsight-integrations/claude-code/settings.json)).
 

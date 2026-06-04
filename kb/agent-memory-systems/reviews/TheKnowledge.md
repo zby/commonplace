@@ -35,7 +35,9 @@ TheKnowledge, from `badwally/TheKnowledge`, is a personal research knowledge bas
 ## Artifact analysis
 
 - **Storage substrate:** `files` — Central durable state is Markdown, YAML, and JSON files under `raw/`, `wiki/`, `nlm/`, `.knowledge/`, `.claude/`, `index.md`, and `log.md`, with Python gateway code enforcing how those files are written.
-- **Representational form:** `mixed` — Prose Markdown carries source and synthesis content; YAML/JSON frontmatter, policies, examples, schedules, events, and source maps carry symbolic state; Python validators, ops, MCP wrappers, hooks, and scripts carry executable system definitions.
+- **Representational form:** `prose` `symbolic` — Prose Markdown carries source, synthesis, policy criteria, rationales, skills, and session-state content; YAML/JSON frontmatter, policies, examples, schedules, events, source maps, Python validators, ops, MCP wrappers, hooks, and scripts carry symbolic state and executable system definitions.
+- **Lineage:** `authored` `imported` `trace-extracted` — Raw sources are imported through ingest and capture paths; wiki pages, policies, gateway code, hooks, and skills are authored or generated through controlled operations; filter examples, logs, event records, and candidate policies derive from retained curation and operation traces.
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `learning` — Sources, wiki pages, logs, and examples act as knowledge; skills and hooks instruct; validators and policies enforce; gateway operations, NotebookLM maps, and MCP surfaces route; citation and schema checks validate; filter examples and candidate policies carry learning authority.
 
 **Raw source files.** Storage substrate: `raw/<type>/<id>.md` files. Representational form: mixed Markdown body plus YAML frontmatter. Lineage: imported through converters, pollers, watcher, or explicit `wiki ingest`; source bodies are immutable after ingest while only allowlisted frontmatter fields may change ([src/gateway/ops/ingest.py](https://github.com/badwally/TheKnowledge/blob/c573953baf79695a0fd065e0309689803b3f2e86/src/gateway/ops/ingest.py), [src/gateway/validator.py](https://github.com/badwally/TheKnowledge/blob/c573953baf79695a0fd065e0309689803b3f2e86/src/gateway/validator.py)). Behavioral authority: knowledge artifacts as preserved evidence; they become learning inputs for filtering and source material for wiki pages, NotebookLM corpora, and evaluation context.
 
@@ -90,15 +92,27 @@ The main tradeoff is complexity. TheKnowledge accumulates many operational paths
 
 **Trace source.** The qualifying traces are curation and filtering events rather than full chat transcripts: automatic filter decisions, user corrections, rationales, scores, source frontmatter snapshots, and content excerpts retained as examples under `.knowledge/policies/<domain>/examples/`. Gateway logs, event files, and evaluation results are additional operational traces, but the implemented learning loop uses the filter example bank.
 
+**Trace source:** `event-streams` — The implemented learning loop consumes retained curation/filtering events, user corrections, rationales, scores, source snapshots, and example records rather than chat transcripts or full tool trajectories.
+
 **Extraction.** Extraction is partly deterministic and partly LLM-mediated. `filter-correct` pins a corrected include/exclude decision with rationale and source snapshot; high-confidence and legacy examples can also populate the bank. Future filter calls select representative examples and include them in the filter prompt. When a domain reaches the threshold, `distill_prompt()` asks an LLM to produce tightened inclusion and exclusion criteria from the accumulated examples and current policy, parses JSON, writes a candidate YAML policy version, and optionally scores calibration metrics.
 
 **Scope and timing.** Scope is per-domain. Timing is staged: decisions accumulate during ingest/filter workflows; readiness is surfaced by `wiki status`; distillation is an explicit `wiki finetune --distill` operation gated by example count unless forced. The live policy is not replaced automatically.
+
+**Learning scope:** `cross-task` — The retained examples and candidate policy are scoped by domain, but they accumulate across filter/ingest decisions and shape later decisions beyond a single task.
+
+**Learning timing:** `staged` — Examples accumulate during workflows, while distillation is an explicit readiness-gated `wiki finetune --distill` stage that writes a candidate rather than replacing the live policy.
+
+**Distilled form:** `prose` `symbolic` — The distilled candidate policy is YAML carrying symbolic include/exclude structure plus prose criteria and rationale.
 
 **Survey placement.** On the trace-derived learning survey, TheKnowledge belongs in the curation-trace-to-policy family. It strengthens the survey claim that the most important authority jump is not trace storage itself but promotion from observed decisions into a system-definition artifact. Here, examples are knowledge artifacts and calibration inputs; a distilled policy candidate is a system-definition artifact only after review/promotion.
 
 ## Read-back placement
 
 **Direction.** Both. Agents and humans pull retained memory through file reads, `wiki context`, `wiki query`, `wiki status`, MCP tools, skills, and NotebookLM-mediated synthesis. Separately, the Claude Code `SessionStart` hook pushes an instruction into the agent session telling it to re-read retained `docs/session-state.md` before plan/write actions when the snapshot is newer than the session start.
+
+**Read-back signal:** `coarse` — The push path is the Claude Code `SessionStart` hook, which fires on session start and relies on freshness of retained session state rather than semantic relevance to the current request.
+
+**Read-back timing:** `pre-action` `post-action` — SessionStart can re-anchor before the next plan/write action, while PreCompact instructs the agent to write a future session-state snapshot after context-management pressure for later sessions.
 
 **Targeting and signal.** Pull targeting is usually `identifier`: page slug/path, domain slug, source id, NotebookLM notebook/domain, MCP tool name, or wikilink. The hook push is `coarse`: it fires at SessionStart and relies on the retained file's mtime/session-start comparison, not semantic relevance to the user's current request.
 
@@ -109,6 +123,8 @@ The main tradeoff is complexity. TheKnowledge accumulates many operational paths
 **Authority at consumption.** Retrieved wiki/source content is advisory context unless a host or agent treats a page as instruction. Gateway validators and policies carry enforcement authority at write/filter time. The session hook carries instruction authority because Claude Code injects hook stdout into context before the agent acts.
 
 **Faithfulness.** The read-back path does not appear to test whether `wiki context`, generated skills, or the session-state hook actually change agent behavior. Evaluation modules judge wiki answer quality and trends, not read-back uptake.
+
+**Faithfulness tested:** `no` — The review finds evaluation of wiki answer quality and trends, but no with/without test that read-back changes agent behavior.
 
 **Other consumers.** The same retained memory is consumed by Obsidian, the FastAPI/React UI, scheduled jobs, lint/status reports, NotebookLM corpus workflows, and humans reviewing drafts, contradictions, or research plans.
 

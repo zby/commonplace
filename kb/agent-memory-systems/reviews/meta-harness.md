@@ -36,6 +36,8 @@ Meta-Harness, from Stanford IRIS Lab, is a framework for optimizing the code aro
 
 - **Storage substrate:** `files` — Repo files, with `ONBOARDING.md` shipped and `domain_spec.md` expected as a generated project-local file
 - **Representational form:** `prose` — Prose instructions plus a structured Markdown template
+- **Lineage:** `authored` `trace-extracted` — authored onboarding prompts, skills, baselines, and scripts combine with proposer/evaluation traces, summaries, frontiers, and generated candidate variants
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `ranking` `learning` — logs and summaries inform later search; skills instruct proposers; import checks, smoke tests, and benchmarks enforce/validate candidates; harness code routes runtime behavior; frontiers rank; candidate generation learns from prior runs
 
 **Onboarding and domain specs.** Storage substrate: repo files, with `ONBOARDING.md` shipped and `domain_spec.md` expected as a generated project-local file. Representational form: prose instructions plus a structured Markdown template. Lineage: authored onboarding prompt, then user/assistant elicitation fills a derived domain spec; unresolved fields are explicitly marked `unknown`. Behavioral authority: system-definition artifact for setup, because it constrains what a later implementation pass may assume and defines the task/harness/evaluation boundary.
 
@@ -85,6 +87,14 @@ The biggest divergence is what "learning" produces. In Meta-Harness, successful 
 **Use onboarding as a pre-implementation gate.** Ready now. `ONBOARDING.md` is a good pattern for forcing task unit, fixed components, evaluation split, baselines, traces, and budget before an agent starts building.
 
 ## Trace-derived learning placement
+
+**Trace source:** `session-logs` `tool-traces` `event-streams` `trajectories` — proposer sessions, Claude session logs, streamed events, tool/file-read traces, benchmark runs, memory-system trajectories, and Terminal-Bench job outputs feed later candidate generation
+
+**Learning scope:** `per-project` `cross-task` — retained state is scoped by reference experiment and run name, while candidate generation reads benchmark/job trajectories across tasks within that experiment
+
+**Learning timing:** `offline` `staged` — candidates are proposed, checked, benchmarked, summarized, and then consumed by a later iteration
+
+**Distilled form:** `prose` `symbolic` — hypotheses and reports are prose-bearing records, while frontiers, summaries, manifests, metrics, and candidate harnesses are symbolic files/code
 
 **Trace source.** Meta-Harness qualifies as trace-derived because later candidate generation consumes durable records from prior proposer sessions, benchmark runs, memory-system trajectories, and Terminal-Bench job outputs. The text-classification skill explicitly tells the proposer to read `evolution_summary.jsonl`, `frontier_val.json`, `config.yaml`, and recent `log.jsonl` traces. The Terminal-Bench skill tells a subagent to deep-read failed and successful trajectories under `jobs/` and `logs/` before proposing a candidate.
 

@@ -34,7 +34,9 @@ Siftly, from viperrcrypto's `viperrcrypto/Siftly` repository, is a self-hosted N
 ## Artifact analysis
 
 - **Storage substrate:** `sqlite` — The local SQLite database configured by Prisma, with `Bookmark`, `MediaItem`, `BookmarkCategory`, `Category`, `Setting`, and `ImportJob` tables
-- **Representational form:** `mixed` — Mixed symbolic/prose: tweet ids, authors, timestamps, source labels, category links, settings, and media URLs are symbolic fields, while tweet text and raw JSON carry prose and platform payloads
+- **Representational form:** `prose` `symbolic` — Tweet ids, authors, timestamps, source labels, category links, settings, and media URLs are symbolic fields, while tweet text, raw JSON, tags, prompts, and exported notes carry prose and platform payloads.
+- **Lineage:** `authored` `imported` — Bookmark rows derive from uploaded X bookmark JSON, while entities, enrichment metadata, category assignments, FTS rows, search cache, prompts, and Obsidian exports are authored or generated from stored bookmarks, media, rules, models, and user settings.
+- **Behavioral authority:** `knowledge` `routing` `ranking` — Bookmark rows and exports advise users and downstream agents, while entities, categories, FTS, AI enrichment, search prompts, settings, and API/CLI handlers route, filter, and rank future search and browsing behavior.
 
 **Bookmark and media rows.** The storage substrate is the local SQLite database configured by Prisma, with `Bookmark`, `MediaItem`, `BookmarkCategory`, `Category`, `Setting`, and `ImportJob` tables. The representational form is mixed symbolic/prose: tweet ids, authors, timestamps, source labels, category links, settings, and media URLs are symbolic fields, while tweet text and raw JSON carry prose and platform payloads. Lineage comes from uploaded X bookmark JSON and import-time parsing; duplicate tweet ids are skipped rather than merged. Behavioral authority is knowledge artifact authority: rows provide evidence, reference material, and retrievable context for user-facing views and tools.
 

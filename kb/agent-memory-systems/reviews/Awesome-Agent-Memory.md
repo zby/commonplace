@@ -30,7 +30,9 @@ Awesome Agent Memory, hosted under TeleAI-UAGI and credited in the README to Blo
 ## Artifact analysis
 
 - **Storage substrate:** `files` — A single Markdown file in a GitHub repository
-- **Representational form:** `mixed` — Authored prose and Markdown/HTML lists with symbolic section headings, links, badges, emphasis, and date groupings
+- **Representational form:** `prose` `symbolic` — Authored prose plus Markdown/HTML list structure, section headings, links, badges, emphasis, and date groupings
+- **Lineage:** `authored` `imported` — Manually curated taxonomy and project guidance plus imported pointers to upstream products, papers, code, articles, workshops, and license text
+- **Behavioral authority:** `knowledge` `ranking` — The catalogue is reference/discovery knowledge for humans and agents, with weak ranking influence through ordering, emphasis, and badges
 
 **README catalogue.** Storage substrate: a single Markdown file in a GitHub repository. Representational form: authored prose and Markdown/HTML lists with symbolic section headings, links, badges, emphasis, and date groupings. Lineage: manually curated/imported bibliography entries; the README records links to upstream products, papers, code, articles, and workshops, but the repository does not expose a structured source-ingest log, validation report, deduplication rule, or regeneration path. Behavioral authority: knowledge artifact for humans and agents using it as reference, evidence, or a discovery list. It is not a system-definition artifact for an agent loop because it does not instruct, route, rank, validate, or inject context by itself.
 

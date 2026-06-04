@@ -36,6 +36,8 @@ Nuggets, from `NeoVertex1/nuggets`, is a local TypeScript memory and messaging a
 
 - **Storage substrate:** `files` — Local JSON files under `~/.nuggets/`, one per nugget or kind
 - **Representational form:** `symbolic` — Symbolic JSON records containing fact key, value, hit count, last-hit session, dimensions, bank count, and HRR configuration
+- **Lineage:** `authored` `trace-extracted` — facts are written explicitly through the tool or derived from Pi user, tool-result, and compaction events
+- **Behavioral authority:** `knowledge` `instruction` `routing` `ranking` `learning` — facts advise through recall and injection; extension code instructs capture/use; kinds and gateway state route; HRR/key matching ranks; trace capture learns short facts
 
 **`.nugget.json` fact files.** Storage substrate: local JSON files under `~/.nuggets/`, one per nugget or kind. Representational form: symbolic JSON records containing fact key, value, hit count, last-hit session, dimensions, bank count, and HRR configuration. Lineage: authored by the agent/user through the `nuggets` tool or derived from Pi events such as preference input, file-tool results, and compaction summaries. Behavioral authority: knowledge artifacts when recalled explicitly; system-definition-adjacent context when the Pi extension injects them before an agent turn.
 
@@ -82,6 +84,14 @@ The central tradeoff is authority without governance. Nuggets can inject remembe
 
 ## Trace-derived learning placement
 
+**Trace source:** `session-logs` `tool-traces` `event-streams` — Pi session messages, user input, tool results, compaction windows, and extension event hooks feed capture
+
+**Learning scope:** `per-task` `per-project` `cross-task` — compaction summaries are task-shaped, file/project facts are project-shaped, and durable user/agent facts can cross tasks
+
+**Learning timing:** `online` `staged` — user and tool-result capture happens during the session, while compaction capture and promotion are staged around session compaction
+
+**Distilled form:** `prose` `symbolic` `parametric` — trace signals become short JSON facts, rendered prompt or `MEMORY.md` prose, and rebuilt HRR vector state
+
 **Trace source.** Nuggets qualifies as trace-derived learning through the Pi extension, not through the HRR math alone. Raw signals include user input text, `read`/`edit`/`write` tool-result file paths, prior `nuggets` tool results in the session branch, messages selected for compaction, and assistant tool-use blocks in the compaction window.
 
 **Extraction.** Extraction is deterministic and narrow. Preference capture uses regexes over user input. File capture reads `file_path` or `path` from tool inputs/results and stores `file:<basename>` or `edited:<basename>`. Compaction capture stores a short `_task` summary from recent user messages and recent file paths from tool-use blocks. Explicit `remember` remains the highest-confidence extraction path because the agent chooses the key and value.
@@ -95,6 +105,12 @@ The central tradeoff is authority without governance. Nuggets can inject remembe
 ## Read-back placement
 
 **Direction.** Nuggets is both pull and push. Pull is the `nuggets` tool's `recall` action and the `/nuggets` inspection command. Push is the Pi extension's `before_agent_start` hook, which appends remembered facts to the system prompt before the agent acts.
+
+**Read-back signal:** `coarse` — the push path fires for every Pi agent turn after facts are loaded or captured, without identifier or inferred relevance matching for the current turn
+
+**Read-back timing:** `pre-action` — prompt injection happens before the receiving agent turn acts; capture and promotion affect later turns rather than returning memory to the completed action
+
+**Faithfulness tested:** `no` — the review found structural activation but no with/without behavioral test for injected facts
 
 **Targeting and signal.** The push path is `coarse`: the `before_agent_start` hook fires on every Pi agent turn after facts are loaded or captured and injects remembered facts from the current session map. There is no instance-level `identifier` or `inferred` signal for the push; grouping by key prefix and the last-ten file cap are scope controls, not relevance matching for this turn. Explicit pull recall uses key resolution, token-overlap fallback, and HRR decoding.
 

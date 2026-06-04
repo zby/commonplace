@@ -35,7 +35,9 @@ pi-self-learning, by Matteo Collina, is a Pi coding-agent extension that adds se
 ## Artifact analysis
 
 - **Storage substrate:** `service-object` — Pi session branch entries at runtime, not pi-self-learning's durable store
-- **Representational form:** `mixed` — Mixed message objects, tool result text, assistant stop reasons, and serialized conversation prose
+- **Representational form:** `prose` `symbolic` — serialized conversation prose, markdown memory files, JSON score records, git history, hook return values, and structured Pi message/tool/stop-reason objects
+- **Lineage:** `trace-extracted` — durable memory is derived from branch conversation, interruption signals, task-end reflection, monthly summarization, and global redistillation
+- **Behavioral authority:** `knowledge` `instruction` `ranking` `learning` — traces and markdown files are evidence/context, strict mode adds memory-use policy, `core/index.json` ranks durable memory, and reflected records feed later summaries and redistillation
 
 **Branch conversation and interruption signals.** Storage substrate: Pi session branch entries at runtime, not pi-self-learning's durable store. Representational form: mixed message objects, tool result text, assistant stop reasons, and serialized conversation prose. Lineage: captured from the current branch shortly before reflection; the extension samples only recent messages and scans a wider recent window for interruption signals. Behavioral authority: knowledge artifacts during reflection, because they are evidence for the LLM extraction oracle; they do not directly instruct future agents until distilled.
 
@@ -68,6 +70,12 @@ The main divergence is authority control. Commonplace makes promotion explicit: 
 
 **Read-back:** `both` — Manual commands such as `/learning-now`, `/learning-daily`, `/learning-status`, `/learning-month`, and `/learning-redistill` are pull surfaces. The `before_agent_start` hook pushes retained memory into the receiving agent's context, but targeting is `coarse` and signal is n/a: selection is session-start/config-flag/recency loading of recent runtime notes plus configured core, daily, and monthly memory files, not instance relevance. The appended memory policy is baseline instruction, not memory read-back, and this review does not assign `push-activation`.
 
+**Read-back signal:** `coarse` — push read-back is session-start/config-flag/recency loading of recent runtime notes plus configured core, daily, and monthly memory files, not instance relevance.
+
+**Read-back timing:** `pre-action` — the `before_agent_start` hook injects retained memory before the receiving agent starts its next task.
+
+**Faithfulness tested:** `no` — the review states effective faithfulness is not verified from code and does not report a with/without behavior ablation for injected memory.
+
 ### Borrowable Ideas
 
 **Treat interruption as learning signal.** Commonplace review and agent-operation workflows could preserve "user stopped me here" as first-class evidence rather than discarding it as noise. Ready for review reports and work logs, especially around permission denials and direction changes.
@@ -83,6 +91,14 @@ The main divergence is authority control. Commonplace makes promotion explicit: 
 **Do not borrow unconditional injection as the final read-back design.** The always-load hook is pragmatic for a small personal memory, but Commonplace would need relevance gates, scope checks, and faithfulness tests before pushing memory into agent context by default.
 
 ## Trace-derived learning placement
+
+**Trace source:** `session-logs` `tool-traces` `event-streams` — task-end reflection consumes recent Pi branch messages, serialized conversation text, tool result errors, assistant stop/skip signals, and lifecycle/interruption signals.
+
+**Learning scope:** `per-task` `per-project` `cross-task` — reflections are task-level, storage mode scopes memory to a project or global root, and global redistillation produces cross-project reusable rules.
+
+**Learning timing:** `online` `staged` — reflection can run after each `agent_end`, while durable behavior changes are written/committed after the task and injected on a later `before_agent_start`.
+
+**Distilled form:** `prose` `symbolic` — daily, monthly, core, long-term, and redistilled memory are prose renders, while `core/index.json` is the canonical scored symbolic record.
 
 **Trace source.** pi-self-learning qualifies as trace-derived learning. The raw traces are recent Pi branch messages, serialized conversation text, tool result errors, assistant abort stop reasons, queued-user-message skips, and related interruption signals collected around task end.
 

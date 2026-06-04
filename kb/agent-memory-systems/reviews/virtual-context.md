@@ -34,6 +34,8 @@ Virtual Context, from the `virtual-context/virtual-context` repository, is a Pyt
 
 - **Storage substrate:** `sqlite` — SQLite or PostgreSQL rows, with filesystem and graph-adjacent stores also present behind the store protocols
 - **Representational form:** `symbolic` — Symbolic records carrying raw user/assistant content, raw provider blocks, normalized hashes, tags, fact signals, code refs, session dates, source batches, and compaction markers
+- **Lineage:** `trace-extracted` `authored` — Canonical turns, segments, facts, tool/media records, requests, and telemetry are trace-derived from live proxy payloads, SDK/MCP/import inputs, tool results, media blocks, and compaction, while retrieval configuration and integration surfaces are authored operator/code artifacts.
+- **Behavioral authority:** `knowledge` `instruction` `routing` `ranking` `learning` — Canonical evidence, summaries, facts, tool/media records, and telemetry advise later agents, while config, proxy/MCP/CLI commands, retrieval scoring, assembly budgets, supersession, paging, restore tools, and injected prompt blocks route, rank, instruct, or learn from traces.
 
 **Canonical turns.** Storage substrate: SQLite or PostgreSQL rows, with filesystem and graph-adjacent stores also present behind the store protocols. Representational form: symbolic records carrying raw user/assistant content, raw provider blocks, normalized hashes, tags, fact signals, code refs, session dates, source batches, and compaction markers. Lineage: trace-derived from live proxy payloads, SDK calls, MCP compaction inputs, and import adapters; canonical rows are source material for later compaction. Behavioral authority: knowledge artifacts as evidence and replay material, plus system-definition authority for lifecycle state because compaction and recovery read their turn ids, hashes, and `compacted_at` status.
 
@@ -78,6 +80,14 @@ The tradeoff is governance. Virtual Context has rich operational lineage and reg
 
 ## Trace-derived learning placement
 
+**Trace source:** `session-logs` `tool-traces` `event-streams` — Raw signals include conversation turns, provider payload/request history, tool calls/results, media blocks, imports, MCP-supplied message lists, request captures, benchmark conversations, and conversation identity events.
+
+**Learning scope:** `per-task` `cross-task` — Memory is scoped to conversations and can continue across sessions or platforms through conversation ids, aliases, labels, VCATTACH, and shared stores.
+
+**Learning timing:** `online` `staged` — Inbound retrieval happens before the model call, post-turn tagging/compaction happens after responses or in recovery paths, and imports or manual compaction are staged batch paths.
+
+**Distilled form:** `prose` `symbolic` `parametric` — Compaction produces prose summaries and facts, symbolic segment/tag/fact/link metadata, and embeddings used for later scoring.
+
 **Trace source.** Virtual Context qualifies as trace-derived learning. Raw signals include live user/assistant turns, provider payload history, tool calls and tool results, media blocks, imported conversation exports, MCP-supplied message lists, request captures, benchmark conversations, and conversation identity/alias events.
 
 **Extraction.** Extraction is staged. Inbound tagging extracts a query-time signal for immediate retrieval. Post-turn tagging enriches canonical turns with semantic tags, fact signals, code refs, and session metadata. Compaction then turns selected canonical turns into segment summaries, facts, tag summaries, embeddings, supersession relationships, and restorable tool/media references. The extraction oracle is a mixture of deterministic budget/lifecycle logic, embedding and lexical retrieval, LLM tagging/summary/fact prompts, and optional supersession/fact-link checks.
@@ -87,6 +97,12 @@ The tradeoff is governance. Virtual Context has rich operational lineage and reg
 **Survey placement.** On the [trace-derived learning survey](../trace-derived-learning-techniques-in-related-systems.md), Virtual Context belongs in the deploy-time trace-to-symbolic-and-prose memory family with engineered read-back. It strengthens the survey distinction between raw trace retention and distilled behavior-shaping artifacts: canonical turns, tool outputs, and media are evidence; segment summaries, tag summaries, facts, embeddings, and injected prompt blocks are the behavior-changing layer.
 
 ## Read-back placement
+
+**Read-back signal:** `identifier` `inferred / lexical` `inferred / embedding` `inferred / judgment` — Targeting uses conversation/tag identifiers and aliases plus query-time tag generation, lexical BM25/FTS matches, embedding similarity, fact overlap, recency, and budget-aware assembly.
+
+**Read-back timing:** `pre-action` — Proxy injection occurs before the upstream model call, while pull tools and paging can be invoked before a later answer.
+
+**Faithfulness tested:** `no` — The review found extensive mechanical tests, but no WITH/WITHOUT ablation proving that injected memory faithfully changes behavior.
 
 **Direction.** Both. From the answering model's perspective, proxy injection is push: selected `<virtual-context>` sections and `<facts>` arrive in the system/instructions field without the model first asking for them. Tool/MCP/CLI paths are pull when an agent or user deliberately asks for recall, quote search, topic expansion, fact query, or restoration.
 

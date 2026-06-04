@@ -33,7 +33,9 @@ The system is built as a service with operational boundaries, not just a local l
 ## Artifact analysis
 
 - **Storage substrate:** `files` — AGFS/RAGFS under account-scoped local paths, while their public identity is the URI
-- **Representational form:** `mixed` — Prose, code, structured data, or mixed files
+- **Representational form:** `prose` `symbolic` `parametric` — prose/source files and generated summaries, code/config/structured sidecars and metadata, plus vector-index embeddings
+- **Lineage:** `authored` `imported` `trace-extracted` — manual writes and integration code are authored, uploaded/watched resources are imported, and session archives drive extracted memories, summaries, relations, and diffs
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `ranking` `learning` — retrieved files and memories are knowledge; skills/hooks/middleware instruct; access policy and write rules enforce; URI roots, sidecars, vectors, relations, operation validation, and extraction loops route, validate, rank, and learn
 
 OpenViking's source content artifacts are `viking://` files and directories. Their storage substrate is AGFS/RAGFS under account-scoped local paths, while their public identity is the URI. Their representational form can be prose, code, structured data, or mixed files. Their lineage usually comes from manual writes, uploaded resources, watched resources, or session-derived memory writes. Their behavioral authority is mostly knowledge-artifact authority when retrieved or read, but a file under an agent skill or experience memory path can become system-definition material when an integration injects it as action guidance.
 
@@ -83,6 +85,11 @@ Borrow low-cardinality operational telemetry for KB commands. Metrics on retriev
 
 OpenViking qualifies as trace-derived. Durable behavior-shaping artifacts are derived from session traces: user memories, agent tool memories, trajectories, experiences, skills, archive summaries, usage relations, and memory diffs. The durable outputs are not merely logs; they are later retrievable and can be injected into model calls.
 
+- **Trace source:** `session-logs` `tool-traces` `trajectories` — session messages, tool-call/output parts, externalized tool results, transcript slices, archive summaries, and trajectory memories feed extraction
+- **Learning scope:** `cross-task` — extracted user memories, agent experiences, tools, skills, and summaries are durable across later sessions rather than confined to the originating turn
+- **Learning timing:** `online` `staged` — plugins capture after turns and commits run asynchronously, while archive extraction and memory updates happen as a later phase
+- **Distilled form:** `prose` `symbolic` `parametric` — extracted memories and summaries are prose, templates/operations/links/diffs/relations are symbolic, and written files are vectorized for later retrieval
+
 The trace source is a session: user and assistant messages, structured content parts, tool-call/output parts, externalized tool results, recall/context usage records, and archive summaries. Claude/Codex plugins capture transcript slices after a turn and strip injected context blocks to reduce self-contamination. MCP `remember` can also create a short session and commit it.
 
 The extraction mechanism is LLM-mediated but schema-constrained. The extractor runs a ReAct loop with memory templates, page-ID rules, link rules, read/refetch rules, and operation validation. `MemoryUpdater` applies resolved operations, preserves system metadata, writes links/backlinks, supersedes older experience where requested, vectorizes written files, and updates directory overviews.
@@ -94,6 +101,12 @@ The main caveat is authority. OpenViking has lineage artifacts such as archive m
 ## Read-back placement
 
 OpenViking has both pull and push read-back. Pull read-back is implemented by `find`, `search`, `read`, `list`, `grep`, `glob`, `code_search`, `code_outline`, and related MCP/HTTP/CLI surfaces. These tools return context only when a caller asks.
+
+**Read-back signal:** `identifier` `inferred / lexical` `inferred / embedding` — hooks and middleware narrow by account/user/agent/session/URI roots, then select by semantic search and lexical-overlap boosts over the current prompt or user text
+
+**Read-back timing:** `pre-action` — Claude/Codex hooks and LangChain middleware insert selected context before the model call or turn acts
+
+**Faithfulness tested:** `no` — the review notes benchmark claims but did not reproduce them, and the code establishes the activation route rather than proving selected memories change behavior
 
 Push read-back is implemented by integrations. Claude Code and Codex `UserPromptSubmit` hooks search memories and skills before the agent acts, filter by threshold and level, apply ranking boosts, deduplicate, enforce token/content budgets, and emit additional context into the prompt. LangChain middleware does the same kind of pre-call insertion by modifying the model request.
 

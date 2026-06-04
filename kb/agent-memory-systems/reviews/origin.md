@@ -35,7 +35,9 @@ Origin, from `7xuanlu/origin`, is a local-first memory system for AI work sessio
 ## Artifact analysis
 
 - **Storage substrate:** `sqlite` — The central retained state lives in a local libSQL database: memories, embeddings, FTS, entities, observations, relations, pages, source links, access logs, agent registry, spaces, import state, rejected memories, and review/refinement queues. Markdown pages, session files, and a git repo under `~/.origin/` are important mirrored and human-facing artifacts, but the daemon routes reads/writes through the database.
-- **Representational form:** `mixed` — Origin combines prose memories and page bodies, symbolic metadata/schemas/status fields/tool contracts, graph relations, FTS indexes, vector embeddings, optional reranker/model outputs, Markdown files, shell hooks, and skill instructions.
+- **Representational form:** `prose` `symbolic` `parametric` — Origin combines prose memories and page bodies, symbolic metadata/schemas/status fields/tool contracts, graph relations, FTS indexes, vector embeddings, optional reranker/model outputs, Markdown files, shell hooks, and skill instructions.
+- **Lineage:** `authored` `imported` `trace-extracted` — memories and system-definition artifacts are authored through captures, tools, skills, and shipped code; chat exports are imported; handoff/session artifacts and extracted records are trace-derived.
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `ranking` `learning` — retrieved memories and pages advise as knowledge; skills and MCP tools instruct and route; gates and review states enforce or validate trust; graph/search/reranking select context; distillation and enrichment learn from retained traces.
 
 **Atomic memory records.** Storage substrate: libSQL `memories` rows with FTS5 triggers, vector embeddings, metadata columns, access logs, and optional child vectors. Representational form: prose content plus symbolic memory type, space, source agent, confidence, confirmation, stability, supersession, structured fields, retrieval cue, quality, pending revision, and distributed-parametric embeddings. Lineage: authored by MCP/CLI capture, imported from chat exports, inferred by `/handoff`, or produced by importer/refinery paths; later enrichment can classify, extract structured fields, link entities, enrich titles, mark revision state, or grow pages. Behavioral authority: knowledge artifacts when retrieved as evidence/context; learning inputs for distillation and graph extraction; system-definition candidates when protected-memory revision or supersession state controls what should be trusted.
 
@@ -91,6 +93,11 @@ The other divergence is authority timing. Commonplace promotes high-authority in
 
 ## Trace-derived learning placement
 
+- **Trace source:** `session-logs` — chat exports, conversation history, session summaries, and session/status files are the trace sources named in the review.
+- **Learning scope:** `per-project` `cross-task` — Origin scopes memory by project/space/session surfaces while carrying context across sessions and future work.
+- **Learning timing:** `online` `offline` `staged` — capture can happen during work, chat import is staged offline, and enrichment/distillation/handoff run asynchronously or at session boundaries.
+- **Distilled form:** `prose` `symbolic` `parametric` — atomic traces become prose memories/pages/status files, symbolic metadata/graph/review state, and indexed embeddings/reranker outputs.
+
 **Trace source.** Origin qualifies as trace-derived. The implemented sources include chat-export ZIPs parsed into conversation memories, `/handoff` session context synthesized from conversation history and git state, session/status files written at session end, and user/agent captures that can be distilled into pages. The source trace is not one uniform event log; it is a mix of explicit memory calls, chat exports, session summaries, git diffs/logs, and current project context.
 
 **Extraction.** Extraction is layered. Import parsing strips list/date/type prefixes, skips section headers and short entries, deduplicates exact content, then stores imported memories and runs background classification plus post-ingest enrichment. `/handoff` delegates extraction judgment to the active agent: infer decisions, lessons, gotchas, corrections, facts, and open threads from the just-finished session, then store atomic captures and write narrative/status files. Distillation clusters related memories and either daemon-synthesizes pages when a daemon LLM is available or returns pending clusters for the calling agent to synthesize and post back.
@@ -102,6 +109,12 @@ The other divergence is authority timing. Commonplace promotes high-authority in
 ## Read-back placement
 
 **Direction.** Origin is both pull and push. `recall`, `search_pages`, `get_page`, `get_page_sources`, `list_memories`, and review/list tools are explicit pull surfaces. `/brief` and `context` push retained memory into the acting agent's session when invoked by the user or session-start workflow, and the status file is rendered before semantic context.
+
+**Read-back signal:** `identifier` `inferred / lexical` `inferred / embedding` — `context` narrows by space, type, source/page/entity/project identifiers while combining FTS, vector retrieval, optional reranking, and page-source overlap; `/brief` uses project identity for status before broader context.
+
+**Read-back timing:** `pre-action` — `/brief` is session-start context, and `context` is called at session start or topic shift before the next work move; capture, enrichment, import, page growth, and handoff affect later reads rather than the current action.
+
+**Faithfulness tested:** `no` — the review found routing/search/page tests and benchmarks, but no with/without ablation proving injected `/brief` or `context` memories change agent behavior.
 
 **Targeting and signal.** Targeting is `instance`. `context` receives a topic/conversation summary, max chunk count, and space, then combines typed tiers, corrections, memory search, and source-overlap-gated pages. The main signal is `inferred / embedding` plus lexical FTS and page-source overlap, narrowed by identifier filters such as space, memory type, source ids, page ids, entity/page targets, and project status file path. `/brief` also uses project identity as an `identifier` signal for the status file before loading broader context.
 

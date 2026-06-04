@@ -33,7 +33,9 @@ Atomic, from Ken Fortney's `kenforthewin/atomic` repository, is a personal knowl
 ## Artifact analysis
 
 - **Storage substrate:** `sqlite` — Per-database SQLite or Postgres tables for atoms, atom-tag joins, source metadata, status fields, and hierarchical tags; a registry database stores global settings and tokens for multi-database deployments ([crates/atomic-core/src/db.rs](https://github.com/kenforthewin/atomic/blob/dd9a43a29e2afeb815f15f65a9c09bfc01873049/crates/atomic-core/src/db.rs), [docs/manual/guides/multi-database.md](https://github.com/kenforthewin/atomic/blob/dd9a43a29e2afeb815f15f65a9c09bfc01873049/docs/manual/guides/multi-database.md))
-- **Representational form:** `mixed` — Mixed prose Markdown plus symbolic metadata
+- **Representational form:** `prose` `symbolic` `parametric` — Markdown atoms, generated articles/findings, and messages are prose; metadata, tags, schemas, ledgers, schedules, queues, and citations are symbolic; chunks, embeddings, centroids, and vector search state are parametric
+- **Lineage:** `authored` `imported` `trace-extracted` — atoms and report definitions are authored, external pages/vault files/Discord messages/feeds and benchmark datasets are imported, and chat messages/tool calls are retained runtime traces without becoming a trace-derived learning loop
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `ranking` `learning` — atoms/findings/articles serve as knowledge; MCP schemas and report definitions instruct and constrain agents; source scopes, tags, schedules, and tool schemas route and enforce access patterns; citations/status/benchmarks support validation; search, embeddings, graph state, and centroids rank; generated wiki/report outputs are learned or derived knowledge artifacts
 
 **Atoms and tags.** Storage substrate: per-database SQLite or Postgres tables for atoms, atom-tag joins, source metadata, status fields, and hierarchical tags; a registry database stores global settings and tokens for multi-database deployments ([crates/atomic-core/src/db.rs](https://github.com/kenforthewin/atomic/blob/dd9a43a29e2afeb815f15f65a9c09bfc01873049/crates/atomic-core/src/db.rs), [docs/manual/guides/multi-database.md](https://github.com/kenforthewin/atomic/blob/dd9a43a29e2afeb815f15f65a9c09bfc01873049/docs/manual/guides/multi-database.md)). Representational form: mixed prose Markdown plus symbolic metadata. Lineage: user-authored, imported, clipped, synced, or agent-written atom content; tag lineage may be user-authored or LLM-extracted. Behavioral authority: atoms and tags are knowledge artifacts when searched, read, synthesized, or displayed; tags also have routing and scoping authority for search, wiki, chat, reports, and auto-tagging.
 
@@ -86,6 +88,12 @@ The most interesting convergence is reports. Atomic's scheduled reports look lik
 ## Read-back placement
 
 **Direction.** Atomic uses both pull and push. Pull paths include UI search, global keyword search, chat-agent tool calls, MCP `semantic_search` / `read_atom`, wiki article generation, similar-note lookup, and canvas browsing. Push exists through scheduled reports: the scheduler launches a report run, source resolution selects atoms, and the report agent receives a numbered source list before it takes any action.
+
+**Read-back signal:** `identifier` — scheduled report push is keyed by saved report-definition fields such as tag ids, kind filters, time windows, source caps, token budgets, context scope, citation policy, and excluded prior findings.
+
+**Read-back timing:** `pre-action` — source atoms are injected into the report agent's initial prompt before it chooses tools or writes the finding.
+
+**Faithfulness tested:** `no` — benchmarks cover retrieval surfaces, but the review found no production with/without ablation proving pushed report source batches improve downstream behavior.
 
 **Trigger and relevance signal.** Pull triggers are user or agent queries, tag scopes, current-page references, atom ids, or UI events. The engineered push trigger is a report schedule or manual run against a saved report definition. Targeting is `instance`: the report row is the durable task frame for this run. The push signal is `identifier`: source scope tag ids, kind filters, time windows, max source atoms, token budgets, context scope, citation policy, and excluded prior findings are declared scope fields resolved before the report agent acts. The report agent can then use semantic search inside the bounded context; that later ranking is pull within the already-pushed report frame.
 

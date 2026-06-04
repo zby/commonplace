@@ -35,7 +35,9 @@ Mem0, from mem0ai, is an open-source long-term memory layer for AI assistants an
 ## Artifact analysis
 
 - **Storage substrate:** `vector` — Pluggable vector stores, including local and hosted backends configured through `VectorStoreFactory`; the payload carries `data`, hash, timestamps, session identifiers, actor/role fields, lemmatized text, and arbitrary metadata
-- **Representational form:** `mixed` — Prose facts plus symbolic metadata and distributed-parametric embeddings
+- **Representational form:** `prose` `symbolic` `parametric` — prose facts plus symbolic metadata/history/entity records and distributed-parametric embeddings
+- **Lineage:** `authored` `trace-extracted` — authored prompts/configuration/hooks shape the system, while messages, transcripts, compact summaries, and coding-session traces are extracted into memories and derived records
+- **Behavioral authority:** `knowledge` `instruction` `routing` `ranking` `learning` — memories advise as knowledge; prompts, custom instructions, filters, hooks, rankings, and extraction/capture loops shape what is learned and returned
 
 **Extracted memory records.** Storage substrate: pluggable vector stores, including local and hosted backends configured through `VectorStoreFactory`; the payload carries `data`, hash, timestamps, session identifiers, actor/role fields, lemmatized text, and arbitrary metadata. Representational form: prose facts plus symbolic metadata and distributed-parametric embeddings. Lineage: trace-extracted from new messages with context from recent messages and existing memories; hash dedup and extraction prompts are part of the derivation policy, while exact source spans and prompt/model versions are not retained per memory. Behavioral authority: knowledge artifact when returned by search or listed through APIs; advisory context when injected by a host; ranking authority belongs to embeddings, BM25 text, filters, entity boosts, and optional rerankers.
 
@@ -84,6 +86,14 @@ The largest design difference is where authority lives. In Mem0, a memory record
 
 ## Trace-derived learning placement
 
+**Trace source:** `session-logs` `tool-traces` `event-streams` — core messages, transcript JSONL windows, compact-summary entries, and OpenClaw successful-turn messages feed the memory pipeline.
+
+**Learning scope:** `per-task` `per-project` `cross-task` — retained memory is scoped by user, agent, run/session, project/app id, branch, source, and metadata filters, while plugin and OpenClaw flows carry session and project-level learnings across later tasks.
+
+**Learning timing:** `online` `staged` — SDK/proxy writes happen during app calls, while plugin auto-capture, compaction capture, OpenClaw capture, and explicit dream/triage flows run on staged prompt, compaction, turn-end, or tool-driven cycles.
+
+**Distilled form:** `prose` `symbolic` `parametric` — extracted facts and compact summaries become prose memories, symbolic metadata/entity/category records, and embedded vector-store entries.
+
 **Trace source.** Mem0 qualifies as trace-derived. The core `add()` path consumes user/assistant messages, recent saved messages, and nearby existing memories; plugin auto-capture reads transcript JSONL windows; compact-summary capture reads entries flagged `isCompactSummary`; OpenClaw auto-capture reads agent messages after successful turns.
 
 **Extraction.** Extraction is prompt-driven and staged. The SDK uses `ADDITIVE_EXTRACTION_PROMPT` or custom instructions to extract self-contained memory facts from new messages while using recent messages and existing memories for context and deduplication. The plugin and OpenClaw layers pre-filter noise, session-specific metadata, generic acknowledgments, and excessively long messages before calling Mem0's add API. Entity extraction then derives linked entity records from the memory text.
@@ -97,6 +107,12 @@ The largest design difference is where authority lives. In Mem0, a memory record
 ## Read-back placement
 
 **Direction.** Mem0 is both pull and push. The SDK, server, OpenMemory, MCP tools, and most skills expose explicit search/list/get calls. The Python proxy, OpenClaw `before_prompt_build` hook, and resume branch of `mem0-plugin` push selected retained memories into the receiving model/agent before action. Plugin search rubrics, setup banners, error/file-path cues, and write nudges inject shipped/static operational context; those are baseline context surfaces, not memory read-back.
+
+**Read-back signal:** `identifier` `inferred / lexical` `inferred / embedding` — push paths narrow by user/session/app/run/source identifiers and select memories from prompt or resume context through embedding search, BM25/keyword scoring, and entity boosts.
+
+**Read-back timing:** `pre-action` `post-action` — proxy, OpenClaw, and resume recall inject before the receiving response, while auto-capture and compact-summary capture run after turns or on later compact/start boundaries.
+
+**Faithfulness tested:** `no` — the review found structural tests and benchmark quality checks, but no with/without hook ablation proving injected memories reliably change agent behavior.
 
 **Targeting and signal.** The memory push paths are instance-targeted. The proxy triggers on chat completion calls whose last message is from the user and uses the last six messages as the search query, so its final selector is `inferred / embedding` with `inferred / lexical` BM25 and entity boosts inside core search, narrowed by identifier filters such as `user_id`, `agent_id`, and `run_id`. OpenClaw triggers on `before_prompt_build`, skips non-interactive/system prompts, sanitizes the current prompt, searches long-term and optionally session memory, applies thresholds, top-k, category priority, token budgets, and subagent namespace rules, then injects `prependContext`; this is also instance targeting with inferred content relevance after identifier narrowing by user/session/source. `mem0-plugin` uses `UserPromptSubmit` resume detection as an `identifier` signal for the resume action, then searches fixed content queries with identifier metadata filters (`user_id`, `app_id`, `metadata.type`) before injecting recovered session context. Ordinary prompts get a search rubric rather than pre-fetched memories.
 

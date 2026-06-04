@@ -37,7 +37,9 @@ Letta, formerly MemGPT, is Letta AI's open-source stateful-agent server and SDK 
 ## Artifact analysis
 
 - **Storage substrate:** `rdbms` — `block` table rows, agent/block pivot rows, optional block tags and history pointers, and optionally git-backed Markdown files when git memory is enabled
-- **Representational form:** `mixed` — Prose values plus symbolic labels, descriptions, limits, read-only flags, metadata, tags, and path-like labels
+- **Representational form:** `prose` `symbolic` `parametric` — Prose values and summaries, symbolic labels/descriptions/limits/flags/metadata/tags/path-like labels, and embeddings or vector-indexed passages
+- **Lineage:** `authored` `imported` `trace-extracted` — Memory can be authored at creation or through tools/APIs, imported from files and sources, or derived from conversation/tool traces, sleeptime runs, and compaction
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `ranking` `learning` — Memories advise as knowledge, core blocks enter system context, tool rules enforce and route operations, metadata validates/limits edits, retrieval ranks results, and trace-derived maintenance updates later memory
 
 **Core memory blocks.** Storage substrate: `block` table rows, agent/block pivot rows, optional block tags and history pointers, and optionally git-backed Markdown files when git memory is enabled. Representational form: prose values plus symbolic labels, descriptions, limits, read-only flags, metadata, tags, and path-like labels. Lineage: authored at agent creation, edited through API/tool calls, or trace-derived through sleeptime/background agents; git mode can preserve commit history, while ordinary database mode preserves less diff-oriented lineage. Behavioral authority: system-definition artifact when compiled into the system prompt, because block content and metadata directly shape the next model call; knowledge artifact when shown to users or edited as remembered facts.
 
@@ -88,6 +90,14 @@ The closest overlap is git-backed memory. Letta's memory repo path acknowledges 
 
 ## Trace-derived learning placement
 
+**Trace source:** `session-logs` `tool-traces` `event-streams` — Persisted conversation messages, tool calls/returns, run and step records, foreground responses handed to sleeptime agents, and compacted message windows
+
+**Learning scope:** `per-task` `per-project` `cross-task` — Scope spans conversations/runs, source or project associations, groups, archives, and organizations
+
+**Learning timing:** `online` `staged` — Foreground memory tools run during agent steps, while sleeptime and compaction run after turns, by group frequency, or under context pressure
+
+**Distilled form:** `prose` `symbolic` `parametric` — Distillation produces block edits, archival passages, and summary messages with prose content, symbolic metadata/control state, and embeddings or vector-indexed passage views
+
 **Trace source.** Letta qualifies as trace-derived. The raw signals include persisted conversation messages, tool calls/returns, run and step records, foreground response messages handed to sleeptime agents, and message windows compacted under context pressure.
 
 **Extraction.** Extraction is mostly LLM/tool mediated rather than a fixed classifier. Foreground agents can call memory tools to edit core blocks or insert archival passages. Sleeptime agents receive conversation transcripts with an explicit memory-management instruction and can use memory edit tools to update shared blocks. Compaction passes in-context messages through summarizer prompts and model settings to produce summary messages.
@@ -101,6 +111,12 @@ The closest overlap is git-backed memory. Letta's memory repo path acknowledges 
 ## Read-back placement
 
 **Direction.** Letta is both push and pull. Core memory blocks and selected file/source views are pushed into the model context through system prompt compilation. Conversation and archival memory are pull through tools such as `conversation_search` and `archival_memory_search`; the prompt-rendered counts and archive tags are availability metadata, not a push of archival memory content.
+
+**Read-back signal:** `identifier` — Pushed memory is selected by attached agent blocks, block labels, git `system/` labels, file/source associations, ids, names, open state, and configured windows rather than semantic top-k push
+
+**Read-back timing:** `pre-action` — Core blocks and file windows are present before the next model call; sleeptime and compaction outputs affect later turns only after persistence and prompt rebuild
+
+**Faithfulness tested:** `no` — The review found structural tests for rendering, prompt recompilation, sleeptime wiring, and compaction, but no with/without behavioral ablation for pushed core memory
 
 **Targeting and signal.** The pushed memory path is instance-targeted, with an `identifier` signal. Core blocks are selected by the receiving agent's attached memory blocks and block labels; git-enabled rendering narrows direct prompt memory to `system/` labels. File/source views are selected by agent-file/source associations, open-file state, file ids/names, and configured line/window limits. This is not semantic top-k selection for core blocks; archival semantic search remains pull.
 

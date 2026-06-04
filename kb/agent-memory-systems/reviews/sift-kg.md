@@ -32,7 +32,9 @@ sift-kg, by Juan Ceresa, is a local document-to-knowledge-graph CLI and Python l
 ## Artifact analysis
 
 - **Storage substrate:** `files` — `output/extractions/*.json` on the local filesystem
-- **Representational form:** `mixed` — Symbolic JSON with prose fields for entity context quotes and relation evidence
+- **Representational form:** `prose` `symbolic` — Symbolic JSON, YAML, graph structures, Markdown narratives, and CLI/skill instructions carry prose fields for entity context quotes, relation evidence, descriptions, reasons, and explanations.
+- **Lineage:** `authored` `imported` — Source documents are imported, while extraction files, discovered schemas, graph JSON, review queues, communities, narratives, exports, and the skill are derived from source text, authored domain rules, LLM extraction, deterministic postprocessing, and operator review.
+- **Behavioral authority:** `knowledge` `instruction` `routing` `ranking` `validation` — Extractions, graph artifacts, narratives, and exports advise users and agents, while schemas, review files, graph algorithms, query/topology tools, postprocessors, and the bundled skill constrain extraction, route lookup, rank visibility, or mutate reviewed graph state.
 
 **Per-document extraction files.** Storage substrate: `output/extractions/*.json` on the local filesystem. Representational form: symbolic JSON with prose fields for entity context quotes and relation evidence. Lineage: derived from source documents through text extraction, chunking, optional schema discovery, document-context generation, and LLM JSON extraction; stale when model, domain, or chunk size changes. Behavioral authority: knowledge artifact as source evidence for graph construction; system-definition input to `sift build` because it determines nodes and edges.
 

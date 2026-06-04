@@ -35,7 +35,9 @@ Graphiti, from getzep, is an open-source temporal context graph engine for AI-ag
 ## Artifact analysis
 
 - **Storage substrate:** `graph` — Graph database nodes under provider-specific graph storage
-- **Representational form:** `mixed` — Mixed structured metadata plus prose or JSON content
+- **Representational form:** `prose` `symbolic` `parametric` — prose episodes/facts/summaries, symbolic graph labels/metadata/timestamps/schemas, and embeddings/full-text indexes
+- **Lineage:** `authored` `imported` `trace-extracted` — episodes can be supplied directly, imported from structured/text enterprise data, or derived from conversational/message traces before LLM extraction
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `ranking` `learning` — graph objects advise as knowledge; prompts/schemas instruct and validate extraction; temporal filters enforce currentness; recipes route/rank retrieval; extraction learns graph state
 
 **Episode nodes.** Storage substrate: graph database nodes under provider-specific graph storage. Representational form: mixed structured metadata plus prose or JSON content. Lineage: authored/imported trace records supplied through `add_episode()`, `/messages`, or the MCP `add_memory` tool; if `store_raw_episode_content` is disabled, the source content is intentionally dropped after extraction. Behavioral authority: knowledge artifacts as evidence and provenance; they shape behavior only when retrieved or used as extraction context.
 
@@ -82,6 +84,14 @@ Graphiti's context model is also runtime-first. It assumes a host application wi
 **Do not borrow automatic fact extraction as automatic authority promotion.** Graphiti is persuasive as a memory graph, not as a governed KB learning loop. Extracted facts can advise future work; they should not become Commonplace instructions without source review and promotion.
 
 ## Trace-derived learning placement
+
+**Trace source:** `session-logs` `event-streams` — conversational messages and other host-submitted episode streams feed durable graph extraction.
+
+**Learning scope:** `cross-task` — graph partitions and `group_id` retain episode-derived facts for later host queries beyond a single immediate task.
+
+**Learning timing:** `online` `staged` — add operations process episodes during ingestion, while service and MCP layers queue episode processing for ordered group writes.
+
+**Distilled form:** `prose` `symbolic` `parametric` — extracted facts/summaries, temporal graph structure and schemas, and embeddings/full-text indexes are the durable distilled surfaces.
 
 **Trace source.** Graphiti qualifies as trace-derived because the implemented ingestion path derives durable graph artifacts from episodes, including conversational messages submitted through the Python API, FastAPI `/messages`, or MCP `add_memory` tool ([graphiti.py](https://github.com/getzep/graphiti/blob/34f56e65e0fe2096132c8d16f3a1a4ac9300a5f6/graphiti_core/graphiti.py), [ingest router](https://github.com/getzep/graphiti/blob/34f56e65e0fe2096132c8d16f3a1a4ac9300a5f6/server/graph_service/routers/ingest.py), [MCP server](https://github.com/getzep/graphiti/blob/34f56e65e0fe2096132c8d16f3a1a4ac9300a5f6/mcp_server/src/graphiti_mcp_server.py)). The trace source is not limited to agent transcripts; it can also be structured JSON, text documents, enterprise data, or direct fact triples.
 

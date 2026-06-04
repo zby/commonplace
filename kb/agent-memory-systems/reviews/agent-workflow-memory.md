@@ -33,7 +33,9 @@ Agent Workflow Memory, from Zhiruo Wang's `zorazrw/agent-workflow-memory` reposi
 ## Artifact analysis
 
 - **Storage substrate:** `files` — Filesystem text files under `mind2web/workflow/` or `webarena/workflow/`, plus user-specified output paths such as `workflow/{website}.txt`
-- **Representational form:** `mixed` — Prose workflow descriptions mixed with action snippets, placeholders, and in WebArena examples `<think>` / `<action>` blocks
+- **Representational form:** `prose` `symbolic` `parametric` — prose workflow descriptions and examples, symbolic action snippets/placeholders/JSON/scripts/prompts, and optional FAISS embeddings over workflow names/docstrings
+- **Lineage:** `authored` `imported` `trace-extracted` — authored induction scripts/prompts, imported seed or demonstration files, and trace-extracted workflows from prior result logs and successful trajectories
+- **Behavioral authority:** `knowledge` `instruction` `routing` `validation` `ranking` `learning` — logs and examples are evidence, workflows instruct the prompt, metadata and workflow paths route selection, rewards/evaluators validate eligible traces, sampling/FAISS rank candidates, and induction updates retained workflow memory
 
 **Workflow `.txt` files.** Storage substrate: filesystem text files under `mind2web/workflow/` or `webarena/workflow/`, plus user-specified output paths such as `workflow/{website}.txt`. Representational form: prose workflow descriptions mixed with action snippets, placeholders, and in WebArena examples `<think>` / `<action>` blocks. Lineage: imported seed files or LLM/manual distillates from training examples and successful result logs; online pipelines overwrite the active file rather than versioning individual updates. Behavioral authority: system-definition artifacts when loaded into the agent prompt as action guidance; knowledge artifacts when inspected as examples of solved web subtasks.
 
@@ -79,6 +81,14 @@ The main design tradeoff is context efficiency versus reviewability. AWM compres
 
 ## Trace-derived learning placement
 
+**Trace source:** `session-logs` `tool-traces` `trajectories` — Mind2Web result JSON and WebArena experiment logs preserve prior runs, actions, observations, rewards, and successful trajectory material.
+
+**Learning scope:** `cross-task` — workflows are induced from demonstrations or prior runs and loaded in later benchmark tasks, usually scoped by website/domain.
+
+**Learning timing:** `online` `offline` `staged` — Mind2Web has offline induction before inference, online induction from prior result JSON, and WebArena's staged run/evaluate/update loop.
+
+**Distilled form:** `prose` `symbolic` `parametric` — workflow prose and concrete action blocks are the main distillate, with symbolic placeholders/JSON/prompt structure and optional embedding-indexed workflow selection.
+
 **Trace source.** Agent Workflow Memory qualifies as trace-derived learning. Mind2Web consumes annotated training examples for offline induction and prior inference result JSON for online induction. WebArena consumes BrowserGym experiment logs, task configs, summary rewards, auto-evaluator outputs, and screenshots through the evaluation path.
 
 **Extraction.** Mind2Web extraction is LLM summarization over formatted task/action examples, followed by simple text filtering keyed to the website. WebArena extraction is either concrete-example selection with optional manual acceptance (`induce_rule.py`) or LLM workflow summarization over successful trajectories (`induce_prompt.py`). The oracle is benchmark reward, model-based auto-evaluation, manual acceptance, or ground-truth demonstrations depending on the path.
@@ -90,6 +100,12 @@ The main design tradeoff is context efficiency versus reviewability. AWM compres
 ## Read-back placement
 
 **Direction.** Agent Workflow Memory uses push from the acting agent's perspective. The agent does not ask for memory; the harness reads a retained workflow file or exemplar set and inserts it into the next prompt before generation.
+
+**Read-back signal:** `identifier` `inferred / embedding` — deployed loops select by configured workflow paths, website-specific files, and Mind2Web domain/subdomain/website specifiers, while the optional Mind2Web retrieval utility can preselect workflows by FAISS embeddings.
+
+**Read-back timing:** `pre-action` — retained workflow memory is inserted before Mind2Web step generation or WebArena's next `<think>` and action.
+
+**Faithfulness tested:** `no` — benchmark comparisons exist, but the review did not find a specific workflow perturbation or ablation proving that injected workflow memory changes downstream behavior.
 
 **Targeting and signal.** Targeting is `instance` in the deployed benchmark loops. WebArena's signal is `identifier`: the pipeline chooses a website-specific `workflow/{website}.txt`, passes it as `workflow_path`, and the agent appends that file to the system prompt. Mind2Web also uses `identifier` signals: the configured `workflow_path` and exemplar `specifier` fields matching website, subdomain, and domain, followed by `retrieve_top_k` sampling. The optional Mind2Web retrieval utility adds an `inferred / embedding` preprocessing path over workflow names/docstrings, but it writes a selected workflow file ahead of the main loop rather than selecting inside each action call.
 

@@ -33,7 +33,9 @@ Echel, from `alirezabbasi/echel`, is a product-creation scaffold and local opera
 ## Artifact analysis
 
 - **Storage substrate:** `files` - The central retained state is project-local Markdown/JSON: `wiki/*.md`, `wiki/work/TASK-*.md`, `wiki/decisions/ADR-*.md`, `wiki/reports/**`, `wiki/graph.json`, `ruleset.md`, `schema/*.md`, `project.echel`, `.echel/gates.json`, `.echel/evidence_registry.json`, and `.echel/memory_records.jsonl`. The optional cockpit also uses SQLite under `.echel/platform/`, but that is not the main project-memory substrate.
-- **Representational form:** `mixed` - Prose Markdown carries product intent, decisions, risks, tasks, reports, rules, and agent instructions; symbolic JSON carries config, graph nodes/edges, evidence registry, gates, memory records, and platform state; Python code and schemas define the generators, validators, and command contracts.
+- **Representational form:** `prose` `symbolic` - Prose Markdown carries product intent, decisions, risks, tasks, reports, rules, and agent instructions; symbolic JSON carries config, graph nodes/edges, evidence registry, gates, memory records, and platform state; Python code and schemas define the generators, validators, and command contracts.
+- **Lineage:** `authored` `imported` - Product memory is scaffolded from CLI inputs or existing-source mode, then authored by domain experts and agents; generated graph, packets, reports, and readiness views are derived from the current wiki, evidence registry, gates, and validation state rather than from session traces.
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `ranking` - Wiki pages and cockpit views provide product context; work packets, rules, schemas, evidence gates, graph validation, readiness reports, and graph-selected tasks instruct, gate, route, validate, and prioritize future work.
 
 **Product wiki pages.** Storage substrate: `wiki/` Markdown files generated and updated by `project_init.py`, `ensure_product_pages()`, `define`, `clarify`, `steer`, and manual/agent edits. Representational form: prose with YAML frontmatter and conventional sections. Lineage: initially scaffolded from CLI inputs or existing-source mode, then authored by domain experts and agents. Behavioral authority: knowledge artifacts when read as product context, and weak system-definition artifacts when rules/prompts require agents to update or obey the pages.
 
@@ -83,6 +85,12 @@ The divergence is type discipline and abstraction level. Commonplace treats coll
 ## Read-back placement
 
 **Direction.** Both. Operators and agents pull retained memory through `status`, `graph show/report`, `memory query`, cockpit dashboard APIs, and file reads. Echel also produces push-style agent handoffs: `session_bootstrap.py` prints the baseline memory bundle, prompt files tell agents what to load, and `build`/`packet` generates a work packet from the active task and graph.
+
+**Read-back signal:** `coarse` `identifier` - Session bootstrap is a coarse baseline bundle, while work packets and review reports select retained product memory by task ids, fixed wiki paths, graph node ids, evidence ids, and configured roots.
+
+**Read-back timing:** `pre-action` `post-action` - Bootstrap and work packets are meant to be read before implementation or review; review, readiness, proof-pack, and release reports are post-action audit surfaces that can constrain follow-up work.
+
+**Faithfulness tested:** `no` - Echel validates artifact structure, evidence links, graph integrity, drift, and gates, but the review found no with/without test proving that pushed packets or bootstrap context improve agent behavior.
 
 **Targeting and signal.** Targeting is `instance` for work packets and review reports: a task id, or the graph-selected next open task, determines which product context, graph context, acceptance criteria, likely files, and evidence obligations are assembled. The signal is `identifier`, because selection keys on task ids, fixed wiki paths, graph node ids, evidence ids, and configured root names rather than semantic relevance inference. Session bootstrap is a coarser always-load baseline.
 

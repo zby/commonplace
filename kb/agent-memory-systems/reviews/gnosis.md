@@ -33,9 +33,11 @@ Gnosis is Stavros Korokithakis's small Go CLI for project-local agent memory. It
 ## Artifact analysis
 
 - **Storage substrate:** `files` — Ordinary files under `.gnosis/`, intended to ship with code and be visible to git
-- **Representational form:** `mixed` — Mixed: prose body text plus symbolic metadata for ID, topics, related IDs, and timestamps
+- **Representational form:** `prose` `symbolic` — prose body text and doctrine, plus symbolic metadata for ID, topics, related IDs, timestamps, indexes, and command routing
+- **Lineage:** `authored` `trace-extracted` — entries are authored by an agent or human through CLI commands, and doctrine can make the agent distill live-session observations into durable entries
+- **Behavioral authority:** `knowledge` `instruction` `routing` `ranking` — entries provide advisory knowledge; doctrine and host instructions route agents into the CLI; FTS5 decides ranked retrieval order
 
-**Entries.** The central retained artifacts are `.gnosis/entries.jsonl` entries in the project repo. Their storage substrate is ordinary files under `.gnosis/`, intended to ship with code and be visible to git. Their representational form is mixed: prose body text plus symbolic metadata for ID, topics, related IDs, and timestamps. Their lineage is authored live by an agent or human through `gn write` or rewritten through `gn edit`; when produced by the planning/review doctrine, they are distilled from the agent's current work session rather than regenerated from source files or retained raw logs. Their behavioral authority is mostly knowledge-artifact authority: future agents consume entries as evidence, reference, context, or advice. They become stronger only when an agent accepts a retrieved decision as constraining the next plan.
+**Entries.** The central retained artifacts are `.gnosis/entries.jsonl` entries in the project repo. Their storage substrate is ordinary files under `.gnosis/`, intended to ship with code and be visible to git. Their representational form combines prose body text with symbolic metadata for ID, topics, related IDs, and timestamps. Their lineage is authored live by an agent or human through `gn write` or rewritten through `gn edit`; when produced by the planning/review doctrine, they are distilled from the agent's current work session rather than regenerated from source files or retained raw logs. Their behavioral authority is mostly knowledge-artifact authority: future agents consume entries as evidence, reference, context, or advice. They become stronger only when an agent accepts a retrieved decision as constraining the next plan.
 
 **Doctrine.** `internal/doctrine/*.txt`, exposed through `gn help`, is a prose system-definition artifact. Its storage substrate is embedded text in the Go binary, sourced from repo files at build time. Its representational form is prose instruction. Its lineage is authored product doctrine, with `docs/PRODUCT_STRATEGY.md` documenting the signal-to-noise decision behind "record what the human knows." Its behavioral authority is instruction and routing: when `AGENTS.md` tells an agent to run `gn help plan` or `gn help review`, the doctrine tells the agent when to search, what counts as worth recording, and when to avoid writing noise.
 
@@ -80,13 +82,18 @@ The second divergence is the writer filter. Commonplace often wants agents to di
 
 ## Trace-derived learning placement
 
+- **Trace source:** `session-logs` — the source trace is the live agent session context rather than stored chat logs, shell history, commits, or hidden tool traces
+- **Learning scope:** `per-task` `per-project` `cross-task` — capture happens during one task, storage is project-local, and entries are meant to inform later tasks in the same repo
+- **Learning timing:** `online` `staged` — agents write during work and again during end-of-session review; there is no offline corpus pass
+- **Distilled form:** `prose` `symbolic` — distilled JSONL entries carry prose observations plus symbolic topics, IDs, related IDs, and timestamps
+
 Gnosis qualifies as trace-derived in the manual/live-extraction sense, not the automated transcript-mining sense. The code does not ingest stored chat logs, shell history, commits, or hidden tool traces. Instead, the embedded doctrine makes the acting agent use the current work session as the trace and explicitly write distilled entries while context is still available.
 
 **Trace source.** The source trace is the live agent session: the user's task context, plan, decisions made during implementation, rejected alternatives, empirical findings, and end-of-session observations. `plan.txt` tells the agent to record decisions immediately when context might be lost, and `review.txt` tells the agent to scan the finished session for durable intangibles ([internal/doctrine/plan.txt](https://github.com/skorokithakis/gnosis/blob/cd1f9921605c6fd43fda2128030b9b43ac72422f/internal/doctrine/plan.txt), [internal/doctrine/review.txt](https://github.com/skorokithakis/gnosis/blob/cd1f9921605c6fd43fda2128030b9b43ac72422f/internal/doctrine/review.txt)).
 
 **Extraction.** The extraction oracle is the acting agent following prose doctrine. It decides whether a session observation is non-reproducible enough to retain, then writes a distilled prose entry through `gn write <topics> <text> [--related id,id]`. Gnosis does not supply an LLM judge, confidence score, automatic summarizer, or separate curation pass ([internal/commands/write.go](https://github.com/skorokithakis/gnosis/blob/cd1f9921605c6fd43fda2128030b9b43ac72422f/internal/commands/write.go)).
 
-**Four fields.** The raw trace is ephemeral working context, not a retained gnosis artifact. The durable extracted artifact is the JSONL entry described in Artifact analysis: file substrate, mixed prose/symbolic form, session-authored lineage, and knowledge-artifact authority at future read time. The doctrine and host `AGENTS.md` instructions are the system-definition artifacts that cause the extraction loop to run.
+**Four fields.** The raw trace is ephemeral working context, not a retained gnosis artifact. The durable extracted artifact is the JSONL entry described in Artifact analysis: file substrate, prose/symbolic form, session-authored lineage, and knowledge-artifact authority at future read time. The doctrine and host `AGENTS.md` instructions are the system-definition artifacts that cause the extraction loop to run.
 
 **Scope and timing.** The loop is per-repository and cross-session in storage, but per-task in capture. Extraction happens online during work and again at a staged end-of-session review. There is no offline corpus pass over accumulated transcripts.
 

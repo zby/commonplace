@@ -35,7 +35,9 @@ MiroShark, from Aaron Mars's `aaronjmars/MiroShark` repository, is a web applica
 ## Artifact analysis
 
 - **Storage substrate:** `graph` — Neo4j plus on-disk upload/project state
-- **Representational form:** `mixed` — Mixed symbolic/prose/vector, with entity nodes, relation edges, ontology JSON, raw episode text, embeddings, temporal fields, and epistemic kind fields
+- **Representational form:** `prose` `symbolic` `parametric` — prose episode/report/action content, symbolic graph/JSON/SQLite/tool schemas, and embedding-backed graph search
+- **Lineage:** `authored` `imported` `trace-extracted` — authored simulation/configuration surfaces, imported source documents, and trace-extracted action, belief, trajectory, graph-memory, and reasoning artifacts
+- **Behavioral authority:** `knowledge` `instruction` `routing` `ranking` `learning` — graph/report/provenance artifacts provide knowledge; prompt injections and tool catalogues instruct; MCP/API/search surfaces route; search fusion/reranking ranks; trace updates learn belief and graph-memory state
 
 **Source graph.** Storage substrate: Neo4j plus on-disk upload/project state. Representational form: mixed symbolic/prose/vector, with entity nodes, relation edges, ontology JSON, raw episode text, embeddings, temporal fields, and epistemic kind fields. Lineage: authored or imported source text is chunked into NER-derived entities and relation facts; entity resolution and contradiction detection derive a current graph view while retaining invalidated edges for point-in-time queries. Behavioral authority: mostly knowledge artifact for simulation setup, report evidence, graph search, MCP retrieval, and frontend display; it gains ranking authority when vector/BM25/traversal/rerank decide what facts enter a report or assistant response.
 
@@ -88,6 +90,14 @@ The report reasoning trace is a strong analogue to Commonplace review reports. B
 
 ## Trace-derived learning placement
 
+**Trace source:** `tool-traces` `event-streams` `trajectories` — platform action logs, per-platform rows, posts/comments/trades, engagement and market events, belief snapshots, and report-agent ReACT tool traces
+
+**Learning scope:** `per-task` — trace learning is scoped to a simulation/run and its per-agent/per-platform state rather than a cross-project corpus
+
+**Learning timing:** `online` `staged` — belief, round-memory, and optional graph-memory updates happen during a run, while report reasoning and provenance outputs are generated in later report/publication stages
+
+**Distilled form:** `prose` `symbolic` `parametric` — compacted prompt summaries and episodes, symbolic belief/trajectory/reasoning/provenance records, and embedding-backed graph-memory retrieval
+
 **Trace source.** MiroShark qualifies as trace-derived learning. The qualifying traces are platform action logs, per-platform SQLite rows, simulated posts/comments/trades, engagement, market state, director/counterfactual events, per-round belief snapshots, and report-agent ReACT tool/thought/observation traces. Source documents are not trace-derived; they are imported source material that generates graph facts.
 
 **Extraction.** Extraction has several routes. `BeliefTracker` and `RoundAnalyzer` compute belief deltas from posts seen, engagement, trust, novelty, and sentiment heuristics. `RoundMemory` compacts prior rounds into prompt summaries. `GraphMemoryUpdater` converts batched agent actions into natural-language episode text, then reuses NER/entity-resolution/embedding to write graph edges. `ReasoningTraceRecorder` records report-agent thoughts, tool calls, observations, and conclusions as a Neo4j subgraph.
@@ -101,6 +111,12 @@ The report reasoning trace is a strong analogue to Commonplace review reports. B
 ## Read-back placement
 
 **Direction.** MiroShark is both pull and push. Graph search, report tools, CLI report/status/frame commands, and the standalone MCP server are pull surfaces. Inside the simulation loop, agents receive pushed retained memory before action: persisted or in-process belief state, compacted round history, cross-platform digests, market/sentiment state derived from prior simulated actions, and per-agent MCP results from earlier calls. Director/counterfactual events and the MCP tool catalogue are pushed situational context or baseline tool surface, but they are not the memory path that makes the verdict `both`.
+
+**Read-back signal:** `identifier` — push selection keys on simulation round, platform membership, active-agent id, per-agent belief-state id, excluded platform, feature flags, and persona/tool configuration
+
+**Read-back timing:** `pre-action` `post-action` — retained state is injected before `env.step`, while belief/action/market/MCP updates are recorded after a round for the next activation
+
+**Faithfulness tested:** `no` — the review found no WITH/WITHOUT ablation or post-action check proving injected memory changes behavior as intended
 
 **Targeting and signal.** The memory push is `instance`-targeted with an `identifier` signal. The code keys on already-available identifiers: simulation round, platform membership, active-agent id, per-agent belief-state id, excluded platform for cross-platform digests, feature flags, and persona/tool configuration. It is not semantic relevance matching over the whole graph. The before-action hook has scope controls: active agents in the current platform round receive the relevant marker-delimited blocks, and MCP results are delivered to the agent id that requested them.
 

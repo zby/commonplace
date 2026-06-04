@@ -35,7 +35,9 @@ DocMason, from JetXu-LLM's `DocMason` repository, is a repo-native local applica
 ## Artifact analysis
 
 - **Storage substrate:** `files` — The workspace filesystem under `original_doc/`, with sample public fixtures separately held under `sample_corpus/` and copied only for demo use (https://github.com/JetXu-LLM/DocMason/blob/f84935b2b7e1e59e64d8ba78066c35d5f55c8559/docs/product/distribution-and-benchmarks.md)
-- **Representational form:** `mixed` — Mixed: binary Office/PDF, text, email, markdown, and lightweight structured text
+- **Representational form:** `prose` `symbolic` — Source documents, summaries, answer files, and turn excerpts are prose; manifests, JSON/JSONL state, graph edges, retrieval records, trace records, workflow metadata, and validation contracts are symbolic.
+- **Lineage:** `authored` `imported` `trace-extracted` — Canonical skills and contracts are authored repo state, private documents are imported source inputs, and interaction memories are derived from host session, prompt, tool-use, and stop traces.
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `ranking` `learning` — Source evidence and interaction memories supply knowledge; skills and contracts instruct; ask/finalization gates enforce; workflows route; validation and trace check support; retrieval policies rank; interaction promotion turns traces into retained memory.
 
 **Private source corpus.** The storage substrate is the workspace filesystem under `original_doc/`, with sample public fixtures separately held under `sample_corpus/` and copied only for demo use (https://github.com/JetXu-LLM/DocMason/blob/f84935b2b7e1e59e64d8ba78066c35d5f55c8559/docs/product/distribution-and-benchmarks.md). The representational form is mixed: binary Office/PDF, text, email, markdown, and lightweight structured text. Lineage is source-of-truth input lineage, tracked through source manifests, fingerprints, path history, first/last seen metadata, and source IDs during sync. Behavioral authority is knowledge artifact authority: source files are evidence and reference, not direct instructions to the agent until compiled and retrieved.
 
@@ -86,6 +88,14 @@ DocMason's context strategy is also more engineered than ordinary markdown-vault
 
 ## Trace-derived learning placement
 
+**Trace source:** `session-logs` `tool-traces` `event-streams` — Host-agent session starts/ends, user prompts, selected tool uses, stop events, and reconciled native threads are mirrored into interaction entries.
+
+**Learning scope:** `per-project` `cross-task` — Interaction memory is workspace-local and conversation-grouped, then participates in later retrieval and trace across future asks in the same project corpus.
+
+**Learning timing:** `online` `staged` — Hooks capture online, while durable promotion happens at sync time and is published only after validation.
+
+**Distilled form:** `prose` `symbolic` — Turn excerpts, summaries, and copied attachment context are prose; JSONL events, manifests, interaction context, semantic fields, retrieval records, trace records, and promoted-entry markers are symbolic.
+
 **Trace source.** DocMason qualifies as trace-derived learning. The qualifying traces are host-agent session and turn traces: Claude Code hook events mirror session starts/ends, user prompts, selected tool uses, and stop events into JSONL files, and the interaction subsystem also reconciles active Codex or Claude Code native threads into interaction entries (https://github.com/JetXu-LLM/DocMason/blob/f84935b2b7e1e59e64d8ba78066c35d5f55c8559/src/docmason/hooks.py, https://github.com/JetXu-LLM/DocMason/blob/f84935b2b7e1e59e64d8ba78066c35d5f55c8559/src/docmason/interaction.py).
 
 **Extraction.** Extraction is mostly deterministic grouping and projection rather than LLM profile synthesis. Pending interaction entries are grouped by conversation, turn text and assistant excerpts are written into per-turn text assets, attachments are copied, relation hints are preserved, and memory semantics are normalized into `memory_kind`, `durability`, `uncertainty`, `answer_use_policy`, and `retrieval_rank_prior` (https://github.com/JetXu-LLM/DocMason/blob/f84935b2b7e1e59e64d8ba78066c35d5f55c8559/src/docmason/interaction.py, https://github.com/JetXu-LLM/DocMason/blob/f84935b2b7e1e59e64d8ba78066c35d5f55c8559/src/docmason/routing.py). If previous semantic outputs exist, the builder preserves them across rebuilds; otherwise the interaction memory can remain pending semantic output until the sync/knowledge-construction path covers it.
@@ -99,6 +109,12 @@ DocMason's context strategy is also more engineered than ordinary markdown-vault
 ## Read-back placement
 
 **Direction.** DocMason is both pull and push. Public `retrieve` and `trace` are pull tools when an operator or inner workflow deliberately invokes them. From the receiving agent's perspective, canonical `ask` also pushes retained memory surfaces into the turn before answer drafting: warm-start pointers from historical answer records and pending interaction-derived memory notices. Its routed execution metadata, support contracts, and required workflow steps are shipped/system-definition context rather than memory read-back, but they govern how the pushed memory may be used (https://github.com/JetXu-LLM/DocMason/blob/f84935b2b7e1e59e64d8ba78066c35d5f55c8559/skills/canonical/ask/SKILL.md, https://github.com/JetXu-LLM/DocMason/blob/f84935b2b7e1e59e64d8ba78066c35d5f55c8559/src/docmason/front_controller.py).
+
+**Read-back signal:** `inferred / lexical` — Warm-start answer evidence and pending interaction relevance key on token overlap and lexical question/memory profiles, with policy gates for corpus signature, question domain, memory kind, answer use, durability, and source scope.
+
+**Read-back timing:** `pre-action` — Canonical ask pushes retained warm-start and interaction-memory surfaces before answer drafting or routing hands the turn to an evidence workflow.
+
+**Faithfulness tested:** `no` — The review found trace/admissibility checks and evaluation support, but no production with/without read-back ablation proving fired memory changed a future answer.
 
 **Targeting and signal.** Push activation is engineered and instance-targeted rather than always-load only. The final memory relevance signal is `inferred / lexical`: `question_execution_profile` normalizes question class/domain, evidence requirements, source-scope intent, and a `memory_query_profile`, then computes warm-start evidence by token overlap against similar historical answer questions under corpus-signature and question-domain constraints (https://github.com/JetXu-LLM/DocMason/blob/f84935b2b7e1e59e64d8ba78066c35d5f55c8559/src/docmason/front_controller.py, https://github.com/JetXu-LLM/DocMason/blob/f84935b2b7e1e59e64d8ba78066c35d5f55c8559/src/docmason/routing.py). Pending interaction activation also keys on lexical overlap, then gates or adjusts the result with memory-kind, answer-use, durability, memory-query profile, source scope, and question-domain policy before it blocks, warns, or participates in retrieval (https://github.com/JetXu-LLM/DocMason/blob/f84935b2b7e1e59e64d8ba78066c35d5f55c8559/src/docmason/interaction.py, https://github.com/JetXu-LLM/DocMason/blob/f84935b2b7e1e59e64d8ba78066c35d5f55c8559/src/docmason/retrieval.py).
 

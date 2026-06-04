@@ -33,7 +33,9 @@ Phantom, from `ghostwright/phantom`, is a Bun/TypeScript agent runtime for an AI
 ## Artifact analysis
 
 - **Storage substrate:** `vector` — Qdrant collection named by `config/memory.yaml`, default `episodes`
-- **Representational form:** `mixed` — Mixed distributed-vector and symbolic payload state, with `summary`, `detail`, and sparse `text_bm25` vectors plus payload fields for session id, user id, tools, files, outcome, importance, access count, timestamps, and lessons
+- **Representational form:** `prose` `symbolic` `parametric` — prose summaries/details and Markdown config, symbolic payload fields/SQLite rows/schemas, and Qdrant dense plus sparse vector state
+- **Lineage:** `authored` `trace-extracted` — seed/config/tool surfaces are authored or agent/operator-created, while sessions feed Qdrant memories and evolved config through consolidation and reflection
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `ranking` `learning` — recalled memories are advisory knowledge; evolved config and prompt assembly instruct; invariant rollback enforces and validates; MCP/scheduler/runtime surfaces route; Qdrant/search signals rank; consolidation and evolution learn from traces
 
 **Qdrant episodic memories.** Storage substrate: Qdrant collection named by `config/memory.yaml`, default `episodes`. Representational form: mixed distributed-vector and symbolic payload state, with `summary`, `detail`, and sparse `text_bm25` vectors plus payload fields for session id, user id, tools, files, outcome, importance, access count, timestamps, and lessons. Lineage: trace-extracted from completed channel sessions by `consolidateSession()`, which summarizes the first user message and records tool/file/outcome metadata. Behavioral authority: knowledge-artifact context when recalled into the prompt, and ranking system-definition authority through importance, recency, access reinforcement, and decay.
 
@@ -90,6 +92,11 @@ Phantom's context story is operationally better for a chat agent. A user message
 
 ## Trace-derived learning placement
 
+- **Trace source:** `session-logs` `tool-traces` — completed sessions supply user/assistant messages, session metadata, tracked files, tool metadata, costs, outcomes, and summaries for consolidation and evolution
+- **Learning scope:** `per-task` `cross-task` — per-session memories record individual interactions, while evolved config and reusable facts/strategies shape later sessions
+- **Learning timing:** `online` `staged` — normal consolidation runs after each ready-memory session, while evolution queues gated summaries for cadence-based batch reflection
+- **Distilled form:** `prose` `symbolic` `parametric` — traces become prose episodes/facts/config, symbolic Qdrant/SQLite payload and metadata rows, and embedded dense/sparse memory vectors
+
 Phantom qualifies for `trace-derived` twice.
 
 The first trace source is the normal completed session: user messages, assistant messages, files tracked, cost, outcome, and session metadata assembled after a channel response. Consolidation creates an episodic memory for every ready-memory session and heuristic semantic facts from explicit correction/preference patterns, then stores embeddings and payloads in Qdrant. This is online, per-session, and low curation: no LLM judge decides the fact content in the current implementation, and procedure extraction remains unimplemented in this path.
@@ -101,6 +108,12 @@ On the survey axes, Phantom combines online trace extraction, LLM-mediated refle
 ## Read-back placement
 
 **Direction.** Both push and pull. Pull surfaces include `phantom_memory_query`, `phantom_memory_search`, `phantom_config`, MCP resources, reflective in-process memory tools, and dashboard memory/config APIs. Push occurs when the runtime builds memory context from the incoming message and appends it to the system prompt before the SDK query.
+
+**Read-back signal:** `coarse` `inferred / lexical` `inferred / embedding` — evolved config and working memory are always-loaded coarse memory, while dynamic Qdrant context uses current-message lexical and embedding search before the SDK call.
+
+**Read-back timing:** `pre-action` `post-action` — memory context and evolved config are assembled before the agent acts; consolidation and evolution run after sessions and affect later turns.
+
+**Faithfulness tested:** `no` — the review finds insertion, selection, rollback, and invariant mechanisms, but no WITH/WITHOUT ablation or post-action audit proving behavioral uptake.
 
 **Targeting and signal.** Phantom has two memory push shapes. Evolved config and working memory are `coarse`: they are retained memory accumulated or edited during use, but `assemblePrompt()` appends them whenever the blocks exist, so they provide generic standing continuity rather than selection for this instance. Dynamic Qdrant memory is `instance`-targeted: each runtime/web-chat query passes the current user text into `MemoryContextBuilder.build()`, which recalls episodes, facts, and one procedure before the SDK call. The signal is mixed `inferred / embedding` plus `inferred / lexical`: stores embed the query and also build sparse BM25-like vectors from the query text, then Qdrant hybrid search and ranking/validity/top-k filters choose the prompt payload. Payload identifiers such as session id, user id, type, category, and timestamps can filter or rank records, but the deployed per-query selector's relevance signal is content-derived.
 

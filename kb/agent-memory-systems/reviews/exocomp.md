@@ -32,7 +32,9 @@ Exocomp, from Cookie Engineer's `cookiengineer/exocomp` repository, is a self-ho
 ## Artifact analysis
 
 - **Storage substrate:** `files` — Go-embedded YAML under `source/agents/`, with an extension hook that reads `agents/*.yaml` from the playground at tool boot
-- **Representational form:** `mixed` — Mixed prose and symbolic permissions: role prompts, model defaults, temperature, allowed tools, and allowed programs
+- **Representational form:** `prose` `symbolic` — Role prompts, ledger fields, skill bodies, and work reports are prose; YAML/JSON metadata, tool schemas, Go handlers, sandbox checks, and executable scripts are symbolic
+- **Lineage:** `authored` `imported` `trace-extracted` — Roles, tools, and ledgers are authored configuration or deliberate agent output; playground skills and role files can be imported; session/recovery files and child-agent reports come from runtime interaction
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` — Ledgers, sessions, and reports advise as knowledge; role prompts and loaded skills instruct; tool/program allowlists, sandboxing, schemas, subprocess dispatch, and parsing/permission checks constrain execution
 
 **Embedded and playground-provided role definitions.** The storage substrate is Go-embedded YAML under `source/agents/`, with an extension hook that reads `agents/*.yaml` from the playground at tool boot. The representational form is mixed prose and symbolic permissions: role prompts, model defaults, temperature, allowed tools, and allowed programs. Lineage is authored configuration, either shipped in the repository or supplied by the local playground. Behavioral authority is system-definition artifact authority: the role package defines the initial system prompt and the executable surface available to the agent.
 
@@ -66,6 +68,12 @@ Exocomp is stronger on live agent orchestration. The planner can spawn role-boun
 Commonplace is stronger on artifact governance. Exocomp's JSON ledgers are easy for agents to read and write, but they have thin schemas, no citation discipline, no validation lifecycle beyond tool-level parsing, and no semantic review before a recorded requirement or bug influences later action. That is appropriate for a local coding workbench but too weak for durable methodology claims.
 
 **Read-back:** `both` — Retained session recovery is pushed coarsely at TTY/web session start, with no instance signal or relevance gate; requirements, bugs, changelogs, work reports, file contents, and skills enter through explicit tool calls or manual skill loading. Role prompts, tool schemas, and shipped role text are baseline context surfaces, not memory read-back
+
+**Read-back signal:** `coarse` — Session recovery pushes retained state at TTY/web session start without an instance signal or relevance gate.
+
+**Read-back timing:** `pre-action` — The pushed recovery state is restored at session start before the receiving agent acts.
+
+**Faithfulness tested:** `not-determinable` — The review records recovery mechanics but no with/without behavioral test for whether restored memory changes later action.
 
 ### Borrowable Ideas
 

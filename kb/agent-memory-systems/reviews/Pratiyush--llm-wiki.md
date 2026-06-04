@@ -33,7 +33,9 @@ llm-wiki, from Pratiyush's `Pratiyush/llm-wiki` repository, is a local-first Pyt
 ## Artifact analysis
 
 - **Storage substrate:** `model-weights` — Python modules under `llmwiki/adapters/` and `llmwiki/convert.py`, plus user config and state files such as `examples/sessions_config.json` and `.llmwiki-state.json`
-- **Representational form:** `mixed` — Symbolic code/config, with prose comments and docs
+- **Representational form:** `prose` `symbolic` — prose Markdown, docs, prompts, and wiki pages plus symbolic code, config, frontmatter, links, JSON, indexes, manifests, and lint/lifecycle rules
+- **Lineage:** `authored` `imported` `trace-extracted` — authored implementation, instructions, wiki edits, and validators; imported opt-in user content and static exports; trace-extracted raw sessions and distilled wiki pages
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `ranking` `learning` — pages and exports act as knowledge; commands, skills, adapters, MCP tools, lint, lifecycle, candidates, caps, search, graph, and trace distillation instruct, enforce, route, validate, rank, and learn from traces
 
 **Adapter registry and conversion rules.** Storage substrate: Python modules under `llmwiki/adapters/` and `llmwiki/convert.py`, plus user config and state files such as `examples/sessions_config.json` and `.llmwiki-state.json`. Representational form: symbolic code/config, with prose comments and docs. Lineage: authored implementation plus adapter-specific schema assumptions; state entries derive from source file mtimes and adapter names. Behavioral authority: system-definition artifacts for routing which traces enter the raw layer, how project slugs are assigned, which records are filtered, what is redacted, and whether a source is treated as AI-session material or opt-in user content.
 
@@ -85,6 +87,14 @@ The other divergence is activation. llm-wiki is excellent at making historical w
 **Do not borrow README-ahead-of-code drift.** The Auto Dream, SessionStart hook, and plugin hook claims are useful product ambitions, but Commonplace should keep advertised activation paths tied to installed code and tested behavior.
 
 ## Trace-derived learning placement
+
+**Trace source:** `session-logs` `tool-traces` — coding-agent session histories, JSONL sessions, exports, local stores, and tool-bearing session records are converted into raw Markdown
+
+**Learning scope:** `per-project` `cross-task` — retained pages are organized by project slug, adapter, local installation, and optional vault overlay, then reused across later query/read/export surfaces
+
+**Learning timing:** `staged` — sync, synthesis/ingest, and build/export/graph compilation run after sessions or raw files already exist
+
+**Distilled form:** `prose` `symbolic` — distilled wiki pages are prose Markdown with symbolic frontmatter, wikilinks, indexes, graph/search exports, and MCP/static export metadata
 
 **Trace source.** llm-wiki qualifies as trace-derived learning because it derives durable retained artifacts from coding-agent traces. Qualifying traces include Claude Code JSONL sessions, Codex CLI JSONL sessions, Copilot/Cursor/Gemini/OpenCode-like local stores, ChatGPT exports, and optional Obsidian notes when explicitly enabled. The trace boundary is adapter discovery plus converter parsing.
 

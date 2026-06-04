@@ -35,7 +35,9 @@ CrewAI Memory is the memory layer inside crewAIInc's Python multi-agent framewor
 ## Artifact analysis
 
 - **Storage substrate:** `vector` — LanceDB rows by default, or Qdrant Edge points when `storage="qdrant-edge"` is configured
-- **Representational form:** `mixed` — Mixed symbolic/prose/distributed-parametric records: prose content, symbolic scope/categories/metadata/importance/timestamps/source/private fields, and embeddings
+- **Representational form:** `prose` `symbolic` `parametric` — prose content, symbolic scope/categories/metadata/importance/timestamps/source/private fields, and embeddings
+- **Lineage:** `authored` `imported` `trace-extracted` — records can be authored directly, imported through Knowledge sources, or extracted from agent/task and LiteAgent outputs
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `ranking` `learning` — memories act as evidence/context, prompt-injected advice, read-only/access-constrained tool surfaces, scope routing, retrieval ranking, and LLM-mediated mutation inputs
 
 **Memory records.** Storage substrate: LanceDB rows by default, or Qdrant Edge points when `storage="qdrant-edge"` is configured. Representational form: mixed symbolic/prose/distributed-parametric records: prose content, symbolic scope/categories/metadata/importance/timestamps/source/private fields, and embeddings. Lineage: authored directly through `remember`, trace-extracted through agent and LiteAgent outputs, flow-authored through `Flow.remember`, or updated/deleted by consolidation and explicit operations. Behavioral authority: knowledge artifact when read as evidence/context; ranking influence when embedding similarity, recency, importance, scopes, categories, and privacy filters decide what reaches the agent; advisory system-definition material when injected into prompts or returned by the memory tool.
 
@@ -84,6 +86,11 @@ CrewAI is ahead of Commonplace on runtime activation. Its LiteAgent can retrieve
 
 ## Trace-derived learning placement
 
+**Trace source:** `session-logs` — task/conversation bundles from Crew agent completion and LiteAgent calls provide the source signal for extraction.
+**Learning scope:** `per-task` `cross-task` — extraction is triggered from individual task or call results, then retained under crew/agent/flow scopes for later tasks or runs.
+**Learning timing:** `online` — memory extraction and LiteAgent saving happen in the runtime path after the producing task or answer.
+**Distilled form:** `prose` `symbolic` `parametric` — reusable memory statements become prose content with symbolic fields and embeddings in `MemoryRecord` storage.
+
 **Trace source.** CrewAI qualifies as trace-derived learning. The ordinary Crew agent executor captures task description, agent role, expected output, and final result, then feeds that trace-like bundle to memory extraction. LiteAgent captures the last user message, agent role, and final output. Flows can also call `remember` or `extract_memories` from application code, but the automatic trace-derived path is clearest in the agent executors.
 
 **Extraction.** Extraction is LLM-mediated. `extract_memories_from_content` asks for discrete, reusable statements and falls back to storing the full content as one memory if the extraction call fails. The later encoding flow may run additional LLM analysis for scope, categories, importance, metadata, and consolidation against similar existing memories.
@@ -97,6 +104,10 @@ CrewAI is ahead of Commonplace on runtime activation. Its LiteAgent can retrieve
 ## Read-back placement
 
 **Direction.** Both. Pull paths include `Memory.recall`, Flow `recall`, `Search memory`, and `query_knowledge`. Push paths are narrower: LiteAgent automatically recalls from the last user message and appends relevant memories to the system message before the LLM call. Ordinary Crew agents get memory tools and post-task saving, but I did not find a source-visible general Crew task pre-prompt injection path equivalent to the LiteAgent path.
+
+**Read-back signal:** `inferred / embedding` `inferred / judgment` — LiteAgent push is keyed by the last user message through vector recall, with deep recall able to add LLM query analysis.
+**Read-back timing:** `pre-action` — LiteAgent injects recalled memories before the LLM call that produces the next answer.
+**Faithfulness tested:** `no` — this review found observable prompt insertion but no with/without ablation proving downstream behavioral use.
 
 **Targeting and signal.** LiteAgent's trigger is a pending LLM call with memory configured, but the memory push is not a coarse always-load: it is `targeting: instance`, keyed by the last user message for this call. The signal is `inferred / embedding` as the primary selector: `_inject_memory_context()` passes the last user message to `memory.recall(query, limit=10)`, and recall embeds the query or LLM-distilled recall queries before vector search. Deep recall can add an LLM `judgment` layer by analyzing longer queries into scopes, time filters, and up to three recall queries, then confidence-routing low-confidence or complex cases; scopes/categories/privacy/recency/importance shape filtering and ranking. Precision, recall, context dilution, and effective authority are runtime properties, not established by the code alone.
 

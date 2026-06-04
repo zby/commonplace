@@ -37,6 +37,8 @@ Reflexion, from `noahshinn/reflexion`, is a research codebase for "Language Agen
 
 - **Storage substrate:** `in-memory` — Python object fields `self.reflections` and `self.reflections_str` inside `CoTAgent` and `ReactReflectAgent`
 - **Representational form:** `prose` — Prose reflection strings plus formatted prompt text
+- **Lineage:** `authored` `trace-extracted` — authored prompt templates/generators shape the loop, while failed traces, logs, and test feedback are distilled into reflections
+- **Behavioral authority:** `knowledge` `instruction` `routing` `validation` `learning` — logs provide audit knowledge; injected reflections and templates instruct; harness placement routes memory; benchmark oracles validate failure; reflection generation is the learning step
 
 **In-process HotPotQA reflections.** Storage substrate: Python object fields `self.reflections` and `self.reflections_str` inside `CoTAgent` and `ReactReflectAgent`. Representational form: prose reflection strings plus formatted prompt text. Lineage: trace-derived from the prior scratchpad when the previous attempt was incorrect, halted, or finished wrong; `LAST_ATTEMPT` can also reuse the whole truncated previous trace as context. Behavioral authority: system-definition-adjacent prompt advice for the next run on the same question, because the reflection header explicitly instructs the model to use the plans to avoid the previous failure. This path is not durable beyond the agent object unless notebooks or logs preserve it.
 
@@ -81,6 +83,14 @@ Reflexion also shows why "memory" and "learning" do not require a database. The 
 
 ## Trace-derived learning placement
 
+**Trace source:** `session-logs` `tool-traces` `trajectories` — scratchpads, action-observation trial logs, implementations, test feedback, and failed benchmark trajectories supply the raw signal
+
+**Learning scope:** `per-task` — reflections are scoped to the same question, environment, or programming item rather than a project or cross-task library
+
+**Learning timing:** `staged` — each cycle attempts, evaluates, reflects on failure, injects the reflection, and retries
+
+**Distilled form:** `prose` — failed traces and feedback are compressed into verbal plans, hints, and diagnoses
+
 **Trace source.** Reflexion qualifies as trace-derived learning. The qualifying traces are HotPotQA scratchpads, AlfWorld/WebShop action-observation trial logs, programming implementations plus unit-test feedback, and benchmark success/failure status. The trace boundary is a failed or incomplete attempt, not a continuous session miner.
 
 **Extraction.** Extraction is LLM-mediated but oracle-gated. HotPotQA asks the reflection model to diagnose a failed reasoning trace. AlfWorld and WebShop generate a "New plan" from an unsuccessful environment history and prior memory. Programming tasks ask for a few-sentence explanation of why the implementation is wrong according to tests, then use that reflection as a hint for the next implementation ([alfworld_runs/generate_reflections.py](https://github.com/noahshinn/reflexion/blob/218cf0ef1df84b05ce379dd4a8e47f17766733a0/alfworld_runs/generate_reflections.py), [webshop_runs/generate_reflections.py](https://github.com/noahshinn/reflexion/blob/218cf0ef1df84b05ce379dd4a8e47f17766733a0/webshop_runs/generate_reflections.py), [programming_runs/generators/generator_utils.py](https://github.com/noahshinn/reflexion/blob/218cf0ef1df84b05ce379dd4a8e47f17766733a0/programming_runs/generators/generator_utils.py)).
@@ -94,6 +104,12 @@ Reflexion also shows why "memory" and "learning" do not require a database. The 
 ## Read-back placement
 
 **Direction.** Push-only for the acting agent. Reflection memory is selected and inserted by the runner before a future attempt. A human can inspect logs or JSONL, but the agent does not issue a memory search.
+
+**Read-back signal:** `identifier` — the harness reuses the same question, environment config slot, programming item, or implementation chain when assembling the next prompt.
+
+**Read-back timing:** `pre-action` — pushed reflections are inserted before the next action loop or implementation generation.
+
+**Faithfulness tested:** `yes` — benchmark comparisons provide aggregate effect evidence for pushed reflections, though per-memory attribution remains unverified from code.
 
 **Targeting and signal.** Targeting is `instance`: the pushed memory is selected for the same HotPotQA question, AlfWorld/WebShop environment config, programming item, or implementation chain, not by an always-load or generic action-type event. The signal is `identifier`: the harness already carries the question, environment index/config slot, dataset item, or current implementation state and reuses that identity when assembling the next prompt. AlfWorld/WebShop additionally cap memory to the latest three entries before prompt construction. Precision/recall of the generated reflection content is not verified from code.
 

@@ -31,7 +31,9 @@ ARIS, from wanshuiyin's `Auto-claude-code-research-in-sleep`, is a research work
 ## Artifact analysis
 
 - **Storage substrate:** `files` — The repository filesystem under `skills/`, mirrored into target projects as symlinked `.claude/skills/` entries by `install_aris.sh`
-- **Representational form:** `mixed` — Mixed: prose procedures, symbolic frontmatter, shell snippets, and resolver contracts
+- **Representational form:** `prose` `symbolic` — Prose procedures, Markdown reports, and textual reminders plus symbolic frontmatter, JSON/JSONL state, shell snippets, diffs, hook configuration, and resolver contracts
+- **Lineage:** `authored` `imported` `trace-extracted` — Authored skill corpus and project notes, imported literature/project metadata, and trace-derived reviewer, run, hook, queue, and meta-optimization records
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `learning` — Wiki pages and traces provide evidence; skills instruct; guards, verdicts, and acceptance states enforce or validate; run/queue/query-pack state routes work; meta-optimization turns traces into proposed skill changes
 
 **Skill corpus.** Storage substrate is the repository filesystem under `skills/`, mirrored into target projects as symlinked `.claude/skills/` entries by `install_aris.sh`. Representational form is mixed: prose procedures, symbolic frontmatter, shell snippets, and resolver contracts. Lineage is authored, with helper drift checks and install manifests but not a generated build graph for every skill. Behavioral authority is system-definition authority: skills instruct the agent, route tools, define gates, name outputs, and constrain what counts as completion.
 
@@ -83,6 +85,14 @@ ARIS also pushes harder on cross-model governance. Commonplace has semantic revi
 
 ## Trace-derived learning placement
 
+**Trace source:** `session-logs` `event-streams` — Reviewer/session traces, Claude Code hook events, run state, queue state, and project/session status are the retained raw signals described here.
+
+**Learning scope:** `per-task` `per-project` `cross-task` — Review traces and queue runs are per task/run, Research Wiki and run state are project-local, and meta-optimization can aggregate project and global logs across skill invocations.
+
+**Learning timing:** `online` `staged` — Wiki updates, run state, queue state, and hook events are updated during workflows, while meta-optimization stages candidate diffs before a separate apply gate.
+
+**Distilled form:** `prose` `symbolic` — Distilled outputs are query packs, claim statuses, failed-idea warnings, reviewer memory, accepted verdict ids, run-state phase acceptance, and staged or landed skill patches.
+
 **Trace source.** ARIS consumes several trace classes: Claude Code hook events in `.aris/meta/events.jsonl`, reviewer prompts/responses in `.aris/traces/`, auto-review round state, experiment logs and result verdicts, failed or partial ideas, queue states, and session/project status. It is not a model-training system; the learned artifacts are prose, symbolic state, query packs, and candidate diffs.
 
 **Extraction.** Extraction is mostly procedural and deterministic around an agent judgment core. Research Wiki ingestion creates paper pages and graph edges through helper scripts; `/result-to-claim` uses a Codex judgment to update claims, experiments, idea outcomes, and query packs ([skills/result-to-claim/SKILL.md](https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/blob/665a238fda5d46259cb99d329a89772886e76da0/skills/result-to-claim/SKILL.md)). `research_wiki.py` deterministically rebuilds query packs from selected short fields. `meta-optimize` analyzes event logs, but only stages diffs; `/meta-apply` performs the binding cross-model review at landing. `capture_filter.py` blocks obvious self-poisoning captures such as transient tool failures becoming durable negative capability claims ([tools/capture_filter.py](https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/blob/665a238fda5d46259cb99d329a89772886e76da0/tools/capture_filter.py)).
@@ -96,6 +106,12 @@ ARIS also pushes harder on cross-model governance. Commonplace has semantic revi
 ## Read-back placement
 
 **Direction.** ARIS uses both pull and push from the acting agent's perspective. Slash-command invocation is pull, and the installed `SKILL.md` files are shipped baseline instructions rather than read-back. The memory push comes from generated project artifacts: `/idea-creator` preloads `research-wiki/query_pack.md`, session-recovery hooks surface Pipeline Status and state-file pointers, meta-readiness reads `.aris/meta/events.jsonl`, monitors read Claude session state, queues write and expose `queue_state.json`, and run-state resume reads `.aris/runs/<run_id>.json`.
+
+**Read-back signal:** `coarse` `identifier` — Workflow hooks and reminders can fire coarsely, while the payload is selected by project paths, status fields, run ids, phase names, queue-state paths, and session ids.
+
+**Read-back timing:** `pre-action` `post-action` — Query packs, restore, context refresh, and pre-compact reminders can shape the next action; SessionEnd, post-edit, queue, and readiness surfaces update or expose retained state after actions for later use.
+
+**Faithfulness tested:** `no` — The review states that ARIS records traces and verdict ids but does not generally run WITH/WITHOUT ablations proving fired query packs or hooks changed agent behavior.
 
 **Targeting and signal.** Targeting is instance-oriented where a workflow has already emitted a durable identifier: the `research-wiki/` directory and `query_pack.md` path select the active project wiki for `/idea-creator`; Pipeline Status, `REVIEW_STATE.json`, run ids, queue-state paths, and Claude session ids select the current project or run. The signal is `identifier`: path, event, project root, status field, run id, phase name, or session registry status. Some hook reminders are coarser, such as first tool call, every thirtieth tool call, pre-compaction, post-edit, or SessionEnd, but their payload is still drawn from retained project/status artifacts when present. ARIS does not use lexical, embedding, or LLM-judgment retrieval for these push paths; actual precision, recall, and context dilution are not verified from code.
 

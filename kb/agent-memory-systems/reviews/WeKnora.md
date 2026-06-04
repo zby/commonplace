@@ -35,7 +35,9 @@ WeKnora, from Tencent's `Tencent/WeKnora` repository, is an enterprise RAG and a
 ## Artifact analysis
 
 - **Storage substrate:** `rdbms` - The dominant retained memory lives in relational tables for knowledge bases, knowledge rows, chunks, wiki pages, sessions, messages, task queues, and configuration, with adjunct object storage for original files, vector/keyword stores for retrieval indexes, Neo4j for optional memory/graph features, and Redis for transient wiki locks.
-- **Representational form:** `mixed` - WeKnora combines prose documents and generated Markdown, symbolic rows/configs/tasks/API contracts, vector embeddings and sparse indexes, and graph entities/relationships.
+- **Representational form:** `prose` `symbolic` `parametric` - WeKnora combines prose documents and generated Markdown, symbolic rows/configs/tasks/API contracts, vector embeddings and sparse indexes, and graph entities/relationships.
+- **Lineage:** `authored` `imported` `trace-extracted` - Operators author KB configs, agents, skills, prompts, and some manual content; uploads, URLs, FAQs, external data-source imports, and source documents are imported; optional conversation memory is extracted from completed chat traces.
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `ranking` `learning` - Retrieved chunks, wiki pages, and memory episodes advise answers; KB configs, prompts, skills, tools, RBAC, MCP approvals, parse/index states, ranking stages, and memory extraction shape instruction, enforcement, routing, validation, ranking, and learning paths.
 
 **Knowledge base configuration.** Storage substrate: relational database rows with JSON columns. Representational form: symbolic config with prose name/description fields. Lineage: authored through UI/API/CLI and updated by operators; invalidates retrieval behavior when chunking, indexing strategy, model, storage, or graph/wiki settings change. Behavioral authority: system-definition artifact because it controls parser choice, embedding model, vector-store binding, indexing pipelines, RBAC scope, and which tools/search paths can see a corpus.
 
@@ -88,6 +90,11 @@ The closest design overlap is progressive context assembly. WeKnora does this op
 
 ## Trace-derived learning placement
 
+- **Trace source:** `session-logs` `event-streams` - The memory pipeline consumes completed user/assistant session exchanges and is triggered from final-answer or non-streaming chat events.
+- **Learning scope:** `per-task` `cross-task` - Memory is scoped by user and session, can affect later turns in the same session, and can be recalled in later sessions for that user.
+- **Learning timing:** `online` - Episode extraction runs after a live response completes, and retrieval runs before later chat completion when memory is enabled.
+- **Distilled form:** `prose` `symbolic` - The durable memory graph stores prose episode summaries/entity descriptions plus symbolic episode, entity, and relationship nodes and edges.
+
 **Trace source.** WeKnora qualifies as trace-derived learning through the opt-in chat memory pipeline. The raw trace is the completed user/assistant exchange from a session, represented as `types.Message` values and stored separately as normal session history. The memory plugin sees the final answer event or non-streaming response, then calls `AddEpisode()` with a user message and assistant message.
 
 **Extraction.** The extraction oracle is an LLM prompted to produce JSON with a conversation summary, entities, and relationships. The Neo4j repository stores an `Episode` node, `Entity` nodes, `MENTIONS` edges from episode to entity, and `RELATED_TO` edges between entities. Retrieval uses a second LLM prompt to extract keywords from the current query, then finds recent episodes whose mentioned entity names match those keywords.
@@ -99,6 +106,12 @@ The closest design overlap is progressive context assembly. WeKnora does this op
 ## Read-back placement
 
 **Direction.** Both push and pull. Server-side quick Q&A/RAG retrieves chunks and renders them into the user message before completion. The opt-in memory plugin appends related episode summaries as "Relevant Memory" before completion. ReAct agents can also pull through `knowledge_search`, wiki, graph, web, MCP, and skill tools.
+
+**Read-back signal:** `identifier` `inferred / lexical` `inferred / embedding` `inferred / judgment` - RAG push is scoped by selected KBs/documents/tags and tenant/RBAC identifiers, then selected by lexical/keyword and embedding retrieval; memory-graph push uses LLM judgment to extract query keywords for entity lookup.
+
+**Read-back timing:** `pre-action` `post-action` - Retrieved chunks and related episode summaries are injected before the model answers, while memory storage and Wiki ingest happen after source or conversation events and affect later actions.
+
+**Faithfulness tested:** `no` - The review notes Langfuse tracing and evaluation metrics, but no with/without memory ablation showing retrieved memory changes behavior.
 
 **Targeting and signal.** RAG push is `instance` targeting by the current query, selected KBs/documents/tags, tenant/RBAC scope, and retrieval thresholds. The signal is mostly `inferred / embedding` plus lexical/keyword matching and optional reranking. Memory-graph push is `instance` targeting by LLM-extracted query keywords matched against entity names, so it is `inferred / judgment` followed by exact graph lookup. Agent-tool retrieval is pull from the acting model.
 

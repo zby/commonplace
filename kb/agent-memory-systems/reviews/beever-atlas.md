@@ -33,7 +33,9 @@ Beever Atlas, from Beever-AI, is an open-source wiki-first RAG system for team c
 ## Artifact analysis
 
 - **Storage substrate:** `vector` — Atlas's central queryable memory is Weaviate `MemoryFact`, with Neo4j graph state and MongoDB document collections as peer stores rather than a single canonical file substrate.
-- **Representational form:** `mixed` — retained behavior-shaping artifacts combine prose facts/wiki sections, symbolic metadata/schemas/ACLs, graph relationships, and distributed-parametric embeddings.
+- **Representational form:** `prose` `symbolic` `parametric` — retained behavior-shaping artifacts combine prose facts/wiki sections, symbolic metadata/schemas/ACLs, graph relationships, and distributed-parametric embeddings.
+- **Lineage:** `authored` `imported` `trace-extracted` — authored tools/prompts/policies operate over imported channel/file events and trace-extracted facts, graph state, summaries, wiki pages, and QA/session history.
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `ranking` — returned facts, pages, graph rows, and histories advise later answers; prompts/tools instruct; ACLs enforce; routing, validation, and ranking fields shape retrieval and distillation.
 
 **Raw channel messages and file/import events.** Storage substrate: MongoDB document collections, especially `channel_messages`, sync jobs, external sources, and idempotency keys. Representational form: symbolic records plus raw text, attachments, links, and platform metadata. Lineage: imported from platform bridges, file imports, or push sources and then advanced through extraction states. Behavioral authority: knowledge artifacts as source evidence; extraction status and idempotency keys also have routing/enforcement authority over which traces are processed.
 
@@ -85,6 +87,14 @@ The biggest tradeoff is authority visibility. Atlas has rich lineage fields and 
 
 ## Trace-derived learning placement
 
+**Trace source:** `session-logs` `event-streams` — platform-normalized channel/file/import events and retained dashboard QA sessions are the review's trace sources.
+
+**Learning scope:** `per-project` `cross-task` — scope is organized by channel, connection, principal, session, and language, and the generated wiki/fact surfaces carry knowledge across later asks.
+
+**Learning timing:** `online` `staged` — sync jobs and background extraction advance message status, while consolidation and wiki maintenance run after extraction settles.
+
+**Distilled form:** `prose` `symbolic` `parametric` — Atlas distills traces into prose facts/summaries/wiki pages, symbolic graph/schema/status fields, and vector-indexed fact representations.
+
 **Trace source.** Atlas qualifies as trace-derived. The raw signal is platform-normalized channel messages, file/import events, attachments, links, and later dashboard QA turns. Message traces are keyed by source, channel, and message id; QA traces are retained as chat history and QA history ([models/persistence.py](https://github.com/Beever-AI/beever-atlas/blob/582d156ffd23bbbb1834ac8a2d69cb6aa99e73ba/src/beever_atlas/models/persistence.py), [chat_history_store.py](https://github.com/Beever-AI/beever-atlas/blob/582d156ffd23bbbb1834ac8a2d69cb6aa99e73ba/src/beever_atlas/stores/chat_history_store.py), [qa_history_store.py](https://github.com/Beever-AI/beever-atlas/blob/582d156ffd23bbbb1834ac8a2d69cb6aa99e73ba/src/beever_atlas/stores/qa_history_store.py)).
 
 **Extraction.** The main extraction loop is staged: preprocessing cleans and enriches messages; fact/entity extractors produce memory facts and graph candidates; embedding and deterministic cross-batch validation enrich them; the persister writes Weaviate and Neo4j state; consolidation clusters and summarizes; wiki generation/maintenance produces pages and kind schemas ([pipeline.py](https://github.com/Beever-AI/beever-atlas/blob/582d156ffd23bbbb1834ac8a2d69cb6aa99e73ba/src/beever_atlas/agents/ingestion/pipeline.py), [fact_extractor.py](https://github.com/Beever-AI/beever-atlas/blob/582d156ffd23bbbb1834ac8a2d69cb6aa99e73ba/src/beever_atlas/agents/ingestion/fact_extractor.py), [persister.py](https://github.com/Beever-AI/beever-atlas/blob/582d156ffd23bbbb1834ac8a2d69cb6aa99e73ba/src/beever_atlas/agents/ingestion/persister.py), [consolidation.py](https://github.com/Beever-AI/beever-atlas/blob/582d156ffd23bbbb1834ac8a2d69cb6aa99e73ba/src/beever_atlas/services/consolidation.py), [wiki_maintainer.py](https://github.com/Beever-AI/beever-atlas/blob/582d156ffd23bbbb1834ac8a2d69cb6aa99e73ba/src/beever_atlas/services/wiki_maintainer.py)). The oracles are mixed: LLM extraction/summarization, deterministic validators, embeddings, quality thresholds, contradiction checks, and operator policies.
@@ -98,6 +108,12 @@ The biggest tradeoff is authority visibility. Atlas has rich lineage fields and 
 ## Read-back placement
 
 **Direction.** Both, with an important split. Team knowledge read-back is mostly pull: a dashboard user, QA agent, MCP client, or external coding assistant calls search/wiki/QA tools to retrieve facts or pages. Dashboard QA conversation history is push: prior session turns are loaded from `chat_history`, formatted under `<prior_conversation>`, and prepended to the next prompt automatically when `session_id` is reused ([ask.py](https://github.com/Beever-AI/beever-atlas/blob/582d156ffd23bbbb1834ac8a2d69cb6aa99e73ba/src/beever_atlas/api/ask.py), [chat_history_store.py](https://github.com/Beever-AI/beever-atlas/blob/582d156ffd23bbbb1834ac8a2d69cb6aa99e73ba/src/beever_atlas/stores/chat_history_store.py)). MCP `ask_channel` explicitly does not persist or reload chat history, so this push path is dashboard-specific ([MCP ask runner](https://github.com/Beever-AI/beever-atlas/blob/582d156ffd23bbbb1834ac8a2d69cb6aa99e73ba/src/beever_atlas/api/mcp_server/_ask_runner.py)).
+
+**Read-back signal:** `identifier` — the push path is dashboard-specific and keyed by the reused `session_id` that selects retained conversation turns.
+
+**Read-back timing:** `pre-action` — dashboard chat-history preload happens before the QA agent sees the new ask.
+
+**Faithfulness tested:** `no` — the review found no with/without ablation or post-action faithfulness audit proving that retrieved memory changed behavior correctly.
 
 **Targeting and signal.** Pull retrieval uses both identifiers and inferred signals: channel id, connection/principal ACLs, page slug, page kind, session id, and fact ids are identifiers; BM25, vector search, MMR, graph traversal, and LLM QA are inferred selection. The push path is `instance / identifier`: the reused `session_id` selects the last retained conversation turns for that session. Precision and usefulness of the returned team memory are runtime qualities, not verified from code.
 

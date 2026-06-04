@@ -35,7 +35,9 @@ Memori, from Memori Labs, is an LLM- and datastore-agnostic memory SDK, cloud se
 ## Artifact analysis
 
 - **Storage substrate:** `service-object` — Cloud conversation endpoints or BYODB `memori_conversation` and `memori_conversation_message` rows
-- **Representational form:** `prose` — Structured rows carrying prose user/assistant text, roles, message types, session ids, timestamps, and optional summaries
+- **Representational form:** `prose` `symbolic` `parametric` — prose turns, facts, summaries, and templates; symbolic rows, ids, triples, attributes, filters, and policies; embeddings and benchmark indexes
+- **Lineage:** `authored` `imported` `trace-extracted` — authored policies and manual/fallback facts, imported benchmark and hosted/BYODB datasets, and traces captured from wrapped LLM calls and agent events
+- **Behavioral authority:** `knowledge` `instruction` `routing` `validation` `ranking` `learning` — memories advise as knowledge, wrappers and skills can instruct requests, source/scope filters route recall, storage/tool checks validate shape, scores rank, and augmentation learns facts/triples/summaries
 
 **Conversation and message traces.** Storage substrate: Cloud conversation endpoints or BYODB `memori_conversation` and `memori_conversation_message` rows. Representational form: structured rows carrying prose user/assistant text, roles, message types, session ids, timestamps, and optional summaries. Lineage: raw interaction traces captured from wrapped LLM calls, provider responses, OpenClaw events, Hermes/Claude Code helpers, or direct agent APIs. Behavioral authority: knowledge/audit artifacts by default; in registered SDK mode, stored conversation history can be replayed into later requests, giving it advisory pre-action context authority.
 
@@ -84,6 +86,14 @@ The key design difference is authority. Memori's extracted facts are usually kno
 
 ## Trace-derived learning placement
 
+**Trace source:** `session-logs` `tool-traces` `event-streams` — wrapped LLM messages and Hermes turns, OpenClaw/Claude Code tool traces, and integration event payloads feed augmentation
+
+**Learning scope:** `per-task` `per-project` `cross-task` — session/process scopes, project/date filters, and durable entity/process memory can carry across later tasks
+
+**Learning timing:** `online` `staged` — SDK persistence and recall occur around each call, while augmentation runs after responses on Cloud or bounded background-worker paths
+
+**Distilled form:** `prose` `symbolic` `parametric` — augmentation produces prose facts and summaries, symbolic triples/attributes/mentions, and fact embeddings
+
 **Trace source.** Memori qualifies as trace-derived. Raw signals include wrapped LLM request/response messages, session ids, provider/model metadata, OpenClaw event messages, tool calls and tool results, Claude Code trace JSON, Hermes turns, optional summaries, and benchmark conversation data.
 
 **Extraction.** The SDK and integrations first normalize messages and traces into augmentation payloads. Cloud or Rust-backed augmentation then returns entity facts, semantic triples, process attributes, and conversation summaries; the Rust pipeline translates that response into storage write operations and can attach embeddings before persistence. The oracle is Memori's augmentation service for Cloud/BYODB augmentation, with local Rust code enforcing shape and write routing rather than independently judging memory quality.
@@ -97,6 +107,12 @@ The key design difference is authority. Memori's extracted facts are usually kno
 ## Read-back placement
 
 **Direction.** Memori is both pull and push. Manual `recall`, agent `memori_recall`, `recall_summary`, and compaction tools are pull. Registered Python and TypeScript SDK clients implement push from the receiving model's perspective because recall runs before the model call and mutates the request without the model choosing to call a tool.
+
+**Read-back signal:** `identifier` `inferred / lexical` `inferred / embedding` — configured entity/session/process/project fields narrow the store, while query-text BM25 and dense embeddings select relevant facts
+
+**Read-back timing:** `pre-action` `post-action` — recall and history injection run before the model response; persistence, augmentation, and OpenClaw capture run after responses for later turns
+
+**Faithfulness tested:** `no` — tests and benchmarks cover wrapping, injection, storage, retrieval, and augmentation payloads, but not a with/without behavior ablation for injected memory
 
 **Targeting and signal.** SDK push is instance-targeted memory activation. The before-call hook is triggered by provider invocation, but selection keys on the current user-query content plus configured entity/session/process scope rather than on a static documentation surface. Local retrieval uses an inferred mixed signal: dense embedding candidates from the query, lexical/BM25 reranking over fact text, top-k limits, and `recall_relevance_threshold`; Cloud recall receives the same query and attribution payload and returns scored facts plus optional history. The identifier fields narrow the memory store, while the final selector is inferred relevance over the current instance.
 

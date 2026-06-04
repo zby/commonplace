@@ -34,7 +34,9 @@ CocoIndex, from cocoindex-io, is an open-source Python framework with a Rust cor
 ## Artifact analysis
 
 - **Storage substrate:** `files` — Project files containing Python apps, dataclasses, context keys, connector configuration, and `@coco.fn` boundaries
-- **Representational form:** `mixed` — Symbolic Python plus typed schemas and occasional prose prompts
+- **Representational form:** `prose` `symbolic` — Symbolic Python plus typed schemas and occasional prose prompts
+- **Lineage:** `authored` `imported` — Application developers author pipeline definitions and skills, while source connectors import external file, database, object-store, stream, and target-state material
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` — Pipeline code, connector reconciliation, memoization state, target schemas, cleanup behavior, and agent skills define or govern synchronization, while target rows can advise downstream agents
 
 **User-authored pipeline definitions.** Storage substrate: project files containing Python apps, dataclasses, context keys, connector configuration, and `@coco.fn` boundaries. Representational form: symbolic Python plus typed schemas and occasional prose prompts. Lineage: authored by application developers; invalidated by source-code, `version`, `deps`, argument, or change-detected context changes. Behavioral authority: system-definition artifact because the pipeline defines sources, transforms, memoization boundaries, target schemas, and cleanup behavior.
 

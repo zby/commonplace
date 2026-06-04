@@ -33,7 +33,9 @@ Claude Context Guard, from `atreiou/claude-context-guard`, is a Claude Code proj
 ## Artifact analysis
 
 - **Storage substrate:** `repo` — Project filesystem and, when the project uses git, the project repository
-- **Representational form:** `mixed` — Mixed prose and symbolic structure. `SESSION_LOG.md`, `TASK_REGISTRY.md`, `DECISIONS.md`, `COMMENTS.md`, `LEARNED_BEHAVIOUR.md`, and `RESUME_STATE.md` are mostly prose with table or field conventions; `FEATURE_LIST.json` is symbolic JSON; archive pages and audit reports are prose-derived records
+- **Representational form:** `prose` `symbolic` — Mixed prose and symbolic structure. `SESSION_LOG.md`, `TASK_REGISTRY.md`, `DECISIONS.md`, `COMMENTS.md`, `LEARNED_BEHAVIOUR.md`, and `RESUME_STATE.md` are mostly prose with table or field conventions; `FEATURE_LIST.json` is symbolic JSON; archive pages and audit reports are prose-derived records
+- **Lineage:** `authored` `imported` `trace-extracted` — Authored scaffold files and command/hook instructions are installed from templates; itemised sidecars derive from existing project source; session ledgers, audits, backups, and learned behaviour are extracted from live work traces
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `validation` — Safeguard files are evidence for recovery and audit; `CLAUDE.md` and slash commands instruct the acting agent; itemisation and version-control rules enforce workflow expectations; `/audit` validates task, sidecar, and safeguard consistency
 
 **Safeguard files.** Storage substrate: project filesystem and, when the project uses git, the project repository. Representational form: mixed prose and symbolic structure. `SESSION_LOG.md`, `TASK_REGISTRY.md`, `DECISIONS.md`, `COMMENTS.md`, `LEARNED_BEHAVIOUR.md`, and `RESUME_STATE.md` are mostly prose with table or field conventions; `FEATURE_LIST.json` is symbolic JSON; archive pages and audit reports are prose-derived records. Lineage: initialized from templates, then updated from session traces, user comments, task outcomes, decisions, feature verification, and save/end/audit passes. Behavioral authority: knowledge artifacts when read as evidence or history; system-definition artifacts when `/start`, `/save`, `/end`, or `/audit` requires the acting agent to obey task status, decisions, comments, feature verification semantics, and resume-state handoff.
 
@@ -64,6 +66,9 @@ The main difference is artifact typing. Context Guard uses file names, command c
 The other difference is lifecycle posture. Context Guard treats the active session as the center: save, resume, audit, paginate, and avoid dropped work. Commonplace treats promoted knowledge as the center: source material and workshop state matter, but library artifacts accumulate only after routing, drafting, review, and validation. Context Guard is stronger as an operational continuity harness; Commonplace is stronger as a durable knowledge system.
 
 **Read-back:** `both` — Memory-only. The push paths are coarse: Claude Code always-loads project `CLAUDE.md`, and `/start` or `/audit` user events instruct the agent to read the current safeguard files; there is no instance signal beyond session/audit mode. Archive pages and itemised sidecars remain pull surfaces. The hooks inject shipped checklist/status text or copy files, not selected retained memory
+**Read-back signal:** `coarse` — The review identifies only coarse push: always-loaded `CLAUDE.md` and lifecycle/audit events that make the agent read the current safeguard files, with no instance-targeted retained-memory selection
+**Read-back timing:** `pre-action` — `CLAUDE.md`, `/start`, and `/audit` load or require reading retained project state before the receiving agent continues work or review
+**Faithfulness tested:** `no` — The review describes activation mechanics, audits, and workflow checks, but no with/without test that pushed retained state changes downstream Claude behavior
 
 ### Borrowable Ideas
 
@@ -78,6 +83,11 @@ The other difference is lifecycle posture. Context Guard treats the active sessi
 **Make source navigation addressable when files are large.** Itemisation plus sidecar indexes is heavier than Commonplace normally wants, but the addressable-section pattern is worth borrowing for long generated reports or code files that agents repeatedly inspect. Needs a scoped pilot; broad automatic itemisation would add maintenance load.
 
 ## Trace-derived learning placement
+
+**Trace source:** `session-logs` `event-streams` — The review grounds trace capture in live session context and lifecycle/hook events, not stored full-transcript mining or model telemetry
+**Learning scope:** `per-project` — The retained outputs are project-local safeguard files, archive pages, audit reports, plans, sidecar indexes, and compaction backups
+**Learning timing:** `online` `staged` — Capture happens during normal Claude Code work, while `/save`, `/end`, `/start`, `/audit`, and hooks stage extraction or preservation at lifecycle and event boundaries
+**Distilled form:** `prose` `symbolic` — Session evidence is codified into Markdown ledgers, reports, plans, sidecar indexes, copied Markdown/JSON, and symbolic JSON rather than embeddings or model weights
 
 **Trace source.** Context Guard qualifies as trace-derived in the weak, agent-mediated sense. The raw signals are live session context: user comments, task creation and completion, decisions, feature verification, errors, rate-limit or interruption state, git state, plans, and audit findings. It does not mine a stored full transcript automatically; the slash commands instruct the acting agent to extract and write the relevant material during `/save`, `/end`, `/start`, or `/audit`.
 

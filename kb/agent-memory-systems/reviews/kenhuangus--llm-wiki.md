@@ -33,7 +33,9 @@ Ken Huang's LLM Wiki is a local-first knowledge compilation system for agentic A
 ## Artifact analysis
 
 - **Storage substrate:** `files` — Filesystem directories under `raw/auto_ingest/`, `raw/normalized/`, and related source queues
-- **Representational form:** `mixed` — Prose markdown with frontmatter and source metadata
+- **Representational form:** `prose` `symbolic` — Prose markdown and reports plus symbolic frontmatter, JSON sidecars, links, Python prompt/config constants, and SQLite tables
+- **Lineage:** `authored` `imported` `trace-extracted` — Authored agent policy/prompts and daemon code, imported source documents and monitor inputs, and trace-extracted metrics/reports from extraction, integration, validation, and page-state events
+- **Behavioral authority:** `knowledge` `instruction` `routing` `validation` `ranking` `learning` — Wiki pages and reports provide knowledge; `AGENTS.md`, prompts, daemon schedules, validators, BM25 scores, metrics rows, and prompt experiments instruct, route, validate, rank, and feed learning loops
 
 **Raw sources and normalized markdown.** Storage substrate: filesystem directories under `raw/auto_ingest/`, `raw/normalized/`, and related source queues. Representational form: prose markdown with frontmatter and source metadata. Lineage: imported from monitors, manual files, arXiv, CVE/NVD, GitHub, RSS, or curated feeds; normalized files are derived from raw sources and should be regenerated when source parsing or domain routing changes. Behavioral authority: knowledge artifacts. They provide evidence and context for extraction, integration, validation, and later human/agent review.
 
@@ -79,6 +81,11 @@ The context-efficiency story is mixed. Query is deliberately small because it re
 **Newsletter and paper synthesis as generated views.** Useful for outward-facing summaries, but they should stay derived knowledge artifacts. Commonplace should not let generated synthesis outrank the typed notes and source snapshots it summarizes.
 
 ## Trace-derived learning placement
+
+**Trace source:** `session-logs` `event-streams` — Operation logs, extraction/integration metrics, monitor deduplication events, wiki page-state changes, validation scans, and generated experiment/hypothesis records
+**Learning scope:** `per-project` `cross-task` — The loops operate within one wiki repository while aggregating failures, page states, validation results, and research gaps across many wiki tasks
+**Learning timing:** `online` `staged` — The daemon runs as live maintenance over the repository, while prompt optimization, research, validation, and paper generation are scheduled cycles
+**Distilled form:** `prose` `symbolic` — Trace loops produce prose experiment logs, validation reports, hypotheses, newsletters, and papers plus symbolic metrics rows, page status/confidence fields, and prompt candidates
 
 LLM Wiki (kenhuangus) qualifies for `trace-derived`, but narrowly. The ordinary source ingestion path is external-source-derived, not trace-derived, and the prompt optimizer is not yet a true prompt-writing ratchet. The qualifying mechanisms are evaluation/operation traces stored in metrics tables, research hypotheses derived from wiki state, and retrospective validation that mutates durable page `status` and `confidence` fields from recent-page/update traces.
 

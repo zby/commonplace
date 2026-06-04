@@ -33,7 +33,9 @@ Continuity, by uziiuzair/Ooozzy, is a local-first desktop AI workspace where cha
 ## Artifact analysis
 
 - **Storage substrate:** `sqlite` — the central retained memory state persists in local SQLite `memory.db`, with a second SQLite subset for the optional org server.
-- **Representational form:** `mixed` — memories and projects are symbolic database records carrying prose content, while narratives are LLM-synthesized prose stored with symbolic sections, confidence, versions, and hashes.
+- **Representational form:** `prose` `symbolic` — memories and projects are symbolic database records carrying prose content, while narratives are LLM-synthesized prose stored with symbolic sections, confidence, versions, and hashes.
+- **Lineage:** `authored` `imported` `trace-extracted` — memories can be authored or agent-written through tools, imported through bulk/plugin sync paths, and conversation-derived learnings are absorbed into narratives.
+- **Behavioral authority:** `knowledge` `instruction` `routing` `learning` — memory rows advise when browsed or searched, prompt/tool definitions instruct behavior, projects and tools route/scoped access, and learnings feed narrative synthesis.
 
 **Memory rows.** Storage substrate: local SQLite in the app config directory. Representational form: mixed symbolic metadata plus prose content. Lineage: authored or agent-written through in-app tools, MCP tools, bulk imports, plugin sync, or manual database access; updates create version rows and soft deletes mark archive time. Behavioral authority: knowledge artifacts when browsed, read, or searched; system-definition context when preloaded into the in-app prompt.
 
@@ -71,6 +73,12 @@ Continuity's context-efficiency model is simple and visible. The in-app assistan
 
 **Read-back:** `both` — retained memory reaches the in-app assistant by coarse prompt push of the narrative and recent memories, and by explicit pull through recall/search/project/MCP tools; I did not find an instance-targeted or faithfulness-tested memory push path.
 
+**Read-back signal:** `coarse` — the push path is a bounded prompt preload of recent memories and synthesized narrative, not instance-targeted retrieval.
+
+**Read-back timing:** `pre-action` — `buildSystemPrompt()` places retained memory ahead of each in-app chat response.
+
+**Faithfulness tested:** `no` — the review did not find a with/without or other faithfulness test for whether prompt-pushed memory changes behavior.
+
 ### Borrowable Ideas
 
 **Use one local operational database for cross-tool memory state.** Ready when Commonplace needs high-churn operational state rather than durable library artifacts. A small SQLite stage layer could hold pending memories, review queue state, run metadata, or trace-derived candidates while the promoted artifacts remain git-tracked Markdown.
@@ -86,6 +94,14 @@ Continuity's context-efficiency model is simple and visible. The in-app assistan
 **Do not borrow immediate promotion to prompt authority without gates.** Continuity's convenience comes from letting chat-derived memory affect future responses quickly. Commonplace should only borrow this for low-stakes personal preferences or workshop candidates, not for durable methodology or instructions.
 
 ## Trace-derived learning placement
+
+**Trace source:** `session-logs` — the retained learning signals are extracted from conversations with optional source thread/message ids, not from automatic transcript mining.
+
+**Learning scope:** `per-project` `cross-task` — learning records carry global or project scope, and the app-side synthesis currently defaults to the global narrative.
+
+**Learning timing:** `staged` — learning records accumulate and are later absorbed during launch/activity/staleness/count-triggered narrative synthesis.
+
+**Distilled form:** `prose` `symbolic` — distilled narratives are synthesized prose briefings stored as structured JSON sections with confidence, version, timestamp, and snapshot hash.
 
 **Trace source.** Continuity qualifies at the implementation edge of trace-derived learning because it has durable `learnings` records for observations extracted from conversations, with optional `source_thread_id` and `source_message_id`, and a synthesis engine that absorbs those records into prompt-loaded narratives ([server/tools/narrative-tools.ts](https://github.com/uziiuzair/continuity/blob/4ca8f6b4108aa4494e3861ed33c8019dbd662c67/server/tools/narrative-tools.ts), [server/db/learnings.ts](https://github.com/uziiuzair/continuity/blob/4ca8f6b4108aa4494e3861ed33c8019dbd662c67/server/db/learnings.ts), [lib/ai/narrative-synthesis.ts](https://github.com/uziiuzair/continuity/blob/4ca8f6b4108aa4494e3861ed33c8019dbd662c67/lib/ai/narrative-synthesis.ts)). The qualification is narrower than systems that parse full transcript logs automatically: the reviewed code exposes recording surfaces for extracted conversation signals, but I did not find an automatic transcript-mining loop that reads stored `messages` and decides learnings itself.
 

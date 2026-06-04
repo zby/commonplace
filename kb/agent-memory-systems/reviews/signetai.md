@@ -33,7 +33,9 @@ Signet AI, from the `Signet-AI/signetai` repository, is a local-first portable c
 ## Artifact analysis
 
 - **Storage substrate:** `sqlite` — Local SQLite under the Signet workspace, especially `memories`, `memories_fts`, `embeddings`, optional `vec_embeddings`, access counters, source fields, scope/project/agent fields, and history tables (https://github.com/Signet-AI/signetai/blob/b7f5176bc4280baceace933d2442d4b04796b336/platform/core/src/migrations/001-baseline.ts)
-- **Representational form:** `mixed` — Mixed: prose memory content plus symbolic metadata, FTS rows, hashes, and distributed-vector embeddings
+- **Representational form:** `prose` `symbolic` `parametric` — prose memory content plus symbolic metadata, FTS rows, hashes, graph state, scores, and distributed-vector embeddings
+- **Lineage:** `authored` `imported` `trace-extracted` — explicit remembers and authored skills/config, imported documents and workspace artifacts, and session/prompt/compaction traces all feed retained state
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `ranking` `learning` — recalled memories advise as knowledge; hooks, prompt blocks, write gates, authorization, graph paths, validators, scores, and trace pipelines instruct, gate, route, validate, rank, and learn
 
 **Memory rows, embeddings, FTS, and vector state.** Storage substrate is local SQLite under the Signet workspace, especially `memories`, `memories_fts`, `embeddings`, optional `vec_embeddings`, access counters, source fields, scope/project/agent fields, and history tables (https://github.com/Signet-AI/signetai/blob/b7f5176bc4280baceace933d2442d4b04796b336/platform/core/src/migrations/001-baseline.ts). Representational form is mixed: prose memory content plus symbolic metadata, FTS rows, hashes, and distributed-vector embeddings. Lineage is authored, imported, explicitly remembered, extracted from session summaries, or pipeline-derived from source memories; content hashes and source IDs provide dedupe and provenance. Behavioral authority is mostly knowledge artifact authority when recalled as context or evidence, but embeddings, FTS, access counters, and ranking metadata have system-definition authority over what later agents see.
 
@@ -80,6 +82,14 @@ Commonplace is stronger as a durable argument and method library. Signet's behav
 
 ## Trace-derived learning placement
 
+**Trace source:** `session-logs` `event-streams` — prompt-submit events, live/canonical session transcripts, session-end transcripts, compaction summaries, and injected-memory feedback are the qualifying trace signals.
+
+**Learning scope:** `per-task` `per-project` `cross-task` — trace state is scoped by session as well as workspace, project, agent, harness, and memory visibility group, then reused across future recall and hook paths.
+
+**Learning timing:** `online` `staged` — prompt-submit updates transcript state before the turn, while session-end summary work and pipeline fact extraction run as queued or worker-driven stages.
+
+**Distilled form:** `prose` `symbolic` `parametric` — summaries and facts are prose, graph entities/attributes/hints/scores are symbolic, and vectors participate in the distilled retrieval substrate.
+
 **Trace source.** Signet qualifies as trace-derived. The qualifying trace signals are prompt-submit events, live/canonical session transcripts, session-end transcripts, compaction summaries, and injected-memory feedback. Explicit remember calls and imported documents can enter the same extraction substrate, but they are adjacent source inputs rather than the basis for the trace-derived tag. The central qualifying trace is the agent/user session transcript, not merely user-authored notes.
 
 **Extraction.** Extraction has several stages. Prompt-submit and session-end preserve raw or cleaned transcript material. The summary worker chunk-summarizes long transcripts, inserts session facts, writes summary artifacts, writes temporal DAG nodes, and scores continuity from the transcript plus injected memories (https://github.com/Signet-AI/signetai/blob/b7f5176bc4280baceace933d2442d4b04796b336/platform/daemon/src/pipeline/summary-worker.ts). The Pipeline V2 worker extracts facts/entities from memory content, runs decision proposals, and applies controlled writes only when enabled, above confidence, not frozen, not duplicate, and passing write gates (https://github.com/Signet-AI/signetai/blob/b7f5176bc4280baceace933d2442d4b04796b336/platform/daemon/src/pipeline/worker.ts). The oracle is mixed: LLM extraction and summarization, deterministic validation, confidence thresholds, dedupe, write gates, optional contradiction checks, and operator config.
@@ -91,6 +101,12 @@ Commonplace is stronger as a durable argument and method library. Signet's behav
 **Survey placement.** Signet belongs in the service-local session-memory branch of the trace-derived survey: it owns a runtime memory daemon, captures live harness traces, distills them into symbolic/prose artifacts, and reactivates them through recall and hooks. It strengthens the survey claim that useful agent memory often promotes traces into external artifacts rather than model weights. It also splits trace-derived systems by authority speed: Signet has richer live activation than report-only systems, but weaker review-before-promotion than Commonplace.
 
 ## Read-back placement
+
+**Read-back signal:** `coarse` `identifier` `inferred / lexical` `inferred / embedding` — session-start does coarse bounded memory loading, while prompt-submit resolves entity names and aliases as identifiers and scores prompt residue through embedding or lexical fallback.
+
+**Read-back timing:** `pre-action` `post-action` — session-start and prompt-submit inject before model action; compaction and continuity-feedback paths run after prior work and can only affect later actions.
+
+**Faithfulness tested:** `no` — continuity scoring audits relevance of injected memories, but the review does not report a with/without ablation proving that injected context changes downstream behavior.
 
 **Direction.** Signet is both pull and push. Pull is explicit `signet recall`, `/recall`, MCP/API recall, dashboard inspection, session search, and source expansion. Push is session-start injection and entity-gated user-prompt-submit injection from the receiving agent's perspective. Shipped system prompts, plugin prompt contributions, secret listings, and command affordance text are baseline context surfaces; the read-back verdict rests on retained identity/user/working-memory files, SQLite memory rows, session recovery context, inherited session context, and entity attributes.
 

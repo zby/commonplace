@@ -33,7 +33,9 @@ Agent-S, from Simular AI's `simular-ai/Agent-S` repository, is a GUI-agent frame
 ## Artifact analysis
 
 - **Storage substrate:** `files` — Platform-scoped JSON files under the user-selected local KB directory, notably `narrative_memory.json` and `episodic_memory.json`
-- **Representational form:** `prose` — Prose summaries keyed by task/search-query text or subtask trajectory preambles
+- **Representational form:** `prose` `symbolic` `parametric` — Prose trajectory summaries and prompts, symbolic JSON caches/DAG contracts/action records, and embedding vectors for retrieval
+- **Lineage:** `authored` `imported` `trace-extracted` — Authored procedural prompts and framework code, optional imported default KB assets, and trajectory-derived summaries/caches
+- **Behavioral authority:** `knowledge` `instruction` `routing` `ranking` `validation` `learning` — Stored experience is knowledge when inspected, prompts instruct, embeddings route and rank read-back, verification/evaluation artifacts validate outcomes, and trajectory summarization learns reusable advice
 
 **S2 narrative and episodic memory JSON.** Storage substrate: platform-scoped JSON files under the user-selected local KB directory, notably `narrative_memory.json` and `episodic_memory.json`. Representational form: prose summaries keyed by task/search-query text or subtask trajectory preambles. Lineage: derived from planner/executor trajectories, reflections, subtask status transitions, and LMM summarization prompts; default seed KBs can also be downloaded from GitHub release assets. Behavioral authority: system-definition artifacts when embedding-retrieved and inserted into planner or worker prompts as advice for future actions; knowledge artifacts when inspected as remembered experience. The promotion path is raw trajectory to summarized prose to retrieved prompt advice, without a deterministic validator between summary and reuse.
 
@@ -79,6 +81,11 @@ S3 is useful as a contrast because it intentionally cuts durable memory out of t
 
 ## Trace-derived learning placement
 
+- **Trace source:** `trajectories` — S2 learns from task and subtask trajectories, and S3/OSWorld writes rollout trajectories for evaluation facts
+- **Learning scope:** `per-task` `cross-task` — S3 reflection and OSWorld artifacts are per-episode/per-task, while S2 summaries are reused across later tasks in the local KB
+- **Learning timing:** `online` `offline` `staged` — S2 summarizes when subtasks/tasks close during a run, S3 reflection is online, and OSWorld/Behavior Best-of-N distillation is offline evaluation work
+- **Distilled form:** `prose` — The reusable S2 memory is prose task/subtask experience; Behavior Best-of-N distills trajectories into fact-caption prose
+
 **Trace source.** Agent-S qualifies as trace-derived learning through S2. The raw traces are task and subtask trajectories assembled from task/search-query text, subtask names and instructions, executor plans, reflections, subtask status transitions, screenshots in the live prompt path, and OSWorld result artifacts. S3's OSWorld harness also writes `traj.jsonl` with plans, actions, rewards, done flags, info, and screenshot filenames.
 
 **Extraction.** S2 extraction is summarization. The narrative summarizer turns a whole-task trajectory into a reusable task-level plan or failure explanation; the episode summarizer turns a subtask trajectory into a smaller plan/action memory with generic element-description placeholders. Behavior Best-of-N extraction is evaluative rather than a future-memory loop: it captions before/after screenshot changes from saved trajectories and asks a comparative judge to select the better rollout.
@@ -90,6 +97,12 @@ S3 is useful as a contrast because it intentionally cuts durable memory out of t
 ## Read-back placement
 
 **Direction.** Agent-S memory read-back is push. S2 uses pull-style retrieval internally, but the selected memory is pushed into the planner or worker prompt before the receiving agent chooses its next action. S3 pushes current-episode reflection, text-buffer notes, and code-agent results into the next worker turn when present, but those objects are transient episode context rather than retained memory read-back.
+
+**Read-back signal:** `inferred / embedding` — S2 selects narrative and episodic memory by embedding similarity against the task instruction or subtask query before injecting it into prompts.
+
+**Read-back timing:** `pre-action` — S2 read-back reaches the planner or worker prompt before the receiving agent plans or acts.
+
+**Faithfulness tested:** `no` — The reviewed code has OSWorld evaluation and Behavior Best-of-N selection, but no isolated memory read-back ablation or perturbation test.
 
 **Targeting and signal.** S2's memory push is instance-targeted with an inferred / embedding signal. The trigger is first-turn planning or first-turn subtask execution, and narrative and episodic memories are selected by embedding similarity against the task instruction or subtask query key. Optional web/RAG knowledge is selected through a formulated query and optional search engine, but it is not the trace-derived experience path. S3's reflection and code-agent result injection is event-keyed rather than semantic retrieval: if a previous action/reflection/code result exists, it is included.
 

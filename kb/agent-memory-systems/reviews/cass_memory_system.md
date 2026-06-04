@@ -33,7 +33,9 @@ last-checked: "2026-06-01"
 ## Artifact analysis
 
 - **Storage substrate:** `files` — External agent session files indexed by the separate `cass` binary, with local and optional SSH remote searches
-- **Representational form:** `mixed` — Mixed structured/prose transcripts, normalized into `CassSearchHit` objects and exported markdown/text
+- **Representational form:** `prose` `symbolic` — Structured/prose transcripts are normalized into `CassSearchHit` objects and exported markdown/text
+- **Lineage:** `authored` `imported` `trace-extracted` — Manual rules/configuration, starter or batch imports, external session stores, and reflected session traces all feed retained artifacts
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `ranking` `learning` — Context snippets and diaries inform; playbook bullets instruct; trauma hooks enforce; query/scoping paths route; schemas and validators check deltas; scoring/embeddings rank; feedback and outcomes update future rules
 
 **Raw sessions and `cass` hits.** Storage substrate: external agent session files indexed by the separate `cass` binary, with local and optional SSH remote searches. Representational form: mixed structured/prose transcripts, normalized into `CassSearchHit` objects and exported markdown/text. Lineage: source evidence from Claude, Codex, Cursor, Aider, PI, and similar agent sessions; `cm` does not own the canonical session store. Behavioral authority: knowledge artifacts when returned as context snippets or used as reflection evidence; ranking authority lives in `cass` search results and `cm` query construction rather than in the raw traces themselves.
 
@@ -84,6 +86,14 @@ The main divergence is source preservation and auditability. cass-memory keeps s
 
 ## Trace-derived learning placement
 
+**Trace source:** `session-logs` `tool-traces` `event-streams` — The review describes external `cass` session traces, exported transcripts, inline feedback markers, context logs, and outcome records as learning inputs.
+
+**Learning scope:** `per-project` `cross-task` — Learning is global plus optional repo/workspace layering, with cross-agent related-session enrichment when enabled.
+
+**Learning timing:** `staged` — Reflection runs after sessions exist through `cm reflect` or MCP `memory_reflect`, then updates playbooks.
+
+**Distilled form:** `prose` `symbolic` `parametric` — Session traces become prose diary/playbook guidance, symbolic metadata/regex guards/scoring state, and optional embedding-backed ranking features.
+
 **Trace source.** cass-memory qualifies as trace-derived learning. It consumes agent/session traces through the external `cass` index, exported session transcripts, inline feedback markers, context logs, outcome records, and optional cross-agent related-session searches. Reflection boundaries are sessions selected by processed-log state, lookback windows, workspace, agent filters, or an explicit session path.
 
 **Extraction.** Extraction runs in several stages. `generateDiary` turns sanitized session exports into diary records using LLM extraction or deterministic fast extraction. `reflectOnSession` asks an LLM for typed deltas against the existing playbook and related history. `validateDelta` and rule validation apply quality, similarity, and evidence checks. `curatePlaybook` then applies deterministic deduplication, conflict detection, reinforcement, deprecation, inversion, promotion, and demotion.
@@ -97,6 +107,12 @@ The main divergence is source preservation and auditability. cass-memory keeps s
 ## Read-back placement
 
 **Direction.** cass-memory is both, but asymmetrically. The ordinary memory product is pull: an agent, human, or MCP host asks for context or search results. The trauma subsystem is push/enforcement: installed hooks receive a tool or commit event, load active retained trauma entries, match them against the pending command or staged diff, and return a denial/warning without the agent asking for memory.
+
+**Read-back signal:** `coarse` `inferred / lexical` — Trauma hooks fire on coarse before-action hook events, then match retained trauma regexes against the pending command or staged diff lines.
+
+**Read-back timing:** `pre-action` — Trauma guard hooks run before the Bash command or commit proceeds.
+
+**Faithfulness tested:** `no` — The review found context-use/outcome logging and mechanical hook enforcement, but no WITH/WITHOUT test proving selected memories changed agent behavior.
 
 **Targeting and signal.** `cm context` uses an explicit task string, keyword extraction, workspace filters, optional embeddings, minimum relevance thresholds, decayed confidence, cass search, and deprecated-pattern checks. That pull selector is instance-targeted and inferred: lexical by default, with embedding ranking when semantic search is enabled. MCP `cm_context` wraps the same call. The trauma guard's hook entry is action-type keyed (`PreToolUse` for Bash commands or git pre-commit for staged diffs), but the retained-memory selection is instance-targeted: active trauma regexes are matched against the pending command or added diff lines, so the signal is inferred / lexical rather than an identifier match.
 

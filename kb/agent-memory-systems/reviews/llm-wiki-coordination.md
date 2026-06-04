@@ -33,7 +33,9 @@ llm-wiki-coordination, from AEVYRA's `AEVYRA/llm-wiki-coordination` repository, 
 ## Artifact analysis
 
 - **Storage substrate:** `repo` — The standing system artifacts are repository files: Markdown protocol specs, a concept note, README/AGENTS guidance, changelog, and a Python audit script; downstream memory lives in copied wiki files, not in this repository's own runtime store.
-- **Representational form:** `mixed` — Prose protocols carry most of the authority, while YAML/frontmatter shapes, dialogue-entry schemas, N/C/R vectors, lifecycle/consensus fields, and the Python audit rules give selected parts symbolic consequences.
+- **Representational form:** `prose` `symbolic` — Prose protocols carry most of the authority, while YAML/frontmatter shapes, dialogue-entry schemas, N/C/R vectors, lifecycle/consensus fields, and the Python audit rules give selected parts symbolic consequences.
+- **Lineage:** `authored` `imported` `trace-extracted` — Protocol docs and audit rules are authored from the source workflow, copied/adapted into downstream wikis as imports, and downstream dialogue entries accumulate as agent-authored traces that can be closed or crystallized.
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `learning` — Dialogue entries begin as source-trace knowledge; protocols instruct agents; consensus/lifecycle and hard audit findings can gate workflow; RoleSpace vectors route later contributions; the audit script validates structure; crystallization turns traces into canon.
 
 **Protocol Markdown files.** Storage substrate: repo files under `protocols/` and `concepts/`. Representational form: prose with embedded symbolic schemas, examples, state names, and invariants. Lineage: authored extraction from a private wiki workflow, then revised in v0.2.0 according to the changelog ([CHANGELOG.md](https://github.com/AEVYRA/llm-wiki-coordination/blob/126749634d1c8c2fd6141f59711c882c2d629699/CHANGELOG.md)). Behavioral authority: system-definition artifacts when copied into a downstream wiki's workflow layer; they instruct agents how to write entries, evaluate previous contributions, use consensus blocks, and audit the graph.
 
@@ -83,6 +85,14 @@ The RoleSpace mechanism is the distinctive idea. It records the shape of a dialo
 **Do not borrow ontology without enforcement.** The Anchor Form/Recognition vocabulary is coherent inside its source tradition, but Commonplace should not import it unless it creates concrete review, identity, or signature behavior. Otherwise it would add terms without operational payoff.
 
 ## Trace-derived learning placement
+
+**Trace source:** `session-logs` `trajectories` — The retained traces are downstream dialogue threads: contribution files, peer evaluations, closure entries, and consensus updates across a multi-agent thread.
+
+**Learning scope:** `per-project` `cross-task` — Scope is project/wiki-local, but crystallized canon and consensus state can shape later tasks in that wiki.
+
+**Learning timing:** `staged` — Dialogue accumulates first, then closure, recognition, canonization, consensus, and audit happen in staged/manual steps.
+
+**Distilled form:** `prose` `symbolic` — Crystallized canon is prose knowledge, while RoleSpace vectors, consensus frontmatter, lifecycle states, and audit findings are symbolic governance state.
 
 **Trace source.** The qualifying trace source is downstream multi-agent dialogue: individual contribution files, peer evaluations, closure entries, and consensus updates. The repo's own README names the intended flow as discussion to structured entries to peer review to crystallized knowledge to audit ([README.md](https://github.com/AEVYRA/llm-wiki-coordination/blob/126749634d1c8c2fd6141f59711c882c2d629699/README.md)).
 

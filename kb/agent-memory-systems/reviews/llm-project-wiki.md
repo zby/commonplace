@@ -32,7 +32,9 @@ llm-project-wiki, by Akash R, is a promptware scaffold for making Claude Code cr
 ## Artifact analysis
 
 - **Storage substrate:** `repo` — The reviewed repository stores only the bootstrap prompt and README, while the generated memory system stores vault files, command files, scripts, and agent instruction files in the target project repository.
-- **Representational form:** `mixed` — The central artifact is prose instruction, but it generates symbolic shell scripts, frontmatter schemas, Dataview queries, slash-command procedures, and Markdown page templates.
+- **Representational form:** `prose` `symbolic` — The central artifact is prose instruction, but it generates symbolic shell scripts, frontmatter schemas, Dataview queries, slash-command procedures, and Markdown page templates.
+- **Lineage:** `authored` `imported` — The setup prompt and generated commands are authored scaffolding, while generated vault pages and source layers are derived from copied docs, memory files, agent rules, and source-code reads
+- **Behavioral authority:** `knowledge` `instruction` `routing` `validation` — Wiki pages advise future agents, while generated rules, commands, schemas, sync scripts, Dataview health checks, and status fields instruct, route, or audit later work
 
 **Bootstrap prompt.** Storage substrate: `SETUP_PROMPT.md` in the source repository. Representational form: prose procedure with embedded shell snippets, directory trees, frontmatter rules, command specs, and audit checklists. Lineage: authored from Karpathy's LLM Wiki pattern and specialized for Claude Code project work. Behavioral authority: system-definition artifact when pasted into Claude Code, because it instructs the agent to create files, edit project rules, scan source code, and run verification passes. Its effective authority is not verified by code tests in this repository.
 

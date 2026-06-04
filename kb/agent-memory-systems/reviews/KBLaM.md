@@ -34,6 +34,8 @@ KBLaM, from Microsoft, is the official implementation of the ICLR 2025 "Knowledg
 
 - **Storage substrate:** `model-weights` — JSON datasets in the repository or user-supplied dataset files, optionally split into train/test outputs
 - **Representational form:** `parametric` — Symbolic JSON records with prose fields such as `name`, `description_type`, `description`, generated `Q`/`A`, and `key_string`
+- **Lineage:** `authored` `imported` — synthetic rows are generated according to the dataset card, Enron rows are imported/extracted from an external dataset, embeddings are derived from row fields, and learned weights come from supervised training
+- **Behavioral authority:** `knowledge` `routing` `ranking` `learning` — source rows and evaluation outputs act as knowledge/evidence, configs and attention code route KB tensors into layers, query heads and sparsification rank/select tensors, and encoder/query-head weights are learned conditioning artifacts
 
 **Knowledge-base rows.** Storage substrate: JSON datasets in the repository or user-supplied dataset files, optionally split into train/test outputs. Representational form: symbolic JSON records with prose fields such as `name`, `description_type`, `description`, generated `Q`/`A`, and `key_string`. Lineage: synthetic rows are GPT-4-generated according to the dataset card; Enron rows are extracted from the Enron email dataset by a separate automated extraction/linking pipeline, then converted into triples. Behavioral authority: knowledge artifacts during training and evaluation, because they provide factual supervision and answer targets; they become stronger model-conditioning material only after encoding into KB tensors.
 
@@ -68,6 +70,12 @@ The context-efficiency contrast is sharp. Commonplace uses lexical search, index
 ## Read-back placement
 
 **Direction.** KBLaM is push from the receiving model's perspective. `KBLaMProcessor` turns a supplied knowledge base into `kb_kvs`, and the modified Llama/Phi generation path consumes those tensors without the model or an agent calling a retrieval tool. Because this repository is a research package, the review treats that as an API capability: the host or evaluation script decides which KB tensors to provide.
+
+**Read-back signal:** `coarse` `inferred / embedding` — the default path exposes caller-supplied KB tensors coarsely, while Llama `dynamic_sparsify` uses query-head vector scoring against KB keys for instance-targeted embedding selection.
+
+**Read-back timing:** `pre-action` — KB tensors are available inside generation before token choices are made.
+
+**Faithfulness tested:** `no` — the review found benchmark and attention-dump support but no with/without activation ablation showing a fired KB tensor changed a decision.
 
 **Targeting and signal.** There are two memory push shapes. The default path is `coarse`: a caller supplies a KB tensor batch or subset, and all supplied KB keys/values are exposed to KB-enabled layers. The Llama `dynamic_sparsify` path is `instance`-targeted when enabled: the current hidden states are projected through the separate query head, scored against KB keys by learned vector dot product, and pruned to `top_k_kb` before attention. The signal is therefore `inferred / embedding`. The Phi path at this commit concatenates supplied KB tensors and can use a separate query head for attention scoring, but it does not implement the same top-k pruning branch.
 

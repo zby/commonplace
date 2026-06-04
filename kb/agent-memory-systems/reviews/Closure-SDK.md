@@ -33,6 +33,8 @@ Closure-SDK, by Walter Henrique Alves da Silva, is a monorepo for composing orde
 
 - **Storage substrate:** `in-memory` — In-process Rust/Python objects, with `Seer` retaining only the current stream monitor state and `Oracle` retaining raw records plus a geometric path
 - **Representational form:** `symbolic` — Symbolic/distributed-geometric numeric state, especially 4-float S3 elements
+- **Lineage:** `authored` `imported` — authored docs, examples, schemas, thresholds, deterministic runtime logic, and curriculum windows combine with imported byte records, table rows, CLI inputs, and caller-supplied query carriers
+- **Behavioral authority:** `knowledge` `enforcement` `routing` `validation` `ranking` `learning` — incidents, reports, rows, and states act as evidence; identity/audit/repair/transaction logic validates and gates accepted state; resonance and ZREAD route/rank reads; curriculum and response paths provide learning input
 
 **SDK running products and closure states.** Storage substrate: in-process Rust/Python objects, with `Seer` retaining only the current stream monitor state and `Oracle` retaining raw records plus a geometric path. Representational form: symbolic/distributed-geometric numeric state, especially 4-float S3 elements. Lineage: derived deterministically from ordered byte records through hashing and quaternion composition. Behavioral authority: system-definition artifact authority for detection, comparison, and localization decisions; knowledge artifact authority when the returned `ClosureState`, `CompareResult`, or `LocalizationResult` is inspected as evidence. The promotion path is summary to escalation: a cheap state can trigger use of retained records and detailed incident reports.
 

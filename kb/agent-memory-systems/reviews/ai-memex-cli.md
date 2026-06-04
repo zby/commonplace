@@ -33,7 +33,9 @@ last-checked: "2026-06-03"
 ## Artifact analysis
 
 - **Storage substrate:** `files` — The central retained state persists as filesystem Markdown and JSON: global vault files, local projection files, raw session Markdown, generated host instructions, config, context registry, watch logs, and status files.
-- **Representational form:** `mixed` — Wiki pages and skills are prose plus YAML frontmatter and wikilinks; CLI code, frontmatter schemas, generated prompts, JSON config, and daemon status are symbolic; no vector store, graph database, or model-weight memory is implemented in this checkout.
+- **Representational form:** `prose` `symbolic` — Wiki pages and skills are prose plus YAML frontmatter and wikilinks; CLI code, frontmatter schemas, generated prompts, JSON config, and daemon status are symbolic; no vector store, graph database, or model-weight memory is implemented in this checkout.
+- **Lineage:** `authored` `imported` `trace-extracted` — Templates, schemas, prompts, and wiki pages are authored or agent-authored; raw sources are imported; session distillation produces trace-extracted raw Markdown that later ingest can promote.
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `ranking` `learning` — Raw files and wiki pages act as knowledge; skills, schemas, prompts, context blocks, validators, search/projection selection, no-progress guards, and staged session ingest can instruct, route, validate, rank, enforce, and learn into later wiki state.
 
 **Global vault.** Storage substrate: a directory such as `~/.llmwiki/` or legacy `~/.llmwiki/global/`. Representational form: mixed Markdown, YAML frontmatter, wikilinks, and JSON config. Lineage: raw sources are imported or captured; wiki pages are agent-authored derived views; `index.md` and `log.md` are maintained summaries of the vault's state and operation history. Behavioral authority: raw files are knowledge artifacts and source-of-truth evidence; wiki pages are knowledge artifacts for query and maintenance, and can become soft system-definition artifacts when the vault schema or context block routes agents to consult them.
 
@@ -68,6 +70,12 @@ ai-memex's largest tradeoff is that its semantic layer is deliberately outside t
 
 **Read-back:** `both` — Retained memory returns by pull through `memex search`, `memex inject`, direct wiki reads, and local projections, and by coarse push when `memex context install` writes a vault digest into auto-loaded host files. The push path is not instance-targeted or faithfulness-tested in the reviewed code, so this review does not add `push-activation`.
 
+**Read-back signal:** `coarse` — The only push path described here is the session-start context digest written into auto-loaded host files, not instance-targeted selection.
+
+**Read-back timing:** `pre-action` — The context block is loaded at session start before the receiving agent acts.
+
+**Faithfulness tested:** `no` — The reviewed prose says the coarse push path is not faithfulness-tested in the code.
+
 ### Borrowable Ideas
 
 **A context block as a managed generated region.** Commonplace could use marker-delimited generated regions for selected project-level context exports, especially when a consuming project wants a small current digest without loading the whole KB. Ready as an export pattern; it needs clear ownership so generated text does not compete with hand-authored AGENTS instructions.
@@ -81,6 +89,14 @@ ai-memex's largest tradeoff is that its semantic layer is deliberately outside t
 **Keep local projections disposable.** `memex glob` makes project-local wiki copies explicitly generated and overwriteable. Commonplace's workshop or consuming-project projections could use the same warning pattern to prevent agents from treating convenience context as the durable source of truth. Ready for generated exports.
 
 ## Trace-derived learning placement
+
+**Trace source:** `session-logs` `tool-traces` — Agent session stores provide user/assistant messages, timestamps, and named tool calls where available.
+
+**Learning scope:** `per-project` `cross-task` — The trace loop is per vault and scene, with cross-session accumulation after durable wiki pages are written.
+
+**Learning timing:** `staged` — Sessions are converted after the fact into raw material, then later ingested or lint-repaired.
+
+**Distilled form:** `prose` `symbolic` — Session traces become Markdown raw documents and typed wiki pages with frontmatter, wikilinks, schemas, and possible schema/skill edits.
 
 **Trace source.** ai-memex qualifies as trace-derived because configured agent session stores are first-class sources. The adapter knows paths and patterns for Claude Code, Codex, OpenCode, Gemini CLI, and Aider; `distill` can infer the current Codex session by environment or select the latest session file by modification time ([src/core/agent-adapter.ts](https://github.com/zelixag/ai-memex-cli/blob/4adb274a33cbb9ff0f03a6aeeb9c8d2525a5ac3f/src/core/agent-adapter.ts), [src/commands/distill.ts](https://github.com/zelixag/ai-memex-cli/blob/4adb274a33cbb9ff0f03a6aeeb9c8d2525a5ac3f/src/commands/distill.ts)). The raw signal is a conversation/session trace: user messages, assistant messages, timestamps, and named tool calls where available.
 

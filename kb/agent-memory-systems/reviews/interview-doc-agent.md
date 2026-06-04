@@ -33,6 +33,8 @@ last-checked: "2026-06-03"
 
 - **Storage substrate:** `files` — The standing memory is a file tree: `SKILL.md`, `materials/`, `经历库/`, `wiki/index.md`, `templates/`, `jd/`, and `output/`.
 - **Representational form:** `prose` — Markdown prose dominates: raw dumps, distilled experience narratives, interview/resume templates, JD text, generated documents, and the skill instructions; the index table and directory convention add light symbolic routing.
+- **Lineage:** `authored` `imported` — Skill instructions, templates, and experience records are authored or AI-distilled, while raw materials, JD files, and user-supplied details are imported source material
+- **Behavioral authority:** `knowledge` `instruction` `routing` `ranking` — Materials, experience records, and outputs advise generation, while `SKILL.md`, `wiki/index.md`, templates, and JD files instruct workflow, route lookups, and select or emphasize facts
 
 **`SKILL.md` instruction artifact.** Storage substrate is a single Markdown file installed into a host skill location or pasted into a platform instruction field. Representational form is prose with YAML frontmatter, directory conventions, and stepwise procedures. Lineage is authored from the Karpathy LLM Wiki pattern and specialized for job-search documents. Behavioral authority is system-definition authority when a compatible host loads it: it tells the agent which files to create, read, update, and write, and it sets generation constraints such as "do not invent data."
 

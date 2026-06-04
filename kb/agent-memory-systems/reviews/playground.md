@@ -36,6 +36,8 @@ Playground, from TribleSpace's `triblespace/playground` repository, is a Rust ru
 
 - **Storage substrate:** `files` — A local TribleSpace pile file, with named branches such as config, cognition, memory, archive, and auxiliary branches used by faculties or diagnostics
 - **Representational form:** `symbolic` — Symbolic graph facts plus blob handles for long strings, unknown blobs, raw JSON, and simple archives
+- **Lineage:** `authored` `imported` `trace-extracted` — Runtime/config/faculty actions author pile facts, archive importers preserve external logs, and cognition/model/exec traces are generated online; this does not imply an implemented trace-to-memory compiler in this checkout
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` — History, archive, and diagnostics surfaces are knowledge artifacts; prompt/config/context assembly instruct and route the model loop; command-only behavior and schema-shaped branch facts constrain and check runtime state
 
 **TribleSpace pile and branches.** Storage substrate: a local TribleSpace pile file, with named branches such as config, cognition, memory, archive, and auxiliary branches used by faculties or diagnostics. Representational form: symbolic graph facts plus blob handles for long strings, unknown blobs, raw JSON, and simple archives. Lineage: authored by the runtime, workers, importers, config commands, and external faculty commands; invalidation is branch/head and blob-handle based rather than file-path based. Behavioral authority: system-definition artifact when branch state drives model requests, command execution, config, routing, prompt assembly, and diagnostics; knowledge artifact when inspected as history.
 
@@ -91,6 +93,12 @@ Playground also treats context caching as a first-class design constraint. Commo
 ## Read-back placement
 
 **Direction.** Both. Pull exists through command/faculty affordances described in the system prompt and docs. Push exists in the implemented core: `create_thought_and_request` loads the memory branch, builds context messages, stores the context blob, and creates the model request before the model acts.
+
+**Read-back signal:** `coarse` — Every model request receives a continuity cover selected by time, hierarchy, and budget, not by an instance identifier, lexical query, embedding similarity, or judgment.
+
+**Read-back timing:** `pre-action` — The selected memory cover is assembled before the model call that produces the next shell command.
+
+**Faithfulness tested:** `no` — The review found no WITH/WITHOUT ablation, perturbation test, or post-action audit proving selected memory changes behavior as intended.
 
 **Targeting and signal.** The memory-cover push is `coarse`. It fires for each model request and selects a continuity cover from the memory branch using root chunks, `start_at`/`end_at`, child edges, moment boundary, continuous coverage, and budget fit. Signal is n/a because the selected cover is not keyed to this task by an identifier, lexical query, embedding similarity, or LLM relevance judgment. Static code verifies the cover-selection mechanics, not precision, context dilution, or effective behavioral use.
 

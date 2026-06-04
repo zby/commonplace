@@ -33,7 +33,9 @@ ExpeL, from LeapLabTHU's `ExpeL` repository, is the official implementation of t
 ## Artifact analysis
 
 - **Storage substrate:** `files` — Local files under `logs/<benchmark>/expel/`: `.txt` logs, `_true.txt` full logs, and `.pkl` lists of serializable agent dictionaries (https://github.com/LeapLabTHU/ExpeL/blob/e41ec9a24823e7b560c561ab191441b56d9bcefc/utils.py)
-- **Representational form:** `mixed` — Mixed: prose trajectories in logs, symbolic Python dictionaries in pickle, and embedded prose fields for task histories and reflections
+- **Representational form:** `prose` `symbolic` `parametric` — prose trajectories/rules/examples, symbolic dictionaries/counters/configs/metadata, and FAISS embeddings for retrieved few-shot examples
+- **Lineage:** `authored` `imported` `trace-extracted` — authored prompt/config/code artifacts, imported/static benchmark few-shot examples, and training traces distilled into rules and retrieval candidates
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `ranking` `learning` — logs and trajectories act as evidence, rules and prompts instruct, filters enforce candidate limits, configs route benchmark behavior, embeddings/rerankers rank, and trace critique learns rules
 
 **Training logs and pickled checkpoints.** The storage substrate is local files under `logs/<benchmark>/expel/`: `.txt` logs, `_true.txt` full logs, and `.pkl` lists of serializable agent dictionaries (https://github.com/LeapLabTHU/ExpeL/blob/e41ec9a24823e7b560c561ab191441b56d9bcefc/utils.py). The representational form is mixed: prose trajectories in logs, symbolic Python dictionaries in pickle, and embedded prose fields for task histories and reflections. Lineage is raw or lightly structured runtime trace capture from training tasks. Behavioral authority is mostly knowledge artifact authority until later scripts reload the checkpoint; once loaded by insight extraction or evaluation, the same records become learning input and retrieval substrate.
 
@@ -80,6 +82,14 @@ ExpeL is stronger on pre-action activation. It does not rely on the agent decidi
 
 ## Trace-derived learning placement
 
+**Trace source:** `trajectories` — benchmark task trajectories carry prompts, thoughts, actions, observations, outcomes, reflections, and serialized agent state
+
+**Learning scope:** `per-task` `cross-task` — reflections can support same-task retries, while extracted rules and retrieved examples are used across held-out tasks within a benchmark/fold
+
+**Learning timing:** `online` `offline` `staged` — training accumulates traces online, insight extraction is an offline/staged pass, and cached fold rules can be loaded by later evaluation
+
+**Distilled form:** `prose` `symbolic` `parametric` — natural-language rules and examples, symbolic counters/cache keys/metadata, and vector embeddings used for few-shot retrieval
+
 **Trace source.** ExpeL qualifies as trace-derived learning. Raw traces are task trajectories from benchmark interactions: prompts, thoughts, actions, observations, success/failure outcomes, reflections, and serialized agent state saved by `train.py` (https://github.com/LeapLabTHU/ExpeL/blob/e41ec9a24823e7b560c561ab191441b56d9bcefc/train.py, https://github.com/LeapLabTHU/ExpeL/blob/e41ec9a24823e7b560c561ab191441b56d9bcefc/agent/expel.py).
 
 **Extraction.** The extraction oracle is an LLM critique prompt. For paired successful and failed trials, the prompt asks for general high-level critiques that avoid similar failures; for successful-trial batches, it asks for generally applicable tips. The LLM must emit bounded operations over the existing rule list, and `parse_rules` plus `update_rules` turns those operations into a counted, sorted rule set (https://github.com/LeapLabTHU/ExpeL/blob/e41ec9a24823e7b560c561ab191441b56d9bcefc/prompts/templates/human.py, https://github.com/LeapLabTHU/ExpeL/blob/e41ec9a24823e7b560c561ab191441b56d9bcefc/agent/expel.py).
@@ -93,6 +103,12 @@ ExpeL is stronger on pre-action activation. It does not rely on the agent decidi
 ## Read-back placement
 
 **Direction.** Read-back is both push and script-level pull. Acting agents receive trace-derived rules and retrieved few-shots by push during prompt construction; scripts pull checkpoints and extracted-insight runs from disk through `load_trajectories_log` (https://github.com/LeapLabTHU/ExpeL/blob/e41ec9a24823e7b560c561ab191441b56d9bcefc/eval.py, https://github.com/LeapLabTHU/ExpeL/blob/e41ec9a24823e7b560c561ab191441b56d9bcefc/utils.py).
+
+**Read-back signal:** `coarse` `identifier` `inferred / embedding` — fold-level rule insertion is coarse; few-shot retrieval narrows by environment/document metadata and then selects by embedding similarity over the current task/thought/action/step query.
+
+**Read-back timing:** `pre-action` — rules are inserted before the task prompt, and few-shots are replaced before the model call.
+
+**Faithfulness tested:** `no` — the review found structural activation and benchmark evaluation, but not item-level ablations proving a specific rule or trajectory caused a specific behavior.
 
 **Targeting and signal.** Rule read-back is coarse: the current evaluation fold supplies the rule set, and every evaluation task receives it unless `no_rules` is set. Few-shot read-back is instance-targeted with an inferred/embedding signal: the system builds a FAISS index over candidate documents narrowed by environment and document type, queries by the current task, thought, action, or step depending on `fewshot_strategy`, retrieves a buffered top-k, excludes current-task and overlong trajectories, and optionally reranks by length or cosine similarity over thoughts/tasks (https://github.com/LeapLabTHU/ExpeL/blob/e41ec9a24823e7b560c561ab191441b56d9bcefc/agent/expel.py, https://github.com/LeapLabTHU/ExpeL/blob/e41ec9a24823e7b560c561ab191441b56d9bcefc/configs/agent/expel.yaml). The metadata filters narrow the candidate pool, but the final selector is content-keyed embedding similarity, which justifies `push-activation`.
 

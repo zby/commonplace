@@ -35,6 +35,8 @@ o-o, from Jahala's `jahala/o-o` repository, is a living-document format rather t
 
 - **Storage substrate:** `files` — The `.o-o.html` file in the user's filesystem or repository
 - **Representational form:** `prose` — Prose HTML with citations, images, paragraph ids, and references
+- **Lineage:** `authored` `imported` — Article content and contracts are authored or LLM-edited from web sources, prior article content, embedded caches, and shared document code
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` — Article content, source caches, indexes, and changelogs advise readers and update agents, while manifests, update contracts, and shell dispatchers instruct, route, enforce freshness/budget policy, and invoke sibling updates
 
 **Visible article HTML.** Storage substrate is the `.o-o.html` file in the user's filesystem or repository. Representational form is prose HTML with citations, images, paragraph ids, and references. Lineage is LLM-edited research output derived from web sources, prior article content, the embedded contract, and prior source-cache entries. Behavioral authority is mostly knowledge-artifact authority for human readers and for the future update agent when it re-reads the article as context.
 

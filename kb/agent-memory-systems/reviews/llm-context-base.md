@@ -33,7 +33,9 @@ llm-context-base, by `asakin/llm-context-base`, is an opinionated Markdown/Obsid
 ## Artifact analysis
 
 - **Storage substrate:** `files` — The central retained state is a Git/Obsidian-friendly file tree of Markdown docs, frontmatter, instruction modules, templates, logs, shims, and a small Python migration script.
-- **Representational form:** `mixed` — Prose Markdown dominates, with symbolic YAML frontmatter, status/type/tag vocabularies, gitignore rules, JSON editor settings, Obsidian config, and Python migration logic.
+- **Representational form:** `prose` `symbolic` — Prose Markdown dominates, with symbolic YAML frontmatter, status/type/tag vocabularies, gitignore rules, JSON editor settings, Obsidian config, and Python migration logic.
+- **Lineage:** `authored` `imported` `trace-extracted` — The template ships authored framework files, the wiki can import or file captured/source material, and training logs, operation logs, learned preferences, and decision outcomes are trace-derived during use.
+- **Behavioral authority:** `knowledge` `instruction` `routing` `validation` `learning` — Wiki content and logs advise future work; bootstrap/config/instruction files instruct and route agents; lint protocols validate by agent procedure; learned context and decision outcomes update later behavior.
 
 **Personal wiki content.** Storage substrate: Markdown files under `_inbox/`, `1-Projects/`, `2-Knowledge/`, `3-Journal/`, `4-Private/`, `_output/`, and optionally `_sources/`. Representational form: prose Markdown plus YAML frontmatter, links, dates, and templates. Lineage: authored or filed by the agent from conversations, captures, source documents, decisions, project work, meetings, or journal entries; `_inbox/` items are temporary source candidates, while filed knowledge is the working memory. Behavioral authority: mostly knowledge artifacts returned as evidence, context, or advice during query; decision outcomes can advise later decisions through the decision learning loop.
 
@@ -68,6 +70,12 @@ llm-context-base's context-efficiency story is intentionally simple: route by di
 
 **Read-back:** `both` — learned config/context and session summaries are pushed at startup, while retained wiki content is pulled through explicit knowledge-query routing, summary scans, links, and file reads.
 
+**Read-back signal:** `coarse` — The push path is startup/session loading of learned config, context, and summaries rather than instance-specific lexical, embedding, judgment, or identifier-triggered memory selection.
+
+**Read-back timing:** `pre-action` — Startup-loaded config/context can shape the next assistant actions before query or write work begins.
+
+**Faithfulness tested:** `no` — The review notes no benchmark, harness, or ablation showing that pushed context reliably changes later assistant behavior.
+
 ### Borrowable Ideas
 
 **Template-first adoption with framework mode escape hatch.** Commonplace could make new consuming-project setup easier by shipping a lighter bootstrap that distinguishes "use this as my KB" from "develop the framework." Ready now as an instruction pattern, but any implementation should avoid duplicated shims drifting apart.
@@ -81,6 +89,14 @@ llm-context-base's context-efficiency story is intentionally simple: route by di
 **Do not borrow instruction-only enforcement for core library artifacts.** llm-context-base can rely on a cooperative current agent because it is a personal template. Commonplace's methodology layer should keep deterministic validation and typed contracts for artifacts that future agents will cite as authority.
 
 ## Trace-derived learning placement
+
+**Trace source:** `session-logs` `event-streams` — The retained learning comes from conversations, captured ideas, query/lint/edit/archive operations, decision outcomes, and observed behavior during the training period, not from automatic raw JSONL or tool-trace mining.
+
+**Learning scope:** `per-project` `cross-task` — Learned conventions are personal-instance or repo-local, and they shape later sessions and decision/query/write tasks across the wiki.
+
+**Learning timing:** `online` `staged` — Agents write preferences and conventions while the session is happening, within the staged training lifecycle of discovery, refinement/cooldown, and established operation.
+
+**Distilled form:** `prose` `symbolic` — The trace loop distills into prose config, context, instructions, logs, decision outcomes, and symbolic frontmatter or structural conventions.
 
 **Trace source.** llm-context-base qualifies as trace-derived in a limited, file-native sense. The source traces are conversations, captured ideas, query operations, lint operations, decision outcomes, and observed user behavior during the training period. The system does not mine raw JSONL transcripts automatically; it tells the active agent to notice patterns and write them into retained files while the interaction is happening.
 

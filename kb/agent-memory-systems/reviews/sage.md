@@ -33,7 +33,9 @@ SAGE, from Dhillon Andrew Kannabhiran's `l33tdawg/sage` repository, is a Go-base
 ## Artifact analysis
 
 - **Storage substrate:** `kv` — On-chain BadgerDB keys for content hash, status, classification, votes, domain ownership, and related consensus state; full content, embeddings, triples, corroborations, and query metadata live in SQLite or PostgreSQL as off-chain projections ([internal/abci/app.go](https://github.com/l33tdawg/sage/blob/8122a91bf561c9c5c99bea380871116c70785988/internal/abci/app.go), [internal/store/store.go](https://github.com/l33tdawg/sage/blob/8122a91bf561c9c5c99bea380871116c70785988/internal/store/store.go))
-- **Representational form:** `mixed` — Mixed symbolic and prose, with typed fields for memory id, type, domain, confidence, status, parent hash, task status, classification, and optional vectors/triples
+- **Representational form:** `prose` `symbolic` `parametric` — Prose memory content and reflections, symbolic typed fields/status/votes/RBAC/hooks/query options, and optional embeddings/triples plus lexical indexes
+- **Lineage:** `authored` `trace-extracted` — Memories, tool definitions, hooks, access state, and validation policy are authored by agents/admins or shipped code; turn observations, task reflections, session lifecycle records, embeddings, triples, votes, and indexes are derived from submitted content and agent/session traces
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `ranking` `learning` — Recalled records advise as knowledge; MCP instructions and skills instruct; RBAC and blocking enforce; hooks and query paths route activation; validators decide status; confidence/search/rerankers rank; trace-derived turn/reflection capture produces later memory
 
 **Consensus memory record.** Storage substrate: on-chain BadgerDB keys for content hash, status, classification, votes, domain ownership, and related consensus state; full content, embeddings, triples, corroborations, and query metadata live in SQLite or PostgreSQL as off-chain projections ([internal/abci/app.go](https://github.com/l33tdawg/sage/blob/8122a91bf561c9c5c99bea380871116c70785988/internal/abci/app.go), [internal/store/store.go](https://github.com/l33tdawg/sage/blob/8122a91bf561c9c5c99bea380871116c70785988/internal/store/store.go)). Representational form: mixed symbolic and prose, with typed fields for memory id, type, domain, confidence, status, parent hash, task status, classification, and optional vectors/triples. Lineage: authored or trace-derived by agents through MCP/REST tools, then consensus-ordered and mirrored; embeddings and triples are derived side data staged before consensus commit. Behavioral authority: committed records are knowledge artifacts when recalled as context, but their status, classification, confidence, and query rank have system-definition authority over what the agent can see and how strongly it is presented.
 
@@ -86,6 +88,14 @@ The deepest design difference is the trust boundary. SAGE treats consensus and a
 
 ## Trace-derived learning placement
 
+**Trace source:** `session-logs` `event-streams` `trajectories` — Conversation turns, session lifecycle/pre-compaction hook events, and completed-task reflections are summarized into durable records
+
+**Learning scope:** `per-task` `cross-task` — Task reflections are per-task, while committed memories can be recalled across later turns, tasks, agents, and domains
+
+**Learning timing:** `online` `staged` — Per-turn and session-end capture happen online, while task reflection, pre-compaction prompting, validation, and consensus commit stage what becomes available
+
+**Distilled form:** `prose` `symbolic` `parametric` — The retained distillates are prose observations/reflections with symbolic type/status/domain/confidence fields and derived embeddings/triples/indexes
+
 **Trace source.** SAGE qualifies as trace-derived learning. The main traces are conversation turns summarized by the agent in `sage_turn`, task outcomes summarized in `sage_reflect`, session lifecycle events written by SessionEnd hooks, and pre-compaction state that hooks ask the agent to distill before context is lost ([internal/mcp/tools.go](https://github.com/l33tdawg/sage/blob/8122a91bf561c9c5c99bea380871116c70785988/internal/mcp/tools.go), [cmd/sage-gui/hook.go](https://github.com/l33tdawg/sage/blob/8122a91bf561c9c5c99bea380871116c70785988/cmd/sage-gui/hook.go), [cmd/sage-gui/mcp.go](https://github.com/l33tdawg/sage/blob/8122a91bf561c9c5c99bea380871116c70785988/cmd/sage-gui/mcp.go)). The code does not automatically ingest full raw chat transcripts by default; the ordinary path stores agent-authored distillates.
 
 **Extraction.** Extraction is mostly agent-mediated rather than parser-mediated. `sage_turn` receives the agent's observation text and stores it as an observation after low-value and duplicate checks. `sage_reflect` maps task summary, dos, and don'ts into separate memory records with fixed prefixes and confidence values. SessionEnd direct-write records a lifecycle event but explicitly says per-turn content is captured by the agent's `sage_turn` calls. Validators then judge quality, consistency, and duplicate status before or during the commit path.
@@ -99,6 +109,12 @@ The deepest design difference is the trust boundary. SAGE treats consensus and a
 ## Read-back placement
 
 **Direction.** Push, for the assigned `related-systems/amazon-science--SAGE` source. The read-back object is retained skill code: rollout generation extracts functions from a first subtask and carries them into the next subtask's initial prompt, while the AppWorld evaluation agent loads saved skill functions and inserts selected functions into `retrieved_skills` before the model acts. I did not find an agent-facing memory lookup tool or deliberate pull path in this source.
+
+**Read-back signal:** `identifier` `inferred / lexical` `inferred / embedding` — Per-example and same-scenario task ids provide identifier matching, while n-gram and embedding retrieval select prior skill functions by lexical and embedding similarity
+
+**Read-back timing:** `pre-action` — Retrieved or carried skill functions are rendered into the initial prompt before the model's first task-solving action
+
+**Faithfulness tested:** `no` — The section reports skill-use counts but no code-level with/without ablation proving that pushed skills change downstream success
 
 **Targeting and signal.** Targeting is `instance`. In the rollout path, the signal is primarily `identifier`: skills generated for a task/scenario are carried by the per-example skill-library slot and replayed on the paired later subtask (`sage/llm_agent/appworld_generation.py`, `sage/llm_agent/app_world/app_world_env.py`). In the AppWorld evaluation patch, targeting is mixed: `default` retrieval keys on same-scenario task ids, `query_embedding` and `skill_embedding` use `inferred / embedding`, and `ngram` uses `inferred / lexical` before injecting matching functions into the prompt (`patches/appworld/experiments/code/skill_library_agent/skill_library_agent.py`). Precision, recall, and actual context dilution are not verified from code.
 

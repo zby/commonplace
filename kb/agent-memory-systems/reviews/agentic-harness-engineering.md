@@ -33,7 +33,9 @@ Agentic Harness Engineering, from the `china-qijizhifeng/agentic-harness-enginee
 ## Artifact analysis
 
 - **Storage substrate:** `repo` — A filesystem workspace under the experiment directory, backed by a local git repository initialized and committed by `evolve.py`
-- **Representational form:** `mixed` — Mixed prose, symbolic config, and executable code: `systemprompt.md`, `code_agent.yaml`, tool descriptions, tools, middleware, skills, sub-agents, and `LongTermMEMORY.md`
+- **Representational form:** `prose` `symbolic` — Prose prompts, reports, summaries, memory files, and skill guidance plus symbolic config, schemas, metrics, traces, manifests, scripts, tools, middleware, sub-agents, and git commits
+- **Lineage:** `authored` `imported` `trace-extracted` — Baseline harness files are copied/imported from the source agent config, the HARNESS skill is authored, and reports, queries, manifests, evaluations, and harness edits derive from benchmark traces
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `ranking` `learning` — Raw traces and reports serve as evidence; prompts, skills, tools, middleware, manifests, verifier rewards, pass/fail metrics, and evolution queries instruct, route, validate, rank, and learn changes to the harness
 
 **Harness workspace.** Storage substrate: a filesystem workspace under the experiment directory, backed by a local git repository initialized and committed by `evolve.py`. Representational form: mixed prose, symbolic config, and executable code: `systemprompt.md`, `code_agent.yaml`, tool descriptions, tools, middleware, skills, sub-agents, and `LongTermMEMORY.md`. Lineage: copied from `agents/code_agent_simple`, patched from experiment config, then edited by the evolution agent from trace-derived evidence and committed/tagged per iteration. Behavioral authority: system-definition artifacts for the evaluated code agent because these files define instructions, tools, middleware hooks, loaded skills, delegation surfaces, and always-available or registered memory surfaces.
 
@@ -80,6 +82,11 @@ The main divergence is objective and artifact granularity. AHE optimizes benchma
 
 ## Trace-derived learning placement
 
+- **Trace source:** `tool-traces` `trajectories` — Benchmark execution supplies NexAU step traces, tool calls, model messages, runtime logs, verifier rewards, exceptions, and per-task rollout histories
+- **Learning scope:** `per-project` `cross-task` — The loop is scoped to an experiment workspace and benchmark iteration, while task histories, stability views, best-ever snapshots, and change attribution compare behavior across tasks and iterations
+- **Learning timing:** `staged` — Each cycle evaluates the current workspace, analyzes retained traces, evolves the next workspace, and evaluates again
+- **Distilled form:** `prose` `symbolic` — Debugger overview/detail reports, prompts, summaries, manifests, metrics, histories, config, scripts, and git-tracked harness edits carry the distilled result
+
 **Trace source.** AHE qualifies as trace-derived learning. The raw signal is benchmark execution: NexAU step traces, tool calls, model messages, runtime logs, verifier reward files, exception files, and optional test output. The trace converter normalizes in-memory tracer dumps into debugger-friendly JSON, and the main loop groups rollouts by task and outcome.
 
 **Extraction.** Extraction is staged. First, `compute_stats`, behavior-stat extractors, and cross-iteration diff code turn run directories into pass/fail metrics, task histories, and stability views. Second, Agent Debugger prompts transform selected traces and verifier outputs into markdown overview/detail reports. Third, the evolution query pushes those reports and attribution records into the evolution agent, which turns them into workspace edits and manifests. The oracle is a combination of verifier reward, task diff, LLM debugger diagnosis, and later benchmark re-evaluation.
@@ -91,6 +98,12 @@ The main divergence is objective and artifact granularity. AHE optimizes benchma
 ## Read-back placement
 
 **Direction.** AHE uses both push and pull from the evolution agent's perspective. The iteration query pushes a scoped memory packet into the next evolution run; detail reports and raw traces remain available through deliberate file reads. This is memory read-back, not shipped documentation injection: the pushed packet is assembled from retained run traces, debugger reports, history, manifests, scores, and attribution records accumulated by the experiment loop.
+
+**Read-back signal:** `identifier` — The pushed packet is assembled for the known benchmark iteration, job directory, task names, outcome labels, file paths, and experiment/configuration identifiers
+
+**Read-back timing:** `pre-action` — The evolution query is pushed before the evolution agent edits the workspace
+
+**Faithfulness tested:** `yes` — Later benchmark iterations compare predicted fixes and regressions against actual task flips and score changes at iteration level, though not at sentence-level causal tracing
 
 **Targeting and signal.** Targeting is `instance`: `build_evolution_query` assembles the packet for the already-known evolution instance, using the current `iteration`, `job_dir`, task results, rollout counts, cross-iteration diff, stability state, best-ever snapshot, change attribution, and optional variant comparison. The signal is `identifier`: benchmark iteration, task names, outcome labels, file paths, and declared experiment/configuration fields identify which retained records belong to this run. Agent Debugger may use an LLM to distill trace content into reports, but the push selector itself is not embedding or LLM relevance retrieval; precision/recall of the packet's practical relevance is not verified from code.
 

@@ -33,7 +33,9 @@ MemoryOS, from BAI-LAB, is an open-source memory layer for personalized AI agent
 ## Artifact analysis
 
 - **Storage substrate:** `vector` — JSON files in `users/<user_id>/short_term.json`, or Chroma variant metadata
-- **Representational form:** `prose` — Structured rows with prose `user_input`, `agent_response`, and timestamps
+- **Representational form:** `prose` `symbolic` `parametric` — Prose turns, summaries, profiles, knowledge entries, and prompts; symbolic ids, timestamps, metadata, thresholds, counters, and tool schemas; embeddings/FAISS or Chroma vector retrieval state
+- **Lineage:** `authored` `trace-extracted` — Authored prompts, thresholds, capacities, schemas, and update policies operate over raw interaction traces that are summarized and distilled into mid-term and long-term memory
+- **Behavioral authority:** `knowledge` `instruction` `routing` `ranking` `learning` — Retrieved memory acts as advisory context; prompts and wrapper code instruct prompt assembly; embeddings, thresholds, heat, and top-k parameters route and rank memory; trace promotion and extraction form the learning path
 
 **Short-term QA pairs.** Storage substrate: JSON files in `users/<user_id>/short_term.json`, or Chroma variant metadata. Representational form: structured rows with prose `user_input`, `agent_response`, and timestamps. Lineage: raw interaction traces inserted by `add_memory()` or through the MCP `add_memory` tool; invalidated by deque capacity, migration to mid-term, or storage deletion. Behavioral authority: advisory context when `get_response()` includes the whole short-term history in the next prompt; source material for later mid-term summaries.
 
@@ -82,6 +84,14 @@ The most important difference is that MemoryOS collapses memory maintenance into
 
 ## Trace-derived learning placement
 
+**Trace source:** `session-logs` `event-streams` — MemoryOS consumes user/assistant QA conversation traces, timestamps, optional metadata, page chains, retrieval visits, and benchmark conversation records.
+
+**Learning scope:** `per-project` — The review evidence scopes retained memory per user and assistant under `users/<user_id>` and `assistants/<assistant_id>` or equivalent Chroma collection names.
+
+**Learning timing:** `online` `staged` — Each `add_memory()` can update short-term traces online, while short-to-mid promotion and heat-triggered long-term extraction happen as staged steps around writes.
+
+**Distilled form:** `prose` `symbolic` `parametric` — Distillation produces prose summaries, profile text, and knowledge entries, plus symbolic metadata/counters/thresholds and embedding-backed retrieval state.
+
 **Trace source.** MemoryOS qualifies as trace-derived. Raw signals are user/assistant QA pairs written through the library or MCP server, timestamps, optional metadata, page chains, retrieval visits, and benchmark conversations.
 
 **Extraction.** The first extraction step moves full short-term turns into mid-term page objects, then LLM prompts decide continuity, meta summaries, and topic summaries. The second extraction step runs when a mid-term session becomes hot: LLM prompts update the user profile and extract user private knowledge plus assistant knowledge. The oracle is the configured chat model plus prompt templates; the code filters empty or `"None"` outputs but does not include a reviewer, confidence score, or source-span check.
@@ -95,6 +105,12 @@ The most important difference is that MemoryOS collapses memory maintenance into
 ## Read-back placement
 
 **Direction.** MemoryOS is both pull and push. MCP `retrieve_memory` and `get_user_profile` are explicit pull tools. The library `get_response()` path is push from the receiving model's perspective because retrieval happens before the model call and recalled memory is placed into the prompt. This is implemented as a response-wrapper API surface rather than MCP hook wiring; callers get push activation when they delegate the answer generation path to MemoryOS.
+
+**Read-back signal:** `coarse` `inferred / embedding` — The wrapper includes short-term history and the raw user profile coarsely, and uses query embeddings over FAISS or Chroma-backed memory for instance-targeted recall.
+
+**Read-back timing:** `pre-action` `post-action` — Retrieval and prompt assembly happen before the generated answer; the resulting QA trace is written after generation for later turns.
+
+**Faithfulness tested:** `no` — The review found retrieval and answering evaluation scripts, but no with/without ablation proving pushed memory changes downstream model behavior or agent actions.
 
 **Targeting and signal.** The engineered memory push is `instance` targeted: `get_response(query)` uses the current query as the instance payload. Its selector is `inferred / embedding`, not an identifier match: the code embeds the query, runs FAISS inner-product search over mid-term session summaries/pages and long-term knowledge entries, then filters by segment/page/knowledge thresholds and top-k capacities. Short-term history and the raw user profile are included by the wrapper without semantic selection, so those inclusions are coarse context inside the same pre-call path.
 

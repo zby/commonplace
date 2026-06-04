@@ -33,7 +33,9 @@ Decapod, from DecapodLabs, is a Rust CLI governance kernel for AI coding agents.
 ## Artifact analysis
 
 - **Storage substrate:** `files` — Repository files such as `AGENTS.md`, `CLAUDE.md`, `CODEX.md`, `.decapod/config.toml`, and `.decapod/generated/specs/*`
-- **Representational form:** `mixed` — Prose plus symbolic TOML/manifest metadata
+- **Representational form:** `prose` `symbolic` — Prose docs, snippets, lessons, and summaries plus symbolic TOML, JSON manifests, SQLite rows, JSONL events, hashes, statuses, proof records, and policy metadata
+- **Lineage:** `authored` `imported` `trace-extracted` — Authored by CLI/RPC and promotion operations, imported or scaffolded from embedded/project sources and events, and trace-extracted from task, worker-loop, LCM, feedback, proof, and verification ledgers
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `ranking` `learning` — Retained artifacts provide evidence/context, instruct and route agents, enforce proof/workunit gates, validate drift and completion, rank/search knowledge and graph context, and turn traces into later lessons and procedural entries
 
 **Entrypoint contracts and generated project specs.** Storage substrate: repository files such as `AGENTS.md`, `CLAUDE.md`, `CODEX.md`, `.decapod/config.toml`, and `.decapod/generated/specs/*`. Representational form: prose plus symbolic TOML/manifest metadata. Lineage: generated or preserved by init/scaffold from inferred repo context, user-provided seeds, embedded templates, and local overrides. Behavioral authority: system-definition artifacts with instruction and routing force for agents, plus knowledge-artifact context when agents read specs as project facts.
 
@@ -83,6 +85,14 @@ Decapod's weaker point for Commonplace purposes is that many retained facts live
 **Do not borrow hidden DB-first memory as the primary durable layer.** SQLite/JSONL is good for runtime state and ledgers, but Commonplace's durable methodology claims should remain in typed Markdown unless they are generated indexes or machine-checkable evidence.
 
 ## Trace-derived learning placement
+
+**Trace source:** `tool-traces` `event-streams` — Task/todo event streams, worker-loop execution records, LCM tool-result originals, retrieval feedback events, proof/verification ledgers, and operator feedback records
+
+**Learning scope:** `per-task` `per-project` `cross-task` — Worker lessons are produced from task completion, stored in repo/store-scoped knowledge and federation substrates, and affect later work across tasks
+
+**Learning timing:** `online` `staged` — Raw event capture happens during operation, while worker lessons, summaries, and procedural promotions are produced after task completion or explicit summarize/promotion calls
+
+**Distilled form:** `prose` `symbolic` — Distilled outputs are prose lessons/summaries plus symbolic metadata, hashes, graph nodes, promotion records, proof baselines, and validation state, with no distributed-parametric state in the reviewed implementation
 
 **Trace source.** Decapod qualifies as trace-derived learning. The trace sources are task/todo event streams, worker-loop execution records, LCM originals with `event`, `message`, `artifact`, and `tool_result` kinds, retrieval feedback events, proof/verification ledgers, and operator feedback records. These are not model transcripts by default, but they are durable event and action traces from agent operation.
 

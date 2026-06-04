@@ -32,7 +32,9 @@ Funes, from Bethany Hunt's `ulyssestenn/funes` repository, is a template and ope
 ## Artifact analysis
 
 - **Storage substrate:** `repo` - The central retained state is plain Markdown and raw files inside a Git repository: top-level protocol files plus per-library `raw/`, `wiki/`, `outputs/`, and `meta/` folders.
-- **Representational form:** `mixed` - Funes combines prose instructions, Markdown articles, YAML-like frontmatter templates, relative links, source registries, indexes, and changelog/health-report conventions.
+- **Representational form:** `prose` `symbolic` - Funes combines prose instructions, Markdown articles, YAML-like frontmatter templates, relative links, source registries, indexes, and changelog/health-report conventions.
+- **Lineage:** `authored` `imported` - Protocol files and compiled wiki articles are authored by the framework or Librarian, while raw sources are imported or captured from user-supplied material.
+- **Behavioral authority:** `knowledge` `instruction` `routing` - Raw sources, source notes, concepts, topics, and outputs advise future work, while `AGENTS.md`, protocol files, scaffolds, indexes, and topic maps instruct or route the Librarian.
 
 **Top-level Librarian protocol files.** Storage substrate: repository files `AGENTS.md`, `protocol.md`, and `library.md`. Representational form: prose instructions plus symbolic folder maps and templates. Lineage: authored framework guidance in the Funes template. Behavioral authority: system-definition artifacts for any host agent that reads `AGENTS.md`; they instruct the Librarian role, routing, workflow, naming, linking, and maintenance behavior.
 

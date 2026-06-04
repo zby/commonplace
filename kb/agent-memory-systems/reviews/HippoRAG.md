@@ -32,7 +32,9 @@ HippoRAG is the OSU NLP Group's Python framework for graph-based retrieval-augme
 ## Artifact analysis
 
 - **Storage substrate:** `files` — Local parquet in `chunk_embeddings/vdb_chunk.parquet`, keyed by MD5-derived chunk IDs
-- **Representational form:** `mixed` — Mixed: prose passage text plus distributed-parametric embeddings and symbolic hash IDs
+- **Representational form:** `prose` `symbolic` `parametric` — prose passage text, extracted strings and prompts, symbolic IDs/JSON/graph/configuration, and distributed-parametric embeddings
+- **Lineage:** `authored` `imported` — caller-supplied corpus documents are imported, while prompts/configuration are authored and derived stores are compiled from those inputs
+- **Behavioral authority:** `knowledge` `instruction` `routing` `ranking` — chunks advise as evidence, prompts/configuration instruct extraction and QA assembly, and graph/rerank/embedding artifacts route and rank retrieval
 
 **Corpus chunks.** The storage substrate is local parquet in `chunk_embeddings/vdb_chunk.parquet`, keyed by MD5-derived chunk IDs. The representational form is mixed: prose passage text plus distributed-parametric embeddings and symbolic hash IDs. Lineage is imported from caller-supplied `docs`; duplicate detection is content-hash based, and regeneration follows `force_index_from_scratch` or changed input text. Behavioral authority is knowledge-artifact authority when chunks are read as evidence, and ranking authority when their embeddings participate in retrieval.
 

@@ -35,6 +35,8 @@ Context Constitution, from Letta, is a documentation repository for an agent-fac
 
 - **Storage substrate:** `files` — GitHub-hosted Markdown in `constitution/CONSTITUTION.md`
 - **Representational form:** `prose` — Prose
+- **Lineage:** `authored` `trace-extracted` — the public policy and workflow are authored, while the described host memory surfaces include agent-authored edits and conversation-derived compaction summaries
+- **Behavioral authority:** `knowledge` `instruction` `routing` `validation` `learning` — the public docs are reference material; prompt inclusion, context hierarchy, MemFS routing, whitespace CI, and claimed training use give the described consumption paths stronger authority
 
 **Constitution prose.** The storage substrate is GitHub-hosted Markdown in `constitution/CONSTITUTION.md`. Its representational form is prose. Its lineage is authored public policy, not generated output, trace-extracted memory, or compiled configuration. As a public document it is a knowledge artifact: readers can use it as reference and rationale for Letta's context-management philosophy. When Letta inserts the same or derived text into an agent prompt or training corpus, it becomes a system-definition artifact with instruction or learning authority, but that consumption path is asserted in the README rather than implemented in this repository.
 
@@ -64,6 +66,12 @@ The Letta framing is more agent-autonomy-forward: the agent owns its context, mo
 The biggest comparison risk is over-reading the source. The documents describe a rich harness with MemFS, message search, compaction, multi-conversation memory, and subagents. This repository does not implement those pieces, so the review can credit the design vocabulary and policy shape but not the runtime behavior.
 
 **Read-back:** `both` — The described Letta harness coarsely push-loads retained `/system` memory in the prompt, while external memory files and message history require agent pull; the constitution itself is shipped policy text, a baseline context surface rather than read-back, and no implemented relevance-gated push activation is present in this repo
+
+**Read-back signal:** `coarse` — the only push read-back evidenced in the review is always-loaded retained `/system` memory; external memory files and message history remain pull surfaces
+
+**Read-back timing:** `pre-action` — the described `/system` memory is present in the prompt before the agent acts
+
+**Faithfulness tested:** `no` — the reviewed repository has no implementation, ablation, or policy-following test showing that pushed memory changes behavior
 
 ### Borrowable Ideas
 

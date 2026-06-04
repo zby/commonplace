@@ -33,7 +33,9 @@ auto-harness, from neosigmaai's `auto-harness` repository, is a benchmark-driven
 ## Artifact analysis
 
 - **Storage substrate:** `files` — Gitignored `workspace/traces/latest/`, `workspace/traces/baseline/`, benchmark job directories before pruning, and `workspace/train_results.json` ([benchmark.py](https://github.com/neosigmaai/auto-harness/blob/de6b3ed51517909ff7a92466908e9ea161964865/benchmark.py))
-- **Representational form:** `mixed` — Mixed JSON containing conversation traces, tool calls, command output, ADK events, rewards, and task metadata
+- **Representational form:** `prose` `symbolic` — prose prompts, learnings, traces, and instructions plus symbolic JSON/TSV, Python code, gates, split policy, and suite entries
+- **Lineage:** `authored` `imported` `trace-extracted` — authored harness policy and templates, imported benchmark templates/splits, and trace-extracted edits, learnings, result summaries, and suite entries
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `learning` — traces and learnings advise diagnosis; `PROGRAM.md` instructs the optimizer; gates enforce/validate; templates and adapters route benchmark execution; accepted edits become learned agent behavior
 
 **Raw traces and result files.** Storage substrate: gitignored `workspace/traces/latest/`, `workspace/traces/baseline/`, benchmark job directories before pruning, and `workspace/train_results.json` ([benchmark.py](https://github.com/neosigmaai/auto-harness/blob/de6b3ed51517909ff7a92466908e9ea161964865/benchmark.py)). Representational form: mixed JSON containing conversation traces, tool calls, command output, ADK events, rewards, and task metadata. Lineage: generated from train benchmark executions; Terminal-Bench baseline traces are preserved once, latest traces are overwritten each train run, and test traces are intentionally not saved. Behavioral authority: knowledge artifacts for the coding agent's diagnosis; they do not directly instruct the benchmarked agent until distilled into code, prompt text, or suite entries.
 
@@ -78,7 +80,21 @@ The most important artifact-authority split is between evidence, optimization po
 
 **Read-back:** `both` — The benchmark gets a coarse memory push because every run imports the evolved `agent/agent.py`; the optimizing coding agent gets retained traces, `workspace/learnings.md`, and train results only by pulling the files that `PROGRAM.md` tells it to inspect. There is no instance-targeted signal, matcher, retrieval budget, before-action hook, or relevance-gated memory injection beyond deterministic benchmark execution and program-following
 
+**Read-back signal:** `coarse` — the push path is deterministic import of the evolved `agent/agent.py` on every benchmark run, not an identifier match or inferred retrieval signal.
+
+**Read-back timing:** `pre-action` — the evolved agent file is imported before the benchmarked agent acts in the next run.
+
+**Faithfulness tested:** `no` — score gates test the edited agent, but the review says there is no explicit ablation separating genuine behavior improvements from score noise.
+
 ## Trace-derived learning placement
+
+**Trace source:** `session-logs` `tool-traces` `event-streams` `trajectories` — train-split dialogue histories, tool trajectories, ADK events, trace files, and result summaries are the retained evidence layer.
+
+**Learning scope:** `per-task` `cross-task` — task-level failures and fixes are promoted into suite obligations and agent edits that can affect later benchmark tasks.
+
+**Learning timing:** `staged` — learning happens through train run, trace inspection, edit, gate, commit, record, and repeat cycles.
+
+**Distilled form:** `prose` `symbolic` — traces are distilled into prose learnings plus symbolic Python code, JSON suite entries, gates, and result records.
 
 **Trace source.** auto-harness qualifies as trace-derived learning. The qualifying traces are train-split conversation/tool traces and result files copied into `workspace/traces/` for Terminal-Bench and BIRD-Interact, plus train result summaries in `workspace/train_results.json` ([benchmark.py](https://github.com/neosigmaai/auto-harness/blob/de6b3ed51517909ff7a92466908e9ea161964865/benchmark.py)). tau-bench support exposes train benchmark results through the same runner and program loop, but the inspected implementation does not add a tau-specific trace-copying path comparable to Terminal-Bench or BIRD.
 

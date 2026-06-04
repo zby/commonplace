@@ -33,7 +33,9 @@ Ars Contexta is `agenticnotetaking/arscontexta`, a Claude Code plugin for genera
 ## Artifact analysis
 
 - **Storage substrate:** `files` — Plain markdown files in the generated domain notes directory, connected by wiki links and YAML frontmatter
-- **Representational form:** `mixed` — Prose with symbolic metadata; optional qmd embeddings are a derived retrieval index, not the authoritative memory
+- **Representational form:** `prose` `symbolic` — Prose notes, context files, methodology claims, and skill bodies carry the memory; YAML/frontmatter/config, hook scripts, routing tables, and validation scripts carry symbolic structure
+- **Lineage:** `authored` `imported` `trace-extracted` — Generated vaults combine authored plugin templates and methodology, imported user/source material, and session/friction traces promoted through generated workflows
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `learning` — Notes and methodology advise; `CLAUDE.md`, skills, hooks, config, validators, and session-learning loops instruct, route, validate, warn/enforce, and promote operational learning
 
 **Generated vault notes and MOCs.** Storage substrate: plain markdown files in the generated domain notes directory, connected by wiki links and YAML frontmatter. Representational form: prose with symbolic metadata; optional qmd embeddings are a derived retrieval index, not the authoritative memory. Lineage: derived from user-provided sources, inbox items, research runs, and processing skills; MOC placement and links are generated or updated by `/reflect` and `/reweave`. Behavioral authority: knowledge artifacts when read as evidence or context, and weak system-definition artifacts when `CLAUDE.md` or skills treat descriptions, topics, and MOC membership as required gates.
 
@@ -88,6 +90,11 @@ The main caution is that Ars Contexta sometimes describes stronger automation th
 
 ## Trace-derived learning placement
 
+- **Trace source:** `session-logs` `event-streams` — The review identifies session transcripts/current session JSON and current-conversation corrections or redirections as the retained trace signal
+- **Learning scope:** `per-project` `cross-task` — Learning is per generated vault, while mined observations and methodology directives can shape later tasks in that vault
+- **Learning timing:** `staged` — Session artifacts or current friction are mined later by `/remember --mine-sessions`, then triaged by `/rethink` or used by `/architect`
+- **Distilled form:** `prose` `symbolic` — Session evidence becomes observation/methodology prose and can later inform config, context, validation, or architecture changes
+
 **Trace source.** Ars Contexta qualifies through the generated `/remember --mine-sessions` path and its supporting session infrastructure. The intended raw signal is stored session transcripts in `ops/sessions/*.md`, plus corrections and redirections in the current conversation for contextual mode. The checked-in SessionStart hook records session ids and archives `ops/sessions/current.json`, while docs and kernel references still describe fuller transcript capture; therefore the durable trace-learning path is implemented as a generated skill workflow, with automatic transcript capture only partially evidenced in the current hooks ([skill-sources/remember/SKILL.md](https://github.com/agenticnotetaking/arscontexta/blob/2acfd5cc4473c4d06c46be63df748e77e00e2746/skill-sources/remember/SKILL.md), [hooks/scripts/session-orient.sh](https://github.com/agenticnotetaking/arscontexta/blob/2acfd5cc4473c4d06c46be63df748e77e00e2746/hooks/scripts/session-orient.sh), [reference/kernel.yaml](https://github.com/agenticnotetaking/arscontexta/blob/2acfd5cc4473c4d06c46be63df748e77e00e2746/reference/kernel.yaml)).
 
 **Extraction.** `/remember` has three modes: explicit user-provided friction, contextual detection of recent corrections, and session mining. Session mining scans unmined sessions for corrections, repeated redirections, workflow breakdowns, agent confusion, undocumented decisions, and escalation patterns. It then creates methodology notes for actionable behavioral changes or observation notes for signals needing more evidence, deduplicates against existing methodology/observation files, and marks sessions as mined.
@@ -99,6 +106,12 @@ The main caution is that Ars Contexta sometimes describes stronger automation th
 ## Read-back placement
 
 **Direction.** Ars Contexta uses both pull and push. Pull includes `/ask`, `/architect`, `/health`, `/next`, qmd/grep search, reading notes/MOCs, and command skill invocation. Push includes hook-driven session orientation, write validation feedback, and condition messages emitted before the agent starts ordinary work. Auto-commit is hook-driven persistence rather than cognitive read-back.
+
+**Read-back signal:** `coarse` `identifier` — SessionStart emits coarse vault/session orientation and maintenance conditions; PostToolUse write validation targets the written file by path
+
+**Read-back timing:** `pre-action` `post-action` — Session orientation fires before work, while write validation fires after a write and can shape the next correction
+
+**Faithfulness tested:** `no` — The review found structural activation and scope controls, but no ablation or post-action audit proving intended behavioral effect
 
 **Targeting and signal.** The `SessionStart` push is `coarse`: it fires from a session-boundary symbol in any detected Ars Contexta vault and emits generic retained orientation from session state, goals, identity, recent methodology snippets, and count-based maintenance conditions. It is engineered by timing and scope limits, not by instance relevance. The `PostToolUse` `Write` validation path is `instance` targeting with an `identifier` signal: the hook reads the `tool_input.file_path`, narrows to `*/notes/*` or `*/thinking/*`, then emits warnings for that written file. Precision, recall, context dilution, and effective authority of the pushed material are not verified from code.
 

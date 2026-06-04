@@ -30,7 +30,9 @@ Tendril, by serverless-dna, is a desktop agentic sandbox for the Agent Capabilit
 ## Artifact analysis
 
 - **Storage substrate:** `files` — Workspace-local `tools/index.json`
-- **Representational form:** `mixed` — Symbolic JSON records with prose fields for `capability`, `triggers`, and `suppression`
+- **Representational form:** `prose` `symbolic` — prose capability descriptions, triggers, suppressions, prompts, and comments are paired with symbolic JSON, TypeScript, Zod schemas, and sandbox arguments
+- **Lineage:** `authored` — capabilities are model-authored or human-edited, while prompts, schemas, and wrappers are authored in repository code or generated from that code
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` — registry summaries advise tool choice, prompts instruct list-first behavior, sandbox wrappers enforce execution bounds, registry names route execution, and schemas/config checks validate accepted shapes
 
 **Capability registry index.** Storage substrate: workspace-local `tools/index.json`. Representational form: symbolic JSON records with prose fields for `capability`, `triggers`, and `suppression`. Lineage: model-authored or human-edited capability definitions, enriched by the system with `tool_path`, creation date, `created_by`, and version; the registry treats missing or malformed JSON as an empty registry rather than preserving an error artifact. Behavioral authority: system-definition artifact for routing and tool selection, because the model reads the summary list before deciding which executable action to take. The invocation policy is advisory, not programmatically enforced.
 

@@ -33,7 +33,9 @@ SkillNote, by luna-prompts, is a self-hosted registry and distribution system fo
 ## Artifact analysis
 
 - **Storage substrate:** `rdbms` — PostgreSQL tables `skills` and `skill_content_versions`
-- **Representational form:** `mixed` — Mixed prose and symbolic state: `description` and `content_md` are prose instruction bodies, while slug, collections, current version, extra frontmatter, import fields, source hashes, and latest-version flags are symbolic control metadata
+- **Representational form:** `prose` `symbolic` — Skill bodies, descriptions, comments, outcomes, and drafts are prose, while slugs, collections, manifests, version counters, import fields, hashes, ratings, events, hooks, and bundle metadata are symbolic control state
+- **Lineage:** `authored` `imported` `trace-extracted` — Skills are authored in the web/API, imported from GitHub or bundles, and supplemented by usage events, ratings, comments, session reads, and prompt-derived drafts
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `ranking` `learning` — Browseable history and drafts are knowledge artifacts; synced skills and hooks instruct; collection limits, manifests, and checksum/drift paths constrain activation; collections and MCP tools route; validators and import checks govern; analytics rank and trace signals feed later selection
 
 **Registry skill rows and content versions.** Storage substrate: PostgreSQL tables `skills` and `skill_content_versions`. Representational form: mixed prose and symbolic state: `description` and `content_md` are prose instruction bodies, while slug, collections, current version, extra frontmatter, import fields, source hashes, and latest-version flags are symbolic control metadata. Lineage: authored in the web/API, imported from GitHub scans, restored from previous versions, or published from ZIP bundles; create/update/restore snapshots preserve previous content state, but ordinary versions do not embed evidence that the instruction is true. Behavioral authority: system-definition artifacts when rendered as local `SKILL.md` files, MCP tools, or OpenClaw bundle entries; knowledge artifacts when humans browse or compare history.
 
@@ -84,6 +86,14 @@ The main tradeoff is operational reach versus epistemic control. SkillNote can g
 
 ## Trace-derived learning placement
 
+**Trace source:** `session-logs` `tool-traces` `event-streams` — SkillNote consumes OpenClaw session JSONL reads, Claude Code skill-use and MCP tool-call traces, hook events, usage posts, ratings/comments, and prompt text signals.
+
+**Learning scope:** `per-task` `per-project` `cross-task` — Usage is session/task scoped, prompt drafts are project-local, and aggregated usage/rating signals steer later cross-task selection.
+
+**Learning timing:** `online` `staged` — Events, drafts, ratings, and usage posts are written online, while promotion into active skills or context-bundle selection happens through later publish/sync or bundle-selection stages.
+
+**Distilled form:** `prose` `symbolic` — Prompt drafts, comments, and skill bodies are prose; events, counts, ratings, rankings, manifests, and metadata are symbolic.
+
 **Trace source.** SkillNote qualifies as trace-derived under the current rules, but only for specific paths. It consumes Claude Code skill-use hook events, MCP `tools/call` events, OpenClaw session JSONL reads of `sn-*/SKILL.md`, explicit OpenClaw usage posts, agent ratings/comments, and user prompt text that matches convention or "save this as a skill" patterns. It does not mine full coding transcripts into finished skills automatically.
 
 **Extraction.** Extraction is mostly deterministic. Hook code extracts skill slug and session id; the MCP middleware extracts tool-call names and connection metadata; OpenClaw's watcher scans new JSONL lines for `read` calls ending in `/sn-*/SKILL.md`; analytics endpoints aggregate counts and ratings; `prompt-watch.sh` uses regexes to either inject `skill-push` context or write a draft candidate. The oracle for a finished skill remains human/agent confirmation through the `skill-push` workflow, not an automatic judge.
@@ -97,6 +107,12 @@ The main tradeoff is operational reach versus epistemic control. SkillNote can g
 **Read-back:** `both` — retained registry skills and skill metadata reach agents by pull when explicitly read or invoked, and by push when hooks or tool surfaces expose selected skills before the agent asks for a specific body.
 
 **Direction.** Both. The strongest memory push paths are startup/session sync of registry skills into `.claude/skills/`, native skill-description exposure, MCP tool-list exposure, OpenClaw `sn-*` skill sync, and compact/subagent context that reintroduces active skill names. Pull remains present when an agent chooses a skill, reads a local `SKILL.md`, calls an MCP skill tool, or asks the registry/API for details. `UserPromptSubmit` explicit-save context and the OpenClaw sidecar's "check SkillNote" instruction are shipped workflow scaffolding; they can cause later read-back, but they are not retained memory read-back themselves.
+
+**Read-back signal:** `coarse` `identifier` `inferred / judgment` — Push paths include coarse skill exposure/sync, collection and skill identifiers, and documented resolver or host-agent judgment over descriptions and task context.
+
+**Read-back timing:** `pre-action` `post-action` — Session, prompt, compact, subagent, and tool-list exposure can happen before later task handling, while post-use events, ratings, and comments shape subsequent selection after a skill action.
+
+**Faithfulness tested:** `no` — Tests cover mechanics, but the review found no with/without ablation or post-action audit proving pushed skills change downstream behavior.
 
 **Targeting and signal.** Targeting is mixed. Claude Code sync is `instance` / `identifier` at the project-collection level: `.skillnote.json` names collections, the API query filters by those collection identifiers, and the generated skill frontmatter exposes descriptions to the host skill selector. The final choice of which synced skill body to apply is host-mediated from description and task context rather than settled by SkillNote's code. OpenClaw's background sync is `coarse` when it writes all registry skills to `sn-*` directories, while `/v1/openclaw/context-bundle` is mixed: optional `collection_filter` is an `identifier`, the server's usage/rating sort is a trace-derived ranking prior rather than semantic relevance, and the documented resolver subagent performs final `inferred / judgment` selection against `task_summary` ([openclaw.py](https://github.com/luna-prompts/skillnote/blob/7303ba7ab2098f9675e320fd68296458b4703752/backend/app/api/openclaw.py), [openclaw.py schema](https://github.com/luna-prompts/skillnote/blob/7303ba7ab2098f9675e320fd68296458b4703752/backend/app/schemas/openclaw.py)). MCP activation is tool-list exposure plus client-side tool choice; the server can narrow by collection identifiers, then the MCP client/agent chooses by tool description.
 

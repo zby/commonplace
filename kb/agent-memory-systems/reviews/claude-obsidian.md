@@ -33,7 +33,9 @@ claude-obsidian, from `AgriciDaniel/claude-obsidian`, is a Claude Code plugin an
 ## Artifact analysis
 
 - **Storage substrate:** `files` — The standing memory lives in a repository/vault directory: `.raw/`, `wiki/`, `_templates/`, `.vault-meta/`, `.obsidian/`, skill files, command files, hook config, and helper scripts
-- **Representational form:** `mixed` — Prose Markdown wiki pages and skills dominate, with symbolic JSON/YAML frontmatter, Obsidian canvas/base files, shell/Python scripts, JSON indexes, lockfiles, and optional embedding vectors
+- **Representational form:** `prose` `symbolic` `parametric` — Prose Markdown wiki pages and skills dominate, with symbolic JSON/YAML frontmatter, Obsidian canvas/base files, shell/Python scripts, JSON indexes, lockfiles, and optional embedding vectors
+- **Lineage:** `authored` `imported` `trace-extracted` — Agent-authored wiki and package artifacts, imported `.raw/` sources, derived indexes, and saved/folded conversation or log traces all appear in the retained surfaces
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `ranking` `learning` — Wiki pages and sources provide knowledge; skills, commands, hooks, locks, lint, mode/config files, retrieval indexes, and save/fold workflows instruct, gate, route, validate, rank, and distill retained traces
 
 **Wiki pages under `wiki/`.** Storage substrate: Markdown files in the vault, organized by the selected methodology mode and linked with Obsidian wikilinks. Representational form: prose Markdown plus YAML frontmatter, wikilinks, callouts, and optional addresses. Lineage: authored by the agent during scaffold, ingest, query filing, save, autoresearch, and lint workflows; invalidated by source changes, stale claims, broken links, or later contradictory sources. Behavioral authority: mostly knowledge artifacts when queried or read as evidence; they can become system-definition artifacts when `wiki/hot.md`, a `CLAUDE.md` rule, or a host instruction tells the agent to treat them as standing context.
 
@@ -86,6 +88,11 @@ claude-obsidian's optional retrieval stack is more ambitious than Commonplace's 
 
 ## Trace-derived learning placement
 
+- **Trace source:** `session-logs` — `/save` uses the current conversation, and `wiki-fold` uses `wiki/log.md` entries rather than raw Claude Code tool transcripts
+- **Learning scope:** `per-project` `cross-task` — Distilled notes and folds are vault-local project/personal memory that can affect later sessions and tasks
+- **Learning timing:** `online` `offline` `staged` — `/save` can run during or after a conversation, while `wiki-fold` is invoked over a selected log range and is dry-run by default
+- **Distilled form:** `prose` `symbolic` — Outputs are Markdown notes and folds with frontmatter, links, addresses, and child-entry citations
+
 **Trace source.** claude-obsidian qualifies as trace-derived in a limited, agent-mediated sense. `/save` uses the current conversation as source material for a durable note. `wiki-fold` uses `wiki/log.md` entries, and sometimes referenced child pages, as source material for extractive fold pages. These are traces of prior agent/user operations, not raw Claude Code JSONL tool transcripts.
 
 **Extraction.** Extraction is mostly LLM/operator judgment under skill instructions. `/save` asks the agent to identify valuable content, choose a note type, rewrite the conversation into declarative present-tense knowledge, and update index/log/hot cache. `wiki-fold` is stricter: it requires extractive summarization, child-entry citations, bounded reads, duplicate detection, and count checks. The oracle is therefore instruction-constrained agent judgment, with human invocation and review as the main curation policy.
@@ -97,6 +104,12 @@ claude-obsidian's optional retrieval stack is more ambitious than Commonplace's 
 ## Read-back placement
 
 **Direction.** Both. `wiki/hot.md` is pushed at session start and after compaction through hooks. The rest of the wiki is primarily pull: the agent invokes query/retrieve/read workflows, scans indexes, or follows wikilinks.
+
+**Read-back signal:** `coarse` — The push side loads `wiki/hot.md` for a vault/session and is not instance-targeted to the current user request.
+
+**Read-back timing:** `pre-action` — Session-start and post-compaction hot-cache read-back arrive before the receiving session or resumed context takes subsequent actions.
+
+**Faithfulness tested:** `no` — The review found no implemented ablation or faithfulness test proving that hot-cache injection or retrieval candidates change final agent behavior.
 
 **Targeting and signal.** The push side is `coarse`: if a session is in a vault with `wiki/hot.md`, the hook loads the recent-context cache. It is not instance-targeted to the current user request. The pull side can be instance-relevant because the agent's query text drives hot/index/page selection or optional BM25/rerank retrieval. That pull signal is inferred lexical/semantic relevance, not symbolic push.
 

@@ -33,7 +33,9 @@ xMemory, by HU-xiaobai, is the code release for "Beyond RAG for Agent Memory: Re
 ## Artifact analysis
 
 - **Storage substrate:** `vector` — Per-user JSONL files under `storage_path/episodes/`, Chroma episode collections, BM25 indexes, caches, and optional graph nodes
-- **Representational form:** `mixed` — Mixed prose trace narrative, symbolic metadata, original-message JSON, timestamps, and distributed-parametric embeddings
+- **Representational form:** `prose` `symbolic` `parametric` — prose trace narratives/facts/summaries, symbolic metadata/original-message JSON/timestamps/graph and kNN sidecars, and distributed-parametric embeddings
+- **Lineage:** `authored` `trace-extracted` — authored prompts, thresholds, retrieval policy, and answer assembly operate over conversation traces distilled into episodes, semantic memories, themes, graph edges, and sidecars
+- **Behavioral authority:** `knowledge` `instruction` `routing` `ranking` `learning` — episodes and semantic facts advise as knowledge; prompts instruct answer generation; themes, kNN, entropy gates, and retrieval policy route/rank context; extraction and hierarchy updates learn from traces
 
 **Episode records.** Storage substrate: per-user JSONL files under `storage_path/episodes/`, Chroma episode collections, BM25 indexes, caches, and optional graph nodes. Representational form: mixed prose trace narrative, symbolic metadata, original-message JSON, timestamps, and distributed-parametric embeddings. Lineage: trace-derived from conversation messages, transformed by LLM boundary detection and episode generation; invalidated by changes to prompts, message timestamps, boundary configuration, model behavior, or source conversations. Behavioral authority: knowledge artifact when retrieved as evidence or context; ranking artifact through BM25/vector indexes; weak audit artifact because original messages are preserved but not independently validated.
 
@@ -78,6 +80,11 @@ The architectural lesson is not "use themes instead of notes." xMemory's themes 
 
 ## Trace-derived learning placement
 
+- **Trace source:** `session-logs` — conversation messages with speaker roles, content, timestamps, annotations, and retained original-message lists
+- **Learning scope:** `per-task` — memory is scoped per user/conversation id rather than project-wide or global
+- **Learning timing:** `online` `staged` — episodes are written while messages are added or flushed, while semantic generation, theme updates, and hierarchy updates run in delayed stages
+- **Distilled form:** `prose` `symbolic` `parametric` — LLM episode narratives, semantic facts, theme summaries, symbolic metadata/sidecars/graph structure, and embeddings
+
 **Trace source.** xMemory qualifies as trace-derived. The raw traces are conversation messages from benchmark or API inputs: speaker roles, content, timestamps, image/search annotations in LoCoMo preprocessing, and original message lists retained inside episodes ([evaluation/locomo/add.py](https://github.com/HU-xiaobai/xMemory/blob/375ae1495095aa14a39eb169f83737f4779391c6/evaluation/locomo/add.py), [src/models/episode.py](https://github.com/HU-xiaobai/xMemory/blob/375ae1495095aa14a39eb169f83737f4779391c6/src/models/episode.py)).
 
 **Extraction.** The first extraction boundary is episode creation: LLM boundary detection decides whether the current buffer should close, then an LLM turns buffered messages into an episode title/content/timestamp. The second boundary is semantic extraction: default prediction-correction retrieves relevant prior semantic facts, predicts the new episode, compares prediction against original messages, and extracts persistent high-value knowledge. The third boundary is theme construction: semantic memories are clustered, summarized, split, merged, and linked by kNN and graph edges.
@@ -89,6 +96,12 @@ The architectural lesson is not "use themes instead of notes." xMemory's themes 
 ## Read-back placement
 
 **Direction.** xMemory is both pull and push over retained memory. The library facade exposes explicit pull through `search()`. The LoCoMo QA harness turns a question into pre-answer retrieval, then pushes selected episode, semantic, and theme memories into the answer prompt. That push is memory read-back, not shipped baseline documentation.
+
+**Read-back signal:** `inferred / embedding` — the engineered push path keys on the current question by embedding similarity over semantic memories, themes, and episode candidates before entropy/information-gain refinement
+
+**Read-back timing:** `pre-action` — the LoCoMo QA harness assembles retained memory into the prompt before answer generation
+
+**Faithfulness tested:** `no` — the review found benchmark answer evaluation and token statistics, not a general with/without-memory behavioral ablation or deployment-time faithfulness gate
 
 **Targeting and signal.** The push path is instance-targeted: it keys on the current question, not on an always-load or generic session-start event. The primary signal is `inferred / embedding`: `adaptive_hier` embeds the question, scores semantic memories and themes by cosine similarity, then builds episode candidates from source episodes plus vector hits. The selection is mixed because semantic/theme neighbor coverage and entropy/information-gain checks refine the final payload, but the first instance selector is content-derived embedding similarity rather than an assigned identifier ([evaluation/locomo/xMemory_search_framework.py](https://github.com/HU-xiaobai/xMemory/blob/375ae1495095aa14a39eb169f83737f4779391c6/evaluation/locomo/xMemory_search_framework.py)). The baseline explicit `search()` path also supports `inferred / lexical` BM25 and vector/hybrid ranking, but that is pull unless a host wraps it into pre-action prompt assembly.
 

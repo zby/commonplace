@@ -35,7 +35,9 @@ Halo, from Context Labs' `context-labs/halo` repository, is a Python package and
 ## Artifact analysis
 
 - **Storage substrate:** `files` — The caller's filesystem path, usually `traces.jsonl` or `HALO_TRACES_PATH` from the integration module
-- **Representational form:** `mixed` — Mixed symbolic/prose: OTLP-like JSON envelopes with structured span ids, timing, status, resource fields, and attributes, plus natural-language LLM messages, tool inputs, and tool outputs
+- **Representational form:** `prose` `symbolic` — OTLP-like JSON envelopes, sidecar index rows, tool schemas, code, and output records are symbolic, with natural-language messages, summaries, prompts, tool outputs, and reports as prose payloads
+- **Lineage:** `authored` `trace-extracted` — prompts, tool schemas, budgets, and package code are authored, while raw traces, sidecar indexes, in-run summaries, and diagnosis reports derive from instrumented harness traces and Halo analysis runs
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `ranking` — traces, span views, summaries, and reports advise; prompts and tool schemas instruct; budgets and depth gates enforce limits; the trace index routes and ranks trace evidence
 
 **Raw trace JSONL.** Storage substrate is the caller's filesystem path, usually `traces.jsonl` or `HALO_TRACES_PATH` from the integration module. Representational form is mixed symbolic/prose: OTLP-like JSON envelopes with structured span ids, timing, status, resource fields, and attributes, plus natural-language LLM messages, tool inputs, and tool outputs. Lineage comes from the instrumented harness and the exporter; source changes are new span lines or edits to the JSONL. Behavioral authority is knowledge artifact authority when Halo reads traces as evidence about harness behavior.
 
@@ -81,6 +83,14 @@ Halo is also more operationally focused. It is built for deployed agent harnesse
 **Keep diagnosis separate from patch authority.** Halo's report-to-patch boundary is a useful warning. Commonplace should continue requiring review, validation, and explicit promotion before trace-derived findings become instructions or validators.
 
 ## Trace-derived learning placement
+
+**Trace source:** `session-logs` `tool-traces` `event-streams` — OpenTelemetry/OpenInference JSONL spans record agent, LLM, tool, handoff, guardrail, and custom harness events
+
+**Learning scope:** `per-project` `cross-task` — traces carry project identifiers and each engine run diagnoses accumulated harness behavior across executions rather than a single live turn
+
+**Learning timing:** `offline` — Halo analyzes accumulated traces after harness executions and leaves patch application to an external loop
+
+**Distilled form:** `prose` `symbolic` — deterministic sidecar indexes are symbolic, while LLM summaries, subagent answers, synthesis results, and final diagnoses are prose wrapped in output records
 
 **Trace source.** Halo qualifies as trace-derived because its central input is agent/session/tool traces: OpenTelemetry/OpenInference-shaped JSONL spans from an instrumented agent harness. The demo exporter records agent, LLM, tool, handoff, guardrail, and custom spans, with project, service, model, token, and agent-name projections.
 

@@ -33,7 +33,9 @@ LLM Wiki, by nvk, is a multi-runtime agent-operated wiki protocol and plugin pac
 ## Artifact analysis
 
 - **Storage substrate:** `files` — Markdown files in a hub or project-local `.wiki/`, organized under `raw/`, `wiki/`, `inventory/`, `datasets/`, `output/`, `.audit/`, `.librarian/`, and logs
-- **Representational form:** `mixed` — Prose plus symbolic YAML frontmatter, path conventions, directory placement, and dual links
+- **Representational form:** `prose` `symbolic` — prose wiki articles, raw notes, reports, and command instructions plus symbolic YAML frontmatter, JSON registries/state, path conventions, directory placement, links, helper code, and tests
+- **Lineage:** `authored` `imported` `trace-extracted` — plugin instructions and helpers are authored, raw sources are imported, and lesson/session state is extracted from agent sessions and workflows
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `ranking` `learning` — wiki content advises, command specs instruct and route, lint/tests can enforce and validate, indexes rank/navigation-scope reads, and lesson workflows learn from sessions
 
 **Topic wiki files.** Storage substrate: Markdown files in a hub or project-local `.wiki/`, organized under `raw/`, `wiki/`, `inventory/`, `datasets/`, `output/`, `.audit/`, `.librarian/`, and logs. Representational form: prose plus symbolic YAML frontmatter, path conventions, directory placement, and dual links. Lineage: raw files are imported or session-derived source records; compiled articles are derived from raw sources; outputs, audit reports, and librarian reports are generated artifacts; indexes are regenerated views over file frontmatter. Behavioral authority: raw sources are knowledge artifacts; compiled articles advise future agents during query/plan/output workflows; indexes and frontmatter carry routing/ranking authority; command instructions and lint rules are system-definition artifacts.
 
@@ -83,6 +85,14 @@ The trace-derived path is real but deliberately file-mediated. Lessons learned a
 **Do not borrow unchecked agentic compilation wholesale.** LLM Wiki's ease of writing and updating articles is useful for personal wikis, but Commonplace should preserve type validation, source snapshots, and semantic review before high-authority knowledge changes.
 
 ## Trace-derived learning placement
+
+**Trace source:** `session-logs` `event-streams` — `/wiki:ll` consumes the current session, while research and audit workflows persist `.session-events.jsonl` and checkpoint state.
+
+**Learning scope:** `per-task` `per-project` `cross-task` — lesson capture starts from a session/workflow, is retained inside a target topic or project-local wiki, and can influence later wiki queries, articles, outputs, or accepted rules.
+
+**Learning timing:** `online` `staged` — research/audit event state is written during workflows, while lesson extraction and promotion into articles or instructions are manually invoked and staged.
+
+**Distilled form:** `prose` `symbolic` — extracted lessons become structured prose notes and optional article/rule updates with frontmatter, JSON state, and instruction-file changes.
 
 **Trace source.** LLM Wiki qualifies as trace-derived because `/wiki:ll` consumes the current session: errors, fixes, user corrections, discoveries, configuration changes, and gotchas. Research and audit workflows also produce `.session-events.jsonl` and `.session-checkpoint.json`, giving later resume and audit commands durable traces of work performed.
 

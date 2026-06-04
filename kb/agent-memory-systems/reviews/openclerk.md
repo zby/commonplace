@@ -34,7 +34,9 @@ OpenClerk, from `yazanabuashour/openclerk`, is a local-first knowledge-plane run
 ## Artifact analysis
 
 - **Storage substrate:** `sqlite` — The central operational substrate is the local OpenClerk SQLite database under `${XDG_DATA_HOME:-~/.local/share}/openclerk/openclerk.sqlite`, with markdown vault files as the canonical document substrate and optional rebuildable caches outside the committed vault.
-- **Representational form:** `mixed` — OpenClerk mixes prose markdown, symbolic JSON runner contracts, symbolic SQLite tables, FTS indexes, projection-state records, module manifests, and prose skill instructions.
+- **Representational form:** `prose` `symbolic` `parametric` — OpenClerk mixes prose markdown and skills, symbolic runner contracts, SQLite tables, FTS indexes, projection state, module manifests, and optional semantic/vector caches.
+- **Lineage:** `authored` `imported` — Canonical markdown can be authored, imported, or runner-created, while SQLite projections, synthesis state, provenance, module state, caches, and eval captures derive from vault files, runner actions, source refs, and explicit captures.
+- **Behavioral authority:** `knowledge` `instruction` `routing` `validation` `ranking` — Markdown and synthesis advise agents, while skills, capabilities manifests, projection state, provenance, module config, retrieval indexes, and eval captures instruct, route, audit, gate, and rank lookup behavior.
 
 **Canonical vault documents.** The durable knowledge artifacts are markdown files under the configured vault root. Their storage substrate is ordinary files, but their runner-visible identity, chunks, headings, metadata, and citations are mirrored into SQLite. Their representational form is prose markdown with symbolic frontmatter and paths. Their lineage is authored, imported, or runner-created through approved document actions; source ingestion and synthesis attach citations, source refs, and provenance. Their behavioral authority is knowledge-artifact authority for source answers and system-definition authority only when a document's content is intentionally consumed as instruction by an external agent workflow.
 

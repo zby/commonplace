@@ -32,7 +32,9 @@ LLM Wiki, by Mehmet Goekce, is a Claude Code-oriented implementation scaffold fo
 ## Artifact analysis
 
 - **Storage substrate:** `files` — `wiki.md` in the source repository and the copied `.claude/commands/wiki.md` in a target project
-- **Representational form:** `prose` — Prescriptive prose with command syntax, workflow phases, constraints, and tool-format rules
+- **Representational form:** `prose` `symbolic` — prescriptive prose in prompts, specs, schemas, and examples, plus symbolic YAML, frontmatter/properties, shell, links, namespaces, and command/config structure
+- **Lineage:** `authored` `imported` — authored prompts, specs, templates, and setup code are installed into a target wiki; L2 wiki pages may be manually imported, setup-created, or generated/appended from source material by `/wiki` workflows
+- **Behavioral authority:** `knowledge` `instruction` `routing` `validation` `ranking` — L2 pages advise query answers; command prompts, schemas, config, namespaces, links, and lint expectations instruct Claude, route artifacts, validate structure, and rank/query candidate pages
 
 **`/wiki` command prompt.** Storage substrate: `wiki.md` in the source repository and the copied `.claude/commands/wiki.md` in a target project. Representational form: prescriptive prose with command syntax, workflow phases, constraints, and tool-format rules. Lineage: authored in the repo, copied by `setup.sh`, and patched only for config path substitution. Behavioral authority: system-definition artifact with instruction and routing force for Claude Code when the slash command is invoked.
 
@@ -64,6 +66,12 @@ The strongest alignment is file-native knowledge. Both systems prefer inspectabl
 LLM Wiki's L1/L2 split is more concrete than Commonplace's current phrasing around always-loaded context versus library retrieval. It distinguishes operational guardrails that must be present before action from contextual knowledge that should stay out of the base prompt until queried. The repo also makes the adoption surface unusually practical: it meets users where their notes already live, with Logseq/Obsidian serialization and Claude Code memory.
 
 **Read-back:** `both` — L1 memory is a coarse host-provided always-load path at session start, while L2 wiki pages and query-time L1 supplements enter through explicit `/wiki query` or command workflows using namespace/entity/keyword matching. The repo records the memory path and recommends L1/L2 routing, but it does not implement a relevance-gated memory push hook into a receiving agent/model context, so this does not warrant `push-activation`
+
+**Read-back signal:** `coarse` — the only push path described in the review is host-provided always-load L1 memory at session start; L2 pages and query-time L1 supplements are explicit pull workflows.
+
+**Read-back timing:** `pre-action` — host-loaded L1 memory is present at session start before the receiving Claude Code session acts.
+
+**Faithfulness tested:** `no` — the review records no with/without ablation or post-action audit showing that loaded L1 memory changes downstream behavior.
 
 This review does not mark the system `trace-derived`. A user may ingest chat transcripts or manually promote gotchas into L1, and the docs call feedback/gotchas first-class page types, but the source does not implement durable artifact derivation from session/tool/evaluation traces. Ordinary source ingestion and manual L1/L2 promotion advice are not enough for the trace-derived tag.
 

@@ -33,7 +33,9 @@ ai-modules, from Andreas F. Hoffmann's `theafh/ai-modules` repository, is a meta
 ## Artifact analysis
 
 - **Storage substrate:** `repo` — The shipped memory machinery lives as Git-tracked Markdown skills, plugin manifests, agent definitions, shell/Python helper scripts, templates, and example/task files; a deployed user's retained wiki and tasks then live as ordinary filesystem trees beside that user's project.
-- **Representational form:** `mixed` — Prose instructions dominate the behavioral surface, while YAML frontmatter, JSON plugin manifests, shell/Python scripts, schema fields, `sha256` values, and lint findings provide symbolic routing and validation.
+- **Representational form:** `prose` `symbolic` — Prose instructions and Markdown pages dominate the behavioral surface, while YAML frontmatter, JSON plugin manifests, shell/Python scripts, schema fields, `sha256` values, and lint findings provide symbolic routing and validation.
+- **Lineage:** `authored` `imported` `trace-extracted` — Skills, scripts, schemas, tasks, and wiki pages are authored in the repository or deployed project; raw sources are imported; `wiki_wrapup` can trace-extract durable candidates from the current chat session.
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` — Wiki pages, raw sources, archived tasks, and session outputs mostly advise as knowledge; skills and open tasks instruct; helper scripts enforce structure, route discovery, and validate wiki/task state.
 
 **Plugin skill packages.** Storage substrate: `plugins/<plugin>/skills/<skill>/SKILL.md`, optional `scripts/` and `references/`, `.claude-plugin/plugin.json`, `.codex-plugin/plugin.json`, and the root marketplace manifest. Representational form: mixed prose and symbolic metadata. Lineage: authored and versioned in the repository; deployment creates symlinked or copied views for host tools but the source of truth remains the repo. Behavioral authority: system-definition artifacts when host agents load the skill body as instructions or use the manifests for installation/routing; knowledge artifacts when maintainers read them as documentation.
 
@@ -81,6 +83,14 @@ The biggest divergence is authority. In ai-modules, many crucial rules live in s
 **Separate broad repair into a dedicated agent definition.** `wiki_auto_shaper` is explicit that broad cleanup displaces context and should run in an isolated high-effort agent. Commonplace already has review/repair workflows; the borrowable part is the clean split between narrow inline lint fixes and broad delegated repair. Ready as procedural guidance.
 
 ## Trace-derived learning placement
+
+**Trace source:** `session-logs` — `wiki_wrapup` mines the visible current chat session at closeout time rather than a persistent transcript store, background tool trace stream, or rollout trajectory.
+
+**Learning scope:** `per-project` — The durable output lands in one wiki selected by the discovery flow, normally project-local unless the selected wiki path is shared.
+
+**Learning timing:** `staged` — Wrapup is a manual closeout action with proposal review before writes, not online learning during every action.
+
+**Distilled form:** `prose` `symbolic` — Approved outputs become wiki pages, query/procedure pages, index/log entries, or tasks: Markdown prose plus frontmatter, links, page types, and task/status metadata.
 
 **Trace source.** ai-modules qualifies through `wiki_wrapup`, which mines the current chat session for durable claims, decisions, definitions, conventions, comparisons, workflows, and named entities. The trace boundary is the visible session at closeout time, not a persistent transcript store or background event stream.
 

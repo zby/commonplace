@@ -33,7 +33,9 @@ EQUIPA, from sbknana's `equipa` repository, is a Python multi-agent software-dev
 ## Artifact analysis
 
 - **Storage substrate:** `sqlite` — The local SQLite database identified by `THEFORGE_DB` and managed from `schema.sql` through `equipa/db.py` (https://github.com/sbknana/equipa/blob/6aa4af8d4505b12ae6877c1068162a8bec8e3d70/schema.sql, https://github.com/sbknana/equipa/blob/6aa4af8d4505b12ae6877c1068162a8bec8e3d70/equipa/db.py)
-- **Representational form:** `mixed` — Mixed: symbolic tables and fields, prose task/session/lesson/reflection text, JSON blobs, and optional embedding vectors serialized as JSON
+- **Representational form:** `prose` `symbolic` `parametric` — Prose task/session/lesson/reflection text, symbolic tables/fields/JSON blobs, and optional embedding vectors serialized as JSON
+- **Lineage:** `authored` `trace-extracted` — Authored baseline prompts, standing orders, tasks, and project context combine with trace-extracted agent runs, lessons, episodes, reviewer findings, session state, and prompt-evolution records
+- **Behavioral authority:** `knowledge` `instruction` `routing` `validation` `ranking` `learning` — Logs and context serve as knowledge; active lessons, episodes, and prompt files instruct; prompt-version selection and dispatch route; safety/rollback checks validate; graph/vector/Q-value state ranks; ForgeSmith/SIMBA/GEPA learn from traces
 
 **TheForge SQLite database.** The storage substrate is the local SQLite database identified by `THEFORGE_DB` and managed from `schema.sql` through `equipa/db.py` (https://github.com/sbknana/equipa/blob/6aa4af8d4505b12ae6877c1068162a8bec8e3d70/schema.sql, https://github.com/sbknana/equipa/blob/6aa4af8d4505b12ae6877c1068162a8bec8e3d70/equipa/db.py). The representational form is mixed: symbolic tables and fields, prose task/session/lesson/reflection text, JSON blobs, and optional embedding vectors serialized as JSON. Lineage is runtime operational state: user-created tasks, agent outputs, orchestrator telemetry, reviewer findings, generated lessons, and derived self-improvement records. Behavioral authority ranges from knowledge artifact authority for project context and logs to system-definition authority for active lessons, prompt-version selection, graph/ranking state, session resume context, and dispatch decisions.
 
@@ -86,6 +88,14 @@ The deepest design difference is authority assignment. Commonplace tends to keep
 
 ## Trace-derived learning placement
 
+**Trace source:** `session-logs` `tool-traces` `trajectories` — Agent run telemetry, output text, reviewer findings, episode reflections, Q-values, session state, recent tool calls, and ForgeSmith/SIMBA/GEPA inputs are the raw trace surfaces named by the review
+
+**Learning scope:** `per-task` `per-project` `cross-task` — Episodes and outcomes are task-specific, while lessons and prompt variants are scoped by project, role, task type, and future dispatches
+
+**Learning timing:** `online` `staged` — Prompt read-back happens online at dispatch, post-task Q-value/session updates happen between actions, and ForgeSmith/SIMBA/GEPA run as staged improvement passes
+
+**Distilled form:** `prose` `symbolic` `parametric` — Distillation produces prose lessons/rules/reflections, symbolic routing/scoring/version metadata, graph edges, embeddings, and evolved prompt files
+
 **Trace source.** EQUIPA qualifies as trace-derived learning. Raw traces include `agent_runs` telemetry, agent output text, reviewer findings, error summaries, `agent_episodes` reflections, Q-values, in-flight session state, recent tool calls, and ForgeSmith/SIMBA/GEPA analysis inputs (https://github.com/sbknana/equipa/blob/6aa4af8d4505b12ae6877c1068162a8bec8e3d70/equipa/db.py, https://github.com/sbknana/equipa/blob/6aa4af8d4505b12ae6877c1068162a8bec8e3d70/equipa/lessons.py, https://github.com/sbknana/equipa/blob/6aa4af8d4505b12ae6877c1068162a8bec8e3d70/equipa/sessions.py).
 
 **Extraction.** Extraction has several oracles. ForgeSmith uses repeated failures and error summaries to generate generic lessons; reviewer findings become developer lessons; episode recording parses approach/reflection/error patterns from agent output and assigns Q-values from outcome; SIMBA uses Claude to contrast successful and failed episodes into rules; GEPA uses DSPy optimization over episode examples and success labels to produce evolved prompt instructions (https://github.com/sbknana/equipa/blob/6aa4af8d4505b12ae6877c1068162a8bec8e3d70/forgesmith.py, https://github.com/sbknana/equipa/blob/6aa4af8d4505b12ae6877c1068162a8bec8e3d70/scripts/forgesmith_simba.py, https://github.com/sbknana/equipa/blob/6aa4af8d4505b12ae6877c1068162a8bec8e3d70/forgesmith_gepa.py).
@@ -99,6 +109,12 @@ The deepest design difference is authority assignment. Commonplace tends to keep
 ## Read-back placement
 
 **Direction.** Read-back is both push and pull. Acting agents receive memory by push during `build_system_prompt`; hosts and humans can pull lessons, logs, context, and session notes through MCP tools (https://github.com/sbknana/equipa/blob/6aa4af8d4505b12ae6877c1068162a8bec8e3d70/equipa/prompts.py, https://github.com/sbknana/equipa/blob/6aa4af8d4505b12ae6877c1068162a8bec8e3d70/equipa/mcp_server.py).
+
+**Read-back signal:** `identifier` `inferred / lexical` `inferred / embedding` — Prompt-time push is targeted by role, error type, project, and task-type identifiers, then episode retrieval adds keyword overlap and optional embedding similarity
+
+**Read-back timing:** `pre-action` — Lessons, episodes, project context, and resume state are loaded before the acting agent starts work; post-task updates affect future dispatches
+
+**Faithfulness tested:** `no` — Success, Q-values, injection counts, prompt versions, and rollback checks are tracked, but the review did not find item-level WITH/WITHOUT ablation for injected memories
 
 **Targeting and signal.** Lesson injection is feature-flagged and instance-targeted by role and optional error-type identifiers, then deduplicated and capped. Episode injection is feature-flagged and instance-targeted by role, project, and task-type identifiers, then reranked by mixed inferred signals: lexical keyword overlap, optional embedding similarity, and optional graph reranking over retained episode relations (https://github.com/sbknana/equipa/blob/6aa4af8d4505b12ae6877c1068162a8bec8e3d70/equipa/config.py, https://github.com/sbknana/equipa/blob/6aa4af8d4505b12ae6877c1068162a8bec8e3d70/equipa/lessons.py). This is stronger than unconditional always-load and justifies `push-activation`.
 

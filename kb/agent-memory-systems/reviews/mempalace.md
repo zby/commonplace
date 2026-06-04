@@ -33,7 +33,9 @@ MemPalace, by `milla-jovovich`, is a local-first Python memory system for coding
 ## Artifact analysis
 
 - **Storage substrate:** `vector` — ChromaDB persistent collections under the configured palace path, accessed through the backend contract
-- **Representational form:** `mixed` — Mixed prose/source text plus symbolic metadata such as wing, room, source file, chunk index, extraction mode, entities, and timestamps
+- **Representational form:** `prose` `symbolic` `parametric` — verbatim prose/source text, symbolic metadata/KG/navigation records/tool schemas, and Chroma embedding-backed retrieval
+- **Lineage:** `authored` `imported` `trace-extracted` — authored manual memories, KG calls, tools, hooks, plugins, docs, and tests; imported project files and diaries; trace-extracted transcripts and hook-captured conversations
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `ranking` `learning` — drawers and KG facts advise; plugins/docs instruct; hooks can block for save pressure; metadata and graph surfaces route and rank; fact checks/tests validate; mining derives durable memory artifacts
 
 **Drawer documents.** Storage substrate: ChromaDB persistent collections under the configured palace path, accessed through the backend contract. Representational form: mixed prose/source text plus symbolic metadata such as wing, room, source file, chunk index, extraction mode, entities, and timestamps. Lineage: imported or trace-captured from project files, transcripts, daily diaries, manual MCP writes, or hooks; source changes invalidate by file hash/metadata, re-mine rules, or manual update/delete. Behavioral authority: knowledge artifacts when retrieved as evidence, context, or advice; they do not enforce behavior unless a host agent obeys the returned text.
 
@@ -81,6 +83,11 @@ The second divergence is activation. MemPalace has hooks that push write-back ob
 **Do not borrow database opacity as the primary KB substrate.** MemPalace's Chroma/SQLite design is reasonable for high-volume personal memory. For Commonplace's methodology KB, plain files, git diffs, type specs, and validation remain better governance surfaces.
 
 ## Trace-derived learning placement
+
+- **Trace source:** `session-logs` `event-streams` — Claude Code, Codex, ChatGPT, Slack/plain-text conversations, hook-provided transcript paths, and hook event counts/transcript mining
+- **Learning scope:** `per-project` `cross-task` — palace path, wing, room, source file, collection, and hook transcript paths scope local project/user memory across later tasks
+- **Learning timing:** `online` `offline` `staged` — MCP/manual writes and hooks can capture during use; mining, sweeps, and benchmarks run batch/offline; pre-compaction and periodic hooks stage capture around workflow boundaries
+- **Distilled form:** `prose` `symbolic` `parametric` — retained verbatim text, symbolic metadata/navigation/KG surfaces, and embedding-backed retrieval indexes
 
 **Trace source.** MemPalace qualifies as trace-derived because the implemented system can ingest Claude Code, Codex, ChatGPT, Slack/plain-text conversations, hook-provided transcript paths, daily diary files, and project corpora into durable memory artifacts. The hook scripts and `hooks_cli.py` count session messages, mine transcripts, and sometimes block the agent with a save instruction before stop or compaction ([hooks README](https://github.com/milla-jovovich/mempalace/blob/db1fbe888b59514a66c43e745f095d762b9bf276/hooks/README.md), [hooks_cli.py](https://github.com/milla-jovovich/mempalace/blob/db1fbe888b59514a66c43e745f095d762b9bf276/mempalace/hooks_cli.py)).
 

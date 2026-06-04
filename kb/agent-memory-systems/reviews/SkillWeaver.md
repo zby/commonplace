@@ -33,7 +33,9 @@ SkillWeaver, from OSU-NLP-Group's `SkillWeaver` repository, is a research framew
 ## Artifact analysis
 
 - **Storage substrate:** `files` — Per-iteration output directories under the caller's `out_dir`, including `choose_task_meta.json`, state/action JSON files, `trajectory_pretty.txt`, `success_check.json`, `kb_update_diagnostics.json`, `trace.zip`, videos, and performance logs
-- **Representational form:** `mixed` — Mixed symbolic JSON, prose trajectory strings, screenshots/videos, and Playwright trace archives
+- **Representational form:** `prose` `symbolic` — Prose trajectory strings, docstrings, prompt text, and semantic knowledge text plus symbolic JSON, executable Python, metadata, static checks, and prompt assembly
+- **Lineage:** `authored` `trace-extracted` — Authored repository code/templates and system checks combine with browser trajectories, success judgments, recovery evidence, and generated skill libraries distilled from traces
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `ranking` `learning` — Traces and diagnostics are evidence; prompt templates and generated skills instruct/execute; static checks enforce/validate; retrieval and hide-unverified route; practice utility ranks; update/practice loops learn
 
 **Exploration traces.** Storage substrate: per-iteration output directories under the caller's `out_dir`, including `choose_task_meta.json`, state/action JSON files, `trajectory_pretty.txt`, `success_check.json`, `kb_update_diagnostics.json`, `trace.zip`, videos, and performance logs. Representational form: mixed symbolic JSON, prose trajectory strings, screenshots/videos, and Playwright trace archives. Lineage: generated from a specific website state, proposed task, browser trajectory, success check, and model calls. Behavioral authority: knowledge artifact authority during the run; traces are evidence for whether a skill should be distilled, not themselves the normal read-back surface for future tasks.
 
@@ -80,6 +82,14 @@ SkillWeaver is weaker on lineage inside the promoted artifact. Metadata records 
 
 ## Trace-derived learning placement
 
+**Trace source:** `tool-traces` `event-streams` `trajectories` — Browser action/state records, Playwright traces and videos, recovery events, screenshots, and task-attempt trajectories feed the skill update loop.
+
+**Learning scope:** `per-task` `per-project` `cross-task` — Learning is bounded by attempted tasks and website/task-family libraries, then saved or copied for later evaluation and reuse.
+
+**Learning timing:** `online` `staged` — Exploration grows the library iteratively, while evaluation loads selected libraries and can stage visibility through `hide_unverified`.
+
+**Distilled form:** `prose` `symbolic` — Successful trajectories become executable Python functions with docstrings, metadata, prompt-visible signatures, and optional semantic knowledge text.
+
 **Trace source.** SkillWeaver qualifies as trace-derived learning. Raw signals include proposed tasks, browser accessibility trees, screenshots, generated action code, stdout/results/exceptions, recovery attempts, success-check outputs, Playwright traces, videos, and WebArena/VWA evaluator results. The central trigger boundary is one attempted task iteration; a separate practice/test boundary exists for generated functions.
 
 **Extraction.** Extraction is LLM-mediated. `check_success_simple()` judges whether a trajectory completed its intended task; on success, `KnowledgeBase.update()` prompts the API-synthesis model to generalize the trajectory into Playwright functions. Static checks reject functions with invalid syntax, non-async top-level definitions, missing `page` first parameter, missing docstrings, disallowed selectors, unsupported annotations, try/while patterns, missing `page.goto()`, and type errors. The no-exception practice loop is a narrower oracle for whether a function can execute, not whether it solves all future semantic variants.
@@ -91,6 +101,12 @@ SkillWeaver is weaker on lineage inside the promoted artifact. Metadata records 
 ## Read-back placement
 
 **Read-back:** `both` — The agent can pull from the skill library through explicit retrieval machinery, and task attempts also run relevance-gated pre-action selection that pushes chosen generated skills into the acting prompt before code generation.
+
+**Read-back signal:** `inferred / judgment` — The active push path asks an LLM to select relevant function names from the current task string plus formatted skill signatures and docstrings.
+
+**Read-back timing:** `pre-action` — Selected functions enter the prompt before the acting agent writes the next `act(page)` code.
+
+**Faithfulness tested:** `no` — The implementation evaluates task success and function execution, but the review found no WITH/WITHOUT read-back ablation proving a pushed skill changed a decision.
 
 **Direction.** SkillWeaver has both pull and engineered push. The retrieval module is explicitly called by the attempt loop, but from the acting agent's perspective selected functions arrive in the prompt before it writes the next `act(page)` function.
 

@@ -94,7 +94,7 @@ def main() -> int:
 
     rows.sort(key=lambda r: (r["source_tier"], r["system_name"].lower()))
     with SYSTEMS_CSV.open("w", encoding="utf-8", newline="") as fh:
-        w = csv.DictWriter(fh, fieldnames=COLUMNS, extrasaction="ignore")
+        w = csv.DictWriter(fh, fieldnames=COLUMNS, extrasaction="ignore", lineterminator="\n")
         w.writeheader()
         w.writerows(rows)
 

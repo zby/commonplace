@@ -33,7 +33,9 @@ GBrain, from Garry Tan's `gbrain` repository, is a Bun/TypeScript personal and c
 ## Artifact analysis
 
 - **Storage substrate:** `rdbms` — Postgres or PGLite `pages` plus optional filesystem markdown under the configured `sync.repo_path`
-- **Representational form:** `mixed` — Mixed: prose markdown, YAML frontmatter, typed page metadata, timestamps, source IDs, and generated DB columns
+- **Representational form:** `prose` `symbolic` `parametric` — prose markdown, facts, takes, synthesized pages, and skill text; symbolic frontmatter, metadata, schema packs, handlers, job state, and tables; embeddings and vector columns
+- **Lineage:** `authored` `imported` `trace-extracted` — authored pages, schema packs, skills, and runtime code; imported or synchronized markdown/files; trace-derived facts, transcripts, eval rows, Minion traces, and SkillOpt outputs
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `ranking` `learning` — pages and facts provide context; skills and context engines instruct; scopes, visibility, write guards, and cost gates constrain; schema packs and search route; evals and SkillOpt validate; search/caches rank; trace loops learn
 
 **Brain pages and synchronized markdown.** The storage substrate is Postgres or PGLite `pages` plus optional filesystem markdown under the configured `sync.repo_path`. The representational form is mixed: prose markdown, YAML frontmatter, typed page metadata, timestamps, source IDs, and generated DB columns. Lineage is authored, imported, captured, synced, or synthesized; `writePageThrough` renders markdown from the saved DB row, while `sync` and import paths can rebuild DB rows from files. Behavioral authority is mainly knowledge artifact authority: pages are evidence, reference, context, and source material. They gain system-definition authority only when their content is consumed as a skill, schema, policy, or prompt fragment.
 
@@ -86,6 +88,14 @@ The main tradeoff is authority speed. GBrain quickly turns runtime traces into m
 
 ## Trace-derived learning placement
 
+**Trace source:** `session-logs` `tool-traces` `event-streams` `trajectories` — conversation turns, transcripts, page-write/import/sync/file-upload events, eval capture, and SkillOpt rollout/tool-call trajectories
+
+**Learning scope:** `per-task` `per-project` `cross-task` — session and benchmark-scoped capture, source/workspace-scoped facts and context, and personal/company brain memory reused across tasks
+
+**Learning timing:** `online` `offline` `staged` — online fact extraction on conversations or page writes, opt-in replay/benchmark SkillOpt work, and scheduled dream/consolidation phases
+
+**Distilled form:** `prose` `symbolic` `parametric` — fact text, takes, synthesized pages, and skill edits; structured claim metadata, provenance, eval rows, and schema fields; embeddings for facts, takes, chunks, and search
+
 **Trace source.** GBrain qualifies as trace-derived. It consumes conversation turns through `extract_facts`, eligible page-write/import/sync/file-upload bodies through the facts backstop, transcript files through the dream synthesize phase, query/search calls through eval capture, and SkillOpt rollout/tool-call trajectories through the optimization loop (https://github.com/garrytan/gbrain/blob/eefe8b5741c27e59bf65198d46e3dfe5bfa70ce9/src/core/facts/extract.ts, https://github.com/garrytan/gbrain/blob/eefe8b5741c27e59bf65198d46e3dfe5bfa70ce9/src/core/facts/backstop.ts, https://github.com/garrytan/gbrain/blob/eefe8b5741c27e59bf65198d46e3dfe5bfa70ce9/src/core/cycle/synthesize.ts, https://github.com/garrytan/gbrain/blob/eefe8b5741c27e59bf65198d46e3dfe5bfa70ce9/src/core/eval-capture.ts, https://github.com/garrytan/gbrain/blob/eefe8b5741c27e59bf65198d46e3dfe5bfa70ce9/src/core/skillopt/types.ts).
 
 **Extraction.** The facts path sanitizes turn text, asks an LLM for structured claims, parses strict JSON with fallback repair, embeds fact text, resolves entity slugs, deduplicates by vector similarity and classifier logic, inserts facts, and bumps hot-memory cache state (https://github.com/garrytan/gbrain/blob/eefe8b5741c27e59bf65198d46e3dfe5bfa70ce9/src/core/facts/extract.ts, https://github.com/garrytan/gbrain/blob/eefe8b5741c27e59bf65198d46e3dfe5bfa70ce9/src/core/facts/backstop.ts). The dream synthesize path runs a significance verdict over transcripts, fans out trusted subagents, records tool writes, and reverse-writes generated pages (https://github.com/garrytan/gbrain/blob/eefe8b5741c27e59bf65198d46e3dfe5bfa70ce9/src/core/cycle/synthesize.ts). SkillOpt uses rollout trajectories and judges to propose and validate edits to skills (https://github.com/garrytan/gbrain/blob/eefe8b5741c27e59bf65198d46e3dfe5bfa70ce9/src/core/skillopt/orchestrator.ts).
@@ -99,6 +109,12 @@ The main tradeoff is authority speed. GBrain quickly turns runtime traces into m
 ## Read-back placement
 
 **Direction.** GBrain is both pull and push. Pull is explicit `search`, `query`, `think`, `recall`, graph traversal, page reads, and skill-guided lookup. Push is implemented through MCP metadata and OpenClaw context assembly. The code-grounded memory push is `_meta.brain_hot_memory`; static skillpack and resolver instructions are shipped baseline documentation, not read-back by themselves.
+
+**Read-back signal:** `coarse` `identifier` — MCP hot-memory push uses source/session/visibility identifiers when present and a coarse recent-source fallback; OpenClaw context uses coarse per-assembly injection with deterministic file/path and time-window selectors
+
+**Read-back timing:** `pre-action` `post-action` — `_meta.brain_hot_memory` is returned after a tool operation but before the next agent step, while OpenClaw context is assembled before the model acts
+
+**Faithfulness tested:** `no` — the review found structural injection and eval surfaces, but no ablation proving pushed facts change downstream behavior
 
 **Targeting and signal.** The MCP dispatcher calls a meta hook after successful tool operations; the hook skips hot-memory operations themselves, selects session-scoped facts when a `source_session` identifier is present, falls back to recent facts from the last 24 hours for the source, sorts by decayed confidence, caps at top-k, and caches per source/session/visibility hash for 30 seconds (https://github.com/garrytan/gbrain/blob/eefe8b5741c27e59bf65198d46e3dfe5bfa70ce9/src/mcp/dispatch.ts, https://github.com/garrytan/gbrain/blob/eefe8b5741c27e59bf65198d46e3dfe5bfa70ce9/src/core/facts/meta-hook.ts). Its best case is `instance` targeting with an `identifier` signal: source ID, session ID, and visibility/allow-list scope. Its no-session fallback is `coarse`: recent source-level facts on any successful non-memory tool response, not semantic relevance to the current task. The OpenClaw context engine runs on every `assemble()` call and injects live time, location, calendar, travel, and task context from workspace files, with sanitization and caps (https://github.com/garrytan/gbrain/blob/eefe8b5741c27e59bf65198d46e3dfe5bfa70ce9/src/openclaw-context-engine.ts, https://github.com/garrytan/gbrain/blob/eefe8b5741c27e59bf65198d46e3dfe5bfa70ce9/src/core/context-engine.ts). That path is `coarse` per-assemble push with deterministic file/path and time-window selectors; the optional OpenClaw SDK memory addition is host-dependent API surface, not fully settled by this repository's code. This is enough for `push-activation`: GBrain has before-action engineered read-back hooks with scope, freshness, and budget controls, not just a static resolver or manual search.
 

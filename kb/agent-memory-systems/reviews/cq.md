@@ -37,7 +37,9 @@ cq is Mozilla AI's shared agent knowledge commons: a plugin, CLI/MCP server, SDK
 ## Artifact analysis
 
 - **Storage substrate:** `sqlite` — Local SQLite in the Go SDK and server-side SQL through the FastAPI backend, with remote node discovery and API-key auth when configured
-- **Representational form:** `mixed` — Mixed: prose `summary`, `detail`, and `action` plus symbolic domains, context, tier, confidence, flags, status, and ids
+- **Representational form:** `prose` `symbolic` — Prose `summary`, `detail`, and `action` plus symbolic domains, context, tier, confidence, flags, status, and ids
+- **Lineage:** `authored` `trace-extracted` — Authored package content and direct human/agent proposals, plus `/cq:reflect` candidates derived from the agent-visible session; derived indexes and review state regenerate from stored KUs and reviewer actions
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `ranking` `learning` — KUs advise as knowledge; skills and commands instruct; review status gates read-back; domains, MCP wiring, and indexes route; review/flag state validates; scoring ranks; reflection/propose/confirm/flag flows update future retained guidance
 
 **Knowledge units.** Storage substrate is local SQLite in the Go SDK and server-side SQL through the FastAPI backend, with remote node discovery and API-key auth when configured. Representational form is mixed: prose `summary`, `detail`, and `action` plus symbolic domains, context, tier, confidence, flags, status, and ids. Lineage is authored or trace-derived depending on whether a human/agent proposed it directly or generated it through `/cq:reflect`; stored lineage is limited to timestamps, creator on the remote, confidence/flag history, and review status, not source transcript offsets. Behavioral authority is advisory knowledge-artifact authority when returned by `query`; it becomes stronger only because the cq skill instructs the agent to verify, apply, confirm, or flag it.
 
@@ -85,6 +87,11 @@ The authority split is also different. cq's stored KUs are mostly knowledge arti
 **Do not import weak lineage into high-authority artifacts.** cq reflection candidates often lack source offsets or durable raw traces. In Commonplace, a cq-like insight should enter a workshop or source-backed note first, not jump straight into an instruction file.
 
 ## Trace-derived learning placement
+
+**Trace source:** `session-logs` `tool-traces` — The raw signal is the current agent-visible session, including user requests, assistant reasoning, tool calls, errors, failed attempts, workarounds, and final solutions
+**Learning scope:** `per-task` `cross-task` — Extraction starts from one session/task, while persisted KUs are intended for reuse across later tasks and configured local or remote stores
+**Learning timing:** `online` `staged` — The skill supports mid-task proposes, while `/cq:reflect` and remote review stage extraction, approval, and sharing after the session or proposal
+**Distilled form:** `prose` `symbolic` — Reflected lessons become prose summary/detail/action fields wrapped in symbolic domains, context, confidence, tier, flags, ids, and review state
 
 **Trace source.** cq qualifies for trace-derived learning through its implemented agent instructions and `/cq:reflect` command. The raw signal is the current agent session: user requests, assistant reasoning as available to the host, tool calls, errors, failed attempts, workarounds, and final solutions. The Cursor hook can add a short failed-tool summary, but the central trace source is still the agent-visible session context, not a cq-owned transcript database.
 

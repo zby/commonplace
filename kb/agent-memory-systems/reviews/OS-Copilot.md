@@ -33,7 +33,9 @@ OS-Copilot is the OS-Copilot team's open-source framework for building generalis
 ## Artifact analysis
 
 - **Storage substrate:** `vector` — `oscopilot/tool_repository/generated_tools/generated_tools.json`, `tool_code/*.py`, `tool_description/*.txt`, and the Chroma database under `generated_tools/vectordb`
-- **Representational form:** `mixed` — Mixed symbolic/prose/code state: Python source code, JSON metadata, prose descriptions, and distributed-parametric embeddings over descriptions
+- **Representational form:** `prose` `symbolic` `parametric` — prose tool descriptions, symbolic Python code and JSON metadata, and distributed-parametric embeddings over descriptions
+- **Lineage:** `authored` `imported` `trace-extracted` — authored prompts/configuration, manual tool imports, and trace-derived generated tools from executed and judged Python subtasks
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `ranking` `learning` — tools can be inspected as knowledge; prompts instruct; score thresholds gate promotion; retrieval routes and ranks; judges validate; successful traces become reusable tools
 
 **Generated tools.** Storage substrate: `oscopilot/tool_repository/generated_tools/generated_tools.json`, `tool_code/*.py`, `tool_description/*.txt`, and the Chroma database under `generated_tools/vectordb`. Representational form: mixed symbolic/prose/code state: Python source code, JSON metadata, prose descriptions, and distributed-parametric embeddings over descriptions. Lineage: trace-derived from an executed Python subtask after LLM generation, environment execution, LLM judging, optional repair, and a score threshold; manual imports can also add tools through `tool_manager.py --add`. Behavioral authority: system-definition artifact when retrieved descriptions enter planning and retrieved code enters future generation prompts; knowledge artifact when merely listed or inspected as a library entry.
 
@@ -83,6 +85,14 @@ The design tradeoff is authority without review. A generated Python tool can aff
 
 ## Trace-derived learning placement
 
+**Trace source:** `tool-traces` `trajectories` — generated code, invocations, environment outputs/errors, judge critiques, repairs, and self-learning lesson runs are execution traces rather than passive logs.
+
+**Learning scope:** `per-task` `per-project` `cross-task` — individual Python subtasks can promote tools, the repository/tool-repository bounds storage, and retained tools are reused across later tasks.
+
+**Learning timing:** `online` `staged` — ordinary execution can store a successful tool immediately, while self-learning runs staged lessons and continuous course cycles.
+
+**Distilled form:** `prose` `symbolic` `parametric` — stored tool descriptions, Python/JSON tool records, and Chroma embeddings over descriptions.
+
 **Trace source.** OS-Copilot qualifies as trace-derived. The raw signals are generated Python code, invocation strings, environment outputs, errors, current working directory, directory listing, task descriptions, next-action dependencies, judge critiques, repair results, and self-learning lesson runs.
 
 **Extraction.** Extraction is LLM-mediated. The executor generates code and invocation from the subtask, prerequisite outputs, and retrieved relevant code. The environment executes it. The judge prompt evaluates task completion and code generality, returning `Complete`, `Amend`, or `Replan` plus a numeric score. Only Python tasks that complete and meet the configured score threshold are stored as reusable tools.
@@ -96,6 +106,12 @@ The design tradeoff is authority without review. A generated Python tool can aff
 ## Read-back placement
 
 **Direction.** OS-Copilot is push-only for memory read-back. Tool management has manual add/delete surfaces for repository maintenance, but I did not find a deployed agent-facing lookup command; FRIDAY pushes retrieved tool descriptions and source code into future model calls automatically from task/subtask text.
+
+**Read-back signal:** `inferred / embedding` — Chroma similarity selects generated tools by comparing current task or subtask descriptions to retained tool descriptions.
+
+**Read-back timing:** `pre-action` — retrieval happens before task decomposition and before Python code generation.
+
+**Faithfulness tested:** `no` — the review found structural tests and tutorial claims but no standing with/without memory ablation or post-action audit for read-back behavior.
 
 **Targeting and signal.** Targeting is `instance`: planning calls `retrieve_tool_name(task, k=10)` and then retrieves descriptions for the selected names, while Python execution calls `retrieve_tool_name(description, 3)` and retrieves code for those names. The signal is `inferred / embedding`, because Chroma similarity selects generated tools by comparing the current task or subtask description to retained tool descriptions; precision and recall are not verified by code.
 
