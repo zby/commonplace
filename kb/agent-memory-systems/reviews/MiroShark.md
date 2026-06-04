@@ -1,6 +1,7 @@
 ---
 description: "MiroShark review: Neo4j graph memory, swarm simulations, trace-derived belief state, MCP/report retrieval, and provenance exports"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived, push-activation]
 status: current
 last-checked: "2026-06-02"
@@ -88,7 +89,13 @@ The report reasoning trace is a strong analogue to Commonplace review reports. B
 
 **Do not collapse simulation traces into method claims.** MiroShark's graph-memory update is useful because it labels trace-derived edges as beliefs or observations. Commonplace should keep a similarly explicit promotion boundary: repeated trace evidence can propose a rule, but a reviewed instruction needs a separate artifact and validation.
 
-## Trace-derived learning placement
+## Write-side placement
+
+**Write agency:** `manual` `automatic` — operators import source material and configure simulations, while graph building, entity resolution, contradiction handling, belief updates, round compaction, optional graph-memory updates, report reasoning traces, and provenance exports automatically change retained graph, simulation, report, and export stores.
+
+**Curation operations:** `consolidate` `dedup` `evolve` `synthesize` `invalidate` — round memory compacts prior rounds, entity resolution merges graph identities, mutable belief state evolves from engagement and stance heuristics, report and graph-memory paths synthesize retained outputs from graph/search/simulation traces, and graph facts retain `invalid_at` history for contradiction/replacement.
+
+### Trace-derived learning
 
 **Trace source:** `tool-traces` `event-streams` `trajectories` — platform action logs, per-platform rows, posts/comments/trades, engagement and market events, belief snapshots, and report-agent ReACT tool traces
 
@@ -114,13 +121,11 @@ The report reasoning trace is a strong analogue to Commonplace review reports. B
 
 **Read-back signal:** `identifier` — push selection keys on simulation round, platform membership, active-agent id, per-agent belief-state id, excluded platform, feature flags, and persona/tool configuration
 
-**Read-back timing:** `pre-action` `post-action` — retained state is injected before `env.step`, while belief/action/market/MCP updates are recorded after a round for the next activation
-
 **Faithfulness tested:** `no` — the review found no WITH/WITHOUT ablation or post-action check proving injected memory changes behavior as intended
 
 **Targeting and signal.** The memory push is `instance`-targeted with an `identifier` signal. The code keys on already-available identifiers: simulation round, platform membership, active-agent id, per-agent belief-state id, excluded platform for cross-platform digests, feature flags, and persona/tool configuration. It is not semantic relevance matching over the whole graph. The before-action hook has scope controls: active agents in the current platform round receive the relevant marker-delimited blocks, and MCP results are delivered to the agent id that requested them.
 
-**Timing relative to action.** Round memory, beliefs, market/sentiment state, cross-platform digests, and MCP results are injected before `env.step`, so they can change the next post, trade, or comment. Belief updates, action recording, market/sentiment refresh, and MCP dispatch happen after a round, then affect the next activation. Report reasoning traces are post-hoc and do not affect the simulation that produced them.
+**Injection point.** Round memory, beliefs, market/sentiment state, cross-platform digests, and MCP results are injected before `env.step`, so they can change the next post, trade, or comment. Belief updates, action recording, market/sentiment refresh, and MCP dispatch happen after a round as write-side maintenance for the next activation. Report reasoning traces are post-hoc and do not affect the simulation that produced them.
 
 **Selection, scope, and complexity.** Round memory limits complexity by summarizing ancient rounds, keeping recent compacted summaries, preserving the previous round in full detail, and using current partial context. Belief state is per-agent and compact. MCP results are capped in the injection layer. The graph search path has a `limit`, candidate-pool sizing, kind/time filters, and reranking, but graph search only acts when called by a report agent, MCP client, or API consumer.
 

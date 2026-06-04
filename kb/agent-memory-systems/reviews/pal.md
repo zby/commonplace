@@ -1,6 +1,7 @@
 ---
 description: "Pal review: Agno AgentOS team with PostgreSQL/pgvector knowledge, context/wiki file routing, Agno learnings, scheduled compile/lint, and push read-back"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [push-activation]
 status: current
 last-checked: "2026-06-02"
@@ -90,19 +91,23 @@ Pal's specialist team also highlights a design tradeoff. Splitting Navigator, Re
 
 **Do not borrow unreviewed learning authority wholesale.** Pal can let agentic learnings enter context quickly. That is appropriate for a personal assistant but risky for shared methodology. Commonplace should treat trace- or interaction-derived rules as candidates until they are promoted through review and validation.
 
+## Write-side placement
+
+**Write agency:** `automatic` `manual` — the review describes system-driven generation, extraction, consolidation, or update of retained artifacts rather than only manual authoring.
+
+**Curation operations:** `consolidate` `dedup` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
 ## Read-back placement
 
 **Direction.** Pal has both pull and engineered push over retained memory. Pull is ordinary tool use: Navigator searches knowledge, reads files, queries SQL, reads wiki state/index, checks raw manifests, and optionally uses Gmail/Calendar/Exa. Push is configured through Agno memory/session settings and AgentOS schedules. The scheduled prompt text itself is not memory read-back; it is a run trigger whose team run can then receive Agno learnings, past-session/history context, and other retained records before acting.
 
 **Read-back signal:** `coarse` — bounded recent history and added learnings are pushed as session/runtime context; Pal code shows inferred past-session search activation, but Agno owns the unresolved lexical/embedding/judgment sub-kind.
 
-**Read-back timing:** `pre-action` — Agno learnings, past sessions, chat history, datetime, and scheduler-started runs are available before the team acts.
-
 **Faithfulness tested:** `no` — evals and smoke tests exist, but the review did not find a WITH/WITHOUT ablation for pushed learnings or past-session search.
 
 **Targeting and signal.** Pal's memory push is mixed. `search_past_sessions=True` with bounded counts on the leader and Navigator is an instance-targeted push keyed by the current run/session payload, but the final relevance signal is Agno-managed and not visible in this repository; classify it only as `inferred` from Pal code, with the lexical/embedding/judgment sub-kind unresolved. `add_history_to_context=True` and `read_chat_history=True` add bounded recent history, which is coarser session-context push. `add_learnings_to_context=True` pushes `pal_learnings` into runtime context for the leader and Researcher; local Pal code shows the activation point, but Agno owns any selection policy, so precision, recall, and context dilution are not verified from Pal code.
 
-**Timing relative to action.** Agno learnings, past sessions, chat history, datetime, and schedules are available before the agent acts. Linter and Compiler outputs are post-action maintenance artifacts unless a later query reads them. Scheduled briefing/wiki/lint/weekly-review prompts are also pre-action activations from the scheduler's perspective: they start a team run without a live user query.
+**Injection point.** Agno learnings, past sessions, chat history, datetime, and schedules are available before the agent acts. Linter and Compiler outputs are post-action maintenance artifacts unless a later query reads them. Scheduled briefing/wiki/lint/weekly-review prompts are also pre-action activations from the scheduler's perspective: they start a team run without a live user query.
 
 **Selection, scope, and complexity.** The leader searches up to ten past sessions and reads five history runs; Navigator searches up to five past sessions and reads ten history runs ([pal/team.py](https://github.com/agno-agi/pal/blob/6516b8ede0c085e48f39f3bd04cb85b475a855dc/pal/team.py), [pal/agents/navigator.py](https://github.com/agno-agi/pal/blob/6516b8ede0c085e48f39f3bd04cb85b475a855dc/pal/agents/navigator.py)). The file/wiki path uses index and manifest reads before full content. SQL and email paths are governed by instructions to summarize when results are too large. There is no explicit token budget or context-quality test in local Pal code.
 

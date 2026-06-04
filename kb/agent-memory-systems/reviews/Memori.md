@@ -1,6 +1,7 @@
 ---
 description: "Memori review: Rust/Python/TypeScript memory SDK with trace augmentation, BYODB storage, hybrid recall, and pre-call prompt injection"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived, push-activation]
 status: current
 last-checked: "2026-06-02"
@@ -84,7 +85,13 @@ The key design difference is authority. Memori's extracted facts are usually kno
 
 **Treat SDK wrapping as a high-risk adoption affordance.** Needs a use case first. Automatic provider wrapping makes onboarding easy, but Commonplace should be cautious about any integration that mutates the model context without an inspectable report.
 
-## Trace-derived learning placement
+## Write-side placement
+
+**Write agency:** `manual` `automatic` — direct/fallback fact insertion and agent/tool calls can write memory explicitly, while registered SDK calls, OpenClaw events, background workers, and Cloud/Rust augmentation persist turns and derive facts, triples, process attributes, summaries, and embeddings after responses.
+
+**Curation operations:** `consolidate` `synthesize` — conversation summaries and compaction outputs consolidate trace history, while advanced augmentation synthesizes new entity facts, knowledge graph triples, process attributes, and summaries from conversations and agent traces.
+
+### Trace-derived learning
 
 **Trace source:** `session-logs` `tool-traces` `event-streams` — wrapped LLM messages and Hermes turns, OpenClaw/Claude Code tool traces, and integration event payloads feed augmentation
 
@@ -110,13 +117,11 @@ The key design difference is authority. Memori's extracted facts are usually kno
 
 **Read-back signal:** `identifier` `inferred / lexical` `inferred / embedding` — configured entity/session/process/project fields narrow the store, while query-text BM25 and dense embeddings select relevant facts
 
-**Read-back timing:** `pre-action` `post-action` — recall and history injection run before the model response; persistence, augmentation, and OpenClaw capture run after responses for later turns
-
 **Faithfulness tested:** `no` — tests and benchmarks cover wrapping, injection, storage, retrieval, and augmentation payloads, but not a with/without behavior ablation for injected memory
 
 **Targeting and signal.** SDK push is instance-targeted memory activation. The before-call hook is triggered by provider invocation, but selection keys on the current user-query content plus configured entity/session/process scope rather than on a static documentation surface. Local retrieval uses an inferred mixed signal: dense embedding candidates from the query, lexical/BM25 reranking over fact text, top-k limits, and `recall_relevance_threshold`; Cloud recall receives the same query and attribution payload and returns scored facts plus optional history. The identifier fields narrow the memory store, while the final selector is inferred relevance over the current instance.
 
-**Timing relative to action.** Recall and conversation-history injection run before the model response, so they can change the next answer. Persistence and augmentation run after the response, so they affect later turns. OpenClaw's `agent_end` capture likewise affects later sessions, while its recall and compaction tools affect only when the agent invokes them.
+**Injection point.** Recall and conversation-history injection assemble before the model response, so they can change the next answer. Persistence, augmentation, and OpenClaw `agent_end` capture happen after the response as write-side maintenance for later turns, while recall and compaction tools affect only when the agent invokes them.
 
 **Selection, scope, and complexity.** Selection uses entity/session/process/project attribution, date/source/signal filters in agent tools, dense candidate limits, final fact limits, score thresholds, dynamic candidate expansion, summary attachment, and provider-specific sanitization of recalled history. Context complexity is moderate: the injected payload is formatted facts, summaries, and sometimes prior conversation messages, not the entire memory graph.
 

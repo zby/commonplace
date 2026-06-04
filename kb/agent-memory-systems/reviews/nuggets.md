@@ -1,6 +1,7 @@
 ---
 description: "Nuggets review: HRR key-value memory with Pi tools, auto-captured facts, pre-turn prompt injection, and gateway-driven proactive chat"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived, push-activation]
 status: current
 last-checked: "2026-06-02"
@@ -82,8 +83,13 @@ The central tradeoff is authority without governance. Nuggets can inject remembe
 
 **Promotion by observed reuse is promising but needs a working counter path.** Hit-count promotion to `MEMORY.md` is a useful design sketch. Commonplace could treat repeated successful recall as a candidate-promotion signal, but only after verifying that the recall path records sessions and that promoted facts keep lineage.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `consolidate` `dedup` `synthesize` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 **Trace source:** `session-logs` `tool-traces` `event-streams` — Pi session messages, user input, tool results, compaction windows, and extension event hooks feed capture
 
 **Learning scope:** `per-task` `per-project` `cross-task` — compaction summaries are task-shaped, file/project facts are project-shaped, and durable user/agent facts can cross tasks
@@ -108,13 +114,11 @@ The central tradeoff is authority without governance. Nuggets can inject remembe
 
 **Read-back signal:** `coarse` — the push path fires for every Pi agent turn after facts are loaded or captured, without identifier or inferred relevance matching for the current turn
 
-**Read-back timing:** `pre-action` — prompt injection happens before the receiving agent turn acts; capture and promotion affect later turns rather than returning memory to the completed action
-
 **Faithfulness tested:** `no` — the review found structural activation but no with/without behavioral test for injected facts
 
 **Targeting and signal.** The push path is `coarse`: the `before_agent_start` hook fires on every Pi agent turn after facts are loaded or captured and injects remembered facts from the current session map. There is no instance-level `identifier` or `inferred` signal for the push; grouping by key prefix and the last-ten file cap are scope controls, not relevance matching for this turn. Explicit pull recall uses key resolution, token-overlap fallback, and HRR decoding.
 
-**Timing relative to action.** Prompt injection happens before the agent turn and can affect the next action. Preference and file captures happen during input/tool events and become available for later turns. Compaction capture and promotion happen around session compaction and affect future turns/sessions.
+**Injection point.** Prompt injection happens before the agent turn and can affect the next action. Preference and file captures happen during input/tool events and become available for later turns. Compaction capture and promotion happen around session compaction and affect future turns/sessions.
 
 **Selection, scope, and complexity.** Selection is broad for preferences, learnings, and other facts, bounded only by what has been remembered in the current map; active files are capped. Scope comes from the shelf kind, current session reconstruction, and local home-directory storage. Complexity stays low because values are expected to be short facts, but context dilution can still grow if many facts accumulate.
 

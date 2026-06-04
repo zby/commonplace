@@ -1,6 +1,7 @@
 ---
 description: "Clude review: cognitive memory SDK, MCP server, hosted chat, dream-cycle trace learning, local/Supabase storage, and prompt-time read-back"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived, push-activation]
 status: current
 last-checked: "2026-06-01"
@@ -85,8 +86,13 @@ Clude's context-management story is more automated. The hosted chat path starts 
 
 **Do not borrow silent authority escalation.** Clude's derived procedural/self-model memories can become prompt instructions when retrieved. Commonplace should keep the distinction between knowledge artifact, advice, and enforced system-definition artifact explicit.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `consolidate` `dedup` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 **Trace source:** `session-logs` `tool-traces` `event-streams` — Raw signals include chat turns, assistant replies, action/outcome records, dream/reflection events, and checked-in action/consolidation/self-model/social-interaction records
 
 **Learning scope:** `per-task` `per-project` `cross-task` — Action/outcome lessons can be task-specific, owner/local stores make project or agent scope explicit, and memory packs plus hosted owner scopes support reuse across tasks
@@ -113,13 +119,11 @@ Clude's context-management story is more automated. The hosted chat path starts 
 
 **Read-back signal:** `coarse` `identifier` `inferred / lexical` `inferred / embedding` — Hosted chat and response-service paths infer relevance from user content using embedding, fragment, lexical/BM25, graph, and temporal retrieval; owner, user, wallet, type, tag, source, decay, and importance fields narrow by identifiers; top procedural memories can be pushed coarsely
 
-**Read-back timing:** `pre-action` `post-action` — Chat and response-service retrieval inject before generation, while dream/reflection/action outputs are after-action until later recall returns them
-
 **Faithfulness tested:** `no` — The review found retrieval, injection, benchmark, proof, and confidence-gate code, but no checked-in behavioral ablation showing that fired memory changes the model response as intended
 
 **Targeting and signal.** The strongest engineered memory push is `targeting: instance`: every authenticated hosted-chat message starts recall from the user content, skips LLM expansion for latency, recalls up to 25 candidates, optionally adds temporal retrieval when constraints are detected, then trims what is sent. The main signal is `inferred` and mixed across `embedding` similarity, fragment search, `lexical` keyword/BM25 scoring, query-derived entity/graph expansion, temporal matching, and optional reranking. Identifier signals also narrow the pool through owner wallet, related user or wallet, memory type, tags, source exclusions, and min-decay/min-importance filters; the final selector is identifier narrowing plus inferred ranking. `buildAndGenerate` has the same instance-targeted capability when the caller supplies memory options, and it additionally adds a `targeting: coarse` procedural-strategy push by fetching top procedural memories without a query.
 
-**Timing relative to action.** Chat and response-service read-back happens before generation, so it can change the next response. The `/greet` path pushes a non-LLM recap from important memories before the user asks a new substantive question. Dream/reflection outputs are after-action until later recall pushes them back into a future prompt.
+**Injection point.** Chat and response-service read-back happens before generation, so it can change the next response. The `/greet` path pushes a non-LLM recap from important memories before the user asks a new substantive question. Dream/reflection outputs are after-action until later recall pushes them back into a future prompt.
 
 **Selection, scope, and complexity.** Selection is code-grounded: owner scope, max results, min decay, source exclusions, token-budget fitting, memory type grouping, temporal constraints, and query-dependent graph expansion. The complexity of loaded context is nontrivial because a single prompt may contain semantic knowledge, procedural rules, identity memories, recent episodes, and conversation history. Effective context dilution and precision/recall are runtime qualities not verified from code.
 

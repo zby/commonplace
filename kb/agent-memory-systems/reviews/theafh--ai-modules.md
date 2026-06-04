@@ -1,6 +1,7 @@
 ---
 description: "ai-modules review: plugin-packaged AI skills, per-repo markdown wiki and task backlogs, deterministic helper scripts, and session-to-wiki distillation"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived]
 status: current
 last-checked: "2026-06-03"
@@ -82,8 +83,13 @@ The biggest divergence is authority. In ai-modules, many crucial rules live in s
 
 **Separate broad repair into a dedicated agent definition.** `wiki_auto_shaper` is explicit that broad cleanup displaces context and should run in an isolated high-effort agent. Commonplace already has review/repair workflows; the borrowable part is the clean split between narrow inline lint fixes and broad delegated repair. Ready as procedural guidance.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `consolidate` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 **Trace source:** `session-logs` — `wiki_wrapup` mines the visible current chat session at closeout time rather than a persistent transcript store, background tool trace stream, or rollout trajectory.
 
 **Learning scope:** `per-project` — The durable output lands in one wiki selected by the discovery flow, normally project-local unless the selected wiki path is shared.

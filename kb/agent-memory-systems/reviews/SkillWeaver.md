@@ -1,6 +1,7 @@
 ---
 description: "SkillWeaver review: WebArena web-agent loop that distills successful browser trajectories into reusable Playwright APIs with LLM-selected pre-action skill injection"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived, push-activation]
 status: current
 last-checked: "2026-06-02"
@@ -80,7 +81,13 @@ SkillWeaver is weaker on lineage inside the promoted artifact. Metadata records 
 
 **Do not borrow high-authority executable memory without provenance.** A generated function can silently encode an accidental UI assumption. Commonplace should require source references, test cases, and invalidation conditions before learned procedures enter durable shared use.
 
-## Trace-derived learning placement
+## Write-side placement
+
+**Write agency:** `automatic` — the exploration, success-check, update, static-check, practice, and recovery paths mutate the generated skill library without a manual authoring channel in the reviewed loop.
+
+**Curation operations:** `evolve` `synthesize` `promote` — successful trajectories synthesize new Playwright functions, function-name merging and recovery/test feedback can update existing skills, and `test_count` plus `hide_unverified` promote practiced functions into higher-visibility read-back.
+
+### Trace-derived learning
 
 **Trace source:** `tool-traces` `event-streams` `trajectories` — Browser action/state records, Playwright traces and videos, recovery events, screenshots, and task-attempt trajectories feed the skill update loop.
 
@@ -104,15 +111,11 @@ SkillWeaver is weaker on lineage inside the promoted artifact. Metadata records 
 
 **Read-back signal:** `inferred / judgment` — The active push path asks an LLM to select relevant function names from the current task string plus formatted skill signatures and docstrings.
 
-**Read-back timing:** `pre-action` — Selected functions enter the prompt before the acting agent writes the next `act(page)` code.
-
 **Faithfulness tested:** `no` — The implementation evaluates task success and function execution, but the review found no WITH/WITHOUT read-back ablation proving a pushed skill changed a decision.
 
 **Direction.** SkillWeaver has both pull and engineered push. The retrieval module is explicitly called by the attempt loop, but from the acting agent's perspective selected functions arrive in the prompt before it writes the next `act(page)` function.
 
 **Targeting and signal.** The push path is `instance`-targeted: each attempt turns the current task into a task string and asks retrieval to select functions for that task instance. The signal is `inferred / judgment`, because `KnowledgeBase.retrieve()` asks an LLM to judge relevance over the task string and formatted skill signatures/docstrings. There is also an embedding-similarity helper in `KnowledgeBase`, but the active prompt path uses LLM function-name selection.
-
-**Timing relative to action.** Read-back happens before the first action step of an attempt. The selected functions are available to every generated step in that attempt through the prompt and execution module, so they can change the action plan before any browser operation occurs.
 
 **Selection, scope, and complexity.** Selection scope is the currently loaded knowledge base, filtered by `hide_unverified` when configured. Prompt complexity is bounded by selected functions, not by a hard token budget. If the library has fewer than five functions, the embedding helper would return all functions, but the active LLM retrieval path can still select by name. Actual selector precision and context dilution are not verified from code.
 

@@ -1,6 +1,7 @@
 ---
 description: "Stash review: Go MCP memory server with pgvector episodes, consolidated facts, relationships, goals, failures, hypotheses, and agent-mediated recall"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived]
 status: current
 last-checked: "2026-06-02"
@@ -83,8 +84,13 @@ The largest design difference is admission and authority. Stash makes it cheap f
 
 **Make tool descriptions teach memory hygiene.** Ready now. Stash's MCP prompt is unusually explicit about when to recall, remember, consolidate, and avoid noise. Commonplace skills and commands should carry similarly operational descriptions, while still relying on validation for high-authority artifacts.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `consolidate` `dedup` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 - **Trace source:** `session-logs` — agent-mediated session observations, summaries, decisions, corrections, failures, and completed-work notes submitted through `remember`
 - **Learning scope:** `per-project` `cross-task` — namespace paths scope recall and consolidation, while user preferences, goals, failures, and project facts can carry across future tasks
 - **Learning timing:** `online` `staged` — capture happens at agent/caller tool-call time, while consolidation runs manually or periodically through checkpointed stages

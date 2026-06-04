@@ -1,6 +1,7 @@
 ---
 description: "Dynamic Cheatsheet review: test-time cheatsheet memory from solver traces, LLM curation, embedding retrieval, and automatic prompt read-back"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived, push-activation]
 status: current
 last-checked: "2026-06-01"
@@ -80,8 +81,13 @@ The main divergence is trust. The curator prompt asks the model to include "test
 
 **Use result JSONL as an audit substrate for iterative memory experiments.** The benchmark runner records prompts, outputs, answers, cheatsheet states, targets, and correctness flow. Commonplace review bundles could borrow that lightweight, appendable run record for experimental workflows before deciding what belongs in the library.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `consolidate` `dedup` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 **Trace source:** `session-logs` `trajectories` — Sequential solver runs produce per-example prompt/output/answer/cheatsheet records and ordered benchmark trajectories
 
 **Learning scope:** `per-task` `cross-task` — Retrieval-synthesis is per-query/transient, while cumulative cheatsheets carry lessons forward across later benchmark examples in the run
@@ -104,15 +110,13 @@ The main divergence is trust. The curator prompt asks the model to include "test
 
 **Read-back signal:** `coarse` `inferred / embedding` — Cumulative mode pushes the whole current cheatsheet, while retrieval modes push top-k prior examples selected by input-embedding similarity
 
-**Read-back timing:** `pre-action` — The selected cheatsheet or previous-solution packet is placed inside the generator prompt before the solver answers
-
 **Faithfulness tested:** `no` — Benchmark comparisons exist, but the review finds no per-memory with/without ablation or item-level faithfulness test
 
 **Direction.** From the solver model's perspective, read-back is push. The runner and `advanced_generate` construct the prompt with whatever cheatsheet or retrieved examples the selected approach supplies; the solver does not call a memory tool or decide whether to retrieve (https://github.com/suzgunmirac/dynamic-cheatsheet/blob/5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9/dynamic_cheatsheet/language_model.py).
 
 **Targeting and signal.** Cumulative mode is `coarse`: the runner carries the whole current cheatsheet into each generator prompt for the selected approach, so it is memory push but not instance-targeted. Retrieval modes are `instance` targeted with an `inferred / embedding` signal: on each query, the system compares the current input embedding against previous input embeddings, selects top-k by cosine similarity, and pushes only those examples or their synthesized summary into the prompt (https://github.com/suzgunmirac/dynamic-cheatsheet/blob/5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9/dynamic_cheatsheet/language_model.py).
 
-**Timing relative to action.** Read-back happens before the solver answers. The selected cheatsheet or previous-solution packet is inside the generator prompt, so it can change the next answer rather than merely audit it afterward.
+**Injection point.** Read-back happens before the solver answers. The selected cheatsheet or previous-solution packet is inside the generator prompt, so it can change the next answer rather than merely audit it afterward.
 
 **Selection, scope, and complexity.** Selection is `retrieve_top_k` for retrieval examples and prompt-instructed compression for cumulative cheatsheets. Complexity is bounded only informally: the curator prompt asks for a 2000-2500 word cheatsheet, and the generator prompt receives the whole current cheatsheet plus any retrieved section in hybrid mode. There is no code-level token clipping for the cheatsheet content, despite `count_tokens` being available on the model wrapper; actual precision, recall, and context dilution are not verified from code (https://github.com/suzgunmirac/dynamic-cheatsheet/blob/5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9/dynamic_cheatsheet/language_model.py).
 

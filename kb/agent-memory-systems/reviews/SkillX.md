@@ -1,6 +1,7 @@
 ---
 description: "SkillX review: trajectory-derived hierarchical skill KB with plan extraction, skill filtering/merging, expansion, and prompt-time retrieval"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived, push-activation]
 status: current
 last-checked: "2026-06-02"
@@ -83,7 +84,13 @@ The important divergence is the quality oracle. SkillX uses benchmark reward and
 
 **Do not borrow automatic authority escalation.** SkillX can take a trajectory-derived candidate through filtering and directly into prompt injection. For Commonplace methodology knowledge, trace-derived candidates should land in a workshop/source layer first, then be reviewed before they become instructions, validators, or high-authority notes.
 
-## Trace-derived learning placement
+## Write-side placement
+
+**Write agency:** `automatic` — the offline extraction, filtering, clustering, merging, checkpointing, and optional expansion pipeline turns reward-filtered trajectories into retained plan, functional-skill, and atomic-skill libraries.
+
+**Curation operations:** `consolidate` `dedup` `synthesize` — verbose traces are compressed into plans and skills, embedding clusters and LLM merging reduce similar candidates, and extraction/expansion generate new retained skill artifacts.
+
+### Trace-derived learning
 
 **Trace source:** `session-logs` `tool-traces` `trajectories` — interaction histories carry role/content messages, tool calls and responses, rewards, metadata, and exploration trajectories
 
@@ -107,13 +114,9 @@ The important divergence is the quality oracle. SkillX uses benchmark reward and
 
 **Read-back signal:** `identifier` `inferred / embedding` `inferred / judgment` — tool-name filters narrow by identifiers, embedding retrieval selects plans and skills by current task or plan steps, and optional LLM selection judges oversized candidate sets
 
-**Read-back timing:** `pre-action` — `prepare_prompt()` formats selected plans and skills into the system prompt before task execution
-
 **Faithfulness tested:** `no` — the review found retrieval and formatting machinery but no code-grounded ablation or perturbation test proving retrieved skills changed downstream behavior
 
 **Targeting and signal.** The memory push is `instance`-targeted. Plans are retrieved by embedding similarity to the current task, and skills are retrieved by embedding similarity to the retrieved plan steps or directly to the task, so the primary signal is `inferred / embedding`. Available-tool filtering can narrow candidates by tool-name identifiers, and the optional `SkillSelector` can apply an LLM relevance `judgment` when the candidate set exceeds `max_skills`; precision, recall, and context dilution are not verified from code.
-
-**Timing relative to action.** `prepare_prompt()` builds a system prompt before task execution. That makes selected plans and skills pre-action context, not after-action reflection.
 
 **Selection, scope, and complexity.** Plan retrieval defaults to `top_k=3`; skill retrieval uses top-k per plan step or a larger task query pool before truncating or LLM-selecting. The implementation has fixed thresholds and maxima, but no token-budget accounting or source-freshness check. It reduces context volume, while the complexity of multi-skill snippets can still dilute the final prompt.
 

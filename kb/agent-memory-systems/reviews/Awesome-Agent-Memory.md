@@ -1,6 +1,7 @@
 ---
 description: "Awesome Agent Memory review: README-only bibliography of memory products, papers, benchmarks, surveys, articles, and workshops, with no runtime memory layer"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 status: current
 last-checked: "2026-06-01"
 ---
@@ -72,6 +73,10 @@ The useful comparison is therefore not "catalogue versus KB" in general. It is a
 **Use the catalogue as a prospecting source, not as authority.** Ready now. Awesome Agent Memory is useful for finding review candidates and checking whether the landscape has shifted, but Commonplace should cite primary repositories, papers, or snapshots when making claims.
 
 **Do not borrow the single-file catalogue as the durable internal structure.** The one-file format is convenient for public browsing, but it does not provide enough artifact-level lineage, status, or validation for an agent-operated KB. A Commonplace version should compile or index typed artifacts rather than hand-maintain all semantics in one README.
+
+## Write-side placement
+
+**Write agency:** `manual` — the review identifies only ordinary README curation through repository edits, issues, and pull requests; it found no generated catalogue pipeline, runtime source, retrieval index, link checker, or automatic update machinery.
 
 ## Curiosity Pass
 

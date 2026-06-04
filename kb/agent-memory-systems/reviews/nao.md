@@ -1,6 +1,7 @@
 ---
 description: "nao review: analytics-agent project context folder, CLI sync/deploy lifecycle, chat-derived user memories, MCP tools, stories, tests"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived]
 status: current
 last-checked: "2026-06-02"
@@ -82,8 +83,6 @@ The main divergence is authority control. In Nao, `RULES.md`, skills, memory row
 
 **Read-back signal:** `coarse` — Pushed retained memory is loaded when present/enabled rather than selected by an instance signal.
 
-**Read-back timing:** `pre-action` — Rules, summaries, connection names, and enabled user memories are placed in prompt context before the agent acts.
-
 **Faithfulness tested:** `no` — The review describes analytics evals and tests, but no with/without read-back ablation showing that pushed memory changes downstream behavior.
 
 ### Borrowable Ideas
@@ -100,8 +99,13 @@ The main divergence is authority control. In Nao, `RULES.md`, skills, memory row
 
 **Do not borrow DB-only memory as the durable methodology source.** Nao's DB memory is appropriate for personal assistant preferences. For shared methodology, Commonplace should keep behavior-shaping rules, schemas, validators, and reviews in git with lineage and review status.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `consolidate` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 **Trace source:** `session-logs` — Recent chat messages are the durable conversation trace consumed by the memory extractor.
 
 **Learning scope:** `cross-task` — Extracted user instructions and profile facts persist per user for reuse across future agent requests when memory is enabled.

@@ -1,6 +1,7 @@
 ---
 description: "AgentFly review: planner-executor agent with case-bank planning memory, trace-derived plan labels, and retriever-gated prompt injection"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived, push-activation]
 status: current
 last-checked: "2026-06-01"
@@ -81,7 +82,13 @@ The tradeoff is auditability versus immediacy. AgentFly can improve the next run
 
 **Make activation policy explicit in environment variables.** `MEMORY_TOP_K`, `MEMORY_MAX_POS_EXAMPLES`, and `MEMORY_MAX_NEG_EXAMPLES` make read-back volume tunable. Commonplace generated context workflows could expose similar per-task budgets for positive evidence, counterexamples, and hard instructions. Ready where context packets are generated mechanically.
 
-## Trace-derived learning placement
+## Write-side placement
+
+**Write agency:** `automatic` — the CBR clients append judged run cases and selector-training rows, and the staged trainer writes a retriever checkpoint that changes later case selection.
+
+**Curation operations:** `consolidate` `promote` — benchmark traces are compressed into compact case rows, and reward/case labels plus the trained retriever change which cases receive salience during later read-back.
+
+### Trace-derived learning
 
 **Trace source:** `tool-traces` `trajectories` — benchmark runs include planner outputs, executor/tool-call history, final answers, ground-truth comparisons, and judge rationales.
 
@@ -105,13 +112,11 @@ The tradeoff is auditability versus immediacy. AgentFly can improve the next run
 
 **Read-back signal:** `inferred / embedding` `inferred / judgment` — the non-parametric path selects by SimCSE embedding similarity, while the parametric path uses a trained neural classifier over the current query and candidate case text.
 
-**Read-back timing:** `pre-action` — selected cases enter `shared_history` before the planner decomposes the task.
-
 **Faithfulness tested:** `no` — benchmark logs and retriever metrics exist, but the review found no ablation or perturbation test proving the planner used an injected case.
 
 **Targeting and signal.** Targeting is `instance`: the client selects cases for the current benchmark query, not a generic always-load bundle. The signal is `inferred`, keyed on content rather than an assigned identifier: the non-parametric path uses SimCSE embedding similarity over case questions, and the parametric path uses a trained neural classifier over the current query and candidate case text, then sorts by predicted relevance score. Precision and recall are not established by code alone.
 
-**Timing relative to action.** Read-back happens before task decomposition, not after execution. It can change the planner's first emitted subtask list, which then changes which tools the executor calls.
+**Injection point.** Read-back happens before task decomposition, not after execution. It can change the planner's first emitted subtask list, which then changes which tools the executor calls.
 
 **Selection, scope, and complexity.** Selection is top-k by similarity or classifier score. Context volume is bounded by `MEMORY_TOP_K`, `MEMORY_MAX_POS_EXAMPLES`, and `MEMORY_MAX_NEG_EXAMPLES`; the global message history is also trimmed to a token ceiling before planner/executor calls. The loaded material is shallow: question plus plan, grouped as positive and negative examples. It does not recursively load source traces behind a case.
 

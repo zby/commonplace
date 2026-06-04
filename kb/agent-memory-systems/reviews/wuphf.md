@@ -1,6 +1,7 @@
 ---
 description: "WUPHF review: multi-agent office with git-backed wiki, per-agent notebooks, MCP memory tools, trace extraction, and prompt-time memory push"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived, push-activation]
 status: current
 last-checked: "2026-06-02"
@@ -83,8 +84,13 @@ The main divergence is runtime ambition. WUPHF is an office runtime first, so it
 
 **Single-writer queue for wiki mutation.** The wiki worker serializes writes, index regeneration, events, and backup mirroring. Commonplace currently relies on git discipline and validation; a queue is unnecessary for local single-agent editing, but the pattern is useful if future MCP write tools or concurrent agents mutate the same KB.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `consolidate` `dedup` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 **Trace source:** `event-streams` `trajectories` — Task memory workflow events, wiki write/extraction/lint/DLQ records, team learning records, and playbook execution records are the raw retained signals named by the review.
 
 **Learning scope:** `per-project` `cross-task` — Memory is organized by workspace/team wiki paths and per-agent notebook shelves, then reused across later tasks through lookup, search, prompt injection, playbooks, and compiled skills.
@@ -111,13 +117,11 @@ The main divergence is runtime ambition. WUPHF is an office runtime first, so it
 
 **Read-back signal:** `inferred / lexical` `inferred / embedding` — The pushed brief uses the notification text as a query: private memory uses substring/token scoring, while configured GBrain shared memory can use vector search; Nex remains opaque from the local code.
 
-**Read-back timing:** `pre-action` — The broker appends scoped memory to the provider stdin before the headless agent turn performs tool calls or writes output.
-
 **Faithfulness tested:** `no` — The review found subsystem tests and benchmarks, but no with/without ablation showing that a pushed memory brief changed downstream agent behavior.
 
 **Targeting and signal.** Pull triggers are explicit agent/user tool calls and slash commands. Push memory targeting is `instance`: each headless turn's notification text becomes the query for `fetchScopedMemoryBrief`. The private-memory path is `inferred / lexical`, because it matches the notification against the retained note key, title, and content with substring/token scoring and a small top-k cap. The shared external path is backend-dependent: GBrain is `inferred / embedding` when vector search is configured, with keyword/reduced-mode fallback; Nex recall is an opaque external API query, so the review can identify it only as inferred query-based recall from local code. The broker wake itself is also event-keyed by messages, focus/collab mode, mentions, active tasks, and channel membership, but those symbols decide which agent wakes, not which memory snippet is selected.
 
-**Timing relative to action.** Pushed memory arrives before the provider turn performs tool calls or writes output. It is appended to stdin after the operator notification and before the model acts, which means it can change the next action rather than only audit the result.
+**Injection point.** Pushed memory arrives before the provider turn performs tool calls or writes output. It is appended to stdin after the operator notification and before the model acts, which means it can change the next action rather than only audit the result.
 
 **Selection, scope, and complexity.** Complexity controls include per-agent private namespaces, shared/private scope switches, literal notebook search, wiki top-k lookup, context lookup limits/timeouts, backend choice, agent-specific MCP manifests, and fresh-session turns. The pushed brief is short, but it is still prose context; precision and context dilution depend on search quality and backend behavior at runtime.
 

@@ -1,6 +1,7 @@
 ---
 description: "Claude Code slash-command wiki scaffold with Logseq/Obsidian schemas, L1/L2 routing doctrine, setup templates, and prompt-governed lint/query workflows"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 status: current
 last-checked: "2026-06-02"
 ---
@@ -65,16 +66,6 @@ The strongest alignment is file-native knowledge. Both systems prefer inspectabl
 
 LLM Wiki's L1/L2 split is more concrete than Commonplace's current phrasing around always-loaded context versus library retrieval. It distinguishes operational guardrails that must be present before action from contextual knowledge that should stay out of the base prompt until queried. The repo also makes the adoption surface unusually practical: it meets users where their notes already live, with Logseq/Obsidian serialization and Claude Code memory.
 
-**Read-back:** `both` — L1 memory is a coarse host-provided always-load path at session start, while L2 wiki pages and query-time L1 supplements enter through explicit `/wiki query` or command workflows using namespace/entity/keyword matching. The repo records the memory path and recommends L1/L2 routing, but it does not implement a relevance-gated memory push hook into a receiving agent/model context, so this does not warrant `push-activation`
-
-**Read-back signal:** `coarse` — the only push path described in the review is host-provided always-load L1 memory at session start; L2 pages and query-time L1 supplements are explicit pull workflows.
-
-**Read-back timing:** `pre-action` — host-loaded L1 memory is present at session start before the receiving Claude Code session acts.
-
-**Faithfulness tested:** `no` — the review records no with/without ablation or post-action audit showing that loaded L1 memory changes downstream behavior.
-
-This review does not mark the system `trace-derived`. A user may ingest chat transcripts or manually promote gotchas into L1, and the docs call feedback/gotchas first-class page types, but the source does not implement durable artifact derivation from session/tool/evaluation traces. Ordinary source ingestion and manual L1/L2 promotion advice are not enough for the trace-derived tag.
-
 ### Borrowable Ideas
 
 **Explicit L1/L2 routing as a user-facing doctrine.** Ready now. Commonplace could sharpen its own distinction between always-loaded operational rules and query-time library knowledge, including explicit "dangerous or embarrassing without it" routing language for promotion decisions.
@@ -88,6 +79,20 @@ This review does not mark the system `trace-derived`. A user may ingest chat tra
 **Append-only ingest target.** Borrow selectively. Append-only page updates reduce accidental deletion in personal wikis; Commonplace should retain replacement/review workflows for durable notes where synthesis quality matters more than preserving every incremental block.
 
 **Do not borrow prompt-only governance as final enforcement.** LLM Wiki's specs are useful, but Commonplace should keep converting high-value checks into executable validators or review gates when artifacts carry system-definition authority.
+
+## Write-side placement
+
+**Write agency:** `manual` `automatic` — users can author or import wiki/L1 content directly, while `/wiki ingest`, `/wiki import`, `/wiki lint --fix`, setup scaffolding, hub updates, and query write-back can create or append L2 pages through the command workflow.
+
+**Curation operations:** `not-determinable` — the review supports automatic create/append/cross-link/hub-update workflows, but it does not support a controlled curation operation beyond ordinary writes; L1 promotion is recorded as recommendation rather than an implemented store-changing operation.
+
+This review does not mark the system `trace-derived`. A user may ingest chat transcripts or manually promote gotchas into L1, and the docs call feedback/gotchas first-class page types, but the source does not implement durable artifact derivation from session/tool/evaluation traces. Ordinary source ingestion and manual L1/L2 promotion advice are not enough for the trace-derived tag.
+
+**Read-back:** `both` — L1 memory is a coarse host-provided always-load path at session start, while L2 wiki pages and query-time L1 supplements enter through explicit `/wiki query` or command workflows using namespace/entity/keyword matching. The repo records the memory path and recommends L1/L2 routing, but it does not implement a relevance-gated memory push hook into a receiving agent/model context, so this does not warrant `push-activation`
+
+**Read-back signal:** `coarse` — the only push path described in the review is host-provided always-load L1 memory at session start; L2 pages and query-time L1 supplements are explicit pull workflows.
+
+**Faithfulness tested:** `no` — the review records no with/without ablation or post-action audit showing that loaded L1 memory changes downstream behavior.
 
 ## Curiosity Pass
 

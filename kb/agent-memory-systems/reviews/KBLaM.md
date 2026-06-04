@@ -1,6 +1,7 @@
 ---
 description: "KBLaM review: research model architecture that encodes KB triples into learned key/value tensors attended by modified Llama/Phi layers"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [push-activation]
 status: current
 last-checked: "2026-06-02"
@@ -67,28 +68,6 @@ The context-efficiency contrast is sharp. Commonplace uses lexical search, index
 
 **Read-back:** `push` — Caller-supplied KB tensors are pushed into modified attention layers at generation time. Default KB supply is coarse; optional Llama `dynamic_sparsify` is instance-targeted inferred/embedding selection over current query states and KB keys. This is a library/model API surface, not a deployed agent loop.
 
-## Read-back placement
-
-**Direction.** KBLaM is push from the receiving model's perspective. `KBLaMProcessor` turns a supplied knowledge base into `kb_kvs`, and the modified Llama/Phi generation path consumes those tensors without the model or an agent calling a retrieval tool. Because this repository is a research package, the review treats that as an API capability: the host or evaluation script decides which KB tensors to provide.
-
-**Read-back signal:** `coarse` `inferred / embedding` — the default path exposes caller-supplied KB tensors coarsely, while Llama `dynamic_sparsify` uses query-head vector scoring against KB keys for instance-targeted embedding selection.
-
-**Read-back timing:** `pre-action` — KB tensors are available inside generation before token choices are made.
-
-**Faithfulness tested:** `no` — the review found benchmark and attention-dump support but no with/without activation ablation showing a fired KB tensor changed a decision.
-
-**Targeting and signal.** There are two memory push shapes. The default path is `coarse`: a caller supplies a KB tensor batch or subset, and all supplied KB keys/values are exposed to KB-enabled layers. The Llama `dynamic_sparsify` path is `instance`-targeted when enabled: the current hidden states are projected through the separate query head, scored against KB keys by learned vector dot product, and pruned to `top_k_kb` before attention. The signal is therefore `inferred / embedding`. The Phi path at this commit concatenates supplied KB tensors and can use a separate query head for attention scoring, but it does not implement the same top-k pruning branch.
-
-**Timing relative to action.** Read-back occurs during generation, before token choices are made, so supplied or pruned KB tensors can affect the immediate answer.
-
-**Selection, scope, and complexity.** Scope is mostly host-supplied: the caller chooses the KB rows or embeddings passed as `kb_kvs`. Inside Llama, `dynamic_sparsify`, `top_k_kb`, `kb_layer_frequency`, `sep_query_head`, and `kb_scale_factor` control which KB tensors are exposed at each KB-enabled layer and how their attention scores are scaled. Actual precision, recall, and context dilution are not verified from code.
-
-**Authority at consumption.** The KB tensors have direct model-conditioning authority through attention-side keys and values. They are not human-readable prompt context at consumption time, and the receiving model cannot inspect their source rows unless the host separately preserves that mapping.
-
-**Faithfulness.** The repository evaluates answer accuracy, refusal, precision, recall, ROUGE, BERTScore, and can dump attention weights, but I did not find a WITH/WITHOUT activation ablation proving that a particular fired KB tensor changed a decision. The `push-activation` tag rests on the implemented attention-side activation mechanism, not on measured downstream faithfulness.
-
-**Other consumers.** Researchers consume datasets, checkpoints, metrics, and attention dumps. Those artifacts are evaluation evidence; the inspected code does not feed them back into a durable memory selector or governance loop.
-
 The governance contrast is also sharp. KBLaM evaluates answer accuracy, refusal, precision, recall, ROUGE, and BERTScore; it does not keep a source snapshot, citation, reviewer decision, or replacement history for each durable fact. Commonplace would treat those missing surfaces as central if a fact can later shape agent behavior.
 
 I did not find qualifying trace-derived learning. The repository uses synthetic and Enron-derived datasets, cached embeddings, supervised training, and evaluation outputs. Those are not agent/session/tool traces, and the evaluation traces are not distilled into durable behavior-shaping artifacts by the inspected code.
@@ -104,6 +83,32 @@ I did not find qualifying trace-derived learning. The repository uses synthetic 
 **Keep the base model unchanged where possible.** Ready as an architectural bias for tools, not as model training. KBLaM preserves baseline behavior when no KB is supplied; Commonplace should likewise make generated indexes, reports, and optional search layers additive rather than changing the meaning of canonical notes.
 
 **Do not borrow tensorized facts as authoritative KB entries.** A learned adapter can improve answers, but it is a poor canonical store for methodology knowledge. Commonplace should keep high-authority claims in reviewable artifacts and use distributed-parametric state only as a derived aid.
+
+## Write-side placement
+
+**Write agency:** `manual` `automatic` — researchers or hosts choose datasets, configs, cached embeddings, checkpoints, and supplied KB rows, while embedding generation and supervised training automatically derive base embeddings, encoder weights, query-head weights, and attention-accessible KB tensors from those inputs
+
+**Curation operations:** `promote` — the review describes a model-training promotion path where authored or generated KB rows become base embeddings, learned key/value projections, and then attention-accessible model-conditioning state
+
+## Read-back placement
+
+**Direction.** KBLaM is push from the receiving model's perspective. `KBLaMProcessor` turns a supplied knowledge base into `kb_kvs`, and the modified Llama/Phi generation path consumes those tensors without the model or an agent calling a retrieval tool. Because this repository is a research package, the review treats that as an API capability: the host or evaluation script decides which KB tensors to provide.
+
+**Read-back signal:** `coarse` `inferred / embedding` — the default path exposes caller-supplied KB tensors coarsely, while Llama `dynamic_sparsify` uses query-head vector scoring against KB keys for instance-targeted embedding selection.
+
+**Faithfulness tested:** `no` — the review found benchmark and attention-dump support but no with/without activation ablation showing a fired KB tensor changed a decision.
+
+**Targeting and signal.** There are two memory push shapes. The default path is `coarse`: a caller supplies a KB tensor batch or subset, and all supplied KB keys/values are exposed to KB-enabled layers. The Llama `dynamic_sparsify` path is `instance`-targeted when enabled: the current hidden states are projected through the separate query head, scored against KB keys by learned vector dot product, and pruned to `top_k_kb` before attention. The signal is therefore `inferred / embedding`. The Phi path at this commit concatenates supplied KB tensors and can use a separate query head for attention scoring, but it does not implement the same top-k pruning branch.
+
+**Injection point.** Read-back occurs during generation, before token choices are made, so supplied or pruned KB tensors can affect the immediate answer.
+
+**Selection, scope, and complexity.** Scope is mostly host-supplied: the caller chooses the KB rows or embeddings passed as `kb_kvs`. Inside Llama, `dynamic_sparsify`, `top_k_kb`, `kb_layer_frequency`, `sep_query_head`, and `kb_scale_factor` control which KB tensors are exposed at each KB-enabled layer and how their attention scores are scaled. Actual precision, recall, and context dilution are not verified from code.
+
+**Authority at consumption.** The KB tensors have direct model-conditioning authority through attention-side keys and values. They are not human-readable prompt context at consumption time, and the receiving model cannot inspect their source rows unless the host separately preserves that mapping.
+
+**Faithfulness.** The repository evaluates answer accuracy, refusal, precision, recall, ROUGE, BERTScore, and can dump attention weights, but I did not find a WITH/WITHOUT activation ablation proving that a particular fired KB tensor changed a decision. The `push-activation` tag rests on the implemented attention-side activation mechanism, not on measured downstream faithfulness.
+
+**Other consumers.** Researchers consume datasets, checkpoints, metrics, and attention dumps. Those artifacts are evaluation evidence; the inspected code does not feed them back into a durable memory selector or governance loop.
 
 ## Curiosity Pass
 

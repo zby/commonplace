@@ -1,6 +1,7 @@
 ---
 description: "Signet AI review: local-first cross-harness memory daemon with SQLite recall, transcript distillation, graph context, and hook-based push activation"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived, push-activation]
 status: current
 last-checked: "2026-06-02"
@@ -80,8 +81,13 @@ Commonplace is stronger as a durable argument and method library. Signet's behav
 
 **Do not borrow database opacity for durable methodology claims.** Signet's live utility depends on SQLite rows, vectors, and feedback loops. Commonplace should keep durable claims and instructions as inspectable markdown, using a database only as an operational index or staging layer.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `consolidate` `dedup` `evolve` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 **Trace source:** `session-logs` `event-streams` — prompt-submit events, live/canonical session transcripts, session-end transcripts, compaction summaries, and injected-memory feedback are the qualifying trace signals.
 
 **Learning scope:** `per-task` `per-project` `cross-task` — trace state is scoped by session as well as workspace, project, agent, harness, and memory visibility group, then reused across future recall and hook paths.
@@ -104,15 +110,13 @@ Commonplace is stronger as a durable argument and method library. Signet's behav
 
 **Read-back signal:** `coarse` `identifier` `inferred / lexical` `inferred / embedding` — session-start does coarse bounded memory loading, while prompt-submit resolves entity names and aliases as identifiers and scores prompt residue through embedding or lexical fallback.
 
-**Read-back timing:** `pre-action` `post-action` — session-start and prompt-submit inject before model action; compaction and continuity-feedback paths run after prior work and can only affect later actions.
-
 **Faithfulness tested:** `no` — continuity scoring audits relevance of injected memories, but the review does not report a with/without ablation proving that injected context changes downstream behavior.
 
 **Direction.** Signet is both pull and push. Pull is explicit `signet recall`, `/recall`, MCP/API recall, dashboard inspection, session search, and source expansion. Push is session-start injection and entity-gated user-prompt-submit injection from the receiving agent's perspective. Shipped system prompts, plugin prompt contributions, secret listings, and command affordance text are baseline context surfaces; the read-back verdict rests on retained identity/user/working-memory files, SQLite memory rows, session recovery context, inherited session context, and entity attributes.
 
 **Targeting and signal.** Signet has mixed push targeting. Session-start is mostly `coarse`: a lifecycle hook always attempts bounded memory loading, scoring recent/project-matching memories by effective score, pinned state, recency, and configured budgets, with additional project/session-key scoped recovery and traversal blocks. Prompt-submit is `instance`: it first resolves known entity names and aliases carried by the current prompt, so that narrowing is `identifier`, then computes the non-entity prompt residue and selects entity attributes by `inferred / embedding` when embeddings are available, falling back to `inferred / lexical` scoring. Precision/recall, prompt dilution, and actual model uptake are not verified from code (https://github.com/Signet-AI/signetai/blob/b7f5176bc4280baceace933d2442d4b04796b336/platform/daemon/src/hooks.ts).
 
-**Timing relative to action.** Session-start injects before the new session begins. Prompt-submit runs before each user turn is handed to the model. Pre-compaction and compaction-complete run around summarization and can only affect later actions, not the action already taken.
+**Injection point.** Session-start injects before the new session begins. Prompt-submit runs before each user turn is handed to the model. Pre-compaction and compaction-complete run around summarization and can only affect later actions, not the action already taken.
 
 **Selection, scope, and complexity.** Prompt-submit has a tight default injection budget and min score; full recall has broader FTS/vector/hint/graph/traversal/reranking channels, limit normalization, authorization, dedupe, and optional aggregate synthesis. This reduces prompt dilution compared with unconditional always-load, but effective precision/recall is not verified from code.
 

@@ -1,6 +1,7 @@
 ---
 description: "Mem0 review: long-term memory SDK/server with trace fact extraction, hybrid vector/entity retrieval, agent hooks, and proxy prompt injection"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived, push-activation]
 status: current
 last-checked: "2026-06-02"
@@ -84,8 +85,13 @@ The largest design difference is where authority lives. In Mem0, a memory record
 
 **Borrow fast agent onboarding only at the integration edge.** The agent signup, plugin installer, and setup banners are adoption affordances. Commonplace can learn from this for tooling ergonomics, but should avoid turning setup convenience into hidden dependency on a hosted memory service.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `dedup` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 **Trace source:** `session-logs` `tool-traces` `event-streams` — core messages, transcript JSONL windows, compact-summary entries, and OpenClaw successful-turn messages feed the memory pipeline.
 
 **Learning scope:** `per-task` `per-project` `cross-task` — retained memory is scoped by user, agent, run/session, project/app id, branch, source, and metadata filters, while plugin and OpenClaw flows carry session and project-level learnings across later tasks.
@@ -110,13 +116,11 @@ The largest design difference is where authority lives. In Mem0, a memory record
 
 **Read-back signal:** `identifier` `inferred / lexical` `inferred / embedding` — push paths narrow by user/session/app/run/source identifiers and select memories from prompt or resume context through embedding search, BM25/keyword scoring, and entity boosts.
 
-**Read-back timing:** `pre-action` `post-action` — proxy, OpenClaw, and resume recall inject before the receiving response, while auto-capture and compact-summary capture run after turns or on later compact/start boundaries.
-
 **Faithfulness tested:** `no` — the review found structural tests and benchmark quality checks, but no with/without hook ablation proving injected memories reliably change agent behavior.
 
 **Targeting and signal.** The memory push paths are instance-targeted. The proxy triggers on chat completion calls whose last message is from the user and uses the last six messages as the search query, so its final selector is `inferred / embedding` with `inferred / lexical` BM25 and entity boosts inside core search, narrowed by identifier filters such as `user_id`, `agent_id`, and `run_id`. OpenClaw triggers on `before_prompt_build`, skips non-interactive/system prompts, sanitizes the current prompt, searches long-term and optionally session memory, applies thresholds, top-k, category priority, token budgets, and subagent namespace rules, then injects `prependContext`; this is also instance targeting with inferred content relevance after identifier narrowing by user/session/source. `mem0-plugin` uses `UserPromptSubmit` resume detection as an `identifier` signal for the resume action, then searches fixed content queries with identifier metadata filters (`user_id`, `app_id`, `metadata.type`) before injecting recovered session context. Ordinary prompts get a search rubric rather than pre-fetched memories.
 
-**Timing relative to action.** Proxy and OpenClaw recall happen before the model/agent response, so recalled memories can change the next action. Auto-capture, compact-summary capture, and OpenClaw agent-end capture happen after a turn or on the next compact/start boundary, so they affect later turns.
+**Injection point.** Proxy and OpenClaw recall happen before the model/agent response, so recalled memories can change the next action. Auto-capture, compact-summary capture, and OpenClaw agent-end capture happen after a turn or on the next compact/start boundary, so they affect later turns.
 
 **Selection, scope, and complexity.** Selection is controlled by entity/user/run filters, project/app ids, thresholds, top-k, dynamic top-score filtering, category priority, token budget, max memory count, identity/config always-include policy, broad cold-start searches, and optional session search. Complexity is moderate: injected context is formatted memory prose plus categories/importance, not a whole graph, but plugin banners and search rubrics can mix operational instructions with recalled facts.
 

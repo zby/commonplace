@@ -1,6 +1,7 @@
 ---
 description: "Voyager review: embodied Minecraft agent that turns critic-approved rollouts into retrievable executable JavaScript skills"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived, push-activation]
 status: current
 last-checked: "2026-06-02"
@@ -84,8 +85,13 @@ The main design contrast is authority. Voyager's raw traces, QA answers, chest m
 
 **Treat retrieval indexes as rebuildable views.** Ready now. Voyager's Chroma count assertions show the cost of index/source drift. Commonplace should keep embeddings or search sidecars rebuildable from canonical files rather than letting them become source-of-truth memory.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `consolidate` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 - **Trace source:** `event-streams` `trajectories` — embodied rollout event records and task-attempt trajectories carry observations, chat, errors, inventory/status changes, nearby world state, generated code, execution, and critic judgment
 - **Learning scope:** `per-task` `cross-task` — each successful task can promote a skill, and the resulting skill library is reused across later tasks or transferred through `skill_library_dir`
 - **Learning timing:** `online` — during `learn()`, successful rollouts update skill and curriculum memory before future tasks
@@ -107,13 +113,11 @@ The main design contrast is authority. Voyager's raw traces, QA answers, chest m
 
 **Read-back signal:** `coarse` `inferred / embedding` — Chroma selects skills by embedding similarity over current task/chat context, while the full active skill set is also made coarsely available to Mineflayer execution.
 
-**Read-back timing:** `pre-action` — retrieval runs before the next action-agent LLM call and before Mineflayer executes the submitted program.
-
 **Faithfulness tested:** `no` — the review found injection and execution wiring, but no with/without-skill ablation or replay test in the inspected codebase.
 
 **Targeting and signal.** The action-prompt push is `instance`-targeted. Skill retrieval fires at task reset using the current task context and again after each step using context plus summarized chat-log needs; `SkillManager.retrieve_skills(...)` runs Chroma similarity over generated skill descriptions and returns the matching skill code, bounded by `retrieval_top_k`. The signal is `inferred / embedding`, because relevance is derived from the current task/chat content rather than from an assigned task or skill identifier. Separately, each Mineflayer `/step` receives `self.skill_manager.programs`, which makes the full active skill set available to execution; that execution-side availability is `coarse` rather than instance-selected.
 
-**Timing relative to action.** Retrieval happens before the next action-agent LLM call and before Mineflayer execution, so selected skills can change both the generated plan and the callable program set.
+**Injection point.** Retrieval happens before the next action-agent LLM call and before Mineflayer execution, so selected skills can change both the generated plan and the callable program set.
 
 **Selection, scope, and complexity.** Selection is top-k over skill descriptions, defaulting to five. Scope is the loaded checkpoint or `skill_library_dir`. Complexity is higher than ordinary text snippets because each selected item is a full executable function that can call other primitives and can be reused by generated code. The code grounds the selection mechanism; precision, recall, and prompt dilution are not verified by this review.
 

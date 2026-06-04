@@ -1,6 +1,7 @@
 ---
 description: "DocMason review: repo-native local document KB with provenance, deterministic retrieval/trace, interaction-memory promotion, and governed ask activation"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived, push-activation]
 status: current
 last-checked: "2026-06-01"
@@ -86,8 +87,13 @@ DocMason's context strategy is also more engineered than ordinary markdown-vault
 
 **Do not borrow private-runtime state into the library layer by default.** DocMason's local `runtime/` is useful precisely because it is not the public corpus. Commonplace should preserve a workshop/runtime boundary for traces, logs, and interaction capture instead of letting them silently become notes.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `synthesize` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 **Trace source:** `session-logs` `tool-traces` `event-streams` — Host-agent session starts/ends, user prompts, selected tool uses, stop events, and reconciled native threads are mirrored into interaction entries.
 
 **Learning scope:** `per-project` `cross-task` — Interaction memory is workspace-local and conversation-grouped, then participates in later retrieval and trace across future asks in the same project corpus.
@@ -112,13 +118,11 @@ DocMason's context strategy is also more engineered than ordinary markdown-vault
 
 **Read-back signal:** `inferred / lexical` — Warm-start answer evidence and pending interaction relevance key on token overlap and lexical question/memory profiles, with policy gates for corpus signature, question domain, memory kind, answer use, durability, and source scope.
 
-**Read-back timing:** `pre-action` — Canonical ask pushes retained warm-start and interaction-memory surfaces before answer drafting or routing hands the turn to an evidence workflow.
-
 **Faithfulness tested:** `no` — The review found trace/admissibility checks and evaluation support, but no production with/without read-back ablation proving fired memory changed a future answer.
 
 **Targeting and signal.** Push activation is engineered and instance-targeted rather than always-load only. The final memory relevance signal is `inferred / lexical`: `question_execution_profile` normalizes question class/domain, evidence requirements, source-scope intent, and a `memory_query_profile`, then computes warm-start evidence by token overlap against similar historical answer questions under corpus-signature and question-domain constraints (https://github.com/JetXu-LLM/DocMason/blob/f84935b2b7e1e59e64d8ba78066c35d5f55c8559/src/docmason/front_controller.py, https://github.com/JetXu-LLM/DocMason/blob/f84935b2b7e1e59e64d8ba78066c35d5f55c8559/src/docmason/routing.py). Pending interaction activation also keys on lexical overlap, then gates or adjusts the result with memory-kind, answer-use, durability, memory-query profile, source scope, and question-domain policy before it blocks, warns, or participates in retrieval (https://github.com/JetXu-LLM/DocMason/blob/f84935b2b7e1e59e64d8ba78066c35d5f55c8559/src/docmason/interaction.py, https://github.com/JetXu-LLM/DocMason/blob/f84935b2b7e1e59e64d8ba78066c35d5f55c8559/src/docmason/retrieval.py).
 
-**Timing relative to action.** Canonical ask runs before the answer workflow and can route to sync, wait for shared jobs, block, warn, or hand the turn to grounded-answer/composition/retrieval/provenance workflows (https://github.com/JetXu-LLM/DocMason/blob/f84935b2b7e1e59e64d8ba78066c35d5f55c8559/skills/canonical/ask/SKILL.md). Retrieval and trace happen during the evidence loop, and finalization happens after the answer draft to check support and admissibility.
+**Injection point.** Canonical ask runs before the answer workflow and can route to sync, wait for shared jobs, block, warn, or hand the turn to grounded-answer/composition/retrieval/provenance workflows (https://github.com/JetXu-LLM/DocMason/blob/f84935b2b7e1e59e64d8ba78066c35d5f55c8559/skills/canonical/ask/SKILL.md). Retrieval and trace happen during the evidence loop, and finalization happens after the answer draft to check support and admissibility.
 
 **Selection, scope, and complexity.** Selection is bounded by top-k retrieval, graph hops, document/source filters, compact projections, source-scope policy, evidence-channel preferences, and question-class/domain routing (https://github.com/JetXu-LLM/DocMason/blob/f84935b2b7e1e59e64d8ba78066c35d5f55c8559/src/docmason/cli.py, https://github.com/JetXu-LLM/DocMason/blob/f84935b2b7e1e59e64d8ba78066c35d5f55c8559/src/docmason/retrieval.py). Interaction memory has additional policy gates through `memory_score_adjustment` and pending-interaction relevance, so contextual-only or ephemeral memories do not automatically dominate ordinary answers.
 

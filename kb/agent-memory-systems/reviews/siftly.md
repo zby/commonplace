@@ -1,6 +1,7 @@
 ---
 description: "Siftly review: local X bookmark knowledge base with SQLite storage, AI enrichment, FTS5 search, Claude reranking, and Obsidian export"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 status: current
 last-checked: "2026-06-02"
 ---
@@ -84,6 +85,12 @@ Siftly is stronger as an ergonomic capture and enrichment front end. It has impo
 **Keep personal capture separate from governed authority.** Siftly is useful precisely because import and enrichment are low-friction. Commonplace can borrow the capture ergonomics, but promotion into instructions, validators, or durable claims still needs review and validation.
 
 **Candidate caps are a useful but incomplete budget.** Siftly's fixed top-150 candidate cap and field truncation are practical. Commonplace can borrow the simplicity for early search layers, while adding tokenizer-aware budgets where generated context is fed directly to agents.
+
+## Write-side placement
+
+**Write agency:** `automatic` `manual` — the review describes system-driven generation, extraction, consolidation, or update of retained artifacts rather than only manual authoring.
+
+**Curation operations:** `dedup` `evolve` `synthesize` `invalidate` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
 
 ## Curiosity Pass
 

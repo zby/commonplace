@@ -1,6 +1,7 @@
 ---
 description: "Operational Ontology Framework review: public templates and artifact vocabulary for D+L+A governance, not an implemented runner or extractor"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 status: current
 last-checked: "2026-06-02"
 ---
@@ -76,6 +77,12 @@ The second divergence is reviewability versus commercial redaction. Commonplace 
 **Anti-pattern catalogue for adoption reviews.** Ready as a checklist. "Retrieval as memory" and "prompt as architecture" are concise failure labels that map cleanly onto Commonplace's distinction between stored knowledge and contextual activation.
 
 **Do not borrow template-only claims as evidence of implementation.** Ready as a review discipline. The repo is a good reminder that artifact destinations and write-back vocabulary are not enough to claim trace-derived learning, push activation, validation, or runtime governance.
+
+## Write-side placement
+
+**Write agency:** `automatic` `manual` — the review describes system-driven generation, extraction, consolidation, or update of retained artifacts rather than only manual authoring.
+
+**Curation operations:** `synthesize` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
 
 ## Curiosity Pass
 

@@ -1,6 +1,7 @@
 ---
 description: "ARIS review: Markdown research-skill harness with Research Wiki, cross-model review gates, traces, run state, queues, hooks, and meta-optimization"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived, push-activation]
 status: current
 last-checked: "2026-06-01"
@@ -83,7 +84,13 @@ ARIS also pushes harder on cross-model governance. Commonplace has semantic revi
 
 **Read-back:** `both` — Agents deliberately invoke skills and read files, while generated query packs, recovery hooks, readiness hooks, monitors, queues, and run-state resume paths can proactively surface retained project state before the next action
 
-## Trace-derived learning placement
+## Write-side placement
+
+**Write agency:** `manual` `automatic` — agents and humans author wiki pages, notes, skills, claims, and pending patches through skill workflows, while helper scripts, hooks, queues, run-state files, query-pack rebuilds, reviewer-state updates, and meta-optimization paths mutate retained project or harness state.
+
+**Curation operations:** `consolidate` `synthesize` `promote` — `research_wiki.py` and workflow skills consolidate project records into query packs, result-to-claim and meta-optimization synthesize traces into claims/statuses or pending diffs, and reviewer verdicts, accepted phase ids, claim updates, and gated meta-apply paths promote selected records into stronger steering or system-definition roles.
+
+### Trace-derived learning
 
 **Trace source:** `session-logs` `event-streams` — Reviewer/session traces, Claude Code hook events, run state, queue state, and project/session status are the retained raw signals described here.
 
@@ -109,13 +116,11 @@ ARIS also pushes harder on cross-model governance. Commonplace has semantic revi
 
 **Read-back signal:** `coarse` `identifier` — Workflow hooks and reminders can fire coarsely, while the payload is selected by project paths, status fields, run ids, phase names, queue-state paths, and session ids.
 
-**Read-back timing:** `pre-action` `post-action` — Query packs, restore, context refresh, and pre-compact reminders can shape the next action; SessionEnd, post-edit, queue, and readiness surfaces update or expose retained state after actions for later use.
-
 **Faithfulness tested:** `no` — The review states that ARIS records traces and verdict ids but does not generally run WITH/WITHOUT ablations proving fired query packs or hooks changed agent behavior.
 
 **Targeting and signal.** Targeting is instance-oriented where a workflow has already emitted a durable identifier: the `research-wiki/` directory and `query_pack.md` path select the active project wiki for `/idea-creator`; Pipeline Status, `REVIEW_STATE.json`, run ids, queue-state paths, and Claude session ids select the current project or run. The signal is `identifier`: path, event, project root, status field, run id, phase name, or session registry status. Some hook reminders are coarser, such as first tool call, every thirtieth tool call, pre-compaction, post-edit, or SessionEnd, but their payload is still drawn from retained project/status artifacts when present. ARIS does not use lexical, embedding, or LLM-judgment retrieval for these push paths; actual precision, recall, and context dilution are not verified from code.
 
-**Timing relative to action.** Query-pack read-back happens before idea generation. Session restore and context refresh happen before tool use, so they can change the next action. Pre-compact reminders fire before context compression. Meta-readiness fires at session end, suggesting a later maintenance action. Queue polling changes job execution while the agent is absent, but its state is later read by the agent or user as operational context.
+**Injection point.** Query-pack read-back assembles before idea generation. Session restore and context refresh happen before tool use, so they can change the next action. Pre-compact reminders fire before context compression. Meta-readiness at session end and queue polling are write-side or operational maintenance surfaces whose retained state is later read by the agent or user as context.
 
 **Selection, scope, and complexity.** The query pack has an 8000-character cap and selects short fields from project direction, gaps, failed ideas, papers, and recent graph edges. Recovery hooks select compact Pipeline Status and pointers rather than full project history. ARIS-Monitor intentionally avoids full transcript content, using registry status and a tail window. The selection policies are code-grounded; actual precision and context dilution are runtime properties not verified here.
 

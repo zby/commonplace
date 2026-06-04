@@ -1,6 +1,7 @@
 ---
 description: "GBrain review: Postgres/PGLite brain with hybrid search, graph/schema packs, hot facts, MCP push metadata, and SkillOpt loops"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived, push-activation]
 status: current
 last-checked: "2026-06-01"
@@ -86,8 +87,13 @@ The main tradeoff is authority speed. GBrain quickly turns runtime traces into m
 
 **Do not borrow opaque promotion by default.** GBrain's speed comes from letting LLM extraction and runtime hooks create behavior-shaping state. Commonplace should keep durable system-definition artifacts in reviewable markdown with explicit citations, even if it later adds hotter runtime caches.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `consolidate` `dedup` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 **Trace source:** `session-logs` `tool-traces` `event-streams` `trajectories` — conversation turns, transcripts, page-write/import/sync/file-upload events, eval capture, and SkillOpt rollout/tool-call trajectories
 
 **Learning scope:** `per-task` `per-project` `cross-task` — session and benchmark-scoped capture, source/workspace-scoped facts and context, and personal/company brain memory reused across tasks
@@ -112,13 +118,11 @@ The main tradeoff is authority speed. GBrain quickly turns runtime traces into m
 
 **Read-back signal:** `coarse` `identifier` — MCP hot-memory push uses source/session/visibility identifiers when present and a coarse recent-source fallback; OpenClaw context uses coarse per-assembly injection with deterministic file/path and time-window selectors
 
-**Read-back timing:** `pre-action` `post-action` — `_meta.brain_hot_memory` is returned after a tool operation but before the next agent step, while OpenClaw context is assembled before the model acts
-
 **Faithfulness tested:** `no` — the review found structural injection and eval surfaces, but no ablation proving pushed facts change downstream behavior
 
 **Targeting and signal.** The MCP dispatcher calls a meta hook after successful tool operations; the hook skips hot-memory operations themselves, selects session-scoped facts when a `source_session` identifier is present, falls back to recent facts from the last 24 hours for the source, sorts by decayed confidence, caps at top-k, and caches per source/session/visibility hash for 30 seconds (https://github.com/garrytan/gbrain/blob/eefe8b5741c27e59bf65198d46e3dfe5bfa70ce9/src/mcp/dispatch.ts, https://github.com/garrytan/gbrain/blob/eefe8b5741c27e59bf65198d46e3dfe5bfa70ce9/src/core/facts/meta-hook.ts). Its best case is `instance` targeting with an `identifier` signal: source ID, session ID, and visibility/allow-list scope. Its no-session fallback is `coarse`: recent source-level facts on any successful non-memory tool response, not semantic relevance to the current task. The OpenClaw context engine runs on every `assemble()` call and injects live time, location, calendar, travel, and task context from workspace files, with sanitization and caps (https://github.com/garrytan/gbrain/blob/eefe8b5741c27e59bf65198d46e3dfe5bfa70ce9/src/openclaw-context-engine.ts, https://github.com/garrytan/gbrain/blob/eefe8b5741c27e59bf65198d46e3dfe5bfa70ce9/src/core/context-engine.ts). That path is `coarse` per-assemble push with deterministic file/path and time-window selectors; the optional OpenClaw SDK memory addition is host-dependent API surface, not fully settled by this repository's code. This is enough for `push-activation`: GBrain has before-action engineered read-back hooks with scope, freshness, and budget controls, not just a static resolver or manual search.
 
-**Timing relative to action.** `_meta.brain_hot_memory` arrives with a tool response before the next agent step that can read metadata. The OpenClaw context block arrives during prompt assembly before the model acts. Facts extraction and dream consolidation happen after source events and affect later actions.
+**Injection point.** `_meta.brain_hot_memory` arrives with a tool response before the next agent step that can read metadata. The OpenClaw context block arrives during prompt assembly before the model acts. Facts extraction and dream consolidation happen after source events and affect later actions.
 
 **Selection, scope, and complexity.** Hot-memory push is bounded by source ID, session ID when available, visibility, top-k, TTL, notability/confidence fields, and active-only facts. OpenClaw live context is bounded by file paths, event windows, task caps, size guards, string sanitization, and stale-calendar warnings. Pull search has richer inferred relevance gating through hybrid retrieval and token budgets, but those results are not unsolicited.
 

@@ -1,6 +1,7 @@
 ---
 description: "Napkin review: local-first Markdown/Obsidian vault memory with NAPKIN.md, TF-IDF overview, BM25 search/read, templates, and pull-only CLI/SDK read-back"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 status: current
 last-checked: "2026-06-02"
 ---
@@ -86,6 +87,12 @@ Napkin's read path also keeps activation deliberately manual. The system can mak
 **Cache lexical search state with inspectable invalidation metadata.** Napkin's path/mtime fingerprint and JSON cache are simple enough to debug. Commonplace could use similarly transparent caches if expensive indexes are introduced. Needs a concrete performance bottleneck first.
 
 **Do not borrow ungoverned note authority.** Napkin intentionally lets any note be retrieved as context. Commonplace should preserve a stronger distinction between ordinary knowledge artifacts and instructions/validators with system-definition authority.
+
+## Write-side placement
+
+**Write agency:** `automatic` `manual` — the review describes system-driven generation, extraction, consolidation, or update of retained artifacts rather than only manual authoring.
+
+**Curation operations:** `dedup` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
 
 ## Curiosity Pass
 

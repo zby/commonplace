@@ -1,6 +1,7 @@
 ---
 description: "claude-obsidian review: Obsidian/Claude Code wiki skills with hot-cache push, pull-first retrieval, locks, modes, and optional BM25/rerank indexes"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 status: current
 last-checked: "2026-06-03"
 tags: [trace-derived, push-activation]
@@ -86,8 +87,13 @@ claude-obsidian's optional retrieval stack is more ambitious than Commonplace's 
 
 **Do not borrow implicit authority for ordinary notes.** claude-obsidian can make any wiki page behavior-shaping if a skill reads it. Commonplace should preserve stronger distinctions between knowledge artifacts, instructions, validators, and review gates.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `consolidate` `dedup` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 - **Trace source:** `session-logs` — `/save` uses the current conversation, and `wiki-fold` uses `wiki/log.md` entries rather than raw Claude Code tool transcripts
 - **Learning scope:** `per-project` `cross-task` — Distilled notes and folds are vault-local project/personal memory that can affect later sessions and tasks
 - **Learning timing:** `online` `offline` `staged` — `/save` can run during or after a conversation, while `wiki-fold` is invoked over a selected log range and is dry-run by default
@@ -107,13 +113,11 @@ claude-obsidian's optional retrieval stack is more ambitious than Commonplace's 
 
 **Read-back signal:** `coarse` — The push side loads `wiki/hot.md` for a vault/session and is not instance-targeted to the current user request.
 
-**Read-back timing:** `pre-action` — Session-start and post-compaction hot-cache read-back arrive before the receiving session or resumed context takes subsequent actions.
-
 **Faithfulness tested:** `no` — The review found no implemented ablation or faithfulness test proving that hot-cache injection or retrieval candidates change final agent behavior.
 
 **Targeting and signal.** The push side is `coarse`: if a session is in a vault with `wiki/hot.md`, the hook loads the recent-context cache. It is not instance-targeted to the current user request. The pull side can be instance-relevant because the agent's query text drives hot/index/page selection or optional BM25/rerank retrieval. That pull signal is inferred lexical/semantic relevance, not symbolic push.
 
-**Timing relative to action.** Hot-cache read-back happens before the agent's session or resumed context acts. PostCompact re-loads after context compaction but before subsequent actions. Save/fold updates happen after a conversation or log range and can only influence future sessions.
+**Injection point.** Hot-cache read-back happens before the agent's session or resumed context acts. PostCompact re-loads after context compaction but before subsequent actions. Save/fold updates happen after a conversation or log range and can only influence future sessions.
 
 **Selection, scope, and complexity.** Hot cache is deliberately small, about 500 words by convention. Query modes bound deeper reads by quick/standard/deep workflows. Optional retrieval uses chunking, BM25 top-k candidates, dedupe by page address, and optional cosine rerank. The strongest context-efficiency risk is derived-index staleness: if the chunk/BM25/embed state is not rebuilt after wiki changes, selection can lag the source.
 

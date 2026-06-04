@@ -1,6 +1,7 @@
 ---
 description: "Reflexion review: benchmark agents that turn failed trajectories and test feedback into verbal self-reflections pushed into later attempts"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived, push-activation]
 status: current
 last-checked: "2026-06-02"
@@ -81,8 +82,13 @@ Reflexion also shows why "memory" and "learning" do not require a database. The 
 
 **Push lessons before repeated mistakes.** Worth borrowing carefully. Reflexion's main advantage is pre-action placement. Commonplace should borrow the timing, but not unconditional authority: pushed memories need scope, provenance, expiry, and evidence that they improve behavior.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `consolidate` `dedup` `synthesize` `invalidate` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 **Trace source:** `session-logs` `tool-traces` `trajectories` — scratchpads, action-observation trial logs, implementations, test feedback, and failed benchmark trajectories supply the raw signal
 
 **Learning scope:** `per-task` — reflections are scoped to the same question, environment, or programming item rather than a project or cross-task library
@@ -107,13 +113,11 @@ Reflexion also shows why "memory" and "learning" do not require a database. The 
 
 **Read-back signal:** `identifier` — the harness reuses the same question, environment config slot, programming item, or implementation chain when assembling the next prompt.
 
-**Read-back timing:** `pre-action` — pushed reflections are inserted before the next action loop or implementation generation.
-
 **Faithfulness tested:** `yes` — benchmark comparisons provide aggregate effect evidence for pushed reflections, though per-memory attribution remains unverified from code.
 
 **Targeting and signal.** Targeting is `instance`: the pushed memory is selected for the same HotPotQA question, AlfWorld/WebShop environment config, programming item, or implementation chain, not by an always-load or generic action-type event. The signal is `identifier`: the harness already carries the question, environment index/config slot, dataset item, or current implementation state and reuses that identity when assembling the next prompt. AlfWorld/WebShop additionally cap memory to the latest three entries before prompt construction. Precision/recall of the generated reflection content is not verified from code.
 
-**Timing relative to action.** Read-back occurs before the next action loop or implementation generation, so it can change the next attempt. Reflection generation happens after the failed attempt, so it cannot repair the just-finished run.
+**Injection point.** Read-back occurs before the next action loop or implementation generation, so it can change the next attempt. Reflection generation happens after the failed attempt, so it cannot repair the just-finished run.
 
 **Selection, scope, and complexity.** Selection is small and task-local. HotPotQA includes accumulated reflection strings or the last attempt depending on strategy; AlfWorld/WebShop include at most three memory entries; programming includes the previous implementation, feedback, and one current self-reflection for the next code generation. Complexity stays low because memories are prose plans rather than multi-document retrieval bundles; actual context dilution is not verified from code.
 

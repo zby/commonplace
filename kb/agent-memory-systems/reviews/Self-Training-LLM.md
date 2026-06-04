@@ -1,6 +1,7 @@
 ---
 description: "Review of Self-Training-LLM: offline Wikipedia QA self-training that promotes generated answer traces into SFT/DPO checkpoints"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived]
 status: current
 last-checked: "2026-06-02"
@@ -70,8 +71,6 @@ The strongest alignment is the trace-derived split. Both systems distinguish raw
 
 **Read-back signal:** `coarse` — loaded checkpoint behavior is always active once selected, without per-instance memory retrieval.
 
-**Read-back timing:** `pre-action` — checkpoint selection happens before answer generation and can change the next answer.
-
 **Faithfulness tested:** `yes` — pairwise evaluation compares post-training checkpoint responses against baseline responses, though it does not preserve item-level attribution from a response back to the training trace.
 
 ### Borrowable Ideas
@@ -86,7 +85,13 @@ The strongest alignment is the trace-derived split. Both systems distinguish raw
 
 **Use pairwise evaluation for artifact variants.** The baseline-vs-post-training comparison shape could transfer to generated instructions or review rewrites: compare old/new outputs on fixed tasks before adoption. Needs a benchmark set and a calibrated judge, otherwise it becomes another ungrounded LLM vote.
 
-## Trace-derived learning placement
+## Write-side placement
+
+**Write agency:** `automatic` — generation, scoring, filtering, DPO/SFT conversion, and training scripts turn selected answer traces into saved checkpoints without manual authoring of each retained behavior.
+
+**Curation operations:** `promote` — uncertainty scores, filters, preference construction, and trainer selection promote generated traces into SFT/DPO datasets and then into distributed-parametric checkpoint state.
+
+### Trace-derived learning
 
 **Trace source:** `trajectories` — generated QA examples, sampled answers, scored training rows, response JSONL, and pairwise judge outputs are the retained generation/evaluation trajectories.
 

@@ -1,6 +1,7 @@
 ---
 description: "Synapptic review: Claude Code transcript learning into user archetypes, multi-assistant memory writes, relay visibility, and guard faithfulness benchmarks"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 status: current
 last-checked: "2026-06-02"
 tags: [trace-derived, push-activation]
@@ -90,8 +91,13 @@ The tradeoff is provenance and artifact discipline. Synapptic keeps source sessi
 
 **Use native host memory files for adoption.** Synapptic writes into the files assistants already load. Commonplace should continue favoring plain files and documented host conventions over hidden service state. Ready now as an adoption criterion.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `consolidate` `dedup` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 **Trace source:** `session-logs` `tool-traces` — Claude Code session JSONL files supply user/assistant messages plus tool-use and tool-result records
 
 **Learning scope:** `per-project` `cross-task` — project profiles stay local, while global dimensions and promoted mixed dimensions follow the user across projects and sessions
@@ -114,13 +120,11 @@ The tradeoff is provenance and artifact discipline. Synapptic keeps source sessi
 
 **Read-back signal:** `identifier` — project slug/path, configured output target, and target model family decide which retained archetype reaches the future assistant
 
-**Read-back timing:** `pre-action` — host memory and instruction files are loaded before the future assistant session or request acts
-
 **Faithfulness tested:** `yes` — the guard benchmark compares WITH and WITHOUT conditions and records verdicts that can filter later output
 
 **Targeting and signal.** Targeting is `instance` at project/session scope: Synapptic resolves a Claude Code project directory into a project slug and project root, combines global memory with that project's archetype, and writes the result to the configured assistant target for that project. The signal is `identifier`: project slug/path and configured output target/model family decide which retained archetype reaches the future assistant. Host loading then uses always-on memory or instruction conventions such as Claude Code memory references, Cursor always-apply rules, Copilot/Gemini/Codex-style instruction files, and similar target files. It does not infer relevance from the current user query.
 
-**Timing relative to action.** Read-back happens before the future assistant session or request acts, through startup or host instruction loading. Session-end extraction and synthesis run after a session, so they can only affect later sessions.
+**Injection point.** Read-back happens before the future assistant session or request acts, through startup or host instruction loading. Session-end extraction and synthesis run after a session, so they can only affect later sessions.
 
 **Selection, scope, and complexity.** Complexity is reduced by filtering raw transcripts before extraction and by synthesizing many observations into one archetype before read-back. At consumption time, however, the selected archetype is loaded as prose; there is no token-aware per-query selection. Claude Code output tries to keep the `user_archetype.md` reference within `MEMORY.md`'s early lines, which is a practical host-specific scope control.
 

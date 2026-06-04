@@ -1,6 +1,7 @@
 ---
 description: "Continuity review: local-first AI workspace with shared SQLite memory, MCP tools, prompt preloading, narrative synthesis, and plugin/org sync"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 status: current
 last-checked: "2026-06-03"
 tags: [trace-derived]
@@ -75,8 +76,6 @@ Continuity's context-efficiency model is simple and visible. The in-app assistan
 
 **Read-back signal:** `coarse` — the push path is a bounded prompt preload of recent memories and synthesized narrative, not instance-targeted retrieval.
 
-**Read-back timing:** `pre-action` — `buildSystemPrompt()` places retained memory ahead of each in-app chat response.
-
 **Faithfulness tested:** `no` — the review did not find a with/without or other faithfulness test for whether prompt-pushed memory changes behavior.
 
 ### Borrowable Ideas
@@ -93,8 +92,13 @@ Continuity's context-efficiency model is simple and visible. The in-app assistan
 
 **Do not borrow immediate promotion to prompt authority without gates.** Continuity's convenience comes from letting chat-derived memory affect future responses quickly. Commonplace should only borrow this for low-stakes personal preferences or workshop candidates, not for durable methodology or instructions.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `dedup` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 **Trace source:** `session-logs` — the retained learning signals are extracted from conversations with optional source thread/message ids, not from automatic transcript mining.
 
 **Learning scope:** `per-project` `cross-task` — learning records carry global or project scope, and the app-side synthesis currently defaults to the global narrative.

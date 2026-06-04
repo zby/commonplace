@@ -1,6 +1,7 @@
 ---
 description: "Origin review: local AI-work memory daemon with sourced captures, distilled wiki pages, hybrid retrieval, review gates, git-backed Markdown, and MCP/Claude Code read-back"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 status: current
 last-checked: "2026-06-03"
 tags: [trace-derived, push-activation]
@@ -91,8 +92,13 @@ The other divergence is authority timing. Commonplace promotes high-authority in
 
 **Do not borrow database opacity into the library layer.** Origin's DB makes sense for a daemon. Commonplace's methodology artifacts should remain file-native and reviewable; a DB would be useful only as an operational index, not as canonical knowledge.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `consolidate` `dedup` `evolve` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 - **Trace source:** `session-logs` — chat exports, conversation history, session summaries, and session/status files are the trace sources named in the review.
 - **Learning scope:** `per-project` `cross-task` — Origin scopes memory by project/space/session surfaces while carrying context across sessions and future work.
 - **Learning timing:** `online` `offline` `staged` — capture can happen during work, chat import is staged offline, and enrichment/distillation/handoff run asynchronously or at session boundaries.
@@ -112,13 +118,11 @@ The other divergence is authority timing. Commonplace promotes high-authority in
 
 **Read-back signal:** `identifier` `inferred / lexical` `inferred / embedding` — `context` narrows by space, type, source/page/entity/project identifiers while combining FTS, vector retrieval, optional reranking, and page-source overlap; `/brief` uses project identity for status before broader context.
 
-**Read-back timing:** `pre-action` — `/brief` is session-start context, and `context` is called at session start or topic shift before the next work move; capture, enrichment, import, page growth, and handoff affect later reads rather than the current action.
-
 **Faithfulness tested:** `no` — the review found routing/search/page tests and benchmarks, but no with/without ablation proving injected `/brief` or `context` memories change agent behavior.
 
 **Targeting and signal.** Targeting is `instance`. `context` receives a topic/conversation summary, max chunk count, and space, then combines typed tiers, corrections, memory search, and source-overlap-gated pages. The main signal is `inferred / embedding` plus lexical FTS and page-source overlap, narrowed by identifier filters such as space, memory type, source ids, page ids, entity/page targets, and project status file path. `/brief` also uses project identity as an `identifier` signal for the status file before loading broader context.
 
-**Timing relative to action.** `/brief` is explicitly session-start context and can change the next move. `context` can be called at session start or topic shift. `capture`, enrichment, import, page growth, and handoff happen during or after work and mostly affect later reads.
+**Injection point.** `/brief` is explicitly session-start context and can change the next move. `context` can be called at session start or topic shift. `capture`, enrichment, import, page growth, and handoff happen during or after work and mostly affect later reads.
 
 **Selection, scope, and complexity.** Selection is controlled by tool limits, memory type tiers, trust gates, space filters, relevance thresholds, top-k search, page overlap, stale-page/user-edit locks, and optional reranking/global prelude flags. Complexity is higher than a flat memory list because read-back can combine identity/preferences, decisions, corrections, atomic search results, compiled pages, and status-file text. Origin reduces volume through distillation and overlap gates, but the resulting context packet can still mix several authority levels.
 

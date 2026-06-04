@@ -1,6 +1,7 @@
 ---
 description: "xMemory review: trace-derived episodic and semantic memory with theme hierarchy, kNN structure, adaptive retrieval, and entropy-gated expansion"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived, push-activation]
 status: current
 last-checked: "2026-06-02"
@@ -78,8 +79,13 @@ The architectural lesson is not "use themes instead of notes." xMemory's themes 
 
 **Treat graph sidecars as operational indexes, not the knowledge base.** Ready now. A GEXF or kNN sidecar can improve navigation, but the durable library still needs inspectable files and source-grounded claims.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `consolidate` `dedup` `synthesize` `invalidate` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 - **Trace source:** `session-logs` — conversation messages with speaker roles, content, timestamps, annotations, and retained original-message lists
 - **Learning scope:** `per-task` — memory is scoped per user/conversation id rather than project-wide or global
 - **Learning timing:** `online` `staged` — episodes are written while messages are added or flushed, while semantic generation, theme updates, and hierarchy updates run in delayed stages
@@ -99,13 +105,11 @@ The architectural lesson is not "use themes instead of notes." xMemory's themes 
 
 **Read-back signal:** `inferred / embedding` — the engineered push path keys on the current question by embedding similarity over semantic memories, themes, and episode candidates before entropy/information-gain refinement
 
-**Read-back timing:** `pre-action` — the LoCoMo QA harness assembles retained memory into the prompt before answer generation
-
 **Faithfulness tested:** `no` — the review found benchmark answer evaluation and token statistics, not a general with/without-memory behavioral ablation or deployment-time faithfulness gate
 
 **Targeting and signal.** The push path is instance-targeted: it keys on the current question, not on an always-load or generic session-start event. The primary signal is `inferred / embedding`: `adaptive_hier` embeds the question, scores semantic memories and themes by cosine similarity, then builds episode candidates from source episodes plus vector hits. The selection is mixed because semantic/theme neighbor coverage and entropy/information-gain checks refine the final payload, but the first instance selector is content-derived embedding similarity rather than an assigned identifier ([evaluation/locomo/xMemory_search_framework.py](https://github.com/HU-xiaobai/xMemory/blob/375ae1495095aa14a39eb169f83737f4779391c6/evaluation/locomo/xMemory_search_framework.py)). The baseline explicit `search()` path also supports `inferred / lexical` BM25 and vector/hybrid ranking, but that is pull unless a host wraps it into pre-action prompt assembly.
 
-**Timing relative to action.** Read-back happens before answer generation in the evaluation loop, so it can change the response. Semantic generation and theme updates happen after prior conversations, so they affect later questions rather than the current trace.
+**Injection point.** Read-back happens before answer generation in the evaluation loop, so it can change the response. Semantic generation and theme updates happen after prior conversations, so they affect later questions rather than the current trace.
 
 **Selection, scope, and complexity.** The adaptive path has explicit caps such as semantic pool size, maximum themes, maximum semantic memories, episode vector candidates, probe count, and episode maximum. It reduces context complexity by showing theme and semantic summaries first, then expands only selected episodes and optionally original messages. Actual context dilution and retrieval precision are not verified from code.
 

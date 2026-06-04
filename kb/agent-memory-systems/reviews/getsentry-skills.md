@@ -1,6 +1,7 @@
 ---
 description: "getsentry/skills review: Sentry Claude Code marketplace of Markdown skills, subagents, settings allowlists, script helpers, and Warden skill scanning"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 status: current
 last-checked: "2026-06-01"
 ---
@@ -82,6 +83,12 @@ The closest Commonplace analogue is not the note library; it is `kb/instructions
 **Routed reference tables for context efficiency.** `skill-writer`'s "open when you need to..." tables are a good pattern for keeping runtime instructions small while preserving depth. Ready now for large Commonplace skills.
 
 **Do not borrow host activation as proof of read-back quality.** Description-based skill selection is useful, but the repo does not provide precision/recall evidence or an ablation showing that activated skills change outcomes. Commonplace should keep activation claims separate from effective behavioral authority.
+
+## Write-side placement
+
+**Write agency:** `automatic` `manual` — the review describes system-driven generation, extraction, consolidation, or update of retained artifacts rather than only manual authoring.
+
+**Curation operations:** `dedup` `synthesize` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
 
 ## Curiosity Pass
 

@@ -1,6 +1,7 @@
 ---
 description: "Decapod review: Rust local-first governance kernel with repo-native specs, capsules, SQLite stores, trace lessons, proof gates, and pull-first activation"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived]
 status: current
 last-checked: "2026-06-01"
@@ -84,8 +85,13 @@ Decapod's weaker point for Commonplace purposes is that many retained facts live
 
 **Do not borrow hidden DB-first memory as the primary durable layer.** SQLite/JSONL is good for runtime state and ledgers, but Commonplace's durable methodology claims should remain in typed Markdown unless they are generated indexes or machine-checkable evidence.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `consolidate` `dedup` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 **Trace source:** `tool-traces` `event-streams` — Task/todo event streams, worker-loop execution records, LCM tool-result originals, retrieval feedback events, proof/verification ledgers, and operator feedback records
 
 **Learning scope:** `per-task` `per-project` `cross-task` — Worker lessons are produced from task completion, stored in repo/store-scoped knowledge and federation substrates, and affect later work across tasks

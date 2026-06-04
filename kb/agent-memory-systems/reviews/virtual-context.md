@@ -1,6 +1,7 @@
 ---
 description: "Virtual Context review: proxy-owned context virtualization with trace-derived compaction, facts, tag summaries, paging tools, and engineered prompt injection"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 status: current
 last-checked: "2026-06-02"
 tags: [trace-derived, push-activation]
@@ -78,8 +79,13 @@ The tradeoff is governance. Virtual Context has rich operational lineage and reg
 
 **Do not borrow opaque summary authority.** Virtual Context must compress at runtime; Commonplace usually has time to cite, review, and validate. Trace-derived Commonplace artifacts should land as candidates with provenance, not as high-authority instructions just because a summarizer produced them.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `consolidate` `evolve` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 **Trace source:** `session-logs` `tool-traces` `event-streams` — Raw signals include conversation turns, provider payload/request history, tool calls/results, media blocks, imports, MCP-supplied message lists, request captures, benchmark conversations, and conversation identity events.
 
 **Learning scope:** `per-task` `cross-task` — Memory is scoped to conversations and can continue across sessions or platforms through conversation ids, aliases, labels, VCATTACH, and shared stores.
@@ -100,15 +106,13 @@ The tradeoff is governance. Virtual Context has rich operational lineage and reg
 
 **Read-back signal:** `identifier` `inferred / lexical` `inferred / embedding` `inferred / judgment` — Targeting uses conversation/tag identifiers and aliases plus query-time tag generation, lexical BM25/FTS matches, embedding similarity, fact overlap, recency, and budget-aware assembly.
 
-**Read-back timing:** `pre-action` — Proxy injection occurs before the upstream model call, while pull tools and paging can be invoked before a later answer.
-
 **Faithfulness tested:** `no` — The review found extensive mechanical tests, but no WITH/WITHOUT ablation proving that injected memory faithfully changes behavior.
 
 **Direction.** Both. From the answering model's perspective, proxy injection is push: selected `<virtual-context>` sections and `<facts>` arrive in the system/instructions field without the model first asking for them. Tool/MCP/CLI paths are pull when an agent or user deliberately asks for recall, quote search, topic expansion, fact query, or restoration.
 
 **Targeting and signal.** The automatic memory push is instance-targeted: it keys on the current inbound message and recent conversation context before the upstream model call. The signal is mixed. Query-time tag generation or embedding matching infers tags from the message, stored tag overlap and alias ride-alongs then provide identifier-like narrowing inside the conversation's retained vocabulary, and the final selector also uses inferred lexical BM25/FTS matches, embedding similarity, fact overlap, recency, and budget-aware assembly. Precision and recall are not verifiable from static code alone.
 
-**Timing relative to action.** Push read-back occurs before the upstream model call, so it can change the next answer. Tagging, compaction, tag-summary rebuilding, fact extraction, and supersession occur after completed turns or in manual/batch paths, so they can only affect later requests.
+**Injection point.** Push read-back occurs before the upstream model call, so it can change the next answer. Tagging, compaction, tag-summary rebuilding, fact extraction, and supersession occur after completed turns or in manual/batch paths, so they can only affect later requests.
 
 **Selection, scope, and complexity.** Selection is constrained by strategy result limits, context-injection budgets, tag and fact caps, protected recent turns, active-tag suppression, working-set depth, and hard prompt budget trimming. Complexity is higher than simple RAG because injected context can include core files, a context hint, tag summaries, segment/full expansions, facts, and restorable tool hints.
 

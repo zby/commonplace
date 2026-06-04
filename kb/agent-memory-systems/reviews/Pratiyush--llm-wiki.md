@@ -1,6 +1,7 @@
 ---
 description: "llm-wiki review: local coding-agent transcript ingestion into immutable raw Markdown, distilled wiki pages, static AI exports, MCP pull tools, and lifecycle lint"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived]
 status: current
 last-checked: "2026-06-02"
@@ -86,7 +87,13 @@ The other divergence is activation. llm-wiki is excellent at making historical w
 
 **Do not borrow README-ahead-of-code drift.** The Auto Dream, SessionStart hook, and plugin hook claims are useful product ambitions, but Commonplace should keep advertised activation paths tied to installed code and tested behavior.
 
-## Trace-derived learning placement
+## Write-side placement
+
+**Write agency:** `automatic` `manual` — adapters and conversion/synthesis commands can derive raw pages, wiki pages, exports, manifests, and candidates from traces, while agent/operator workflows still review, edit, and promote durable wiki content.
+
+**Curation operations:** `synthesize` `promote` — trace-derived raw sessions are synthesized into wiki source/entity/concept/synthesis pages, and noisy generated entities/concepts can move through a candidate quarantine before promotion.
+
+### Trace-derived learning
 
 **Trace source:** `session-logs` `tool-traces` — coding-agent session histories, JSONL sessions, exports, local stores, and tool-bearing session records are converted into raw Markdown
 

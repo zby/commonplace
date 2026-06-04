@@ -1,6 +1,7 @@
 ---
 description: "Review of Browzy, a terminal personal knowledge base that compiles sources into local Markdown wiki articles and relevance-gates them into LLM answers"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived, push-activation]
 status: current
 last-checked: "2026-06-01"
@@ -78,8 +79,13 @@ The main divergence is behavioral authority. Browzy's compiled articles are know
 
 **Do not borrow unreviewed trace-to-wiki promotion.** Session digests and insight drafts are useful as a personal research affordance, but Commonplace should require review and lineage before session-derived material can enter durable methodology artifacts.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `consolidate` `dedup` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 Browzy qualifies as trace-derived, but only at the symbolic artifact layer. It does not learn weights, train a ranker, or promote traces into hard rules. The qualifying mechanisms are session digest generation from prior user/assistant turns and insight crystallization from a question, an answer, and the source articles used to produce that answer.
 
 **Trace source:** `session-logs` `event-streams` — saved session message arrays, last-session metadata, query-answer records with `sourcesUsed`, and activity-log events are the raw trace signals.
@@ -100,12 +106,11 @@ Browzy qualifies as trace-derived, but only at the symbolic artifact layer. It d
 **Direction.** Browzy is push for the answering model and pull for the human operator. The user pulls by asking a question or running `/search`; the model receives a prepared prompt where Browzy has already selected and formatted accumulated wiki article memory, not shipped baseline documentation ([app.tsx](https://github.com/VihariKanukollu/browzy.ai/blob/56c253042041ee2f483a5e9b824174d746891cf4/src/cli/app.tsx), [engine.ts](https://github.com/VihariKanukollu/browzy.ai/blob/56c253042041ee2f483a5e9b824174d746891cf4/src/core/query/engine.ts)).
 
 **Read-back signal:** `inferred / lexical` — query-time FTS5/BM25 retrieval, title/tag/content token matches, and section scoring infer relevance from the current question's words.
-**Read-back timing:** `pre-action` — selected article sections, confidence, and gap notes are assembled before the answer-generating LLM call.
 **Faithfulness tested:** `no` — the review found retrieval-quality tests, but no WITH/WITHOUT ablation or post-answer audit proving the injected memories changed answer behavior as intended.
 
 **Targeting and signal.** Targeting is `instance`: each answer call builds context for this user query rather than always-loading generic memory. The primary signal is `inferred / lexical`: SQLite FTS5/BM25 candidate retrieval, query-term density, title/tag token matches, and section scoring all key on words from the current question rather than on a declared identifier carried by the instance. Fallback from `_index.json`, recency, backlink count, and follow-up exclusion for already-used slugs adjust the candidate set or order but do not change the selector into an identifier match ([sqlite.ts](https://github.com/VihariKanukollu/browzy.ai/blob/56c253042041ee2f483a5e9b824174d746891cf4/src/core/storage/sqlite.ts), [contextBuilder.ts](https://github.com/VihariKanukollu/browzy.ai/blob/56c253042041ee2f483a5e9b824174d746891cf4/src/core/retrieval/contextBuilder.ts), [relevanceRanker.ts](https://github.com/VihariKanukollu/browzy.ai/blob/56c253042041ee2f483a5e9b824174d746891cf4/src/core/retrieval/relevanceRanker.ts)).
 
-**Timing relative to action.** Read-back occurs before the answer-generating LLM call. The prepared context, confidence note, and gap note can change the next generated answer; session digest generation and crystallized insight drafting happen after sessions or answers and therefore cannot affect the just-produced answer ([engine.ts](https://github.com/VihariKanukollu/browzy.ai/blob/56c253042041ee2f483a5e9b824174d746891cf4/src/core/query/engine.ts), [digest.ts](https://github.com/VihariKanukollu/browzy.ai/blob/56c253042041ee2f483a5e9b824174d746891cf4/src/core/query/digest.ts), [crystallizer.ts](https://github.com/VihariKanukollu/browzy.ai/blob/56c253042041ee2f483a5e9b824174d746891cf4/src/core/query/crystallizer.ts)).
+**Injection point.** Read-back occurs before the answer-generating LLM call. The prepared context, confidence note, and gap note can change the next generated answer; session digest generation and crystallized insight drafting happen after sessions or answers and therefore cannot affect the just-produced answer ([engine.ts](https://github.com/VihariKanukollu/browzy.ai/blob/56c253042041ee2f483a5e9b824174d746891cf4/src/core/query/engine.ts), [digest.ts](https://github.com/VihariKanukollu/browzy.ai/blob/56c253042041ee2f483a5e9b824174d746891cf4/src/core/query/digest.ts), [crystallizer.ts](https://github.com/VihariKanukollu/browzy.ai/blob/56c253042041ee2f483a5e9b824174d746891cf4/src/core/query/crystallizer.ts)).
 
 **Selection, scope, and complexity.** The implemented policy considers up to 15 ranked articles, caps each article at about 8,000 tokens, includes at least two articles when possible, extracts up to five relevant sections when section matches are narrower than the article, and uses model-aware article budgets computed before prompt assembly ([contextBuilder.ts](https://github.com/VihariKanukollu/browzy.ai/blob/56c253042041ee2f483a5e9b824174d746891cf4/src/core/retrieval/contextBuilder.ts), [tokenCounter.ts](https://github.com/VihariKanukollu/browzy.ai/blob/56c253042041ee2f483a5e9b824174d746891cf4/src/core/retrieval/tokenCounter.ts)). Actual precision, recall, and context dilution are not verified from code.
 

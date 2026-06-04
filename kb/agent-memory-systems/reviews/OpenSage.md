@@ -1,6 +1,7 @@
 ---
 description: "OpenSage review: dynamic subagents, sandbox/file memory, generated Skills, Neo4j history/memory, plugins, and RL adapters"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived, push-activation]
 status: current
 last-checked: "2026-06-02"
@@ -84,7 +85,13 @@ OpenSage is stronger where the memory must sit inside an active agent framework.
 
 **Use plugin callbacks as guard surfaces.** Needs concrete use cases. A read-before-edit warning or build-verifier callback is a useful system-definition artifact, but Commonplace should encode stable rules as validation or review gates rather than silent runtime nudges where possible.
 
-## Trace-derived learning placement
+## Write-side placement
+
+**Write agency:** `automatic` `manual` — plugins, history compaction, memory observers, generated Skills/plugins, and RL/export adapters can write retained surfaces from execution traces, while file memory and configured Skills also have manual authoring paths.
+
+**Curation operations:** `consolidate` `synthesize` `promote` — history compaction consolidates session traces, memory extraction and generated Skills/plugins synthesize new retained artifacts, and storage/evaluation paths promote selected outputs into memory, Skill, plugin, or training surfaces.
+
+### Trace-derived learning
 
 **Trace source:** `session-logs` `tool-traces` `event-streams` `trajectories` — ADK session events, tool calls/responses, plugin callback streams, benchmark task outputs, and RL rollout interactions
 
@@ -108,11 +115,9 @@ OpenSage is stronger where the memory must sit inside an active agent framework.
 
 **Read-back signal:** `coarse` `identifier` — history compaction pushes coarse session summaries, and the ensemble message-board diff selects unread JSONL records by board and receiving agent identifiers
 
-**Read-back timing:** `post-action` — the identified message-board push and compaction surfaces run after a tool call or history-budget trigger and shape later turns rather than the just-completed action
-
 **Faithfulness tested:** `no` — the review notes no built-in check proving pushed or retrieved memories change downstream behavior
 
-The strongest memory push is the ensemble message-board path. `message_board_diff_plugin` runs after a tool call, resolves the receiving agent instance id and current board id, reads unread JSONL records with a per-agent cursor, and appends the diff into the tool result. Targeting is `instance`; the signal is `identifier`, because selection keys on `board_id` plus the receiving `agent_id`/instance id rather than semantic similarity. It is after-tool rather than pre-action, so it can shape the next model turn rather than the tool call that just completed; scope is capped by `read_diff(max_bytes=32000)`. Precision, context dilution, and effective authority are not verified from code.
+The strongest memory push is the ensemble message-board path. `message_board_diff_plugin` runs after a tool call, resolves the receiving agent instance id and current board id, reads unread JSONL records with a per-agent cursor, and appends the diff into the tool result. Targeting is `instance`; the signal is `identifier`, because selection keys on `board_id` plus the receiving `agent_id`/instance id rather than semantic similarity. It can shape the next model turn rather than the tool call that just completed; scope is capped by `read_diff(max_bytes=32000)`. Precision, context dilution, and effective authority are not verified from code.
 
 Other push-like surfaces are weaker or outside memory read-back. History compaction automatically appends a session-summary event when the folded history exceeds budget, which is a coarse session-memory push rather than an instance-relevance signal. Built-in Skill descriptions and the `/mem` layout instructions are shipped baseline prompt surfaces, not read-back; user-local or plugin Skill metadata can be retained memory when selected by `enabled_skills`, but full `SKILL.md` content is normally pulled through `list_available_scripts`. Long-term Neo4j memory remains pull-only: `search_memory` requires an explicit query and then uses LLM strategy selection, embedding search, keyword search, or title browsing.
 

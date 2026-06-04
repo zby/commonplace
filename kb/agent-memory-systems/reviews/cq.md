@@ -1,6 +1,7 @@
 ---
 description: "cq review: Mozilla AI plugin, MCP server, SQLite/remote knowledge units, review-gated sharing, and agent-led session reflection"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived]
 status: current
 last-checked: "2026-06-01"
@@ -86,8 +87,13 @@ The authority split is also different. cq's stored KUs are mostly knowledge arti
 
 **Do not import weak lineage into high-authority artifacts.** cq reflection candidates often lack source offsets or durable raw traces. In Commonplace, a cq-like insight should enter a workshop or source-backed note first, not jump straight into an instruction file.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `consolidate` `dedup` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 **Trace source:** `session-logs` `tool-traces` — The raw signal is the current agent-visible session, including user requests, assistant reasoning, tool calls, errors, failed attempts, workarounds, and final solutions
 **Learning scope:** `per-task` `cross-task` — Extraction starts from one session/task, while persisted KUs are intended for reuse across later tasks and configured local or remote stores
 **Learning timing:** `online` `staged` — The skill supports mid-task proposes, while `/cq:reflect` and remote review stage extraction, approval, and sharing after the session or proposal

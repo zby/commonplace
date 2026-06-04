@@ -1,6 +1,7 @@
 ---
 description: "OpenViking review: viking:// context database with AGFS/RAGFS storage, hierarchical retrieval, session extraction, hooks, MCP, tenancy, and metrics"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived, push-activation]
 status: current
 last-checked: "2026-06-02"
@@ -81,8 +82,13 @@ Borrow the separation between raw trace, archive summary, and reusable experienc
 
 Borrow low-cardinality operational telemetry for KB commands. Metrics on retrieval, semantic processing, task status, validation, and queue timing would help maintain large agent-operated KBs, provided they do not leak content or create noisy status artifacts in the repository.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `consolidate` `dedup` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 OpenViking qualifies as trace-derived. Durable behavior-shaping artifacts are derived from session traces: user memories, agent tool memories, trajectories, experiences, skills, archive summaries, usage relations, and memory diffs. The durable outputs are not merely logs; they are later retrievable and can be injected into model calls.
 
 - **Trace source:** `session-logs` `tool-traces` `trajectories` — session messages, tool-call/output parts, externalized tool results, transcript slices, archive summaries, and trajectory memories feed extraction
@@ -103,8 +109,6 @@ The main caveat is authority. OpenViking has lineage artifacts such as archive m
 OpenViking has both pull and push read-back. Pull read-back is implemented by `find`, `search`, `read`, `list`, `grep`, `glob`, `code_search`, `code_outline`, and related MCP/HTTP/CLI surfaces. These tools return context only when a caller asks.
 
 **Read-back signal:** `identifier` `inferred / lexical` `inferred / embedding` — hooks and middleware narrow by account/user/agent/session/URI roots, then select by semantic search and lexical-overlap boosts over the current prompt or user text
-
-**Read-back timing:** `pre-action` — Claude/Codex hooks and LangChain middleware insert selected context before the model call or turn acts
 
 **Faithfulness tested:** `no` — the review notes benchmark claims but did not reproduce them, and the code establishes the activation route rather than proving selected memories change behavior
 

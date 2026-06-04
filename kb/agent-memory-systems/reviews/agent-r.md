@@ -1,6 +1,7 @@
 ---
 description: "Agent-R review: MCTS trajectory collection and self-training pipeline that distills failed and successful agent rollouts into revision training data"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived]
 status: current
 last-checked: "2026-06-01"
@@ -68,7 +69,6 @@ The context-cost tradeoff also differs. Agent-R pays the cost offline in rollout
 
 **Read-back:** `push` — Coarse always-on parameterization after fine-tuning; the code does not implement pull retrieval or instance-targeted push activation over stored trajectories
 **Read-back signal:** `coarse` — after fine-tuning the retained lesson is always-on model parameterization, not an identifier or inferred retrieval signal over stored trajectories
-**Read-back timing:** `pre-action` — the fine-tuned checkpoint influences generation before each later action rather than auditing after the action
 **Faithfulness tested:** `no` — the review records evaluation rollouts, but no code-grounded with/without read-back ablation over the learned parameter influence
 
 ### Borrowable Ideas
@@ -83,7 +83,13 @@ The context-cost tradeoff also differs. Agent-R pays the cost offline in rollout
 
 **Use loss masks as authority markers.** The `loss: False` and `loss: True` flags distinguish context to condition on from tokens to train. A prose-artifact analogue would mark evidence, proposed rule text, and non-authoritative commentary distinctly. Needs a use case in generated training or evaluation corpora.
 
-## Trace-derived learning placement
+## Write-side placement
+
+**Write agency:** `automatic` — MCTS collection, path pairing, verifier-assisted splice selection, JSONL generation, and external fine-tuning stages convert rollout traces into retained training artifacts and intended model behavior.
+
+**Curation operations:** `consolidate` `synthesize` `promote` — saved trees are reduced to paired revision examples, those examples synthesize correction behavior, and external fine-tuning promotes the trace-derived lesson into model weights.
+
+### Trace-derived learning
 
 **Trace source:** `trajectories` — MCTS rollouts over task environments preserve conversation state, actions, observations, rewards, terminal flags, and tree statistics
 **Learning scope:** `cross-task` — the review describes benchmark/task-family training data and a promoted model behavior, not project-local memory

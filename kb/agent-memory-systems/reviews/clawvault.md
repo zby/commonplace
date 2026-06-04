@@ -1,6 +1,7 @@
 ---
 description: "ClawVault review: deprecated OpenClaw-era markdown vault with session observation, fact extraction, graph search, context injection, and hooks"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived, push-activation]
 status: current
 last-checked: "2026-06-01"
@@ -89,8 +90,13 @@ ClawVault is also more productized around host-agent activation. The OpenClaw pl
 
 **Do not borrow authority spread without review gates.** ClawVault's authority lives across Markdown, JSONL facts, generated indexes, plugin config, runtime hooks, maintenance outputs, and LLM extraction prompts. Commonplace should keep stronger distinctions between knowledge artifacts and system-definition artifacts before allowing trace-derived material to guide future agents.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `consolidate` `dedup` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 - **Trace source:** `session-logs` `event-streams` — session files/transcripts and OpenClaw heartbeat, compaction, hook, and event payloads feed the observer and fact extractor
 - **Learning scope:** `per-project` `cross-task` — vault/workspace-local memory can be agent-scoped and can carry observations, facts, tasks, and reflections across sessions and tasks
 - **Learning timing:** `online` `offline` `staged` — watcher/heartbeat/compaction capture runs online-ish, session-end and reflection paths run later, and maintain/reflect promote in explicit passes
@@ -112,13 +118,11 @@ ClawVault is also more productized around host-agent activation. The OpenClaw pl
 
 **Read-back signal:** `identifier` `inferred / lexical` `inferred / embedding` `inferred / judgment` — session recap uses session/agent identifiers, prompt and outbound-message injection search over current content, and optional embedding/reranker paths add semantic and judgment-like signals
 
-**Read-back timing:** `pre-action` — prompt-building injection and message-sending filtering run before the receiving model turn or outbound message can proceed
-
 **Faithfulness tested:** `no` — the review found wired retrieval and injection but no checked-in with/without ablation for the OpenClaw hook path
 
 **Targeting and signal.** The memory push is instance-targeted. For prompt-building injection, the main signal is `inferred`: the current prompt is sanitized and used as a content query, then `ClawVault.find` searches vault Markdown with BM25 lexical matching by default, optional embedding ranks, optional cross-encoder reranking, a `minScore`, top-k clamp, and temporal boost ([src/plugin/hooks/before-prompt-build.ts](https://github.com/Versatly/clawvault/blob/bd702e9cce436bc3065827714cd576e8be20c375/src/plugin/hooks/before-prompt-build.ts), [src/plugin/vault-context-injector.ts](https://github.com/Versatly/clawvault/blob/bd702e9cce436bc3065827714cd576e8be20c375/src/plugin/vault-context-injector.ts), [src/lib/in-process-search.ts](https://github.com/Versatly/clawvault/blob/bd702e9cce436bc3065827714cd576e8be20c375/src/lib/in-process-search.ts)). In the model's terms this is `inferred / lexical` by default, with optional `embedding` and reranker `judgment` components when configured. Session recap injection is also instance-targeted, but by `identifier`: the hook resolves the current `sessionKey`/agent id and fetches recent turns for that session. Message filtering is another `inferred / lexical`-first path: if outbound content contains a question, ClawVault searches memory using that content and can rewrite or cancel based on hits over a score threshold.
 
-**Timing relative to action.** Prompt-building injection fires before the model sees the task, so it can change the next action. Message-sending filtering fires before the agent's outbound message leaves the system, so it can prevent a question that memory could answer. Observation hooks and reflection are after-action or maintenance paths unless their outputs later feed prompt injection.
+**Injection point.** Prompt-building injection fires before the model sees the task, so it can change the next action. Message-sending filtering fires before the agent's outbound message leaves the system, so it can prevent a question that memory could answer. Observation hooks and reflection are after-action or maintenance paths unless their outputs later feed prompt injection.
 
 **Selection, scope, and complexity.** Selection is code-grounded: prompt text is sanitized and truncated, max results are clamped to 1-20, default min score is 0.2 for context injection, snippets are truncated, and vault path can be resolved per agent or workspace. Session recap injection is scoped by session key and limited to the recent recap entries. The CLI `context` command has a richer pull selection model with profiles, source caps, graph-hop expansion, fact boosts, and optional token budgets. Effective precision, recall, and context dilution are runtime qualities not verified from source.
 

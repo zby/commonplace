@@ -1,6 +1,7 @@
 ---
 description: "Cortex review: local RDF/SQLite cognitive knowledge system with ontology, hybrid retrieval, MCP serving, reasoning, and trace-derived tier learning"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived]
 status: current
 last-checked: "2026-06-03"
@@ -80,8 +81,13 @@ The strongest divergence is trust. Cortex can classify, link, infer, and retriev
 
 **Do not borrow access-count trust.** Cortex's `reflex` promotion is operationally sensible, but Commonplace should not treat repeated reads as evidence that a note is correct or instruction-worthy. Usage can prioritize review; it should not replace review.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `evolve` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 **Trace source:** `tool-traces` `event-streams` — Cortex consumes query/search calls, object reads, and explicit feedback events rather than full conversation transcripts.
 
 **Learning scope:** `per-project` `cross-task` — The loop is local to a Cortex data directory and object/project metadata, while accumulated access state can affect later searches across tasks in that store.

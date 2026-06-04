@@ -1,6 +1,7 @@
 ---
 description: "LACP review: local agent control plane with Claude hooks, staged memory extraction, SMS read-back, Obsidian brain, and policy gates"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived, push-activation]
 status: current
 last-checked: "2026-06-02"
@@ -86,8 +87,13 @@ The biggest divergence is substrate discipline. LACP's behavior-shaping state is
 
 **Do not borrow home-directory sprawl without export discipline.** LACP's local state layout is appropriate for a personal control plane. Commonplace should keep durable methodology knowledge in repo artifacts unless runtime state has a defined export, lineage, and review path.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `consolidate` `evolve` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 **Trace source:** `session-logs` `tool-traces` `event-streams` `trajectories` — transcripts, assistant messages, hook inputs, provenance/session records, benchmark/workflow captures, and skill ledgers feed the retained outputs described below.
 
 **Learning scope:** `per-task` `per-project` `cross-task` — extraction spans per-turn/session facts, current cwd/project state, and sometimes cross-project agent identity or workflow lessons.
@@ -112,13 +118,11 @@ The biggest divergence is substrate discipline. LACP's behavior-shaping state is
 
 **Read-back signal:** `coarse` `identifier` — session-start memory push loads coarse retained focus/SMS context and identifier-selected handoff state keyed by the current cwd hash.
 
-**Read-back timing:** `pre-action` — retained memory is pushed at session start before the receiving model acts; Stop hooks write or gate future state rather than returning retained memory after the same action.
-
 **Faithfulness tested:** `no` — the review found structural hook activation and output tests, but no with/without ablation proving injected memory changes model behavior.
 
 **Targeting and signal.** The central memory push trigger is the Claude `SessionStart` hook, so part of the targeting is `coarse`: retained focus and SMS self-model/narrative/recent-episode context are loaded if present and then ordered by priority under `LACP_SESSION_BUDGET_TOKENS`. LACP also has an `instance` / `identifier` memory push for handoff state: `session_start.py` hashes the current cwd, reads `~/.lacp/handoffs/<cwd-hash>-latest.json`, and injects it only when the matching handoff is less than 24 hours old. SMS episode inclusion is not an inferred match to the current prompt; `build_session_context()` reads recent episodes with `min_significance=0.6`, takes the last three, and includes them by significance/recency rather than embedding, BM25, or LLM judgment.
 
-**Timing relative to action.** Session-start injection happens before the model acts in a new session and can change the next plan. `UserPromptSubmit` thinking nudge can shape the next response before answering a user prompt. Stop hooks run after an answer and can only block completion, inject corrective feedback for the next pass, or write artifacts for future sessions.
+**Injection point.** Session-start injection happens before the model acts in a new session and can change the next plan. `UserPromptSubmit` thinking nudge can shape the next response before answering a user prompt. Stop hooks run after an answer and can only block completion, inject corrective feedback for the next pass, or write artifacts for future sessions.
 
 **Selection, scope, and complexity.** Selection is intentionally simple: sorted priorities, rough token accounting, 24-hour handoff freshness, focus staleness warnings, last three high-significance episodes, line caps, bounded summaries, and env/config flags. Scope is current cwd/project slug, current session id, home-directory LACP state, and configured vault/automation roots. Complexity can still become high because the assembled context may mix policy, identity, git state, tests, focus, health, SMS memory, handoff state, and mode rules in one `systemMessage`.
 

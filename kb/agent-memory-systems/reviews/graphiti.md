@@ -1,6 +1,7 @@
 ---
 description: "Graphiti review: temporal context graph engine with episode provenance, LLM fact extraction, hybrid retrieval, MCP/API pull surfaces"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived]
 status: current
 last-checked: "2026-06-02"
@@ -83,8 +84,13 @@ Graphiti's context model is also runtime-first. It assumes a host application wi
 
 **Do not borrow automatic fact extraction as automatic authority promotion.** Graphiti is persuasive as a memory graph, not as a governed KB learning loop. Extracted facts can advise future work; they should not become Commonplace instructions without source review and promotion.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `consolidate` `dedup` `evolve` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 **Trace source:** `session-logs` `event-streams` — conversational messages and other host-submitted episode streams feed durable graph extraction.
 
 **Learning scope:** `cross-task` — graph partitions and `group_id` retain episode-derived facts for later host queries beyond a single immediate task.

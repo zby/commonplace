@@ -1,6 +1,7 @@
 ---
 description: "G-Memory review: benchmark MAS memory with Chroma task traces, task graphs, trace-derived insights, and relevance-gated prompt read-back"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived, push-activation]
 status: current
 last-checked: "2026-06-01"
@@ -84,8 +85,13 @@ The systems also differ in their tolerance for opaque storage. Chroma and pickle
 
 **Use post-action feedback to demote loaded guidance.** G-Memory's `backward` path adjusts cached insight scores after task success or failure. Commonplace could record which instructions or examples were injected before a run and attach later quality signals. Needs a run-log schema and careful attribution.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `consolidate` `dedup` `synthesize` `invalidate` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 **Trace source:** `session-logs` `tool-traces` `trajectories` — Completed MAS task contexts include agent messages, system/user instructions, action/observation/reward steps, final labels, environment feedback, and graph-linked trajectories.
 
 **Learning scope:** `per-task` `cross-task` — Raw contexts are captured per completed task, while related-task retrieval, insight finetuning, correlations, and cluster merges reuse traces across tasks within the run-local benchmark memory.
@@ -108,15 +114,13 @@ The systems also differ in their tolerance for opaque storage. Chroma and pickle
 
 **Read-back signal:** `inferred / embedding` `inferred / judgment` — Push selection is keyed to the current task through embedding similarity, graph-expanded similar tasks, cosine thresholds, and LLM judgment reranking.
 
-**Read-back timing:** `pre-action` — Retrieval and prompt assembly happen before task solving and before each action prompt consumes the selected trajectories and insights.
-
 **Faithfulness tested:** `no` — The review found task outcomes and score updates, but no item-level with/without ablation proving that a specific injected memory changed behavior.
 
 **Direction.** Read-back is push from the acting agent's perspective. The MAS workflow retrieves memory before task solving and inserts selected successful trajectories and insights into the prompt; agents do not issue a memory lookup themselves (https://github.com/bingreeky/GMemory/blob/7b581c51d993bd600df14691d101d7e601040cc6/tasks/mas_workflow/autogen/autogen.py, https://github.com/bingreeky/GMemory/blob/7b581c51d993bd600df14691d101d7e601040cc6/tasks/mas_workflow/format.py).
 
 **Targeting and signal.** The trigger is each scheduled task, but the loaded memory is instance-targeted to the current task text rather than coarse always-load. The signal is inferred and mixed: task cases start from embedding similarity over task nodes, expand through k-hop graph neighbors, fall back to label-filtered Chroma similarity when needed, filter by cosine threshold, double candidate windows, and then use LLM judgment to rerank successful trajectories by usefulness to the query; insights are selected by related-task correlations after similar-task retrieval (https://github.com/bingreeky/GMemory/blob/7b581c51d993bd600df14691d101d7e601040cc6/mas/memory/mas_memory/GMemory.py). This instance-targeted inferred signal plus the before-action prompt hook justifies `push-activation`; actual precision and recall are not verified from code.
 
-**Timing relative to action.** Retrieval happens after `init_task_context` and before the task loop. The selected trajectories and role-specific or raw insights are then reused in prompt construction for each action step. `backward` score updates happen after the task and can only affect future retrieval, not the just-finished action.
+**Injection point.** Retrieval happens after `init_task_context` and before the task loop. The selected trajectories and role-specific or raw insights are then reused in prompt construction for each action step. `backward` score updates happen after the task and can only affect future retrieval, not the just-finished action.
 
 **Selection, scope, and complexity.** Selection is bounded by CLI/workflow settings (`successful_topk`, `failed_topk`, `insights_topk`, `threshold`, `hop`), graph expansion, label filtering, similarity thresholds, LLM reranking, and insight score/correlation filtering (https://github.com/bingreeky/GMemory/blob/7b581c51d993bd600df14691d101d7e601040cc6/tasks/run.py, https://github.com/bingreeky/GMemory/blob/7b581c51d993bd600df14691d101d7e601040cc6/mas/memory/mas_memory/GMemory.py). Complexity remains substantial because retrieved memory is inserted as whole formatted task cases with detailed trajectories, not as cited snippets under a token budget.
 

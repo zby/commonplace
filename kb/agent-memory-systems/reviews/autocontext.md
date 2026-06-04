@@ -1,6 +1,7 @@
 ---
 description: "Autocontext review: iterative agent harness with run traces, scenario-scoped playbooks, lessons, mutations, context assembly, datasets, and distilled models"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived, push-activation]
 status: current
 last-checked: "2026-06-01"
@@ -85,7 +86,13 @@ The two systems converge on an important design claim: retained state matters on
 
 **Read-back:** `both` — With engineered memory push. The acting role receives scenario-scoped playbooks, hints, lessons, dead ends, reports, active harness mutations, selected session history, and context-selection/budget outcomes through prompt/context assembly; operators and agents can also pull run status, playbooks, runtime sessions, datasets, and knowledge through CLI, HTTP, MCP, and SDK surfaces. Repo instructions and runtime skill manifests are baseline context surfaces, not memory read-back.
 
-## Trace-derived learning placement
+## Write-side placement
+
+**Write agency:** `automatic` `manual` — run, coach, analyst, architect, context-selection, production-trace, dataset, training, and registry workflows automatically create or update scenario knowledge, mutations, datasets, prompt bundles, and checkpoints, while authored seeds and operator workflows can still write retained scenario knowledge
+
+**Curation operations:** `consolidate` `evolve` `synthesize` `invalidate` `promote` — coach and curator stages consolidate run evidence into playbooks, hints, lessons, reports, and memory packs; playbooks and lessons can be replaced, superseded, or versioned; architect stages synthesize tools, validators, and mutations; gates/status/quarantine can invalidate candidates; datasets, packages, and checkpoints can be promoted through activation states
+
+### Trace-derived learning
 
 **Trace source:** `session-logs` `tool-traces` `event-streams` `trajectories` — run generations, role outputs, runtime prompt/tool/child-task/compaction events, production traces, replay narratives, and score trajectories are retained as learning evidence.
 
@@ -109,13 +116,9 @@ The two systems converge on an important design claim: retained state matters on
 
 **Read-back signal:** `identifier` — prompt push is selected by known scenario, run, generation, role, mutation status, target role/component/tool, and target-family identifiers rather than lexical, embedding, or judgment relevance.
 
-**Read-back timing:** `pre-action` — retained scenario knowledge, run-derived artifacts, active mutations, and selected history are assembled into prompts before the receiving role generates.
-
 **Faithfulness tested:** `no` — outcome evaluation, ablation knobs, and context-selection telemetry exist, but the review did not find a per-memory test proving that a loaded lesson or mutation changed the next action.
 
 **Targeting and signal.** The main prompt push is `instance` targeted with an `identifier` signal. The already-known `scenario_name` selects the playbook, hints, lessons, dead ends, progress, protocol, mutation log, and active harness mutations for that scenario; `run_id` and `generation` select trajectories, reports, feedback, attribution, freshness windows, and context-selection records; `role` selects the final competitor, analyst, coach, or architect prompt; active mutation status plus target role/component/tool name determines which mutation content is applied. The TypeScript operational-memory-pack API is also identifier-targeted by target family, status, integrity, risk, quarantine state, and capacity, but that is a control-plane capability surface rather than evidence that memory packs are wired into the main Python run loop. I did not find embedding, keyword, or LLM-judgment relevance selection in the core prompt-assembly path; compaction and context budgets trim or remove components after the identifier-selected candidates are assembled. Precision/recall, context dilution, and effective authority of those selections are not verified by static code.
-
-**Timing relative to action.** Prompt memory is assembled before competitor, analyst, coach, or architect generation, so it can change the next action. Runtime-session and compaction logs are written during or after execution; they affect future behavior only after a later assembly, analysis, dataset, or training path consumes them.
 
 **Selection, scope, and complexity.** The strongest controls are scenario scoping, role-specific prompt construction, semantic compaction, component token caps, protected hints/dead ends, mutation type checks, context-selection telemetry, memory-pack capacity limits, and dataset selection rules. These reduce volume and make selection observable, but they do not prove that loaded memory is behaviorally faithful or causally useful.
 

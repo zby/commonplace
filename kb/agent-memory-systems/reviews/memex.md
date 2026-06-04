@@ -1,6 +1,7 @@
 ---
 description: "Memex review: isolated Claude Code daemon that turns raw sources into a persistent Markdown wiki with SQLite queues, prompts, and pull-only wiki read-back"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 status: current
 last-checked: "2026-06-03"
 ---
@@ -80,6 +81,12 @@ Memex also has a different stance on context efficiency. Commonplace relies on e
 **Keep the LLM inside a narrow filesystem and tool envelope.** The namespace wrapper is heavier than Commonplace needs for normal work, but the design principle transfers: source ingestion and external-system review benefit from making irrelevant files unreachable, not merely undesired. Needs an execution environment that can provide that boundary without privileged daemon cost.
 
 **Do not borrow prompt-only promotion of authority.** In Memex, a convention becomes behavior-shaping when Claude writes it into `_schema.md` and future prompts tell Claude to obey it. Commonplace should keep stronger promotion paths where high-authority instructions and validators are reviewed, typed, and checked.
+
+## Write-side placement
+
+**Write agency:** `automatic` `manual` — the review describes system-driven generation, extraction, consolidation, or update of retained artifacts rather than only manual authoring.
+
+**Curation operations:** `dedup` `evolve` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
 
 ## Curiosity Pass
 

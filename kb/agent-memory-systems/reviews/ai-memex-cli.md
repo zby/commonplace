@@ -1,6 +1,7 @@
 ---
 description: "ai-memex-cli review: Git-backed LLM wiki toolbox, installed agent skill, session distillation, coarse context bootstrap, and self-healing lint loops"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived]
 status: current
 last-checked: "2026-06-03"
@@ -72,8 +73,6 @@ ai-memex's largest tradeoff is that its semantic layer is deliberately outside t
 
 **Read-back signal:** `coarse` — The only push path described here is the session-start context digest written into auto-loaded host files, not instance-targeted selection.
 
-**Read-back timing:** `pre-action` — The context block is loaded at session start before the receiving agent acts.
-
 **Faithfulness tested:** `no` — The reviewed prose says the coarse push path is not faithfulness-tested in the code.
 
 ### Borrowable Ideas
@@ -88,7 +87,13 @@ ai-memex's largest tradeoff is that its semantic layer is deliberately outside t
 
 **Keep local projections disposable.** `memex glob` makes project-local wiki copies explicitly generated and overwriteable. Commonplace's workshop or consuming-project projections could use the same warning pattern to prevent agents from treating convenience context as the durable source of truth. Ready for generated exports.
 
-## Trace-derived learning placement
+## Write-side placement
+
+**Write agency:** `automatic` `manual` — users and host agents author raw and wiki Markdown through CLI/skill workflows, while distill, ingest, lint, semantic-lint, watch, and context refresh can mechanically or agentically rewrite vault state and generated context blocks
+
+**Curation operations:** `synthesize` `promote` `dedup` — ingest and optional semantic distillation synthesize typed wiki pages from raw sources and sessions; raw session documents can be promoted into wiki state and context digests; lint/linker/watch loops detect orphans, broken links, duplicate no-progress issue sets, and safe repairs
+
+### Trace-derived learning
 
 **Trace source:** `session-logs` `tool-traces` — Agent session stores provide user/assistant messages, timestamps, and named tool calls where available.
 

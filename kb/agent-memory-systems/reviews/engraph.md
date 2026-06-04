@@ -1,6 +1,7 @@
 ---
 description: "Engraph review: local Obsidian vault index with hybrid search, MCP/HTTP tools, identity context, and write-placement learning"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 status: current
 last-checked: "2026-06-01"
 ---
@@ -82,6 +83,12 @@ Engraph is weaker on durable artifact governance. It has health checks, mtime co
 **Expose write tools with narrow mutation shapes.** Section edits, frontmatter operations, append, rewrite, archive, and reindex are better agent affordances than "edit the whole file." Commonplace already has some narrow commands; Engraph reinforces making mutation intent explicit.
 
 **Do not borrow direct vault mutation without gates.** Engraph's direct write API suits personal notes, but Commonplace should keep type validation, review gates, and git diffs in the path before durable methodology artifacts gain authority.
+
+## Write-side placement
+
+**Write agency:** `automatic` `manual` — the review describes system-driven generation, extraction, consolidation, or update of retained artifacts rather than only manual authoring.
+
+**Curation operations:** `consolidate` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
 
 ## Curiosity Pass
 

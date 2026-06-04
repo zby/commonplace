@@ -1,6 +1,7 @@
 ---
 description: "Binder review: local-first typed knowledge graph with Markdown views, transactions, CLI/MCP/LSP access, and agent-facing skills"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 status: current
 last-checked: "2026-06-01"
 ---
@@ -80,6 +81,12 @@ The main divergence is the source of authority. Binder's authority sits in a liv
 Binder is more operational for small apps and agent-accessible state. It gives agents a schema tool, search tool, and transaction tool over a typed store. Commonplace is stronger as a durable methodology library: citations, review sections, cross-note links, and prose argument structure matter more than low-latency CRUD.
 
 **Read-back:** `pull` — For agent memory in the reviewed implementation. Agents can deliberately call MCP/CLI/search/read tools or use installed skill guidance, but I did not find a Binder-owned relevance-gated push mechanism that injects memories before action
+
+## Write-side placement
+
+**Write agency:** `automatic` `manual` — the review describes system-driven generation, extraction, consolidation, or update of retained artifacts rather than only manual authoring.
+
+**Curation operations:** `dedup` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
 
 ## Curiosity Pass
 

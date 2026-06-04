@@ -1,6 +1,7 @@
 ---
 description: "sage-wiki review: LLM-compiled personal wiki with SQLite FTS/vector/ontology state, MCP pull read-back, output trust, and session-trace scribing"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 status: current
 last-checked: "2026-06-03"
 tags: [trace-derived]
@@ -88,8 +89,13 @@ The biggest divergence is context activation. sage-wiki can make a large wiki se
 
 **Do not borrow database-only authority for core methodology claims.** A methodology KB needs reviewable, diffable arguments. SQLite is useful for retrieval and staging, but durable claims and high-authority instructions should remain visible in typed files.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `consolidate` `dedup` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 **Trace source:** `session-logs` - `sage-wiki scribe <session-file>` consumes Claude Code session JSONL after filtering non-message records.
 
 **Learning scope:** `per-project` `cross-task` - Scribed entities and relations land in the project wiki's durable ontology and can affect later ontology queries and graph-expanded retrieval.

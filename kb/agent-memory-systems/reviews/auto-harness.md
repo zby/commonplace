@@ -1,6 +1,7 @@
 ---
 description: "Auto-harness review: benchmark loop where train traces drive agent-file edits, learnings logs, regression-suite promotion, and score gates"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived]
 status: current
 last-checked: "2026-06-01"
@@ -82,11 +83,15 @@ The most important artifact-authority split is between evidence, optimization po
 
 **Read-back signal:** `coarse` — the push path is deterministic import of the evolved `agent/agent.py` on every benchmark run, not an identifier match or inferred retrieval signal.
 
-**Read-back timing:** `pre-action` — the evolved agent file is imported before the benchmarked agent acts in the next run.
-
 **Faithfulness tested:** `no` — score gates test the edited agent, but the review says there is no explicit ablation separating genuine behavior improvements from score noise.
 
-## Trace-derived learning placement
+## Write-side placement
+
+**Write agency:** `automatic` `manual` — the harness automatically copies templates, records traces/results, enforces gates, promotes suite entries, and records accepted iterations, while the optimizing coding agent manually edits `agent/agent.py` and appends learnings from the trace evidence
+
+**Curation operations:** `promote` `invalidate` — newly fixed failures are promoted into `workspace/suite.json` regression obligations, accepted scores/commits are recorded as the current best baseline, and gates reject or invalidate changes that touch disallowed files or regress the suite/test score
+
+### Trace-derived learning
 
 **Trace source:** `session-logs` `tool-traces` `event-streams` `trajectories` — train-split dialogue histories, tool trajectories, ADK events, trace files, and result summaries are the retained evidence layer.
 

@@ -1,6 +1,7 @@
 ---
 description: "Beever Atlas review: wiki-first team-chat memory with trace-derived facts, graph links, generated pages, QA tools, and MCP pull surfaces"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived, push-activation]
 status: current
 last-checked: "2026-06-03"
@@ -85,8 +86,13 @@ The biggest tradeoff is authority visibility. Atlas has rich lineage fields and 
 
 **Do not borrow service-state authority drift.** Atlas has many hidden authority surfaces: embeddings, generated wiki pages, dirty queues, LLM prompts, feedback/history stores, and ACL state. Commonplace should borrow the pipeline shape only where resulting artifacts remain visible, cited, and reviewable.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `consolidate` `dedup` `evolve` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 **Trace source:** `session-logs` `event-streams` — platform-normalized channel/file/import events and retained dashboard QA sessions are the review's trace sources.
 
 **Learning scope:** `per-project` `cross-task` — scope is organized by channel, connection, principal, session, and language, and the generated wiki/fact surfaces carry knowledge across later asks.
@@ -111,13 +117,11 @@ The biggest tradeoff is authority visibility. Atlas has rich lineage fields and 
 
 **Read-back signal:** `identifier` — the push path is dashboard-specific and keyed by the reused `session_id` that selects retained conversation turns.
 
-**Read-back timing:** `pre-action` — dashboard chat-history preload happens before the QA agent sees the new ask.
-
 **Faithfulness tested:** `no` — the review found no with/without ablation or post-action faithfulness audit proving that retrieved memory changed behavior correctly.
 
 **Targeting and signal.** Pull retrieval uses both identifiers and inferred signals: channel id, connection/principal ACLs, page slug, page kind, session id, and fact ids are identifiers; BM25, vector search, MMR, graph traversal, and LLM QA are inferred selection. The push path is `instance / identifier`: the reused `session_id` selects the last retained conversation turns for that session. Precision and usefulness of the returned team memory are runtime qualities, not verified from code.
 
-**Timing relative to action.** Search/wiki/MCP calls run during an ask or external-agent turn and can affect the answer after the tool returns. Dashboard chat-history preload happens before the QA agent sees the new ask, so it can shape the next answer. Post-answer persistence to QAHistory and chat_history affects later turns only.
+**Injection point.** Search/wiki/MCP calls run during an ask or external-agent turn and can affect the answer after the tool returns. Dashboard chat-history preload happens before the QA agent sees the new ask, so it can shape the next answer. Post-answer persistence to QAHistory and chat_history affects later turns only.
 
 **Selection, scope, and complexity.** Atlas has several explicit bounds: MCP question/query length, retrieval limits, per-channel ACLs, Weaviate `tier` filters, top-k style tool limits, wiki module/section reads, and `MAX_CONTEXT_TURNS = 10` for dashboard session history. The remaining complexity risk is qualitative: generated wiki pages, graph neighborhoods, and fact lists can still be semantically broad even when their item count is bounded.
 

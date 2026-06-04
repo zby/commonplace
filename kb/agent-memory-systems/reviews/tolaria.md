@@ -1,6 +1,7 @@
 ---
 description: "Tolaria review: local-first markdown/git vault with typed lenses, saved views, managed agent guidance, AI context snapshots, CLI-agent launchers, and MCP tools"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [push-activation]
 status: current
 last-checked: "2026-06-02"
@@ -90,19 +91,23 @@ The strongest Commonplace-relevant contribution is the activation layer around l
 
 **Do not borrow flexible type lenses as a substitute for contracts.** Tolaria's type system is excellent for adoption and UI grouping, but Commonplace's methodology notes and instructions need stronger checkable obligations. Borrow lenses for browsing; keep schemas/contracts for behavior-shaping artifacts.
 
+## Write-side placement
+
+**Write agency:** `automatic` `manual` — the review describes system-driven generation, extraction, consolidation, or update of retained artifacts rather than only manual authoring.
+
+**Curation operations:** `consolidate` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
 ## Read-back placement
 
 **Direction.** Tolaria is both pull and push. Pull comes from MCP `search_notes`, `get_vault_context`, `list_vaults`, and `get_note`, plus normal file/git access. Push comes from the built-in AI panel and CLI-agent launch path: the user opens an AI session, and Tolaria injects active vault memory from the UI context before the receiving agent responds. The same prompt path also includes shipped Tolaria product docs and generic vault-use instructions, but those are baseline context surfaces rather than read-back.
 
 **Read-back signal:** `identifier` `inferred / lexical` — pushed memory keys on active note path, open-tab paths, note-list type/filter state, and inline wikilink references; a visible note list narrowed by free-text UI query adds lexical inference.
 
-**Read-back timing:** `pre-action` — the context snapshot and agent prompt are built before the receiving model or CLI agent acts.
-
 **Faithfulness tested:** `no` — the review found structure, prompt, truncation, and launcher tests, but no ablation showing that injected UI context changes downstream behavior.
 
 **Targeting and signal.** Targeting is `instance`: the pushed memory is selected for the current UI instance rather than always loaded. The primary signal is `identifier`, because the snapshot keys on active note path, open-tab paths, note-list type/filter state, and inline wikilink references already present in the user interface. If the visible note list was narrowed by a free-text UI query, that sub-path is `inferred / lexical`; the implemented push path itself does not use embedding retrieval or an LLM relevance judge. Precision/recall quality and context dilution are not verifiable from code, but the selection mechanism is implemented.
 
-**Timing relative to action.** The snapshot and agent system prompt are built before `sendAgentMessage()` streams the selected target, and the Rust launchers pass the resulting prompt/system prompt into the external CLI or model call. This can change the next action, not merely summarize it afterward ([src/lib/aiAgentConversation.ts](https://github.com/refactoringhq/tolaria/blob/6c979addb3dc9ab6e0ef265156e58e4b1026b1c5/src/lib/aiAgentConversation.ts), [src/utils/streamAiAgent.ts](https://github.com/refactoringhq/tolaria/blob/6c979addb3dc9ab6e0ef265156e58e4b1026b1c5/src/utils/streamAiAgent.ts)).
+**Injection point.** The snapshot and agent system prompt are built before `sendAgentMessage()` streams the selected target, and the Rust launchers pass the resulting prompt/system prompt into the external CLI or model call. This can change the next action, not merely summarize it afterward ([src/lib/aiAgentConversation.ts](https://github.com/refactoringhq/tolaria/blob/6c979addb3dc9ab6e0ef265156e58e4b1026b1c5/src/lib/aiAgentConversation.ts), [src/utils/streamAiAgent.ts](https://github.com/refactoringhq/tolaria/blob/6c979addb3dc9ab6e0ef265156e58e4b1026b1c5/src/utils/streamAiAgent.ts)).
 
 **Selection, scope, and complexity.** Selection is bounded by `MAX_ACTIVE_NOTE_BODY_CHARS`, head/tail truncation, `MAX_REFERENCED_NOTE_BODY_CHARS`, `MAX_NOTE_LIST_ITEMS`, active vault paths, and explicit `vaultPath` disambiguation for MCP tools. Complexity remains moderate: the agent receives one structured JSON snapshot and can pull fuller notes through MCP when needed rather than receiving the whole vault.
 

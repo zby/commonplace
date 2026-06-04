@@ -48,7 +48,13 @@ The useful comparison is promotion discipline. Schmidhuber collapses "is this tr
 - **Treat primitives and payoff as prior bias.** Useful as framing, not an implementation task. In Commonplace, type specs, validators, link labels, and skills are the primitive set that makes some learning trajectories cheap and others unlikely.
 - **Do not borrow scalar promotion without the oracle.** Needs a strong use case. Payoff-per-time works cleanly only when reward is timely and meaningful; KB promotion needs separate source-fidelity, reasoning-value, and maintenance-cost gates.
 
-## Trace-derived learning placement
+## Write-side placement
+
+**Write agency:** `automatic` — self-modification programs change the retained policy distribution during system life, and the fixed top-level strategy retains or rolls those changes back from observed payoff history.
+
+**Curation operations:** `evolve` `invalidate` `promote` — self-modification evolves the existing policy distribution, the rollback stack invalidates changes that no longer qualify, and payoff-per-time gates promote candidate modifications into retained policy state.
+
+### Trace-derived learning
 
 The paper warrants `trace-derived` placement because it reports durable policy updates derived from system-life action/reward history.
 

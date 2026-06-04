@@ -1,6 +1,7 @@
 ---
 description: "Spacebot review: Rust multi-process agent harness with typed graph memory, working-memory synthesis, task autonomy, and engineered prompt activation"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 status: current
 last-checked: "2026-06-02"
 tags: [trace-derived, push-activation]
@@ -82,8 +83,13 @@ The context-efficiency contrast is useful. Commonplace keeps canonical artifacts
 
 **Do not borrow unreviewed auto-memory authority wholesale.** Spacebot is optimized for live interaction, so a memory row can shape future behavior quickly. Commonplace should keep higher-friction promotion for claims that enter the methodology library.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `consolidate` `dedup` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 **Trace source:** `session-logs` `tool-traces` `event-streams` — channel conversations, worker transcripts, tool-mediated memory saves, branch/cortex completions, cron/task events, persistence-branch extractions, and ingestion chunks all feed retained memory or synthesis layers.
 
 **Learning scope:** `per-project` `cross-task` — memory is service-owned per agent with channel/user metadata, multi-agent links, task state, wiki input, and synthesis layers that can affect later work across channels and tasks.
@@ -104,15 +110,13 @@ The context-efficiency contrast is useful. Commonplace keeps canonical artifacts
 
 **Read-back signal:** `coarse` `identifier` `inferred / lexical` `inferred / embedding` — prompt assembly pushes coarse service-level bulletins and synthesis caches, identifier-scoped channel/user/day/event/task layers, and graph-memory recall that combines FTS, vector search, keyword-seeded graph expansion, type filters, and top-k curation.
 
-**Read-back timing:** `pre-action` `post-action` — channel and worker prompts receive memory before the next LLM call, while persistence, compaction, synthesis, cron, and maintenance run after activity and shape later turns.
-
 **Faithfulness tested:** `no` — the review found no read-back faithfulness test proving that injected working memory or knowledge synthesis changes downstream behavior.
 
 **Direction.** Both. `memory_recall`, wiki tools, task tools, channel recall, and API surfaces are pull paths. Channel prompt assembly pushes retained memory through the memory bulletin, knowledge synthesis, working-memory rendering, channel activity maps, participant context, and, where installed for the instance, skills. Worker ambient memory likewise pushes knowledge synthesis and working memory into worker prompts. Static prompt fragments, built-in tool docs, adapter prompts, worker capabilities, and status scaffolding are baseline context surfaces, not memory read-back.
 
 **Targeting and signal.** The strongest memory push is `instance` targeted, mostly by `identifier`: channel prompts pass the current `channel_id` into working-memory rendering, exclude that channel from the other-channel map, scope participant context by active participant keys, and use day/time, event type, channel, user, and config symbols to select what survives. The memory bulletin and knowledge synthesis are coarser service-level caches, refreshed by dirty-version/freshness logic and gathered memory/task sections, then pushed into each channel when memory mode is enabled. The explicit graph-memory pull path uses mixed inferred selection: LanceDB FTS (`inferred / lexical`), vector search (`inferred / embedding`), keyword-seeded graph expansion, RRF, optional type filters, and top-k curation. Precision, recall, and context dilution are not verified from code. This remains `push-activation` because before-action prompt assembly pushes retained memory with scope, freshness, and budget controls, not merely a manual search tool.
 
-**Timing relative to action.** Channel push happens before each channel LLM call. Worker skills and worker context are assembled before worker execution. Memory persistence and compaction run after activity and can affect later turns through new memory rows, working-memory events, or updated syntheses.
+**Injection point.** Channel push happens before each channel LLM call. Worker skills and worker context are assembled before worker execution. Memory persistence and compaction run after activity and can affect later turns through new memory rows, working-memory events, or updated syntheses.
 
 **Selection, scope, and complexity.** Selection is layered: graph memory recall has top-k/search mode/type filters; working memory has token budgets and event caps; channel maps cap channels and inactive windows; participant context has participant thresholds; synthesis caches summarize broader retained state. Complexity remains high because many layers can be present in one prompt. The code makes the complexity explicit, but quality of final prompt composition is runtime-dependent.
 

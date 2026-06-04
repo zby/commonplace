@@ -1,6 +1,7 @@
 ---
 description: "HippoRAG review: graph-based RAG over corpus documents with OpenIE triples, parquet embedding stores, igraph PageRank retrieval, and pull-only QA"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 status: current
 last-checked: "2026-06-02"
 ---
@@ -78,6 +79,12 @@ HippoRAG's context engineering is efficient but opaque. The system keeps only to
 **Use a baseline path beside the graph path.** HippoRAG keeps dense passage retrieval as both a standard RAG baseline and a fallback when fact reranking yields no usable facts. A Commonplace search layer should likewise retain cheap lexical or direct retrieval when graph/ranker signals fail.
 
 **Do not borrow opaque PageRank authority into governance.** PageRank is useful ranking machinery, but it is not a validator, reviewer, or promotion oracle. Commonplace can use such scores to order candidates, but stronger behavioral authority still needs reviewable artifacts and checks.
+
+## Write-side placement
+
+**Write agency:** `manual` `automatic` — callers explicitly add or delete documents through the API, while the indexing path automatically extracts OpenIE entities/triples, writes derived stores, builds graph state, and applies content-hash duplicate handling
+
+**Curation operations:** `dedup` — the review identifies content-hash duplicate detection in the corpus chunk path; graph and embedding rebuilds are access-structure upkeep rather than curation operations
 
 ## Curiosity Pass
 

@@ -1,6 +1,7 @@
 ---
 description: "Phantom review: VM-based AI co-worker with Qdrant memory, trace-derived config evolution, scheduler, MCP, and prompt push activation"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 status: current
 last-checked: "2026-06-02"
 tags: [trace-derived, push-activation]
@@ -90,8 +91,13 @@ Phantom's context story is operationally better for a chat agent. A user message
 
 **Do not borrow large always-loaded config uncritically.** Phantom's always-appended evolved sections fit a single co-worker identity. Commonplace should prefer targeted loading and typed navigation unless a prompt block is small, validated, and clearly session-global.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `consolidate` `dedup` `evolve` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 - **Trace source:** `session-logs` `tool-traces` — completed sessions supply user/assistant messages, session metadata, tracked files, tool metadata, costs, outcomes, and summaries for consolidation and evolution
 - **Learning scope:** `per-task` `cross-task` — per-session memories record individual interactions, while evolved config and reusable facts/strategies shape later sessions
 - **Learning timing:** `online` `staged` — normal consolidation runs after each ready-memory session, while evolution queues gated summaries for cadence-based batch reflection
@@ -111,13 +117,11 @@ On the survey axes, Phantom combines online trace extraction, LLM-mediated refle
 
 **Read-back signal:** `coarse` `inferred / lexical` `inferred / embedding` — evolved config and working memory are always-loaded coarse memory, while dynamic Qdrant context uses current-message lexical and embedding search before the SDK call.
 
-**Read-back timing:** `pre-action` `post-action` — memory context and evolved config are assembled before the agent acts; consolidation and evolution run after sessions and affect later turns.
-
 **Faithfulness tested:** `no` — the review finds insertion, selection, rollback, and invariant mechanisms, but no WITH/WITHOUT ablation or post-action audit proving behavioral uptake.
 
 **Targeting and signal.** Phantom has two memory push shapes. Evolved config and working memory are `coarse`: they are retained memory accumulated or edited during use, but `assemblePrompt()` appends them whenever the blocks exist, so they provide generic standing continuity rather than selection for this instance. Dynamic Qdrant memory is `instance`-targeted: each runtime/web-chat query passes the current user text into `MemoryContextBuilder.build()`, which recalls episodes, facts, and one procedure before the SDK call. The signal is mixed `inferred / embedding` plus `inferred / lexical`: stores embed the query and also build sparse BM25-like vectors from the query text, then Qdrant hybrid search and ranking/validity/top-k filters choose the prompt payload. Payload identifiers such as session id, user id, type, category, and timestamps can filter or rank records, but the deployed per-query selector's relevance signal is content-derived.
 
-**Timing relative to action.** Memory context and evolved config are assembled before the Agent SDK call, so they can change the next action. Consolidation and evolution run after the session, so they only affect future sessions.
+**Injection point.** Memory context and evolved config are assembled before the Agent SDK call, so they can change the next action. Consolidation and evolution run after the session, so they only affect future sessions.
 
 **Selection, scope, and complexity.** Defaults are top 10 episodes, top 20 facts, one procedure, and an estimated 50,000-token memory budget. Facts are prioritized, episodes are filtered by durability/recency before formatting, and procedure inclusion requires a successful procedure lookup. The budget is generous enough that context dilution remains a runtime risk not verifiable from source.
 

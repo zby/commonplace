@@ -1,6 +1,7 @@
 ---
 description: "Halo review: Python trace-analysis engine that indexes OTel JSONL, delegates bounded trace exploration to subagents, and emits harness-improvement reports"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived]
 status: current
 last-checked: "2026-06-02"
@@ -82,8 +83,13 @@ Halo is also more operationally focused. It is built for deployed agent harnesse
 
 **Keep diagnosis separate from patch authority.** Halo's report-to-patch boundary is a useful warning. Commonplace should continue requiring review, validation, and explicit promotion before trace-derived findings become instructions or validators.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `consolidate` `synthesize` `invalidate` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 **Trace source:** `session-logs` `tool-traces` `event-streams` — OpenTelemetry/OpenInference JSONL spans record agent, LLM, tool, handoff, guardrail, and custom harness events
 
 **Learning scope:** `per-project` `cross-task` — traces carry project identifiers and each engine run diagnoses accumulated harness behavior across executions rather than a single live turn

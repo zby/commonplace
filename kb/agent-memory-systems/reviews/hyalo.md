@@ -1,6 +1,7 @@
 ---
 description: "hyalo review: Rust CLI for structured Markdown KB search, mutation, linting, snapshot indexes, and Claude skill/rule integration"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 status: current
 last-checked: "2026-06-02"
 ---
@@ -86,6 +87,12 @@ I also did not find qualifying trace-derived learning. The tidy skill can ask Cl
 **Generated host-agent integration from the CLI.** `hyalo init --claude` makes the tool teach the host agent how to use it. Commonplace could similarly generate or refresh local agent rules/skills from current type specs and collection contracts. Useful, but it should be treated as generated static instruction rather than as read-back learning.
 
 **Saved views as named retrieval contracts.** `.hyalo.toml` views encode reusable filters in config. Commonplace could borrow named query presets for common review and navigation states, especially "current seedling notes," "stale reviews," or "notes missing outbound links." Ready once the query surface is stable.
+
+## Write-side placement
+
+**Write agency:** `automatic` `manual` — the review describes system-driven generation, extraction, consolidation, or update of retained artifacts rather than only manual authoring.
+
+**Curation operations:** `consolidate` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
 
 ## Curiosity Pass
 

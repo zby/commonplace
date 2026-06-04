@@ -1,6 +1,7 @@
 ---
 description: "llm-wiki-coordination review: Markdown wiki protocol layer for dialogue threads, RoleSpace peer evaluation, consensus frontmatter, and structural audit"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 status: current
 last-checked: "2026-06-03"
 tags: [trace-derived]
@@ -84,8 +85,13 @@ The RoleSpace mechanism is the distinctive idea. It records the shape of a dialo
 
 **Do not borrow ontology without enforcement.** The Anchor Form/Recognition vocabulary is coherent inside its source tradition, but Commonplace should not import it unless it creates concrete review, identity, or signature behavior. Otherwise it would add terms without operational payoff.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 **Trace source:** `session-logs` `trajectories` — The retained traces are downstream dialogue threads: contribution files, peer evaluations, closure entries, and consensus updates across a multi-agent thread.
 
 **Learning scope:** `per-project` `cross-task` — Scope is project/wiki-local, but crystallized canon and consensus state can shape later tasks in that wiki.

@@ -1,6 +1,7 @@
 ---
 description: "CASS Memory review: trace-derived playbook rules over cass session logs, pull context scoring, MCP tools, outcome feedback, and trauma guard hooks"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived, push-activation]
 status: current
 last-checked: "2026-06-01"
@@ -84,8 +85,13 @@ The main divergence is source preservation and auditability. cass-memory keeps s
 
 **Installable hook enforcement should stay narrow.** The trauma guard shows how a small class of high-risk memories can become pre-action enforcement. Commonplace should not push every note this way, but narrow hooks for irreversible commands or known project hazards are plausible. Needs strict governance and bypass policy.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `dedup` `evolve` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 **Trace source:** `session-logs` `tool-traces` `event-streams` — The review describes external `cass` session traces, exported transcripts, inline feedback markers, context logs, and outcome records as learning inputs.
 
 **Learning scope:** `per-project` `cross-task` — Learning is global plus optional repo/workspace layering, with cross-agent related-session enrichment when enabled.
@@ -110,13 +116,11 @@ The main divergence is source preservation and auditability. cass-memory keeps s
 
 **Read-back signal:** `coarse` `inferred / lexical` — Trauma hooks fire on coarse before-action hook events, then match retained trauma regexes against the pending command or staged diff lines.
 
-**Read-back timing:** `pre-action` — Trauma guard hooks run before the Bash command or commit proceeds.
-
 **Faithfulness tested:** `no` — The review found context-use/outcome logging and mechanical hook enforcement, but no WITH/WITHOUT test proving selected memories changed agent behavior.
 
 **Targeting and signal.** `cm context` uses an explicit task string, keyword extraction, workspace filters, optional embeddings, minimum relevance thresholds, decayed confidence, cass search, and deprecated-pattern checks. That pull selector is instance-targeted and inferred: lexical by default, with embedding ranking when semantic search is enabled. MCP `cm_context` wraps the same call. The trauma guard's hook entry is action-type keyed (`PreToolUse` for Bash commands or git pre-commit for staged diffs), but the retained-memory selection is instance-targeted: active trauma regexes are matched against the pending command or added diff lines, so the signal is inferred / lexical rather than an identifier match.
 
-**Timing relative to action.** Context retrieval happens before work only if the agent or host calls it. Trauma guard hooks fire before the risky Bash command or commit proceeds, so they can change the next action by denying it and showing the stored reason/reference.
+**Injection point.** Context retrieval happens before work only if the agent or host calls it. Trauma guard hooks fire before the risky Bash command or commit proceeds, so they can change the next action by denying it and showing the stored reason/reference.
 
 **Selection, scope, and complexity.** Context read-back controls volume with `maxBulletsInContext`, `maxHistoryInContext`, `--limit`, `--history`, lookback days, workspace scope, history snippet truncation, and semantic/keyword scoring. Trauma read-back is narrow: one matching active trauma entry is enough to block. Precision is not established from code; regexes can false-positive or false-negative, and context relevance depends on task wording, embedding availability, and playbook quality.
 

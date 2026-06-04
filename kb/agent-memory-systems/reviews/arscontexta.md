@@ -1,6 +1,7 @@
 ---
 description: "Claude Code plugin that derives file-backed agent knowledge systems with generated context files, skills, hooks, methodology claims, and session-learning loops"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived, push-activation]
 status: current
 last-checked: "2026-06-01"
@@ -88,7 +89,13 @@ The main caution is that Ars Contexta sometimes describes stronger automation th
 
 **Condition-based maintenance signals at session start.** Ready for workshop areas. Counting observations, tensions, unprocessed sessions, and inbox items is cheap and useful. The Commonplace version should separate "surface a condition" from "decide what to do," as Ars Contexta's `/next` does.
 
-## Trace-derived learning placement
+## Write-side placement
+
+**Write agency:** `automatic` `manual` — setup and generated skills write vault scaffolds, context files, skills, hooks, config, observations, methodology notes, and queue/session artifacts, while users and agents still manually author notes and operational corrections through the generated workflows
+
+**Curation operations:** `synthesize` `dedup` `promote` — conversational setup synthesizes a derivation and vault from onboarding signals; `/remember` deduplicates observations against existing methodology/observation files; operational evidence can be promoted into methodology directives, context/config changes, and architecture proposals
+
+### Trace-derived learning
 
 - **Trace source:** `session-logs` `event-streams` — The review identifies session transcripts/current session JSON and current-conversation corrections or redirections as the retained trace signal
 - **Learning scope:** `per-project` `cross-task` — Learning is per generated vault, while mined observations and methodology directives can shape later tasks in that vault
@@ -109,13 +116,9 @@ The main caution is that Ars Contexta sometimes describes stronger automation th
 
 **Read-back signal:** `coarse` `identifier` — SessionStart emits coarse vault/session orientation and maintenance conditions; PostToolUse write validation targets the written file by path
 
-**Read-back timing:** `pre-action` `post-action` — Session orientation fires before work, while write validation fires after a write and can shape the next correction
-
 **Faithfulness tested:** `no` — The review found structural activation and scope controls, but no ablation or post-action audit proving intended behavioral effect
 
 **Targeting and signal.** The `SessionStart` push is `coarse`: it fires from a session-boundary symbol in any detected Ars Contexta vault and emits generic retained orientation from session state, goals, identity, recent methodology snippets, and count-based maintenance conditions. It is engineered by timing and scope limits, not by instance relevance. The `PostToolUse` `Write` validation path is `instance` targeting with an `identifier` signal: the hook reads the `tool_input.file_path`, narrows to `*/notes/*` or `*/thinking/*`, then emits warnings for that written file. Precision, recall, context dilution, and effective authority of the pushed material are not verified from code.
-
-**Timing relative to action.** Session orientation fires before work and can change the next action by surfacing goals, identity, methodology, and maintenance conditions. Write validation fires after a write, so it can affect the next correction but not the write that already happened. Auto-commit is asynchronous persistence, not cognitive read-back.
 
 **Selection, scope, and complexity.** Scope is intentionally bounded: tree output is limited to three levels and markdown files; methodology snippets are the first three lines of the five newest files; conditions are simple counts for observations, tensions, archived sessions, and inbox files. This limits volume but not necessarily authority: even a short condition line can steer the next action.
 

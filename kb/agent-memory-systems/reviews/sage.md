@@ -1,6 +1,7 @@
 ---
 description: "SAGE review: consensus-validated agent memory with MCP tools, lifecycle hooks, confidence decay, RBAC, hybrid recall, and trace-derived turn/reflection capture"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived, push-activation]
 status: current
 last-checked: "2026-06-02"
@@ -86,8 +87,13 @@ The deepest design difference is the trust boundary. SAGE treats consensus and a
 
 **Do not borrow governed-service opacity.** SAGE's service architecture is powerful, but Commonplace should preserve inspectable file artifacts as the durable unit. A future service index or hook layer should remain downstream of source-readable artifacts rather than replacing them.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `consolidate` `dedup` `evolve` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 **Trace source:** `session-logs` `event-streams` `trajectories` — Conversation turns, session lifecycle/pre-compaction hook events, and completed-task reflections are summarized into durable records
 
 **Learning scope:** `per-task` `cross-task` — Task reflections are per-task, while committed memories can be recalled across later turns, tasks, agents, and domains
@@ -112,13 +118,11 @@ The deepest design difference is the trust boundary. SAGE treats consensus and a
 
 **Read-back signal:** `identifier` `inferred / lexical` `inferred / embedding` — Per-example and same-scenario task ids provide identifier matching, while n-gram and embedding retrieval select prior skill functions by lexical and embedding similarity
 
-**Read-back timing:** `pre-action` — Retrieved or carried skill functions are rendered into the initial prompt before the model's first task-solving action
-
 **Faithfulness tested:** `no` — The section reports skill-use counts but no code-level with/without ablation proving that pushed skills change downstream success
 
 **Targeting and signal.** Targeting is `instance`. In the rollout path, the signal is primarily `identifier`: skills generated for a task/scenario are carried by the per-example skill-library slot and replayed on the paired later subtask (`sage/llm_agent/appworld_generation.py`, `sage/llm_agent/app_world/app_world_env.py`). In the AppWorld evaluation patch, targeting is mixed: `default` retrieval keys on same-scenario task ids, `query_embedding` and `skill_embedding` use `inferred / embedding`, and `ngram` uses `inferred / lexical` before injecting matching functions into the prompt (`patches/appworld/experiments/code/skill_library_agent/skill_library_agent.py`). Precision, recall, and actual context dilution are not verified from code.
 
-**Timing relative to action.** The push fires before the task-solving action: `get_initial_prompts` renders `retrieved_skills` into the initial prompt, and the evaluation agent's `initialize` method renders the selected skill functions before the first model call.
+**Injection point.** The push fires before the task-solving action: `get_initial_prompts` renders `retrieved_skills` into the initial prompt, and the evaluation agent's `initialize` method renders the selected skill functions before the first model call.
 
 **Selection, scope, and complexity.** Rollout read-back is scoped by the scenario/subtask pairing and pushes all functions held in that per-example skill library. Evaluation retrieval caps are coarse: skill-embedding retrieval stops after roughly six unique functions, query-embedding and n-gram retrieval select up to two matching prior task ids, and default retrieval loads functions from sibling scenario ids. The pushed unit is whole Python function text, so complexity is bounded mainly by function count and prompt-length truncation elsewhere in the rollout loop, not by progressive disclosure.
 

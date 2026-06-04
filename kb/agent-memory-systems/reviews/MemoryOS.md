@@ -1,6 +1,7 @@
 ---
 description: "MemoryOS review: hierarchical JSON/Chroma memory with trace summarization, profile extraction, FAISS retrieval, and MCP tools"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived, push-activation]
 status: current
 last-checked: "2026-06-02"
@@ -82,7 +83,13 @@ The most important difference is that MemoryOS collapses memory maintenance into
 
 **Use ChromaDB as an optional retrieval cache only.** Needs a concrete search layer. The Chroma variant shows how vector storage can accelerate search while JSON metadata remains available; Commonplace should keep Markdown as the source of truth if it adds a vector cache.
 
-## Trace-derived learning placement
+## Write-side placement
+
+**Write agency:** `manual` `automatic` — `add_memory()` and MCP `add_memory` provide an explicit write interface, while `get_response()` and the update path automatically store QA traces, promote evicted turns, update profiles, and extract long-term knowledge.
+
+**Curation operations:** `consolidate` `evolve` `synthesize` `decay` `promote` — short-term turns are summarized into mid-term pages, the complete user profile is updated from prior profile plus new pages, private/assistant knowledge entries are extracted from hot sessions, bounded deques/LFU/capacity limits forget or evict, and heat-triggered analysis promotes mid-term traces toward long-term profile and knowledge state.
+
+### Trace-derived learning
 
 **Trace source:** `session-logs` `event-streams` — MemoryOS consumes user/assistant QA conversation traces, timestamps, optional metadata, page chains, retrieval visits, and benchmark conversation records.
 
@@ -108,13 +115,11 @@ The most important difference is that MemoryOS collapses memory maintenance into
 
 **Read-back signal:** `coarse` `inferred / embedding` — The wrapper includes short-term history and the raw user profile coarsely, and uses query embeddings over FAISS or Chroma-backed memory for instance-targeted recall.
 
-**Read-back timing:** `pre-action` `post-action` — Retrieval and prompt assembly happen before the generated answer; the resulting QA trace is written after generation for later turns.
-
 **Faithfulness tested:** `no` — The review found retrieval and answering evaluation scripts, but no with/without ablation proving pushed memory changes downstream model behavior or agent actions.
 
 **Targeting and signal.** The engineered memory push is `instance` targeted: `get_response(query)` uses the current query as the instance payload. Its selector is `inferred / embedding`, not an identifier match: the code embeds the query, runs FAISS inner-product search over mid-term session summaries/pages and long-term knowledge entries, then filters by segment/page/knowledge thresholds and top-k capacities. Short-term history and the raw user profile are included by the wrapper without semantic selection, so those inclusions are coarse context inside the same pre-call path.
 
-**Timing relative to action.** Retrieval and prompt assembly happen before the final LLM response, so memory can change the next answer. The new QA pair is written after generation, so that trace affects later turns. Heat-triggered profile and knowledge extraction can also run after a write and shape later retrieval.
+**Injection point.** Retrieval and prompt assembly happen before the final LLM response, so memory can change the next answer. The new QA pair is written after generation as write-side maintenance for later turns. Heat-triggered profile and knowledge extraction can also run after a write and shape later retrieval.
 
 **Selection, scope, and complexity.** Selection is bounded by short-term capacity, `retrieval_queue_capacity`, `top_k_sessions`, `top_k_knowledge`, similarity thresholds, mid-term heat, LFU eviction, and long-term knowledge capacity. Context complexity is moderate: the prompt can include recent history, historical pages with meta info, user profile text, user knowledge, assistant knowledge, and metadata in one assembled call, but it does not load the whole store.
 

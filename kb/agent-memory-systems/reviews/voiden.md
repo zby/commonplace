@@ -1,6 +1,7 @@
 ---
 description: "Voiden review: offline Git-native API workspace with .void files, extension skills, search, imports, and pull-only agent affordances"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 status: current
 last-checked: "2026-06-02"
 ---
@@ -76,6 +77,12 @@ The biggest divergence is authority. In Voiden, symbolic request blocks have exe
 **Use readable extraction for custom block files.** Useful if Commonplace grows richer embedded block formats. Voiden's search path extracts human-readable text from Markdown and YAML blocks before matching. Commonplace can borrow that pattern for future mixed-format artifacts without making the embedded structure opaque to `rg`-style workflows.
 
 **Do not borrow execution history as automatic learning.** Voiden's histories are useful evidence, but they do not become better rules by being stored. Commonplace should keep any trace-to-instruction promotion behind explicit review and source grounding.
+
+## Write-side placement
+
+**Write agency:** `automatic` `manual` — the review describes system-driven generation, extraction, consolidation, or update of retained artifacts rather than only manual authoring.
+
+**Curation operations:** `consolidate` `synthesize` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
 
 ## Curiosity Pass
 

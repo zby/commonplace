@@ -1,6 +1,7 @@
 ---
 description: "REM review: episodic memory service with parsed episodes, vector/graph retrieval, LLM consolidation, and LangChain memory injection"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived, push-activation]
 status: current
 last-checked: "2026-06-02"
@@ -78,7 +79,13 @@ The largest design difference is the authority boundary. REM can put memory back
 
 **Do not borrow multi-store complexity without an operational need.** REM's Postgres+Qdrant+Neo4j+Redis stack gives runtime affordances but increases deployment and consistency burden. Commonplace should only add such substrates for high-volume ingestion or retrieval problems that files and deterministic indexes cannot solve.
 
-## Trace-derived learning placement
+## Write-side placement
+
+**Write agency:** `automatic` — API/SDK writes store episodes, parse and embed them, and queued or scheduled workers consolidate unconsolidated episodes into semantic memories without a manual authoring channel in the reviewed loop.
+
+**Curation operations:** `consolidate` `synthesize` — worker consolidation groups episodes and prompts for durable semantic facts, synthesizing new memory records from clustered trace evidence.
+
+### Trace-derived learning
 
 - **Trace source:** `session-logs` `trajectories` — REM stores agent episodes and LangChain human/assistant turns after tasks or framework turns
 - **Learning scope:** `per-task` `cross-task` — episodes are written per task or turn and retained under agent/user/session identifiers for later retrieval
@@ -101,13 +108,11 @@ The largest design difference is the authority boundary. REM can put memory back
 
 **Read-back signal:** `identifier` `inferred / embedding` — LangChain push uses the configured `agent_id` as an identifier filter and embeds the current invocation input for Qdrant episode and semantic-memory retrieval.
 
-**Read-back timing:** `pre-action` `post-action` — LangChain memory loading runs before model invocation, while `save_context()` writes the completed turn afterward for later retrieval.
-
 **Faithfulness tested:** `no` — tests and benchmarks inspect retrieval and `injection_prompt` contents, but the review found no with/without-memory behavior ablation.
 
 **Targeting and signal.** Pull retrieval triggers on `POST /api/v1/retrieve` or `REMClient.retrieve()`. LangChain push targets the current invocation instance: the framework's pre-invoke memory loading step derives a query from the current `input`, `question`, or `human_input`, uses the configured `agent_id` as an identifier filter, and sends the resulting prompt to that chain call. The final relevance selector is `inferred / embedding`: REM embeds the current query, searches Qdrant episode and semantic-memory collections under the `agent_id` filter, then uses graph-neighbor expansion, recency, retrieval count, and `top_k` to shape the returned set. Precision, recall, and context dilution are not verified from code.
 
-**Timing relative to action.** Retrieval and LangChain memory loading happen before model response and can change the next action. Episode writes and consolidation happen after a task/turn or in background jobs, so they affect later retrievals rather than the current response.
+**Injection point.** Retrieval and LangChain memory loading happen before model response and can change the next action. Episode writes and consolidation happen after a task/turn or in background jobs, so they affect later retrievals rather than the current response.
 
 **Selection, scope, and complexity.** Selection is bounded by `top_k` with a hard cap of 20, semantic-memory inclusion, one-hop graph expansion from at most three episode hits, and reranking. Scope is mostly agent-level; user/session metadata exists in episode records but is not a first-class retrieval filter in the reviewed retrieve request. Complexity is low to moderate: the injection prompt is a flat text block of memory snippets and learned facts, not a nested graph or multi-step navigation plan.
 

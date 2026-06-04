@@ -1,6 +1,7 @@
 ---
 description: "Cognee review: Python memory control plane with graph/vector retrieval, session traces, feedback weighting, MCP tools, and agent memory injection"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived, push-activation]
 status: current
 last-checked: "2026-06-01"
@@ -88,8 +89,13 @@ Cognee's graph/vector substrate is useful for scale and multi-hop retrieval, but
 
 **Do not borrow opaque authority drift.** Feedback weights, graph summaries, trace summaries, skill proposals, and cache snapshots all shape future behavior. Commonplace should keep those authority changes explicit, reviewable, and source-pinned rather than letting them accumulate as hidden service state.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `consolidate` `dedup` `evolve` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 **Trace source:** `session-logs` `tool-traces` `trajectories` — session traces, decorated function/tool execution records, and agentic skill/tool run trajectories are retained for later improvement.
 
 **Learning scope:** `per-task` `cross-task` — traces are session-scoped at capture time, then promoted into dataset-scoped graph memory or skill proposals that can affect later tasks.
@@ -114,13 +120,11 @@ Cognee's graph/vector substrate is useful for scale and multi-hop retrieval, but
 
 **Read-back signal:** `identifier` `inferred / embedding` — decorator and session push are narrowed by user, dataset, and session identifiers, while graph-memory selection uses vector similarity over graph/vector collections.
 
-**Read-back timing:** `pre-action` `post-action` — decorator retrieval and `LLMGateway` injection happen before the mediated LLM call, while trace persistence and improvement happen after an action for later calls.
-
 **Faithfulness tested:** `no` — the review found retrieval and injection tests, but no checked-in with/without behavioral ablation proving the model uses pushed memory correctly.
 
 **Targeting and signal.** The clearest engineered push path is the decorator. Its graph-memory branch is `instance` targeting with an `inferred / embedding` signal: it derives a content query from a fixed string, a selected method parameter, or a string argument; narrows by user/dataset permissions; runs `GRAPH_SUMMARY_COMPLETION` with `memory_top_k`; then stores the result in the active context ([runtime.py](https://github.com/topoteretes/cognee/blob/cfb0aa4d0b3ae0154cf9f24e5908263d565341f4/cognee/modules/agent_memory/runtime.py)). Dataset and user permissions are identifier narrowing, but the final memory selector is vector similarity over graph/vector collections. Its session-memory branch is `instance` targeting with an `identifier` signal: `session_id` and user select recent trace feedback, bounded by `session_memory_last_n`. `LLMGateway` injects the active memory context into subsequent Cognee-mediated LLM calls ([LLMGateway.py](https://github.com/topoteretes/cognee/blob/cfb0aa4d0b3ae0154cf9f24e5908263d565341f4/cognee/infrastructure/llm/LLMGateway.py)). Session graph-context prepending is also `instance / identifier`, keyed by user and `session_id`. Precision, recall, context dilution, and effective authority are runtime qualities, not verified from code.
 
-**Timing relative to action.** Decorator retrieval occurs before the wrapped agent function runs; injection occurs before the LLM receives the prompt, so it can change the next action. Trace persistence and `improve()` happen after action; they only affect later calls unless the same workflow explicitly recalls the updated memory.
+**Injection point.** Decorator retrieval occurs before the wrapped agent function runs; injection occurs before the LLM receives the prompt, so it can change the next action. Trace persistence and `improve()` happen after action; they only affect later calls unless the same workflow explicitly recalls the updated memory.
 
 **Selection, scope, and complexity.** Selection is code-grounded: dataset permissions, `dataset_name`, `memory_top_k`, graph-summary vector search, `session_id`, `session_memory_last_n`, `MAX_MEMORY_CONTEXT_LENGTH`, and optional `memory_only_context` bound what is loaded. The graph completion path also has `top_k`, `wide_search_top_k`, neighborhood controls, and optional global context index prelude. Complexity can still be high because retrieved memory is assembled as prose context rather than a typed minimal fact set.
 

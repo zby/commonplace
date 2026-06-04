@@ -1,6 +1,7 @@
 ---
 description: "Synthadoc review: ingest-time LLM wiki compiler with Markdown pages, SQLite audit/provenance, lifecycle states, routing, and context packs"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 status: current
 last-checked: "2026-06-03"
 ---
@@ -75,6 +76,12 @@ The largest divergence is authority. Synthadoc is willing to let an LLM compile 
 **Context packs as handoff artifacts.** Ready for read-only workflows. A goal -> decomposed searches -> budgeted excerpts pack is a good shape for giving another agent bounded evidence without turning the whole KB into prompt stuffing.
 
 **Do not borrow fail-open provenance as trust.** Synthadoc correctly favors ingest completion, but Commonplace should not let missing citation annotation silently preserve the same authority as fully grounded claims.
+
+## Write-side placement
+
+**Write agency:** `automatic` `manual` — the review describes system-driven generation, extraction, consolidation, or update of retained artifacts rather than only manual authoring.
+
+**Curation operations:** `dedup` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
 
 ## Curiosity Pass
 

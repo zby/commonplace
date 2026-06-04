@@ -1,6 +1,7 @@
 ---
 description: "Letta Context Constitution review: authored prose policy for token-space learning, context hierarchy, MemFS affordances, and agent self-management"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 status: current
 last-checked: "2026-06-01"
 ---
@@ -69,8 +70,6 @@ The biggest comparison risk is over-reading the source. The documents describe a
 
 **Read-back signal:** `coarse` — the only push read-back evidenced in the review is always-loaded retained `/system` memory; external memory files and message history remain pull surfaces
 
-**Read-back timing:** `pre-action` — the described `/system` memory is present in the prompt before the agent acts
-
 **Faithfulness tested:** `no` — the reviewed repository has no implementation, ablation, or policy-following test showing that pushed memory changes behavior
 
 ### Borrowable Ideas
@@ -84,6 +83,12 @@ The biggest comparison risk is over-reading the source. The documents describe a
 **Separate memory-maintenance subagents by job.** Recall, reflection, and defragmentation are sensible roles. Commonplace already uses specialized skills and review workflows; it could name memory-maintenance roles more explicitly when trace review, promotion, or index repair become recurring operations.
 
 **Do not borrow identity rhetoric as architecture.** The constitution uses strong selfhood and continuity language. Commonplace should borrow the operational parts - context hierarchy, promotion boundaries, progressive disclosure, and reviewable self-modification - without making methodology quality depend on a metaphysical claim about agent identity.
+
+## Write-side placement
+
+**Write agency:** `automatic` `manual` — the review describes system-driven generation, extraction, consolidation, or update of retained artifacts rather than only manual authoring.
+
+**Curation operations:** `consolidate` `synthesize` `invalidate` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
 
 ## Curiosity Pass
 

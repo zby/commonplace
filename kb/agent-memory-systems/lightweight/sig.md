@@ -45,6 +45,12 @@ The sharpest divergence is governance. Commonplace is explicit about document co
 - **Hidden git for non-technical team sync.** If Commonplace ever targets non-terminal maintainers, Sig's reported approach is the right packaging direction: keep files/git as the substrate, but make routine contribution and pull operations visible as ordinary app actions.
 - **Analytics allowlist as a documentation pattern.** The analytics document is not memory architecture, but it is a useful product trust pattern: enumerate exactly what leaves the machine and what never does. Borrow only if Commonplace grows telemetry or hosted surfaces.
 
+## Write-side placement
+
+**Write agency:** `manual` `automatic` — users provide raw capture and review sharing decisions, while the reported app synthesis step structures private notes and prepares org-facing summaries before reviewed sharing.
+
+**Curation operations:** `synthesize` — the reported synthesis step turns raw work narration into private notes and team-facing summaries; the public docs do not expose deduplication, decay, invalidation, or automatic promotion rules.
+
 ## Read-back placement
 
 **Read-back:** `both` - the docs report pull-style reuse when external AI tools read the local markdown folder, and push-style reuse when Sig itself sends user messages to an AI provider with Sig-managed context. The sources do not document an engineered activation path - no matcher, retrieval budget, before-action hook, or faithfulness test - so `push-activation` is not warranted.

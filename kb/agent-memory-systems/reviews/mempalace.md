@@ -1,6 +1,7 @@
 ---
 description: "MemPalace review: local-first verbatim drawers, closet ranking, SQLite temporal KG, MCP/CLI/plugin surfaces, hooks, and trace-derived capture"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived]
 status: current
 last-checked: "2026-06-02"
@@ -82,8 +83,13 @@ The second divergence is activation. MemPalace has hooks that push write-back ob
 
 **Do not borrow database opacity as the primary KB substrate.** MemPalace's Chroma/SQLite design is reasonable for high-volume personal memory. For Commonplace's methodology KB, plain files, git diffs, type specs, and validation remain better governance surfaces.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `consolidate` `evolve` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 - **Trace source:** `session-logs` `event-streams` — Claude Code, Codex, ChatGPT, Slack/plain-text conversations, hook-provided transcript paths, and hook event counts/transcript mining
 - **Learning scope:** `per-project` `cross-task` — palace path, wing, room, source file, collection, and hook transcript paths scope local project/user memory across later tasks
 - **Learning timing:** `online` `offline` `staged` — MCP/manual writes and hooks can capture during use; mining, sweeps, and benchmarks run batch/offline; pre-compaction and periodic hooks stage capture around workflow boundaries

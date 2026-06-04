@@ -1,6 +1,7 @@
 ---
 description: "Text-game memory agent that builds an in-run knowledge graph and episodic store, then relevance-pushes selected facts into planner and action prompts"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [push-activation]
 status: current
 last-checked: "2026-06-01"
@@ -78,19 +79,23 @@ The most important distinction is durability. AriGraph learns from observations,
 
 **Read-back:** `push` — From the planner/action agent's perspective, the orchestration layer relevance-selects graph facts and episodic memories and inserts them into prompts before each decision; the selected memory is not requested by the planner/action agent through a tool call
 
+## Write-side placement
+
+**Write agency:** `automatic` — observations and movement actions update the in-run graph and episodic store through extraction, duplicate exclusion, outdated-fact pruning, navigation-edge insertion, and episodic-memory storage.
+
+**Curation operations:** `dedup` `synthesize` `invalidate` `promote` — the graph update path excludes already-known triplets, synthesizes graph facts and navigation edges from observations/actions, prunes predicted outdated conflicts, and promotes observation-derived facts into prompt and navigation-routing authority inside the run.
+
 ## Read-back placement
 
 **Direction.** AriGraph has engineered push activation from the planner/action agent's perspective. The pipeline, not the planner/action LLM, calls the memory system every step and supplies the selected "Information from the memory module" and "most relevant episodic memories" in the prompt.
 
 **Read-back signal:** `inferred / embedding` `inferred / judgment` — the pipeline uses LLM judgment to extract query entities/depths from the current observation and plan, then embedding similarity over graph strings and episodic observations selects memory for the next prompt.
 
-**Read-back timing:** `pre-action` `post-action` — selected memory is inserted before planning and action selection; after action selection, graph navigation can translate a `go to` command into hidden route steps.
-
 **Faithfulness tested:** `no` — benchmark reward and retrieved-memory logs exist, but the review found no with/without ablation or post-action audit proving that fired memory changed the model's decision.
 
 **Targeting and signal.** Targeting is `instance`: every nonterminal game step uses the current observation and plan to select memory for this step, not a generic always-load. The graph-fact signal is `inferred / judgment` followed by `inferred / embedding`: an LLM extracts entity queries and depths from the current observation and plan, then Contriever similarity selects graph strings above a threshold and graph expansion follows those hits. The episodic signal is also `inferred / embedding`, with ranking by current-plan embedding similarity plus overlap with the currently retrieved subgraph.
 
-**Timing relative to action.** Read-back happens before planning and action selection, so memory can change the immediate next plan and command. The graph can also affect environment interaction after action selection when a `go to` action is translated into a route through known navigation edges.
+**Injection point.** Read-back assembles before planning and action selection, so memory can change the immediate next plan and command. The graph can also affect environment interaction when a selected `go to` action is translated into a route through known navigation edges.
 
 **Selection, scope, and complexity.** The selected subgraph is bounded by query depths, `topk=6`, `post_retrieve_threshold=0.75`, and graph expansion; episodic memory is bounded by `topk_episodic`. The implementation controls volume, but complexity can still grow because graph facts, episodic text, history, inventory, plan, exploration hints, and valid actions are all rendered into one prompt.
 

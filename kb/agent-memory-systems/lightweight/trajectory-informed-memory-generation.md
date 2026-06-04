@@ -46,7 +46,13 @@ The most direct divergence is read-back. Commonplace generally requires an agent
 - **Consolidate near-duplicate operational advice.** Clustering similar tips and then merging them maps to a possible review-bundle workflow for repeated log observations. Needs a strong oracle or reviewer gate before automation.
 - **Compare cheap and rich retrieval modes.** The cosine-vs-LLM-guided retrieval split is a useful design pattern for Commonplace search experiments: cheap lexical/vector shortlist first, richer agent judgment only when the task demands it. Needs a concrete retrieval use case.
 
-## Trace-derived learning placement
+## Write-side placement
+
+**Write agency:** `automatic` — the reported pipeline analyzes completed trajectories, generates reusable tips, consolidates them, stores them with embeddings and metadata, and later retrieves them without manual authoring of each retained tip.
+
+**Curation operations:** `consolidate` `dedup` `synthesize` — subtask generalization and tip compression consolidate trajectory evidence, clustering and LLM merging remove redundant tips, and strategy/recovery/optimization tip generation synthesizes new operational advice from completed runs.
+
+### Trace-derived learning
 
 Trajectory-Informed Memory Generation qualifies as trace-derived coverage because the sources document durable retained artifacts extracted from agent trajectories.
 
@@ -61,7 +67,7 @@ Trajectory-Informed Memory Generation qualifies as trace-derived coverage becaus
 **Read-back:** `push` — the paper reports retrieving task-relevant tips at agent invocation and injecting them into the prompt before reasoning, so memory reaches the agent as unsolicited context selected by the surrounding system rather than by the agent's own lookup.
 
 - **Trigger and relevance signal** — reported retrieval is task-context keyed, using either cosine similarity over embeddings or LLM-guided selection with metadata filtering and category prioritization.
-- **Timing relative to action** — pre-reasoning prompt injection; selected tips can shape the next plan before the agent acts.
+- **Injection point** — pre-reasoning prompt injection; selected tips can shape the next plan before the agent acts.
 - **Selection, scope, and complexity** — context cost is bounded by distilled tips rather than full trajectories, but the exact top-k, token budget, thresholds, and consolidation prompts are not verified from code.
 - **Authority at consumption** — advisory prompt guidance, not a hard gate or validator. Effective adherence is inferred from benchmark deltas, not directly tested as a faithfulness check in the local source coverage.
 - **Failure surface** — mismatched retrieval can be actively harmful because agents tend to follow retrieved experience; the paper acknowledges related experience-following risks, but the local snapshot does not document a bad-tip retirement policy.

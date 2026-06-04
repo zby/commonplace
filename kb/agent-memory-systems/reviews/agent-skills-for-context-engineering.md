@@ -1,6 +1,7 @@
 ---
 description: "Agent Skills for Context Engineering review: plugin-packaged context-engineering skills, researcher OS, routed baseline skill activation, and trace-to-skill example"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived]
 status: current
 last-checked: "2026-06-01"
@@ -77,7 +78,13 @@ The researcher subsystem is the strongest convergence. It resembles a smaller Co
 
 **Preserve generated skill references beside the skill.** The trace optimizer writes optimization summaries, final prompts, and detected patterns under the generated skill directory. A Commonplace analogue would keep derivation bundles beside generated instructions until review decides whether to promote them. Ready for generated drafts and AutoReason-style loops.
 
-## Trace-derived learning placement
+## Write-side placement
+
+**Write agency:** `manual` `automatic` — the main skill corpus and researcher artifacts are authored and maintained by people or agents, while the interleaved-thinking example can capture traces, optimize prompts, and generate new skill directories and references.
+
+**Curation operations:** `consolidate` `synthesize` — trace analysis aggregates execution evidence into diagnostic patterns and prompt changes, then generates new `SKILL.md` prose and reference artifacts.
+
+### Trace-derived learning
 
 **Trace source:** `tool-traces` `trajectories` — The interleaved-thinking example captures thinking blocks, tool calls, tool results, final responses, success/error status, token counts, and timestamps from agent executions.
 

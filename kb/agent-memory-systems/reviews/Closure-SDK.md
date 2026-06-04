@@ -1,6 +1,7 @@
 ---
 description: "Closure-SDK review: geometric S3 verification, database, and experimental brain runtime with file-backed state and query-gated recall but no agent prompt memory"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 status: current
 last-checked: "2026-06-01"
 ---
@@ -80,6 +81,12 @@ The main divergence is semantic authority. In Commonplace, a note, instruction, 
 **Separate geometric/ranking authority from semantic authority.** Resonance search ranks by a mathematically explicit distance, then leaves interpretation to the application. Commonplace should preserve this separation if it adds embeddings or learned ranking: rankers can select candidates, but prose/type contracts should remain the place where authority is assigned. Ready as a design constraint.
 
 **Internal memory layers can be useful without prompt injection.** `closure_ea` shows a memory-bearing runtime where reads and writes happen inside the substrate itself. Commonplace should not assume every memory system is a prompt-context system; some retained artifacts shape future behavior through validators, stores, route tables, or model state. Ready as taxonomy discipline.
+
+## Write-side placement
+
+**Write agency:** `manual` `automatic` — Closure DNA tables and CLI/API calls provide the manual mutation channel, while `closure_ea` ingests carriers, writes epigenetic and response entries, reinforces or corrects entries, and runs consolidation inside the runtime
+
+**Curation operations:** `consolidate` `dedup` `evolve` — the review's own prose identifies `closure_ea` consolidation plus merge/prune behavior for non-DNA entries, and says epigenetic entries can be created, reinforced, or corrected from carrier ingest and closure events
 
 ## Curiosity Pass
 

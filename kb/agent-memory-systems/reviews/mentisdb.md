@@ -1,6 +1,7 @@
 ---
 description: "MentisDB review: Rust append-only thought chains with ranked/vector/graph retrieval, skill registry, MCP/REST/dashboard surfaces, and candidate LLM extraction"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 status: current
 last-checked: "2026-06-02"
 ---
@@ -75,8 +76,6 @@ MentisDB's hash-chain and sidecar design is a useful contrast to Commonplace's p
 
 **Read-back signal:** `coarse` — The only memory push described here is host-mediated chain/type/recent-window loading through the LangChain memory adapter, not identifier or inferred instance relevance.
 
-**Read-back timing:** `pre-action` — `load_memory_variables()` formats retained thoughts into a prompt variable before the host model call consumes them.
-
 **Faithfulness tested:** `no` — The review notes benchmarks and tests, but not a with/without-memory behavioral ablation showing that pushed context changes downstream agent behavior.
 
 ### Borrowable Ideas
@@ -92,6 +91,12 @@ MentisDB's hash-chain and sidecar design is a useful contrast to Commonplace's p
 **Borrow `source_episode` only with stronger lineage.** Needs a trace workflow. An episode label is useful, but Commonplace should retain source snapshots, exact spans, or review reports when an extracted memory could affect future behavior.
 
 **Do not borrow candidate extraction as automatic learning.** Ready now as a caution. MentisDB's LLM extraction is safer because candidates are not appended automatically; Commonplace should keep the same boundary for any trace-to-note assistant.
+
+## Write-side placement
+
+**Write agency:** `automatic` `manual` — the review describes system-driven generation, extraction, consolidation, or update of retained artifacts rather than only manual authoring.
+
+**Curation operations:** `consolidate` `dedup` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
 
 ## Curiosity Pass
 

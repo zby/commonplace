@@ -1,6 +1,7 @@
 ---
 description: "EveryInc compound-engineering-plugin review: multi-host CE skills, project-local learning docs, session-history recall, and converter governance"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived, push-activation]
 status: current
 last-checked: "2026-06-03"
@@ -80,8 +81,13 @@ Compound Engineering is stronger on adoption and workflow packaging. The same pl
 
 **Machine-readable review contracts for skill-to-skill calls.** `ce-code-review` has a `mode:agent` JSON output path for programmatic callers while preserving a Markdown human report ([plugins/compound-engineering/skills/ce-code-review/SKILL.md](https://github.com/EveryInc/compound-engineering-plugin/blob/09391874b4be1a248bc7d627b0ebd5c29f0c886b/plugins/compound-engineering/skills/ce-code-review/SKILL.md)). Commonplace skills that are called by other skills should similarly expose a stable machine-readable result, rather than forcing downstream automation to parse human prose.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `consolidate` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 - **Trace source:** `session-logs` `tool-traces` `event-streams` — prior coding-agent session JSONL supplies session history, event records, and collapsed tool-call summaries.
 - **Learning scope:** `per-project` `cross-task` — extraction is repo/branch/time-window scoped, and distilled findings can inform later tasks through solution docs.
 - **Learning timing:** `offline` `staged` — traces are mined after they already exist, during explicit `ce-sessions` or `ce-compound` workflow stages.
@@ -99,15 +105,13 @@ Compound Engineering is stronger on adoption and workflow packaging. The same pl
 
 **Read-back signal:** `coarse` `identifier` `inferred / lexical` `inferred / judgment` — workflow anchors are coarse context; paths, repo, branch, frontmatter, and filenames are identifier signals; keyword counts are lexical inference; related-doc/session synthesis can use semantic judgment.
 
-**Read-back timing:** `pre-action` — strategy, prior learnings, requirements, pulse config, and session-history findings are read before the receiving workflow finalizes its next artifact or decision.
-
 **Faithfulness tested:** `no` — the review found selection, extraction, validation, and refresh machinery, but no end-to-end with/without behavioral test for pushed project memory.
 
 **Direction.** The system uses both pull and push for project-retained memory. Pull appears when a user invokes `ce-sessions`, runs `ce-compound-refresh` on `docs/solutions/`, or asks a skill to inspect a named artifact. Push appears when a CE workflow automatically reads well-known project state after invocation: `ce-strategy` is read by ideation/brainstorm/planning, `ce-plan` searches requirements docs, `ce-code-review` dispatches `ce-learnings-researcher`, `ce-compound` searches related solution docs and optionally session history, and `ce-product-pulse` reads pulse config before writing a browseable pulse report.
 
 **Targeting and signal.** Targeting is mixed. Well-known anchors such as `STRATEGY.md`, `.compound-engineering/config.local.yaml`, and `CONCEPTS.md` are coarse identifier-based paths. Requirements and learning retrieval are instance-targeted by directory, filename, frontmatter, keywords, branch, repo, and semantic judgment. Session retrieval uses identifier signals where available (`repo`, branch/cwd, time window) and inferred lexical signals through keyword counts before handing filtered traces to an LLM synthesizer.
 
-**Timing relative to action.** Most read-back is pre-action context: strategy grounds planning before the plan is written, prior learnings inform a review before findings are finalized, and session-history findings can alter a learning before it is saved. `ce-product-pulse` is after-the-fact reporting, but its saved reports become future browseable project memory.
+**Injection point.** Most read-back is pre-action context: strategy grounds planning before the plan is written, prior learnings inform a review before findings are finalized, and session-history findings can alter a learning before it is saved. `ce-product-pulse` is after-the-fact reporting, but its saved reports become future browseable project memory.
 
 **Selection, scope, and complexity.** The system has local caps and filters rather than a global memory budget. `ce-sessions` caps deep dives at five sessions and extracts skeletons to files. `ce-compound` tells related-doc searchers to grep frontmatter first, read only candidates, and fully read only strong/moderate matches. `ce-plan` narrows source requirements by path, recency, and relevance. These are practical context controls, but effective precision/recall is not verified from code.
 

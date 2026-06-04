@@ -1,6 +1,7 @@
 ---
 description: "interview-doc-agent review: single-file job-document skill using a Markdown experience library, index-first lookup, templates, and JD-conditioned outputs"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 status: current
 last-checked: "2026-06-03"
 ---
@@ -80,6 +81,12 @@ The largest divergence is governance. Commonplace treats the type, status, sourc
 **Use placeholders as an anti-hallucination contract.** Ready as a writing convention. The skill's `___` rule is a concrete way to keep missing information visible instead of letting the agent smooth over gaps.
 
 **Do not borrow prose-only grounding for higher-authority artifacts.** For job documents, human review may be enough. For Commonplace instructions, validators, or reviews, the same "trust the skill" pattern would be too weak without citations, validation, and review.
+
+## Write-side placement
+
+**Write agency:** `automatic` `manual` — the review describes system-driven generation, extraction, consolidation, or update of retained artifacts rather than only manual authoring.
+
+**Curation operations:** `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
 
 ## Curiosity Pass
 

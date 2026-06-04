@@ -1,6 +1,7 @@
 ---
 description: "Supermemory review: hosted memory API with MCP/browser/SDK wrappers, conversation trace capture, profile/search read-back, and graph claims"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived, push-activation]
 status: current
 last-checked: "2026-06-02"
@@ -80,8 +81,13 @@ The main tradeoff is opacity versus ergonomics. Supermemory's hosted API returns
 
 **Do not borrow API-side opacity for methodology knowledge.** Supermemory's hosted backend is appropriate for product memory, but Commonplace's core methodology artifacts should remain inspectable files with validation and review evidence.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `dedup` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 - **Trace source:** `session-logs` `tool-traces` `event-streams` — conversation and prompt messages, tool-call fields where available, and browser/framework/MCP event hooks feed the hosted memory service
 - **Learning scope:** `per-project` `cross-task` — container tags, project/default-project state, and custom conversation ids scope memory that can be reused across later calls and tasks
 - **Learning timing:** `online` — browser, framework, and MCP capture/retrieval paths run during conversations; backend distillation timing beyond the hosted API is not locally visible
@@ -103,13 +109,11 @@ The main tradeoff is opacity versus ergonomics. Supermemory's hosted API returns
 
 **Read-back signal:** `coarse` `inferred / lexical` `inferred / embedding` — profile/context paths load coarse container profile memory, while query/full/browser paths send prompt text to hosted semantic/hybrid search for instance-targeted recall.
 
-**Read-back timing:** `pre-action` — middleware, MCP prompt/resource paths, and browser prompt insertion assemble retained memory before the receiving model generation or user submission.
-
 **Faithfulness tested:** `no` — wrapper tests and examples cover construction paths, but the review found no local with/without-memory ablation proving downstream behavior changes.
 
 **Targeting and signal.** Push targeting is mixed. `profile` mode and MCP `context` are `coarse`: they load the configured container's static/dynamic profile without deriving relevance from the current instance. `query` and `full` middleware modes, OpenAI Responses wrapping, MCP `recall` when used by a host for another agent, and browser auto-search/prompt insertion are `instance` targeted: the local code extracts the latest user message or prompt text and sends it as `q` to the hosted profile/search API. The instance signal is `inferred`, primarily content-based search; Supermemory docs and MCP search expose semantic/hybrid search, but the hosted `/v4/profile` ranking sub-kind and precision/recall are not locally verifiable from this checkout. Container tag, project, custom id, threshold/limit parameters, cache keys, and client-side deduplication are scoping and complexity controls rather than the relevance signal itself.
 
-**Timing relative to action.** Read-back happens before model generation in middleware and before user prompt submission in the browser extension. Trace saves happen after response or on prompt submission and affect later turns, not the already-completed response.
+**Injection point.** Read-back happens before model generation in middleware and before user prompt submission in the browser extension. Trace saves happen after response or on prompt submission and affect later turns, not the already-completed response.
 
 **Selection, scope, and complexity.** Selection is bounded by mode (`profile`, `query`, `full`), container tag, `limit`, `threshold` in some calls, default chunk threshold, deduplication, turn-key cache, and a coarse 200,000-character cap in the MCP client. Complexity is moderate: wrappers flatten static profile, dynamic profile, and search memories into Markdown/prose prompt blocks rather than loading a graph structure.
 

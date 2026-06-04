@@ -1,6 +1,7 @@
 ---
 description: "Gnosis review: tiny Go CLI for repo-local agent-written why memory, JSONL source of truth, FTS5 cache, and doctrine-mediated agent workflow"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived]
 status: current
 last-checked: "2026-06-01"
@@ -80,8 +81,13 @@ The second divergence is the writer filter. Commonplace often wants agents to di
 
 **No MCP until the target agents need it.** Ready as a product discipline. Gnosis's shell-first surface is enough for coding agents with terminal access. Commonplace should add protocol surfaces only when they carry different authority or reach, not just because the protocol exists.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `consolidate` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 - **Trace source:** `session-logs` — the source trace is the live agent session context rather than stored chat logs, shell history, commits, or hidden tool traces
 - **Learning scope:** `per-task` `per-project` `cross-task` — capture happens during one task, storage is project-local, and entries are meant to inform later tasks in the same repo
 - **Learning timing:** `online` `staged` — agents write during work and again during end-of-session review; there is no offline corpus pass

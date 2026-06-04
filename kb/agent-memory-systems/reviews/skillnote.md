@@ -1,6 +1,7 @@
 ---
 description: "SkillNote review: self-hosted skill registry, collection-scoped sync, agent-native hooks, MCP tool exposure, usage analytics, and draft skill capture"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived, push-activation]
 status: current
 last-checked: "2026-06-02"
@@ -84,8 +85,13 @@ The main tradeoff is operational reach versus epistemic control. SkillNote can g
 
 **Do not borrow ratings as quality gates.** SkillNote ratings are appropriate for product analytics and selection hints. Commonplace should not treat a 5-star instruction as validated unless a review, test, or source-grounding check supports it.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 **Trace source:** `session-logs` `tool-traces` `event-streams` — SkillNote consumes OpenClaw session JSONL reads, Claude Code skill-use and MCP tool-call traces, hook events, usage posts, ratings/comments, and prompt text signals.
 
 **Learning scope:** `per-task` `per-project` `cross-task` — Usage is session/task scoped, prompt drafts are project-local, and aggregated usage/rating signals steer later cross-task selection.
@@ -110,13 +116,11 @@ The main tradeoff is operational reach versus epistemic control. SkillNote can g
 
 **Read-back signal:** `coarse` `identifier` `inferred / judgment` — Push paths include coarse skill exposure/sync, collection and skill identifiers, and documented resolver or host-agent judgment over descriptions and task context.
 
-**Read-back timing:** `pre-action` `post-action` — Session, prompt, compact, subagent, and tool-list exposure can happen before later task handling, while post-use events, ratings, and comments shape subsequent selection after a skill action.
-
 **Faithfulness tested:** `no` — Tests cover mechanics, but the review found no with/without ablation or post-action audit proving pushed skills change downstream behavior.
 
 **Targeting and signal.** Targeting is mixed. Claude Code sync is `instance` / `identifier` at the project-collection level: `.skillnote.json` names collections, the API query filters by those collection identifiers, and the generated skill frontmatter exposes descriptions to the host skill selector. The final choice of which synced skill body to apply is host-mediated from description and task context rather than settled by SkillNote's code. OpenClaw's background sync is `coarse` when it writes all registry skills to `sn-*` directories, while `/v1/openclaw/context-bundle` is mixed: optional `collection_filter` is an `identifier`, the server's usage/rating sort is a trace-derived ranking prior rather than semantic relevance, and the documented resolver subagent performs final `inferred / judgment` selection against `task_summary` ([openclaw.py](https://github.com/luna-prompts/skillnote/blob/7303ba7ab2098f9675e320fd68296458b4703752/backend/app/api/openclaw.py), [openclaw.py schema](https://github.com/luna-prompts/skillnote/blob/7303ba7ab2098f9675e320fd68296458b4703752/backend/app/schemas/openclaw.py)). MCP activation is tool-list exposure plus client-side tool choice; the server can narrow by collection identifiers, then the MCP client/agent chooses by tool description.
 
-**Timing relative to action.** SessionStart and OpenClaw sidecar sync happen before task handling. UserPromptSubmit fires before Claude responds to a prompt. PostToolUse, usage posts, comments, and ratings happen after a skill is used and can shape later selection but not the just-completed action. PostCompact and SubagentStart reintroduce collection awareness after context transitions.
+**Injection point.** SessionStart and OpenClaw sidecar sync happen before task handling. UserPromptSubmit fires before Claude responds to a prompt. PostToolUse, usage posts, comments, and ratings happen after a skill is used and can shape later selection but not the just-completed action. PostCompact and SubagentStart reintroduce collection awareness after context transitions.
 
 **Selection, scope, and complexity.** Code-grounded bounds include the 15-skill collection limit, project `.skillnote.json`, managed manifests, OpenClaw `max_skills` bounds of 1-100, a 4x over-fetch window before usage/rating sort, top-200 analytics caps, and native progressive disclosure from description to full skill body. Effective precision, recall, and context dilution are not verified from code.
 

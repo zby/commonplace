@@ -1,6 +1,7 @@
 ---
 description: "Tendril review: desktop Strands agent whose model-authored Deno tools persist in a workspace capability registry"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 status: current
 last-checked: "2026-06-02"
 ---
@@ -76,6 +77,12 @@ Tendril's executable-memory pattern also shifts trust. In Commonplace, a note ca
 **Name-only execution boundary.** Ready now as a security pattern. Tendril's `execute` API accepts a registered name and args, not arbitrary code. Commonplace commands that run generated helpers should prefer named, versioned artifacts over inline code pasted into a runtime.
 
 **Do not borrow unreviewed executable memory as authority.** Tendril's one-turn tool creation is powerful, but Commonplace should require explicit review, tests, or provenance before model-authored code becomes a trusted operational artifact.
+
+## Write-side placement
+
+**Write agency:** `automatic` `manual` — the review describes system-driven generation, extraction, consolidation, or update of retained artifacts rather than only manual authoring.
+
+**Curation operations:** `evolve` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
 
 ## Curiosity Pass
 

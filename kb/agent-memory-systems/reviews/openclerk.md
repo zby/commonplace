@@ -1,6 +1,7 @@
 ---
 description: "OpenClerk review: local-first JSON runner over markdown vaults, SQLite projections, provenance, synthesis, modules, and pull-only agent read-back"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 status: current
 last-checked: "2026-06-03"
 ---
@@ -88,6 +89,12 @@ The biggest divergence is authority packaging. Commonplace's artifact types and 
 **Approval-shaped write plans.** Needs a concrete workflow first. OpenClerk often returns exact next write requests with `planned_no_write` and approval boundaries. Commonplace could use that for risky source ingestion, relationship maintenance, or archive replacement, but only where the existing file-edit workflow is too error-prone.
 
 **SQLite as an operational projection layer.** Needs scale pressure before adoption. OpenClerk shows how a local database can hold FTS, projection state, provenance, and config while leaving markdown as authority. Commonplace should not add this until generated indexes and command outputs become too slow or too hard to compose.
+
+## Write-side placement
+
+**Write agency:** `automatic` `manual` — the review describes system-driven generation, extraction, consolidation, or update of retained artifacts rather than only manual authoring.
+
+**Curation operations:** `consolidate` `dedup` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
 
 ## Curiosity Pass
 

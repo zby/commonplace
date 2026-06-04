@@ -1,6 +1,7 @@
 ---
 description: "secure-llm-wiki review: git-backed claim wiki with nonce-delimited extraction, trust tiers, adversarial write gates, and coarse query-time read-back"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 status: current
 last-checked: "2026-06-03"
 ---
@@ -67,8 +68,6 @@ The interesting borrow is not "use an LLM to maintain a wiki"; it is the channel
 
 **Read-back signal:** `coarse` - The query path loads the eligible wiki context block by status/trust hygiene rather than by per-question identifier or inferred relevance.
 
-**Read-back timing:** `pre-action` - The retained claims are placed in the query model's system prompt before it answers the user's question.
-
 **Faithfulness tested:** `no` - The review cites read-hygiene and trust tests, but not a with/without ablation or behavioral faithfulness check proving the pushed context changes model behavior.
 
 ### Borrowable Ideas
@@ -82,6 +81,12 @@ The interesting borrow is not "use an LLM to maintain a wiki"; it is the channel
 **Strip forged trust markers at read time.** Secure LLM-Wiki tests that `[T]` inside claim text cannot impersonate system-assigned trust. Commonplace could apply the same principle to generated report markers, review statuses, and frontmatter-like strings copied from sources. Ready as a small parser/helper rule if repeated source injection appears.
 
 **Host-pattern trust rules with safe suffix matching.** The trust registry's host-only matching and tests against query-string/domain-suffix bypasses are a good security baseline for URL-derived source trust. Commonplace could borrow the matching discipline for source snapshot classification, but the policy vocabulary should remain lighter unless automated trust routing grows.
+
+## Write-side placement
+
+**Write agency:** `automatic` `manual` — the review describes system-driven generation, extraction, consolidation, or update of retained artifacts rather than only manual authoring.
+
+**Curation operations:** `dedup` `synthesize` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
 
 ## Curiosity Pass
 

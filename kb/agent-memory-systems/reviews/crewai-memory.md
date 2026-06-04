@@ -1,6 +1,7 @@
 ---
 description: "CrewAI Memory review: unified vector memory with LLM extraction, scoped recall, task-output learning, tools, and LiteAgent prompt injection"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived, push-activation]
 status: current
 last-checked: "2026-06-01"
@@ -84,8 +85,13 @@ CrewAI is ahead of Commonplace on runtime activation. Its LiteAgent can retrieve
 
 **Do not borrow unaudited consolidation.** CrewAI lets an LLM decide updates/deletes against similar memories. That is pragmatic for runtime memory, but Commonplace should keep durable note edits and warning acknowledgments behind explicit review, validation, or semantic gates.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `consolidate` `dedup` `evolve` `synthesize` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 **Trace source:** `session-logs` — task/conversation bundles from Crew agent completion and LiteAgent calls provide the source signal for extraction.
 **Learning scope:** `per-task` `cross-task` — extraction is triggered from individual task or call results, then retained under crew/agent/flow scopes for later tasks or runs.
 **Learning timing:** `online` — memory extraction and LiteAgent saving happen in the runtime path after the producing task or answer.
@@ -106,12 +112,11 @@ CrewAI is ahead of Commonplace on runtime activation. Its LiteAgent can retrieve
 **Direction.** Both. Pull paths include `Memory.recall`, Flow `recall`, `Search memory`, and `query_knowledge`. Push paths are narrower: LiteAgent automatically recalls from the last user message and appends relevant memories to the system message before the LLM call. Ordinary Crew agents get memory tools and post-task saving, but I did not find a source-visible general Crew task pre-prompt injection path equivalent to the LiteAgent path.
 
 **Read-back signal:** `inferred / embedding` `inferred / judgment` — LiteAgent push is keyed by the last user message through vector recall, with deep recall able to add LLM query analysis.
-**Read-back timing:** `pre-action` — LiteAgent injects recalled memories before the LLM call that produces the next answer.
 **Faithfulness tested:** `no` — this review found observable prompt insertion but no with/without ablation proving downstream behavioral use.
 
 **Targeting and signal.** LiteAgent's trigger is a pending LLM call with memory configured, but the memory push is not a coarse always-load: it is `targeting: instance`, keyed by the last user message for this call. The signal is `inferred / embedding` as the primary selector: `_inject_memory_context()` passes the last user message to `memory.recall(query, limit=10)`, and recall embeds the query or LLM-distilled recall queries before vector search. Deep recall can add an LLM `judgment` layer by analyzing longer queries into scopes, time filters, and up to three recall queries, then confidence-routing low-confidence or complex cases; scopes/categories/privacy/recency/importance shape filtering and ranking. Precision, recall, context dilution, and effective authority are runtime properties, not established by the code alone.
 
-**Timing relative to action.** LiteAgent retrieval happens after messages are formatted and before `_execute_core` invokes the LLM, so it can change the next answer. Crew agent auto-saving happens after the task result and only affects future tasks or future runs. Memory tools can affect an action only if the agent chooses or is prompted to call them during its reasoning loop.
+**Injection point.** LiteAgent retrieval happens after messages are formatted and before `_execute_core` invokes the LLM, so it can change the next answer. Crew agent auto-saving happens after the task result and only affects future tasks or future runs. Memory tools can affect an action only if the agent chooses or is prompted to call them during its reasoning loop.
 
 **Selection, scope, and complexity.** LiteAgent caps injected recall at 10 matches. General recall defaults to limit 10, oversamples vector results, caps distilled queries at three, caps candidate scopes at 20, and can filter by scope, categories, source, private flag, and time cutoff. The injected representation remains a prose bullet list; complex or enumerative tasks are explicitly warned not to trust the automatic set as complete.
 

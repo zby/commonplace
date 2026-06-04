@@ -1,6 +1,7 @@
 ---
 description: "VLM-wiki review: multimodal personal wiki with raw media, VLM analysis notes, Markdown articles, Obsidian browsing, and pull-only index/article read-back"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 status: current
 last-checked: "2026-06-03"
 ---
@@ -82,6 +83,12 @@ The other divergence is context strategy. VLM-wiki relies on a global index and 
 **Do not borrow unenforced pattern discovery.** The README advertises habit, mood, place, and relationship patterns, but the inspected code does not implement those detectors. Commonplace should keep pattern claims as candidate notes until grounded by code, evidence, or review.
 
 **Separate adoption templates from governance.** VLM-wiki's templates are good onboarding surfaces. Commonplace should preserve the distinction between scaffolded shape and validated artifact quality.
+
+## Write-side placement
+
+**Write agency:** `manual` `automatic` — humans and host agents maintain raw/wiki/index/log files under `AGENTS.md`, while the media scripts can write frame, metadata, and VLM analysis outputs from retained raw media.
+
+**Curation operations:** `consolidate` — the implemented scripts and sample workflow derive smaller analysis/wiki views from raw media and diary material, but the review does not find an enforced detector, validator, or automatic promotion path.
 
 ## Curiosity Pass
 

@@ -1,6 +1,7 @@
 ---
 description: "Kompl review: source-to-wiki compiler with SQLite provenance, LLM extraction and drafting, vector/FTS read-back, MCP tools, and query-derived drafts"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived, push-activation]
 status: current
 last-checked: "2026-06-03"
@@ -83,7 +84,13 @@ Kompl is stronger on end-user activation. Its compiled pages flow into browser s
 
 **Do not borrow automatic source-to-library compilation wholesale.** Kompl's product goal rewards broad synthesis from arbitrary sources. Commonplace's library needs narrower claims, known types, and reviewable mechanisms. The useful import is the staged pipeline, not automatic durable authority for every generated page.
 
-## Trace-derived learning placement
+## Write-side placement
+
+**Write agency:** `manual` `automatic` - users can ingest sources, approve or reject drafts, and use manual approval mode, while the compile pipeline automatically extracts, resolves, plans, drafts, commits, indexes, creates query-generated draft candidates, and emits maintenance signals
+
+**Curation operations:** `consolidate` `dedup` `evolve` `synthesize` `promote` - the review describes summary/page compilation, fuzzy identity and alias resolution, existing-page update planning, LLM-generated entity/concept/comparison/overview/query drafts, and corpus-wide promotion of recurring entities or questions into pending or committed pages
+
+### Trace-derived learning
 
 **Trace source:** `session-logs` `event-streams` - Kompl's trace-derived loop uses chat/session records plus compile progress, activity, lint, and digest events rather than agent tool trajectories.
 
@@ -107,13 +114,11 @@ Kompl is stronger on end-user activation. Its compiled pages flow into browser s
 
 **Read-back signal:** `inferred / lexical` `inferred / embedding` `inferred / judgment` - Chat push selects retained pages by LLM judgment over a small page index or by hybrid FTS/vector relevance for larger wikis.
 
-**Read-back timing:** `pre-action` - Built-in chat retrieval sends selected page content before answer synthesis; post-answer drafts are learning candidates rather than read-back into the same action.
-
 **Faithfulness tested:** `no` - The review found exposure records and citations, but no ablation or perturbation test proving loaded pages changed model behavior.
 
 **Targeting and signal.** The chat push is instance-targeted and inferred. Small wikis use LLM judgment over the page index to choose page ids; larger wikis use FTS lexical retrieval plus vector similarity, then merge scores with source count and recency. MCP pull starts from the agent's explicit query or page id, so it is pull even when `search_wiki` performs relevance ranking. `read_page` is identifier-based pull over a known `page_id`.
 
-**Timing relative to action.** Chat retrieval happens before the model answers, so selected pages can shape the next response. Query-generated drafts happen after the answer and only influence future behavior after approval or later retrieval. Lint and digest traces also happen after activity; they can guide maintenance but do not directly change the answer that produced the trace.
+**Injection point.** Chat retrieval happens before the model answers, so selected pages can shape the next response. Query-generated drafts happen after the answer and only influence future behavior after approval or later retrieval. Lint and digest traces also happen after activity; they can guide maintenance but do not directly change the answer that produced the trace.
 
 **Selection, scope, and complexity.** Read-back is local-wiki scoped. The built-in chat path retrieves at most ten pages, sends fuller content for the top five, and truncates page bodies. For small wikis the full index is the selection surface; for large wikis the hybrid retriever avoids sending the full index and raw corpus. MCP tools return summaries or full pages on demand, so complexity is controlled by the calling agent's pull sequence rather than automatic breadth.
 

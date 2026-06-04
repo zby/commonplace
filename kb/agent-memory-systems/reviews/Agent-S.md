@@ -1,6 +1,7 @@
 ---
 description: "Agent-S review: GUI-agent framework with S2 trace-summarized episodic/narrative memory, embedding read-back, and S3 transient reflection/code-agent context"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived, push-activation]
 status: current
 last-checked: "2026-06-01"
@@ -79,7 +80,13 @@ S3 is useful as a contrast because it intentionally cuts durable memory out of t
 
 **Keep best-of-N facts separate from winner selection.** Behavior Best-of-N first derives fact captions from trajectories, then uses a comparative judge over those facts and screenshots. Commonplace could use a similar two-stage review for multiple generated drafts: fact extraction first, preference judgment second. Needs a high-value generation workflow before implementation.
 
-## Trace-derived learning placement
+## Write-side placement
+
+**Write agency:** `automatic` — S2 summarizes task and subtask trajectories into durable narrative and episodic JSON memory, while S3/OSWorld writes rollout artifacts and evaluation facts.
+
+**Curation operations:** `consolidate` — S2 compresses full-task and per-subtask trajectories into concise reusable experience summaries rather than replaying raw traces.
+
+### Trace-derived learning
 
 - **Trace source:** `trajectories` — S2 learns from task and subtask trajectories, and S3/OSWorld writes rollout trajectories for evaluation facts
 - **Learning scope:** `per-task` `cross-task` — S3 reflection and OSWorld artifacts are per-episode/per-task, while S2 summaries are reused across later tasks in the local KB
@@ -100,13 +107,11 @@ S3 is useful as a contrast because it intentionally cuts durable memory out of t
 
 **Read-back signal:** `inferred / embedding` — S2 selects narrative and episodic memory by embedding similarity against the task instruction or subtask query before injecting it into prompts.
 
-**Read-back timing:** `pre-action` — S2 read-back reaches the planner or worker prompt before the receiving agent plans or acts.
-
 **Faithfulness tested:** `no` — The reviewed code has OSWorld evaluation and Behavior Best-of-N selection, but no isolated memory read-back ablation or perturbation test.
 
 **Targeting and signal.** S2's memory push is instance-targeted with an inferred / embedding signal. The trigger is first-turn planning or first-turn subtask execution, and narrative and episodic memories are selected by embedding similarity against the task instruction or subtask query key. Optional web/RAG knowledge is selected through a formulated query and optional search engine, but it is not the trace-derived experience path. S3's reflection and code-agent result injection is event-keyed rather than semantic retrieval: if a previous action/reflection/code result exists, it is included.
 
-**Timing relative to action.** S2 read-back happens before planning or subtask execution, so it can change the next plan or action. S3 reflection happens after the previous action and before the next action, so it can steer recovery. Behavior Best-of-N selection happens after complete rollouts, so it changes which trajectory is selected, not the steps inside that already-finished rollout.
+**Injection point.** S2 read-back happens before planning or subtask execution, so it can change the next plan or action. S3 reflection is assembled for the next action when present, while Behavior Best-of-N selection operates after complete rollouts and is not an in-rollout read-back path.
 
 **Selection, scope, and complexity.** S2 selects one nearest narrative or episodic memory, excluding the exact same key when it is the top match. It does not implement a token budget, source freshness check, or multi-candidate diversity policy for retrieved memory. S3 bounds complexity by flushing older images for long-context providers and older turns for other providers, but its transient text buffer has no durable curation policy.
 

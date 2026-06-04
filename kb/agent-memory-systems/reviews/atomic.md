@@ -1,6 +1,7 @@
 ---
 description: "Atomic review: SQLite/Postgres Markdown atoms with embeddings, tags, wiki synthesis, agentic chat, MCP tools, scheduled reports, and canvas graph"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [push-activation]
 status: current
 last-checked: "2026-06-01"
@@ -85,19 +86,21 @@ The most interesting convergence is reports. Atomic's scheduled reports look lik
 
 **Cited generated findings as first-class artifacts.** Atomic's report findings preserve citation rows and provenance. Commonplace can borrow the provenance discipline for generated reviews or recurring scans, but should keep stronger promotion gates before treating findings as library notes.
 
+## Write-side placement
+
+**Write agency:** `automatic` `manual` — users, agents, plugins, and MCP tools create or edit atoms manually, while the asynchronous pipeline, auto-tagging, graph maintenance, wiki/report agents, import sidecars, queues, and scheduled report runner automatically change derived memory state and generated atoms
+
+**Curation operations:** `synthesize` `dedup` `promote` — wiki/report agents synthesize articles and cited findings from source atoms; import/plugin sidecars and report policies preserve deduplication boundaries; scheduled report definitions and accepted wiki/report outputs promote selected source material into reusable generated knowledge artifacts
+
 ## Read-back placement
 
 **Direction.** Atomic uses both pull and push. Pull paths include UI search, global keyword search, chat-agent tool calls, MCP `semantic_search` / `read_atom`, wiki article generation, similar-note lookup, and canvas browsing. Push exists through scheduled reports: the scheduler launches a report run, source resolution selects atoms, and the report agent receives a numbered source list before it takes any action.
 
 **Read-back signal:** `identifier` — scheduled report push is keyed by saved report-definition fields such as tag ids, kind filters, time windows, source caps, token budgets, context scope, citation policy, and excluded prior findings.
 
-**Read-back timing:** `pre-action` — source atoms are injected into the report agent's initial prompt before it chooses tools or writes the finding.
-
 **Faithfulness tested:** `no` — benchmarks cover retrieval surfaces, but the review found no production with/without ablation proving pushed report source batches improve downstream behavior.
 
 **Trigger and relevance signal.** Pull triggers are user or agent queries, tag scopes, current-page references, atom ids, or UI events. The engineered push trigger is a report schedule or manual run against a saved report definition. Targeting is `instance`: the report row is the durable task frame for this run. The push signal is `identifier`: source scope tag ids, kind filters, time windows, max source atoms, token budgets, context scope, citation policy, and excluded prior findings are declared scope fields resolved before the report agent acts. The report agent can then use semantic search inside the bounded context; that later ranking is pull within the already-pushed report frame.
-
-**Timing relative to action.** Report source atoms arrive pre-action. They shape the report agent's initial prompt before it chooses tool calls or writes the finding. Chat search and MCP retrieval happen mid-action only when the agent or external client calls a tool.
 
 **Selection, scope, and complexity.** Search selection uses hybrid ranking, thresholds, limits, recency, and optional tag scope. Atom reads are line-paginated. Report selection adds schedule-derived watermarks, tag subtree resolution, kind filters, source caps, token truncation, and context filters. These are real context-budget controls; effective recall/precision still depends on embeddings, tags, prompts, and model behavior at runtime.
 

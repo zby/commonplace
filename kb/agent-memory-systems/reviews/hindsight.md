@@ -1,6 +1,7 @@
 ---
 description: "Hindsight review: Vectorize server/API memory bank with LLM fact extraction, observations, mental models, directives, hooks, and push recall"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived, push-activation]
 status: current
 last-checked: "2026-06-02"
@@ -84,8 +85,13 @@ The biggest divergence is reviewability. Hindsight has more automatic adaptation
 
 **Do not borrow service opacity for shared methodology.** Hindsight's database-first substrate fits runtime memory. Commonplace methodology artifacts still need git-native review, status, replacement history, and human-readable contracts.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `consolidate` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 **Trace source:** `session-logs` `tool-traces` — client-supplied conversations, Claude Code JSONL transcripts, and optional formatted tool content are submitted to retain
 
 **Learning scope:** `per-task` `per-project` `cross-task` — bank, tag, project/session/user metadata, tenant schema, and host config can scope retained traces from one task through shared banks
@@ -110,13 +116,11 @@ The biggest divergence is reviewability. Hindsight has more automatic adaptation
 
 **Read-back signal:** `identifier` `inferred / lexical` `inferred / embedding` — push recall narrows by bank/config/fact-type identifiers, then selects from the current prompt using BM25, semantic embeddings, graph/temporal expansion, and reranking
 
-**Read-back timing:** `pre-action` `post-action` — auto-recall injects before the next prompt is answered, while auto-retain records the completed turn for later read-back
-
 **Faithfulness tested:** `no` — the review found implementation tests and tracing, but no with/without ablation showing injected memories changed downstream behavior
 
 **Targeting and signal.** The engineered push trigger is a host hook on user prompt submission, but the selected memories are instance-targeted rather than coarse always-load. The hook narrows by identifiers such as the selected bank, optional dynamic bank id, additional banks, and configured fact types, then uses the current prompt plus optional prior turns as a content query. The final relevance signal is mixed: identifier narrowing followed by inferred content selection through semantic embeddings, BM25 lexical matching, graph/temporal expansion, and reranking ([hindsight-integrations/claude-code/scripts/recall.py](https://github.com/vectorize-io/hindsight/blob/867b7b4ab632c2ac0655de6dce2d3451ff4d483f/hindsight-integrations/claude-code/scripts/recall.py), [hindsight-integrations/claude-code/settings.json](https://github.com/vectorize-io/hindsight/blob/867b7b4ab632c2ac0655de6dce2d3451ff4d483f/hindsight-integrations/claude-code/settings.json)).
 
-**Timing relative to action.** Auto-recall runs before prompt construction for the next user request and can change the next model response. Auto-retain runs after the assistant response or at session end and can only affect later turns/sessions after retain and consolidation complete.
+**Injection point.** Auto-recall runs before prompt construction for the next user request and can change the next model response. Auto-retain runs after the assistant response or at session end and can only affect later turns/sessions after retain and consolidation complete.
 
 **Selection, scope, and complexity.** The Claude Code defaults are intentionally narrow: `recallTypes` is `["observation"]`, `recallMaxTokens` is 1024, `recallContextTurns` is 1, and `recallMaxQueryChars` is 800. Hindsight itself also has recall budgets, max token filtering, tag filters, optional chunks/source-facts, and reflect context caps. Actual context dilution and precision are runtime qualities, not verified from code.
 

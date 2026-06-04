@@ -1,6 +1,7 @@
 ---
 description: "CocoIndex review: incremental Python dataflow framework for keeping vector, graph, file, and database targets fresh for agent context"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 status: current
 last-checked: "2026-06-01"
 ---
@@ -80,6 +81,12 @@ The most useful comparison is lineage. CocoIndex can tell the engine what compon
 **Agent skill packaged with the implementation.** Ready now as a publishing pattern. CocoIndex ships the skill that teaches agents how to use the current API. Commonplace already has skills; the borrowable pattern is keeping a public agent-facing instruction bundle versioned with the code it explains.
 
 **Do not borrow opaque target rows as KB claims.** CocoIndex examples can build useful vector stores and knowledge graphs, but Commonplace should not treat retrieved rows as promoted notes without review, citations, and authority assignment.
+
+## Write-side placement
+
+**Write agency:** `automatic` `manual` — the review describes system-driven generation, extraction, consolidation, or update of retained artifacts rather than only manual authoring.
+
+**Curation operations:** `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
 
 ## Curiosity Pass
 

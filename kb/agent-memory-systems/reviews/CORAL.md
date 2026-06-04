@@ -1,6 +1,7 @@
 ---
 description: "CORAL review: multi-agent coding runs with shared .coral state, eval traces, agent-written notes/skills, checkpointed public memory, and heartbeat push prompts"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived, push-activation]
 status: current
 last-checked: "2026-06-01"
@@ -84,7 +85,13 @@ CORAL is stronger as a scheduler around trace-derived learning. It has a real fe
 
 **Use roles and posture files as coordination memory for multi-agent work.** Needs a concrete workflow. For long-running Commonplace maintenance or survey passes, a lightweight "who owns which pass" artifact could reduce duplicate work without becoming a permanent methodology note.
 
-## Trace-derived learning placement
+## Write-side placement
+
+**Write agency:** `manual` `automatic` — agents author notes, skills, roles, and synthesis files in the shared public state, while `coral eval`, the grader daemon, checkpointing, heartbeat state, and manager-triggered prompts automatically write or schedule retained attempt, score, checkpoint, and maintenance artifacts.
+
+**Curation operations:** `consolidate` `synthesize` `promote` — heartbeat prompts can schedule reflection, consolidation, pivoting, and wiki linting from eval traces; agents distill scores, attempts, logs, and teammate work into notes, synthesis, roles, and skills; successful trace-derived lessons can gain stronger planning or procedural authority when they become shared skills or heartbeat/instruction-mediated coordination artifacts.
+
+### Trace-derived learning
 
 **Trace source:** `session-logs` `tool-traces` `event-streams` — commits, eval messages, attempt records, grader outputs, runtime logs, eval logs, checkpoints, role updates, and shared notes form the run trace around each eval event.
 
@@ -114,13 +121,11 @@ CORAL is stronger as a scheduler around trace-derived learning. It has a real fe
 
 **Read-back signal:** `identifier` — the manager targets the matching live agent by `agent_id` from the finalized attempt and selects heartbeat actions from symbolic eval-count, budget-class, score-history, plateau, score-direction, and epsilon signals.
 
-**Read-back timing:** `pre-action` `post-action` — eval-result push happens after grading, then interrupts/resumes the agent before its next work segment can proceed.
-
 **Faithfulness tested:** `no` — CORAL measures downstream scores, but the review found no ablation showing that a specific pushed note, heartbeat prompt, or skill changed agent behavior.
 
 **Targeting and signal.** The memory push is instance-targeted by identifier. The manager watches new finalized attempt files, reads the attempt's `agent_id`, and interrupts/resumes the matching live agent with that attempt's score, title, commit id, budget class, and feedback. Heartbeat action selection adds engineered control signals: per-agent eval count, global eval count, real-versus-tune budget class, score history, plateau streak, score direction, and optional epsilon thresholds. These signals choose a prompt class (`reflect`, `consolidate`, `pivot`, `lint_wiki`, or custom actions), not specific note, skill, or attempt bodies beyond the current eval-result header.
 
-**Timing relative to action.** Heartbeat read-back fires after an eval is finalized and before the agent continues its next work segment. The manager interrupts the active runtime and resumes it with the combined prompt, so the pushed material can change the next plan, note-writing behavior, lane choice, or consolidation work.
+**Injection point.** Heartbeat read-back assembles after an eval is finalized and before the agent continues its next work segment. The manager interrupts the active runtime and resumes it with the combined prompt, so the pushed material can change the next plan, note-writing behavior, lane choice, or consolidation work.
 
 **Selection, scope, and complexity.** CORAL pushes the current attempt summary and feedback for the committing agent, then selects a shipped prompt class. It may tell the agent to inspect recent attempts, top attempts, notes, skills, roles, focus notes, or synthesis files, but the agent still performs that content selection. Complexity is controlled by path scoping, CLI summaries, per-agent/global heartbeat separation, and progressive disclosure through `coral log`, `coral show`, `coral notes`, and `coral skills`. There is no top-k note retriever, token budgeter, or semantic matcher over shared notes in the inspected code.
 

@@ -1,6 +1,7 @@
 ---
 description: "Thalo review: plain-text knowledge language with schemas, validation, LSP tooling, query/actualize workflows, and synthesis PR automation"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [push-activation]
 status: current
 last-checked: "2026-06-02"
@@ -80,19 +81,23 @@ The most important divergence is where schema lives. Thalo lets users define dom
 
 **Keep generation out of the core language runtime.** Ready now. Thalo's core actualize command packages context but leaves model invocation to the caller. Commonplace should preserve the same boundary for generated notes and reviews: deterministic selection first, generation second, review/promotion third.
 
+## Write-side placement
+
+**Write agency:** `automatic` `manual` — the review describes system-driven generation, extraction, consolidation, or update of retained artifacts rather than only manual authoring.
+
+**Curation operations:** `consolidate` `dedup` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
 ## Read-back placement
 
 **Read-back:** `both` — Thalo uses both pull and push over retained memory. Pull paths include `thalo query`, scripting API queries, LSP definition/reference/navigation, manual `thalo actualize`, and direct reading of text files. Push exists through `thalo-action`: a repository event or workflow run invokes actualization, selects pending syntheses, and feeds accumulated Thalo entries plus the synthesis prompt into a user command before that command generates or updates content.
 
 **Read-back signal:** `identifier` — the engineered push path selects synthesis definitions, source entries, checkpoints, changed files, tags, links, entity names, metadata fields, and entry identities through assigned symbolic identifiers rather than lexical, embedding, or LLM relevance.
 
-**Read-back timing:** `pre-action` — `thalo-action` feeds selected entries and the synthesis prompt to the user command before that command generates or updates content.
-
 **Faithfulness tested:** `no` — the review finds tests for parsing, checking, queries, actualization, LSP behavior, formatting, and merge behavior, but no with/without read-back behavioral ablation for downstream synthesis quality.
 
 **Targeting and signal.** Pull triggers are user or agent queries, link/tag navigation, editor cursor position, or a manually chosen synthesis link. The engineered push trigger is the GitHub workflow/action run, usually after changes to `.thalo` or Markdown files. Its targeting is `instance`: `runActualize()` narrows to selected synthesis link ids when provided, finds each synthesis definition, then selects entries for that synthesis's declared source queries and checkpoint. The signal is `identifier`: entity names, tags, link ids, metadata fields, synthesis link ids, git or timestamp checkpoints, changed-file detection, entry identity comparison, and query matching are all assigned symbolic fields rather than embedding, keyword, or LLM relevance judgments.
 
-**Timing relative to action.** `thalo-action` supplies the synthesis JSON before the user command runs, so the selected memory can shape the generated output. CLI query and manual actualize also happen before the caller's next action, but the caller intentionally requested them.
+**Injection point.** `thalo-action` supplies the synthesis JSON before the user command runs, so the selected memory can shape the generated output. CLI query and manual actualize also happen before the caller's next action, but the caller intentionally requested them.
 
 **Selection, scope, and complexity.** Query scope is entity plus `where` conditions over tags, links, and metadata; CLI query can apply a result limit. Actualize adds per-synthesis source queries, optional target link filtering, and checkpoint-based deltas. Complexity is bounded by raw matching entries and the synthesis prompt. There is no token budget, semantic compression, or multi-hop retrieval plan, so large matching deltas can still overfill a downstream LLM context; actual context dilution is not verified from code.
 

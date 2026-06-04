@@ -1,6 +1,7 @@
 ---
 description: "Basic Memory review: local-first Markdown graph, SQLite/Postgres search, MCP tools, semantic retrieval, and Claude Code trace-to-brief hooks"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 status: current
 last-checked: "2026-06-03"
 tags: [trace-derived, push-activation]
@@ -89,7 +90,13 @@ The Claude Code plugin is the most relevant activation contrast. Commonplace has
 
 **Do not borrow opaque authority from retrieval success.** Basic Memory makes notes easy to retrieve and inject. Commonplace should keep distinguishing knowledge artifacts from system-definition artifacts before they are loaded as instructions, validators, or gates.
 
-## Trace-derived learning placement
+## Write-side placement
+
+**Write agency:** `automatic` `manual` — humans, agents, MCP tools, importers, and shared skills author Markdown memory, while sync/indexing, semantic indexing, schema inference, conversation import, and Claude Code hooks automatically write graph projections, vector chunks, imported conversations, and session checkpoint notes
+
+**Curation operations:** `promote` `synthesize` — Markdown notes are promoted into parsed graph rows, search/vector indexes, and structured context surfaces; Claude Code transcripts are distilled into session checkpoint notes, and schema inference can synthesize schema notes from existing practice
+
+### Trace-derived learning
 
 - **Trace source:** `session-logs` — Claude Code JSONL transcripts and imported ChatGPT/Claude conversation exports are the trace sources described here.
 - **Learning scope:** `per-project` `cross-task` — Captured sessions are mapped to configured Basic Memory projects and can brief later sessions or tasks in that project.
@@ -110,13 +117,9 @@ The Claude Code plugin is the most relevant activation contrast. Commonplace has
 
 **Read-back signal:** `identifier` — SessionStart push keys on cwd, project references, note type, status, and date windows rather than semantic inference over the first prompt.
 
-**Read-back timing:** `pre-action` `post-action` — SessionStart briefs before the future Claude session acts, while PreCompact captures after accumulated work for future read-back.
-
 **Faithfulness tested:** `no` — The review found no implemented ablation or post-action audit proving that the pushed session brief changes Claude behavior.
 
 **Targeting and signal.** The plugin's push is `instance`-targeted at the project/session level. It reads `.claude/settings*.json` under the current `cwd`, resolves `primaryProject`, `secondaryProjects`, `teamProjects`, `recallTimeframe`, and placement conventions, then queries active tasks, open decisions, and recent sessions for the selected projects ([plugins/claude-code/hooks/session-start.sh](https://github.com/basicmachines-co/basic-memory/blob/fc2ee07076eb397b09db7b2681e5213002df0d70/plugins/claude-code/hooks/session-start.sh)). The signal is mainly `identifier`: cwd, project ref, note type, status, and date window. It is not semantic query inference over the user's first prompt.
-
-**Timing relative to action.** SessionStart output is available before the future Claude session acts. PreCompact capture runs before context compaction but after the current session's work; it cannot change the action just taken, only future read-back.
 
 **Selection, scope, and complexity.** Selection is bounded by structured filters, `--page-size 5`, a maximum of six shared projects, per-call timeouts, and Claude Code's documented 10,000-character hook-output cap enforced by the hook's formatting discipline ([plugins/claude-code/hooks/session-start.sh](https://github.com/basicmachines-co/basic-memory/blob/fc2ee07076eb397b09db7b2681e5213002df0d70/plugins/claude-code/hooks/session-start.sh)). Core pull tools also carry page size, depth, timeframe, `max_related`, `search_type`, and metadata filter knobs. Precision and context dilution are runtime properties; the code shows selection policy, not whether the selected brief always changes behavior correctly.
 

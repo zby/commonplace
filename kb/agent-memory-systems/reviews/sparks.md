@@ -1,6 +1,7 @@
 ---
 description: "Sparks review: Go runtime for Karpathy-style LLM wikis with raw/wiki files, SQLite manifest, embedded agent contracts, CLI/MCP plumbing, and pull-only read-back"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 status: current
 last-checked: "2026-06-03"
 ---
@@ -86,6 +87,12 @@ The tradeoff is extensibility and authority precision. Sparks v1 hardcodes page 
 **Keep generated views clearly subordinate to source state.** Sparks distinguishes raw source, agent-derived wiki, manifest, generated collections, and live Tasks. Commonplace can borrow that explicit ownership table for generated indexes and workshop/library promotion. Ready as documentation and validation messaging.
 
 **Do not borrow the fixed schema wholesale.** Commonplace's whole point is methodology for many artifact types. A fixed entity/concept/summary/synthesis shape is useful as an install profile, not as the framework's core type model.
+
+## Write-side placement
+
+**Write agency:** `automatic` `manual` — the review describes system-driven generation, extraction, consolidation, or update of retained artifacts rather than only manual authoring.
+
+**Curation operations:** `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
 
 ## Curiosity Pass
 

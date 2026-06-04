@@ -1,6 +1,7 @@
 ---
 description: "EQUIPA review: SQLite-backed multi-agent orchestrator with trace-derived lessons, episodic memory, graph reranking, and prompt-level read-back"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived, push-activation]
 status: current
 last-checked: "2026-06-01"
@@ -86,8 +87,13 @@ The deepest design difference is authority assignment. Commonplace tends to keep
 
 **Persist large tool outputs as pointers.** The tool-result storage path is a direct context-efficiency idea: preserve the full artifact on disk, inject only a preview and path. Ready for high-volume review or snapshot workflows.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `dedup` `evolve` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 **Trace source:** `session-logs` `tool-traces` `trajectories` — Agent run telemetry, output text, reviewer findings, episode reflections, Q-values, session state, recent tool calls, and ForgeSmith/SIMBA/GEPA inputs are the raw trace surfaces named by the review
 
 **Learning scope:** `per-task` `per-project` `cross-task` — Episodes and outcomes are task-specific, while lessons and prompt variants are scoped by project, role, task type, and future dispatches
@@ -112,13 +118,11 @@ The deepest design difference is authority assignment. Commonplace tends to keep
 
 **Read-back signal:** `identifier` `inferred / lexical` `inferred / embedding` — Prompt-time push is targeted by role, error type, project, and task-type identifiers, then episode retrieval adds keyword overlap and optional embedding similarity
 
-**Read-back timing:** `pre-action` — Lessons, episodes, project context, and resume state are loaded before the acting agent starts work; post-task updates affect future dispatches
-
 **Faithfulness tested:** `no` — Success, Q-values, injection counts, prompt versions, and rollback checks are tracked, but the review did not find item-level WITH/WITHOUT ablation for injected memories
 
 **Targeting and signal.** Lesson injection is feature-flagged and instance-targeted by role and optional error-type identifiers, then deduplicated and capped. Episode injection is feature-flagged and instance-targeted by role, project, and task-type identifiers, then reranked by mixed inferred signals: lexical keyword overlap, optional embedding similarity, and optional graph reranking over retained episode relations (https://github.com/sbknana/equipa/blob/6aa4af8d4505b12ae6877c1068162a8bec8e3d70/equipa/config.py, https://github.com/sbknana/equipa/blob/6aa4af8d4505b12ae6877c1068162a8bec8e3d70/equipa/lessons.py). This is stronger than unconditional always-load and justifies `push-activation`.
 
-**Timing relative to action.** Memory is loaded before agent work begins. Resume state can also be inserted on loop entry before redispatch after prior capture (https://github.com/sbknana/equipa/blob/6aa4af8d4505b12ae6877c1068162a8bec8e3d70/equipa/loops.py). Post-task Q-value updates and ForgeSmith passes affect future dispatches, not the just-finished action.
+**Injection point.** Memory is loaded before agent work begins. Resume state can also be inserted on loop entry before redispatch after prior capture (https://github.com/sbknana/equipa/blob/6aa4af8d4505b12ae6877c1068162a8bec8e3d70/equipa/loops.py). Post-task Q-value updates and ForgeSmith passes affect future dispatches, not the just-finished action.
 
 **Selection, scope, and complexity.** Selection is bounded by lesson limits, episode limits, token-estimate trimming, summary truncation, and optional graph/vector ranking. Complexity can still accumulate because the dynamic suffix also includes task metadata, project context, language guidance, initiative context, budgets, retry history, and arbitrary extra context. EQUIPA has local context controls, not a single audited activation budget.
 

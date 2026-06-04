@@ -1,6 +1,7 @@
 ---
 description: "WeKnora review: enterprise RAG with hybrid/vector retrieval, Wiki Mode distillation, ReAct tools, skills, and optional Neo4j trace memory"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 status: current
 last-checked: "2026-06-03"
 tags: [trace-derived, push-activation]
@@ -88,7 +89,13 @@ The closest design overlap is progressive context assembly. WeKnora does this op
 
 **Borrow retrieval fan-out carefully.** Multi-store fan-out plus score normalization is useful for shared/tenant contexts, but Commonplace's file-first repo does not yet need that machinery. Keep it as a future pattern, not an immediate feature.
 
-## Trace-derived learning placement
+## Write-side placement
+
+**Write agency:** `manual` `automatic` — operators author KB configuration, agents, skills, prompts, manual content, and request-scoped settings, while ingestion, chunking/indexing, Wiki Mode, task queues, optional memory extraction, and context-window consolidation mutate retained stores.
+
+**Curation operations:** `consolidate` `evolve` `synthesize` — ingestion/chunking/wiki/context summaries compress source and conversation material, wiki ingest/retract/linking updates retained pages and refs over time, and Wiki Mode plus optional conversation-memory extraction generate new pages, episode summaries, entities, and relationships.
+
+### Trace-derived learning
 
 - **Trace source:** `session-logs` `event-streams` - The memory pipeline consumes completed user/assistant session exchanges and is triggered from final-answer or non-streaming chat events.
 - **Learning scope:** `per-task` `cross-task` - Memory is scoped by user and session, can affect later turns in the same session, and can be recalled in later sessions for that user.
@@ -109,13 +116,9 @@ The closest design overlap is progressive context assembly. WeKnora does this op
 
 **Read-back signal:** `identifier` `inferred / lexical` `inferred / embedding` `inferred / judgment` - RAG push is scoped by selected KBs/documents/tags and tenant/RBAC identifiers, then selected by lexical/keyword and embedding retrieval; memory-graph push uses LLM judgment to extract query keywords for entity lookup.
 
-**Read-back timing:** `pre-action` `post-action` - Retrieved chunks and related episode summaries are injected before the model answers, while memory storage and Wiki ingest happen after source or conversation events and affect later actions.
-
 **Faithfulness tested:** `no` - The review notes Langfuse tracing and evaluation metrics, but no with/without memory ablation showing retrieved memory changes behavior.
 
 **Targeting and signal.** RAG push is `instance` targeting by the current query, selected KBs/documents/tags, tenant/RBAC scope, and retrieval thresholds. The signal is mostly `inferred / embedding` plus lexical/keyword matching and optional reranking. Memory-graph push is `instance` targeting by LLM-extracted query keywords matched against entity names, so it is `inferred / judgment` followed by exact graph lookup. Agent-tool retrieval is pull from the acting model.
-
-**Timing relative to action.** Quick Q&A and memory retrieval happen before the chat model answers. Agent tool retrieval happens during ReAct steps before a final answer. Memory storage and Wiki ingest happen after source or conversation events and only affect future actions.
 
 **Selection, scope, and complexity.** Selection is governed by KB scope, search targets, over-retrieval caps, vector/keyword thresholds, RRF fusion, rerank/merge/top-k stages, wiki index caps, and tool-output truncation. Context complexity can still be high because retrieved contexts, document headers, FAQ priority blocks, wiki pages, attachments, image descriptions, quoted context, and history can all enter the prompt if enabled.
 

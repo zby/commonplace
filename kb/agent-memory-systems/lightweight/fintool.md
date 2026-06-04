@@ -29,7 +29,7 @@ Fintool is an AI agent product for professional investors, covered here from a f
 Claim-level (no code inspected):
 
 - **Storage substrate:** `files` — the central retained artifacts are reported as YAML/markdown files in S3, with PostgreSQL as a derived metadata/query index rather than the source of truth.
-- **Representational form:** `mixed` — skills and user memories are prose/markdown; metadata, watchlists, fiscal calendars, confidence scores, and eval records are symbolic. The source does not expose enough implementation detail to split every sub-artifact cleanly.
+- **Representational form:** `prose` `symbolic` — skills and user memories are prose/markdown; metadata, watchlists, fiscal calendars, confidence scores, and eval records are symbolic. The source does not expose enough implementation detail to split every sub-artifact cleanly.
 - **Lineage** — mixed authored/imported/derived: skills are reportedly authored by analysts or customers, user memories by users, financial context by imported source data normalized through a parsing pipeline, PostgreSQL rows by S3 sync, and eval outcomes by test execution. The report does not document a durable agent-trace-to-memory distillation loop.
 - **Behavioral authority** — skills act as **system-definition artifacts** because they instruct task execution; user memories and normalized financial documents act as **knowledge artifacts** injected or retrieved as context; eval suites act as system-definition artifacts at deployment time by blocking regressions. Effective runtime obedience is not verified.
 
@@ -45,6 +45,10 @@ The useful divergence is governance. Commonplace emphasizes reviewable accumulat
 - **Adversarial grounding tests.** Ready as an evaluation pattern. Plant false material beside real source material, then require the model to cite the real source; this maps cleanly to the [oracle-strength spectrum](../../notes/oracle-strength-spectrum.md).
 - **User-editable memory file.** Needs a concrete user-preference layer first. A single markdown file injected into every session is a simple constraining surface, but Commonplace would need ownership, privacy, and scope rules before adopting it.
 - **S3 source of truth plus derived query index.** Useful as production evidence rather than an immediate migration target. Commonplace's repo substrate already supplies versioning and inspection; the Fintool pattern matters when a consuming product needs multi-user storage, access control, and fast metadata queries.
+
+## Write-side placement
+
+**Write agency:** `manual` — the reported durable skills and user memories are authored by analysts, customers, or users through the product's file/skill surfaces; the source reports normalization and indexing infrastructure but not an autonomous memory-curation loop.
 
 ## Read-back placement
 

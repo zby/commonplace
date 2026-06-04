@@ -1,6 +1,7 @@
 ---
 description: "Self-improving agent harness that stores generated code patches, evaluation reports, archive metadata, and replays selected lineages into later agents"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived, push-activation]
 status: current
 last-checked: "2026-06-02"
@@ -73,13 +74,11 @@ The central design divergence is read-back. Commonplace generally asks an agent 
 
 **Read-back signal:** `identifier` — parent lineage replay is keyed by archive generation ids, parent ids, metadata-listed patch files, declared domains, and saved prediction ids rather than semantic inference.
 
-**Read-back timing:** `pre-action` — selected lineage patches are applied before the next meta-agent call or evaluation run.
-
 **Faithfulness tested:** `no` — evaluation scores route later generations, but the review does not identify a with/without replay ablation isolating read-back's behavioral effect.
 
 **Targeting and signal.** Targeting is `instance` for the executable patch path. The selected generation is keyed by archive generation ids, parent ids, declared run domains, `valid_parent`, score files, and child-count metadata; after parent selection, patch replay is an `identifier` read keyed by the selected `parent_genid` and its metadata-listed patch files. This is score-mediated symbolic routing over retained metadata, not inferred semantic retrieval over patch or transcript content.
 
-**Timing relative to action.** The push happens pre-action. Lineage patches are applied before the new meta-agent call or evaluation, so retained memory can change the code the future agent executes and edits.
+**Injection point.** The push happens pre-action. Lineage patches are applied before the new meta-agent call or evaluation, so retained memory can change the code the future agent executes and edits.
 
 **Selection, scope, and complexity.** Selection scope is experiment-local and archive-local. The default selector filters invalid parents, requires per-domain score availability, optionally discounts staged evaluations, and chooses by latest, best, random, score-proportional, or score-plus-child-count policy. The applied scope is the whole selected patch lineage, filtered to exclude `domains/` changes during application; context dilution and patch-chain interaction quality are not verified from code.
 
@@ -101,8 +100,13 @@ The central design divergence is read-back. Commonplace generally asks an agent 
 
 **Do not borrow patch authority without artifact contracts.** HyperAgents shows why executable memory needs explicit lineage and governance. Before Commonplace lets generated code or instructions mutate future behavior automatically, the promoted artifact should record the source trace, oracle, reviewer, validity scope, supersession state, and rollback path.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `consolidate` `evolve` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 **Trace source:** `session-logs` `tool-traces` `trajectories` — meta-agent sessions, task-agent chat/tool histories, benchmark outcomes, generation logs, parent-selection metadata, and archive trajectories feed the loop.
 
 **Learning scope:** `cross-task` — learning occurs across generations and can transfer across domains insofar as selected patch lineages generalize.

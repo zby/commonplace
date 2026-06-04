@@ -1,6 +1,7 @@
 ---
 description: "SAGE review: AppWorld skill-library agent whose trace-extracted Python skills are pushed into later tasks and rewarded during GRPO"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived, push-activation]
 status: current
 last-checked: "2026-06-01"
@@ -81,7 +82,13 @@ The biggest divergence is authority. In SAGE, retained skill code crosses into t
 
 **Separate inspectable skills from absorbed policy learning.** SAGE keeps skill JSONL and also trains model weights. Commonplace should preserve any learned selector or policy beside readable source artifacts, so the learned layer is an activation aid rather than the only copy of the knowledge. Ready as a design constraint.
 
-## Trace-derived learning placement
+## Write-side placement
+
+**Write agency:** `automatic` — AppWorld trajectories, AST extraction, deduplication, embedding generation, expert-data extraction, SFT, and GRPO write or update skill libraries, datasets, retrieval artifacts, and checkpoints without a manual authoring channel in the reviewed loop
+
+**Curation operations:** `dedup` `promote` — extracted functions are deduplicated by function name, then successful trajectories can be promoted into reusable skill records, SFT datasets, embedding-backed activation state, and model checkpoints
+
+### Trace-derived learning
 
 **Trace source:** `session-logs` `tool-traces` `trajectories` — AppWorld rollouts include generated code, environment outputs, completion/reward signals, `lm_calls.jsonl` conversation logs, and paired-subtask skill-use traces.
 
@@ -105,13 +112,9 @@ The biggest divergence is authority. In SAGE, retained skill code crosses into t
 
 **Read-back signal:** `identifier` `inferred / lexical` `inferred / embedding` — default and GRPO paths key on scenario/task or rollout slots, while optional n-gram and embedding modes infer relevance from task text, query text, or function text.
 
-**Read-back timing:** `pre-action` — retained functions are inserted before the acting AppWorld agent's first code action for the task or paired subtask.
-
 **Faithfulness tested:** `yes` — SAGE executes retrieved skill blocks, counts later function-name use, and makes skill use reward-relevant, while still not proving causal contribution to task success.
 
 **Targeting and signal.** The push is instance-targeted. In the deployed evaluation config, the selector matches the current task's scenario group to retained skill `task_id` values, so the signal is `identifier`. Optional skill-embedding retrieval uses `inferred / embedding` over the current instruction and retained function text; optional query-embedding retrieval uses `inferred / embedding` to select prior query ids and then joins skills by `task_id`; optional n-gram retrieval is `inferred / lexical` followed by the same task-id join. In the GRPO loop, first-subtask skills are carried to the paired second subtask through the rollout's subtask schedule and per-environment skill-library slot, an instance-scoped identifier/schedule signal. The code gives thresholds and top-k limits for some modes, but precision and recall are not verified from code.
-
-**Timing relative to action.** Read-back happens before the agent's first code action for the task or subtask. That means a pushed function can change the first plan, first API call, and subsequent execution path.
 
 **Selection, scope, and complexity.** Evaluation-time default retrieval loads functions from earlier tasks in the same scenario group. Embedding and n-gram modes cap retrieved query groups or functions. RL-time read-back is narrower: only functions generated in the first subtask's in-memory library are available to the second subtask. Complexity is bounded by prompt length and observation truncation, but actual context dilution is not verified from code, and the system does not deeply summarize or cite source traces behind each function.
 

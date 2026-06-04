@@ -1,6 +1,7 @@
 ---
 description: "nvk llm-wiki review: multi-runtime agent wiki manager with Markdown topics, generated indexes, lint/archive helpers, and lesson capture"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived]
 status: current
 last-checked: "2026-06-02"
@@ -84,8 +85,13 @@ The trace-derived path is real but deliberately file-mediated. Lessons learned a
 
 **Do not borrow unchecked agentic compilation wholesale.** LLM Wiki's ease of writing and updating articles is useful for personal wikis, but Commonplace should preserve type validation, source snapshots, and semantic review before high-authority knowledge changes.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `consolidate` `dedup` `evolve` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 **Trace source:** `session-logs` `event-streams` — `/wiki:ll` consumes the current session, while research and audit workflows persist `.session-events.jsonl` and checkpoint state.
 
 **Learning scope:** `per-task` `per-project` `cross-task` — lesson capture starts from a session/workflow, is retained inside a target topic or project-local wiki, and can influence later wiki queries, articles, outputs, or accepted rules.

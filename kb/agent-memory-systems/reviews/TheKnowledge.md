@@ -1,6 +1,7 @@
 ---
 description: "TheKnowledge review: filesystem wiki gateway with citation-grounded Markdown, NotebookLM-mediated synthesis, policy distillation, MCP tools, and hook-assisted read-back"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 status: current
 last-checked: "2026-06-03"
 tags: [trace-derived, push-activation]
@@ -88,7 +89,13 @@ The main tradeoff is complexity. TheKnowledge accumulates many operational paths
 
 **Do not borrow arbitrary scheduled shell execution as an agent surface.** The scheduler is intentionally CLI-only in MCP because it can run arbitrary commands. Commonplace should preserve that boundary if it adds scheduled jobs.
 
-## Trace-derived learning placement
+## Write-side placement
+
+**Write agency:** `manual` `automatic` — humans and agents author raw/wiki/policy artifacts through gateway operations, while ingest, NotebookLM filing, source-map resolution, filter correction, candidate policy distillation, generated skills, hooks, watcher/scheduler paths, and validators also mutate retained files and metadata.
+
+**Curation operations:** `consolidate` `synthesize` — source/wiki/query paths consolidate imported material into pages and filed artifacts, while NotebookLM queries, candidate policy distillation, and generated domain skills synthesize new retained artifacts without replacing the live policy automatically.
+
+### Trace-derived learning
 
 **Trace source.** The qualifying traces are curation and filtering events rather than full chat transcripts: automatic filter decisions, user corrections, rationales, scores, source frontmatter snapshots, and content excerpts retained as examples under `.knowledge/policies/<domain>/examples/`. Gateway logs, event files, and evaluation results are additional operational traces, but the implemented learning loop uses the filter example bank.
 
@@ -112,11 +119,7 @@ The main tradeoff is complexity. TheKnowledge accumulates many operational paths
 
 **Read-back signal:** `coarse` — The push path is the Claude Code `SessionStart` hook, which fires on session start and relies on freshness of retained session state rather than semantic relevance to the current request.
 
-**Read-back timing:** `pre-action` `post-action` — SessionStart can re-anchor before the next plan/write action, while PreCompact instructs the agent to write a future session-state snapshot after context-management pressure for later sessions.
-
 **Targeting and signal.** Pull targeting is usually `identifier`: page slug/path, domain slug, source id, NotebookLM notebook/domain, MCP tool name, or wikilink. The hook push is `coarse`: it fires at SessionStart and relies on the retained file's mtime/session-start comparison, not semantic relevance to the user's current request.
-
-**Timing relative to action.** The SessionStart hook is pre-action; it can change the next plan or write by causing the agent to reload session-state memory. The PreCompact hook is post-context-management guidance: it instructs the agent to write a future session-state snapshot before compaction, so its effect is on later sessions.
 
 **Selection, scope, and complexity.** `wiki context` bounds expansion by N-hop wikilink depth and returns either Markdown or JSON. Evaluation context caps total and per-source characters. Authorship prompts cap source body and existing-page snippets. The hook path is intentionally tiny: it pushes a short rule, not the full session state.
 

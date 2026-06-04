@@ -1,6 +1,7 @@
 ---
 description: "llm-context-base review: markdown LLM-wiki template with metadata routing, training write-back, JIT instructions, lint, and multi-tool shims"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 status: current
 last-checked: "2026-06-03"
 tags: [trace-derived]
@@ -72,8 +73,6 @@ llm-context-base's context-efficiency story is intentionally simple: route by di
 
 **Read-back signal:** `coarse` — The push path is startup/session loading of learned config, context, and summaries rather than instance-specific lexical, embedding, judgment, or identifier-triggered memory selection.
 
-**Read-back timing:** `pre-action` — Startup-loaded config/context can shape the next assistant actions before query or write work begins.
-
 **Faithfulness tested:** `no` — The review notes no benchmark, harness, or ablation showing that pushed context reliably changes later assistant behavior.
 
 ### Borrowable Ideas
@@ -88,8 +87,13 @@ llm-context-base's context-efficiency story is intentionally simple: route by di
 
 **Do not borrow instruction-only enforcement for core library artifacts.** llm-context-base can rely on a cooperative current agent because it is a personal template. Commonplace's methodology layer should keep deterministic validation and typed contracts for artifacts that future agents will cite as authority.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `consolidate` `dedup` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 **Trace source:** `session-logs` `event-streams` — The retained learning comes from conversations, captured ideas, query/lint/edit/archive operations, decision outcomes, and observed behavior during the training period, not from automatic raw JSONL or tool-trace mining.
 
 **Learning scope:** `per-project` `cross-task` — Learned conventions are personal-instance or repo-local, and they shape later sessions and decision/query/write tasks across the wiki.

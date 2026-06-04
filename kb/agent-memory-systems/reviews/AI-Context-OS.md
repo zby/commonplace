@@ -1,6 +1,7 @@
 ---
 description: "AI Context OS review: file-first desktop memory layer with L0/L1/L2 routing, MCP adapters, heuristic scoring, observability, and governance suggestions"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived, push-activation]
 status: current
 last-checked: "2026-06-03"
@@ -81,7 +82,13 @@ Another difference is where structured state earns its place. Commonplace mostly
 
 **Do not borrow status-only "apply" for high-authority changes.** Marking an optimization as applied without the edit is fine as a UI queue action, but Commonplace should keep acceptance tied to a changed artifact, validation result, or review event.
 
-## Trace-derived learning placement
+## Write-side placement
+
+**Write agency:** `automatic` `manual` — users and MCP/app commands can author or import memories, while usage traces, inbox/proposal flows, health checks, and optimizer runs write advisory maintenance/proposal records.
+
+**Curation operations:** `consolidate` `dedup` `decay` `promote` — optimizer suggestions cover compressing oversized L1 sections, merging tag-overlapping records, archiving or removing unused/decayed memories, and promoting or downgrading memory importance.
+
+### Trace-derived learning
 
 - **Trace source:** `session-logs` `tool-traces` `event-streams` — The review identifies session events, MCP context-serving traces, served/not-loaded memory events, access telemetry, daily inbox/proposal events, and provider/chat debug context.
 - **Learning scope:** `per-project` `cross-task` — Trace-derived governance is workspace-local and uses usage across context requests to produce future maintenance suggestions.
@@ -102,13 +109,11 @@ Another difference is where structured state earns its place. Commonplace mostly
 
 **Read-back signal:** `coarse` `identifier` `inferred / lexical` — Static adapters are coarse always-present memory/routing context, skill dependency force-loads key on visible dependency IDs, and chat auto-assembly uses lexical/heuristic relevance from the latest user turn.
 
-**Read-back timing:** `pre-action` — Chat, MCP context packages, and static adapters are assembled before the provider or receiving agent acts.
-
 **Faithfulness tested:** `no` — The review found exposure/observability records but no per-memory behavioral ablation showing that loaded memory changed a model action.
 
 **Targeting and signal.** The engineered push path is `instance` targeted with an `inferred / lexical` signal, broadened by symbolic metadata and graph structure. The current user turn supplies the query; BM25, query expansion, tag/L0 overlap, ontology bonus, recency, importance, access frequency, and PPR graph proximity rank memories; token budget then chooses L1 or L2. Skill dependency force-loads use an `identifier` signal once a scored skill's `requires` or `optional` IDs are visible. Static adapters are `coarse`: they always expose the memory roster and reading rules, not a specific instance's relevant content.
 
-**Timing relative to action.** Chat and MCP context packages are assembled before the provider or receiving agent acts, so they can change the next response. Observability rows, memory-usage updates, daily logs, and optimization records are written after context serving or user actions; they affect future behavior only when later retrieval, router generation, or maintenance workflows consume them.
+**Injection point.** Chat and MCP context packages are assembled before the provider or receiving agent acts, so they can change the next response. Static adapters provide coarse context when a host tool loads them before execution.
 
 **Selection, scope, and complexity.** Selection is workspace-scoped and budgeted. The implementation caps L2 loading to at most three top-cluster memories, lets L1 carry mid-relevance or forced dependencies, and keeps L0-only memories as available-but-unloaded references. This reduces token volume and some complexity, but the retrieval model is lexical/heuristic rather than embedding or judgment-based; precision, recall, and context dilution are runtime qualities, not verified by static code.
 

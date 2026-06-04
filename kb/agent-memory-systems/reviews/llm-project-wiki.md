@@ -1,6 +1,7 @@
 ---
 description: "llm-project-wiki review: Claude Code setup prompt that generates an Obsidian project wiki, wiki-first rules, sync script, ingest command, and gap audit"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 status: current
 last-checked: "2026-06-03"
 ---
@@ -80,6 +81,12 @@ llm-project-wiki is more aggressive about making the compiled wiki the first sto
 **Treat gap logs as maintenance inputs, not just notes.** llm-project-wiki's gap-to-log-to-ingest loop gives a lightweight path from failed lookup to future wiki improvement. Commonplace has workshop notes and review findings; a narrower gap-log grammar could help avoid mid-task context switching while preserving improvement signals. Ready as a workshop convention.
 
 **Do not borrow prompt-only generation where deterministic tooling is cheap.** The setup prompt specifies scripts, frontmatter checks, orphan checks, and index completeness checks in prose. Commonplace should keep such checks in executable validators when the rule is stable enough to codify.
+
+## Write-side placement
+
+**Write agency:** `automatic` `manual` — the review describes system-driven generation, extraction, consolidation, or update of retained artifacts rather than only manual authoring.
+
+**Curation operations:** `consolidate` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
 
 ## Curiosity Pass
 

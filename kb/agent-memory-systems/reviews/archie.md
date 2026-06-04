@@ -1,6 +1,7 @@
 ---
 description: "Archie review: repo-backed Arch Linux desktop configuration whose docs, work items, agent briefs, scripts, and Stow packages shape future maintenance"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 status: current
 last-checked: "2026-06-01"
 ---
@@ -82,6 +83,10 @@ Archie resembles Commonplace less as a knowledge system and more as an operating
 The main overlap is agent operation. Both systems put agent behavior into repository files rather than hidden service state. Archie is thinner on validation, type structure, source citation, and generated navigation, but it is stronger as an example of a personal system where the boundary between "memory" and "runtime configuration" is literal: changing the repo can change the user's shell, desktop, package workflow, and future agent instructions.
 
 Archie also shows a different adoption affordance. Commonplace asks maintainers to write typed knowledge artifacts. Archie lets its owner keep ordinary desktop files, shell scripts, guides, and task briefs in a familiar repo, then gradually adds more formal structure only where recurring maintenance needs it.
+
+## Write-side placement
+
+**Write agency:** `manual` — repo memory changes through maintainer-authored configuration, guides, work items, ADRs, task briefs, scripts, and CLI code; the reviewed source documents Codex session logs but does not implement automatic trace mining, curation, or relevance-gated writeback
 
 ## Curiosity Pass
 

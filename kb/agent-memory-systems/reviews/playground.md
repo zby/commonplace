@@ -1,6 +1,7 @@
 ---
 description: "Playground review: TribleSpace-backed autonomous model-shell loop with budgeted memory-cover push, archive importers, and durable cognition/model/exec traces"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [push-activation]
 status: current
 last-checked: "2026-06-02"
@@ -90,19 +91,23 @@ Playground also treats context caching as a first-class design constraint. Commo
 
 **Do not borrow implicit authority for unreviewed summaries.** Playground's automatic memory cover is powerful, but Commonplace should not let arbitrary summaries become high-authority methodology context without type, review, and validation status.
 
+## Write-side placement
+
+**Write agency:** `automatic` `manual` — the review describes system-driven generation, extraction, consolidation, or update of retained artifacts rather than only manual authoring.
+
+**Curation operations:** `consolidate` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
 ## Read-back placement
 
 **Direction.** Both. Pull exists through command/faculty affordances described in the system prompt and docs. Push exists in the implemented core: `create_thought_and_request` loads the memory branch, builds context messages, stores the context blob, and creates the model request before the model acts.
 
 **Read-back signal:** `coarse` — Every model request receives a continuity cover selected by time, hierarchy, and budget, not by an instance identifier, lexical query, embedding similarity, or judgment.
 
-**Read-back timing:** `pre-action` — The selected memory cover is assembled before the model call that produces the next shell command.
-
 **Faithfulness tested:** `no` — The review found no WITH/WITHOUT ablation, perturbation test, or post-action audit proving selected memory changes behavior as intended.
 
 **Targeting and signal.** The memory-cover push is `coarse`. It fires for each model request and selects a continuity cover from the memory branch using root chunks, `start_at`/`end_at`, child edges, moment boundary, continuous coverage, and budget fit. Signal is n/a because the selected cover is not keyed to this task by an identifier, lexical query, embedding similarity, or LLM relevance judgment. Static code verifies the cover-selection mechanics, not precision, context dilution, or effective behavioral use.
 
-**Timing relative to action.** The selected memory cover is assembled before the model call that produces the next shell command. It is therefore pre-action context, not a post-action reflection.
+**Injection point.** The selected memory cover is assembled before the model call that produces the next shell command. It is therefore pre-action context, not a post-action reflection.
 
 **Selection, scope, and complexity.** Selection is budgeted. The body budget reserves output and safety margin, subtracts system prompt cost, chooses memory first, then moment turns. The cover starts coarse, drops oldest roots if needed, and splits the widest parent into children only when the children's extra cost fits. Moment turns keep the most recent raw command interactions after the breath/memory floor. Complexity is bounded by tree depth and the number of selected summaries plus tail turns, not by arbitrary archive size.
 

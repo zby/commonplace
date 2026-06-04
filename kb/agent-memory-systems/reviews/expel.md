@@ -1,6 +1,7 @@
 ---
 description: "ExpeL review: benchmark agent that distills training trajectories into rules and retrieves prior trajectories as prompt few-shots"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived, push-activation]
 status: current
 last-checked: "2026-06-01"
@@ -80,8 +81,13 @@ ExpeL is stronger on pre-action activation. It does not rely on the agent decidi
 
 **Do not borrow pickle checkpoints as durable knowledge.** They are practical for experiments but poor as a reviewable memory substrate. Commonplace should preserve inspectable Markdown, JSON, or SQLite records with schema and provenance if it adopts similar trace loops.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `consolidate` `dedup` `synthesize` `invalidate` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 **Trace source:** `trajectories` — benchmark task trajectories carry prompts, thoughts, actions, observations, outcomes, reflections, and serialized agent state
 
 **Learning scope:** `per-task` `cross-task` — reflections can support same-task retries, while extracted rules and retrieved examples are used across held-out tasks within a benchmark/fold
@@ -106,13 +112,11 @@ ExpeL is stronger on pre-action activation. It does not rely on the agent decidi
 
 **Read-back signal:** `coarse` `identifier` `inferred / embedding` — fold-level rule insertion is coarse; few-shot retrieval narrows by environment/document metadata and then selects by embedding similarity over the current task/thought/action/step query.
 
-**Read-back timing:** `pre-action` — rules are inserted before the task prompt, and few-shots are replaced before the model call.
-
 **Faithfulness tested:** `no` — the review found structural activation and benchmark evaluation, but not item-level ablations proving a specific rule or trajectory caused a specific behavior.
 
 **Targeting and signal.** Rule read-back is coarse: the current evaluation fold supplies the rule set, and every evaluation task receives it unless `no_rules` is set. Few-shot read-back is instance-targeted with an inferred/embedding signal: the system builds a FAISS index over candidate documents narrowed by environment and document type, queries by the current task, thought, action, or step depending on `fewshot_strategy`, retrieves a buffered top-k, excludes current-task and overlong trajectories, and optionally reranks by length or cosine similarity over thoughts/tasks (https://github.com/LeapLabTHU/ExpeL/blob/e41ec9a24823e7b560c561ab191441b56d9bcefc/agent/expel.py, https://github.com/LeapLabTHU/ExpeL/blob/e41ec9a24823e7b560c561ab191441b56d9bcefc/configs/agent/expel.yaml). The metadata filters narrow the candidate pool, but the final selector is content-keyed embedding similarity, which justifies `push-activation`.
 
-**Timing relative to action.** Rules are inserted before the task prompt when the evaluation agent resets. Few-shots can be replaced before an LLM call because `prompt_agent` calls `update_dynamic_prompt_components` before invoking the model (https://github.com/LeapLabTHU/ExpeL/blob/e41ec9a24823e7b560c561ab191441b56d9bcefc/agent/react.py, https://github.com/LeapLabTHU/ExpeL/blob/e41ec9a24823e7b560c561ab191441b56d9bcefc/agent/expel.py). Reflections during training are also pushed before retrying the same task, but those are per-task recovery memory rather than the main cross-task ExpeL artifact.
+**Injection point.** Rules are inserted before the task prompt when the evaluation agent resets. Few-shots can be replaced before an LLM call because `prompt_agent` calls `update_dynamic_prompt_components` before invoking the model (https://github.com/LeapLabTHU/ExpeL/blob/e41ec9a24823e7b560c561ab191441b56d9bcefc/agent/react.py, https://github.com/LeapLabTHU/ExpeL/blob/e41ec9a24823e7b560c561ab191441b56d9bcefc/agent/expel.py). Reflections during training are also pushed before retrying the same task, but those are per-task recovery memory rather than the main cross-task ExpeL artifact.
 
 **Selection, scope, and complexity.** Selection is bounded by the number of base few-shots, `buffer_retrieve_ratio`, `max_fewshot_tokens`, environment filters, duplicate-task filters, and optional reranking. Complexity can still be high because whole trajectories are inserted as examples rather than compressed into smaller cited fragments.
 

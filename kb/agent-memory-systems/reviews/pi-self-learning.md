@@ -1,6 +1,7 @@
 ---
 description: "pi-self-learning review: Pi extension that distills task traces into git-backed daily, core, monthly, and injected memory files"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived]
 status: current
 last-checked: "2026-06-02"
@@ -72,8 +73,6 @@ The main divergence is authority control. Commonplace makes promotion explicit: 
 
 **Read-back signal:** `coarse` — push read-back is session-start/config-flag/recency loading of recent runtime notes plus configured core, daily, and monthly memory files, not instance relevance.
 
-**Read-back timing:** `pre-action` — the `before_agent_start` hook injects retained memory before the receiving agent starts its next task.
-
 **Faithfulness tested:** `no` — the review states effective faithfulness is not verified from code and does not report a with/without behavior ablation for injected memory.
 
 ### Borrowable Ideas
@@ -90,8 +89,13 @@ The main divergence is authority control. Commonplace makes promotion explicit: 
 
 **Do not borrow unconditional injection as the final read-back design.** The always-load hook is pragmatic for a small personal memory, but Commonplace would need relevance gates, scope checks, and faithfulness tests before pushing memory into agent context by default.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `consolidate` `dedup` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 **Trace source:** `session-logs` `tool-traces` `event-streams` — task-end reflection consumes recent Pi branch messages, serialized conversation text, tool result errors, assistant stop/skip signals, and lifecycle/interruption signals.
 
 **Learning scope:** `per-task` `per-project` `cross-task` — reflections are task-level, storage mode scopes memory to a project or global root, and global redistillation produces cross-project reusable rules.

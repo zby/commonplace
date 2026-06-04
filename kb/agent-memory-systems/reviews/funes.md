@@ -1,6 +1,7 @@
 ---
 description: "Funes review: Git/Markdown Librarian protocol for raw-source preservation, compiled wiki memory, generated outputs, and pull-only agent read-back"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 status: current
 last-checked: "2026-06-03"
 ---
@@ -80,6 +81,12 @@ Funes also makes a sharper raw/compiled split than many note systems. Commonplac
 **Keep the library creation path small.** `library.md` asks only for scope, link style, and tooling before scaffolding. Commonplace init flows should preserve that bias: ask only the choices that change the structure. Ready for CLI/template UX review.
 
 **Do not borrow prose-only governance where stronger gates are available.** Funes' method is a good low-friction template, but Commonplace should keep validation, type specs, and review gates for artifacts with durable methodological authority.
+
+## Write-side placement
+
+**Write agency:** `automatic` `manual` — the review describes system-driven generation, extraction, consolidation, or update of retained artifacts rather than only manual authoring.
+
+**Curation operations:** `consolidate` `dedup` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
 
 ## Curiosity Pass
 

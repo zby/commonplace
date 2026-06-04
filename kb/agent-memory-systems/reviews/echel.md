@@ -1,6 +1,7 @@
 ---
 description: "Echel review: product-owned Markdown wiki, generated graph/work packets, readiness gates, cockpit views, and task-scoped push read-back for AI coding"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 status: current
 last-checked: "2026-06-03"
 tags: [push-activation]
@@ -82,19 +83,23 @@ The divergence is type discipline and abstraction level. Commonplace treats coll
 
 **Do not borrow section-fragile graph extraction as the primary semantic model.** Echel's graph is useful because the scaffold controls the wiki shape. Commonplace's heterogeneous collections need stronger type-aware parsing and authored semantics before graph output should guide agent behavior.
 
+## Write-side placement
+
+**Write agency:** `automatic` `manual` — the review describes system-driven generation, extraction, consolidation, or update of retained artifacts rather than only manual authoring.
+
+**Curation operations:** `consolidate` `dedup` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
 ## Read-back placement
 
 **Direction.** Both. Operators and agents pull retained memory through `status`, `graph show/report`, `memory query`, cockpit dashboard APIs, and file reads. Echel also produces push-style agent handoffs: `session_bootstrap.py` prints the baseline memory bundle, prompt files tell agents what to load, and `build`/`packet` generates a work packet from the active task and graph.
 
 **Read-back signal:** `coarse` `identifier` - Session bootstrap is a coarse baseline bundle, while work packets and review reports select retained product memory by task ids, fixed wiki paths, graph node ids, evidence ids, and configured roots.
 
-**Read-back timing:** `pre-action` `post-action` - Bootstrap and work packets are meant to be read before implementation or review; review, readiness, proof-pack, and release reports are post-action audit surfaces that can constrain follow-up work.
-
 **Faithfulness tested:** `no` - Echel validates artifact structure, evidence links, graph integrity, drift, and gates, but the review found no with/without test proving that pushed packets or bootstrap context improve agent behavior.
 
 **Targeting and signal.** Targeting is `instance` for work packets and review reports: a task id, or the graph-selected next open task, determines which product context, graph context, acceptance criteria, likely files, and evidence obligations are assembled. The signal is `identifier`, because selection keys on task ids, fixed wiki paths, graph node ids, evidence ids, and configured root names rather than semantic relevance inference. Session bootstrap is a coarser always-load baseline.
 
-**Timing relative to action.** The push-style surfaces fire before implementation or review: the packet and bootstrap output are meant to be read before the agent writes code. Review reports and readiness reports are post-action audit surfaces unless a future agent receives them as constraints for follow-up work.
+**Injection point.** The push-style surfaces fire before implementation or review: the packet and bootstrap output are meant to be read before the agent writes code. Review reports and readiness reports are post-action audit surfaces unless a future agent receives them as constraints for follow-up work.
 
 **Selection, scope, and complexity.** Context volume is bounded by fixed file lists, recent-log slicing, compacted section summaries, graph-neighborhood formatting, and task-specific packet sections. Complexity remains moderate because a packet mixes product strategy, graph nodes, acceptance criteria, file guesses, verification, and memory-update obligations in one document. There is no token-aware top-k memory selector or semantic deduplication layer.
 

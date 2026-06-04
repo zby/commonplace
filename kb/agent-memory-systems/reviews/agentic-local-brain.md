@@ -1,6 +1,7 @@
 ---
 description: "Agentic Local Brain review: local PKM with Markdown capture, SQLite metadata/graph state, Chroma vectors, enhanced RAG, wiki synthesis, and usage-trace personalization"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 status: current
 last-checked: "2026-06-03"
 tags: [trace-derived, push-activation]
@@ -87,7 +88,13 @@ LocalBrain's context assembly is more automated than Commonplace's current searc
 
 **Wiki synthesis needs a review lane before it can become knowledge.** LocalBrain's LLM wiki compiler is a plausible synthesis interface. In Commonplace, generated synthesis should land in workshop/report space until citations, lineage, and review status are explicit.
 
-## Trace-derived learning placement
+## Write-side placement
+
+**Write agency:** `automatic` `manual` — users and agents manually collect Markdown notes, while background mining, tag/summary extraction, embedding, relation building, wiki compilation, reading-history capture, and conversation persistence automatically change derived memory state
+
+**Curation operations:** `synthesize` `promote` — LLM wiki compilation and cross-document mining synthesize new articles, entities, relations, topics, and recommendations from collected material and traces; reading-history and conversation rows promote recent usage into ranking and prompt context
+
+### Trace-derived learning
 
 **Trace source:** `session-logs` `event-streams` - Conversation turns are retained session memory, while item views, searches, RAG query events, and mining-run records are usage event streams.
 
@@ -111,13 +118,9 @@ LocalBrain's context assembly is more automated than Commonplace's current searc
 
 **Read-back signal:** `coarse` `identifier` `inferred / lexical` `inferred / embedding` - Conversation history is selected by `session_id`; reading-history boosts are coarse user-recency signals over retrieved chunks; the RAG context itself is selected by lexical and vector relevance from the current question.
 
-**Read-back timing:** `pre-action` `post-action` - Conversation history and retrieved context are assembled before answer generation, while views/searches/RAG calls are recorded afterward for later recommendations or RAG runs.
-
 **Faithfulness tested:** `no` - The review found no implemented ablation, perturbation test, or post-answer audit proving that retained history or personalization changes model behavior.
 
 **Targeting and signal.** Conversation read-back is `instance`-targeted by `session_id`; the relevant identifier already exists in the chat request. Reading-history ranking boost is coarser: it favors documents recently viewed by the user if they also appear in the current retrieved chunk set. Retrieval itself is inferred lexical/vector relevance from the question plus optional tags.
-
-**Timing relative to action.** Conversation history and retrieved context are assembled before the answer-generation LLM call, so they can change the next answer. Reading-history events are recorded after views/searches/RAG calls and can only affect later recommendations or RAG runs.
 
 **Selection, scope, and complexity.** Selection is bounded by `top_k`, RRF candidate counts, rerank top-k, context budget, conversation history turn limits, and a hard 4000-character cap in `format_history_for_prompt` ([kb/query/conversation.py](https://github.com/agent-creativity/agentic-local-brain/blob/d1e5f846351a8433edea54053ddb5fc3158229c6/kb/query/conversation.py), [kb/query/retrieval_pipeline.py](https://github.com/agent-creativity/agentic-local-brain/blob/d1e5f846351a8433edea54053ddb5fc3158229c6/kb/query/retrieval_pipeline.py)). Complexity remains high because a final answer may reflect original chunks, query rewrites, semantic scores, keyword matches, graph entities, topic labels, recent views, prior conversation, and prompt-template choice.
 

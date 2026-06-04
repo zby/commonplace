@@ -1,6 +1,7 @@
 ---
 description: "TraceCraft review: CLI coordination layer with bucket-backed memory, mailbox, claims, artifacts, and mirrored agent transcripts"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 status: current
 last-checked: "2026-06-02"
 ---
@@ -80,6 +81,12 @@ The design is attractive where coordination failure is the main risk. Atomic cla
 **Borrow bucket-browsability as an adoption affordance.** Ready as a product lesson. A coordination tool is easier to trust when operators can inspect the exact JSON objects in MinIO, AWS, R2, or HuggingFace without a custom UI.
 
 **Do not borrow scalar key-value memory as a KB substitute.** Ready now. Dotted key paths are convenient for coordination, but they lack the type contracts, citations, review state, and link semantics Commonplace needs for durable methodology knowledge.
+
+## Write-side placement
+
+**Write agency:** `automatic` `manual` — the review describes system-driven generation, extraction, consolidation, or update of retained artifacts rather than only manual authoring.
+
+**Curation operations:** `consolidate` `dedup` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
 
 ## Curiosity Pass
 

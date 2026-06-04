@@ -1,6 +1,7 @@
 ---
 description: "LLM Wiki fork with local-first wiki compilation, autonomous source monitors, metrics-backed research tasks, retrospective validation, and synthesis"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived]
 status: current
 last-checked: "2026-06-02"
@@ -80,8 +81,13 @@ The context-efficiency story is mixed. Query is deliberately small because it re
 
 **Newsletter and paper synthesis as generated views.** Useful for outward-facing summaries, but they should stay derived knowledge artifacts. Commonplace should not let generated synthesis outrank the typed notes and source snapshots it summarizes.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `consolidate` `dedup` `synthesize` `invalidate` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 **Trace source:** `session-logs` `event-streams` — Operation logs, extraction/integration metrics, monitor deduplication events, wiki page-state changes, validation scans, and generated experiment/hypothesis records
 **Learning scope:** `per-project` `cross-task` — The loops operate within one wiki repository while aggregating failures, page states, validation results, and research gaps across many wiki tasks
 **Learning timing:** `online` `staged` — The daemon runs as live maintenance over the repository, while prompt optimization, research, validation, and paper generation are scheduled cycles

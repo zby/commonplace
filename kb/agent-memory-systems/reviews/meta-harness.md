@@ -1,6 +1,7 @@
 ---
 description: "Meta-Harness review: offline evolutionary search over model harness code using proposer skills, candidates, traces, frontiers, and benchmark summaries"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived]
 status: current
 last-checked: "2026-06-02"
@@ -86,8 +87,13 @@ The biggest divergence is what "learning" produces. In Meta-Harness, successful 
 
 **Use onboarding as a pre-implementation gate.** Ready now. `ONBOARDING.md` is a good pattern for forcing task unit, fixed components, evaluation split, baselines, traces, and budget before an agent starts building.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `consolidate` `dedup` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 **Trace source:** `session-logs` `tool-traces` `event-streams` `trajectories` — proposer sessions, Claude session logs, streamed events, tool/file-read traces, benchmark runs, memory-system trajectories, and Terminal-Bench job outputs feed later candidate generation
 
 **Learning scope:** `per-project` `cross-task` — retained state is scoped by reference experiment and run name, while candidate generation reads benchmark/job trajectories across tasks within that experiment

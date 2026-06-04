@@ -28,7 +28,7 @@ AgeMem is an agent memory system whose distinctive contribution is a **memory-ma
 Claim-level (no code inspected):
 
 - **Storage substrate:** `model-weights` — the central retained controller is reported as an RL-trained policy in the agent model. The LTM facts are reported as entries in a long-term memory store, but the paper does not give an inspectable persistence implementation.
-- **Representational form:** `mixed` — the policy is distributed-parametric; the stored facts appear as prose/tool-argument records in a reported LTM store; STM is manipulated as active context text. The most consequential operative part is the least inspectable one.
+- **Representational form:** `prose` `symbolic` `parametric` — the policy is distributed-parametric; the stored facts appear as prose/tool-argument records in a reported LTM store; STM is manipulated as active context text. The most consequential operative part is the least inspectable one.
 - **Lineage** — **trace-extracted**: the policy is derived from staged task trajectories / rollouts via RL; task, context, and memory-management rewards decide what becomes signal. Stored facts are authored at runtime by the policy. Changes in task distribution, reward design, or evaluation oracle would invalidate the learned policy claim.
 - **Behavioral authority** — two parts: the learned policy is a **system-definition artifact** consumed as a controller over memory actions; the stored LTM facts are **knowledge artifacts** consumed as context when retrieved. Effective quality and authority are reported by the paper, not verified from code.
 
@@ -41,7 +41,13 @@ AgeMem and Commonplace sit at opposite ends of the curation-agency axis. AgeMem 
 - **"When to store/retrieve" as a first-class learnable decision.** Even without adopting RL, the framing — that curation *timing* is a policy, not an incidental side effect of writing — is worth carrying into how we think about promotion and read-back triggers. Needs a use case before any automation.
 - **Operation-set + policy separation.** Hand-crafted memory operations with a separable decision layer is a clean architecture; in our terms the decision layer is exactly the read-back/curation policy we under-specify. Not ready to build; conceptually useful.
 
-## Trace-derived learning placement
+## Write-side placement
+
+**Write agency:** `automatic` — the reported learned policy invokes memory-management actions itself, including LTM `Add`, `Update`, and `Delete`, rather than leaving store changes only to a human authoring channel.
+
+**Curation operations:** `evolve` — the reported `Update` action lets the policy modify existing long-term memories in response to the task trajectory; other operations are reported as tool actions but not described clearly enough to map to the curation vocabulary.
+
+### Trace-derived learning
 
 AgeMem qualifies: it derives a durable artifact (the policy) from agent traces.
 

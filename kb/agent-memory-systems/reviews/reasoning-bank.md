@@ -1,6 +1,7 @@
 ---
 description: "ReasoningBank review: trace-derived reasoning memories for WebArena and SWE-Bench with embedding-selected prompt injection and scaling loops"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived, push-activation]
 status: current
 last-checked: "2026-06-02"
@@ -80,8 +81,13 @@ ReasoningBank also makes the read-back boundary unusually explicit. The selected
 
 **Make memory use discussable in the prompt.** The receiving agents are told to discuss whether to use each memory item before acting. Commonplace could borrow that as a faithfulness aid in workflows that inject retrieved notes: ask the agent to name which retrieved item it used and why. Ready as an instruction pattern, but still needs an audit check to verify actual use.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `consolidate` `dedup` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 **Trace source:** `session-logs` `tool-traces` `trajectories` — WebArena and SWE-Bench consume logs/messages, action traces, and benchmark trajectories from prior runs
 
 **Learning scope:** `per-task` `cross-task` — memory is induced after individual tasks or same-task scaling trials, then reused across later benchmark tasks within website/mode or model-scoped banks
@@ -104,13 +110,11 @@ ReasoningBank also makes the read-back boundary unusually explicit. The selected
 
 **Read-back signal:** `inferred / embedding` — the pushed memory is selected by embedding similarity between the current query or problem statement and cached prior task embeddings.
 
-**Read-back timing:** `pre-action` — selected memory is written or appended before the WebArena or SWE-Bench action loop starts.
-
 **Faithfulness tested:** `no` — the review found benchmark comparisons but no code-grounded audit that the selected memory changed model behavior faithfully.
 
 **Targeting and signal.** Targeting is `instance`: task start with a configured memory path or benchmark memory mode causes the harness to select a memory for this WebArena task or SWE-Bench instance. The signal is `inferred / embedding`: relevance is derived from embedding similarity between the current query or problem statement and cached prior task embeddings, with an instruction-aware query embedding used for scoring. The deployed code requests one memory entry. Precision, recall, and context dilution are runtime properties not verified by the code.
 
-**Timing relative to action.** Read-back happens before the action loop: WebArena writes the selected memory file before constructing `ExpArgs`, and the legacy agent appends the file content to the system message on every `get_action` call; SWE-Bench appends selected memory before adding the first user task message.
+**Injection point.** Read-back happens before the action loop: WebArena writes the selected memory file before constructing `ExpArgs`, and the legacy agent appends the file content to the system message on every `get_action` call; SWE-Bench appends selected memory before adding the first user task message.
 
 **Selection, scope, and complexity.** Selection is top-1 after embedding ranking, then mapped back by task id. Scope is website/memory-mode for WebArena and model-name for SWE-Bench. Volume is bounded by one prior task record, but the memory record can contain several memory items and there is no token budget or schema-aware trimming for the selected memory text.
 

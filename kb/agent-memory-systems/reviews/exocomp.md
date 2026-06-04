@@ -1,6 +1,7 @@
 ---
 description: "Exocomp review: Go multi-agent coding workbench with YAML roles, sandboxed tools, JSON ledgers, and session recovery"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 status: current
 last-checked: "2026-06-01"
 ---
@@ -71,8 +72,6 @@ Commonplace is stronger on artifact governance. Exocomp's JSON ledgers are easy 
 
 **Read-back signal:** `coarse` — Session recovery pushes retained state at TTY/web session start without an instance signal or relevance gate.
 
-**Read-back timing:** `pre-action` — The pushed recovery state is restored at session start before the receiving agent acts.
-
 **Faithfulness tested:** `not-determinable` — The review records recovery mechanics but no with/without behavioral test for whether restored memory changes later action.
 
 ### Borrowable Ideas
@@ -86,6 +85,12 @@ Commonplace is stronger on artifact governance. Exocomp's JSON ledgers are easy 
 **Output caps around executable tools.** Exocomp's 16 MB output buffer and idle/time limits are blunt but useful context-protection controls. Commonplace command wrappers should keep explicit output budgets and pointer-to-full-output patterns for high-volume runs. Ready now for command design.
 
 **Do not borrow recovery as memory governance.** Resuming a raw session is useful continuity, but it does not distinguish evidence, instruction, stale state, or validated knowledge. Commonplace should keep recovered traces below curated artifacts unless they are promoted through review.
+
+## Write-side placement
+
+**Write agency:** `automatic` `manual` — the review describes system-driven generation, extraction, consolidation, or update of retained artifacts rather than only manual authoring.
+
+**Curation operations:** `consolidate` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
 
 ## Curiosity Pass
 

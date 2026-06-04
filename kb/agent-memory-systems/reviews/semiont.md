@@ -1,6 +1,7 @@
 ---
 description: "Semiont review: event-sourced semantic KB with W3C annotations, graph/vector projections, gather/match read-back, and agent skills"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived, push-activation]
 status: current
 last-checked: "2026-06-02"
@@ -80,8 +81,13 @@ The major design divergence is where semantics live. Commonplace makes the durab
 
 **Do not borrow automatic projection as authority promotion.** Semiont's graph and vector projections are useful because they shape retrieval, not because they make claims true. Commonplace should preserve the distinction: generated candidates and rankings can advise, but only reviewed artifacts should become instructions, definitions, or validators.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `dedup` `evolve` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 **Trace source:** `event-streams` — persisted semantic domain events such as yield, mark, frame, entity-tag, and job lifecycle events are the durable raw signal.
 
 **Learning scope:** `per-project` — the review identifies project and resource-scoped projection, with no broader cross-task scope established.
@@ -106,13 +112,11 @@ The major design divergence is where semantics live. Commonplace makes the durab
 
 **Read-back signal:** `identifier` `inferred / embedding` `inferred / judgment` — the push keys on annotation/resource identifiers, then may add vector-similar annotations and an LLM relationship summary.
 
-**Read-back timing:** `pre-action` — pushed gather context arrives before the bind/generate/compose decision in the wizard.
-
 **Faithfulness tested:** `no` — the review did not find a built-in ablation or post-action audit proving gathered context changed behavior.
 
 **Targeting and signal.** The automatic gather push is `instance`-targeted. It keys first on identifiers the workflow already carries: annotation id and resource id from `bind:initiate`, with the default title and entity types traveling as workflow metadata. Inside that identified frame, gathered context is mixed: identifier-selected source annotation/resource state is combined with graph neighbors, entity-type statistics, optional `inferred / embedding` similar annotations from the selected span, and optional `inferred / judgment` relationship summary. Precision and recall are not verified from code.
 
-**Timing relative to action.** The pushed gather happens before the bind/generate/compose decision in the wizard. Matcher search runs after the user chooses the Bind path, with explicit limit and semantic-scoring options, so that later candidate search is pull within the already-open resolution workflow.
+**Injection point.** The pushed gather happens before the bind/generate/compose decision in the wizard. Matcher search runs after the user chooses the Bind path, with explicit limit and semantic-scoring options, so that later candidate search is pull within the already-open resolution workflow.
 
 **Selection, scope, and complexity.** The default gather context window is 2000 characters in the SDK/state-unit path, with code validation allowing 100 to 5000. Graph context and semantic context are separately bounded by implementation limits such as top connection names, vector annotation limit 10, Matcher resource vector limit 40, and Matcher final limit 10 unless overridden. The result can still be complex because it mixes span text, metadata, graph relations, semantic matches, and LLM summaries.
 

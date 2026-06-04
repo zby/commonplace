@@ -1,6 +1,7 @@
 ---
 description: "OS-Copilot review: FRIDAY planner/executor with self-learning that promotes judged Python code into Chroma-retrieved reusable tools"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived, push-activation]
 status: current
 last-checked: "2026-06-02"
@@ -83,7 +84,13 @@ The design tradeoff is authority without review. A generated Python tool can aff
 
 **Do not borrow unsupervised generated-tool authority wholesale.** The missing piece for Commonplace is provenance: a generated tool should retain the triggering task, source traces, judge/rater output, tests, and invalidation conditions before it becomes reusable infrastructure.
 
-## Trace-derived learning placement
+## Write-side placement
+
+**Write agency:** `automatic` `manual` — successful Python subtasks can be stored automatically as reusable tools after execution and judge scoring, while manual add/delete commands maintain the tool repository.
+
+**Curation operations:** `synthesize` `promote` — execution traces are synthesized into reusable Python tools with descriptions and embeddings, and the judge score threshold promotes completed subtasks into the retained tool repository.
+
+### Trace-derived learning
 
 **Trace source:** `tool-traces` `trajectories` — generated code, invocations, environment outputs/errors, judge critiques, repairs, and self-learning lesson runs are execution traces rather than passive logs.
 
@@ -109,13 +116,11 @@ The design tradeoff is authority without review. A generated Python tool can aff
 
 **Read-back signal:** `inferred / embedding` — Chroma similarity selects generated tools by comparing current task or subtask descriptions to retained tool descriptions.
 
-**Read-back timing:** `pre-action` — retrieval happens before task decomposition and before Python code generation.
-
 **Faithfulness tested:** `no` — the review found structural tests and tutorial claims but no standing with/without memory ablation or post-action audit for read-back behavior.
 
 **Targeting and signal.** Targeting is `instance`: planning calls `retrieve_tool_name(task, k=10)` and then retrieves descriptions for the selected names, while Python execution calls `retrieve_tool_name(description, 3)` and retrieves code for those names. The signal is `inferred / embedding`, because Chroma similarity selects generated tools by comparing the current task or subtask description to retained tool descriptions; precision and recall are not verified by code.
 
-**Timing relative to action.** Retrieval happens before task decomposition and before Python code generation. It can change the next plan or generated code before the agent acts. Repair and replanning happen after execution and can only affect later attempts or subtasks.
+**Injection point.** Retrieval happens before task decomposition and before Python code generation. It can change the next plan or generated code before the agent acts. Repair and replanning happen after execution and can only affect later attempts or subtasks.
 
 **Selection, scope, and complexity.** Selection is top-k by vector similarity. Planning receives up to 10 tool descriptions; Python generation receives up to 3 code snippets. Complexity is controlled by retrieval counts and subtask dependency summaries, but retrieved code can still be large, and the system does not enforce token budgets or provenance-aware filtering.
 

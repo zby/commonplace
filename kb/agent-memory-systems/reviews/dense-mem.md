@@ -1,6 +1,7 @@
 ---
 description: "Dense-Mem review: self-hosted MCP memory server with Neo4j fragment/claim/fact graph, verifier gates, tiered recall, and trace-derived claims"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived]
 status: current
 last-checked: "2026-06-03"
@@ -84,8 +85,13 @@ The architectural divergence is where truth is made explicit. Commonplace preser
 
 **Do not borrow verifier-backed promotion as a substitute for review.** Dense-Mem's verifier is appropriate for operational personal memory. Commonplace methodology claims need source-grounded review and argument quality, not only entailment against a fragment.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `consolidate` `dedup` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 **Trace source:** `session-logs` - Dense-Mem consumes current conversation evidence and summarized historical conversations rather than full transcripts, tool logs, event streams, or trajectories.
 
 **Learning scope:** `cross-task` - The loop is profile-scoped and can carry facts across later conversations and skill-pack transfers, while the review does not identify project- or task-bounded learning semantics.

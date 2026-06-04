@@ -1,6 +1,7 @@
 ---
 description: "o-o review: self-contained HTML/bash living documents with embedded update contracts, source caches, changelogs, and Claude-driven web refresh"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 status: current
 last-checked: "2026-06-02"
 ---
@@ -83,6 +84,12 @@ The second divergence is lineage quality. o-o has a useful source cache and chan
 **Keep source-cache state separate from authoritative claims.** Ready conceptually. o-o usefully preserves source lists and facts for the next update, but Commonplace should keep those as source/research state until reviewed into notes or instructions.
 
 **Do not borrow the full polyglot artifact as the default KB unit.** The single-file app is elegant for living articles, but Commonplace benefits from separate type contracts, validators, indexes, and archives. Borrow the locality of the update contract, not the loss of modular boundaries.
+
+## Write-side placement
+
+**Write agency:** `automatic` `manual` — the review describes system-driven generation, extraction, consolidation, or update of retained artifacts rather than only manual authoring.
+
+**Curation operations:** `consolidate` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
 
 ## Curiosity Pass
 

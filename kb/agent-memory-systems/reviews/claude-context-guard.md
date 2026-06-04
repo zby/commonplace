@@ -1,6 +1,7 @@
 ---
 description: "Claude Context Guard review: Claude Code continuity scaffold with safeguard files, lifecycle slash commands, hooks, pagination, and itemised code indexes"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived]
 status: current
 last-checked: "2026-06-01"
@@ -67,7 +68,6 @@ The other difference is lifecycle posture. Context Guard treats the active sessi
 
 **Read-back:** `both` — Memory-only. The push paths are coarse: Claude Code always-loads project `CLAUDE.md`, and `/start` or `/audit` user events instruct the agent to read the current safeguard files; there is no instance signal beyond session/audit mode. Archive pages and itemised sidecars remain pull surfaces. The hooks inject shipped checklist/status text or copy files, not selected retained memory
 **Read-back signal:** `coarse` — The review identifies only coarse push: always-loaded `CLAUDE.md` and lifecycle/audit events that make the agent read the current safeguard files, with no instance-targeted retained-memory selection
-**Read-back timing:** `pre-action` — `CLAUDE.md`, `/start`, and `/audit` load or require reading retained project state before the receiving agent continues work or review
 **Faithfulness tested:** `no` — The review describes activation mechanics, audits, and workflow checks, but no with/without test that pushed retained state changes downstream Claude behavior
 
 ### Borrowable Ideas
@@ -82,8 +82,13 @@ The other difference is lifecycle posture. Context Guard treats the active sessi
 
 **Make source navigation addressable when files are large.** Itemisation plus sidecar indexes is heavier than Commonplace normally wants, but the addressable-section pattern is worth borrowing for long generated reports or code files that agents repeatedly inspect. Needs a scoped pilot; broad automatic itemisation would add maintenance load.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `consolidate` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 **Trace source:** `session-logs` `event-streams` — The review grounds trace capture in live session context and lifecycle/hook events, not stored full-transcript mining or model telemetry
 **Learning scope:** `per-project` — The retained outputs are project-local safeguard files, archive pages, audit reports, plans, sidecar indexes, and compaction backups
 **Learning timing:** `online` `staged` — Capture happens during normal Claude Code work, while `/save`, `/end`, `/start`, `/audit`, and hooks stage extraction or preservation at lifecycle and event boundaries

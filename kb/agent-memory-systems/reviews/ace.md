@@ -1,6 +1,7 @@
 ---
 description: "ACE review: playbook-evolving agent loop that distills task attempts, reflections, and curation outputs into reusable prompt context"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived]
 status: current
 last-checked: "2026-06-01"
@@ -70,8 +71,6 @@ The useful contrast is ACE's willingness to operationalize small learning cycles
 
 **Read-back signal:** `coarse` — Every Generator call receives the whole retained playbook; the review finds no instance-targeted selector or relevance-gated signal.
 
-**Read-back timing:** `pre-action` — The playbook is inserted into the Generator prompt before the model produces the next answer.
-
 **Faithfulness tested:** `no` — ACE tracks validation accuracy and selected playbooks, but the review does not find a with/without read-back ablation proving the injected playbook changes behavior.
 
 ### Borrowable Ideas
@@ -86,7 +85,13 @@ The useful contrast is ACE's willingness to operationalize small learning cycles
 
 **Run deduplication as a maintenance pass, not a hidden write path.** The optional analyzer separates growth from cleanup. Commonplace could borrow this for candidate link or note consolidation reports, but automatic merges should stay behind review until lineage and semantic checks are stronger.
 
-## Trace-derived learning placement
+## Write-side placement
+
+**Write agency:** `automatic` — Generator attempts, Reflector diagnostics, Curator operations, counter updates, optional deduplication, and validation selection mutate or select saved playbook state during a run.
+
+**Curation operations:** `dedup` `synthesize` `promote` — the Curator adds new playbook bullets from reflections, optional bulletpoint analysis drops or merges duplicate advice, and validation accuracy selects the best playbook snapshot.
+
+### Trace-derived learning
 
 **Trace source:** `session-logs` `trajectories` — Task-level Generator attempts, reasoning responses, correctness feedback, reflection rounds, and retained LLM/usage logs supply the learning signal.
 

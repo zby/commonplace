@@ -1,6 +1,7 @@
 ---
 description: "Quicky Wiki review: SQLite claim graph with LLM source extraction, confidence events, generated wiki outputs, health loops, dashboard, and MCP pull tools"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 status: current
 last-checked: "2026-06-03"
 ---
@@ -84,6 +85,12 @@ The trust tradeoff is sharp. Quicky Wiki has more first-class machinery for conf
 **Do not borrow document-to-claim extraction without review gates.** Automatic extraction is useful for exploration and workshop intake, but Commonplace methodology notes should not become durable library claims just because an LLM extracted them with a confidence number.
 
 **MCP as a narrow pull interface.** Quicky's MCP tools are a practical agent integration surface: list, search, get page, query, health, ingest. A Commonplace MCP layer should similarly expose bounded operations rather than whole-repo dumps. Needs a maintained tool contract before implementation.
+
+## Write-side placement
+
+**Write agency:** `automatic` `manual` — the review describes system-driven generation, extraction, consolidation, or update of retained artifacts rather than only manual authoring.
+
+**Curation operations:** `dedup` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
 
 ## Curiosity Pass
 

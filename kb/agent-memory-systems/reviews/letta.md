@@ -1,6 +1,7 @@
 ---
 description: "Letta review: stateful agent server with prompt-rendered core memory, searchable recall/archives, compaction, sleeptime agents, and git memory"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived, push-activation]
 status: current
 last-checked: "2026-06-02"
@@ -88,8 +89,13 @@ The closest overlap is git-backed memory. Letta's memory repo path acknowledges 
 
 **Do not borrow automatic core-memory authority promotion wholesale.** Letta can let an agent or sleeptime agent rewrite behavior-shaping blocks from traces. Commonplace should preserve a review gate before trace-derived prose becomes instruction, validator, or navigation policy.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `consolidate` `evolve` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 **Trace source:** `session-logs` `tool-traces` `event-streams` — Persisted conversation messages, tool calls/returns, run and step records, foreground responses handed to sleeptime agents, and compacted message windows
 
 **Learning scope:** `per-task` `per-project` `cross-task` — Scope spans conversations/runs, source or project associations, groups, archives, and organizations
@@ -114,13 +120,11 @@ The closest overlap is git-backed memory. Letta's memory repo path acknowledges 
 
 **Read-back signal:** `identifier` — Pushed memory is selected by attached agent blocks, block labels, git `system/` labels, file/source associations, ids, names, open state, and configured windows rather than semantic top-k push
 
-**Read-back timing:** `pre-action` — Core blocks and file windows are present before the next model call; sleeptime and compaction outputs affect later turns only after persistence and prompt rebuild
-
 **Faithfulness tested:** `no` — The review found structural tests for rendering, prompt recompilation, sleeptime wiring, and compaction, but no with/without behavioral ablation for pushed core memory
 
 **Targeting and signal.** The pushed memory path is instance-targeted, with an `identifier` signal. Core blocks are selected by the receiving agent's attached memory blocks and block labels; git-enabled rendering narrows direct prompt memory to `system/` labels. File/source views are selected by agent-file/source associations, open-file state, file ids/names, and configured line/window limits. This is not semantic top-k selection for core blocks; archival semantic search remains pull.
 
-**Timing relative to action.** Core blocks and file windows are present before the next LLM call and can change the next action. Sleeptime and compaction run after turns or under context pressure, so their outputs affect later turns after persistence and prompt rebuild. Archival/recall searches affect the current turn only when the model or host calls the tool.
+**Injection point.** Core blocks and file windows are present before the next LLM call and can change the next action. Sleeptime and compaction run after turns or under context pressure, so their outputs affect later turns after persistence and prompt rebuild. Archival/recall searches affect the current turn only when the model or host calls the tool.
 
 **Selection, scope, and complexity.** Context volume is controlled by block character limits, git `system/` rendering, open/closed file state, `max_files_open`, per-file view windows, retrieval limits, tags, date filters, and compaction thresholds. Context complexity is still high: the prompt can combine system text, core blocks, metadata, source directories, file snippets, tool rules, skills, summaries, and messages.
 

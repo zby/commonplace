@@ -1,6 +1,7 @@
 ---
 description: "sift-kg review: document-to-knowledge-graph CLI with LLM extraction, source-grounded graph JSON, review YAML, topology queries, and an agent skill"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 status: current
 last-checked: "2026-06-02"
 ---
@@ -71,6 +72,12 @@ The most relevant alignment is progressive disclosure. sift-kg's agent-facing to
 **Agent-facing graph commands with bounded output.** Needs a concrete query surface. `sift topology` and `sift query --depth` show how a CLI can be designed for agent context budgets: load the map, then load one neighborhood. Commonplace can borrow the output discipline even if the underlying substrate remains Markdown.
 
 **Do not borrow schema-free extraction as authority.** The LLM-designed schema is useful for exploration, but Commonplace's methodology artifacts need authored contracts and validation. Schema-free extraction should create candidates or workshop artifacts, not directly define durable collection semantics.
+
+## Write-side placement
+
+**Write agency:** `automatic` `manual` — the review describes system-driven generation, extraction, consolidation, or update of retained artifacts rather than only manual authoring.
+
+**Curation operations:** `consolidate` `dedup` `synthesize` `invalidate` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
 
 ## Curiosity Pass
 

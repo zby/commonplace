@@ -1,6 +1,7 @@
 ---
 description: "A-mem review: Python library for Chroma-backed memory notes with LLM-evolved metadata, neighbor linking, and optional persistent retrievers"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 status: current
 last-checked: "2026-06-01"
 ---
@@ -74,6 +75,12 @@ The LLM evolution loop is the distinctive contrast. Commonplace tends to ask age
 **Make generated metadata advisory until reviewed.** A-mem can let LLM-generated tags, context, and links affect later retrieval immediately. Commonplace could use similar generation as a draft assist, but the borrowed version should surface candidates in a workshop or review report before they gain durable link or routing authority. Ready as a governance rule, not as automatic promotion.
 
 **Require explicit extension for persistent stores.** `PersistentChromaRetriever` refuses to open an existing collection unless `extend=True`. The general idea is useful: commands that can append to durable derived state should make continuation explicit. Ready as a command design pattern.
+
+## Write-side placement
+
+**Write agency:** `manual` `automatic` — host code supplies notes through `add_note`, while the wired `process_memory` path can use nearest-neighbor retrieval and an LLM evolution prompt to mutate links, tags, and context metadata.
+
+**Curation operations:** `evolve` — generated link/context/tag changes can modify the new note and neighboring retained notes in place in light of newly arriving memory.
 
 ## Curiosity Pass
 

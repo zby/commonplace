@@ -1,6 +1,7 @@
 ---
 description: "ByteRover CLI review: local context-tree memory with HTML topics, BM25 retrieval, trace-derived ranking signals, hooks, MCP, review, and VC"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived]
 status: current
 last-checked: "2026-06-01"
@@ -84,8 +85,13 @@ ByteRover is ahead on productized adoption. It has connectors for existing agent
 
 **Do not borrow usage-based maturity as trust.** ByteRover maturity is useful for ranking and pruning. Commonplace should not let repeated retrieval alone increase epistemic or governance status; review and source lineage should carry that promotion.
 
-## Trace-derived learning placement
+## Write-side placement
 
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `consolidate` `dedup` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
 **Trace source:** `tool-traces` `event-streams` — Search hits, curate outcomes, query metadata, review/dream choices, and task lifecycle events are the trace inputs named by the review.
 
 **Learning scope:** `per-project` `cross-task` — Signals are project-scoped, and the resulting ranking/lifecycle state plus curated topics can shape later tasks in that project.
