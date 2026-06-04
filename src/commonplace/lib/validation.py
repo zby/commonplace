@@ -19,7 +19,7 @@ from commonplace.lib.type_resolver import TypeProfile, resolve_type, validate_in
 # own severity with `severity: warn` (read from error.schema below), optionally
 # keyed by a stable `ruleId` so it can be re-leveled or referenced later. This is
 # the Spectral/Schematron pattern (severity authored on an identified rule); see
-# kb/work/review-template-retrofit/severity-belongs-in-schema.md.
+# kb/reference/adr/024-schema-severity-is-per-constraint-fail-by-default.md.
 _DEFAULT_SCHEMA_SEVERITY = "fail"
 
 # A quote-anchored citation's attribution line: a blockquote line of the form `> --- ...`.
