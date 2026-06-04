@@ -11,7 +11,7 @@ A review of an external agent memory, knowledge, or context-engineering system. 
 
 These reviews serve two readers. For someone **surveying or choosing** a system, the review is a faithful account of what it is and does. For **Commonplace itself**, it surfaces ideas worth borrowing for our own design. The characterization sections (Core Ideas, Artifact analysis, the placement sections) serve the first reader; `Comparison with Our System` and its nested `### Borrowable Ideas` serve the second.
 
-**Two evidence tiers, one type.** The `source-tier` frontmatter field records which: `code-grounded` (the default this spec assumes — findings rest on inspected source; abandoned-but-readable code counts) or `doc-grounded` (no reachable source; findings rest on paper/README/blog, kept claim-level, filed under `lightweight/`). Doc-grounded deltas are in *Doc-grounded tier* below; everything else applies to both.
+**Two evidence tiers, one type.** The `source-tier` frontmatter field records which: `code-grounded` (the default this spec assumes — findings rest on inspected source; abandoned-but-readable code counts) or `doc-grounded` (no reachable source; findings rest on paper/README/blog, kept claim-level, filed under `lightweight/`). Doc-grounded deltas are in the `## Doc-grounded tier` section near the end of this spec; everything else applies to both.
 
 This spec is also the **worker contract** for the `write-agent-memory-system-review` skill. The parent skill owns source preparation, archiving, index edits, QA, validation, and reporting. The worker owns only code inspection and drafting from the inputs below.
 
@@ -19,7 +19,7 @@ The section specs below distill [designing-agent-memory-systems](../../notes/des
 
 ## Inputs
 
-These Inputs and the Workflow describe the **code-grounded** path (the skill's contract); a `doc-grounded` review skips source preparation and follows *Doc-grounded tier*. The caller provides:
+These Inputs and the Workflow describe the **code-grounded** path (the skill's contract); a `doc-grounded` review skips source preparation and follows the `## Doc-grounded tier` section near the end of this spec. The caller provides:
 
 - `source_dir` — local source directory (already prepared; the parent does all cloning/refresh)
 - `note_path` — target path under `kb/agent-memory-systems/reviews/`
@@ -146,7 +146,7 @@ When a full section is warranted, address:
 
 - `description` — discriminating retrieval filter (50–200 chars, double-quoted)
 - `type: ../types/agent-memory-system-review.md`
-- `source-tier` — `code-grounded` when the findings rest on inspected source, `doc-grounded` when they rest only on docs/papers/reports. Required. This is the **only** authority difference between reviews; see *Doc-grounded tier*.
+- `source-tier` — `code-grounded` when the findings rest on inspected source, `doc-grounded` when they rest only on docs/papers/reports. Required. This is the **only** authority difference between reviews; see the `## Doc-grounded tier` section.
 - `status: current` unless clearly stale
 - `last-checked: "{today}"`
 - `tags` — add `trace-derived` and/or `push-activation` only per the placement rules above. A review may carry neither, either, or both; otherwise omit `tags`. Collection membership comes from location, not a tag.
