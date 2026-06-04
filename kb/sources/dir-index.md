@@ -9,7 +9,7 @@ index_source: directory
 ← [Parent](../index.md)
 
 - ["Creative Thinking"](./creative-thinking-by-claude-shannon.md) *(snapshot)*
-- [A harness for every task: dynamic workflows in Claude Code](./a-harness-for-every-task-dynamic-workflows-in-claude-code-2061907337154367865.md) *(snapshot)*
+- [A harness for every task: dynamic workflows in Claude Code](./a-harness-for-every-task-dynamic-workflows.md) *(snapshot)*
 - [A new way to think about composing skills to increase leverage: Skill Graphs 2.0](./a-new-way-to-think-about-composing-skills-to-increase-leverage-skill.md) *(snapshot)*
 - [A-Mem: Agentic Memory for LLM Agents](./a-mem-agentic-memory-for-llm-agents.md) *(snapshot)*
 - [A-MEM: Learning Operations Analysis](./a-mem-agentic-memory-for-llm-agents.ingest.report-learning-operations.md) *(note)* - Dissects A-MEM's four fully-automatic operations (construct, link, evolve, retrieve) — all accretive, none curative — identifying the missing vocabulary (delete, split, reorganize, assess quality) that separates accumulation from curation
@@ -53,7 +53,7 @@ index_source: directory
 - [Infinite midwit](./adam-mastroianni-infinite-midwit.md) *(snapshot)* - Adam Mastroianni's objective-vs-subjective intelligence framing for why AI competence and benchmarks still miss taste, wisdom, and idea selection.
 - [Ingest Report: SkillOpt: Executive Strategy for Self-Evolving Agent Skills](./skillopt-executive-strategy-self-evolving-agent-skills.ingest.md) *(ingest-report)* - SkillOpt paper showing validation-gated text-space optimization of compact agent skills as readable deploy-time learning around frozen models
 - [Ingest: "Creative Thinking"](./creative-thinking-by-claude-shannon.ingest.md) *(ingest-report)* - Shannon's 1952 lecture cataloguing six explicit problem-solving operators (simplification, analogy, restatement, generalization, structural analysis, inversion) as a portable creative toolkit
-- [Ingest: A harness for every task: dynamic workflows in Claude Code](./a-harness-for-every-task-dynamic-workflows-in-claude-code-2061907337154367865.ingest.md) *(ingest-report)* - Anthropic practitioner account of dynamic workflows in Claude Code: model-authored ephemeral JS orchestrators that spawn and coordinate sub-agents
+- [Ingest: A harness for every task: dynamic workflows in Claude Code](./a-harness-for-every-task-dynamic-workflows.ingest.md) *(ingest-report)* - Anthropic practitioner account of dynamic workflows in Claude Code: model-authored ephemeral JS orchestrators that spawn and coordinate sub-agents
 - [Ingest: A new way to think about composing skills to increase leverage — Skill Graphs 2.0](./a-new-way-to-think-about-composing-skills-to-increase.ingest.md) *(ingest-report)* - Sakhuja's practitioner reframe of skill graphs into a three-tier compositional hierarchy (atoms/molecules/compounds) driven by the reliability ceiling of deep skill chains and the 'brain RAM' bottleneck in parallel-agent supervision
 - [Ingest: A-MEM: Agentic Memory for LLM Agents](./a-mem-agentic-memory-for-llm-agents.ingest.md) *(ingest-report)* - Zettelkasten-inspired flat agent memory with embedding linking and LLM-driven evolution — benchmark success without curation operations or inspectable links
 - [Ingest: Adaptation of Agentic AI](./adaptation-of-agentic-ai-survey-post-training-memory-skills.ingest.md) *(ingest-report)* - Survey mapping agentic adaptation across A1/A2 agent training, T1/T2 tool adaptation, memory, skills, and dynamics-aware evaluation
@@ -216,6 +216,6 @@ index_source: directory
 - [What spec-driven development gets wrong](./what-spec-driven-development-gets-wrong-2025993446633492725.md) *(snapshot)*
 - [What Survives in Multi-Agent Systems](./voooooogel-multi-agent-future.md)
 - [When code is free, research is all that matters](./when-code-is-free-research-is-all-that-matters-2031072399731675269.md) *(snapshot)*
-- [Where It Lives Is Not What It Is: An Architectural Vocabulary for Retained Adaptation in Agentic Systems](./where-it-lives-architectural-vocabulary-retained-adaptation.md) *(snapshot)* - Position paper proposing a four-field architectural vocabulary (storage substrate, representational form, lineage, behavioral authority) for classifying retained behavior-shaping artifacts in agentic systems, beyond storage-first labels.
+- [Where It Lives Is Not What It Is: Vocabulary for Retained Adaptation in Agentic Systems](./where-it-lives-architectural-vocabulary-retained-adaptation.md) *(snapshot)* - Position paper proposing a four-field architectural vocabulary (storage substrate, representational form, lineage, behavioral authority) for classifying retained behavior-shaping artifacts in agentic systems, beyond storage-first labels.
 - [Why AI systems don't learn and what to do about it](./why-ai-systems-dont-learn-and-what-to-do-about-it.md) *(snapshot)* - Dupoux, LeCun, and Malik argue current AI externalizes learning into human-run MLOps, then propose an A-B-M architecture where observation learning, action learning, and a meta-control plane are integrated for lifelong adaptation.
 - [Writing conventions for kb/sources/ (descriptive register)](./COLLECTION.md)

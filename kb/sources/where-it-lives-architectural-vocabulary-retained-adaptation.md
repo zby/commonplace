@@ -7,7 +7,7 @@ type: kb/sources/types/snapshot.md
 tags: [academic-paper]
 ---
 
-# Where It Lives Is Not What It Is: An Architectural Vocabulary for Retained Adaptation in Agentic Systems
+# Where It Lives Is Not What It Is: Vocabulary for Retained Adaptation in Agentic Systems
 
 ## Abstract
 

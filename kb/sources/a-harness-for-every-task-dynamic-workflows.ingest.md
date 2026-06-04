@@ -1,6 +1,6 @@
 ---
 description: "Anthropic practitioner account of dynamic workflows in Claude Code: model-authored ephemeral JS orchestrators that spawn and coordinate sub-agents"
-source_snapshot: "a-harness-for-every-task-dynamic-workflows-in-claude-code-2061907337154367865.md"
+source_snapshot: "a-harness-for-every-task-dynamic-workflows.md"
 ingested: "2026-06-03"
 type: kb/sources/types/ingest-report.md
 source_type: practitioner-report
@@ -9,7 +9,7 @@ domains: [agent-orchestration, sub-agent-coordination, context-engineering, veri
 
 # Ingest: A harness for every task: dynamic workflows in Claude Code
 
-Source: a-harness-for-every-task-dynamic-workflows-in-claude-code-2061907337154367865.md
+Source: a-harness-for-every-task-dynamic-workflows.md
 Captured: 2026-06-03
 From: https://x.com/trq212/status/2061907337154367865
 
@@ -27,12 +27,12 @@ Anthropic shipped "dynamic workflows" in Claude Code: instead of planning and ex
 
 The companion connect report frames this snapshot as the **shipped, first-party instance** of the KB's orchestration/scheduler theory cluster, and -- because snapshots are immutable and carry no outbound links and this one has no prior `.ingest.md` -- identifies the primary deliverable as **reverse-edge `evidence` candidates** (library notes that should cite this source). The strongest are:
 
-- [RLM has the model write ephemeral orchestrators over sub-agents](./rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md) -- dynamic workflows *are* "the model writes the orchestrator rather than being it," now on an exact JS substrate with interrupt-and-resume.
-- [Orchestration strategies and run-state have opposite persistence economics](./orchestration-strategies-and-run-state-have-opposite-persistence.md) -- the save/check-in/distribute-via-skill path is the promote-the-recurring-strategy mechanism this note argues for (against RLM's discard-both default).
-- [Synthesis is not error correction](./synthesis-is-not-error-correction.md) -- the source keeps fan-out-and-synthesize (a merging barrier) distinct from tournament/adversarial verification (selection), confirming that design distinction.
-- [Topology, isolation, and verification form a causal chain for reliable agent scaling](./topology-isolation-and-verification-form-a-causal-chain-for-reliable.md) -- the source motivates workflows by exactly the failure modes the chain addresses and prescribes decomposition + isolated contexts + adversarial verifiers.
-- [Decomposition heuristics for bounded-context scheduling](./decomposition-heuristics-for-bounded-context-scheduling.md) and [Agent orchestration occupies a multi-dimensional design space](./agent-orchestration-occupies-a-multi-dimensional-design-space.md) -- the six-pattern catalogue and the model-authored/promotable/model-routed combination are concrete data points for both.
-- [Brainstorming: how to test whether pairwise comparison can harden soft oracles](./brainstorming-how-to-test-whether-pairwise-comparison-can-harden.md) -- the Sorting use-case independently asserts "comparative judgment is more reliable than absolute scoring" and runs a pairwise pipeline.
+- [RLM has the model write ephemeral orchestrators over sub-agents](../notes/rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md) -- dynamic workflows *are* "the model writes the orchestrator rather than being it," now on an exact JS substrate with interrupt-and-resume.
+- [Orchestration strategies and run-state have opposite persistence economics](../notes/orchestration-strategies-and-run-state-have-opposite-persistence.md) -- the save/check-in/distribute-via-skill path is the promote-the-recurring-strategy mechanism this note argues for (against RLM's discard-both default).
+- [Synthesis is not error correction](../notes/synthesis-is-not-error-correction.md) -- the source keeps fan-out-and-synthesize (a merging barrier) distinct from tournament/adversarial verification (selection), confirming that design distinction.
+- [Topology, isolation, and verification form a causal chain for reliable agent scaling](../notes/topology-isolation-and-verification-form-a-causal-chain-for-reliable.md) -- the source motivates workflows by exactly the failure modes the chain addresses and prescribes decomposition + isolated contexts + adversarial verifiers.
+- [Decomposition heuristics for bounded-context scheduling](../notes/decomposition-heuristics-for-bounded-context-scheduling.md) and [Agent orchestration occupies a multi-dimensional design space](../notes/agent-orchestration-occupies-a-multi-dimensional-design-space.md) -- the six-pattern catalogue and the model-authored/promotable/model-routed combination are concrete data points for both.
+- [Brainstorming: how to test whether pairwise comparison can harden soft oracles](../notes/brainstorming-how-to-test-whether-pairwise-comparison-can-harden.md) -- the Sorting use-case independently asserts "comparative judgment is more reliable than absolute scoring" and runs a pairwise pipeline.
 
 Connect also flags a **synthesis opportunity** (one note could state that a production harness now supplies topology + isolation + verification plus a promotion path in one shipped system) and three maintenance observations: no note names the three failure modes with shared vocabulary, no security-of-orchestration ("quarantine") home note exists, and authoring this ingest consolidates the otherwise note-side-only outbound surface. These are non-actionable context here.
 
@@ -65,4 +65,4 @@ For the KB, the safe stance is to cite this as **corroborating practitioner test
 
 ## Recommended Next Action
 
-**Author the `evidence` reverse-edges from the two strongest, lowest-risk notes first**, then decide on the failure-mode note. Specifically: add an `evidence` link to this snapshot from [rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md](./rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md) (shipped instance of model-authored ephemeral orchestrators) and from [orchestration-strategies-and-run-state-have-opposite-persistence.md](./orchestration-strategies-and-run-state-have-opposite-persistence.md) (the save/share promotion path it predicts), framed as corroborating practitioner testimony. As a follow-on, evaluate writing a new note in `kb/notes/` that names the **single-context failure-mode triad** (agentic laziness, self-preferential bias, goal drift) and sources it here -- this fills the vocabulary gap connect identified and would anchor several of the orchestration-cluster edges. Promotion is out of scope for this ingest; these are advisory.
+**Author the `evidence` reverse-edges from the two strongest, lowest-risk notes first**, then decide on the failure-mode note. Specifically: add an `evidence` link to this snapshot from [rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md](../notes/rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md) (shipped instance of model-authored ephemeral orchestrators) and from [orchestration-strategies-and-run-state-have-opposite-persistence.md](../notes/orchestration-strategies-and-run-state-have-opposite-persistence.md) (the save/share promotion path it predicts), framed as corroborating practitioner testimony. As a follow-on, evaluate writing a new note in `kb/notes/` that names the **single-context failure-mode triad** (agentic laziness, self-preferential bias, goal drift) and sources it here -- this fills the vocabulary gap connect identified and would anchor several of the orchestration-cluster edges. Promotion is out of scope for this ingest; these are advisory.
