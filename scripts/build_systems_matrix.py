@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
 """Generate the wide comparison matrix (systems.csv) by parsing the reviews.
 
-One row per code-backed review file in kb/agent-memory-systems/reviews/
-(source_tier `code-grounded`, read from each review's `source-tier` frontmatter),
-keyed by `review_file`. Doc-grounded reviews under lightweight/ are intentionally
-excluded from this code-based matrix. The parsing logic
-lives in the package library `commonplace.lib.systems_matrix` (text-in, row-out,
-unit-tested); this runner owns file discovery, the legacy identity join
+One row per code-backed review file in kb/agent-memory-systems/reviews/, keyed by
+`review_file`. The `reviews/` location is authoritative for source_tier
+(`code-grounded`); each review's `source-tier` frontmatter is validated against it
+and missing/mismatched values are flagged, not trusted. Doc-grounded reviews under
+lightweight/ are intentionally excluded from this code-based matrix. The parsing
+logic lives in the package library `commonplace.lib.systems_matrix` (text-in,
+row-out, unit-tested); this runner owns file discovery, the legacy identity join
 (public_repo / clone_path), and CSV writing. Hand-classified columns are
-preserved across runs by review_file. Off-vocabulary and missing lead tokens are
-reported, not guessed.
+preserved across runs by review_file. Off-vocabulary tokens, missing frontmatter,
+and tier mismatches are reported, not guessed.
 
 Output: kb/agent-memory-systems/systems.csv. Run:  python3 scripts/build_systems_matrix.py
 """
@@ -28,6 +29,11 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 AMS = REPO_ROOT / "kb" / "agent-memory-systems"
 REVIEWS_DIR = AMS / "reviews"
 SYSTEMS_CSV = AMS / "systems.csv"
+
+# reviews/ is the code-grounded tier by location; this is authoritative for the
+# written row. Each review's `source-tier` frontmatter is validated against it
+# (missing or mismatched values are flagged), not trusted as the source of truth.
+REVIEWS_TIER = "code-grounded"
 
 
 def parse_review(path: Path, source_tier: str) -> tuple[dict[str, str], list[str]]:
@@ -83,11 +89,15 @@ def main() -> int:
     all_flags: list[tuple[str, str]] = []
     joined = 0
     for path, tier in review_files:
-        # reviews/ are code-grounded by location; record that but flag the missing
-        # frontmatter field as a worklist item rather than defaulting silently.
-        row, flags = parse_review(path, tier or "code-grounded")
+        # Location is authoritative for the tier written; validate the declared
+        # frontmatter against it and flag drift rather than trusting it blindly.
+        row, flags = parse_review(path, REVIEWS_TIER)
         if tier is None:
-            flags.append("source-tier: missing lead token")
+            flags.append("source-tier: missing frontmatter")
+        elif tier != REVIEWS_TIER:
+            flags.append(
+                f"source-tier: frontmatter says {tier!r}, expected {REVIEWS_TIER!r} for reviews/"
+            )
         # preserve hand-classified columns from a prior run
         old = prior.get(row["review_file"])
         if old:
