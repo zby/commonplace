@@ -1,113 +1,113 @@
 ---
-description: "Operational Ontology Framework review: public templates and artifact vocabulary for D+L+A governance, not an implemented runner or extractor"
+description: "Operational Ontology Framework review: public D+L+A artifact templates for governed AI work, with no implemented memory runtime"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 status: current
-last-checked: "2026-06-02"
+last-checked: "2026-06-04"
 ---
 
 # Operational Ontology Framework
 
-Operational Ontology Framework is FSTech Digital's public reference for structuring AI work around explicit operational state, rules, actions, governance artifacts, and write-back discipline. The inspected repository is intentionally a method surface: README/docs, minimal artifact templates, and example schemas. It does not publish production code, prompts, agents, adapters, deployment scripts, or a runtime that reads, writes, retrieves, or validates the artifacts.
+Operational Ontology Framework, from FSTech Digital, is a public reference surface for operating AI systems with explicit Data, Logic, Action, governance artifacts, and write-back discipline. The reviewed repository contains docs, Markdown templates, and generic JSON examples; it explicitly does not publish production code, prompts, agents, adapters, deployment scripts, dashboards, or client implementations.
 
 **Repository:** https://github.com/fstech-digital/operational-ontology-framework
 
 **Reviewed commit:** [0c70e70b5fc634d9dda8bdb880bf75557f3ae9e9](https://github.com/fstech-digital/operational-ontology-framework/commit/0c70e70b5fc634d9dda8bdb880bf75557f3ae9e9)
 
-**Last checked:** 2026-06-02
+**Source directory:** `related-systems/fstech-digital--operational-ontology-framework`
 
 ## Core Ideas
 
-**The repository publishes the map, not the machine.** The README says the repository contains core concepts, the D+L+A model, governance artifacts, anti-patterns, generic schemas, and templates, then explicitly excludes FSTech production code, client implementations, prompts, agents, adapters, deployment scripts, and playbooks ([README.md](https://github.com/fstech-digital/operational-ontology-framework/blob/0c70e70b5fc634d9dda8bdb880bf75557f3ae9e9/README.md), [docs/examples-redacted.md](https://github.com/fstech-digital/operational-ontology-framework/blob/0c70e70b5fc634d9dda8bdb880bf75557f3ae9e9/docs/examples-redacted.md), [NOTICE.md](https://github.com/fstech-digital/operational-ontology-framework/blob/0c70e70b5fc634d9dda8bdb880bf75557f3ae9e9/NOTICE.md)). This matters for review placement: the code-grounded artifact is a public governance vocabulary, not an executable memory system.
+**The repository publishes the map, not the machine.** The README says the public surface includes core concepts, D+L+A, governance artifacts, anti-patterns, schemas, and templates, while excluding production code, client implementations, prompts, agents, adapters, deployment scripts, and commercial playbooks ([README.md](https://github.com/fstech-digital/operational-ontology-framework/blob/0c70e70b5fc634d9dda8bdb880bf75557f3ae9e9/README.md), [docs/examples-redacted.md](https://github.com/fstech-digital/operational-ontology-framework/blob/0c70e70b5fc634d9dda8bdb880bf75557f3ae9e9/docs/examples-redacted.md)). That boundary is the most important code-grounded finding: this is a method/template repository, not an implemented agent-memory runtime.
 
-**D+L+A is the governing frame.** The method splits operational AI into Data, Logic, and Action: entities/state/sources/ownership, rules/routes/validations/policies, and allowed execution with approvals and audit trail ([docs/dla-model.md](https://github.com/fstech-digital/operational-ontology-framework/blob/0c70e70b5fc634d9dda8bdb880bf75557f3ae9e9/docs/dla-model.md), [docs/what-is-operational-ontology.md](https://github.com/fstech-digital/operational-ontology-framework/blob/0c70e70b5fc634d9dda8bdb880bf75557f3ae9e9/docs/what-is-operational-ontology.md)). Its memory relevance is that retained context is not treated as undifferentiated recall; it is placed into operational roles that can constrain decisions and actions.
+**D+L+A turns memory into operational state.** The framework splits an operational AI system into Data, Logic, and Action: entities, relationships, state, sources, rules, routes, validations, policies, allowed actions, approvals, and audit trail ([docs/dla-model.md](https://github.com/fstech-digital/operational-ontology-framework/blob/0c70e70b5fc634d9dda8bdb880bf75557f3ae9e9/docs/dla-model.md), [docs/what-is-operational-ontology.md](https://github.com/fstech-digital/operational-ontology-framework/blob/0c70e70b5fc634d9dda8bdb880bf75557f3ae9e9/docs/what-is-operational-ontology.md)). Its memory relevance is not retrieval mechanics; it is the insistence that durable state, rules, and next actions must be explicit enough to bound later behavior.
 
-**Five artifact families separate volatility and authority.** Pin holds invariants, Spec holds current work, Handoff preserves session continuity, Facts hold long-term observations with source/confidence, and Skills hold reusable procedures refined by practice ([README.md](https://github.com/fstech-digital/operational-ontology-framework/blob/0c70e70b5fc634d9dda8bdb880bf75557f3ae9e9/README.md), [docs/artifacts.md](https://github.com/fstech-digital/operational-ontology-framework/blob/0c70e70b5fc634d9dda8bdb880bf75557f3ae9e9/docs/artifacts.md), [templates/](https://github.com/fstech-digital/operational-ontology-framework/tree/0c70e70b5fc634d9dda8bdb880bf75557f3ae9e9/templates)). The families are a useful retained-artifact vocabulary even though the repo does not implement storage, retrieval, validation, or promotion logic around them.
+**Five artifact families separate volatility and authority.** Pin stores invariants, Spec stores current work, Handoff stores session continuity, Facts store long-term observations with source/date/confidence, and Skills store reusable procedures refined through practice ([README.md](https://github.com/fstech-digital/operational-ontology-framework/blob/0c70e70b5fc634d9dda8bdb880bf75557f3ae9e9/README.md), [docs/artifacts.md](https://github.com/fstech-digital/operational-ontology-framework/blob/0c70e70b5fc634d9dda8bdb880bf75557f3ae9e9/docs/artifacts.md), [templates/](https://github.com/fstech-digital/operational-ontology-framework/tree/0c70e70b5fc634d9dda8bdb880bf75557f3ae9e9/templates)). This vocabulary is useful because it names what changes rarely, what changes per task, what carries continuity, what records observations, and what should become reusable procedure.
 
-**Write-back is a discipline, not an implemented learning loop.** Handoff, Facts, Spec, and Skills templates define places where future operators could record decisions, observations, completed work, and procedure refinements ([templates/_handoff.md](https://github.com/fstech-digital/operational-ontology-framework/blob/0c70e70b5fc634d9dda8bdb880bf75557f3ae9e9/templates/_handoff.md), [templates/_facts.md](https://github.com/fstech-digital/operational-ontology-framework/blob/0c70e70b5fc634d9dda8bdb880bf75557f3ae9e9/templates/_facts.md), [templates/_skills.md](https://github.com/fstech-digital/operational-ontology-framework/blob/0c70e70b5fc634d9dda8bdb880bf75557f3ae9e9/templates/_skills.md), [templates/_spec.md](https://github.com/fstech-digital/operational-ontology-framework/blob/0c70e70b5fc634d9dda8bdb880bf75557f3ae9e9/templates/_spec.md)). I found no code that ingests traces, runs extraction, updates those files, or decides which write-back becomes durable behavior-shaping material.
+**Context efficiency comes from partitioning, not selection code.** The framework lowers context complexity by telling adopters where different kinds of retained material belong: low-volatility invariants in Pin, high-volatility execution state in Spec, session carry-over in Handoff, longer-lived observations in Facts, and procedural know-how in Skills. I found no token budget, search index, relevance matcher, progressive loader, or automatic prompt assembly in the inspected checkout.
 
-**Context efficiency comes from partitioning, not retrieval machinery.** The framework reduces context complexity by assigning material to roles: rarely changing invariants in Pin, volatile execution state in Spec, append-only continuity in Handoff, observed knowledge in Facts, and procedural know-how in Skills. There is no token budget, search index, relevance matcher, progressive disclosure engine, or automatic loading policy in the public checkout. Efficiency depends on a human or host agent loading the right artifact family for the next operation.
+**Write-back is required as a discipline, not implemented as a loop.** The templates define destinations where future operators could record decisions, observations, completed work, next actions, and skill refinements ([templates/_handoff.md](https://github.com/fstech-digital/operational-ontology-framework/blob/0c70e70b5fc634d9dda8bdb880bf75557f3ae9e9/templates/_handoff.md), [templates/_facts.md](https://github.com/fstech-digital/operational-ontology-framework/blob/0c70e70b5fc634d9dda8bdb880bf75557f3ae9e9/templates/_facts.md), [templates/_skills.md](https://github.com/fstech-digital/operational-ontology-framework/blob/0c70e70b5fc634d9dda8bdb880bf75557f3ae9e9/templates/_skills.md), [templates/_spec.md](https://github.com/fstech-digital/operational-ontology-framework/blob/0c70e70b5fc634d9dda8bdb880bf75557f3ae9e9/templates/_spec.md)). The repository does not include code that watches traces, extracts memories, updates artifacts, promotes facts into skills, or verifies that write-back happened.
 
-**Anti-patterns are part of the method's authority surface.** The docs reject prompt-as-architecture, retrieval-as-memory, chatbot theater, no write-back, and unbounded agency ([docs/anti-patterns.md](https://github.com/fstech-digital/operational-ontology-framework/blob/0c70e70b5fc634d9dda8bdb880bf75557f3ae9e9/docs/anti-patterns.md)). These are prescriptive constraints on how adopters should build systems, but in this repository they remain prose guidance rather than executable gates.
+**Anti-patterns define the method's negative authority.** The docs reject prompt-as-architecture, retrieval-as-memory, automation before simplification, chatbot theater, no write-back, and unbounded agency ([docs/anti-patterns.md](https://github.com/fstech-digital/operational-ontology-framework/blob/0c70e70b5fc634d9dda8bdb880bf75557f3ae9e9/docs/anti-patterns.md)). In this repository those are design constraints for adopters, not executable gates.
 
 ## Artifact analysis
 
-- **Storage substrate:** `files` — Markdown files in the public GitHub repository under `README.md` and `docs/`
-- **Representational form:** `symbolic` — Prose, with small tables for concepts and failure modes
-- **Lineage:** `authored` — Public docs, templates, example schemas, and policy files are authored reference material rather than generated from operational traces in the inspected checkout.
-- **Behavioral authority:** `knowledge` `instruction` `routing` `validation` — Docs and templates advise adopters, while Pins, Specs, Skills, schemas, guardrails, decision routes, and repository policies can instruct, route, constrain, or validate downstream work when adopted.
+- **Storage substrate:** `repo` `files` — The reviewed retained surface is Git-tracked Markdown documentation, Markdown templates, generic JSON examples, and repository policy files. The repository does not publish a database, vector store, graph store, prompt registry, service object, or model artifact.
+- **Representational form:** `prose` `symbolic` — README/docs/templates carry prose guidance and section structure; the schema examples, decision routes, workflow examples, tables, checklist fields, source/date/confidence fields, and repository policies are symbolic shapes. There is no parametric retained state in the inspected checkout.
+- **Lineage:** `authored` — The artifacts are authored public reference material and generic templates. I found no import pipeline and no durable artifacts derived from session logs, tool traces, event streams, trajectories, or evaluation traces.
+- **Behavioral authority:** `knowledge` `instruction` `routing` `validation` — In this repository the docs and templates advise and instruct adopters, route attention across Data/Logic/Action and Pin/Spec/Handoff/Facts/Skills, and sketch validation/audit fields. Stronger runtime authority is not verified because no agent loader, validator, router, or enforcement path is published.
 
-**Framework docs.** Storage substrate: Markdown files in the public GitHub repository under `README.md` and `docs/`. Representational form: prose, with small tables for concepts and failure modes. Lineage: authored public reference material, not generated from operational traces in the inspected checkout. Behavioral authority: system-definition artifact for adopters at design time; it instructs architects and agents to model Data, Logic, Action, write-back, and guardrails explicitly, but has no direct runtime authority unless copied into a host system's instructions or process.
+**Framework docs.** The docs are authored knowledge and instruction artifacts for architects and agent operators. They explain how to make entities, rules, actions, escalation, state, and write-back explicit, but they do not themselves act on a future agent unless a host system loads them as instructions.
 
-**Templates.** Storage substrate: Markdown files under `templates/`. Representational form: mixed prose and symbolic section structure. Lineage: authored generic templates for artifact instances; filling them in would create project-specific retained artifacts outside this repository. Behavioral authority varies by template. Pin is intended as a system-definition artifact because its invariants, rules, decision routes, boundaries, escalation rules, and automations are supposed to constrain future agent action. Spec is a system-definition artifact for current execution state and acceptance criteria. Handoff and Facts are mostly knowledge artifacts when consumed as continuity, evidence, observations, preferences, decisions, and patterns. Skills are prose system-definition artifacts when a future agent follows them as procedures. Effective authority is not verified from code because the public repo does not wire any agent loader or enforcement path.
+**Templates.** The templates are authored prose/symbolic system-definition candidates. Pin is meant to constrain future action with invariants, rules, boundaries, decision routes, and automations; Spec is current execution state and acceptance criteria; Handoff carries continuity; Facts hold observations and confidence; Skills define reusable procedures and refinement criteria. Their effective authority depends on adoption outside this repository.
 
-**Example schemas.** Storage substrate: JSON example files under `schemas/`. Representational form: symbolic examples for pin, decision route, and workflow shape. Lineage: authored examples, not compiled from templates or validated by repository code. Behavioral authority: descriptive/reference authority in this repo; they would become validation or routing system-definition artifacts only if a downstream implementation adopted them as schemas or generated checks from them.
+**Schema examples.** The JSON files under `schemas/` are symbolic examples for pin, decision, and workflow shape ([schemas/pin.schema.example.json](https://github.com/fstech-digital/operational-ontology-framework/blob/0c70e70b5fc634d9dda8bdb880bf75557f3ae9e9/schemas/pin.schema.example.json), [schemas/decision.schema.example.json](https://github.com/fstech-digital/operational-ontology-framework/blob/0c70e70b5fc634d9dda8bdb880bf75557f3ae9e9/schemas/decision.schema.example.json), [schemas/workflow.schema.example.json](https://github.com/fstech-digital/operational-ontology-framework/blob/0c70e70b5fc634d9dda8bdb880bf75557f3ae9e9/schemas/workflow.schema.example.json)). They are not wired to tests, a package, a CLI, or a schema validator in the public checkout.
 
-**License, notice, security, and contributing boundaries.** Storage substrate: repository policy files. Representational form: prose legal and operational constraints. Lineage: authored public policy. Behavioral authority: system-definition artifact for repository participation and reuse, especially because the license excludes future code, prompts, agents, adapters, operational playbooks, and production/client-specific material from the public grant ([LICENSE](https://github.com/fstech-digital/operational-ontology-framework/blob/0c70e70b5fc634d9dda8bdb880bf75557f3ae9e9/LICENSE), [SECURITY.md](https://github.com/fstech-digital/operational-ontology-framework/blob/0c70e70b5fc634d9dda8bdb880bf75557f3ae9e9/SECURITY.md), [CONTRIBUTING.md](https://github.com/fstech-digital/operational-ontology-framework/blob/0c70e70b5fc634d9dda8bdb880bf75557f3ae9e9/CONTRIBUTING.md)).
-
-There is no implemented promotion path in the inspected repository. The conceptual path is clear: Handoff and Facts can inform future Skills, Specs, or Pins; repeated execution can refine Skills; decision routes can be made more explicit. But no checked code performs that promotion, checks it, or records lineage from raw traces to distilled rules.
+Promotion path: conceptually, a Handoff can become Facts, repeated Facts can inform Skills, and durable Skills or rules can become Pin material. The repository names those destinations and criteria, but it does not implement promotion, provenance tracking, invalidation, or review of such transitions.
 
 ## Comparison with Our System
 
 | Dimension | Operational Ontology Framework | Commonplace |
 |---|---|---|
-| Primary purpose | Public method for operating AI under explicit Data, Logic, Action, and governance artifacts | Git-native framework and KB for typed agent-operated knowledge artifacts |
-| Published substrate | Markdown docs, templates, and example JSON schemas | Markdown collections, type specs, schemas, commands, validators, generated indexes, review workflows |
+| Primary purpose | Public method and templates for governed operational AI | Git-native framework and KB for typed agent-operated knowledge artifacts |
+| Published substrate | Markdown docs, Markdown templates, and generic JSON examples | Markdown collections, type specs, schemas, commands, validators, indexes, review workflows |
 | Runtime implementation | Not published in this checkout | Implemented CLI commands, validation, indexing, skills, and review system |
-| Memory artifacts | Pin, Spec, Handoff, Facts, Skills as generic templates | Notes, references, instructions, sources, reviews, ADRs, work artifacts, generated indexes |
-| Context activation | Host/user discipline; no public loader or matcher | Agent instructions, collection contracts, `rg`, indexes, links, skills, validation/review workflows |
+| Memory artifacts | Pin, Spec, Handoff, Facts, Skills as generic artifact families | Notes, references, instructions, sources, reviews, ADRs, work artifacts, generated indexes |
+| Context activation | Host/user discipline; no public loader or matcher | Agent instructions, collection contracts, `rg`, indexes, links, skills, validation and review workflows |
 | Governance | Conceptual governance and artifact templates | Enforced frontmatter/type validation, link checks, review gates, replacement archives, Git history |
 
-The strongest overlap is the insistence that memory must be operationally typed. Operational Ontology's Pin/Spec/Handoff/Facts/Skills vocabulary is a compact version of a point Commonplace makes with collection contracts and artifact types: retained material changes future behavior only through a known role, consumer, and authority path.
+The strongest overlap is the claim that retained knowledge needs an explicit operational role. Operational Ontology's artifact families are a compact version of a Commonplace principle: memory changes future behavior only through a known consumer, authority path, and update discipline.
 
-The biggest divergence is implementation status. Commonplace ships executable commands, schemas, validators, generated indexes, and skills. Operational Ontology Framework explicitly withholds the production machine and publishes only the public reference surface. That makes it a useful design comparison but a weak implementation benchmark for retrieval, write-back, trace extraction, or activation.
+The biggest divergence is implementation. Commonplace ships executable validation, indexing, type contracts, review workflows, and source-grounding procedures. Operational Ontology Framework publishes the public vocabulary and template layer, while keeping real prompts, agents, adapters, dashboards, deployments, and client implementations outside the repository.
 
-The second divergence is reviewability versus commercial redaction. Commonplace keeps methodology, examples, commands, and operational rules in the same repository so a reviewer can inspect the whole path from source text to behavior-shaping artifact. Operational Ontology Framework documents the shape of such systems while leaving real prompts, agents, adapters, deployments, dashboards, and client implementations outside the public checkout.
-
-**Read-back:** `pull` — From the inspected repository. A human or agent can deliberately read the docs/templates, but I found no relevance-gated or state/scoped pre-action push activation, no always-loaded agent config, and no runtime loader
+The second divergence is evidence reviewability. Commonplace can be reviewed from source text through generated indexes and validation behavior. Operational Ontology Framework can only be reviewed as authored guidance; claims about automatic write-back, retrieval, governance, or read-back must remain unverified unless a downstream implementation is inspected.
 
 ### Borrowable Ideas
 
-**Pin as an invariant artifact class.** Ready now as vocabulary. Commonplace already has higher-authority instructions and type specs, but "Pin" is a useful name for low-volatility operational invariants that should override volatile work state.
+**Pin as a name for invariants.** Ready now as vocabulary. Commonplace already has high-authority instructions and type specs, but "Pin" is a useful compact name for low-volatility operational invariants that should override temporary work state.
 
-**Separate Handoff from Facts.** Ready for workshop design. Commonplace work artifacts could distinguish append-only session continuity from longer-lived observations more explicitly, preventing temporary handoff material from masquerading as durable knowledge.
+**Separate Handoff from Facts.** Ready for workshop design. Commonplace can keep session continuity distinct from durable observations so temporary state does not masquerade as long-lived knowledge.
 
-**D+L+A as an audit prompt for agent workflows.** Ready as a lightweight review lens. For any proposed agent automation, ask what the Data, Logic, and Action layers are, where each persists, and which artifact has authority over the next action.
+**D+L+A as an audit lens.** Ready now as a review prompt. For any proposed agent workflow, ask which Data, Logic, and Action artifacts exist, where each persists, and which one has authority over the next action.
 
-**Anti-pattern catalogue for adoption reviews.** Ready as a checklist. "Retrieval as memory" and "prompt as architecture" are concise failure labels that map cleanly onto Commonplace's distinction between stored knowledge and contextual activation.
+**Anti-pattern labels for adoption reviews.** Ready now. "Retrieval as memory," "prompt as architecture," and "no write-back" are concise failure labels that map cleanly onto Commonplace's distinctions between storage, activation, and maintained authority.
 
-**Do not borrow template-only claims as evidence of implementation.** Ready as a review discipline. The repo is a good reminder that artifact destinations and write-back vocabulary are not enough to claim trace-derived learning, push activation, validation, or runtime governance.
+**Do not borrow template-only evidence as implementation evidence.** Ready as review discipline. A destination for write-back is not evidence of automatic trace learning; a schema example is not evidence of enforcement; an artifact taxonomy is not evidence of read-back.
 
-## Write-side placement
+## Write side
 
-**Write agency:** `automatic` `manual` — the review describes system-driven generation, extraction, consolidation, or update of retained artifacts rather than only manual authoring.
+**Write agency:** `manual` — In the inspected repository, retained artifacts change by authored repository edits or by a downstream adopter manually filling templates. I found no implemented automatic write, curation, promotion, invalidation, consolidation, decay, synthesis, or trace-derived learning loop.
 
-**Curation operations:** `synthesize` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+## Read-back
+
+**Read-back:** `pull` — The public artifacts re-enter future work when a human, agent, or host system deliberately reads the docs/templates or copies them into an implementation. I found no published runner, hook, loader, relevance matcher, or pre-invocation memory injection path that automatically pushes retained project memory into an agent context.
+
+The templates can support a push-capable downstream system if a host always loads Pin or selects artifacts before an agent acts, but that behavior is not implemented in this checkout. The reviewed repository therefore stays pull-only: useful to consult, not an observed activation mechanism.
 
 ## Curiosity Pass
 
-**The public repository is intentionally sparse.** That sparseness is itself part of the artifact: it keeps the method legible but prevents a code-grounded reviewer from verifying the operational layer the method describes.
+**The most important source line is the absence claim.** "Map, not machine" is not marketing color; it materially limits what a code-grounded review can classify.
 
-**The artifact names are strong because they encode volatility.** Pin, Spec, Handoff, Facts, and Skills are not just document categories. They imply update frequency, conflict resolution, and read priority. The templates would be less useful if they were generic "notes."
+**The template names encode volatility.** Pin, Spec, Handoff, Facts, and Skills carry update-frequency and authority assumptions, which makes them stronger than generic "notes" or "memory" labels.
 
-**Facts and Skills gesture toward learning without implementing extraction.** Facts have source/date/confidence fields, and Skills say they improve through write-back after execution. Those are good destinations for learning outputs, but not evidence that this checkout derives durable artifacts from traces.
+**Facts and Skills gesture toward learning without proving it.** Facts have source/date/confidence fields, and Skills say they improve through write-back after execution. Those are good destinations for learning outputs, but not evidence that this repository derives durable artifacts from traces.
 
-**The schema examples are interface sketches, not validators.** The JSON files are useful as shape examples, but without a package, command, CI check, or schema meta-definition they do not yet enforce anything.
+**The schema examples are interface sketches.** They may be useful adoption aids, but without validator code, package metadata, tests, or CI, they should not be counted as enforcement.
 
-**The framework is closest to Commonplace at the artifact-contract layer.** It is not a memory database, RAG engine, or agent runtime. Its useful comparison point is how it names retained surfaces and their authority.
+**Commercial redaction changes the review target.** The public repo may describe a real private operational practice, but this review can only classify the public source surface.
 
 ## What to Watch
 
-- Whether FSTech publishes a runner, CLI, agent integration, or validation package that turns the templates into enforceable artifacts.
-- Whether future public examples include concrete lifecycle transitions: Handoff to Fact, Fact to Skill, Skill to Pin, or Spec completion to durable history.
-- Whether schema examples become real JSON Schemas with tests, versioning, and migration rules.
-- Whether an implementation defines a read-back policy: which artifacts are loaded before which actions, with what scope and precedence.
-- Whether write-back gains provenance fields strong enough to distinguish observed traces, human decisions, inferred facts, and promoted rules.
+- Whether FSTech publishes a runner, CLI, agent integration, validator, or prompt-loading package; that would change the review from method-surface coverage to runtime coverage.
+- Whether future examples show concrete lifecycle transitions from Handoff to Fact, Fact to Skill, Skill to Pin, or Spec completion to durable history.
+- Whether the JSON examples become real schemas with tests, versioning, and migration rules.
+- Whether a public implementation defines read-back policy: which artifacts are loaded before which actions, at what scope, and with what precedence.
+- Whether write-back gains provenance fields that distinguish observed traces, human decisions, inferred facts, and promoted rules.
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - exemplifies: the repository defines durable artifact destinations, but not an implemented activation path.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - exemplifies: Pin, Spec, Handoff, Facts, Skills, schemas, and policy files need separate substrate/form/lineage/authority classification.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - distinguishes: Handoff and Facts mostly serve as evidence, reference, continuity, and advice unless a host gives them stronger authority.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - distinguishes: Pin, Spec, Skills, schemas, and repository policies can instruct, constrain, route, or validate when a host system consumes them with force.
-- [Agent memory is a crosscutting concern, not a separable niche](../../notes/agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md) - contrasts: the public framework names crosscutting governance surfaces but omits the host runtime integration that would make them act.
+- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: the repository defines durable artifact destinations but no implemented activation path.
+- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: docs, templates, schema examples, and policy files have different forms and authority levels.
+- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: Facts, Handoff material, and framework docs mostly advise unless a host gives them stronger authority.
+- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - distinguishes: Pin, Spec, Skills, decision routes, and schemas can instruct, route, or validate when adopted by a host system.
+- [Agent memory is a crosscutting concern, not a separable niche](../../notes/agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md) - relates: the framework treats memory as operational state across rules, actions, escalation, and write-back.

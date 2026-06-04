@@ -1,118 +1,119 @@
 ---
-description: "llm-project-wiki review: Claude Code setup prompt that generates an Obsidian project wiki, wiki-first rules, sync script, ingest command, and gap audit"
+description: "llm-project-wiki review: prompt-only Claude Code workflow that bootstraps an Obsidian project wiki, wiki-first rules, diff ingest, and gap audits"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
+tags: [trace-derived]
 status: current
-last-checked: "2026-06-03"
+last-checked: "2026-06-04"
 ---
 
 # llm-project-wiki
 
-llm-project-wiki, by Akash R, is a promptware scaffold for making Claude Code create and maintain an Obsidian wiki for a software project. The repository is intentionally tiny: it contains a README and one setup prompt. The reviewed system is therefore not a runtime package with source modules; it is an instruction artifact that asks Claude Code to generate a project-local vault, wiki maintenance rules, slash commands, and agent-facing lookup policy in the target repository ([README.md](https://github.com/akash-r34/llm-project-wiki/blob/1fdfba9129a46afd18aa68a83f12d6716ab694c6/README.md), [SETUP_PROMPT.md](https://github.com/akash-r34/llm-project-wiki/blob/1fdfba9129a46afd18aa68a83f12d6716ab694c6/SETUP_PROMPT.md)).
+`llm-project-wiki`, from `akash-r34/llm-project-wiki`, is a prompt-only Claude Code setup kit for creating an Obsidian "LLM wiki" inside a software project. At the reviewed commit it contains only `README.md` and `SETUP_PROMPT.md`; the shipped behavior is an authored prompt that asks Claude to audit a project, scaffold a vault, build wiki pages, wire future-agent lookup rules, and maintain the wiki through diff-based ingest and gap audits.
 
 **Repository:** https://github.com/akash-r34/llm-project-wiki
 
 **Reviewed commit:** [1fdfba9129a46afd18aa68a83f12d6716ab694c6](https://github.com/akash-r34/llm-project-wiki/commit/1fdfba9129a46afd18aa68a83f12d6716ab694c6)
 
-**Last checked:** 2026-06-03
+**Last checked:** 2026-06-04
 
 ## Core Ideas
 
-**The product is a bootstrap prompt, not an installed program.** `SETUP_PROMPT.md` tells Claude Code to detect whether an `Obsidian Vault/` exists, then either build a new vault through Phases 0-6 or run an existing-vault gap audit through Phase G ([SETUP_PROMPT.md](https://github.com/akash-r34/llm-project-wiki/blob/1fdfba9129a46afd18aa68a83f12d6716ab694c6/SETUP_PROMPT.md)). This makes the repository more like an executable procedure in natural language than a library: the durable system appears only after a target-project Claude session follows the prompt.
+**The system is an agent prompt, not an application runtime.** The repo's file list is just `README.md` and `SETUP_PROMPT.md`; there is no package, executable, tests, or library code. The implementation surface is therefore the setup prompt itself: it instructs a Claude Code session to detect whether an `Obsidian Vault/` exists, then either build a new vault through phases 0-6 or run Phase G as a repair audit ([SETUP_PROMPT.md](https://github.com/akash-r34/llm-project-wiki/blob/1fdfba9129a46afd18aa68a83f12d6716ab694c6/SETUP_PROMPT.md), [README.md](https://github.com/akash-r34/llm-project-wiki/blob/1fdfba9129a46afd18aa68a83f12d6716ab694c6/README.md)).
 
-**The generated wiki has a three-layer contract.** The prompt scaffolds `Sources/`, `Wiki/`, and `Templates/`, with `Sources/` as copied source material, `Wiki/` as LLM-maintained compiled pages, and `Templates/` as page templates ([README.md](https://github.com/akash-r34/llm-project-wiki/blob/1fdfba9129a46afd18aa68a83f12d6716ab694c6/README.md), [SETUP_PROMPT.md](https://github.com/akash-r34/llm-project-wiki/blob/1fdfba9129a46afd18aa68a83f12d6716ab694c6/SETUP_PROMPT.md)). The important design split is raw input versus compiled knowledge: copied project docs and memory are preserved as reference material, while wiki pages are rewritten into navigable entity, concept, decision, overview, status, and reference pages.
+**It compiles project sources into an Obsidian wiki.** The prompt defines a three-layer vault: `Sources/` for synced originals, `Wiki/` for LLM-maintained compiled pages, and `Templates/` for page creation. It requires `schema.md`, `log.md`, `index.md`, six Templater templates, an Obsidian health page, and eventually 40-100+ interlinked project pages covering architecture, entities, concepts, decisions, status, and references ([SETUP_PROMPT.md](https://github.com/akash-r34/llm-project-wiki/blob/1fdfba9129a46afd18aa68a83f12d6716ab694c6/SETUP_PROMPT.md), [README.md](https://github.com/akash-r34/llm-project-wiki/blob/1fdfba9129a46afd18aa68a83f12d6716ab694c6/README.md)).
 
-**Wiki-first lookup turns the generated wiki into the agent's primary project memory.** The prompt updates `CLAUDE.md` and `GEMINI.md` with a rule that sends future architecture, data-model, component, decision, and project-state questions through `index.md`, semantic lookup, and relevant wiki pages before falling back to memory files or source code ([SETUP_PROMPT.md](https://github.com/akash-r34/llm-project-wiki/blob/1fdfba9129a46afd18aa68a83f12d6716ab694c6/SETUP_PROMPT.md)). This is the main behavioral-authority move: wiki pages are not just documentation; the generated rules give them precedence in future agent work.
+**Wiki-first lookup is the behavior hook.** Setup modifies `CLAUDE.md` and optionally `GEMINI.md` so future agent sessions must consult the vault `index.md`, use its Semantic Lookup table, read relevant wiki pages, and only then fall back to existing memory files or source files. That makes the generated wiki a primary context surface for future coding work, but the actual page content is still read through explicit navigation rather than automatically injected into every model call ([SETUP_PROMPT.md](https://github.com/akash-r34/llm-project-wiki/blob/1fdfba9129a46afd18aa68a83f12d6716ab694c6/SETUP_PROMPT.md)).
 
-**Context efficiency comes from compilation and stale marking, not retrieval algorithms.** The setup prompt tries to spare future context by making pages contain signatures, schemas, constraints, edge cases, and cross-references, so an agent can answer from the wiki instead of opening raw source. Updates are localized by `git diff`, source-path references, and `status: stale` markers rather than by embeddings, ranking, or a database ([README.md](https://github.com/akash-r34/llm-project-wiki/blob/1fdfba9129a46afd18aa68a83f12d6716ab694c6/README.md), [SETUP_PROMPT.md](https://github.com/akash-r34/llm-project-wiki/blob/1fdfba9129a46afd18aa68a83f12d6716ab694c6/SETUP_PROMPT.md)). The system reduces repeated rereading when the generated wiki is accurate, but it does not provide a token budget, top-k selector, or mechanical context packer.
+**Context efficiency comes from precompilation plus diff refresh.** The intended optimization is to avoid rereading raw code for ordinary questions: future sessions use a semantic index and compiled wiki pages with code excerpts, constraints, and cross-references. Maintenance is scoped by `git diff HEAD~1 --name-only`, path-to-`Sources/` mapping, grep from changed source to affected wiki pages, section-level updates, and stale-page frontmatter ([SETUP_PROMPT.md](https://github.com/akash-r34/llm-project-wiki/blob/1fdfba9129a46afd18aa68a83f12d6716ab694c6/SETUP_PROMPT.md), [README.md](https://github.com/akash-r34/llm-project-wiki/blob/1fdfba9129a46afd18aa68a83f12d6716ab694c6/README.md)).
 
-**Maintenance is prompt-governed and audit-heavy.** The generated `/wiki-ingest` command is specified as a diff-based update path that maps changed files to `Sources/`, finds affected wiki pages, updates only changed sections, resolves open `[gap]` entries, creates new pages for new entities, and logs the ingest. Phase G separately checks infrastructure wiring, source coverage, wiki coverage, link integrity, frontmatter, protocol wiring, and audit logging for an existing vault ([SETUP_PROMPT.md](https://github.com/akash-r34/llm-project-wiki/blob/1fdfba9129a46afd18aa68a83f12d6716ab694c6/SETUP_PROMPT.md)). The governance model is explicit, but its execution depends on Claude Code following the prompt and generated command text.
-
-**Adoption is deliberately native to the target developer environment.** The prompt uses Obsidian-compatible Markdown, `CLAUDE.md`, optional `GEMINI.md`, Claude Code slash commands, `git diff`, shell sync scripts, and ordinary repo commits ([README.md](https://github.com/akash-r34/llm-project-wiki/blob/1fdfba9129a46afd18aa68a83f12d6716ab694c6/README.md), [SETUP_PROMPT.md](https://github.com/akash-r34/llm-project-wiki/blob/1fdfba9129a46afd18aa68a83f12d6716ab694c6/SETUP_PROMPT.md)). That keeps the memory substrate inspectable and portable, but also means the system's correctness is mostly prompt compliance plus human/git review rather than a tested implementation.
+**Governance is prompt-specified and file-based.** The prompt asks Claude to create Dataview health checks, frontmatter requirements, wikilink density targets, stale status, gap logs, bootstrap/audit logs, sync scripts, slash commands, and protocol wiring checks. Those are inspectable files, but the reviewed repo does not include generated examples or executable validation proving that a resulting vault satisfies them ([SETUP_PROMPT.md](https://github.com/akash-r34/llm-project-wiki/blob/1fdfba9129a46afd18aa68a83f12d6716ab694c6/SETUP_PROMPT.md)).
 
 ## Artifact analysis
 
-- **Storage substrate:** `repo` — The reviewed repository stores only the bootstrap prompt and README, while the generated memory system stores vault files, command files, scripts, and agent instruction files in the target project repository.
-- **Representational form:** `prose` `symbolic` — The central artifact is prose instruction, but it generates symbolic shell scripts, frontmatter schemas, Dataview queries, slash-command procedures, and Markdown page templates.
-- **Lineage:** `authored` `imported` — The setup prompt and generated commands are authored scaffolding, while generated vault pages and source layers are derived from copied docs, memory files, agent rules, and source-code reads
-- **Behavioral authority:** `knowledge` `instruction` `routing` `validation` — Wiki pages advise future agents, while generated rules, commands, schemas, sync scripts, Dataview health checks, and status fields instruct, route, or audit later work
+- **Storage substrate:** `files` `repo` — The shipped system is two Markdown files in a git repository, and the generated target state is an Obsidian vault plus project files such as `CLAUDE.md`, `GEMINI.md`, `.claude/commands/wiki-ingest.md`, `scripts/sync-vault.sh`, `SECOND_BRAIN.md`, and wiki Markdown pages.
+- **Representational form:** `prose` `symbolic` — The operative artifact is prose instruction to Claude; symbolic parts include vault directory contracts, command paths, shell snippets, frontmatter schemas, page types, status values, log grammars, Dataview queries, and grep/git workflows.
+- **Lineage:** `authored` `imported` `trace-extracted` — The setup prompt and generated schemas/rules are authored; `Sources/` snapshots are imported from project memory, rules, root docs, and design docs; gap entries and query-generated missing-page work are trace-extracted from future tasks where the wiki proves insufficient.
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `learning` — Generated wiki pages advise future agents as knowledge; `CLAUDE.md` / `GEMINI.md` wiki-first rules and slash commands instruct; stale marking, sync cadence, and "only if insufficient" fallback rules constrain behavior; `index.md`, Semantic Lookup, wikilinks, and grep path matching route reads and maintenance; frontmatter, health dashboards, orphan checks, broken-link checks, and gap audits validate; gap-to-ingest and diff ingest implement a lightweight learning loop.
 
-**Bootstrap prompt.** Storage substrate: `SETUP_PROMPT.md` in the source repository. Representational form: prose procedure with embedded shell snippets, directory trees, frontmatter rules, command specs, and audit checklists. Lineage: authored from Karpathy's LLM Wiki pattern and specialized for Claude Code project work. Behavioral authority: system-definition artifact when pasted into Claude Code, because it instructs the agent to create files, edit project rules, scan source code, and run verification passes. Its effective authority is not verified by code tests in this repository.
+**Setup prompt.** `SETUP_PROMPT.md` is the highest-authority retained artifact in the source repo. It does not store project knowledge itself; it causes a future Claude session to create a local knowledge substrate and agent rules in the target project.
 
-**Generated vault scaffold.** Storage substrate: target-project repo files under `Obsidian Vault/<ProjectName>/`. Representational form: mixed Markdown prose, frontmatter, Obsidian wikilinks, Dataview query blocks, and Templater templates. Lineage: generated from the target project's source audit, copied docs/memory, and the setup prompt's schema. Behavioral authority: knowledge artifact when wiki pages are read as project reference; system-definition artifact when `schema.md`, templates, health checks, and wiki status fields govern future maintenance.
+**Generated vault.** The intended durable memory is the created Obsidian vault: `Sources/` preserves source snapshots, `Wiki/` stores compiled knowledge pages, `Templates/` constrains future page shape, `index.md` routes questions, `schema.md` governs maintenance, and `log.md` stores bootstrap, ingest, gap, and audit records.
 
-**Sources layer and sync script.** Storage substrate: target-project `Sources/` files plus `scripts/sync-vault.sh`. Representational form: copied Markdown/source documentation and symbolic shell commands. Lineage: derived snapshots from `.claude/memory`, `.claude/rules`, root agent files, READMEs, and docs paths, with a "not authoritative" header added to copied agent-instruction files. Behavioral authority: mostly knowledge artifact authority as preserved evidence for wiki generation; the sync script has system-definition authority over which project materials enter the source layer.
+**Generated project rules and commands.** The prompt wires `CLAUDE.md`, `GEMINI.md`, `/wiki-ingest`, `/status`, and `/phase-complete` so future agent sessions treat the wiki as primary context and mark pages stale after code edits. These are system-definition artifacts because they shape future agent workflow, not just human documentation.
 
-**Compiled wiki pages and index.** Storage substrate: target-project `Wiki/*.md` files and `index.md`. Representational form: prose pages constrained by page types, frontmatter, code excerpt conventions, source pointers, Semantic Lookup entries, and wikilinks. Lineage: distilled from `Sources/` and source-code reads during bootstrap or ingest; invalidated by source changes, missing coverage, broken links, stale status, or open gap entries. Behavioral authority: knowledge artifacts when consulted for answers; weak system-definition artifacts when the wiki-first rule makes them the primary context before source reads.
+**Access structures.** The Semantic Lookup table, full TOC, wikilinks, Dataview stale/old/orphan/schema checks, grep by `source_file`, and `git diff` changed-file lists are symbolic access structures. They reduce search complexity, but the repo does not provide measured retrieval quality.
 
-**Generated agent rules and commands.** Storage substrate: target-project `CLAUDE.md`, `GEMINI.md`, `.claude/commands/wiki-ingest.md`, and updates to status/phase commands when present. Representational form: prose instructions with shell snippets and procedural checklists. Lineage: generated from the setup prompt and patched into the target project's existing agent-control surface. Behavioral authority: system-definition artifacts. They route future agent work through the wiki, mark pages stale after code edits, run diff-based ingests, and close gap-to-resolution loops.
-
-**Gap log and health/audit surfaces.** Storage substrate: target-project `log.md`, `Wiki/_Health.md`, and Phase G audit outputs. Representational form: structured prose log entries, Dataview queries, and checklist findings. Lineage: generated from bootstrap, ingest, gap discovery, link checks, frontmatter checks, and existing-vault audits. Behavioral authority: knowledge artifact authority as evidence of maintenance history and open gaps; system-definition authority when `/wiki-ingest` or Phase G consumes those records to create or repair wiki pages.
-
-The promotion path is clear but prompt-mediated: raw project docs and source files become copied `Sources/`, then compiled wiki pages, then wiki-first context for later agents. Some generated artifacts cross into stronger symbolic authority, especially `sync-vault.sh`, frontmatter schemas, Dataview health checks, and grep/diff maintenance procedures. The source repository does not include a deterministic implementation or tests that prove those generated artifacts are created correctly.
+Promotion path: raw project files are synced into `Sources/`, compiled by Claude into wiki pages, then given stronger future authority through `CLAUDE.md` / `GEMINI.md` wiki-first rules. Gap entries can later promote missing knowledge into new or updated wiki pages through `/wiki-ingest`.
 
 ## Comparison with Our System
 
-| Dimension | llm-project-wiki | Commonplace |
-|---|---|---|
-| Primary unit | Generated Obsidian project wiki | Typed Markdown artifacts in a methodology KB |
-| Bootstrap mechanism | One Claude Code setup prompt | Repository code, collection contracts, skills, validators, and review workflows |
-| Source layer | Copied `Sources/` snapshots from project docs/memory | Captured sources, source-grounded reviews, and workshop material |
-| Read path | Wiki-first lookup through generated `index.md` and wiki pages | Search, generated indexes, authored links, skills, and type contracts |
-| Maintenance | Prompt-defined sync, diff ingest, stale marking, gap audit | Deterministic validation, generated indexes, review bundles, git lifecycle |
-| Main risk | Prompt compliance and generated-artifact drift | Methodology overhead and validation/review maintenance cost |
+`llm-project-wiki` and Commonplace both treat Markdown files plus agent instructions as a real context-engineering substrate. The difference is where discipline lives. Commonplace has collection contracts, type specs, validation commands, review workflows, and a repo-wide methodology for durable artifacts. `llm-project-wiki` is a bootstrap prompt that asks an LLM to create an Obsidian vault and maintenance conventions inside another repo.
 
-The strongest alignment is the compiled-knowledge bet. Both systems treat raw source material as too expensive and noisy to reread on every task, then create retained Markdown artifacts that make future agent work cheaper. llm-project-wiki applies that pattern to arbitrary software projects; Commonplace applies it to agent-operated KB methodology and external-system reviews.
-
-The main divergence is where authority is codified. llm-project-wiki leaves almost everything inside natural-language setup and generated maintenance prompts. Commonplace moves more of the system into typed frontmatter, schemas, validators, CLI commands, and collection-local contracts. That makes Commonplace heavier, but it also gives maintainers more deterministic ways to detect drift.
-
-llm-project-wiki is more aggressive about making the compiled wiki the first stop for all future project questions. Commonplace usually expects an agent to choose among search, indexes, links, instructions, and validation outputs. The wiki-first rule is attractive because it creates a simple default path, but it is only safe if wiki freshness and coverage are maintained.
-
-**Read-back:** `pull` — For retained memory only, wiki content reaches the agent when the agent follows the generated wiki-first rule, opens `index.md`, and reads selected wiki pages. The always-loaded part is the lookup instruction in `CLAUDE.md` or `GEMINI.md`, not selected retained wiki content.
+The strongest overlap is the compiled-source model: source snapshots feed distilled pages, and later agents should prefer the distilled surface before opening raw source. The largest divergence is enforcement. Commonplace validates artifact structure with shipped commands; `llm-project-wiki` relies on Claude following prompt instructions, shell snippets, Dataview queries, and manual commit discipline in the generated project.
 
 ### Borrowable Ideas
 
-**Make a generated semantic lookup table the first-page contract.** Commonplace has curated and generated indexes, but a compact "question / intent -> artifact" table is a useful affordance for project-specific agents. Ready for scoped indexes where common questions are stable.
+**Semantic Lookup as a first-class routing table.** Ready now as a navigation pattern. Commonplace indexes could carry more "question / intent -> artifact" rows for recurring agent tasks, not only directory listings and tag hubs.
 
-**Use stale marking as an explicit source-to-wiki invalidation path.** The prompt's code-edit rule marks wiki pages stale by searching for `source_file:` references. Commonplace already has validation and generated indexes, but source-linked reviews and workshop outputs could benefit from similarly cheap invalidation markers where a source path changes. Needs a concrete source-backed workflow.
+**Stale marking on source edits.** Ready for workflows where notes describe source files. Commonplace could borrow the explicit "edit source -> mark derived page stale" rule for generated reference pages, while keeping validation separate from the generated wiki.
 
-**Separate copied source snapshots from compiled wiki pages.** This matches Commonplace's source/review split. The borrowable detail is the explicit "reference copy, not authoritative instruction" header for synced agent files, which reduces accidental instruction leakage from archived context. Ready for source snapshots that copy `AGENTS.md`, `CLAUDE.md`, or similar files.
+**Gap-to-log-to-ingest loop.** Useful with a concrete workshop workflow. A failed lookup should leave a small, structured gap entry that the next maintenance pass can promote into a source, note, or index update.
 
-**Treat gap logs as maintenance inputs, not just notes.** llm-project-wiki's gap-to-log-to-ingest loop gives a lightweight path from failed lookup to future wiki improvement. Commonplace has workshop notes and review findings; a narrower gap-log grammar could help avoid mid-task context switching while preserving improvement signals. Ready as a workshop convention.
+**Do not borrow prompt-only enforcement as sufficient governance.** The setup prompt is practical for bootstrapping, but Commonplace should keep deterministic validators and review gates for artifacts that carry durable authority.
 
-**Do not borrow prompt-only generation where deterministic tooling is cheap.** The setup prompt specifies scripts, frontmatter checks, orphan checks, and index completeness checks in prose. Commonplace should keep such checks in executable validators when the rule is stable enough to codify.
+## Write side
 
-## Write-side placement
+**Write agency:** `manual` `automatic` — A human manually starts the setup prompt, sync script, and slash commands, but the instructed Claude workflow automatically scaffolds files, writes pages, updates stale pages, resolves gaps, audits vault wiring, and patches missing infrastructure within that session.
 
-**Write agency:** `automatic` `manual` — the review describes system-driven generation, extraction, consolidation, or update of retained artifacts rather than only manual authoring.
+**Curation operations:** `evolve` `synthesize` `invalidate` — Diff ingest evolves existing wiki pages by updating only changed sections; bootstrap and gap resolution synthesize new overview/entity/concept/decision/status/reference pages from multiple project sources; code edits mark affected wiki pages `status: stale`, and Phase G repairs stale or broken vault state. There is no shipped deduplication, decay, recurrence promotion, or contradiction-maintenance implementation beyond prompt-specified link/orphan/gap audits.
 
-**Curation operations:** `consolidate` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+### Trace-derived learning
+
+**Trace source:** `session-logs` — The qualifying trace-derived path is the future-work loop: when a question or task reveals that the wiki is insufficient, Claude appends a `[gap]` entry to `log.md`; the next `/wiki-ingest` reads open gaps and creates or updates the missing pages.
+
+**Learning scope:** `per-project` — The generated wiki, gaps, stale markers, and command rules live in the target software project.
+
+**Learning timing:** `online` `staged` — Gap capture happens during the future task that discovered the missing knowledge; resolution is staged into the next ingest or gap-audit pass.
+
+**Distilled form:** `prose` `symbolic` — Gaps become prose log entries, then wiki pages with frontmatter, wikilinks, source paths, and status metadata.
+
+**Extraction.** The oracle is the acting LLM's judgment that the wiki was insufficient for the current task. The prompt prescribes a one-sentence gap note and later ingest processing, but it does not ship code that parses transcripts or automatically ranks gaps.
+
+**Scope and timing.** Most wiki construction is imported-source distillation, not trace learning. The trace-derived part is narrow: task-time lookup failures become durable gap records and later wiki updates.
+
+**Survey fit.** `llm-project-wiki` is a prompt-level example of trace-derived repair, not a trace-mining platform. It strengthens the distinction between "compile source into a wiki" and "learn from future agent sessions where the compiled wiki fails."
+
+## Read-back
+
+**Read-back:** `pull` — The generated wiki becomes the primary reference, but future agents are instructed to open `index.md`, use the Semantic Lookup table, and read wiki pages explicitly; the reviewed repo does not implement automatic memory injection into the model context.
+
+Wiki-first rules in `CLAUDE.md` and `GEMINI.md` are pushed instructions about *how* to retrieve memory, not automatic delivery of the memory content itself. `/status` similarly starts from a wiki status page by command convention. The read path is therefore deliberate navigation over retained files: index -> wiki page -> fallback memory/source only when insufficient.
+
+Selection and scope are bounded by the authored routing structures: Semantic Lookup entries, TOC groups, wikilinks, `source_file` frontmatter, `grep -rl` affected-page discovery, and changed-file lists from `git diff`. The repo does not include tests or telemetry proving that this selection improves answer quality or prevents stale-source mistakes.
 
 ## Curiosity Pass
 
-The repository is a pure prompt artifact. That is not a defect, but it makes the review's code-grounding unusual: there is no parser, CLI, package manifest, test suite, or generated example vault to inspect. The source can prove the intended protocol, not its execution quality in real projects.
+**The most consequential artifact is not the wiki; it is the rule that makes agents trust the wiki first.** Without the generated `CLAUDE.md` / `GEMINI.md` protocol, the vault is just documentation. With it, the same files gain operational authority over future source-reading behavior.
 
-The prompt tells Claude to write a wiki "for LLM retrieval" and not for humans ([SETUP_PROMPT.md](https://github.com/akash-r34/llm-project-wiki/blob/1fdfba9129a46afd18aa68a83f12d6716ab694c6/SETUP_PROMPT.md)). That is a useful corrective against marketing docs, but it can also lead to pages optimized for exhaustive excerpts rather than maintainable abstractions. The quality bar says any question requiring source reads is a gap; that may encourage over-copying unless the wiki has strong page-size and update-cost discipline.
+**The system's portability comes from being prompt-only.** Any Claude Code project can try it without installing a package, but every guarantee depends on the model correctly executing a long prompt and maintaining the generated conventions.
 
-The wiki-first rule improves activation by making the lookup path obvious, but it is still pull from the agent's perspective. Nothing in the repository implements automatic relevance-gated injection of wiki pages into the model context.
+**The stale-marker loop is cheap but fragile.** Grepping `source_file:` frontmatter can work for direct entity pages, but cross-cutting concept, architecture, and decision pages may need updates even when no single `source_file` points at the changed code.
 
-The Sources layer copies root instruction files with a "not authoritative" header. That is a small but important safety pattern: archived instructions are evidence for the wiki, not live instructions for the acting agent.
-
-The generated `/wiki-ingest` command is diff-based, but it relies on source references inside wiki pages and grep mappings. That is practical for early adoption, but brittle if generated pages omit `source_file`, cover many sources, or describe cross-cutting concepts whose invalidation does not map cleanly to one file path.
+**It intentionally optimizes for LLM retrieval over human documentation.** The prompt explicitly says the wiki is not for humans and should prioritize precision over readability. That is aligned with agent memory, but it may make ordinary project documentation less pleasant if teams conflate the two.
 
 ## What to Watch
 
-- Whether the repository adds a worked example vault from a real project; that would make the prompt's generated artifacts reviewable rather than only specified.
-- Whether `/wiki-ingest` becomes an executable command with deterministic stale-page discovery, link checks, and frontmatter validation; that would shift part of the system from prose authority into symbolic authority.
-- Whether the wiki-first rule gains context-budget policy for page length, excerpt size, and number of pages read before answering.
-- Whether gap entries remain manually filed maintenance signals or become true trace-derived extraction from session logs, tool traces, or repeated failed lookups.
-- Whether source-to-wiki lineage gets stronger than path references, for example section anchors, symbol ids, commit pins, or generated dependency maps.
+- Whether the repo gains generated sample vaults or tests; that would make it possible to evaluate whether the long setup prompt reliably produces the promised structure.
+- Whether `/wiki-ingest` becomes executable code rather than a Markdown command prompt; that would shift maintenance from model-followed procedure toward deterministic tooling.
+- Whether stale propagation expands beyond direct `source_file` grep to dependency-aware updates for concept, architecture, and decision pages.
+- Whether the gap log gains status, owner, source, and resolution metadata; that would make the trace-derived repair loop auditable rather than a loose task journal.
+- Whether Obsidian Dataview health checks are complemented by CLI validation so non-Obsidian agents can enforce the same constraints.
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - supports: llm-project-wiki tries to close storage-to-context failure with an explicit wiki-first lookup rule.
-- [Frontloading spares execution context](../../notes/frontloading-spares-execution-context.md) - aligns: compiled wiki pages precompute source understanding so future calls do not repeatedly rediscover project structure.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - exemplifies: the same Markdown wiki pages have different authority when read as reference versus made primary by `CLAUDE.md`.
-- [The wikiwiki principle: lowest-friction capture, then progressive refinement in place](../../notes/wikiwiki-principle-lowest-friction-capture-then-progressive-refinement.md) - contrasts: llm-project-wiki bootstraps a structured wiki up front rather than gradually refining low-friction captures.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - distinguishes: copied Sources, wiki pages, and gap logs mostly serve as evidence, reference, or context.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - distinguishes: the setup prompt, generated rules, sync script, and slash-command procedures carry instruction, routing, and validation force.
+- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: the generated wiki is pulled through explicit lookup, even though wiki-first rules push the obligation to look.
+- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: setup prompts, generated wiki pages, source snapshots, rules, logs, and commands differ by substrate, form, lineage, and authority.
+- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: compiled wiki pages advise future agents as reference context.
+- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: setup prompt, `CLAUDE.md` / `GEMINI.md` rules, slash commands, schemas, and health checks shape future behavior.
+- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - qualifies narrowly: task-discovered wiki gaps become durable log entries and later page updates.

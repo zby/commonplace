@@ -1,0 +1,165 @@
+---
+description: "Cognee review: Python memory control plane with graph/vector retrieval, session traces, feedback weighting, MCP tools, and agent memory injection"
+type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
+tags: []
+status: outdated
+last-checked: "2026-06-01"
+---
+
+# Cognee
+
+> Replaced 2026-06-04. See [Cognee](./cognee.md) for the current review.
+
+Cognee, from topoteretes, is an open-source Python "memory control plane" for agents. It ingests documents and structured inputs, extracts a graph and vector-searchable summaries, exposes search/recall APIs and MCP tools, keeps short-lived session memory in a cache, and can distill session traces and feedback into longer-lived graph state. The reviewed code is a library and service surface, not a single bundled agent; host agents decide which APIs, decorators, MCP tools, or external integrations to wire.
+
+**Repository:** https://github.com/topoteretes/cognee
+
+**Reviewed commit:** [cfb0aa4d0b3ae0154cf9f24e5908263d565341f4](https://github.com/topoteretes/cognee/commit/cfb0aa4d0b3ae0154cf9f24e5908263d565341f4)
+
+**Last checked:** 2026-06-01
+
+## Core Ideas
+
+**The public memory API is organized around `remember`, `recall`, `forget`, and `improve`.** `cognee/__init__.py` exports both the older `add` / `cognify` / `search` flow and the newer memory-oriented API ([cognee/__init__.py](https://github.com/topoteretes/cognee/blob/cfb0aa4d0b3ae0154cf9f24e5908263d565341f4/cognee/__init__.py)). `remember()` routes permanent data through `add()` plus `cognify()`, while `session_id` stores text in session cache and can run `improve()` in the background; typed entries route Q&A, trace, feedback, and skill-run payloads to specialized stores ([remember.py](https://github.com/topoteretes/cognee/blob/cfb0aa4d0b3ae0154cf9f24e5908263d565341f4/cognee/api/v1/remember/remember.py), [entries.py](https://github.com/topoteretes/cognee/blob/cfb0aa4d0b3ae0154cf9f24e5908263d565341f4/cognee/memory/entries.py)).
+
+**The durable knowledge substrate is a graph/vector/relational store ensemble.** `cognify()` classifies documents, chunks text, uses LLM extraction to build entities and relationships, summarizes chunks, writes graph nodes/edges, and indexes fields in vector collections; temporal cognify swaps in event/timestamp extraction tasks ([cognify.py](https://github.com/topoteretes/cognee/blob/cfb0aa4d0b3ae0154cf9f24e5908263d565341f4/cognee/api/v1/cognify/cognify.py)). The repository ships multiple graph adapters and vector adapters, with Kuzu/Ladybug/Neo4j/Neptune/Postgres graph paths and LanceDB/PGVector/Chroma vector paths under `cognee/infrastructure/databases/` ([databases tree](https://github.com/topoteretes/cognee/tree/cfb0aa4d0b3ae0154cf9f24e5908263d565341f4/cognee/infrastructure/databases)).
+
+**Retrieval is multi-mode and graph-centered.** `recall()` can search session cache, trace cache, graph-context snapshots, and graph search, with a rule-based router choosing a `SearchType` when the caller does not specify one ([recall.py](https://github.com/topoteretes/cognee/blob/cfb0aa4d0b3ae0154cf9f24e5908263d565341f4/cognee/api/v1/recall/recall.py), [query_router.py](https://github.com/topoteretes/cognee/blob/cfb0aa4d0b3ae0154cf9f24e5908263d565341f4/cognee/api/v1/recall/query_router.py)). Graph completion uses vector search over node, edge, chunk, and summary collections, projects a graph fragment, ranks triplets with optional feedback influence, resolves edges to text, and then generates an answer ([graph_completion_retriever.py](https://github.com/topoteretes/cognee/blob/cfb0aa4d0b3ae0154cf9f24e5908263d565341f4/cognee/modules/retrieval/graph_completion_retriever.py), [brute_force_triplet_search.py](https://github.com/topoteretes/cognee/blob/cfb0aa4d0b3ae0154cf9f24e5908263d565341f4/cognee/modules/retrieval/utils/brute_force_triplet_search.py)).
+
+**Session memory is deliberately faster and lower-authority than graph memory.** The cache stores session Q&A entries, agent trace steps, feedback, and graph-context snapshots in Redis, filesystem diskcache, or Tapes-backed storage depending on configuration ([config.py](https://github.com/topoteretes/cognee/blob/cfb0aa4d0b3ae0154cf9f24e5908263d565341f4/cognee/infrastructure/databases/cache/config.py), [models.py](https://github.com/topoteretes/cognee/blob/cfb0aa4d0b3ae0154cf9f24e5908263d565341f4/cognee/infrastructure/databases/cache/models.py), [FsCacheAdapter.py](https://github.com/topoteretes/cognee/blob/cfb0aa4d0b3ae0154cf9f24e5908263d565341f4/cognee/infrastructure/databases/cache/fscache/FsCacheAdapter.py), [RedisAdapter.py](https://github.com/topoteretes/cognee/blob/cfb0aa4d0b3ae0154cf9f24e5908263d565341f4/cognee/infrastructure/databases/cache/redis/RedisAdapter.py)). Session recall is keyword-overlap search, while `improve()` can bridge selected sessions into graph memory.
+
+**Improvement is a mixed trace, feedback, and graph-enrichment loop.** With `session_ids`, `improve()` applies user feedback scores to graph node/edge `feedback_weight`, persists session Q&A into the graph, persists per-step agent trace feedback into an `agent_trace_feedbacks` node set, runs default memify enrichment, optionally builds a global context index, and syncs graph knowledge back into session cache ([improve.py](https://github.com/topoteretes/cognee/blob/cfb0aa4d0b3ae0154cf9f24e5908263d565341f4/cognee/api/v1/improve/improve.py), [apply_feedback_weights.py](https://github.com/topoteretes/cognee/blob/cfb0aa4d0b3ae0154cf9f24e5908263d565341f4/cognee/tasks/memify/apply_feedback_weights.py), [persist_agent_trace_feedbacks_in_knowledge_graph.py](https://github.com/topoteretes/cognee/blob/cfb0aa4d0b3ae0154cf9f24e5908263d565341f4/cognee/memify_pipelines/persist_agent_trace_feedbacks_in_knowledge_graph.py), [sync_graph_to_session.py](https://github.com/topoteretes/cognee/blob/cfb0aa4d0b3ae0154cf9f24e5908263d565341f4/cognee/tasks/memify/sync_graph_to_session.py)).
+
+**Agent integration comes through decorators, MCP, and skills.** The `agent_memory` decorator wraps async functions, retrieves relevant memory before the call, stores active context in a `ContextVar`, persists traces after the call, and can periodically memify those traces ([decorator.py](https://github.com/topoteretes/cognee/blob/cfb0aa4d0b3ae0154cf9f24e5908263d565341f4/cognee/modules/agent_memory/decorator.py), [runtime.py](https://github.com/topoteretes/cognee/blob/cfb0aa4d0b3ae0154cf9f24e5908263d565341f4/cognee/modules/agent_memory/runtime.py)). `LLMGateway` prepends that active memory context to LLM inputs, making decorator retrieval a real push path for Cognee-mediated calls ([LLMGateway.py](https://github.com/topoteretes/cognee/blob/cfb0aa4d0b3ae0154cf9f24e5908263d565341f4/cognee/infrastructure/llm/LLMGateway.py)). The MCP server exposes ingestion, search, recall, forget, improve, file upload, UI, and per-client dataset scoping tools ([server.py](https://github.com/topoteretes/cognee/blob/cfb0aa4d0b3ae0154cf9f24e5908263d565341f4/cognee-mcp/src/server.py)).
+
+**Context efficiency is explicit but uneven.** Retrieval has `top_k`, `wide_search_top_k`, graph-fragment projection, optional neighborhood depth, global context summaries, skill-body progressive disclosure, and `MAX_MEMORY_CONTEXT_LENGTH` limits for decorator memory ([graph_completion_retriever.py](https://github.com/topoteretes/cognee/blob/cfb0aa4d0b3ae0154cf9f24e5908263d565341f4/cognee/modules/retrieval/graph_completion_retriever.py), [runtime.py](https://github.com/topoteretes/cognee/blob/cfb0aa4d0b3ae0154cf9f24e5908263d565341f4/cognee/modules/agent_memory/runtime.py), [load_skill.py](https://github.com/topoteretes/cognee/blob/cfb0aa4d0b3ae0154cf9f24e5908263d565341f4/cognee/modules/tools/builtin/load_skill.py)). But several paths still concatenate graph triplets, session history, or trace feedback as prose, so complexity control depends on caller choices and runtime data shape.
+
+## Artifact analysis
+
+- **Storage substrate:** `rdbms` — Relational database records plus configured file/object storage behind `add()` and dataset APIs
+- **Representational form:** `symbolic` — Symbolic metadata and source text/files
+- **Lineage:** `authored` `imported` `trace-extracted` — imported datasets, authored skills/tools/configuration, and trace-extracted session, feedback, and skill-run records all feed retained state
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `ranking` `learning` — retrieved graph/cache artifacts provide context; skills/tools and permissions instruct and enforce; routers, scopes, feedback weights, and improvement paths route, validate, rank, and learn
+
+**Ingested datasets and raw data records.** Storage substrate: relational database records plus configured file/object storage behind `add()` and dataset APIs. Representational form: symbolic metadata and source text/files. Lineage: imported by user/API/MCP calls, then consumed by `cognify()` pipelines; source deletion and `forget()` can remove data, memory, or all user-owned state ([forget.py](https://github.com/topoteretes/cognee/blob/cfb0aa4d0b3ae0154cf9f24e5908263d565341f4/cognee/api/v1/forget/forget.py)). Behavioral authority: knowledge artifact source material until processed; dataset permissions and node sets add routing and access-control authority.
+
+**Extracted graph nodes, edges, summaries, and embeddings.** Storage substrate: graph database, vector database, and relational metadata. Representational form: mixed symbolic graph records, prose summaries, and distributed-parametric embeddings. Lineage: derived from imported documents by classification, chunking, LLM extraction, summarization, and `add_data_points`; invalidated or rebuilt by re-cognify, memory-only forget, adapter migrations, or custom graph model changes. Behavioral authority: knowledge artifact authority when retrieved as evidence/context; ranking authority when vector distances, triplet importance, feedback weights, and graph projection decide what reaches an answer.
+
+**Session Q&A cache and graph-context snapshots.** Storage substrate: Redis lists, filesystem diskcache keys, or Tapes cache, plus `session_records` lifecycle rows. Representational form: symbolic JSON-like Q&A records, feedback fields, used graph element ids, and graph-context JSON lines. Lineage: produced by `remember(session_id=...)`, session-aware completions, agentic retriever answers, and `sync_graph_to_session`; TTL and cache backend determine retention. Behavioral authority: short-term knowledge artifact authority for session recall and completion history; graph-context snapshots become push context inside session completions when `SessionManager` prepends them to conversation history ([session_manager.py](https://github.com/topoteretes/cognee/blob/cfb0aa4d0b3ae0154cf9f24e5908263d565341f4/cognee/infrastructure/session/session_manager.py)).
+
+**Agent trace entries and trace feedback summaries.** Storage substrate: session cache under agent trace keys. Representational form: symbolic trace records plus prose `session_feedback` summaries generated by LLM or deterministic fallback. Lineage: trace-extracted from decorated function calls, typed `TraceEntry` payloads, or integrations that call the trace API; each record preserves origin function, status, memory query/context, method params, return value, and error. Behavioral authority: raw trace records are knowledge artifacts for audit and recall; feedback summaries become source material for durable graph memory when persisted by the trace memify pipeline.
+
+**Feedback weights on graph nodes and edges.** Storage substrate: graph database properties on nodes and edges. Representational form: symbolic numeric weights. Lineage: derived from session Q&A feedback scores only when the Q&A records include `used_graph_element_ids`; streaming updates are marked in session `memify_metadata` to avoid double application ([apply_feedback_weights.py](https://github.com/topoteretes/cognee/blob/cfb0aa4d0b3ae0154cf9f24e5908263d565341f4/cognee/tasks/memify/apply_feedback_weights.py)). Behavioral authority: ranking influence, because retrieval can include `feedback_influence` and project `feedback_weight` into graph-fragment scoring. This is a system-definition artifact, not just a note about user satisfaction.
+
+**Skills, tools, skill runs, and skill improvement proposals.** Storage substrate: graph/vector stores as `Skill`, `Tool`, `SkillRun`, and `SkillImprovementProposal` datapoints. Representational form: mixed prose procedure bodies, symbolic manifests/schemas, and execution records. Lineage: skills are explicitly ingested from `SKILL.md`; skill runs are recorded by `AgenticRetriever` or `SkillRunEntry`; proposals are derived from low-scoring or errored runs and require explicit apply to mutate the skill procedure ([ingest_skills.py](https://github.com/topoteretes/cognee/blob/cfb0aa4d0b3ae0154cf9f24e5908263d565341f4/cognee/modules/tools/ingest_skills.py), [agentic_retriever.py](https://github.com/topoteretes/cognee/blob/cfb0aa4d0b3ae0154cf9f24e5908263d565341f4/cognee/modules/retrieval/agentic_retriever.py), [SkillRun.py](https://github.com/topoteretes/cognee/blob/cfb0aa4d0b3ae0154cf9f24e5908263d565341f4/cognee/modules/engine/models/SkillRun.py), [skill_improvement.py](https://github.com/topoteretes/cognee/blob/cfb0aa4d0b3ae0154cf9f24e5908263d565341f4/cognee/modules/memify/skill_improvement.py)). Behavioral authority: skills and tools are system-definition artifacts for agent execution; skill runs and proposals are trace-derived evidence and candidate edits until applied.
+
+**Agent connection registry and MCP per-client datasets.** Storage substrate: in-memory registry plus persisted principal configuration for agent connections; MCP defaults derive a per-client dataset name from request client info. Representational form: symbolic configuration records. Lineage: registered at decorated function entry or MCP request time, deactivated after execution, and persisted per user where available ([registry.py](https://github.com/topoteretes/cognee/blob/cfb0aa4d0b3ae0154cf9f24e5908263d565341f4/cognee/modules/agents/registry.py), [server.py](https://github.com/topoteretes/cognee/blob/cfb0aa4d0b3ae0154cf9f24e5908263d565341f4/cognee-mcp/src/server.py)). Behavioral authority: routing and scoping authority, because it determines which dataset an agent writes to or reads by default.
+
+The main promotion path is session/trace material -> cache -> `improve()` / memify -> graph/vector memory -> retrieval and injection. Cognee also has a separate skill-run -> proposal -> applied skill path. Both paths cross from knowledge artifact into system-definition artifact territory, but neither includes a strong human review gate by default.
+
+## Comparison with Our System
+
+| Dimension | Cognee | Commonplace |
+|---|---|---|
+| Primary purpose | Runtime memory control plane for agents and applications | Git-tracked methodology KB operated by agents and maintainers |
+| Main substrate | Relational DB, graph DB, vector DB, cache, MCP/API service | Markdown files, source snapshots, schemas, scripts, generated indexes |
+| Representational form | Mixed graph records, embeddings, prose summaries, traces, skills, tools | Mostly prose/frontmatter plus symbolic type specs, validators, indexes |
+| Lineage | Pipeline-derived graph/vector artifacts and session-to-graph bridges | Source-pinned citations, review lifecycle, explicit replacement archives |
+| Activation | Pull APIs/MCP search plus decorator/LLMGateway push injection | Mostly deliberate pull through search, indexes, skills, and validation |
+| Governance | Permissions, feedback weights, pipeline status, some proposals | Collection contracts, type specs, validation, semantic gates, review status |
+
+Cognee and Commonplace share the premise that memory should not be only a vector store. Cognee combines graph structure, vectors, session traces, feedback, skills, and tool execution records. Commonplace combines source snapshots, authored notes, type specs, review gates, and generated navigation. The difference is operating layer: Cognee is a runtime substrate for applications; Commonplace is an inspectable knowledge corpus where durable claims should be readable and reviewable without a service.
+
+Cognee is stronger on runtime activation and adaptive feedback. It can pull graph context into an LLM call, sync graph knowledge back into session cache, apply feedback weights to graph elements, and expose MCP tools for agents that need a managed memory service. Commonplace is stronger on epistemic discipline: a durable review or note names its source, status, type, and link semantics, and the user can inspect exact Markdown diffs.
+
+Cognee's graph/vector substrate is useful for scale and multi-hop retrieval, but it also hides some authority inside ranking, embeddings, and service state. A retrieved graph edge may have a source trail in the underlying data pipeline, but the review surface is not the same as a source-pinned Markdown claim. For Commonplace, Cognee is a good example of runtime memory infrastructure and a weaker model for durable methodology claims unless paired with explicit review/promotion.
+
+**Read-back:** `both` — Cognee has ordinary pull through `search`, `recall`, MCP tools, and `memory_search`; it also has engineered memory push when `agent_memory` retrieves instance-scoped graph or session memory and `LLMGateway` injects it into the next Cognee-mediated LLM call
+
+### Borrowable Ideas
+
+**Separate fast session memory from promoted graph memory.** Ready conceptually. Commonplace workshop state could distinguish cheap, ephemeral working context from promoted library artifacts with clearer expiration and promotion rules.
+
+**Record used evidence ids with answers.** Ready now as design language. Cognee's Q&A records can carry `used_graph_element_ids`, enabling later feedback to update only the elements that supported an answer. Commonplace could record which notes/sources shaped an agent answer before evaluating or revising them.
+
+**Graph-to-session sync as a context cache.** Useful with a runtime consumer. Cognee's `sync_graph_to_session` keeps a bounded JSON-lines snapshot of recent graph knowledge per session. A Commonplace analogue would be a bounded session context pack generated from recent validated notes, not a replacement for the notes.
+
+**Progressive disclosure for skills.** Ready now. Cognee exposes skill names/descriptions first, then lets the agent call `load_skill` for the full procedure. Commonplace skills already exist; the useful borrow is making description-only catalogs a first-class context budget policy.
+
+**Proposal-first skill improvement.** Worth tracking, not ready to automate broadly. Cognee can generate a `SkillImprovementProposal` from poor runs, then apply it only when requested. Commonplace could use the same proposal artifact shape, but should keep human or semantic-gate review before applied instruction edits.
+
+**Do not borrow opaque authority drift.** Feedback weights, graph summaries, trace summaries, skill proposals, and cache snapshots all shape future behavior. Commonplace should keep those authority changes explicit, reviewable, and source-pinned rather than letting them accumulate as hidden service state.
+
+## Write-side placement
+
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `consolidate` `dedup` `evolve` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
+**Trace source:** `session-logs` `tool-traces` `trajectories` — session traces, decorated function/tool execution records, and agentic skill/tool run trajectories are retained for later improvement.
+
+**Learning scope:** `per-task` `cross-task` — traces are session-scoped at capture time, then promoted into dataset-scoped graph memory or skill proposals that can affect later tasks.
+
+**Learning timing:** `online` `staged` — trace capture and some background improvement are live during use, while explicit `improve()` and periodic memify runs stage promotion into durable graph state.
+
+**Distilled form:** `prose` `symbolic` `parametric` — feedback summaries are prose, graph records/weights/skill proposals are symbolic, and promoted graph memory includes vector-indexed embeddings.
+
+**Trace source.** Cognee qualifies as trace-derived learning. Raw traces enter through `TraceEntry`, `SessionManager.add_agent_trace_step`, the `agent_memory` decorator, and agentic retriever skill/tool execution records. Stored trace records include origin function, status, method parameters, method return value, memory query, memory context, errors, and generated feedback summaries ([entries.py](https://github.com/topoteretes/cognee/blob/cfb0aa4d0b3ae0154cf9f24e5908263d565341f4/cognee/memory/entries.py), [session_manager.py](https://github.com/topoteretes/cognee/blob/cfb0aa4d0b3ae0154cf9f24e5908263d565341f4/cognee/infrastructure/session/session_manager.py), [decorator.py](https://github.com/topoteretes/cognee/blob/cfb0aa4d0b3ae0154cf9f24e5908263d565341f4/cognee/modules/agent_memory/decorator.py), [agentic_retriever.py](https://github.com/topoteretes/cognee/blob/cfb0aa4d0b3ae0154cf9f24e5908263d565341f4/cognee/modules/retrieval/agentic_retriever.py)).
+
+**Extraction.** The first extraction layer is per-step `session_feedback`, generated by an LLM from method return values or by deterministic fallback. The second layer is memify: `extract_agent_trace_feedbacks` pulls either feedback summaries or raw method returns from selected sessions, `cognify_agent_trace_feedback` adds them to a configured node set, and the ordinary cognify pipeline turns the text into graph/vector memory ([extract_agent_trace_feedbacks.py](https://github.com/topoteretes/cognee/blob/cfb0aa4d0b3ae0154cf9f24e5908263d565341f4/cognee/tasks/memify/extract_agent_trace_feedbacks.py), [cognify_agent_trace_feedback.py](https://github.com/topoteretes/cognee/blob/cfb0aa4d0b3ae0154cf9f24e5908263d565341f4/cognee/tasks/memify/cognify_agent_trace_feedback.py)). A separate feedback path reads Q&A feedback scores and used graph element ids, then updates graph weights.
+
+**Scope and timing.** Trace learning is session-scoped at capture time and dataset-scoped at promotion time. Timing can be explicit through `improve(session_ids=...)`, automatic after `remember(session_id=...)`, or periodic inside `agent_memory` via `persist_session_trace_after`. The code uses locks for single-session `improve()` to avoid duplicate bridge work ([improve.py](https://github.com/topoteretes/cognee/blob/cfb0aa4d0b3ae0154cf9f24e5908263d565341f4/cognee/api/v1/improve/improve.py), [runtime.py](https://github.com/topoteretes/cognee/blob/cfb0aa4d0b3ae0154cf9f24e5908263d565341f4/cognee/modules/agent_memory/runtime.py)).
+
+**Survey placement.** Cognee belongs in the trace-to-retrieval-substrate and trace-to-system-definition families. Raw traces are cache-backed knowledge artifacts; feedback summaries and persisted trace text become graph/vector knowledge artifacts; feedback weights become ranking system-definition artifacts; skill proposals can become instruction artifacts if applied.
+
+**Curation policy.** The oracle is mixed: LLM summaries, deterministic fallbacks, explicit feedback scores, used-element ids, and manual apply for skill proposals. There is no general review gate that says a trace-derived graph fact or feedback weight is epistemically trusted; the main guardrails are scoping, permissions, metadata, and whether callers opt into the improvement path.
+
+## Read-back placement
+
+**Direction.** Both. Pull paths include `search`, `recall`, MCP `search`/`recall`, `memory_search`, and direct graph/vector retrieval. Push paths include `agent_memory` retrieval before a wrapped function's LLM call, `LLMGateway` input injection, session graph-context prepending inside session completions, and host integrations that opt into those API surfaces.
+
+**Read-back signal:** `identifier` `inferred / embedding` — decorator and session push are narrowed by user, dataset, and session identifiers, while graph-memory selection uses vector similarity over graph/vector collections.
+
+**Faithfulness tested:** `no` — the review found retrieval and injection tests, but no checked-in with/without behavioral ablation proving the model uses pushed memory correctly.
+
+**Targeting and signal.** The clearest engineered push path is the decorator. Its graph-memory branch is `instance` targeting with an `inferred / embedding` signal: it derives a content query from a fixed string, a selected method parameter, or a string argument; narrows by user/dataset permissions; runs `GRAPH_SUMMARY_COMPLETION` with `memory_top_k`; then stores the result in the active context ([runtime.py](https://github.com/topoteretes/cognee/blob/cfb0aa4d0b3ae0154cf9f24e5908263d565341f4/cognee/modules/agent_memory/runtime.py)). Dataset and user permissions are identifier narrowing, but the final memory selector is vector similarity over graph/vector collections. Its session-memory branch is `instance` targeting with an `identifier` signal: `session_id` and user select recent trace feedback, bounded by `session_memory_last_n`. `LLMGateway` injects the active memory context into subsequent Cognee-mediated LLM calls ([LLMGateway.py](https://github.com/topoteretes/cognee/blob/cfb0aa4d0b3ae0154cf9f24e5908263d565341f4/cognee/infrastructure/llm/LLMGateway.py)). Session graph-context prepending is also `instance / identifier`, keyed by user and `session_id`. Precision, recall, context dilution, and effective authority are runtime qualities, not verified from code.
+
+**Injection point.** Decorator retrieval occurs before the wrapped agent function runs; injection occurs before the LLM receives the prompt, so it can change the next action. Trace persistence and `improve()` happen after action; they only affect later calls unless the same workflow explicitly recalls the updated memory.
+
+**Selection, scope, and complexity.** Selection is code-grounded: dataset permissions, `dataset_name`, `memory_top_k`, graph-summary vector search, `session_id`, `session_memory_last_n`, `MAX_MEMORY_CONTEXT_LENGTH`, and optional `memory_only_context` bound what is loaded. The graph completion path also has `top_k`, `wide_search_top_k`, neighborhood controls, and optional global context index prelude. Complexity can still be high because retrieved memory is assembled as prose context rather than a typed minimal fact set.
+
+**Authority at consumption.** In `LLMGateway`, memory is advisory context prepended to the user input, not a hard gate. In session completion, graph-context snapshots and conversation history are also advisory. In `AgenticRetriever`, skills and tools are stronger: the skill catalog, `load_skill`, and permitted tool manifest define what the agent may execute, while `execute_tool` enforces scope and permissions ([agentic_retriever.py](https://github.com/topoteretes/cognee/blob/cfb0aa4d0b3ae0154cf9f24e5908263d565341f4/cognee/modules/retrieval/agentic_retriever.py), [execute_tool.py](https://github.com/topoteretes/cognee/blob/cfb0aa4d0b3ae0154cf9f24e5908263d565341f4/cognee/modules/tools/execute_tool.py)).
+
+**Faithfulness.** The code and tests verify that memory text is retrieved, stored in context, and injected into LLM input; this does not prove the model used the memory correctly. This review did not find a checked-in with/without behavioral ablation for decorator push activation.
+
+**Other consumers.** Human users and operators consume the UI, graph visualization, MCP outputs, pipeline status, logs, and trace APIs. The system itself consumes feedback weights, skill runs, proposals, agent connection records, and session lifecycle metrics as routing, ranking, or governance inputs.
+
+## Curiosity Pass
+
+The README describes a Claude Code plugin that captures tool calls and injects context through lifecycle hooks, but that plugin lives in a separate integrations repository; in this checkout, the source-visible activation mechanism is the Python decorator/LLM gateway and MCP server, not the external Claude Code plugin ([README.md](https://github.com/topoteretes/cognee/blob/cfb0aa4d0b3ae0154cf9f24e5908263d565341f4/README.md)).
+
+The `agent_memory` decorator is subtle: it does not pass memory as a function argument. It relies on a `ContextVar` and Cognee's own `LLMGateway` to inject memory. If a wrapped agent calls a different LLM client directly, retrieval may happen but have no effect unless the function reads `get_current_agent_memory_context()` itself.
+
+Cognee's trace learning is not just document ingestion. Ordinary files become graph memory through cognify, but the trace-derived parts are specifically session traces, generated trace feedback, Q&A feedback, used graph element ids, skill runs, and proposals.
+
+The session cache is not only a short-term chat log. It also stores graph-context snapshots and trace feedback, which means cache TTL and backend choice affect the promotion path, not just latency.
+
+The strongest governance feature is not review; it is scoping. Dataset permissions, per-client MCP default datasets, and tool permissions keep memories and tools in the right lane. That helps safety, but does not answer whether a promoted trace-derived claim is true.
+
+## What to Watch
+
+- Whether the external Claude Code plugin is moved into this repository or pinned as a source-visible submodule; that would let future reviews assess hook-level activation rather than README-described integration.
+- Whether trace-derived graph nodes gain stronger source offsets, trace ids, and review states; without them, promoted trace memory is useful but hard to audit.
+- Whether `SkillImprovementProposal` grows an explicit review/evaluation gate before apply; that would make the skill-learning path more borrowable for Commonplace instructions.
+- Whether feedback weights become visible in operator-facing reports with explanation of which Q&A feedback changed which graph elements; that would make ranking authority easier to inspect.
+- Whether global context indexes become a default part of recall rather than an opt-in prelude; that would change Cognee's context efficiency story.
+
+Relevant Notes:
+
+- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - extends: Cognee turns session traces, feedback, and skill runs into graph memory, ranking weights, and optional skill proposals.
+- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - contrasts: Cognee has both stored graph/vector memory and a source-visible decorator push path.
+- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: Cognee's cache, graph, vector, skill, trace, and MCP artifacts have different substrates, forms, lineage, and authority.
+- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - distinguishes: documents, graph facts, summaries, traces, and session cache records mostly provide evidence or context.
+- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - distinguishes: feedback weights, skills, tools, permissions, query routing, and MCP defaults directly shape future behavior.

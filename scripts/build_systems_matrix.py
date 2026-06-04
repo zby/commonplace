@@ -29,6 +29,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 AMS = REPO_ROOT / "kb" / "agent-memory-systems"
 REVIEWS_DIR = AMS / "reviews"
 SYSTEMS_CSV = AMS / "systems.csv"
+RELATED_SYSTEMS = REPO_ROOT / "related-systems"
 
 # reviews/ is the code-grounded tier by location; this is authoritative for the
 # written row. Each review's `source-tier` frontmatter is validated against it
@@ -39,6 +40,34 @@ REVIEWS_TIER = "code-grounded"
 def parse_review(path: Path, source_tier: str) -> tuple[dict[str, str], list[str]]:
     review_file = str(path.relative_to(REPO_ROOT))
     return parse_review_text(path.read_text(encoding="utf-8"), review_file, source_tier)
+
+
+def read_review_identity(path: Path) -> tuple[str, str]:
+    """Return explicit Repository / Source directory metadata from a review."""
+    text = path.read_text(encoding="utf-8")
+
+    def field(label: str) -> str:
+        match = re.search(rf"^\*\*{re.escape(label)}:\*\*\s*(.+?)\s*$", text, re.MULTILINE)
+        return match.group(1).strip() if match else ""
+
+    return field("Repository"), field("Source directory")
+
+
+def derive_clone_path(repo_url: str) -> str:
+    """Infer a local checkout path from a GitHub repo URL when it exists."""
+    clean = re.sub(r"[#?].*$", "", repo_url.strip().removesuffix(".git").rstrip("/"))
+    match = re.search(r"github\.com/([^/]+)/([^/]+)$", clean)
+    if not match:
+        return ""
+    owner, repo = match.groups()
+    candidates = [
+        RELATED_SYSTEMS / f"{owner}--{repo}",
+        RELATED_SYSTEMS / repo,
+    ]
+    for candidate in candidates:
+        if candidate.is_dir():
+            return str(candidate.relative_to(REPO_ROOT))
+    return ""
 
 
 def read_source_tier(path: Path) -> str | None:
@@ -104,8 +133,19 @@ def main() -> int:
             for c in COLUMNS:
                 if c not in PARSED and c not in JOINED and old.get(c):
                     row[c] = old[c]
-        # join identity
+        # join identity. Prefer explicit current-review metadata over the legacy
+        # CSV inventory so renamed/colliding reviews cannot inherit stale rows.
         key = norm(path.stem)
+        explicit_repo, explicit_clone = read_review_identity(path)
+        if explicit_repo or explicit_clone:
+            legacy_repo, legacy_clone = ident.get(key, ("", ""))
+            row["public_repo"] = explicit_repo or legacy_repo
+            row["clone_path"] = explicit_clone or derive_clone_path(explicit_repo) or legacy_clone
+            joined += 1
+            rows.append(row)
+            for f in flags:
+                all_flags.append((row["review_file"], f))
+            continue
         if key in ident:
             row["public_repo"], row["clone_path"] = ident[key]
             joined += 1

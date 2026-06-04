@@ -1,0 +1,140 @@
+---
+description: "ai-modules review: plugin-packaged AI skills, per-repo markdown wiki and task backlogs, deterministic helper scripts, and session-to-wiki distillation"
+type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
+tags: []
+status: outdated
+last-checked: "2026-06-03"
+---
+
+# ai-modules
+
+> Replaced 2026-06-04. See [ai-modules](./theafh--ai-modules.md) for the current review.
+
+ai-modules, from Andreas F. Hoffmann's `theafh/ai-modules` repository, is a meta-repository of AI-consumed skills, agents, and deployment metadata for Claude Code, Codex, Cursor, Copilot, Gemini, Antigravity, and in-place checkout use. Its memory-system relevance is concentrated in two plugin families: `knowledge_management` ships a per-repo plain-Markdown wiki workflow, while `ai_dev` ships project-local development skills such as the `tasks/` backlog and instruction-writing/formatting rubrics. The system does not implement a vector store, database-backed memory server, or autonomous runtime recall loop; it packages retained instruction artifacts and helper scripts that make project-local files become durable wiki, task, and governance surfaces.
+
+**Repository:** https://github.com/theafh/ai-modules
+
+**Reviewed commit:** [14f42f58a898f6ae335920d2fb462b39cf61e71b](https://github.com/theafh/ai-modules/commit/14f42f58a898f6ae335920d2fb462b39cf61e71b)
+
+**Last checked:** 2026-06-03
+
+## Core Ideas
+
+**Skills are the primary behavior-shaping unit.** The repository is organized as plugin directories with `skills/<name>/SKILL.md` artifacts, optional bundled scripts, plugin manifests, and a root marketplace manifest ([README.md](https://github.com/theafh/ai-modules/blob/14f42f58a898f6ae335920d2fb462b39cf61e71b/README.md), [.claude-plugin/marketplace.json](https://github.com/theafh/ai-modules/blob/14f42f58a898f6ae335920d2fb462b39cf61e71b/.claude-plugin/marketplace.json), [plugins/ai_dev/.codex-plugin/plugin.json](https://github.com/theafh/ai-modules/blob/14f42f58a898f6ae335920d2fb462b39cf61e71b/plugins/ai_dev/.codex-plugin/plugin.json)). The retained artifacts are inspectable Markdown instructions plus small symbolic metadata and scripts; deployment symlinks them into host environments instead of centralizing state in a service.
+
+**The wiki skill turns a project-adjacent `wiki/` tree into durable memory.** The `knowledge_management` plugin defines a three-layer wiki: immutable `raw/` sources, agent-owned pages under type folders, and a `SCHEMA.md` that defines the domain, page-type enum, tag taxonomy, and frontmatter rules ([plugins/knowledge_management/skills/wiki/SKILL.md](https://github.com/theafh/ai-modules/blob/14f42f58a898f6ae335920d2fb462b39cf61e71b/plugins/knowledge_management/skills/wiki/SKILL.md), [plugins/knowledge_management/skills/wiki/references/template_schema.md](https://github.com/theafh/ai-modules/blob/14f42f58a898f6ae335920d2fb462b39cf61e71b/plugins/knowledge_management/skills/wiki/references/template_schema.md)). It is "per-repo" in the operational sense: discovery walks upward from the current working directory, respects `.no_wiki` opt-outs, and requires the user to choose when the path is ambiguous rather than silently adopting an upstream wiki ([plugins/knowledge_management/skills/wiki/scripts/discover_wiki.sh](https://github.com/theafh/ai-modules/blob/14f42f58a898f6ae335920d2fb462b39cf61e71b/plugins/knowledge_management/skills/wiki/scripts/discover_wiki.sh)).
+
+**Context efficiency is explicit but file-pull based.** The wiki skill instructs agents to orient through `SCHEMA.md`, `index.md`, and a bounded recent-log scan before reading deeper pages; large wikis add targeted `rg` search, and query answers read only relevant pages before optionally filing a reusable result ([plugins/knowledge_management/skills/wiki/SKILL.md](https://github.com/theafh/ai-modules/blob/14f42f58a898f6ae335920d2fb462b39cf61e71b/plugins/knowledge_management/skills/wiki/SKILL.md)). The ai_dev `task_create` sibling similarly narrows one-shot task creation so a user does not load the full backlog-management workflow for a single file ([plugins/ai_dev/skills/task_create/SKILL.md](https://github.com/theafh/ai-modules/blob/14f42f58a898f6ae335920d2fb462b39cf61e71b/plugins/ai_dev/skills/task_create/SKILL.md)). The tradeoff is that scope control is procedural: an agent still has to follow the skill's discovery, orientation, and search rules.
+
+**Deterministic helpers carry the mechanical governance.** The wiki's helper scripts discover/init wiki paths, compute body-only `sha256` for raw files, and lint frontmatter, links, type-location, taxonomy, stale sources, source drift, footnotes, wikilinks, and markdown style ([plugins/knowledge_management/skills/wiki/scripts/lint.py](https://github.com/theafh/ai-modules/blob/14f42f58a898f6ae335920d2fb462b39cf61e71b/plugins/knowledge_management/skills/wiki/scripts/lint.py), [plugins/knowledge_management/skills/wiki/references/lint_checks.md](https://github.com/theafh/ai-modules/blob/14f42f58a898f6ae335920d2fb462b39cf61e71b/plugins/knowledge_management/skills/wiki/references/lint_checks.md)). The task skill repeats the pattern with `discover_tasks.sh`, `init_tasks.sh`, and a backlog linter for file names, frontmatter, status/location consistency, ISO datetimes, task size, standard Markdown, and collisions across open and archived tasks ([plugins/ai_dev/skills/task/SKILL.md](https://github.com/theafh/ai-modules/blob/14f42f58a898f6ae335920d2fb462b39cf61e71b/plugins/ai_dev/skills/task/SKILL.md), [plugins/ai_dev/skills/task/scripts/lint.py](https://github.com/theafh/ai-modules/blob/14f42f58a898f6ae335920d2fb462b39cf61e71b/plugins/ai_dev/skills/task/scripts/lint.py)).
+
+**Session and source ingestion are triage-first.** `wiki_import` persists one external resource into `raw/<kind>/`, mines it for durable candidates, diffs those candidates against the existing wiki, and emits a proposal before wiki-page writes land. `wiki_wrapup` does the analogous operation over the current chat session, surfacing new pages, extensions, and contradictions before writing ([plugins/knowledge_management/skills/wiki_import/SKILL.md](https://github.com/theafh/ai-modules/blob/14f42f58a898f6ae335920d2fb462b39cf61e71b/plugins/knowledge_management/skills/wiki_import/SKILL.md), [plugins/knowledge_management/skills/wiki_wrapup/SKILL.md](https://github.com/theafh/ai-modules/blob/14f42f58a898f6ae335920d2fb462b39cf61e71b/plugins/knowledge_management/skills/wiki_wrapup/SKILL.md)). This is the repo's strongest trace-derived memory mechanism, but it is staged and user-approved, not a background transcript miner.
+
+**Broad repair delegates to a specialized agent definition.** `wiki_fix` is a thin front end to `wiki_auto_shaper`, whose agent definition owns an orient -> assess -> remediate -> verify loop over the current wiki, including structural lint, page-anatomy checks, topic splitting, scaffold drift, and contradiction surfacing ([plugins/knowledge_management/skills/wiki_fix/SKILL.md](https://github.com/theafh/ai-modules/blob/14f42f58a898f6ae335920d2fb462b39cf61e71b/plugins/knowledge_management/skills/wiki_fix/SKILL.md), [plugins/knowledge_management/agents/wiki_auto_shaper.md](https://github.com/theafh/ai-modules/blob/14f42f58a898f6ae335920d2fb462b39cf61e71b/plugins/knowledge_management/agents/wiki_auto_shaper.md)). The separation is a context-efficiency design: broad repair work gets its own high-effort context instead of displacing the active user conversation.
+
+## Artifact analysis
+
+- **Storage substrate:** `repo` — The shipped memory machinery lives as Git-tracked Markdown skills, plugin manifests, agent definitions, shell/Python helper scripts, templates, and example/task files; a deployed user's retained wiki and tasks then live as ordinary filesystem trees beside that user's project.
+- **Representational form:** `prose` `symbolic` — Prose instructions and Markdown pages dominate the behavioral surface, while YAML frontmatter, JSON plugin manifests, shell/Python scripts, schema fields, `sha256` values, and lint findings provide symbolic routing and validation.
+- **Lineage:** `authored` `imported` `trace-extracted` — Skills, scripts, schemas, tasks, and wiki pages are authored in the repository or deployed project; raw sources are imported; `wiki_wrapup` can trace-extract durable candidates from the current chat session.
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` — Wiki pages, raw sources, archived tasks, and session outputs mostly advise as knowledge; skills and open tasks instruct; helper scripts enforce structure, route discovery, and validate wiki/task state.
+
+**Plugin skill packages.** Storage substrate: `plugins/<plugin>/skills/<skill>/SKILL.md`, optional `scripts/` and `references/`, `.claude-plugin/plugin.json`, `.codex-plugin/plugin.json`, and the root marketplace manifest. Representational form: mixed prose and symbolic metadata. Lineage: authored and versioned in the repository; deployment creates symlinked or copied views for host tools but the source of truth remains the repo. Behavioral authority: system-definition artifacts when host agents load the skill body as instructions or use the manifests for installation/routing; knowledge artifacts when maintainers read them as documentation.
+
+**Per-repo wiki trees.** Storage substrate: filesystem files under a discovered `$WIKI`, normally `<project>/wiki/` or an explicitly selected ancestor/global wiki. Representational form: mixed Markdown prose plus YAML frontmatter, standard links, raw-source hashes, and schema-defined enums. Lineage: `init_wiki.sh` scaffolds `SCHEMA.md`, `index.md`, `log.md`, raw buckets, and page directories from templates; raw files are captured from external sources, while wiki pages are agent/human distilled from raw material, session wrapups, or query work. Behavioral authority: wiki pages are mostly knowledge artifacts for future agents and humans; `SCHEMA.md`, `index.md`, `log.md`, and linter-visible metadata become system-definition artifacts because they route page creation, validation, freshness checks, and navigation.
+
+**Raw-source provenance and drift records.** Storage substrate: `raw/articles`, `raw/papers`, `raw/meetings`, `raw/notes`, and `raw/assets` under the wiki. Representational form: prose/source Markdown with symbolic frontmatter (`source_url`, `ingested`, `sha256`). Lineage: imported from source material by the wiki skill or `wiki_import`; `compute_sha256.py` computes body-only hashes and `lint.py` flags drift. Behavioral authority: raw files are knowledge artifacts and evidence; the hash/frontmatter layer has validation authority over re-ingest and drift detection.
+
+**Task backlog artifacts.** Storage substrate: project-local `tasks/*.md` and `tasks/archive/*.md`. Representational form: mixed Markdown body plus YAML frontmatter (`description`, `scope`, `created`, `updated`, `status`) and filename grammar. Lineage: authored by agents/humans through the `task` family, sometimes converted from sources such as chat sessions, notes, specs, PDFs, or todo files; archival moves preserve implemented/deferred history. Behavioral authority: open tasks are system-definition artifacts for future implementation work because they describe what to build and how to verify it; archived tasks become knowledge artifacts unless reopened or audited.
+
+**Helper scripts and linters.** Storage substrate: shell and Python files under skill `scripts/` directories. Representational form: symbolic executable code. Lineage: authored implementation paired with the skill prose that instructs agents to call it. Behavioral authority: system-definition artifacts with enforcement or routing force: discovery scripts decide which wiki/tasks path is in scope; init scripts define scaffold shape; lint scripts gate structural validity and surface warnings; `compute_sha256.py` decides source-drift hashes.
+
+**Trace-derived session wrapup path.** Storage substrate: the raw chat session is the visible active conversation rather than a persisted raw file; approved outputs become wiki pages, index/log entries, and sometimes raw sidecars if routed through import-like capture. Representational form: raw trace is prose conversation; distilled output is mixed wiki Markdown/frontmatter. Lineage: `wiki_wrapup` instructs the agent to mine the current chat for durable claims, decisions, definitions, comparisons, workflows, and named entities, classify them against the existing wiki, and write only after proposal approval. Behavioral authority: the visible session is a temporary knowledge artifact; approved pages become durable knowledge artifacts and can acquire weak system-definition force when future agents orient through `SCHEMA.md`, `index.md`, and procedure pages.
+
+Promotion path: ai-modules promotes information through authored skill/task/wiki workflows rather than learned models. External or session material can become raw source, then wiki pages, then indexed/logged navigation; task material can become open backlog instructions, then archived implementation history. The system has stronger promotion into governed prose and symbolic lint surfaces than into hard runtime enforcement.
+
+## Comparison with Our System
+
+| Dimension | ai-modules | Commonplace |
+|---|---|---|
+| Primary purpose | Publish deployable AI skills/plugins and per-project workflows | Maintain a typed methodology KB and framework for agent-operated knowledge bases |
+| Main retained unit | `SKILL.md`, deployed plugin metadata, per-repo `wiki/` and `tasks/` files | Typed Markdown artifacts with collection contracts, schemas, links, indexes, and review gates |
+| Wiki model | Per-repo plain Markdown wiki governed by `SCHEMA.md`, `index.md`, `log.md`, and lint scripts | Repository KB with collection-local `COLLECTION.md`, shared type specs, generated indexes, semantic review, and validation |
+| Context efficiency | Skill activation, narrow sibling skills, orientation through schema/index/log, bounded recent-log reads, search-before-read guidance | Lexical search, curated/generated indexes, type-specific contracts, reports, skill workflows, and validation |
+| Read-back | Mostly pull through skill activation and file/search reads; shipped skills may be host-pushed as baseline instructions | Mostly pull through `rg`, indexes, links, skills, and generated reports |
+| Governance | Deterministic scripts plus skill prose; broad wiki audit delegated to `wiki_auto_shaper` | Deterministic validators, review bundles, type contracts, link vocabulary, indexes, and curated methodology notes |
+
+The closest alignment is the wiki skill. Both systems treat Markdown as more than documentation: prose pages, schema files, indexes, logs, and helper scripts are retained artifacts that shape future agent behavior. ai-modules is lighter and more portable: a user can deploy the skill pack, scaffold a wiki beside any repo, and keep the state readable in plain files. Commonplace is stricter: artifact types, collection contracts, path-valued type specs, link vocabulary, and review workflows give stronger comparison and validation semantics.
+
+The biggest divergence is authority. In ai-modules, many crucial rules live in skill prose that the agent must obey; helper scripts enforce structure where they exist, but semantic fidelity depends on the active model and the `wiki_auto_shaper` agent. Commonplace pushes more of the method into explicit collection/type contracts and deterministic validation, then adds semantic gates for the remainder.
+
+**Read-back:** `pull` — Retained wiki and task memory reaches the agent when a skill is activated and the agent deliberately reads `SCHEMA.md`, `index.md`, recent `log.md`, relevant pages, task files, or search results. Host platforms may push shipped `SKILL.md` files as baseline instructions, but those are packaged system definitions rather than retained memory accumulated from using a particular wiki or task tree.
+
+### Borrowable Ideas
+
+**Make per-repo wiki discovery explicit and user-visible.** ai-modules' `discover_wiki.sh` treats upstream wiki adoption as ambiguous and asks when multiple path candidates exist. Commonplace could borrow the same explicit ambiguity handling for project-local workshop or consuming-project KB discovery. Ready now for any command that walks upward and might cross confidentiality or scope boundaries.
+
+**Keep small deterministic helpers beside skills.** The wiki and task skills bundle exactly the discovery, init, lint, and hash helpers their prose depends on. Commonplace already follows this pattern in commands, but skill-local helper placement is worth preserving for portable downstream skills. Ready now.
+
+**Use narrow front-end skills over a larger base skill.** `task_create`, `task_check`, `task_implement`, `task_audit`, `task_finish`, and `task_fix` provide task-specific activation surfaces while deferring the file format to the base `task` skill. Commonplace could borrow this for high-friction workflows where one broad skill currently loads too much policy. Ready when there is a repeated narrow trigger.
+
+**Proposal-first session wrapup.** `wiki_wrapup` converts a chat into candidate durable knowledge but stops before writing pages until the user chooses. Commonplace's workshop-to-library promotion could use the same "new / extend / conflict" report shape for summarizing a session into durable notes. Ready for workshop closeout.
+
+**Let schema declare the type enum that lint consumes.** The wiki linter reads allowed page types from `SCHEMA.md`, so individual wikis can extend the taxonomy without modifying code. Commonplace has stronger central type specs, but this pattern is useful for consuming projects that need local page categories without changing the framework. Needs a use case where local variation is intentionally permitted.
+
+**Separate broad repair into a dedicated agent definition.** `wiki_auto_shaper` is explicit that broad cleanup displaces context and should run in an isolated high-effort agent. Commonplace already has review/repair workflows; the borrowable part is the clean split between narrow inline lint fixes and broad delegated repair. Ready as procedural guidance.
+
+## Write-side placement
+
+**Write agency:** `automatic` `manual` — the review identifies a trace-derived or rule-driven path that changes retained memory from execution/session evidence; manual surfaces are included where the reviewed prose describes user or operator authoring.
+
+**Curation operations:** `consolidate` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+
+### Trace-derived learning
+**Trace source:** `session-logs` — `wiki_wrapup` mines the visible current chat session at closeout time rather than a persistent transcript store, background tool trace stream, or rollout trajectory.
+
+**Learning scope:** `per-project` — The durable output lands in one wiki selected by the discovery flow, normally project-local unless the selected wiki path is shared.
+
+**Learning timing:** `staged` — Wrapup is a manual closeout action with proposal review before writes, not online learning during every action.
+
+**Distilled form:** `prose` `symbolic` — Approved outputs become wiki pages, query/procedure pages, index/log entries, or tasks: Markdown prose plus frontmatter, links, page types, and task/status metadata.
+
+**Trace source.** ai-modules qualifies through `wiki_wrapup`, which mines the current chat session for durable claims, decisions, definitions, conventions, comparisons, workflows, and named entities. The trace boundary is the visible session at closeout time, not a persistent transcript store or background event stream.
+
+**Extraction.** The extraction oracle is the active agent following `wiki_wrapup`: it reads the wiki's `SCHEMA.md`, `index.md`, and recent `log.md`, classifies session-derived candidates as NEW, EXTEND, CONFIRM, or CONFLICT, and emits a proposal under fixed headings before any wiki write. The human approval step is central; approved writes route back through the base `wiki` ingest/update logic.
+
+**Scope and timing.** Scope is one wiki selected by the discovery flow and one current session. Timing is staged and manual: wrapup happens when the user asks to wrap up, close, harvest, or persist the session. This is not online learning during every action and not cross-project unless the selected wiki path is shared.
+
+**Survey placement.** This belongs in the trace-to-wiki / trace-to-instruction family, with a weaker raw-retention story than llm-wiki-style transcript import. The raw trace is ephemeral unless separately captured; the durable behavior-shaping artifact is the approved wiki page, query page, procedure page, index/log entry, or task generated from the session.
+
+## Curiosity Pass
+
+**The repo's own task files show the task skill as working memory for the skill pack.** The checked-in `tasks/` directory contains open and archived Markdown task briefs about wiki and task-skill evolution, including context-efficiency improvements and instruction-writing sweeps ([tasks/wiki_auto-shaper-read-token-cost.md](https://github.com/theafh/ai-modules/blob/14f42f58a898f6ae335920d2fb462b39cf61e71b/tasks/wiki_auto-shaper-read-token-cost.md), [tasks/task-skill_ai-instruction-writing-sweep.md](https://github.com/theafh/ai-modules/blob/14f42f58a898f6ae335920d2fb462b39cf61e71b/tasks/task-skill_ai-instruction-writing-sweep.md)). That makes the backlog pattern more than documentation; the repo uses it to maintain the skill system itself.
+
+**The wiki skill is stronger as a protocol than as a runtime.** It prescribes how agents create, orient, search, lint, and repair a wiki, but there is no daemon that decides which page to inject before an arbitrary user action. This keeps the system inspectable and cheap, but memory effectiveness depends on the host agent activating and following the skill.
+
+**The "compile once" wiki thesis is operationalized through navigation files, not embeddings.** `index.md`, `log.md`, page folders, tags, and links are the retrieval surface. That is a good fit for agents with file tools, but it creates maintenance obligations: index/log lag, source drift, and schema drift are real failure modes, hence the linter and auto-shaper.
+
+**Some overview docs lag the current provenance rule.** The root and plugin READMEs still say provenance is anchored by footnotes, but the current wiki skill and lint matrix forbid footnote markers and prefer `sources:` frontmatter plus inline standard Markdown links ([README.md](https://github.com/theafh/ai-modules/blob/14f42f58a898f6ae335920d2fb462b39cf61e71b/README.md), [plugins/knowledge_management/README.md](https://github.com/theafh/ai-modules/blob/14f42f58a898f6ae335920d2fb462b39cf61e71b/plugins/knowledge_management/README.md), [plugins/knowledge_management/skills/wiki/SKILL.md](https://github.com/theafh/ai-modules/blob/14f42f58a898f6ae335920d2fb462b39cf61e71b/plugins/knowledge_management/skills/wiki/SKILL.md), [plugins/knowledge_management/skills/wiki/references/lint_checks.md](https://github.com/theafh/ai-modules/blob/14f42f58a898f6ae335920d2fb462b39cf61e71b/plugins/knowledge_management/skills/wiki/references/lint_checks.md)). That matters because provenance syntax is a behavior-shaping contract for future agents.
+
+**Some governance currently lives in natural language that only an obedient agent enforces.** The linter catches many structural issues, but page-anatomy quality, procedure-vs-concept classification, and contradiction interpretation still depend on the `wiki_auto_shaper` agent's prose checks. That is a reasonable line for a portable skill pack, but it is weaker than making the same properties machine-checkable.
+
+**The task backlog is not exactly memory, but it is behavior-shaping retained state.** A task file does not answer "what is true" the way a wiki page does; it tells a future implementer what to build and how to verify it. For the retained-artifact vocabulary, that makes open tasks system-definition artifacts with planning/implementation authority, not merely notes.
+
+## What to Watch
+
+- Whether `wiki_wrapup` starts preserving the raw session as a first-class raw source; that would strengthen trace-derived lineage and make session-to-wiki claims more auditable.
+- Whether `wiki_query`-like pull tooling or MCP surfaces appear; that would change the system from skill/file protocol toward a queryable memory interface.
+- Whether `wiki_auto_shaper` gets tests or fixtures for semantic repair quality; that would make broad repair less dependent on unverified agent judgment.
+- Whether deployment metadata grows machine-readable routing fields for individual skills beyond natural-language descriptions; that would shift activation authority from prose into symbolic contracts.
+- Whether the wiki and task linters promote more semantic conventions into code; that would move the system closer to Commonplace-style validation without sacrificing portability.
+
+Relevant Notes:
+
+- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - compares: `wiki_wrapup` distills the active chat session into proposed durable wiki changes.
+- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - exemplifies: ai-modules stores wiki/task memory in files, but current read-back is still deliberate pull.
+- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: skills, manifests, wiki pages, raw sources, task files, and linters need separate substrate/form/lineage/authority treatment.
+- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: raw wiki sources, distilled pages, archived tasks, and query results mostly act as evidence, reference, and context.
+- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: `SKILL.md` instructions, plugin manifests, `SCHEMA.md`, lint scripts, and open task files can instruct, route, validate, or govern future behavior.
+- [Use trace-derived extraction](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - exemplifies: `wiki_wrapup` turns session traces into reviewed durable artifacts instead of relying on the chat transcript itself.

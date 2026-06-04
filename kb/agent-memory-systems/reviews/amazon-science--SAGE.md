@@ -1,154 +1,145 @@
 ---
-description: "SAGE review: AppWorld skill-library agent whose trace-extracted Python skills are pushed into later tasks and rewarded during GRPO"
+description: "Amazon SAGE review: AppWorld rollouts become reusable Python skills, retrieval state, SFT data, and GRPO reward signal"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived, push-activation]
+tags:
+  - trace-derived
 status: current
-last-checked: "2026-06-01"
+last-checked: "2026-06-04"
 ---
 
-# SAGE
+# Amazon Science SAGE
 
-SAGE, from `amazon-science/SAGE`, is a research implementation of Skill Augmented GRPO for self-evolving AppWorld agents. Its memory mechanism is not a general personal-memory store. It is a task-skill loop: successful AppWorld trajectories are mined for Python helper functions, those functions are retained as a skill library or as model-training signal, and later rollouts receive selected skills in their prompt or learn to generate and use them through SFT and GRPO.
+Amazon Science SAGE is the `amazon-science/SAGE` implementation of Skill Augmented GRPO for self-evolving AppWorld agents. At the reviewed commit, its memory system is a benchmark-specific skill loop: AppWorld trajectories produce Python helper functions, selected functions are inserted into later prompts, expert logs become supervised fine-tuning data, and GRPO rewards successful reuse of generated skills.
 
 **Repository:** https://github.com/amazon-science/SAGE
 
 **Reviewed commit:** [3c9244e82244abb1adc5467ee601a03ba0f433a0](https://github.com/amazon-science/SAGE/commit/3c9244e82244abb1adc5467ee601a03ba0f433a0)
 
-**Last checked:** 2026-06-01
+**Last checked:** 2026-06-04
 
 ## Core Ideas
 
-**The retained unit is executable Python function text.** The AppWorld patch extracts top-level function definitions from generated code, preserves import lines, records each function with a task id and function name, and writes the result to `skill_library_functions.jsonl`. The same mechanism deduplicates by function name and can append new skills after normal evaluation runs ([skill_library_agent.py](https://github.com/amazon-science/SAGE/blob/3c9244e82244abb1adc5467ee601a03ba0f433a0/patches/appworld/experiments/code/skill_library_agent/skill_library_agent.py), [skill_library_agent_rollout.py](https://github.com/amazon-science/SAGE/blob/3c9244e82244abb1adc5467ee601a03ba0f433a0/patches/appworld/experiments/code/skill_library_agent/skill_library_agent_rollout.py)).
+**The explicit memory unit is executable Python function text.** The AppWorld skill-library agent parses generated code with `ast`, keeps import lines plus top-level function definitions, records task id, function name, and function body, and writes the result to `skill_library_functions.jsonl` ([skill_library_agent.py](https://github.com/amazon-science/SAGE/blob/3c9244e82244abb1adc5467ee601a03ba0f433a0/patches/appworld/experiments/code/skill_library_agent/skill_library_agent.py), [agent.py](https://github.com/amazon-science/SAGE/blob/3c9244e82244abb1adc5467ee601a03ba0f433a0/patches/appworld/experiments/code/skill_library_agent/agent.py)). The rollout variant keeps a per-scenario in-memory library, verifies generated skills in the next AppWorld world, and merges records by function name ([skill_library_agent_rollout.py](https://github.com/amazon-science/SAGE/blob/3c9244e82244abb1adc5467ee601a03ba0f433a0/patches/appworld/experiments/code/skill_library_agent/skill_library_agent_rollout.py), [agent.py](https://github.com/amazon-science/SAGE/blob/3c9244e82244abb1adc5467ee601a03ba0f433a0/patches/appworld/experiments/code/skill_library_agent/agent.py)).
 
-**Skill read-back is prompt injection after an execution check.** Before an AppWorld task starts, the agent builds `retrieved_skills_prompt`, executes the concatenated functions in the environment, drops them if execution fails, and renders them into the prompt as `retrieved_skills`. In the normal config this is enabled with `use_skill_library: true` and `retrieval_method: "default"` ([skill_library_agent.py](https://github.com/amazon-science/SAGE/blob/3c9244e82244abb1adc5467ee601a03ba0f433a0/patches/appworld/experiments/code/skill_library_agent/skill_library_agent.py), [sage_test_normal.jsonnet](https://github.com/amazon-science/SAGE/blob/3c9244e82244abb1adc5467ee601a03ba0f433a0/patches/appworld/experiments/configs/sage_test_normal.jsonnet), [skill_library_agent.txt](https://github.com/amazon-science/SAGE/blob/3c9244e82244abb1adc5467ee601a03ba0f433a0/patches/appworld/experiments/prompts/skill_library_agent.txt)).
+**Skill read-back is prompt insertion after an execution check.** At task initialization, the skill-library agent selects functions, concatenates them into `retrieved_skills_prompt`, executes that block in AppWorld, clears it on failure, and renders it into the prompt's `{{ retrieved_skills }}` slot ([skill_library_agent.py](https://github.com/amazon-science/SAGE/blob/3c9244e82244abb1adc5467ee601a03ba0f433a0/patches/appworld/experiments/code/skill_library_agent/skill_library_agent.py), [skill_library_agent.txt](https://github.com/amazon-science/SAGE/blob/3c9244e82244abb1adc5467ee601a03ba0f433a0/patches/appworld/experiments/prompts/skill_library_agent.txt)). The normal evaluation config enables `use_skill_library` and uses the `default` retrieval method ([sage_test_normal.jsonnet](https://github.com/amazon-science/SAGE/blob/3c9244e82244abb1adc5467ee601a03ba0f433a0/patches/appworld/experiments/configs/sage_test_normal.jsonnet)).
 
-**The repository contains several activation policies, not one memory API.** The deployed evaluation config uses same-scenario retrieval: for task group `x`, it loads skills from `x_1` and `x_2`. The code also implements skill-embedding retrieval over function text, query-embedding retrieval over task instructions, and n-gram retrieval over prior queries with thresholds and top-k limits ([skill_library_agent.py](https://github.com/amazon-science/SAGE/blob/3c9244e82244abb1adc5467ee601a03ba0f433a0/patches/appworld/experiments/code/skill_library_agent/skill_library_agent.py)).
+**Retrieval policy is swappable but the deployed evaluation path is scenario keyed.** The default selector loads skills from earlier tasks in the same scenario group, using task-id prefixes. Optional modes rank function text by SentenceTransformer skill embeddings, rank prior task queries by query embeddings, or match prior queries by n-gram overlap before joining back to skill task ids ([skill_library_agent.py](https://github.com/amazon-science/SAGE/blob/3c9244e82244abb1adc5467ee601a03ba0f433a0/patches/appworld/experiments/code/skill_library_agent/skill_library_agent.py)). This is not a general user-memory API; it is an AppWorld scenario and task-selection harness.
 
-**SFT turns successful expert rollouts into model weights.** The data extraction script reads AppWorld `lm_calls.jsonl` logs from successful scenario rollouts, keeps the final assistant message after code extraction, filters examples with missing code, and writes `appworld_expert_dataset.json` for LLaMA-Factory. The patched supervised processor adds `prompt_turn_idx`, so early turns can be masked out of the training target ([extract_expert_dataset.py](https://github.com/amazon-science/SAGE/blob/3c9244e82244abb1adc5467ee601a03ba0f433a0/patches/appworld/extract_expert_dataset.py), [supervised.py](https://github.com/amazon-science/SAGE/blob/3c9244e82244abb1adc5467ee601a03ba0f433a0/patches/LLaMA-Factory/src/llamafactory/data/processor/supervised.py), [qwen2_5_32B_appworld.yaml](https://github.com/amazon-science/SAGE/blob/3c9244e82244abb1adc5467ee601a03ba0f433a0/patches/LLaMA-Factory/examples/train_full/qwen2_5_32B_appworld.yaml)).
+**The training path turns traces into model behavior.** `extract_expert_dataset.py` reads `lm_calls.jsonl` logs from successful or partial expert-data runs, keeps final assistant code messages, filters no-code examples, and writes `appworld_expert_dataset.json` for LLaMA-Factory ([extract_expert_dataset.py](https://github.com/amazon-science/SAGE/blob/3c9244e82244abb1adc5467ee601a03ba0f433a0/patches/appworld/extract_expert_dataset.py)). The patched supervised processor masks target turns before `prompt_turn_idx`, and the SFT config trains Qwen2.5-32B on that AppWorld dataset ([supervised.py](https://github.com/amazon-science/SAGE/blob/3c9244e82244abb1adc5467ee601a03ba0f433a0/patches/LLaMA-Factory/src/llamafactory/data/processor/supervised.py), [qwen2_5_32B_appworld.yaml](https://github.com/amazon-science/SAGE/blob/3c9244e82244abb1adc5467ee601a03ba0f433a0/patches/LLaMA-Factory/examples/train_full/qwen2_5_32B_appworld.yaml)).
 
-**GRPO makes skill use part of the reward surface.** During SAGE training, each scenario produces two sampled subtasks. In subtask iteration 0, generated functions are stored in an in-memory skill library. In subtask iteration 1, those skills are inserted into the next prompt, calls to prior skill names are counted, and the final reward is boosted when the first and second subtasks succeed and at least one skill is used ([ray_trainer.py](https://github.com/amazon-science/SAGE/blob/3c9244e82244abb1adc5467ee601a03ba0f433a0/sage/verl/trainer/ppo/ray_trainer.py), [appworld_generation.py](https://github.com/amazon-science/SAGE/blob/3c9244e82244abb1adc5467ee601a03ba0f433a0/sage/llm_agent/appworld_generation.py), [app_world_env.py](https://github.com/amazon-science/SAGE/blob/3c9244e82244abb1adc5467ee601a03ba0f433a0/sage/llm_agent/app_world/app_world_env.py)).
+**GRPO stages first-subtask skills into a second subtask and rewards use.** The SAGE generation manager samples two subtasks per scenario, stores first-subtask function definitions in per-environment skill libraries, inserts them into second-subtask prompts, counts later calls to prior skill names, and adds reward when successful runs use those skills ([ray_trainer.py](https://github.com/amazon-science/SAGE/blob/3c9244e82244abb1adc5467ee601a03ba0f433a0/sage/verl/trainer/ppo/ray_trainer.py), [appworld_generation.py](https://github.com/amazon-science/SAGE/blob/3c9244e82244abb1adc5467ee601a03ba0f433a0/sage/llm_agent/appworld_generation.py), [app_world_env.py](https://github.com/amazon-science/SAGE/blob/3c9244e82244abb1adc5467ee601a03ba0f433a0/sage/llm_agent/app_world/app_world_env.py)).
 
-**The training stack is a modified veRL/AppWorld pipeline.** The `sage/` package is packaged as `verl`, run through Ray, vLLM, PPO/GRPO trainers, and AppWorld subprocesses. The memory-specific code is concentrated in `sage/llm_agent/` and the AppWorld patches; most of `sage/verl/` is training infrastructure rather than a standalone memory substrate ([sage](https://github.com/amazon-science/SAGE/tree/3c9244e82244abb1adc5467ee601a03ba0f433a0/sage), [patches/appworld](https://github.com/amazon-science/SAGE/tree/3c9244e82244abb1adc5467ee601a03ba0f433a0/patches/appworld), [run_sage_2nodes.sh](https://github.com/amazon-science/SAGE/blob/3c9244e82244abb1adc5467ee601a03ba0f433a0/sage/run_sage_2nodes.sh)).
-
-**Context cost is bounded by selection, not store size.** Retrieval (same-scenario, embedding, query, or n-gram with top-k and thresholds) picks a few skills, executes them, and drops failures before inserting the rest, so the agent sees a small vetted skill block rather than the whole library — though each inserted skill is full function source.
+**Context efficiency is selection plus viability filtering, not summarization.** The agent does not load the whole skill library by default. Scenario-keyed retrieval selects earlier same-scenario functions; embedding and n-gram modes cap selected functions or query groups; retrieved code is executed before insertion. The inserted unit is still full function source, so complexity is bounded by selector limits and prompt truncation rather than by a provenance-aware compression policy.
 
 ## Artifact analysis
 
-- **Storage substrate:** `files` — Filesystem JSONL under `predefined_skill_library/skill_library_functions.jsonl` when present, plus generated `skill_library_functions.jsonl` files in AppWorld output directories
-- **Representational form:** `prose` `symbolic` `parametric` — prose task ids, prompts, and assistant code text; symbolic JSON records, Python functions, configs, reward code, and metadata; and distributed-parametric embeddings and model weights
-- **Lineage:** `authored` `imported` `trace-extracted` — authored templates/configs/reward code, imported predefined skill libraries when present, and trace-extracted skills, datasets, embeddings, and checkpoints from AppWorld rollouts and logs
-- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `ranking` `learning` — retained artifacts serve as experiment evidence, prompt instructions, execution-checked code, selector inputs, viability checks, retrieval/ranking state, and SFT/GRPO learning signal
+- **Storage substrate:** `files` `in-memory` `model-weights` — durable skill libraries, embedding files, query lists, expert datasets, logs, and checkpoints live as local files; GRPO uses per-batch in-memory skill dictionaries; learned behavior persists in SFT and veRL checkpoint directories.
+- **Representational form:** `prose` `symbolic` `parametric` — prompts and task instructions are prose; JSONL records, Python function bodies, configs, and reward code are symbolic; embeddings and trained model weights are distributed-parametric state.
+- **Lineage:** `authored` `imported` `trace-extracted` — prompts, configs, and reward code are authored; modified AppWorld, LLaMA-Factory, veRL, and vLLM code are imported/adapted; skills, query records, expert datasets, embeddings, and checkpoints derive from AppWorld rollouts and LLM-call logs.
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `ranking` `learning` — retained artifacts serve as experiment evidence, prompt instructions, executable code, scenario/query selectors, execution checks, similarity rankers, and SFT/GRPO learning signal.
 
-**Predefined skill-library JSONL.** Storage substrate: filesystem JSONL under `predefined_skill_library/skill_library_functions.jsonl` when present, plus generated `skill_library_functions.jsonl` files in AppWorld output directories. Representational form: symbolic JSON records carrying prose task ids and executable Python function text. Lineage: extracted from successful or accepted agent trajectories by AST parsing generated code; imported predefined libraries have weaker visible provenance in this repo. Behavioral authority: system-definition artifact at read-back time because selected functions are inserted into the prompt and executed in the AppWorld environment before the next task.
+**Skill-library JSONL.** The central inspectable memory is a JSONL list of `task_id`, `name`, and `function` records. At rest it is a knowledge artifact and reusable code corpus; at read-back it becomes system-definition context because selected functions are executed in AppWorld and inserted into the prompt before the next task.
 
-**Skill and query embedding files.** Storage substrate: PyTorch `.pt` files such as `skill_embeddings.pt` and `query_embeddings.pt`, with `query_list.jsonl` for task ids and instructions. Representational form: distributed-parametric embeddings plus symbolic query/task metadata. Lineage: derived from extracted skill function text or AppWorld task instructions through a SentenceTransformer model. Behavioral authority: ranking system-definition artifact because embedding similarity determines which skills enter the agent context under the embedding retrieval modes.
+**Embedding and query files.** `skill_embeddings.pt`, `query_embeddings.pt`, and `query_list.jsonl` are derived access structures over function text or prior task instructions. They do not replace the skill records, but they have ranking authority when the selected retrieval mode uses similarity rather than scenario ids.
 
-**In-rollout skill libraries.** Storage substrate: Python dictionaries inside the SAGE AppWorld generation loop, scoped to a scenario batch rather than durable files. Representational form: symbolic function-name-to-code mappings. Lineage: extracted from the first sampled subtask's generated code and filtered only by execution success/failure handling. Behavioral authority: system-definition artifact for the second subtask because the functions are pushed into the next initial prompt and their later use changes reward.
+**In-rollout GRPO skill dictionaries.** During SAGE training, the skill store can be an in-memory dictionary scoped to a scenario batch. Functions generated in subtask iteration 0 are available to subtask iteration 1, and their later name-level use changes the final reward calculation.
 
-**Expert transcript dataset.** Storage substrate: JSON written to `../LLaMA-Factory/data/appworld_expert_dataset.json`. Representational form: symbolic chat-message records with assistant code responses. Lineage: trace-extracted from `lm_calls.jsonl` logs of successful AppWorld expert-data runs, then filtered for missing executable code and processed by the SFT pipeline. Behavioral authority: learning input, producing distributed-parametric model state rather than a readable runtime memory.
+**Expert transcript dataset and model checkpoints.** `lm_calls.jsonl` traces become an AppWorld SFT dataset, and SFT/GRPO outputs become model weights. These are less inspectable than JSONL skill functions but have stronger behavioral authority because they alter the policy that writes code and decides whether to use supplied skills.
 
-**SFT and GRPO model checkpoints.** Storage substrate: model output directories under LLaMA-Factory and veRL checkpoint directories such as `saves/.../sft` and `verl_checkpoints/$EXPERIMENT_NAME`. Representational form: distributed-parametric weights. Lineage: SFT weights derive from expert transcripts; SAGE RL weights derive from AppWorld rollouts, environment rewards, skill-use bonuses, masks, and GRPO/PPO updates. Behavioral authority: system-definition artifact with the strongest force in the system, because it changes the policy that writes code, defines reusable functions, and decides whether to call pushed skills.
+**Prompt templates, configs, and reward code.** The prompt templates define how skill text appears to the agent, configs select the retrieval method, and reward code decides when skill use contributes to training. These authored system-definition artifacts control how trace-derived memory gains future force.
 
-**Prompt templates and reward code.** Storage substrate: repo files in `patches/appworld/experiments/prompts/`, AppWorld configs, and `sage/llm_agent/appworld_generation.py`. Representational form: mixed prose templates and symbolic Python reward logic. Lineage: authored framework code. Behavioral authority: system-definition artifacts: they define what the agent sees, when skills are inserted, how observations are truncated, how skill usage is counted, and how success plus skill use becomes training reward.
-
-The promotion path is trajectory -> extracted function -> skill library -> prompt insertion -> successful skill use -> reward update, with a second path from successful expert traces -> SFT dataset -> model weights. The system can cross representational forms: executable prose/symbolic skill text can either remain inspectable as JSONL or be absorbed into distributed-parametric weights. The weakest lineage point is reviewability: generated skills store task id, name, and function text, but not a durable pointer to the source log span, verifier result, model version, prompt version, or human acceptance status.
+Promotion path: AppWorld execution trace -> parsed function definition -> JSONL or in-memory skill record -> prompt insertion after execution check -> later skill call -> reward or evaluation signal -> SFT/GRPO model state. The path crosses from readable symbolic memory into distributed-parametric policy learning, while source-log provenance remains weak: function records do not preserve a source span, model version, verifier output, or prompt version beside each retained skill.
 
 ## Comparison with Our System
 
-| Dimension | SAGE | Commonplace |
+| Dimension | Amazon Science SAGE | Commonplace |
 |---|---|---|
-| Primary purpose | Improve AppWorld agents through skill extraction, skill-conditioned rollouts, SFT, and GRPO | Maintain a typed methodology KB for future agents and maintainers |
-| Canonical retained unit | Python helper functions, embeddings, transcript datasets, model checkpoints | Git-tracked markdown artifacts, schemas, links, indexes, reviews, and reports |
-| Learning loop | Agent trajectories become skills, datasets, rewards, and weights | Source-grounded writing, review, validation, and workshop-to-library promotion |
-| Read-back | Selected or staged skills are pushed into prompts before action | Mostly pull through search/indexes/links, plus explicit instructions and generated context where configured |
-| Governance | Execution check, task reward, skill-use reward, SFT/RL metrics | Collection contracts, schemas, deterministic validation, semantic review, git history |
+| Primary purpose | Improve AppWorld benchmark agents with extracted skills, SFT, and GRPO | Maintain a typed methodology KB for future agents and maintainers |
+| Canonical retained unit | Python helper functions, embedding/query files, transcript datasets, model checkpoints | Git-tracked Markdown artifacts, schemas, links, indexes, reviews, and reports |
+| Learning source | AppWorld trajectories, LLM-call logs, task rewards, and skill-use counts | Source-grounded writing, review, validation, and workshop-to-library promotion |
+| Read-back | Selected skills are inserted into prompts before action | Mostly deliberate pull through search, indexes, links, skills, and review gates |
+| Governance | Execution check, task success, skill-use reward, SFT/RL metrics | Collection contracts, schemas, deterministic validation, semantic review, git history |
 
-SAGE is a useful contrast case because it treats "memory" as reusable executable procedure rather than explanatory knowledge. A generated helper function has high operational leverage: it can immediately log in, query APIs, normalize data, or complete a repeated AppWorld pattern. Commonplace's artifacts are slower and more inspectable: a note can explain when a procedure is valid, cite sources, and survive outside the task distribution that produced it.
+SAGE is a useful contrast because its retained artifact is executable procedure, not explanatory knowledge. A helper function can immediately call AppWorld APIs, normalize data, or encode a repeated workflow. Commonplace artifacts usually carry weaker direct authority but stronger provenance, reviewability, and replacement history.
 
-The biggest divergence is authority. In SAGE, retained skill code crosses into the environment and model weights quickly. Once a skill is pushed into context or learned into the policy, it can change behavior without a prose review layer. Commonplace intentionally keeps most retained knowledge as readable evidence or typed guidance until validation or instruction machinery gives it stronger force.
-
-**Read-back:** `push` — With engineered memory selection. From the acting AppWorld agent's perspective, retained skill functions arrive in the initial prompt before it asks for them; the deployed evaluation path is same-scenario identifier selection, while optional modes use embedding or lexical inference and the GRPO loop stages first-subtask skills into the second subtask.
+The sharp tradeoff is speed of authority. SAGE can turn a successful generated function into prompt context or model behavior quickly. Commonplace delays that transition until the artifact is typed, cited, connected, validated, and reviewed.
 
 ### Borrowable Ideas
 
-**Treat code snippets as promotable memory, but require provenance.** A Commonplace analogue would let repeated agent-written helper functions become retained artifacts only when they carry source task, validation result, owning collection, and intended authority. Ready as a workshop experiment; not ready for automatic promotion.
+**Treat repeated helper code as a promotable artifact.** Ready for bounded workshops. Commonplace could let repeated local maintenance functions graduate into scripts, but only with source task, validation result, scope, and owner metadata.
 
-**Use an execution check before pushing code into context.** SAGE executes retrieved functions and drops the skill block if it fails. Commonplace could add a lightweight "import/parse/run smoke test" gate for generated scripts before they are included in a task packet. Ready where the artifact is executable.
+**Run executable retained context before injecting it.** Ready wherever the artifact is code. SAGE's execution check is shallow, but a parse/import/smoke-test gate would still catch broken generated utilities before they enter a task packet.
 
-**Reward reuse separately from success.** SAGE's reward code distinguishes task success from use of an earlier skill. A Commonplace analogue would track when prior notes, scripts, or review decisions were actually used in a successful maintenance task. Needs a careful anti-gaming design before becoming a metric.
+**Keep retrieval policy swappable behind one insertion point.** Ready for evaluation harnesses. Commonplace could compare path/tag, lexical, and embedding selectors for the same generated context target without changing the downstream workflow.
 
-**Keep activation policy swappable.** Same-scenario, embedding, query-embedding, and n-gram retrieval are simple alternatives behind one insertion point. Commonplace generated context could expose multiple selectors for the same packet target and compare them without changing the consuming workflow. Ready for evaluation harnesses, not general authoring.
+**Separate inspectable skills from learned policy state.** Ready as a design constraint. If Commonplace ever trains or tunes a selector, the learned layer should remain an activation aid beside readable source artifacts, not the only carrier of the knowledge.
 
-**Separate inspectable skills from absorbed policy learning.** SAGE keeps skill JSONL and also trains model weights. Commonplace should preserve any learned selector or policy beside readable source artifacts, so the learned layer is an activation aid rather than the only copy of the knowledge. Ready as a design constraint.
+**Reward reuse separately from success.** Needs anti-gaming design. SAGE's skill-use bonus is a useful measurement idea, but Commonplace would need evidence that reuse was relevant, not merely present.
 
-## Write-side placement
+## Write side
 
-**Write agency:** `automatic` — AppWorld trajectories, AST extraction, deduplication, embedding generation, expert-data extraction, SFT, and GRPO write or update skill libraries, datasets, retrieval artifacts, and checkpoints without a manual authoring channel in the reviewed loop
+**Write agency:** `automatic` `manual` — AppWorld runs automatically extract and append skills, embeddings, query records, expert datasets, and checkpoints; operators manually choose configs, predefined libraries, data-generation scripts, and training/evaluation runs.
 
-**Curation operations:** `dedup` `promote` — extracted functions are deduplicated by function name, then successful trajectories can be promoted into reusable skill records, SFT datasets, embedding-backed activation state, and model checkpoints
+**Curation operations:** `dedup` `promote` — function-name replacement removes duplicate retained skills during extraction/merge, and successful traces can be promoted into reusable skill records, read-back indexes, SFT data, and model checkpoints.
 
 ### Trace-derived learning
 
-**Trace source:** `session-logs` `tool-traces` `trajectories` — AppWorld rollouts include generated code, environment outputs, completion/reward signals, `lm_calls.jsonl` conversation logs, and paired-subtask skill-use traces.
+**Trace source:** `session-logs` `tool-traces` `trajectories` — raw signal includes AppWorld code-generation turns, environment execution outputs, task success/evaluation, `lm_calls.jsonl` message logs, and paired-subtask skill-use traces.
 
-**Learning scope:** `per-task` `cross-task` — traces are task/scenario-scoped during extraction and rollout, then can become cross-task skill libraries, datasets, and policy weights.
+**Learning scope:** `per-task` `cross-task` — traces are captured around individual AppWorld tasks or subtasks, then retained skills, datasets, and weights can influence later tasks within the benchmark distribution.
 
-**Learning timing:** `offline` `staged` — expert-data/SFT and persisted skill-library paths run offline, while the GRPO loop stages first-subtask skills into the second subtask before reward updates.
+**Learning timing:** `offline` `staged` — expert-data extraction and SFT are offline; the GRPO loop stages first-subtask skills into the second subtask within a training rollout before policy updates.
 
-**Distilled form:** `prose` `symbolic` `parametric` — distilled outputs include assistant/code text, executable function records and activation metadata, embeddings, and trained model checkpoints.
+**Distilled form:** `prose` `symbolic` `parametric` — retained outputs include prompt-visible code/prose, JSONL function records, embedding vectors, transcript datasets, and trained model checkpoints.
 
-**Trace source.** SAGE qualifies as trace-derived learning. The raw signals are AppWorld agent trajectories: generated code snippets, environment execution output, task completion status, evaluator rewards, `lm_calls.jsonl` conversation logs, and rollout-level skill-use counts. In SAGE training, paired subtasks within a scenario also provide a local trace source: functions generated in the first subtask can be tested through use in the second.
+Extraction is mostly syntactic plus outcome-gated. Function extraction parses generated Python and keeps top-level definitions; expert-data extraction reads final logged model calls from successful or partial scenario runs; GRPO uses task reward plus a skill-use bonus as the oracle for policy updates. The raw trace remains evidence, while extracted functions and learned weights gain future behavior-shaping authority.
 
-**Extraction.** Extraction is mostly syntactic and reward-gated. The skill code parses generated Python with `ast`, keeps function definitions and imports, deduplicates by function name, and writes function records when runs are accepted. Expert-data extraction reads final LLM-call records from successful rollouts and converts them into SFT conversations. GRPO then uses task reward plus a skill-use bonus as the oracle for updating model weights.
+Survey placement: SAGE belongs in both trace-to-tool and trace-to-policy territory on the [trace-derived learning survey](../trace-derived-learning-techniques-in-related-systems.md). It strengthens the survey's raw/distilled split: logs and rollouts are not the memory that later acts; extracted functions, retrieval state, and policy weights are.
 
-**Scope and timing.** Scope is AppWorld scenario/task-level, not project-level user memory. Offline expert-data generation produces durable transcript datasets and SFT weights. Evaluation-time skill libraries can be loaded from disk and appended after tasks. RL-time skill libraries are staged within a rollout batch: first subtask generates functions, second subtask receives them, and the final reward updates the policy.
+## Read-back
 
-**Survey placement.** On the [trace-derived learning survey](../trace-derived-learning-techniques-in-related-systems.md), SAGE sits in both trace-to-tool and trace-to-policy territory. It strengthens the survey's raw/distilled distinction: functions are readable distilled artifacts, embeddings are activation artifacts, and SFT/GRPO checkpoints are distributed-parametric system-definition artifacts derived from the same behavioral traces.
+**Read-back:** `push` — From the acting AppWorld agent's perspective, selected retained functions arrive in the initial prompt before code generation; the agent does not choose a separate memory-search action.
 
-## Read-back placement
+**Read-back signal:** `identifier` `inferred / lexical` `inferred / embedding` — The normal path keys by scenario/task identifiers, while optional n-gram and embedding modes infer relevance from task text, query text, or function text.
 
-**Direction.** SAGE uses push from the acting agent's perspective. Retrieved or staged retained functions are inserted into the initial prompt before code generation; the agent does not choose a separate memory-search action.
+**Faithfulness tested:** `no` — SAGE checks whether retrieved code executes, counts later name-level skill use, and makes use reward-relevant, but I did not find a code-level with/without memory ablation or perturbation audit proving that a selected skill caused correct behavior.
 
-**Read-back signal:** `identifier` `inferred / lexical` `inferred / embedding` — default and GRPO paths key on scenario/task or rollout slots, while optional n-gram and embedding modes infer relevance from task text, query text, or function text.
+**Direction edge cases.** The evaluation agent performs retrieval inside `initialize()`, before the model begins solving the task. The GRPO path similarly assembles initial prompts with first-subtask skills before the second subtask. Those are push reads for the receiving agent even though the harness performs the lookup.
 
-**Faithfulness tested:** `yes` — SAGE executes retrieved skill blocks, counts later function-name use, and makes skill use reward-relevant, while still not proving causal contribution to task success.
+**Targeting and signal.** Default evaluation uses an identifier signal: current task id prefix selects skills from earlier same-scenario tasks. GRPO uses the rollout schedule and per-environment skill dictionary as an instance-scoped identifier. Optional skill-embedding retrieval compares the current instruction to function embeddings; optional query-embedding retrieval compares current instruction to prior query embeddings and then joins to skill task ids; optional n-gram retrieval uses lexical overlap over prior query text.
 
-**Targeting and signal.** The push is instance-targeted. In the deployed evaluation config, the selector matches the current task's scenario group to retained skill `task_id` values, so the signal is `identifier`. Optional skill-embedding retrieval uses `inferred / embedding` over the current instruction and retained function text; optional query-embedding retrieval uses `inferred / embedding` to select prior query ids and then joins skills by `task_id`; optional n-gram retrieval is `inferred / lexical` followed by the same task-id join. In the GRPO loop, first-subtask skills are carried to the paired second subtask through the rollout's subtask schedule and per-environment skill-library slot, an instance-scoped identifier/schedule signal. The code gives thresholds and top-k limits for some modes, but precision and recall are not verified from code.
+**Selection, scope, and complexity.** Default retrieval loops through retained functions from two prior same-scenario task ids and deduplicates by function name. Skill-embedding retrieval stops after roughly six ranked entries; query-embedding and n-gram retrieval select up to two prior query groups over threshold. Retrieved code is full Python source, so prompt complexity can still be high even when count is bounded.
 
-**Selection, scope, and complexity.** Evaluation-time default retrieval loads functions from earlier tasks in the same scenario group. Embedding and n-gram modes cap retrieved query groups or functions. RL-time read-back is narrower: only functions generated in the first subtask's in-memory library are available to the second subtask. Complexity is bounded by prompt length and observation truncation, but actual context dilution is not verified from code, and the system does not deeply summarize or cite source traces behind each function.
+**Authority at consumption.** Pushed functions are advisory prompt context and executable environment definitions. The prompt tells the agent to prioritize suitable high-level functions but still judge applicability. In training, later use of a pushed skill affects reward, giving the read-back path learning authority in addition to prompt authority.
 
-**Authority at consumption.** Pushed skills are advisory prompt context and executable environment definitions. They are stronger than examples because the environment receives function definitions before later code can call them, but weaker than hard constraints because the model may ignore them. In RL training, use of a skill becomes reward-relevant, increasing authority through the learning loop.
-
-**Faithfulness.** SAGE checks syntactic/execution viability by running the retrieved skill block and counts whether function names appear in later generated code without being redefined. It does not prove that a function's body caused task success, and name-based usage can overstate behavioral contribution.
-
-**Other consumers.** Human researchers can inspect JSONL skills, prompt templates, logs, datasets, and checkpoints. The same artifacts serve as experiment evidence, reusable runtime code, activation state, and model-training input.
+**Other consumers.** Human researchers can inspect skill JSONL, prompt files, logs, expert datasets, embedding files, and checkpoints. Those surfaces are useful evidence, but the agent-facing behavior comes from prompt insertion and learned policy state.
 
 ## Curiosity Pass
 
-**The strongest memory is not the skill file, but the trained policy.** The JSONL library is readable, but SFT and GRPO weights eventually carry much of the behavioral change. That makes SAGE less inspectable than a pure skill-library system even though it begins with explicit functions.
+**The most durable memory may be the model, not the skill file.** JSONL skills are readable, but SFT and GRPO checkpoints absorb behavior into weights where provenance and inspection are much weaker.
 
-**Default retrieval is simpler than the paper-level framing may suggest.** The evaluation config uses same-scenario retrieval, while embedding and n-gram matchers exist as options in code. The most reproducible path is therefore structured task grouping, not a general semantic memory service.
+**The default selector is simpler than the retrieval menu.** Embedding and n-gram selectors are implemented, but the normal evaluation config uses same-scenario task ids. The most reproducible read-back path is structured benchmark grouping, not general semantic memory.
 
-**The execution check is valuable but shallow.** Running the concatenated functions catches broken definitions, but it does not verify that a function is safe, relevant, non-stale, or faithful to the trajectory that produced it.
+**Execution checks are necessary but narrow.** Executing concatenated functions catches broken definitions, but it does not prove relevance, safety, freshness, or causal contribution.
 
-**Skill-use reward has noisy credit assignment.** Counting a function name in generated code is an inexpensive signal, but it does not distinguish a decisive helper from a harmless call, dead code, or a copied name.
+**Skill-use reward is name-based.** Counting a function name in generated code is cheap, but it can overstate contribution if the call is incidental, redundant, or only correlated with task success.
 
-**There is little artifact governance around generated skills.** Function records have task ids and names, but no typed status, owner, review result, source span, or invalidation rule. That is acceptable for a benchmark loop and risky as a durable agent-memory practice.
+**Skill records have little governance metadata.** The stored record carries task id, name, and function text, but not source log span, acceptance rationale, verifier output, model version, prompt version, expiry, or reviewer status.
 
 ## What to Watch
 
-- Whether SAGE adds provenance fields to skill records; that would make extracted functions auditable instead of merely reusable.
-- Whether skill-use credit moves from name matching to execution-level contribution tests; that would make the reward less gameable and more useful as a Commonplace evaluation analogue.
-- Whether embedding retrieval becomes the default evaluation path; that would turn SAGE from scenario-keyed reuse into a more general relevance-gated memory system.
-- Whether extracted skills get pruning, review, or versioning; that would show whether the library can remain useful as it grows beyond a benchmark run.
-- Whether future code separates skill activation metrics from policy-learning metrics; that would clarify how much improvement comes from explicit read-back versus absorbed model weights.
+- Whether skill records gain source spans, verifier results, model/prompt version, and task reward metadata; that would make generated code more auditable as retained behavior.
+- Whether evaluation distinguishes explicit skill-library read-back gains from absorbed policy-learning gains; that would clarify which memory surface is doing the work.
+- Whether relevance selection moves from same-scenario keys to embedding or lexical modes in the default configs; that would change the system from benchmark-group reuse to a more general context selector.
+- Whether skill-use credit moves beyond function-name matching to execution-level contribution tests; that would make the reward less gameable.
+- Whether the library adds pruning, invalidation, or review for stale generated functions as the corpus grows.
 
 Relevant Notes:
 
-- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - compares: SAGE turns AppWorld traces into skill functions, SFT data, reward signal, and policy weights.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - exemplifies: SAGE spans JSONL skills, embeddings, datasets, prompts, reward code, and model checkpoints.
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - contrasts: SAGE's skills matter because the runner actively inserts selected functions into prompts.
-- [Use trace-derived extraction](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - exemplifies: SAGE extracts reusable helper functions from prior agent behavior.
-- [Frontloading spares execution context](../../notes/frontloading-spares-execution-context.md) - exemplifies: SAGE preloads task-relevant functions before the agent starts acting.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - distinguishes: skill functions, reward logic, and checkpoints directly shape later behavior.
+- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - places: SAGE turns AppWorld trajectories into skill functions, SFT data, reward signal, and policy weights.
+- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: SAGE's skill library matters because the runner inserts selected functions into prompts.
+- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: SAGE spans JSONL skills, embeddings, datasets, prompts, reward code, and checkpoints.
+- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: logs, datasets, and retained skill records are evidence until consumed by selectors, prompts, or training.
+- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: skill functions, retrieval indexes, reward code, prompts, and checkpoints shape later behavior.
+- [Use trace-derived extraction](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - exemplifies: SAGE extracts reusable helper functions and learned policy state from agent trajectories.

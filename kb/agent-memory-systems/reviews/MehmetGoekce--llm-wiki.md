@@ -1,123 +1,118 @@
 ---
-description: "Claude Code slash-command wiki scaffold with Logseq/Obsidian schemas, L1/L2 routing doctrine, setup templates, and prompt-governed lint/query workflows"
+description: "LLM Wiki review: Claude Code command package for a Logseq/Obsidian wiki with L1 auto-loaded memory, L2 pull queries, schema rules, and lint gates"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 status: current
-last-checked: "2026-06-02"
+last-checked: "2026-06-04"
 ---
 
 # LLM Wiki (MehmetGoekce)
 
-LLM Wiki, by Mehmet Goekce, is a Claude Code-oriented implementation scaffold for Karpathy's LLM Wiki idea. At the reviewed commit it is not a Python service or vector memory system; its operative implementation is a `/wiki` slash-command prompt, an interactive `setup.sh` installer, Logseq/Obsidian schema templates, config, examples, docs, and OpenSpec requirements that tell Claude how to ingest sources, query wiki pages, lint structure, and maintain a two-layer L1/L2 memory boundary.
+LLM Wiki, from `MehmetGoekce/llm-wiki`, is a Claude Code command package and setup script for maintaining a personal or team wiki in Logseq or Obsidian. At the reviewed commit it does not ship a separate application server, database, retrieval service, or MCP tool; its behavior is encoded in `wiki.md`, setup templates, documentation, and OpenSpec requirements that instruct Claude Code to ingest sources, query wiki pages, lint structure, and route knowledge between always-loaded Claude memory and an on-demand wiki.
 
 **Repository:** https://github.com/MehmetGoekce/llm-wiki
 
 **Reviewed commit:** [96ce7ad1ccec75c9100a71c7472c46ac41eb2825](https://github.com/MehmetGoekce/llm-wiki/commit/96ce7ad1ccec75c9100a71c7472c46ac41eb2825)
 
-**Last checked:** 2026-06-02
+**Last checked:** 2026-06-04
 
 ## Core Ideas
 
-**The system is a prompt-installed wiki maintainer, not a standalone runtime.** `setup.sh` asks for Logseq or Obsidian, wiki path, namespaces, optional Claude memory path, and optional project path; then it creates schema, dashboard, hub pages, `llm-wiki.yml`, and copies `wiki.md` into `.claude/commands/wiki.md` ([setup.sh](https://github.com/MehmetGoekce/llm-wiki/blob/96ce7ad1ccec75c9100a71c7472c46ac41eb2825/setup.sh), [wiki.md](https://github.com/MehmetGoekce/llm-wiki/blob/96ce7ad1ccec75c9100a71c7472c46ac41eb2825/wiki.md)). There is no separate query engine, indexer, or deterministic linter implementation beyond this shell installer and Claude command specification.
+**The system is a Claude Code command, not a standalone memory runtime.** `setup.sh` creates wiki scaffolding, writes `llm-wiki.yml`, and optionally copies `wiki.md` into a project's `.claude/commands/wiki.md`; the command file then describes `/wiki ingest`, `/wiki query`, `/wiki lint`, `/wiki status`, and `/wiki import` workflows for Claude Code to execute with its normal file tools ([setup.sh](https://github.com/MehmetGoekce/llm-wiki/blob/96ce7ad1ccec75c9100a71c7472c46ac41eb2825/setup.sh), [wiki.md](https://github.com/MehmetGoekce/llm-wiki/blob/96ce7ad1ccec75c9100a71c7472c46ac41eb2825/wiki.md)). The repository's executable implementation is mostly setup; the memory operations themselves are prompt-governed agent work.
 
-**L1/L2 is the central context-efficiency doctrine.** L1 is Claude Code memory: small, auto-loaded rules, gotchas, identity, and credentials. L2 is the Logseq/Obsidian wiki: larger project, workflow, research, and reference knowledge loaded on demand by `/wiki query`. The design aims to keep always-loaded context under roughly 10-20 concise memory files while limiting query-time wiki reads to the top 3-5 relevant pages, with at most three pages loaded simultaneously ([docs/l1-l2-architecture.md](https://github.com/MehmetGoekce/llm-wiki/blob/96ce7ad1ccec75c9100a71c7472c46ac41eb2825/docs/l1-l2-architecture.md), [openspec/specs/query.md](https://github.com/MehmetGoekce/llm-wiki/blob/96ce7ad1ccec75c9100a71c7472c46ac41eb2825/openspec/specs/query.md)).
+**L1/L2 is the main context-efficiency mechanism.** The docs and command split retained knowledge into L1 Claude Code memory for always-needed rules, identity, and credentials, and L2 wiki pages for project history, workflows, research, and deep knowledge queried on demand ([docs/l1-l2-architecture.md](https://github.com/MehmetGoekce/llm-wiki/blob/96ce7ad1ccec75c9100a71c7472c46ac41eb2825/docs/l1-l2-architecture.md), [openspec/specs/l1-l2-routing.md](https://github.com/MehmetGoekce/llm-wiki/blob/96ce7ad1ccec75c9100a71c7472c46ac41eb2825/openspec/specs/l1-l2-routing.md)). L1 is deliberately small and pushed by Claude Code's memory mechanism; L2 is bounded by command instructions such as reading only the top 3-5 pages and at most 3 pages simultaneously.
 
-**The wiki schema is the behavior contract.** Setup installs different templates for Logseq and Obsidian, but both encode the same page types, required properties, namespace rules, cross-reference rules, L1/L2 boundary, ingest workflow, and lint rules. Logseq uses `property:: value` outliner blocks and flat `Wiki___...md` filenames; Obsidian uses YAML frontmatter and folder hierarchy under `Wiki/` ([templates/logseq/Schema.md](https://github.com/MehmetGoekce/llm-wiki/blob/96ce7ad1ccec75c9100a71c7472c46ac41eb2825/templates/logseq/Schema.md), [templates/obsidian/Schema.md](https://github.com/MehmetGoekce/llm-wiki/blob/96ce7ad1ccec75c9100a71c7472c46ac41eb2825/templates/obsidian/Schema.md), [docs/schema-reference.md](https://github.com/MehmetGoekce/llm-wiki/blob/96ce7ad1ccec75c9100a71c7472c46ac41eb2825/docs/schema-reference.md)).
+**The schema is the operational contract.** The generated schema pages define page types, required properties, cross-reference rules, format rules, lint rules, and the L1/L2 boundary for either Logseq or Obsidian; the command tells Claude to read the schema before operations and enforce format-specific page creation ([templates/logseq/Schema.md](https://github.com/MehmetGoekce/llm-wiki/blob/96ce7ad1ccec75c9100a71c7472c46ac41eb2825/templates/logseq/Schema.md), [templates/obsidian/Schema.md](https://github.com/MehmetGoekce/llm-wiki/blob/96ce7ad1ccec75c9100a71c7472c46ac41eb2825/templates/obsidian/Schema.md), [openspec/specs/schema.md](https://github.com/MehmetGoekce/llm-wiki/blob/96ce7ad1ccec75c9100a71c7472c46ac41eb2825/openspec/specs/schema.md)). The schema gives prose instructions enough symbolic structure for linting and consistent page generation.
 
-**Ingest is append-only, cross-linking, and quality-gated by instruction.** `/wiki ingest` tells Claude to analyze a URL/file/text source, extract entities and decisions, route quick rules to L1 recommendations, scan the wiki, create or append to 5-15 pages, update hubs, add cross-references, check credentials, and report changes ([wiki.md](https://github.com/MehmetGoekce/llm-wiki/blob/96ce7ad1ccec75c9100a71c7472c46ac41eb2825/wiki.md), [openspec/specs/ingest.md](https://github.com/MehmetGoekce/llm-wiki/blob/96ce7ad1ccec75c9100a71c7472c46ac41eb2825/openspec/specs/ingest.md)). The append-only rule is strong in the prompt and specs, but enforcement depends on the agent following the command text.
+**Writes are append-only wiki maintenance with optional L1 recommendations.** `/wiki ingest` instructs Claude to analyze a URL, file, or text source, extract entities/facts/relationships/dates/decisions, scan existing pages, create or append pages, add cross-references, update hubs, and run a quality gate; the L1/L2 routing spec says L1 candidates should be recommended rather than silently written into the wiki ([wiki.md](https://github.com/MehmetGoekce/llm-wiki/blob/96ce7ad1ccec75c9100a71c7472c46ac41eb2825/wiki.md), [openspec/specs/ingest.md](https://github.com/MehmetGoekce/llm-wiki/blob/96ce7ad1ccec75c9100a71c7472c46ac41eb2825/openspec/specs/ingest.md), [openspec/specs/l1-l2-routing.md](https://github.com/MehmetGoekce/llm-wiki/blob/96ce7ad1ccec75c9100a71c7472c46ac41eb2825/openspec/specs/l1-l2-routing.md)).
 
-**Query is deliberate pull over files, not retrieval middleware.** `/wiki query` parses the question, glob/grep searches namespace pages, reads the top matching pages in small batches, optionally reads L1 memory when operational gotchas may apply, and synthesizes an attributed answer. There is no implemented event hook that pushes selected wiki pages into a receiving agent context before arbitrary actions ([wiki.md](https://github.com/MehmetGoekce/llm-wiki/blob/96ce7ad1ccec75c9100a71c7472c46ac41eb2825/wiki.md), [openspec/specs/query.md](https://github.com/MehmetGoekce/llm-wiki/blob/96ce7ad1ccec75c9100a71c7472c46ac41eb2825/openspec/specs/query.md)).
+**Read-back is simple file search plus synthesis.** `/wiki query` tells Claude to parse a question, glob by namespace, grep keywords, read the top 3-5 pages, optionally consult L1 memory, then synthesize an answer with source attribution and staleness/confidence warnings ([wiki.md](https://github.com/MehmetGoekce/llm-wiki/blob/96ce7ad1ccec75c9100a71c7472c46ac41eb2825/wiki.md), [openspec/specs/query.md](https://github.com/MehmetGoekce/llm-wiki/blob/96ce7ad1ccec75c9100a71c7472c46ac41eb2825/openspec/specs/query.md)). There is no vector store or learned ranker in the inspected repository.
 
-**Governance is mostly prose-plus-template, with setup-time shell automation.** The README and OpenSpec files describe nine lint rules, including orphan detection, staleness, missing properties, broken references, hub completeness, credential leaks, empty pages, cross-reference minimums, and L1/L2 duplicates. In the reviewed source these are expressed in `wiki.md`, schema templates, and specs; there is no checked-in deterministic `llm-wiki lint` executable that independently enforces them ([openspec/specs/lint.md](https://github.com/MehmetGoekce/llm-wiki/blob/96ce7ad1ccec75c9100a71c7472c46ac41eb2825/openspec/specs/lint.md), [README.md](https://github.com/MehmetGoekce/llm-wiki/blob/96ce7ad1ccec75c9100a71c7472c46ac41eb2825/README.md)).
+**Quality checks are mostly specified agent behavior.** The lint spec names nine checks: orphans, stale high-confidence pages, missing properties, broken references, hub completeness, credential leaks, empty pages, cross-reference minimum, and L1/L2 duplicates. `wiki.md` tells Claude how to perform them and which fixes are allowed, but the repo does not contain a separate deterministic lint executable for those checks ([wiki.md](https://github.com/MehmetGoekce/llm-wiki/blob/96ce7ad1ccec75c9100a71c7472c46ac41eb2825/wiki.md), [openspec/specs/lint.md](https://github.com/MehmetGoekce/llm-wiki/blob/96ce7ad1ccec75c9100a71c7472c46ac41eb2825/openspec/specs/lint.md)).
 
 ## Artifact analysis
 
-- **Storage substrate:** `files` — `wiki.md` in the source repository and the copied `.claude/commands/wiki.md` in a target project
-- **Representational form:** `prose` `symbolic` — prescriptive prose in prompts, specs, schemas, and examples, plus symbolic YAML, frontmatter/properties, shell, links, namespaces, and command/config structure
-- **Lineage:** `authored` `imported` — authored prompts, specs, templates, and setup code are installed into a target wiki; L2 wiki pages may be manually imported, setup-created, or generated/appended from source material by `/wiki` workflows
-- **Behavioral authority:** `knowledge` `instruction` `routing` `validation` `ranking` — L2 pages advise query answers; command prompts, schemas, config, namespaces, links, and lint expectations instruct Claude, route artifacts, validate structure, and rank/query candidate pages
+- **Storage substrate:** `files` `repo` — L1 memory persists as Claude Code memory files at `memory_path`; L2 persists as Logseq or Obsidian Markdown files under the configured wiki path; setup can initialize git and commit the initial wiki state, but there is no database, vector store, or service object in the inspected repository.
+- **Representational form:** `prose` `symbolic` — Wiki pages, command instructions, docs, examples, and source-derived notes are prose; page properties, YAML/frontmatter, Logseq property blocks, `llm-wiki.yml`, namespace conventions, lint rules, and OpenSpec requirements are symbolic constraints. I found no parametric representation such as embeddings or model weights.
+- **Lineage:** `authored` `imported` — The command, specs, schema templates, and setup script are authored; wiki pages are created from imported URLs, files, inline text, existing notes, and manual edits. The repo does not show a durable agent-trace mining loop, so I am not marking it `trace-extracted`.
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `ranking` `learning` — L2 pages advise as knowledge; L1 memory and the `/wiki` command instruct Claude Code; credential boundaries, append-only rules, schema requirements, and lint checks enforce or validate; namespaces, page types, hubs, and the L1/L2 rule route writes and reads; grep/namespace matching plus top-page selection rank read-back; ingest and optional query write-back accumulate imported knowledge.
 
-**`/wiki` command prompt.** Storage substrate: `wiki.md` in the source repository and the copied `.claude/commands/wiki.md` in a target project. Representational form: prescriptive prose with command syntax, workflow phases, constraints, and tool-format rules. Lineage: authored in the repo, copied by `setup.sh`, and patched only for config path substitution. Behavioral authority: system-definition artifact with instruction and routing force for Claude Code when the slash command is invoked.
+**Claude command file.** `wiki.md` is a system-definition artifact: it defines the role, context, workflows, constraints, and command modes that future Claude Code sessions follow. Its operative content is prose instruction plus symbolic command names, phases, limits, and file-format rules.
 
-**Installed wiki config and templates.** Storage substrate: `llm-wiki.yml` in the wiki root and generated Schema/Dashboard/Hub files in the Logseq graph or Obsidian vault. Representational form: symbolic YAML plus prose/symbolic Markdown schema. Lineage: generated from `config.example.yml`, selected setup answers, and `templates/logseq/` or `templates/obsidian/`; invalidated by namespace, tool-mode, or path changes. Behavioral authority: system-definition artifacts because they route file format, namespace discovery, required properties, lint expectations, and L1/L2 boundaries.
+**L1 memory files.** L1 files are outside the git-tracked wiki, configured through `memory_path`, and are meant to be auto-loaded by Claude Code every session. Their content is usually concise prose with high prompt authority: rules, gotchas, identity, and credentials that should affect action before any query.
 
-**L2 wiki pages.** Storage substrate: Logseq `pages/Wiki___*.md` files or Obsidian `Wiki/**/*.md` files, usually git-tracked. Representational form: mixed prose plus symbolic properties/frontmatter and `[[Wiki/...]]` links. Lineage: imported manually, created by setup, or generated/appended by `/wiki ingest`, `/wiki import`, `/wiki lint --fix`, and query write-back when the user confirms. Behavioral authority: primarily knowledge artifacts when read during query, ingest, status, and lint; their frontmatter and links also have routing/ranking/evaluation force for command workflows.
+**L2 wiki pages.** L2 pages are Logseq or Obsidian Markdown with required properties and cross-references. They are knowledge artifacts during query, and become stronger system-definition artifacts when their properties, links, hub membership, or confidence/staleness fields drive search, lint, routing, or update decisions.
 
-**L1 Claude memory files.** Storage substrate: an external Claude Code memory directory referenced by `memory_path` in config; examples live only as sample files in `examples/l1-memory-examples.md`. Representational form: concise prose rules, gotchas, identity notes, and credential references. Lineage: authored or manually promoted from discovered operational lessons; the repo recommends L1 storage but does not itself create, update, or inject these files except by recording the path. Behavioral authority: system-definition or high-authority advisory context when Claude Code auto-loads them, but that activation is provided by Claude Code's host memory mechanism rather than implemented by this repo.
+**Schema and lint rules.** The schema pages and OpenSpec files are durable constraints over the wiki surface. They do not execute independently, but they shape Claude Code's future writes and validations by defining valid types, required fields, namespace depth, cross-reference minimums, credential patterns, and auto-fix boundaries.
 
-**OpenSpec files.** Storage substrate: `openspec/project.md` and `openspec/specs/*.md`. Representational form: prescriptive prose with `SHALL`/`MUST` requirements, BDD scenarios, and acceptance criteria. Lineage: authored design and implementation contract for future development. Behavioral authority: system-definition artifacts for contributors and agents extending the repo, but not runtime enforcement for installed users unless an agent reads and follows them.
-
-**Setup script.** Storage substrate: `setup.sh`. Representational form: symbolic shell plus embedded Python and template substitution. Lineage: authored installer. Behavioral authority: one-time scaffolding and packaging authority: it creates directories, config, schema/dashboard/hub pages, optionally initializes git, optionally installs the slash command, and optionally commits the initial wiki state.
-
-The main promotion path is source material -> agent extraction -> L2 wiki page append/update -> later query synthesis. A separate recommended path routes dangerous or embarrassing operational facts to L1 memory, but the repository leaves actual L1 write/promotion to the user or host Claude memory workflow. This means the architecture is clear, but the strongest behavioral authority sits outside the repo's own implementation.
+**Promotion path.** LLM Wiki has an explicit L2-to-L1 conceptual promotion path: repeated or high-consequence gotchas should become L1 memory; stale or historical L1 content can be demoted to L2. The inspected implementation records this as command/spec guidance and lint suggestions, not as an independently implemented promotion engine.
 
 ## Comparison with Our System
 
-| Dimension | LLM Wiki (MehmetGoekce) | Commonplace |
-|---|---|---|
-| Primary purpose | Personal/team Claude Code wiki scaffold for Logseq or Obsidian | Agent-operated methodology KB with typed collections, source capture, validation, and review gates |
-| Main retained artifacts | Claude slash-command prompt, generated schemas, L1 memory recommendations, L2 wiki pages | Typed Markdown notes, source snapshots, skills, type specs, reports, generated indexes |
-| Runtime surface | Claude Code `/wiki` command plus setup-created files | `commonplace-*` commands, local skills, schemas, collection contracts |
-| Context efficiency | L1/L2 split, JIT query, max three pages at a time, 3-5 page reads | Collection routing, indexes, lexical search, source snapshots, semantic review, explicit artifact lifecycle |
-| Governance | Prompt/spec/schema lint rules and credential warnings | Deterministic validation, type specs, review runs, archived replacements, link conventions |
-| UI substrate | Logseq or Obsidian as human-facing graph/vault | Git-native Markdown KB with generated indexes and reports |
+LLM Wiki and Commonplace both use Markdown files, schema-like conventions, links, and validation language to make a knowledge base agent-operable. The difference is where authority sits. Commonplace encodes type contracts, validation, indexes, review workflows, and generated artifacts inside a repository with deterministic Python commands. LLM Wiki mostly delegates operation to Claude Code following a command prompt and wiki schema, with `setup.sh` as the only substantial executable surface.
 
-The strongest alignment is file-native knowledge. Both systems prefer inspectable Markdown, explicit schemas, links, and git history over opaque vector-only memory. The strongest divergence is enforcement. Commonplace treats validation scripts, type specs, generated indexes, review runs, and archives as first-class machinery. LLM Wiki describes similar governance intentions, but most checks live in Claude prompt instructions and OpenSpec requirements rather than executable validators.
+The L1/L2 split is sharper than Commonplace's ordinary navigation model. LLM Wiki explicitly says some retained memory should be pushed into every session because missing it would be dangerous or embarrassing, while broader context stays behind `/wiki query`. Commonplace usually relies on the active agent to search indexes, links, and notes, plus whatever instructions are loaded by the harness.
 
-LLM Wiki's L1/L2 split is more concrete than Commonplace's current phrasing around always-loaded context versus library retrieval. It distinguishes operational guardrails that must be present before action from contextual knowledge that should stay out of the base prompt until queried. The repo also makes the adoption surface unusually practical: it meets users where their notes already live, with Logseq/Obsidian serialization and Claude Code memory.
+The tradeoff is verification. LLM Wiki is easy to adopt because it fits existing Claude Code, Logseq, Obsidian, and git habits; its memory behavior is also harder to test because the key operations depend on a live LLM faithfully following prose instructions. Commonplace is heavier, but deterministic validation and review gates give its artifacts more inspectable authority.
 
 ### Borrowable Ideas
 
-**Explicit L1/L2 routing as a user-facing doctrine.** Ready now. Commonplace could sharpen its own distinction between always-loaded operational rules and query-time library knowledge, including explicit "dangerous or embarrassing without it" routing language for promotion decisions.
+**Explicit hot/cold memory routing.** Ready now as vocabulary. Commonplace could name "always-loaded" versus "pull-only" artifacts more explicitly when deciding which instructions, workshop notes, or warnings belong in session context.
 
-**Host-native wiki export targets.** Needs a concrete audience. Logseq/Obsidian support is not necessary for Commonplace's methodology repo, but a consuming-project template could borrow the dual serializer idea when human editing in an external graph tool matters.
+**Credential boundary as a first-class lint rule.** Ready now if Commonplace ever stores operational project knowledge. LLM Wiki's rule that secrets belong only in git-excluded L1 memory is a crisp security boundary.
 
-**Schema as the first generated artifact.** Ready now. Setup creates schema, dashboard, and hub pages before any ingest. Commonplace already has type specs and collection contracts; the borrowable piece is making initial scaffold generation visibly establish the behavior contract before content growth.
+**Schema page as agent-facing writing contract.** Already aligned with Commonplace's `COLLECTION.md` and type specs, but LLM Wiki's generated in-wiki schema is a useful adoption pattern for small KBs that do not need a Python validator yet.
 
-**L1/L2 duplicate lint concept.** Worth borrowing with deterministic implementation. Commonplace could inspect overlaps between always-loaded instructions/skills and library notes to find stale duplicated rules, but it should do that as a report first rather than an automatic mutation.
+**Do not borrow prompt-only lint for durable governance.** Commonplace should keep deterministic validation for required metadata, link health, and generated indexes; prose-only lint is useful as guidance but too weak as a repository gate.
 
-**Append-only ingest target.** Borrow selectively. Append-only page updates reduce accidental deletion in personal wikis; Commonplace should retain replacement/review workflows for durable notes where synthesis quality matters more than preserving every incremental block.
+## Write side
 
-**Do not borrow prompt-only governance as final enforcement.** LLM Wiki's specs are useful, but Commonplace should keep converting high-value checks into executable validators or review gates when artifacts carry system-definition authority.
+**Write agency:** `manual` `automatic` — Users choose sources, invoke commands, approve optional write-back, and can edit wiki pages manually; Claude Code is instructed to perform automatic source extraction, page creation, append-only updates, hub updates, cross-reference insertion, lint scanning, selected lint auto-fixes, and git commits within those user-triggered commands.
 
-## Write-side placement
+**Curation operations:** `evolve` `synthesize` `invalidate` — Ingest appends new facts to existing pages and updates hubs/cross-references; query can synthesize a useful answer from multiple pages and offer to save it as a new page; lint can downgrade stale high-confidence pages and flag L1/L2 duplicates or credential leaks. Source acquisition and index/search scans are not counted as curation operations.
 
-**Write agency:** `manual` `automatic` — users can author or import wiki/L1 content directly, while `/wiki ingest`, `/wiki import`, `/wiki lint --fix`, setup scaffolding, hub updates, and query write-back can create or append L2 pages through the command workflow.
+The automatic side is agent-executed rather than service-executed: I found instructions and specs for these operations, but not a separate implementation that deterministically parses pages and applies the rules without Claude Code.
 
-**Curation operations:** `not-determinable` — the review supports automatic create/append/cross-link/hub-update workflows, but it does not support a controlled curation operation beyond ordinary writes; L1 promotion is recorded as recommendation rather than an implemented store-changing operation.
+## Read-back
 
-This review does not mark the system `trace-derived`. A user may ingest chat transcripts or manually promote gotchas into L1, and the docs call feedback/gotchas first-class page types, but the source does not implement durable artifact derivation from session/tool/evaluation traces. Ordinary source ingestion and manual L1/L2 promotion advice are not enough for the trace-derived tag.
+**Read-back:** `both` — L1 Claude Code memory is designed as push memory that is present every session, while L2 wiki knowledge is retrieved through explicit `/wiki query` and file reads.
 
-**Read-back:** `both` — L1 memory is a coarse host-provided always-load path at session start, while L2 wiki pages and query-time L1 supplements enter through explicit `/wiki query` or command workflows using namespace/entity/keyword matching. The repo records the memory path and recommends L1/L2 routing, but it does not implement a relevance-gated memory push hook into a receiving agent/model context, so this does not warrant `push-activation`
+**Read-back signal:** `coarse` — The push path is coarse always-load of L1 memory. Namespace, keyword, confidence, and staleness signals are used after the agent invokes L2 query, so they classify the pull path rather than targeted push.
 
-**Read-back signal:** `coarse` — the only push path described in the review is host-provided always-load L1 memory at session start; L2 pages and query-time L1 supplements are explicit pull workflows.
+**Faithfulness tested:** `no` — The repository contains specs and examples for desired behavior, but I did not find tests or evaluations showing with/without memory effects on Claude Code behavior.
 
-**Faithfulness tested:** `no` — the review records no with/without ablation or post-action audit showing that loaded L1 memory changes downstream behavior.
+**Direction edge cases.** Static `wiki.md` command instructions are shipped baseline behavior, not accumulated memory read-back. L1 memory files count because they are retained user/project memory intended to be auto-loaded. L2 wiki pages are pull-only because Claude Code must decide to glob, grep, and read them during `/wiki query` or related workflows.
+
+**Selection, scope, and complexity.** L2 query is bounded by simple symbolic and lexical heuristics: parse the question, select candidate namespaces/entities, grep keywords, read the top 3-5 pages, and batch at most 3 pages simultaneously. Actual precision and context dilution are not verifiable from the repository alone.
+
+**Authority at consumption.** L1 has high prompt authority because it is present before action. L2 query results have advisory authority as cited source pages. Schema and lint outputs can become stronger when the agent treats them as blocking rules, especially for credentials and missing required properties.
+
+**Other consumers.** Humans read and edit the Logseq or Obsidian graph, dashboard, hubs, and backlinks. Git history, setup-generated files, and optional commits make the wiki inspectable outside Claude Code.
 
 ## Curiosity Pass
 
-**The advertised linter is mostly a command contract.** The README says `/wiki lint` finds orphans, stale content, broken references, and credential leaks, but the repository has no separate linter program. The lint behavior is an instruction set for Claude plus OpenSpec requirements.
+**The strongest design idea is not the wiki.** The L1/L2 routing rule is the distinctive part: it treats context loading as a consequence-management problem rather than a generic retrieval problem.
 
-**L1 is architecturally central but externally implemented.** The repo's most important memory claim depends on Claude Code memory loading. `setup.sh` asks for `memory_path`, schemas mention L1, and query may read L1 files, but the repo does not create or maintain those files.
+**The repo's claims are more operational than executable.** The README says `/wiki lint` finds stale pages and credential leaks, but the inspected files implement that as Claude Code command guidance and OpenSpec requirements, not as a standalone lint binary.
 
-**The installer uses git strongly but locally.** Setup can initialize git in the wiki and commit the initial scaffold, which fits the "wiki as durable artifact" story. Later command workflows only recommend commits or tell Claude to commit; they are not wrapped in a transaction.
+**Append-only updates reduce overwrite risk but can accumulate contradiction.** Existing content is never overwritten, which is safer for LLM editing, but stale or contradicted claims need lint/review discipline to avoid becoming a long page of unmerged history.
 
-**The Logseq/Obsidian split is more than display.** It changes file paths, property syntax, and append ergonomics, so the command prompt must keep format rules in context. This is adoption-friendly but adds a correctness burden to every agent run.
+**Logseq is a good fit for agent writes.** Its block structure makes appending and addressing smaller units easier than free-form Markdown, while Obsidian improves manual editing ergonomics.
 
-**OpenSpec raises the bar for future implementation.** The `SHALL`/`MUST` scenarios are clearer than most README roadmaps, and could become tests if the repo later adds deterministic tooling.
+**L1 credential handling is pragmatic but high risk.** Putting credentials in auto-loaded memory avoids git leaks, but it also gives them prompt-level exposure in every session that loads that memory.
 
 ## What to Watch
 
-- Whether `/wiki lint` becomes a real executable validator. That would move governance from prose authority toward symbolic enforcement and make the comparison with Commonplace materially stronger.
-- Whether L1 promotion/demotion gains an implemented write path or review queue instead of recommendations only. That would change the system's artifact lifecycle and possibly its activation classification.
-- Whether setup or the command layer starts instrumenting query frequency, page reads, or session events. That would reopen the `trace-derived` decision if those traces produce durable behavior-shaping artifacts.
-- Whether Claude Code memory support changes its loading semantics. This repo's L1 model depends on host behavior outside the repository.
-- Whether generated Logseq/Obsidian schemas diverge. The current promise is tool-agnostic behavior with serialization differences only; drift would make reviews of installed wikis harder.
+- Whether `/wiki lint` becomes a deterministic executable; that would materially strengthen schema and security enforcement beyond prompt-following.
+- Whether query gains a real retrieval layer or remains glob/grep plus model judgment; this determines how well L2 scales past the stated 50-200 page target.
+- Whether L1 promotion/demotion gets an auditable workflow with provenance, not just recommendation text.
+- Whether optional query write-back gains a review state before creating durable pages from synthesized answers.
+- Whether tests are added for setup, template generation, and representative command workflows; currently the OpenSpec files are stronger than the executable verification surface.
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - clarifies: L2 wiki pages are stored knowledge until a query or command reads them.
-- [Context efficiency is the central design concern in agent systems](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) - applies: the L1/L2 split is explicitly a context-budget mechanism.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: slash commands, schemas, L1 memory files, L2 pages, and OpenSpec specs have different substrates, forms, lineage, and authority.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: L2 wiki pages advise later agents when queried.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: `wiki.md`, setup templates, schemas, and OpenSpec files instruct or constrain future agent behavior.
+- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: LLM Wiki's L1 memory is pushed into sessions, while L2 wiki pages require explicit query/read work.
+- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: L1 memory files, L2 wiki pages, schema pages, command instructions, and lint rules differ by substrate, form, lineage, and authority.
+- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: L2 wiki pages mainly serve as evidence and reference during query.
+- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: `wiki.md`, schemas, routing rules, lint rules, and setup templates shape future agent behavior.
+- [Symbolic context engineering is bounded by symbol availability](../../notes/symbolic-context-engineering-is-bounded-by-symbol-availability.md) - explains: LLM Wiki's retrieval depends on namespaces, page names, properties, links, and keywords being available as symbols.
