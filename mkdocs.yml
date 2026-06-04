@@ -39,6 +39,7 @@ plugins:
 # its README.md.
 hooks:
   - src/commonplace/docs/mkdocs_hooks.py
+  - mkdocs_site_assets.py
 validation:
   nav:
     omitted_files: ignore
