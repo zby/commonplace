@@ -1,17 +1,17 @@
 ---
 type: kb/types/type-spec.md
 name: agent-memory-system-review
-description: Code-grounded review of an external agent memory or context-engineering system
+description: Review of an external agent memory or context-engineering system; source-tier marks code-grounded vs doc-grounded evidence
 schema: ./agent-memory-system-review.schema.yaml
 ---
 
 # Agent memory system review
 
-A **code-grounded** review of an external agent memory, knowledge, or context-engineering system. It captures what the system actually does, not what it claims.
+A review of an external agent memory, knowledge, or context-engineering system. It captures what the system actually does, not what it claims.
 
-These reviews serve two readers. For someone **surveying or choosing** a system, the review is a faithful, code-grounded account of what it is and does. For **Commonplace itself**, it surfaces ideas worth borrowing for our own design. The characterization sections (Core Ideas, Artifact analysis, the placement sections) serve the first reader; `Comparison with Our System` and its nested `### Borrowable Ideas` serve the second.
+These reviews serve two readers. For someone **surveying or choosing** a system, the review is a faithful account of what it is and does. For **Commonplace itself**, it surfaces ideas worth borrowing for our own design. The characterization sections (Core Ideas, Artifact analysis, the placement sections) serve the first reader; `Comparison with Our System` and its nested `### Borrowable Ideas` serve the second.
 
-**Requires readable local source.** A system documented only by paper, README, or blog — with no accessible code — gets a lightweight note instead, not this type. Abandoned-but-readable code is fine.
+**Two evidence tiers, one type.** The `source-tier` frontmatter field records which: `code-grounded` (the default this spec assumes — findings rest on inspected source; abandoned-but-readable code counts) or `doc-grounded` (no reachable source; findings rest on paper/README/blog, kept claim-level, filed under `lightweight/`). Doc-grounded deltas are in *Doc-grounded tier* below; everything else applies to both.
 
 This spec is also the **worker contract** for the `write-agent-memory-system-review` skill. The parent skill owns source preparation, archiving, index edits, QA, validation, and reporting. The worker owns only code inspection and drafting from the inputs below.
 
@@ -19,7 +19,7 @@ The section specs below distill [designing-agent-memory-systems](../../notes/des
 
 ## Inputs
 
-The caller provides:
+These Inputs and the Workflow describe the **code-grounded** path (the skill's contract); a `doc-grounded` review skips source preparation and follows *Doc-grounded tier*. The caller provides:
 
 - `source_dir` — local source directory (already prepared; the parent does all cloning/refresh)
 - `note_path` — target path under `kb/agent-memory-systems/reviews/`
@@ -213,6 +213,7 @@ code-backed comparison matrix; the matrix keys on `source-tier`, not location.
 ---
 description: Template for related-system reviews — external system comparisons with fixed sections, borrowable ideas, and review freshness metadata
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 status: current
 last-checked: "YYYY-MM-DD"
 ---
