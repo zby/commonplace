@@ -37,6 +37,12 @@ def test_zikkaron_fixture_full_new_format() -> None:
     assert row["sig_inferred_judgment"] == "0"
     assert row["rb_faithfulness_tested"] == "no"
 
+    # write side: agency (both) + curation operations one-hot
+    assert (row["wa_manual"], row["wa_automatic"]) == ("1", "1")
+    assert row["op_consolidate"] == "1" and row["op_dedup"] == "1"
+    assert row["op_evolve"] == "1" and row["op_decay"] == "1" and row["op_promote"] == "1"
+    assert row["op_synthesize"] == "0" and row["op_invalidate"] == "0"
+
     # trace axes
     assert row["ts_tool_traces"] == "1" and row["ts_event_streams"] == "1"
     assert row["df_prose"] == "1" and row["df_symbolic"] == "1" and row["df_parametric"] == "1"
@@ -51,10 +57,14 @@ def test_pull_only_skips_push_and_keeps_universal_axes() -> None:
         "**Representational form:** `prose` — x\n"
         "**Lineage:** `authored` — x\n"
         "**Behavioral authority:** `knowledge` — x\n"
+        "**Write agency:** `manual` — edits through the authoring channel\n"
         "**Read-back:** `pull` — agent must call search\n"
     )
     row, flags = parse(text)
     assert (row["rb_pull"], row["rb_push"]) == ("1", "0")
+    # write agency is universal; manual-only -> curation operations not applicable
+    assert (row["wa_manual"], row["wa_automatic"]) == ("1", "0")
+    assert row["op_consolidate"] == ""  # blank, not flagged
     # push-only axes left blank (not applicable), not flagged
     assert row["sig_coarse"] == ""
     assert row["rb_faithfulness_tested"] == ""
@@ -72,6 +82,7 @@ def test_trace_axes_only_apply_to_trace_derived() -> None:
         "**Representational form:** `prose` — x\n"
         "**Lineage:** `authored` — x\n"
         "**Behavioral authority:** `knowledge` — x\n"
+        "**Write agency:** `manual` — x\n"
         "**Read-back:** `pull` — x\n"
     )
     row, flags = parse(base)  # no trace-derived tag
@@ -92,6 +103,7 @@ def test_missing_applicable_tokens_are_flagged() -> None:
     assert "Behavioral authority: missing lead token" in flags
     assert "Read-back signal: missing lead token" in flags
     assert "Trace source: missing lead token" in flags
+    assert "Write agency: missing lead token" in flags
     assert "Faithfulness tested: missing lead token" in flags
 
 
@@ -102,6 +114,7 @@ def test_not_determinable_marks_applicable_axis_assessed_unknown() -> None:
         "**Representational form:** `prose` — x\n"
         "**Lineage:** `authored` — x\n"
         "**Behavioral authority:** `knowledge` — x\n"
+        "**Write agency:** `not-determinable` — the review cannot tell\n"
         "**Trace source:** `not-determinable` — the review says traces are used but not which kind\n"
         "**Learning scope:** `cross-task` — x\n"
         "**Learning timing:** `offline` — x\n"

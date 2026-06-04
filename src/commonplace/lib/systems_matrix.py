@@ -47,6 +47,15 @@ ONEHOT_AXES = {
         "auth_enforcement": "enforcement", "auth_routing": "routing",
         "auth_validation": "validation", "auth_ranking": "ranking",
         "auth_learning": "learning"},
+    # write side: agency is universal; curation operations gate on automatic agency.
+    # Keep "Write agency" before "Curation operations" so wa_automatic is parsed
+    # before the curation-ops applicability check reads it.
+    "Write agency": {"wa_manual": "manual", "wa_automatic": "automatic"},
+    "Curation operations": {
+        "op_consolidate": "consolidate", "op_dedup": "dedup",
+        "op_evolve": "evolve", "op_synthesize": "synthesize",
+        "op_invalidate": "invalidate", "op_decay": "decay",
+        "op_promote": "promote"},
     "Read-back signal": {
         "sig_coarse": "coarse", "sig_identifier": "identifier",
         "sig_inferred_lexical": "inferred / lexical",
@@ -64,9 +73,11 @@ ONEHOT_AXES = {
         "df_prose": "prose", "df_symbolic": "symbolic", "df_parametric": "parametric"},
 }
 
-# Axes applicable only to push/both read-back, and only to trace-derived systems.
+# Axes applicable only to push/both read-back, to trace-derived systems, and to
+# systems with automatic write agency, respectively.
 PUSH_AXES = {"Read-back signal"}
 TRACE_AXES = {"Trace source", "Learning scope", "Learning timing", "Distilled form"}
+AUTOMATIC_AXES = {"Curation operations"}
 
 COLUMNS = [
     # identity / meta
@@ -77,6 +88,9 @@ COLUMNS = [
     "representational_form", *FORM,
     *ONEHOT_AXES["Lineage"],
     *ONEHOT_AXES["Behavioral authority"],
+    # write side
+    *ONEHOT_AXES["Write agency"],
+    *ONEHOT_AXES["Curation operations"],
     # trace-derived learning
     "trace_derived",
     *ONEHOT_AXES["Trace source"],
@@ -239,6 +253,8 @@ def parse_review_text(text: str, review_file: str, source_tier: str) -> tuple[di
             applicable = is_push
         elif label in TRACE_AXES:
             applicable = trace_derived
+        elif label in AUTOMATIC_AXES:
+            applicable = row.get("wa_automatic") == "1"
         _onehot(label, cols, text, applicable, row, flags)
 
     # faithfulness tested (single yes/no), applicable to push/both

@@ -42,7 +42,7 @@ Write from the code outward. Required sections are enforced by the schema; the t
 - **Core Ideas** — 3–6 mechanisms and design choices, not a feature list; bold lead phrases for scanning. **Every review states how the system manages context efficiency** — the volume *and* complexity of what it puts in the agent's context (selection budgets, progressive disclosure, navigation, compaction, sub-agent isolation), named even when the answer is "unbounded / loads everything." A memory system is a context-engineering tool; this is its central design question, not an optional angle. Also frame the ideas by what future action the remembered material can change, and surface where distinctive: how far the memory can be **trusted** (preserved source, metadata, review state, validation) and its **adoption affordances** (fits the native editor/terminal/git environment, avoids metered-API lock-in, degrades to inspectable files and scripts).
 - **Artifact analysis** — the four-field record for the central retained artifacts. Required; see Artifact analysis.
 - **Comparison with Our System** — concrete alignments, divergences, and tradeoffs vs Commonplace. Close with a `### Borrowable Ideas` subsection: for each idea, what it would look like in Commonplace, and whether it is ready now or needs a use case first.
-- **Write-side placement** — how the store *changes*: agency (manual curation vs automatic) and operations; trace-derived learning is the automatic-from-traces sub-case. *Optional; see rule below.*
+- **Write-side placement** — how the store *changes*: agency (manual curation vs automatic) and operations; trace-derived learning is the automatic-from-traces sub-case. *Required — carries the `**Write agency:**` verdict; curation operations and the trace sub-section are conditional, see rule below.*
 - **Read-back placement** — how the store is *served*. *Optional; see rule below.* Every review states a one-line read-back direction verdict somewhere even without the full section.
 - **Curiosity Pass** — second pass: surprising claims, simpler alternatives, mechanisms that sound more powerful than they are.
 - **What to Watch** — *specific* pending changes, each tied to a consequence for our design or a tracked decision. Cut generic maturity ("they add features / get more robust"); an honestly-short section beats filler.
@@ -96,7 +96,7 @@ Write the agency verdict and the automatic operations as lead tokens:
 - `**Write agency:**` `manual` · `automatic` — list all that apply.
 - `**Curation operations:**` — the automatic operations from the list above; omit when agency is manual-only.
 
-**Trigger:** include the `## Write-side placement` section when the system has any non-trivial automatic write or curation path (trace-learned or rule-based maintenance). A manual-curation-only system states just the `**Write agency:** \`manual\`` verdict and needs no section.
+**Trigger:** every review keeps a `## Write-side placement` heading carrying the `**Write agency:**` verdict (parallel to the always-present `**Read-back:**` verdict). Add `**Curation operations:**` and the `### Trace-derived learning` sub-section only when the system has a non-trivial automatic write or curation path (trace-learned or rule-based maintenance). A manual-curation-only system keeps just the heading and the `**Write agency:** \`manual\`` verdict.
 
 ### Trace-derived learning
 
@@ -224,7 +224,7 @@ last-checked: "YYYY-MM-DD"
 
 **Write agency:** `{manual|automatic}` `{...}` — {how the store changes; manual = curation via the authoring channel, see Lineage + affordances}
 
-{Add `**Curation operations:** \`consolidate\` …` for the automatic operations. Optional section — include only with a non-trivial automatic write/curation path; a manual-only system keeps just the agency verdict. See Write-side placement.}
+{Required heading + `**Write agency:**` verdict. Add `**Curation operations:** \`consolidate\` …` and the `### Trace-derived learning` sub-section only with a non-trivial automatic write/curation path; a manual-only system keeps just the heading and agency verdict. See Write-side placement.}
 
 ### Trace-derived learning
 
