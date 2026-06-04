@@ -7,11 +7,11 @@ schema: ./agent-memory-system-review.schema.yaml
 
 # Agent memory system review
 
-A review of an external agent memory, knowledge, or context-engineering system. It captures what the system actually does, not what it claims.
+A review of an external agent memory, knowledge, or context-engineering system. It captures what the system actually does, not what it claims — stated at the confidence the evidence supports: mark what you can't verify, and never present reported behavior as observed.
 
 These reviews serve two readers. For someone **surveying or choosing** a system, the review is a faithful account of what it is and does. For **Commonplace itself**, it surfaces ideas worth borrowing for our own design. The characterization sections (Core Ideas, Artifact analysis, the placement sections) serve the first reader; `Comparison with Our System` and its nested `### Borrowable Ideas` serve the second.
 
-**Two evidence tiers, one type.** The `source-tier` frontmatter field records which: `code-grounded` (the default this spec assumes — findings rest on inspected source; abandoned-but-readable code counts) or `doc-grounded` (no reachable source; findings rest on paper/README/blog, kept claim-level, filed under `lightweight/`). Doc-grounded deltas are in the `## Doc-grounded tier` section near the end of this spec; everything else applies to both.
+**Two evidence tiers, one type.** The `source-tier` frontmatter field records which: `code-grounded` (the default this spec assumes — findings rest on inspected source; abandoned-but-readable code counts) or `doc-grounded` (no reachable source; findings rest on paper/README/blog, kept claim-level, filed under `lightweight/`). The instructions below are tier-neutral — the evidence-stance, source-metadata, and citation rules phrase for both — so only the Inputs/Workflow, written for the common code-grounded path, need the distinction.
 
 This spec is also the **worker contract** for the `write-agent-memory-system-review` skill. The parent skill owns source preparation, archiving, index edits, QA, validation, and reporting. The worker owns only code inspection and drafting from the inputs below.
 
@@ -19,7 +19,7 @@ The section specs below distill [designing-agent-memory-systems](../../notes/des
 
 ## Inputs
 
-These Inputs and the Workflow describe the **code-grounded** path (the skill's contract); a `doc-grounded` review skips source preparation and follows the `## Doc-grounded tier` section near the end of this spec. The caller provides:
+These Inputs and the Workflow describe the **code-grounded** path (the skill's contract); a `doc-grounded` review skips source preparation (no `source_dir`) and otherwise follows the same tier-neutral section, source-metadata, citation, and evidence-stance rules. The caller provides:
 
 - `source_dir` — local source directory (already prepared; the parent does all cloning/refresh)
 - `note_path` — target path under `kb/agent-memory-systems/reviews/`
@@ -38,7 +38,7 @@ If any required input is missing, stop and report which. Verify `source_dir` is 
 Write from the code outward. Required sections are enforced by the schema; the two placement sections are optional and governed by their own trigger rules below.
 
 - **Opening paragraph** — what the system is, what it is for, who built it. Include caller-supplied source identity.
-- **Source metadata** — source identity and reviewed revision, before the section headings, using the caller's labels.
+- **Source metadata** — source identity and reviewed revision, before the section headings, using the caller's labels: a repo + commit (code-grounded) or a document + version/date (doc-grounded).
 - **Core Ideas** — 3–6 mechanisms and design choices, not a feature list; bold lead phrases for scanning. **Every review states how the system manages context efficiency** — the volume *and* complexity of what it puts in the agent's context (selection budgets, progressive disclosure, navigation, compaction, sub-agent isolation), named even when the answer is "unbounded / loads everything." A memory system is a context-engineering tool; this is its central design question, not an optional angle. Also frame the ideas by what future action the remembered material can change, and surface where distinctive: how far the memory can be **trusted** (preserved source, metadata, review state, validation) and its **adoption affordances** (fits the native editor/terminal/git environment, avoids metered-API lock-in, degrades to inspectable files and scripts).
 - **Artifact analysis** — the four-field record for the central retained artifacts. Required; see Artifact analysis.
 - **Comparison with Our System** — concrete alignments, divergences, and tradeoffs vs Commonplace. Close with a `### Borrowable Ideas` subsection: for each idea, what it would look like in Commonplace, and whether it is ready now or needs a use case first.
@@ -146,14 +146,14 @@ When a full section is warranted, address:
 
 - `description` — discriminating retrieval filter (50–200 chars, double-quoted)
 - `type: ../types/agent-memory-system-review.md`
-- `source-tier` — `code-grounded` when the findings rest on inspected source, `doc-grounded` when they rest only on docs/papers/reports. Required. This is the **only** authority difference between reviews; see the `## Doc-grounded tier` section.
+- `source-tier` — `code-grounded` (findings rest on inspected source; abandoned-but-readable code counts) or `doc-grounded` (no reachable source; findings rest on docs/papers, kept claim-level, filed under `lightweight/`, excluded from the matrix). Required — the **only** authority difference between reviews. Promote a `doc-grounded` review by flipping to `code-grounded` once source is read.
 - `status: current` unless clearly stale
 - `last-checked: "{today}"`
 - `tags` — add `trace-derived` and/or `push-activation` only per the placement rules above. A review may carry neither, either, or both; otherwise omit `tags`. Collection membership comes from location, not a tag.
 
 ## Citations
 
-Use the caller-supplied citation format when provided. Otherwise cite source files in prose with **source-relative paths in code spans** — not markdown links into the local directory. Review notes must remain readable without access to the local source.
+Use the caller-supplied citation format when provided. Otherwise cite the source where the finding is reached — **commit-pinned source files/blobs** for code-grounded reviews (source-relative paths in code spans, not markdown links into the local directory), or **document URLs and `kb/sources/` ingest/snapshot links** for doc-grounded reviews (never local source paths). Review notes must remain readable without access to the source.
 
 ### Quote-anchored citations
 
@@ -174,30 +174,6 @@ For GitHub-backed sources the attribution may instead be a commit-pinned blob UR
 The quoted text is the anchor; the attribution pins where it came from. Do not record byte offsets, character spans, or ids — the quote is self-relocating (it can be re-found by search) and the pinned commit is immutable, so nothing else is needed to verify it.
 
 This is **optional and additive** — use it on the claims that carry the review, not on every sentence. It strengthens the "readable without the source" goal above: the evidence now travels inline rather than hiding behind a file path. Resolution (does the quote actually appear in the pinned source?) is a write-time check run against the live checkout — see [verify-review-quote-grounding](../../instructions/verify-review-quote-grounding.md) — not something a later reader or the standing validator can redo, because the source is not retained in the KB. The validator checks only that each quote-anchored citation is well-formed and names a source.
-
-## Doc-grounded tier
-
-A review is one type; `source-tier` records its evidence tier and is the only thing
-that differs by authority. Most of this spec assumes `code-grounded` (source was
-inspected). A `doc-grounded` review covers a system whose source is **not
-reachable** — a paper, README, article, practitioner report, or ingest — and
-carries the **same sections and the same controlled lead tokens**, at a lower
-evidence tier. Deltas when `source-tier: doc-grounded`:
-
-- **Evidence stance is claim-level.** State mechanisms as *reported*; never present
-  reported behavior as observed. Where sources conflict or go quiet, say so. A field
-  the sources don't address gets a sole `` `not-determinable` `` token with a note,
-  not a guess.
-- **Source metadata names documents, not a repo** — the paper / README / article /
-  ingest and its version or date, in the source lines (not a repository + commit).
-- **Citations point at the sources** — URLs and `kb/sources/` ingest/snapshot links,
-  never at source files. Keep the review readable without the original documents.
-- **`last-checked`** records when coverage was last reconciled against its sources.
-- **Promotion.** If inspectable source later appears and is read, flip `source-tier`
-  to `code-grounded` and upgrade the findings from reported to observed.
-
-`doc-grounded` reviews live under `lightweight/` and are excluded from the
-code-backed comparison matrix; the matrix keys on `source-tier`, not location.
 
 ## Constraints
 

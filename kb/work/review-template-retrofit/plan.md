@@ -124,10 +124,11 @@ authoring discipline, not a schema branch).
 **Steps:**
 
 1. **Spec** (`...types/agent-memory-system-review.md`): add `source-tier:
-   code-grounded | doc-grounded` to the Frontmatter section. Fold the lightweight
-   deltas (evidence stance, source-metadata format, citation target, promotion
-   note) into a short **"## Doc-grounded tier"** subsection — the deltas the
-   lightweight doc already was, minus the duplicated 90%.
+   code-grounded | doc-grounded` to the Frontmatter section. Make the instructions
+   **tier-neutral** — phrase the evidence stance, source-metadata format, and
+   citation target inline for both tiers (no separate doc-grounded section); only
+   Inputs/Workflow stay code-grounded-specific. The `source-tier` field is the only
+   discriminator.
 2. **Schema** (`...types/agent-memory-system-review.schema.yaml`): require
    `source-tier` with `enum: [code-grounded, doc-grounded]`. No tier branch (equally
    strict).
