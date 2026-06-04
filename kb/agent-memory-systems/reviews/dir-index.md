@@ -8,12 +8,12 @@ index_source: directory
 
 ← [Parent](../dir-index.md)
 
-- [A-mem](./a-mem.md) *(agent-memory-system-review)* - A-mem review: Python library for Chroma-backed memory notes with LLM-evolved metadata, neighbor linking, and optional persistent retrievers
-- [ACE](./ace.md) *(agent-memory-system-review)* - ACE review: playbook-evolving agent loop that distills task attempts, reflections, and curation outputs into reusable prompt context
-- [Agent Skills for Context Engineering](./agent-skills-for-context-engineering.md) *(agent-memory-system-review)* - Agent Skills for Context Engineering review: plugin-packaged context-engineering skills, researcher OS, routed baseline skill activation, and trace-to-skill example
-- [Agent Workflow Memory](./agent-workflow-memory.md) *(agent-memory-system-review)* - Agent Workflow Memory review: workflow text distilled from web-agent trajectories, pushed into Mind2Web/WebArena prompts, with benchmark-specific induction loops
-- [Agent-R](./agent-r.md) *(agent-memory-system-review)* - Agent-R review: MCTS trajectory collection and self-training pipeline that distills failed and successful agent rollouts into revision training data
-- [Agent-S](./Agent-S.md) *(agent-memory-system-review)* - Agent-S review: GUI-agent framework with S2 trace-summarized episodic/narrative memory, embedding read-back, and S3 transient reflection/code-agent context
+- [A-mem](./a-mem.md) *(agent-memory-system-review)* - A-mem review: in-memory plus Chroma vector library with LLM-generated metadata, automatic neighbor evolution, and pull-only retrieval APIs
+- [ACE](./ace.md) *(agent-memory-system-review)* - ACE review: trace-derived playbook evolution with generator-reflector-curator roles, coarse push read-back, and run-file lineage
+- [Agent Skills for Context Engineering](./agent-skills-for-context-engineering.md) *(agent-memory-system-review)* - Agent Skills review: file-first context-engineering skill marketplace with static skill routing, demo utilities, and trace-to-skill examples
+- [Agent Workflow Memory](./agent-workflow-memory.md) *(agent-memory-system-review)* - Agent Workflow Memory review: workflow text files induced from web-task traces, optional FAISS retrieval, and prompt-time workflow injection
+- [Agent-R](./agent-r.md) *(agent-memory-system-review)* - Agent-R review: MCTS trajectory self-training system that turns failed and successful task rollouts into revision data and model weights
+- [Agent-S](./Agent-S.md) *(agent-memory-system-review)* - Agent-S review: GUI-agent framework with authored procedural prompts, S1/S2 episodic JSON memory, S3 task-local reflection, and BBON trace judging
 - [AgentFly](./AgentFly.md) *(agent-memory-system-review)* - AgentFly review: planner-executor agent with case-bank planning memory, trace-derived plan labels, and retriever-gated prompt injection
 - [Agentic Harness Engineering](./agentic-harness-engineering.md) *(agent-memory-system-review)* - Agentic Harness Engineering review: trace-derived harness evolution loop that turns benchmark rollouts into pushed analysis, manifests, and git-tracked agent harness edits
 - [Agentic Local Brain](./agentic-local-brain.md) *(agent-memory-system-review)* - Agentic Local Brain review: local PKM with Markdown capture, SQLite metadata/graph state, Chroma vectors, enhanced RAG, wiki synthesis, and usage-trace personalization
