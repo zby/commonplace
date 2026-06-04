@@ -8,10 +8,12 @@ dimensions. Generated, not hand-maintained -- rebuild after systems.csv changes:
     python3 scripts/build_systems_matrix.py    # refresh the matrix first
     python3 scripts/render_systems_table.py    # then re-render this table
 
-Only the columns the matrix fills reliably enough to compare across the whole
-population earn a place (see scripts/analyze_matrix.py). Authority and curation
-are rendered as collapsed flag-set profiles (discriminating modes only);
-representational-form component columns stay in the raw matrix.
+This is the *human* view: scannable, one decision per cell. It deliberately
+diverges from the raw matrix (systems.csv), which keeps the full one-hot flag
+sets for authority, curation, and read-back signal. Here those collapse to a
+single discriminating value each, and a plain-English "What it is" column is
+pulled to the front — the thing a person surveying the landscape most wants and
+the matrix buries. The full flag sets stay one click away in systems.csv.
 """
 from __future__ import annotations
 
@@ -23,32 +25,15 @@ COLLECTION = REPO_ROOT / "kb" / "agent-memory-systems"
 SYSTEMS_CSV = COLLECTION / "systems.csv"
 OUT = COLLECTION / "systems-table.md"
 
-# Authority and curation are sets of one-hot flags, not single fields. Each column
-# below collapses to the *discriminating* flags only — the near-universal authority
-# modes (knowledge 100%, instruction 95%, routing 91%) and near-constant curation
-# ops (synthesize/promote 88%) are dropped so the cell shows signal, not noise.
-AUTH_MODES = [
-    ("enforce", "auth_enforcement"),
-    ("validate", "auth_validation"),
-    ("rank", "auth_ranking"),
-    ("learn", "auth_learning"),
-]
-CURATION_OPS = [
-    ("consolidate", "op_consolidate"),
-    ("dedup", "op_dedup"),
-    ("evolve", "op_evolve"),
-    ("invalidate", "op_invalidate"),
-    ("decay", "op_decay"),
-]
-# Read-back targeting lives in the signal one-hots: `coarse` (generic recall) vs an
-# `instance` signal (identifier / inferred). An instance signal *is* a targeted push;
-# there is no separate "engineered push" flag.
-SIGNAL_MODES = [
-    ("coarse", "sig_coarse"),
-    ("identifier", "sig_identifier"),
-    ("inferred-lexical", "sig_inferred_lexical"),
-    ("inferred-embedding", "sig_inferred_embedding"),
-    ("inferred-judgment", "sig_inferred_judgment"),
+# Read-back targeting collapses the signal one-hots to one human value. The
+# question a reader asks is "does a push select for *this* instance?" so any
+# `instance` signal (identifier / inferred-*) reads as `targeted`; `coarse`-only
+# is generic always-load; pull-only systems push nothing (`—`).
+INSTANCE_SIGNALS = [
+    "sig_identifier",
+    "sig_inferred_lexical",
+    "sig_inferred_embedding",
+    "sig_inferred_judgment",
 ]
 
 
@@ -57,24 +42,36 @@ def field(name: str):
     return lambda r: (r[name].strip() or "—")
 
 
-def flag_profile(flags: list[tuple[str, str]]):
-    """Accessor collapsing a one-hot flag set to a '+'-joined list of active modes."""
-    return lambda r: "+".join(lab for lab, f in flags if r.get(f, "").strip() == "1") or "—"
+def targeting(r) -> str:
+    """Collapse the read-back signal one-hots to —/coarse/targeted."""
+    if any(r.get(s, "").strip() == "1" for s in INSTANCE_SIGNALS):
+        return "targeted"
+    if r.get("sig_coarse", "").strip() == "1":
+        return "coarse"
+    return "—"
+
+
+def yes_dash(name: str):
+    """Accessor for a one-hot flag rendered as yes / em dash."""
+    return lambda r: "yes" if r.get(name, "").strip() == "1" else "—"
 
 
 # Display columns: (header, accessor). System name is handled separately (linked).
+# Curation, the full authority set, and the raw signal one-hots stay in systems.csv;
+# here `Enforces` is the one authority mode that actually discriminates (validate /
+# rank / learn are near-universal), and `Targeting` collapses the signal.
 COLUMNS = [
-    ("Storage substrate", field("storage_substrate")),
+    ("What it is", field("one_line")),
+    ("Storage", field("storage_substrate")),
     ("Read-back", field("read_back_direction")),
-    ("Read-back signal", flag_profile(SIGNAL_MODES)),
-    ("Trace-derived", field("trace_derived")),
-    ("Authority", flag_profile(AUTH_MODES)),
-    ("Curation", flag_profile(CURATION_OPS)),
+    ("Targeting", targeting),
+    ("Learns from traces", field("trace_derived")),
+    ("Enforces", yes_dash("auth_enforcement")),
 ]
 
 FRONTMATTER = """\
 ---
-description: "Auto-generated sortable comparison table of the code-reviewed agent memory systems across the matrix fields filled reliably enough to compare — storage substrate, read-back direction, read-back signal (coarse vs instance targeting), trace-derived learning, behavioral authority, and curation operations. Rebuild with scripts/render_systems_table.py."
+description: "Human-readable comparison table of the code-reviewed agent memory systems: a one-line description plus the fields that discriminate — storage substrate, read-back direction, push targeting (coarse vs instance), trace-derived learning, and whether memory acts as an enforced gate. Rebuild with scripts/render_systems_table.py; full flag sets live in systems.csv."
 type: kb/types/note.md
 traits: [has-comparison]
 tags: [agent-memory]
@@ -85,54 +82,52 @@ status: current
 SUMMARY = """\
 # Agent memory systems comparison table
 
-A sortable view of the code-reviewed systems in this collection, generated from
+A scannable view of the code-reviewed systems in this collection, generated from
 [`systems.csv`](./systems.csv). Lightweight (doc-only) reviews are excluded — a
 comparison table is for *choosing* a system, and that calls for code-grounded
 evidence. Click any column header to sort (in the rendered HTML site; on GitHub
 the [raw matrix](./systems.csv) is itself a sortable, searchable viewer).
 
-For the architectural deep dive behind these axes, see the
-[comparative review](./agentic-memory-systems-comparative-review.md).
+This is the human view: one decision per cell. The raw [`systems.csv`](./systems.csv)
+keeps the full one-hot flag sets (every authority mode, every curation operation,
+every read-back signal); here each collapses to its single discriminating value,
+and a plain-English description leads.
+
+For the findings across the whole population, see the
+[comparison](./agentic-memory-systems-comparative-review.md).
 
 ## How to read the columns
 
-- **Storage substrate** — where memory physically lives: plain files, a git repo,
-  SQLite, an RDBMS, a vector or graph store, key-value, in-memory, or model
-  weights. It sets the operational floor — inspectability and diffability at one
-  end, scale and query power at the other. Files-family still leads, but a third
-  of systems are database-backed, and the most common database is plain SQLite,
-  not a vector or graph store.
+- **What it is** — a one-line description of the system, lifted from its review.
+  Scan this first; the rest of the row tells you *how* it works.
+- **Storage** — where memory physically lives: plain `files`, a git `repo`,
+  `sqlite`, an `rdbms`, a `vector` or `graph` store, `kv`, `in-memory`, or
+  `model-weights`. It sets the operational floor — inspectability and diffability
+  at one end, scale and query power at the other. Files-family still leads, but
+  roughly a third are database-backed, and the most common database is plain
+  SQLite, not a vector or graph store.
 - **Read-back** — how remembered material reaches the next action: the agent
   *pulls* it with an explicit lookup, the system *pushes* it in unasked, or
-  *both*. This is the first question to ask, because it decides whether the agent
-  has to remember to look or whether context arrives on its own.
-- **Read-back signal** — *how* a push selects what to inject: `coarse` (always-load /
-  session-start, generic recall) versus an `instance` signal — an `identifier` match
-  or `inferred` relevance (lexical / embedding / judgment). An instance signal *is* a
-  targeted push; coarse is not; pull-only shows none. Targeting lives here, in one
-  place — there is no separate "engineered push" flag.
-- **Trace-derived** — whether memory is mined automatically from the agent's own
-  execution traces rather than authored by hand. It trades throughput for
-  reviewability. Most systems are trace-derived — and they overwhelmingly push or
-  do both, so automatic learning and automatic activation tend to ship together.
-- **Authority** — with what force the stored memory acts on the agent, beyond the
-  baseline. Every system carries *knowledge* authority and nearly all add
-  *instruction* and *routing*, so those are assumed and omitted; the cell shows
-  only the discriminating modes: *enforce* (a hard gate the agent can't ignore),
-  *validate* (checks writes against rules), *rank* (influences retrieval order),
-  and *learn* (feeds back into the system's own behavior). A dash means
-  advisory-only — knowledge and instruction, nothing stronger.
-- **Curation** — which upkeep operations the system runs over stored memory.
-  *Synthesize* and *promote* are near-universal and omitted; the cell shows the
-  discriminating ops: *consolidate* (merge related entries), *dedup* (drop
-  duplicates), *evolve* (rewrite entries in place), *invalidate* (mark stale),
-  and *decay* (age out by time or use). A dash means write-once memory with no
-  active upkeep.
+  *both*. The first question to ask, because it decides whether the agent has to
+  remember to look or whether context arrives on its own.
+- **Targeting** — for systems that push, *how* the push selects what to inject:
+  `coarse` (always-load / session-start, generic recall) versus `targeted` (the
+  push selects for *this* instance — an identifier match, or relevance inferred
+  from content by keyword, embedding, or LLM judgment). Pull-only systems push
+  nothing (`—`). The raw signal one-hots behind this live in the matrix.
+- **Learns from traces** — whether memory is mined automatically from the agent's
+  own execution traces rather than authored by hand. It trades throughput for
+  reviewability. Most systems do — and they overwhelmingly push or do both, so
+  automatic learning and automatic activation tend to ship together.
+- **Enforces** — whether the stored memory ever acts as a **hard gate** (a check
+  the agent can't bypass — a validation that must pass, a blocking rule, a
+  required proof) rather than advisory context it can override. This is the
+  *enforcement* mode of behavioral authority — nothing to do with authentication.
+  The other authority modes (instruction, routing, validation, ranking, learning)
+  are near-universal and so don't discriminate; they stay in the matrix.
 
-Representational form is omitted from this compact view while the component
-one-hot retrofit proceeds. The raw matrix carries `form_prose`, `form_symbolic`,
-and `form_parametric` columns. The full agency and curation flag sets — including
-the near-universal modes assumed away above — also live in the raw matrix.
+Curation operations and the full authority and signal flag sets are dropped from
+this compact view; they live in [`systems.csv`](./systems.csv).
 """
 
 

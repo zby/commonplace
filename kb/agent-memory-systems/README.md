@@ -1,9 +1,36 @@
 # Agent Memory Systems
 A survey of external **agent memory systems** — how AI agents store, retrieve, and maintain knowledge across sessions and tasks. We track knowledge bases, context-engineering layers, structured note-taking tools, and trajectory-learning loops, reading their source code wherever it is available.
 
-**Choosing or designing one?** Start with [Choosing an agent memory framework starts with activation, not storage](./choosing-an-agent-memory-framework.md), which uses the current matrix fields as a first-pass chooser lens. Then read the [comparative review](./agentic-memory-systems-comparative-review.md), which places the landscape across six architectural dimensions, and browse the [repo-backed reviews](./reviews/dir-index.md) — each one reads the actual code and reports what a system _does_, not what its README claims. Every review classifies the system's retained artifacts in a shared vocabulary — storage substrate, representational form, lineage, behavioral authority — so independent systems can be set side by side on the same terms.
+**Choosing or designing one?** Scan the [comparison table](./systems-table.md) — one
+row per system, a plain-English description plus the handful of fields that
+actually discriminate. Then read the [comparison](./agentic-memory-systems-comparative-review.md),
+which counts what 129 systems do rather than characterizing them one at a time, and
+browse the [repo-backed reviews](./reviews/dir-index.md) — each reads the actual
+code and reports what a system _does_, not what its README claims.
 
 We track these systems not just to borrow ideas but to watch how they evolve. Convergence across independent projects is a stronger signal than any single design argument.
+
+## How we review
+
+Every review classifies a system's retained behavior-shaping artifacts in **one
+shared vocabulary**, so independent systems can be set side by side on the same
+terms. The vocabulary, and the activation distinction the reviews turn on, come
+from these theory notes:
+
+- [designing-agent-memory-systems](../notes/designing-agent-memory-systems.md) — the design-pressure inventory the review contract distills into review-time sections.
+- The **four-field artifact record** every review applies to each system's central artifacts:
+  - [storage substrate](../notes/definitions/storage-substrate.md) — where retained state physically lives (files, repo, sqlite, rdbms, vector/graph, kv, in-memory, model-weights, service-object); locates access, versioning, deletion.
+  - [representational form](../notes/definitions/representational-form.md) — prose / symbolic / parametric; sets the default inspection method (read / test / probe).
+  - [lineage](../notes/definitions/lineage.md) — authored, imported, or trace-extracted, and what source change invalidates it.
+  - [behavioral authority](../notes/definitions/behavioral-authority.md) — who consumes it, through which channel, with what force ([knowledge](../notes/definitions/knowledge-artifact.md) advice vs [system-definition](../notes/definitions/system-definition-artifact.md) instruction / enforcement / routing / validation / ranking / learning).
+  - (the record applies at the [operative-part](../notes/definitions/operative-part.md) level of a [retained artifact](../notes/definitions/retained-artifact.md) — a bundled object is split when its parts carry different forms or authorities.)
+- [knowledge storage does not imply contextual activation](../notes/knowledge-storage-does-not-imply-contextual-activation.md) — separates stored memory, memory loaded into context (**read-back**: pull / push / both), and memory that actually changes behavior; the reason a review states a read-back direction and asks whether faithfulness is tested.
+- [symbolic context engineering is bounded by symbol availability](../notes/symbolic-context-engineering-is-bounded-by-symbol-availability.md) — why a targeted push needs an identifier already on the table or a content inference; grounds the read-back **signal** (coarse vs identifier vs inferred).
+- [agent memory is a crosscutting concern, not a separable niche](../notes/agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md) — why these axes span storage, retrieval, and learning at once rather than being one "memory" box.
+
+The [review type spec](./types/agent-memory-system-review.md) is the operational
+contract that turns these notes into the fixed review sections and the
+backticked lead tokens the [matrix](./systems.csv) is parsed from.
 ## Coverage
 **Two coverage tiers.** Systems with open-source repos get the deep path: clone the repo, read the code, write a review note here. Systems known only from a README or paper get the lightweight path: snapshot a single page into `kb/sources/`, run `/ingest`, and optionally add a standard note under `lightweight/` when the system needs a stable place in this collection.
 
@@ -16,9 +43,9 @@ Browse the roster:
 
 Cross-cutting reads:
 
-- [Choosing an agent memory framework](./choosing-an-agent-memory-framework.md) — chooser-oriented guide using activation model, substrate, trace-derived learning, and governance tradeoffs as first-pass filters
+- [Comparison table](./systems-table.md) — one scannable row per code-reviewed system
   
-- [Comparative review](./agentic-memory-systems-comparative-review.md) — synthesises across both tiers
+- [Comparison](./agentic-memory-systems-comparative-review.md) — the findings across all 129 code-reviewed systems
   
 - [Trace-derived learning techniques in related systems](./trace-derived-learning-techniques-in-related-systems.md) — broadens the comparison to artifact-learning and weight-learning systems fed by live traces
   

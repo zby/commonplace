@@ -108,7 +108,7 @@ COLUMNS = [
 # hand-classified and preserved across runs by the CLI.
 _PARSED_ONEHOT = [c for cols in ONEHOT_AXES.values() for c in cols] + list(FORM)
 PARSED = {
-    "system_name", "review_file", "source_tier",
+    "system_name", "review_file", "source_tier", "one_line",
     "storage_substrate", "representational_form",
     "read_back_direction", "read_back_notes", "rb_pull", "rb_push",
     "rb_faithfulness_tested",
@@ -196,6 +196,13 @@ def parse_review_text(text: str, review_file: str, source_tier: str) -> tuple[di
 
     h1 = _H1.search(text)
     row["system_name"] = h1.group(1).strip() if h1 else Path(review_file).stem
+
+    # one-line description from frontmatter, stripped of the "<Name> review:" prefix
+    # the reviews conventionally lead with (127/129) so the human table reads cleanly.
+    md = re.search(r'^description:\s*"?(.+?)"?\s*$', text, re.MULTILINE)
+    one_line = md.group(1).strip() if md else ""
+    one_line = re.sub(r"^.{0,40}?\breview:\s*", "", one_line, count=1, flags=re.IGNORECASE)
+    row["one_line"] = one_line
 
     tags = set()
     mt = _TAGS.search(text)
