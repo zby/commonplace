@@ -14,7 +14,7 @@ The missing step is **contextual activation**: making available knowledge action
 
 This is why "the model knows X" is often the wrong operational question. The useful question is: will X be brought to bear at the moment when it matters?
 
-Bringing stored memory into that context is what the [agent-memory-system reviews](../agent-memory-systems/types/agent-memory-system-review.md) call **read-back** (defined there): the necessary first move, not activation itself. The gap between read-back and activation is what a faithfulness test measures — "we read it back" is not the claim "it worked."
+Bringing stored memory into that context is **read-back**: the return of *retained memory* — content the system accumulated from use, whether authored (a note, a project decision) or trace-learned — into a future action, reached either by the agent's own lookup (*pull*) or by unsolicited arrival (*push*). The boundary is accumulation: runtime injection of shipped, static documentation — tool specs, repo docs, installed skills — is *not* read-back, because that content arrives *with* the system rather than accumulating *from use of* it. Read-back is the necessary first move, not activation itself. The gap between the two is what a faithfulness test measures — "we read it back" is not the claim "it worked." The [agent-memory-system reviews](../agent-memory-systems/types/agent-memory-system-review.md) operationalise read-back, classifying each system's path by direction and selection signal.
 
 ## Two Places The Transition Fails
 
