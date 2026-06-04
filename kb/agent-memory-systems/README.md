@@ -33,14 +33,14 @@ Cross-cutting reads:
 
 **Extractable columns** come straight from each review, so the matrix stays in sync with the prose:
 
-- Three backticked **lead tokens** written in the review body where the finding is reached — `storage_substrate` (`files`/`repo`/`sqlite`/`rdbms`/`vector`/`graph`/`kv`/`in-memory`/`prompt-registry`/`model-weights`/`service-object`), `representational_form` (`prose`/`symbolic`/`parametric`/`mixed`), and `read_back_direction` (`pull`/`push`/`both`). The token leads its own justifying sentence, so value and reasoning can't drift. The convention lives in the [review type spec](./types/agent-memory-system-review.md).
-- `trace_derived` and `push_engineered` from the review's frontmatter tags.
+- Backticked **lead tokens** written in the review body where the finding is reached — `storage_substrate` (`files`/`repo`/`sqlite`/`rdbms`/`vector`/`graph`/`kv`/`in-memory`/`prompt-registry`/`model-weights`/`service-object`), `representational_form` (`prose`/`symbolic`/`parametric`), `read_back_direction` (`pull`/`push`/`both`), `Read-back signal`, write agency, curation operations, and trace-derived sub-fields. The token leads its own justifying sentence, so value and reasoning can't drift. The convention lives in the [review type spec](./types/agent-memory-system-review.md).
+- `trace_derived` from the review's `trace-derived` frontmatter tag.
 
 Remaining columns are hand-classified candidates the script lists but leaves empty; the analyzer flags them as too-sparse until filled. When populating a compound axis (e.g. the trace-derived sub-fields), record the raw observed value first and normalise it into a harness-agnostic vocabulary — the normalisation step is itself the test of whether the category generalises across systems.
 
 **Consumption rule:** a human comparison table is for *choosing* a system, so it covers **code-based reviews only**. Lightweight reviews (doc-only, lower authority) stay in the matrix as segmented backing data (`source_tier=lightweight`) for landscape/survey questions, but are excluded from the consumption table — `analyze_matrix.py` filters to code-based by default (`--all` includes lightweight).
 
-Current mature chooser fields are `storage_substrate`, `representational_form`, `trace_derived`, `read_back_direction`, and `push_engineered`. The read-back fields need one extra interpretive cut: pushing shipped static documentation is baseline context, not memory read-back. For system choice, the useful distinction is whether retained memory is pull-only, coarse-pushed, identifier-targeted, or inferred from the current content.
+Current mature chooser fields are `storage_substrate`, `representational_form`, `trace_derived`, `read_back_direction`, and the `Read-back signal` one-hots. Pushing shipped static documentation is baseline context, not memory read-back. For system choice, the useful distinction is whether retained memory is pull-only, coarse-pushed, identifier-targeted, or inferred from the current content.
 
 ## Patterns Across Systems
 Most systems here (ours, Ars Contexta, Thalo, ClawVault, Agent-Skills) independently converge on:

@@ -20,7 +20,7 @@ allOf:
             enum: [code-grounded, doc-grounded]
         additionalProperties: true
       headings:
-        description: "Required review headings. Borrowable Ideas nests as a ### subsection under ## Comparison with Our System. ## Write-side placement is required in every review (it carries the **Write agency:** verdict; a ### Trace-derived learning sub-section is added only when trace-learning applies). ## Read-back placement carries the required **Read-back:** verdict and its full body only for a non-trivial push-activation path."
+        description: "Required review headings. Borrowable Ideas nests as a ### subsection under ## Comparison with Our System. ## Write side is required in every review (it carries the **Write agency:** verdict; a ### Trace-derived learning sub-section is added only when trace-learning applies). ## Read-back is required in every review (it carries the **Read-back:** verdict; push-specific detail inside the section is used only for push/both read-backs, with targeting recorded by the Read-back signal: a coarse vs instance signal, not a separate flag)."
         type: array
         allOf:
           - contains:
@@ -30,7 +30,9 @@ allOf:
           - contains:
               const: "## Comparison with Our System"
           - contains:
-              const: "## Write-side placement"
+              const: "## Write side"
+          - contains:
+              const: "## Read-back"
           - contains:
               const: "## Curiosity Pass"
           - contains:
@@ -53,7 +55,22 @@ allOf:
   - properties:
       body:
         not:
+          pattern: "## Write-side placement"
+  - properties:
+      body:
+        not:
+          pattern: "## Read-back placement"
+  - properties:
+      body:
+        not:
           pattern: "\\*\\*Read-back timing:\\*\\*"
+  - properties:
+      frontmatter:
+        properties:
+          tags:
+            not:
+              contains:
+                const: push-activation
   - if:
       properties:
         frontmatter:
@@ -67,16 +84,3 @@ allOf:
       properties:
         body:
           pattern: "### Trace-derived learning"
-  - if:
-      properties:
-        frontmatter:
-          required:
-            - tags
-          properties:
-            tags:
-              contains:
-                const: push-activation
-    then:
-      properties:
-        body:
-          pattern: "## Read-back placement"

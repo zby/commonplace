@@ -11,6 +11,7 @@ index_source: directory
 ## Subdirectories
 
 - [agent-complexity-theory/](./agent-complexity-theory/dir-index.md)
+- [agent-memory-review-rerun/](./agent-memory-review-rerun/dir-index.md)
 - [aris-full-trial/](./aris-full-trial/dir-index.md)
 - [auditable-llm-editing/](./auditable-llm-editing/dir-index.md)
 - [comparative-review-data-refresh/](./comparative-review-data-refresh/dir-index.md)
@@ -31,7 +32,6 @@ index_source: directory
 - [review-revise-gated/](./review-revise-gated/dir-index.md)
 - [review-run-lifecycle/](./review-run-lifecycle/dir-index.md)
 - [review-system-rewrite/](./review-system-rewrite/dir-index.md)
-- [review-template-retrofit/](./review-template-retrofit/dir-index.md)
 - [semantic-search-replacement/](./semantic-search-replacement/dir-index.md)
 - [shipping-model/](./shipping-model/dir-index.md)
 - [skill-creator-distillation/](./skill-creator-distillation/dir-index.md)

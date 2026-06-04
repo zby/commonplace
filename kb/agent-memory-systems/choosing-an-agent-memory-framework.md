@@ -8,7 +8,7 @@ status: current
 
 # Choosing an agent memory framework starts with activation, not storage
 
-The comparison matrix now has enough coverage to support a practical chooser lens. Across the code-reviewed systems, five fields are filled and varied enough to trust as first-pass filters: storage substrate, representational form, trace-derived status, read-back direction, and engineered push activation. The most useful first question is not "files or database?" but **how remembered material reaches the next action**.
+The comparison matrix now has enough coverage to support a practical chooser lens. Across the code-reviewed systems, five fields are filled and varied enough to trust as first-pass filters: storage substrate, representational form, trace-derived status, read-back direction, and read-back signal. The most useful first question is not "files or database?" but **how remembered material reaches the next action**.
 
 Storage still matters, but it is a second-order constraint. A file-first system can be pull-only, coarse always-load, or engineered push. A database-backed system can be a deliberate lookup surface or an automatic prompt injector. The activation path decides whether the agent must remember to look, whether memory arrives generically, or whether the system selects relevant memory before the next action.
 
@@ -50,8 +50,7 @@ The matrix is not yet a full product table. Most candidate columns remain empty 
 
 ## Open Questions
 
-- Should `read_back_targeting` and `read_back_signal` become extractable matrix fields now that the prose retrofit is complete?
-- Should coarse engineered push and instance-targeted push both keep using `push-activation`, or should the tag split once the targeting field is extractable?
+- Which read-back signal collapse belongs in the human chooser table: raw `sig_*` columns, a coarse/identifier/inferred display value, or a pull/coarse/targeted summary?
 - Which chooser dimensions are still missing from the matrix: governance, access control, temporal model, deployment surface, or curation operations?
 
 ---

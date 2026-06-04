@@ -2,7 +2,7 @@
 description: "Zikkaron review: local Claude Code memory engine with SQLite/vector retrieval, trace capture, hook-based context injection, and compaction replay"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived, push-activation]
+tags: [trace-derived]
 status: current
 last-checked: "2026-06-02"
 ---
@@ -79,7 +79,7 @@ Commonplace is stronger as a governed knowledge substrate. Its retained artifact
 
 **Do not borrow automatic prompt injection without review boundaries.** Needs a use case and gates. Zikkaron's hooks are effective, but automatic read-back can give stale or weak memories practical authority. Commonplace should require trace lineage, budgets, and observable effect checks before broad push activation.
 
-## Write-side placement
+## Write side
 
 **Write agency:** `automatic` `manual` — the write gate, curator, consolidation daemons, and hook trace capture change the store without the user; `remember` and the other MCP tools are the manual authoring channel
 
@@ -102,7 +102,7 @@ Commonplace is stronger as a governed knowledge substrate. Its retained artifact
 
 **Survey placement.** Zikkaron belongs in the trace-to-summary-memory and trace-to-runtime-context families. It strengthens the survey split between raw trace capture and distilled behavior-shaping artifacts: raw tool rows do little by themselves, while grouped action memories, checkpoints, anchors, and hook-selected memories can shape future agent behavior. It also shows the governance risk of trace-derived systems whose automatic summaries can be injected without a review step.
 
-## Read-back placement
+## Read-back
 
 **Direction.** Zikkaron is both pull and push. MCP tools such as `recall`, `get_project_context`, `restore`, `memory_stats`, and `get_rules` are pull. Installed Claude hooks push retained memory on `SessionStart`, `UserPromptSubmit`, and post-compaction restore; `PreCompact` and `PostToolUse` capture memory for later read-back rather than themselves returning memory to the agent.
 
@@ -112,7 +112,7 @@ Commonplace is stronger as a governed knowledge substrate. Its retained artifact
 
 **Targeting and signal.** Zikkaron has mixed push targeting. The `UserPromptSubmit` hook is `instance`-targeted: it extracts the current prompt, runs FTS5 over prompt terms (`inferred / lexical`) and optionally sqlite-vec over the prompt embedding (`inferred / embedding`), then boosts current-directory, non-action-stream, and high-heat memories within result, character, and time budgets. The `SessionStart` hook is mixed but mostly `instance`: it uses `cwd` as an `identifier` for hot project memories, always includes protected anchors globally, and includes the latest active checkpoint and recent actions as coarse session context. Post-compaction restore is also mixed: active checkpoint and recent/anchored memories are coarse or session-carried state, hot project memories are `identifier`-selected by directory, and SR prediction uses checkpoint task or directory text as an inferred query. Precision, recall, and context dilution are not verified from code.
 
-**Injection point.** The read-back assembles before the receiving Claude turn acts: `UserPromptSubmit` and `SessionStart` print into context pre-invocation, and post-compact restoration reconstructs context for the resumed session. `PreCompact` and `PostToolUse` fire after the turn but are write-side capture/maintenance, not a second read (see Write-side placement).
+**Injection point.** The read-back assembles before the receiving Claude turn acts: `UserPromptSubmit` and `SessionStart` print into context pre-invocation, and post-compact restoration reconstructs context for the resumed session. `PreCompact` and `PostToolUse` fire after the turn but are write-side capture/maintenance, not a second read (see Write side).
 
 **Selection, scope, and complexity.** Selection is bounded in hook code: prompt recall uses `MAX_RESULTS = 5`, `MAX_CONTEXT_CHARS = 3000`, and a 0.5 second time budget; session-start limits checkpoint, anchors, hot project memories, and recent actions. Full MCP recall has caller-provided `max_results`, many internal candidate/rerank stages, and metacognitive trimming. Complexity can still be high because the retrieval stack combines many signals and derived stores.
 

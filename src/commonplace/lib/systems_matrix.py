@@ -101,7 +101,7 @@ COLUMNS = [
     "read_back_direction", "rb_pull", "rb_push",
     *ONEHOT_AXES["Read-back signal"],
     "rb_faithfulness_tested",
-    "push_engineered", "read_back_notes",
+    "read_back_notes",
 ]
 
 # Columns the parser owns (recomputed every run). Everything else is
@@ -112,7 +112,7 @@ PARSED = {
     "storage_substrate", "representational_form",
     "read_back_direction", "read_back_notes", "rb_pull", "rb_push",
     "rb_faithfulness_tested",
-    "trace_derived", "push_engineered",
+    "trace_derived",
     *_PARSED_ONEHOT,
 }
 JOINED = {"public_repo", "clone_path"}
@@ -203,7 +203,8 @@ def parse_review_text(text: str, review_file: str, source_tier: str) -> tuple[di
         tags = {t.strip() for t in mt.group(1).split(",") if t.strip()}
     trace_derived = "trace-derived" in tags
     row["trace_derived"] = "yes" if trace_derived else "no"
-    row["push_engineered"] = "yes" if "push-activation" in tags else "no"
+    # Targeting (coarse vs instance) lives in the Read-back signal one-hots; there is
+    # no separate push_engineered flag — an `instance` signal *is* a targeted push.
 
     # single-valued lead tokens + vocab flagging
     for col, (label, vocab) in SINGLE_VOCAB.items():
