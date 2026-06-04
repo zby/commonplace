@@ -59,7 +59,13 @@ A second realisation sharpened the cut: when maintenance is **manual**, it *is* 
 
 **Consequences.** Findings quantify the 129 code-grounded systems; doc-grounded coverage remains a landscape surface, not comparison data.
 
-**Update.** The former separate `lightweight-review` type was later merged into `agent-memory-system-review`; the evidence tier is now the `source-tier` field (`code-grounded` | `doc-grounded`), not a distinct type. The one difference that ever mattered — authority — is a field, eliminating the two-spec drift.
+### D6 — One review type; evidence tier is a field, not a type
+
+**Context.** There were two types — `agent-memory-system-review` (code-grounded) and `lightweight-review` (doc-grounded) — carrying the *same* comparison elements; the lightweight spec itself said its label was "about authority, not scope." The matrix already keyed inclusion on directory, not type (D5). Two specs that must say the same thing drifted: the write-side/read-side methodology update (D3) was applied to the code-grounded type but the lightweight type was forgotten. That forgetting is the signature of duplication that should be one artifact.
+
+**Decision.** Collapse to a single `agent-memory-system-review` type with a required `source-tier: code-grounded | doc-grounded` frontmatter field as the one authority marker. Delete `lightweight-review.md` and its schema; fold the doc-grounded deltas (claim-level evidence stance, document-not-repo source metadata, source-URL citations, promotion) into a **Doc-grounded tier** section of the merged spec. **One equally-strict schema** for both tiers — doc-grounded reviews lean on `not-determinable` where sources are silent, which is authoring discipline, not a schema branch. Keep the `reviews/` vs `lightweight/` directory split as physical organisation only; the build keys on `source-tier`, not the path. The matrix `source_tier` value moves `repo-reviewed` → `code-grounded` to match the field.
+
+**Consequences.** One source of truth for the methodology — the drift class of D3-vs-lightweight is eliminated. Promotion from doc- to code-grounded is now a field flip, not a type conversion. `source-tier` is required, so every review backfills it during the layout retrofit. Folding this in, the schema was also tightened to enforce what the spec already called required but didn't — `## Artifact analysis` and the `**Read-back:**` verdict. The directory split stays a convenience, no longer load-bearing.
 
 ## Open follow-ons
 
