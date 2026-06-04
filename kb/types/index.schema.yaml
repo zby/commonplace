@@ -21,9 +21,6 @@ allOf:
             type: string
             minLength: 1
         additionalProperties: true
-      links:
-        type: array
-        minItems: 3
   - if:
       properties:
         frontmatter:

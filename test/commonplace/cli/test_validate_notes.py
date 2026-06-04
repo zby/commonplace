@@ -13,6 +13,8 @@ if str(SRC_ROOT) not in sys.path:
 
 import pytest  # noqa: E402
 
+from jsonschema.exceptions import ValidationError  # noqa: E402
+
 from commonplace.cli import validate_notes  # noqa: E402
 from commonplace.lib import project_paths, validation  # noqa: E402
 from commonplace.lib.naming import MAX_NOTE_SLUG_LENGTH  # noqa: E402
@@ -257,7 +259,7 @@ def test_structured_claim_requires_evidence_and_reasoning(tmp_path: Path) -> Non
     note = write(
         notes_root / "claim.md",
         """---
-description: Structured claim missing one required section so the validator should warn deterministically
+description: Structured claim missing one required section so the validator should fail deterministically
 type: kb/notes/types/structured-claim.md
 traits: []
 status: current
@@ -273,7 +275,8 @@ Some evidence.
 
     results = validation.validate_note(note, repo_root=tmp_path)
 
-    assert any("missing '## Reasoning'" in item for item in results.warns)
+    # Schema violations fail by default unless the constraint opts down to warn.
+    assert any("missing '## Reasoning'" in item for item in results.fails)
 
 
 def test_bare_enum_frontmatter_type_fails_validation(tmp_path: Path) -> None:
@@ -296,7 +299,7 @@ status: current
     assert "frontmatter.type: must start with kb/ or be file-relative (./ or ../): spec" in results.fails
 
 
-def test_agent_memory_review_warns_when_last_checked_missing(tmp_path: Path) -> None:
+def test_agent_memory_review_fails_when_last_checked_missing(tmp_path: Path) -> None:
     notes_root = configure_temp_repo(tmp_path)
     write(
         tmp_path / "kb" / "agent-memory-systems" / "types" / "agent-memory-system-review.schema.yaml",
@@ -344,7 +347,37 @@ Watch.
 
     results = validation.validate_note(note, repo_root=tmp_path)
 
-    assert "frontmatter: 'last-checked' is a required property" in results.warns
+    assert "frontmatter: 'last-checked' is a required property" in results.fails
+
+
+def test_schema_violation_fails_by_default() -> None:
+    # No severity on the failing subschema → the default applies: a broken
+    # constraint blocks (the schema is the contract).
+    error = ValidationError(
+        "'x' is a required property",
+        validator="required",
+        schema={"required": ["x"]},
+        path=["frontmatter"],
+    )
+
+    severity, _ = validation._schema_error_message(error)
+
+    assert severity == "fail"
+
+
+def test_schema_constraint_can_opt_down_to_warn() -> None:
+    # `severity: warn` on the failing subschema downgrades just that constraint,
+    # keyed by its stable ruleId.
+    error = ValidationError(
+        "[] is too short",
+        validator="minItems",
+        schema={"type": "array", "minItems": 3, "ruleId": "min-items-example", "severity": "warn"},
+        path=["links"],
+    )
+
+    severity, _ = validation._schema_error_message(error)
+
+    assert severity == "warn"
 
 
 def test_quote_citation_shape_passes_when_well_formed() -> None:

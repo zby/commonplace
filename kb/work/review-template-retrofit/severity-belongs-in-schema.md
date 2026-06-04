@@ -83,7 +83,7 @@ The mechanism is settled by the research; this is the substance left to choose.
 - **(B) Default fail, annotate warns (invert).** "Violating the schema fails unless marked soft." Most principled — a schema _is_ the spec — but flips today's warnings to failures across every type and needs a constraint audit first. Bigger, riskier.
   
 
-(A) is the recommended next step; (B) a possible end state once constraints are audited.
+**Decision (implemented 2026-06-04): (B) default-fail.** The analysis had recommended (A) as the safer step and (B) as "bigger, riskier" pending a constraint audit. Running the audit it asked for changed the call: a full-corpus `commonplace-validate` across all five collections found exactly **3 schema-derived warnings**, all the same `minItems` constraint on generated dir-indexes, in 3 files — every other warning was hand-coded (link-health), not schema-routed. So (B)'s feared blast radius was empty: no existing note breaks, and fail-by-default only bites future violations, which is the point. Implemented: `_DEFAULT_SCHEMA_SEVERITY = "fail"` in `_schema_error_message`, severity read from `error.schema`, `_FAIL_PATHS` deleted. The one soft constraint (the index `minItems`) was **removed outright** rather than tagged `severity: warn` — a near-empty generated index is not worth flagging at all — so no schema currently carries a `severity` annotation; the opt-down path is exercised by a unit test instead.
 ## Wrinkles
 - `required` **granularity.** `required` errors report at the parent object with the field name in the message, so `error.schema` is the whole object — one `severity` / `ruleId` covers all its required fields uniformly. Fine for the frontmatter case (all three fail together); per-field severity would need the fields split into separate subschemas.
   
@@ -91,11 +91,11 @@ The mechanism is settled by the research; this is the substance left to choose.
   
 - **Unannotated constraints.** Default `warn`, and (optionally) `log`/surface that a fired constraint had no `ruleId` so coverage gaps are visible rather than silent.
   
-## Recommendation
-1. Adopt the **stable-**`ruleId` **+ inline-**`severity` model in `_schema_error_message` (default `warn`), and delete `_FAIL_PATHS`. This matches the Spectral/Schematron convergent pattern; it is not a bespoke invention.
+## Recommendation (as implemented)
+1. Adopted the **stable-**`ruleId` **+ inline-**`severity` model in `_schema_error_message`, now **default** `fail`, and deleted `_FAIL_PATHS`. Matches the Spectral/Schematron convergent pattern; not a bespoke invention.
   
-2. Annotate the three frontmatter required fields `severity: fail` (policy A) and the `**Write agency:**` constraint `severity: fail` — the latter is the retrofit done-condition plan.md wanted but declared unreachable. Zero blast radius on other types.
+2. A constraint opts down with `severity: warn` (read off `error.schema`), keyed by a stable `ruleId`. No schema needs the opt-down today — the only candidate (index `minItems`) was removed instead.
   
-3. Defer the external override layer and fail-by-default (B) until a second consumer needs them (YAGNI) — the `ruleId`s make both cheap to add later.
+3. Deferred (YAGNI): the **external override layer** (a severity map keyed by `ruleId`) and folding the **hand-coded checks** (link-health `warn`, title/slug `fail`) into the same model. Both are cheap to add later; neither is needed now.
   
-4. If this generalizes beyond the review schema, promote the principle ("severity is keyed to a stable rule ID, authored with the constraint") to a `kb/notes/` note.
+4. Follow-on: if this generalizes, promote the principle ("severity is keyed to a stable rule ID, authored with the constraint; the schema fails by default") to a `kb/notes/` note.

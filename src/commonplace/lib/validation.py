@@ -14,13 +14,13 @@ from commonplace.lib.note_parser import ParsedDocument, parse_document
 from commonplace.lib.type_resolver import TypeProfile, resolve_type, validate_instance
 
 
-_FAIL_PATHS: frozenset[tuple[str, ...]] = frozenset({
-    ("frontmatter", "description"),
-    ("frontmatter", "tags"),
-    ("frontmatter", "type"),
-})
-
-_REQUIRED_PROPERTY_RE = re.compile(r"'([^']+)' is a required property")
+# A schema violation fails by default — the schema is the contract, so breaking a
+# constraint blocks unless its author explicitly opts down. A subschema lowers its
+# own severity with `severity: warn` (read from error.schema below), optionally
+# keyed by a stable `ruleId` so it can be re-leveled or referenced later. This is
+# the Spectral/Schematron pattern (severity authored on an identified rule); see
+# kb/work/review-template-retrofit/severity-belongs-in-schema.md.
+_DEFAULT_SCHEMA_SEVERITY = "fail"
 
 # A quote-anchored citation's attribution line: a blockquote line of the form `> --- ...`.
 # The trailing group is the attribution (source path or link).
@@ -144,21 +144,17 @@ def validate_quote_citations(results: CheckResults, content: str) -> None:
 
 def _schema_error_message(error: ValidationError) -> tuple[str, str]:
     path = tuple(str(part) for part in error.absolute_path)
-
-    # `required` violations report at the parent path; the missing field is in the message.
-    # For severity lookup, treat the missing field as if it were at path + (field_name,).
-    effective_path = path
-    if error.validator == "required":
-        match = _REQUIRED_PROPERTY_RE.search(error.message)
-        if match:
-            effective_path = path + (match.group(1),)
-
-    severity = "fail" if effective_path in _FAIL_PATHS else "warn"
     location = ".".join(path) if path else "document"
+
+    # Severity is a property of the failing constraint: read it from the leaf
+    # subschema, defaulting to fail. Same place description/title/contains are read.
+    schema = error.schema if isinstance(error.schema, dict) else None
+    severity = _DEFAULT_SCHEMA_SEVERITY
+    if isinstance(schema, dict) and schema.get("severity") in ("fail", "warn"):
+        severity = schema["severity"]
 
     # Prefer schema-authored description/title when present — lets schema authors
     # make any specific error more readable without touching validator code.
-    schema = error.schema if isinstance(error.schema, dict) else None
     if isinstance(schema, dict):
         hint = schema.get("description") or schema.get("title")
         if isinstance(hint, str):
