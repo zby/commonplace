@@ -9,6 +9,9 @@ exclude_docs: |
   work/review-revise-gated/run-08/**
 theme:
   name: mkdocs
+extra_javascript:
+  - https://cdnjs.cloudflare.com/ajax/libs/tablesort/5.3.0/tablesort.min.js
+  - javascripts/tablesort-init.js
 plugins:
   - search
   - redirects:

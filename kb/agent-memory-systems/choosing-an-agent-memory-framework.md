@@ -48,16 +48,6 @@ The matrix is not yet a full product table. Most candidate columns remain empty 
 
 **Choose database/vector/graph systems** when scale, multi-tenant access, temporal queries, relationship traversal, or low-latency semantic retrieval matter more than plain-file inspectability. The trade is operational complexity and reduced transparency of the exact memory object that shaped the next action.
 
-## What Belongs In The README
-
-The collection README should not become a giant comparison table. It should point readers to three entry points:
-
-- the comparative review for the deeper theory of agency, link structure, curation, and temporal model;
-- this chooser guide for first-pass system selection;
-- the generated matrix for current counts and sortable backing data.
-
-The README should also name the read-back distinction explicitly. The review framework treats shipped static documentation as baseline context, not memory read-back. That matters for readers choosing systems: a framework that auto-loads skills or manuals is not the same as one that retrieves retained memory for the current instance.
-
 ## Open Questions
 
 - Should `read_back_targeting` and `read_back_signal` become extractable matrix fields now that the prose retrofit is complete?

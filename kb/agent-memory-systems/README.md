@@ -13,16 +13,12 @@ Browse the roster:
   
 - [Lightweight coverage](./lightweight/dir-index.md) — paper- or README-grounded systems with no inspectable repo
   
-- [Collection directory index](./dir-index.md) — top-level files in this collection (the cross-cutting notes below), with links into the two subdirectories above
-  
 
 Cross-cutting reads:
 
 - [Choosing an agent memory framework](./choosing-an-agent-memory-framework.md) — chooser-oriented guide using activation model, substrate, trace-derived learning, and governance tradeoffs as first-pass filters
   
 - [Comparative review](./agentic-memory-systems-comparative-review.md) — synthesises across both tiers
-  
-- [Adaptation survey review candidates](./adaptation-survey-review-candidates.md) — maps the agentic-adaptation survey's memory and skill systems to existing reviews and likely additions
   
 - [Trace-derived learning techniques in related systems](./trace-derived-learning-techniques-in-related-systems.md) — broadens the comparison to artifact-learning and weight-learning systems fed by live traces
   
