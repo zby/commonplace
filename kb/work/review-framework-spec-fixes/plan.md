@@ -42,7 +42,7 @@ In `## Write-side placement`, the Operations bullet says "Note for each whether 
 ### Fix 4 — Make D3 accurate (depends on Fix 1)
 If Fix 1 lands, D3's "are removed" becomes true — no edit needed beyond a last-checked bump if desired. If we defer Fix 1 instead, change D3's consequence to "pending" so the decision log stops claiming finished work.
 ## Out of scope here (tracked, not blocking)
-- **84 active reviews still carry** `**Read-back timing:**` **tokens** and ~190 carry the old `## Trace-derived learning placement` heading. After Fix 1 the tokens are inert prose and the schema relaxation keeps the headings valid. Stripping the dead tokens and renaming headings is **retrofit work** — fold it into the existing `comparative-review-data-refresh` / `agent-memory-matrix-retrofit` passes, not this one. `kb/work/agent-memory-matrix-retrofit/runbook.md` also references timing and should be updated in that pass.
+- **84 active reviews still carry** `**Read-back timing:**` **tokens** and ~190 carry the old `## Trace-derived learning placement` heading. After Fix 1 the tokens are inert prose and the schema relaxation keeps the headings valid. Stripping the dead tokens and renaming headings is **retrofit work** — fold it into the existing `comparative-review-data-refresh` / `review-template-retrofit` passes, not this one. See `kb/work/review-template-retrofit/runbook.md` for the current layout-retrofit procedure.
   
 - **Wiring** `**Write agency:**` **/** `**Curation operations:**` **into the parser as one-hot columns (Finding 3 / D4).** Authored-in-prose now, extract-later — same precedent as read-back signal. New axes + columns + retrofit; a separate unit.
   

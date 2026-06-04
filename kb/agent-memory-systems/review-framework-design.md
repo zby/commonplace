@@ -69,7 +69,7 @@ A second realisation sharpened the cut: when maintenance is **manual**, it *is* 
 
 ## Open follow-ons
 
-- **Review retrofit (second pass):** migrate the ~89 trace reviews to the `## Write-side placement` / `### Trace-derived learning` structure, author `**Write agency:**` and `**Curation operations:**`, and strip the deprecated `**Read-back timing:**` tokens. See the runbook in `kb/work/agent-memory-matrix-retrofit/`.
+- **Review retrofit (second pass):** migrate the ~89 trace reviews to the `## Write-side placement` / `### Trace-derived learning` structure, author `**Write agency:**` and `**Curation operations:**`, and strip the deprecated `**Read-back timing:**` tokens. See the runbook in `kb/work/review-template-retrofit/`.
 - **Parser/matrix:** add `write_agency` and curation-operation one-hot columns; drop `rb_pre_action`/`rb_post_action`.
 - ~~Theory note for "no post-action read-back"~~ — resolved by pinning `read-back` in the activation-gap note rather than adding a note.
 

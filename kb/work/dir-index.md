@@ -11,7 +11,6 @@ index_source: directory
 ## Subdirectories
 
 - [agent-complexity-theory/](./agent-complexity-theory/dir-index.md)
-- [agent-memory-matrix-retrofit/](./agent-memory-matrix-retrofit/dir-index.md)
 - [aris-full-trial/](./aris-full-trial/dir-index.md)
 - [auditable-llm-editing/](./auditable-llm-editing/dir-index.md)
 - [comparative-review-data-refresh/](./comparative-review-data-refresh/dir-index.md)

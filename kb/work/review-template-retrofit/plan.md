@@ -9,7 +9,7 @@ done-condition for the retrofit. Then fan the retrofit out one sub-agent per
 review, then rebuild and verify the whole corpus.
 
 This is the **layout** retrofit (rename + write-side tokens + timing removal),
-distinct from the earlier `../agent-memory-matrix-retrofit/` (one-hot lead tokens).
+distinct from the earlier one-hot lead-token retrofit (now retired).
 
 ## Sequence
 

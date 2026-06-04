@@ -5,7 +5,7 @@ Migrate one agent-memory-system review to the **write-side / read-side** templat
 
 **Severity note:** schema violations validate as **warnings**, not failures (the validator hard-fails only on frontmatter `description`/`tags`/`type`), so an un-retrofitted review reports `Overall: PASS (N warnings)`. Do **not** gate on bare `Overall: PASS` — use the Worklist signals below.
 
-Authority: `../../agent-memory-systems/types/agent-memory-system-review.md` (Write-side placement + Read-back placement sections, and the skeleton). Worked example: `../../agent-memory-systems/reviews/Zikkaron.md` (the canonical fully-retrofitted review — validates `PASS (clean)`; mirror its structure). Mirror the delegation discipline of the earlier `../agent-memory-matrix-retrofit/` runbook: faithful-not-complete, `not-determinable` over guessing.
+Authority: `../../agent-memory-systems/types/agent-memory-system-review.md` (Write-side placement + Read-back placement sections, and the skeleton). Worked example: `../../agent-memory-systems/reviews/Zikkaron.md` (the canonical fully-retrofitted review — validates `PASS (clean)`; mirror its structure). Keep the established delegation discipline: faithful-not-complete, `not-determinable` over guessing.
 
 **Environment:** run all commands from the repo root with the project venv active (direnv puts `.venv/bin` on `PATH`); use `.venv/bin/commonplace-validate` and `python3 scripts/build_systems_matrix.py` as written. All paths in this runbook are repo-root-relative.
 ## What the new layout is
@@ -31,11 +31,11 @@ Authority: `../../agent-memory-systems/types/agent-memory-system-review.md` (Wri
 - **Doc-grounded (**`lightweight/`**) caveat:** these often lack code evidence for curation operations — author `**Write agency:**` from the sources; use a sole `` `not-determinable` `` on `**Curation operations:**` only if the write path is genuinely automatic but unspecified. The matrix consumes `code-grounded` rows only, but the rename + timing removal + agency verdict + `source-tier` apply everywhere to pass the strict schema.
   
 ## Worklist
-Division of labour: the **build flags cover the tokens** (parser-level: `Write agency`, and `Curation operations` once agency is `automatic`); **validate/grep cover the structure** (schema-level: the heading rename, the dead timing token, and the `### Trace-derived learning` sub-section). Neither tool alone is the full worklist — hence three signals.
+Division of labour: the **build flags cover code-grounded parser fields** (parser-level: `source-tier`, `Write agency`, and `Curation operations` once agency is `automatic`); **validate/grep cover the structure** (schema-level: the heading rename, the dead timing token, the missing write-side heading, and the `### Trace-derived learning` sub-section). Neither tool alone is the full worklist — hence four signals.
 
 A review needs work if **any** of these deterministic signals fire (don't rely on `Overall: PASS` — see the severity note):
 
-1. **Missing/incomplete tokens** — `python3 scripts/build_systems_matrix.py` lists per-review flags on code-grounded rows (e.g. `Write agency: missing lead token`, and `Curation operations` once agency is `automatic`).
+1. **Missing/incomplete matrix fields** — `python3 scripts/build_systems_matrix.py` lists per-review flags on code-grounded rows (e.g. `source-tier: missing frontmatter`, `Write agency: missing lead token`, and `Curation operations` once agency is `automatic`).
   
 2. **Old structure still present:**
   
@@ -56,11 +56,21 @@ for f in kb/agent-memory-systems/reviews/*.md kb/agent-memory-systems/lightweigh
 done
 ```
 
-Lightweight reviews aren't in the matrix build, so signal 1 won't catch them — use signals 2–3 and a per-file `commonplace-validate` for those.
+4. **Validation not clean on any live review** — this is the deterministic catch-all for lightweight/doc-grounded reviews, which are not emitted by the matrix build, and for schema warnings not covered by the structural greps:
+  
+
+```bash
+for f in kb/agent-memory-systems/reviews/*.md kb/agent-memory-systems/lightweight/*.md; do
+  case "$f" in *.replaced.*|*/dir-index.md|*/README.md) continue;; esac
+  commonplace-validate "$f" | grep -q "Overall: PASS (clean)" || echo "$f"
+done
+```
+
+Lightweight reviews aren't in the matrix build, so signal 1 won't catch them — use signals 2–4 for those.
 ## Orchestration
 1. For each worklist file, spawn **one sub-agent** scoped to that single file — sequential or bounded-parallel, but **never two agents on one file**. Pass it the file path, this runbook, the spec, and the Zikkaron example.
   
-2. After each sub-agent returns, run `commonplace-validate <file>` → `Overall: PASS (clean)` (no Write-side / Read-back / Trace warnings), and re-run the build to confirm that file's flags are gone.
+2. After each sub-agent returns, run `commonplace-validate <file>` → `Overall: PASS (clean)` (no Write-side / Read-back / Trace warnings). For files under `reviews/`, also re-run the build to confirm that file's flags are gone; files under `lightweight/` are doc-grounded and excluded from the matrix.
   
 3. Repeat until the worklist is empty.
   
@@ -88,7 +98,7 @@ Lightweight reviews aren't in the matrix build, so signal 1 won't catch them —
 8. **Self-check:** `source-tier` is set; a `## Write-side placement` heading with a `**Write agency:**` token is present; no `## Trace-derived learning placement` heading remains; no `**Read-back timing:**` line remains; tokens use only allowed values; multi-valued tokens list every value that applies; `commonplace-validate` is `PASS (clean)`.
   
 ## Done condition
-- All three worklist signals return nothing; every in-scope review is `Overall: PASS (clean)`.
+- All four worklist signals return nothing; every in-scope review is `Overall: PASS (clean)`.
   
 - `python3 scripts/build_systems_matrix.py` → 0 flags on code-grounded rows.
   
