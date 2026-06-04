@@ -9,7 +9,7 @@ Authority: `../../agent-memory-systems/types/agent-memory-system-review.md` (Wri
 
 **Environment:** run all commands from the repo root with the project venv active (direnv puts `.venv/bin` on `PATH`); use `.venv/bin/commonplace-validate` and `python3 scripts/build_systems_matrix.py` as written. All paths in this runbook are repo-root-relative.
 ## What the new layout is
-1. `## Trace-derived learning placement` **→** `## Write-side placement`, with the trace treatment demoted to a `### Trace-derived learning` **sub-section**. The write side is _everything that changes the store_; trace-learning is the automatic-from-traces case.
+1. Every review gets a `## Write-side placement` section (required). A trace review's `## Trace-derived learning placement` is **renamed** to it, with the trace treatment demoted to a `### Trace-derived learning` **sub-section**; a non-trace review (most of them) gets a **freshly created** `## Write-side placement` heading. The write side is _everything that changes the store_; trace-learning is the automatic-from-traces case.
   
 2. **Write-side lead tokens:**
   
@@ -69,13 +69,19 @@ Lightweight reviews aren't in the matrix build, so signal 1 won't catch them —
   
 2. **Add** `source-tier` to frontmatter if absent: `code-grounded` for files under `reviews/`, `doc-grounded` for files under `lightweight/`.
   
-3. **Rename** `## Trace-derived learning placement` → `## Write-side placement`; demote its trace content to a `### Trace-derived learning` sub-section. Preserve the trace lead tokens (`**Trace source:**`, `**Learning scope:**`, `**Learning timing:**`, `**Distilled form:**`) and prose verbatim.
+3. **Ensure a** `## Write-side placement` **section exists**, located after `## Comparison with Our System` (and its `### Borrowable Ideas`) and before `## Read-back placement`:
   
+
+- **If** the review has a `## Trace-derived learning placement` section, **rename** it to `## Write-side placement` and demote its trace content to a `### Trace-derived learning` sub-section — preserve the trace lead tokens (`**Trace source:**`, `**Learning scope:**`, `**Learning timing:**`, `**Distilled form:**`) and prose verbatim.
+  
+- **Otherwise** (most non-trace reviews have no such section), **create** the `## Write-side placement` heading at that location.
+  
+
 4. **Add** `**Write agency:**` under the `## Write-side placement` heading: `manual` if the store changes only through the authoring channel; `automatic` if the system itself writes/curates (rule-driven, scheduled, or trace-learned); both when both apply. End with a short `— justification` from the review's own prose.
   
 5. **Add** `**Curation operations:**` only when agency includes `automatic`: the automatic operations the review's evidence supports. Manual maintenance is _not_ an operation (agency only). Index/embedding rebuilds are access-structure upkeep, not operations. If the path is automatic but the operations are unreadable from the evidence, use a sole `` `not-determinable` ``.
   
-6. **Remove the read-back timing** lead line and the old "Timing relative to action" item. If that prose carried real capture/consolidation meaning, relocate it to the write side (a curation operation or maintenance prose). Keep the read-back item numbering consistent with the spec (current item 3 is "Injection point — pre-invocation"; add injection-point prose only if the trigger/occasion is distinctive — session start, pre-compact, etc.).
+6. **Remove the read-back timing** lead line and the old "Timing relative to action" item _(present only in push/trace reviews — skip if absent)_. If that prose carried real capture/consolidation meaning, relocate it to the write side (a curation operation or maintenance prose). Keep the read-back item numbering consistent with the spec (current item 3 is "Injection point — pre-invocation"; add injection-point prose only if the trigger/occasion is distinctive — session start, pre-compact, etc.).
   
 7. Do **not** restate the read-back definition; do **not** read or modify the reviewed system's source; do **not** change the review's claims; do **not** bump `last-checked`. Preserve all citations, blockquotes, and CriticMarkup attributes.
   
