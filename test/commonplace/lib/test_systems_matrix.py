@@ -8,7 +8,7 @@ from commonplace.lib import systems_matrix as sm
 FIXTURES_DIR = Path(__file__).resolve().parent / "fixtures"
 
 
-def parse(text: str, review_file: str = "reviews/x.md", tier: str = "repo-reviewed"):
+def parse(text: str, review_file: str = "reviews/x.md", tier: str = "code-grounded"):
     return sm.parse_review_text(text, review_file, tier)
 
 

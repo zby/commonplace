@@ -146,6 +146,7 @@ When a full section is warranted, address:
 
 - `description` — discriminating retrieval filter (50–200 chars, double-quoted)
 - `type: ../types/agent-memory-system-review.md`
+- `source-tier` — `code-grounded` when the findings rest on inspected source, `doc-grounded` when they rest only on docs/papers/reports. Required. This is the **only** authority difference between reviews; see *Doc-grounded tier*.
 - `status: current` unless clearly stale
 - `last-checked: "{today}"`
 - `tags` — add `trace-derived` and/or `push-activation` only per the placement rules above. A review may carry neither, either, or both; otherwise omit `tags`. Collection membership comes from location, not a tag.
@@ -174,9 +175,34 @@ The quoted text is the anchor; the attribution pins where it came from. Do not r
 
 This is **optional and additive** — use it on the claims that carry the review, not on every sentence. It strengthens the "readable without the source" goal above: the evidence now travels inline rather than hiding behind a file path. Resolution (does the quote actually appear in the pinned source?) is a write-time check run against the live checkout — see [verify-review-quote-grounding](../../instructions/verify-review-quote-grounding.md) — not something a later reader or the standing validator can redo, because the source is not retained in the KB. The validator checks only that each quote-anchored citation is well-formed and names a source.
 
+## Doc-grounded tier
+
+A review is one type; `source-tier` records its evidence tier and is the only thing
+that differs by authority. Most of this spec assumes `code-grounded` (source was
+inspected). A `doc-grounded` review covers a system whose source is **not
+reachable** — a paper, README, article, practitioner report, or ingest — and
+carries the **same sections and the same controlled lead tokens**, at a lower
+evidence tier. Deltas when `source-tier: doc-grounded`:
+
+- **Evidence stance is claim-level.** State mechanisms as *reported*; never present
+  reported behavior as observed. Where sources conflict or go quiet, say so. A field
+  the sources don't address gets a sole `` `not-determinable` `` token with a note,
+  not a guess.
+- **Source metadata names documents, not a repo** — the paper / README / article /
+  ingest and its version or date, in the source lines (not a repository + commit).
+- **Citations point at the sources** — URLs and `kb/sources/` ingest/snapshot links,
+  never at source files. Keep the review readable without the original documents.
+- **`last-checked`** records when coverage was last reconciled against its sources.
+- **Promotion.** If inspectable source later appears and is read, flip `source-tier`
+  to `code-grounded` and upgrade the findings from reported to observed.
+
+`doc-grounded` reviews live under `lightweight/` and are excluded from the
+code-backed comparison matrix; the matrix keys on `source-tier`, not location.
+
 ## Constraints
 
 - Don't put the source directory under `kb/agent-memory-systems/reviews/`.
+- Don't present `doc-grounded` reported behavior as observed; don't invent four-field or read-back detail the sources don't support.
 - Don't write markdown links from a review into local source paths (`../../../related-systems/...`).
 - Don't treat proposed docs as implemented behavior without checking the code.
 - Don't update `last-checked` without actually re-reading the system.

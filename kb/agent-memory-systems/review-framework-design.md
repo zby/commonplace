@@ -55,9 +55,11 @@ A second realisation sharpened the cut: when maintenance is **manual**, it *is* 
 
 **Context.** Lightweight (doc-grounded) coverage is a lower evidence tier, and a comparison table is for *choosing* a system.
 
-**Decision.** The matrix and its consumption table cover `repo-reviewed` systems only; lightweight reviews are excluded from the contract and the build.
+**Decision.** The matrix and its consumption table cover `code-grounded` systems only (the `source-tier` frontmatter value the build keys on); `doc-grounded` reviews under `lightweight/` are excluded from the contract and the build.
 
-**Consequences.** Findings quantify the 129 code-reviewed systems; lightweight coverage remains a landscape surface, not comparison data.
+**Consequences.** Findings quantify the 129 code-grounded systems; doc-grounded coverage remains a landscape surface, not comparison data.
+
+**Update.** The former separate `lightweight-review` type was later merged into `agent-memory-system-review`; the evidence tier is now the `source-tier` field (`code-grounded` | `doc-grounded`), not a distinct type. The one difference that ever mattered — authority — is a field, eliminating the two-spec drift.
 
 ## Open follow-ons
 

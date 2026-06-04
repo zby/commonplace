@@ -73,7 +73,7 @@ def mutual_info_norm(a: list[str], b: list[str]) -> float:
 
 def main() -> int:
     cols, all_rows = load()
-    rows = [r for r in all_rows if r.get("source_tier") == "repo-reviewed"]
+    rows = [r for r in all_rows if r.get("source_tier") == "code-grounded"]
     n = len(rows)
     analytic = [c for c in cols if c not in SKIP]
 

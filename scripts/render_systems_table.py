@@ -87,7 +87,7 @@ def rel_link(review_file: str) -> str:
 
 def main() -> int:
     with SYSTEMS_CSV.open(encoding="utf-8") as fh:
-        rows = [r for r in csv.DictReader(fh) if r.get("source_tier") == "repo-reviewed"]
+        rows = [r for r in csv.DictReader(fh) if r.get("source_tier") == "code-grounded"]
     rows.sort(key=lambda r: r["system_name"].lower())
 
     headers = ["System"] + [h for h, _ in COLUMNS]

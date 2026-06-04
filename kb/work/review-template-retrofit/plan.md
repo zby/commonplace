@@ -14,6 +14,7 @@ distinct from the earlier `../agent-memory-matrix-retrofit/` (one-hot lead token
 ## Sequence
 
 - **Phase 0 — make the tooling strict** (orchestrator, do once, *not* delegated). Below.
+- **Phase 0.5 — collapse the two review types into one** (orchestrator, do once). Below.
 - **Phase 1 — per-review retrofit** (delegated fan-out). See `runbook.md`.
 - **Phase 2 — verify the live corpus** (orchestrator). Below.
 
@@ -100,6 +101,54 @@ would mean broadening `_FAIL_PATHS` in `src/commonplace/lib/validation.py`, whic
 changes validator semantics for every note type — out of scope. The worklist
 therefore keys on build flags + structural grep, not `Overall: PASS` (see
 `runbook.md`).
+
+---
+
+## Phase 0.5 — collapse the two review types into one
+
+**Rationale.** `lightweight-review` carries the *same comparison elements* as
+`agent-memory-system-review` — its own spec says the label is "about authority, not
+scope". The only real difference is evidence tier (was code read?), and every
+downstream difference (evidence stance, source-metadata format, citation target,
+matrix inclusion) follows from that one bit. The matrix build already keys
+inclusion on directory, not type. Two specs that must say the same thing is what
+caused the drift the methodology update just hit (lightweight was forgotten). So
+make it **one type with a `source-tier` field**; tier becomes the single authority
+marker.
+
+**Decisions:** keep the `reviews/` vs `lightweight/` directory split (physical org;
+build keys on the field, not the path); one **equally-strict** schema for both
+tiers (doc-grounded reviews use `not-determinable` where sources are silent — an
+authoring discipline, not a schema branch).
+
+**Steps:**
+
+1. **Spec** (`...types/agent-memory-system-review.md`): add `source-tier:
+   code-grounded | doc-grounded` to the Frontmatter section. Fold the lightweight
+   deltas (evidence stance, source-metadata format, citation target, promotion
+   note) into a short **"## Doc-grounded tier"** subsection — the deltas the
+   lightweight doc already was, minus the duplicated 90%.
+2. **Schema** (`...types/agent-memory-system-review.schema.yaml`): require
+   `source-tier` with `enum: [code-grounded, doc-grounded]`. No tier branch (equally
+   strict).
+3. **Delete** `lightweight-review.md` and `lightweight-review.schema.yaml`.
+4. **Flip the doc-grounded reviews** (`lightweight/*.md`, ~5): `type:` →
+   `agent-memory-system-review.md`, add `source-tier: doc-grounded`. (Body retrofit
+   to the new layout still happens in Phase 1.)
+5. **Build** (`scripts/build_systems_matrix.py`): read `source-tier` from
+   frontmatter instead of hardcoding `repo-reviewed` by directory; map the matrix
+   `source_tier` column to the field value. During the transition, default to
+   `code-grounded` for `reviews/` when the field is absent (the field lands on the
+   129 code reviews in Phase 1); drop the default once Phase 1 is done.
+6. **References**: update `CLAUDE.md`, `README.md`, dir-index/type-index, and the
+   runbook/plan scope language that mention a separate `lightweight-review` type.
+7. **Gate:** `pytest` green; `commonplace-validate` resolves the flipped reviews
+   against the merged type (they'll warn on the Phase-1 body items, which is
+   expected). Commit Phase 0.5 atomically.
+
+**Note:** this supersedes the in-progress `lightweight-review.schema.yaml`
+mirroring — that file is deleted here, and the partial edits to
+`lightweight-review.md` are discarded with it.
 
 ---
 

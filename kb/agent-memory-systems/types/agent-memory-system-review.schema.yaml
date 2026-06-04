@@ -9,12 +9,15 @@ allOf:
           - description
           - type
           - last-checked
+          - source-tier
         properties:
           type:
             const: kb/agent-memory-systems/types/agent-memory-system-review.md
           last-checked:
             type: string
             format: date
+          source-tier:
+            enum: [code-grounded, doc-grounded]
         additionalProperties: true
       headings:
         description: "Required review headings. Borrowable Ideas nests as a ### subsection under ## Comparison with Our System. ## Write-side placement is required in every review (it carries the **Write agency:** verdict; a ### Trace-derived learning sub-section is added only when trace-learning applies). ## Read-back placement carries the required **Read-back:** verdict and its full body only for a non-trivial push-activation path."
@@ -22,6 +25,8 @@ allOf:
         allOf:
           - contains:
               const: "## Core Ideas"
+          - contains:
+              const: "## Artifact analysis"
           - contains:
               const: "## Comparison with Our System"
           - contains:
@@ -38,6 +43,9 @@ allOf:
   - properties:
       body:
         pattern: "\\*\\*Write agency:\\*\\*"
+  - properties:
+      body:
+        pattern: "\\*\\*Read-back:\\*\\*"
   - properties:
       body:
         not:

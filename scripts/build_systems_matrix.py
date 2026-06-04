@@ -2,8 +2,9 @@
 """Generate the wide comparison matrix (systems.csv) by parsing the reviews.
 
 One row per code-backed review file in kb/agent-memory-systems/reviews/
-(source_tier `repo-reviewed`), keyed by `review_file`. Lightweight doc-grounded
-notes are intentionally excluded from this code-based matrix. The parsing logic
+(source_tier `code-grounded`, read from each review's `source-tier` frontmatter),
+keyed by `review_file`. Doc-grounded reviews under lightweight/ are intentionally
+excluded from this code-based matrix. The parsing logic
 lives in the package library `commonplace.lib.systems_matrix` (text-in, row-out,
 unit-tested); this runner owns file discovery, the legacy identity join
 (public_repo / clone_path), and CSV writing. Hand-classified columns are
@@ -32,6 +33,12 @@ SYSTEMS_CSV = AMS / "systems.csv"
 def parse_review(path: Path, source_tier: str) -> tuple[dict[str, str], list[str]]:
     review_file = str(path.relative_to(REPO_ROOT))
     return parse_review_text(path.read_text(encoding="utf-8"), review_file, source_tier)
+
+
+def read_source_tier(path: Path, default: str = "code-grounded") -> str:
+    """Read the `source-tier` frontmatter value; default until Phase 1 backfills it."""
+    m = re.search(r"^source-tier:\s*(\S+)", path.read_text(encoding="utf-8"), re.MULTILINE)
+    return m.group(1).strip() if m else default
 
 
 def load_inventory() -> list[dict[str, str]]:
@@ -70,7 +77,7 @@ def main() -> int:
     for p in sorted(REVIEWS_DIR.glob("*.md")):
         if ".replaced." in p.name or p.name in ("dir-index.md", "README.md"):
             continue
-        review_files.append((p, "repo-reviewed"))
+        review_files.append((p, read_source_tier(p)))
 
     rows: list[dict[str, str]] = []
     all_flags: list[tuple[str, str]] = []

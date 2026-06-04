@@ -22,11 +22,11 @@ Authority: `../../agent-memory-systems/types/agent-memory-system-review.md` (Wri
 4. **Read-back definition is not restated** in the review (it lives in the activation note). Don't re-add it.
   
 ## Scope
-- **In:** `kb/agent-memory-systems/reviews/*.md` and `kb/agent-memory-systems/lightweight/*.md` (live instances of the type).
+- **In:** `kb/agent-memory-systems/reviews/*.md` and `kb/agent-memory-systems/lightweight/*.md`. Both are now the **one** `agent-memory-system-review` type; the tier is the `source-tier` frontmatter field — `code-grounded` under `reviews/`, `doc-grounded` under `lightweight/`. Every review needs `source-tier` (schema-required); add it if absent.
   
 - **Out:** `*.replaced.*` (frozen — never edit), `dir-index.md`, `README.md`, any non-review file.
   
-- **Lightweight caveat:** doc-grounded reviews often lack code evidence for curation operations — author `**Write agency:**` from the paper; use a sole `` `not-determinable` `` on `**Curation operations:**` only if the write path is genuinely automatic but unspecified. The matrix consumes `reviews/` only, but the rename + timing removal + agency verdict apply everywhere to pass the strict schema.
+- **Doc-grounded (**`lightweight/`**) caveat:** these often lack code evidence for curation operations — author `**Write agency:**` from the sources; use a sole `` `not-determinable` `` on `**Curation operations:**` only if the write path is genuinely automatic but unspecified. The matrix consumes `code-grounded` rows only, but the rename + timing removal + agency verdict + `source-tier` apply everywhere to pass the strict schema.
   
 ## Worklist
 Division of labour: the **build flags cover the tokens** (parser-level: `Write agency`, and `Curation operations` once agency is `automatic`); **validate/grep cover the structure** (schema-level: the heading rename, the dead timing token, and the `### Trace-derived learning` sub-section). Neither tool alone is the full worklist — hence three signals.
@@ -65,17 +65,19 @@ Lightweight reviews aren't in the matrix build, so signal 1 won't catch them —
 ## Per-sub-agent procedure (one review file)
 1. Read the whole review file.
   
-2. **Rename** `## Trace-derived learning placement` → `## Write-side placement`; demote its trace content to a `### Trace-derived learning` sub-section. Preserve the trace lead tokens (`**Trace source:**`, `**Learning scope:**`, `**Learning timing:**`, `**Distilled form:**`) and prose verbatim.
+2. **Add** `source-tier` to frontmatter if absent: `code-grounded` for files under `reviews/`, `doc-grounded` for files under `lightweight/`.
   
-3. **Add** `**Write agency:**` under the `## Write-side placement` heading: `manual` if the store changes only through the authoring channel; `automatic` if the system itself writes/curates (rule-driven, scheduled, or trace-learned); both when both apply. End with a short `— justification` from the review's own prose.
+3. **Rename** `## Trace-derived learning placement` → `## Write-side placement`; demote its trace content to a `### Trace-derived learning` sub-section. Preserve the trace lead tokens (`**Trace source:**`, `**Learning scope:**`, `**Learning timing:**`, `**Distilled form:**`) and prose verbatim.
   
-4. **Add** `**Curation operations:**` only when agency includes `automatic`: the automatic operations the review's evidence supports. Manual maintenance is _not_ an operation (agency only). Index/embedding rebuilds are access-structure upkeep, not operations. If the path is automatic but the operations are unreadable from the evidence, use a sole `` `not-determinable` ``.
+4. **Add** `**Write agency:**` under the `## Write-side placement` heading: `manual` if the store changes only through the authoring channel; `automatic` if the system itself writes/curates (rule-driven, scheduled, or trace-learned); both when both apply. End with a short `— justification` from the review's own prose.
   
-5. **Remove the read-back timing** lead line and the old "Timing relative to action" item. If that prose carried real capture/consolidation meaning, relocate it to the write side (a curation operation or maintenance prose). Keep the read-back item numbering consistent with the spec (current item 3 is "Injection point — pre-invocation"; add injection-point prose only if the trigger/occasion is distinctive — session start, pre-compact, etc.).
+5. **Add** `**Curation operations:**` only when agency includes `automatic`: the automatic operations the review's evidence supports. Manual maintenance is _not_ an operation (agency only). Index/embedding rebuilds are access-structure upkeep, not operations. If the path is automatic but the operations are unreadable from the evidence, use a sole `` `not-determinable` ``.
   
-6. Do **not** restate the read-back definition; do **not** read or modify the reviewed system's source; do **not** change the review's claims; do **not** bump `last-checked`. Preserve all citations, blockquotes, and CriticMarkup attributes.
+6. **Remove the read-back timing** lead line and the old "Timing relative to action" item. If that prose carried real capture/consolidation meaning, relocate it to the write side (a curation operation or maintenance prose). Keep the read-back item numbering consistent with the spec (current item 3 is "Injection point — pre-invocation"; add injection-point prose only if the trigger/occasion is distinctive — session start, pre-compact, etc.).
   
-7. **Self-check:** a `## Write-side placement` heading with a `**Write agency:**` token is present; no `## Trace-derived learning placement` heading remains; no `**Read-back timing:**` line remains; tokens use only allowed values; multi-valued tokens list every value that applies; `commonplace-validate` is `PASS (clean)`.
+7. Do **not** restate the read-back definition; do **not** read or modify the reviewed system's source; do **not** change the review's claims; do **not** bump `last-checked`. Preserve all citations, blockquotes, and CriticMarkup attributes.
+  
+8. **Self-check:** `source-tier` is set; a `## Write-side placement` heading with a `**Write agency:**` token is present; no `## Trace-derived learning placement` heading remains; no `**Read-back timing:**` line remains; tokens use only allowed values; multi-valued tokens list every value that applies; `commonplace-validate` is `PASS (clean)`.
   
 ## Done condition
 - All three worklist signals return nothing; every in-scope review is `Overall: PASS (clean)`.

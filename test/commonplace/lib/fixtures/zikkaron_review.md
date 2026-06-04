@@ -1,6 +1,7 @@
 ---
 description: "Zikkaron review: local Claude Code memory engine with SQLite/vector retrieval, trace capture, hook-based context injection, and compaction replay"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived, push-activation]
 status: current
 last-checked: "2026-06-02"
