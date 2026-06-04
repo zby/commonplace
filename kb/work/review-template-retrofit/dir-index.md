@@ -10,4 +10,5 @@ index_source: directory
 
 - [Analysis: should the schema define FAIL vs WARNING?](./severity-belongs-in-schema.md)
 - [Plan: retrofit reviews to the write-side / read-side template](./plan.md)
+- [Principle: severity belongs to the constraint; the schema fails by default](./principle-severity-belongs-to-the-constraint.md)
 - [Review template retrofit — per-review runbook](./runbook.md)
