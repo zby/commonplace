@@ -52,8 +52,6 @@ ONEHOT_AXES = {
         "sig_inferred_lexical": "inferred / lexical",
         "sig_inferred_embedding": "inferred / embedding",
         "sig_inferred_judgment": "inferred / judgment"},
-    "Read-back timing": {
-        "rb_pre_action": "pre-action", "rb_post_action": "post-action"},
     "Trace source": {
         "ts_session_logs": "session-logs", "ts_tool_traces": "tool-traces",
         "ts_event_streams": "event-streams", "ts_trajectories": "trajectories"},
@@ -67,7 +65,7 @@ ONEHOT_AXES = {
 }
 
 # Axes applicable only to push/both read-back, and only to trace-derived systems.
-PUSH_AXES = {"Read-back signal", "Read-back timing"}
+PUSH_AXES = {"Read-back signal"}
 TRACE_AXES = {"Trace source", "Learning scope", "Learning timing", "Distilled form"}
 
 COLUMNS = [
@@ -88,7 +86,6 @@ COLUMNS = [
     # read-back
     "read_back_direction", "rb_pull", "rb_push",
     *ONEHOT_AXES["Read-back signal"],
-    *ONEHOT_AXES["Read-back timing"],
     "rb_faithfulness_tested",
     "push_engineered", "read_back_notes",
 ]

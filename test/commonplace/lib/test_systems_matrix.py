@@ -30,12 +30,11 @@ def test_zikkaron_fixture_full_new_format() -> None:
     assert (row["lin_authored"], row["lin_imported"], row["lin_trace_extracted"]) == ("1", "1", "1")
     assert row["auth_knowledge"] == "1" and row["auth_enforcement"] == "1" and row["auth_learning"] == "1"
 
-    # read-back direction one-hot + signal + timing + faithfulness
+    # read-back direction one-hot + signal + faithfulness
     assert (row["read_back_direction"], row["rb_pull"], row["rb_push"]) == ("both", "1", "1")
     assert row["sig_coarse"] == "1" and row["sig_identifier"] == "1"
     assert row["sig_inferred_lexical"] == "1" and row["sig_inferred_embedding"] == "1"
     assert row["sig_inferred_judgment"] == "0"
-    assert (row["rb_pre_action"], row["rb_post_action"]) == ("1", "1")
     assert row["rb_faithfulness_tested"] == "no"
 
     # trace axes
@@ -57,7 +56,7 @@ def test_pull_only_skips_push_and_keeps_universal_axes() -> None:
     row, flags = parse(text)
     assert (row["rb_pull"], row["rb_push"]) == ("1", "0")
     # push-only axes left blank (not applicable), not flagged
-    assert row["sig_coarse"] == "" and row["rb_pre_action"] == ""
+    assert row["sig_coarse"] == ""
     assert row["rb_faithfulness_tested"] == ""
     # universal axes set
     assert row["form_prose"] == "1" and row["lin_authored"] == "1" and row["auth_knowledge"] == "1"
@@ -92,7 +91,6 @@ def test_missing_applicable_tokens_are_flagged() -> None:
     assert "Lineage: missing lead token" in flags
     assert "Behavioral authority: missing lead token" in flags
     assert "Read-back signal: missing lead token" in flags
-    assert "Read-back timing: missing lead token" in flags
     assert "Trace source: missing lead token" in flags
     assert "Faithfulness tested: missing lead token" in flags
 
@@ -110,7 +108,6 @@ def test_not_determinable_marks_applicable_axis_assessed_unknown() -> None:
         "**Distilled form:** `prose` — x\n"
         "**Read-back:** `push` — pushes stuff\n"
         "**Read-back signal:** `not-determinable` — push exists but the review does not identify the selector\n"
-        "**Read-back timing:** `pre-action` — x\n"
         "**Faithfulness tested:** `not-determinable` — the review does not say whether ablations exist\n"
     )
     row, flags = parse(text)

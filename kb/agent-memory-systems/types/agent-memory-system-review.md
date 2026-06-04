@@ -42,8 +42,8 @@ Write from the code outward. Required sections are enforced by the schema; the t
 - **Core Ideas** — 3–6 mechanisms and design choices, not a feature list; bold lead phrases for scanning. **Every review states how the system manages context efficiency** — the volume *and* complexity of what it puts in the agent's context (selection budgets, progressive disclosure, navigation, compaction, sub-agent isolation), named even when the answer is "unbounded / loads everything." A memory system is a context-engineering tool; this is its central design question, not an optional angle. Also frame the ideas by what future action the remembered material can change, and surface where distinctive: how far the memory can be **trusted** (preserved source, metadata, review state, validation) and its **adoption affordances** (fits the native editor/terminal/git environment, avoids metered-API lock-in, degrades to inspectable files and scripts).
 - **Artifact analysis** — the four-field record for the central retained artifacts. Required; see Artifact analysis.
 - **Comparison with Our System** — concrete alignments, divergences, and tradeoffs vs Commonplace. Close with a `### Borrowable Ideas` subsection: for each idea, what it would look like in Commonplace, and whether it is ready now or needs a use case first.
-- **Trace-derived learning placement** — *optional; see rule below.*
-- **Read-back placement** — *optional; see rule below.* Every review states a one-line direction verdict somewhere even without the full section.
+- **Write-side placement** — how the store *changes*: agency (manual curation vs automatic) and operations; trace-derived learning is the automatic-from-traces sub-case. *Optional; see rule below.*
+- **Read-back placement** — how the store is *served*. *Optional; see rule below.* Every review states a one-line read-back direction verdict somewhere even without the full section.
 - **Curiosity Pass** — second pass: surprising claims, simpler alternatives, mechanisms that sound more powerful than they are.
 - **What to Watch** — *specific* pending changes, each tied to a consequence for our design or a tracked decision. Cut generic maturity ("they add features / get more robust"); an honestly-short section beats filler.
 
@@ -73,19 +73,40 @@ Note any **promotion path**: whether the system can move a candidate toward a st
 
 Mark effective authority and quality (does the prose carry forward, is the retrieval precise) as *not verified from code* where it cannot be read off the source — the same discipline as Read-back placement.
 
-For systems that learn from agent traces, the Trace-derived learning placement section deepens this with the raw → distilled two-stage treatment; this section still records the system's standing retained surfaces.
+For systems that learn from agent traces, the Write-side placement section deepens this with the raw → distilled two-stage treatment; this section still records the system's standing retained surfaces.
 
-## Trace-derived learning placement
+## Write-side placement
 
-This section is the trace-learning deepening of **Artifact analysis**: where that section classifies the system's standing retained surfaces, this one classifies the raw → distilled loop that produces them.
+The write side is everything that *changes* the store; the read side (below) only *serves* it. Two axes describe it:
 
-**Trigger:** include the `## Trace-derived learning placement` section **and** add `trace-derived` to `tags` only when the code-grounded read finds a qualifying mechanism. Otherwise omit both.
+- **Agency** — does the store change by `manual` curation (a human authoring or editing through the write interface) or by `automatic` system operations (rule-driven, scheduled, or trace-learned)? A system can be both. Manual curation is **not a separate mechanism** — it is the authoring channel pointed at existing content, so record it here as agency only: its provenance is the Artifact-analysis Lineage `authored` value, and its quality is an *adoption-affordances* question (editability, diffability, links that survive a rename) handled in Core Ideas. The automatic side is where the system itself does something worth classifying.
+- **Operations** — which store-changing operations the system performs beyond trivial create/update/delete. Each token is a distinct design choice:
+  - `consolidate` — summarise or compress a group (or an oversized entry) into a more compact, higher-level memory (abstraction; reduces count or size).
+  - `dedup` — detect and merge near-duplicate entries (redundancy removal, *not* abstraction).
+  - `evolve` — automatically modify an *existing* entry in place — its content, links, or metadata — in light of newly arriving entries (A-MEM-style enrichment), without merging or deleting it.
+  - `synthesize` — generate a *new* entry capturing an insight across existing entries (additive and generative; the sources remain). The rare, high-value operation.
+  - `invalidate` — supersede or mark an entry stale on contradiction or replacement, retaining history (truth maintenance, e.g. bi-temporal `valid_at`/`invalid_at`).
+  - `decay` — remove or down-weight entries by age, recency, or capacity (forgetting / eviction).
+  - `promote` — change an entry's tier or salience (promotion-by-recurrence, heat reweighting) without changing its content.
+
+  These are the *automatic* operations the system itself performs; manual maintenance is recorded as agency only (it is authoring on existing content, not a separate operation). Index/embedding rebuilds are access-structure upkeep, not content curation — note them in prose, not here.
+
+Write the agency verdict and the automatic operations as lead tokens:
+
+- `**Write agency:**` `manual` · `automatic` — list all that apply.
+- `**Curation operations:**` — the automatic operations from the list above; omit when agency is manual-only.
+
+**Trigger:** include the `## Write-side placement` section when the system has any non-trivial automatic write or curation path (trace-learned or rule-based maintenance). A manual-curation-only system states just the `**Write agency:** \`manual\`` verdict and needs no section.
+
+### Trace-derived learning
+
+When automatic writes are fed by agent traces, deepen the write side with the raw → distilled loop. **Add `trace-derived` to `tags`** and include this sub-section only when the code-grounded read finds a qualifying mechanism.
 
 A system qualifies when it derives durable retained artifacts from agent traces. Qualifying **traces:** session logs, transcripts, tool/action traces, event streams, repeated trajectories, rollouts. Qualifying **outputs:** prose (notes, rules, playbooks, lessons), symbolic units (schemas, scripts, tools), or distributed-parametric state (weights, embeddings, adapters, rankers, controllers).
 
 Many systems run a two-stage loop: raw traces accumulate as knowledge artifacts (logs, episode buffers), then a distillation step — automatic or manual — produces system-definition artifacts (rules, validators, route entries, fine-tunes). Document both stages; the distillation step's trigger, oracle, and curation policy is often the most discriminating part. Address:
 
-1. **Trace source** — what raw signal is consumed, with what trigger boundaries. Lead token values: `session-logs`, `tool-traces`, `event-streams`, `trajectories`.
+1. **Trace source** — what raw signal is consumed, with what trigger boundaries. Lead token values: `**Trace source:**` `session-logs` · `tool-traces` · `event-streams` · `trajectories`.
 2. **Extraction** — what gets pulled out, and what oracle or judge decides what becomes signal.
 3. **Four fields** — record storage substrate, representational form, lineage, and behavioral authority for the raw and distilled stages in **Artifact analysis** rather than repeating them here.
 4. **Scope and timing** — per-task / per-project / cross-task, and online / offline / staged in cycles. Lead token values: `**Learning scope:**` `per-task` · `per-project` · `cross-task`; `**Learning timing:**` `online` · `offline` · `staged`; `**Distilled form:**` `prose` · `symbolic` · `parametric`.
@@ -93,15 +114,13 @@ Many systems run a two-stage loop: raw traces accumulate as knowledge artifacts 
 
 ## Read-back placement
 
-The read-back path is how stored memory re-enters a future action. The trace-derived section captures how memory is *made*; this captures how it *acts* — independent axes (a system can have an elaborate learning loop and a trivial read-back, or the reverse).
+The read-back path is how stored memory re-enters a future action — the *serve* side. **Read-back is defined in [knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md)** — including what does and does not count as it (retained memory that accumulates from use, not shipped baseline documentation), and how it differs from activation. This section is the *operational* classification for a review: how to read a system's read-back path off its code. The Write-side placement section captures how memory is *made and maintained*; this captures how it *acts* — independent axes (a system can have an elaborate write/curation loop and a trivial read-back, or the reverse).
 
-**Read-back is the return of *retained memory*** — content the system accumulated from use, whether authored (a user's note, a project decision, a maintained artifact) or trace-learned. Runtime injection of shipped/static baseline documentation — tool specs, repo docs, installed skills, system manuals — is **not read-back**; note it, if at all, as a baseline context surface, not here. (Boundary test: does the content *accumulate from use of this system*, or *arrive with the system*?) This section applies the bound from [symbolic context engineering is bounded by symbol availability](../../notes/symbolic-context-engineering-is-bounded-by-symbol-availability.md): a system can select by an identifier the instance carries only once that identifier exists, so instance-relevant push is either an identifier match on an already-emitted symbol or content inference.
-
-**Every review** states a one-line **direction verdict over memory read-back only**: does retained memory reach the agent's context by **pull** (the agent's own deliberate lookup), **push** (unsolicited arrival — always-load of memory, hook, situation match, or user event), or both? Judge from the agent's perspective: user-initiated retrieval uses pull machinery but is push to the agent. **Pushing static baseline documentation does not count** — it never upgrades a system from `pull` to `both`. The most discriminating finding is whether there is *any* push of memory or the system is **pull-only** — the large, under-tested class.
+**Every review** states a one-line **direction verdict over memory read-back only**: does retained memory reach the agent's context by **pull** (the agent's own deliberate lookup), **push** (unsolicited arrival — always-load of memory, hook, situation match, or user event), or both? Judge from the agent's perspective: user-initiated retrieval uses pull machinery but is push to the agent. Static baseline documentation does not count (per the definition) — it never lifts a system from `pull` to `both`. The most discriminating finding is whether there is *any* push of memory or the system is **pull-only** — the large, under-tested class.
 
 Write the verdict as a backticked controlled-value lead token, the same extractable convention as the Artifact analysis lead tokens: `**Read-back:** \`pull\` — …` with value ∈ `pull` · `push` · `both`. This line is required even when the full section below is omitted.
 
-When the verdict is `push` or `both`, also write **read-back signal**, **read-back timing**, and **faithfulness tested** lead tokens. Read-back signal is the *set* of targeting/signal kinds the push fires on, since a system can do several at once (always-load coarse recall *and* an identifier match *and* an inferred query). List one backticked token per kind: `**Read-back signal:** \`coarse\` \`identifier\` \`inferred / embedding\` — …` with each token ∈ `coarse` · `identifier` · `inferred / lexical` · `inferred / embedding` · `inferred / judgment` (the same vocabulary as **Targeting and signal** below). Read-back timing values are `pre-action` and `post-action`. Faithfulness tested is a single `yes` or `no` token, or `not-determinable` when the review does not contain enough evidence. The matrix parser one-hots whatever tokens appear into indicator columns; these authored lines take precedence over mining the section prose. Omit for pull-only systems (their push-only axes are recorded as all-absent).
+When the verdict is `push` or `both`, also write **read-back signal** and **faithfulness tested** lead tokens. Read-back signal is the *set* of targeting/signal kinds the push fires on, since a system can do several at once (always-load coarse recall *and* an identifier match *and* an inferred query). List one backticked token per kind: `**Read-back signal:** \`coarse\` \`identifier\` \`inferred / embedding\` — …` with each token ∈ `coarse` · `identifier` · `inferred / lexical` · `inferred / embedding` · `inferred / judgment` (the same vocabulary as **Targeting and signal** below). Faithfulness tested is a single `yes` or `no` token, or `not-determinable` when the review does not contain enough evidence. The matrix parser one-hots whatever tokens appear into indicator columns; these authored lines take precedence over mining the section prose. Omit for pull-only systems (their push-only axes are recorded as all-absent).
 
 **Trigger:** include the full `## Read-back placement` section **and** add `push-activation` to `tags` only when the memory read-back is **instance-targeted** or otherwise engineered — an `identifier` or `inferred` signal (below), a selection/scope budget, a before-action hook, or a faithfulness test. Pull-only RAG, coarse always-load, and documentation-only injection get only the verdict, no section, no tag.
 
@@ -112,12 +131,12 @@ Two cautions on what code can show:
 
 When a full section is warranted, address:
 
-1. **Direction** — pull, push, or both, from the agent's perspective. Note "push riding on the pull interface" when a query *also* injects unsolicited behavior-shaping material; documented related-record expansion on a query is still pull (how much expands is a scope question). In multi-agent setups, an orchestrator's or sub-agent's pull is push for the receiving agent.
-2. **Targeting and signal** — two fields.
+1. **Direction edge cases** — the verdict token above is the headline; here record the tricky calls. Note "push riding on the pull interface" when a query *also* injects unsolicited behavior-shaping material; documented related-record expansion on a query is still pull (how much expands is a scope question). In multi-agent setups, an orchestrator's or sub-agent's pull is push for the receiving agent.
+2. **Targeting and signal** — the two fields behind the `**Read-back signal:**` token.
    - **Targeting**: `coarse` — fired by an always-present or action-type symbol (always-load of memory, session start, any tool call), delivering *generic* recall; or `instance` — selecting for *this* instance. Always-load is the degenerate corner: name it `coarse`, not a peer trigger.
-   - **Signal** (only when `instance`): `identifier` — matches an identifier the instance carries by design (tag, type, path, tool name, id, declared scope); or `inferred` — relevance derived from content, sub-kind `lexical` (keyword/BM25: exact-token but content-keyed, hence sense-blind — fires on a term the context negates), `embedding` (learned similarity), or `judgment` (an LLM relevance call). Classify by *what it keys on*, not the mechanism: keyword keys on content words, not an assigned identifier, so it is `inferred / lexical`.
-   By the bound above, a system cannot do an `identifier` push for an instance whose symbol does not yet exist; genuine instance-relevant push is therefore an `identifier` match on an already-emitted symbol, or `inferred` selection. Mechanism is code-grounded; precision/recall and sense-blind false positives are runtime.
-3. **Timing relative to action** — a pre-action hook fires before the action and can change the next move; a reflection or summary step fires after and can only explain or audit.
+   - **Signal** (only when `instance`): `identifier` — matches an identifier the instance carries by design (tag, type, path, tool name, id, declared scope); or `inferred` — relevance derived from content, sub-kind `lexical` (keyword/BM25: exact-token but content-keyed, hence sense-blind — fires on a term the context negates), `embedding` (learned similarity), or `judgment` (an LLM relevance call). Classify by *what it keys on*: keyword keys on content words, not an assigned identifier, so it is `inferred / lexical`.
+   This is where [symbol availability](../../notes/symbolic-context-engineering-is-bounded-by-symbol-availability.md) bites: a genuine `instance` push needs an `identifier` already emitted, or `inferred` selection.
+3. **Injection point — there is one, and it is pre-invocation.** A read serves whatever the store holds at the moment it assembles context, just before a model call; relevance must be resolved *at that read*, because between it and the action's completion no new relevant memory arrives — the only thing produced is the agent's own output. So there is no "post-action read-back": operations that fire after the turn (capturing the output, consolidating, re-indexing, decaying) are write-side **maintenance** (see Write-side placement), not a second read. Record the *trigger/occasion* that assembles the read if it is distinctive (session start, user prompt, pre-compact, tool call), not a pre/post "timing".
 4. **Selection, scope, and complexity** — top-k, token budget, task/project/session scoping, and how deep or indirect the loaded material is (complexity, not just volume, drives degradation). Policy is code-grounded; actual context dilution is runtime.
 5. **Authority at consumption** — advisory context, system instruction, hard gate, router input, or audit trigger. The same memory can be read back as a soft reminder or a hard gate; this is set on the read path, not at write time. Effective authority needs a faithfulness check.
 6. **Faithfulness** — whether the system *itself* tests that fired read-back changes behavior (WITH/WITHOUT ablation, perturbation, post-action audit) rather than assuming context presence equals use. [Synapptic](../reviews/synapptic.md) is the reviewed example.
@@ -201,15 +220,21 @@ last-checked: "YYYY-MM-DD"
 
 {For each idea: what it would look like in Commonplace; ready now or needs a use case first.}
 
-## Trace-derived learning placement
+## Write-side placement
 
-{Optional — qualifying trace-learning only; delete otherwise, and add `trace-derived` to `tags` when kept. Deepens Artifact analysis with the raw → distilled loop. See Trace-derived learning placement.}
+**Write agency:** `{manual|automatic}` `{...}` — {how the store changes; manual = curation via the authoring channel, see Lineage + affordances}
+
+{Add `**Curation operations:** \`consolidate\` …` for the automatic operations. Optional section — include only with a non-trivial automatic write/curation path; a manual-only system keeps just the agency verdict. See Write-side placement.}
+
+### Trace-derived learning
+
+{Optional sub-section — qualifying trace-learning only; delete otherwise, and add `trace-derived` to `tags` when kept. Deepens Artifact analysis with the raw → distilled loop. Lead tokens: `**Trace source:**`, `**Learning scope:**`, `**Learning timing:**`, `**Distilled form:**`.}
 
 ## Read-back placement
 
 **Read-back:** `{pull|push|both}` — {one-line justification; required regardless}
 
-{Full section only when relevance-gated/engineered; delete the rest otherwise, and add `push-activation` to `tags` when kept. See Read-back placement.}
+{Full section only when relevance-gated/engineered; delete the rest otherwise, and add `push-activation` to `tags` when kept. There is no read-back "timing" — read-back is pre-invocation; after-the-turn work is Write-side maintenance. See Read-back placement.}
 
 ## Curiosity Pass
 

@@ -17,7 +17,7 @@ allOf:
             format: date
         additionalProperties: true
       headings:
-        description: "Required review headings. Borrowable Ideas now nests as a ### subsection under ## Comparison with Our System, so it is not a required top-level heading. ## Trace-derived learning placement and ## Read-back placement are optional, each used only when the review finds the corresponding qualifying mechanism (trace-derived learning / a non-trivial push-activation path)."
+        description: "Required review headings. Borrowable Ideas now nests as a ### subsection under ## Comparison with Our System, so it is not a required top-level heading. ## Write-side placement (with its ### Trace-derived learning sub-section) and ## Read-back placement are optional, each used only when the review finds the corresponding qualifying mechanism (a non-trivial automatic write/curation path / a non-trivial push-activation path)."
         type: array
         allOf:
           - contains:
@@ -44,7 +44,7 @@ allOf:
     then:
       properties:
         body:
-          pattern: "Trace-derived learning placement"
+          pattern: "Trace-derived learning"
   - if:
       properties:
         frontmatter:
