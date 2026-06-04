@@ -1,6 +1,7 @@
 ---
 description: "Zikkaron review: local Claude Code memory engine with SQLite/vector retrieval, trace capture, hook-based context injection, and compaction replay"
 type: ../types/agent-memory-system-review.md
+source-tier: code-grounded
 tags: [trace-derived, push-activation]
 status: current
 last-checked: "2026-06-02"
@@ -78,7 +79,13 @@ Commonplace is stronger as a governed knowledge substrate. Its retained artifact
 
 **Do not borrow automatic prompt injection without review boundaries.** Needs a use case and gates. Zikkaron's hooks are effective, but automatic read-back can give stale or weak memories practical authority. Commonplace should require trace lineage, budgets, and observable effect checks before broad push activation.
 
-## Trace-derived learning placement
+## Write-side placement
+
+**Write agency:** `automatic` `manual` — the write gate, curator, consolidation daemons, and hook trace capture change the store without the user; `remember` and the other MCP tools are the manual authoring channel
+
+**Curation operations:** `consolidate` `dedup` `evolve` `decay` `promote` — CLS consolidation abstracts episodic memories into semantic schemas and compresses by age; the curator merges/links near-duplicates; enrichment reconsolidates existing entries in place; heat decay and age compression evict cold memories; auto-protection and heat reweighting promote salience
+
+### Trace-derived learning
 
 - **Trace source:** `session-logs` `tool-traces` `event-streams` — `PostToolUse` action rows, compaction/session traces, and hook event streams
 - **Learning scope:** `per-project` `cross-task` — directory/project-scoped action memories plus cross-task semantic schemas from consolidation
@@ -101,13 +108,11 @@ Commonplace is stronger as a governed knowledge substrate. Its retained artifact
 
 **Read-back signal:** `coarse` `identifier` `inferred / lexical` `inferred / embedding` — mixed push targeting: `SessionStart` and post-compaction restore carry `coarse` session/anchor state and `identifier` directory selection for hot project memories, while `UserPromptSubmit` adds `inferred / lexical` (FTS5 over prompt terms) and `inferred / embedding` (sqlite-vec over the prompt embedding) recall.
 
-**Read-back timing:** `pre-action` `post-action` — `SessionStart`/`UserPromptSubmit`/restore inject before the receiving turn acts; `PostToolUse` and `PreCompact` capture after an action, shaping only later turns.
-
 **Faithfulness tested:** `no` — the repo ships tests and benchmark scripts, but there is no code-grounded with/without ablation proving injected context changes downstream behavior.
 
 **Targeting and signal.** Zikkaron has mixed push targeting. The `UserPromptSubmit` hook is `instance`-targeted: it extracts the current prompt, runs FTS5 over prompt terms (`inferred / lexical`) and optionally sqlite-vec over the prompt embedding (`inferred / embedding`), then boosts current-directory, non-action-stream, and high-heat memories within result, character, and time budgets. The `SessionStart` hook is mixed but mostly `instance`: it uses `cwd` as an `identifier` for hot project memories, always includes protected anchors globally, and includes the latest active checkpoint and recent actions as coarse session context. Post-compaction restore is also mixed: active checkpoint and recent/anchored memories are coarse or session-carried state, hot project memories are `identifier`-selected by directory, and SR prediction uses checkpoint task or directory text as an inferred query. Precision, recall, and context dilution are not verified from code.
 
-**Timing relative to action.** `UserPromptSubmit` and `SessionStart` output are injected before the receiving Claude turn acts. `PreCompact` drains before context loss; post-compact restoration prints reconstructed context for the resumed session. `PostToolUse` capture happens after an action and only affects future turns after direct read-back or consolidation.
+**Injection point.** The read-back assembles before the receiving Claude turn acts: `UserPromptSubmit` and `SessionStart` print into context pre-invocation, and post-compact restoration reconstructs context for the resumed session. `PreCompact` and `PostToolUse` fire after the turn but are write-side capture/maintenance, not a second read (see Write-side placement).
 
 **Selection, scope, and complexity.** Selection is bounded in hook code: prompt recall uses `MAX_RESULTS = 5`, `MAX_CONTEXT_CHARS = 3000`, and a 0.5 second time budget; session-start limits checkpoint, anchors, hot project memories, and recent actions. Full MCP recall has caller-provided `max_results`, many internal candidate/rerank stages, and metacognitive trimming. Complexity can still be high because the retrieval stack combines many signals and derived stores.
 

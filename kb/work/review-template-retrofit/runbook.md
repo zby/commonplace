@@ -5,7 +5,9 @@ Migrate one agent-memory-system review to the **write-side / read-side** templat
 
 **Severity note:** schema violations validate as **warnings**, not failures (the validator hard-fails only on frontmatter `description`/`tags`/`type`), so an un-retrofitted review reports `Overall: PASS (N warnings)`. Do **not** gate on bare `Overall: PASS` — use the Worklist signals below.
 
-Authority: `../../agent-memory-systems/types/agent-memory-system-review.md` (Write-side placement + Read-back placement sections, and the skeleton). Worked example: `../../agent-memory-systems/reviews/Zikkaron.md` (the canonical new-layout review; keep one example in sync). Mirror the delegation discipline of the earlier `../agent-memory-matrix-retrofit/` runbook: faithful-not-complete, `not-determinable` over guessing.
+Authority: `../../agent-memory-systems/types/agent-memory-system-review.md` (Write-side placement + Read-back placement sections, and the skeleton). Worked example: `../../agent-memory-systems/reviews/Zikkaron.md` (the canonical fully-retrofitted review — validates `PASS (clean)`; mirror its structure). Mirror the delegation discipline of the earlier `../agent-memory-matrix-retrofit/` runbook: faithful-not-complete, `not-determinable` over guessing.
+
+**Environment:** run all commands from the repo root with the project venv active (direnv puts `.venv/bin` on `PATH`); use `.venv/bin/commonplace-validate` and `python3 scripts/build_systems_matrix.py` as written. All paths in this runbook are repo-root-relative.
 ## What the new layout is
 1. `## Trace-derived learning placement` **→** `## Write-side placement`, with the trace treatment demoted to a `### Trace-derived learning` **sub-section**. The write side is _everything that changes the store_; trace-learning is the automatic-from-traces case.
   
@@ -33,7 +35,7 @@ Division of labour: the **build flags cover the tokens** (parser-level: `Write a
 
 A review needs work if **any** of these deterministic signals fire (don't rely on `Overall: PASS` — see the severity note):
 
-1. **Missing/incomplete tokens** — `python3 scripts/build_systems_matrix.py` lists per-review flags on repo-reviewed rows (e.g. `Write agency: missing lead token`, and `Curation operations` once agency is `automatic`).
+1. **Missing/incomplete tokens** — `python3 scripts/build_systems_matrix.py` lists per-review flags on code-grounded rows (e.g. `Write agency: missing lead token`, and `Curation operations` once agency is `automatic`).
   
 2. **Old structure still present:**
   
@@ -82,7 +84,7 @@ Lightweight reviews aren't in the matrix build, so signal 1 won't catch them —
 ## Done condition
 - All three worklist signals return nothing; every in-scope review is `Overall: PASS (clean)`.
   
-- `python3 scripts/build_systems_matrix.py` → 0 flags on repo-reviewed rows.
+- `python3 scripts/build_systems_matrix.py` → 0 flags on code-grounded rows.
   
 - No `## Trace-derived learning placement` or `**Read-back timing:**` in live (non-`.replaced`) reviews:
   
