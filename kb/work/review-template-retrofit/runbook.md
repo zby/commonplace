@@ -29,6 +29,8 @@ Authority: `../../agent-memory-systems/types/agent-memory-system-review.md` (Wri
 - **Lightweight caveat:** doc-grounded reviews often lack code evidence for curation operations — author `**Write agency:**` from the paper; use a sole `` `not-determinable` `` on `**Curation operations:**` only if the write path is genuinely automatic but unspecified. The matrix consumes `reviews/` only, but the rename + timing removal + agency verdict apply everywhere to pass the strict schema.
   
 ## Worklist
+Division of labour: the **build flags cover the tokens** (parser-level: `Write agency`, and `Curation operations` once agency is `automatic`); **validate/grep cover the structure** (schema-level: the heading rename, the dead timing token, and the `### Trace-derived learning` sub-section). Neither tool alone is the full worklist — hence three signals.
+
 A review needs work if **any** of these deterministic signals fire (don't rely on `Overall: PASS` — see the severity note):
 
 1. **Missing/incomplete tokens** — `python3 scripts/build_systems_matrix.py` lists per-review flags on repo-reviewed rows (e.g. `Write agency: missing lead token`, and `Curation operations` once agency is `automatic`).
