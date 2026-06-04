@@ -69,8 +69,8 @@ A second realisation sharpened the cut: when maintenance is **manual**, it *is* 
 
 ## Open follow-ons
 
-- **Review retrofit (second pass):** migrate the ~89 trace reviews to the `## Write-side placement` / `### Trace-derived learning` structure, author `**Write agency:**` and `**Curation operations:**`, and strip the deprecated `**Read-back timing:**` tokens. See the runbook in `kb/work/review-template-retrofit/`.
-- **Parser/matrix:** add `write_agency` and curation-operation one-hot columns; drop `rb_pre_action`/`rb_post_action`.
+- **Review regeneration (in progress):** the structural retrofit (write-side heading, `source-tier`, timing removal) landed corpus-wide, but the prose-normalization pass that authored the write-side *tokens* over-tagged them — `synthesize` (the rare op) appeared on 88% of reviews, because a post-hoc axis cannot be back-filled faithfully from prose written before it existed. That approach was abandoned; reviews are being **regenerated from source** via the `write-agent-memory-system-review` skill (workshop `kb/work/agent-memory-review-rerun/`).
+- ~~Parser/matrix: add write-agency and curation-operation one-hot columns; drop `rb_pre_action`/`rb_post_action`~~ — done (`wa_*`/`op_*` columns carried; timing columns removed). Validator severity is now per-constraint, fail by default ([ADR-024](../reference/adr/024-schema-severity-is-per-constraint-fail-by-default.md)).
 - ~~Theory note for "no post-action read-back"~~ — resolved by pinning `read-back` in the activation-gap note rather than adding a note.
 
 ---
