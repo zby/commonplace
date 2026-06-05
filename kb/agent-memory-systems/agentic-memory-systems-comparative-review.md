@@ -23,7 +23,7 @@ the field, and the questions that do divide it are about *activation* and
 ## 1. Storage stopped dividing the field
 
 Files-family substrates (plain `files`, a git `repo`, `in-memory`) still lead at
-**68%**, but **29%** are database-backed — and the modal database is plain
+**70%**, but **29%** are database-backed — and the modal database is plain
 **SQLite (13%)**, not a vector or graph store (**9% combined**). "Filesystem-first
 convergence" was the founding observation of this collection; at 129 systems it is
 a slim majority, not a landscape law. More to the point, substrate predicts very
@@ -34,14 +34,14 @@ below, and so do the database-backed ones. Storage is an operational floor
 ## 2. The real split is a coupled bundle — and it isn't storage
 
 How memory is *made* and how it is *activated* turn out to be the same axis. Of the
-**62%** of systems that derive memory automatically from agent traces, **84% push
+**61%** of systems that derive memory automatically from agent traces, **82% push
 or do both** — automatic capture and automatic activation ship together. The
 converse holds: **70%** of pull-only systems are *not* trace-derived; they are
 authored or curated and wait to be asked. The population sorts into two camps:
 
-- **Automatic camp (52%)** — trace-derived *and* pushing. The system watches the
+- **Automatic camp (50%)** — trace-derived *and* pushing. The system watches the
   agent, distills memory, and injects it without being asked.
-- **Curated camp (23%)** — authored *and* pull-only. A human writes; the agent
+- **Curated camp (25%)** — authored *and* pull-only. A human writes; the agent
   retrieves on a deliberate, auditable lookup.
 - The remaining **25%** mix the two (authored memory with a push path, or
   trace-derived memory behind an explicit search).
@@ -52,11 +52,11 @@ audits weakly; the curated camp audits well and scales slowly.
 
 ## 3. Pushed memory is mostly coarse, not targeted
 
-Among the 86 systems that push, **69% fire a coarse always-load** (session-start
+Among the 83 systems that push, **75% fire a coarse always-load** (session-start
 profile blocks, recent notes, checkpoint state) rather than selecting for the
-moment. Instance targeting is real but minority and shallow: identifier match 49%,
-embedding similarity 47%, lexical 38%, and an actual **LLM relevance judgment only
-16%**. Most "push" is "load the standing context," not "select the right memory
+moment. Instance targeting is real but minority and shallow: identifier match 52%,
+embedding similarity 46%, lexical 40%, and an actual **LLM relevance judgment only
+17%**. Most "push" is "load the standing context," not "select the right memory
 for this turn." That matters because targeting is
 [bounded by symbol availability](../notes/symbolic-context-engineering-is-bounded-by-symbol-availability.md):
 precise selection needs an identifier already on the table or a content inference,
@@ -65,7 +65,7 @@ relevant-ish.
 
 ## 4. Almost nobody checks the push is right
 
-This is the sharpest gap. Of the 86 pushing systems, **7 (8%)** test read-back
+This is the sharpest gap. Of the 83 pushing systems, **5 (6%)** test read-back
 faithfulness — whether the memory that fired actually changed the agent's behavior
 (ablation, perturbation, post-action audit). The rest assume context presence
 equals use. Automatic activation is the most widely shipped capability in the
@@ -76,10 +76,10 @@ it does.
 
 ## 5. Enforcement is the authority discriminator
 
-Every system carries knowledge authority; instruction and routing (90% each),
-validation (83%), ranking (79%), and learning (74%) are near-universal — so common
-they describe the category rather than distinguish within it. The one authority
-mode that actually splits the field is **enforcement, at 54%**: whether stored
+Every system carries knowledge authority; routing (90%), instruction and
+validation (88% each), ranking (81%), and learning (78%) are near-universal — so
+common they describe the category rather than distinguish within it. The one
+authority mode that actually splits the field is **enforcement, at 50%**: whether stored
 memory ever acts as a *hard gate* (a check the agent can't bypass — a validation
 that must pass, a blocking rule, a required proof) versus advisory context it can
 override. This is the real line between memory that *informs* and memory that
@@ -87,10 +87,10 @@ override. This is the real line between memory that *informs* and memory that
 
 ## 6. Extraction is automated; genuine synthesis is not
 
-Systems readily create and tier memory — promote 73%, synthesize-labelled 67%,
-consolidate 54% — but the operations that maintain *truth* over time lag:
-invalidate 50%, evolve 43%, decay 35%. And **17 of 129 systems run no automatic
-curation at all** (10 of them manual-only authoring). The hardest operation —
+Systems readily create, tier, and enrich memory — promote 70%, synthesize-labelled
+54%, evolve 53%, consolidate 50% — but the operations that maintain *truth* and
+*bounded size* over time lag: invalidate 42%, decay 25%. And **22 of 129 systems
+run no automatic curation at all** (9 of them manual-only authoring). The hardest operation —
 deriving a genuinely *new* claim across stored entries, as opposed to summarizing
 them — remains rare and mostly aspirational even where the matrix records a
 `synthesize` token. Curation is where the survey's frontier still sits: capture is
