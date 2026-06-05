@@ -80,7 +80,7 @@ Tracecraft's session mirror is valuable evidence capture, but it deliberately st
 
 **Write agency:** `manual` `automatic` - Agents and users manually write memory, messages, claims, completions, and artifacts through CLI calls; automatic command paths register agents during init, append `.tracecraft.json` to `.gitignore`, tail harness sessions, redact copied bytes, upload session parts, update session metadata, and advance local mirror cursor state.
 
-Tracecraft does not perform the review contract's curation operations on existing stored memory. It overwrites simple key-value entries, updates status/meta records, and appends new trace parts, but I did not find automatic deduplication, consolidation, evolution, synthesis, invalidation, decay, or salience promotion over retained memories. Session mirroring is acquisition/preservation of traces, not trace-derived learning into new behavior-shaping artifacts.
+**Curation operations:** `none` — Tracecraft does not perform the review contract's curation operations on existing stored memory. It overwrites simple key-value entries, updates status/meta records, and appends new trace parts, but I did not find automatic deduplication, consolidation, evolution, synthesis, invalidation, decay, or salience promotion over retained memories. Session mirroring is acquisition/preservation of traces, not trace-derived learning into new behavior-shaping artifacts.
 
 ## Read-back
 

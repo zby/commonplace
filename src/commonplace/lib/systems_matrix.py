@@ -24,6 +24,11 @@ import re
 from pathlib import Path
 
 NOT_DETERMINABLE = "not-determinable"
+# Assessed-absent sentinel: the reviewer looked and found none of the axis values
+# apply. Distinct from `not-determinable` (assessed-unknown -> blank) and from an
+# omitted line (retrofit gap -> flag). `none` records an explicit 0 across the
+# whole axis, so "verified no curation" stays distinct from "not assessed".
+NONE_TOKEN = "none"
 
 # --- single-valued lead tokens (one column, one backticked value) -------------
 SINGLE_VOCAB = {
@@ -146,6 +151,16 @@ def _is_assessed_unknown(label: str, line: str, flags: list[str]) -> bool:
     return False
 
 
+def _is_assessed_none(label: str, line: str, flags: list[str]) -> bool:
+    tokens = _tokens(line)
+    if NONE_TOKEN not in tokens:
+        return False
+    if tokens == [NONE_TOKEN]:
+        return True
+    flags.append(f"{label}: `{NONE_TOKEN}` cannot be mixed with controlled values")
+    return False
+
+
 def extract_token(label: str, text: str) -> str:
     """Value of a ``**Label:** `token``` lead token, or '' if absent."""
     m = re.search(rf"\*\*{re.escape(label)}:\*\*\s*`([^`]+)`", text)
@@ -165,6 +180,7 @@ def _onehot(label: str, cols: dict[str, str], text: str, applicable: bool,
     applicable=False -> leave blank (axis does not apply). applicable=True with no
     lead token -> blank + flag (retrofit worklist). Present -> 1/0 across the vocab.
     A sole `not-determinable` token means assessed-unknown and leaves the axis blank.
+    A sole `none` token means assessed-absent and sets every column to 0.
     """
     if not applicable:
         return
@@ -173,6 +189,10 @@ def _onehot(label: str, cols: dict[str, str], text: str, applicable: bool,
         flags.append(f"{label}: missing lead token")
         return
     if _is_assessed_unknown(label, line, flags):
+        return
+    if _is_assessed_none(label, line, flags):
+        for col in cols:
+            row[col] = "0"
         return
     matched = False
     for col, value in cols.items():

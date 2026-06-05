@@ -143,6 +143,39 @@ def test_not_determinable_cannot_be_mixed_with_controlled_values() -> None:
     assert "Representational form: `not-determinable` cannot be mixed with controlled values" in flags
 
 
+def test_curation_none_sets_assessed_absent_zeros_without_flag() -> None:
+    # automatic writes but no curation: `none` records 0 across the axis, no flag
+    text = (
+        "# Acquisitive\n\n"
+        "**Storage substrate:** `files` — x\n"
+        "**Representational form:** `prose` — x\n"
+        "**Lineage:** `imported` — x\n"
+        "**Behavioral authority:** `knowledge` — x\n"
+        "**Write agency:** `manual` `automatic` — auto-extracts, no curation\n"
+        "**Curation operations:** `none` — only acquisition, nothing over stored memory\n"
+        "**Read-back:** `pull` — x\n"
+    )
+    row, flags = parse(text)
+    assert row["op_consolidate"] == "0" and row["op_dedup"] == "0"
+    assert row["op_promote"] == "0" and row["op_synthesize"] == "0"
+    assert flags == []
+
+
+def test_curation_none_cannot_be_mixed_with_controlled_values() -> None:
+    text = (
+        "# MixedNone\n\n"
+        "**Storage substrate:** `files` — x\n"
+        "**Representational form:** `prose` — x\n"
+        "**Lineage:** `authored` — x\n"
+        "**Behavioral authority:** `knowledge` — x\n"
+        "**Write agency:** `automatic` — x\n"
+        "**Curation operations:** `dedup` `none` — x\n"
+        "**Read-back:** `pull` — x\n"
+    )
+    row, flags = parse(text)
+    assert "Curation operations: `none` cannot be mixed with controlled values" in flags
+
+
 def test_legacy_mixed_form_is_flagged_for_decomposition() -> None:
     text = (
         "# Old\n\n"

@@ -75,7 +75,7 @@ The useful comparison is not "RAG versus KB." It is "retrieval-readable memory v
 
 **Write agency:** `manual` `automatic` — Humans or upstream processes supply/import KB records and choose datasets, while scripts automatically generate synthetic records, compute cached embeddings, train encoder/query-head parameters, and save model/config/encoder checkpoints.
 
-**Curation operations:** `not-determinable` — I found automatic acquisition, embedding, training, checkpointing, and evaluation, but not implemented consolidation, deduplication, evolution, synthesis, invalidation, decay, or promotion over memory already in the store. KB tensors can be selected or pruned at read time, but that is ranking/access behavior rather than store-changing curation.
+**Curation operations:** `none` — I found automatic acquisition, embedding, training, checkpointing, and evaluation, but not implemented consolidation, deduplication, evolution, synthesis, invalidation, decay, or promotion over memory already in the store. KB tensors can be selected or pruned at read time, but that is ranking/access behavior rather than store-changing curation.
 
 ## Read-back
 

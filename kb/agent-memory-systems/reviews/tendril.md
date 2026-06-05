@@ -67,7 +67,7 @@ Tendril's "few bootstrap tools, many retained capabilities" solves a real prompt
 
 **Write agency:** `manual` `automatic` - Humans choose the workspace, configure providers/sandbox settings, and can edit or delete registry files directly; the agent automatically writes `system-prompt.txt` on startup and model-authors/upserts capability definitions plus TypeScript implementations through `registerCapability`.
 
-**Curation operations:** `not-determinable` - The implemented automatic write path mainly acquires new executable capabilities from current tasks and can overwrite a same-name capability. I did not find code that automatically deduplicates, consolidates, synthesizes, invalidates, decays, or promotes already-stored capabilities under a durable curation policy. The prompt's "fix and retry" instruction may lead the model to rewrite a tool after failure, but the system does not retain a trace-grounded repair loop or review state that would make this a classified curation operation.
+**Curation operations:** `none` - The implemented automatic write path mainly acquires new executable capabilities from current tasks and can overwrite a same-name capability. I did not find code that automatically deduplicates, consolidates, synthesizes, invalidates, decays, or promotes already-stored capabilities under a durable curation policy. The prompt's "fix and retry" instruction may lead the model to rewrite a tool after failure, but the system does not retain a trace-grounded repair loop or review state that would make this a classified curation operation.
 
 ## Read-back
 

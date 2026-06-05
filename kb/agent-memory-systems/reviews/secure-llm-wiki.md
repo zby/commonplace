@@ -75,7 +75,7 @@ The read path is weaker than the write path. Secure LLM-Wiki can ensure only act
 
 **Write agency:** `manual` `automatic` — Users manually choose sources, trust overrides, resets, deletion commands, and trust-rule edits; the system automatically reads supported sources, extracts claims, computes embeddings when possible, reviews/gates each claim, commits active claims, quarantines blocked/escalated claims, and writes sidecar embeddings.
 
-The automatic write path is acquisition plus admission control, not ongoing curation over existing memory. Gate 5 can detect likely duplicates or conflicts against existing claims and block/escalate the candidate, but I did not find automatic dedup merging, consolidation, in-place evolution, stale invalidation, decay, promotion, or synthesis across stored claims.
+**Curation operations:** `none` — The automatic write path is acquisition plus admission control, not ongoing curation over existing memory. Gate 5 can detect likely duplicates or conflicts against existing claims and block/escalate the candidate, but I did not find automatic dedup merging, consolidation, in-place evolution, stale invalidation, decay, promotion, or synthesis across stored claims.
 
 ## Read-back
 

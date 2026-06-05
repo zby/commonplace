@@ -80,7 +80,7 @@ The systems meet at the point where a KB needs fresh derived indexes. CocoIndex 
 
 **Write agency:** `manual` `automatic` — Developers and agents manually author pipeline code, schemas, examples, and skill files; the framework automatically writes LMDB tracking state, memo entries, user-state records, target ownership records, and connector actions that create/update/delete files, rows, vectors, graph records, collections, topics, and other target states.
 
-**Curation operations:** `not-determinable` — CocoIndex has automatic write-side maintenance, but I did not find a framework-level controlled curation operation over retained memories beyond freshness, memoization, target reconciliation, and target cleanup.
+**Curation operations:** `none` — CocoIndex has automatic write-side maintenance, but I did not find a framework-level controlled curation operation over retained memories beyond freshness, memoization, target reconciliation, and target cleanup.
 
 CocoIndex does not have a framework-level semantic curation loop over agent traces. Its automatic write side is incremental maintenance: source scans, file watches, Kafka feeds, memo invalidation, target reconciliation, and target cleanup. Those are behaviorally important for freshness, but they are not automatic consolidation, deduplication, synthesis, decay, or promotion of memories in the review taxonomy; user pipelines may implement such operations, but the framework does not impose them.
 

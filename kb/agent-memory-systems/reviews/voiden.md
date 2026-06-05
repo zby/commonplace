@@ -73,7 +73,7 @@ The agent surface is narrower than a memory system but useful. Voiden does not p
 
 **Write agency:** `manual` `automatic` — Users, agents, import flows, extension installers, scripts, and the desktop app can create or edit `.void` files, settings, installed skills, extension state, and request artifacts. Automatic writes include frontmatter generation, import conversion, autosave/state persistence, history capture, retention pruning, `.gitignore` updates for `.voiden/history`, and skill recomposition after extension/skill settings change.
 
-**Curation operations:** `not-determinable` — The automatic paths I found are acquisition, serialization, execution-log capture, retention pruning, cache invalidation, and generated-instruction composition. I did not find automatic consolidation, deduplication, evolution, synthesis, invalidation, decay, or promotion of memory already in the store under the review vocabulary.
+**Curation operations:** `none` — The automatic paths I found are acquisition, serialization, execution-log capture, retention pruning, cache invalidation, and generated-instruction composition. I did not find automatic consolidation, deduplication, evolution, synthesis, invalidation, decay, or promotion of memory already in the store under the review vocabulary.
 
 History capture is trace extraction, but not trace-derived learning under the current review contract. The stored traces are request/response evidence, and the code provides UI/history consumption plus retention controls. It does not distill those traces into future prompt instructions, validators, route policies, embeddings, or edited workspace artifacts.
 

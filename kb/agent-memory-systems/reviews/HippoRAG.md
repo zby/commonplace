@@ -79,7 +79,7 @@ The biggest design divergence is that HippoRAG treats extracted structure as an 
 
 **Write agency:** `automatic` — Callers explicitly supply documents, but the store-changing work is automatic indexing: chunk hashing, embedding upserts, OpenIE extraction, fact/entity embedding, graph edge construction, synonymy edge construction, graph persistence, OpenIE JSON persistence, and document deletion.
 
-**Curation operations:** `not-determinable` — I found automatic acquisition and access-structure construction, plus delete/update support, but not implemented consolidation, deduplication, in-place evolution, synthesis across existing memories, staleness invalidation, decay, or content salience promotion over already stored memory. Index and embedding rebuilds are retrieval upkeep rather than content curation.
+**Curation operations:** `none` — I found automatic acquisition and access-structure construction, plus delete/update support, but not implemented consolidation, deduplication, in-place evolution, synthesis across existing memories, staleness invalidation, decay, or content salience promotion over already stored memory. Index and embedding rebuilds are retrieval upkeep rather than content curation.
 
 ## Read-back
 

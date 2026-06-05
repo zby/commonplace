@@ -81,7 +81,7 @@ Commonplace is stronger on durable knowledge governance. Exocomp's ledgers are e
 
 **Write agency:** `manual` `automatic` — Humans and local authors can provide role YAML and skill packages; agents and the system write project ledgers, session backups, child-agent backups, work reports, debug snapshots, and tool-call records. The automatic side is mostly persistence and agent-mediated acquisition/update, not a curation loop over existing memory.
 
-**Curation operations:** `not-determinable` — I did not find automatic deduplication, consolidation, synthesis, decay, or learned promotion over retained memory. Bug fixing can mark an existing bug report as fixed, and session shutdown backs up current state, but those are requested tool/state updates rather than an autonomous truth-maintenance or learning policy.
+**Curation operations:** `none` — I did not find automatic deduplication, consolidation, synthesis, decay, or learned promotion over retained memory. Bug fixing can mark an existing bug report as fixed, and session shutdown backs up current state, but those are requested tool/state updates rather than an autonomous truth-maintenance or learning policy.
 
 ## Read-back
 

@@ -87,14 +87,17 @@ override. This is the real line between memory that *informs* and memory that
 
 ## 6. Extraction is automated; genuine synthesis is not
 
-Systems readily create, tier, and enrich memory — promote 70%, synthesize-labelled
-54%, evolve 53%, consolidate 50% — but the operations that maintain *truth* and
-*bounded size* over time lag: invalidate 42%, decay 25%. And **22 of 129 systems
-run no automatic curation at all** (9 of them manual-only authoring). The hardest operation —
-deriving a genuinely *new* claim across stored entries, as opposed to summarizing
-them — remains rare and mostly aspirational even where the matrix records a
-`synthesize` token. Curation is where the survey's frontier still sits: capture is
-solved, lifecycle maintenance is not.
+Across the 120 systems that write automatically, only one operation clears half —
+promote (62%, a tier/salience bump that changes nothing about content). Everything
+that actually reshapes stored memory trails it: synthesize-labelled 48%, evolve
+48%, consolidate 44%, dedup 41%, and the truth-maintenance pair lags hardest —
+invalidate 38%, decay 22%. And **13 of those 120 do no curation at all** — pure
+acquisition, storing new material without ever touching what is already there (a
+further 9 systems are manual-only). The hardest operation — deriving a genuinely
+*new* claim across stored entries, as opposed to summarizing them — remains rare
+and mostly aspirational even where the matrix records a `synthesize` token.
+Curation is where the survey's frontier still sits: capture is solved, lifecycle
+maintenance is not.
 
 ## What this means for our design
 

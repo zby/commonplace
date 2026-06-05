@@ -73,7 +73,7 @@ The strongest design divergence is authority. In llm-context-base, a convention 
 
 **Write agency:** `manual` `automatic` — Humans and host agents create, edit, file, archive, and update Markdown artifacts; the only in-repo automatic write implementation I found is the metadata migration script, while most "automatic" behavior is instruction for the external agent to perform captures, lint logging, README updates, training-log updates, and filing decisions.
 
-**Curation operations:** `not-determinable` — The repo specifies maintenance checks and agent-authored write-back, but it does not implement a code-run curation loop over stored memories from which consolidate/dedup/evolve/synthesize/invalidate/decay/promote can be verified as automatic operations.
+**Curation operations:** `none` — The repo specifies maintenance checks and agent-authored write-back, but it does not implement a code-run curation loop over stored memories from which consolidate/dedup/evolve/synthesize/invalidate/decay/promote can be verified as automatic operations.
 
 ## Read-back
 

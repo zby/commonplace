@@ -66,7 +66,7 @@ The desktop app narrows one previous gap with Commonplace: it now has a standing
 
 **Write agency:** `manual` `automatic` — Users manually configure providers, start/cancel/retry runs, import sources, and apply any resulting harness edits; automatic paths ingest OTLP spans, import Langfuse traces, upsert summaries/search rows, export selected traces, build sidecar indexes, compact agent context, stream run events, and store final run results.
 
-**Curation operations:** `not-determinable` — The inspected automatic writes are acquisition, indexing, summarization, export, logging, and run-result persistence. I did not find code that automatically consolidates, deduplicates, evolves, synthesizes, invalidates, decays, or promotes memory already in HALO's store under the review vocabulary; the harness-edit promotion happens outside HALO.
+**Curation operations:** `none` — The inspected automatic writes are acquisition, indexing, summarization, export, logging, and run-result persistence. I did not find code that automatically consolidates, deduplicates, evolves, synthesizes, invalidates, decays, or promotes memory already in HALO's store under the review vocabulary; the harness-edit promotion happens outside HALO.
 
 ### Trace-derived learning
 

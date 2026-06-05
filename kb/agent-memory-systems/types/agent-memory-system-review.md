@@ -129,6 +129,8 @@ Write the agency verdict and the automatic operations as lead tokens:
 
 Every `## Write side` section carries the `**Write agency:**` verdict. Add `**Curation operations:**` and the `### Trace-derived learning` sub-section only when the system has a non-trivial automatic write or curation path (trace-learned or rule-based maintenance). A manual-curation-only system keeps just the agency verdict.
 
+**When the system writes automatically but performs no curation** (its only automatic writes are *acquisition* — extraction, import, upload, indexing — with no operation over already-stored memory), write `**Curation operations:** \`none\`` with a one-line reason, *not* an omitted line. Omission is read as a retrofit gap and flagged; `none` records an assessed-absent verdict (every curation column set to `0`), keeping "verified no curation" distinct from "not assessed" (blank) and from "could not tell" (`not-determinable`). Use `none` only when agency includes `automatic`; a manual-only system still omits the line.
+
 ### Trace-derived learning
 
 When automatic writes are fed by agent traces, deepen the write side with the raw → distilled loop. **Add `trace-derived` to `tags`** and include this sub-section only when the code-grounded read finds a qualifying mechanism.

@@ -71,7 +71,7 @@ The main divergence is authority. In `interview-doc-agent`, the host model is tr
 
 **Write agency:** `manual` `automatic` — Users manually add raw materials, templates, and JDs, and can edit the library directly; the host agent, when instructed by the skill, can initialize folders, distill `materials/` into `经历库/`, update `00-个人档案.md` and `wiki/index.md`, and write generated documents to `output/`.
 
-**Curation operations:** `not-determinable` — The repository gives prose instructions for distilling and integrating new raw material, but I found no executable curation implementation that deterministically performs the controlled curation operations on existing stored entries. Creating experience records from raw materials is acquisition/import, while updating the index is access-structure upkeep.
+**Curation operations:** `none` — The repository gives prose instructions for distilling and integrating new raw material, but I found no executable curation implementation that deterministically performs the controlled curation operations on existing stored entries. Creating experience records from raw materials is acquisition/import, while updating the index is access-structure upkeep.
 
 ## Read-back
 
