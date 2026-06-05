@@ -1,5 +1,5 @@
 ---
-description: "What 129 code-grounded agent-memory reviews show when set on one matrix: storage no longer divides the field, the real split is automatic-capture+automatic-activation vs authored+explicit-lookup, most pushed memory is coarse, enforcement is the authority discriminator, and almost no system verifies that its automatic activation is right."
+description: "What 129 code-grounded agent-memory reviews show on one matrix: storage predicts almost nothing, capture and activation move together except on graph stores, automatic activation ships almost entirely unverified, and curation is bimodal — 13 systems do none, 6 do all of it."
 type: kb/types/note.md
 traits: [has-comparison]
 tags: [agent-memory]
@@ -8,113 +8,30 @@ status: current
 
 # What the matrix shows across 129 agent memory systems
 
-Every code-grounded review in this collection classifies its system on one shared
-set of axes — [storage substrate](../notes/definitions/storage-substrate.md),
-[lineage](../notes/definitions/lineage.md),
-[behavioral authority](../notes/definitions/behavioral-authority.md), and how
-memory [reaches the next action](../notes/knowledge-storage-does-not-imply-contextual-activation.md).
-Parsed into [`systems.csv`](./systems.csv) and rendered as the
-[comparison table](./systems-table.md), 129 systems can be counted rather than
-characterized one at a time. Six findings stand out. The headline: the question
-people reach for first — files or database? — is the one that no longer divides
-the field, and the questions that do divide it are about *activation* and
-*verification*, not storage.
+129 code-grounded reviews, each classified on the same axes — [storage substrate](../notes/definitions/storage-substrate.md), [lineage](../notes/definitions/lineage.md), [behavioral authority](../notes/definitions/behavioral-authority.md), and how memory [reaches the next action](../notes/knowledge-storage-does-not-imply-contextual-activation.md) — and parsed into [`systems.csv`](./systems.csv) and the [comparison table](./systems-table.md). What divides the field is not storage but activation and verification. Four surprises.
 
-## 1. Storage stopped dividing the field
+## Storage predicts nothing
 
-Files-family substrates (plain `files`, a git `repo`, `in-memory`) still lead at
-**70%**, but **29%** are database-backed — and the modal database is plain
-**SQLite (13%)**, not a vector or graph store (**9% combined**). "Filesystem-first
-convergence" was the founding observation of this collection; at 129 systems it is
-a slim majority, not a landscape law. More to the point, substrate predicts very
-little else — file-first systems span the full range of activation and authority
-below, and so do the database-backed ones. Storage is an operational floor
-(inspectability vs scale), not the architectural fork it is often treated as.
+Files-family substrates lead at **70%**, but read that with care: the roster was assembled largely from the llm-wiki discussions that followed Karpathy's sketch of the idea, which over-sample file-based systems, so the majority is a fact about *this collection*, not the field. The durable point is the spread. Substrate runs from [Agent-R](./reviews/agent-r.md), whose "memory" is not a store but a fine-tune baked into weights, to [supermemory](./reviews/supermemory.md), a hosted service behind an API — and it predicts almost nothing about how a system behaves. It is an operational floor, not the architectural fork it is usually treated as.
 
-## 2. The real split is a coupled bundle — and it isn't storage
+## Capture and activation are one choice — except on graphs
 
-How memory is *made* and how it is *activated* turn out to be the same axis. Of the
-**61%** of systems that derive memory automatically from agent traces, **82% push
-or do both** — automatic capture and automatic activation ship together. The
-converse holds: **70%** of pull-only systems are *not* trace-derived; they are
-authored or curated and wait to be asked. The population sorts into two camps:
+Whether a system learns automatically and whether it injects memory unasked turn out to be the same decision: **82%** of trace-learners push, and **70%** of pull-only systems are hand-authored. The field splits into an **automatic camp** (50% — learns from traces, pushes) and a **curated camp** (25% — authored, waits to be asked). The clean exception is graph memory: [Graphiti](./reviews/graphiti.md), [Cortex](./reviews/cortex.md), and [dense-mem](./reviews/dense-mem.md) all capture automatically yet stay strictly pull-only, because a graph is dear to build and cheap to query — so it can afford to wait to be asked rather than guess what to push.
 
-- **Automatic camp (50%)** — trace-derived *and* pushing. The system watches the
-  agent, distills memory, and injects it without being asked.
-- **Curated camp (25%)** — authored *and* pull-only. A human writes; the agent
-  retrieves on a deliberate, auditable lookup.
-- The remaining **25%** mix the two (authored memory with a push path, or
-  trace-derived memory behind an explicit search).
+## Automatic activation is shipped on faith
 
-This — not files-vs-database — is the choice that cascades. It decides who holds
-the throughput/reviewability tradeoff: the automatic camp accumulates fast and
-audits weakly; the curated camp audits well and scales slowly.
+Pushing is the survey's most common capability and its least verified. **75%** of pushes are a coarse always-load, not a selection for the moment (an actual LLM relevance judgment fires in only **17%**). And just **5 of 83** pushing systems ever test that the memory they injected changed the agent's behavior — and those five ([Reflexion](./reviews/reflexion.md), [Synapptic](./reviews/synapptic.md), [KBLaM](./reviews/KBLaM.md), [auto-harness](./reviews/auto-harness.md), [Meta-Harness](./reviews/meta-harness.md)) are all systems where measuring the outcome was already the point. Everywhere else, [storage is simply assumed to imply activation](../notes/knowledge-storage-does-not-imply-contextual-activation.md).
 
-## 3. Pushed memory is mostly coarse, not targeted
+## Curation is a barbell
 
-Among the 83 systems that push, **75% fire a coarse always-load** (session-start
-profile blocks, recent notes, checkpoint state) rather than selecting for the
-moment. Instance targeting is real but minority and shallow: identifier match 52%,
-embedding similarity 46%, lexical 40%, and an actual **LLM relevance judgment only
-17%**. Most "push" is "load the standing context," not "select the right memory
-for this turn." That matters because targeting is
-[bounded by symbol availability](../notes/symbolic-context-engineering-is-bounded-by-symbol-availability.md):
-precise selection needs an identifier already on the table or a content inference,
-and most systems have neither wired, so they fall back to loading everything
-relevant-ish.
+Capture is solved; lifecycle maintenance is not — and it is bimodal, not gradual. Of the 120 systems that write automatically, **13 do no curation at all** (pure acquisition, never touching what is already stored), while **6 run all seven operations** ([Clude](./reviews/cludebot.md), [GBrain](./reviews/gbrain.md), [LACP](./reviews/lacp.md), [Origin](./reviews/origin.md), [Stash](./reviews/stash.md), [WUPHF](./reviews/wuphf.md)); the middle is thin. The rarest is genuine `synthesize` — a *new* claim across stored entries rather than a summary of them — which stays mostly aspirational even where the matrix records the token.
 
-## 4. Almost nobody checks the push is right
+## For us
 
-This is the sharpest gap. Of the 83 pushing systems, **5 (6%)** test read-back
-faithfulness — whether the memory that fired actually changed the agent's behavior
-(ablation, perturbation, post-action audit). The rest assume context presence
-equals use. Automatic activation is the most widely shipped capability in the
-survey and the least verified: systems invest heavily in *deciding what to inject*
-and almost nothing in *confirming the injection landed*. Knowledge storage does
-not imply contextual activation, and the field is largely operating on faith that
-it does.
-
-## 5. Enforcement is the authority discriminator
-
-Every system carries knowledge authority; routing (90%), instruction and
-validation (88% each), ranking (81%), and learning (78%) are near-universal — so
-common they describe the category rather than distinguish within it. The one
-authority mode that actually splits the field is **enforcement, at 50%**: whether stored
-memory ever acts as a *hard gate* (a check the agent can't bypass — a validation
-that must pass, a blocking rule, a required proof) versus advisory context it can
-override. This is the real line between memory that *informs* and memory that
-*binds*, and it runs right down the middle of the population.
-
-## 6. Extraction is automated; genuine synthesis is not
-
-Across the 120 systems that write automatically, only one operation clears half —
-promote (62%, a tier/salience bump that changes nothing about content). Everything
-that actually reshapes stored memory trails it: synthesize-labelled 48%, evolve
-48%, consolidate 44%, dedup 41%, and the truth-maintenance pair lags hardest —
-invalidate 38%, decay 22%. And **13 of those 120 do no curation at all** — pure
-acquisition, storing new material without ever touching what is already there (a
-further 9 systems are manual-only). The hardest operation — deriving a genuinely
-*new* claim across stored entries, as opposed to summarizing them — remains rare
-and mostly aspirational even where the matrix records a `synthesize` token.
-Curation is where the survey's frontier still sits: capture is solved, lifecycle
-maintenance is not.
-
-## What this means for our design
-
-The two findings that bear on Commonplace are the curated camp's known weakness and
-the verification gap. We sit squarely in the **curated camp** (authored, pull-first,
-files) — which the matrix confirms is the minority bet, strong on reviewability and
-weak on throughput. The standing risk is the one camp-2 systems share: manual
-curation does not scale. The answer the data points to is not defecting to the
-automatic camp (which trades navigability and audit for volume) but *automating the
-curation itself* while keeping memory authored and inspectable. And finding 4 is a
-cheap edge: faithfulness testing is nearly absent across all 129 systems, so a KB
-that actually checks whether a loaded note changed an agent's behavior would be
-measuring something the rest of the field assumes.
+Commonplace is curated-camp (authored, pull-first, files): the minority bet, strong on review and weak on scale. The data argues not for defecting to automatic capture but for *automating the curation* while keeping memory authored — sliding from the empty end of the barbell toward the full one. And faithfulness testing is the cheap edge: nearly absent across 129 systems, so checking whether a loaded note actually changed an agent's behavior would measure what almost the whole field only assumes.
 
 Relevant Notes:
 
-- [knowledge-storage-does-not-imply-contextual-activation](../notes/knowledge-storage-does-not-imply-contextual-activation.md) - grounds: findings 2–4 rest on the read-back / activation distinction this note draws
+- [knowledge-storage-does-not-imply-contextual-activation](../notes/knowledge-storage-does-not-imply-contextual-activation.md) - grounds: the read-back / activation distinction the second and third findings rest on
 - [agent-memory-is-a-crosscutting-concern-not-a-separable-niche](../notes/agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md) - see-also: why the dividing axes span storage, retrieval, and learning at once
 - [trace-derived-learning-techniques-in-related-systems](./trace-derived-learning-techniques-in-related-systems.md) - see-also: the focused survey of the automatic camp this matrix quantifies
-- [designing-agent-memory-systems](../notes/designing-agent-memory-systems.md) - rationale: the design-pressure inventory the review axes distill
