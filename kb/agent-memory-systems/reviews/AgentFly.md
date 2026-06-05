@@ -1,155 +1,130 @@
 ---
-description: "AgentFly review: planner-executor agent with case-bank planning memory, trace-derived plan labels, and retriever-gated prompt injection"
+description: "AgentFly/Memento review: planner-executor agent with JSONL case-bank memory, trace-judged case writes, and parametric or SimCSE case read-back"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived, push-activation]
 status: current
-last-checked: "2026-06-01"
+last-checked: "2026-06-04"
+tags: [trace-derived]
 ---
 
 # AgentFly
 
-AgentFly, from the `Agent-on-the-Fly/AgentFly` repository, is published in the README as Memento: a planner-executor research agent that uses case-based reasoning to improve future task planning without fine-tuning the base planner or executor LLMs. The core memory implementation is not a general user-memory substrate. It is a benchmark-oriented case bank of prior questions, generated plans, and correctness labels, read back into the meta-planner before it decomposes the next task.
+AgentFly, branded as Memento in the inspected repository, is an Agent-on-the-Fly planner-executor agent for benchmark question answering. Its memory system is a case-based reasoning layer: previous tasks, plans, rewards, labels, and retrieved-case outcomes are stored as JSONL rows, then read back as positive and negative planning examples through either non-parametric SimCSE retrieval or a trained pairwise case retriever.
 
 **Repository:** https://github.com/Agent-on-the-Fly/AgentFly
 
 **Reviewed commit:** [42fbbcac63dd58ed6856c0761357345a58e4f032](https://github.com/Agent-on-the-Fly/AgentFly/commit/42fbbcac63dd58ed6856c0761357345a58e4f032)
 
-**Last checked:** 2026-06-01
+**Last checked:** 2026-06-04
 
 ## Core Ideas
 
-**The base agent is a hierarchical planner-executor.** `client/agent.py` runs a meta-planner that emits JSON subtasks, then an executor sub-agent that can call MCP tools and returns concise results to the planner. Its only in-run memory is `shared_history`, trimmed by token budget; it does not persist cases or learn across runs ([client/agent.py](https://github.com/Agent-on-the-Fly/AgentFly/blob/42fbbcac63dd58ed6856c0761357345a58e4f032/client/agent.py)).
+**The agent is a hierarchical planner-executor with MCP tools.** The baseline client asks a meta-planner to produce JSON task plans, sends each task to an executor with MCP tool schemas, records intermediate task results in shared history, and loops back to the planner for final answer or replanning ([client/agent.py](https://github.com/Agent-on-the-Fly/AgentFly/blob/42fbbcac63dd58ed6856c0761357345a58e4f032/client/agent.py)). The memory variants keep that architecture and add case read-back before planning ([client/no_parametric_cbr.py](https://github.com/Agent-on-the-Fly/AgentFly/blob/42fbbcac63dd58ed6856c0761357345a58e4f032/client/no_parametric_cbr.py), [client/parametric_memory_cbr.py](https://github.com/Agent-on-the-Fly/AgentFly/blob/42fbbcac63dd58ed6856c0761357345a58e4f032/client/parametric_memory_cbr.py)).
 
-**Case memory stores plans, not full trajectories.** The memory pool is JSONL. In the parametric path, each row has `case`, `plan`, and `case_label`; the non-parametric path uses `question`, `plan`, and `reward` fields. The bundled `memory/memory.jsonl` shows short natural-language questions paired with serialized planner JSON and positive/negative labels, not observations, tool calls, source evidence, or final answers ([memory/memory.jsonl](https://github.com/Agent-on-the-Fly/AgentFly/blob/42fbbcac63dd58ed6856c0761357345a58e4f032/memory/memory.jsonl), [memory/np_memory.py](https://github.com/Agent-on-the-Fly/AgentFly/blob/42fbbcac63dd58ed6856c0761357345a58e4f032/memory/np_memory.py), [memory/parametric_memory.py](https://github.com/Agent-on-the-Fly/AgentFly/blob/42fbbcac63dd58ed6856c0761357345a58e4f032/memory/parametric_memory.py)).
+**Memory is a compact case bank, not full trajectory replay.** The durable memory rows contain question/case text, plan JSON, and a reward or positive/negative case label; the larger result records contain meta traces, executor traces, tool history, judgements, and rationales, but the read-back prompt uses compact examples rather than replaying those full traces ([memory/memory.jsonl](https://github.com/Agent-on-the-Fly/AgentFly/blob/42fbbcac63dd58ed6856c0761357345a58e4f032/memory/memory.jsonl), [memory/dummy_memo.jsonl](https://github.com/Agent-on-the-Fly/AgentFly/blob/42fbbcac63dd58ed6856c0761357345a58e4f032/memory/dummy_memo.jsonl), [client/no_parametric_cbr.py](https://github.com/Agent-on-the-Fly/AgentFly/blob/42fbbcac63dd58ed6856c0761357345a58e4f032/client/no_parametric_cbr.py), [client/parametric_memory_cbr.py](https://github.com/Agent-on-the-Fly/AgentFly/blob/42fbbcac63dd58ed6856c0761357345a58e4f032/client/parametric_memory_cbr.py)). This is the main context-efficiency move: preserve the plan-shaped lesson, not the whole interaction.
 
-**Non-parametric CBR retrieves by embedding similarity.** `client/no_parametric_cbr.py` loads `MEMORY_JSONL_PATH`, extracts question-plan pairs, embeds case keys with a SimCSE model, retrieves top-k similar cases for the current query, separates them into positive and negative examples using the original row's reward, and injects a prompt that asks the planner to imitate positives and avoid negatives ([client/no_parametric_cbr.py](https://github.com/Agent-on-the-Fly/AgentFly/blob/42fbbcac63dd58ed6856c0761357345a58e4f032/client/no_parametric_cbr.py), [memory/np_memory.py](https://github.com/Agent-on-the-Fly/AgentFly/blob/42fbbcac63dd58ed6856c0761357345a58e4f032/memory/np_memory.py)).
+**Read-back is bounded by top-k and label filtering.** Non-parametric retrieval embeds case keys and the current task with a SimCSE model, selects top-k by cosine similarity, then formats positive reward rows and negative reward rows under separate caps ([memory/np_memory.py](https://github.com/Agent-on-the-Fly/AgentFly/blob/42fbbcac63dd58ed6856c0761357345a58e4f032/memory/np_memory.py), [client/no_parametric_cbr.py](https://github.com/Agent-on-the-Fly/AgentFly/blob/42fbbcac63dd58ed6856c0761357345a58e4f032/client/no_parametric_cbr.py)). Parametric retrieval scores each case-plus-plan prompt against the current query with a trained classifier, sorts by score, and injects at most `MEMORY_TOP_K` cases ([memory/parametric_memory.py](https://github.com/Agent-on-the-Fly/AgentFly/blob/42fbbcac63dd58ed6856c0761357345a58e4f032/memory/parametric_memory.py), [client/parametric_memory_cbr.py](https://github.com/Agent-on-the-Fly/AgentFly/blob/42fbbcac63dd58ed6856c0761357345a58e4f032/client/parametric_memory_cbr.py)). The complexity is still example-heavy: every selected case can carry a full plan.
 
-**Parametric memory trains a case selector, not the agent itself.** `memory/train_memory_retriever.py` trains a classifier over current query and candidate in-context case text, saving `best.pt` or `last.pt`. `memory/parametric_memory.py` loads that checkpoint and scores each pool entry for the current query. The README frames this as learning without LLM weight updates: the trained retriever changes which examples reach the planner, while the planner and executor models remain external LLM calls ([memory/train_memory_retriever.py](https://github.com/Agent-on-the-Fly/AgentFly/blob/42fbbcac63dd58ed6856c0761357345a58e4f032/memory/train_memory_retriever.py), [memory/parametric_memory.py](https://github.com/Agent-on-the-Fly/AgentFly/blob/42fbbcac63dd58ed6856c0761357345a58e4f032/memory/parametric_memory.py), [README.md](https://github.com/Agent-on-the-Fly/AgentFly/blob/42fbbcac63dd58ed6856c0761357345a58e4f032/README.md)).
+**The parametric path learns a retriever, not an executor model.** `train_memory_retriever.py` trains a SimCSE-backed classifier over `(retrieved case prompt, current query) -> truth_label`, saving `best.pt` and `last.pt` checkpoints when invoked ([memory/train_memory_retriever.py](https://github.com/Agent-on-the-Fly/AgentFly/blob/42fbbcac63dd58ed6856c0761357345a58e4f032/memory/train_memory_retriever.py)). The LLM weights are unchanged; the learned artifact is a read-back ranking model that decides which cases become in-context examples.
 
-**The online loop writes new cases from judged runs.** Both CBR clients run benchmark questions from `data/deepresearcher.jsonl`, call an LLM judge over predicted answer and ground truth, write result records under `../result/`, and append memory entries for later runs. The parametric path also writes `training_data.jsonl` rows linking the current query, each retrieved case, the case label, and whether the current answer was correct ([client/no_parametric_cbr.py](https://github.com/Agent-on-the-Fly/AgentFly/blob/42fbbcac63dd58ed6856c0761357345a58e4f032/client/no_parametric_cbr.py), [client/parametric_memory_cbr.py](https://github.com/Agent-on-the-Fly/AgentFly/blob/42fbbcac63dd58ed6856c0761357345a58e4f032/client/parametric_memory_cbr.py), [memory/training_data.jsonl](https://github.com/Agent-on-the-Fly/AgentFly/blob/42fbbcac63dd58ed6856c0761357345a58e4f032/memory/training_data.jsonl)).
-
-**Tool use is broad, but memory only steers planning.** The executor can call MCP-style servers for code execution, crawling, documents, search, images, math, video, and related tools. The case memory is injected into planner messages before task decomposition; it does not select tools directly, validate tool outputs, rewrite executor prompts per subtask, or constrain final-answer generation ([client/agent.py](https://github.com/Agent-on-the-Fly/AgentFly/blob/42fbbcac63dd58ed6856c0761357345a58e4f032/client/agent.py), [client/parametric_memory_cbr.py](https://github.com/Agent-on-the-Fly/AgentFly/blob/42fbbcac63dd58ed6856c0761357345a58e4f032/client/parametric_memory_cbr.py), [server](https://github.com/Agent-on-the-Fly/AgentFly/tree/42fbbcac63dd58ed6856c0761357345a58e4f032/server)).
+**Trace-derived learning is benchmark-loop mediated.** The main automatic write paths run inside benchmark scripts: they judge answers with an LLM, append result JSONL rows, append compact memory entries, append retrieved-case training rows in the parametric variant, and reload the memory pool for later tasks ([client/no_parametric_cbr.py](https://github.com/Agent-on-the-Fly/AgentFly/blob/42fbbcac63dd58ed6856c0761357345a58e4f032/client/no_parametric_cbr.py), [client/parametric_memory_cbr.py](https://github.com/Agent-on-the-Fly/AgentFly/blob/42fbbcac63dd58ed6856c0761357345a58e4f032/client/parametric_memory_cbr.py)). The implementation supports continual accumulation in those evaluation loops, but the inspected source does not implement autonomous compression, deduplication, contradiction handling, or personal preference memory; those are README TODOs ([README.md](https://github.com/Agent-on-the-Fly/AgentFly/blob/42fbbcac63dd58ed6856c0761357345a58e4f032/README.md)).
 
 ## Artifact analysis
 
-- **Storage substrate:** `files` — Filesystem JSONL files such as `memory/memory.jsonl` or the configured `MEMORY_JSONL_PATH`
-- **Representational form:** `prose` `symbolic` `parametric` — prose questions, plans, traces, and prompts; symbolic JSON records, labels, rewards, scores, and prompt templates; distributed-parametric embeddings and retriever checkpoints
-- **Lineage:** `authored` `trace-extracted` — authored prompt/framework code and seeded examples combine with trace-derived rows appended after judged benchmark runs and retriever-training data derived from those runs
-- **Behavioral authority:** `knowledge` `instruction` `ranking` `learning` — cases and result logs serve as evidence, prompt templates instruct planner/executor behavior, retrievers rank which cases are selected, and training rows/checkpoints drive selector learning
+- **Storage substrate:** `files` `model-weights` — Case banks, training rows, dummy memory, benchmark result rows, and source data are JSONL files; the parametric retriever can persist PyTorch checkpoints under the configured output directory, although no checkpoint file is present in the inspected checkout.
+- **Representational form:** `prose` `symbolic` `parametric` — Questions, cases, rationales, and plans are prose; JSON fields, rewards, case labels, truth labels, traces, and prompt templates are symbolic; the optional case retriever checkpoint is distributed-parametric state.
+- **Lineage:** `authored` `imported` `trace-extracted` — Prompt templates and client code are authored; benchmark data and seed case rows are imported or preloaded; result rows, compact case entries, retrieved-case training rows, and retriever checkpoints derive from task trajectories and judgement outcomes.
+- **Behavioral authority:** `knowledge` `instruction` `validation` `ranking` `learning` — Case examples are knowledge artifacts when they evidence prior tasks; the formatted "positive" and "negative" blocks instruct the planner to imitate or avoid patterns; LLM judge outputs validate benchmark answers; SimCSE similarity and the trained classifier rank read-back; training rows and checkpoints provide learning authority for future retrieval.
 
-**Case-bank JSONL.** Storage substrate: filesystem JSONL files such as `memory/memory.jsonl` or the configured `MEMORY_JSONL_PATH`. Representational form: symbolic JSON records containing prose questions, serialized planner JSON, and positive/negative labels or rewards. Lineage: seeded examples plus trace-derived rows appended after judged benchmark runs. Behavioral authority: knowledge artifacts when inspected as examples; system-definition artifacts at read-back time because selected rows are transformed into planner context that biases the next decomposition.
+**Case-bank rows.** `memory.jsonl` rows use `case`, `plan`, and `case_label`; `dummy_memo.jsonl` rows use `question`, `plan`, and `reward`. Both formats are consumed by wrapper-specific loaders and formatted into examples. Their operative split is the plan prose/JSON used as planner advice and the label/reward used as a selection and warning signal.
 
-**Result and trace records.** Storage substrate: JSONL result files written under `../result/` by the CBR clients. Representational form: mixed symbolic/prose records containing query, model output, plan JSON, meta-planner trace, executor trace, tool history, judge rationale, and reward or correctness. Lineage: generated from benchmark questions, planner/executor calls, MCP tool results, and an LLM judge over ground truth. Behavioral authority: knowledge artifacts as audit/evaluation evidence; system-definition artifacts only when compressed into memory rows or pairwise training rows.
+**Training-data rows.** `training_data.jsonl` rows connect a current query, a retrieved case, its case label, the retrieved plan, and a truth label indicating whether the full run was judged correct. These are not read directly into the planner; they are learning artifacts for the retriever training script.
 
-**Retriever-training JSONL.** Storage substrate: `memory/training_data.jsonl` or `TRAINING_DATA_PATH`. Representational form: symbolic pair records with current query, retrieved case, case label, plan, and `truth_label`. Lineage: derived from parametric CBR runs by pairing the current judged outcome with every case that was retrieved for that query. Behavioral authority: system-definition artifact for learning because the trainer uses these rows to decide which query-case pairs should be selected later.
+**Retriever model.** `MemoryRetrieverClassifier` concatenates two encoded text representations and classifies whether a case should be useful for a query. Its effective relevance quality is not verified from source code alone; the code shows the architecture and save/load path, not deployment performance.
 
-**Non-parametric embedding retriever.** Storage substrate: no persistent index in the inspected code; embeddings are computed at retrieval time from the JSONL pool. Representational form: distributed-parametric SimCSE embeddings plus symbolic top-k scores. Lineage: derived from the case-bank key text and the current query under the chosen pretrained encoder. Behavioral authority: ranking system-definition artifact because similarity decides which cases are converted into planner prompt examples.
+**Benchmark result rows.** The benchmark loops write result records with plan JSON, meta trace, executor trace, tool history, prediction, ground truth, judgement, rationale, and reward. These are retained trace evidence for humans and for memory acquisition, but the read-back path does not load the full traces into future planner prompts.
 
-**Parametric retriever checkpoint.** Storage substrate: PyTorch checkpoint path such as `memory/ckpts/retriever/best.pt`, supplied through `RETRIEVER_MODEL_PATH`. Representational form: distributed-parametric classifier weights on top of a transformer backbone. Lineage: trained from `training_data.jsonl`, tokenizer/backbone choice, split policy, class weighting, and optimizer settings in `train_memory_retriever.py`. Behavioral authority: ranking system-definition artifact because its scores determine which positive and negative cases reach the planner.
-
-**Prompt templates and planner/executor system prompts.** Storage substrate: Python string constants in the client files. Representational form: prose instructions embedded in code. Lineage: authored framework code. Behavioral authority: system-definition artifacts because they define planner JSON shape, executor tool-use behavior, final-answer format, judge criteria, and the meaning of injected positive/negative cases.
-
-The promotion path is benchmark run -> result trace -> judged plan memory row -> retrieved prompt example, with an optional second path through pairwise training data -> retriever checkpoint -> better case selection. It promotes traces into case-selection and prompt-conditioning artifacts, not into durable prose lessons, validators, route tables, or changed planner/executor weights. The main governance gap is lineage: appended memory rows and training rows do not preserve source result-file id, judge model version, prompt version, retrieval scores, or acceptance status.
+The promotion path is case-bank to retrieval training to checkpoint-mediated ranking. A compact case can first act as prompt-visible advice, then later contribute to the learned read-back policy; it does not become a validator, tool, symbolic procedure, or durable Commonplace-style reviewed instruction.
 
 ## Comparison with Our System
 
-| Dimension | AgentFly | Commonplace |
-|---|---|---|
-| Primary purpose | Improve benchmark task planning through retrieved prior cases | Maintain a typed methodology KB for future agents and maintainers |
-| Canonical retained unit | JSONL case with question, plan, and label; optional retriever checkpoint | Git-tracked markdown artifacts, schemas, links, indexes, reviews, and reports |
-| Learning loop | Online judged runs append memory; optional offline retriever training | Source-grounded writing, review, validation, and workshop-to-library promotion |
-| Read-back | Retrieved cases are pushed into the planner prompt before decomposition | Mostly pull through search/indexes/links, plus explicit instructions and generated context where configured |
-| Governance | LLM judge, labels, top-k retrieval, training metrics | Collection contracts, schemas, deterministic validation, semantic review, git history |
+AgentFly and Commonplace both treat retained artifacts as behavior-shaping context rather than as hidden model updates. The important difference is artifact granularity. Commonplace keeps typed, reviewed, source-linked notes and instructions in git; AgentFly keeps compact benchmark cases and labels in JSONL, with optional promotion into a trained ranker.
 
-AgentFly is closer to Commonplace than systems that only fine-tune a model, because the main behavior-shaping artifacts remain inspectable as files. But its retained unit is narrower: a task and a plan label, rather than a source-grounded note with frontmatter, links, type contract, review state, and explicit evidence. It optimizes for fast few-shot reuse, not durable explanation.
+AgentFly is stronger as a quick online-learning loop for benchmark agents. It can run a task, judge the result, append a case, and use the updated case pool for the next task in the same batch. Commonplace is stronger as a governed knowledge base: its artifacts carry frontmatter, type contracts, validation, replacement history, citations, and explicit review state.
 
-The strongest alignment is the separation between raw evidence and loaded context. AgentFly stores result traces and memory rows, but only a small retrieved subset reaches the planner. Commonplace already makes the same bet with search, indexes, and scoped note loading. The difference is activation: AgentFly automates selection and prompt insertion for every benchmark query, while Commonplace usually leaves search and linking as deliberate agent actions unless an instruction or workflow frontloads context.
-
-The tradeoff is auditability versus immediacy. AgentFly can improve the next run by appending a few JSONL rows, but the row itself carries little support for source review or invalidation. Commonplace makes promotion slower because the artifact must explain itself, but that friction is what lets future agents inspect why a rule or note should still have authority.
-
-**Read-back:** `push` — With instance-targeted inferred selection. From the acting planner's perspective, retrieved case memory arrives before it asks for it; non-parametric CBR gates by SimCSE embedding similarity over the current query and case question, and parametric CBR gates by a trained neural query-case classifier.
+The clearest tradeoff is authority. AgentFly's read-back cases are powerful because they are injected before planning, but they are also brittle: positive and negative examples can steer the planner without provenance beyond the case row and judge label. Commonplace would not promote a trace-derived pattern into system-definition authority without source preservation and review.
 
 ### Borrowable Ideas
 
-**Inject negative examples as first-class memory.** A Commonplace analogue would preserve failed plans or invalid review moves alongside successful procedures, then load them as "avoid this pattern" evidence when the current task matches. Ready for workshop reports; promotion to standing instructions needs review gates.
+**Positive and negative examples as a compact read-back format.** Commonplace could use paired "imitate / avoid" examples in operational instructions or review-gate prompts when repeated failures have clear shape. Ready for narrow workflows; not ready as a general replacement for notes.
 
-**Train a selector without changing the consuming agent.** AgentFly's parametric retriever changes activation, not the planner model. Commonplace could use a learned or scored selector for context packets while keeping the KB artifacts readable and versioned. Needs a larger supervised corpus of retrieval decisions.
+**Keep full traces separate from compact lessons.** AgentFly stores rich result traces but serves compact cases. Commonplace can apply the same split to review runs: preserve full outputs as evidence, then serve only a small distilled lesson or warning.
 
-**Keep plan memory separate from execution trace memory.** AgentFly stores compact planning cases even when result records contain fuller traces. Commonplace could similarly distill long agent runs into small plan-shaping cards while retaining the trace as evidence. Ready as a trace-review convention.
+**Train retrieval from judged usefulness, not just semantic similarity.** The parametric retriever is a useful design direction: retrieval should learn which prior artifacts helped, not only which look textually similar. This needs a concrete Commonplace use case with enough judged retrieval events before implementation.
 
-**Use retrieval outcomes to generate selector-training examples.** The parametric path records which retrieved cases preceded a correct or incorrect answer. A Commonplace analogue would log which notes were loaded for a task and whether the outcome passed validation, then use that as weak supervision for retrieval ranking. Needs careful controls so "loaded during success" does not become false credit.
+**Reload memory after writes in batch runs.** The benchmark loop immediately reloads the memory pool after appending a case. Commonplace could mirror that for long review sweeps where a newly accepted finding should affect later items in the same run, but only with explicit scope boundaries.
 
-**Make activation policy explicit in environment variables.** `MEMORY_TOP_K`, `MEMORY_MAX_POS_EXAMPLES`, and `MEMORY_MAX_NEG_EXAMPLES` make read-back volume tunable. Commonplace generated context workflows could expose similar per-task budgets for positive evidence, counterexamples, and hard instructions. Ready where context packets are generated mechanically.
+**Do not borrow ungated example authority wholesale.** Injected cases tell the planner to follow positives and avoid negatives. In Commonplace, that authority should pass through review status, source links, and expiry or supersession policy.
 
-## Write-side placement
+## Write side
 
-**Write agency:** `automatic` — the CBR clients append judged run cases and selector-training rows, and the staged trainer writes a retriever checkpoint that changes later case selection.
+**Write agency:** `automatic` — The benchmark clients automatically append result rows, compact memory entries, and parametric training rows after judged task runs; the training script can then write retriever checkpoints from accumulated training data.
 
-**Curation operations:** `consolidate` `promote` — benchmark traces are compressed into compact case rows, and reward/case labels plus the trained retriever change which cases receive salience during later read-back.
+**Curation operations:** `promote` — Reward/case labels, retrieved-case truth labels, and the trained retriever change which existing cases receive read-back salience. The code does not implement automatic deduplication, consolidation, in-place evolution, contradiction invalidation, age decay, or cleanup over stored cases.
 
 ### Trace-derived learning
 
-**Trace source:** `tool-traces` `trajectories` — benchmark runs include planner outputs, executor/tool-call history, final answers, ground-truth comparisons, and judge rationales.
+**Trace source:** `trajectories` `tool-traces` — The result records retain plan output, meta-planner cycles, executor steps, tool calls, answer judgement, rationale, and reward; the compact memory writes mostly consume the query, plan, and judged success/failure rather than the full trace body.
 
-**Learning scope:** `cross-task` — accumulated benchmark cases and selector-training rows are reused across later benchmark questions, not confined to the same task instance.
+**Extraction.** The non-parametric loop turns each judged task into a compact `(question, plan, reward)` row and reloads the memory pool. The parametric loop turns each judged task into a compact `(case, plan, case_label)` row and, when cases were retrieved, appends `(query, retrieved case, retrieved plan, truth_label)` rows for offline retriever training. The oracle is an LLM judge over the predicted answer and ground truth.
 
-**Learning timing:** `online` `offline` `staged` — CBR clients append memory rows during batch processing, while parametric retriever improvement is a staged offline training step used by later runs.
+**Learning scope:** `cross-task` — Rows from one benchmark task can influence retrieval and planning for later tasks in the same configured memory pool.
 
-**Distilled form:** `prose` `symbolic` `parametric` — trace runs distill into prose planning cases, symbolic labels/rewards/training rows, and optional neural retriever weights.
+**Learning timing:** `staged` — Case rows are appended online during benchmark execution, but parametric learning is a separate offline training step that writes checkpoints.
 
-**Trace source.** AgentFly qualifies as trace-derived learning. The raw signals are benchmark question runs: planner outputs, executor results, tool-call history, final answers, ground-truth comparisons, and LLM-judge rationales in the CBR clients' result records. The memory rows keep only a smaller slice: question, generated plan, and reward or case label.
+**Distilled form:** `prose` `symbolic` `parametric` — The first distilled artifacts are prose/symbolic case rows and labels; the optional second-stage artifact is a trained neural retriever checkpoint.
 
-**Extraction.** Extraction is simple and mostly automatic. After each run, the non-parametric path appends the current question and plan to the memory pool with reward 1 or 0. The parametric path appends a positive or negative case row for the current query, and also writes training pairs connecting each retrieved case to whether the current answer was correct. A separate training script turns those pair records into a classifier checkpoint.
+On the survey axes, AgentFly is trace-derived learning with a compact case-bank output and an optional weight-learning read-back policy. It strengthens the distinction between learning LLM task behavior and fine-tuning the LLM itself: the learned weights, when present, belong to a retrieval selector, not to the planner or executor model.
 
-**Scope and timing.** Scope is benchmark-level, especially DeepResearcher-style question answering in the inspected code. Memory accumulation is online during batch processing. Parametric retriever improvement is staged: collect pair data, train the checkpoint offline, then use that checkpoint for later retrieval. The loop does not mine arbitrary user sessions or multi-project histories.
+## Read-back
 
-**Survey placement.** On the [trace-derived learning survey](../trace-derived-learning-techniques-in-related-systems.md), AgentFly sits between trace-to-prose-case and trace-to-ranker systems. It strengthens the survey split between retained evidence and activation machinery: the JSONL cases are readable, but much of the behavior change comes from which cases the retriever chooses to push into the planner.
+**Read-back:** `push` — The host client retrieves cases from memory and appends the formatted case prompt to `shared_history` before the meta-planner call; from the planner's perspective, the memory arrives without a separate tool request.
 
-## Read-back placement
+**Read-back signal:** `inferred / embedding` — Non-parametric read-back uses SimCSE embeddings and cosine similarity over case keys; parametric read-back uses a learned classifier over encoded query and case-plus-plan text. Both infer relevance from content rather than matching an explicit case identifier.
 
-**Direction.** AgentFly uses push from the planner's perspective. The agent does not issue a memory query as an action; the host client retrieves cases from the current user query and inserts the resulting examples into `shared_history` before the planner call.
+**Faithfulness tested:** `no` — The code records retrieved cases, benchmark judgements, and rewards, but it does not run with/without read-back ablations or post-answer audits proving that a particular injected case changed the planner's behavior.
 
-**Read-back signal:** `inferred / embedding` `inferred / judgment` — the non-parametric path selects by SimCSE embedding similarity, while the parametric path uses a trained neural classifier over the current query and candidate case text.
+Read-back assembles before the planner invocation. In the non-parametric variant, the selected examples are split by reward into positive and negative blocks with configurable caps; in the parametric variant, selected examples are split by `case_label`. The injected prompt explicitly tells the planner to focus on positive examples and avoid negative patterns. That makes the cases more forceful than passive evidence, but effective uptake, precision, and context dilution are not verified from code.
 
-**Faithfulness tested:** `no` — benchmark logs and retriever metrics exist, but the review found no ablation or perturbation test proving the planner used an injected case.
+The selection policy is bounded by `MEMORY_TOP_K`, `MEMORY_MAX_POS_EXAMPLES`, and `MEMORY_MAX_NEG_EXAMPLES`; the broader conversation is separately trimmed by token count. There is no progressive disclosure inside a case: if a case is selected, its question and plan text are included.
 
-**Targeting and signal.** Targeting is `instance`: the client selects cases for the current benchmark query, not a generic always-load bundle. The signal is `inferred`, keyed on content rather than an assigned identifier: the non-parametric path uses SimCSE embedding similarity over case questions, and the parametric path uses a trained neural classifier over the current query and candidate case text, then sorts by predicted relevance score. Precision and recall are not established by code alone.
-
-**Injection point.** Read-back happens before task decomposition, not after execution. It can change the planner's first emitted subtask list, which then changes which tools the executor calls.
-
-**Selection, scope, and complexity.** Selection is top-k by similarity or classifier score. Context volume is bounded by `MEMORY_TOP_K`, `MEMORY_MAX_POS_EXAMPLES`, and `MEMORY_MAX_NEG_EXAMPLES`; the global message history is also trimmed to a token ceiling before planner/executor calls. The loaded material is shallow: question plus plan, grouped as positive and negative examples. It does not recursively load source traces behind a case.
-
-**Authority at consumption.** Memory arrives as advisory prompt context, phrased as examples to follow or avoid. It is not a hard validator, route table, or enforced planner constraint. Effective authority depends on the planner following the examples, which the code does not test at the individual case level.
-
-**Faithfulness.** The repository has benchmark result logging and retriever training/evaluation metrics, but I did not find a faithfulness test that ablates a specific retrieved case, perturbs it, or verifies that the planner used the injected example.
-
-**Other consumers.** Humans can inspect and edit the JSONL memory pool, training data, result logs, and retriever checkpoints. The same files serve as research evidence, selector-training material, and operational read-back state.
+Other consumers include the offline trainer, which consumes training rows to update retriever weights, and human evaluators, who can inspect result JSONL rows and benchmark figures. Those consumers are separate from the planner read-back classification.
 
 ## Curiosity Pass
 
-**The README says no fine-tuning, but the parametric path fine-tunes the selector.** The claim is accurate for the planner/executor LLMs; the memory subsystem itself can learn a neural retriever checkpoint.
+The repository name and README branding diverge: the requested source is AgentFly, while the README, package name, and clone instructions call the system Memento. The review uses AgentFly as the local review title and names the internal branding in prose.
 
-**The positive/negative labels are answer-level, not plan-step-level.** A plan from a correct answer is treated as positive, and a plan from an incorrect answer is treated as negative. That is cheap supervision, but it can mislabel useful plans that failed because of execution, retrieval, tool, or final-answer issues.
+The README's "continual learning" claim is partly code-grounded and partly operational. The code does implement automatic case accumulation and retriever training data capture; retraining still requires a separate training invocation, and there is no scheduler or closed-loop checkpoint refresh in the inspected files.
 
-**The memory rows are more compact than the traces that produced them.** That keeps read-back cheap, but it also drops the evidence needed to understand why a plan succeeded or failed.
+The case bank is narrower than "experience replay" can suggest. Full meta/executor/tool traces are recorded in result files, but future planner prompts receive compact question-plan examples, not replayed tool trajectories or environment states.
 
-**Parametric training credit assignment is weak.** `training_data.jsonl` labels retrieved cases by whether the current query was answered correctly, not by whether the individual retrieved case actually helped. The trained selector can still be useful, but the label semantics are noisy.
+The parametric retriever is the most distinctive mechanism, but it adds an opaque ranking layer around otherwise inspectable JSONL cases. That may improve relevance, yet it weakens the local-first audit story unless training data, checkpoint provenance, and evaluation results remain easy to inspect.
 
-**Tool traces do not become tool policies.** The executor has a large MCP surface, yet the memory mechanism only conditions the planner. There is no retained rule like "for this task class, prefer search before crawling" except insofar as that pattern appears in remembered plans.
+The current memory implementation is benchmark-shaped. User personal memory, memory compression, and multi-modal memory are listed as future work, so they should not be counted as implemented retained-artifact mechanisms at this commit.
 
 ## What to Watch
 
-- Whether memory rows gain provenance fields such as source result path, judge model, prompt version, retrieval score, and acceptance status; that would make trace-derived cases auditable rather than just reusable.
-- Whether the system adds plan-step or tool-call-level credit assignment; that would distinguish bad plans from bad execution and make negative memory less noisy.
-- Whether retriever training becomes part of the online loop rather than an external staged command; that would turn AgentFly into a tighter continual-learning system.
-- Whether memory compression or pruning is implemented as the README TODO suggests; that would reveal whether the case bank remains an inspectable library or becomes a managed activation substrate.
-- Whether personal/user memory appears in code; that would move the system beyond benchmark case replay into a broader agent-memory design.
+- Whether the repository wires automatic retraining or checkpoint refresh into the benchmark loop; that would move AgentFly from staged learning toward a tighter online selector-learning loop.
+- Whether memory compression is implemented over stored cases; that would add a real consolidation operation rather than only compact acquisition from traces.
+- Whether duplicate, contradictory, or stale cases are detected; without that, the case bank can accumulate misleading negative and positive examples.
+- Whether result traces become read-back material or training inputs beyond compact plans; that would change both context complexity and trace-derived classification.
+- Whether user personal memory is added as a separate store; that would shift the system from benchmark case reasoning toward a broader agent memory substrate.
 
 Relevant Notes:
 
-- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - compares: AgentFly turns judged task runs into reusable cases and selector-training data.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - exemplifies: AgentFly separates JSONL cases, result traces, training pairs, prompt templates, and retriever weights by substrate, form, lineage, and authority.
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - contrasts: AgentFly's memory matters because the client actively retrieves and pushes cases into the planner prompt.
-- [Use trace-derived extraction](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - exemplifies: AgentFly extracts future planning context from prior judged runs.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - distinguishes: selected cases and retriever checkpoints shape later planning even though the original JSONL rows are readable evidence.
+- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes AgentFly's JSONL case bank from the host-client injection path that actually puts cases into planner context.
+- [Context efficiency is the central design concern in agent systems](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) - frames the top-k case-selection and compact-plan strategy as the central memory design tradeoff.
+- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - supports separating case rows, training rows, result traces, prompt templates, and learned retriever weights.
+- [Use trace-derived extraction](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - frames judged task runs becoming compact cases and selector-training rows.
+- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies the prompts, labels, retrieval policy, and trained selector when they steer future planning.
+- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies prior task cases and result traces as evidence or advice before stronger authority is assigned.

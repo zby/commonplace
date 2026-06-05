@@ -1,121 +1,122 @@
 ---
-description: "TraceCraft review: CLI coordination layer with bucket-backed memory, mailbox, claims, artifacts, and mirrored agent transcripts"
+description: "Tracecraft review: serverless bucket-backed multi-agent coordination with JSON memory, atomic claims, mailboxes, artifacts, and session mirroring"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 status: current
-last-checked: "2026-06-02"
+last-checked: "2026-06-05"
 ---
 
-# tracecraft
+# Tracecraft
 
-TraceCraft, from Arrmlet's `tracecraft` repository, is a CLI-first coordination layer for multi-agent AI runs. It does not own the model loop or provide semantic recall. It stores shared key-value memory, messages, task claims, handoffs, artifacts, agent registration, and mirrored harness transcripts as project-scoped JSON or file objects in S3-compatible or HuggingFace buckets.
+Tracecraft, from `Arrmlet/tracecraft`, is a Python CLI and SDK for coordinating multiple AI agents through a shared S3-compatible or HuggingFace bucket. At the reviewed commit it stores project-scoped JSON objects for agent presence, key-value memory, messages, task claims, step status, handoffs, artifacts, and mirrored harness sessions without running a server or database.
 
 **Repository:** https://github.com/Arrmlet/tracecraft
 
 **Reviewed commit:** [7d77daaaf17d3f18b7718e3ddfc8ee2576446adc](https://github.com/Arrmlet/tracecraft/commit/7d77daaaf17d3f18b7718e3ddfc8ee2576446adc)
 
-**Last checked:** 2026-06-02
+**Last checked:** 2026-06-05
 
 ## Core Ideas
 
-**The bucket is the coordination substrate.** The SDK exposes a small Python CLI whose storage factory returns either an S3 wrapper or a HuggingFace Buckets wrapper. Every operation writes or reads objects under a project prefix, so the bucket becomes the durable shared state for agents that may be running in different terminals, worktrees, hosts, or clouds ([store.py](https://github.com/Arrmlet/tracecraft/blob/7d77daaaf17d3f18b7718e3ddfc8ee2576446adc/sdk/tracecraft/store.py), [s3.py](https://github.com/Arrmlet/tracecraft/blob/7d77daaaf17d3f18b7718e3ddfc8ee2576446adc/sdk/tracecraft/s3.py), [hf.py](https://github.com/Arrmlet/tracecraft/blob/7d77daaaf17d3f18b7718e3ddfc8ee2576446adc/sdk/tracecraft/hf.py)).
+**The bucket is the coordination substrate.** Tracecraft writes every shared object under a project prefix: `agents/`, `memory/`, `messages/`, `steps/`, `artifacts/`, and `sessions/`. S3 uses `put_object`, `get_object`, paginated `list_objects_v2`, upload/download, and conditional `IfNoneMatch`; the HuggingFace backend exposes the same interface through `HfFileSystem`, with best-effort check-then-write for conditional puts ([README.md](https://github.com/Arrmlet/tracecraft/blob/7d77daaaf17d3f18b7718e3ddfc8ee2576446adc/README.md), [sdk/tracecraft/s3.py](https://github.com/Arrmlet/tracecraft/blob/7d77daaaf17d3f18b7718e3ddfc8ee2576446adc/sdk/tracecraft/s3.py), [sdk/tracecraft/hf.py](https://github.com/Arrmlet/tracecraft/blob/7d77daaaf17d3f18b7718e3ddfc8ee2576446adc/sdk/tracecraft/hf.py)).
 
-**Coordination memory is plain JSON, not semantic memory.** `memory set/get/list` maps dotted keys to `memory/...json` objects with a value, writer id, and timestamp. There is no embedding index, summarizer, retrieval model, or schema beyond CLI conventions; agents must know or list the keys they want ([memory.py](https://github.com/Arrmlet/tracecraft/blob/7d77daaaf17d3f18b7718e3ddfc8ee2576446adc/sdk/tracecraft/cli/memory.py)).
+**Memory is explicit shared state, not semantic recall.** `tracecraft memory set` stores a string value with `set_by` and `set_at`; `memory get` reads one key; `memory list` enumerates keys by prefix. Dotted names become object paths, but there is no embedding index, learned retriever, or consolidation loop over stored memories ([sdk/tracecraft/cli/memory.py](https://github.com/Arrmlet/tracecraft/blob/7d77daaaf17d3f18b7718e3ddfc8ee2576446adc/sdk/tracecraft/cli/memory.py)).
 
-**Atomic claims are the strongest behavior-shaping primitive.** `claim` writes `steps/<id>/claim.json` with `if_none_match=True`; the S3 backend turns that into `IfNoneMatch="*"`, while the HuggingFace backend documents a best-effort check-then-write fallback. The losing caller reads the existing owner and errors rather than overwriting the claim ([steps.py](https://github.com/Arrmlet/tracecraft/blob/7d77daaaf17d3f18b7718e3ddfc8ee2576446adc/sdk/tracecraft/cli/steps.py), [s3.py](https://github.com/Arrmlet/tracecraft/blob/7d77daaaf17d3f18b7718e3ddfc8ee2576446adc/sdk/tracecraft/s3.py), [hf.py](https://github.com/Arrmlet/tracecraft/blob/7d77daaaf17d3f18b7718e3ddfc8ee2576446adc/sdk/tracecraft/hf.py), [Tier 0 tests](https://github.com/Arrmlet/tracecraft/blob/7d77daaaf17d3f18b7718e3ddfc8ee2576446adc/sdk/tests/test_tier_0.py)).
+**Task ownership is enforced by object creation, not an agent scheduler.** `claim` writes `steps/<id>/claim.json` with `if_none_match=True`; the first writer wins and later claimers read the existing owner. `complete` writes status plus a handoff note, and `wait-for` polls status until dependencies are complete ([sdk/tracecraft/cli/steps.py](https://github.com/Arrmlet/tracecraft/blob/7d77daaaf17d3f18b7718e3ddfc8ee2576446adc/sdk/tracecraft/cli/steps.py), [sdk/tests/test_tier_0.py](https://github.com/Arrmlet/tracecraft/blob/7d77daaaf17d3f18b7718e3ddfc8ee2576446adc/sdk/tests/test_tier_0.py)).
 
-**The read-back model is explicit CLI pull.** Agents read memory with `tracecraft memory get/list`, messages with `inbox`, completion state with `step-status` or `wait-for`, artifacts with `artifact download`, and transcripts with `session show`. Example Claude Code and Hermes skill files instruct agents to run these commands, but the implementation does not inject recalled state into a model request or fire relevance-gated hooks ([CLI entrypoint](https://github.com/Arrmlet/tracecraft/blob/7d77daaaf17d3f18b7718e3ddfc8ee2576446adc/sdk/tracecraft/cli/__init__.py), [examples/claude-code/CLAUDE.md](https://github.com/Arrmlet/tracecraft/blob/7d77daaaf17d3f18b7718e3ddfc8ee2576446adc/examples/claude-code/CLAUDE.md), [examples/hermes-agent/SKILL.md](https://github.com/Arrmlet/tracecraft/blob/7d77daaaf17d3f18b7718e3ddfc8ee2576446adc/examples/hermes-agent/SKILL.md)).
+**Context efficiency is procedural and pull-oriented.** Tracecraft does not assemble a prompt context or decide which memories are relevant. It keeps shared state outside the model until an agent deliberately calls `memory get`, `inbox`, `step-status`, `wait-for`, `artifact download`, or `session show`; the main efficiency win is that agents can fetch small coordination records instead of pasting a full shared run history into every prompt ([sdk/tracecraft/cli/__init__.py](https://github.com/Arrmlet/tracecraft/blob/7d77daaaf17d3f18b7718e3ddfc8ee2576446adc/sdk/tracecraft/cli/__init__.py), [examples/claude-code/CLAUDE.md](https://github.com/Arrmlet/tracecraft/blob/7d77daaaf17d3f18b7718e3ddfc8ee2576446adc/examples/claude-code/CLAUDE.md)).
 
-**Session mirroring preserves traces beside coordination state.** The `session mirror` command discovers harness transcripts for Claude Code, Codex, OpenClaw, and Hermes, reads new bytes or SQLite rows from a cursor, redacts common token shapes by default, uploads append-disjoint `part-*.jsonl` objects, and maintains cumulative `meta.json` with redaction counts and part metadata ([session.py](https://github.com/Arrmlet/tracecraft/blob/7d77daaaf17d3f18b7718e3ddfc8ee2576446adc/sdk/tracecraft/cli/session.py), [harness base](https://github.com/Arrmlet/tracecraft/blob/7d77daaaf17d3f18b7718e3ddfc8ee2576446adc/sdk/tracecraft/harness/base.py), [Hermes adapter](https://github.com/Arrmlet/tracecraft/blob/7d77daaaf17d3f18b7718e3ddfc8ee2576446adc/sdk/tracecraft/harness/hermes.py), [redact.py](https://github.com/Arrmlet/tracecraft/blob/7d77daaaf17d3f18b7718e3ddfc8ee2576446adc/sdk/tracecraft/redact.py), [session mirror docs](https://github.com/Arrmlet/tracecraft/blob/7d77daaaf17d3f18b7718e3ddfc8ee2576446adc/docs/session-mirror.md)).
+**Session mirroring records traces for inspection, not learning.** The mirror command tails Claude Code, Codex, OpenClaw, or Hermes sessions, redacts known token shapes by default, uploads append-disjoint JSONL parts, and maintains `meta.json` with cursor ranges and redaction counts. The implementation preserves traces and provides list/show/tail operations; I did not find code that distills these traces into future instructions, rules, rankings, or learned memory ([docs/session-mirror.md](https://github.com/Arrmlet/tracecraft/blob/7d77daaaf17d3f18b7718e3ddfc8ee2576446adc/docs/session-mirror.md), [sdk/tracecraft/cli/session.py](https://github.com/Arrmlet/tracecraft/blob/7d77daaaf17d3f18b7718e3ddfc8ee2576446adc/sdk/tracecraft/cli/session.py), [sdk/tracecraft/redact.py](https://github.com/Arrmlet/tracecraft/blob/7d77daaaf17d3f18b7718e3ddfc8ee2576446adc/sdk/tracecraft/redact.py)).
 
-**Context efficiency is operational rather than semantic.** TraceCraft keeps model context small by not loading anything automatically: agents issue targeted CLI reads for specific keys, inboxes, steps, artifacts, or transcript tails. That avoids always-loading a large memory store, but it also means relevance, completeness, and follow-through depend on the harness instructions and the agent's command choices.
+**Harness integration is adapter-light.** Claude Code, Codex, and OpenClaw adapters tail append-only JSONL files; Hermes reads a live SQLite database read-only and emits new `messages` rows as JSONL. The shared `Harness` protocol keeps discovery, active-session selection, incremental reads, and cursor sizing separate from storage ([sdk/tracecraft/harness/base.py](https://github.com/Arrmlet/tracecraft/blob/7d77daaaf17d3f18b7718e3ddfc8ee2576446adc/sdk/tracecraft/harness/base.py), [sdk/tracecraft/harness/claude_code.py](https://github.com/Arrmlet/tracecraft/blob/7d77daaaf17d3f18b7718e3ddfc8ee2576446adc/sdk/tracecraft/harness/claude_code.py), [sdk/tracecraft/harness/codex.py](https://github.com/Arrmlet/tracecraft/blob/7d77daaaf17d3f18b7718e3ddfc8ee2576446adc/sdk/tracecraft/harness/codex.py), [sdk/tracecraft/harness/openclaw.py](https://github.com/Arrmlet/tracecraft/blob/7d77daaaf17d3f18b7718e3ddfc8ee2576446adc/sdk/tracecraft/harness/openclaw.py), [sdk/tracecraft/harness/hermes.py](https://github.com/Arrmlet/tracecraft/blob/7d77daaaf17d3f18b7718e3ddfc8ee2576446adc/sdk/tracecraft/harness/hermes.py)).
 
 ## Artifact analysis
 
-- **Storage substrate:** `files` — Project-scoped bucket objects under `memory/<key path>.json`
-- **Representational form:** `prose` `symbolic` — Symbolic JSON envelopes carry prose values, messages, handoff notes, transcript rows, and instruction files; there is no embedding or learned parameter store
-- **Lineage:** `authored` `imported` `trace-extracted` — Agents author memory, messages, claims, registry rows, and examples; artifact uploads import local files; session mirroring copies harness transcripts and metadata from trace stores
-- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` — Most retained objects advise as context or evidence, loaded examples instruct agents, conditional claims and waits gate work, and messages, handoffs, claims, and registry rows coordinate recipients and task ownership
+- **Storage substrate:** `files` `kv` `service-object` - The durable store is bucket objects containing JSON records and uploaded files; shared memory is a key-value object namespace; local `.tracecraft.json` and mirror-state files hold credentials, project/agent identity, and cursors; S3 or HuggingFace bucket services provide the actual cross-agent substrate ([sdk/tracecraft/config.py](https://github.com/Arrmlet/tracecraft/blob/7d77daaaf17d3f18b7718e3ddfc8ee2576446adc/sdk/tracecraft/config.py), [sdk/tracecraft/store.py](https://github.com/Arrmlet/tracecraft/blob/7d77daaaf17d3f18b7718e3ddfc8ee2576446adc/sdk/tracecraft/store.py), [docs/s3-architecture.md](https://github.com/Arrmlet/tracecraft/blob/7d77daaaf17d3f18b7718e3ddfc8ee2576446adc/docs/s3-architecture.md)).
+- **Representational form:** `prose` `symbolic` - Message bodies, handoff notes, memory values, and transcript contents are prose-like payloads; object paths, JSON schemas, timestamps, agent ids, step ids, cursor ranges, redaction counters, and status values are symbolic. The reviewed code does not persist embeddings, model weights, or a learned ranker.
+- **Lineage:** `authored` `imported` `trace-extracted` - Agents and users author memory entries, messages, claims, statuses, and handoff notes through CLI commands; artifact uploads import local files into the bucket; session mirroring extracts raw harness traces from local JSONL files or Hermes SQLite rows into bucket parts.
+- **Behavioral authority:** `knowledge` `routing` `enforcement` `validation` - Memory entries, messages, handoffs, artifacts, and session traces provide knowledge/reference context; step ids, agent ids, inbox paths, project prefixes, and wait barriers route work; S3 conditional creation enforces single-owner claims on S3-compatible backends; config checks, credential handling, gitignore insertion, redaction counts, and tests provide validation/governance evidence. Tracecraft does not turn retained state into prompt instructions by itself.
 
-**Shared memory entries.** Storage substrate: project-scoped bucket objects under `memory/<key path>.json`. Representational form: symbolic JSON carrying a prose scalar value plus `set_by` and `set_at` metadata. Lineage: authored directly by an agent or script through `tracecraft memory set`; listing and dotted-path conversion are derived views, not separate durable artifacts. Behavioral authority: knowledge artifact authority. A later agent can use the value as shared context or evidence, but TraceCraft does not promote it into an instruction, validator, or automatic prompt input.
+**Coordination JSON.** `agents/*.json`, `memory/**/*.json`, `messages/**/*.json`, and `steps/**/{claim,status,handoff}.json` are small symbolic/prose records. Their authority is strongest for routing and enforcement around work ownership; their content is otherwise advisory knowledge for the agents that explicitly read it.
 
-**Messages and broadcasts.** Storage substrate: bucket objects under `messages/<recipient>/<timestamp>_<sender>.json` and `messages/_broadcast/...`. Representational form: symbolic envelope plus prose message. Lineage: authored by the sending agent with second-resolution timestamp naming. Behavioral authority: advisory communication for the recipient; `inbox --delete` can remove read messages, but there is no durable acknowledgement protocol beyond deletion.
+**Artifacts.** Uploaded files under `artifacts/` are imported project outputs. Their form is arbitrary, but Tracecraft treats them as opaque files: it uploads, downloads, lists, and names them by step or shared scope rather than interpreting their contents ([sdk/tracecraft/cli/artifacts.py](https://github.com/Arrmlet/tracecraft/blob/7d77daaaf17d3f18b7718e3ddfc8ee2576446adc/sdk/tracecraft/cli/artifacts.py)).
 
-**Task claims, status, and handoffs.** Storage substrate: bucket objects under `steps/<step>/claim.json`, `status.json`, and `handoff.json`. Representational form: symbolic JSON with prose handoff notes. Lineage: authored by `claim`, `complete`, and status reads; the S3 claim object is protected by conditional create, while status and handoff are ordinary writes. Behavioral authority: system-definition-like coordination authority. A claim can block competing work, `wait-for` can gate later work until completion, and handoff notes advise the next agent.
+**Session parts and metadata.** Mirrored sessions are raw trace artifacts: append-disjoint `part-NNNNN-<uuid>.jsonl` objects plus `meta.json` with source path, cursor range, byte counts, redaction counts, and upload times. They are evidence and observability records, not distilled memory.
 
-**Artifacts.** Storage substrate: bucket objects under `artifacts/<step-or-shared>/<filename>`. Representational form: arbitrary file bytes named and routed by CLI convention. Lineage: imported from local files through `artifact upload`; source path and producer step are not deeply encoded beyond bucket key and command output. Behavioral authority: knowledge or work-product artifacts consumed by later agents through explicit download.
+**Local config and mirror state.** `.tracecraft.json` and `~/.tracecraft/mirror-state/<session>.json` are system-definition artifacts for the CLI. They decide which project, bucket, backend, agent identity, and cursor position future commands use, but they are not shared agent memory.
 
-**Agent registry records.** Storage substrate: bucket objects under `agents/<agent>.json`, written during `init`. Representational form: symbolic JSON with status, step, heartbeat, and summary fields. Lineage: authored at initialization in this commit; the code marks stale heartbeats when listing, but does not refresh heartbeat after init. Behavioral authority: advisory coordination state for humans or agents deciding who else is active.
-
-**Mirrored session transcripts.** Storage substrate: bucket objects under `sessions/<harness>/<session-id>/part-*.jsonl` plus `meta.json`, with local cursor state in `~/.tracecraft/mirror-state/`. Representational form: mixed raw JSONL bytes, synthesized Hermes JSONL rows, symbolic part metadata, and redaction-count JSON. Lineage: copied from harness session stores by append cursor, optionally regex-redacted before upload; meta records cursor ranges and source paths. Behavioral authority: audit and context artifact. A later agent can inspect transcript tails, but the implementation does not distill transcripts into rules, memories, or tool definitions.
-
-**CLI examples and skill/instruction files.** Storage substrate: checked-in Markdown files under `examples/` and repository docs. Representational form: prose procedure and command snippets. Lineage: authored project guidance. Behavioral authority: system-definition artifact only when a host harness loads the file as instructions; it tells agents to use TraceCraft commands but does not itself activate stored bucket state.
-
-Promotion path: TraceCraft has a promotion path from a task claim to coordination lock, and from completed work to handoff/artifact availability. It does not have a code-grounded promotion path from raw traces or memory values into validated durable instructions, generated skills, semantic facts, or retrieval-ranked context.
+Promotion path: Tracecraft can move an agent-produced file or note into a shared artifact, and it can move a local harness transcript into a bucket trace. It does not currently promote traces or repeated coordination records into instructions, validators, summaries, or higher-salience memories.
 
 ## Comparison with Our System
 
-| Dimension | TraceCraft | Commonplace |
+| Dimension | Tracecraft | Commonplace |
 |---|---|---|
-| Primary purpose | Cross-agent coordination through shared bucket state | Git-native methodology KB for agent-operated knowledge bases |
-| Canonical retained artifacts | Bucket JSON objects, artifact files, mirrored transcript parts, local config/state | Typed Markdown notes, instructions, reviews, ADRs, sources, generated indexes |
-| Storage substrate | S3-compatible or HuggingFace bucket, plus local config/cursor files | Repository files with validation, diffs, and generated indexes |
-| Write path | Stateless CLI commands and session mirror runs | Authored notes, source snapshots, validators, review gates, index refreshes |
-| Read-back | Explicit CLI reads and polling | Mostly explicit pull through `rg`, indexes, links, skills, and validation workflows |
-| Governance | Atomic S3 claim creation, bucket scoping, basic redaction, tests for shipped primitives | Collection contracts, type specs, schema validation, semantic review gates, git lineage |
+| Primary purpose | Cross-agent coordination through a shared bucket | Typed, source-grounded methodology KB for agents and maintainers |
+| Canonical retained artifact | Project-scoped JSON objects, uploaded files, and mirrored session parts | Git-native Markdown notes, sources, reviews, indexes, schemas, and commands |
+| Context control | Explicit CLI reads and small object namespaces | Search, indexes, links, collection/type contracts, validation, review gates |
+| Write path | CLI writes objects; mirror copies traces; S3 conditional puts enforce claims | Authored file edits, snapshots, generated indexes, validation, semantic review |
+| Read-back | Pull through commands such as `memory get`, `inbox`, `wait-for`, `artifact download`, and `session show` | Mostly pull through lexical search, indexes, links, and selected instructions |
+| Governance | Bucket ownership, object-level history if backend supports it, redaction counts, tests | Git history, schemas, link checks, citations, review gates, collection contracts |
 
-TraceCraft and Commonplace both prefer inspectable retained artifacts over hidden platform memory. The important difference is authority. TraceCraft is an operational coordination substrate: it helps several agents avoid duplicated work, pass handoffs, share files, and inspect transcripts. Commonplace is a knowledge-methodology substrate: it makes retained claims and procedures reviewable, typed, searchable, and validatable.
+Tracecraft is closer to a shared coordination substrate than to a knowledge base. It gives multiple agents a lightweight, inspectable place to coordinate without owning their model loop. Commonplace gives agents durable methodology artifacts whose type, links, provenance, and validation status are part of the artifact itself.
 
-**Read-back:** `pull` — Stored memory, messages, artifacts, step state, and session transcripts reach the agent only when the agent or harness explicitly calls the CLI; the code does not implement relevance-gated push activation, automatic prompt injection, or memory faithfulness tests
+The main divergence is authority. Tracecraft's strongest system authority is operational: claims, waits, inboxes, and artifacts help agents avoid collision. Commonplace's strongest system authority is semantic and procedural: type contracts, instructions, and validators determine what an artifact means and how it may change behavior.
 
-The design is attractive where coordination failure is the main risk. Atomic claim writes are a stronger primitive than prose "I am working on X" notes, and bucket storage makes the coordination surface work across hosts without requiring all agents to share a local process. It is weaker as a knowledge system: values are scalar, lineage is coarse, no schema validates memory keys, and session traces remain raw audit material rather than reviewed knowledge artifacts.
+Tracecraft's session mirror is valuable evidence capture, but it deliberately stops before distillation. Commonplace would treat those traces as source material or workshop evidence until a reviewed note, instruction, or validator is written from them.
 
 ### Borrowable Ideas
 
-**Use object-store conditional create for distributed work claims.** Ready for operational workflows. Commonplace could borrow this when multiple agents are assigned independent review or migration tasks outside one git worktree, using claims as coordination locks rather than as knowledge artifacts.
+**Bucket-native coordination for parallel review work.** Ready when Commonplace needs multi-agent concurrency beyond git branches. A small object store namespace for claims, handoffs, and artifacts could prevent duplicate review work without making the bucket the KB source of truth.
 
-**Keep coordination memory separate from durable KB promotion.** Ready now as design vocabulary. TraceCraft is useful precisely because its quick handoffs do not pretend to be curated notes. Commonplace should keep ephemeral agent coordination in workshop/log surfaces until something earns a typed artifact.
+**Atomic claim files as a coordination primitive.** Ready now as an operational pattern. Commonplace already has review runs and gates; a conditional-create claim object could make "one agent owns this note/run" explicit in distributed workflows.
 
-**Mirror agent sessions as audit evidence, not automatic memory.** Needs a privacy and retention policy first. TraceCraft's append-disjoint session parts plus redaction counts are a practical audit substrate, but Commonplace should route them into source/workshop material rather than automatically deriving instructions.
+**Keep traces and coordination events in one project namespace.** Useful with a concrete audit viewer. If Commonplace captures agent run traces, storing them beside review-run status and handoffs would make postmortems easier than splitting logs across tools.
 
-**Borrow bucket-browsability as an adoption affordance.** Ready as a product lesson. A coordination tool is easier to trust when operators can inspect the exact JSON objects in MinIO, AWS, R2, or HuggingFace without a custom UI.
+**Append-disjoint trace parts with cumulative redaction metadata.** Ready for source snapshot workflows that handle long logs. The part-plus-meta design keeps uploads cheap and makes redaction visible without pretending regex redaction is complete.
 
-**Do not borrow scalar key-value memory as a KB substitute.** Ready now. Dotted key paths are convenient for coordination, but they lack the type contracts, citations, review state, and link semantics Commonplace needs for durable methodology knowledge.
+**Do not borrow object-store authority for KB artifacts.** Tracecraft's bucket model is good for coordination, but Commonplace's durable knowledge value depends on repo review, diffability, schemas, and link validation. Bucket JSON should remain operational state or source evidence unless it is exported into typed files.
 
-## Write-side placement
+## Write side
 
-**Write agency:** `automatic` `manual` — the review describes system-driven generation, extraction, consolidation, or update of retained artifacts rather than only manual authoring.
+**Write agency:** `manual` `automatic` - Agents and users manually write memory, messages, claims, completions, and artifacts through CLI calls; automatic command paths register agents during init, append `.tracecraft.json` to `.gitignore`, tail harness sessions, redact copied bytes, upload session parts, update session metadata, and advance local mirror cursor state.
 
-**Curation operations:** `consolidate` `dedup` `synthesize` `invalidate` `decay` `promote` — the existing review evidence identifies automatic store-changing operations matching these curation classes.
+Tracecraft does not perform the review contract's curation operations on existing stored memory. It overwrites simple key-value entries, updates status/meta records, and appends new trace parts, but I did not find automatic deduplication, consolidation, evolution, synthesis, invalidation, decay, or salience promotion over retained memories. Session mirroring is acquisition/preservation of traces, not trace-derived learning into new behavior-shaping artifacts.
+
+## Read-back
+
+**Read-back:** `pull` - Retained Tracecraft state reaches an agent when the agent, user, or surrounding harness deliberately calls CLI commands such as `memory get`, `memory list`, `inbox`, `step-status`, `wait-for`, `artifact download`, `session list`, or `session show`; the inspected implementation does not push stored memory into a model invocation or auto-inject retrieved content into prompts.
+
+`wait-for` is still pull from the agent's perspective: the agent chooses to block on a step and receives completion only through that command. Broadcast messages and direct messages are also pull until an agent checks `inbox`. Static example instructions tell a Claude Code agent how to use Tracecraft, but they are shipped baseline guidance rather than read-back of accumulated memory.
+
+Selection is symbolic and explicit. Agents choose keys, prefixes, step ids, recipient ids, artifact names, session ids, or harness names; there is no lexical, embedding, or judgment-based relevance selection over stored objects. Effective context dilution is therefore host-controlled: Tracecraft can keep reads small, but an agent can still choose to load too many messages, artifacts, or transcript tail lines.
+
+Authority at consumption is mostly advisory context, except for coordination commands whose return values govern operational choices such as whether a step is already claimed or complete. The system does not test whether a fetched memory or handoff actually changes downstream model behavior.
 
 ## Curiosity Pass
 
-**The README's "memory" is coordination memory.** The implementation stores named values and handoff notes; it does not retrieve semantically similar memories or summarize prior work for the agent.
+**The system calls one namespace "memory," but its strongest mechanism is coordination.** The key-value memory API is intentionally simple; atomic claims, inboxes, handoffs, artifacts, and waits are the parts that most directly change what parallel agents do.
 
-**The strongest system-definition artifact is a lock.** The claim object has immediate behavioral force because a second agent is rejected. Most other artifacts are advisory until an agent chooses to read them.
+**Trace preservation is not trace learning.** Tracecraft mirrors sessions into the same bucket as coordination records, which is useful for audit and replay, but the current implementation does not create summaries, rules, skills, ranking signals, or prompt policy from those traces.
 
-**HuggingFace support trades browsability for weaker atomicity.** The HF backend has the same interface, but its conditional claim is a check-then-write fallback rather than S3's conditional put. That distinction matters if Commonplace borrows the claim pattern.
+**The backend abstraction changes the guarantee.** S3-compatible backends can enforce first-writer-wins claims through `IfNoneMatch`; HuggingFace Buckets use a racy check-then-write fallback. A review of coordination reliability should not treat those as equivalent.
 
-**Session mirroring is close to trace-derived learning but stops at trace retention.** The code preserves raw transcript traces and metadata, then offers `session show`; it does not extract lessons, policies, selectors, or embeddings from those traces.
+**Plain JSON is both the adoption win and the semantic limit.** Any agent can inspect bucket objects with a CLI or console, but Tracecraft has no typed interpretation layer beyond its command conventions.
 
-**Heartbeat semantics are currently thinner than the registry shape suggests.** `init` writes a heartbeat and `agents` marks records stale after five minutes, but no recurring heartbeat writer is implemented at this commit.
+**The session mirror is already a useful source-capture tool.** Even without learning, preserving redacted session parts and coordination records in one namespace can support later review, replay, and failure analysis.
 
 ## What to Watch
 
-- Whether claims gain TTL, owner refresh, or stale-claim recovery; that decides whether TraceCraft can coordinate long-running agent work without manual cleanup.
-- Whether memory keys gain schemas, namespaces, or compare-and-set writes; that would move the system from loose coordination notes toward stronger shared state.
-- Whether session mirroring adds trace-to-summary or trace-to-handoff distillation; that would change the trace-derived classification and require governance around extracted artifacts.
-- Whether push-oriented harness integrations appear, such as pre-turn inbox/memory injection or relevance-gated reminders; that would change the read-back classification.
-- Whether redaction expands from regex token shapes to configurable project policy; mirrored transcripts are high-value audit evidence but also high-risk retained data.
-
-## Bottom Line
-
-TraceCraft is best read as a serverless coordination ledger for agent fleets, not as an agent memory system in the semantic-recall sense. Its durable artifacts can shape behavior by preventing duplicate task claims, exposing handoffs, and making transcript evidence available on demand. Under the current review rules, it does not qualify for `trace-derived` because it retains raw traces without deriving durable behavior-shaping artifacts from them, and it does not qualify for `push-activation` because read-back is explicit CLI pull rather than engineered activation.
+- Whether the planned replay surface ships and merges session traces with coordination events; that would turn Tracecraft from a coordination CLI into a run-inspection system with stronger Commonplace relevance ([plans/TRACES_V1_PLAN.md](https://github.com/Arrmlet/tracecraft/blob/7d77daaaf17d3f18b7718e3ddfc8ee2576446adc/plans/TRACES_V1_PLAN.md)).
+- Whether session traces gain summarization, lessons, or policy extraction; that would change the review from raw trace storage to qualifying trace-derived learning.
+- Whether TTL/heartbeat refresh, stale claim handling, or claim release policies land; those would strengthen operational enforcement for long-running multi-agent work.
+- Whether HuggingFace conditional writes get a stronger compare-and-set mechanism; today Tracecraft's atomic-claim story is strongest on S3-compatible backends.
+- Whether an agent-facing plugin or hook begins automatically injecting inbox, memory, or handoff content before prompts; that would change read-back from pull-only to push or both.
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: TraceCraft stores shared state and traces, but stored objects affect action only when explicitly read.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: TraceCraft's memory values, claims, handoffs, artifacts, transcripts, and examples differ by substrate, form, lineage, and authority.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: memory entries, messages, artifacts, registry rows, and transcript parts mostly advise as context or evidence.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: claim objects, CLI procedures, and loaded example instructions can constrain or route future work.
-- [Retained artifact](../../notes/definitions/retained-artifact.md) - clarifies: TraceCraft's bucket objects count when later agents can consume them in behavior-shaping ways.
+- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Tracecraft stores shared state and traces, but agents must explicitly read them for context.
+- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: coordination JSON, artifacts, session traces, and local config have different substrates, forms, lineage, and authority.
+- [Symbolic context engineering is bounded by symbol availability](../../notes/symbolic-context-engineering-is-bounded-by-symbol-availability.md) - relates: Tracecraft selection depends on explicit keys, step ids, agent ids, artifact names, and session ids.
+- [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - contrast: Tracecraft captures traces but does not yet extract behavior-shaping artifacts from them.
+- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: memory values, messages, handoffs, artifacts, and session parts are evidence/reference unless a host agent gives them stronger authority.
+- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: claims, waits, config, and mirror cursor state affect routing and enforcement rather than serving as ordinary knowledge.
