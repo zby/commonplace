@@ -85,9 +85,9 @@ Skills depend on command names, not filesystem layout. Missing commands are setu
 Agent runtimes (Claude Code, Codex) spawn shell processes that don't inherit a manually activated venv. The commands need to be on PATH without the user running `source .venv/bin/activate` first. Two approaches were considered:
 
 - **`uv run` prefix** — forces every skill and instruction to invoke commands as `uv run commonplace-validate` instead of `commonplace-validate`. Couples the skill layer to a specific Python packaging tool.
-- **direnv + `.envrc`** — automatically sets PATH, environment variables, and venv activation when entering the project directory. Agent runtimes inherit the environment. Skills invoke commands by name. Project-scoped — deactivates when you leave the directory.
+- **direnv + `.envrc`** — automatically sets PATH, environment variables, and venv activation when entering the project directory from a shell with the direnv hook installed. Agent runtimes inherit the environment when launched from that hooked, loaded shell; non-interactive launchers need an explicit `direnv exec` wrapper. Skills invoke commands by name. Project-scoped — deactivates when you leave the directory.
 
-direnv is the recommended approach. Init generates a ready-to-use `.envrc` so the user only needs `direnv allow`.
+direnv is the recommended approach. Init generates a ready-to-use `.envrc`; the user needs the shell hook installed and then runs `direnv allow` in the project.
 
 ### 6. Init resolves templates
 

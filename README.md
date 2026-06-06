@@ -63,6 +63,7 @@ Framework skills:
 | `cp-skill-validate` | Check frontmatter, descriptions, types, links, structure |
 | `cp-skill-connect` | Discover connections and write a `connect-report` artifact |
 | `cp-skill-convert` | Convert raw text captures into structured notes |
+| `cp-skill-health-check` | Diagnose broken Commonplace installs, skill discovery, command PATH, and direnv state |
 | `cp-skill-ingest` | Ingest external source: snapshot → connect → classify → analyse |
 | `cp-skill-snapshot-web` | Capture a URL to `kb/sources/` |
 | `cp-skill-revise-iterative` | Iteratively revise a note without changing its claims |
@@ -93,11 +94,11 @@ Search the KB, read matching notes, follow links to deepen understanding. Link s
 Clone the repo and start working. The repo is a functioning knowledge base out of the box — skills, types, writing conventions, and methodology are all in place.
 
 ```bash
-git clone https://github.com/anthropics/commonplace.git
+git clone https://github.com/zby/commonplace.git
 cd commonplace
 ```
 
-If you use `direnv`, run `direnv allow` once after entering the repo. The `.envrc` sets `PATH` and `UV_CACHE_DIR` for the project.
+If you use `direnv`, make sure your shell has the direnv hook installed, then run `direnv allow` once after entering the repo. The `.envrc` sets `PATH` and `UV_CACHE_DIR` for the project. Start Codex or Claude Code from that direnv-loaded interactive shell so the runtime inherits the project venv; otherwise launch it with `direnv exec . <command>`.
 
 Skills are installed into `.claude/skills/cp-skill-*/` and `.agents/skills/cp-skill-*/` by `commonplace-init`. The root `AGENTS.md` provides the project routing layer. The `kb/` directory is both the methodology and your workspace — new notes go alongside the existing ones.
 

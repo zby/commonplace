@@ -46,6 +46,9 @@ def test_init_project_seeds_scaffold_files(tmp_path: Path) -> None:
     assert (tmp_path / "kb" / "commonplace" / "instructions" / "cp-skill-write" / "SKILL.md").is_file()
     assert (tmp_path / "kb" / "commonplace" / "instructions" / "cp-skill-connect" / "SKILL.md").is_file()
     assert (tmp_path / "kb" / "commonplace" / "instructions" / "cp-skill-ingest" / "SKILL.md").is_file()
+    assert (
+        tmp_path / "kb" / "commonplace" / "instructions" / "cp-skill-health-check" / "SKILL.md"
+    ).is_file()
     assert (tmp_path / "kb" / "commonplace" / "instructions" / "review-gates").is_dir()
     assert (tmp_path / "kb" / "commonplace" / "reference" / "README.md").is_file()
     assert (tmp_path / "kb" / "commonplace" / "reference" / "types" / "adr.md").is_file()
@@ -87,7 +90,13 @@ def test_init_project_installs_skills_as_symlinks(tmp_path: Path) -> None:
         tmp_path / ".agents" / "skills",
     ):
         assert skills_dir.is_dir()
-        for skill_name in ("cp-skill-write", "cp-skill-validate", "cp-skill-snapshot-web", "cp-skill-connect"):
+        for skill_name in (
+            "cp-skill-write",
+            "cp-skill-validate",
+            "cp-skill-snapshot-web",
+            "cp-skill-connect",
+            "cp-skill-health-check",
+        ):
             link = skills_dir / skill_name
             assert link.is_symlink(), f"{link} should be a symlink"
             assert (link / "SKILL.md").is_file()

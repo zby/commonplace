@@ -67,6 +67,7 @@ PROMOTED_SKILLS = [
     "cp-skill-validate",
     "cp-skill-connect",
     "cp-skill-convert",
+    "cp-skill-health-check",
     "cp-skill-ingest",
     "cp-skill-snapshot-web",
     "cp-skill-revise-iterative",

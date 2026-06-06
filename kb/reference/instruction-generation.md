@@ -67,7 +67,7 @@ Both flow through the same `_write_template` helper with the same replacements d
 
 ## Skill promotion
 
-In addition to copying the instructions tree under `kb/commonplace/instructions/`, `init_project` promotes a selected subset of skills (`write`, `validate`, `connect`, `convert`, `ingest`, `snapshot-web`, `revise-iterative`, `revise-autoreason`) into runtime discovery directories for multiple harnesses:
+In addition to copying the instructions tree under `kb/commonplace/instructions/`, `init_project` promotes a selected subset of skills (`write`, `validate`, `connect`, `convert`, `health-check`, `ingest`, `snapshot-web`, `revise-iterative`, `revise-autoreason`) into runtime discovery directories for multiple harnesses:
 
 - `.claude/skills/cp-skill-<skill>/`
 - `.agents/skills/cp-skill-<skill>/`
