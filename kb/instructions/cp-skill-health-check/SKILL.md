@@ -10,7 +10,7 @@ argument-hint: "[symptom] — optional description of what is broken"
 
 ## EXECUTE NOW
 
-Use this skill when the user reports that a Commonplace KB is not working correctly: missing skills, `commonplace-*` command failures, validation not found, Codex/Claude Code not seeing the venv, or confusion around direnv. It applies both to installed KBs, where shipped content lives under `kb/commonplace/`, and to the Commonplace source repo, where shipped content lives directly under `kb/`.
+Use this skill when the user reports that a Commonplace KB is not working correctly: missing skills, `commonplace-*` command failures, validation not found, the agent runtime not seeing the venv, or confusion around direnv. It applies both to installed KBs, where shipped content lives under `kb/commonplace/`, and to the Commonplace source repo, where shipped content lives directly under `kb/`.
 
 Target symptom: `$ARGUMENTS`
 
@@ -49,7 +49,10 @@ Interpretation:
 Run:
 
 ```bash
-find .claude/skills .agents/skills -maxdepth 2 -name SKILL.md -print 2>/dev/null | sort
+# Use find -L so it follows symlinked skill directories. Promoted skills are
+# usually symlinks into kb/instructions/<skill>/, and plain `find` (without -L)
+# will not descend into them, returning a misleading empty result.
+find -L .claude/skills .agents/skills -maxdepth 2 -name SKILL.md -print 2>/dev/null | sort
 for skill in cp-skill-write cp-skill-validate cp-skill-connect cp-skill-convert cp-skill-health-check cp-skill-ingest cp-skill-snapshot-web; do
   for dir in .claude/skills .agents/skills; do
     test -e "$dir/$skill/SKILL.md" && echo "active skill OK: $dir/$skill" || echo "active skill MISSING: $dir/$skill"
@@ -57,6 +60,8 @@ for skill in cp-skill-write cp-skill-validate cp-skill-connect cp-skill-convert 
 done
 find .claude/skills .agents/skills -maxdepth 1 -type l ! -exec test -e {} \; -print 2>/dev/null | sort
 ```
+
+The per-skill `test -e` loop is the authoritative signal for whether each expected skill resolves (`test -e` follows symlinks). Treat the `find -L` listing as a cross-check for unexpected or extra skills, not the primary verdict.
 
 Expected promoted skills include at least:
 
@@ -111,7 +116,7 @@ Interpretation:
 - `direnv` missing: install direnv or use explicit `.venv/bin/<command>` paths.
 - `.envrc` not allowed: run `direnv allow` from the project root.
 - No hook found in shell config: add `eval "$(direnv hook bash)"` to `~/.bashrc` for bash, or `eval "$(direnv hook zsh)"` to `~/.zshrc` for zsh, then start a new interactive shell.
-- `direnv exec . bash -c ...` succeeds but direct `command -v commonplace-validate` fails: direnv is configured, but the current agent command environment did not inherit it. Start Codex/Claude Code from a direnv-loaded interactive shell, or launch with `direnv exec /path/to/project <agent-command>`.
+- `direnv exec . bash -c ...` succeeds but direct `command -v commonplace-validate` fails: direnv is configured, but the current agent command environment did not inherit it. Start the agent runtime from a direnv-loaded interactive shell, or launch it with `direnv exec /path/to/project <agent-command>`.
 - Do not test `direnv exec` through `bash -lc`; login shell startup may reset `PATH` and hide the environment you are trying to inspect.
 
 ## Step 5 - Check package and validator health
