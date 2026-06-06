@@ -19,7 +19,7 @@ Do:
 
 - clarify storage substrate, representational form, lineage, and behavioral authority where the existing review already contains enough evidence
 - replace stale shorthand such as role, substrate class, knowledge memory, or system-definition memory when it means an artifact-analysis field
-- keep edits local to review wording, generated indexes, and the trace-derived survey when placement wording changes
+- keep edits local to review wording and the trace-derived survey when placement wording changes
 
 Do not:
 
@@ -48,12 +48,7 @@ Do not:
 
 7. **Update the trace-derived survey only when needed.** Edit `kb/agent-memory-systems/trace-derived-learning-techniques-in-related-systems.md` only if the refresh changes survey placement, axis wording, or a cross-system claim.
 
-8. **Refresh indexes.** Run:
-   ```bash
-   commonplace-refresh-indexes
-   ```
-
-9. **Validate.** Run the smallest validation scope that covers the edited reviews and instruction or survey files. For a few files, validate each file directly:
+8. **Validate.** Run the smallest validation scope that covers the edited reviews and instruction or survey files. For a few files, validate each file directly:
    ```bash
    commonplace-validate path/to/edited-file.md
    ```

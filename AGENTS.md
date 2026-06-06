@@ -83,7 +83,7 @@ A design insight is worth a note when it changes how someone would build or oper
 - `kb/notes/links-index.md` — linking methodology: semantics, navigation, contracts
 - `kb/agent-memory-systems/README.md` — curated index of external agent-memory/knowledge systems
 - `kb/agent-memory-systems/dir-index.md` — auto-generated directory listing for agent-memory-system coverage
-- `kb/notes/dir-index.md` — auto-generated directory listing (rebuild with `commonplace-refresh-indexes`)
+- `kb/notes/dir-index.md` — auto-generated directory listing
 - `kb/reference/README.md` — shipped-system documentation entry point: architecture, type system, operator guide, and ADR navigation
 - `kb/reference/navigation.md` — how agents navigate the KB with `rg`, titles/descriptions, indexes, links, connect reports, and future search layers
 - `kb/reference/adr/` — architecture decision records for the shipped Commonplace system
@@ -115,7 +115,7 @@ This section declares the active vocabulary: terms with specific meanings throug
 ## Development
 
 - **Use `python3`** for stdlib-only throwaway tooling. Commonplace runtime code should live in the Python package and be invoked through `commonplace-*` commands.
-- **Run `commonplace-*` commands directly when the project venv is on PATH** — this repo uses direnv to put `.venv/bin` on `PATH`, so installed entry points such as `commonplace-validate`, `commonplace-refresh-indexes`, and `commonplace-run-review-bundle` should be executable without `uv run` when the agent runtime was started from a direnv-loaded shell. If the command environment is non-interactive and direnv did not load, use `direnv exec . bash -c '<command>'` or the explicit `.venv/bin/<command>` path. Do not wrap Commonplace commands in `uv run` unless the direct command is genuinely unavailable; `/snap/bin/uv` can fail under sandbox confinement even when the `.venv/bin` entry point works.
+- **Run `commonplace-*` commands directly when the project venv is on PATH** — this repo uses direnv to put `.venv/bin` on `PATH`, so installed entry points such as `commonplace-validate` and `commonplace-run-review-bundle` should be executable without `uv run` when the agent runtime was started from a direnv-loaded shell. If the command environment is non-interactive and direnv did not load, use `direnv exec . bash -c '<command>'` or the explicit `.venv/bin/<command>` path. Do not wrap Commonplace commands in `uv run` unless the direct command is genuinely unavailable; `/snap/bin/uv` can fail under sandbox confinement even when the `.venv/bin` entry point works.
 - **Run installed developer tools directly too** — `pytest` is also installed in `.venv/bin` when direnv is loaded, so use `pytest` directly for the normal test suite. If direnv is not loaded, use `direnv exec . bash -c 'pytest ...'` or `.venv/bin/pytest`. Use `uv run` only when a command is not installed in the active environment or the workflow explicitly needs uv's environment management.
 - **YAGNI** — don't implement features that aren't needed yet. If you identify a gap, create a note in `kb/notes/` instead of implementing it.
 - **No backwards compatibility** — with no external consumers, always prioritize cleaner design over keeping old behavior alive. If backcompat code is ever needed, mark it with `# BACKCOMPAT: <reason> - remove after <condition>`.

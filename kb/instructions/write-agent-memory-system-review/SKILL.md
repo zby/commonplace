@@ -117,7 +117,7 @@ If the system has no reachable source code, stop and write a lightweight note in
 
    If the harness cannot launch a sub-agent or worker, stop after setup and report that delegated drafting is unavailable. Do not draft locally unless the user explicitly authorizes a local fallback for this run. If the user authorizes that fallback, report `drafting was local, not delegated` as a workflow exception.
 
-9. **Refresh indexes; update the README only if needed.** A new review appears automatically in `reviews/dir-index.md` after `commonplace-refresh-indexes`, so the README no longer carries a per-system list. Only edit `kb/agent-memory-systems/README.md` when:
+9. **Update the README only if needed.** Only edit `kb/agent-memory-systems/README.md` when:
    - the system was named in the `## Coverage` "Review backlog" callout — remove it there, or
    - the repo adds a genuinely new cross-system pattern worth a line in `## Patterns Across Systems`.
    Keep the edit minimal and specific.

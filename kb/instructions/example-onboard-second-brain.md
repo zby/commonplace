@@ -67,11 +67,7 @@ Bulk-import the operator's existing material into the collections designed in Ph
 1. Ask where documents live: Google Docs, Notion exports, local files, web pages, GitHub issues, X threads.
 2. Route each document to the collection whose register matches its content. A pitch deck evaluation is evaluative; a meeting transcript is narrative; a project status doc is descriptive. The routing table in `CLAUDE.md` is the source of truth.
 3. For web sources, use `/cp-skill-snapshot-web <url>`. For local files, place them in the right collection and run `/cp-skill-ingest <path>` to classify and connect.
-4. Refresh generated indexes:
-   ```bash
-   commonplace-refresh-indexes
-   ```
-5. Test together. Ask the operator for three things they remember working on. Search the KB with generated indexes, `rg` over descriptions, and `rg` over note bodies. If recall is poor, improve descriptions, tags, and index membership before moving on.
+4. Test together. Ask the operator for three things they remember working on. Search the KB with generated indexes, `rg` over descriptions, and `rg` over note bodies. If recall is poor, improve descriptions, tags, and index membership before moving on.
 
 **Verify Phase 2**: at least one note in each populated collection passes `cp-skill-validate`. The operator can find at least 80% of the things they remember via generated indexes and `rg`.
 
