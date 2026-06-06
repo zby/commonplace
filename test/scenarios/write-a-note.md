@@ -1,100 +1,53 @@
 ---
-description: Step-by-step decomposition of the write-a-note scenario with file references for cost measurement — the most step-rich common scenario, 7 steps plus escalation
+description: Fork-by-fork decomposition of writing a KB note — orchestrator routes, cp-skill-write drafts, cp-skill-connect links; the most fork-rich common operation
 type: scenario
 frequency: common
 ---
 
 # Write a note
 
-User asks the agent to capture an insight, design observation, or analysis as a KB note. The agent must route to the correct location, find related notes, understand the type structure and writing conventions, write the note, and connect it to existing knowledge.
+The user asks the agent to capture an insight as a KB note. The work runs as three clean-context forks: the orchestrator routes the request, `cp-skill-write` (context: fork) drafts and validates the note, and the write skill then calls `cp-skill-connect` (context: fork) to wire it into the graph. Each fork pays its framework overhead from scratch.
 
-## Steps
+## Forks
 
-### 1. Route to correct location
-- **Context needed:** Routing table — what goes where
-- **Source:** `CLAUDE.md`
-- **Hops:** 0
-- **Fixed/Variable:** fixed
-- **Notes:** CLAUDE.md is always loaded. The routing table tells the agent `kb/notes/` for design notes, `kb/notes/adr/` for decisions, etc.
+### Fork 1 — orchestrator (main session)
+| load | kind | source | hops |
+|---|---|---|---|
+| routing table + active vocabulary | overhead | `AGENTS.md` | 0 |
+| the insight to capture | content | variable | 0 |
 
-### 2. Find related notes
-- **Context needed:** Search patterns, good descriptions on existing notes
-- **Source:** variable — search results from `kb/notes/`
-- **Hops:** 1 (search) + 2-4 (read results)
-- **Fixed/Variable:** variable
-- **Notes:** The search itself is one hop. Reading results depends on how many relevant notes exist. Estimate 3 results at ~2000 bytes each for typical topics.
+Notes: AGENTS.md is always loaded in the main session (0 hops, bytes still count). The orchestrator picks the target collection from the routing table, then invokes `cp-skill-write`. The insight is already in the prompting session.
 
-### 3. Read related notes
-- **Context needed:** Full content of related notes for understanding context
-- **Source:** variable — specific notes from search results
-- **Hops:** 0 (already read in step 2)
-- **Fixed/Variable:** variable
-- **Notes:** Counted in step 2. Listed separately because it's a distinct cognitive step — the agent shifts from searching to understanding.
+### Fork 2 — cp-skill-write (context: fork)
+| load | kind | source | hops |
+|---|---|---|---|
+| drafting procedure | overhead | `kb/instructions/cp-skill-write/SKILL.md` | 0 |
+| collection conventions + outbound-linking rules | overhead | `kb/notes/COLLECTION.md` | 1 |
+| type-spec (artifact shape) | overhead | `kb/types/note.md` | 1 |
+| destination dir-indexes (link candidates) | overhead | `kb/notes/dir-index.md` | 1-3 |
+| candidate note bodies NOT opened | spared | — | — |
+| the insight + any user-named sources | content | variable | 0-2 |
+| targeted validation | overhead | `commonplace-validate` run | 1 |
 
-### 4. Know the structure
-- **Context needed:** Type template for the target note type
-- **Source:** target collection's `COLLECTION.md` (e.g. `kb/notes/COLLECTION.md`)
-- **Hops:** 1
-- **Fixed/Variable:** fixed
-- **Notes:** Each COLLECTION.md inlines the default note template. Directory-local types (adr, index, related-system) require an additional hop to `kb/*/types/`. For the common case (note), one hop suffices.
+Notes: the skill body is injected (0 hops; bytes count). Step 4 of the skill reads destination dir-indexes for link candidates and deliberately does *not* open candidate bodies — that is the spared credit (≈3 bodies × ~2KB avoided per dir-index read). Directory-local types (adr, index) add one hop to a `kb/*/types/` spec. Whether AGENTS.md is re-injected into the fork is the main open assumption — set it in the harness config.
 
-### 5. Know how to write well
-- **Context needed:** Writing conventions — title-as-claim, description quality, composability
-- **Source:** target collection's `COLLECTION.md`
-- **Hops:** 0
-- **Fixed/Variable:** fixed
-- **Notes:** Same file as step 4 — already loaded. COLLECTION.md serves double duty: type templates and register-specific writing conventions.
+### Fork 3 — cp-skill-connect (context: fork)
+| load | kind | source | hops |
+|---|---|---|---|
+| connection procedure | overhead | `kb/instructions/cp-skill-connect/SKILL.md` | 0 |
+| source-collection linking rules | overhead | `kb/notes/COLLECTION.md` | 1 |
+| area / dir indexes for candidate discovery | overhead | `kb/notes/dir-index.md` | 1-3 |
+| the just-written note | content | variable | 1 |
+| candidate notes (body search, tag traversal, reverse-edge) | content | variable | 2-5 |
 
-### 6. Write the file
-- **Context needed:** All of the above in context
-- **Source:** — (agent produces output)
-- **Hops:** 0
-- **Fixed/Variable:** fixed
-- **Notes:** No additional reads. The agent writes using everything loaded in steps 1-5.
-
-### 7. Connect to existing knowledge
-- **Context needed:** /connect skill body, area indexes
-- **Source:** `kb/instructions/cp-skill-connect/SKILL.md` + variable (area indexes)
-- **Hops:** 1 (skill) + 1-3 (indexes and search)
-- **Fixed/Variable:** mixed — skill is fixed, index reads are variable
-- **Notes:** The connect step is a separate skill invocation. The skill body is substantial (~15KB). Index reads depend on how many areas the note touches.
-
-## Escalation path (installed projects only)
-
-### E1. Recognize the gap
-- **Context needed:** Awareness that full methodology reasoning exists
-- **Source:** `CLAUDE.md` (fragment in installed project)
-- **Hops:** 0
-- **Fixed/Variable:** fixed
-- **Notes:** The CLAUDE.md fragment includes an escalation hint: "for why things work this way, search `commonplace/kb/`". Always loaded.
-
-### E2. Search methodology
-- **Context needed:** Full reasoning behind a convention
-- **Source:** `commonplace/kb/notes/` (search results)
-- **Hops:** 1 (search) + 1-2 (read results)
-- **Fixed/Variable:** variable
-- **Notes:** The agent searches the Commonplace repo's notes for the reasoning behind whatever convention it's struggling with.
-
-### E3. Read source reasoning
-- **Context needed:** The specific methodology note
-- **Source:** variable — e.g. `commonplace/kb/notes/title-as-claim-enables-traversal-as-reasoning.md`
-- **Hops:** 0 (already read in E2)
-- **Fixed/Variable:** variable
-- **Notes:** Counted in E2. The agent now has the full reasoning and can apply judgment.
-
-### E4. Return to common path
-- **Context needed:** Continue with the write
-- **Source:** — (back in `kb/`)
-- **Hops:** 0
-- **Fixed/Variable:** fixed
-- **Notes:** No additional reads. The agent returns to step 6 or 7 with deeper understanding.
+Notes: cp-skill-write suggests cp-skill-connect as a non-optional next step, so a normal write incurs this fork. The connect skill body is the largest single overhead (~15KB). Unlike Fork 2, this fork does active prospecting, so it opens more candidate bodies (content).
 
 ## Variants
 
-**Commonplace repo:** Escalation steps E1-E4 don't exist. The methodology notes ARE the content the agent searches in step 2. When writing a note about, say, title conventions, the agent naturally encounters the full reasoning because it lives in the same `kb/notes/` directory.
+**Commonplace repo vs installed project (common path):** identical forks — installed projects copy COLLECTION.md and the type-specs, so the overhead files and paths match.
 
-**Installed project (common path):** Steps 1-7 are identical — the copied operational artifacts (`COLLECTION.md` files, `kb/types/`) ensure the paths are the same. The agent doesn't know or care whether it's in Commonplace or an installed project.
+**Escalation to methodology (installed projects, ~10%):** when a convention is unclear, an extra search + 1-2 body reads into `commonplace/kb/notes/` are added to Fork 2. In the Commonplace repo this does not occur — the methodology notes are already the content in scope.
 
-**Installed project (escalation):** Adds 2-3 hops to a different tree. Estimated to occur ~10% of the time — most writes don't hit edge cases requiring full methodology reasoning.
+**Directory-local types:** for adr / index / agent-memory-system-review, Fork 2 adds one hop to the target collection's `kb/*/types/` spec.
 
-**Directory-local types:** When the target type is adr, index, or agent-memory-system-review, step 4 requires an additional hop to the target collection's path-valued type spec, such as `kb/reference/types/adr.md` or `kb/agent-memory-systems/types/agent-memory-system-review.md`. This adds one extra read for the less common specialized-type path.
+**Write without connect:** if the user declines the suggested connect step, Fork 3 does not run — removing the largest single overhead body and the heaviest content-prospecting fork.

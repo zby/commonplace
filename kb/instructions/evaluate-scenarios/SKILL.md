@@ -1,6 +1,6 @@
 ---
 name: evaluate-scenarios
-description: Read all scenario files, measure instruction bytes from referenced source files, and produce a cost report showing hops and byte counts per scenario weighted by frequency. Use to verify architectural claims about context loading costs.
+description: Decompose each scenario into clean-context forks, measure framework-overhead bytes and hops per fork, and report a feasibility signal (heaviest fork's net load) and a cost signal (overhead summed across forks). Use to measure the operational overhead the framework imposes per agent.
 type: kb/types/instruction.md
 user-invocable: true
 allowed-tools: Read, Grep, Glob, Bash
@@ -13,11 +13,11 @@ model: sonnet
 **Target: $ARGUMENTS**
 
 Parse immediately:
-- If target is empty: evaluate all scenarios in `test/scenarios/`
-- If target is a scenario name: evaluate only that scenario
-- If target is "compare": evaluate all and compare against a previous run if one exists
+- empty → evaluate all scenarios in `test/scenarios/`
+- a scenario name → evaluate only that scenario
+- `compare` → evaluate all and compare against a previous run if one exists
 
-**Execute these steps:**
+This harness measures **operational overhead**: the framework instructions an agent must read on top of the task's own content. The unit is the **fork**, not the operation — every `cp-skill-*` runs `context: fork`, so each fork pays its overhead from a fresh context. See `kb/notes/feasibility-is-the-heaviest-forks-net-load.md` for the model.
 
 ### 1. Discover scenario files
 
@@ -25,108 +25,94 @@ Parse immediately:
 ls test/scenarios/*.md
 ```
 
-Read each scenario file. Parse the frontmatter for `frequency` and the step list for **Source** paths and **Hops** values.
+Read each scenario. Each has a `## Forks` section with one subsection per fork; each fork has a table of loads: `load | kind | source | hops`, where `kind` is `overhead`, `content`, or `spared`.
 
-### 2. Measure fixed instruction bytes
+### 2. Config (override via $ARGUMENTS, e.g. `notesize=3000 candidates=4 budget=50000 agents_per_fork=on`)
 
-For each step marked **Fixed/Variable: fixed** or **Fixed/Variable: mixed**, read the file referenced in **Source** and measure its byte count:
+| Knob | Default | Meaning |
+|---|---|---|
+| `notesize` | 2,000 B | average note/body read |
+| `candidates` | 3 | content notes opened where a fork prospects bodies |
+| `spared_bodies` | 3 | bodies a dir-index read lets a fork skip |
+| `index_size` | 3,000 B | one dir-index / area index read |
+| `validate_out` | 500 B | bytes a `commonplace-validate` run returns into context |
+| `budget` | 50,000 B | usable-window soft ceiling for the feasibility flag (overhead + content + room to reason) |
+| `agents_per_fork` | off | if `on`, add AGENTS.md overhead to every fork, not only where the scenario lists it (the "is AGENTS.md re-injected?" assumption) |
+
+### 3. Measure overhead bytes (per fork)
+
+For each `overhead` row, read the file named in **source** and measure it:
 
 ```bash
 wc -c < {source-path}
 ```
 
-Common fixed sources you'll encounter:
-- `CLAUDE.md` — always-loaded context (count once, not per-step)
-- `kb/notes/COLLECTION.md` — writing conventions for the notes collection
-- `kb/instructions/cp-skill-connect/SKILL.md` — connection skill body
-- `kb/instructions/cp-skill-ingest/SKILL.md` — ingestion skill body
-- `kb/instructions/cp-skill-snapshot-web/SKILL.md` — snapshot skill body
-- `kb/sources/types/source-review.md` — source review type template
-- the scenario fixture template under `test/scenarios/types/`
+Measure each distinct file once and reuse the number, but **add it to every fork that lists it** — do not amortize across forks. A `commonplace-validate` (or other tool) source contributes `validate_out` bytes and 1 hop, not a file measurement. A dir-index or area index given as a concrete path is measured with `wc -c` like any file — these can be large (the `kb/notes` dir-index is tens of KB and grows with collection size); `index_size` applies only to a generic unnamed index the scenario does not path.
 
-**Important:** Count CLAUDE.md bytes once per scenario (it's always loaded, not a per-step cost). Count other fixed sources once per scenario even if referenced in multiple steps (they stay in context after first load).
+Common overhead sources: `AGENTS.md`, the target `COLLECTION.md`, the type-spec (`kb/types/*.md`), the invoked skill body (`kb/instructions/cp-skill-*/SKILL.md`), `kb/notes/dir-index.md` and area indexes.
 
-### 3. Estimate variable instruction bytes
+### 4. Estimate content and spared bytes (per fork)
 
-For steps marked **Fixed/Variable: variable**, use these configurable defaults:
+- `content` row: `notesize` per body, times the count implied by the hop range (use the midpoint). A row marked "the insight"/"already in session" with hops 0 contributes its rough size if stated, else `notesize`.
+- `spared` row: a **negative** credit, `spared_bodies × notesize` minus the `index_size` that replaced them (the dir-index read is already counted as overhead).
 
-| Variable element | Default estimate |
-|-----------------|-----------------|
-| Search results (note count) | 3 notes |
-| Average note size | 2,000 bytes |
-| Link-follow reads | 2 notes |
-| Area index reads | 1 index at ~3,000 bytes |
-| External URL content | 5,000 bytes |
+### 5. Count hops (per fork)
 
-If $ARGUMENTS includes override estimates (e.g. "notes=5 notesize=3000"), use those instead.
+Sum the **hops** column per fork; a range (`2-4`) uses its midpoint. Track overhead-hops and content-hops separately so the cost signal can report overhead hops.
 
-### 4. Count hops per scenario
+### 6. Compute the two signals (per scenario)
 
-Parse the **Hops** field from each step. Sum:
-- **Fixed hops:** steps where the hop count is a single number (e.g. "1")
-- **Variable hops:** steps where the hop count is a range (e.g. "2-4") — use the midpoint
-- **Total hops:** fixed + variable
+- **Net load per fork** = overhead bytes + content bytes − spared credit (bytes); net hops = overhead + content hops.
+- **Feasibility signal** = the single **heaviest** fork by net bytes — report that fork, its net bytes and net hops, and flag it if net bytes exceed `budget`.
+- **Cost signal** = **overhead** bytes summed across **all** forks (gross — the spared credit applies only to feasibility), and overhead hops summed across all forks.
 
-For escalation steps, count separately and weight at 0.1 (estimated 10% occurrence).
-
-### 5. Produce the cost table
-
-Output format:
+### 7. Output
 
 ```
-## Scenario Cost Report
+## Scenario Overhead Report
 
-Generated: {date}
-Variable estimates: {defaults or overrides used}
+Generated: {date}    Config: {knobs used}
 
-### Per-Scenario Breakdown
+### {Scenario} (frequency: {freq})
 
-#### {Scenario name} (frequency: {freq})
+| Fork | Overhead B / hops | Content B / hops | Spared B | Net B | Net hops |
+|------|-------------------|------------------|----------|-------|----------|
+| 1 orchestrator | ... | ... | — | ... | ... |
+| 2 cp-skill-write | ... | ... | ... | ... | ... |
+| 3 cp-skill-connect | ... | ... | — | ... | ... |
+| **Feasibility (heaviest fork)** | | | | **{B} ({fork})** {⚠ if > budget} | **{hops}** |
+| **Cost (Σ overhead, gross)** | **{B} / {hops}** | | | | |
 
-| Step | Hops | Fixed bytes | Variable bytes | Source |
-|------|------|-------------|----------------|--------|
-| 1. {name} | 0 | 5,251 | — | CLAUDE.md |
-| 2. {name} | 3 | — | ~6,000 | search results |
-| ... | | | | |
-| **Subtotal (common path)** | **N** | **X** | **~Y** | |
-| E1. {name} | ... | ... | ... | ... |
-| **Subtotal (escalation, ×0.1)** | **N** | **X** | **~Y** | |
+Overhead sources measured: {file: bytes, ...; note any counted in multiple forks}
 
-{Repeat for each scenario}
+{repeat per scenario}
 
-### Summary Table
+### Summary
 
-| Scenario | Freq | Weight | Hops (common) | Hops (w/ esc.) | Bytes (fixed) | Bytes (total est.) |
-|----------|------|--------|---------------|----------------|---------------|-------------------|
-| Write a note | common | 1.0 | N | N | X | ~Y |
-| Ingest a source | occasional | 0.3 | N | N | X | ~Y |
-| Answer a question | common | 1.0 | N | N | X | ~Y |
-| Respond to a change | occasional | 0.3 | N | N | X | ~Y |
-
-### Weighted Totals
+| Scenario | Freq | Feasibility (heaviest fork B / hops) | Cost (Σ overhead B / hops) |
+|----------|------|--------------------------------------|----------------------------|
+| ... | ... | ... | ... |
 
 | Metric | Value |
 |--------|-------|
-| Weighted hops (common path) | N |
-| Weighted hops (with escalation) | N |
-| Weighted fixed bytes | X |
-| Weighted total bytes | ~Y |
+| Worst feasibility across scenarios | {scenario / fork — bytes} |
+| Frequency-weighted overhead cost | {Σ (cost × weight); common=1.0, occasional=0.3, rare=0.1} |
 
 ### Observations
-
-{Note any architectural implications:
-- Which scenario dominates the weighted cost?
-- Where are the biggest variable cost drivers?
-- What architectural changes would reduce costs?
-- How does the current design compare to alternatives (e.g. inlining types saved N bytes at step X)?}
+- which fork drives feasibility, and how close it is to `budget`
+- which overhead source dominates the cost sum (re-paid skill bodies? re-read COLLECTION.md?)
+- what would cut each signal (merge forks lowers cost but raises feasibility; sparing more content lowers feasibility only)
+- any fork flagged over `budget`
 ```
 
-### 6. Verify plausibility
+### 8. Verify plausibility
 
-After producing the table, sanity-check key numbers:
-- CLAUDE.md should be in the range of 4,000-7,000 bytes
-- COLLECTION.md files should be in the range of 4,000-8,000 bytes
-- Skill files (connect, ingest) are typically 10,000-20,000 bytes
-- If any number looks implausible, re-read the source file and re-measure
+- AGENTS.md: ~15,000–18,000 B (root instructions + vocabulary + routing)
+- COLLECTION.md: ~4,000–8,000 B
+- type-spec (`kb/types/*.md`): ~2,000–4,000 B
+- skill bodies (`cp-skill-*`): ~8,000–12,000 B
+- `kb/notes` dir-index: tens of KB, grows with note count
 
-**START NOW.** Read all scenario files, measure all referenced source files, produce the cost table.
+If a number is implausible, re-read and re-measure.
+
+**START NOW.** Read the scenarios, measure overhead per fork, emit the per-scenario fork tables and the feasibility + cost signals.
