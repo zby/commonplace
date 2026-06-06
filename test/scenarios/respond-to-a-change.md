@@ -1,91 +1,52 @@
 ---
-description: Step-by-step decomposition of the respond-to-a-change scenario — chains reading (assemble evidence) with writing (compose response), the most complex occasional scenario with escalation possible during either phase
+description: Fork decomposition of responding to a change — a content-heavy evidence-assembly fork (answer-style) followed, only for KB-note responses, by the write and connect forks
 type: scenario
 frequency: occasional
 ---
 
 # Respond to a change
 
-User notices an upstream change (PR, RFC, API update) or has a design idea, and asks the agent to analyse it against existing knowledge and write a grounded response. This chains the answer-a-question scenario (assemble evidence) with the write-a-note scenario (compose response), making it the most complex scenario.
+The user notices an upstream change (PR, RFC, API update) or floats a design idea and asks for a grounded response. The agent assembles evidence in the **main session** (like answer-a-question), then composes the response. If the response is a KB note it invokes `cp-skill-write` and `cp-skill-connect` (two more forks); if it is an external message or PR comment, it stops after the orchestrator fork.
 
-## Steps
+## Forks
 
-### 1. Understand the change
-- **Context needed:** The change itself — PR description, RFC text, or user explanation
-- **Source:** variable — external URL or user message
-- **Hops:** 0-1 (0 if user explains, 1 if URL fetch needed)
-- **Fixed/Variable:** variable
-- **Notes:** The change may be provided inline or as a URL requiring a fetch.
+### Fork 1 — orchestrator (main session)
+| load | kind | source | hops |
+|---|---|---|---|
+| routing + search patterns | overhead | `AGENTS.md` | 0 |
+| the change (PR / RFC / idea) | content | variable | 0-1 |
+| evidence notes (search + read) | content | variable | 3-5 |
+| linked notes for grounding | content | variable | 1-3 |
 
-### 2. Route to correct search scope
-- **Context needed:** Routing table, search patterns
-- **Source:** `CLAUDE.md`
-- **Hops:** 0
-- **Fixed/Variable:** fixed
-- **Notes:** Always loaded. The agent needs to know which areas of the KB are relevant to this change.
+Notes: the evidence-assembly phase runs in the main session — overhead is just AGENTS.md, the rest is content (quotable prior decisions, ADRs, source reviews). For an external output (PR comment / message) the agent composes here and stops: no skill forks, no overhead beyond AGENTS.md.
 
-### 3. Search for related evidence
-- **Context needed:** KB notes that inform the response — prior decisions, design rationale, relevant analysis
-- **Source:** variable — search results from `kb/notes/`, `kb/sources/`
-- **Hops:** 1 (search)
-- **Fixed/Variable:** variable
-- **Notes:** One search hop. The agent looks for notes that constrain, inform, or provide evidence for the response.
+### Fork 2 — cp-skill-write (context: fork) — only if the response is a KB note
+| load | kind | source | hops |
+|---|---|---|---|
+| drafting procedure | overhead | `kb/instructions/cp-skill-write/SKILL.md` | 0 |
+| collection conventions | overhead | `kb/notes/COLLECTION.md` | 1 |
+| type-spec | overhead | `kb/types/note.md` | 1 |
+| destination dir-indexes | overhead | `kb/notes/dir-index.md` | 1-3 |
+| candidate bodies NOT opened | spared | — | — |
+| the assembled evidence | content | variable | 0-1 |
+| targeted validation | overhead | `commonplace-validate` run | 1 |
 
-### 4. Read evidence notes
-- **Context needed:** Full content of relevant notes
-- **Source:** variable — specific notes from search results
-- **Hops:** 3-5 (read results)
-- **Fixed/Variable:** variable
-- **Notes:** More reads than answer-a-question because the agent needs not just understanding but quotable evidence. Prior ADRs, structured claims, and source reviews are especially valuable.
+Notes: identical to write-a-note Fork 2. The evidence assembled in Fork 1 is the content the write is about (carried into the fork). An ADR response uses `kb/reference/types/adr.md` and `kb/reference/COLLECTION.md` instead (one extra type hop).
 
-### 5. Follow links for deeper grounding
-- **Context needed:** Notes linked from evidence that strengthen the argument
-- **Source:** variable — notes referenced by links in step 4
-- **Hops:** 1-3 (follow links)
-- **Fixed/Variable:** variable
-- **Notes:** The agent follows links to find the full reasoning chain. A structured claim's evidence section may reference other notes that provide the actual data.
+### Fork 3 — cp-skill-connect (context: fork) — only if the response is a KB note
+| load | kind | source | hops |
+|---|---|---|---|
+| connection procedure | overhead | `kb/instructions/cp-skill-connect/SKILL.md` | 0 |
+| source-collection linking rules | overhead | `kb/notes/COLLECTION.md` | 1 |
+| area / dir indexes | overhead | `kb/notes/dir-index.md` | 1-3 |
+| the new note + candidates | content | variable | 2-5 |
 
-### 6. Read writing conventions
-- **Context needed:** How to write the response document — type template, quality conventions
-- **Source:** target collection's `COLLECTION.md`
-- **Hops:** 1
-- **Fixed/Variable:** fixed
-- **Notes:** Needed if the response is a KB note (analysis, ADR). May be skipped if the response is a PR comment or external message — but even then, the grounding conventions apply.
-
-### 7. Write the response
-- **Context needed:** All evidence and conventions in context
-- **Source:** — (agent produces output)
-- **Hops:** 0
-- **Fixed/Variable:** fixed
-- **Notes:** No additional reads. The agent composes the response grounded in the evidence assembled in steps 3-5.
-
-### 8. Connect the response (if KB note)
-- **Context needed:** /connect skill body, area indexes
-- **Source:** `kb/instructions/cp-skill-connect/SKILL.md` + variable (area indexes)
-- **Hops:** 1 (skill) + 1-3 (indexes and search)
-- **Fixed/Variable:** mixed — skill is fixed, index reads are variable
-- **Notes:** Only applies when the response is a KB note (analysis document, ADR). Skipped for external outputs (PR comments, messages).
-
-## Escalation path (installed projects only)
-
-### E1. Evidence assembly escalation
-- **Context needed:** When KB evidence is thin, full methodology reasoning may provide additional grounding
-- **Source:** `commonplace/kb/notes/` (search results)
-- **Hops:** 1 (search) + 1-2 (read results)
-- **Fixed/Variable:** variable
-- **Notes:** Triggers when the agent can't find enough evidence in `kb/` to ground the response. The methodology notes may contain design reasoning that applies.
-
-### E2. Response structure escalation
-- **Context needed:** When the response doesn't fit standard types
-- **Source:** `commonplace/kb/notes/` (search results)
-- **Hops:** 1 (search) + 1 (read)
-- **Fixed/Variable:** variable
-- **Notes:** Triggers when the response is a complex document type (e.g. a multi-claim analysis that doesn't fit the standard note or ADR template).
+Notes: identical to write-a-note Fork 3.
 
 ## Variants
 
-**Commonplace repo:** No escalation needed — the methodology IS the content. Responding to a change about, say, how types should work naturally involves reading the methodology notes about types.
+**External output (PR comment / message):** only Fork 1 runs — the cheapest path, overhead ≈ AGENTS.md, no dir-index reads.
 
-**Installed project:** Escalation can trigger during either the evidence assembly phase (steps 3-5) or the response composition phase (steps 6-7). Two distinct escalation points make this the most expensive scenario when escalation occurs.
+**KB-note output:** Forks 2-3 as in write-a-note; this is where the heavy navigation overhead (skill bodies + dir-indexes) is incurred.
 
-**Output type variation:** The response may be a KB note (full write-a-note connection step), a PR comment (no connection needed, but grounding conventions still apply), or an external message (minimal formatting). Steps 6 and 8 vary accordingly.
+**Escalation (installed projects):** extra `commonplace/kb/notes/` reads can occur in Fork 1 (thin evidence) or Fork 2 (response doesn't fit a standard type) — two escalation points.

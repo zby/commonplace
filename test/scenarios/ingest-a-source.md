@@ -1,84 +1,57 @@
 ---
-description: Step-by-step decomposition of the ingest-a-source scenario — skill-orchestrated, most steps mediated by /ingest which chains snapshot, connect, classify, and analyse
+description: Fork-by-fork decomposition of ingesting a source — orchestrator routes, cp-skill-ingest drives a pipeline that forks cp-skill-snapshot-web (capture) and cp-skill-connect (link); four clean contexts
 type: scenario
 frequency: occasional
 ---
 
 # Ingest a source
 
-User provides a URL or document to capture and analyse. The agent uses the /ingest skill which orchestrates a multi-phase pipeline: snapshot the source, connect it to existing knowledge, classify its relevance, and produce a structured analysis.
+The user provides a URL or document to capture and analyse. `cp-skill-ingest` (context: fork) drives a pipeline that itself invokes two further forked skills — `cp-skill-snapshot-web` to capture, `cp-skill-connect` to link — before writing the `.ingest.md` analysis. Four clean contexts, each paying overhead from scratch.
 
-## Steps
+## Forks
 
-### 1. Route to /ingest skill
-- **Context needed:** Skill descriptions — which skill handles source ingestion
-- **Source:** `CLAUDE.md`
-- **Hops:** 0
-- **Fixed/Variable:** fixed
-- **Notes:** CLAUDE.md is always loaded. The skills table maps "External source snapshot" to `/snapshot-web` and "Source analysis" to `/ingest`.
+### Fork 1 — orchestrator (main session)
+| load | kind | source | hops |
+|---|---|---|---|
+| skill table + routing | overhead | `AGENTS.md` | 0 |
+| the URL or document | content | variable | 0 |
 
-### 2. Load /ingest skill
-- **Context needed:** Full skill procedure for orchestrating ingestion
-- **Source:** `kb/instructions/cp-skill-ingest/SKILL.md`
-- **Hops:** 1
-- **Fixed/Variable:** fixed
-- **Notes:** The skill body contains the complete orchestration procedure: snapshot → connect → classify → analyse.
+Notes: AGENTS.md is always loaded; the orchestrator routes "source analysis" to `cp-skill-ingest` and invokes it.
 
-### 3. Snapshot the source
-- **Context needed:** /snapshot-web skill procedure + URL
-- **Source:** `kb/instructions/cp-skill-snapshot-web/SKILL.md` + external URL
-- **Hops:** 1 (skill) + 1 (URL fetch)
-- **Fixed/Variable:** mixed — skill is fixed, URL is variable
-- **Notes:** /ingest delegates to /snapshot-web for capture. The URL fetch is external (not a file read), but it's a hop in terms of agent tool calls.
+### Fork 2 — cp-skill-ingest (context: fork)
+| load | kind | source | hops |
+|---|---|---|---|
+| ingest orchestration procedure | overhead | `kb/instructions/cp-skill-ingest/SKILL.md` | 0 |
+| source-review type-spec | overhead | `kb/sources/types/source-review.md` | 1 |
+| sources collection conventions | overhead | `kb/sources/COLLECTION.md` | 1 |
+| the captured snapshot | content | variable | 1 |
+| related notes for extraction | content | variable | 2-3 |
 
-### 4. Read source type definition
-- **Context needed:** Structure for source-review documents
-- **Source:** `kb/sources/types/source-review.md`
-- **Hops:** 1
-- **Fixed/Variable:** fixed
-- **Notes:** Defines the type spec for source reviews: required frontmatter, sections, and writing rules.
+Notes: the driving fork — injects its skill body (0 hops), invokes Forks 3 and 4, then writes the `.ingest.md`. The source-review type-spec is tiny (~1 KB).
 
-### 5. Find related notes
-- **Context needed:** Existing KB content related to the source's topic
-- **Source:** variable — search results from `kb/notes/`
-- **Hops:** 1 (search) + 2-3 (read results)
-- **Fixed/Variable:** variable
-- **Notes:** Same as write-a-note step 2. The agent searches for notes that the source extends, contradicts, or grounds.
+### Fork 3 — cp-skill-snapshot-web (context: fork)
+| load | kind | source | hops |
+|---|---|---|---|
+| capture procedure (URL routing) | overhead | `kb/instructions/cp-skill-snapshot-web/SKILL.md` | 0 |
+| the fetched source | content | variable | 1 |
 
-### 6. Write structured extraction
-- **Context needed:** Snapshotted content + source-review type spec + related notes context
-- **Source:** — (agent produces output)
-- **Hops:** 0
-- **Fixed/Variable:** fixed
-- **Notes:** No additional reads. The agent writes the `.ingest.md` file using everything loaded in steps 1-5.
+Notes: invoked by ingest for URL capture; writes the snapshot under `kb/sources/`. The fetched page is external content.
 
-### 7. Connect to existing knowledge
-- **Context needed:** /connect skill body, area indexes
-- **Source:** `kb/instructions/cp-skill-connect/SKILL.md` + variable (area indexes)
-- **Hops:** 1 (skill) + 1-3 (indexes and search)
-- **Fixed/Variable:** mixed — skill is fixed, index reads are variable
-- **Notes:** Same as write-a-note step 7. The ingest skill invokes /connect to weave the new source review into the knowledge graph.
+### Fork 4 — cp-skill-connect (context: fork)
+| load | kind | source | hops |
+|---|---|---|---|
+| connection procedure | overhead | `kb/instructions/cp-skill-connect/SKILL.md` | 0 |
+| sources linking rules | overhead | `kb/sources/COLLECTION.md` | 1 |
+| cross-collection candidate indexes | overhead | `kb/sources/dir-index.md` | 1-2 |
+| more candidate indexes | overhead | `kb/notes/dir-index.md` | 1-2 |
+| the snapshot + candidate notes | content | variable | 2-5 |
 
-## Escalation path (installed projects only)
-
-### E1. Recognize unusual source format
-- **Context needed:** Awareness that the skill procedure may not cover all source formats
-- **Source:** `CLAUDE.md` (fragment in installed project)
-- **Hops:** 0
-- **Fixed/Variable:** fixed
-- **Notes:** Current skills don't explicitly signal when escalation is needed. The agent must recognise that the standard extraction template doesn't fit.
-
-### E2. Search methodology for source handling guidance
-- **Context needed:** Full reasoning behind source classification and extraction
-- **Source:** `commonplace/kb/notes/` (search results)
-- **Hops:** 1 (search) + 1-2 (read results)
-- **Fixed/Variable:** variable
-- **Notes:** The agent searches Commonplace for notes about document classification, source types, or extraction methodology.
+Notes: run on the snapshot. It scans both the sources dir-index (~60 KB) and the notes dir-index (~66 KB) for candidates — the dominant overhead, as in write-a-note Fork 3.
 
 ## Variants
 
-**Commonplace repo:** Escalation is seamless — methodology notes are in the same `kb/notes/` the agent already searches, and the skill body is also searchable under `kb/instructions/cp-skill-ingest/SKILL.md`.
+**Snapshot already on disk:** Fork 3 is skipped — the path is passed straight to Fork 2/4.
 
-**Installed project:** The /ingest skill is loaded from the runtime skill surface (`.claude/skills/` or `.agents/skills/`) after `commonplace-init` copies the promoted instruction directory. Escalation adds 2-3 hops but is rare — most sources fit the standard extraction template.
+**Source type variation:** academic paper / blog / GitHub / X each change only Fork 3's capture method; Forks 2 and 4 are identical.
 
-**Source type variation:** Academic papers, blog posts, GitHub issues, and X/Twitter posts each have different capture methods (handled by /snapshot-web) but the analysis pipeline is the same. The variable cost is in step 3 (capture method) not in steps 4-7.
+**Escalation (installed projects, rare):** an unusual source format adds a search + 1-2 reads into `commonplace/kb/notes/` in Fork 2.

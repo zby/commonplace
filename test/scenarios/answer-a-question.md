@@ -1,63 +1,29 @@
 ---
-description: Step-by-step decomposition of the answer-a-question scenario — read-only, mostly variable costs, rarely needs escalation because no structural decisions are involved
+description: Fork decomposition of answering a question — a single read-only fork, content-dominated; the low-overhead contrast case where the framework costs little beyond AGENTS.md
 type: scenario
 frequency: common
 ---
 
 # Answer a question
 
-User asks something the KB should know. The agent must search for relevant notes, read them, follow links to deepen understanding, and synthesise an answer. This is a read-only scenario — no files are created or modified.
+The user asks something the KB should know. The agent searches, reads the relevant notes, follows links, and synthesises — all in the **main session**. No `cp-skill-*` is invoked, so there is **one fork**. This is the contrast case: cost is dominated by *content* (the notes that answer the question, which any reader would load), and framework overhead is little more than AGENTS.md.
 
-## Steps
+## Forks
 
-### 1. Understand the question
-- **Context needed:** Routing table to know where to search, search patterns
-- **Source:** `CLAUDE.md`
-- **Hops:** 0
-- **Fixed/Variable:** fixed
-- **Notes:** CLAUDE.md is always loaded. The agent uses routing and search patterns to determine where to look.
+### Fork 1 — orchestrator (main session) — the only fork
+| load | kind | source | hops |
+|---|---|---|---|
+| routing + search patterns | overhead | `AGENTS.md` | 0 |
+| navigation surface (only if scanned in full) | overhead | `kb/notes/dir-index.md` | 0-1 |
+| matching notes | content | variable | 3-5 |
+| linked notes followed | content | variable | 1-3 |
 
-### 2. Search for relevant notes
-- **Context needed:** KB content matching the question
-- **Source:** variable — search results from `kb/notes/`, `kb/sources/`
-- **Hops:** 1 (search)
-- **Fixed/Variable:** variable
-- **Notes:** One search hop. Results depend entirely on the question and KB content. Estimate 3-5 results.
-
-### 3. Read matching notes
-- **Context needed:** Full content of relevant notes
-- **Source:** variable — specific notes from search results
-- **Hops:** 3-5 (read results)
-- **Fixed/Variable:** variable
-- **Notes:** Each result is a read. The agent scans descriptions to decide which to load fully. Good descriptions (the retrieval filter convention) reduce unnecessary reads.
-
-### 4. Follow links for deeper context
-- **Context needed:** Notes linked from the initial results
-- **Source:** variable — notes referenced by links in step 3
-- **Hops:** 1-3 (follow links)
-- **Fixed/Variable:** variable
-- **Notes:** The agent follows inline and footer links from loaded notes to build a more complete picture. Not all links are followed — the agent uses link semantics (extends, grounds, contradicts) to decide which are relevant.
-
-### 5. Synthesise answer
-- **Context needed:** All loaded notes in context
-- **Source:** — (agent produces output)
-- **Hops:** 0
-- **Fixed/Variable:** fixed
-- **Notes:** No additional reads. The agent composes an answer from everything loaded.
-
-## Escalation path (installed projects only)
-
-### E1. Question is about methodology, not content
-- **Context needed:** Understanding of how the KB system works
-- **Source:** `commonplace/kb/notes/` (search results)
-- **Hops:** 1 (search) + 1-2 (read results)
-- **Fixed/Variable:** variable
-- **Notes:** When the user asks "what types of notes can I create?" or "how does the connect skill work?", the answer lives in Commonplace methodology, not in the project's KB. The CLAUDE.md fragment must distinguish: "for your content, search `kb/`; for how the system works, search `commonplace/kb/`."
+Notes: read-only, no skill fork. AGENTS.md is the only guaranteed overhead. The agent navigates by `rg` (search results are small content, ~0 overhead) **or** by scanning a dir-index; a *full* dir-index read is the expensive path (~66 KB) and is usually avoidable with `rg`, so it is listed at 0-1 hops. Everything else is content the reader would load regardless of any framework.
 
 ## Variants
 
-**Commonplace repo:** No distinction between content and methodology questions — everything is in `kb/notes/`. A question about "how do types work?" and "what are the design principles?" search the same directory.
+**Depth:** a simple factual question needs only the matching notes (2-4 hops, content-only); a synthesis question exercises link-following (5-9 hops).
 
-**Installed project:** The agent must distinguish content questions (search `kb/`) from methodology questions (search `commonplace/kb/`). The CLAUDE.md fragment handles this routing.
+**Methodology question (installed project):** the search shifts from `kb/` to `commonplace/kb/notes/`, but the shape stays a single content-dominated fork.
 
-**Depth variation:** Simple factual questions ("what did we decide about X?") may need only steps 1-3 (2-4 hops total). Complex synthesis questions ("what's the relationship between X and Y?") exercise the full chain including step 4 (5-9 hops total).
+**Commonplace repo:** no content/methodology split — everything is in `kb/notes/`.
