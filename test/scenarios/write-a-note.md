@@ -24,12 +24,11 @@ Notes: AGENTS.md is always loaded in the main session (0 hops, bytes still count
 | drafting procedure | overhead | `kb/instructions/cp-skill-write/SKILL.md` | 0 |
 | collection conventions + outbound-linking rules | overhead | `kb/notes/COLLECTION.md` | 1 |
 | type-spec (artifact shape) | overhead | `kb/types/note.md` | 1 |
-| dir-index of every authorized outbound destination | overhead | `kb/{notes,reference,agent-memory-systems,sources,instructions}/dir-index.md` | 5 |
-| candidate note bodies NOT opened | spared | — | — |
+| near-duplicate check (key-term search) | overhead | `rg` over `kb/notes/` | 1 |
 | the insight + any user-named sources | content | variable | 0-2 |
 | targeted validation | overhead | `commonplace-validate` run | 1 |
 
-Notes: the skill body is injected (0 hops; bytes count). Step 4 reads the dir-index of *each destination collection the source COLLECTION.md authorizes outbound links to* — for `kb/notes/` that is five (notes, reference, agent-memory-systems, sources, instructions), ~137 KB total, dominated by the notes (~66 KB) and sources (~60 KB) indexes. It deliberately does *not* open candidate bodies — that is the spared credit. This makes Fork 2 one of the heaviest forks in the eval (~150 KB net), on par with the connect fork. Directory-local types (adr, index) add one hop to a `kb/*/types/` spec. Whether AGENTS.md is re-injected into the fork is the main open assumption — set it in the harness config.
+Notes: as of the focused-write change, Step 4 reads **no** dir-index. Near-duplicate detection is a targeted `rg` of the title's key terms (matching lines only, ~hundreds of bytes, not a 66 KB index); link candidates are limited to already-loaded context and user-named targets. All dir-index scanning and cross-destination prospecting moved to `cp-skill-connect` (Fork 3). This drops Fork 2 overhead from ~154 KB to ~17 KB. Directory-local types (adr, index) add one hop to a `kb/*/types/` spec. Whether AGENTS.md is re-injected into the fork is the main open assumption — set it in the harness config.
 
 ### Fork 3 — cp-skill-connect (context: fork)
 | load | kind | source | hops |
@@ -45,8 +44,6 @@ Notes: cp-skill-write suggests cp-skill-connect as a non-optional next step, so 
 ## Variants
 
 **Commonplace repo vs installed project (common path):** identical forks — installed projects copy COLLECTION.md and the type-specs, so the overhead files and paths match.
-
-**Selective link discovery:** most links land in `kb/notes/`, so an agent may read only the notes dir-index instead of all five authorized destinations — dropping Fork 2's index overhead from ~137 KB to ~66 KB. The skill instructs reading each authorized destination's dir-index, so all five is the worst case and the notes-only read is the optimistic one.
 
 **Escalation to methodology (installed projects, ~10%):** when a convention is unclear, an extra search + 1-2 body reads into `commonplace/kb/notes/` are added to Fork 2. In the Commonplace repo this does not occur — the methodology notes are already the content in scope.
 

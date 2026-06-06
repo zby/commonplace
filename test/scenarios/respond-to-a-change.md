@@ -26,12 +26,11 @@ Notes: the evidence-assembly phase runs in the main session — overhead is just
 | drafting procedure | overhead | `kb/instructions/cp-skill-write/SKILL.md` | 0 |
 | collection conventions | overhead | `kb/notes/COLLECTION.md` | 1 |
 | type-spec | overhead | `kb/types/note.md` | 1 |
-| destination dir-indexes | overhead | `kb/notes/dir-index.md` | 1-3 |
-| candidate bodies NOT opened | spared | — | — |
+| near-duplicate check (key-term search) | overhead | `rg` over `kb/notes/` | 1 |
 | the assembled evidence | content | variable | 0-1 |
 | targeted validation | overhead | `commonplace-validate` run | 1 |
 
-Notes: identical to write-a-note Fork 2. The evidence assembled in Fork 1 is the content the write is about (carried into the fork). An ADR response uses `kb/reference/types/adr.md` and `kb/reference/COLLECTION.md` instead (one extra type hop).
+Notes: identical to write-a-note Fork 2 — no dir-index read; near-duplicate detection is a targeted `rg`, all discovery deferred to connect. The evidence assembled in Fork 1 is the content the write is about. An ADR response uses `kb/reference/types/adr.md` and `kb/reference/COLLECTION.md` instead (one extra type hop).
 
 ### Fork 3 — cp-skill-connect (context: fork) — only if the response is a KB note
 | load | kind | source | hops |

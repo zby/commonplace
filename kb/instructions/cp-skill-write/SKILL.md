@@ -1,6 +1,6 @@
 ---
 name: cp-skill-write
-description: Write a KB artifact by reading the target collection conventions and the selected path-valued type-spec doc before drafting and validating.
+description: Write a single KB note — apply the target collection's conventions and path-valued type-spec, commit only in-hand links plus a cheap duplicate check, validate, then hand graph discovery to cp-skill-connect.
 type: kb/types/instruction.md
 user-invocable: true
 allowed-tools: Read, Write, Grep, Glob, Bash, Skill
@@ -41,15 +41,15 @@ For `text`, write raw markdown with no frontmatter only when the user explicitly
 
 ### Step 4 - Search Before Writing
 
-Unless the user requests otherwise, the write flow does not run active discovery. Link candidates come from three cheap sources, in order:
+Write does not run active discovery — that is `cp-skill-connect`'s job. Write authors one note and commits only links the author already has in hand, plus a cheap duplicate guard:
 
-1. **Destination `dir-index.md`.** For each destination collection authorised by the source `COLLECTION.md`'s outbound section, read that destination's `dir-index.md` once. Titles and descriptions are the full surface — enough to catch near-duplicates in the target collection and enough to surface obvious connection points in other destinations. Do not open candidate notes to inspect their bodies unless the dir-index line itself is a match.
-2. **Context already loaded.** Notes, sources, and ingests that were pulled into the session for this write are first-class candidates. If it was worth reading, it is worth considering as a link.
+1. **Near-duplicate check.** Search the target collection for the new note's distinctive title terms with `rg` (e.g. `rg -i "key term" kb/notes/ --glob "*.md"`). This is a targeted term search — do **not** read a whole `dir-index.md`; it can grow to tens of KB, so a full read is the wrong tool for a single note's duplicate check. If a near-duplicate already exists, prefer editing it to creating a second note.
+2. **Context already loaded.** Notes, sources, and ingests pulled into the session for this write are first-class link candidates. If it was worth reading, it is worth considering as a link.
 3. **User-named targets.** Link targets the user mentions in the prompt.
 
 In edit mode, also run a backlinks lookup on the target note — one query, no body search — so edits don't orphan dependents.
 
-Active prospecting (body search, tag traversal, link-following, reverse-edge reasoning) belongs to `cp-skill-connect`, not here.
+All discovery beyond this — dir-index scans, cross-destination prospecting, body search, tag traversal, link-following, reverse-edge reasoning — belongs to `cp-skill-connect`, not here. Write stays focused on authoring one note.
 
 ### Step 5 - Draft And Save
 
@@ -69,7 +69,7 @@ commonplace-validate path/to/written-file.md
 
 If the task wrote or edited multiple KB artifacts, validate each explicit path or the smallest containing directory that covers only those artifacts. Bare `commonplace-validate kb` and `commonplace-validate all` are rejected — scope must be a specific collection or file. Fix structural failures in the touched artifacts before stopping.
 
-Then suggest `cp-skill-connect` as the next step. Step 4 commits links the author already had reason to believe in (dir-index, loaded context, user-named); the rest of the note's share of the graph — body-search candidates, tag-traversal hits, link-following, reverse-edge candidates from other collections — only surfaces under the connect skill. The suggestion is not optional polish.
+Then suggest `cp-skill-connect` as the next step. Step 4 commits only links the author already had in hand (loaded context, user-named) plus a duplicate guard; the rest of the note's share of the graph — dir-index scans, cross-destination candidates, body-search hits, tag-traversal, link-following, reverse-edge candidates — only surfaces under the connect skill. The suggestion is not optional polish.
 
 ## Universal Mechanics
 
