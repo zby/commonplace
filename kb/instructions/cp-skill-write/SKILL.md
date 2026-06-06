@@ -13,7 +13,7 @@ argument-hint: "[path | collection | type] [topic] — a note path for editing, 
 
 **Target: $ARGUMENTS**
 
-All documents in the KB live in a **collection**: a directory under `kb/` with a local `COLLECTION.md`, such as `kb/notes/`, `kb/reference/`, `kb/instructions/`, or an installed library collection like `kb/commonplace/notes/`. Each collection that accepts writes has a `COLLECTION.md` with its register, quality goal, type offerings, and linking conventions. Do not create a `COLLECTION.md` inside another collection; validation treats it as invalid.
+All documents in the KB live in a **collection**: a directory under `kb/` with a local `COLLECTION.md`, such as `kb/notes/`, `kb/reference/`, `kb/instructions/`, or an installed library collection like `kb/commonplace/notes/`. Each collection that accepts writes has a `COLLECTION.md` with its register, quality goal, type offerings, and linking conventions.
 
 Documents with frontmatter carry a path-valued `type:` that points to a type-spec doc, for example `type: kb/types/note.md` or `type: kb/reference/types/adr.md`. Files with no frontmatter are implicit `text`.
 
@@ -35,7 +35,7 @@ Read the target collection's `COLLECTION.md` for the collection's writing conven
 
 Read the selected type-spec doc. Its frontmatter must include `type: kb/types/type-spec.md`, `name`, `description`, and `schema`. Its body supplies the artifact shape and may include a template block. Follow that body as the structural authoring contract.
 
-Do not use legacy split type sidecars. Do not fall back from a missing type path to `note`.
+Do not fall back from a missing type path to `note`.
 
 For `text`, write raw markdown with no frontmatter only when the user explicitly wants unstructured capture. Otherwise use `kb/types/note.md`.
 
@@ -61,13 +61,13 @@ Preserve existing frontmatter and links during edits unless the requested change
 
 ### Step 6 - Validate
 
-Run targeted validation on the written or edited artifact, not the whole KB:
+Validate the note you wrote or edited:
 
 ```bash
-commonplace-validate path/to/written-file.md
+commonplace-validate path/to/file.md
 ```
 
-If the task wrote or edited multiple KB artifacts, validate each explicit path or the smallest containing directory that covers only those artifacts. Bare `commonplace-validate kb` and `commonplace-validate all` are rejected — scope must be a specific collection or file. Fix structural failures in the touched artifacts before stopping.
+Fix structural failures before stopping.
 
 Then suggest `cp-skill-connect` as the next step. Step 4 commits only links the author already had in hand (loaded context, user-named) plus a duplicate guard; the rest of the note's share of the graph — dir-index scans, cross-destination candidates, body-search hits, tag-traversal, link-following, reverse-edge candidates — only surfaces under the connect skill. The suggestion is not optional polish.
 
