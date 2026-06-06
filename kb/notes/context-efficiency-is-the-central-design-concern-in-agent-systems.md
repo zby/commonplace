@@ -8,7 +8,7 @@ status: current
 
 # Context efficiency is the central design concern in agent systems
 
-In traditional systems, the scarce resources are compute, memory, storage, and bandwidth; algorithmic complexity is the dominant cost model. In agent systems, the scarce resource is context — the finite window of tokens the agent can attend to. Context is not just another resource. It is the *only channel* through which an agent receives instructions, understands its task, accesses knowledge, and reasons toward action. A CPU has registers, cache, RAM, disk, and network as separate tiers. An LLM has one context window. Everything competes for the same space.
+In traditional systems, the scarce resources are compute, memory, storage, and bandwidth; algorithmic complexity is the dominant cost model. In agent systems, the scarce resource is context — the finite window of tokens the agent can attend to. Context differs from these in being undifferentiated: a CPU tiers registers, cache, RAM, disk, and network, whereas an LLM has one context window in which instructions, task, knowledge, and reasoning all compete for the same space.
 
 Context is scarce for two distinct reasons, and they are different *kinds* of cost:
 
