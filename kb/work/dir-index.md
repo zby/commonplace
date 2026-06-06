@@ -11,9 +11,11 @@ index_source: directory
 ## Subdirectories
 
 - [agent-complexity-theory/](./agent-complexity-theory/dir-index.md)
+- [agent-runtime-review/](./agent-runtime-review/dir-index.md)
 - [aris-full-trial/](./aris-full-trial/dir-index.md)
 - [auditable-llm-editing/](./auditable-llm-editing/dir-index.md)
 - [comparative-review-data-refresh/](./comparative-review-data-refresh/dir-index.md)
+- [context-cost-note-split/](./context-cost-note-split/dir-index.md)
 - [curiosity-prompts/](./curiosity-prompts/dir-index.md)
 - [gate-refactor/](./gate-refactor/dir-index.md)
 - [harness-fundamentals/](./harness-fundamentals/dir-index.md)

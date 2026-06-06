@@ -12,8 +12,8 @@ index_source: directory
 
 - [cp-skill-connect/](./cp-skill-connect/SKILL.md)
 - [cp-skill-convert/](./cp-skill-convert/SKILL.md)
-- [cp-skill-ingest/](./cp-skill-ingest/SKILL.md)
 - [cp-skill-health-check/](./cp-skill-health-check/SKILL.md)
+- [cp-skill-ingest/](./cp-skill-ingest/SKILL.md)
 - [cp-skill-revise-autoreason/](./cp-skill-revise-autoreason/SKILL.md)
 - [cp-skill-revise-iterative/](./cp-skill-revise-iterative/SKILL.md)
 - [cp-skill-snapshot-web/](./cp-skill-snapshot-web/)
