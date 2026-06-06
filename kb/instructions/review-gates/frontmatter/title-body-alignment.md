@@ -16,6 +16,8 @@ The title promises one thing but the body now establishes something else because
 
 Read the title, then read the body. Ask whether the body actually supports the title's claim or scope.
 
+"Title" here means the H1 prose title. The filename is a compressed slug, not the title — do not flag a filename for dropping qualifiers the H1 and body still carry. A shorter, broader slug is expected; only the H1's scope is under test.
+
 Look for two common patterns:
 
 - claim drift: the title asserts X but the body really establishes related claim Y
