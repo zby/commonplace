@@ -34,7 +34,7 @@ That widens the evaluation target. An access strategy might be good at exact loo
 
 Search, hierarchy browsing, link-following, grep, and indexes support different mixes of these tasks. [Link-following and search impose different metadata requirements](./link-following-and-search-impose-different-metadata-requirements.md) names one important split, but there are probably more than two modes.
 
-These modes also consume context differently. A representation that works well for exact lookup may work poorly for synthesis setup because [effective context is task-relative and complexity-relative, not a fixed model constant](./effective-context-is-task-relative-and-complexity-relative-not-a.md). The same token count can be easy for one task shape and unusable for another.
+These modes also consume context differently. A representation that works well for exact lookup may work poorly for synthesis setup because [agent context is constrained by soft degradation, not hard token limits](./agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md). The same token count can be easy for one task shape and unusable for another.
 
 **Transformation burden** — queries also differ in how much work remains after the relevant inputs have been found. This seems independent from navigation mode. Some questions are mostly lookup: "Who is the HR head?" Some are derivation or aggregation: "What were last year's expenses?" if the answer requires selecting records and summing them. Some are synthesis: "Why did expenses increase?" Some are conjectural or creative: "How should we reorganize HR next year?"
 
@@ -121,7 +121,6 @@ Relevant Notes:
 - [agents navigate by deciding what to read next](./agents-navigate-by-deciding-what-to-read-next.md) — grounds the pointer-design part of the problem
 - [link-following and search impose different metadata requirements](./link-following-and-search-impose-different-metadata-requirements.md) — names one navigation split this note broadens into a larger task taxonomy
 - [a knowledge base should support fluid resolution-switching](./a-knowledge-base-should-support-fluid-resolution-switching.md) — extends the navigation question from retrieval accuracy to movement between abstraction levels
-- [effective context is task-relative and complexity-relative not a fixed model constant](./effective-context-is-task-relative-and-complexity-relative-not-a.md) — sharpens why access strategies should be compared per task shape rather than globally
 - [agent context is constrained by soft degradation not hard token limits](./agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md) — grounds the claim that access architecture must manage degradation rather than only fit under a hard limit
 - [bounded-context orchestration model](./bounded-context-orchestration-model.md) — grounds the symbolic/semantic split as symbolic scheduling and bounded semantic calls rather than treating all post-retrieval work as one kind
 - [ephemeral computation prevents accumulation](./ephemeral-computation-prevents-accumulation.md) — adds the case where answers are mechanically derived on demand rather than retrieved verbatim or persisted as durable knowledge

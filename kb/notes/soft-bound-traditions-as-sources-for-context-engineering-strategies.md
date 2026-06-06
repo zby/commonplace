@@ -100,7 +100,6 @@ Relevant Notes:
 - [constraining](./definitions/constraining.md) — instance: progressive narrowing of interpretation space; roots in gradual typing, formal specification
 - [distillation](./definitions/distillation.md) — instance: compression for a specific observer; roots in pedagogy, technical writing, knowledge management
 - [context efficiency is the central design concern](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — instance: attention scarcity made architectural; roots in Simon, working memory
-- [effective context is task-relative and complexity-relative not a fixed model constant](./effective-context-is-task-relative-and-complexity-relative-not-a.md) — sharpens: the soft bound that justifies transfer is itself task-dependent
 - [short composable notes maximize combinatorial discovery](./short-composable-notes-maximize-combinatorial-discovery.md) — instance: modularity under bounds; roots in Parnas, Ranganathan, Zettelkasten
 - [links index](./links-index.md) — instance: typed relationships for bounded navigation; roots in hypertext theory, semantic web, library science
 - [deploy-time learning](./deploy-time-learning-is-the-missing-middle.md) — instance: system-level adaptation through artifacts; roots in organizational learning, knowledge creation

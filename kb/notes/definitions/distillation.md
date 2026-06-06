@@ -83,7 +83,7 @@ Both cases transform a source the consumer cannot use directly into a target the
 Relevant Notes:
 
 - [context efficiency is the central design concern](../context-efficiency-is-the-central-design-concern-in-agent-systems.md) — foundation: the bounded context that makes distillation a feasibility requirement, not just an optimization
-- [effective context is task-relative](../effective-context-is-task-relative-and-complexity-relative-not-a.md) — foundation: effective context depends on task complexity, so the same source may be feasible for one task and infeasible for another
+- [agent context is constrained by soft degradation, not hard token limits](../agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md) — foundation: effective context depends on task complexity, so the same source may be feasible for one task and infeasible for another
 - [constraining](./constraining.md) — co-equal mechanism: constraining the interpretation space, orthogonal to distillation
 - [codification](./codification.md) — the far end of constraining; sometimes follows distillation (reshape a procedure for use, then commit it to a symbolic artifact)
 - [skills derive from methodology through distillation](../skills-derive-from-methodology-through-distillation.md) — the full argument for distillation as the mechanism behind skill creation
