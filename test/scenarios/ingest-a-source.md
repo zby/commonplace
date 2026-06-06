@@ -42,11 +42,10 @@ Notes: invoked by ingest for URL capture; writes the snapshot under `kb/sources/
 |---|---|---|---|
 | connection procedure | overhead | `kb/instructions/cp-skill-connect/SKILL.md` | 0 |
 | sources linking rules | overhead | `kb/sources/COLLECTION.md` | 1 |
-| cross-collection candidate indexes | overhead | `kb/sources/dir-index.md` | 1-2 |
-| more candidate indexes | overhead | `kb/notes/dir-index.md` | 1-2 |
+| dir-index of every destination authorized by sources | overhead | `kb/notes/dir-index.md`, `kb/sources/dir-index.md` (+ any others in the sources outbound section) | 2-5 |
 | the snapshot + candidate notes | content | variable | 2-5 |
 
-Notes: run on the snapshot. It scans both the sources dir-index (~60 KB) and the notes dir-index (~66 KB) for candidates — the dominant overhead, as in write-a-note Fork 3.
+Notes: connect runs the full prospecting procedure on every destination `kb/sources/COLLECTION.md` authorizes — the notes (~66 KB) and sources (~60 KB) dir-indexes dominate (~126 KB), the heaviest single fork in the eval. (Exact destination set = read it from the sources outbound section.)
 
 ## Variants
 

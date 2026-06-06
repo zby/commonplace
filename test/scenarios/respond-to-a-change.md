@@ -38,10 +38,10 @@ Notes: identical to write-a-note Fork 2. The evidence assembled in Fork 1 is the
 |---|---|---|---|
 | connection procedure | overhead | `kb/instructions/cp-skill-connect/SKILL.md` | 0 |
 | source-collection linking rules | overhead | `kb/notes/COLLECTION.md` | 1 |
-| area / dir indexes | overhead | `kb/notes/dir-index.md` | 1-3 |
+| dir-index of every authorized destination | overhead | `kb/{notes,reference,agent-memory-systems,sources,instructions}/dir-index.md` | 5 |
 | the new note + candidates | content | variable | 2-5 |
 
-Notes: identical to write-a-note Fork 3.
+Notes: identical to write-a-note Fork 3 — full prospecting re-reads all five authorized dir-indexes (~137 KB), the second such read in the operation.
 
 ## Variants
 
