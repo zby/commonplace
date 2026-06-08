@@ -44,6 +44,10 @@ kb/sources/slate-moving-beyond-react-and-rlm.md
 # connect reports
 kb/reports/connect/*
 kb/work/connect/
+
+# critique reports (experimental — see kb/instructions/critique-note.md)
+kb/reports/critique/*
+!kb/reports/critique/README.md
 kb/work/review-db-migration/
 kb/work/review-runs-direct-write/
 
