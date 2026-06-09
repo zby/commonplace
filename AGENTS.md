@@ -82,13 +82,12 @@ A design insight is worth a note when it changes how someone would build or oper
 - `kb/notes/tags-index.md` — top-level navigation hub: tag indexes, foundations, evaluation, gaps
 - `kb/notes/links-index.md` — linking methodology: semantics, navigation, contracts
 - `kb/agent-memory-systems/README.md` — curated index of external agent-memory/knowledge systems
-- `kb/agent-memory-systems/dir-index.md` — auto-generated directory listing for agent-memory-system coverage
-- `kb/notes/dir-index.md` — auto-generated directory listing
 - `kb/reference/README.md` — shipped-system documentation entry point: architecture, type system, operator guide, and ADR navigation
-- `kb/reference/navigation.md` — how agents navigate the KB with `rg`, titles/descriptions, indexes, links, connect reports, and future search layers
+- `kb/reference/navigation.md` — how agents navigate the KB with `rg`, titles/descriptions, indexes, links, connect reports, and future search layers — including the scoped `rg` recipes that replace complete-index reads
 - `kb/reference/adr/` — architecture decision records for the shipped Commonplace system
 - `kb/reference/link-vocabulary.md` — label catalogue and authoring guidance for `COLLECTION.md` authors (consult when revising outbound rules)
-- `kb/sources/dir-index.md` — auto-generated source listing
+
+Complete generated listings (`dir-index.md` pages, per-tag generated tails) are build-time materializations for the published site only — they are not committed and not on any agent read path (ADR 025). Enumerate candidates with scoped `rg` instead (recipes in `kb/reference/navigation.md`).
 
 ## Vocabulary
 
@@ -115,8 +114,7 @@ This section declares the active vocabulary: terms with specific meanings throug
 ## Development
 
 - **Use `python3`** for stdlib-only throwaway tooling. Commonplace runtime code should live in the Python package and be invoked through `commonplace-*` commands.
-- **Run `commonplace-*` commands directly when the project venv is on PATH** — this repo uses direnv to put `.venv/bin` on `PATH`, so installed entry points such as `commonplace-validate` and `commonplace-run-review-bundle` should be executable without `uv run` when the agent runtime was started from a direnv-loaded shell. If the command environment is non-interactive and direnv did not load, use `direnv exec . bash -c '<command>'` or the explicit `.venv/bin/<command>` path. Do not wrap Commonplace commands in `uv run` unless the direct command is genuinely unavailable; `/snap/bin/uv` can fail under sandbox confinement even when the `.venv/bin` entry point works.
-- **Run installed developer tools directly too** — `pytest` is also installed in `.venv/bin` when direnv is loaded, so use `pytest` directly for the normal test suite. If direnv is not loaded, use `direnv exec . bash -c 'pytest ...'` or `.venv/bin/pytest`. Use `uv run` only when a command is not installed in the active environment or the workflow explicitly needs uv's environment management.
+- **Run `commonplace-*` commands and `pytest` by their bare name** — this repo uses direnv to put `.venv/bin` on `PATH`, so installed entry points (`commonplace-validate`, `commonplace-run-review-bundle`, `pytest`, …) resolve directly. Do not prepend `.venv/bin/`, wrap in `direnv exec`, or wrap in `uv run` as a precaution — just call the command. Only if a bare call actually fails with "command not found" should you fall back, in this order: `direnv exec . bash -c '<command>'`, then `.venv/bin/<command>`. Reach for `uv run` only when the command is genuinely not installed in the active environment, never as a wrapper around an installed entry point (`/snap/bin/uv` can fail under sandbox confinement even when the `.venv/bin` entry point works).
 - **YAGNI** — don't implement features that aren't needed yet. If you identify a gap, create a note in `kb/notes/` instead of implementing it.
 - **No backwards compatibility** — with no external consumers, always prioritize cleaner design over keeping old behavior alive. If backcompat code is ever needed, mark it with `# BACKCOMPAT: <reason> - remove after <condition>`.
 - **Tests**: `pytest` — all tests must pass.
@@ -150,7 +148,7 @@ Read the target collection's `COLLECTION.md` before writing or connecting artifa
 
 A `COLLECTION.md` inside a non-collection namespace is an ordinary collection; a `COLLECTION.md` inside another collection is invalid and reported by validation.
 
-For the full navigation model, read `kb/reference/navigation.md`. In short: use `rg` for cheap lexical search, scan titles and descriptions in directory/curated indexes before opening full files, and follow authored links when local context makes the relationship useful.
+For the full navigation model, read `kb/reference/navigation.md`. In short: use `rg` for cheap lexical search, scan titles and descriptions in curated indexes and scoped `rg` listings before opening full files, and follow authored links when local context makes the relationship useful.
 
 ```bash
 # Find notes by description

@@ -97,6 +97,7 @@ command -v uv || true
 ```
 
 Interpretation:
+- `commonplace-validate` and `pytest` resolving to a path under the project `.venv/bin` is the healthy state: agents must call these by bare name (no `.venv/bin/` prefix, no `direnv exec`, no `uv run` wrapper). If the bare commands resolve, report Command PATH OK and flag any habit of prefixing as unnecessary — see the bullets in `AGENTS.md` under Development.
 - `commonplace-validate` missing while `.venv/bin/commonplace-validate` exists usually means `.venv/bin` is not on `PATH`.
 - `pytest` resolving outside the project venv is a sign the project environment was not loaded.
 - `uv` missing only matters for install/update workflows; installed `commonplace-*` commands should not need `uv run` after environment activation.
