@@ -22,6 +22,7 @@ Use `instruction` for prescriptive content: procedures, skill bodies, wrapper pr
 - Title imperatively or as an action.
 - Keep the body executable on first reading.
 - State prerequisites, scope boundaries, decision points, and verification checks where they matter.
+- Fix only what the executor can't determine at run time: the goal, constraints, what *done* means, privileged facts, and arbitrary choices (paths, names, templates, which valid interpretation to follow). Leave anything the executor can determine from the live system to the executor — a fixed detail is an authoring-time snapshot and goes stale.
 - Keep rationale minimal. Put durable reasoning in `kb/notes/` and link from there.
 
 ## Template
@@ -37,3 +38,9 @@ type: kb/types/instruction.md
 {What this instruction does and when to use it. Body sections follow the
 shape that fits the work.}
 ```
+
+---
+
+Relevant Notes:
+
+- [An instruction should fix what the executor can't determine, not what it will](../notes/fix-what-the-executor-cant-determine-not-what-it-will.md) - rationale for the detail-level rule: which details to fix and which to leave to the executor
