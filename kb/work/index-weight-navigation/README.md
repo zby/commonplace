@@ -95,20 +95,25 @@ The complete `dir-index` is exempt: it is no longer committed or an agent read s
 
 ## Open decisions
 
-1. mkdocs generation mechanism: a `commonplace-refresh-indexes --for-build` mode the mkdocs hook calls, or a dedicated mkdocs plugin? Must now emit both the directory inventory and the per-tag complete listing.
+1. ~~mkdocs generation mechanism~~ — **resolved: extend the existing mkdocs hook (`src/commonplace/docs/mkdocs_hooks.py`), not a new plugin or a `--for-build` CLI.** The hook already drives nav (`on_config`) and a per-page metadata badge (`on_page_markdown`), and CI already runs `commonplace-refresh-indexes` before `mkdocs build` — build-time generation already exists; ADR 025 only removes its *write to git*. Mechanism: inject the per-tag generated tail via `on_page_markdown` on tag-index pages (already identified by `index_source: tag` / `index_key`), and emit per-collection `dir-index` pages as virtual files via `on_files`, both reusing the in-memory `index_directory` / `index_generated` lib functions. `commonplace-refresh-indexes`'s repo-writing role and its CI step are dropped; the lib modules stay. A plugin adds packaging overhead and a second pattern; a `--for-build` CLI must still write somewhere, which is the committed-artifact problem being removed.
 2. ~~The query command's shape and output~~ — **resolved: no command; scoped `rg` (ADR 025).**
 3. Soft/hard weight thresholds for curated indexes: bytes or entry count; global, collection-local, or per-index?
 4. Do curated indexes need to *declare* focused-routing (cheap to read) vs archival, or is "curated = focused" sufficient?
-5. Reference-sweep scope before removal: `CLAUDE.md` Key Indexes, `kb/reference/navigation.md`, `cp-skill-connect`, and any README / curated index that links to a `dir-index.md`.
+5. ~~Reference-sweep scope before removal~~ — **resolved: enumerated (2026-06-09) by `rg -l 'dir-index'` over the repo.** The live surface to update:
+   - **Primary (named in step 5):** `CLAUDE.md`/`AGENTS.md` Key Indexes, `kb/reference/navigation.md`, `cp-skill-connect/SKILL.md`.
+   - **Other live docs:** `kb/index.md`; the READMEs of `kb/notes/`, `kb/instructions/`, `kb/sources/`, `kb/reference/`, `kb/agent-memory-systems/`; `cp-skill-write/SKILL.md`; `evaluate-scenarios/SKILL.md`; `re-ingest.md`; `evaluate-log-entry-for-note-creation.md`; `kb/reference/collections-and-types.md`; `kb/reference/storage-architecture.md`; `kb/types/index.md` (the index type spec describes the generated tail); notes `a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md` and `symbolic-context-engineering-is-bounded-by-symbol-availability.md`; `kb/agent-memory-systems/review-framework-design.md`.
+   - **Code:** `generate_notes_index.py` (standalone CLI that only writes dir-index — retire); `index_directory._best_landing` (parent→child `dir-index.md` nav links — logic moves into the mkdocs hook, since the virtual pages still need it); `promotion.py` (exclusion filters only — leave as-is).
+   - **Leave untouched:** historical artifacts under `kb/reports/**`, old connect reports, ADR 003 (already marked superseded), and other workshops' in-flight docs.
+   - **Scale check:** 67 committed `dir-index.md` files; 17 tag indexes in `kb/notes/` carry an `## Other tagged notes` tail to strip (check each against its curated body so nothing editorial is cut).
 6. ~~ADR~~ — **done: ADR 025 (supersedes 003).**
 
 ## Candidate implementation sequence
 
-1. Decide the mkdocs generation mechanism (deferred decision #1).
+1. ~~Decide the mkdocs generation mechanism~~ — **done: extend `mkdocs_hooks.py` (decision #1).**
 2. Document the scoped `rg` recipes (§2) in `navigation.md` as the agent path. *(No command to build — ADR 025.)*
 3. Move complete-listing generation (dir-index + per-tag tail) into the mkdocs build; stop writing them to the repo.
 4. `git rm` + gitignore the `dir-index.md` files; strip the committed generated tail from tag indexes.
-5. Update `navigation.md`, `cp-skill-connect`, `CLAUDE.md` Key Indexes, and any other references.
+5. Update references per the enumerated sweep list (decision #5): primary docs, other live docs, and code consumers.
 6. Add curated-index weight reporting + validation thresholds.
 7. ~~Promote the durable conclusions~~ — theory note and ADR 025 both done; remaining promotion is reference-doc updates folded into step 5.
 
