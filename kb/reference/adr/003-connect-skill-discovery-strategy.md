@@ -2,12 +2,12 @@
 description: Design options and scaling strategy for how the connect skill discovers candidate connections — index-first with semantic search backup, and what changes when the KB grows
 type: ../types/adr.md
 tags: []
-status: accepted
+status: superseded
 ---
 
 # 003-connect-skill-discovery-strategy
 
-**Status:** accepted
+**Status:** superseded by [025-complete-generated-indexes-are-build-time-only](./025-complete-generated-indexes-are-build-time-only.md)
 **Date:** 2026-03-05
 
 ## Context
