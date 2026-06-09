@@ -35,7 +35,7 @@ What counts as known-before-the-call depends on the consumer. State that is dyna
 
 A frontloaded artifact also needs a validity window: the span during which its pre-computed inputs remain accurate. If inputs may change before the consuming call, include enough [lineage](./definitions/lineage.md) (what it depends on, and when it must be regenerated), timestamp, or regeneration instruction for refresh.
 
-Possibility is not enough. Frontload when the pre-step removes repeated discovery, runtime indirection, or task-specific ambiguity from a later LLM call. Stop when the pre-step merely restates a stable skill contract, meaning an interface the callee already has loaded.
+Possibility is not enough, and context saving is not the only cost in play. Frontload when the pre-step removes repeated discovery, runtime indirection, or task-specific ambiguity from a later LLM call. Stop when the pre-step merely restates a stable skill contract — an interface the callee already has loaded. Stop, too, when [the value is one the executor would be better placed to choose](./fix-what-the-executor-cant-see-not-what-it-will.md): freezing a situation-dependent detail can save context and still be wrong, because it commits a guess the executor could have read off the live state. Saving context and forfeiting that runtime advantage are two pulls in the same decision.
 
 ## Frontloading vs codification
 
@@ -55,3 +55,4 @@ Relevant Notes:
 - [Ad hoc prompts extend the system without schema changes](./ad-hoc-prompts-extend-the-system-without-schema-changes.md) — application: ad hoc instruction artifacts frontload caller judgment at a clean context boundary, but should not merely duplicate stable skill contracts
 - [Instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — motivates: the context loading hierarchy is one response to execution context being the bottleneck
 - [Frontloading is partial evaluation, not divide-and-conquer](./frontloading-is-partial-evaluation-not-divide-and-conquer.md) — mechanism: the theoretical framing for why pre-compute-and-insert is precise, not metaphorical, in a homoiconic medium
+- [An instruction should fix what the executor can't see, not what it will](./fix-what-the-executor-cant-see-not-what-it-will.md) — extends: a second cost the frontload-or-not decision must weigh — freezing a situation-dependent value forfeits the executor's runtime advantage even when it saves context
