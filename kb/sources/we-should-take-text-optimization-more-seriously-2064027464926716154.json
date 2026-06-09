@@ -1,0 +1,639 @@
+{
+  "source": "https://x.com/yoonholeee/status/2064027464926716154",
+  "captured": "2026-06-09T15:02:46.024584+00:00",
+  "family": "x-article",
+  "status_id": "2064027464926716154",
+  "conversation_id": "2064027464926716154",
+  "target_post": {
+    "id": "2064027464926716154",
+    "article": {
+      "cover_media": "3_2064025441674084352",
+      "entities": {
+        "mentions": [
+          {
+            "start": 817,
+            "end": 827,
+            "username": "fortelabs"
+          },
+          {
+            "start": 828,
+            "end": 838,
+            "username": "ivanhzhao"
+          },
+          {
+            "start": 839,
+            "end": 846,
+            "username": "kepano"
+          },
+          {
+            "start": 10,
+            "end": 26,
+            "username": "lateinteraction"
+          },
+          {
+            "start": 27,
+            "end": 38,
+            "username": "allenainie"
+          },
+          {
+            "start": 39,
+            "end": 52,
+            "username": "chelseabfinn"
+          },
+          {
+            "start": 53,
+            "end": 61,
+            "username": "a1zhang"
+          },
+          {
+            "start": 62,
+            "end": 71,
+            "username": "abeirami"
+          },
+          {
+            "start": 72,
+            "end": 86,
+            "username": "qizhengz_alex"
+          }
+        ],
+        "urls": [
+          {
+            "text": "https://yoonholee.com/blog/2026/we-should-take-text-optimization-more-seriously/"
+          },
+          {
+            "text": "https://arxiv.org/abs/2508.00614"
+          },
+          {
+            "text": "https://arxiv.org/abs/2201.11903"
+          },
+          {
+            "text": "https://arxiv.org/abs/2001.08361"
+          },
+          {
+            "text": "https://arxiv.org/abs/2507.19457"
+          },
+          {
+            "text": "https://dl.acm.org/doi/abs/10.1145/3654777.3676362"
+          },
+          {
+            "text": "https://mitpress.mit.edu/9780262081535/artificial-intelligence/"
+          },
+          {
+            "text": "https://hippocraticai.com/polaris-3/"
+          },
+          {
+            "text": "https://arxiv.org/abs/2603.28052"
+          },
+          {
+            "text": "https://arxiv.org/abs/2603.16856"
+          },
+          {
+            "text": "https://github.com/stanfordnlp/dspy"
+          },
+          {
+            "text": "https://www.anthropic.com/index/claudes-constitution"
+          },
+          {
+            "text": "https://arxiv.org/abs/2206.07682"
+          },
+          {
+            "text": "https://arxiv.org/abs/2005.11401"
+          },
+          {
+            "text": "https://arxiv.org/abs/2406.16218"
+          },
+          {
+            "text": "https://trajectory.ai/field-notes/the-sovereign-path-for-continual-agent-learning-early-results-on-harvey-lab-with-nvidia-nemotron"
+          },
+          {
+            "text": "https://arxiv.org/abs/2402.10949"
+          },
+          {
+            "text": "https://arxiv.org/abs/2005.11401"
+          },
+          {
+            "text": "https://arxiv.org/abs/2602.12275"
+          },
+          {
+            "text": "https://obsidian.md/"
+          },
+          {
+            "text": "https://www.notion.com/"
+          },
+          {
+            "text": "https://arxiv.org/abs/2602.21193"
+          },
+          {
+            "text": "https://cacm.acm.org/research/computer-science-as-empirical-inquiry/"
+          },
+          {
+            "text": "https://arxiv.org/abs/2603.28052"
+          },
+          {
+            "text": "https://yoonholee.com/blog/2026/we-should-take-text-optimization-more-seriously/"
+          },
+          {
+            "text": "https://openai.com/index/the-instruction-hierarchy/"
+          },
+          {
+            "text": "https://arxiv.org/abs/2603.28052"
+          },
+          {
+            "text": "https://arxiv.org/abs/2210.10760"
+          },
+          {
+            "text": "https://arxiv.org/abs/2504.21798"
+          },
+          {
+            "text": "https://arxiv.org/abs/2203.11171"
+          },
+          {
+            "text": "https://arxiv.org/abs/2310.08560"
+          },
+          {
+            "text": "https://openai.com/index/deliberative-alignment/"
+          },
+          {
+            "text": "https://arxiv.org/abs/2303.11366"
+          },
+          {
+            "text": "https://www.tbench.ai/leaderboard/terminal-bench/2.0"
+          },
+          {
+            "text": "https://arxiv.org/abs/2512.07611"
+          },
+          {
+            "text": "https://arxiv.org/html/2601.19897v1"
+          },
+          {
+            "text": "https://web.mit.edu/sts.035/www/PDFs/think.pdf"
+          },
+          {
+            "text": "https://arxiv.org/abs/2307.11760"
+          },
+          {
+            "text": "https://arxiv.org/abs/2504.15965"
+          },
+          {
+            "text": "https://arxiv.org/abs/2310.03957"
+          },
+          {
+            "text": "https://alexzhang13.github.io/blog/2026/mgh/"
+          },
+          {
+            "text": "https://arxiv.org/abs/2510.13786"
+          },
+          {
+            "text": "https://cursor.com/cursorbench"
+          },
+          {
+            "text": "https://arxiv.org/abs/2210.03629"
+          },
+          {
+            "text": "https://arxiv.org/abs/2103.08493"
+          },
+          {
+            "text": "https://arxiv.org/abs/2104.08691"
+          },
+          {
+            "text": "https://arxiv.org/abs/2512.24601"
+          },
+          {
+            "text": "https://arxiv.org/abs/2601.16443"
+          },
+          {
+            "text": "https://arxiv.org/abs/2604.11806"
+          },
+          {
+            "text": "https://arxiv.org/abs/2603.28052"
+          },
+          {
+            "text": "https://arxiv.org/abs/2403.17031"
+          },
+          {
+            "text": "https://openreview.net/forum?id=4OsgYD7em5"
+          },
+          {
+            "text": "https://arxiv.org/abs/2505.24864"
+          },
+          {
+            "text": "https://arxiv.org/abs/2602.03587"
+          },
+          {
+            "text": "https://github.com/openclaw/openclaw"
+          },
+          {
+            "text": "https://www.alice.id.tue.nl/references/clark-chalmers-1998.pdf"
+          },
+          {
+            "text": "https://arxiv.org/abs/2309.03409"
+          },
+          {
+            "text": "https://bair.berkeley.edu/blog/2024/02/18/compound-ai-systems/"
+          },
+          {
+            "text": "https://arxiv.org/abs/2209.15189"
+          },
+          {
+            "text": "https://arxiv.org/abs/2604.25727"
+          },
+          {
+            "text": "https://arxiv.org/abs/2510.13786"
+          },
+          {
+            "text": "https://arxiv.org/abs/2012.15723"
+          },
+          {
+            "text": "https://arxiv.org/abs/2005.14165"
+          },
+          {
+            "text": "https://x.com/ClaudeDevs/status/2060044853279617150"
+          },
+          {
+            "text": "https://arxiv.org/abs/2605.12484"
+          },
+          {
+            "text": "https://github.com/letta-ai/context-constitution"
+          },
+          {
+            "text": "https://arxiv.org/html/2604.14116v1"
+          },
+          {
+            "text": "https://arxiv.org/abs/2205.11916"
+          },
+          {
+            "text": "https://agentskills.io/home"
+          },
+          {
+            "text": "https://arxiv.org/abs/2507.19457"
+          },
+          {
+            "text": "https://mitpress.mit.edu/9780262082310/cognition-in-the-wild/"
+          },
+          {
+            "text": "https://arxiv.org/abs/2603.08640"
+          }
+        ]
+      },
+      "plain_text": "Cross-posted from https://yoonholee.com/blog/2026/we-should-take-text-optimization-more-seriously/\nThere is a common negative sentiment I observe among ML researchers toward prompting, or more broadly, text optimization. The underlying view seems to be something like \u201creal learning happens in the weights.\u201d By text optimization, I broadly mean methods that modify the mutable text layer around a model: prompts, context, filesystem state, memory, retrieval databases, and model harnesses. I think this layer should be taken more seriously by the broader research community. I\u2019ll argue for text optimization on three counts:\nText optimization is a legitimate update mechanism. It holds the same functional role as gradient-based weight optimization: changing future behavior in response to new information.\nText optimization is much more sample-efficient than weight optimization, particularly in the low-data regime. Relatively short, high-likelihood text has low description length, giving text optimization a favorable inductive bias.\nText optimization enables a new scaling axis: update-time compute. Reflective text optimization lets a system spend more compute learning from a single experience, the way inference-time scaling lets a model spend more on a single input.\nLearning Outside the Weights\nDeployed AI systems are no longer just a parameter vector queried in isolation; they are complex, stateful machines with many moving parts, the weights being just one of them. Once this whole system is the object of study, learning can mean changing any behavior-conditioning state. Weights are one state, typically updated through gradient-based optimization. Prompts, memories, retrieval indices, and harness code are others, with different costs, capacities, and failure modes. The important question is which update target is the most appropriate for a given piece of information.\nText artifacts have a useful inductive bias. The usual Kolmogorov-style compression intuition applies: short specifications that explain many cases are more likely to capture real structure than long lists of exceptions. In this sense, good text updates are compact patches to a pretrained world prior. Empirically, text optimization is orders of magnitude more sample-efficient in the low-data regime (1, 2, 3). Because of this, a recurring pattern at scale is to use the text layer to elicit and compose existing capabilities in the model, and then distill this into the weights over time (Anthropic, OpenAI, Cursor, Letta, Hippocratic AI, Harvey).\nUpdate-Time Compute: A New Scaling Axis\nThe text layer enables reflective learning (Reflexion, Trace, GEPA, Meta-Harness): an optimization loop grounded in text can externalize its own hypotheses about how it should change. This makes hypothesis testing scalably useful at update time: systems can propose multiple ideas in text and test them against new evidence before accepting or rejecting them, the way a scientist might propose and test multiple theories before settling on one. See e.g. Appendix A.2 of Meta-Harness for a real example of such hypothesis-testing behavior. SGD can\u2019t cheaply do this; its single running parameter vector commits each update, with no easy way to fork and compare.\nI think the core promise of text optimization is that we can scale \u201cupdate-time compute\u201d: just as inference-time scaling lets a model spend more compute to solve a single instance, reflective text optimization lets a system spend more compute learning from a single experience. A failed trajectory can be reread, diagnosed, abstracted, tested against candidate revisions, and then converted into a proposed update. Text-space learning is therefore especially useful when (1) failures are expensive, (2) the desired behavior is hard to specify, or (3) there is abundant offline trace data that does not work well otherwise (SFT or offline RL).\nThe Strongest Case for Weights, and My Counterpoints\nThere are some compelling arguments for keeping learning in the weights. For each, I will state my strongest interpretation of the argument, and then respond in rebuttal style.\nWeights give amortization. Once a behavior is trained into the model, the system no longer has to carry the full specification of that behavior in every context window. The context window, in contrast, is a finite resource.\nI think this is a strong argument for many types of information to ultimately belong in weights. I agree; for example, LLMs should not need a long prompt to explain basic arithmetic for every request. Even here, though, many pieces of useful information are not stable or general enough to be worth the cost of amortization: user preferences, API contracts, or facts that frequently change. I think the right framing is as a routing problem: weights are where stable, repeatedly useful information belongs, while text is where information stays while it is volatile, local, auditable, or not yet trusted enough to amortize.\nAdditionally, good text-layer systems do not dump all available information into the context window. They implement progressive disclosure of information, where the system retrieves and conditions on relevant information as needed (RAG, MemGPT, RLM, Meta-Harness). With the right organization, it\u2019s fairly straightforward to implicitly condition on a much larger context than the model\u2019s input window. When you know what to include, you can pack a surprising amount of information into context. 1% of a 1M-token context is 10K tokens, which is more than three copies of this post; hopefully enough that reading it meaningfully shifts a reader\u2019s mental model.\nEven if some information is worth amortizing into weights, it need not be amortized immediately. I\u2019ve come to view the text layer as a kind of flexible \u201cstaging ground\u201d for information that may eventually be distilled into weights. This layer makes it very easy to test and refine behavioral hypotheses before committing them to the model. The mechanics of how to evolve the text layer and use it to improve the weights over time is an interesting open research question, whether through direct distillation, (1, 2, 3, 4), synthetic data generation (5, 6, 7, 8), or modifying the training loop itself (9, 10).\nTraining the weights creates new neural circuits. Text optimization only ever elicits existing behavior from a fixed set of weights, and given those weights, there is a ceiling on what the text layer can reach.\nAgreed that a weak model gives text optimization very little to work with. However, such a ceiling is not unique to text optimization, and this argument has even been made against RL.[1] Text optimization does not need to create completely new latent capabilities to be useful. Many deployed systems are bottlenecked not by whether the model could in principle perform a certain behavior primitive, but by whether the system can elicit and compose that behavior reliably (mgh). The practical question is therefore how much useful headroom remains between the model\u2019s latent capabilities and the behavior the deployed system actually exhibits.\nEmpirically, the headroom for improving the text layer is significant. It shows up across retrieval-augmented QA, test-time scaling, and tool-use agents: fixed-model behavior improves when we change the context or execution environment rather than the weights (1, 2, 3, 4, 5). Scale also appears to increase the value of text conditioning: larger models become better at using information supplied at inference time, and some context-conditioned abilities appear only at larger scale (1, 2, 3).\nThe \u201cexistence argument\u201d: the human brain is clearly intelligent. It must be possible to learn by changing weights alone.\nI\u2019d actually make a similar existence argument for text optimization. Look at the collection of all written text (books, papers, code, webpages, etc.): good external representations greatly amplify human intelligence. How much would the quality of our work suffer if we were suddenly cut off from all external text?\nAnyone can change a text artifact and get a seemingly better-looking output. Text optimization is unusually vulnerable to benchmark leakage and folk theories about model psychology.\nFirst, text optimization has been poorly marketed by its early successes. The most visible examples were amusing model quirks like \u201clet\u2019s think step by step\u201d, \u201ctake a deep breath\u201d, \u201cthis is very important to my career\u201d, personas, and threats and tipping. It\u2019s perhaps tempting to conclude that text optimization itself will disappear as newer models become more robust to such tricks. But this confuses a weak early framing of the field with the underlying research problem.\nIt\u2019s very easy to tinker on the text layer: anyone can edit an instruction and declare victory based on cherry-picked outputs.[2] This low barrier to entry makes bad science here common. If anything, I view such immature methodological norms as a strong argument for studying text optimization more rigorously, especially given its practical importance.\nGradient descent is a real optimizer. You can lean on the large literature on optimization, generalization, and convergence to understand how it works. Text optimization is heuristic hill-climbing.\nConvergence theory only guarantees that you will minimize the proxy loss, not that the proxy matches what you actually care about. A stronger optimizer just exploits this gap; the field has largely moved on from theoretical analysis of generalization dynamics to empirical scaling laws and best practices. RL post-training in particular is notoriously finicky and prone to this kind of overfitting (1, 2, 3, 4). In contrast, text-layer edits apply weaker optimization pressure while remaining highly auditable, and in many cases also composable.\nNeural networks are universal function approximators and can represent anything.\nRepresentational capacity is not the right thing to look at; even a two-layer MLP can in principle represent any function, but that doesn\u2019t mean it can learn to do so efficiently or reliably. We should be looking at reachable behavior, i.e., what behaviors are sufficiently high-likelihood under the implicit prior. Harnesses can demonstrably execute behaviors that we wouldn\u2019t expect frozen models to via a single forward pass.\nText artifacts are not portable. They are overfit to one model\u2019s quirks and often break on the next checkpoint.\nThe relevant comparison is with other update artifacts. A text artifact written for one model may fail on another, but a weight delta trained for one architecture is usually not portable at all. Text artifacts are slightly more portable since text still carries meaning across models.\nPerhaps the Pendulum Has Swung Too Far\nThe \u201cweights are the real learning\u201d view is partly a reaction to early AI, when researchers were focused on building systems that could learn by changing their internal parameters. For decades, the dominant picture treated intelligence as explicit symbol manipulation. Newell and Simon\u2019s physical symbol system hypothesis and Haugeland\u2019s GOFAI are canonical examples of this mindset. Neural networks showed that this was too narrow: useful information can clearly live in weights; modern LLMs are the strongest evidence for that claim.\nWe seem to have overcorrected towards viewing weights as the only serious home for knowledge. This is strange when zoomed out because human cognition routinely depends on external artifacts. In Cognition in the Wild, Edwin Hutchins analyzes ship navigation as a cognitive system made of people, instruments, procedures, and external representations. Clark and Chalmers make a related point in The Extended Mind: the boundary of a cognitive system can extend beyond the internal state of a single component. The computer-science version of this lineage runs at least back to Vannevar Bush\u2019s Memex: an external memory organized around associative trails through a personal archive. Modern tools-for-thought systems like Notion and Obsidian are concrete attempts to make external memory part of everyday knowledge work. @fortelabs @ivanhzhao @kepano \nScientific practice is a useful comparison. One of the core goals of science is to construct compact representations of the world, which is aided by private intuitions inside scientists\u2019 heads but not reducible to them. The usual products are crystallized: an abstraction, a theorem, or a causal model, which can be written down and shared. Their value comes in large part from externalization: they can be criticized, compared against new evidence, revised, and applied to new cases. Text artifacts occupy a similar functional role in model systems: they are external representations that encode behavior-relevant abstractions. Updating them is \u201clearning\u201d in the same sense that revising a scientific theory in light of new evidence is learning.\nA Call for Good Research on the Text Layer\nI think text optimization deserves the same kind of community we built around weight optimization, and I wish there were more high-quality research here. Several directions seem ripe for foundational work in the very near future:\nTheoretical analysis of the text layer. Generally, text space gives a much better prior than weight space, and cleanly formalizing this observation could be very useful for guiding practice. This old-ish paper is a promising start applying PAC-Bayes to prompts in 2023-level models, which seems very much worth revisiting with the latest generation of models and text artifacts.\nBetter evals. CL-bench is an initial attempt at a proper eval for context learning, and agentic benchmarks like TerminalBench-2 have partly become a battleground for harnesses. Still, we need more benchmarks that isolate useful properties of the text layer, controlling for weight capability while flagging the weird new classes of overfitting and cheating that the text layer enables.\n\u201cArchitecture research\u201d, i.e., understanding the design space. There are so many proposed designs for the text layer, from the instruction hierarchy, DSPy programs, agent skills, OpenClaw-style agents, and the massive number of memory system designs. There is a sense in which these are all points on one huge design space, but we don\u2019t have a good way to talk about that space, let alone compare different points in it.\nHCI research on how to elicit input from humans to optimize the text layer, and how to present the system\u2019s internal state back to users for inspection and revision. I think figuring out the right ways to interact with the text layer can make it economically viable to routinely have top domain experts sit down for \u201cverbal fine-tuning\u201d sessions with AI systems. I don\u2019t know of a good example of work in this direction, but this paper of mine had essentially this motivation, though it worked in a very limited domain.\nSeriously scaling up text optimization, including establishing scaling laws. The compute budgets currently allocated to text optimization are orders of magnitude smaller than weight post-training scale. For example, a scaled-up artifact might look like a Wikipedia-scale knowledge/harness layer, optimized from the ground up against measurable model-system performance[3].\n\n\n\nThanks to @lateinteraction @allenainie @chelseabfinn @a1zhang @abeirami for excellent feedback on an earlier draft. This post is a distillation of many conversations with researchers over the past year or so, which I won\u2019t attempt to list here in full.\n[1] This is contested. ProRL and The Art of Scaling RL Compute argue that with the right training recipe, RL can expand reasoning capacity beyond the base model. Personally, I think the truth is somewhere in the middle: RL by design should be able to discover new behaviors, but there\u2019s definitely a strong empirical dependence on the quality of the base model. Either way, the details here don\u2019t matter for the argument I\u2019m making in the post.\n[2] I do see this happen somewhat often, at least more than in weight-space research. Everyone seems to have a strong opinion on what the best system prompt or skill is. This probably has more to do with social media dynamics: \u201cone weird trick to make your model 10x smarter\u201d is much more actionable than any weight-space intervention.\n[3] I\u2019ve started to think this may be a good startup.",
+      "preview_text": "There is a common negative sentiment I observe among ML researchers toward prompting, or more broadly, text optimization. The underlying view seems to be something like \u201creal learning happens in the",
+      "title": "We Should Take Text Optimization More Seriously "
+    },
+    "conversation_id": "2064027464926716154",
+    "created_at": "2026-06-08T16:51:10.000Z",
+    "entities": {
+      "urls": [
+        {
+          "start": 0,
+          "end": 23,
+          "url": "https://t.co/jCgH0doXCQ",
+          "expanded_url": "http://x.com/i/article/2064017981982859264",
+          "display_url": "x.com/i/article/2064\u2026",
+          "status": 500,
+          "unwound_url": "https://x.com/i/article/2064017981982859264"
+        }
+      ]
+    },
+    "edit_history_tweet_ids": [
+      "2064027464926716154"
+    ],
+    "text": "https://t.co/jCgH0doXCQ",
+    "author_id": "837865857606795264"
+  },
+  "posts": [
+    {
+      "id": "2064027464926716154",
+      "created_at": "2026-06-08T16:51:10.000Z",
+      "author_id": "837865857606795264",
+      "article": {
+        "preview_text": "There is a common negative sentiment I observe among ML researchers toward prompting, or more broadly, text optimization. The underlying view seems to be something like \u201creal learning happens in the",
+        "entities": {
+          "mentions": [
+            {
+              "start": 817,
+              "end": 827,
+              "username": "fortelabs"
+            },
+            {
+              "start": 828,
+              "end": 838,
+              "username": "ivanhzhao"
+            },
+            {
+              "start": 839,
+              "end": 846,
+              "username": "kepano"
+            },
+            {
+              "start": 10,
+              "end": 26,
+              "username": "lateinteraction"
+            },
+            {
+              "start": 27,
+              "end": 38,
+              "username": "allenainie"
+            },
+            {
+              "start": 39,
+              "end": 52,
+              "username": "chelseabfinn"
+            },
+            {
+              "start": 53,
+              "end": 61,
+              "username": "a1zhang"
+            },
+            {
+              "start": 62,
+              "end": 71,
+              "username": "abeirami"
+            },
+            {
+              "start": 72,
+              "end": 86,
+              "username": "qizhengz_alex"
+            }
+          ],
+          "urls": [
+            {
+              "text": "https://yoonholee.com/blog/2026/we-should-take-text-optimization-more-seriously/"
+            },
+            {
+              "text": "https://arxiv.org/abs/2508.00614"
+            },
+            {
+              "text": "https://arxiv.org/abs/2201.11903"
+            },
+            {
+              "text": "https://arxiv.org/abs/2001.08361"
+            },
+            {
+              "text": "https://arxiv.org/abs/2507.19457"
+            },
+            {
+              "text": "https://dl.acm.org/doi/abs/10.1145/3654777.3676362"
+            },
+            {
+              "text": "https://mitpress.mit.edu/9780262081535/artificial-intelligence/"
+            },
+            {
+              "text": "https://hippocraticai.com/polaris-3/"
+            },
+            {
+              "text": "https://arxiv.org/abs/2603.28052"
+            },
+            {
+              "text": "https://arxiv.org/abs/2603.16856"
+            },
+            {
+              "text": "https://github.com/stanfordnlp/dspy"
+            },
+            {
+              "text": "https://www.anthropic.com/index/claudes-constitution"
+            },
+            {
+              "text": "https://arxiv.org/abs/2206.07682"
+            },
+            {
+              "text": "https://arxiv.org/abs/2005.11401"
+            },
+            {
+              "text": "https://arxiv.org/abs/2406.16218"
+            },
+            {
+              "text": "https://trajectory.ai/field-notes/the-sovereign-path-for-continual-agent-learning-early-results-on-harvey-lab-with-nvidia-nemotron"
+            },
+            {
+              "text": "https://arxiv.org/abs/2402.10949"
+            },
+            {
+              "text": "https://arxiv.org/abs/2005.11401"
+            },
+            {
+              "text": "https://arxiv.org/abs/2602.12275"
+            },
+            {
+              "text": "https://obsidian.md/"
+            },
+            {
+              "text": "https://www.notion.com/"
+            },
+            {
+              "text": "https://arxiv.org/abs/2602.21193"
+            },
+            {
+              "text": "https://cacm.acm.org/research/computer-science-as-empirical-inquiry/"
+            },
+            {
+              "text": "https://arxiv.org/abs/2603.28052"
+            },
+            {
+              "text": "https://yoonholee.com/blog/2026/we-should-take-text-optimization-more-seriously/"
+            },
+            {
+              "text": "https://openai.com/index/the-instruction-hierarchy/"
+            },
+            {
+              "text": "https://arxiv.org/abs/2603.28052"
+            },
+            {
+              "text": "https://arxiv.org/abs/2210.10760"
+            },
+            {
+              "text": "https://arxiv.org/abs/2504.21798"
+            },
+            {
+              "text": "https://arxiv.org/abs/2203.11171"
+            },
+            {
+              "text": "https://arxiv.org/abs/2310.08560"
+            },
+            {
+              "text": "https://openai.com/index/deliberative-alignment/"
+            },
+            {
+              "text": "https://arxiv.org/abs/2303.11366"
+            },
+            {
+              "text": "https://www.tbench.ai/leaderboard/terminal-bench/2.0"
+            },
+            {
+              "text": "https://arxiv.org/abs/2512.07611"
+            },
+            {
+              "text": "https://arxiv.org/html/2601.19897v1"
+            },
+            {
+              "text": "https://web.mit.edu/sts.035/www/PDFs/think.pdf"
+            },
+            {
+              "text": "https://arxiv.org/abs/2307.11760"
+            },
+            {
+              "text": "https://arxiv.org/abs/2504.15965"
+            },
+            {
+              "text": "https://arxiv.org/abs/2310.03957"
+            },
+            {
+              "text": "https://alexzhang13.github.io/blog/2026/mgh/"
+            },
+            {
+              "text": "https://arxiv.org/abs/2510.13786"
+            },
+            {
+              "text": "https://cursor.com/cursorbench"
+            },
+            {
+              "text": "https://arxiv.org/abs/2210.03629"
+            },
+            {
+              "text": "https://arxiv.org/abs/2103.08493"
+            },
+            {
+              "text": "https://arxiv.org/abs/2104.08691"
+            },
+            {
+              "text": "https://arxiv.org/abs/2512.24601"
+            },
+            {
+              "text": "https://arxiv.org/abs/2601.16443"
+            },
+            {
+              "text": "https://arxiv.org/abs/2604.11806"
+            },
+            {
+              "text": "https://arxiv.org/abs/2603.28052"
+            },
+            {
+              "text": "https://arxiv.org/abs/2403.17031"
+            },
+            {
+              "text": "https://openreview.net/forum?id=4OsgYD7em5"
+            },
+            {
+              "text": "https://arxiv.org/abs/2505.24864"
+            },
+            {
+              "text": "https://arxiv.org/abs/2602.03587"
+            },
+            {
+              "text": "https://github.com/openclaw/openclaw"
+            },
+            {
+              "text": "https://www.alice.id.tue.nl/references/clark-chalmers-1998.pdf"
+            },
+            {
+              "text": "https://arxiv.org/abs/2309.03409"
+            },
+            {
+              "text": "https://bair.berkeley.edu/blog/2024/02/18/compound-ai-systems/"
+            },
+            {
+              "text": "https://arxiv.org/abs/2209.15189"
+            },
+            {
+              "text": "https://arxiv.org/abs/2604.25727"
+            },
+            {
+              "text": "https://arxiv.org/abs/2510.13786"
+            },
+            {
+              "text": "https://arxiv.org/abs/2012.15723"
+            },
+            {
+              "text": "https://arxiv.org/abs/2005.14165"
+            },
+            {
+              "text": "https://x.com/ClaudeDevs/status/2060044853279617150"
+            },
+            {
+              "text": "https://arxiv.org/abs/2605.12484"
+            },
+            {
+              "text": "https://github.com/letta-ai/context-constitution"
+            },
+            {
+              "text": "https://arxiv.org/html/2604.14116v1"
+            },
+            {
+              "text": "https://arxiv.org/abs/2205.11916"
+            },
+            {
+              "text": "https://agentskills.io/home"
+            },
+            {
+              "text": "https://arxiv.org/abs/2507.19457"
+            },
+            {
+              "text": "https://mitpress.mit.edu/9780262082310/cognition-in-the-wild/"
+            },
+            {
+              "text": "https://arxiv.org/abs/2603.08640"
+            }
+          ]
+        },
+        "title": "We Should Take Text Optimization More Seriously ",
+        "cover_media": "3_2064025441674084352",
+        "plain_text": "Cross-posted from https://yoonholee.com/blog/2026/we-should-take-text-optimization-more-seriously/\nThere is a common negative sentiment I observe among ML researchers toward prompting, or more broadly, text optimization. The underlying view seems to be something like \u201creal learning happens in the weights.\u201d By text optimization, I broadly mean methods that modify the mutable text layer around a model: prompts, context, filesystem state, memory, retrieval databases, and model harnesses. I think this layer should be taken more seriously by the broader research community. I\u2019ll argue for text optimization on three counts:\nText optimization is a legitimate update mechanism. It holds the same functional role as gradient-based weight optimization: changing future behavior in response to new information.\nText optimization is much more sample-efficient than weight optimization, particularly in the low-data regime. Relatively short, high-likelihood text has low description length, giving text optimization a favorable inductive bias.\nText optimization enables a new scaling axis: update-time compute. Reflective text optimization lets a system spend more compute learning from a single experience, the way inference-time scaling lets a model spend more on a single input.\nLearning Outside the Weights\nDeployed AI systems are no longer just a parameter vector queried in isolation; they are complex, stateful machines with many moving parts, the weights being just one of them. Once this whole system is the object of study, learning can mean changing any behavior-conditioning state. Weights are one state, typically updated through gradient-based optimization. Prompts, memories, retrieval indices, and harness code are others, with different costs, capacities, and failure modes. The important question is which update target is the most appropriate for a given piece of information.\nText artifacts have a useful inductive bias. The usual Kolmogorov-style compression intuition applies: short specifications that explain many cases are more likely to capture real structure than long lists of exceptions. In this sense, good text updates are compact patches to a pretrained world prior. Empirically, text optimization is orders of magnitude more sample-efficient in the low-data regime (1, 2, 3). Because of this, a recurring pattern at scale is to use the text layer to elicit and compose existing capabilities in the model, and then distill this into the weights over time (Anthropic, OpenAI, Cursor, Letta, Hippocratic AI, Harvey).\nUpdate-Time Compute: A New Scaling Axis\nThe text layer enables reflective learning (Reflexion, Trace, GEPA, Meta-Harness): an optimization loop grounded in text can externalize its own hypotheses about how it should change. This makes hypothesis testing scalably useful at update time: systems can propose multiple ideas in text and test them against new evidence before accepting or rejecting them, the way a scientist might propose and test multiple theories before settling on one. See e.g. Appendix A.2 of Meta-Harness for a real example of such hypothesis-testing behavior. SGD can\u2019t cheaply do this; its single running parameter vector commits each update, with no easy way to fork and compare.\nI think the core promise of text optimization is that we can scale \u201cupdate-time compute\u201d: just as inference-time scaling lets a model spend more compute to solve a single instance, reflective text optimization lets a system spend more compute learning from a single experience. A failed trajectory can be reread, diagnosed, abstracted, tested against candidate revisions, and then converted into a proposed update. Text-space learning is therefore especially useful when (1) failures are expensive, (2) the desired behavior is hard to specify, or (3) there is abundant offline trace data that does not work well otherwise (SFT or offline RL).\nThe Strongest Case for Weights, and My Counterpoints\nThere are some compelling arguments for keeping learning in the weights. For each, I will state my strongest interpretation of the argument, and then respond in rebuttal style.\nWeights give amortization. Once a behavior is trained into the model, the system no longer has to carry the full specification of that behavior in every context window. The context window, in contrast, is a finite resource.\nI think this is a strong argument for many types of information to ultimately belong in weights. I agree; for example, LLMs should not need a long prompt to explain basic arithmetic for every request. Even here, though, many pieces of useful information are not stable or general enough to be worth the cost of amortization: user preferences, API contracts, or facts that frequently change. I think the right framing is as a routing problem: weights are where stable, repeatedly useful information belongs, while text is where information stays while it is volatile, local, auditable, or not yet trusted enough to amortize.\nAdditionally, good text-layer systems do not dump all available information into the context window. They implement progressive disclosure of information, where the system retrieves and conditions on relevant information as needed (RAG, MemGPT, RLM, Meta-Harness). With the right organization, it\u2019s fairly straightforward to implicitly condition on a much larger context than the model\u2019s input window. When you know what to include, you can pack a surprising amount of information into context. 1% of a 1M-token context is 10K tokens, which is more than three copies of this post; hopefully enough that reading it meaningfully shifts a reader\u2019s mental model.\nEven if some information is worth amortizing into weights, it need not be amortized immediately. I\u2019ve come to view the text layer as a kind of flexible \u201cstaging ground\u201d for information that may eventually be distilled into weights. This layer makes it very easy to test and refine behavioral hypotheses before committing them to the model. The mechanics of how to evolve the text layer and use it to improve the weights over time is an interesting open research question, whether through direct distillation, (1, 2, 3, 4), synthetic data generation (5, 6, 7, 8), or modifying the training loop itself (9, 10).\nTraining the weights creates new neural circuits. Text optimization only ever elicits existing behavior from a fixed set of weights, and given those weights, there is a ceiling on what the text layer can reach.\nAgreed that a weak model gives text optimization very little to work with. However, such a ceiling is not unique to text optimization, and this argument has even been made against RL.[1] Text optimization does not need to create completely new latent capabilities to be useful. Many deployed systems are bottlenecked not by whether the model could in principle perform a certain behavior primitive, but by whether the system can elicit and compose that behavior reliably (mgh). The practical question is therefore how much useful headroom remains between the model\u2019s latent capabilities and the behavior the deployed system actually exhibits.\nEmpirically, the headroom for improving the text layer is significant. It shows up across retrieval-augmented QA, test-time scaling, and tool-use agents: fixed-model behavior improves when we change the context or execution environment rather than the weights (1, 2, 3, 4, 5). Scale also appears to increase the value of text conditioning: larger models become better at using information supplied at inference time, and some context-conditioned abilities appear only at larger scale (1, 2, 3).\nThe \u201cexistence argument\u201d: the human brain is clearly intelligent. It must be possible to learn by changing weights alone.\nI\u2019d actually make a similar existence argument for text optimization. Look at the collection of all written text (books, papers, code, webpages, etc.): good external representations greatly amplify human intelligence. How much would the quality of our work suffer if we were suddenly cut off from all external text?\nAnyone can change a text artifact and get a seemingly better-looking output. Text optimization is unusually vulnerable to benchmark leakage and folk theories about model psychology.\nFirst, text optimization has been poorly marketed by its early successes. The most visible examples were amusing model quirks like \u201clet\u2019s think step by step\u201d, \u201ctake a deep breath\u201d, \u201cthis is very important to my career\u201d, personas, and threats and tipping. It\u2019s perhaps tempting to conclude that text optimization itself will disappear as newer models become more robust to such tricks. But this confuses a weak early framing of the field with the underlying research problem.\nIt\u2019s very easy to tinker on the text layer: anyone can edit an instruction and declare victory based on cherry-picked outputs.[2] This low barrier to entry makes bad science here common. If anything, I view such immature methodological norms as a strong argument for studying text optimization more rigorously, especially given its practical importance.\nGradient descent is a real optimizer. You can lean on the large literature on optimization, generalization, and convergence to understand how it works. Text optimization is heuristic hill-climbing.\nConvergence theory only guarantees that you will minimize the proxy loss, not that the proxy matches what you actually care about. A stronger optimizer just exploits this gap; the field has largely moved on from theoretical analysis of generalization dynamics to empirical scaling laws and best practices. RL post-training in particular is notoriously finicky and prone to this kind of overfitting (1, 2, 3, 4). In contrast, text-layer edits apply weaker optimization pressure while remaining highly auditable, and in many cases also composable.\nNeural networks are universal function approximators and can represent anything.\nRepresentational capacity is not the right thing to look at; even a two-layer MLP can in principle represent any function, but that doesn\u2019t mean it can learn to do so efficiently or reliably. We should be looking at reachable behavior, i.e., what behaviors are sufficiently high-likelihood under the implicit prior. Harnesses can demonstrably execute behaviors that we wouldn\u2019t expect frozen models to via a single forward pass.\nText artifacts are not portable. They are overfit to one model\u2019s quirks and often break on the next checkpoint.\nThe relevant comparison is with other update artifacts. A text artifact written for one model may fail on another, but a weight delta trained for one architecture is usually not portable at all. Text artifacts are slightly more portable since text still carries meaning across models.\nPerhaps the Pendulum Has Swung Too Far\nThe \u201cweights are the real learning\u201d view is partly a reaction to early AI, when researchers were focused on building systems that could learn by changing their internal parameters. For decades, the dominant picture treated intelligence as explicit symbol manipulation. Newell and Simon\u2019s physical symbol system hypothesis and Haugeland\u2019s GOFAI are canonical examples of this mindset. Neural networks showed that this was too narrow: useful information can clearly live in weights; modern LLMs are the strongest evidence for that claim.\nWe seem to have overcorrected towards viewing weights as the only serious home for knowledge. This is strange when zoomed out because human cognition routinely depends on external artifacts. In Cognition in the Wild, Edwin Hutchins analyzes ship navigation as a cognitive system made of people, instruments, procedures, and external representations. Clark and Chalmers make a related point in The Extended Mind: the boundary of a cognitive system can extend beyond the internal state of a single component. The computer-science version of this lineage runs at least back to Vannevar Bush\u2019s Memex: an external memory organized around associative trails through a personal archive. Modern tools-for-thought systems like Notion and Obsidian are concrete attempts to make external memory part of everyday knowledge work. @fortelabs @ivanhzhao @kepano \nScientific practice is a useful comparison. One of the core goals of science is to construct compact representations of the world, which is aided by private intuitions inside scientists\u2019 heads but not reducible to them. The usual products are crystallized: an abstraction, a theorem, or a causal model, which can be written down and shared. Their value comes in large part from externalization: they can be criticized, compared against new evidence, revised, and applied to new cases. Text artifacts occupy a similar functional role in model systems: they are external representations that encode behavior-relevant abstractions. Updating them is \u201clearning\u201d in the same sense that revising a scientific theory in light of new evidence is learning.\nA Call for Good Research on the Text Layer\nI think text optimization deserves the same kind of community we built around weight optimization, and I wish there were more high-quality research here. Several directions seem ripe for foundational work in the very near future:\nTheoretical analysis of the text layer. Generally, text space gives a much better prior than weight space, and cleanly formalizing this observation could be very useful for guiding practice. This old-ish paper is a promising start applying PAC-Bayes to prompts in 2023-level models, which seems very much worth revisiting with the latest generation of models and text artifacts.\nBetter evals. CL-bench is an initial attempt at a proper eval for context learning, and agentic benchmarks like TerminalBench-2 have partly become a battleground for harnesses. Still, we need more benchmarks that isolate useful properties of the text layer, controlling for weight capability while flagging the weird new classes of overfitting and cheating that the text layer enables.\n\u201cArchitecture research\u201d, i.e., understanding the design space. There are so many proposed designs for the text layer, from the instruction hierarchy, DSPy programs, agent skills, OpenClaw-style agents, and the massive number of memory system designs. There is a sense in which these are all points on one huge design space, but we don\u2019t have a good way to talk about that space, let alone compare different points in it.\nHCI research on how to elicit input from humans to optimize the text layer, and how to present the system\u2019s internal state back to users for inspection and revision. I think figuring out the right ways to interact with the text layer can make it economically viable to routinely have top domain experts sit down for \u201cverbal fine-tuning\u201d sessions with AI systems. I don\u2019t know of a good example of work in this direction, but this paper of mine had essentially this motivation, though it worked in a very limited domain.\nSeriously scaling up text optimization, including establishing scaling laws. The compute budgets currently allocated to text optimization are orders of magnitude smaller than weight post-training scale. For example, a scaled-up artifact might look like a Wikipedia-scale knowledge/harness layer, optimized from the ground up against measurable model-system performance[3].\n\n\n\nThanks to @lateinteraction @allenainie @chelseabfinn @a1zhang @abeirami for excellent feedback on an earlier draft. This post is a distillation of many conversations with researchers over the past year or so, which I won\u2019t attempt to list here in full.\n[1] This is contested. ProRL and The Art of Scaling RL Compute argue that with the right training recipe, RL can expand reasoning capacity beyond the base model. Personally, I think the truth is somewhere in the middle: RL by design should be able to discover new behaviors, but there\u2019s definitely a strong empirical dependence on the quality of the base model. Either way, the details here don\u2019t matter for the argument I\u2019m making in the post.\n[2] I do see this happen somewhat often, at least more than in weight-space research. Everyone seems to have a strong opinion on what the best system prompt or skill is. This probably has more to do with social media dynamics: \u201cone weird trick to make your model 10x smarter\u201d is much more actionable than any weight-space intervention.\n[3] I\u2019ve started to think this may be a good startup."
+      },
+      "entities": {
+        "urls": [
+          {
+            "start": 0,
+            "end": 23,
+            "url": "https://t.co/jCgH0doXCQ",
+            "expanded_url": "http://x.com/i/article/2064017981982859264",
+            "display_url": "x.com/i/article/2064\u2026",
+            "status": 500,
+            "unwound_url": "https://x.com/i/article/2064017981982859264"
+          }
+        ]
+      },
+      "text": "https://t.co/jCgH0doXCQ",
+      "edit_history_tweet_ids": [
+        "2064027464926716154"
+      ],
+      "conversation_id": "2064027464926716154"
+    }
+  ],
+  "users": {
+    "837865857606795264": {
+      "id": "837865857606795264",
+      "name": "Yoonho Lee",
+      "username": "yoonholeee"
+    },
+    "4338481": {
+      "id": "4338481",
+      "name": "Alexis Gallagher",
+      "username": "alexisgallagher"
+    },
+    "367086476": {
+      "id": "367086476",
+      "name": "Timmy Ghiurau",
+      "username": "itzik009"
+    },
+    "881564579158949894": {
+      "id": "881564579158949894",
+      "name": "Augustin C",
+      "username": "augustincnr690"
+    },
+    "2061510787626328064": {
+      "id": "2061510787626328064",
+      "name": "David",
+      "username": "airplaychain"
+    },
+    "16781098": {
+      "id": "16781098",
+      "name": "Jesse Jr Lim (\u6797\u632f\u71ca)",
+      "username": "Jessejrlim"
+    },
+    "14719154": {
+      "id": "14719154",
+      "name": "oso",
+      "username": "osoleve"
+    }
+  },
+  "thread_fetch_error": null
+}
