@@ -35,17 +35,6 @@ Out of scope:
 
 A design insight is worth a note when it changes how someone would build or operate a KB. Observations about what works are worth a log entry on first occurrence and a note when the mechanism is understood. Pure pattern-recording without explanation belongs in a log entry, not a note.
 
-## Key Indexes
-
-- `kb/notes/tags-README.md` — top-level navigation hub: tag READMEs, foundations, evaluation, gaps
-- `kb/notes/links-README.md` — linking methodology: semantics, navigation, contracts
-- `kb/agent-memory-systems/README.md` — curated index of external agent-memory/knowledge systems
-- `kb/reference/README.md` — shipped-system documentation entry point: architecture, type system, operator guide, and ADR navigation
-- `kb/reference/navigation.md` — how agents navigate the KB: `rg` recipes, titles/descriptions, curated indexes, links, connect reports
-- `kb/reference/adr/` — architecture decision records for the shipped Commonplace system
-
-Each tag's curated head is its `<tag>-README.md` (type `tag-readme`), small by type contract. It may declare two validator-enforced frontmatter marks: `complete: true` — the README links every note carrying the tag, so a reader can skip the by-tag `rg` sweep; `covered_by: [children]` — every tagged note also carries a listed child tag, so a reader can trust the typed routing. Maintenance of the marks lives in `kb/types/tag-readme.md` (ADR 026).
-
 ## Vocabulary
 
 Terms needed to understand the project's structure and everyday operations, alphabetical. Each links its full definition.
@@ -97,7 +86,19 @@ Read the target collection's `COLLECTION.md` before writing or connecting artifa
 | `kb/work/` | workshop layer | Holding in-flight investigations, drafts, migration plans, and temporary work that should eventually close or promote durable artifacts. |
 | `kb/types/` | global type surface, not a collection | Looking up shared type specs used across collections. |
 
-For the full navigation model, read `kb/reference/navigation.md`. In short: use `rg` for cheap lexical search, scan titles and descriptions in curated indexes and scoped `rg` listings before opening full files, and follow authored links when local context makes the relationship useful.
+### Navigation
+
+For the full model, read `kb/reference/navigation.md`. In short: use `rg` for cheap lexical search, scan titles and descriptions in curated indexes and scoped `rg` listings before opening full files, and follow authored links when local context makes the relationship useful.
+
+Entry points:
+
+- `kb/notes/tags-README.md` — top-level navigation hub: tag READMEs, foundations, evaluation, gaps
+- `kb/notes/links-README.md` — linking methodology: semantics, navigation, contracts
+- `kb/agent-memory-systems/README.md` — curated index of external agent-memory/knowledge systems
+- `kb/reference/README.md` — shipped-system documentation entry point: architecture, type system, operator guide, and ADR navigation
+- `kb/reference/adr/` — architecture decision records for the shipped Commonplace system
+
+Each tag's curated head is its `<tag>-README.md` (type `tag-readme`), small by type contract. It may declare two validator-enforced frontmatter marks: `complete: true` — the README links every note carrying the tag, so a reader can skip the by-tag `rg` sweep; `covered_by: [children]` — every tagged note also carries a listed child tag, so a reader can trust the typed routing. Maintenance of the marks lives in `kb/types/tag-readme.md` (ADR 026).
 
 ```bash
 # Find notes by description

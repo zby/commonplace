@@ -58,7 +58,7 @@ The agent has no fallback if goals are left unfilled — an empty `## KB Goals` 
 
 ## Relationship to other Commonplace invariants
 
-- The routing table (`## Using the KB` and `## Key Indexes`) is generated from the framework and does not vary per installation.
+- The routing and navigation content (`## Using the KB`, including its Collection Routing and Navigation subsections) is generated from the framework and does not vary per installation.
 - A vocabulary section is optional and project-specific; many installations will not need one.
 - Git and development conventions are framework-shipped but customizable.
 
