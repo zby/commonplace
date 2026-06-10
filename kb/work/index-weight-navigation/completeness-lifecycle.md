@@ -50,6 +50,7 @@ Its properties differ from `complete` in exactly the ways growth punishes:
   
 - **The write obligation transfers instead of lifting.** A new T note must take at least one child tag — taxonomy pressure, the arscontexta cost, but now _explicit and enforced_ rather than a silently decaying prose claim ("there are three kinds of notes here") that nobody checks. The smell to watch: a catch-all child (`T-misc`) makes coverage trivially satisfiable while destroying its routing value.
   
+- **The list itself needs a limit — and here the metric is count, not bytes.** Routing value comes from a reader holding the alternatives in mind at once ("which of these kinds is my X?"); a `covered_by` of 30 children is the flat listing rebuilt one level up, and it slips under the byte gates because a bare list is terse. Validation warns past a soft fan-out (~7 children). No hard fail: the remedy is recursive and editorial — group children under intermediate tags, each with its own README, restoring small fan-out at every level.
 - **Who gains:** targeted lookup gets trustworthy typed routing ("which kind of T is this?"); exhaustive consumers get a recursion guarantee (union the children, each of which is itself `complete`, `covered`, or rg-backed). Who doesn't: connect can still just rg the parent — for flat enumeration the mark adds nothing over the query.
   
 
@@ -99,6 +100,7 @@ A large tag's default end state is _selective head + rg membership + build-time 
 - Does the hub (`tags-README.md`, complete over the set of tag-READMEs) follow the same lifecycle? Its membership grows much more slowly; it plausibly stays complete indefinitely, which is fine — the lifecycle just never fires.
   
 - Should each tag listed in `covered_by` be required to have its own tag-README (the routing link target), or is a bare child tag with rg-only membership acceptable?
+  
 - When entries are trimmed at exit (a), is there value in parking the dropped phrases somewhere (the build tail shows description, not the lost phrase)? Current lean: no — phrases are cheap to rewrite when a child README wants them, and parking creates a stale-phrase store.
   
 
