@@ -87,7 +87,7 @@ A design insight is worth a note when it changes how someone would build or oper
 - `kb/reference/adr/` — architecture decision records for the shipped Commonplace system
 - `kb/reference/link-vocabulary.md` — label catalogue and authoring guidance for `COLLECTION.md` authors (consult when revising outbound rules)
 
-Each tag's curated head is its `<tag>-README.md` (type `tag-readme`), small by type contract. Two validator-enforced frontmatter marks change what a reader may skip: `complete: true` means the README links every note carrying the tag, so the by-tag `rg` sweep is skippable; `covered_by: [children]` means every tagged note also carries a listed child tag, so the typed routing is trustworthy. Maintenance of the marks lives in `kb/types/tag-readme.md` (ADR 026).
+Each tag's curated head is its `<tag>-README.md` (type `tag-readme`), small by type contract. It may declare two validator-enforced frontmatter marks: `complete: true` — the README links every note carrying the tag, so a reader can skip the by-tag `rg` sweep; `covered_by: [children]` — every tagged note also carries a listed child tag, so a reader can trust the typed routing. Maintenance of the marks lives in `kb/types/tag-readme.md` (ADR 026).
 
 ## Vocabulary
 
