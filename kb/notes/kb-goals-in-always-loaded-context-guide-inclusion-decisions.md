@@ -29,9 +29,7 @@ The [control-plane model](./agents-md-should-be-organized-as-a-control-plane.md)
 | Concern | Per-installation or universal? |
 |---|---|
 | Purpose — what decisions/actions the KB supports | Per-installation |
-| Domain — what the KB is about (scope boundary) | Per-installation |
-| Include — what types of knowledge belong | Per-installation |
-| Exclude — what doesn't belong despite seeming relevant | Per-installation |
+| Scope — the domain boundary, with in-scope and out-of-scope lists | Per-installation |
 | Quality bar — domain-specific "good enough" standards | Per-installation |
 | Routing, type system, writing conventions, link semantics | Universal (framework-provided) |
 
@@ -41,11 +39,7 @@ Only the per-installation rows require human input. The universal rows are shipp
 
 **Purpose** — Start from the users, not the domain. Who will use this KB? What are they trying to do better? A good purpose statement names the decisions or actions the KB supports: "supports the API team in making design decisions about the payment service" is actionable; "stores knowledge about payments" is not.
 
-**Domain** — Draw a scope boundary. Everything inside is in scope, everything outside is not. Be specific enough that an agent can decide "does this belong?" without asking. Name adjacent domains and clarify whether they're in or out: "adjacent systems (auth, billing) are in scope only where they interact with payments."
-
-**Include** — What types of knowledge belong here? Design decisions, failure analysis, integration patterns, operational procedures? This section is less critical than Exclude because the routing table already covers structural placement.
-
-**Exclude** — The most valuable subsection. Scope creep is the default failure mode of a KB — every piece of knowledge looks relevant in isolation. Name specific things that seem relevant but don't belong: "business rules live in the product wiki, not here." "General distributed systems theory is out of scope unless it directly informs a specific design decision." The Exclude list is what makes the Include list meaningful.
+**Scope** — Draw a boundary an agent can apply without asking: a domain statement naming adjacent domains and whether they're in or out ("adjacent systems (auth, billing) are in scope only where they interact with payments"), made operational by an in-scope list and an out-of-scope list. The out-of-scope list is the most valuable part: scope creep is the default failure mode of a KB — every piece of knowledge looks relevant in isolation — so naming what seems relevant but doesn't belong ("business rules live in the product wiki, not here") is what makes the in-scope list meaningful. The in-scope list is less critical because the routing table already covers structural placement.
 
 **Quality bar** — When is a piece of knowledge worth a note vs. a log entry vs. nothing? A writing guide says how to write well; this subsection says when to write at all. Domain-specific standards: "a design decision is worth a note when it affects more than one endpoint; single-endpoint details belong in code comments."
 

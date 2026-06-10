@@ -37,7 +37,7 @@ Most operations are things you ask the agent to do. Each entry below shows what 
 
 *What you get.* A new markdown file under `kb/notes/` with frontmatter, a claim-shaped title, and inbound and outbound links to related notes.
 
-*Limitations.* The agent's sense of "what's worth a note" depends on the `## KB Goals and Scope` section in `AGENTS.md`. The `Exclude` subsection is load-bearing; without it, scope creeps.
+*Limitations.* The agent's sense of "what's worth a note" depends on the `## KB Goals and Scope` section in `AGENTS.md`. The out-of-scope list is load-bearing; without it, scope creeps.
 
 ### Ingest a source
 

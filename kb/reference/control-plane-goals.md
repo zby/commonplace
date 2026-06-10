@@ -11,12 +11,10 @@ This note describes how KB goals live in always-loaded context in the shipped sy
 
 ## Where goals live in the shipped control plane
 
-The control-plane file the system ships is `AGENTS.md`. KB goals live in a dedicated `## KB Goals and Scope` section near the top, structured into five subsections:
+The control-plane file the system ships is `AGENTS.md`. KB goals live in a dedicated `## KB Goals and Scope` section near the top, structured into three subsections:
 
 - **Purpose** — what decisions or actions the KB supports
-- **Domain** — scope boundary
-- **Include** — types of knowledge that belong
-- **Exclude** — types of knowledge that don't belong despite seeming relevant
+- **Scope** — the domain boundary, made operational by in-scope and out-of-scope lists (the out-of-scope list is the guard against scope creep)
 - **Quality bar** — domain-specific "good enough" standards
 
 This placement is load-bearing. `AGENTS.md` is loaded on every agent invocation, including forked skill contexts (`context: fork`), so the goals are in context for every write decision without any tool call. The section sits alongside the routing table, vocabulary, git conventions, and other invariants the agent needs from turn one.
@@ -26,9 +24,7 @@ This placement is load-bearing. `AGENTS.md` is loaded on every agent invocation,
 | Concern | Per-installation or framework? | Where it lives |
 |---|---|---|
 | Purpose | Per-installation | `AGENTS.md` `## KB Goals and Scope` (filled in by the practitioner at install time) |
-| Domain | Per-installation | same |
-| Include | Per-installation | same |
-| Exclude | Per-installation | same |
+| Scope (boundary + in/out lists) | Per-installation | same |
 | Quality bar | Per-installation | same |
 | Routing table | Framework | `AGENTS.md` `## Using the KB`, generated/templated |
 | Type system | Framework | `kb/types/` plus collection-local `kb/*/types/` directories with schemas and templates |
@@ -46,7 +42,7 @@ Only the per-installation rows require human input. Framework rows are shipped f
 - A stock Skills and Commands section listing the Commonplace-provided skills
 - `{{project_name}}` placeholders that `init_project` substitutes with the directory name
 
-The five-subsection layout in the template matches the structure the generated file expects, so the scaffold is self-demonstrating: the placeholder text shows the exact shape the practitioner is editing toward.
+The three-subsection layout in the template matches the structure the generated file expects, so the scaffold is self-demonstrating: the placeholder text shows the exact shape the practitioner is editing toward.
 
 ## The install-time fill-in flow
 

@@ -14,21 +14,21 @@ The Commonplace repo is itself a knowledge base — it uses its own knowledge sy
 
 Support decisions about KB architecture, type systems, writing quality, context engineering, and knowledge organization — made by agents and maintainers working on Commonplace or on KBs built with it.
 
-### Domain
+### Scope
 
-Agent-operated knowledge base methodology: how to structure, write, connect, validate, review, and maintain knowledge artifacts for consumption by LLM agents. Adjacent topics (learning theory, cognitive science, software architecture) are in scope only where they directly inform KB design decisions.
+Agent-operated knowledge base methodology: how to structure, write, connect, validate, review, and maintain knowledge artifacts for consumption by LLM agents.
 
-### Include
+In scope:
 
 - Design decisions about KB methodology (type systems, linking, indexing, review)
 - Context engineering theory (distillation, constraining, codification)
 - Operational patterns (writing workflows, validation, maintenance)
 - Evaluations and comparisons with external knowledge systems
 
-### Exclude
+Out of scope:
 
 - Application-specific KB content (belongs in consuming projects)
-- General software engineering unless it informs KB methodology
+- General software engineering, learning theory, or cognitive science unless it directly informs KB design decisions
 - Raw logs without analysis (use `kb/log.md`)
 
 ### Quality bar
