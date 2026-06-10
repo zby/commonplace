@@ -91,19 +91,20 @@ Each tag's curated head is its `<tag>-README.md` (type `tag-readme`), small by t
 
 ## Vocabulary
 
-Terms needed to understand the project's structure and everyday operations. Each links its full definition.
+Terms needed to understand the project's structure and everyday operations, alphabetical. Each links its full definition.
 
-- **Collection** — a `kb/` subtree whose root contains `COLLECTION.md`; that file is the local authoring and routing contract for artifacts in the subtree. See `kb/reference/definitions/collection.md`.
-- **Register** — one of three content modes (theoretical, descriptive, prescriptive) that determines a collection's quality goal, title conventions, and linking rules. See `kb/notes/definitions/register.md`.
-- **Workshop** — a named workspace for work-in-flight documents, under `kb/work/<workshop-name>/`. Value is consumed rather than accumulated: a finished workshop produces library artifacts (notes, ADRs) and is deleted. See `kb/notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md`.
-- **Distillation** — extracting a use-shaped artifact from a larger body of material for a particular consumer (notes from sources, instructions from notes). Distinct from ML knowledge distillation. See `kb/notes/definitions/distillation.md`.
-- **Constraining** — narrowing the space of valid interpretations an artifact admits — from writing a convention up to committing to code. Orthogonal to distillation. See `kb/notes/definitions/constraining.md`.
 - **Codification** — the far end of constraining, where natural language crosses into a symbolic artifact (code, schema, grammar) with formal semantics. See `kb/notes/definitions/codification.md`.
-- **Frontloading** — pre-computing parts of an instruction whose inputs are already known (at build, install, or session start) and inserting the result, so the consuming call's context carries the answer instead of the work. See `kb/notes/frontloading-spares-execution-context.md`.
-- **Context engineering** — getting the right knowledge into a bounded context at the right time: routing, loading, scoping, maintenance. See `kb/notes/definitions/context-engineering.md`.
+- **Collection** — a `kb/` subtree whose root contains `COLLECTION.md`; that file is the local authoring and routing contract for artifacts in the subtree. See `kb/reference/definitions/collection.md`.
 - **Commonplace** — the name of this KB and framework. Capitalize it in prose; lowercase only in literal identifiers (`commonplace-*`, `llm-commonplace`, `src/commonplace/`, `kb/commonplace/`).
+- **Constraining** — narrowing the space of valid interpretations an artifact admits — from writing a convention up to committing to code. Orthogonal to distillation. See `kb/notes/definitions/constraining.md`.
+- **Context engineering** — getting the right knowledge into a bounded context at the right time: routing, loading, scoping, maintenance. See `kb/notes/definitions/context-engineering.md`.
+- **Distillation** — extracting a use-shaped artifact from a larger body of material for a particular consumer (notes from sources, instructions from notes). Distinct from ML knowledge distillation. See `kb/notes/definitions/distillation.md`.
+- **Frontloading** — pre-computing parts of an instruction whose inputs are already known (at build, install, or session start) and inserting the result, so the consuming call's context carries the answer instead of the work. See `kb/notes/frontloading-spares-execution-context.md`.
+- **Register** — one of three content modes (theoretical, descriptive, prescriptive) that determines a collection's quality goal, title conventions, and linking rules. See `kb/notes/definitions/register.md`.
+- **System-definition artifact** — a retained artifact the system consumes with binding force: instruction, enforcement, routing, validation, or configuration (skills, schemas, COLLECTION.md files, validators). Contrast a knowledge artifact, consumed as evidence or advice that informs without binding. See `kb/notes/definitions/system-definition-artifact.md`.
+- **Workshop** — a named workspace for work-in-flight documents, under `kb/work/<workshop-name>/`. Value is consumed rather than accumulated: a finished workshop produces library artifacts (notes, ADRs) and is deleted. See `kb/notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md`.
 
-The specialized vocabulary for classifying external memory systems (retained artifact, operative part, storage substrate, representational form, lineage, behavioral authority, knowledge/system-definition artifact) is not needed for ordinary work — it lives in `kb/notes/artifact-analysis-README.md` and is loaded by the review skill and type spec that use it.
+The specialized vocabulary for classifying external memory systems (retained artifact, operative part, storage substrate, representational form, lineage, behavioral authority, knowledge artifact) is not needed for ordinary work — it lives in `kb/notes/artifact-analysis-README.md` and is loaded by the review skill and type spec that use it.
 
 ## Development
 
