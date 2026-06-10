@@ -1,10 +1,8 @@
 ---
 description: Continual learning splits into knowledge accumulation (solved by ordinary data engineering — DBs, files, vector stores, RAG) and behaviour change (the open problem). Behaviour change depends on behavioral authority, with distributed-parametric updates expensive and readable artifacts cheap but under-addressed
 type: kb/types/note.md
-traits:
-  - title-as-claim
-tags:
-  - learning-theory
+traits: [title-as-claim]
+tags: [learning-theory, deploy-time-learning]
 status: current
 ---
 

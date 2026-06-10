@@ -39,4 +39,4 @@ For the live Commonplace repo's current type inventory and migration summary, se
 - [type-system](./type-system-README.md) — sub-area: why documents have types, their roles, and how structured writing improves quality
 - [tags](./tags-README.md) — the document system is infrastructure for the KB; architecture decisions about files-not-database and context loading depend on document structure
 - [links](./links-README.md) — [title-as-claim](./title-as-claim-enables-traversal-as-reasoning.md) bridges both areas: it's a writing convention that enables link semantics
-- [learning-theory](./learning-theory-index.md) — the type ladder instantiates the constraining gradient for documents
+- [learning-theory](./learning-theory-README.md) — the type ladder instantiates the constraining gradient for documents

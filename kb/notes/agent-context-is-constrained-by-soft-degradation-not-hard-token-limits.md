@@ -2,7 +2,7 @@
 description: Agent context is bounded by silent reliability degradation across volume, complexity, and relevance/interference, not just by provider token limits
 type: kb/types/note.md
 traits: [has-external-sources, title-as-claim]
-tags: [learning-theory, foundations]
+tags: [learning-theory, foundations, deploy-time-learning]
 status: current
 ---
 

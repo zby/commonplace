@@ -2,7 +2,7 @@
 description: "Memory design needs operational policy axes (capture, derivation, activation, authority assignment, lifecycle, evaluation) on top of substrate, form, lineage, and behavioral authority"
 type: kb/types/note.md
 traits: [has-comparison, has-external-sources, title-as-claim]
-tags: [agent-memory, context-engineering, learning-theory]
+tags: [agent-memory, context-engineering, learning-theory, artifact-analysis]
 status: seedling
 ---
 

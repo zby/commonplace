@@ -2,7 +2,7 @@
 description: "Retired note kept as a backlink target; its general memory-quality claim and KB-specific ingress claim now live in narrower successor notes."
 type: kb/types/note.md
 traits: [title-as-claim]
-tags: [learning-theory, foundations]
+tags: [learning-theory, foundations, deploy-time-learning]
 status: outdated
 ---
 

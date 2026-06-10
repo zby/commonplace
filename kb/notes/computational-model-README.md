@@ -8,11 +8,11 @@ status: current
 
 # Computational model
 
-What kind of "programs" LLM instructions are, and what programming-language concepts — scoping, homoiconicity, partial evaluation, typing — illuminate their behavior. Where [learning-theory](./learning-theory-index.md) covers how systems learn and [tags](./tags-README.md) covers how knowledge bases are operated, this index covers the computational properties of the medium itself and the scheduling architecture that follows from context scarcity.
+What kind of "programs" LLM instructions are, and what programming-language concepts — scoping, homoiconicity, partial evaluation, typing — illuminate their behavior. Where [learning-theory](./learning-theory-README.md) covers how systems learn and [tags](./tags-README.md) covers how knowledge bases are operated, this index covers the computational properties of the medium itself and the scheduling architecture that follows from context scarcity.
 
 ## Foundations
 
-- [agentic-systems-interpret-underspecified-instructions](./agentic-systems-interpret-underspecified-instructions.md) — core framing: LLM instructions are distinguished by underspecified semantics and execution indeterminism; also foundational to [learning-theory](./learning-theory-index.md)
+- [agentic-systems-interpret-underspecified-instructions](./agentic-systems-interpret-underspecified-instructions.md) — core framing: LLM instructions are distinguished by underspecified semantics and execution indeterminism; also foundational to [learning-theory](./learning-theory-README.md)
 - [context-efficiency-is-the-central-design-concern-in-agent-systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — why context is the scarce resource; cost has two dimensions (volume and complexity) that drive the mechanisms below
 - [agent-context-is-constrained-by-soft-degradation-not-hard-token-limits](./agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md) — usable context is a task-dependent degradation surface, not raw window size; volume, complexity, and interference are its dimensions
 - [bounded-context-orchestration-model](./bounded-context-orchestration-model.md) — formalises orchestration as a symbolic scheduler driving bounded LLM calls through a select/call loop with explicit state update
@@ -80,7 +80,7 @@ These notes are dual-tagged with [LLM interpretation errors](./llm-interpretatio
 ## Related Tags
 
 - [llm-interpretation-errors](./llm-interpretation-errors-README.md) — error correction theory, oracle hardening, and reliability dimensions; explains *why* the scheduling architecture works
-- [learning-theory](./learning-theory-index.md) — how systems learn through constraining, codification, distillation; the computational model explains *what kind of programs* these mechanisms operate on
+- [learning-theory](./learning-theory-README.md) — how systems learn through constraining, codification, distillation; the computational model explains *what kind of programs* these mechanisms operate on
 - [tags](./tags-README.md) — practical architecture that applies these computational properties; frontloading and indirection cost are PL concepts applied to KB instructions
 
 ---

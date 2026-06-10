@@ -2,7 +2,7 @@
 description: "Brainstorm on learning reusable review gates from accepted note edits: mine candidate gates from before/after diffs, store them atomically, and load a bounded subset into future reviews"
 type: kb/types/note.md
 traits: []
-tags: [kb-maintenance, learning-theory, context-engineering]
+tags: [kb-maintenance, learning-theory, context-engineering, deploy-time-learning]
 status: speculative
 ---
 

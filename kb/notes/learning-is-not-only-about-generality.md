@@ -3,7 +3,7 @@ description: Per Simon, any capacity change is learning; accumulation is the mos
 type: kb/types/note.md
 traits: [has-external-sources, title-as-claim]
 status: current
-tags: [learning-theory]
+tags: [learning-theory, deploy-time-learning]
 ---
 
 # Learning is not only about generality

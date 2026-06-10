@@ -44,6 +44,8 @@ rg -l '^tags:.*\bTAG\b' kb/notes/ --glob '*.md' \
 
 The `xargs -r` guard matters: a tag matching zero files would otherwise make `rg` run with no path arguments and search the whole repo.
 
+One known blind spot: the by-tag pattern only matches the corpus-standard inline form (`tags: [a, b]`); a note using block-style YAML tags is invisible to it (the validator's checks parse YAML and are not affected). Keep tags inline when authoring.
+
 By keyword or whole collection — descriptions under any scope:
 
 ```bash

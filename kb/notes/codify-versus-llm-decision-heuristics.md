@@ -2,7 +2,7 @@
 description: Four lenses on the codify-vs-LLM decision — spec completeness, oracle strength, interpretation space, pattern stability — collected from across the KB, with evidence they come apart at the edges
 type: kb/types/note.md
 traits: []
-tags: [learning-theory]
+tags: [learning-theory, constraining]
 status: current
 ---
 

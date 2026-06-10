@@ -2,7 +2,7 @@
 description: Ephemeral computation — discarding generated artifacts after use — trades accumulation for simplicity, making it the inverse of codification
 type: kb/types/note.md
 traits: [title-as-claim]
-tags: [learning-theory]
+tags: [learning-theory, artifact-analysis]
 status: current
 ---
 

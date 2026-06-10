@@ -2,7 +2,7 @@
 description: Artifact analysis records retained behavior-shaping artifacts by storage substrate, representational form, lineage, and behavioral authority so review evidence, invalidation, and rollback follow how artifacts actually act
 type: kb/types/note.md
 traits: [has-comparison]
-tags: [learning-theory]
+tags: [learning-theory, artifact-analysis]
 status: current
 ---
 

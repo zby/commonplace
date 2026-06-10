@@ -16,6 +16,6 @@ Agent memory notes treat memory as part of agent architecture, not just storage.
 
 ## Related Tags
 
-- [Learning theory](./learning-theory-index.md) - memory only matters when retained artifacts change future behavior
+- [Learning theory](./learning-theory-README.md) - memory only matters when retained artifacts change future behavior
 - [Computational model](./computational-model-README.md) - agent memory is loaded through bounded calls and scheduling decisions
 - [Related systems](../agent-memory-systems/README.md) - external implementations and comparisons that expose memory-system design tradeoffs

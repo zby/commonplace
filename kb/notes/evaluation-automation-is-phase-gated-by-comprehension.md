@@ -2,7 +2,7 @@
 description: Optimization loops require manual error analysis and judge calibration before automation can improve behavior rather than just score
 type: kb/types/note.md
 traits: [has-external-sources, title-as-claim]
-tags: [learning-theory, llm-interpretation-errors, evaluation]
+tags: [learning-theory, llm-interpretation-errors, evaluation, deploy-time-learning]
 status: seedling
 ---
 

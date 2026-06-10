@@ -1,7 +1,7 @@
 ---
 description: Flat memory predicts three cross-contamination failures — search pollution, identity scatter, insight trapping — testable via an observation protocol against real agent systems
 type: kb/types/note.md
-tags: [learning-theory]
+tags: [learning-theory, agent-memory]
 status: speculative
 traits: [title-as-claim]
 ---

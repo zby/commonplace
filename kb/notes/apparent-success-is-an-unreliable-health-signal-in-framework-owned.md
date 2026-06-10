@@ -2,7 +2,7 @@
 description: When framework-owned tool loops recover from broken tools via agent workarounds, final success stops being a reliable signal that the underlying scripts and workflows are healthy
 type: kb/types/note.md
 traits: [title-as-claim]
-tags: [computational-model, kb-maintenance, learning-theory, observability, tool-loop]
+tags: [computational-model, kb-maintenance, learning-theory, observability, tool-loop, deploy-time-learning]
 status: seedling
 ---
 

@@ -2,7 +2,7 @@
 description: Fixed artifacts are safe when their spec fully captures the problem; they are risky when they encode proxy theories whose components may not compose into the larger capability
 type: kb/types/note.md
 traits: []
-tags: [learning-theory]
+tags: [learning-theory, constraining]
 status: current
 ---
 

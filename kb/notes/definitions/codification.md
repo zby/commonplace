@@ -1,7 +1,7 @@
 ---
 description: Definition — codification is constraining that crosses from natural language into a symbolic artifact with formal semantics or assigned consequences; executable code is the main practical KB case
 type: kb/types/definition.md
-tags: [learning-theory]
+tags: [learning-theory, constraining]
 status: current
 ---
 

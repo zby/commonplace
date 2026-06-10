@@ -2,7 +2,7 @@
 description: Pre-training acquires both structural priors (evolution's role in humans) and world knowledge in one pass — making it and in-context learning intermediate on the evolution-to-reaction spectrum
 type: kb/types/note.md
 traits: [has-external-sources]
-tags: [learning-theory]
+tags: [learning-theory, deploy-time-learning]
 status: seedling
 ---
 

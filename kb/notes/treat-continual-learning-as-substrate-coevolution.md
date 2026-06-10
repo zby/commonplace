@@ -2,7 +2,7 @@
 description: Behaviour change spans three representational forms — distributed-parametric, prose, and symbolic — so the coevolution question is how their improvement loops relate, not which is the real locus of learning
 type: kb/types/note.md
 traits: [title-as-claim]
-tags: [learning-theory]
+tags: [learning-theory, deploy-time-learning]
 ---
 
 # Treat continual learning as substrate coevolution

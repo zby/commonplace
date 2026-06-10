@@ -30,7 +30,7 @@ A-MEM proposes an agentic memory system for LLM agents that applies Zettelkasten
 /connect identified 6 new note connections and 3 source connections, in addition to 4 existing connections from KB notes.
 
 **Already connected (4 notes reference this source):**
-- [learning-theory](../notes/learning-theory-index.md) — reference material in Memory & Architecture section: flat single-space design as test case for three-space separation
+- [learning-theory](../notes/learning-theory-README.md) — reference material in Memory & Architecture section: flat single-space design as test case for three-space separation
 - [tags](../notes/tags-README.md) — reference material: empirical evidence for boiling cauldron mutations and scaling data for embedding-based linking
 - [links](../notes/links-README.md) — reference material: empirical counterpoint on embedding-based link generation succeeding on QA benchmarks
 - [memory-management-policy-is-learnable-but-oracle-dependent](../notes/memory-management-policy-is-learnable-but-oracle-dependent.md) — contrasts: A-MEM's hand-crafted heuristics as "plausible theories about memory management, not definitions of it"

@@ -2,7 +2,7 @@
 description: The four artifact-analysis fields exist to surface three architectural review concerns over retained behavior — efficiency, security, and sovereignty — with sovereignty (owner control to inspect, regenerate, delete, roll back) as the new axis
 type: kb/types/note.md
 traits: [title-as-claim, has-external-sources]
-tags: [learning-theory]
+tags: [learning-theory, artifact-analysis]
 status: current
 ---
 

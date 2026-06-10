@@ -26,7 +26,7 @@ Text files: 3 | Seedlings: 108
   Sources: [Ad hoc prompts extend the system without schema changes](../notes/ad-hoc-prompts-extend-the-system-without-schema-changes.md), [Ad hoc prompts extend the system without schema changes](../notes/ad-hoc-prompts-extend-the-system-without-schema-changes.md), [005-quality-check-placement](../notes/adr/005-quality-check-placement.md) +46 more
 
 - [Trace-derived learning techniques in related systems](../agent-memory-systems/trace-derived-learning-techniques-in-related-systems.md) — **35 links in**
-  Sources: [Automating KB learning is an open problem](../notes/automating-kb-learning-is-an-open-problem.md), [Continuous learning requires durability, not weight updates](../notes/continuous-learning-requires-durability-not-weight-updates.md), [Learning theory](../notes/learning-theory-index.md) +32 more
+  Sources: [Automating KB learning is an open problem](../notes/automating-kb-learning-is-an-open-problem.md), [Continuous learning requires durability, not weight updates](../notes/continuous-learning-requires-durability-not-weight-updates.md), [Learning theory](../notes/learning-theory-README.md) +32 more
 
 - [Error correction works with above-chance oracles and decorrelated checks](../notes/error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — **34 links in**
   Sources: [Brainstorming: how to test whether pairwise comparison can harden soft oracles](../notes/brainstorming-how-to-test-whether-pairwise-comparison-can-harden.md), [Enforcement without structured recovery is incomplete](../notes/enforcement-without-structured-recovery-is-incomplete.md), [Evaluation automation is phase-gated by comprehension](../notes/evaluation-automation-is-phase-gated-by-comprehension.md) +31 more

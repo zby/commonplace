@@ -35,6 +35,7 @@ plugins:
         'notes/failure-modes-index.md': 'notes/failure-modes-README.md'
         'notes/foundations-index.md': 'notes/foundations-README.md'
         'notes/kb-maintenance-index.md': 'notes/kb-maintenance-README.md'
+        'notes/learning-theory-index.md': 'notes/learning-theory-README.md'
         'notes/links-index.md': 'notes/links-README.md'
         'notes/llm-frameworks-should-expose-the-loop.md': 'notes/tool-loop-README.md'
         'notes/llm-interpretation-errors-index.md': 'notes/llm-interpretation-errors-README.md'

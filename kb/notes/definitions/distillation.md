@@ -1,7 +1,7 @@
 ---
 description: Definition — distillation is targeted transformation of recorded material into a use-shaped artifact for a particular downstream consumer; in KB practice this is usually directed context compression
 type: kb/types/definition.md
-tags: [learning-theory]
+tags: [learning-theory, distillation]
 status: current
 ---
 

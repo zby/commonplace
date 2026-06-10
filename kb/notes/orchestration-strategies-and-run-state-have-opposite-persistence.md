@@ -2,7 +2,7 @@
 description: Inside a host-language scheduler, run-state K is task-specific so it has near-zero cross-task reuse value and should stay ephemeral, while select-strategies recur and are expensive to rediscover so they are the high-value promotion target — RLM discards both, losing the valuable half
 type: kb/types/note.md
 traits: [title-as-claim]
-tags: [computational-model, learning-theory, tool-loop]
+tags: [computational-model, learning-theory, tool-loop, artifact-analysis]
 status: seedling
 ---
 

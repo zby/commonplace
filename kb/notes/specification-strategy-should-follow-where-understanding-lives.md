@@ -2,7 +2,7 @@
 description: "Among durable artifacts, spec-first, bidirectional spec, and spec mining fit different phases: when understanding is available upfront, discovered during execution, or only visible after observation"
 type: kb/types/note.md
 traits: [has-external-sources, title-as-claim]
-tags: [learning-theory]
+tags: [learning-theory, constraining]
 status: seedling
 ---
 

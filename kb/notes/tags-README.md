@@ -16,7 +16,13 @@ For current-state documentation about the live Commonplace system rather than tr
 - [Foundations](./foundations-README.md) — core theory: contextual competence, bounded context, reach, design methodology, composability
 - [Architecture](./architecture-README.md) — how Commonplace is structured and installed: repo layout, control-plane design, file-based storage
 - [Evaluation](./evaluation-README.md) — what works, what doesn't, what needs testing
-- [Learning theory](./learning-theory-index.md) — constraining, distillation, verification, and memory theory used to reason about system improvement
+- [Learning theory](./learning-theory-README.md) — how systems learn, verify, and improve; covered by seven child tags (enforced), so its README routes rather than enumerates:
+  - [Deploy-time learning](./deploy-time-learning-README.md) — the framework: adaptation through durable inspectable artifacts
+  - [Constraining](./constraining-README.md) — narrowing interpretation space, codification, relaxing
+  - [Distillation](./distillation-README.md) — targeted extraction of use-shaped artifacts
+  - [Discovery](./discovery-README.md) — positing generals, recognizing instances; reach
+  - [Artifact analysis](./artifact-analysis-README.md) — the four-field vocabulary for retained artifacts
+  - [Agent memory](./agent-memory-README.md) — memory architecture and policy (also a top-level area)
 - [Document system](./document-system-README.md) — document types, writing conventions, and validation rules for structured notes
 - [Computational model](./computational-model-README.md) — programming-language framing for LLM instructions and orchestration
 - [Links](./links-README.md) — link semantics, navigation behavior, and link-management methodology

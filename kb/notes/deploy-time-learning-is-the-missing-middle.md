@@ -2,7 +2,7 @@
 description: Deploy-time learning fills the gap between slow distributed-parametric training and ephemeral in-context adaptation — durable system-definition artifacts updated across sessions during deployment
 type: kb/types/note.md
 traits: [has-comparison, title-as-claim]
-tags: [learning-theory]
+tags: [learning-theory, deploy-time-learning]
 ---
 
 # Deploy-time learning is the missing middle

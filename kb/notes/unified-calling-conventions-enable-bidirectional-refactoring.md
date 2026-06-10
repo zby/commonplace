@@ -2,7 +2,7 @@
 description: When agents and tools share a calling convention, components can move between neural and symbolic without changing call sites — llm-do demonstrates this with name-based dispatch over a hybrid VM
 type: kb/types/note.md
 traits: [has-external-sources, title-as-claim]
-tags: [learning-theory, computational-model]
+tags: [learning-theory, computational-model, constraining]
 status: current
 ---
 

@@ -54,5 +54,5 @@ Conflating the three leads to misdiagnosis — e.g. narrowing the spec (underspe
 
 ## Related Tags
 
-- [learning-theory](./learning-theory-index.md) — oracle and verification theory originated there; this area applies it specifically to LLM interpretation errors
+- [learning-theory](./learning-theory-README.md) — oracle and verification theory originated there; this area applies it specifically to LLM interpretation errors
 - [computational-model](./computational-model-README.md) — the scheduling architecture that separation notes describe; error correction explains *why* it works

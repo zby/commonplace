@@ -2,7 +2,7 @@
 description: "Agile's 'changing requirements' hide two distinct phenomena — genuine change (world moved) and late discovery that downstream specs committed to a wrong interpretation of an underspecified upstream spec — short iterations limit interpretation-error propagation, not just change-response latency"
 type: kb/types/note.md
 traits: []
-tags: [learning-theory]
+tags: [learning-theory, deploy-time-learning]
 status: seedling
 ---
 

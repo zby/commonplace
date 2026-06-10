@@ -2,7 +2,7 @@
 description: LLM-based systems have two distinct properties — semantic underspecification of natural language specs (the deeper difference from traditional programming) and execution indeterminism (present in all practical systems) — the spec-to-program projection model captures the first, which indeterminism tends to obscure
 type: kb/types/note.md
 traits: [has-external-sources]
-tags: [learning-theory, computational-model]
+tags: [learning-theory, computational-model, constraining]
 status: current
 ---
 
@@ -126,7 +126,7 @@ Treating agentic systems as interpreters of underspecified instructions suggests
 
 Relevant Notes:
 
-- [learning-theory](./learning-theory-index.md) — parent index: learning mechanisms, oracle theory, memory architecture
+- [learning-theory](./learning-theory-README.md) — parent index: learning mechanisms, oracle theory, memory architecture
 - [llm-code-boundaries-are-natural-checkpoints](./llm-code-boundaries-are-natural-checkpoints.md) — splits from this note: the boundary-as-checkpoint argument expanded with debugging, testing, and refactoring applications
 - [progressive-constraining-commits-only-after-patterns-stabilize](./progressive-constraining-commits-only-after-patterns-stabilize.md) — splits from this note: the one-shot vs progressive distinction for LLM code generation as a constraining mode
 - [llm-debugging-starts-with-retry-versus-rewrite-triage](./llm-debugging-starts-with-retry-versus-rewrite-triage.md) — splits from this note: the debugging heuristic derived from the two-phenomena model

@@ -2,7 +2,7 @@
 description: Deutsch's adaptive-vs-explanatory distinction — explanatory knowledge has "reach" (transfers to new contexts) because it captures why, not just what works; grounds the KB's first-principles filter as selecting for reach over fit
 type: kb/types/note.md
 traits: [has-external-sources]
-tags: [learning-theory]
+tags: [learning-theory, discovery]
 status: seedling
 ---
 

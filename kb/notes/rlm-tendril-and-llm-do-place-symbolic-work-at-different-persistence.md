@@ -2,7 +2,7 @@
 description: "Compares RLM, Tendril, and llm-do as three placements for symbolic work and interfaces: ephemeral REPL code, workspace-local generated tools, and durable unified callables"
 type: kb/types/note.md
 traits: [title-as-claim, has-comparison, has-external-sources]
-tags: [computational-model, learning-theory]
+tags: [computational-model, learning-theory, artifact-analysis]
 status: seedling
 ---
 

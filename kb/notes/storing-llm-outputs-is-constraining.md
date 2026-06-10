@@ -2,7 +2,7 @@
 description: Choosing to keep a specific LLM output resolves semantic underspecification to one interpretation and freezes it against execution indeterminism — the same constraining move the parent note describes for code, applied to artifacts
 type: kb/types/note.md
 traits: [title-as-claim]
-tags: [learning-theory]
+tags: [learning-theory, constraining]
 status: speculative
 ---
 

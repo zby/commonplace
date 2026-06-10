@@ -3,7 +3,7 @@ description: Constraining narrows interpretation (largest gain at codification, 
 type: kb/types/note.md
 traits: []
 status: current
-tags: [learning-theory]
+tags: [learning-theory, constraining, distillation]
 ---
 
 # Constraining and distillation both trade generality for reliability, speed, and cost

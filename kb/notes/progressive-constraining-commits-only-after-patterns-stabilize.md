@@ -2,7 +2,7 @@
 description: Constraining via LLM code generation freezes a single projection of the spec in one shot, but progressive constraining observes behavior across many runs and commits only the interpretations that consistently emerge
 type: kb/types/note.md
 traits: [title-as-claim]
-tags: [learning-theory, computational-model]
+tags: [learning-theory, computational-model, constraining]
 status: seedling
 ---
 

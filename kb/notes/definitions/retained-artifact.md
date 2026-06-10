@@ -1,7 +1,7 @@
 ---
 description: Definition - a retained artifact is retained state that a later agentic loop can consume in a behavior-shaping way, regardless of storage substrate
 type: kb/types/definition.md
-tags: [learning-theory]
+tags: [learning-theory, artifact-analysis]
 status: current
 ---
 

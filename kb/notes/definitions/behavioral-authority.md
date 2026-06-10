@@ -1,7 +1,7 @@
 ---
 description: Definition - behavioral authority records who consumes a retained artifact, through which channel, and with what force
 type: kb/types/definition.md
-tags: [learning-theory]
+tags: [learning-theory, artifact-analysis]
 status: current
 ---
 

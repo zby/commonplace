@@ -20,4 +20,4 @@ Context engineering is the machinery for getting the right knowledge into a boun
 
 - [Computational model](./computational-model-README.md) - explains the bounded-call substrate context engineering operates on
 - [Tool loop](./tool-loop-README.md) - covers framework-owned loops and when scheduling must become explicit
-- [Learning theory](./learning-theory-index.md) - covers how context machinery contributes to deploy-time learning
+- [Learning theory](./learning-theory-README.md) - covers how context machinery contributes to deploy-time learning

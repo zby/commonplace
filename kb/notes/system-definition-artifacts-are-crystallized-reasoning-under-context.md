@@ -2,7 +2,7 @@
 description: Heuristic system-definition artifacts (tips, playbooks, rules) are mostly crystallized reasoning; under unbounded context heuristic prose collapses into knowledge artifacts plus read-time derivation, while authority-bearing constraints and symbolic codification persist for other reasons
 type: kb/types/note.md
 traits: [has-comparison, title-as-claim]
-tags: [learning-theory]
+tags: [learning-theory, artifact-analysis]
 ---
 
 # System-definition artifacts are crystallized reasoning under context scarcity
