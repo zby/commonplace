@@ -27,7 +27,7 @@ Descriptions are the important middle layer. They are not decorative summaries; 
 
 Curated indexes are the collection-scale version of the same idea: grouping and context phrases where the order and headings carry extra routing signal. A directory's curated head is its `README.md`; a tag's curated head is its `<tag>-README.md` (type `tag-readme`), small by type contract.
 
-Two validator-enforced frontmatter marks on a tag-README change what a reader may skip (ADR 026): `complete: true` guarantees the README links every note carrying the tag — it *is* the membership surface, and the by-tag `rg` recipe below is skippable for that tag; `covered_by: [children]` guarantees every tagged note carries a listed child tag — the README's typed routing ("which kind of X is this?") is trustworthy. Both are accelerators, never load-bearing: scoped `rg` always recovers membership regardless of any mark — full semantics in [mark-semantics.md](./mark-semantics.md).
+A tag-README may declare two validator-enforced frontmatter marks (ADR 026): `complete: true` — the README links every note carrying the tag, so a reader can skip the by-tag `rg` recipe below for that tag; `covered_by: [children]` — every tagged note carries a listed child tag, so a reader can trust the README's typed routing ("which kind of X is this?"). Both are accelerators, never load-bearing: scoped `rg` always recovers membership regardless of any mark — full semantics in [mark-semantics.md](./mark-semantics.md).
 
 ## Complete listings are build-time only
 
