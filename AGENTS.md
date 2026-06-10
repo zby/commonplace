@@ -8,41 +8,19 @@ This section contains agent behavior rules. The Roughdraft subsection ends befor
 
 ### Roughdraft
 
-Use Roughdraft when the user wants to review or comment on a Markdown file.
+Use Roughdraft when the user wants to review or comment on a Markdown file. The user may say `rd` for Roughdraft; do not create any alias, symlink, or command named `rd`.
 
-The user may refer to Roughdraft as `rd` in natural language. Treat `rd` as shorthand for Roughdraft in user requests, but do not create or modify any shell alias, executable, symlink, or command named `rd`.
+When the user asks for a plan, write it as a Markdown file on disk before asking them to review it.
 
-When the user asks for a plan, write the plan as a Markdown file on disk before asking them to review it.
-
-When you write or modify a Markdown file and want the user to review or comment on it, open it with:
+To get a file reviewed, open it (one `.md` file at a time; the server starts automatically):
 
 ```bash
 roughdraft open "/absolute/path/to/file.md"
 ```
 
-Roughdraft is currently a single-file Markdown viewer/editor. Open one `.md` file at a time.
+**Leave the command running** — do not interrupt, kill, background, or detach it. Roughdraft exits the command when the user clicks Done Reviewing; that exit is the signal to read the file from disk and respond to the CriticMarkup feedback in it.
 
-If Roughdraft is not running, `roughdraft open` will start it automatically.
-
-After `roughdraft open` opens the document, leave the command running. Do not interrupt, kill, background, detach, or treat the waiting process as cleanup. The wait is intentional: Roughdraft will exit the command after the user clicks Done Reviewing, and that exit is your signal to resume.
-
-After the user finishes reviewing in Roughdraft, read the Markdown file from disk and respond to any CriticMarkup comments or suggested changes.
-
-Use Roughdraft-flavored CriticMarkup when reading or writing inline review feedback in Markdown. The base markers are:
-
-Comment: `{>>comment<<}`
-Insertion: `{++new text++}`
-Deletion: `{--old text--}`
-Substitution: `{~~old~>new~~}`
-Highlight: `{==text==}`
-
-When you add a new comment or suggested change, use the extended Roughdraft format with an attribute block, such as `{id="c1" by="AI" at="2026-04-28T12:00:00.000Z"}`. Generate a stable document-local id (`c1`, `c2`, etc. for comments; `s1`, `s2`, etc. for suggestions), set `by` to your agent or author label, set `at` to the current ISO timestamp, and set `re` when replying to an existing comment or suggestion.
-
-Roughdraft may already have attribute blocks after comments and suggestions. Preserve these attributes unless you are intentionally removing the associated comment or suggestion. The common attributes are `id` for a stable document-local id, `by` for the author, `at` for an ISO timestamp, and `re` for the parent comment or suggestion id in a reply thread.
-
-Anchored comments usually look like `{==selected text==}{>>Comment text<<}{id="c1" by="AI" at="2026-04-28T12:00:00.000Z"}`. Suggested changes usually look like `{++new text++}{id="s1" by="AI" at="2026-04-28T12:10:00.000Z"}` or `{~~old text~>new text~~}{id="s2" by="AI" at="2026-04-28T12:11:00.000Z"}`. Replies usually look like `{>>Reply text<<}{id="c2" by="AI" at="2026-04-28T12:05:00.000Z" re="c1"}`.
-
-Use `roughdraft help` and `roughdraft help criticmarkup` for local command and syntax details.
+Review feedback uses Roughdraft-flavored CriticMarkup: comments `{>>…<<}`, insertions `{++…++}`, deletions `{--…--}`, substitutions `{~~old~>new~~}`, highlights `{==…==}` — each optionally followed by an attribute block like `{id="c1" by="AI" at="2026-04-28T12:00:00.000Z" re="c0"}`. When adding comments or suggestions: generate stable document-local ids (`c1`, `c2`… for comments, `s1`, `s2`… for suggestions), set `by` and the current ISO timestamp in `at`, set `re` to the parent id when replying, and preserve existing attribute blocks unless removing the associated comment. Full syntax: `roughdraft help criticmarkup`.
 
 ## Repository Overview
 
@@ -83,9 +61,8 @@ A design insight is worth a note when it changes how someone would build or oper
 - `kb/notes/links-README.md` — linking methodology: semantics, navigation, contracts
 - `kb/agent-memory-systems/README.md` — curated index of external agent-memory/knowledge systems
 - `kb/reference/README.md` — shipped-system documentation entry point: architecture, type system, operator guide, and ADR navigation
-- `kb/reference/navigation.md` — how agents navigate the KB with `rg`, titles/descriptions, indexes, links, connect reports, and future search layers — including the scoped `rg` recipes that replace complete-index reads
+- `kb/reference/navigation.md` — how agents navigate the KB: `rg` recipes, titles/descriptions, curated indexes, links, connect reports
 - `kb/reference/adr/` — architecture decision records for the shipped Commonplace system
-- `kb/reference/link-vocabulary.md` — label catalogue and authoring guidance for `COLLECTION.md` authors (consult when revising outbound rules)
 
 Each tag's curated head is its `<tag>-README.md` (type `tag-readme`), small by type contract. It may declare two validator-enforced frontmatter marks: `complete: true` — the README links every note carrying the tag, so a reader can skip the by-tag `rg` sweep; `covered_by: [children]` — every tagged note also carries a listed child tag, so a reader can trust the typed routing. Maintenance of the marks lives in `kb/types/tag-readme.md` (ADR 026).
 
@@ -140,8 +117,6 @@ Read the target collection's `COLLECTION.md` before writing or connecting artifa
 | `kb/work/` | workshop layer | Holding in-flight investigations, drafts, migration plans, and temporary work that should eventually close or promote durable artifacts. |
 | `kb/types/` | global type surface, not a collection | Looking up shared type specs used across collections. |
 
-A `COLLECTION.md` inside a non-collection namespace is an ordinary collection; a `COLLECTION.md` inside another collection is invalid and reported by validation.
-
 For the full navigation model, read `kb/reference/navigation.md`. In short: use `rg` for cheap lexical search, scan titles and descriptions in curated indexes and scoped `rg` listings before opening full files, and follow authored links when local context makes the relationship useful.
 
 ```bash
@@ -158,9 +133,7 @@ rg "^tags:.*learning-theory" kb/notes/ kb/reference/ kb/instructions/ --glob "*.
 
 ### Skills
 
-`commonplace-init` installs the `cp-skill-*` family (`cp-skill-write`, `cp-skill-validate`, `cp-skill-connect`, etc.) into `.claude/skills/` and `.agents/skills/`. The harness loads them automatically.
-
-This repo also has a local-only `write-agent-memory-system-review` skill for external agent-memory-system reviews. It is symlinked into `.claude/skills/` and `.agents/skills/` here, but is not a promoted `cp-skill-*` framework skill.
+The `cp-skill-*` family (`cp-skill-write`, `cp-skill-validate`, `cp-skill-connect`, etc.) is installed into `.claude/skills/` and `.agents/skills/` by `commonplace-init`; the harness loads them automatically. The local `write-agent-memory-system-review` skill is repo-only, not a promoted framework skill.
 
 ### Commands
 
@@ -172,5 +145,3 @@ The `llm-commonplace` package provides `commonplace-*` CLI commands for validati
 
 For review work (single-note review, triage, ack, or sweep), read `kb/instructions/REVIEW-SYSTEM.md`.
 For fixing review warnings, read `kb/instructions/FIX-SYSTEM.md`.
-
-For writing conventions, read the target collection's `COLLECTION.md`; it is the local authoring and routing contract for that collection.
