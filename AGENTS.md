@@ -54,7 +54,7 @@ Terms needed to understand the project's structure and everyday operations, alph
 ## Development
 
 - **Use `python3`** for stdlib-only throwaway tooling. Commonplace runtime code should live in the Python package and be invoked through `commonplace-*` commands.
-- **Run `commonplace-*` commands and `pytest` by their bare name** — this repo uses direnv to put `.venv/bin` on `PATH`, so installed entry points (`commonplace-validate`, `commonplace-run-review-bundle`, `pytest`, …) resolve directly. Do not prepend `.venv/bin/`, wrap in `direnv exec`, or wrap in `uv run` as a precaution — just call the command. Only if a bare call actually fails with "command not found" should you fall back, in this order: `direnv exec . bash -c '<command>'`, then `.venv/bin/<command>`. Reach for `uv run` only when the command is genuinely not installed in the active environment, never as a wrapper around an installed entry point (`/snap/bin/uv` can fail under sandbox confinement even when the `.venv/bin` entry point works).
+- **Run `commonplace-*` commands and `pytest` by their bare name** — direnv puts `.venv/bin` on `PATH`. Do not prepend `.venv/bin/` or wrap in `direnv exec` or `uv run` as a precaution. If a bare command genuinely fails, run `cp-skill-health-check`.
 - **YAGNI** — don't implement features that aren't needed yet. If you identify a gap, create a note in `kb/notes/` instead of implementing it.
 - **No backwards compatibility** — with no external consumers, always prioritize cleaner design over keeping old behavior alive. If backcompat code is ever needed, mark it with `# BACKCOMPAT: <reason> - remove after <condition>`.
 - **Tests**: `pytest` — all tests must pass.
