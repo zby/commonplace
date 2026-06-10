@@ -2,8 +2,7 @@
 description: "Reflexion review: benchmark agents turn failed trajectories and test feedback into task-local verbal lessons for later attempts"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags:
-  - trace-derived
+tags: [trace-derived]
 status: current
 last-checked: "2026-06-04"
 ---

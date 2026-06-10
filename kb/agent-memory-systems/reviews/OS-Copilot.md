@@ -2,8 +2,7 @@
 description: "OS-Copilot review: FRIDAY promotes judged Python execution traces into Chroma-retrieved reusable tools for later planning and codegen"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags:
-  - trace-derived
+tags: [trace-derived]
 status: current
 last-checked: "2026-06-04"
 ---

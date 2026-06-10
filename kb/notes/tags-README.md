@@ -1,7 +1,8 @@
 ---
-description: Hub for all tag indexes — browse the KB by conceptual domain rather than by directory
+description: Hub for all tag READMEs — browse the KB by conceptual domain rather than by directory; complete over the tag pages in this collection
 type: kb/types/tag-readme.md
 index_source: tag-indexes
+complete: true
 status: current
 ---
 
@@ -25,6 +26,9 @@ For current-state documentation about the live Commonplace system rather than tr
   - [Agent memory](./agent-memory-README.md) — memory architecture and policy (also a top-level area)
 - [Document system](./document-system-README.md) — document types, writing conventions, and validation rules for structured notes
 - [Computational model](./computational-model-README.md) — programming-language framing for LLM instructions and orchestration
+- [Tool loop](./tool-loop-README.md) — loop exposure, hidden schedulers, and framework-owned tool-loop failure modes
+- [Context engineering](./context-engineering-README.md) — getting the right knowledge into bounded context at the right time
+- [Failure modes](./failure-modes-README.md) — characteristic ways knowledge can exist without changing agent behavior
 - [Links](./links-README.md) — link semantics, navigation behavior, and link-management methodology
 - [Type system](./type-system-README.md) — why documents have types, what roles they serve, how structured writing improves quality
 - [LLM interpretation errors](./llm-interpretation-errors-README.md) — error taxonomy, oracle theory, error correction, and architectural responses to imperfect LLM interpretation
