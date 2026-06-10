@@ -33,6 +33,10 @@ The asymmetry matters in one direction only: an _unmarked but actually complete_
 Summing the consumers: enforced trust (one read, no follow-up call, for exhaustive readers), guaranteed _editorial_ coverage (a phrase for every member, eventually — the validator queues the gap), and a deterministic, self-routing maintenance trigger. What it does **not** buy: anything irreplaceable — rg backstops enumeration for every consumer.
 
 This is why fighting to preserve completeness through growth is the wrong instinct: the thing being preserved is a convenience, and the structures needed to preserve it cost more than the convenience is worth.
+## Where the instructions live: the type spec is maintenance-path only
+The full contract — gates, checks, exits, smells, when to declare or drop a mark — lives in the `tag-readme` type spec, and that is fine because **the spec is not on the reading path**. A tag-README is understood standalone: the field names are self-describing to a first-time reader (`complete: true`, `covered_by: [a, b]` mean what they say), the body is ordinary curated prose, and no consumer needs the spec to use the artifact correctly. Only _maintenance_ — declaring a mark, fixing a validator warning, executing an exit — requires loading the type instructions, and the validator message routes there.
+
+This puts a constraint on future field naming: read-side meaning must survive without the spec. A mark whose name needs the spec to decode would put the spec back on every reader's path and break the separation.
 ## The exits, analyzed
 When a complete README approaches the hard gate:
 
