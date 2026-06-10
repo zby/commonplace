@@ -19,7 +19,7 @@ A mark can be true or false, present or absent. The two failure modes are not sy
 
 A false negative costs a bounded, recoverable query; a false positive costs silent, unbounded incorrectness. Because the downside is one-sided and severe, every mark is **validator-enforced** — there is no sanctioned state where a mark is maintained by hand and trusted by consumers.
 
-The rule holds only because the recovery path exists first: the mark is a cache over the membership query, and the query is the ground truth. A mark without a recovery path would be load-bearing by necessity — its *absence* would also break consumers. The design sequence is therefore: guarantee the query path, then add the mark as an optimization on top.
+The rule holds only because the recovery path exists first: the mark is a cache over the membership query, and the query is the ground truth — the scoped-`rg` path was guaranteed by [ADR 025](./adr/025-complete-generated-indexes-are-build-time-only.md) before the marks existed. A mark without a recovery path would be load-bearing by necessity — its *absence* would also break consumers. The design sequence is therefore: guarantee the query path, then add the mark as an optimization on top. This is the marks-specific instance of the general compiled-view requirement: a derived surface [must not drift into an independent source of truth](../notes/agent-memory-requirements/keep-compiled-views-aligned.md).
 
 ## Consumer and lifecycle behavior that follows
 
@@ -36,5 +36,7 @@ The same three-condition shape — a machine-checkable property, an independent 
 Relevant Notes:
 
 - [stale-indexes-are-worse-than-no-indexes](../notes/stale-indexes-are-worse-than-no-indexes.md) — rationale: the marked-but-false case is the trusted-stale-artifact trap, which is why marks are machine-enforced or absent
+- [keep-compiled-views-aligned](../notes/agent-memory-requirements/keep-compiled-views-aligned.md) — rationale: a mark is a compiled view over the membership query; that note states the general requirement (a rebuildable derivative must not become an independent source of truth, and stale views must be detectable) that this rule instantiates
 - [026-tag-readme-type-with-completeness-and-coverage-marks](./adr/026-tag-readme-type-with-completeness-and-coverage-marks.md) — part-of: the decision record that introduced the marks and this rule
+- [025-complete-generated-indexes-are-build-time-only](./adr/025-complete-generated-indexes-are-build-time-only.md) — part-of: the decision that guaranteed the scoped-`rg` recovery path the marks depend on
 - [maintain-curated-indexes](../instructions/maintain-curated-indexes.md) — procedure: declaring, fixing, and dropping marks when the validator flags a README

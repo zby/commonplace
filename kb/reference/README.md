@@ -177,6 +177,7 @@ Look up how the shipped system is put together: its architecture, type system, a
 - [scenario-architecture.md](./scenario-architecture.md) — scenario-derived architecture: the library/user split under `kb/commonplace/`, package-provided commands, and measurable scenario decomposition
 - [storage-architecture.md](./storage-architecture.md) — markdown as source of truth, derived indexes, and SQLite as a scoped exception for review state
 - [navigation.md](./navigation.md) — how agents move through the KB using control-plane pointers, `rg`, titles/descriptions, indexes, links, connect reports, and future search layers
+- [mark-semantics.md](./mark-semantics.md) — what the `complete`/`covered_by` marks on tag-READMEs mean for consumers: accelerators over a recoverable query, never load-bearing
 - [control-plane-goals.md](./control-plane-goals.md) — how Commonplace ships KB goals in always-loaded context via `AGENTS.md`
 - [instruction-generation.md](./instruction-generation.md) — build-time instruction generation flow and `commonplace-init`
 - [review-architecture.md](./review-architecture.md) — code architecture for `commonplace.review` and `commonplace.cli.review`
