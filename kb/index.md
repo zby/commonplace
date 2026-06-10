@@ -10,7 +10,7 @@ This KB is itself agent-operated: a human directs the inquiry, AI agents draft, 
 
 **How agents learn.** [Deploy-time learning](./notes/deploy-time-learning-is-the-missing-middle.md) fills the gap between training and in-context learning. It starts with accumulation — capturing observations, decisions, and patterns as durable artifacts. Three operations transform what's accumulated: [constraining](./notes/definitions/constraining.md) narrows interpretation (conventions → structured types → deterministic code), [distillation](./notes/definitions/distillation.md) extracts focused artifacts from larger reasoning, and [discovery](./notes/discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) produces the high-reach theories that are accumulation's most valuable items. The [learning theory index](./notes/learning-theory-index.md) maps the full landscape.
 
-**What makes memory agent-usable.** [Agent memory needs discoverable, composable, trusted knowledge under bounded context](./notes/agent-memory-needs-discoverable-composable-trusted-knowledge-under.md). Discoverable: agents find what they need without loading everything. Composable: notes chain into arguments via [explicit link semantics](./notes/links-index.md). Trustworthy: notes declare their [maturity](./types/note.md) (`seedling` → `current`) and link to the sources or notes they rest on, so readers know how much weight a claim holds.
+**What makes memory agent-usable.** [Agent memory needs discoverable, composable, trusted knowledge under bounded context](./notes/agent-memory-needs-discoverable-composable-trusted-knowledge-under.md). Discoverable: agents find what they need without loading everything. Composable: notes chain into arguments via [explicit link semantics](./notes/links-README.md). Trustworthy: notes declare their [maturity](./types/note.md) (`seedling` → `current`) and link to the sources or notes they rest on, so readers know how much weight a claim holds.
 
 **Information and bounded observers.** [Information value is observer-relative](./notes/information-value-is-observer-relative.md) — the same data can contain extractable structure for one observer and noise for another. This grounds why [distillation creates value](./notes/definitions/distillation.md) and why [reverse-compression](./notes/reverse-compression-is-when-llm-output-expands-without-adding.md) — expanding text without adding extractable structure — is a real failure mode.
 
@@ -22,7 +22,7 @@ Each collection has a README that serves as its curated landing — all are link
 
 For deeper navigation:
 
-- [Tags](./notes/tags-index.md) — tag indexes within Notes
+- [Tags](./notes/tags-README.md) — tag indexes within Notes
 - [Workshops](./work/README.md) — the stuff we currently work on
 
 ## Use it yourself

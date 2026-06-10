@@ -23,7 +23,7 @@ RLM has two layers of symbolic orchestration. The outer layer is a traditional t
 
 The key move is that the model *writes* the orchestrator rather than *being* it. A standard tool loop consults the model at each step: "what should we do next?" RLM has the model emit the plan as code — `results = [recursive_llm("summarize", chunk) for chunk in chunks]` — so dispatch decisions are authored by the model but executed on a symbolic substrate. Bookkeeping for the inner orchestration lives in Python variables and the REPL stack, not in the conversation. This avoids the [degraded scheduler](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) failure mode where bounded context is wasted on bookkeeping.
 
-The model-authored orchestrators are structurally the same thing a programmer would write by hand — exactly the symbolic orchestration over sub-agents that the [tool loop](./tool-loop-index.md) argument calls for. The elegance of RLM is how it packs this into the tool-loop model: the REPL tool gives the model a substrate for writing orchestrators without anyone having to write reentrant framework code.
+The model-authored orchestrators are structurally the same thing a programmer would write by hand — exactly the symbolic orchestration over sub-agents that the [tool loop](./tool-loop-README.md) argument calls for. The elegance of RLM is how it packs this into the tool-loop model: the REPL tool gives the model a substrate for writing orchestrators without anyone having to write reentrant framework code.
 
 ## Ephemerality
 
@@ -40,5 +40,5 @@ Relevant Notes:
 - [Bounded-context orchestration model](./bounded-context-orchestration-model.md) — foundation: the select/call loop with explicit state update that RLM's code expresses
 - [LLM-mediated schedulers are a degraded variant of the clean model](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) — contrast: what happens when the LLM is the scheduler instead of writing it
 - [Ephemeral computation prevents accumulation](./ephemeral-computation-prevents-accumulation.md) — explains: why RLM's scheduler code is discarded and what that costs
-- [tool loop](./tool-loop-index.md) — boundary case: RLM implements the full solution (symbolic orchestration over sub-agents) by having the model author it in a REPL tool
+- [tool loop](./tool-loop-README.md) — boundary case: RLM implements the full solution (symbolic orchestration over sub-agents) by having the model author it in a REPL tool
 - [agent orchestration occupies a multi-dimensional design space](./agent-orchestration-occupies-a-multi-dimensional-design-space.md) — context: situates RLM as one combination of scheduler placement and persistence rather than as one point on a single ladder

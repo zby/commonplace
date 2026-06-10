@@ -79,8 +79,8 @@ A design insight is worth a note when it changes how someone would build or oper
 
 ## Key Indexes
 
-- `kb/notes/tags-index.md` — top-level navigation hub: tag indexes, foundations, evaluation, gaps
-- `kb/notes/links-index.md` — linking methodology: semantics, navigation, contracts
+- `kb/notes/tags-README.md` — top-level navigation hub: tag READMEs, foundations, evaluation, gaps
+- `kb/notes/links-README.md` — linking methodology: semantics, navigation, contracts
 - `kb/agent-memory-systems/README.md` — curated index of external agent-memory/knowledge systems
 - `kb/reference/README.md` — shipped-system documentation entry point: architecture, type system, operator guide, and ADR navigation
 - `kb/reference/navigation.md` — how agents navigate the KB with `rg`, titles/descriptions, indexes, links, connect reports, and future search layers — including the scoped `rg` recipes that replace complete-index reads
@@ -88,6 +88,8 @@ A design insight is worth a note when it changes how someone would build or oper
 - `kb/reference/link-vocabulary.md` — label catalogue and authoring guidance for `COLLECTION.md` authors (consult when revising outbound rules)
 
 Complete generated listings (`dir-index.md` pages, per-tag generated tails) are build-time materializations for the published site only — they are not committed and not on any agent read path (ADR 025). Enumerate candidates with scoped `rg` instead (recipes in `kb/reference/navigation.md`).
+
+Each tag's curated head is its `<tag>-README.md` (type `tag-readme`), small by type contract. Two validator-enforced frontmatter marks change what a reader may skip: `complete: true` means the README links every note carrying the tag, so the by-tag `rg` sweep is skippable; `covered_by: [children]` means every tagged note also carries a listed child tag, so the typed routing is trustworthy. Maintenance of the marks lives in `kb/types/tag-readme.md` (ADR 026).
 
 ## Vocabulary
 

@@ -2,7 +2,7 @@
 
 Observations and design work toward a knowledge base for design history.
 
-Navigation: [tags index](./tags-index.md).
+Navigation: [tags index](./tags-README.md).
 
 ## Goal
 

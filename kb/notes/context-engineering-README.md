@@ -1,6 +1,6 @@
 ---
 description: Index for context-engineering notes about selecting, scoping, and maintaining task-relevant knowledge under bounded context
-type: kb/types/index.md
+type: kb/types/tag-readme.md
 index_source: tag
 index_key: context-engineering
 status: current
@@ -18,6 +18,6 @@ Context engineering is the machinery for getting the right knowledge into a boun
 
 ## Adjacent Indexes
 
-- [Computational model](./computational-model-index.md) - explains the bounded-call substrate context engineering operates on
-- [Tool loop](./tool-loop-index.md) - covers framework-owned loops and when scheduling must become explicit
+- [Computational model](./computational-model-README.md) - explains the bounded-call substrate context engineering operates on
+- [Tool loop](./tool-loop-README.md) - covers framework-owned loops and when scheduling must become explicit
 - [Learning theory](./learning-theory-index.md) - covers how context machinery contributes to deploy-time learning

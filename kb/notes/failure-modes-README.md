@@ -1,6 +1,6 @@
 ---
 description: Index for failure-modes notes about characteristic ways knowledge can exist without changing agent behavior
-type: kb/types/index.md
+type: kb/types/tag-readme.md
 index_source: tag
 index_key: failure-modes
 status: current
@@ -17,5 +17,5 @@ Failure-mode notes name recurring ways an agent-operated KB can fail despite hav
 
 ## Related Tags
 
-- [LLM interpretation errors](./llm-interpretation-errors-index.md) - adjacent error taxonomy for failures in how models interpret instructions and evidence
-- [Evaluation](./evaluation-index.md) - methods for detecting whether failures are real and whether interventions improve behavior
+- [LLM interpretation errors](./llm-interpretation-errors-README.md) - adjacent error taxonomy for failures in how models interpret instructions and evidence
+- [Evaluation](./evaluation-README.md) - methods for detecting whether failures are real and whether interventions improve behavior

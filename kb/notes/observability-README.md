@@ -1,6 +1,6 @@
 ---
 description: Index of notes about making hidden state, hidden failure, and quality drift visible — runtime inspectability, degraded-execution signals, and maintenance-oriented detection mechanisms
-type: kb/types/index.md
+type: kb/types/tag-readme.md
 index_source: tag
 index_key: observability
 status: current
@@ -12,7 +12,7 @@ Observability is about recovering signals that would otherwise stay hidden: exec
 
 ## Runtime visibility
 
-- [tool loop](./tool-loop-index.md) — inspectable orchestration is a precondition for seeing how a run actually progressed rather than inferring from the final artifact
+- [tool loop](./tool-loop-README.md) — inspectable orchestration is a precondition for seeing how a run actually progressed rather than inferring from the final artifact
 - [Designing a Memory System for LLM-Based Agents](./designing-agent-memory-systems.md) — bridges observability to memory: hidden fallback paths and degraded execution become extraction targets for maintenance and repair
 - [Apparent success is an unreliable health signal in framework-owned tool loops](./apparent-success-is-an-unreliable-health-signal-in-framework-owned.md) — successful outcomes can hide broken helpers and degraded execution paths, so final success alone is not a trustworthy operational signal
 - [Silent disambiguation is the semantic analogue of tool fallback](./silent-disambiguation-is-the-semantic-analogue-of-tool-fallback.md) — extends the same observability problem to underspecified specs: a useful artifact can hide that the contract did not determine the path and the runtime repaired it locally
@@ -31,7 +31,7 @@ Observability is about recovering signals that would otherwise stay hidden: exec
 
 ## Related Tags
 
-- [KB maintenance](./kb-maintenance-index.md) — maintenance consumes the signals observability exposes
-- [Computational model](./computational-model-index.md) — runtime architecture determines which state transitions are inspectable
+- [KB maintenance](./kb-maintenance-README.md) — maintenance consumes the signals observability exposes
+- [Computational model](./computational-model-README.md) — runtime architecture determines which state transitions are inspectable
 - [Learning theory](./learning-theory-index.md) — soft signals, oracle strength, and inspectable artifacts explain what observability can reliably support
-- [LLM interpretation errors](./llm-interpretation-errors-index.md) — error correction and verification theory explain how visible signals can become actionable
+- [LLM interpretation errors](./llm-interpretation-errors-README.md) — error correction and verification theory explain how visible signals can become actionable

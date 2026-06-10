@@ -21,5 +21,5 @@ Relevant Notes:
 - [changing requirements conflate genuine change with disambiguation failure](./changing-requirements-conflate-genuine-change-with-disambiguation.md) — sharpens: the first silent choice is already a degraded run state, not only a future maintenance problem
 - [interpretation errors are failures of the interpreter](./interpretation-errors-are-failures-of-the-interpreter.md) — distinguishes: this note is about insufficient specification, not violating a sufficient one
 - [enforcement without structured recovery is incomplete](./enforcement-without-structured-recovery-is-incomplete.md) — applies: ambiguity handling also needs typed recovery and escalation
-- [observability](./observability-index.md) — belongs to: semantic recovery must be visible to learn whether contracts are sufficient
+- [observability](./observability-README.md) — belongs to: semantic recovery must be visible to learn whether contracts are sufficient
 - [What Spec-Driven Development Gets Wrong](https://x.com/augmentcode/status/2025993446633492725) — exemplifies: bidirectional spec updates make semantic recovery visible

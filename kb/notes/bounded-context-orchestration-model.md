@@ -94,7 +94,7 @@ Relevant Notes:
 - [any symbolic program with LLM calls is a select/call program](./any-symbolic-program-with-llm-calls-is-a-select-call-program.md) — universality: the model's invariants hold by construction for all programs with symbolic orchestration and bounded LLM calls
 - [decomposition heuristics for bounded-context scheduling](./decomposition-heuristics-for-bounded-context-scheduling.md) — consequence: practical heuristics that follow from the model
 - [LLM-mediated schedulers are a degraded variant of the clean model](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) — consequence: what happens when the scheduler is itself bounded
-- [tool loop](./tool-loop-index.md) — consequence: extracts the main architectural implication of the model for real implementations
+- [tool loop](./tool-loop-README.md) — consequence: extracts the main architectural implication of the model for real implementations
 - [distillation](./definitions/distillation.md) — mechanism: compaction of K is distillation targeting the orchestrator's context budget
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — complicates: the goal, the halt/continue decision, and the sub-agent's interpretation are all underspecified
 - [a functioning KB needs a workshop layer](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — context: the loop's externalisation response is the workshop pattern

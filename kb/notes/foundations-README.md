@@ -1,6 +1,6 @@
 ---
 description: Core theory the rest of the KB builds on — contextual competence, bounded context, reach, design methodology, composability
-type: kb/types/index.md
+type: kb/types/tag-readme.md
 index_source: tag
 index_key: foundations
 status: current

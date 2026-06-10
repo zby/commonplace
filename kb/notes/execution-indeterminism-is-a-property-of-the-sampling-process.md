@@ -26,7 +26,7 @@ Relevant Notes:
 
 - [agentic-systems-interpret-underspecified-instructions](./agentic-systems-interpret-underspecified-instructions.md) — elaborates: the full framework including how indeterminism and underspecification layer on each other; covers the deeper phenomenon (underspecification as a property of the specification language) that indeterminism obscures
 - [interpretation errors are failures of the interpreter not the spec](./interpretation-errors-are-failures-of-the-interpreter.md) — sibling: the third phenomenon, also unaddressed by sampling control
-- [LLM interpretation errors](./llm-interpretation-errors-index.md) — parent area: the three-phenomena taxonomy this note is part of
+- [LLM interpretation errors](./llm-interpretation-errors-README.md) — parent area: the three-phenomena taxonomy this note is part of
 
 Sources:
 

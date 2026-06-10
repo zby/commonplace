@@ -1,6 +1,6 @@
 ---
 description: Index of notes about the document type system — why types exist, what roles they serve, how they improve output quality, and how they're structured
-type: kb/types/index.md
+type: kb/types/tag-readme.md
 index_source: tag
 index_key: type-system
 tags: [document-system]
@@ -9,7 +9,7 @@ status: seedling
 
 # Type system
 
-Why documents have types, what the type system does, and how structured writing improves quality. Sub-area of [document-system](./document-system-index.md).
+Why documents have types, what the type system does, and how structured writing improves quality. Sub-area of [document-system](./document-system-README.md).
 
 ## Overview
 
@@ -43,5 +43,5 @@ Three independent arguments for why structured document types improve what gets 
 
 ## Related Tags
 
-- [document-system](./document-system-index.md) — parent area; type system is one component of the document infrastructure
+- [document-system](./document-system-README.md) — parent area; type system is one component of the document infrastructure
 - [learning-theory](./learning-theory-index.md) — the type ladder instantiates the constraining gradient for documents

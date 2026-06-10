@@ -65,7 +65,7 @@ Relevant Notes:
 - [bounded-context orchestration model](./bounded-context-orchestration-model.md) — foundation: the clean model supplies one important dimension, scheduler placement
 - [LLM-mediated schedulers are a degraded variant of the clean model](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) — one region of the space: scheduling inside conversation
 - [RLM has the model write ephemeral orchestrators over sub-agents](./rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md) — boundary case: model-authored external scheduler with ephemeral persistence
-- [tool loop](./tool-loop-index.md) — consequence: framework design concerns one dimension of the larger space
+- [tool loop](./tool-loop-README.md) — consequence: framework design concerns one dimension of the larger space
 - [conversation vs prompt refinement in agent-to-agent coordination](./conversation-vs-prompt-refinement-in-agent-to-agent-coordination.md) — grounds: coordination forms vary independently of scheduler placement
 - [agent orchestration needs coordination guarantees, not just coordination channels](./agent-orchestration-needs-coordination-guarantees-not-just.md) — sharpens: coordination form and coordination guarantee are separate dimensions because different shared substrates fail in different ways
 - [Axes of artifact analysis](./axes-of-artifact-analysis.md) — vocabulary: decomposition policy is a system-definition authority path over an operative part that can be carried by distributed-parametric, prose, or symbolic forms on different substrates

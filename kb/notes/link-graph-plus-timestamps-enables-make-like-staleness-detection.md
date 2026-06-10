@@ -60,4 +60,4 @@ Relevant Notes:
 - [quality signals for KB evaluation](./quality-signals-for-kb-evaluation.md) — extends: adds dependency-aware detection alongside age-based heuristics
 - [mechanistic constraints make Popperian KB recommendations actionable](./mechanistic-constraints-make-popperian-kb-recommendations-actionable.md) — motivates: its proposal-pruning pattern is a concrete use case for this detection
 - [traversal improves the graph](./traversal-improvements-should-be-deferred-via-logging-to-avoid-mid.md) — mechanism: traversal is when staleness gets noticed today; this note proposes detecting it before traversal
-- [links](./links-index.md) — foundation: the link graph that provides the dependency structure
+- [links](./links-README.md) — foundation: the link graph that provides the dependency structure

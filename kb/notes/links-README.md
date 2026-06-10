@@ -1,6 +1,6 @@
 ---
 description: Index of notes about linking — how links work as decision points, navigation modes, link contracts, and automated link management
-type: kb/types/index.md
+type: kb/types/tag-readme.md
 index_source: tag
 index_key: links
 status: current
@@ -31,7 +31,7 @@ Our link semantics (extends, grounds, contradicts, exemplifies) are lighter than
 
 - [agents-navigate-by-deciding-what-to-read-next](./agents-navigate-by-deciding-what-to-read-next.md) — links, skills, and index entries are all contextual hints for read/skip decisions
 - [two-kinds-of-navigation](./link-following-and-search-impose-different-metadata-requirements.md) — link-following is local with context; search is long-range with titles/descriptions; indexes bridge both
-- [stale-indexes-are-worse-than-no-indexes](./stale-indexes-are-worse-than-no-indexes.md) — a missing index entry suppresses search; the note becomes invisible (now in [maintenance](./kb-maintenance-index.md))
+- [stale-indexes-are-worse-than-no-indexes](./stale-indexes-are-worse-than-no-indexes.md) — a missing index entry suppresses search; the note becomes invisible (now in [maintenance](./kb-maintenance-README.md))
 
 ## Analysis
 

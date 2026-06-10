@@ -1,6 +1,6 @@
 ---
 description: Three sources of deviation between intended and actual LLM output — prompt underspecification, execution indeterminism, and interpreter failure — plus oracle theory, error correction, and architectural responses for managing each
-type: kb/types/index.md
+type: kb/types/tag-readme.md
 index_source: tag
 index_key: llm-interpretation-errors
 status: current
@@ -38,8 +38,8 @@ Conflating the three leads to misdiagnosis — e.g. narrowing the spec (underspe
 
 ## Architectural Responses
 
-- [scheduler-llm-separation-exploits-an-error-correction-asymmetry](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — separation works because bookkeeping admits cheap error correction (hard oracles) while semantic work resists it; mixing forces bookkeeping onto the expensive substrate (also [computational-model](./computational-model-index.md))
-- [specification-level-separation-recovers-scoping-before-it-recovers-error-correction](./specification-level-separation-recovers-scoping-before-it-recovers.md) — OpenProse-like DSLs recover frame isolation before gaining hard-oracle bookkeeping; an intermediate regime (also [computational-model](./computational-model-index.md))
+- [scheduler-llm-separation-exploits-an-error-correction-asymmetry](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — separation works because bookkeeping admits cheap error correction (hard oracles) while semantic work resists it; mixing forces bookkeeping onto the expensive substrate (also [computational-model](./computational-model-README.md))
+- [specification-level-separation-recovers-scoping-before-it-recovers-error-correction](./specification-level-separation-recovers-scoping-before-it-recovers.md) — OpenProse-like DSLs recover frame isolation before gaining hard-oracle bookkeeping; an intermediate regime (also [computational-model](./computational-model-README.md))
 
 ## Related notes in other areas
 
@@ -55,4 +55,4 @@ Conflating the three leads to misdiagnosis — e.g. narrowing the spec (underspe
 ## Related Tags
 
 - [learning-theory](./learning-theory-index.md) — oracle and verification theory originated there; this area applies it specifically to LLM interpretation errors
-- [computational-model](./computational-model-index.md) — the scheduling architecture that separation notes describe; error correction explains *why* it works
+- [computational-model](./computational-model-README.md) — the scheduling architecture that separation notes describe; error correction explains *why* it works

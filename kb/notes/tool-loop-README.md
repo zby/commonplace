@@ -1,6 +1,6 @@
 ---
 description: Index for the tool-loop argument — the framework-owned tool loop is useful but should yield control when tasks need different tool surfaces, exceed one context window, or codify scheduling
-type: kb/types/index.md
+type: kb/types/tag-readme.md
 index_source: tag
 index_key: tool-loop
 tags: [computational-model, context-engineering, tool-loop]

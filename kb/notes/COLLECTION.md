@@ -67,7 +67,8 @@ Scan `kb/notes/`, `kb/reference/`, `kb/agent-memory-systems/`, `kb/sources/`, an
 | `note` | `kb/types/note.md` | transferable theoretical notes |
 | `structured-claim` | `./types/structured-claim.md` | developed arguments with explicit evidence and reasoning sections |
 | `definition` | `kb/types/definition.md` | KB vocabulary under `kb/notes/definitions/` |
-| `index` | `kb/types/index.md` | curated or generated navigation hubs |
+| `tag-readme` | `kb/types/tag-readme.md` | a tag's curated head (`<tag>-README.md`); weight-gated, with optional validator-enforced `complete`/`covered_by` marks |
+| `index` | `kb/types/index.md` | build-time generated listings only — do not author new committed indexes |
 
 ## What does NOT belong here
 

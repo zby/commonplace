@@ -1,6 +1,6 @@
 ---
 description: Index of notes about keeping the KB healthy over time — detection of staleness and quality degradation, maintenance operations, and the dynamics that govern system entropy
-type: kb/types/index.md
+type: kb/types/tag-readme.md
 index_source: tag
 index_key: kb-maintenance
 status: current
@@ -8,7 +8,7 @@ status: current
 
 # KB maintenance
 
-How an agent-operated KB stays healthy as it grows. Detection, operations, and the dynamics that govern quality over time. For how the KB is *built*, see [tags](./tags-index.md). For document structure, see [document-system](./document-system-index.md).
+How an agent-operated KB stays healthy as it grows. Detection, operations, and the dynamics that govern quality over time. For how the KB is *built*, see [tags](./tags-README.md). For document structure, see [document-system](./document-system-README.md).
 
 ## Dynamics
 
@@ -33,6 +33,6 @@ How an agent-operated KB stays healthy as it grows. Detection, operations, and t
 
 ## Related Tags
 
-- [tags](./tags-index.md) — parent area: architecture and design of the KB itself
-- [document-system](./document-system-index.md) — type system and validation that maintenance operations check against
-- [links](./links-index.md) — linking methodology that staleness detection and quality signals operate on
+- [tags](./tags-README.md) — parent area: architecture and design of the KB itself
+- [document-system](./document-system-README.md) — type system and validation that maintenance operations check against
+- [links](./links-README.md) — linking methodology that staleness detection and quality signals operate on

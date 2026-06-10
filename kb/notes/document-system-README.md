@@ -1,6 +1,6 @@
 ---
 description: Index of notes about document types, writing conventions, validation, and structural quality — how notes are classified, structured, and checked
-type: kb/types/index.md
+type: kb/types/tag-readme.md
 index_source: tag
 index_key: document-system
 status: seedling
@@ -36,7 +36,7 @@ For the live Commonplace repo's current type inventory and migration summary, se
 
 ## Related Tags
 
-- [type-system](./type-system-index.md) — sub-area: why documents have types, their roles, and how structured writing improves quality
-- [tags](./tags-index.md) — the document system is infrastructure for the KB; architecture decisions about files-not-database and context loading depend on document structure
-- [links](./links-index.md) — [title-as-claim](./title-as-claim-enables-traversal-as-reasoning.md) bridges both areas: it's a writing convention that enables link semantics
+- [type-system](./type-system-README.md) — sub-area: why documents have types, their roles, and how structured writing improves quality
+- [tags](./tags-README.md) — the document system is infrastructure for the KB; architecture decisions about files-not-database and context loading depend on document structure
+- [links](./links-README.md) — [title-as-claim](./title-as-claim-enables-traversal-as-reasoning.md) bridges both areas: it's a writing convention that enables link semantics
 - [learning-theory](./learning-theory-index.md) — the type ladder instantiates the constraining gradient for documents

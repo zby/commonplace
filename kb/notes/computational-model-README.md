@@ -1,6 +1,6 @@
 ---
 description: Tag index — PL concepts (scoping, homoiconicity, partial evaluation, typing) applied to LLM instructions, plus the scheduling architecture that follows from context scarcity
-type: kb/types/index.md
+type: kb/types/tag-readme.md
 index_source: tag
 index_key: computational-model
 status: current
@@ -8,7 +8,7 @@ status: current
 
 # Computational model
 
-What kind of "programs" LLM instructions are, and what programming-language concepts — scoping, homoiconicity, partial evaluation, typing — illuminate their behavior. Where [learning-theory](./learning-theory-index.md) covers how systems learn and [tags](./tags-index.md) covers how knowledge bases are operated, this index covers the computational properties of the medium itself and the scheduling architecture that follows from context scarcity.
+What kind of "programs" LLM instructions are, and what programming-language concepts — scoping, homoiconicity, partial evaluation, typing — illuminate their behavior. Where [learning-theory](./learning-theory-index.md) covers how systems learn and [tags](./tags-README.md) covers how knowledge bases are operated, this index covers the computational properties of the medium itself and the scheduling architecture that follows from context scarcity.
 
 ## Foundations
 
@@ -43,7 +43,7 @@ What kind of "programs" LLM instructions are, and what programming-language conc
 
 ### Tool loop & hidden scheduling
 
-- [tool loop](./tool-loop-index.md) — tool calls are not enough unless frameworks keep state progression and recursion exposed
+- [tool loop](./tool-loop-README.md) — tool calls are not enough unless frameworks keep state progression and recursion exposed
 - [subtasks that need different tools force loop exposure in agent frameworks](./subtasks-that-need-different-tools-force-loop-exposure-in-agent.md) — the decisive boundary: child tasks need fresh tool surfaces, not one fixed loop
 - [stateful tools recover control by becoming hidden schedulers](./stateful-tools-recover-control-by-becoming-hidden-schedulers.md) — hidden loops can recover substantial control by relocating the scheduler into tools
 - [codified scheduling patterns can turn tools into hidden schedulers](./codified-scheduling-patterns-can-turn-tools-into-hidden-schedulers.md) — once next-step policy stabilizes into code, hiding it collapses orchestration into covert runtime logic
@@ -67,7 +67,7 @@ What kind of "programs" LLM instructions are, and what programming-language conc
 
 ## Error Correction & Reliability
 
-These notes are dual-tagged with [LLM interpretation errors](./llm-interpretation-errors-index.md), which provides the broader error-theory context. They appear here because their claims are about the scheduling architecture.
+These notes are dual-tagged with [LLM interpretation errors](./llm-interpretation-errors-README.md), which provides the broader error-theory context. They appear here because their claims are about the scheduling architecture.
 
 - [scheduler-llm-separation-exploits-an-error-correction-asymmetry](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — conjectures that the scheduling model works because symbolic operations are error-correctable through redundancy while LLM bookkeeping compounds errors silently
 - [specification-level separation recovers scoping before it recovers error correction](./specification-level-separation-recovers-scoping-before-it-recovers.md) — identifies an intermediate regime where OpenProse-like DSLs recover frame isolation without yet gaining hard-oracle bookkeeping
@@ -79,9 +79,9 @@ These notes are dual-tagged with [LLM interpretation errors](./llm-interpretatio
 
 ## Related Tags
 
-- [llm-interpretation-errors](./llm-interpretation-errors-index.md) — error correction theory, oracle hardening, and reliability dimensions; explains *why* the scheduling architecture works
+- [llm-interpretation-errors](./llm-interpretation-errors-README.md) — error correction theory, oracle hardening, and reliability dimensions; explains *why* the scheduling architecture works
 - [learning-theory](./learning-theory-index.md) — how systems learn through constraining, codification, distillation; the computational model explains *what kind of programs* these mechanisms operate on
-- [tags](./tags-index.md) — practical architecture that applies these computational properties; frontloading and indirection cost are PL concepts applied to KB instructions
+- [tags](./tags-README.md) — practical architecture that applies these computational properties; frontloading and indirection cost are PL concepts applied to KB instructions
 
 ---
 

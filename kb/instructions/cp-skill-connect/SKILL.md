@@ -55,7 +55,7 @@ Use the outbound section's triggers, latitude cues, and direction hints to set p
 
 In order of cost:
 
-- **Curated heads.** Read the destination's `README.md` and, when the source carries `tags:`, the matching tag indexes — their editorial groupings and context phrases capture routing signal a flat listing misses.
+- **Curated heads.** Read the destination's `README.md` and, when the source carries `tags:`, the matching `<tag>-README.md` pages — their editorial groupings and context phrases capture routing signal a flat listing misses. If a tag-README declares `complete: true`, it links every note carrying that tag — **skip the by-tag rg for that tag** and record the skip in the discovery trace.
 - **Scoped `rg` description listing.** Enumerate candidates at path + description resolution without loading a complete index:
 
   ```bash

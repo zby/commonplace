@@ -25,7 +25,9 @@ Commonplace navigation is a progressive disclosure stack. Agents should usually 
 
 Descriptions are the important middle layer. They are not decorative summaries; they are fixed, agent-facing filters between lexical search and full reads. A good description lets an agent scan five plausible hits and decide which one to open. This is why validation requires descriptions and why scoped listings and build-time indexes are built from them.
 
-Curated indexes are the collection-scale version of the same idea: grouping and context phrases where the order and headings carry extra routing signal. A directory's curated head is its `README.md`; a tag's curated head is the editorial body of its tag index.
+Curated indexes are the collection-scale version of the same idea: grouping and context phrases where the order and headings carry extra routing signal. A directory's curated head is its `README.md`; a tag's curated head is its `<tag>-README.md` (type `tag-readme`), small by type contract.
+
+Two validator-enforced frontmatter marks on a tag-README change what a reader may skip (ADR 026): `complete: true` guarantees the README links every note carrying the tag — it *is* the membership surface, and the by-tag `rg` recipe below is skippable for that tag; `covered_by: [children]` guarantees every tagged note carries a listed child tag — the README's typed routing ("which kind of X is this?") is trustworthy. Both are accelerators, never load-bearing: scoped `rg` always recovers membership regardless of any mark.
 
 ## Complete listings are build-time only
 

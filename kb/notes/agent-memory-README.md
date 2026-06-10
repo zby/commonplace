@@ -1,6 +1,6 @@
 ---
 description: Index for agent-memory notes about memory as a crosscutting concern in agent architecture
-type: kb/types/index.md
+type: kb/types/tag-readme.md
 index_source: tag
 index_key: agent-memory
 status: current
@@ -17,5 +17,5 @@ Agent memory notes treat memory as part of agent architecture, not just storage.
 ## Related Tags
 
 - [Learning theory](./learning-theory-index.md) - memory only matters when retained artifacts change future behavior
-- [Computational model](./computational-model-index.md) - agent memory is loaded through bounded calls and scheduling decisions
+- [Computational model](./computational-model-README.md) - agent memory is loaded through bounded calls and scheduling decisions
 - [Related systems](../agent-memory-systems/README.md) - external implementations and comparisons that expose memory-system design tradeoffs

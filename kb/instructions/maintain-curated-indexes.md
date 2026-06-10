@@ -5,7 +5,9 @@ type: kb/types/instruction.md
 
 # Maintain curated indexes
 
-Audit curated tag indexes for editorial quality, completeness, and coherence. A tag index is the tag's curated head: a hand-written editorial body with groupings and context phrases. The complete per-tag listing is not committed — it is generated at mkdocs build time for the published site (ADR 025); agents reconstruct it on demand with the scoped `rg` recipe below.
+Audit curated tag READMEs (`<tag>-README.md`, type `tag-readme`) for editorial quality, completeness, and coherence. A tag README is the tag's curated head: a hand-written editorial body with groupings and context phrases, small by type contract (weight gates). The complete per-tag listing is not committed — it is generated at mkdocs build time for the published site (ADR 025); agents reconstruct it on demand with the scoped `rg` recipe below.
+
+This instruction is also the route for fixing validator warnings on tag-READMEs (weight gate, `complete` membership, `covered_by` coverage and fan-out). The marks' maintenance rules — when to declare or drop `complete`/`covered_by`, the lifecycle exits, the smells — live in the type spec, `kb/types/tag-readme.md`; read it before changing a mark.
 
 ## When to use
 
@@ -55,17 +57,17 @@ For each orphan, consider whether adding tags would help future readers find it.
 When a tag grows large and internal clusters emerge:
 
 1. Look at the curated groupings — these often reveal natural sub-tags.
-2. Create a new tag-backed index page with `type: kb/types/index.md`, `index_source: tag`, and `index_key: <tag>`.
-3. Add the new tag to relevant notes' `tags:` field.
-4. Write the curated body for the new index; the complete listing appears on the published site automatically.
+2. Create a new `<tag>-README.md` with `type: kb/types/tag-readme.md`, `index_source: tag`, and `index_key: <tag>` (template in the type spec).
+3. Add the new tag to relevant notes' `tags:` field — keeping the parent tag on every note (never a partial migration; see the split discipline in `kb/types/tag-readme.md`).
+4. Write the curated body for the new README; the complete listing appears on the published site automatically.
 
 **Split criteria:**
 - Would the resulting indexes each have 5+ notes?
 - Do the clusters represent genuinely distinct topics, or just editorial convenience?
 
-### 5. Update tags-index.md
+### 5. Update tags-README.md
 
-Ensure `kb/notes/tags-index.md` lists all tag indexes. This is the hub page readers use to browse by tag.
+Ensure `kb/notes/tags-README.md` lists all tag READMEs. This is the hub page readers use to browse by tag.
 
 ## Principles
 

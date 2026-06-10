@@ -23,7 +23,7 @@ Concrete outputs of comparative reading:
 - **Redundancy** — two notes making the same argument in different words. One should absorb the other.
 - **Contradiction** — two notes asserting incompatible claims. Either one is wrong, or they apply in different scopes that should be made explicit.
 - **Tension** — two notes that don't contradict but pull in different directions. The tension is often more interesting than either note alone.
-- **Complementarity** — notes that are independent arguments for the same conclusion (like the [three output-quality arguments](./type-system-index.md)). Worth linking explicitly.
+- **Complementarity** — notes that are independent arguments for the same conclusion (like the [three output-quality arguments](./type-system-README.md)). Worth linking explicitly.
 - **Merge candidates** — notes that are halves of one argument, or overlapping seedlings that haven't differentiated.
 - **Missing connections** — notes that should reference each other but don't.
 - **Gaps** — a claim that needs support, a category that has no instances, an argument with no counterargument.

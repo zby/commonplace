@@ -5,7 +5,7 @@ Text files: 3 | Seedlings: 108
 ## Text → Note
 
 - [Text testing framework — source material](../notes/text-testing-framework.md) — **8 links in**
-  Sources: [Automating KB learning is an open problem](../notes/automating-kb-learning-is-an-open-problem.md), [Automating KB learning is an open problem](../notes/automating-kb-learning-is-an-open-problem.md), [Document system](../notes/document-system-index.md) +5 more
+  Sources: [Automating KB learning is an open problem](../notes/automating-kb-learning-is-an-open-problem.md), [Automating KB learning is an open problem](../notes/automating-kb-learning-is-an-open-problem.md), [Document system](../notes/document-system-README.md) +5 more
 
 - [Convert still requires semantic description](../notes/convert-still-requires-semantic-description.md) — **0 links in**
 

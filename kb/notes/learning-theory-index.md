@@ -84,7 +84,7 @@ A third operation, distinct from both constraining and distillation: positing a 
 
 ## Oracle & Verification
 
-Moved to [LLM interpretation errors](./llm-interpretation-errors-index.md) — oracle theory, error correction, reliability dimensions, and the augmentation/automation boundary now live in the dedicated error-theory area. Key notes:
+Moved to [LLM interpretation errors](./llm-interpretation-errors-README.md) — oracle theory, error correction, reliability dimensions, and the augmentation/automation boundary now live in the dedicated error-theory area. Key notes:
 
 - [error-correction-works-above-chance-oracles-with-decorrelated-checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — the core theory of error correction via decorrelated weak oracles
 - [oracle-strength-spectrum](./oracle-strength-spectrum.md) — the gradient from hard to no oracle that determines engineering priorities
@@ -116,6 +116,6 @@ Moved to [LLM interpretation errors](./llm-interpretation-errors-index.md) — o
 
 ## Related Tags
 
-- [llm-interpretation-errors](./llm-interpretation-errors-index.md) — oracle theory, error correction, and reliability dimensions migrated here; the error-theory area applies verification concepts specifically to LLM interpretation failures
-- [tags](./tags-index.md) — applies learning theory to KB architecture and evaluation; [methodology-enforcement-is-constraining](./methodology-enforcement-is-constraining.md) bridges both areas
-- [document-system](./document-system-index.md) — the type ladder (text→note→structured-claim) instantiates the constraining gradient for documents
+- [llm-interpretation-errors](./llm-interpretation-errors-README.md) — oracle theory, error correction, and reliability dimensions migrated here; the error-theory area applies verification concepts specifically to LLM interpretation failures
+- [tags](./tags-README.md) — applies learning theory to KB architecture and evaluation; [methodology-enforcement-is-constraining](./methodology-enforcement-is-constraining.md) bridges both areas
+- [document-system](./document-system-README.md) — the type ladder (text→note→structured-claim) instantiates the constraining gradient for documents

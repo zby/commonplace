@@ -1,6 +1,6 @@
 ---
 description: Hub for all tag indexes — browse the KB by conceptual domain rather than by directory
-type: kb/types/index.md
+type: kb/types/tag-readme.md
 index_source: tag-indexes
 status: current
 ---
@@ -13,17 +13,17 @@ For current-state documentation about the live Commonplace system rather than tr
 
 ## Tag Indexes
 
-- [Foundations](./foundations-index.md) — core theory: contextual competence, bounded context, reach, design methodology, composability
-- [Architecture](./architecture-index.md) — how Commonplace is structured and installed: repo layout, control-plane design, file-based storage
-- [Evaluation](./evaluation-index.md) — what works, what doesn't, what needs testing
+- [Foundations](./foundations-README.md) — core theory: contextual competence, bounded context, reach, design methodology, composability
+- [Architecture](./architecture-README.md) — how Commonplace is structured and installed: repo layout, control-plane design, file-based storage
+- [Evaluation](./evaluation-README.md) — what works, what doesn't, what needs testing
 - [Learning theory](./learning-theory-index.md) — constraining, distillation, verification, and memory theory used to reason about system improvement
-- [Document system](./document-system-index.md) — document types, writing conventions, and validation rules for structured notes
-- [Computational model](./computational-model-index.md) — programming-language framing for LLM instructions and orchestration
-- [Links](./links-index.md) — link semantics, navigation behavior, and link-management methodology
-- [Type system](./type-system-index.md) — why documents have types, what roles they serve, how structured writing improves quality
-- [LLM interpretation errors](./llm-interpretation-errors-index.md) — error taxonomy, oracle theory, error correction, and architectural responses to imperfect LLM interpretation
-- [Observability](./observability-index.md) — making hidden state, hidden failure, and quality drift visible enough for operators and maintenance loops to act on
-- [KB maintenance](./kb-maintenance-index.md) — operations, audits, and maintenance methodology
+- [Document system](./document-system-README.md) — document types, writing conventions, and validation rules for structured notes
+- [Computational model](./computational-model-README.md) — programming-language framing for LLM instructions and orchestration
+- [Links](./links-README.md) — link semantics, navigation behavior, and link-management methodology
+- [Type system](./type-system-README.md) — why documents have types, what roles they serve, how structured writing improves quality
+- [LLM interpretation errors](./llm-interpretation-errors-README.md) — error taxonomy, oracle theory, error correction, and architectural responses to imperfect LLM interpretation
+- [Observability](./observability-README.md) — making hidden state, hidden failure, and quality drift visible enough for operators and maintenance loops to act on
+- [KB maintenance](./kb-maintenance-README.md) — operations, audits, and maintenance methodology
 - [Related systems](../agent-memory-systems/README.md) — external systems tracked for comparison and convergence signals
 
 ## Workshop Layer

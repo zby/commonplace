@@ -33,7 +33,7 @@ This placement is load-bearing. `AGENTS.md` is loaded on every agent invocation,
 | Routing table | Framework | `AGENTS.md` `## Using the KB`, generated/templated |
 | Type system | Framework | `kb/types/` plus collection-local `kb/*/types/` directories with schemas and templates |
 | Writing conventions | Framework | `kb/*/COLLECTION.md` (per-collection) |
-| Link semantics | Framework | `kb/notes/links-index.md` and related guidance in `kb/instructions/` |
+| Link semantics | Framework | `kb/notes/links-README.md` and related guidance in `kb/instructions/` |
 
 Only the per-installation rows require human input. Framework rows are shipped from Commonplace and can be updated mechanically on upgrade.
 
