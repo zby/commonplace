@@ -242,6 +242,41 @@ def init_project(root: Path, name: str | None = None) -> InitReport:
     return report
 
 
+def direnv_warnings(root: Path) -> list[str]:
+    """Return setup-warning lines about the direnv prerequisite.
+
+    `commonplace-init` writes a `.envrc` but does not install direnv or run
+    `direnv allow`. Without those manual steps the `.envrc` is a silent no-op:
+    `.venv/bin` never lands on PATH and `commonplace-*` commands do not resolve
+    by bare name. Surface the gap at init time instead of letting the user
+    discover it as a "command not found" later. Returns an empty list when
+    nothing actionable is detected.
+    """
+    lines: list[str] = []
+    if shutil.which("direnv") is None:
+        lines.append(
+            "direnv is not installed. The generated .envrc puts .venv/bin on "
+            "PATH so commonplace-* commands run by bare name, but it stays a "
+            "no-op until the environment is activated."
+        )
+        lines.append(
+            "Recommended: install direnv, add its shell hook, then run "
+            "'direnv allow' in this directory."
+        )
+        lines.append(
+            "Without direnv: add 'export PATH=\".venv/bin:$PATH\"' to your "
+            "shell rc instead."
+        )
+    else:
+        lines.append(
+            "direnv is installed. Run 'direnv allow' in this directory so the "
+            "generated .envrc activates and .venv/bin lands on PATH; install "
+            "the direnv shell hook first if you have not already."
+        )
+    lines.append("See INSTALL.md step 3 (Activate the environment) for the exact steps.")
+    return lines
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", default=".", help="project root to initialize")
@@ -274,6 +309,12 @@ def main(argv: list[str] | None = None) -> int:
         and not report.preserved_different
     ):
         print("No changes needed.")
+
+    warnings = direnv_warnings(root)
+    if warnings:
+        print("\nEnvironment setup:")
+        for line in warnings:
+            print(f"- {line}")
     return 0
 
 

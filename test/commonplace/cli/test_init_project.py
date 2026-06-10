@@ -11,7 +11,11 @@ SRC_ROOT = Path(__file__).resolve().parents[4] / "src"
 if str(SRC_ROOT) not in sys.path:
     sys.path.insert(0, str(SRC_ROOT))
 
-from commonplace.cli.init_project import init_project, main  # noqa: E402
+from commonplace.cli.init_project import (  # noqa: E402
+    direnv_warnings,
+    init_project,
+    main,
+)
 
 
 def test_init_project_creates_core_directories(tmp_path: Path) -> None:
@@ -198,3 +202,40 @@ def test_main_does_not_imply_manual_edits_for_template_name_drift(
     assert "Preserved existing files differing from current scaffold output:" in captured.out
     assert "- AGENTS.md.template" in captured.out
     assert "local changes" not in captured.out
+
+
+def test_direnv_warnings_when_direnv_missing(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.setattr(
+        "commonplace.cli.init_project.shutil.which", lambda _: None
+    )
+    lines = direnv_warnings(tmp_path)
+    assert lines
+    assert any("direnv is not installed" in line for line in lines)
+    assert any("INSTALL.md" in line for line in lines)
+
+
+def test_direnv_warnings_when_direnv_present(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.setattr(
+        "commonplace.cli.init_project.shutil.which", lambda _: "/usr/bin/direnv"
+    )
+    lines = direnv_warnings(tmp_path)
+    assert lines
+    assert any("direnv allow" in line for line in lines)
+
+
+def test_main_emits_direnv_setup_section(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
+    monkeypatch.setattr(
+        "commonplace.cli.init_project.shutil.which", lambda _: None
+    )
+    exit_code = main(["--root", str(tmp_path), "--name", "myproject"])
+
+    captured = capsys.readouterr()
+    assert exit_code == 0
+    assert "Environment setup:" in captured.out
+    assert "direnv is not installed" in captured.out
