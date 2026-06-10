@@ -87,8 +87,6 @@ A design insight is worth a note when it changes how someone would build or oper
 - `kb/reference/adr/` — architecture decision records for the shipped Commonplace system
 - `kb/reference/link-vocabulary.md` — label catalogue and authoring guidance for `COLLECTION.md` authors (consult when revising outbound rules)
 
-Complete generated listings (`dir-index.md` pages, per-tag generated tails) are build-time materializations for the published site only — they are not committed and not on any agent read path (ADR 025). Enumerate candidates with scoped `rg` instead (recipes in `kb/reference/navigation.md`).
-
 Each tag's curated head is its `<tag>-README.md` (type `tag-readme`), small by type contract. Two validator-enforced frontmatter marks change what a reader may skip: `complete: true` means the README links every note carrying the tag, so the by-tag `rg` sweep is skippable; `covered_by: [children]` means every tagged note also carries a listed child tag, so the typed routing is trustworthy. Maintenance of the marks lives in `kb/types/tag-readme.md` (ADR 026).
 
 ## Vocabulary
