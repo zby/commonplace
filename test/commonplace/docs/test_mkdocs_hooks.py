@@ -98,6 +98,101 @@ tags: [kb-design]
     assert result.count("./curated.md") == 1
 
 
+def test_on_page_markdown_appends_tail_to_tag_readme_type(tmp_path: Path) -> None:
+    mkdocs_hooks._notes_by_tag.cache_clear()
+    notes = tmp_path / "kb" / "notes"
+    write(notes / "COLLECTION.md", "# Notes collection\n")
+    readme = write(
+        notes / "kb-design-README.md",
+        """---
+description: "Curated head for kb-design"
+type: kb/types/tag-readme.md
+index_source: tag
+index_key: kb-design
+---
+
+# kb-design
+""",
+    )
+    write(
+        notes / "tagged.md",
+        """---
+description: Tagged note
+type: kb/types/note.md
+tags: [kb-design]
+---
+
+# Tagged note
+""",
+    )
+    page = SimpleNamespace(
+        meta={
+            "type": "kb/types/tag-readme.md",
+            "index_source": "tag",
+            "index_key": "kb-design",
+        },
+        file=SimpleNamespace(abs_src_path=str(readme)),
+    )
+
+    result = mkdocs_hooks.on_page_markdown(
+        "# kb-design\n\nOrientation.\n",
+        page,
+        config={"docs_dir": str(tmp_path / "kb")},
+    )
+
+    assert "## Other tagged notes <!-- generated -->" in result
+    assert "- [Tagged note](./tagged.md) - Tagged note" in result
+
+
+def test_on_page_markdown_skips_empty_tail_for_complete_readme(tmp_path: Path) -> None:
+    mkdocs_hooks._notes_by_tag.cache_clear()
+    notes = tmp_path / "kb" / "notes"
+    write(notes / "COLLECTION.md", "# Notes collection\n")
+    readme = write(
+        notes / "kb-design-README.md",
+        """---
+description: "Curated head for kb-design"
+type: kb/types/tag-readme.md
+index_source: tag
+index_key: kb-design
+complete: true
+---
+
+# kb-design
+""",
+    )
+    write(
+        notes / "curated.md",
+        """---
+description: Curated note
+type: kb/types/note.md
+tags: [kb-design]
+---
+
+# Curated note
+""",
+    )
+    page = SimpleNamespace(
+        meta={
+            "type": "kb/types/tag-readme.md",
+            "index_source": "tag",
+            "index_key": "kb-design",
+            "complete": True,
+        },
+        file=SimpleNamespace(abs_src_path=str(readme)),
+    )
+    curated_body = "# kb-design\n\n- [Curated](./curated.md) — placed\n"
+
+    result = mkdocs_hooks.on_page_markdown(
+        curated_body,
+        page,
+        config={"docs_dir": str(tmp_path / "kb")},
+    )
+
+    # Every member is curated, so no generated section is appended at all
+    assert "Other tagged notes" not in result
+
+
 def test_on_page_markdown_links_collection_readme_to_dir_index(tmp_path: Path) -> None:
     notes = tmp_path / "kb" / "notes"
     readme = write(notes / "README.md", "# Notes\n")

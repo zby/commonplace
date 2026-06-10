@@ -20,6 +20,11 @@ from commonplace.lib.project_paths import (
 FIELD_NAME = "tags"
 MARKER = "<!-- generated -->"
 INDEX_TYPE = "kb/types/index.md"
+TAG_README_TYPE = "kb/types/tag-readme.md"
+# Page types that carry index_source/index_key and receive a build-time
+# generated listing. INDEX_TYPE remains for build-time virtual pages and
+# unmigrated indexes; TAG_README_TYPE is the committed curated head (ADR 026).
+TAG_PAGE_TYPES = {INDEX_TYPE, TAG_README_TYPE}
 GENERATED_HEADING_BY_SOURCE = {
     "tag": "## Other tagged notes",
     "tag-indexes": "## Other tag indexes",
@@ -38,7 +43,7 @@ def collect_notes_by_tag(
         content = path.read_text(encoding="utf-8")
         fm = frontmatter.parse(content).data
 
-        if fm.get("type") == INDEX_TYPE:
+        if fm.get("type") in TAG_PAGE_TYPES:
             continue
         rel_parts = path.relative_to(collection_dir).parts
         if "types" in rel_parts or ".collection" in rel_parts:
@@ -74,7 +79,7 @@ def index_source(path: Path, root: Path, content: str | None = None) -> str | No
     if is_type_definition_content(path, collection) or ".collection" in rel_parts:
         return None
     fm = index_frontmatter(path, content)
-    if fm.get("type") != INDEX_TYPE:
+    if fm.get("type") not in TAG_PAGE_TYPES:
         return None
     source = fm.get("index_source")
     if source in GENERATED_HEADING_BY_SOURCE:

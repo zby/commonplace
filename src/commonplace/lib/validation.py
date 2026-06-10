@@ -14,6 +14,19 @@ from commonplace.lib.note_parser import ParsedDocument, parse_document
 from commonplace.lib.type_resolver import TypeProfile, resolve_type, validate_instance
 
 
+# Weight gates for tag-readme artifacts: the type contract is that a tag's
+# curated head stays a cheap whole-read surface (ADR 026). Bytes gate; entry
+# count is reported as diagnosis only.
+TAG_README_SOFT_BYTES = 8 * 1024
+TAG_README_HARD_BYTES = 16 * 1024
+# Soft fan-out limit for covered_by: routing value needs the alternatives held
+# in mind at once; past this, group children under intermediate tags.
+TAG_README_MAX_FANOUT = 7
+# Validator messages must name the fixing instruction so the maintenance loop
+# is self-routing (ADR 026).
+_TAG_README_FIX_HINT = "see kb/instructions/maintain-curated-indexes.md"
+
+
 # A schema violation fails by default — the schema is the contract, so breaking a
 # constraint blocks unless its author explicitly opts down. A subschema lowers its
 # own severity with `severity: warn` (read from error.schema below), optionally
@@ -142,6 +155,105 @@ def validate_quote_citations(results: CheckResults, content: str) -> None:
         results.passes.append(f"quote-anchored citations: {found} well-formed")
 
 
+def _linked_md_targets(parsed: ParsedNote) -> set[Path]:
+    """Resolve the note's local markdown links to absolute paths."""
+    targets: set[Path] = set()
+    for link in parsed.document.links:
+        parsed_url = urlsplit(link)
+        if parsed_url.scheme or parsed_url.netloc:
+            continue
+        link_path = unquote(parsed_url.path)
+        if not link_path.endswith(".md") or Path(link_path).is_absolute():
+            continue
+        targets.add((parsed.path.parent / link_path).resolve())
+    return targets
+
+
+def validate_tag_readme(results: CheckResults, parsed: ParsedNote, *, repo_root: Path) -> None:
+    """Enforce the tag-readme type contract: weight gates plus the optional
+    `complete` (membership) and `covered_by` (coverage) marks (ADR 026)."""
+    from commonplace.lib.index_generated import (
+        collect_notes_by_tag,
+        collect_tag_index_entries,
+    )
+    from commonplace.lib.project_paths import collection_for_path
+
+    fm = parsed.document.frontmatter or {}
+
+    size = len(parsed.content.encode("utf-8"))
+    entry_count = len(re.findall(r"^\s*- \[", parsed.content, re.MULTILINE))
+    if size > TAG_README_HARD_BYTES:
+        results.fails.append(
+            f"weight gate: {size} B exceeds hard limit {TAG_README_HARD_BYTES} B "
+            f"({entry_count} entries) — curate harder, split the tag, or narrow it; {_TAG_README_FIX_HINT}"
+        )
+    elif size > TAG_README_SOFT_BYTES:
+        results.warns.append(
+            f"weight gate: {size} B exceeds soft limit {TAG_README_SOFT_BYTES} B "
+            f"({entry_count} entries) — plan the exit; {_TAG_README_FIX_HINT}"
+        )
+    else:
+        results.passes.append(
+            f"weight gate: {size} B within {TAG_README_SOFT_BYTES} B soft limit ({entry_count} entries)"
+        )
+
+    try:
+        collection = collection_for_path(parsed.path, repo_root)
+    except ValueError as exc:
+        results.fails.append(f"tag-readme: {exc}")
+        return
+
+    source = fm.get("index_source")
+    key = str(fm.get("index_key", ""))
+    notes_by_tag = collect_notes_by_tag(collection)
+
+    if fm.get("complete") is True:
+        if source == "tag":
+            members = [(path, title) for path, title, _ in notes_by_tag.get(key, [])]
+        else:
+            members = [(path, title) for path, title, _ in collect_tag_index_entries(collection, repo_root)]
+        linked = _linked_md_targets(parsed)
+        missing = [
+            path for path, _ in members
+            if path.resolve() not in linked and path.resolve() != parsed.path.resolve()
+        ]
+        if missing:
+            for path in missing:
+                results.fails.append(
+                    f"complete mark: missing entry for {path.relative_to(repo_root)} — "
+                    f"add it with a context phrase or drop the mark; {_TAG_README_FIX_HINT}"
+                )
+        else:
+            results.passes.append(f"complete mark: all {len(members)} members linked")
+
+    covered_by = fm.get("covered_by")
+    if isinstance(covered_by, list) and covered_by:
+        if len(covered_by) > TAG_README_MAX_FANOUT:
+            results.warns.append(
+                f"covered_by fan-out: {len(covered_by)} children exceeds ~{TAG_README_MAX_FANOUT} — "
+                f"group children under intermediate tags; {_TAG_README_FIX_HINT}"
+            )
+        covered_paths = {
+            path.resolve()
+            for child in covered_by
+            for path, _, _ in notes_by_tag.get(str(child), [])
+        }
+        uncovered = [
+            path for path, _, _ in notes_by_tag.get(key, [])
+            if path.resolve() not in covered_paths and path.resolve() != parsed.path.resolve()
+        ]
+        if uncovered:
+            for path in uncovered:
+                results.fails.append(
+                    f"covered_by: {path.relative_to(repo_root)} carries no listed child tag — "
+                    f"tag it with one of {covered_by} or revise the list; {_TAG_README_FIX_HINT}"
+                )
+        else:
+            results.passes.append(
+                f"covered_by: all tagged notes carry one of {len(covered_by)} children"
+            )
+
+
 def _schema_error_message(error: ValidationError) -> tuple[str, str]:
     path = tuple(str(part) for part in error.absolute_path)
     location = ".".join(path) if path else "document"
@@ -203,6 +315,8 @@ def validate_note(path: Path, *, repo_root: Path) -> CheckResults:
     validate_links_from_document(results, parsed.path, parsed.document.links)
     if parsed.note_type == "agent-memory-system-review":
         validate_quote_citations(results, parsed.content)
+    if parsed.note_type == "tag-readme":
+        validate_tag_readme(results, parsed, repo_root=repo_root)
     apply_schema_validation(results, parsed)
     return results
 

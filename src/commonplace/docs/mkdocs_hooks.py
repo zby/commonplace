@@ -16,6 +16,9 @@ from commonplace.lib import frontmatter, index_directory, index_generated
 from commonplace.lib.project_paths import collection_dirs, collection_for_path
 
 INDEX_TYPE = "kb/types/index.md"
+# Page types that act as a tag's landing: the committed tag-readme (ADR 026)
+# and the index type (build-time virtual pages, unmigrated indexes).
+TAG_PAGE_TYPES = {INDEX_TYPE, "kb/types/tag-readme.md"}
 
 # Recursion caps for per-collection dir-index generation. instructions stops
 # at one level because each cp-skill-* subdir is essentially a single SKILL.md
@@ -106,9 +109,9 @@ def _index_metadata(candidate: Path) -> tuple[str | None, str | None, str | None
 
 
 def _matches_tag_index(candidate: Path, tag: str) -> bool:
-    """Return True when a page declares itself as the index for a tag."""
+    """Return True when a page declares itself as the landing for a tag."""
     note_type, index_source, index_key = _index_metadata(candidate)
-    return note_type == INDEX_TYPE and index_source == "tag" and index_key == tag
+    return note_type in TAG_PAGE_TYPES and index_source == "tag" and index_key == tag
 
 
 def _find_tag_index(tag: str, note_dir: Path) -> str | None:
@@ -138,7 +141,7 @@ def _append_generated_tail(markdown: str, page, config) -> str:
     meta = page.meta or {}
     source = meta.get("index_source")
     if (
-        meta.get("type") != INDEX_TYPE
+        meta.get("type") not in TAG_PAGE_TYPES
         or source not in index_generated.GENERATED_HEADING_BY_SOURCE
         or config is None
         or page.file.abs_src_path is None
@@ -158,7 +161,9 @@ def _append_generated_tail(markdown: str, page, config) -> str:
         if source == "tag"
         else None,
     )
-    if not section:
+    # A complete-marked README curates every member, leaving the generated
+    # section as a bare heading — skip it rather than render an empty shell.
+    if not section or "\n- " not in section:
         return markdown
     return markdown.rstrip("\n") + "\n\n" + section
 

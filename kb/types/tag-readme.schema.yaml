@@ -1,0 +1,42 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+allOf:
+  - $ref: "./note-base.schema.yaml"
+  - type: object
+    properties:
+      frontmatter:
+        type: object
+        required:
+          - description
+          - type
+          - index_source
+        properties:
+          type:
+            const: kb/types/tag-readme.md
+          index_source:
+            enum:
+              - tag
+              - tag-indexes
+          index_key:
+            type: string
+            minLength: 1
+          complete:
+            type: boolean
+          covered_by:
+            type: array
+            minItems: 1
+            uniqueItems: true
+            items:
+              type: string
+              minLength: 1
+        additionalProperties: true
+  - if:
+      properties:
+        frontmatter:
+          properties:
+            index_source:
+              const: tag
+    then:
+      properties:
+        frontmatter:
+          required:
+            - index_key
