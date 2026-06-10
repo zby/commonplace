@@ -161,14 +161,18 @@ mv AGENTS.md.template AGENTS.md
 cat AGENTS.md.template >> CLAUDE.md
 ```
 
-Then review the merged file and fill in the `KB Goals` section for your project.
+Then review the merged file and fill in the per-project parts. The template's HTML comments mark every spot, but the load-bearing ones are:
 
-## 5. Verify search and indexes
+- **`KB Goals and Scope`** — Purpose, Scope (the out-of-scope list is what prevents scope creep), and Quality bar. Without these the agent has no basis for inclusion decisions.
+- **Command invocation (in `### Commands`)** — keep the variant matching your step-3 choice. If `.venv/bin` is on `PATH` (direnv or shell rc), keep the bare-name rule. If it is not feasible to put `.venv/bin` on `PATH` in this project, keep the variant that tells agents to invoke `.venv/bin/commonplace-validate`, `.venv/bin/pytest`, and so on — otherwise agents will retry failing bare commands.
+- **Navigation entry points** — add curated tag READMEs to the list as they emerge; the comment in the template explains when to create one.
 
-Commonplace works with repo-local indexes and `rg`; no semantic-search daemon is required.
+## 5. Verify validation and search
+
+Commonplace works with curated indexes and `rg`; no semantic-search daemon is required, and complete generated listings are built only for the published site (never committed).
 
 ```bash
-commonplace-refresh-indexes
+commonplace-validate kb/notes
 rg "^description:" kb/notes kb/reference kb/instructions --glob "*.md"
 rg "your search terms" kb/ --glob "*.md"
 ```
@@ -182,7 +186,7 @@ If you use Claude Code, you can skip the permission prompt for each `commonplace
   "permissions": {
     "allow": [
       "Bash(commonplace-validate:*)",
-      "Bash(commonplace-refresh-indexes:*)"
+      "Bash(commonplace-relocate-note:*)"
     ]
   }
 }
