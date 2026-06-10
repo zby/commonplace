@@ -36,6 +36,8 @@ This is why fighting to preserve completeness through growth is the wrong instin
 ## Where the instructions live: the type spec is maintenance-path only
 The full contract — gates, checks, exits, smells, when to declare or drop a mark — lives in the `tag-readme` type spec, and that is fine because **the spec is not on the reading path**. A tag-README is understood standalone: the field names are self-describing to a first-time reader (`complete: true`, `covered_by: [a, b]` mean what they say), the body is ordinary curated prose, and no consumer needs the spec to use the artifact correctly. Only _maintenance_ — declaring a mark, fixing a validator warning, executing an exit — requires loading the type instructions, and the validator message routes there.
 
+One refinement (2026-06-10): the marks' _read-side meaning_ is additionally frontloaded into `AGENTS.md`, because the operative consequence — "the rg sweep is skippable" / "the typed routing is trustworthy" — is not fully inferable from the field names, and the always-loaded layer delivers it at zero extra reads. The split is meaning → AGENTS.md (two sentences), mechanics → validator, maintenance → type spec.
+
 This puts a constraint on future field naming: read-side meaning must survive without the spec. A mark whose name needs the spec to decode would put the spec back on every reader's path and break the separation.
 ## The exits, analyzed
 When a complete README approaches the hard gate:
