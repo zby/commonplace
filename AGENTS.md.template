@@ -2,7 +2,7 @@
 
 <!-- One sentence: what this KB is and who it serves. -->
 
-## KB Goals
+## KB Goals and Scope
 
 ### Purpose
 
@@ -11,31 +11,25 @@ What decisions or actions does this KB support? Who uses it?
 Example: "This KB supports the API team in making design decisions about the payment service. It accumulates architectural reasoning, failure analysis, and integration patterns so that agents and developers can make informed decisions without re-deriving context from code and Slack history."
 -->
 
-### Domain
+### Scope
 
 <!--
-What is this KB about? Draw a scope boundary.
-Be specific enough that an agent can decide "does this belong?" without asking.
-Example: "Payment service architecture, integration patterns, and failure modes. Adjacent systems (auth, billing) are in scope only where they interact with payments. General distributed systems theory is in scope when it directly informs a specific design decision. Business rules and product requirements are out of scope — they live in the product wiki."
+What is this KB about? Draw a boundary an agent can apply without asking.
+Open with one or two sentences naming the domain; name adjacent domains and say whether they're in or out.
+Example: "Payment service architecture, integration patterns, and failure modes. Adjacent systems (auth, billing) are in scope only where they interact with payments."
+
+Then make the boundary operational with two lists. The out-of-scope list is the more valuable one — scope creep is the default failure mode, and naming what seems relevant but doesn't belong is what keeps the in-scope list meaningful.
+Examples in: design decisions, failure analysis, integration patterns, operational procedures, team conventions.
+Examples out: raw logs without analysis, business rules (live in the product wiki), general theory without specific application, code-level documentation (belongs in code comments).
 -->
 
-### Include
-
-<!--
-What types of knowledge belong here? Be concrete.
-Examples: design decisions, failure analysis, integration patterns, operational procedures, team conventions.
--->
+In scope:
 
 -
 -
 -
 
-### Exclude
-
-<!--
-What doesn't belong despite seeming relevant? This prevents scope creep.
-Examples: raw logs without analysis, business rules (live in product wiki), general theory without specific application, code-level documentation (belongs in code comments).
--->
+Out of scope:
 
 -
 -
@@ -51,10 +45,10 @@ Example: "A design decision is worth a note when it affects more than one endpoi
 
 ## Vocabulary
 
-This section declares the active vocabulary: terms with specific meanings throughout this KB.
+Terms needed to understand the project's structure and everyday operations, alphabetical. Each links its full definition.
 
 <!--
-Add project-specific terms only when the KB needs a stable operational meaning.
+Add a term only when agents need it to understand the project's structure or everyday operations; specialized vocabulary belongs in the artifacts that use it.
 Prefer backing definition notes under kb/notes/definitions/ when a short gloss is not enough.
 
 Example:
@@ -82,25 +76,27 @@ Collections are `kb/` subtrees with a local `COLLECTION.md`. Read the target col
 | `kb/commonplace/` | namespace, not a collection | Locating shipped library collections; do not treat the namespace itself as governed content. |
 | `kb/types/` | global type surface, not a collection | Looking up shared type specs used by both user and shipped collections. |
 
-A `COLLECTION.md` inside a non-collection namespace is an ordinary collection; a `COLLECTION.md` inside another collection is invalid and reported by validation.
+### Navigation
+
+For the full model, read `kb/commonplace/reference/navigation.md`. In short: use `rg` for cheap lexical search, scan titles and descriptions in curated indexes and scoped `rg` listings before opening full files, and follow authored links when local context makes the relationship useful.
+
+Entry points:
+
+- `kb/reference/README.md` — current-state documentation for this system and links to its ADRs
+- `kb/commonplace/reference/README.md` — shipped Commonplace documentation entry point
+
+<!-- Add curated tag READMEs here as they emerge. When 5+ related notes accumulate under a tag, create `kb/notes/<tag>-README.md` (type `kb/types/tag-readme.md`): an orientation paragraph plus selective picks with context phrases. It may declare validator-enforced marks — `complete: true` (links every tagged note) or `covered_by: [children]` (every tagged note carries a listed child tag); see `kb/types/tag-readme.md`. -->
 
 ```bash
 # Find notes by description
 rg "^description:" kb/notes/ kb/reference/ kb/instructions/ --glob "*.md"
 
-# Find notes by type
-rg "^type: note" kb/notes/ kb/reference/ kb/instructions/ --glob "*.md"
+# Find notes by type (types are path-valued)
+rg "^type: kb/types/note.md" kb/notes/ kb/reference/ kb/instructions/ --glob "*.md"
 
 # Find notes by tag
 rg "^tags:.*my-tag" kb/notes/ kb/reference/ kb/instructions/ --glob "*.md"
 ```
-
-Key entry points:
-
-- `kb/notes/index.md` — auto-generated directory listing (rebuild with `commonplace-generate-notes-index kb/notes`)
-- `kb/reference/README.md` — current-state documentation for this system and links to its ADRs
-
-<!-- Add curated tag indexes here as they emerge. Create a tag index when 5+ related notes accumulate without navigation structure. -->
 
 ### Skills
 
@@ -108,9 +104,15 @@ Key entry points:
 
 ### Commands
 
-The `llm-commonplace` package provides `commonplace-*` CLI commands for validation, indexing, snapshots, note operations, and the review system. For the full reference, read [kb/commonplace/reference/commands.md](./kb/commonplace/reference/commands.md).
+The `llm-commonplace` package provides `commonplace-*` CLI commands for validation, snapshots, note operations, and the review system. For the full reference, read [kb/commonplace/reference/commands.md](./kb/commonplace/reference/commands.md).
+
+<!--
+Keep the invocation variant that matches this project's environment (INSTALL.md step 3) and delete the other:
+-->
+Call `commonplace-*` commands and `pytest` by bare name — `.venv/bin` is on `PATH` (direnv or shell rc); do not prepend `.venv/bin/` or wrap in `uv run`.
+<!-- OR, if this project does not put .venv/bin on PATH:
+Invoke commands through the project venv: `.venv/bin/commonplace-validate`, `.venv/bin/pytest`, etc. Bare names will not resolve.
+-->
 
 For review work (single-note review, triage, ack, or sweep), read `kb/commonplace/instructions/REVIEW-SYSTEM.md`.
 For fixing review warnings, read `kb/commonplace/instructions/FIX-SYSTEM.md`.
-
-For writing conventions, read the target collection's `COLLECTION.md`; it is the local authoring and routing contract for that collection.
