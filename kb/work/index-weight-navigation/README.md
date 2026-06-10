@@ -33,11 +33,11 @@ The axis is **curated head vs generated complete list**, not complete-vs-focused
 
 2. **Curated heads — keep committed, at every scope.** A directory's curated head is its `README.md` / `COLLECTION.md`; a tag's curated head is the editorial body of its tag index (intro + hand-grouped sections). These carry orientation generation cannot produce, and they survive once the generated tail is detached. Retiring `dir-index.md` loses no curation precisely because a directory's curation already lives in a separate file (README); the same move applied to tags means detaching the tag index's generated tail so the curated body stands alone — the tag index *is* the tag's README.
 
-3. **Colocation is conditional on weight.** For a small tag, keeping the short generated list colocated under the curated head is the ergonomic win (orientation next to its entries). For a popular tag, the generated tail is exactly the context debt this workshop targets — so past a weight threshold the tail is detached to build-time/query (see weight pressure below). Small: colocate; large: detach.
+3. **Weight is a contract on the curated head, not a colocation dial.** *(Revised 2026-06-10; the original framing — small tags colocate their generated list, large ones detach it — is superseded: nothing generated is committed at any size.)* The committed curated head (`tag-readme`) is small by type contract (weight gates), and a head whose curated entries cover the tag's full membership may declare `complete: true` — legal only under the gates, enforced by validation.
 
 4. **Uncurated slices — scoped `rg`/query.** Tags or slices that do not warrant a curated head are served by a scoped query (by tag, keyword, or area), not a standalone file.
 
-Net: note files are the single source of truth; humans get full build-time listings (directory and tag); agents get curated heads plus scoped query. The pathological artifact is the *generated complete listing* at any scope — not curation, and not generated lists while they stay small and colocated.
+Net: note files are the single source of truth; humans get full build-time listings (directory and tag); agents get curated heads plus scoped query. The pathological artifact is the *generated complete listing* at any scope — never curation, which may even be complete as a declared, enforced property under the weight gates.
 
 ## Design sketch
 
@@ -46,7 +46,7 @@ Net: note files are the single source of truth; humans get full build-time listi
 - `commonplace-refresh-indexes` stops writing per-collection `dir-index.md` to the repo; that generation moves into the mkdocs build (plugin or hook) so the published site still has browsable inventories.
 - The per-tag `## Other tagged notes` generated tail gets the same treatment: not committed, injected at mkdocs build time for human readers.
 - `git rm` the existing `dir-index.md` files and gitignore them; strip the committed generated tail from tag indexes.
-- Curated heads stay committed: directory `README.md` / `COLLECTION.md`, and the editorial body of each tag index. A small tag may keep a short colocated list; a large one detaches it (see weight pressure).
+- Curated heads stay committed: directory `README.md` / `COLLECTION.md`, and the tag's `<tag>-README.md`. Nothing generated is colocated; a small tag's README may instead declare enforced completeness (see §4).
 
 ### 2. The agent query path: scoped `rg`, no new command
 
@@ -67,22 +67,23 @@ rg returns `path + description`, not the human H1 title; the path stands in for 
 Ordinary discovery prefers, in order:
 
 1. already-loaded context and user-named targets
-2. curated focused indexes (tag / area) — read whole, since they are scoped and colocated
+2. curated tag READMEs — read whole, since they are small by type contract
 3. scoped `rg` over the destination collection or tag (recipes in §2)
 4. candidate body reads
 5. no complete-`dir-index` step — it no longer exists in the repo; the mkdocs site serves humans
 
 `cp-skill-write` is already off the complete index (rg duplicate check + in-hand links). `cp-skill-connect` stops reading complete destination `dir-index.md`; in standard mode it reads curated focused indexes where they exist, otherwise scoped `rg`, and reserves broad scans for deep mode.
 
-### 4. Weight pressure decides colocation
+### 4. Weight gates are the tag-readme type contract
 
-The colocation decision (point 3) is governed by a weight threshold on the curated index as an agent read surface:
+*(Revised 2026-06-10: weight no longer governs colocation of a generated tail — nothing generated is committed; it is the contract that the tag's curated head stays a cheap read surface.)*
 
-- index generation/validation reports per-index weight (bytes, entry count).
-- validation warns past a soft threshold and fails past a hard one.
-- past threshold, the index must detach its generated tail (to build-time/query), be curated harder, or have its tag narrowed — because a curated index is a *read surface*, it must stay context-feasible.
+- validation reports per-README weight (bytes, with entry count as diagnosis).
+- every `tag-readme` warns past the soft threshold and fails past the hard one — no exemptions.
+- past threshold, the README must be curated harder, its tag split, or its tag narrowed; a `complete` mark must be dropped if full membership no longer fits under the gates.
+- splits follow the split discipline (see Resolved 2026-06-10) so the tag structure stays visible.
 
-The complete `dir-index` is exempt: it is no longer committed or an agent read surface at all.
+Build-time artifacts (`dir-index` pages, generated tails) are exempt: they are not committed and not agent read surfaces at all.
 
 ## Resolved (2026-06-08)
 
@@ -102,7 +103,8 @@ The `index` type was doing two jobs: being an *index* (complete enumeration) and
 - **Completeness is a declared, enforced property, not a separate artifact.** A tag-README may set a frontmatter field (working name `complete: true`; absent = selective) claiming it links *every* note carrying the tag. Validation enforces the claim with the same membership query as the rg recipe — an unenforced claim would be worthless, since a careful agent would run the rg sweep anyway. When the mark is present, consumers like `cp-skill-connect` skip the by-tag rg call for that tag. On the published site, a complete README's generated tail is automatically empty (the tail already excludes curated links), so nothing special is needed at build time.
 - **Directory READMEs stay free form.** They serve heterogeneous jobs (operator guide, survey landing, project framing) and `COLLECTION.md` already carries each collection's enforceable contract. Unification with tags happens at the name level (README = curated head), not the type level; type them only if a shared structure emerges.
 - **Weight gates are the type contract (revises decision #3):** every `tag-readme` sits under the 8/16 KB gates, no exemptions — the contract is that the tag's curated head is *small*, a cheap read surface. The `complete` mark is therefore only legal while the tag's full membership fits under the gates: a growing tag drops the mark (readers fall back to the scoped rg) or splits. A complete README hitting the soft warn is the early signal that the tag is outgrowing completeness. `learning-theory-index` (18.8 KB) cannot declare complete; it trims to selective or splits the tag.
-- **The hub** (`tags-index.md`) becomes `tags-README.md` under the same type, complete-marked over the set of tag-READMEs and enforced the same way (recommendation — confirm at migration). The `index` type shrinks to the build-time virtual pages.
+- **The hub** (`tags-index.md`) becomes `tags-README.md` under the same type, complete-marked over the set of tag-READMEs and enforced the same way (recommendation — confirm at migration; the schema must cover the hub's binding, today's `index_source: tag-indexes`, alongside the per-tag binding). The `index` type shrinks to the build-time virtual pages.
+- **Forced splitting is kept as a tripwire, not a membership rule (arscontexta lesson).** The tag indexes descend from arscontexta-style areas: forced small (~40 notes) with *exclusive* membership — "tag the most precise area", no parent/child dual-tagging (see ADR 004's context). The useful half was the tripwire: growth forced an explicit editorial act instead of silent accretion. The harmful half was the membership rule: after a split, notes moved to the child tag vanished from the parent's surface while conceptually still belonging to it, and the parent/child structure itself lived nowhere readable — the hierarchy went invisible. The weight gates keep the tripwire (growth trips validation and forces a decision) with a wider remedies menu — trim, split, or narrow — because our heads are selective-by-default rather than forced-complete. **Split discipline:** when a tag splits, either child-tagged notes *keep* the parent tag (tags overlap per ADR 004 — parent membership queries stay truthful, and the parent README goes selective, linking the child READMEs with context phrases, so the structure is visible exactly where it is read) or the parent tag is retired entirely. The forbidden middle — some child notes keep the parent tag, some don't — recreates arscontexta's invisible structure.
 
 ## Open decisions
 
@@ -112,7 +114,7 @@ The `index` type was doing two jobs: being an *index* (complete enumeration) and
    - **Bytes, not entry count.** Bytes are the unit of context cost — the property the threshold protects — and the eval framework already prices everything in bytes (note ≈ 2 KB, skill body ≈ 8–12 KB, AGENTS.md ≈ 15–18 KB, fork budget ≈ 50 KB). Entry count is reported alongside as *diagnosis* (it discriminates "curate harder" from "split the tag") but does not gate: a 60-entry bare list can weigh less than a 20-entry essayish index, and it's the bytes that hurt.
    - **Calibration (measured 2026-06-10, post-tail-strip):** median curated tag index ≈ 3.5 KB; soft 8 KB ≈ one skill body — the point where a navigation aid costs as much as the procedure it serves (~25–30 entries with context phrases); hard 16 KB ≈ AGENTS.md — an index costing as much as the whole always-loaded control plane is indefensible as a routing aid. Today the soft gate flags exactly the two real outliers (`learning-theory` 18.8 KB / 55 entries, `computational-model` 10.5 KB / 35 entries) and the hard gate only `learning-theory` — which genuinely needs splitting.
    - **Global default, no override machinery.** Per YAGNI and the ADR 024 pattern: if a specific index ever earns an exception, key it explicitly on that index then; don't build the override map now.
-   - **Scope: index-typed artifacts only.** Collection READMEs are also curated heads but serve as landing/contract pages loaded deliberately (`kb/reference/README.md` is 14.9 KB and would warn); extending to them is cheap later if their weight starts hurting.
+   - **Scope: `tag-readme` artifacts.** Collection READMEs are also curated heads but serve as landing/contract pages loaded deliberately and stay free form (`kb/reference/README.md` is 14.9 KB and would warn); extending to them is cheap later if their weight starts hurting.
    - **Sequencing (ADR 024 blast-radius rule — audit before flipping):** land the soft warn first; the hard fail goes in only after `learning-theory-index.md` is trimmed or its tag split below the gate, otherwise validation is red on day one.
    - Remedies past threshold (unchanged from the design sketch): curate harder, split the tag, or narrow it.
 4. ~~Declare focused-routing vs archival?~~ — **resolved (2026-06-10) by the type split above:** the declaration exists and is richer than the original question — `tag-readme` is the routing surface by type, and the `complete` mark declares the enumeration contract, machine-enforced.
