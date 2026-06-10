@@ -105,8 +105,6 @@ Terms needed to understand the project's structure and everyday operations, alph
 - **System-definition artifact** — a retained artifact the system consumes with binding force: instruction, enforcement, routing, validation, or configuration (skills, schemas, COLLECTION.md files, validators). Contrast a knowledge artifact, consumed as evidence or advice that informs without binding. See `kb/notes/definitions/system-definition-artifact.md`.
 - **Workshop** — a named workspace for work-in-flight documents, under `kb/work/<workshop-name>/`. Value is consumed rather than accumulated: a finished workshop produces library artifacts (notes, ADRs) and is deleted. See `kb/notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md`.
 
-The specialized vocabulary for classifying external memory systems (retained artifact, operative part, storage substrate, lineage, behavioral authority, knowledge artifact) is not needed for ordinary work — it lives in `kb/notes/artifact-analysis-README.md` and is loaded by the review skill and type spec that use it.
-
 ## Development
 
 - **Use `python3`** for stdlib-only throwaway tooling. Commonplace runtime code should live in the Python package and be invoked through `commonplace-*` commands.
