@@ -2,8 +2,6 @@
 
 Reference documentation for the Commonplace system — how to operate it and how it works.
 
-Navigation: [directory index](./dir-index.md).
-
 This collection answers two kinds of question:
 
 - **How do I...?** — operational how-tos for the common workflows your agent runs on your behalf: writing, ingesting, connecting, validating, reviewing, and so on.
@@ -84,7 +82,7 @@ For the full read path and scaling direction, see [navigation.md](./navigation.m
 - "Connect `kb/notes/my-new-note.md` to related notes."
 - "I just wrote a note on X. Find what it should link to."
 
-*What happens.* The agent reads the source collection's `COLLECTION.md` for its per-destination outbound rules, prospects each authorised destination (dir-index, tag indexes, body search, link-following), applies the articulation test, labels candidates from the destination's authorised set, and writes a connection report. The skill never edits notes — the report is the entire deliverable.
+*What happens.* The agent reads the source collection's `COLLECTION.md` for its per-destination outbound rules, prospects each authorised destination (curated indexes, scoped `rg` description listings, body search, link-following), applies the articulation test, labels candidates from the destination's authorised set, and writes a connection report. The skill never edits notes — the report is the entire deliverable.
 
 *What you get.* A report at `kb/reports/connect/<collection>/<note-name>.connect.md` (gitignored) listing candidate outbound edges, bidirectional candidates, reverse-edge candidates (notes that should link *to* this target under their own COLLECTION.md rules), off-authorisation candidates (articulated but outside the authorised label set), index memberships, synthesis opportunities, and a discovery trace. Review the candidates and apply the ones worth keeping — connect never mutates the source, so applying the suggestions is a separate step.
 
@@ -162,8 +160,6 @@ Most operations go through the agent, but a few CLI commands are reasonable to r
 |---|---|
 | `uv run commonplace-validate <path>` | Run the deterministic validator on a note or directory |
 | `uv run commonplace-relocate-note <note> --to <dest> [--apply]` | Move or rename a note with link rewrites and mkdocs redirect; dry-run by default |
-| `uv run commonplace-generate-notes-index <dir>` | Rebuild an auto-generated index file |
-| `uv run commonplace-refresh-indexes` | Rebuild generated index sections across the KB |
 | `uv run commonplace-github-snapshot <url>` | Snapshot a GitHub issue, PR, or repo README into `kb/sources/` |
 | `uv run commonplace-x-snapshot <url>` | Snapshot a Twitter/X post into `kb/sources/` |
 

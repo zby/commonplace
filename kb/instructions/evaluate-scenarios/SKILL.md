@@ -33,8 +33,8 @@ Read each scenario. Each has a `## Forks` section with one subsection per fork; 
 |---|---|---|
 | `notesize` | 2,000 B | average note/body read |
 | `candidates` | 3 | content notes opened where a fork prospects bodies |
-| `spared_bodies` | 3 | bodies a dir-index read lets a fork skip |
-| `index_size` | 3,000 B | one dir-index / area index read |
+| `spared_bodies` | 3 | bodies an index or description-listing read lets a fork skip |
+| `index_size` | 3,000 B | one curated index read or scoped description listing |
 | `validate_out` | 500 B | bytes a `commonplace-validate` run returns into context |
 | `budget` | 50,000 B | usable-window soft ceiling for the feasibility flag (overhead + content + room to reason) |
 | `agents_per_fork` | off | if `on`, add AGENTS.md overhead to every fork, not only where the scenario lists it (the "is AGENTS.md re-injected?" assumption) |
@@ -47,14 +47,14 @@ For each `overhead` row, read the file named in **source** and measure it:
 wc -c < {source-path}
 ```
 
-Measure each distinct file once and reuse the number, but **add it to every fork that lists it** — do not amortize across forks. A `commonplace-validate` (or other tool) source contributes `validate_out` bytes and 1 hop, not a file measurement. A dir-index or area index given as a concrete path is measured with `wc -c` like any file — these can be large (the `kb/notes` dir-index is tens of KB and grows with collection size); `index_size` applies only to a generic unnamed index the scenario does not path.
+Measure each distinct file once and reuse the number, but **add it to every fork that lists it** — do not amortize across forks. A `commonplace-validate` (or other tool) source contributes `validate_out` bytes and 1 hop, not a file measurement. An index given as a concrete path is measured with `wc -c` like any file; `index_size` applies only to a generic unnamed index or scoped listing the scenario does not path. (Complete `dir-index.md` listings no longer exist in the repo — ADR 025; a legacy scenario that lists one should be re-costed as a scoped `rg` listing.)
 
-Common overhead sources: `AGENTS.md`, the target `COLLECTION.md`, the type-spec (`kb/types/*.md`), the invoked skill body (`kb/instructions/cp-skill-*/SKILL.md`), `kb/notes/dir-index.md` and area indexes.
+Common overhead sources: `AGENTS.md`, the target `COLLECTION.md`, the type-spec (`kb/types/*.md`), the invoked skill body (`kb/instructions/cp-skill-*/SKILL.md`), and curated tag indexes.
 
 ### 4. Estimate content and spared bytes (per fork)
 
 - `content` row: `notesize` per body, times the count implied by the hop range (use the midpoint). A row marked "the insight"/"already in session" with hops 0 contributes its rough size if stated, else `notesize`.
-- `spared` row: a **negative** credit, `spared_bodies × notesize` minus the `index_size` that replaced them (the dir-index read is already counted as overhead).
+- `spared` row: a **negative** credit, `spared_bodies × notesize` minus the `index_size` that replaced them (the index or listing read is already counted as overhead).
 
 ### 5. Count hops (per fork)
 
@@ -111,7 +111,7 @@ Overhead sources measured: {file: bytes, ...; note any counted in multiple forks
 - COLLECTION.md: ~4,000–8,000 B
 - type-spec (`kb/types/*.md`): ~2,000–4,000 B
 - skill bodies (`cp-skill-*`): ~8,000–12,000 B
-- `kb/notes` dir-index: tens of KB, grows with note count
+- scoped `rg` description listing: roughly 150 B per matching note — grows with the slice, not the collection
 
 If a number is implausible, re-read and re-measure.
 

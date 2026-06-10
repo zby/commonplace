@@ -126,7 +126,6 @@ Three feedback loops, separately useful:
 ## Verify the whole onboarding
 
 - Every new collection has a valid `COLLECTION.md` and appears in the `CLAUDE.md` routing table.
-- `commonplace-generate-notes-index kb/notes` runs clean.
 - `cp-skill-validate` passes on a sampled note from each collection.
 - The operator can ask a fresh Claude Code session a project-specific question and get an answer grounded in their KB, not invented.
 

@@ -110,12 +110,12 @@ The complete `dir-index` is exempt: it is no longer committed or an agent read s
 ## Candidate implementation sequence
 
 1. ~~Decide the mkdocs generation mechanism~~ — **done: extend `mkdocs_hooks.py` (decision #1).**
-2. Document the scoped `rg` recipes (§2) in `navigation.md` as the agent path. *(No command to build — ADR 025.)*
-3. Move complete-listing generation (dir-index + per-tag tail) into the mkdocs build; stop writing them to the repo.
-4. `git rm` + gitignore the `dir-index.md` files; strip the committed generated tail from tag indexes.
-5. Update references per the enumerated sweep list (decision #5): primary docs, other live docs, and code consumers.
+2. ~~Document the scoped `rg` recipes (§2) in `navigation.md`~~ — **done (2026-06-09):** recipes plus the build-time-only policy live in `kb/reference/navigation.md`.
+3. ~~Move complete-listing generation into the mkdocs build~~ — **done (2026-06-09):** `mkdocs_hooks.py` emits `dir-index` pages as virtual files (`on_files`) and appends tag tails (`on_page_markdown`) via in-memory `index_directory.collect_index_pages` / `index_generated.generated_section_for_index`; collection READMEs get a build-time "Complete file listing" link. The repo-writing CLIs (`commonplace-refresh-indexes`, `commonplace-sync-generated-index`, `commonplace-generate-notes-index`) and the CI refresh step are retired.
+4. ~~`git rm` + gitignore + strip tails~~ — **done (2026-06-09):** 67 `dir-index.md` files removed and gitignored; 16 tag indexes stripped to their curated bodies.
+5. ~~Update references per the enumerated sweep list (decision #5)~~ — **done (2026-06-09):** primary docs, live docs, code consumers, plus `test/scenarios/` cost tables and the connect-report trace template.
 6. Add curated-index weight reporting + validation thresholds.
-7. ~~Promote the durable conclusions~~ — theory note and ADR 025 both done; remaining promotion is reference-doc updates folded into step 5.
+7. ~~Promote the durable conclusions~~ — theory note and ADR 025 both done; reference-doc updates landed with step 5.
 
 ## Closure criteria
 

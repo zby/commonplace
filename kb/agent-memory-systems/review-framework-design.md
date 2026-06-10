@@ -7,7 +7,7 @@ status: current
 
 # Review framework and comparison matrix: design and decisions
 
-This collection reviews external agent-memory systems against a shared vocabulary so independent systems can be set side by side. Two artifacts carry that comparison: the per-system [reviews](./reviews/dir-index.md), written to the [review type spec](./types/agent-memory-system-review.md), and [`systems.csv`](./systems.csv), a matrix **parsed from the reviews** by `commonplace.lib.systems_matrix` (run via `scripts/build_systems_matrix.py`). This note records the motivations and the design decisions behind that machinery, so later changes start from the reasoning rather than re-deriving it.
+This collection reviews external agent-memory systems against a shared vocabulary so independent systems can be set side by side. Two artifacts carry that comparison: the per-system reviews under `reviews/`, written to the [review type spec](./types/agent-memory-system-review.md), and [`systems.csv`](./systems.csv), a matrix **parsed from the reviews** by `commonplace.lib.systems_matrix` (run via `scripts/build_systems_matrix.py`). This note records the motivations and the design decisions behind that machinery, so later changes start from the reasoning rather than re-deriving it.
 
 It is a collection-scoped decision log, deliberately *not* a `kb/reference/adr/` record: those govern the shipped Commonplace system, whereas this governs how *this collection* reviews and compares external systems. The format is ADR-style (context / decision / consequences) for rigour.
 

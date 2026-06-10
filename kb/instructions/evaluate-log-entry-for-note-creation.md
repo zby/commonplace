@@ -27,11 +27,11 @@ Extract:
 
 Rewrite the proposal in one sentence in your own words. If you cannot restate it clearly, do not create a note yet.
 
-### 2. Read the full notes index first
+### 2. Scan note descriptions first
 
-Read `kb/notes/dir-index.md` before opening individual notes.
+List candidate notes at description resolution before opening individual notes — run the scoped `rg` recipes from `kb/reference/navigation.md` over `kb/notes/` (by the proposal's key terms and any matching tags; `rg '^description:' kb/notes/ --glob '*.md'` for a full sweep).
 
-Scan the entire index, not just keyword matches. Flag notes whose descriptions suggest they may already cover:
+Scan the listing broadly, not just exact keyword matches. Flag notes whose descriptions suggest they may already cover:
 
 - the same mechanism
 - the same distinction
@@ -47,7 +47,7 @@ Read the notes and source ingests most likely to overlap with the proposal.
 Prioritise:
 
 1. Notes explicitly named in the log entry
-2. Notes flagged from `kb/notes/dir-index.md`
+2. Notes flagged in the description scan
 3. Any directly relevant source ingests
 
 Read enough to answer:

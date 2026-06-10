@@ -28,8 +28,3 @@ For current-state subsystem documentation and ADR navigation, start at [../refer
 - [instruction-generation](../reference/instruction-generation.md) — current-state: the Commonplace `commonplace-init` build step, scaffold trees, and substitution points that implement build-time generation today
 - [scenario-decomposition-drives-architecture](./scenario-decomposition-drives-architecture.md) — concrete use cases decomposed into step-by-step context needs
 - [scenario-architecture](../reference/scenario-architecture.md) — current-state: the two-tree split, the escalation path to `commonplace/kb/`, the `AGENTS.md` fragment contract, and the `test/scenarios/` measurement surface
-
-## Other tagged notes <!-- generated -->
-
-- [Agent runtimes decompose into scheduler context engine and execution substrate](./agent-runtimes-decompose-into-scheduler-context-engine-and-execution.md) - Practitioner runtime taxonomies converge on three separable components — scheduler, context engine, and execution substrate — because each solves a different class of model limitation
-- [Always-loaded context mechanisms in agent harnesses](./always-loaded-context-mechanisms-in-agent-harnesses.md) - Survey of always-loaded context mechanisms across agent harnesses — system prompt files, capability descriptions, memory, and configuration injection — cataloguing what each carries, how write policies differ, and where the gaps are

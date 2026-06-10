@@ -59,8 +59,8 @@ Each `COLLECTION.md`'s "Outbound linking conventions" section is **the single au
 
 Two skills consume this directly:
 
-- **[cp-skill-write](../instructions/cp-skill-write/SKILL.md)** reads the source `COLLECTION.md`, treats its outbound section as the authoritative label and reader-need reference, and prospects per destination using cheap surfaces (dir-index, already-loaded context, user-named targets).
-- **[cp-skill-connect](../instructions/cp-skill-connect/SKILL.md)** reads the source `COLLECTION.md`, enumerates destination blocks, runs the full prospecting procedure on each (search guidance, dir-index, tag indexes, body search, link-following), and labels candidates from the destination's authorised set. Candidates that pass the articulation test but fall outside any authorised label go in a dedicated "Off-authorisation candidates" report section as a signal for the collection author.
+- **[cp-skill-write](../instructions/cp-skill-write/SKILL.md)** reads the source `COLLECTION.md`, treats its outbound section as the authoritative label and reader-need reference, and commits only links already in hand (a targeted `rg` duplicate check, already-loaded context, user-named targets).
+- **[cp-skill-connect](../instructions/cp-skill-connect/SKILL.md)** reads the source `COLLECTION.md`, enumerates destination blocks, runs the full prospecting procedure on each (search guidance, curated indexes, scoped `rg` description listings, body search, link-following), and labels candidates from the destination's authorised set. Candidates that pass the articulation test but fall outside any authorised label go in a dedicated "Off-authorisation candidates" report section as a signal for the collection author.
 
 There is no compiled topology and no separate vocabulary document for the skills to read; live `COLLECTION.md` reads remove the drift risk a compile step would introduce. A separate authoring resource at [`link-vocabulary.md`](./link-vocabulary.md) catalogues labels and authoring guidance for `COLLECTION.md` authors revising the outbound rules; note writers and the connect skill do not read it.
 

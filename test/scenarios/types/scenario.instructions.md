@@ -8,9 +8,9 @@ Every `cp-skill-*` runs `context: fork`. The unit that matters is the individual
 
 ## Classify every load
 
-- **overhead** — read only because of the framework. Give a real file path so the harness can measure bytes: AGENTS.md, the target COLLECTION.md, the selected type-spec, the invoked skill body, dir-index / area indexes, a validate invocation.
+- **overhead** — read only because of the framework. Give a real file path so the harness can measure bytes: AGENTS.md, the target COLLECTION.md, the selected type-spec, the invoked skill body, curated indexes / scoped `rg` listings, a validate invocation.
 - **content** — task/source material read regardless of framework. Usually "variable"; give a byte estimate in Notes.
-- **spared** — content the framework let this fork skip (dir-index line instead of body, frontloaded answer, distilled artifact). Record as a credit (a negative content load).
+- **spared** — content the framework let this fork skip (a description line instead of a body, frontloaded answer, distilled artifact). Record as a credit (a negative content load).
 
 ## Count hops
 

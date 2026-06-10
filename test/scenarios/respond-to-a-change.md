@@ -30,22 +30,22 @@ Notes: the evidence-assembly phase runs in the main session — overhead is just
 | the assembled evidence | content | variable | 0-1 |
 | targeted validation | overhead | `commonplace-validate` run | 1 |
 
-Notes: identical to write-a-note Fork 2 — no dir-index read; near-duplicate detection is a targeted `rg`, all discovery deferred to connect. The evidence assembled in Fork 1 is the content the write is about. An ADR response uses `kb/reference/types/adr.md` and `kb/reference/COLLECTION.md` instead (one extra type hop).
+Notes: identical to write-a-note Fork 2 — no collection-wide listing read; near-duplicate detection is a targeted `rg`, all discovery deferred to connect. The evidence assembled in Fork 1 is the content the write is about. An ADR response uses `kb/reference/types/adr.md` and `kb/reference/COLLECTION.md` instead (one extra type hop).
 
 ### Fork 3 — cp-skill-connect (context: fork) — only if the response is a KB note
 | load | kind | source | hops |
 |---|---|---|---|
 | connection procedure | overhead | `kb/instructions/cp-skill-connect/SKILL.md` | 0 |
 | source-collection linking rules | overhead | `kb/notes/COLLECTION.md` | 1 |
-| dir-index of every authorized destination | overhead | `kb/{notes,reference,agent-memory-systems,sources,instructions}/dir-index.md` | 5 |
+| curated heads + scoped `rg` description listings per authorized destination | overhead | destination `README.md` / tag indexes + `rg` listings | 5 |
 | the new note + candidates | content | variable | 2-5 |
 
-Notes: identical to write-a-note Fork 3 — full prospecting re-reads all five authorized dir-indexes (~137 KB), the second such read in the operation.
+Notes: identical to write-a-note Fork 3 — full prospecting covers all five authorized destinations via curated heads plus scoped listings (ADR 025; previously this re-read ~137 KB of dir-indexes).
 
 ## Variants
 
-**External output (PR comment / message):** only Fork 1 runs — the cheapest path, overhead ≈ AGENTS.md, no dir-index reads.
+**External output (PR comment / message):** only Fork 1 runs — the cheapest path, overhead ≈ AGENTS.md, no destination prospecting.
 
-**KB-note output:** Forks 2-3 as in write-a-note; this is where the heavy navigation overhead (skill bodies + dir-indexes) is incurred.
+**KB-note output:** Forks 2-3 as in write-a-note; this is where the heavy navigation overhead (skill bodies + destination prospecting) is incurred.
 
 **Escalation (installed projects):** extra `commonplace/kb/notes/` reads can occur in Fork 1 (thin evidence) or Fork 2 (response doesn't fit a standard type) — two escalation points.

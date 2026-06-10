@@ -24,9 +24,3 @@ Core theory that the rest of the KB builds on. These notes define the quality cr
 
 - [agent context is constrained by soft degradation not hard token limits](./agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md) — the binding constraint is the soft degradation curve, not the hard token limit; agents are in the same soft-bound family as human cognition and organizational learning
 - [soft-bound traditions as sources for context engineering strategies](./soft-bound-traditions-as-sources-for-context-engineering-strategies.md) — catalog of twelve traditions with transfer assessment: what's already working, what's plausible, what's aspirational
-
-## Other tagged notes <!-- generated -->
-
-- [Access burden and transformation burden are independent query dimensions](./access-burden-and-transformation-burden-are-independent-query.md) - Queries have two independent difficulty axes — finding inputs (access) and producing the answer (transformation) — conflating them misroutes symbolic transformations through semantic processing
-- [An agentic KB maximizes contextual competence through discoverable, composable, trusted knowledge](./an-agentic-kb-maximizes-contextual-competence-through-discoverable.md) - Retired note kept as a backlink target; its general memory-quality claim and KB-specific ingress claim now live in narrower successor notes.
-- [Under sub-agent decomposition, feasibility is the heaviest fork's net load](./feasibility-is-the-heaviest-forks-net-load.md) - Once work is split across sub-agents, the per-window feasibility ceiling becomes per-agent — set by the heaviest fork's net load (what the system adds minus what it spares), which comes apart from the operation's summed cost

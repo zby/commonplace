@@ -10,7 +10,6 @@ from typing import Any
 from commonplace.lib import frontmatter
 from commonplace.lib.note_parser import extract_title, strip_frontmatter
 from commonplace.lib.project_paths import (
-    collection_dirs,
     collection_for_path,
     is_replaced_archive,
     is_type_definition_content,
@@ -130,82 +129,37 @@ def build_generated_section(
     return "\n".join(lines)
 
 
-def sync_index(
+def generated_section_for_index(
     index_path: Path,
-    notes_by_tag: dict[str, list[tuple[Path, str, str]]],
+    *,
+    source: str,
+    index_key: str | None,
+    curated_text: str,
     root: Path,
-    dry_run: bool = False,
+    notes_by_tag: dict[str, list[tuple[Path, str, str]]] | None = None,
 ) -> str | None:
-    """Sync the generated section of one index."""
-    content = index_path.read_text(encoding="utf-8")
-    fm = index_frontmatter(index_path, content)
-    source = str(fm.get("index_source", ""))
+    """Build the generated section for one tag/tag-indexes page, in memory.
+
+    `curated_text` is the page's committed body; links already curated there
+    are excluded from the generated listing. `notes_by_tag` lets the caller
+    reuse one collection scan across pages. Returns None for unknown sources.
+    Nothing is written — generated tails are build-time materializations for
+    the published site, never committed artifacts (ADR 025).
+    """
     if source not in GENERATED_HEADING_BY_SOURCE:
         return None
 
-    marker_pos_for_curated = content.find(MARKER)
-    curated_section = (
-        content[:marker_pos_for_curated] if marker_pos_for_curated != -1 else content
-    )
-    curated_links = extract_curated_links(curated_section)
-
+    collection = collection_for_path(index_path, root)
     if source == "tag":
-        key = str(fm.get("index_key", ""))
-        entries = notes_by_tag.get(key, [])
-        change_target = f"{len(entries)} notes for tag '{key}'"
+        if notes_by_tag is None:
+            notes_by_tag = collect_notes_by_tag(collection)
+        entries = notes_by_tag.get(index_key or "", [])
     else:
-        collection = collection_for_path(index_path, root)
         entries = collect_tag_index_entries(collection, root)
-        change_target = f"{len(entries)} tag indexes"
 
-    generated = build_generated_section(
+    return build_generated_section(
         entries,
         index_path.parent,
         GENERATED_HEADING_BY_SOURCE[source],
-        curated_links,
+        extract_curated_links(curated_text),
     )
-
-    marker_pos = content.find(MARKER)
-    if marker_pos == -1:
-        heading_pos = -1
-        for heading in GENERATED_HEADING_BY_SOURCE.values():
-            heading_pos = max(heading_pos, content.rfind(f"\n{heading}"))
-        if heading_pos == -1:
-            heading_pos = content.rfind("\n## All notes")
-        if heading_pos != -1:
-            new_content = content[:heading_pos].rstrip("\n") + "\n\n" + generated
-        else:
-            new_content = content.rstrip("\n") + "\n\n" + generated
-    else:
-        line_start = content.rfind("\n", 0, marker_pos)
-        line_start = 0 if line_start == -1 else line_start + 1
-        new_content = content[:line_start].rstrip("\n") + "\n\n" + generated
-
-    if new_content == content:
-        return None
-
-    if not dry_run:
-        index_path.write_text(new_content, encoding="utf-8")
-    return f"  {'Would update' if dry_run else 'Updated'} {index_path.name}: {change_target}"
-
-
-def find_index_files(args: list[str], root: Path) -> list[Path]:
-    """Find generated-tail index files to process."""
-    if args:
-        indexes = []
-        for arg in args:
-            path = Path(arg)
-            if not path.is_file():
-                continue
-            content = path.read_text(encoding="utf-8")
-            if index_source(path, root, content):
-                indexes.append(path)
-        return indexes
-
-    indexes = []
-    for collection in collection_dirs(root):
-        for path in sorted(iter_unignored_markdown_files(collection)):
-            content = path.read_text(encoding="utf-8")
-            if index_source(path, root, content):
-                indexes.append(path)
-    return indexes

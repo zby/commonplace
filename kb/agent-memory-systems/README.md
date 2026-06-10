@@ -5,7 +5,7 @@ A survey of external **agent memory systems** — how AI agents store, retrieve,
 row per system, a plain-English description plus the handful of fields that
 actually discriminate. Then read the [comparison](./agentic-memory-systems-comparative-review.md),
 which counts what 129 systems do rather than characterizing them one at a time, and
-browse the [repo-backed reviews](./reviews/dir-index.md) — each reads the actual
+browse the repo-backed reviews under `reviews/` — each reads the actual
 code and reports what a system _does_, not what its README claims.
 
 We track these systems not just to borrow ideas but to watch how they evolve. Convergence across independent projects is a stronger signal than any single design argument.
@@ -36,9 +36,9 @@ backticked lead tokens the [matrix](./systems.csv) is parsed from.
 
 Browse the roster:
 
-- [Repo-backed reviews](./reviews/dir-index.md) — systems with open-source repos, reviewed from the code
+- Repo-backed reviews (`reviews/`) — systems with open-source repos, reviewed from the code; the [comparison table](./systems-table.md) is the curated entry point
   
-- [Lightweight coverage](./lightweight/dir-index.md) — paper- or README-grounded systems with no inspectable repo
+- [Lightweight coverage](./lightweight/README.md) — paper- or README-grounded systems with no inspectable repo
   
 
 Cross-cutting reads:

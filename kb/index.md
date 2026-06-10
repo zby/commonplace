@@ -23,7 +23,6 @@ Each collection has a README that serves as its curated landing — all are link
 For deeper navigation:
 
 - [Tags](./notes/tags-index.md) — tag indexes within Notes
-- [Notes directory](./notes/dir-index.md) — auto-generated listing of every note
 - [Workshops](./work/README.md) — the stuff we currently work on
 
 ## Use it yourself

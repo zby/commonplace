@@ -35,11 +35,11 @@ Target: `$ARGUMENTS` — one artifact path or artifact name. If none provided, a
 
    This is the only linking-rules surface. There is no compiled topology and no separate vocabulary doc to consult.
 5. Treat the installed KB goals from always-loaded `AGENTS.md` as an outer scope check, not as a replacement for collection label authorisation. `kb/reference/control-plane-goals.md` documents this always-loaded goal-frame invariant, including forked skill contexts, so connect does not add a separate goal-loading step.
-6. Use repo-local discovery only: generated indexes, tag indexes, `rg`, and link following. Do not call external semantic-search tools or MCP search services; connect must work in Codex without external search state.
+6. Use repo-local discovery only: curated indexes, scoped `rg`, and link following. Do not call external semantic-search tools or MCP search services; connect must work in Codex without external search state. Complete generated listings (`dir-index.md`, tag tails) are build-time site artifacts and do not exist in the repo (ADR 025).
 
 ## Discovery — per destination
 
-Connect is the skill that pays the cost of active search. The write skill is bounded to dir-index + already-loaded context + user-named targets; connect runs the full prospecting procedure on every destination the source's `COLLECTION.md` permits.
+Connect is the skill that pays the cost of active search. The write skill is bounded to a targeted duplicate check + already-loaded context + user-named targets; connect runs the full prospecting procedure on every destination the source's `COLLECTION.md` permits.
 
 Active depth: **standard** (quick: index-only single pass; deep: full discovery, multiple passes, synthesis detection).
 
@@ -55,8 +55,18 @@ Use the outbound section's triggers, latitude cues, and direction hints to set p
 
 In order of cost:
 
-- **Destination `dir-index.md`.** Read the destination's full `dir-index.md`; titles + descriptions are the cheapest candidate surface. Collections without a `dir-index.md` (rare) can be scanned with `ls` or by reading the collection's `README.md` for curated entry points.
-- **Tag indexes.** When the source carries `tags:`, check matching tag or topic indexes in the destination collection if present. Curated sections above generated markers often add value because they capture editorial groupings the flat index scan misses.
+- **Curated heads.** Read the destination's `README.md` and, when the source carries `tags:`, the matching tag indexes — their editorial groupings and context phrases capture routing signal a flat listing misses.
+- **Scoped `rg` description listing.** Enumerate candidates at path + description resolution without loading a complete index:
+
+  ```bash
+  # whole destination
+  rg '^description:' kb/<destination>/ --glob '*.md'
+  # by tag
+  rg -l '^tags:.*\bTAG\b' kb/<destination>/ --glob '*.md' \
+    | xargs -r rg -N --no-heading '^description:\s*' -r ''
+  ```
+
+  The `xargs -r` guard matters: a tag matching zero files would otherwise make `rg` search the whole repo.
 - **`rg` body search.** Run focused queries for terms and adjacent concepts the source's claim foregrounds and the destination's outbound guidance suggests. Multiple queries; capture the actual query strings.
 
   ```bash

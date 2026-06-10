@@ -33,9 +33,6 @@ jobs:
       - name: Install build dependencies
         run: python -m pip install --upgrade ".[docs]"
 
-      - name: Rebuild directory indexes and tag listings
-        run: commonplace-refresh-indexes
-
       - name: Configure Pages
         uses: actions/configure-pages@v5
 

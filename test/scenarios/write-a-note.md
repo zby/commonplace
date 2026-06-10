@@ -28,18 +28,18 @@ Notes: AGENTS.md is always loaded in the main session (0 hops, bytes still count
 | the insight + any user-named sources | content | variable | 0-2 |
 | targeted validation | overhead | `commonplace-validate` run | 1 |
 
-Notes: as of the focused-write change, Step 4 reads **no** dir-index. Near-duplicate detection is a targeted `rg` of the title's key terms (matching lines only, ~hundreds of bytes, not a 66 KB index); link candidates are limited to already-loaded context and user-named targets. All dir-index scanning and cross-destination prospecting moved to `cp-skill-connect` (Fork 3). This drops Fork 2 overhead from ~154 KB to ~17 KB. Directory-local types (adr, index) add one hop to a `kb/*/types/` spec. Whether AGENTS.md is re-injected into the fork is the main open assumption — set it in the harness config.
+Notes: as of the focused-write change, Step 4 reads **no** collection-wide listing. Near-duplicate detection is a targeted `rg` of the title's key terms (matching lines only, ~hundreds of bytes, not a complete index); link candidates are limited to already-loaded context and user-named targets. All description-scan and cross-destination prospecting moved to `cp-skill-connect` (Fork 3). This drops Fork 2 overhead from ~154 KB to ~17 KB. Directory-local types (adr, index) add one hop to a `kb/*/types/` spec. Whether AGENTS.md is re-injected into the fork is the main open assumption — set it in the harness config.
 
 ### Fork 3 — cp-skill-connect (context: fork)
 | load | kind | source | hops |
 |---|---|---|---|
 | connection procedure | overhead | `kb/instructions/cp-skill-connect/SKILL.md` | 0 |
 | source-collection linking rules | overhead | `kb/notes/COLLECTION.md` | 1 |
-| dir-index of every authorized destination | overhead | `kb/{notes,reference,agent-memory-systems,sources,instructions}/dir-index.md` | 5 |
+| curated heads + scoped `rg` description listings per authorized destination | overhead | destination `README.md` / tag indexes + `rg` listings | 5 |
 | the just-written note | content | variable | 1 |
 | candidate notes (body search, tag traversal, reverse-edge) | content | variable | 2-5 |
 
-Notes: cp-skill-write suggests cp-skill-connect as a non-optional next step, so a normal write incurs this fork. Connect runs the *full* prospecting procedure on every authorized destination, so it re-reads the same ~137 KB of dir-indexes Fork 2 already read — **the operation pays for them twice** — plus tag indexes, `rg` body search, and candidate bodies (content). This is the heaviest fork; the repeated dir-index reads dominate it.
+Notes: cp-skill-write suggests cp-skill-connect as a non-optional next step, so a normal write incurs this fork. Connect runs the *full* prospecting procedure on every authorized destination. As of ADR 025 there are no complete `dir-index.md` reads — each destination costs a curated head plus a scoped `rg` description listing that grows with the matching slice, not the collection (this fork previously re-read ~137 KB of dir-indexes and dominated the operation). Candidate bodies remain the main content load.
 
 ## Variants
 

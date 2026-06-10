@@ -64,16 +64,21 @@ def _should_skip_subdir(subdir: Path, *, ignore_root: Path | None = None) -> boo
     return not _has_indexable_content(subdir, ignore_root=ignore_root)
 
 
-def _subdir_link_target(subdir: Path, *, ignore_root: Path | None = None) -> str:
+def _subdir_link_target(
+    subdir: Path,
+    *,
+    ignore_root: Path | None = None,
+    has_dir_index: bool = False,
+) -> str:
     """Pick the best landing inside `subdir` to link from a parent dir-index.
 
-    Prefers dir-index.md, then README.md, then the sole `.md` file when the
+    Prefers the subdir's own dir-index when the caller will materialize one
+    (`has_dir_index`), then README.md, then the sole `.md` file when the
     subdir contains exactly one (catches kb/instructions/cp-skill-*/SKILL.md
     and similar single-doc subdirs), then a bare directory URL.
     """
-    dir_index = subdir / "dir-index.md"
     readme = subdir / "README.md"
-    if dir_index.is_file() and not is_git_ignored(dir_index, ignore_root):
+    if has_dir_index:
         return f"./{subdir.name}/dir-index.md"
     if readme.is_file() and not is_git_ignored(readme, ignore_root):
         return f"./{subdir.name}/README.md"
@@ -95,11 +100,14 @@ def generate(
     *,
     parent_link: str,
     ignore_root: Path | None = None,
+    subdirs_have_index: bool = False,
 ) -> str:
     """Generate dir-index.md content for a single directory level.
 
     Lists files directly in `notes_dir` plus a row per qualifying subdirectory.
     `parent_link` is rendered as the back-link at the top of the page.
+    `subdirs_have_index` tells the link picker that qualifying subdirs will
+    have their own dir-index page materialized alongside this one.
     """
     output = notes_dir / "dir-index.md"
     file_entries: list[tuple[str, str, str, str]] = []
@@ -135,7 +143,7 @@ def generate(
 
     lines = [
         "---",
-        "description: Auto-generated directory - run commonplace-refresh-indexes to rebuild",
+        "description: Auto-generated directory listing - built for the published site, not committed",
         f"type: {INDEX_TYPE}",
         "index_source: directory",
         "---",
@@ -150,7 +158,11 @@ def generate(
         lines.append("## Subdirectories")
         lines.append("")
         for subdir in subdirs:
-            target = _subdir_link_target(subdir, ignore_root=ignore_root)
+            target = _subdir_link_target(
+                subdir,
+                ignore_root=ignore_root,
+                has_dir_index=subdirs_have_index,
+            )
             lines.append(f"- [{subdir.name}/]({target})")
         lines.append("")
 
@@ -170,60 +182,54 @@ def generate(
     return "\n".join(lines)
 
 
-def write_index(
+def collect_index_pages(
     notes_dir: Path,
     *,
     is_root: bool = True,
     max_depth: int | None = None,
     _depth: int = 0,
     ignore_root: Path | None = None,
-) -> tuple[Path, int]:
-    """Generate and write dir-index.md for `notes_dir`, recursing into subdirs.
+) -> list[tuple[Path, str]]:
+    """Generate dir-index pages for `notes_dir` and qualifying subdirs, in memory.
+
+    Returns `(output_path, content)` pairs; nothing is written to disk —
+    complete generated listings are build-time materializations for the
+    published site, never committed artifacts (ADR 025).
 
     `is_root=True` indicates a collection root, in which case the parent link
     points at the kb-level homepage (`../index.md`). For nested levels the
     parent link points at the parent dir-index.
 
     `max_depth` caps recursion. None means recurse unconditionally; 1 means
-    only generate the dir-index at this level (no nested dir-indexes). When
-    recursion is capped, any stale dir-index.md files in skipped descendants
-    are removed so the parent's subdir links cleanly fall back to README.md
-    or a bare directory URL.
+    only generate the dir-index at this level (no nested dir-indexes), in
+    which case subdir links fall back to README.md or a bare directory URL.
     """
     resolved_ignore_root = (ignore_root or notes_dir).resolve()
     will_recurse = max_depth is None or _depth + 1 < max_depth
 
-    for subdir in sorted(notes_dir.iterdir()):
-        if not subdir.is_dir() or _should_skip_subdir(
-            subdir,
-            ignore_root=resolved_ignore_root,
-        ):
-            continue
-        if will_recurse:
-            write_index(
-                subdir,
-                is_root=False,
-                max_depth=max_depth,
-                _depth=_depth + 1,
-                ignore_root=resolved_ignore_root,
-            )
-        else:
-            for stale in iter_unignored_markdown_files(
+    pages: list[tuple[Path, str]] = []
+    if will_recurse:
+        for subdir in sorted(notes_dir.iterdir()):
+            if not subdir.is_dir() or _should_skip_subdir(
                 subdir,
                 ignore_root=resolved_ignore_root,
             ):
-                if stale.name != "dir-index.md":
-                    continue
-                stale.unlink()
+                continue
+            pages.extend(
+                collect_index_pages(
+                    subdir,
+                    is_root=False,
+                    max_depth=max_depth,
+                    _depth=_depth + 1,
+                    ignore_root=resolved_ignore_root,
+                )
+            )
 
-    parent_link = "../index.md" if is_root else "../dir-index.md"
     content = generate(
         notes_dir,
-        parent_link=parent_link,
+        parent_link="../index.md" if is_root else "../dir-index.md",
         ignore_root=resolved_ignore_root,
+        subdirs_have_index=will_recurse,
     )
-    output = notes_dir / "dir-index.md"
-    output.write_text(content, encoding="utf-8")
-    count = content.count("\n- ")
-
-    return output, count
+    pages.append((notes_dir / "dir-index.md", content))
+    return pages

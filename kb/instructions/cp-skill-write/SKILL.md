@@ -43,13 +43,13 @@ For `text`, write raw markdown with no frontmatter only when the user explicitly
 
 Write does not run active discovery — that is `cp-skill-connect`'s job. Write authors one note and commits only links the author already has in hand, plus a cheap duplicate guard:
 
-1. **Near-duplicate check.** Search the target collection for the new note's distinctive title terms with `rg` (e.g. `rg -i "key term" kb/notes/ --glob "*.md"`). This is a targeted term search — do **not** read a whole `dir-index.md`; it can grow to tens of KB, so a full read is the wrong tool for a single note's duplicate check. If a near-duplicate already exists, prefer editing it to creating a second note.
+1. **Near-duplicate check.** Search the target collection for the new note's distinctive title terms with `rg` (e.g. `rg -i "key term" kb/notes/ --glob "*.md"`). This is a targeted term search — do **not** enumerate the whole collection; a complete listing costs linear context and is the wrong tool for a single note's duplicate check. If a near-duplicate already exists, prefer editing it to creating a second note.
 2. **Context already loaded.** Notes, sources, and ingests pulled into the session for this write are first-class link candidates. If it was worth reading, it is worth considering as a link.
 3. **User-named targets.** Link targets the user mentions in the prompt.
 
 In edit mode, also run a backlinks lookup on the target note — one query, no body search — so edits don't orphan dependents.
 
-All discovery beyond this — dir-index scans, cross-destination prospecting, body search, tag traversal, link-following, reverse-edge reasoning — belongs to `cp-skill-connect`, not here. Write stays focused on authoring one note.
+All discovery beyond this — collection-wide description scans, cross-destination prospecting, body search, tag traversal, link-following, reverse-edge reasoning — belongs to `cp-skill-connect`, not here. Write stays focused on authoring one note.
 
 ### Step 5 - Draft And Save
 
@@ -69,7 +69,7 @@ commonplace-validate path/to/file.md
 
 Fix structural failures before stopping.
 
-Then suggest `cp-skill-connect` as the next step. Step 4 commits only links the author already had in hand (loaded context, user-named) plus a duplicate guard; the rest of the note's share of the graph — dir-index scans, cross-destination candidates, body-search hits, tag-traversal, link-following, reverse-edge candidates — only surfaces under the connect skill. The suggestion is not optional polish.
+Then suggest `cp-skill-connect` as the next step. Step 4 commits only links the author already had in hand (loaded context, user-named) plus a duplicate guard; the rest of the note's share of the graph — collection-wide description scans, cross-destination candidates, body-search hits, tag-traversal, link-following, reverse-edge candidates — only surfaces under the connect skill. The suggestion is not optional polish.
 
 ## Universal Mechanics
 

@@ -3,7 +3,7 @@ from __future__ import annotations
 import subprocess
 from pathlib import Path
 
-from commonplace.lib.index_directory import generate, write_index
+from commonplace.lib.index_directory import collect_index_pages, generate
 
 
 def write(path: Path, content: str) -> Path:
@@ -80,7 +80,11 @@ type: ../types/agent-memory-system-review.md
     assert "Replaced review" not in content
 
 
-def test_write_index_recurses_and_lists_subdirs(tmp_path: Path) -> None:
+def as_dict(pages: list[tuple[Path, str]]) -> dict[Path, str]:
+    return dict(pages)
+
+
+def test_collect_index_pages_recurses_and_lists_subdirs(tmp_path: Path) -> None:
     collection = tmp_path / "kb" / "reference"
     write(
         collection / "top.md",
@@ -107,10 +111,10 @@ type: kb/reference/types/adr.md
     # types/ subdir should not get a dir-index
     write(collection / "types" / "adr.template.md", "# Template\n")
 
-    output, count = write_index(collection)
+    pages = as_dict(collect_index_pages(collection))
 
-    root_index = (collection / "dir-index.md").read_text(encoding="utf-8")
-    adr_index = (collection / "adr" / "dir-index.md").read_text(encoding="utf-8")
+    root_index = pages[collection / "dir-index.md"]
+    adr_index = pages[collection / "adr" / "dir-index.md"]
 
     # Root lists the subdir entry, not the file inside it
     assert "- [adr/](./adr/dir-index.md)" in root_index
@@ -125,31 +129,29 @@ type: kb/reference/types/adr.md
     )
     assert "← [Parent](../dir-index.md)" in adr_index
 
-    # Empty and types directories are not indexed
-    assert not (collection / "empty" / "dir-index.md").exists()
-    assert not (collection / "types" / "dir-index.md").exists()
+    # Empty and types directories are not indexed, and nothing touched disk
+    assert collection / "empty" / "dir-index.md" not in pages
+    assert collection / "types" / "dir-index.md" not in pages
+    assert not (collection / "dir-index.md").exists()
 
 
-def test_write_index_max_depth_cleans_stale_subdir_indexes(tmp_path: Path) -> None:
+def test_collect_index_pages_max_depth_skips_nested_indexes(tmp_path: Path) -> None:
     collection = tmp_path / "kb" / "instructions"
     write(collection / "top.md", "# Top\n")
     write(collection / "skill-foo" / "SKILL.md", "# Foo skill\n")
-    # Pre-existing stale dir-index from an earlier unlimited run
-    write(collection / "skill-foo" / "dir-index.md", "# Stale\n")
 
-    write_index(collection, max_depth=1)
+    pages = as_dict(collect_index_pages(collection, max_depth=1))
 
-    root_index = (collection / "dir-index.md").read_text(encoding="utf-8")
+    root_index = pages[collection / "dir-index.md"]
 
-    # Root dir-index lists the subdir, but the stale nested dir-index is gone
-    assert "- [skill-foo/](" in root_index
-    assert not (collection / "skill-foo" / "dir-index.md").exists()
+    # Root dir-index lists the subdir, but no nested dir-index is generated
+    assert collection / "skill-foo" / "dir-index.md" not in pages
     # Subdir entry falls back to a sensible link target (SKILL.md exists; no
-    # README, no dir-index → bare directory URL is acceptable too)
-    assert "skill-foo/" in root_index
+    # README, no dir-index → the sole markdown file)
+    assert "- [skill-foo/](./skill-foo/SKILL.md)" in root_index
 
 
-def test_write_index_prunes_gitignored_directories(tmp_path: Path) -> None:
+def test_collect_index_pages_prunes_gitignored_directories(tmp_path: Path) -> None:
     init_git_repo(tmp_path)
     write(tmp_path / ".gitignore", "kb/reference/generated/\n")
     collection = tmp_path / "kb" / "reference"
@@ -173,13 +175,11 @@ type: kb/types/note.md
 # Ignored
 """,
     )
-    write(collection / "generated" / "dir-index.md", "# Stale ignored index\n")
+    pages = as_dict(collect_index_pages(collection, ignore_root=tmp_path))
 
-    write_index(collection, ignore_root=tmp_path)
-
-    root_index = (collection / "dir-index.md").read_text(encoding="utf-8")
+    root_index = pages[collection / "dir-index.md"]
 
     assert "- [Kept](./kept.md) *(note)* - Kept note" in root_index
     assert "generated/" not in root_index
     assert "Ignored note" not in root_index
-    assert (collection / "generated" / "dir-index.md").exists()
+    assert collection / "generated" / "dir-index.md" not in pages

@@ -42,32 +42,9 @@ for c in notes reference instructions agent-memory-systems sources; do
 done
 ```
 
-### commonplace-generate-notes-index
+### Generated indexes (no command)
 
-Generate an `index.md` file from frontmatter of all markdown files in a directory. Lists each note with its description.
-
-```bash
-commonplace-generate-notes-index kb/notes
-commonplace-generate-notes-index kb/sources
-```
-
-### commonplace-refresh-indexes
-
-Refresh the checked-in generated indexes used locally and by GitHub Pages. Rebuilds the directory indexes for notes and sources, then refreshes generated sections of managed generated-tail indexes.
-
-```bash
-commonplace-refresh-indexes
-```
-
-### commonplace-sync-generated-index
-
-Rebuild auto-generated sections of index pages with generated tails. Uses `index_source` metadata to decide whether a page lists tagged notes or tag indexes.
-
-```bash
-commonplace-sync-generated-index                           # all indexes
-commonplace-sync-generated-index kb/notes/tags-index.md    # specific index
-commonplace-sync-generated-index --dry-run                 # preview changes
-```
+Complete generated listings — per-collection `dir-index.md` pages and per-tag generated tails — are not committed and have no rebuild command. The mkdocs hook (`src/commonplace/docs/mkdocs_hooks.py`) materializes them in-memory at build time for the published site (ADR 025); `mkdocs build` is the only way to produce them. Agents enumerate candidates with the scoped `rg` recipes in [navigation.md](./navigation.md). The retired commands `commonplace-refresh-indexes`, `commonplace-sync-generated-index`, and `commonplace-generate-notes-index` no longer exist.
 
 ## Note operations
 

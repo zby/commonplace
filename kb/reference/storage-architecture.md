@@ -27,14 +27,15 @@ Document type is declared by `type:` in frontmatter and validated against the ma
 
 ## Derived indexes
 
-Each index below is regenerable from the authored markdown. Losing an index is a rebuild, not a data loss.
+Each surface below is derived from the authored markdown; none of it is committed. Complete generated listings exist only in the built site (ADR 025).
 
-| Index | What it covers | Rebuild command |
+| Surface | What it covers | Where it is produced |
 |---|---|---|
-| Directory listing pages (`kb/notes/dir-index.md`, `kb/sources/dir-index.md`) | Title, description, and type of every note in the directory | `commonplace-generate-notes-index <dir>` |
-| Tag-index generated tails (`kb/notes/tags-index.md` and subordinate tag pages) | Notes grouped by tag below the `<!-- generated -->` marker | `commonplace-sync-generated-index` |
-| All of the above at once | — | `commonplace-refresh-indexes` |
+| Directory listing pages (per-collection `dir-index.md`) | Title, description, and type of every note in the directory | mkdocs hook, build time only |
+| Per-tag generated listings (below each curated tag index) | Notes grouped by tag, minus already-curated entries | mkdocs hook, build time only |
 | MkDocs static site | Entire `kb/` tree, configured by `mkdocs.yml` | `mkdocs build` |
+
+Agents enumerate the same information on demand with the scoped `rg` recipes in [navigation.md](./navigation.md).
 
 The `redirect_maps` block in `mkdocs.yml` preserves external URLs across note renames.
 

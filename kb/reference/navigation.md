@@ -14,7 +14,7 @@ Commonplace navigation is a progressive disclosure stack. Agents should usually 
 |---|---|---|
 | `AGENTS.md` | Always-loaded goals, scope boundaries, key indexes, commands, and routing conventions | Cold start and task routing |
 | `rg` | Cheap lexical search over files | Exact names, phrases, vocabulary, commands, and local evidence |
-| Directory indexes | Titles plus descriptions for one collection or directory | Scan a collection before opening candidate files |
+| Scoped `rg` listings | Path-plus-description slices for a tag or collection, computed on demand | Enumerate candidates in a collection or tag without loading a complete inventory |
 | Curated indexes | Topic-organized entry points with short context phrases | Entering a known area such as links, architecture, or related systems |
 | Descriptions | Fixed retrieval filters for individual artifacts | Decide whether a search or index hit is worth opening |
 | Links | Local navigation with authored relationship context | Follow a premise, rationale, implementation, definition, or related artifact from an already-loaded source |
@@ -23,15 +23,40 @@ Commonplace navigation is a progressive disclosure stack. Agents should usually 
 
 `rg` is the current cheap retrieval layer. It is not ranked like BM25, but it fills the same first-pass role at the present KB size: quickly surface lexical candidates without invoking an inference pipeline.
 
-Descriptions are the important middle layer. They are not decorative summaries; they are fixed, agent-facing filters between lexical search and full reads. A good description lets an agent scan five plausible hits and decide which one to open. This is why validation requires descriptions and why generated indexes include them.
+Descriptions are the important middle layer. They are not decorative summaries; they are fixed, agent-facing filters between lexical search and full reads. A good description lets an agent scan five plausible hits and decide which one to open. This is why validation requires descriptions and why scoped listings and build-time indexes are built from them.
 
-Indexes are the collection-scale version of the same idea. A directory index exposes every local artifact at title-plus-description resolution. A curated index adds grouping and context phrases where the order and headings carry extra routing signal.
+Curated indexes are the collection-scale version of the same idea: grouping and context phrases where the order and headings carry extra routing signal. A directory's curated head is its `README.md`; a tag's curated head is the editorial body of its tag index.
+
+## Complete listings are build-time only
+
+Complete generated listings — per-collection `dir-index.md` pages and per-tag generated tails — are not committed and are not on any agent read path. They are materialized at mkdocs build time for the published site, where human readers skim and Ctrl-F them sublinearly ([ADR 025](./adr/025-complete-generated-indexes-are-build-time-only.md)). An agent reads a file whole, so a complete inventory costs linear context for whichever consumer can least afford it; the agent path is the curated head plus a scoped `rg` listing over the slice it needs.
+
+### Scoped listing recipes
+
+By tag — path plus description for every note carrying a tag:
+
+```bash
+rg -l '^tags:.*\bTAG\b' kb/notes/ --glob '*.md' \
+  | xargs -r rg -N --no-heading '^description:\s*' -r ''
+```
+
+The `xargs -r` guard matters: a tag matching zero files would otherwise make `rg` run with no path arguments and search the whole repo.
+
+By keyword or whole collection — descriptions under any scope:
+
+```bash
+rg '^description:' kb/<collection>/ --glob '*.md'
+rg -l '<keyword>' kb/<collection>/ --glob '*.md' \
+  | xargs -r rg -N --no-heading '^description:\s*' -r ''
+```
+
+These return `path + description`; the path stands in for the title during triage. Open the candidate body only after a description earns it.
 
 Links are narrower and richer. They do not replace search; they work after the agent already has local context. The surrounding prose or footer label should explain why following the target helps from this source.
 
 ## Scaling Shape
 
-The current stack works because the KB is still small enough that `rg`, indexes, and descriptions fit the agent's effective working process. Growth creates two separate pressures:
+The current stack works because the KB is still small enough that `rg`, curated indexes, and descriptions fit the agent's effective working process. Growth creates two separate pressures:
 
 1. **The core must stay scannable.** High-signal notes, reference docs, and indexes should remain small enough for agents to browse as a map. Larger source collections, archives, transcripts, and long reviews can live outside the core and be reached through explicit links or search.
 2. **Search may need ranking.** When lexical results become too noisy or vocabulary mismatch becomes common, the system may need search stronger than `rg`.
@@ -63,3 +88,4 @@ Relevant Notes:
 - [Link-following and search impose different metadata requirements](../notes/link-following-and-search-impose-different-metadata-requirements.md) - rationale: search, links, and indexes require different pointer metadata
 - [Pointer design tradeoffs in progressive disclosure](../notes/pointer-design-tradeoffs-in-progressive-disclosure.md) - rationale: descriptions, query-time search, and link phrases occupy different cost/specificity/reliability positions
 - [Two context boundaries govern collection operations](../notes/two-context-boundaries-govern-collection-operations.md) - rationale: collections have both full-text and title-plus-description scan boundaries
+- [Design for the first-time human, except on access cost](../notes/design-for-the-first-time-human-except-on-access-cost.md) - rationale: complete listings are routed to the consumer whose access mode makes them cheap — build-time pages for humans, scoped queries for agents

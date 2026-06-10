@@ -99,8 +99,8 @@ depth: standard
 
 ## Discovery Trace
 
-**Index scan:**
-- Read [notes index](../../notes/dir-index.md) -- flagged candidates: {candidates with reasons}
+**Description listing scan:**
+- Scoped `rg` listing over {destination} -- flagged candidates: {candidates with reasons}
 
 **Topic indexes:**
 - {topic index reads and candidates, or "None"}

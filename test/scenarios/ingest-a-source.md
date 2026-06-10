@@ -42,10 +42,10 @@ Notes: invoked by ingest for URL capture; writes the snapshot under `kb/sources/
 |---|---|---|---|
 | connection procedure | overhead | `kb/instructions/cp-skill-connect/SKILL.md` | 0 |
 | sources linking rules | overhead | `kb/sources/COLLECTION.md` | 1 |
-| dir-index of every destination authorized by sources | overhead | `kb/notes/dir-index.md`, `kb/sources/dir-index.md` (+ any others in the sources outbound section) | 2-5 |
+| curated heads + scoped `rg` description listings per authorized destination | overhead | destination `README.md` / tag indexes + `rg` listings | 2-5 |
 | the snapshot + candidate notes | content | variable | 2-5 |
 
-Notes: connect runs the full prospecting procedure on every destination `kb/sources/COLLECTION.md` authorizes — the notes (~66 KB) and sources (~60 KB) dir-indexes dominate (~126 KB), the heaviest single fork in the eval. (Exact destination set = read it from the sources outbound section.)
+Notes: connect runs the full prospecting procedure on every destination `kb/sources/COLLECTION.md` authorizes. As of ADR 025 there are no complete `dir-index.md` reads — before that change the notes (~66 KB) and sources (~60 KB) dir-indexes dominated this fork (~126 KB), the heaviest in the eval; the scoped listings grow with the matching slice instead. (Exact destination set = read it from the sources outbound section.)
 
 ## Variants
 

@@ -56,8 +56,3 @@ Conflating the three leads to misdiagnosis — e.g. narrowing the spec (underspe
 
 - [learning-theory](./learning-theory-index.md) — oracle and verification theory originated there; this area applies it specifically to LLM interpretation errors
 - [computational-model](./computational-model-index.md) — the scheduling architecture that separation notes describe; error correction explains *why* it works
-
-## Other tagged notes <!-- generated -->
-
-- [Brainstorming: how to test whether pairwise comparison can harden soft oracles](./brainstorming-how-to-test-whether-pairwise-comparison-can-harden.md) - Staged test plan for whether pairwise comparison improves soft-oracle properties (discrimination, stability, calibration) in LLM evaluation loops
-- [Topology, isolation, and verification form a causal chain for reliable agent scaling](./topology-isolation-and-verification-form-a-causal-chain-for-reliable.md) - Decomposition, scoping, and verification may form a strict dependency chain (topology → isolation → verification) rather than independent design choices — tests the simpler account that decomposition alone implies the other two

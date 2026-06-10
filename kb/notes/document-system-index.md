@@ -40,8 +40,3 @@ For the live Commonplace repo's current type inventory and migration summary, se
 - [tags](./tags-index.md) — the document system is infrastructure for the KB; architecture decisions about files-not-database and context loading depend on document structure
 - [links](./links-index.md) — [title-as-claim](./title-as-claim-enables-traversal-as-reasoning.md) bridges both areas: it's a writing convention that enables link semantics
 - [learning-theory](./learning-theory-index.md) — the type ladder instantiates the constraining gradient for documents
-
-## Other tagged notes <!-- generated -->
-
-- [A knowledge base holds theories, descriptions, and prescriptions with asymmetric linking](./a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md) - Three exhaustive registers — theory, description, prescription — with distinct quality goals; formulation constraint and maintenance asymmetry make the split real, distillation connects them; registers classify content orthogonally to operational roles, and in agent systems the prescription/implementation boundary collapses
-- [Register](./definitions/register.md) - Definition — a register is one of three content modes (theoretical, descriptive, prescriptive) that determines a collection's quality goal, title conventions, and linking rules

@@ -35,7 +35,3 @@ Observability is about recovering signals that would otherwise stay hidden: exec
 - [Computational model](./computational-model-index.md) — runtime architecture determines which state transitions are inspectable
 - [Learning theory](./learning-theory-index.md) — soft signals, oracle strength, and inspectable artifacts explain what observability can reliably support
 - [LLM interpretation errors](./llm-interpretation-errors-index.md) — error correction and verification theory explain how visible signals can become actionable
-
-## Other tagged notes <!-- generated -->
-
-- [Single-artifact review bundles still cut Claude costs substantially after cache-aware weighting](./evidence/single-artifact-review-bundles-still-cut-claude-costs-substantially.md) - April 2-4, 2026 review telemetry reweighted with Anthropic Opus 4.6 prompt-caching prices still shows a substantial cost drop from the single-artifact bundle refactor

@@ -8,7 +8,7 @@ status: seedling
 
 # Index curation adds orientation that generation cannot produce
 
-A generated index is complete: every note carrying a tag appears in the listing, rebuilt deterministically by `commonplace-sync-generated-index`. But completeness is not orientation. A reader scanning 30 generated entries sees an alphabetized address book — titles and descriptions in sequence, with no signal about which notes are foundational, which are in tension, or where the interesting clusters lie. The reader must open notes to discover structure.
+A generated index is complete: every note carrying a tag appears in the listing, rebuilt deterministically (since ADR 025, at mkdocs build time for the published site). But completeness is not orientation. A reader scanning 30 generated entries sees an alphabetized address book — titles and descriptions in sequence, with no signal about which notes are foundational, which are in tension, or where the interesting clusters lie. The reader must open notes to discover structure.
 
 Curation adds editorial information that generation cannot: groupings that reflect conceptual clusters, context phrases that explain *why* a note matters to a topic (not just *that* it exists), and cross-links to related indexes that reveal how topics connect. This is orientation — it tells the reader where they are in a landscape before they start walking.
 

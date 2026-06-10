@@ -14,11 +14,11 @@ The user asks something the KB should know. The agent searches, reads the releva
 | load | kind | source | hops |
 |---|---|---|---|
 | routing + search patterns | overhead | `AGENTS.md` | 0 |
-| navigation surface (only if scanned in full) | overhead | `kb/notes/dir-index.md` | 0-1 |
+| navigation surface (curated index or scoped `rg` listing) | overhead | tag index / `rg` description listing | 0-1 |
 | matching notes | content | variable | 3-5 |
 | linked notes followed | content | variable | 1-3 |
 
-Notes: read-only, no skill fork. AGENTS.md is the only guaranteed overhead. The agent navigates by `rg` (search results are small content, ~0 overhead) **or** by scanning a dir-index; a *full* dir-index read is the expensive path (~66 KB) and is usually avoidable with `rg`, so it is listed at 0-1 hops. Everything else is content the reader would load regardless of any framework.
+Notes: read-only, no skill fork. AGENTS.md is the only guaranteed overhead. The agent navigates by `rg` (search results are small content, ~0 overhead) or a curated index; complete `dir-index.md` listings no longer exist in the repo (ADR 025), so the old ~66 KB full-index path is gone. Everything else is content the reader would load regardless of any framework.
 
 ## Variants
 

@@ -9,7 +9,6 @@ Each source is captured verbatim into a file at the time of snapshot and analyze
 - **Source snapshots** — one file per snapshotted external artifact, with a short header noting the URL and capture date followed by the verbatim content.
 - **`*.ingest.md` reports** — the analyses produced by `cp-skill-ingest`. Each report names the source, classifies it as a related system / paper / article / etc., summarises the load-bearing claims, and proposes connections into `kb/notes/` and other collections.
 - **`types/`** — local type definitions for the artifacts in this collection (`source-review`, `ingest-report`).
-- **[dir-index.md](./dir-index.md)** — auto-generated alphabetical listing of every file in this collection.
 
 ## How to add a source
 

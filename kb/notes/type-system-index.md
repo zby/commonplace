@@ -45,6 +45,3 @@ Three independent arguments for why structured document types improve what gets 
 
 - [document-system](./document-system-index.md) — parent area; type system is one component of the document infrastructure
 - [learning-theory](./learning-theory-index.md) — the type ladder instantiates the constraining gradient for documents
-
-## Other tagged notes <!-- generated -->
-

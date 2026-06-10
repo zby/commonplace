@@ -2,7 +2,7 @@
 
 Observations and design work toward a knowledge base for design history.
 
-Navigation: [directory index](./dir-index.md), [tags index](./tags-index.md).
+Navigation: [tags index](./tags-index.md).
 
 ## Goal
 

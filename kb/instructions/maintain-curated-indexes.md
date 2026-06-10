@@ -1,11 +1,11 @@
 ---
-description: Audit and maintain curated sections of generated-tail index pages — evaluate editorial groupings, check for orphaned notes, and split or merge indexes where needed.
+description: Audit and maintain curated tag-index pages — evaluate editorial groupings, check for orphaned notes, and split or merge indexes where needed.
 type: kb/types/instruction.md
 ---
 
 # Maintain curated indexes
 
-Audit curated index sections for editorial quality, completeness, and coherence. The generated section (rebuilt by `commonplace-sync-generated-index`) is always complete — this instruction focuses on the hand-written curated section above the `<!-- generated -->` marker.
+Audit curated tag indexes for editorial quality, completeness, and coherence. A tag index is the tag's curated head: a hand-written editorial body with groupings and context phrases. The complete per-tag listing is not committed — it is generated at mkdocs build time for the published site (ADR 025); agents reconstruct it on demand with the scoped `rg` recipe below.
 
 ## When to use
 
@@ -18,19 +18,28 @@ Audit curated index sections for editorial quality, completeness, and coherence.
 ### 1. Inventory tags and sizes
 
 ```bash
-commonplace-sync-generated-index --dry-run
+rg -N --no-heading '^tags:' kb/notes/ --glob '*.md' \
+  | grep -o '\[.*\]' | tr -d '[]' | tr ',' '\n' | sed 's/^ *//' \
+  | sort | uniq -c | sort -rn
 ```
 
-This shows how many notes each tag has. Tags with many notes but no curated section are candidates for curation. Tags with curated sections that haven't been updated after significant growth may need revision.
+This shows how many notes each tag has. Tags with many notes but no curated index are candidates for curation. Indexes that haven't been updated after significant tag growth may need revision.
 
 ### 2. For each curated index, evaluate editorial quality
 
-Load the curated section. Ask:
+Load the index and list the tag's full membership:
+
+```bash
+rg -l '^tags:.*\bTAG\b' kb/notes/ --glob '*.md' \
+  | xargs -r rg -N --no-heading '^description:\s*' -r ''
+```
+
+Ask:
 
 - **Do the groupings still make sense?** Sections should reflect natural clusters. If a section has grown to 15+ entries, it may need sub-grouping or splitting into its own index.
 - **Are the context phrases still accurate?** A note's role in the topic may have shifted since the phrase was written.
-- **Are important notes missing?** Compare the curated section against the generated section. Notes in the generated list but absent from the curated section are either: (a) not important enough to curate, which is fine, or (b) missing editorial placement, which should be fixed.
-- **Are there entries that no longer belong?** A curated entry whose note has drifted away from the topic should be removed from the curated section (it stays in the generated section automatically).
+- **Are important notes missing?** Compare the curated entries against the tag's full membership from the listing above. Tagged notes absent from the index are either: (a) not important enough to curate, which is fine, or (b) missing editorial placement, which should be fixed.
+- **Are there entries that no longer belong?** A curated entry whose note has drifted away from the topic should be removed (the note stays reachable through the build-time listing and the scoped query).
 
 ### 3. Check for orphaned notes
 
@@ -43,13 +52,12 @@ For each orphan, consider whether adding tags would help future readers find it.
 
 ### 4. Split or promote
 
-When a tag's generated section grows large and internal clusters emerge:
+When a tag grows large and internal clusters emerge:
 
-1. Look at the curated section's groupings — these often reveal natural sub-tags.
+1. Look at the curated groupings — these often reveal natural sub-tags.
 2. Create a new tag-backed index page with `type: kb/types/index.md`, `index_source: tag`, and `index_key: <tag>`.
 3. Add the new tag to relevant notes' `tags:` field.
-4. Run `commonplace-sync-generated-index` to populate the generated section.
-5. Optionally write a curated section for the new index.
+4. Write the curated body for the new index; the complete listing appears on the published site automatically.
 
 **Split criteria:**
 - Would the resulting indexes each have 5+ notes?
@@ -61,6 +69,6 @@ Ensure `kb/notes/tags-index.md` lists all tag indexes. This is the hub page read
 
 ## Principles
 
-- The curated section is editorial, not exhaustive — it's a "best of" selection with context, not a complete listing.
-- The generated section handles completeness — don't worry about missing notes in the curated part unless they're genuinely important for the topic's story.
+- The curated index is editorial, not exhaustive — it's a "best of" selection with context, not a complete listing.
+- Completeness is handled elsewhere — the build-time site listing for humans, the scoped `rg` query for agents. Don't chase complete coverage in the curated body unless a note is genuinely important for the topic's story.
 - Groupings serve readers, not taxonomy — optimize for "does this help someone understand the topic?" not "is this logically clean?"
