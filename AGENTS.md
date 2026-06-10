@@ -91,25 +91,19 @@ Each tag's curated head is its `<tag>-README.md` (type `tag-readme`), small by t
 
 ## Vocabulary
 
-This section declares the active vocabulary: terms with specific meanings throughout this KB.
+Terms needed to understand the project's structure and everyday operations. Each links its full definition.
 
 - **Collection** — a `kb/` subtree whose root contains `COLLECTION.md`; that file is the local authoring and routing contract for artifacts in the subtree. See `kb/reference/definitions/collection.md`.
-- **Context engineering** — the architecture and machinery for getting the right knowledge into a bounded context at the right time. Includes routing, loading, scoping, and maintenance. See `kb/notes/definitions/context-engineering.md`.
-- **Distillation** — targeted transformation of recorded material into a use-shaped artifact for a particular downstream consumer. In KB practice this is usually directed context compression, because agents and maintainers work under bounded context. ML knowledge distillation (Hinton) is a sibling instance in a different substrate. See `kb/notes/definitions/distillation.md`.
-- **Constraining** — making semantics more focused by narrowing the space of valid interpretations a text or symbolic artifact admits. Reliability, speed, cost control, and reviewability may follow, but they are consequences rather than the definition. Orthogonal to distillation. See `kb/notes/definitions/constraining.md`.
-- **Codification** — constraining that crosses from natural language into a symbolic artifact with formal semantics or assigned consequences. Executable code is the main practical KB case, but schemas, grammars, route tables, and similar formal artifacts can also count. See `kb/notes/definitions/codification.md`.
-- **Frontloading** — pre-computing parts of an LLM instruction whose inputs are known before the LLM runs, and inserting the result so the agent does not redo the work at execution time. The primary argument is *constitutive* — it shapes what fits in a consuming call's effective context. In some cases it also has an *economic* benefit (saving repeated runtime work), most visible at broad scopes (build-time, install-time, session-start). See `kb/notes/frontloading-spares-execution-context.md`.
-- **Retained artifact** — retained state that a later agentic loop can consume in a behavior-shaping way. The boundary is behavioral consequence, not storage label. See `kb/notes/definitions/retained-artifact.md`.
-- **Operative part** — the behavior-affecting content, structure, parameterization, or mechanism within a retained artifact or consumption path. Classify the operative part when a stored object bundles several behavior-shaping parts. See `kb/notes/definitions/operative-part.md`.
-- **Storage substrate** — where retained state persists: repo, database, vector store, prompt registry, service object, model-artifact store, etc. Storage is one field, not the taxonomy. See `kb/notes/definitions/storage-substrate.md`.
-- **Representational form** — how an operative part is encoded and consumed: prose, symbolic, distributed-parametric, or mixed. Form determines the default review method: read prose, test/check symbolic artifacts, probe distributed-parametric artifacts. See `kb/notes/definitions/representational-form.md`.
-- **Lineage** — source dependencies and derivation status needed to invalidate, regenerate, retire, or review retained behavior. See `kb/notes/definitions/lineage.md`.
-- **Behavioral authority** — who consumes a retained artifact, through which channel, and with what force: advice, instruction, enforcement, ranking influence, audit trigger, or learning input. Replaces loose "role" shorthand when precision matters. See `kb/notes/definitions/behavioral-authority.md`.
-- **Knowledge artifact** — retained artifact consumed as evidence, reference, context, explanation, or advice. It can change behavior through belief or consideration without binding the next action. See `kb/notes/definitions/knowledge-artifact.md`.
-- **System-definition artifact** — retained artifact consumed with instruction, enforcement, routing, validation, configuration, evaluation, or learning force. This is an authority-path family, not a form or substrate. See `kb/notes/definitions/system-definition-artifact.md`.
 - **Register** — one of three content modes (theoretical, descriptive, prescriptive) that determines a collection's quality goal, title conventions, and linking rules. See `kb/notes/definitions/register.md`.
-- **Workshop** — a named workspace for temporal, work-in-flight documents. Lives in `kb/work/<workshop-name>/`. Value is consumed rather than accumulated — workshop artifacts have lifecycles and expiration; they produce library artifacts (notes, ADRs) when done. Contrast with the library layer (notes, indexes) where value accumulates over time. See `kb/notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md`.
-- **Commonplace** — the name of this KB and framework. Capitalize it in prose; keep lowercase only for literal identifiers such as `commonplace-*`, `llm-commonplace`, `src/commonplace/`, and `kb/commonplace/`.
+- **Workshop** — a named workspace for work-in-flight documents, under `kb/work/<workshop-name>/`. Value is consumed rather than accumulated: a finished workshop produces library artifacts (notes, ADRs) and is deleted. See `kb/notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md`.
+- **Distillation** — extracting a use-shaped artifact from a larger body of material for a particular consumer (notes from sources, instructions from notes). Distinct from ML knowledge distillation. See `kb/notes/definitions/distillation.md`.
+- **Constraining** — narrowing the space of valid interpretations an artifact admits — from writing a convention up to committing to code. Orthogonal to distillation. See `kb/notes/definitions/constraining.md`.
+- **Codification** — the far end of constraining, where natural language crosses into a symbolic artifact (code, schema, grammar) with formal semantics. See `kb/notes/definitions/codification.md`.
+- **Frontloading** — pre-computing parts of an instruction whose inputs are already known (at build, install, or session start) and inserting the result, so the consuming call's context carries the answer instead of the work. See `kb/notes/frontloading-spares-execution-context.md`.
+- **Context engineering** — getting the right knowledge into a bounded context at the right time: routing, loading, scoping, maintenance. See `kb/notes/definitions/context-engineering.md`.
+- **Commonplace** — the name of this KB and framework. Capitalize it in prose; lowercase only in literal identifiers (`commonplace-*`, `llm-commonplace`, `src/commonplace/`, `kb/commonplace/`).
+
+The specialized vocabulary for classifying external memory systems (retained artifact, operative part, storage substrate, representational form, lineage, behavioral authority, knowledge/system-definition artifact) is not needed for ordinary work — it lives in `kb/notes/artifact-analysis-README.md` and is loaded by the review skill and type spec that use it.
 
 ## Development
 
