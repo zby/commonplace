@@ -53,8 +53,7 @@ Terms needed to understand the project's structure and everyday operations, alph
 
 ## Development
 
-- **Use `python3`** for stdlib-only throwaway tooling. Commonplace runtime code should live in the Python package and be invoked through `commonplace-*` commands.
-- **Run `commonplace-*` commands and `pytest` by their bare name** — direnv puts `.venv/bin` on `PATH`. Do not prepend `.venv/bin/` or wrap in `direnv exec` or `uv run` as a precaution. If a bare command genuinely fails, run `cp-skill-health-check`.
+- **Use `python3`** for stdlib-only throwaway tooling. Commonplace runtime code lives in the Python package as `commonplace-*` commands — call them and `pytest` by bare name (direnv puts `.venv/bin` on `PATH`; never prepend `.venv/bin/` or wrap in `direnv exec` or `uv run`). If a bare call genuinely fails, run `cp-skill-health-check`.
 - **YAGNI** — don't implement features that aren't needed yet. If you identify a gap, create a note in `kb/notes/` instead of implementing it.
 - **No backwards compatibility** — with no external consumers, always prioritize cleaner design over keeping old behavior alive. If backcompat code is ever needed, mark it with `# BACKCOMPAT: <reason> - remove after <condition>`.
 - **Tests**: `pytest` — all tests must pass.
