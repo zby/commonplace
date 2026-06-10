@@ -2,37 +2,17 @@
 
 `CLAUDE.md` is a symlink to this file (`AGENTS.md`). Edit `AGENTS.md` directly.
 
-## Global Agent Instructions
-
-This section contains agent behavior rules. The Roughdraft subsection ends before `## Repository Overview`.
-
-### Roughdraft
-
-Use Roughdraft when the user wants to review or comment on a Markdown file. The user may say `rd` for Roughdraft; do not create any alias, symlink, or command named `rd`.
-
-When the user asks for a plan, write it as a Markdown file on disk before asking them to review it.
-
-To get a file reviewed, open it (one `.md` file at a time; the server starts automatically):
-
-```bash
-roughdraft open "/absolute/path/to/file.md"
-```
-
-**Leave the command running** — do not interrupt, kill, background, or detach it. Roughdraft exits the command when the user clicks Done Reviewing; that exit is the signal to read the file from disk and respond to the CriticMarkup feedback in it.
-
-Review feedback uses Roughdraft-flavored CriticMarkup: comments `{>>…<<}`, insertions `{++…++}`, deletions `{--…--}`, substitutions `{~~old~>new~~}`, highlights `{==…==}` — each optionally followed by an attribute block like `{id="c1" by="AI" at="2026-04-28T12:00:00.000Z" re="c0"}`. When adding comments or suggestions: generate stable document-local ids (`c1`, `c2`… for comments, `s1`, `s2`… for suggestions), set `by` and the current ISO timestamp in `at`, set `re` to the parent id when replying, and preserve existing attribute blocks unless removing the associated comment. Full syntax: `roughdraft help criticmarkup`.
-
 ## Repository Overview
 
 A framework for building agent-operated knowledge bases. This repo contains the methodology, type definitions, writing conventions, instructions and skills, and the Python commands that get installed into projects.
 
 The Commonplace repo is itself a knowledge base — it uses its own knowledge system to document the methodology for building knowledge bases. There is no separation between "user content" and "methodology" here; the methodology IS the content.
 
-## KB Goals
+## KB Goals and Scope
 
 ### Purpose
 
-This KB accumulates methodology for building agent-operated knowledge bases — the theory, design patterns, and operational conventions that make KBs effective. It supports agents and maintainers making decisions about KB architecture, type systems, writing quality, context engineering, and knowledge organization.
+Support decisions about KB architecture, type systems, writing quality, context engineering, and knowledge organization — made by agents and maintainers working on Commonplace or on KBs built with it.
 
 ### Domain
 
@@ -133,7 +113,7 @@ rg "^tags:.*learning-theory" kb/notes/ kb/reference/ kb/instructions/ --glob "*.
 
 ### Skills
 
-The `cp-skill-*` family (`cp-skill-write`, `cp-skill-validate`, `cp-skill-connect`, etc.) is installed into `.claude/skills/` and `.agents/skills/` by `commonplace-init`; the harness loads them automatically. The local `write-agent-memory-system-review` skill is repo-only, not a promoted framework skill.
+The `cp-skill-*` family (`cp-skill-write`, `cp-skill-validate`, `cp-skill-connect`, etc.) is installed into `.claude/skills/` and `.agents/skills/` by `commonplace-init`; the harness loads them automatically. Repo-local skills (`roughdraft-review`, `write-agent-memory-system-review`) are symlinked the same way but are not promoted framework skills.
 
 ### Commands
 

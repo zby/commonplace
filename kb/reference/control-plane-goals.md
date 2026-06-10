@@ -11,7 +11,7 @@ This note describes how KB goals live in always-loaded context in the shipped sy
 
 ## Where goals live in the shipped control plane
 
-The control-plane file the system ships is `AGENTS.md`. KB goals live in a dedicated `## KB Goals` section near the top, structured into five subsections:
+The control-plane file the system ships is `AGENTS.md`. KB goals live in a dedicated `## KB Goals and Scope` section near the top, structured into five subsections:
 
 - **Purpose** — what decisions or actions the KB supports
 - **Domain** — scope boundary
@@ -25,7 +25,7 @@ This placement is load-bearing. `AGENTS.md` is loaded on every agent invocation,
 
 | Concern | Per-installation or framework? | Where it lives |
 |---|---|---|
-| Purpose | Per-installation | `AGENTS.md` `## KB Goals` (filled in by the practitioner at install time) |
+| Purpose | Per-installation | `AGENTS.md` `## KB Goals and Scope` (filled in by the practitioner at install time) |
 | Domain | Per-installation | same |
 | Include | Per-installation | same |
 | Exclude | Per-installation | same |
@@ -41,7 +41,7 @@ Only the per-installation rows require human input. Framework rows are shipped f
 
 `commonplace-init` copies `AGENTS.md.template` into the practitioner project as `AGENTS.md.template`, which the practitioner fills in and renames (or copies into) `AGENTS.md`. The template carries:
 
-- A placeholder `## KB Goals` section with HTML comment guidance for each subsection, as concrete prose examples the practitioner replaces with their own answers
+- A placeholder `## KB Goals and Scope` section with HTML comment guidance for each subsection, as concrete prose examples the practitioner replaces with their own answers
 - A stock `## Using the KB` routing section pointing at `kb/notes/`, `kb/reference/`, and `kb/instructions/`
 - A stock Skills and Commands section listing the Commonplace-provided skills
 - `{{project_name}}` placeholders that `init_project` substitutes with the directory name

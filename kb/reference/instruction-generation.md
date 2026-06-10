@@ -89,7 +89,7 @@ The rule is "never clobber a practitioner edit." Updating an installed project t
 A short list of things that are still authored by hand rather than generated:
 
 - Static-site navigation configuration, if a project publishes the KB as a site
-- Per-project customisation of the `## KB Goals` section in a generated `AGENTS.md` — the template carries placeholder prose; the practitioner fills in real values
+- Per-project customisation of the `## KB Goals and Scope` section in a generated `AGENTS.md` — the template carries placeholder prose; the practitioner fills in real values
 
 These could all move to generated form later, but the current build-time step covers the cases where runtime parameterisation would have cost the most interpretation overhead: paths in promoted skills and the project name stamped into the control-plane template.
 
@@ -101,4 +101,4 @@ Relevant Notes:
 - [013-skills-first-delivery-with-core-local-type-split](./adr/013-skills-first-delivery-with-core-local-type-split.md) — decision: the skills-first delivery model and the core/local type split that `SCAFFOLD_TREES` and `PROMOTED_SKILLS` implement
 - [006-two-tree-installation-layout](./adr/006-two-tree-installation-layout.md) — decision: the installation layout that `commonplace-init` produces
 - [architecture](./architecture.md) — shipped architecture: where the generation pipeline sits inside the installed surface
-- [control-plane-goals](./control-plane-goals.md) — how the generated `AGENTS.md.template` carries the `## KB Goals` section for practitioners to fill in
+- [control-plane-goals](./control-plane-goals.md) — how the generated `AGENTS.md.template` carries the `## KB Goals and Scope` section for practitioners to fill in

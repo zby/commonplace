@@ -37,7 +37,7 @@ Most operations are things you ask the agent to do. Each entry below shows what 
 
 *What you get.* A new markdown file under `kb/notes/` with frontmatter, a claim-shaped title, and inbound and outbound links to related notes.
 
-*Limitations.* The agent's sense of "what's worth a note" depends on the `## KB Goals` section in `AGENTS.md`. The `Exclude` subsection is load-bearing; without it, scope creeps.
+*Limitations.* The agent's sense of "what's worth a note" depends on the `## KB Goals and Scope` section in `AGENTS.md`. The `Exclude` subsection is load-bearing; without it, scope creeps.
 
 ### Ingest a source
 
@@ -65,7 +65,7 @@ Most operations are things you ask the agent to do. Each entry below shows what 
 - "What do we have on retry backoff strategies?"
 - "Is there anything in the KB about the tradeoff between X and Y?"
 
-*What happens.* The agent combines frontmatter search, generated directory indexes, tag indexes, structured ripgrep over note bodies, and link following. It filters by descriptions first, then loads only the notes that look relevant.
+*What happens.* The agent combines frontmatter search, curated tag READMEs, scoped ripgrep listings and body search, and link following. It filters by descriptions first, then loads only the notes that look relevant.
 
 *What you get.* A short list of notes with justifications, usually followed by a synthesised answer that cites them inline.
 

@@ -34,7 +34,7 @@ There is no separate vendored `commonplace/` framework tree. The agent's normal 
 | Step | Context needed | Where it lives |
 |------|---------------|----------------|
 | Route to the correct location | Routing table | `AGENTS.md` |
-| Decide whether it belongs | KB goals and scope boundary | `AGENTS.md` `## KB Goals` |
+| Decide whether it belongs | KB goals and scope boundary | `AGENTS.md` `## KB Goals and Scope` |
 | Find related notes | Searchable library and user notes | `kb/notes/`, `kb/commonplace/notes/` |
 | Know how to write well | Writing conventions | target collection's `COLLECTION.md` (e.g. `kb/notes/COLLECTION.md`) |
 | Know the structure | Global or collection-local type definitions | `kb/types/`, `kb/<collection>/types/` |
