@@ -127,7 +127,7 @@ Commonplace can be installed into any project as a Python package. See **[INSTAL
 Install the package first, then use the commands directly:
 
 ```bash
-commonplace-generate-notes-index kb/notes
+commonplace-validate kb/notes
 commonplace-relocate-note old-note "New note title" --apply
 commonplace-relocate-note old-note --to kb/notes/definitions --apply
 commonplace-github-snapshot <url>

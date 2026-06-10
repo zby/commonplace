@@ -125,7 +125,7 @@ def test_init_project_resolves_templates(tmp_path: Path) -> None:
     assert "myproject" in text
     assert "{{project_name}}" not in text
     assert "## Vocabulary" in text
-    assert "This section declares the active vocabulary" in text
+    assert "Terms needed to understand the project" in text
 
     assert not (tmp_path / "qmd-collections.yml").exists()
 
