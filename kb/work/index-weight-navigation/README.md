@@ -143,7 +143,7 @@ The `index` type was doing two jobs: being an *index* (complete enumeration) and
    - **`navigation.md`** — marks as navigation affordances (`complete` = README is the membership surface; `covered_by` = trustworthy typed routing); **`maintain-curated-indexes.md`** — gains the lifecycle procedure; **FIX-SYSTEM/validation docs** — three new warning classes (weight, fan-out, membership/coverage).
    - **`kb/types/note.md` — deliberately unchanged**: obligations attach to the tag-README, never the note type.
    - Re-key the mkdocs hook on the new type (tag badge links, tail injection, hub tail); `kb/types/index.md` shrinks to build-time virtual pages.
-9. Record the type split + completeness mark in an ADR (extends, does not reopen, ADR 025).
+9. ~~Record the type split + completeness mark in an ADR~~ — **done (2026-06-10): ADR 026** (`kb/reference/adr/026-tag-readme-type-with-completeness-and-coverage-marks.md`), extending ADR 025 and refining its decision point 5 (forward pointer added in 025).
 10. ~~Promote the durable conclusions~~ — theory note and ADR 025 both done; reference-doc updates landed with step 5; the step-9 ADR covers the 2026-06-10 revision.
 
 ## Closure criteria
