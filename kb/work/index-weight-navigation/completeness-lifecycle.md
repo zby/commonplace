@@ -3,7 +3,7 @@ Design deliberation for the `complete` mark on `tag-readme` artifacts. The quest
 ## The mechanism and its inherent dynamic
 A `tag-readme` with `complete: true` makes two enforced promises: every note carrying the tag is linked (membership check, same query as the rg recipe), and the file sits under the weight gates (type contract: small).
 
-This creates a **write-side obligation**: writing a new note with tag T fails validation until the writer adds an entry to T's README. That coupling is the engine of the whole lifecycle:
+This creates a **membership obligation**: a new note tagged T leaves T's README failing validation until someone adds the entry — enforced reactively through the validator (the write path itself carries no tag discipline; the validator message routes to the fixing instruction). That coupling is the engine of the whole lifecycle:
 
 1. Each new tagged note adds ~150–300 B (link + context phrase).
   
@@ -26,17 +26,17 @@ The asymmetry matters in one direction only: an _unmarked but actually complete_
 
 **Human on the published site.** Gets the build-time generated tail appended to every tag-README regardless — always complete, with sublinear skim/search access ([the access-cost split](../../notes/design-for-the-first-time-human-except-on-access-cost.md)). **Verdict: cannot tell whether the mark exists.**
 
-**The writer (cp-skill-write path).** The mark converts fuzzy curation ("should this note be in the index?") into a deterministic, checkable obligation: tag T → entry in T's README, written at the moment the writer has the note's context loaded — the best possible moment to produce a context phrase. When the mark drops, the obligation lifts and curation reverts to periodic maintenance ([maintain-curated-indexes](../../instructions/maintain-curated-indexes.md)), where placement decisions are made cold. **Verdict: the mark's main beneficiary is write-time curation quality; its main cost is the same coupling.**
+**The writer (cp-skill-write path).** _(Revised 2026-06-10: the writing instructions deliberately carry no tag discipline.)_ The mark converts fuzzy curation ("should this note be in the index?") into a deterministic, checkable obligation: tag T → entry in T's README. But the obligation is enforced _reactively_, not at write time: write stays single-artifact and tags stay free; the validator's membership check fires when the marked README is next validated (sweeps, fix runs), and its warning/failure message names the fixing instruction ([maintain-curated-indexes](../../instructions/maintain-curated-indexes.md) / the FIX-SYSTEM route) so the loop is self-routing. Accepted cost: the entry and phrase are written cold at fix time, not hot at write time. **Verdict: the mark turns curation debt into a validator-visible, self-routing maintenance queue — without touching the write path.**
 
 **The maintainer / auditor.** With the mark: nothing to audit for completeness (validation does it); audit attention goes to phrase quality and groupings. Without: the curated-vs-membership comparison is a manual step in the maintenance instruction. **Verdict: the mark shifts completeness work from periodic audit to write time.**
 ## What the mark actually buys
-Summing the consumers: enforced trust (one read, no follow-up call, for exhaustive readers), guaranteed _editorial_ coverage (a phrase for every member, produced at write time when context is hot), and a deterministic write-side curation trigger. What it does **not** buy: anything irreplaceable — rg backstops enumeration for every consumer.
+Summing the consumers: enforced trust (one read, no follow-up call, for exhaustive readers), guaranteed _editorial_ coverage (a phrase for every member, eventually — the validator queues the gap), and a deterministic, self-routing maintenance trigger. What it does **not** buy: anything irreplaceable — rg backstops enumeration for every consumer.
 
 This is why fighting to preserve completeness through growth is the wrong instinct: the thing being preserved is a convenience, and the structures needed to preserve it cost more than the convenience is worth.
 ## The exits, analyzed
 When a complete README approaches the hard gate:
 
-**(a) Drop to selective — the default.** Remove the mark, trim the entries to the editorial best-of. Exhaustive consumers fall back to rg (one extra call); the groupings and best phrases survive; the write-side obligation lifts. Cheap, honest, no new structure. The trimmed-out phrases are a real but bounded loss — they can seed child READMEs later if substructure emerges.
+**(a) Drop to selective — the default.** Remove the mark, trim the entries to the editorial best-of. Exhaustive consumers fall back to rg (one extra call); the groupings and best phrases survive; the membership obligation lifts. Cheap, honest, no new structure. The trimmed-out phrases are a real but bounded loss — they can seed child READMEs later if substructure emerges.
 
 **(b) Split with overlap — an editorial act, not a completeness rescue.** When the README's own groupings reveal genuine substructure, mint child tags. Child-tagged notes **keep the parent tag** (tags overlap per ADR 004) — removing it would be illogical, since the notes still are about T. The parent README goes selective and links the child READMEs with context phrases; small children may take their own complete marks. Note what this does _not_ do: it does not restore the parent's completeness. The parent's full membership is still rg-only.
 
@@ -48,9 +48,10 @@ Its properties differ from `complete` in exactly the ways growth punishes:
 
 - **Weight-immune.** The README links a handful of children, not every member, so it stays far under the gates no matter how large T grows. `covered` is the mark that _survives_ growth; `complete` is the one that can't.
   
-- **The write obligation transfers instead of lifting.** A new T note must take at least one child tag — taxonomy pressure, the arscontexta cost, but now _explicit and enforced_ rather than a silently decaying prose claim ("there are three kinds of notes here") that nobody checks. The smell to watch: a catch-all child (`T-misc`) makes coverage trivially satisfiable while destroying its routing value.
+- **The obligation transfers instead of lifting.** A new T note must (eventually, validator-enforced) take at least one child tag — taxonomy pressure, the arscontexta cost, but now _explicit and enforced_ rather than a silently decaying prose claim ("there are three kinds of notes here") that nobody checks. The smell to watch: a catch-all child (`T-misc`) makes coverage trivially satisfiable while destroying its routing value.
   
 - **The list itself needs a limit — and here the metric is count, not bytes.** Routing value comes from a reader holding the alternatives in mind at once ("which of these kinds is my X?"); a `covered_by` of 30 children is the flat listing rebuilt one level up, and it slips under the byte gates because a bare list is terse. Validation warns past a soft fan-out (~7 children). No hard fail: the remedy is recursive and editorial — group children under intermediate tags, each with its own README, restoring small fan-out at every level.
+  
 - **Who gains:** targeted lookup gets trustworthy typed routing ("which kind of T is this?"); exhaustive consumers get a recursion guarantee (union the children, each of which is itself `complete`, `covered`, or rg-backed). Who doesn't: connect can still just rg the parent — for flat enumeration the mark adds nothing over the query.
   
 
@@ -67,7 +68,7 @@ The forbidden state is unchanged: partial migration, where some child-tagged not
 SELECTIVE ──────────────── author curates all members, fits gates
     │ add complete: true       (validation confirms membership)
     ▼
-COMPLETE ────────────────── each new tagged note must add an entry
+COMPLETE ────────────────── each new tagged note queues a README entry (validator-enforced)
     │ soft warn (~8 KB): plan the exit
     │ hard gate (~16 KB) approaching:
     ▼
@@ -93,7 +94,7 @@ A large tag's default end state is _selective head + rg membership + build-time 
 5. The `covered_by` mark (c) is designed but not adopted: never write the unenforced prose version of the claim ("the children cover this tag"); adopt the enforced mark the first time a real tag needs typed routing at scale, with `learning-theory` as the natural candidate. The frontmatter list is the only symbolic tag-to-tag relation; watch for the catch-all-child smell.
   
 ## Open questions
-- Should the hard-gate failure message _instruct_ the drop (and should dropping be manual-only)? Leaning manual: the trim that accompanies it is editorial work, and an auto-drop would silently degrade the write-side obligation.
+- Should the hard-gate failure message _instruct_ the drop (and should dropping be manual-only)? Leaning manual: the trim that accompanies it is editorial work, and an auto-drop would silently erase the membership obligation.
   
 - Should the soft warn on a complete README carry a distinct message ("plan the completeness exit") vs the generic weight warning?
   
