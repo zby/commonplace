@@ -103,9 +103,7 @@ If the system has no reachable source code, stop and write a lightweight note in
    - write `note_path`
    - decide trace-derived status from implementation evidence and either include both the placement section and `trace-derived` tag, or omit both
 
-   Pass the worker these type-contract inputs:
-   - `source_dir`
-   - `note_path`
+   Pass the worker the inputs defined in the type contract's `## Inputs` section — the contract is authoritative; read the list from there (currently `source_dir` and `note_path`).
 
    Also pass this parent-supplied source metadata for the review note:
    - `source_url`
@@ -124,14 +122,7 @@ If the system has no reachable source code, stop and write a lightweight note in
 
 10. **Update the trace-derived survey if needed.** If the review's trace-derived placement adds meaningfully to the survey, update `kb/agent-memory-systems/trace-derived-learning-techniques-in-related-systems.md`.
 
-11. **Run taxonomy QA.** Re-read the drafted review and check whether it makes the artifact contract clear where relevant. Do not force a rigid four-field section into every review; add or revise prose only when the existing text leaves a mechanism ambiguous.
-
-   Check:
-   - **Storage substrate:** does the review identify where retained state persists when storage is architecturally relevant?
-   - **Representational form:** does it classify behavior-shaping operative parts as prose, symbolic, distributed-parametric, or mixed when that affects the comparison?
-   - **Lineage:** does it explain source traces, derivation, invalidation, regeneration, or source-of-truth status for generated or distilled artifacts?
-   - **Behavioral authority:** does it distinguish knowledge-artifact use from system-definition-artifact use by naming the consumer, channel, and force?
-   - **Trace-derived split:** if the system learns from traces, does the review distinguish raw trace artifacts from distilled behavior-shaping artifacts?
+11. **Run taxonomy QA.** Re-read the drafted review and check whether it makes the artifact contract clear where relevant. Work from the type contract's artifact-analysis field list (plus its trace-derived split, when the system learns from traces) — the contract is authoritative for which fields exist and what each means; do not QA against a remembered list. For each contract field, ask: does the review make that mechanism clear where it affects the comparison? Do not force a rigid section into every review; add or revise prose only when the existing text leaves a mechanism ambiguous.
 
    If a field is absent because the reviewed system has no distinctive mechanism there, leave it absent. If the absence hides an important tradeoff, fix the review before semantic QA.
 

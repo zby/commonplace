@@ -53,7 +53,13 @@ Run:
 # usually symlinks into kb/instructions/<skill>/, and plain `find` (without -L)
 # will not descend into them, returning a misleading empty result.
 find -L .claude/skills .agents/skills -maxdepth 2 -name SKILL.md -print 2>/dev/null | sort
-for skill in cp-skill-write cp-skill-validate cp-skill-connect cp-skill-convert cp-skill-health-check cp-skill-ingest cp-skill-snapshot-web; do
+# Derive the expected promoted set from the live skill source tree
+# (kb/commonplace/instructions/ in an installed KB, kb/instructions/ in the
+# Commonplace source repo). Do not check against a hardcoded skill list —
+# it goes stale as skills are added or retired.
+skill_src=kb/commonplace/instructions
+test -d "$skill_src" || skill_src=kb/instructions
+for skill in $(cd "$skill_src" && ls -d cp-skill-*); do
   for dir in .claude/skills .agents/skills; do
     test -e "$dir/$skill/SKILL.md" && echo "active skill OK: $dir/$skill" || echo "active skill MISSING: $dir/$skill"
   done
@@ -63,17 +69,7 @@ find .claude/skills .agents/skills -maxdepth 1 -type l ! -exec test -e {} \; -pr
 
 The per-skill `test -e` loop is the authoritative signal for whether each expected skill resolves (`test -e` follows symlinks). Treat the `find -L` listing as a cross-check for unexpected or extra skills, not the primary verdict.
 
-Expected promoted skills include at least:
-
-```text
-cp-skill-write
-cp-skill-validate
-cp-skill-connect
-cp-skill-convert
-cp-skill-health-check
-cp-skill-ingest
-cp-skill-snapshot-web
-```
+The expected promoted set is the `cp-skill-*` directories in the skill source tree the loop derives from. In the Commonplace source repo, the installer's `PROMOTED_SKILLS` list in `src/commonplace/cli/init_project.py` is the authoritative manifest; if the loop's derived set and that list disagree, report the difference as a finding.
 
 Interpretation:
 - No `.claude/skills/` or `.agents/skills/` entries: `commonplace-init` likely did not run, or the runtime is looking at a different project root.

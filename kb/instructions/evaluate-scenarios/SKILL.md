@@ -107,12 +107,8 @@ Overhead sources measured: {file: bytes, ...; note any counted in multiple forks
 
 ### 8. Verify plausibility
 
-- AGENTS.md: ~15,000–18,000 B (root instructions + vocabulary + routing)
-- COLLECTION.md: ~4,000–8,000 B
-- type-spec (`kb/types/*.md`): ~2,000–4,000 B
-- skill bodies (`cp-skill-*`): ~8,000–12,000 B
-- scoped `rg` description listing: roughly 150 B per matching note — grows with the slice, not the collection
+Sanity-check against the live files, not remembered typical sizes — artifact sizes drift as the system evolves, so a hand-maintained range goes stale. Whenever a size drives a verdict or looks surprising, re-run `wc -c` on the actual artifact (AGENTS.md, the COLLECTION.md, the type spec, the skill body) and use that number.
 
-If a number is implausible, re-read and re-measure.
+One structural anchor that scales rather than drifts: a scoped `rg` description listing costs roughly 150 B per matching note — it grows with the slice, not the collection.
 
 **START NOW.** Read the scenarios, measure overhead per fork, emit the per-scenario fork tables and the feasibility + cost signals.

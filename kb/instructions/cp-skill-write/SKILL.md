@@ -55,7 +55,7 @@ All discovery beyond this — collection-wide description scans, cross-destinati
 
 Follow the type-spec doc and collection conventions. Derive a lowercase-hyphenated filename from `# Title` unless editing an existing file. For typed artifacts, set `type:` to the exact repo-relative type-spec path, not the type name.
 
-Set traits only when clearly warranted: `title-as-claim`, `definition`, `has-comparison`, `has-external-sources`, `has-implementation`.
+Set traits only when clearly warranted. The available traits and their meanings are defined in the target type's spec (e.g. the traits table in `kb/types/note.md`) — take the vocabulary from there, not from a remembered list.
 
 Preserve existing frontmatter and links during edits unless the requested change requires changing them.
 
