@@ -53,7 +53,8 @@ Terms needed to understand the project's structure and everyday operations, alph
 
 ## Development
 
-- **Use `python3`** for stdlib-only throwaway tooling. Commonplace runtime code lives in the Python package as `commonplace-*` commands — call them and `pytest` by bare name (direnv puts `.venv/bin` on `PATH`; never prepend `.venv/bin/` or wrap in `direnv exec` or `uv run`). If a bare call genuinely fails, run `cp-skill-health-check`.
+- **Use `python3`** for stdlib-only throwaway tooling. Commonplace runtime code lives in the Python package as `commonplace-*` commands.
+- **Package documentation**: [lib-modules.md](./kb/reference/lib-modules.md) — internal API of the `commonplace.lib` modules; [review-architecture.md](./kb/reference/review-architecture.md) — code architecture of the review subsystem.
 - **YAGNI** — don't implement features that aren't needed yet. If you identify a gap, create a note in `kb/notes/` instead of implementing it.
 - **No backwards compatibility** — with no external consumers, always prioritize cleaner design over keeping old behavior alive. If backcompat code is ever needed, mark it with `# BACKCOMPAT: <reason> - remove after <condition>`.
 - **Tests**: `pytest` — all tests must pass.
@@ -117,11 +118,7 @@ The `cp-skill-*` family (`cp-skill-write`, `cp-skill-validate`, `cp-skill-connec
 
 ### Commands
 
-The `llm-commonplace` package provides `commonplace-*` CLI commands for validation, indexing, snapshots, note operations, and the review system. Documentation lives in `kb/reference/`:
-
-- [commands.md](./kb/reference/commands.md) — CLI command reference
-- [lib-modules.md](./kb/reference/lib-modules.md) — library modules (frontmatter, note_parser, type_resolver)
-- [review-architecture.md](./kb/reference/review-architecture.md) — review system architecture and data model
+The `llm-commonplace` package provides `commonplace-*` CLI commands for validation, snapshots, note operations, and the review system — reference in [commands.md](./kb/reference/commands.md). Call them and `pytest` by bare name: direnv puts `.venv/bin` on `PATH`, so never prepend `.venv/bin/` or wrap in `direnv exec` or `uv run`. If a bare call genuinely fails, run `cp-skill-health-check`.
 
 For review work (single-note review, triage, ack, or sweep), read `kb/instructions/REVIEW-SYSTEM.md`.
 For fixing review warnings, read `kb/instructions/FIX-SYSTEM.md`.
