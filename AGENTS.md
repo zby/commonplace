@@ -101,10 +101,11 @@ Terms needed to understand the project's structure and everyday operations, alph
 - **Distillation** — extracting a use-shaped artifact from a larger body of material for a particular consumer (notes from sources, instructions from notes). Distinct from ML knowledge distillation. See `kb/notes/definitions/distillation.md`.
 - **Frontloading** — pre-computing parts of an instruction whose inputs are already known (at build, install, or session start) and inserting the result, so the consuming call's context carries the answer instead of the work. See `kb/notes/frontloading-spares-execution-context.md`.
 - **Register** — one of three content modes (theoretical, descriptive, prescriptive) that determines a collection's quality goal, title conventions, and linking rules. See `kb/notes/definitions/register.md`.
+- **Representational form** — how retained content is encoded and consumed: prose, symbolic (code, schemas, grammars), distributed-parametric (model weights), or mixed. Codification is the prose→symbolic crossing on this axis, and form sets the default review method: read prose, test symbolic artifacts, probe parametric ones. See `kb/notes/definitions/representational-form.md`.
 - **System-definition artifact** — a retained artifact the system consumes with binding force: instruction, enforcement, routing, validation, or configuration (skills, schemas, COLLECTION.md files, validators). Contrast a knowledge artifact, consumed as evidence or advice that informs without binding. See `kb/notes/definitions/system-definition-artifact.md`.
 - **Workshop** — a named workspace for work-in-flight documents, under `kb/work/<workshop-name>/`. Value is consumed rather than accumulated: a finished workshop produces library artifacts (notes, ADRs) and is deleted. See `kb/notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md`.
 
-The specialized vocabulary for classifying external memory systems (retained artifact, operative part, storage substrate, representational form, lineage, behavioral authority, knowledge artifact) is not needed for ordinary work — it lives in `kb/notes/artifact-analysis-README.md` and is loaded by the review skill and type spec that use it.
+The specialized vocabulary for classifying external memory systems (retained artifact, operative part, storage substrate, lineage, behavioral authority, knowledge artifact) is not needed for ordinary work — it lives in `kb/notes/artifact-analysis-README.md` and is loaded by the review skill and type spec that use it.
 
 ## Development
 
