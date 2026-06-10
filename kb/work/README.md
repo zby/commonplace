@@ -2,8 +2,6 @@
 
 Experimental workshop space. Purpose-driven working artifacts that haven't codified into notes yet.
 
-Navigation: [directory index](./dir-index.md).
-
 Each workshop is a directory exploring a specific workflow end-to-end: from question through sourcing and extraction to finished notes. The goal is to discover what patterns actually emerge from use, rather than designing structure upfront.
 
 ## Active Workshops
@@ -31,3 +29,4 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 - [shipping-model](./shipping-model/README.md) — deciding how commonplace ships its content so user collections stay theirs while our library sits alongside as a read-only dependency
 - [distributing-built-kbs](./distributing-built-kbs/README.md) — the downstream counterpart to shipping-model: most hassle-free way to distribute a domain KB someone built, by separating the lightweight consumer path from the authoring machinery
 - [lifecycle-management](./lifecycle-management/README.md) — mapping the full artifact life-cycle (intake, promotion, maturation, retirement); the `agent-memory-design` test case landed as a `note + synthesis` trait in `kb/notes/designing-agent-memory-systems.md`
+- [derivative-report-uniformity](./derivative-report-uniformity/README.md) — unifying frontmatter, directory structure, and (deliberately fuzzy) validation/staleness across the three source-derived reports: reviews, connect reports, critiques
