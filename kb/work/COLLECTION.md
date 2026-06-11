@@ -12,6 +12,8 @@ Plain markdown without frontmatter is fine. Imported, copied, or transitional fi
 
 Substantial work lives in a named subdirectory `kb/work/<workshop-name>/` with a short `README.md` (or `framing.md` / `plan.md`) saying what the work is and what would close it. Small one-off files can live directly under `kb/work/` until they disappear or grow into a workshop.
 
+The framing file should fix only what a later session can't determine — the goal, what closes the workshop, the evaluation boundary, and bookkeeping conventions. Don't pre-commit method, first targets, or interpretation of prior results; the live work will determine those — rationale: [An author should fix what the executor can't determine, not what it will](../notes/fix-what-the-executor-cant-determine-not-what-it-will.md).
+
 The Active Workshops list in [`kb/work/README.md`](./README.md) is the curated operational navigation surface — add a one-line entry when starting, remove it when the workshop closes. If the README already has unrelated uncommitted edits, do not partially stage it just to keep navigation immediately complete; commit the workshop artifacts atomically and update the README in a later navigation cleanup.
 
 ## Title conventions
