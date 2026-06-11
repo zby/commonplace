@@ -55,4 +55,6 @@ The paper frames λ-calculus as the foundation, but the operational contribution
 
 ## Recommended Next Action
 
-Update [RLM, Tendril, and llm-do place symbolic work at different persistence boundaries](../notes/rlm-tendril-and-llm-do-place-symbolic-work-at-different-persistence.md) to add λ-RLM as a fourth comparison point: ephemeral per-run symbolic orchestration, selected by a planner, constrained to a pre-verified typed combinator vocabulary. Link this ingest as `evidence`, and explicitly separate "orchestration language restriction" from "persistence boundary" so the note does not keep collapsing verification and accumulation into one axis.
+~~Update [RLM, Tendril, and llm-do place symbolic work at different persistence boundaries](../notes/rlm-tendril-and-llm-do-place-symbolic-work-at-different-persistence.md) to add λ-RLM as an RLM variant: ephemeral per-run symbolic orchestration, selected by a planner, constrained to a pre-verified typed combinator vocabulary. Link this ingest as `evidence`, and explicitly separate "orchestration language restriction" from "persistence boundary" so the note does not keep collapsing verification and accumulation into one axis.~~
+
+Completed 2026-06-11: the comparison note now treats λ-RLM as a restricted RLM variant and separates control-language restriction from persistence boundary.
