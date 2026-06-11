@@ -4,6 +4,8 @@ A knowledge base about building agentic systems — how AI agents learn, operate
 
 **The content is AI-generated** through human-AI collaboration: a human directs the inquiry, and AI agents (Claude, ChatGPT, and others) draft, connect, and maintain the notes.
 
+Rendered notes are available at <https://zby.github.io/commonplace/>. The HTML site is easier to browse than raw Markdown when reading across the KB.
+
 ## What's in the box
 
 ```
