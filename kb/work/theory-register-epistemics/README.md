@@ -6,7 +6,7 @@ Brainstorm the theoretical register's admission policy. `kb/notes/` is built aro
 
 ## Trigger case
 
-`kb/notes/trace-derived-memory-matures-through-an-epistemic-authority-ladder.md` (uncommitted at workshop start) carries `title-as-claim` but is a design proposal: the five-rung factoring, the verification-coverage metric, and the operating-point stance are arbitrary choices whose consequences are hard to isolate. The contestability test doesn't fail for it — it doesn't *apply*. Resolving that note under whatever policy emerges is part of closing this workshop.
+`kb/notes/trace-derived-memory-matures-through-an-epistemic-authority-ladder.md` (uncommitted at workshop start) carried `title-as-claim` but was a design proposal: the five-rung factoring, the verification-coverage metric, and the operating-point stance are arbitrary choices whose consequences are hard to isolate. The contestability test doesn't fail for it — it doesn't *apply*. It has since been revised under the existential recast (idea 2 below) into `kb/notes/trace-derived-memory-earns-authority-per-operation-not-at-capture.md`: the truth-apt claim took the title, the ladder became an explicit witness with its free choices marked. Whether that revision satisfies the eventual policy is part of closing this workshop.
 
 ## Ideas established in discussion (2026-06-11)
 
@@ -30,6 +30,6 @@ Brainstorm the theoretical register's admission policy. `kb/notes/` is built aro
 
 Relevant Notes:
 
-- [trace-derived memory matures through an epistemic-authority ladder](../../notes/trace-derived-memory-matures-through-an-epistemic-authority-ladder.md) — tests: the trigger case the policy must resolve
+- [trace-derived memory earns authority per operation, not at capture](../../notes/trace-derived-memory-earns-authority-per-operation-not-at-capture.md) — tests: the trigger case, already revised under the existential recast; the policy must confirm or amend it
 - [alexander patterns and knowledge system design](../../notes/alexander-patterns-and-knowledge-system-design.md) — draws-on: Context/Problem/Forces/Solution is prior art for what a design-proposal quality test could check
 - [register](../../notes/definitions/register.md) — defined-in: the three-register model whose theoretical slot this workshop re-examines
