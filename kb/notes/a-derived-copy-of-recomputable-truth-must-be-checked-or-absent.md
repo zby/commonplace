@@ -8,17 +8,17 @@ status: seedling
 
 # A derived copy of recomputable truth must be checked or absent
 
-When an artifact carries a copy of information that is mechanically recomputable from a ground-truth source elsewhere in the system — a completeness mark, a compiled cue, a hardcoded contract list inlined in a hot-path instruction, a duplicated file — the copy must be machine-checked against its source (a validator re-derives and compares, failing on mismatch) or it must not exist (delete it, or read the source live). There is no safe middle where the copy is maintained by hand and trusted by consumers.
+Some artifacts carry a copy of information that is mechanically recomputable from a ground-truth source elsewhere in the system: a completeness mark, a compiled cue, a hardcoded contract list inlined in a hot-path instruction, a duplicated file. Such a copy has exactly two valid states. Either it is machine-checked against its source — a validator re-derives and compares, failing on mismatch — or it does not exist: delete it, or read the source live. There is no safe middle where the copy is maintained by hand and trusted by consumers.
 
 ## The asymmetry that forces the rule
 
 The two failure modes are not symmetric, and the rule rides entirely on that. An *absent* copy costs the consumer one bounded recomputation: run the query, read the source, do the work the copy would have saved. A *false* copy costs silent, unbounded wrongness — it tells consumers to stop looking, or to follow a snapshot of a world that has since moved, and they have no signal that anything is wrong. This is the [stale-indexes failure](./stale-indexes-are-worse-than-no-indexes.md) in its sharpest form: a trusted-but-stale claim suppresses the fallback that would have recovered the truth, so the gap becomes invisible rather than merely costly.
 
-False-positive trust is the trap. The downside of absence is bounded and recoverable; the downside of a false copy is neither. Because that asymmetry is one-sided and severe, hand-maintained-and-trusted is *forbidden*, not merely risky: any unenforced copy is one missed edit away from the catastrophic state, with nothing watching.
+That asymmetry is why hand-maintained-and-trusted is *forbidden* rather than merely risky. The downside of absence is bounded and recoverable; the downside of a false copy is neither — and an unenforced copy is always one missed edit away from it, with nothing watching.
 
 ## Reconciling two pulls
 
-Two established principles collide exactly on recomputable values, and enforcement is what dissolves the collision.
+Two established principles pull in opposite directions on recomputable values, and enforcement is what dissolves the collision.
 
 [Frontloading spares execution context](./frontloading-spares-execution-context.md) says: pre-compute values known before a call and insert the result, sparing the hot path the cost of deriving them. It already demands a *validity window* — lineage or regeneration rules — for any inserted value that can change. So frontloading wants the contract list inlined in the write skill, because reading the contract on every invocation is a recurring hot-path context cost.
 
@@ -32,17 +32,17 @@ Enforcement is only available when three preconditions hold:
 
 1. **A derivation rule.** The copy must be mechanically re-derivable from the source. Extractable lists, set memberships, and file identity are checkable: a validator can re-extract and compare. Prose summaries and judgments are not — there is no comparison a machine can run, so they stay as live reads or are omitted.
 2. **Machine-locatability.** The copy must occupy a marked region that names its source — the [lineage](./definitions/lineage.md) the validator follows to find the ground truth and re-derive.
-3. **Ground truth that exists at validation time.** Enforcement cannot help where execution itself produces the evidence. A plan's executor learns things no validator could pre-check, because the run generates them. That part of the fix-what-the-executor territory is untouched by this rule: the third precondition fails, so the value was never a recomputable copy in the first place.
+3. **Ground truth that exists at validation time.** Enforcement cannot help where execution itself produces the evidence: a plan's executor learns things no validator could pre-check, because the run generates them. That part of the fix-what-the-executor territory is untouched by this rule — when the precondition fails, the value was never a recomputable copy in the first place.
 
 ## Consequences
 
 - **Checked copies degrade gracefully.** Dropping one costs consumers a recomputation, never correctness, so lifecycle exits stay cheap: a copy that outgrows its purpose is deleted and readers fall back to the source.
-- **Never write the unenforced prose version of a checkable claim.** "This list is complete" with no validator behind it is the catastrophic state with none of the protection. A checkable claim is enforced as a check or not asserted at all.
+- **Never write the unenforced prose version of a checkable claim.** "This list is complete" with no validator behind it is exactly the hand-maintained-and-trusted state the rule forbids. A checkable claim is enforced as a check or not asserted at all.
 - **When a copy can't be checked, the resolution is omission.** Either delete the copy ([ADR 025](../reference/adr/025-complete-generated-indexes-are-build-time-only.md) deleted committed generated indexes) or read the source live (the 2026-06-10 skill edits chose read-the-contract per invocation). Both are correct; both pay a build-time or hot-path cost that enforcement would have avoided. Omission is the fallback, not the optimum.
 
 ## Instances across four surfaces
 
-The rule already runs, is half-applied, and is unapplied across the system — which is why it generalizes:
+Four surfaces in the system instantiate the rule, each in a different state of application — already enforced, stated but unenforced, resolved by omission, and not yet applied. The spread is what shows it generalizes:
 
 - **`complete`/`covered_by` marks on tag-READMEs** — enforced and shipped. A validator re-derives membership from the scoped `rg` sweep and fails on mismatch (see [mark-semantics.md](../reference/mark-semantics.md)).
 - **Compiled memory views and cues** — the general source-of-truth requirement, stated for memory systems in [keep-compiled-views-aligned](./agent-memory-requirements/keep-compiled-views-aligned.md): a derived surface needs provenance, regeneration rules, and staleness detection so it does not become an independent authority.
