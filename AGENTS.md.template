@@ -89,13 +89,13 @@ Entry points:
 
 ```bash
 # Find notes by description
-rg "^description:" kb/notes/ kb/reference/ kb/instructions/ --glob "*.md"
+rg "^description:" kb/notes/ kb/reference/ kb/instructions/ kb/commonplace/notes/ kb/commonplace/reference/ kb/commonplace/instructions/ --glob "*.md"
 
 # Find notes by type (types are path-valued)
-rg "^type: kb/types/note.md" kb/notes/ kb/reference/ kb/instructions/ --glob "*.md"
+rg "^type: kb/types/note.md" kb/notes/ kb/reference/ kb/instructions/ kb/commonplace/notes/ kb/commonplace/reference/ kb/commonplace/instructions/ --glob "*.md"
 
 # Find notes by tag
-rg "^tags:.*my-tag" kb/notes/ kb/reference/ kb/instructions/ --glob "*.md"
+rg "^tags:.*my-tag" kb/notes/ kb/reference/ kb/instructions/ kb/commonplace/notes/ kb/commonplace/reference/ kb/commonplace/instructions/ --glob "*.md"
 ```
 
 ### Skills
@@ -107,11 +107,11 @@ rg "^tags:.*my-tag" kb/notes/ kb/reference/ kb/instructions/ --glob "*.md"
 The `llm-commonplace` package provides `commonplace-*` CLI commands for validation, snapshots, note operations, and the review system. For the full reference, read [kb/commonplace/reference/commands.md](./kb/commonplace/reference/commands.md).
 
 <!--
-Keep the invocation variant that matches this project's environment (INSTALL.md step 3) and delete the other:
+Keep the invocation variant that matches this project's start-time contract (INSTALL.md step 3) and delete the other:
 -->
-Call `commonplace-*` commands and `pytest` by bare name — `.venv/bin` is on `PATH` (direnv or shell rc); do not prepend `.venv/bin/` or wrap in `uv run`.
-<!-- OR, if this project does not put .venv/bin on PATH:
-Invoke commands through the project venv: `.venv/bin/commonplace-validate`, `.venv/bin/pytest`, etc. Bare names will not resolve.
+Call `commonplace-*` commands by bare name — the project venv command directory is on `PATH` (`.venv/bin` on Linux/macOS, `.venv\Scripts` on Windows); do not prepend venv paths or wrap in `uv run`.
+<!-- OR, if this project does not put the venv command directory on PATH:
+Invoke commands through the project venv: `.venv/bin/commonplace-validate` on Linux/macOS or `.venv\Scripts\commonplace-validate.exe` on Windows. Bare names will not resolve.
 -->
 
 For review work (single-note review, triage, ack, or sweep), read `kb/commonplace/instructions/REVIEW-SYSTEM.md`.

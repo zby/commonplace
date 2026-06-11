@@ -11,6 +11,7 @@ SRC_ROOT = Path(__file__).resolve().parents[4] / "src"
 if str(SRC_ROOT) not in sys.path:
     sys.path.insert(0, str(SRC_ROOT))
 
+from commonplace.cli import init_project as init_project_module  # noqa: E402
 from commonplace.cli.init_project import (  # noqa: E402
     direnv_warnings,
     init_project,
@@ -126,6 +127,8 @@ def test_init_project_resolves_templates(tmp_path: Path) -> None:
     assert "{{project_name}}" not in text
     assert "## Vocabulary" in text
     assert "Terms needed to understand the project" in text
+    assert "Call `commonplace-*` commands by bare name" in text
+    assert "commands and `pytest`" not in text
 
     assert not (tmp_path / "qmd-collections.yml").exists()
 
@@ -225,6 +228,39 @@ def test_direnv_warnings_when_direnv_present(
     lines = direnv_warnings(tmp_path)
     assert lines
     assert any("direnv allow" in line for line in lines)
+
+
+def test_environment_warnings_on_windows(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.setattr(init_project_module.sys, "platform", "win32")
+
+    lines = direnv_warnings(tmp_path)
+
+    assert lines
+    assert any("Windows detected" in line for line in lines)
+    assert any("Activate.ps1" in line for line in lines)
+    assert any("Load the project environment" in line for line in lines)
+
+
+def test_main_prints_windows_guidance_when_init_fails(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
+    monkeypatch.setattr(init_project_module.sys, "platform", "win32")
+
+    def fail_init_project(root: Path, name: str | None = None) -> init_project_module.InitReport:
+        raise OSError("symbolic link privilege not held")
+
+    monkeypatch.setattr(init_project_module, "init_project", fail_init_project)
+
+    exit_code = init_project_module.main(["--root", str(tmp_path), "--name", "myproject"])
+
+    captured = capsys.readouterr()
+    assert exit_code == 1
+    assert "Windows detected" in captured.out
+    assert "Activate.ps1" in captured.out
+    assert "Failed to initialize Commonplace project" in captured.out
+    assert "symbolic link privilege not held" in captured.out
 
 
 def test_main_emits_direnv_setup_section(

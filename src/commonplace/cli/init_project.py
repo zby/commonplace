@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import os
 import shutil
+import sys
 from dataclasses import dataclass, field
 from importlib.resources import as_file, files
 from pathlib import Path
@@ -243,7 +244,7 @@ def init_project(root: Path, name: str | None = None) -> InitReport:
 
 
 def direnv_warnings(root: Path) -> list[str]:
-    """Return setup-warning lines about the direnv prerequisite.
+    """Return setup-warning lines about loading the project command environment.
 
     `commonplace-init` writes a `.envrc` but does not install direnv or run
     `direnv allow`. Without those manual steps the `.envrc` is a silent no-op:
@@ -253,6 +254,24 @@ def direnv_warnings(root: Path) -> list[str]:
     nothing actionable is detected.
     """
     lines: list[str] = []
+    if sys.platform == "win32":
+        lines.append(
+            "Windows detected. The generated .envrc is for Unix-like shells; "
+            "activate the project venv before running commonplace-* commands "
+            "or starting an agent runtime."
+        )
+        lines.append(
+            "PowerShell: run '.\\.venv\\Scripts\\Activate.ps1'. cmd: run "
+            "'.venv\\Scripts\\activate.bat'."
+        )
+        lines.append(
+            "If skill symlink creation fails on a future init run, enable "
+            "Developer Mode or use an elevated terminal, then rerun "
+            "'commonplace-init'."
+        )
+        lines.append("See INSTALL.md step 3 (Load the project environment) for examples.")
+        return lines
+
     if shutil.which("direnv") is None:
         lines.append(
             "direnv is not installed. The generated .envrc puts .venv/bin on "
@@ -273,7 +292,7 @@ def direnv_warnings(root: Path) -> list[str]:
             "generated .envrc activates and .venv/bin lands on PATH; install "
             "the direnv shell hook first if you have not already."
         )
-    lines.append("See INSTALL.md step 3 (Activate the environment) for the exact steps.")
+    lines.append("See INSTALL.md step 3 (Load the project environment) for examples.")
     return lines
 
 
@@ -288,7 +307,26 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     root = Path(args.root).resolve()
-    report = init_project(root, name=args.name)
+    pre_init_warnings: list[str] = []
+    if sys.platform == "win32":
+        pre_init_warnings = direnv_warnings(root)
+        if pre_init_warnings:
+            print("Environment setup:")
+            for line in pre_init_warnings:
+                print(f"- {line}")
+            print()
+
+    try:
+        report = init_project(root, name=args.name)
+    except OSError as exc:
+        if sys.platform == "win32":
+            print(f"Failed to initialize Commonplace project at {root}: {exc}")
+            if not pre_init_warnings:
+                print("\nEnvironment setup:")
+                for line in direnv_warnings(root):
+                    print(f"- {line}")
+            return 1
+        raise
 
     print(f"Initialized Commonplace project at {root}")
     if report.created:
@@ -310,7 +348,7 @@ def main(argv: list[str] | None = None) -> int:
     ):
         print("No changes needed.")
 
-    warnings = direnv_warnings(root)
+    warnings = [] if pre_init_warnings else direnv_warnings(root)
     if warnings:
         print("\nEnvironment setup:")
         for line in warnings:
