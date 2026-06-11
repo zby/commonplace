@@ -35,6 +35,7 @@ The same three-condition shape — a machine-checkable property, an independent 
 
 Relevant Notes:
 
+- [a-derived-copy-of-recomputable-truth-must-be-checked-or-absent](../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — rationale: the general theory the marks instantiate — enforce-or-omit for any derived copy of recomputable ground truth
 - [stale-indexes-are-worse-than-no-indexes](../notes/stale-indexes-are-worse-than-no-indexes.md) — rationale: the marked-but-false case is the trusted-stale-artifact trap, which is why marks are machine-enforced or absent
 - [keep-compiled-views-aligned](../notes/agent-memory-requirements/keep-compiled-views-aligned.md) — rationale: a mark is a compiled view over the membership query; that note states the general requirement (a rebuildable derivative must not become an independent source of truth, and stale views must be detectable) that this rule instantiates
 - [026-tag-readme-type-with-completeness-and-coverage-marks](./adr/026-tag-readme-type-with-completeness-and-coverage-marks.md) — part-of: the decision record that introduced the marks and this rule
