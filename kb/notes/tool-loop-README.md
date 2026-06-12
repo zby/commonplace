@@ -54,6 +54,7 @@ The framework's job is therefore to [**keep the tool loop optional**](./llm-fram
 ## Related approaches
 
 - [RLM has the model write ephemeral orchestrators over sub-agents](./rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md) — boundary case: the model writes an ephemeral symbolic orchestrator that composes agents via `recursive_llm()` — the loop is exposed to the model rather than the programmer, but discarded after each run
+- [Claude Code dynamic workflows](../agentic-systems/claude-code-dynamic-workflows.md) — shipped instance: a harness exposing a returning `agent()` plus host-language composition beneath its frozen loop — RLM's authorship model with persistence added, but in a sandboxed guest language, with capability surfaces, the dispatch interior, and the inter-workflow seams still framework-owned
 
 ---
 
