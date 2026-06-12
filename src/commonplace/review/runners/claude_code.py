@@ -1,21 +1,13 @@
+"""claude-code runner adapter: stream-json decoding and session-log telemetry."""
+
 from __future__ import annotations
 
 import json
 import os
-import re
-import subprocess
-import sys
-import threading
-from dataclasses import dataclass
 from pathlib import Path
 
-
-@dataclass(frozen=True)
-class RunnerResult:
-    stdout: str
-    stderr: str
-    returncode: int
-    telemetry: dict[str, object] | None = None
+from commonplace.review.protocol.prompt import REVIEW_RUNNER_SYSTEM_PROMPT
+from commonplace.review.runners.base import RunnerAdapter, coerce_usage_int
 
 
 CLAUDE_TOKEN_FIELDS = (
@@ -25,43 +17,11 @@ CLAUDE_TOKEN_FIELDS = (
     "output_tokens",
 )
 
-CODEX_TOKEN_FIELDS = (
-    "input_tokens",
-    "cached_input_tokens",
-    "output_tokens",
-    "reasoning_output_tokens",
-    "total_tokens",
-)
-
-CODEX_SESSION_ID_RE = re.compile(r"(?m)^session id:\s*(\S+)\s*$")
-
-
-REVIEW_RUNNER_SYSTEM_PROMPT = (
-    "Your goal is to write a series of review artifacts for the requested gates. "
-    "The task prompt provides the exact note, gate definitions, and output contract for the run. "
-    "Stay within the target note, the provided gate definitions, and only the linked neighborhood that the active gates require. "
-    "Do not do broad repository exploration or search for alternate gate definitions. "
-    "Treat helper scripts as command interfaces; inspect workflow files or script source only if a command fails and you need to debug it."
-)
-
-def _stream_pipe(pipe, sink, chunks: list[str]) -> None:
-    try:
-        for line in iter(pipe.readline, ""):
-            chunks.append(line)
-            sink.write(line)
-            sink.flush()
-    finally:
-        pipe.close()
-
-
-def _coerce_usage_int(value: object) -> int:
-    return value if isinstance(value, int) and not isinstance(value, bool) else 0
-
 
 def _usage_totals_from_requests(requests: list[dict[str, object]]) -> dict[str, int]:
     totals = {
         field: sum(
-            _coerce_usage_int((request.get("usage") or {}).get(field))
+            coerce_usage_int((request.get("usage") or {}).get(field))
             for request in requests
             if isinstance(request.get("usage"), dict)
         )
@@ -86,7 +46,7 @@ def _is_usable_claude_model(value: object) -> bool:
     return isinstance(value, str) and bool(value) and not value.startswith("<")
 
 
-def _build_claude_telemetry(
+def build_claude_telemetry(
     requests: list[dict[str, object]],
     *,
     init_model: str | None = None,
@@ -186,7 +146,7 @@ def _merge_usage_entry(target: dict[str, object], incoming: dict[str, object]) -
     target["source"] = [existing, source]
 
 
-def _record_claude_usage_entry(
+def record_claude_usage_entry(
     request_usage_entries: list[dict[str, object]],
     request_usage_index: dict[str, int],
     event: object,
@@ -219,7 +179,7 @@ def _claude_project_session_dir(repo_root: Path) -> Path:
     return home / ".claude" / "projects" / project_key
 
 
-def _snapshot_claude_session_logs(repo_root: Path) -> dict[Path, int]:
+def snapshot_claude_session_logs(repo_root: Path) -> dict[Path, int]:
     session_dir = _claude_project_session_dir(repo_root)
     if not session_dir.is_dir():
         return {}
@@ -259,7 +219,7 @@ def _session_log_matches_prompt(session_log: Path, prompt: str) -> bool:
     return False
 
 
-def _find_matching_claude_session_log(
+def find_matching_claude_session_log(
     *,
     repo_root: Path,
     prompt: str,
@@ -285,7 +245,7 @@ def _find_matching_claude_session_log(
     return None
 
 
-def _load_claude_session_log_usage(
+def load_claude_session_log_usage(
     session_log: Path,
     request_usage_entries: list[dict[str, object]],
     request_usage_index: dict[str, int],
@@ -303,7 +263,7 @@ def _load_claude_session_log_usage(
                         event = json.loads(line)
                     except json.JSONDecodeError:
                         continue
-                    _record_claude_usage_entry(
+                    record_claude_usage_entry(
                         request_usage_entries,
                         request_usage_index,
                         event,
@@ -311,222 +271,6 @@ def _load_claude_session_log_usage(
                     )
         except OSError:
             continue
-
-
-def _codex_sessions_root() -> Path:
-    return Path(os.path.expanduser("~")) / ".codex" / "sessions"
-
-
-def _snapshot_codex_session_logs() -> dict[Path, int]:
-    sessions_root = _codex_sessions_root()
-    if not sessions_root.is_dir():
-        return {}
-    snapshot: dict[Path, int] = {}
-    for path in sessions_root.rglob("*.jsonl"):
-        try:
-            snapshot[path] = path.stat().st_mtime_ns
-        except FileNotFoundError:
-            continue
-    return snapshot
-
-
-def _extract_codex_session_id(output: str) -> str | None:
-    match = CODEX_SESSION_ID_RE.search(output)
-    if match is None:
-        return None
-    return match.group(1)
-
-
-def _find_codex_session_log_by_id(session_id: str) -> Path | None:
-    sessions_root = _codex_sessions_root()
-    if not sessions_root.is_dir():
-        return None
-    for path in sessions_root.rglob(f"*{session_id}.jsonl"):
-        return path
-    return None
-
-
-def _codex_session_log_matches_prompt(session_log: Path, prompt: str) -> bool:
-    try:
-        with session_log.open(encoding="utf-8") as handle:
-            for _ in range(16):
-                line = handle.readline()
-                if not line:
-                    return False
-                try:
-                    event = json.loads(line)
-                except json.JSONDecodeError:
-                    continue
-                if not isinstance(event, dict):
-                    continue
-                event_type = event.get("type")
-                payload = event.get("payload")
-                if not isinstance(payload, dict):
-                    continue
-
-                if event_type == "event_msg" and payload.get("type") == "user_message":
-                    if payload.get("message") == prompt:
-                        return True
-
-                if event_type != "response_item":
-                    continue
-                if payload.get("type") != "message" or payload.get("role") != "user":
-                    continue
-                content = payload.get("content")
-                if not isinstance(content, list):
-                    continue
-                for item in content:
-                    if not isinstance(item, dict):
-                        continue
-                    if item.get("type") == "input_text" and item.get("text") == prompt:
-                        return True
-    except OSError:
-        return False
-    return False
-
-
-def _find_matching_codex_session_log(
-    *,
-    prompt: str,
-    session_log_snapshot: dict[Path, int],
-    session_id: str | None,
-) -> Path | None:
-    if isinstance(session_id, str) and session_id:
-        session_log = _find_codex_session_log_by_id(session_id)
-        if session_log is not None:
-            return session_log
-
-    sessions_root = _codex_sessions_root()
-    if not sessions_root.is_dir():
-        return None
-
-    candidates: list[tuple[int, Path]] = []
-    for path in sessions_root.rglob("*.jsonl"):
-        try:
-            mtime_ns = path.stat().st_mtime_ns
-        except FileNotFoundError:
-            continue
-        previous_mtime_ns = session_log_snapshot.get(path)
-        if previous_mtime_ns is None or mtime_ns > previous_mtime_ns:
-            candidates.append((mtime_ns, path))
-
-    for _, path in sorted(candidates, reverse=True):
-        if _codex_session_log_matches_prompt(path, prompt):
-            return path
-    return None
-
-
-def _normalize_codex_usage(usage: object) -> dict[str, int] | None:
-    if not isinstance(usage, dict):
-        return None
-    return {
-        field: _coerce_usage_int(usage.get(field))
-        for field in CODEX_TOKEN_FIELDS
-    }
-
-
-def _codex_reasoning_effort(turn_context: dict[str, object] | None) -> str | None:
-    if not isinstance(turn_context, dict):
-        return None
-
-    effort = turn_context.get("effort")
-    if isinstance(effort, str) and effort.strip():
-        return effort.strip().lower()
-
-    collaboration_mode = turn_context.get("collaboration_mode")
-    if not isinstance(collaboration_mode, dict):
-        return None
-    settings = collaboration_mode.get("settings")
-    if not isinstance(settings, dict):
-        return None
-    effort = settings.get("reasoning_effort")
-    if isinstance(effort, str) and effort.strip():
-        return effort.strip().lower()
-    return None
-
-
-def load_codex_session_log_telemetry(session_log: Path) -> dict[str, object] | None:
-    session_meta: dict[str, object] | None = None
-    turn_context: dict[str, object] | None = None
-    task_started: dict[str, object] | None = None
-    task_complete: dict[str, object] | None = None
-    last_token_payload: dict[str, object] | None = None
-    token_count_events = 0
-
-    try:
-        with session_log.open(encoding="utf-8") as handle:
-            for line in handle:
-                try:
-                    event = json.loads(line)
-                except json.JSONDecodeError:
-                    continue
-                if not isinstance(event, dict):
-                    continue
-
-                event_type = event.get("type")
-                payload = event.get("payload")
-                if event_type == "session_meta" and isinstance(payload, dict):
-                    session_meta = payload
-                    continue
-                if event_type == "turn_context" and isinstance(payload, dict):
-                    turn_context = payload
-                    continue
-                if event_type != "event_msg" or not isinstance(payload, dict):
-                    continue
-
-                payload_type = payload.get("type")
-                if payload_type == "task_started":
-                    task_started = payload
-                    continue
-                if payload_type == "task_complete":
-                    task_complete = payload
-                    continue
-                if payload_type != "token_count":
-                    continue
-                info = payload.get("info")
-                if not isinstance(info, dict):
-                    continue
-                last_token_payload = payload
-                token_count_events += 1
-    except OSError:
-        return None
-
-    if last_token_payload is None:
-        return None
-
-    info = last_token_payload.get("info")
-    assert isinstance(info, dict)
-    totals = _normalize_codex_usage(info.get("total_token_usage"))
-    last_usage = _normalize_codex_usage(info.get("last_token_usage"))
-    if totals is None:
-        return None
-
-    return {
-        "provider": "codex",
-        "source": "session-log",
-        "session_id": session_meta.get("id") if isinstance(session_meta, dict) else None,
-        "session_path": str(session_log),
-        "timestamp": session_meta.get("timestamp") if isinstance(session_meta, dict) else None,
-        "cwd": session_meta.get("cwd") if isinstance(session_meta, dict) else None,
-        "originator": session_meta.get("originator") if isinstance(session_meta, dict) else None,
-        "cli_version": session_meta.get("cli_version") if isinstance(session_meta, dict) else None,
-        "model_provider": session_meta.get("model_provider") if isinstance(session_meta, dict) else None,
-        "model": turn_context.get("model") if isinstance(turn_context, dict) else None,
-        "reasoning_effort": _codex_reasoning_effort(turn_context),
-        "turn_id": (
-            task_complete.get("turn_id")
-            if isinstance(task_complete, dict) and isinstance(task_complete.get("turn_id"), str)
-            else task_started.get("turn_id")
-            if isinstance(task_started, dict)
-            else None
-        ),
-        "task_complete_message": task_complete.get("last_agent_message") if isinstance(task_complete, dict) else None,
-        "model_context_window": info.get("model_context_window"),
-        "totals": totals,
-        "last_usage": last_usage,
-        "token_count_events": token_count_events,
-        "rate_limits": last_token_payload.get("rate_limits"),
-    }
 
 
 def _extract_claude_text_content(payload: object) -> str:
@@ -568,7 +312,7 @@ def _summarize_claude_block(block: object) -> str:
     return ""
 
 
-def _stream_claude_json_pipe(
+def stream_claude_json_pipe(
     pipe,
     sink,
     chunks: list[str],
@@ -596,7 +340,7 @@ def _stream_claude_json_pipe(
 
             event_type = event.get("type")
             message = event.get("message")
-            _record_claude_usage_entry(
+            record_claude_usage_entry(
                 request_usage_entries,
                 request_usage_index,
                 event,
@@ -651,22 +395,18 @@ def _stream_claude_json_pipe(
         pipe.close()
 
 
-def run_prompt(
-    *,
-    runner: str,
-    prompt: str,
-    repo_root: Path,
-    model: str | None = None,
-) -> RunnerResult:
-    env = os.environ.copy()
-    runner_prompt = prompt
-    claude_request_usage_entries: list[dict[str, object]] = []
-    claude_request_usage_index: dict[str, int] = {}
-    claude_init_state: dict[str, str] = {}
-    claude_session_log_snapshot = _snapshot_claude_session_logs(repo_root) if runner == "claude-code" else {}
-    codex_session_log_snapshot = _snapshot_codex_session_logs() if runner == "codex" else {}
+class ClaudeCodeRunner(RunnerAdapter):
+    name = "claude-code"
 
-    if runner == "claude-code":
+    def __init__(self) -> None:
+        self._usage_entries: list[dict[str, object]] = []
+        self._usage_index: dict[str, int] = {}
+        self._init_state: dict[str, str] = {}
+
+    def snapshot_session_logs(self, repo_root: Path) -> dict[Path, int]:
+        return snapshot_claude_session_logs(repo_root)
+
+    def build_command(self, *, prompt: str, repo_root: Path, model: str | None) -> tuple[list[str], str]:
         cmd = [
             "claude",
             "-p",
@@ -685,90 +425,31 @@ def run_prompt(
         if model:
             cmd.extend(["--model", model])
         cmd.append(prompt)
-    elif runner == "codex":
-        cmd = ["codex", "exec", "--full-auto", "-C", str(repo_root)]
-        if model:
-            cmd.extend(["--model", model])
-        runner_prompt = f"{REVIEW_RUNNER_SYSTEM_PROMPT}\n\n{prompt}"
-        cmd.append(runner_prompt)
-    else:
-        raise ValueError(f"unsupported runner: {runner}")
+        return cmd, prompt
 
-    process = subprocess.Popen(
-        cmd,
-        cwd=repo_root,
-        env=env,
-        text=True,
-        bufsize=1,
-        stdin=subprocess.DEVNULL,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-    )
-    assert process.stdout is not None
-    assert process.stderr is not None
+    def stream_stdout(self, pipe, sink, chunks: list[str]) -> None:
+        stream_claude_json_pipe(
+            pipe,
+            sink,
+            chunks,
+            self._usage_entries,
+            self._usage_index,
+            self._init_state,
+        )
 
-    stdout_chunks: list[str] = []
-    stderr_chunks: list[str] = []
-    stdout_thread = threading.Thread(
-        target=_stream_claude_json_pipe if runner == "claude-code" else _stream_pipe,
-        args=(
-            (
-                process.stdout,
-                sys.stdout,
-                stdout_chunks,
-                claude_request_usage_entries,
-                claude_request_usage_index,
-                claude_init_state,
-            )
-            if runner == "claude-code"
-            else (process.stdout, sys.stdout, stdout_chunks)
-        ),
-        daemon=True,
-    )
-    stderr_thread = threading.Thread(
-        target=_stream_pipe,
-        args=(process.stderr, sys.stderr, stderr_chunks),
-        daemon=True,
-    )
-    stdout_thread.start()
-    stderr_thread.start()
-    returncode = process.wait()
-    stdout_thread.join()
-    stderr_thread.join()
-
-    if runner == "claude-code":
-        session_log = _find_matching_claude_session_log(
+    def collect_telemetry(
+        self,
+        *,
+        repo_root: Path,
+        sent_prompt: str,
+        stdout: str,
+        session_log_snapshot: dict[Path, int],
+    ) -> dict[str, object] | None:
+        session_log = find_matching_claude_session_log(
             repo_root=repo_root,
-            prompt=prompt,
-            session_log_snapshot=claude_session_log_snapshot,
+            prompt=sent_prompt,
+            session_log_snapshot=session_log_snapshot,
         )
         if session_log is not None:
-            _load_claude_session_log_usage(
-                session_log,
-                claude_request_usage_entries,
-                claude_request_usage_index,
-            )
-
-    codex_telemetry = None
-    if runner == "codex":
-        session_log = _find_matching_codex_session_log(
-            prompt=runner_prompt,
-            session_log_snapshot=codex_session_log_snapshot,
-            session_id=_extract_codex_session_id("".join(stdout_chunks)),
-        )
-        if session_log is not None:
-            codex_telemetry = load_codex_session_log_telemetry(session_log)
-
-    return RunnerResult(
-        stdout="".join(stdout_chunks),
-        stderr="".join(stderr_chunks),
-        returncode=returncode,
-        telemetry=(
-            _build_claude_telemetry(
-                claude_request_usage_entries,
-                init_model=claude_init_state.get("model"),
-            )
-            if runner == "claude-code"
-            else codex_telemetry
-        ),
-    )
+            load_claude_session_log_usage(session_log, self._usage_entries, self._usage_index)
+        return build_claude_telemetry(self._usage_entries, init_model=self._init_state.get("model"))

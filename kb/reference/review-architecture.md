@@ -31,11 +31,12 @@ This document refers to modules by their unqualified names (e.g. `run_review_bun
 │  Packing (which pairs share one LLM call)       │
 │  run_review_bundle (share-note)                 │
 │  run_gate_sweep (share-gate, experimental)      │
-│  create/finalize/ingest (live agent)            │
+│  batch + create/finalize/ingest (external       │
+│  executors: live agent, orchestrator)           │
 ├─────────────────────────────────────────────────┤
 │  Pair protocol & execution                      │
 │  protocol/ (format, prompt, parser, decisions)  │
-│  executor           review_runners              │
+│  executor           runners/ (adapter registry) │
 ├─────────────────────────────────────────────────┤
 │  Gate resolution & targeting                    │
 │  resolve_gates      review_target_selector      │
@@ -188,17 +189,20 @@ Every output block is keyed by the full (note, gate) pair:
 
 - **`run_review_bundle.py` — share-note packing.** One note, all its gates, one call, one run.
 - **`run_gate_sweep.py` — share-gate packing (experimental).** One gate over a chunked note list; one single-gate run per note; a missing pair fails only that note's run while the rest of the batch completes.
-- **Live-agent path** — same protocol without a nested runner:
+- **Live-agent path (single note)** — same protocol without a nested runner:
   1. `commonplace-create-review-run --with-prompt` creates the run and writes the canonical prompt to `kb/reports/bundle-reviews/review-run-{id}/prompt.md` (path returned as `prompt_path` in the JSON payload)
   2. the current agent reads `prompt_path`, follows it, and writes `kb/reports/bundle-reviews/review-run-{id}/bundle-output.md`
   3. `commonplace-ingest-bundle-output` parses that artifact and finalizes through `record_and_finalize_run` (single-run ingest is all-or-nothing)
+- **External-executor batch path (`batch.py`)** — deterministic ends for any orchestrator that owns its own fan-out (a live agent reviewing many pairs, or a harness workflow spawning sub-agents per batch); decision record: [ADR 030](./adr/030-harness-facing-seams-batch-endpoints-and-runner-adapters.md).
+  1. `commonplace-prepare-review-batch <note>::<gate>... --runner <label> --model <id>` creates one run per note for an arbitrary pair set (inapplicable gates skipped and reported; missing notes/gates and dirty gates fatal) and writes the canonical prompt under `kb/reports/bundle-reviews/review-batch-{first-run-id}/`; returns run ids, skipped pairs, `prompt_path`, and `bundle_output_path` as JSON
+  2. the executor follows the prompt and writes `bundle_output_path`
+  3. `commonplace-ingest-batch-output --review-run-ids <id>... --input-file <path>` finalizes with the executor's salvage policy (shared `finalize_runs_from_parsed`); JSON result, exit 1 if any run failed. Runs in one batch must target distinct notes.
 
-### review_runners.py — LLM execution
+### runners/ — harness CLI adapters
 
-Invokes `claude-code` or `codex` CLI processes with a review prompt. Captures:
-- stdout/stderr
-- Exit code
-- Session telemetry (token counts, model info) from CLI session logs
+Each subprocess harness CLI sits behind the `RunnerAdapter` interface (`runners/base.py`): build the command, optionally decode the stdout stream, collect best-effort telemetry from vendor session logs afterwards. `runners/claude_code.py` and `runners/codex.py` are the adapters; the registry in `runners/__init__.py` backs `run_prompt` dispatch and the CLIs' `--runner` choices. Adding a harness CLI is one adapter module plus one registry entry. Telemetry is best-effort by design — session-log formats are undocumented vendor internals, and a failed scrape never fails a run.
+
+`run_prompt` captures stdout/stderr, exit code, and session telemetry (token counts, model info).
 
 ---
 

@@ -4,7 +4,9 @@ import json
 import os
 from pathlib import Path
 
-from commonplace.review import review_runners
+from commonplace.review import runners
+from commonplace.review.protocol.prompt import REVIEW_RUNNER_SYSTEM_PROMPT
+from commonplace.review.runners.codex import load_codex_session_log_telemetry
 
 
 CODEX_SESSION_ID = "019d54ab-17a2-73b0-b341-3f36434aa48b"
@@ -152,7 +154,7 @@ print("=== GATE REVIEW END: frontmatter ===", flush=True)
 def test_load_codex_session_log_telemetry_extracts_totals_and_metadata(tmp_path: Path) -> None:
     log_path = _write_codex_session_log(tmp_path / "rollout.jsonl", cwd="/repo", prompt="test prompt")
 
-    telemetry = review_runners.load_codex_session_log_telemetry(log_path)
+    telemetry = load_codex_session_log_telemetry(log_path)
 
     assert telemetry is not None
     assert telemetry["provider"] == "codex"
@@ -246,7 +248,7 @@ for event in [
 
     monkeypatch.setenv("PATH", f"{fake_bin}:{os.environ['PATH']}")
 
-    result = review_runners.run_prompt(
+    result = runners.run_prompt(
         runner="claude-code",
         prompt="test prompt",
         repo_root=tmp_path,
@@ -308,7 +310,7 @@ for event in [
 
     monkeypatch.setenv("PATH", f"{fake_bin}:{os.environ['PATH']}")
 
-    result = review_runners.run_prompt(
+    result = runners.run_prompt(
         runner="claude-code",
         prompt="test prompt",
         repo_root=tmp_path,
@@ -364,7 +366,7 @@ for event in [
 
     monkeypatch.setenv("PATH", f"{fake_bin}:{os.environ['PATH']}")
 
-    result = review_runners.run_prompt(
+    result = runners.run_prompt(
         runner="claude-code",
         prompt="test prompt",
         repo_root=tmp_path,
@@ -459,7 +461,7 @@ for event in [
     monkeypatch.setenv("HOME", str(fake_home))
     monkeypatch.setenv("PATH", f"{fake_bin}:{os.environ['PATH']}")
 
-    result = review_runners.run_prompt(
+    result = runners.run_prompt(
         runner="claude-code",
         prompt="test prompt",
         repo_root=tmp_path,
@@ -487,7 +489,7 @@ def _run_codex_prompt(monkeypatch, tmp_path: Path, *, emit_session_id: bool):
 
     # run_prompt prepends the system prompt to the user's prompt for codex; the prompt-match
     # fallback greps the session log for that full string, so store it verbatim.
-    runner_prompt = f"{review_runners.REVIEW_RUNNER_SYSTEM_PROMPT}\n\ntest prompt"
+    runner_prompt = f"{REVIEW_RUNNER_SYSTEM_PROMPT}\n\ntest prompt"
     session_log_source = tmp_path / "expected-session-log.jsonl"
     _write_codex_session_log(session_log_source, cwd=str(tmp_path), prompt=runner_prompt)
 
@@ -497,7 +499,7 @@ def _run_codex_prompt(monkeypatch, tmp_path: Path, *, emit_session_id: bool):
     monkeypatch.setenv("PATH", f"{fake_bin}:{os.environ['PATH']}")
     monkeypatch.setenv("CODEX_SESSION_LOG_SOURCE", str(session_log_source))
 
-    return review_runners.run_prompt(
+    return runners.run_prompt(
         runner="codex",
         prompt="test prompt",
         repo_root=tmp_path,

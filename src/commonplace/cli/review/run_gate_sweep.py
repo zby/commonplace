@@ -8,12 +8,13 @@ from pathlib import Path
 
 from commonplace.review.review_db import prepare_review_db
 from commonplace.review.run_gate_sweep import run_gate_sweep
+from commonplace.review.runners import runner_names
 
 
 def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser = argparse.ArgumentParser(description="Run one gate across many notes using batched prompts.")
     parser.add_argument("gate_id", help="Single gate id, e.g. accessibility/undefined-terms.")
-    parser.add_argument("--runner", required=True, choices=["claude-code", "codex"])
+    parser.add_argument("--runner", required=True, choices=runner_names())
     parser.add_argument("--model", required=True, help="Requested runner model and initial review model partition.")
     parser.add_argument("--current", action="store_true", help="Limit to notes whose frontmatter status is current.")
     parser.add_argument("--note", nargs="+", dest="note_paths", help="Filter to specific note paths or directories.")

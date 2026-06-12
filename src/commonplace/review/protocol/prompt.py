@@ -22,6 +22,16 @@ from commonplace.review.protocol.format import (
 
 OutputMode = Literal["stdout", "file"]
 
+# Appended as the system prompt by subprocess runner adapters; the task
+# prompt rendered below carries the per-run specifics.
+REVIEW_RUNNER_SYSTEM_PROMPT = (
+    "Your goal is to write a series of review artifacts for the requested gates. "
+    "The task prompt provides the exact note, gate definitions, and output contract for the run. "
+    "Stay within the target note, the provided gate definitions, and only the linked neighborhood that the active gates require. "
+    "Do not do broad repository exploration or search for alternate gate definitions. "
+    "Treat helper scripts as command interfaces; inspect workflow files or script source only if a command fails and you need to debug it."
+)
+
 
 @dataclass(frozen=True)
 class NoteReviewTarget:

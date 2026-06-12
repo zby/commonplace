@@ -5,7 +5,7 @@ import subprocess
 from pathlib import Path
 
 from commonplace.review import executor
-from commonplace.review.review_runners import RunnerResult
+from commonplace.review.runners import RunnerResult
 
 from ._run_cli import run_cli
 

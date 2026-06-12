@@ -20,6 +20,7 @@ from commonplace.review.review_db import resolve_db_path
 from commonplace.review.review_target_selector import StaleGate, select_stale_gates
 from commonplace.review.executor import UsageExhausted
 from commonplace.review.run_review_bundle import run_bundle
+from commonplace.review.runners import runner_names
 
 
 DEFAULT_PARALLELISM = 4
@@ -38,7 +39,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--model", required=True, help="Model partition to review with.")
     parser.add_argument(
         "--runner",
-        choices=["claude-code", "codex"],
+        choices=runner_names(),
         default="claude-code",
         help="Runner to use for the review bundle command.",
     )

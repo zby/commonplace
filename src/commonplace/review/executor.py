@@ -29,7 +29,7 @@ from commonplace.review.review_db import (
 )
 from commonplace.review.review_metadata import iso_now
 from commonplace.review.review_model import build_model_id
-from commonplace.review.review_runners import run_prompt
+from commonplace.review.runners import run_prompt
 
 
 URL_SCHEME_RE = re.compile(r"^[a-z]+://", re.IGNORECASE)
@@ -54,6 +54,15 @@ class BatchOutcome:
     @property
     def ok(self) -> bool:
         return self.runner_returncode == 0 and not self.failed
+
+
+@dataclass(frozen=True)
+class RunPairs:
+    """One review run's identity and expected gate set, for finalization."""
+
+    note_path: str
+    review_run_id: int
+    gate_ids: tuple[str, ...]
 
 
 def encode_stage_filename(gate_id: str) -> str:
@@ -376,25 +385,55 @@ def execute_batch(
         )
         return BatchOutcome(completed=[], failed=[(rid, str(exc)) for rid in run_ids], runner_returncode=0)
 
+    run_pairs = [
+        RunPairs(note_path=target.note_path, review_run_id=target.review_run_id, gate_ids=target.gate_ids)
+        for target in targets
+    ]
+    completed, failed = finalize_runs_from_parsed(
+        repo_root=repo_root,
+        db_path=db_path,
+        run_pairs=run_pairs,
+        parsed=parsed,
+        raw_output=raw_output,
+        telemetry_json=telemetry_json,
+        debug_log=debug_log,
+        actual_model_id=actual_model_id,
+    )
+    return BatchOutcome(completed=completed, failed=failed, runner_returncode=0)
+
+
+def finalize_runs_from_parsed(
+    *,
+    repo_root: Path,
+    db_path: Path,
+    run_pairs: list[RunPairs],
+    parsed: ParsedPairBundle,
+    raw_output: str | None = None,
+    telemetry_json: str | None = None,
+    debug_log: str | None = None,
+    actual_model_id: str | None = None,
+) -> tuple[list[int], list[tuple[int, str]]]:
+    """Salvage policy over a parsed pair bundle: finalize each run whose pairs
+    all parsed, fail the rest individually. Returns (completed, failed)."""
     missing_by_note: dict[str, list[str]] = {}
     for note_path, gate_id in parsed.missing:
         missing_by_note.setdefault(note_path, []).append(gate_id)
 
     completed: list[int] = []
     failed: list[tuple[int, str]] = []
-    for target in targets:
-        missing_gates = missing_by_note.get(target.note_path)
+    for run in run_pairs:
+        missing_gates = missing_by_note.get(run.note_path)
         if missing_gates:
             reason = f"missing pair reviews: {', '.join(sorted(missing_gates))}"
             fail_running_review_runs(
                 db_path=db_path,
-                review_run_ids=[target.review_run_id],
+                review_run_ids=[run.review_run_id],
                 failure_reason=reason,
                 debug_log=debug_log,
                 telemetry_json=telemetry_json,
                 raw_bundle_markdown=raw_output,
             )
-            failed.append((target.review_run_id, reason))
+            failed.append((run.review_run_id, reason))
             continue
 
         with connect(db_path) as conn:
@@ -402,9 +441,9 @@ def execute_batch(
                 finalize_run_from_pairs(
                     conn,
                     repo_root=repo_root,
-                    note_path=target.note_path,
-                    review_run_id=target.review_run_id,
-                    gate_ids=target.gate_ids,
+                    note_path=run.note_path,
+                    review_run_id=run.review_run_id,
+                    gate_ids=run.gate_ids,
                     parsed=parsed,
                     telemetry_json=telemetry_json,
                     debug_log=debug_log,
@@ -412,9 +451,9 @@ def execute_batch(
                 )
             except ValueError as exc:
                 conn.commit()
-                failed.append((target.review_run_id, str(exc)))
+                failed.append((run.review_run_id, str(exc)))
                 continue
             conn.commit()
-        completed.append(target.review_run_id)
+        completed.append(run.review_run_id)
 
-    return BatchOutcome(completed=completed, failed=failed, runner_returncode=0)
+    return completed, failed

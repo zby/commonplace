@@ -152,6 +152,22 @@ Parse a sentinel-delimited review bundle and finalize its existing review run.
 commonplace-ingest-bundle-output --review-run-id 42 --input-file kb/reports/bundle-reviews/review-run-42/bundle-output.md
 ```
 
+### commonplace-prepare-review-batch
+
+Create review runs for an arbitrary set of (note, gate) pairs and render one batch prompt for an external executor (live agent or orchestrator). Returns run ids, skipped pairs, and artifact paths as JSON.
+
+```bash
+commonplace-prepare-review-batch kb/notes/a.md::prose/source-residue kb/notes/b.md::prose/source-residue --runner live-agent --model claude-opus-4-6
+```
+
+### commonplace-ingest-batch-output
+
+Parse a batch's pair-delimited output and finalize its runs with salvage: runs whose pairs all parsed complete, runs with missing pairs fail individually. Exit 1 if any run failed.
+
+```bash
+commonplace-ingest-batch-output --review-run-ids 42 43 --input-file kb/reports/bundle-reviews/review-batch-42/bundle-output.md
+```
+
 ### commonplace-write-gate-review
 
 Record a single gate review from a file into an existing review run. This remains available for manual edge cases; the normal live-agent bundle path uses `commonplace-ingest-bundle-output`.
