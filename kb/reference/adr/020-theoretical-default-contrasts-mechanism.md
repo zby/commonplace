@@ -61,7 +61,7 @@ The vocabulary splits into two classes by directional shape. New label proposals
 | `exemplifies` (also `example`) | source is a concrete instance of target |
 | `mechanism` | target is source's operational engine |
 
-Each label points *upstream* (toward more fundamental, more general, or more foundational content). Each upstream note typically accumulates many incoming links — so the upstream note cannot, and should not, maintain forward links back to all of them. The forward edge from the downstream side is the canonical representation. The upstream view is the auto-computed backlinks view ([backlinks.md](../../notes/backlinks.md)).
+Each label points *upstream* (toward more fundamental, more general, or more foundational content). Each upstream note typically accumulates many incoming links — so the upstream note cannot, and should not, maintain forward links back to all of them. The forward edge from the downstream side is the canonical representation. The upstream view is the auto-computed backlinks view ([inbound and outbound links serve asymmetric reader needs](../../notes/inbound-and-outbound-links-serve-asymmetric-reader-needs.md)).
 
 **Symmetric labels (self-dual; either end may author):**
 
@@ -120,4 +120,4 @@ Relevant Notes:
 - [ADR 019 — collection-owned link vocabulary](./019-collection-owned-link-vocabulary.md) — depends-on: this ADR's additions land inside the architecture ADR 019 specifies
 - [linking theory](../../notes/linking-theory.md) — grounds: the decision-cost model this vocabulary instantiates
 - [link-vocabulary report](../../reports/link-vocabulary.md) — frozen audit snapshot the analysis behind this decision was derived from
-- [backlinks](../../notes/backlinks.md) — the inverse-view mechanism that makes directional asymmetry workable
+- [inbound and outbound links serve asymmetric reader needs](../../notes/inbound-and-outbound-links-serve-asymmetric-reader-needs.md) — the inverse-view rationale that makes directional asymmetry workable

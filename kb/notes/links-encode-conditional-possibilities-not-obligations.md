@@ -104,4 +104,4 @@ Relevant Notes:
 - [ADR 019 — collection-owned link vocabulary](../reference/adr/019-collection-owned-link-vocabulary.md) — extends: the architecture that enforces the reader-need discipline per destination
 - [ADR 020 — theoretical-default additions (contrasts, mechanism)](../reference/adr/020-theoretical-default-contrasts-mechanism.md) — extends: applies the reader-need test to label proposals
 - [Linking theory](./linking-theory.md) — grounds: the decision-cost model this note instantiates
-- [Backlinks](./backlinks.md) — mechanism: the inverse-view machinery that makes unidirectional link authoring workable
+- [Inbound and outbound links serve asymmetric reader needs](./inbound-and-outbound-links-serve-asymmetric-reader-needs.md) — mechanism: the inverse view is computed rather than authored, which makes unidirectional link authoring workable

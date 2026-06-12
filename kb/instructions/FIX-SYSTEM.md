@@ -45,7 +45,7 @@ commonplace-warn-selector
 commonplace-warn-selector --json
 
 # Filter to specific notes
-commonplace-warn-selector --json kb/notes/backlinks.md
+commonplace-warn-selector --json kb/notes/linking-theory.md
 ```
 
 ### Fix strategy taxonomy

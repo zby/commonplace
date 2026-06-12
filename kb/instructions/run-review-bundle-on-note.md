@@ -9,7 +9,7 @@ Review a specific note against an explicit list of gates from inside the current
 
 Inputs:
 
-- first argument: `{note-path}` — repository-relative note path, for example `kb/notes/backlinks.md`
+- first argument: `{note-path}` — repository-relative note path, for example `kb/notes/linking-theory.md`
 - remaining arguments: `{gate-or-bundle}...` — one or more gate ids or bundle names, for example `semantic/grounding-alignment`, `prose/source-residue`, or `prose` (= all prose gates)
 
 Do not run the selector to choose gates. Treat the provided list as the exact execution set.

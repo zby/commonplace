@@ -35,7 +35,7 @@ Our link semantics (extends, grounds, contradicts, exemplifies) are lighter than
 
 ## Analysis
 
-- [backlinks](./backlinks.md) — use cases for inbound link visibility: hub identification, source-to-theory bridging, impact assessment, tension surfacing; four design options with trade-offs
+- [inbound-and-outbound-links-serve-asymmetric-reader-needs](./inbound-and-outbound-links-serve-asymmetric-reader-needs.md) — outbound shows what a note rests on, inbound what rests on it: four read-time orientation needs, computed not authored; the surfacing design space is [backlink-surfacing](../reference/proposals/backlink-surfacing.md)
 - [link-strength-is-encoded-in-position-and-prose](./link-strength-is-encoded-in-position-and-prose.md) — inline premise links carry more weight than footer links; position and prose encode commitment level, creating a weighted graph
 - [distilled-artifacts-need-source-tracking-at-the-source](./distilled-artifacts-need-source-tracking.md) — distilled artifacts shouldn't link back to sources (focus), but sources should link forward via "Distilled into:" so source changes trigger staleness review
 
