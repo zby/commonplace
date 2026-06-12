@@ -1,7 +1,7 @@
 ---
 type: kb/types/type-spec.md
 name: adr
-description: Architecture decision record for accepted or proposed system decisions
+description: Architecture decision record for implemented system decisions
 schema: ./adr.schema.yaml
 ---
 
@@ -9,7 +9,7 @@ schema: ./adr.schema.yaml
 
 ## Authoring Instructions
 
-Use an ADR for a concrete architectural decision that has been proposed, accepted, superseded, or deprecated.
+Use an ADR for a concrete architectural decision that has been made and implemented — accepted, superseded, or deprecated. A decision still under consideration is not an ADR; it stays in the workshop layer (`kb/work/`) until decided.
 
 - The title should start with the numeric ADR prefix used in this collection, then a short decision label.
 - `Status` records the decision lifecycle, not the note-writing status.
@@ -22,7 +22,7 @@ Use an ADR for a concrete architectural decision that has been proposed, accepte
 
 ```markdown
 ---
-description: Template for architecture decision records — accepted/proposed decisions with Context, Decision, and Consequences sections
+description: Template for architecture decision records — implemented decisions with Context, Decision, and Consequences sections
 type: ../types/adr.md
 tags: []
 status: accepted
@@ -30,7 +30,7 @@ status: accepted
 
 # {NNN}-{decision-title}
 
-**Status:** {proposed | accepted | superseded | deprecated}
+**Status:** {accepted | superseded | deprecated}
 **Date:** {YYYY-MM-DD}
 
 ## Context

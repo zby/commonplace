@@ -2,12 +2,12 @@
 description: "Adds `contrasts` and `mechanism` to the theoretical-register default template on corpus evidence, and declares the directional-asymmetry principle that governs how the theoretical vocabulary is authored and read."
 type: ../types/adr.md
 tags: []
-status: proposed
+status: accepted
 ---
 
 # 020-Link vocabulary: add contrasts and mechanism; declare directional asymmetry
 
-**Status:** proposed
+**Status:** accepted
 **Date:** 2026-04-19
 **Extends:** [ADR-009](./009-link-relationship-semantics.md)
 **Depends on:** [ADR-019](./019-collection-owned-link-vocabulary.md)

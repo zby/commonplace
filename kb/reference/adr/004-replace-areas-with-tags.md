@@ -2,12 +2,12 @@
 description: Replaces the areas frontmatter field with freeform tags and restructures index pages to have both curated and generated sections, decoupling navigation from comparative reading
 type: ../types/adr.md
 tags: []
-status: proposed
+status: accepted
 ---
 
 # 004-Replace areas with tags
 
-**Status:** proposed
+**Status:** accepted
 **Date:** 2026-03-13
 
 ## Context

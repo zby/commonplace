@@ -2,12 +2,12 @@
 description: Where quality checks belong — WRITING.md, validate, the experimental review system, or recurring tasks — based on cost, false-positive tolerance, and whether the check gates note creation
 type: ../types/adr.md
 tags: []
-status: proposed
+status: accepted
 ---
 
 # 005-quality-check-placement
 
-**Status:** proposed
+**Status:** accepted
 **Date:** 2026-03-14
 
 ## Context

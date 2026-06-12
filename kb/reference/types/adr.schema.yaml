@@ -13,7 +13,6 @@ allOf:
             const: kb/reference/types/adr.md
           status:
             enum:
-              - proposed
               - accepted
               - superseded
               - deprecated

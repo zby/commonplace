@@ -2,12 +2,12 @@
 description: Each COLLECTION.md owns its outbound-linking rules per destination collection, selecting from a shared authoring catalogue; the connect and write skills read COLLECTION.md directly, and the compiled register-by-register topology is retired
 type: ../types/adr.md
 tags: []
-status: proposed
+status: accepted
 ---
 
 # 019-Collection-owned link vocabulary with per-destination outbound rules
 
-**Status:** proposed
+**Status:** accepted
 **Date:** 2026-04-22
 **Extends:** [ADR-009](./009-link-relationship-semantics.md), [ADR-017](./017-collection-md-is-the-register-convention-boundary.md)
 
