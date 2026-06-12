@@ -13,6 +13,8 @@ Tests for economy:
 
 **Fidelity constraint.** Describe the system as built, even when the implementation deviates from the theory that inspired it. If the system does X but the theory says Y, describe X and note the deviation — the `rationale` link may carry the qualifier.
 
+**Proposal exception.** Design proposals — finished but unadopted designs — live only under `proposals/` and carry the `design-proposal` trait. A proposal describes a design object faithfully (problem, option space, forces, free choices marked), not shipped behavior; its description leads with "Proposal:" so a reader acting on reference docs never mistakes proposed for shipped. Conventions: [proposals/README.md](./proposals/README.md).
+
 ## Title and description conventions
 
 **Topical titles by default.** Answer "what is this about?" — "Type loading", "Storage architecture". A link like `see [type loading](./type-loading.md) for how types are resolved` reads naturally.
@@ -45,7 +47,7 @@ Scan `kb/reference/`, `kb/notes/`, `kb/agent-memory-systems/`, `kb/sources/`, an
 
 | type | file | use for |
 |---|---|---|
-| `note` | `kb/types/note.md` | general shipped-system reference documents |
+| `note` | `kb/types/note.md` | general shipped-system reference documents; design proposals under `proposals/` (trait `design-proposal`) |
 | `adr` | `./types/adr.md` | architecture decision records |
 | `definition` | `kb/types/definition.md` | shipped-system vocabulary terms |
 | `index` | `kb/types/index.md` | reference navigation hubs and generated directory indexes |

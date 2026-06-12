@@ -24,6 +24,7 @@ Brainstorm the theoretical register's admission policy. `kb/notes/` is built aro
 
 ## Decisions reached
 
+- **`kb/reference/proposals/` and the `design-proposal` trait shipped.** (2026-06-12) Trait rather than type: nothing is automatically checkable yet, so proposals stay plain `note` — types for structure, traits for review (ADR 012). The contract lives in `kb/reference/proposals/README.md`: no decision (else it's an ADR); transferable requirements cited from `kb/notes/` via `rationale`, only system-specific constraints inlined (the split-test rule); dated current-state anchor, staleness against later ADRs an expected lifecycle event; descriptions lead with "Proposal:" (the fidelity-exception amendment in `kb/reference/COLLECTION.md`). Remaining migration work: execute the backlinks split per the dry run, assess `selector-loaded-review-gates` and `quality-signals-for-kb-evaluation`, reroute the AGENTS.md YAGNI rule for system gaps.
 - **ADRs record implemented decisions only.** (2026-06-12) The `proposed` status was removed from the ADR type spec and schema; pending decisions are not ADRs — they live in `kb/work/` until decided (and in the future possibly as `design-proposal` artifacts). The five stale `proposed` ADRs (004, 005, 007, 019, 020) were all long implemented and flipped to `accepted`. This sharpens the proposal/ADR boundary: a design-proposal may hold multiple options and unresolved forces; an ADR holds one decision that shipped.
 
 ## What would close this workshop
