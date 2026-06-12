@@ -69,7 +69,7 @@ A synthesis opportunity was identified: an inspectability-learnability spectrum 
 
 **Conversational-agent-specific benchmarks only.** LOCOMO, LOCCO, and MultiWOZ are all conversational dialogue benchmarks. The paper's claims about "autonomous AI agents" are broader than what the evaluation supports. Whether constrained forgetting helps for task-oriented agents (ALFWorld, WebArena), knowledge-management agents, or multi-agent systems is untested. The reach of the results is lower than the framing implies.
 
-**Fixed budget assumption.** The framework assumes a fixed memory budget. The KB's [effective context is task-relative](../notes/effective-context-is-task-relative-and-complexity-relative-not-a.md) note argues that context budgets vary by task complexity. A fixed-budget forgetting framework may be over-pruning for simple tasks and under-pruning for complex ones. The paper does not address adaptive budget sizing.
+**Fixed budget assumption.** The framework assumes a fixed memory budget. The KB's [soft-degradation note](../notes/agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md) argues that usable context varies by task complexity. A fixed-budget forgetting framework may be over-pruning for simple tasks and under-pruning for complex ones. The paper does not address adaptive budget sizing.
 
 **Snapshot quality limits detailed assessment.** The arxiv HTML snapshot captures the paper's structure and key claims but may lose some quantitative detail (exact F1 scores, ablation tables, statistical significance tests). Our assessment of the empirical strength is based on the framework description and qualitative results summary rather than full numerical analysis.
 

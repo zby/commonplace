@@ -41,7 +41,7 @@ AgeMem and Commonplace sit at opposite ends of the curation-agency axis. AgeMem 
 - **"When to store/retrieve" as a first-class learnable decision.** Even without adopting RL, the framing — that curation *timing* is a policy, not an incidental side effect of writing — is worth carrying into how we think about promotion and read-back triggers. Needs a use case before any automation.
 - **Operation-set + policy separation.** Hand-crafted memory operations with a separable decision layer is a clean architecture; in our terms the decision layer is exactly the read-back/curation policy we under-specify. Not ready to build; conceptually useful.
 
-## Write-side placement
+## Write side
 
 **Write agency:** `automatic` — the reported learned policy invokes memory-management actions itself, including LTM `Add`, `Update`, and `Delete`, rather than leaving store changes only to a human authoring channel.
 
@@ -57,7 +57,7 @@ AgeMem qualifies: it derives a durable artifact (the policy) from agent traces.
 - **Scope and timing** — cross-task policy; learned **offline** in training, then deployed (staged, not online).
 - **Survey placement** — a clean trajectory-to-weights case in the [trace-derived learning survey](../trace-derived-learning-techniques-in-related-systems.md), flagged lower-confidence because the runtime is not code-inspected.
 
-## Read-back placement
+## Read-back
 
 **Read-back:** `pull` — memory re-enters action through the reported `Retrieve` operation, selected inside the agent policy rather than delivered by a separate unsolicited activation service. The paper also reports proactive retrieval during staged training, but still as memory tool use inside the policy loop; it does not document a relevance-gated before-action push path from an external memory layer, so there is no `push-activation` tag.
 

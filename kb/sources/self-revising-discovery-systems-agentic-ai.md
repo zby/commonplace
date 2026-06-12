@@ -7,7 +7,7 @@ type: kb/sources/types/snapshot.md
 tags: [academic-paper]
 ---
 
-# Self-Revising Discovery Systems for Science: A Categorical Framework for Agentic Artificial Intelligence
+# Self-Revising Discovery Systems for Science
 
 Author: Fiona Y. Wang, Markus J. Buehler (MIT)
 Source: https://arxiv.org/html/2606.01444v1

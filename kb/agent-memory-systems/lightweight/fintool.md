@@ -46,11 +46,11 @@ The useful divergence is governance. Commonplace emphasizes reviewable accumulat
 - **User-editable memory file.** Needs a concrete user-preference layer first. A single markdown file injected into every session is a simple constraining surface, but Commonplace would need ownership, privacy, and scope rules before adopting it.
 - **S3 source of truth plus derived query index.** Useful as production evidence rather than an immediate migration target. Commonplace's repo substrate already supplies versioning and inspection; the Fintool pattern matters when a consuming product needs multi-user storage, access control, and fast metadata queries.
 
-## Write-side placement
+## Write side
 
 **Write agency:** `manual` — the reported durable skills and user memories are authored by analysts, customers, or users through the product's file/skill surfaces; the source reports normalization and indexing infrastructure but not an autonomous memory-curation loop.
 
-## Read-back placement
+## Read-back
 
 **Read-back:** `push` — the report says user memories are loaded and injected on every conversation, which is unsolicited from the agent's perspective. This is unconditional always-load, not a relevance-gated activation path, so it does not warrant `push-activation`.
 

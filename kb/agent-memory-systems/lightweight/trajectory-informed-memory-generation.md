@@ -3,7 +3,7 @@ description: "Lightweight doc-grounded coverage of Trajectory-Informed Memory Ge
 type: ../types/agent-memory-system-review.md
 source-tier: doc-grounded
 traits: [has-comparison, has-external-sources]
-tags: [trace-derived, push-activation]
+tags: [trace-derived]
 status: current
 last-checked: "2026-06-02"
 ---
@@ -46,7 +46,7 @@ The most direct divergence is read-back. Commonplace generally requires an agent
 - **Consolidate near-duplicate operational advice.** Clustering similar tips and then merging them maps to a possible review-bundle workflow for repeated log observations. Needs a strong oracle or reviewer gate before automation.
 - **Compare cheap and rich retrieval modes.** The cosine-vs-LLM-guided retrieval split is a useful design pattern for Commonplace search experiments: cheap lexical/vector shortlist first, richer agent judgment only when the task demands it. Needs a concrete retrieval use case.
 
-## Write-side placement
+## Write side
 
 **Write agency:** `automatic` — the reported pipeline analyzes completed trajectories, generates reusable tips, consolidates them, stores them with embeddings and metadata, and later retrieves them without manual authoring of each retained tip.
 
@@ -62,7 +62,7 @@ Trajectory-Informed Memory Generation qualifies as trace-derived coverage becaus
 - **Scope and timing** — staged learning across completed runs, then prompt-time reuse on held-out tasks. The paper reports AppWorld evaluation with the best configuration reaching +14.3 percentage points on scenario goal completion.
 - **Survey placement** — a lower-confidence, source-ingested trajectory-to-artifact case in the [trace-derived learning survey](../trace-derived-learning-techniques-in-related-systems.md); it strengthens the survey's readable-artifact-learning axis while leaving implementation details unverified.
 
-## Read-back placement
+## Read-back
 
 **Read-back:** `push` — the paper reports retrieving task-relevant tips at agent invocation and injecting them into the prompt before reasoning, so memory reaches the agent as unsolicited context selected by the surrounding system rather than by the agent's own lookup.
 
