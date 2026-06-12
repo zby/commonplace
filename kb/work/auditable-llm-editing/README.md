@@ -76,7 +76,7 @@ The workshop closes when it produces one of:
 
 - [review-revise-gated](../review-revise-gated/README.md) — prior workshop for scoring review/revision arrangements against accepted edits.
 - [Semantic review catches content errors that structural validation cannot](../../notes/semantic-review-catches-content-errors-that-structural-validation.md) — background: semantic checks need structured rubrics but remain judgment-dependent.
-- [Selector-loaded review gates could let review-revise learn from accepted edits](../../notes/selector-loaded-review-gates-could-let-review-revise-learn-from.md) — possible maturation path for recurring editing failures.
+- [Gate learning from accepted edits](../../reference/proposals/gate-learning-from-accepted-edits.md) — possible maturation path for recurring editing failures.
 - [Codification and relaxing navigate the bitter lesson boundary](../../notes/codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) — framing: codify control surfaces for current leverage while watching for structures that should relax into learned mechanisms.
 - [Human writing structures transfer to LLMs because failure modes overlap](../../notes/human-writing-structures-transfer-to-llms-because-failure-modes.md) — rationale for testing specific writing structures against specific LLM failure modes.
 - [Writing styles are strategies for managing underspecification](../../notes/writing-styles-are-strategies-for-managing-underspecification.md) — style is not cosmetic only; it allocates autonomy and constraint.

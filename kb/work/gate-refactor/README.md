@@ -5,7 +5,7 @@ Goal: move reviews from monolithic bundle documents to individual gate files wit
 ## Prior work
 
 - Earlier selector-refactor analysis established the need for gate-local freshness and explored a more elaborate storage model that was later simplified away.
-- [selector-loaded review gates](../../notes/selector-loaded-review-gates-could-let-review-revise-learn-from.md) — how review-revise discoveries become reusable gates
+- [gate learning from accepted edits](../../reference/proposals/gate-learning-from-accepted-edits.md) — how review-revise discoveries become reusable gates
 
 ## Files in this workshop
 

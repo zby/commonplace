@@ -71,5 +71,5 @@ Relevant Notes:
 - [semantic-review-catches-content-errors-that-structural-validation-cannot](../semantic-review-catches-content-errors-that-structural-validation.md) — extends: quantifies the review system's "different cost model" claim with measured run telemetry
 - [quality-signals-for-kb-evaluation](../quality-signals-for-kb-evaluation.md) — exemplifies: review telemetry is a concrete operational signal rather than a purely theoretical oracle candidate
 - [oracle-strength-spectrum](../oracle-strength-spectrum.md) — grounds: investing in telemetry before capability only helps if the telemetry is interpreted with the right cost model
-- [selector-loaded-review-gates-could-let-review-revise-learn-from-accepted-edits](../selector-loaded-review-gates-could-let-review-revise-learn-from.md) — motivates: slimmer review harnesses reduce both context load and follow-up request churn
+- [Gate learning from accepted edits](../../reference/proposals/gate-learning-from-accepted-edits.md) — motivates: slimmer review harnesses reduce both context load and follow-up request churn
 - [010-review state should move to sqlite once reviews leave git and accumulate operational metadata](../../reference/adr/010-review-state-should-move-to-sqlite-once-reviews-leave-git-and.md) — enables: the SQLite review store made this measurement possible
