@@ -41,3 +41,15 @@ So R wants to live on both sides. The resolution is not duplication but citation
 - Remaining doubt: whether every squatter's requirements generalize as well as these four did. `selector-loaded-review-gates` is the next test case if doubt persists — its "requirements" may be thinner.
 
 Not executed: the actual file moves await the design-proposal type existing. This file records the dry run.
+
+## Addendum (2026-06-12): the proposal half is already stale
+
+Operator correction after the dry run: curated tag READMEs receive no generated links, and complete generated listings are build-time-only — materialized for the web view at deployment, never stored in the repo ([ADR 025](../../reference/adr/025-complete-generated-indexes-are-build-time-only.md), refined by ADR 026: "nothing generated is committed at any size").
+
+Consequences for the proposal half:
+
+- **Option B (generated footers committed into notes) is foreclosed** by the committed-generated-content prohibition; its cited precedent (`sync_topic_links.py`) is now a counter-precedent — that mechanism's family was retired.
+- **The live option space reorganizes by consumer**, following ADR 025's access-mode asymmetry. Human web readers: backlinks rendered at mkdocs build time — a second materialization of authored outbound links, one source of truth, nothing committed. Agents in the repo: on-demand inversion (option A / a scoped `rg` recipe), consistent with the curated-heads-plus-scoped-rg read path. Manual semantic backlinks (option C) survive only as curated authoring where semantics matter (e.g. symmetric `contradicts` already gives tension surfacing both ends).
+- **The requirements half gains a parameter rather than rotting**: the four needs split by consumer (human web reader vs agent reading repo files), and the design answer differs per consumer. The agent-centric phrasing of the original use cases now reads as one binding of that parameter.
+
+Test implication: the staleness landed almost entirely on the proposal half — current-state description, option space, precedents — while the requirements half survived intact and was arguably *strengthened* by ADR 025's access-cost framing. The two halves age at different rates, which is itself register evidence for the split: descriptive proposals are time-indexed, theoretical requirements are not. The design-proposal type should therefore carry a "current state as of <date>" anchor (as workshop READMEs already do), and staleness against later ADRs is an expected lifecycle event for proposals, not a defect.
