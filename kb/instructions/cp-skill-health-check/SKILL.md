@@ -49,9 +49,10 @@ Interpretation:
 Run:
 
 ```bash
-# Use find -L so it follows symlinked skill directories. Promoted skills are
-# usually symlinks into kb/instructions/<skill>/, and plain `find` (without -L)
-# will not descend into them, returning a misleading empty result.
+# Use find -L so it follows symlinked skill directories. The known
+# .claude/.agents projections are usually symlinks into the canonical skill
+# source tree, and plain `find` (without -L) will not descend into them,
+# returning a misleading empty result.
 find -L .claude/skills .agents/skills -maxdepth 2 -name SKILL.md -print 2>/dev/null | sort
 # Derive the expected promoted set from the live skill source tree
 # (kb/commonplace/instructions/ in an installed KB, kb/instructions/ in the
@@ -72,11 +73,11 @@ The per-skill `test -e` loop is the authoritative signal for whether each expect
 The expected promoted set is the `cp-skill-*` directories in the skill source tree the loop derives from. In the Commonplace source repo, the installer's `PROMOTED_SKILLS` list in `src/commonplace/cli/init_project.py` is the authoritative manifest; if the loop's derived set and that list disagree, report the difference as a finding.
 
 Interpretation:
-- No `.claude/skills/` or `.agents/skills/` entries: `commonplace-init` likely did not run, or the runtime is looking at a different project root.
-- `active skill MISSING` for an expected skill: the runtime skill surface is incomplete. In an installed KB, rerun `commonplace-init` after confirming the project root and package install. In the Commonplace source repo, recreate the local symlink to `kb/instructions/<skill>/`.
+- No `.claude/skills/` or `.agents/skills/` entries: `commonplace-init` likely did not run, the runtime is looking at a different project root, or the active runtime uses a different skill-discovery surface.
+- `active skill MISSING` for an expected skill: the checked skill surface is incomplete. In an installed KB, rerun `commonplace-init` after confirming the project root and package install, or install/register `kb/commonplace/instructions/<skill>/` in the active runtime's own skill surface. In the Commonplace source repo, recreate the local symlink to `kb/instructions/<skill>/` or install/register that canonical skill directory in the active runtime's own surface.
 - Broken symlink output for an expected active skill: the skill surface points at a missing path; treat it as a runtime-skill problem.
 - Broken symlink output for a retired or extra skill not in the expected active set, such as `cp-skill-compile-collections`, is a maintenance observation, not the likely cause of current Commonplace command or health-check failure when all expected active skills are OK.
-- Skill exists on disk but the agent cannot invoke it: the runtime may not support that skill directory, may have been started before init, or may need restart.
+- Skill exists on disk but the agent cannot invoke it: the runtime may not support that skill directory, may have been started before init, may need restart, or may need its own IDE/plugin-specific skill import step.
 
 ## Step 3 - Check command environment
 

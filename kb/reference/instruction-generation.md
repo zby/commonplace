@@ -74,14 +74,16 @@ The source tree does not keep symlinked copies of the shipped KB under `src/comm
 
 The exception is `src/commonplace/_data/templates/`, which contains real scaffold-only files for the user's empty `COLLECTION.md` templates. Those files have no canonical counterpart elsewhere in the KB.
 
-## Skill promotion
+## Skill projection
 
-In addition to copying the instructions tree under `kb/commonplace/instructions/`, `init_project` promotes a selected subset of skills (`write`, `validate`, `connect`, `convert`, `health-check`, `ingest`, `snapshot-web`, `revise-iterative`, `revise-autoreason`) into runtime discovery directories for multiple harnesses:
+In addition to copying the instructions tree under `kb/commonplace/instructions/`, `init_project` projects a selected subset of skills (`write`, `validate`, `connect`, `convert`, `health-check`, `ingest`, `snapshot-web`, `revise-iterative`, `revise-autoreason`) into two known runtime discovery layouts:
 
 - `.claude/skills/cp-skill-<skill>/`
 - `.agents/skills/cp-skill-<skill>/`
 
-Each promotion is a **symlink** pointing at `kb/commonplace/instructions/cp-skill-<skill>/`. This keeps skill discovery working in each runtime while the canonical skill content stays in one place inside the shipped library — edits to the library update both harnesses' views simultaneously.
+Each generated projection is a **symlink** pointing at `kb/commonplace/instructions/cp-skill-<skill>/`. This keeps skill discovery working for those runtimes while the canonical skill content stays in one place inside the shipped library.
+
+The canonical contract is the source directory, not the two generated layouts. Agent runtimes and IDEs that use another skill surface must link, copy, register, or import the same `kb/commonplace/instructions/cp-skill-*` directories according to their own rules.
 
 ## Re-running init
 

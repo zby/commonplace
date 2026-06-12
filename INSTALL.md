@@ -16,7 +16,7 @@ Commonplace is usable when the terminal or agent runtime starts inside the proje
 - **The project venv is the active command environment** — `commonplace-*` commands resolve from the project-local `.venv`, not from a global install or another project.
 - **Commands run by bare name** — agents can call `commonplace-validate`, `commonplace-init`, and other Commonplace commands without prepending `.venv/bin/`, `.venv\Scripts\`, `uv run`, or `direnv exec`.
 - **The control-plane file is present** — `AGENTS.md` or `CLAUDE.md` contains the project KB goals, routing rules, and command invocation rule.
-- **Runtime skills are discoverable** — `.claude/skills/cp-skill-*/` and `.agents/skills/cp-skill-*/` exist.
+- **Runtime skills are discoverable by the active agent** — the `cp-skill-*` skill bodies from `kb/commonplace/instructions/` are installed, linked, copied, or registered in whatever skill directory or plugin surface the active agent runtime actually reads.
 - **Shipped Commonplace collections are present** — `kb/commonplace/notes/`, `kb/commonplace/reference/`, and `kb/commonplace/instructions/` exist and contain the reusable methodology library.
 - **Search works** — `rg` is available for fast KB search.
 
@@ -153,7 +153,7 @@ commonplace-init --name <your-project>
 
 After step 3, `commonplace-*` commands work directly in shells and agent runtimes that have loaded the project environment.
 
-On Windows, `commonplace-init` creates symlinks for promoted skills. If it fails with a symlink privilege error, enable Developer Mode or rerun the command from an elevated terminal, then retry:
+`commonplace-init` creates convenience skill symlinks for the known `.claude/skills/` and `.agents/skills/` layouts. These are not the whole skill contract; other IDEs and agent runtimes may use different locations. If init fails with a symlink privilege error on Windows, either enable Developer Mode or use the runtime-specific skill installation procedure in step 4.
 
 ```powershell
 uv run commonplace-init --name <your-project>
@@ -166,7 +166,8 @@ This creates:
 - **User KB directories** — `kb/notes/`, `kb/reference/`, `kb/instructions/`, `kb/sources/`, `kb/tasks/`, `kb/work/`, `kb/reports/`, `kb/log.md`
 - **Commonplace library content** — shipped notes, reference docs, instructions, review gates, and skills under `kb/commonplace/notes/`, `kb/commonplace/reference/`, and `kb/commonplace/instructions/`
 - **Type definitions** — shared types under `kb/types/`, plus source/report type scaffolds
-- **Skills** — `.claude/skills/cp-skill-write/` and `.agents/skills/cp-skill-write/`, plus the matching `cp-skill-validate/`, `cp-skill-connect/`, etc. The `cp-skill-` prefix avoids collisions with your project's own skills and with the `commonplace-*` CLI commands.
+- **Canonical skills** — `kb/commonplace/instructions/cp-skill-write/`, plus the matching `cp-skill-validate/`, `cp-skill-connect/`, etc. The `cp-skill-` prefix avoids collisions with your project's own skills and with the `commonplace-*` CLI commands.
+- **Known runtime skill projections** — `.claude/skills/cp-skill-*/` and `.agents/skills/cp-skill-*/` symlinks, when the platform permits them
 - **`.envrc`** — project-scoped Unix-shell environment (PATH, UV_CACHE_DIR), ready to use with direnv on Linux/macOS
 - **`AGENTS.md.template`** — control-plane template with project name filled in
 
@@ -293,7 +294,35 @@ export PATH=".venv/bin:$PATH"
 
 This uses a relative path, so it resolves to whichever project directory you're in. Restart your shell or `source` the file.
 
-## 4. Set up the control-plane file
+## 4. Install runtime skills
+
+Commonplace's source of truth for shipped skills is:
+
+```text
+kb/commonplace/instructions/cp-skill-*/
+```
+
+Each active agent runtime must expose those directories through its own skill discovery mechanism. `commonplace-init` creates symlinks for two common layouts:
+
+```text
+.claude/skills/cp-skill-*/ -> ../../kb/commonplace/instructions/cp-skill-*/
+.agents/skills/cp-skill-*/ -> ../../kb/commonplace/instructions/cp-skill-*/
+```
+
+If your runtime uses one of those layouts and symlinks are available, no further work is needed. If your runtime uses a different directory, install the same `cp-skill-*` directories there in the way that runtime expects: symlink, junction, copy, plugin registration, or IDE-specific import.
+
+For an agent doing the installation: inspect your own runtime's skill-discovery rules, then project every `kb/commonplace/instructions/cp-skill-*` directory into that surface. Prefer links or runtime registration when available so updates to `kb/commonplace/instructions/` are visible after rerunning `commonplace-init`; copy only when the runtime or platform cannot follow links.
+
+Acceptance check: from inside the agent runtime, confirm that these skills are available by their `cp-skill-*` names:
+
+```text
+cp-skill-write
+cp-skill-validate
+cp-skill-connect
+cp-skill-health-check
+```
+
+## 5. Set up the control-plane file
 
 The control-plane file (`CLAUDE.md` or `AGENTS.md`) is always loaded by the agent runtime. It tells the agent what the KB is for, where to find things, and which skills are available.
 
@@ -317,7 +346,7 @@ Then review the merged file and fill in the per-project parts. The template's HT
 - **Command invocation (in `### Commands`)** — keep the variant that matches the project's start-time contract. The preferred contract is bare-name invocation with the venv command directory on `PATH` (`.venv/bin` through direnv or shell rc on Linux/macOS, `.venv\Scripts` through activation on Windows). If the project deliberately does not put the venv on `PATH`, keep the fallback variant that tells agents to invoke the venv executables directly — `.venv/bin/commonplace-validate` on Linux/macOS or `.venv\Scripts\commonplace-validate.exe` on Windows — otherwise agents will retry failing bare commands.
 - **Navigation entry points** — add curated tag READMEs to the list as they emerge; the comment in the template explains when to create one.
 
-## 5. Verify validation and search
+## 6. Verify validation and search
 
 Commonplace works with curated indexes and `rg`; no semantic-search daemon is required, and complete generated listings are built only for the published site (never committed).
 
@@ -329,7 +358,7 @@ rg "your search terms" kb/ --glob "*.md"
 
 A fresh project may have no user notes yet, so `commonplace-validate kb/notes` can report that no notes matched. Run it after the first user note exists.
 
-## 6. Pre-approve Commonplace CLI commands in Claude Code (optional)
+## 7. Pre-approve Commonplace CLI commands in Claude Code (optional)
 
 If you use Claude Code, you can skip the permission prompt for each `commonplace-*` command by adding prefix-wildcard allow rules to `.claude/settings.local.json` (user-local, gitignored). Add one `Bash(<name>:*)` entry for each `[project.scripts]` entry in `pyproject.toml`, e.g.:
 

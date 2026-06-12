@@ -55,7 +55,7 @@ src/commonplace/             Packaged operational engine
 
 ## Skills and instructions
 
-Framework skills are sourced from `kb/instructions/` and promoted by `commonplace-init` into `.claude/skills/` and `.agents/skills/` with a `cp-skill-` prefix. The prefix keeps them distinct from both a project's own skills and the `commonplace-*` CLI commands. Plain KB procedures remain under `kb/instructions/` and load on demand. The project control-plane file (`CLAUDE.md` or `AGENTS.md`) still handles KB discovery and scoping.
+Framework skills are sourced from `kb/instructions/` and installed into consuming projects under `kb/commonplace/instructions/cp-skill-*/` with a `cp-skill-` prefix. The prefix keeps them distinct from both a project's own skills and the `commonplace-*` CLI commands. `commonplace-init` creates `.claude/skills/` and `.agents/skills/` symlink projections for common runtimes, and other IDEs or agent runtimes should expose the same canonical skill directories through their own skill mechanism. Plain KB procedures remain under `kb/instructions/` and load on demand. The project control-plane file (`CLAUDE.md` or `AGENTS.md`) still handles KB discovery and scoping.
 
 Framework skills:
 
@@ -102,7 +102,7 @@ cd commonplace
 
 If you use `direnv`, make sure your shell has the direnv hook installed, then run `direnv allow` once after entering the repo. The `.envrc` sets `PATH` and `UV_CACHE_DIR` for the project. Start Codex or Claude Code from that direnv-loaded interactive shell so the runtime inherits the project venv; otherwise launch it with `direnv exec . <command>`.
 
-Skills are installed into `.claude/skills/cp-skill-*/` and `.agents/skills/cp-skill-*/` by `commonplace-init`. The root `AGENTS.md` provides the project routing layer. The `kb/` directory is both the methodology and your workspace — new notes go alongside the existing ones.
+Skills are installed under `kb/instructions/cp-skill-*/` in this repo and exposed to local agent runtimes through `.claude/skills/cp-skill-*/` and `.agents/skills/cp-skill-*/` symlinks. Other runtimes should expose the same canonical skill directories in their own way. The root `AGENTS.md` provides the project routing layer. The `kb/` directory is both the methodology and your workspace — new notes go alongside the existing ones.
 
 This is the right mode when:
 - You want to explore or contribute to the Commonplace methodology itself

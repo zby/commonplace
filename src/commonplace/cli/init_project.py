@@ -284,9 +284,9 @@ def direnv_warnings(root: Path) -> list[str]:
             "'.venv\\Scripts\\activate.bat'."
         )
         lines.append(
-            "If skill symlink creation fails on a future init run, enable "
-            "Developer Mode or use an elevated terminal, then rerun "
-            "'commonplace-init'."
+            "If convenience skill symlink creation fails, enable Developer "
+            "Mode, use an elevated terminal, or install the cp-skill-* "
+            "directories into your agent runtime's skill surface manually."
         )
         lines.append("See INSTALL.md step 3 (Load the project environment) for examples.")
         return lines

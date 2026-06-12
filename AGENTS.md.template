@@ -100,7 +100,7 @@ rg "^tags:.*my-tag" kb/notes/ kb/reference/ kb/instructions/ kb/commonplace/note
 
 ### Skills
 
-`commonplace-init` installs the `cp-skill-*` family (`cp-skill-write`, `cp-skill-validate`, `cp-skill-connect`, etc.) into `.claude/skills/` and `.agents/skills/`. The harness loads them automatically.
+The `cp-skill-*` family (`cp-skill-write`, `cp-skill-validate`, `cp-skill-connect`, etc.) is available in this agent runtime. If a Commonplace skill is unexpectedly unavailable, use `cp-skill-health-check` to diagnose the installation.
 
 ### Commands
 
