@@ -47,7 +47,7 @@ Four surfaces in the system instantiate the rule, each in a different state of a
 - **`complete`/`covered_by` marks on tag-READMEs** — enforced and shipped. A validator re-derives membership from the scoped `rg` sweep and fails on mismatch (see [mark-semantics.md](../reference/mark-semantics.md)).
 - **Compiled memory views and cues** — the general source-of-truth requirement, stated for memory systems in [keep-compiled-views-aligned](./agent-memory-requirements/keep-compiled-views-aligned.md): a derived surface needs provenance, regeneration rules, and staleness detection so it does not become an independent authority.
 - **Hardcoded contract values in hot-path skills** — currently resolved by omission (read the contract live). Enforcement — a marked frontloaded region whose extractable list a validator re-derives — would dominate, recovering the context economy without the drift.
-- **Duplicated build artifacts** — the two tracked `AGENTS.md.template` copies (root feeds wheel builds via `pyproject` `force-include`; `src/commonplace/_data` serves editable installs) must be byte-identical. This is the trivially checkable case: file identity, one comparison.
+- **Duplicated build artifacts** — the two tracked `AGENTS.md.template` copies (root feeds wheel builds via `pyproject` `force-include`; `src/commonplace/_data` serves editable installs) must be byte-identical (the two-copy layout is designed in [ADR 027](../reference/adr/027-package-scaffold-assets-without-source-tree-symlinks.md)). This is the trivially checkable case: file identity, one comparison.
 
 It is the general form of "a cache must never be the only copy" — applied not only to caches but to every derived copy of recomputable truth.
 
@@ -61,7 +61,9 @@ It is the general form of "a cache must never be the only copy" — applied not 
 Relevant Notes:
 
 - [Stale indexes are worse than no indexes](./stale-indexes-are-worse-than-no-indexes.md) — grounds: the absence-degrades-to-search vs presence-suppresses-search asymmetry that makes false copies catastrophic
+- [The boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — grounds: the "checked" branch exists only where a cheap deterministic oracle can re-derive and compare; where verification is unavailable, omission is the only safe state
 - [Frontloading spares execution context](./frontloading-spares-execution-context.md) — extends: enforcement is the move that secures frontloading's validity window for recomputable inserted values
 - [An author should fix what the executor can't determine, not what it will](./fix-what-the-executor-cant-determine-not-what-it-will.md) — extends: adds recomputable-and-checked as a third class between arbitrary and situational on its fix-or-leave axis
 - [Keep lineage and compiled views from drifting](./agent-memory-requirements/keep-compiled-views-aligned.md) — extends: generalizes its compiled-view source-of-truth rules beyond memory systems to any derived copy of recomputable truth
 - [Mark semantics](../reference/mark-semantics.md) — evidence: the shipped, validator-enforced instance of the rule
+- [ADR 027 — Package scaffold assets without source-tree symlinks](../reference/adr/027-package-scaffold-assets-without-source-tree-symlinks.md) — evidence: source-of-truth for the byte-identical `AGENTS.md.template` duplication cited as the fourth instance
