@@ -1,8 +1,30 @@
 [project]
 name = "llm-commonplace"
 version = "0.1.0"
+readme = "README.md"
 requires-python = ">=3.11"
+license = "MIT AND CC-BY-4.0"
+license-files = ["LICENSE*"]
+authors = [
+    { name = "Zbigniew Lukasiak", email = "zzbbyy@gmail.com" },
+]
+keywords = ["agents", "context-engineering", "knowledge-base", "llm", "markdown"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Documentation",
+    "Topic :: Software Development :: Documentation",
+    "Topic :: Text Processing :: Markup :: Markdown",
+]
 dependencies = ["jsonschema>=4.25.0", "PyYAML>=6.0.0"]
+
+[project.urls]
+Documentation = "https://zby.github.io/commonplace/"
+Homepage = "https://zby.github.io/commonplace/"
+Repository = "https://github.com/zby/commonplace"
 
 [project.scripts]
 commonplace-ack-gate-review = "commonplace.cli.review.ack_gate_review:main"
@@ -35,7 +57,7 @@ dev = ["pytest", "ruff"]
 
 [project.optional-dependencies]
 docs = ["mkdocs", "mkdocs-redirects"]
-snapshot = ["xdk"]
+snapshot = ["python-dotenv", "xdk"]
 all = ["mkdocs", "mkdocs-redirects", "python-dotenv", "pyyaml", "xdk"]
 
 [build-system]

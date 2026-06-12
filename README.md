@@ -47,7 +47,7 @@ src/commonplace/             Packaged operational engine
 
 **Progressive refinement.** Capture with zero friction — a file with no frontmatter is a valid `text` type with zero structural requirements. Add frontmatter to make it a `note`. Add Evidence/Reasoning/Caveats sections to make it a `structured-claim`. Structure is earned, not imposed.
 
-**Files, not database.** Authored knowledge stays file-backed: universal interface, free versioning via git, zero infrastructure. Derived indexes solve scale problems without replacing the source of truth. The current scoped exception is the experimental review system, which stores review state in SQLite because that state behaves like local operational metadata rather than library content; see [010-review state should move to sqlite once reviews leave git and accumulate operational metadata](./kb/reference/adr/010-review-state-should-move-to-sqlite-once-reviews-leave-git-and.md).
+**Files, not database.** Authored knowledge stays file-backed: universal interface, free versioning via git, zero infrastructure. Derived indexes solve scale problems without replacing the source of truth. The current scoped exception is the experimental review system, which stores review state in SQLite because that state behaves like local operational metadata rather than library content; see [010-review state should move to sqlite once reviews leave git and accumulate operational metadata](https://github.com/zby/commonplace/blob/main/kb/reference/adr/010-review-state-should-move-to-sqlite-once-reviews-leave-git-and.md).
 
 **The network IS the knowledge.** Individual notes matter less than their relationships. Every link must articulate its relationship (extends, grounds, contradicts, exemplifies) — "related" is not a relationship. An unconnected note is invisible.
 
@@ -111,7 +111,7 @@ This is the right mode when:
 
 ### Installing into a project
 
-Commonplace can be installed into any project as a Python package. See **[INSTALL.md](INSTALL.md)** for the setup flow.
+Commonplace can be installed into any project as a Python package. See **[INSTALL.md](https://github.com/zby/commonplace/blob/main/INSTALL.md)** for the setup flow.
 
 ## Prerequisites
 
@@ -138,4 +138,7 @@ commonplace-x-snapshot <url>
 
 ## License
 
-[CC BY 4.0](LICENSE)
+Commonplace is dual-licensed:
+
+- Code in `src/` and package tooling: [MIT](https://github.com/zby/commonplace/blob/main/LICENSE-CODE)
+- Knowledge-base content, documentation, templates, and bundled instructional artifacts: [CC BY 4.0](https://github.com/zby/commonplace/blob/main/LICENSE)
