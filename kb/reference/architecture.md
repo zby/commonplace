@@ -70,7 +70,7 @@ The Python package carries the scaffold inputs as packaged data in built wheels.
 | `kb/tasks/` | User's task lifecycle artifacts |
 | `kb/work/` | User's temporal workshop material |
 | `kb/reports/` | User's generated operational artifacts |
-| `.claude/skills/`, `.agents/skills/` | Known runtime skill projections into `kb/commonplace/instructions/`; other runtimes may need their own projection |
+| `.claude/skills/`, `.agents/skills/` | Optional known runtime skill projections into `kb/commonplace/instructions/`; other runtimes may need their own projection |
 
 ## How the shipped surface is produced
 
@@ -79,7 +79,7 @@ The Python package carries the scaffold inputs as packaged data in built wheels.
 1. Creates the directory shell under `kb/` — the user's collections, the user-space directories, and the `kb/commonplace/` hierarchy.
 2. Copies shipped library trees into `kb/commonplace/{notes,reference,instructions}/`. Shared `kb/types/` and user-space type scaffolds (`kb/sources/types/`, `kb/reports/types/`) land at their conventional top-level locations.
 3. Scaffolds minimal `COLLECTION.md` templates into the user's empty collections so that write skills have a starter register and conventions stub to fill in.
-4. Promotes selected skills into known `.claude/skills/cp-skill-*/` and `.agents/skills/cp-skill-*/` runtime surfaces as symlinks into `kb/commonplace/instructions/<name>/`, and resolves project-specific templates such as `AGENTS.md` and `.envrc`. Other agent runtimes may need to link, copy, register, or import the same canonical skill directories into their own discovery surface.
+4. Attempts to promote selected skills into known `.claude/skills/cp-skill-*/` and `.agents/skills/cp-skill-*/` runtime surfaces as symlinks into `kb/commonplace/instructions/<name>/`, and resolves project-specific templates such as `AGENTS.md` and `.envrc`. If symlinks are unavailable, the canonical skill directories remain installed under `kb/commonplace/instructions/`; other agent runtimes may need to link, copy, register, or import those directories into their own discovery surface.
 
 The result is that the agent's hot path stays inside the project tree. It reads `AGENTS.md`, the target collection's `COLLECTION.md`, and the relevant type files directly from the installed KB rather than jumping out to a separate framework checkout.
 

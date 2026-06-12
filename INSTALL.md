@@ -7,6 +7,7 @@
 - **git** (required)
 - **direnv** (optional, recommended on Linux/macOS) — for project-scoped environment variables
 - **ripgrep** (required) — used by agent runtimes for fast KB search
+- **An agent runtime** — Codex, Claude Code, or another internal LLM/IDE that can load a project control-plane file and expose skill/procedure directories to the agent.
 
 ## Start-time contract
 
@@ -20,7 +21,7 @@ Commonplace is usable when the terminal or agent runtime starts inside the proje
 - **Shipped Commonplace collections are present** — `kb/commonplace/notes/`, `kb/commonplace/reference/`, and `kb/commonplace/instructions/` exist and contain the reusable methodology library.
 - **Search works** — `rg` is available for fast KB search.
 
-The concrete shell commands below are examples of ways to satisfy this contract. Linux/macOS usually satisfies it with direnv. Windows usually satisfies it by activating `.venv` in PowerShell or `cmd` before starting Codex or Claude Code.
+The concrete shell commands below are examples of ways to satisfy this contract. Linux/macOS usually satisfies it with direnv. Windows usually satisfies it by activating `.venv` in PowerShell or `cmd` before starting the agent runtime. If your company runtime does not automatically read `AGENTS.md` or `CLAUDE.md`, configure it to load the control-plane file as project instructions before starting work.
 
 Acceptance checks:
 
@@ -153,7 +154,7 @@ commonplace-init --name <your-project>
 
 After step 3, `commonplace-*` commands work directly in shells and agent runtimes that have loaded the project environment.
 
-`commonplace-init` creates convenience skill symlinks for the known `.claude/skills/` and `.agents/skills/` layouts. These are not the whole skill contract; other IDEs and agent runtimes may use different locations. If init fails with a symlink privilege error on Windows, either enable Developer Mode or use the runtime-specific skill installation procedure in step 4.
+`commonplace-init` creates convenience skill symlinks for the known `.claude/skills/` and `.agents/skills/` layouts. These are not the whole skill contract; other IDEs and agent runtimes may use different locations. If symlink creation is unavailable on Windows, init still creates the canonical `kb/commonplace/instructions/cp-skill-*` directories and reports the optional skill projections as skipped; use the runtime-specific skill installation procedure in step 4.
 
 ```powershell
 uv run commonplace-init --name <your-project>
@@ -255,11 +256,13 @@ Verify that the start-time contract is satisfied:
 Get-Command commonplace-validate
 ```
 
-Start Codex or Claude Code from that same activated terminal:
+Start the agent runtime from that same activated terminal. For Codex this is:
 
 ```powershell
 codex
 ```
+
+For Claude Code or an internal IDE/LLM, use the runtime's normal launch command from this activated shell, or configure the IDE's integrated terminal/service environment so `.venv\Scripts` is on `PATH`.
 
 For one-off human commands without activating the terminal first, call the venv executable explicitly. Do not put this form in the control-plane file unless the project has deliberately chosen not to satisfy the bare-command contract:
 
@@ -302,14 +305,14 @@ Commonplace's source of truth for shipped skills is:
 kb/commonplace/instructions/cp-skill-*/
 ```
 
-Each active agent runtime must expose those directories through its own skill discovery mechanism. `commonplace-init` creates symlinks for two common layouts:
+Each active agent runtime must expose those directories through its own skill discovery mechanism. `commonplace-init` creates symlink projections for two common layouts when the platform permits them:
 
 ```text
 .claude/skills/cp-skill-*/ -> ../../kb/commonplace/instructions/cp-skill-*/
 .agents/skills/cp-skill-*/ -> ../../kb/commonplace/instructions/cp-skill-*/
 ```
 
-If your runtime uses one of those layouts and symlinks are available, no further work is needed. If your runtime uses a different directory, install the same `cp-skill-*` directories there in the way that runtime expects: symlink, junction, copy, plugin registration, or IDE-specific import.
+If your runtime uses one of those layouts and symlinks are available, no further work is needed. If your runtime uses a different directory, install the same `cp-skill-*` directories there in the way that runtime expects: symlink, junction, copy, plugin registration, IDE-specific import, or whatever internal extension mechanism exposes reusable instructions to the model.
 
 For an agent doing the installation: inspect your own runtime's skill-discovery rules, then project every `kb/commonplace/instructions/cp-skill-*` directory into that surface. Prefer links or runtime registration when available so updates to `kb/commonplace/instructions/` are visible after rerunning `commonplace-init`; copy only when the runtime or platform cannot follow links.
 
@@ -324,7 +327,7 @@ cp-skill-health-check
 
 ## 5. Set up the control-plane file
 
-The control-plane file (`CLAUDE.md` or `AGENTS.md`) is always loaded by the agent runtime. It tells the agent what the KB is for, where to find things, and which skills are available.
+The control-plane file (`CLAUDE.md` or `AGENTS.md`) must be loaded by the agent runtime. It tells the agent what the KB is for, where to find things, and which skills are available. Codex and Claude-style runtimes usually load these files automatically from the project root; internal runtimes may need an explicit project-instructions setting, plugin configuration, or prompt import.
 
 **New project** — rename the template:
 

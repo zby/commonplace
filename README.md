@@ -117,7 +117,7 @@ Commonplace can be installed into any project as a Python package. See **[INSTAL
 
 | Tool | Required | Purpose |
 |---|---|---|
-| [Claude Code](https://docs.anthropic.com/en/docs/claude-code) or Codex | yes | Agent runtime — use the runtime's skill surface plus `AGENTS.md` |
+| Agent runtime | yes | Codex, Claude Code, or another internal LLM/IDE that can load project instructions and expose the `cp-skill-*` skill directories |
 | [uv](https://docs.astral.sh/uv/) | yes | Install and run the Commonplace Python package |
 | [git](https://git-scm.com/) | yes | Versioning, history-preserving renames in `convert` |
 | [ripgrep](https://github.com/BurntSushi/ripgrep) (`rg`) | yes | Structured search — frontmatter queries, keyword matching, link scanning |

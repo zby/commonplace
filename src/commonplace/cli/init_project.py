@@ -80,6 +80,7 @@ class InitReport:
     created: list[Path] = field(default_factory=list)
     preserved_identical: list[Path] = field(default_factory=list)
     preserved_different: list[Path] = field(default_factory=list)
+    skipped: list[tuple[Path, str]] = field(default_factory=list)
 
 
 def _record_existing(
@@ -252,10 +253,16 @@ def init_project(root: Path, name: str | None = None) -> InitReport:
                     report.preserved_identical.append(skills_dest / skill_name)
                     continue
                 link.unlink()
-            elif link.is_dir():
-                # Replace old copied directory with a symlink.
-                shutil.rmtree(link)
-            link.symlink_to(target)
+            elif link.exists():
+                # A real directory or file may be an intentional runtime-specific
+                # skill projection on platforms that cannot follow symlinks.
+                report.preserved_different.append(skills_dest / skill_name)
+                continue
+            try:
+                link.symlink_to(target, target_is_directory=True)
+            except OSError as exc:
+                report.skipped.append((skills_dest / skill_name, str(exc)))
+                continue
             report.created.append(skills_dest / skill_name)
 
     return report
@@ -359,10 +366,19 @@ def main(argv: list[str] | None = None) -> int:
         print("Preserved existing files differing from current scaffold output:")
         for path in report.preserved_different:
             print(f"- {path.as_posix()}")
+    if report.skipped:
+        print("Skipped optional runtime skill projections:")
+        for path, reason in report.skipped:
+            print(f"- {path.as_posix()}: {reason}")
+        print(
+            "Install the matching kb/commonplace/instructions/cp-skill-* directories "
+            "through your agent runtime's own skill mechanism if needed."
+        )
     if (
         not report.created
         and not report.preserved_identical
         and not report.preserved_different
+        and not report.skipped
     ):
         print("No changes needed.")
 

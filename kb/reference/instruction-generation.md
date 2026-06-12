@@ -75,12 +75,12 @@ The exception is `src/commonplace/_data/templates/`, which contains real scaffol
 
 ## Skill projection
 
-In addition to copying the instructions tree under `kb/commonplace/instructions/`, `init_project` projects a selected subset of skills (`write`, `validate`, `connect`, `convert`, `health-check`, `ingest`, `snapshot-web`, `revise-iterative`, `revise-autoreason`) into two known runtime discovery layouts:
+In addition to copying the instructions tree under `kb/commonplace/instructions/`, `init_project` attempts to project a selected subset of skills (`write`, `validate`, `connect`, `convert`, `health-check`, `ingest`, `snapshot-web`, `revise-iterative`, `revise-autoreason`) into two known runtime discovery layouts:
 
 - `.claude/skills/cp-skill-<skill>/`
 - `.agents/skills/cp-skill-<skill>/`
 
-Each generated projection is a **symlink** pointing at `kb/commonplace/instructions/cp-skill-<skill>/`. This keeps skill discovery working for those runtimes while the canonical skill content stays in one place inside the shipped library.
+Each generated projection is a **symlink** pointing at `kb/commonplace/instructions/cp-skill-<skill>/`. This keeps skill discovery working for those runtimes while the canonical skill content stays in one place inside the shipped library. If symlink creation is unavailable, initialization preserves the canonical skill directories and reports the optional runtime projections as skipped.
 
 The canonical contract is the source directory, not the two generated layouts. Agent runtimes and IDEs that use another skill surface must link, copy, register, or import the same `kb/commonplace/instructions/cp-skill-*` directories according to their own rules.
 

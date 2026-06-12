@@ -110,6 +110,40 @@ def test_init_project_installs_skills_as_symlinks(tmp_path: Path) -> None:
             assert link.resolve() == (tmp_path / "kb" / "commonplace" / "instructions" / skill_name).resolve()
 
 
+def test_init_project_skips_skill_projection_when_symlinks_are_unavailable(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    def fail_symlink(
+        self: Path,
+        target: str | Path,
+        target_is_directory: bool = False,
+    ) -> None:
+        raise OSError("symbolic link privilege not held")
+
+    monkeypatch.setattr(Path, "symlink_to", fail_symlink)
+
+    report = init_project(tmp_path)
+
+    assert (tmp_path / "kb" / "commonplace" / "instructions" / "cp-skill-write" / "SKILL.md").is_file()
+    assert not (tmp_path / ".claude" / "skills" / "cp-skill-write").exists()
+    assert len(report.skipped) == (
+        len(init_project_module.PROMOTED_SKILLS) * len(init_project_module.SKILLS_DIRS)
+    )
+    assert any("symbolic link privilege not held" in reason for _, reason in report.skipped)
+
+
+def test_init_project_preserves_existing_real_skill_projection(tmp_path: Path) -> None:
+    link = tmp_path / ".claude" / "skills" / "cp-skill-write"
+    link.mkdir(parents=True)
+    (link / "SKILL.md").write_text("runtime-specific copy", encoding="utf-8")
+
+    report = init_project(tmp_path)
+
+    assert Path(".claude/skills/cp-skill-write") in report.preserved_different
+    assert not link.is_symlink()
+    assert (link / "SKILL.md").read_text(encoding="utf-8") == "runtime-specific copy"
+
+
 def test_init_project_resolves_templates(tmp_path: Path) -> None:
     init_project(tmp_path, name="myproject")
 
