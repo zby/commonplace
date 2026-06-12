@@ -33,6 +33,29 @@ Rejected candidates, kept for reuse in other surfaces:
 1. "A framework for wikis that AI agents write, link, review, and run — self-hosting: its theory of LLM-operated wikis ships as one, running."
 2. "Executable knowledge for AI agents: a wiki framework whose own theory runs as the wiki it describes — prose agents execute, gates that review it, git that audits it."
 
+## The analogy, drilled (2026-06-12)
+
+Why self-hosting matters for compilers — four separable reasons, each translating differently:
+
+1. **Proof by demonstration.** A self-compiling compiler has processed one large, demanding, real program: its own source. Capability shown, not claimed; historically *the* maturity milestone (C, Rust, Go).
+2. **Forced feedback loop.** Developers live inside their own language; deficiencies hurt them first and daily.
+3. **Compounding independence.** Post-bootstrap, compiler improvements are written in the language and built by the previous compiler — the system improves itself using itself.
+4. **Coherence at the fixed point.** Self-application is a consistency test: a compiler bug tends to break the compiler's own build. Dark side: Thompson's *Trusting Trust* — self-hosting also self-propagates flaws.
+
+**The tight form for Commonplace is the self-hosting interpreter — the metacircular evaluator — not the compiler.** Compilation has a translation step producing a different artifact that then runs; nothing here does that. Agents read conventions and skills fresh each session and follow them directly (the "externalized methodology" idea): the methodology is source that runs by being read. Structurally:
+
+- The **LLM + harness is the host machine** — the evaluator beneath the metacircular one. Lisp's `eval`-in-Lisp never bootstraps the hardware either; a host beneath is constitutive of the form, not a defect of the analogy.
+- **Metacircularity is the actual claim**: the methodology for operating LLM wikis is expressed in the medium it governs — wiki artifacts, with writing conventions applying to their own files. Lisp showed the language can state its own semantics; Commonplace shows the wiki format can carry the rules of its own operation.
+- **Codification is the JIT.** Stable prose rules promote into validators, schemas, and `commonplace-*` commands — an interpreter compiling its hot, stable paths to native code while the rest stays interpreted and cheap to change. The constraining gradient *is* the interpreted/compiled boundary, and the analogy predicts where it sits: compile what is stable and frequently executed, keep interpreting what is still moving.
+
+All four compiler benefits carry over: (1) the methodology runs a real demanding wiki — its own; (2) every methodology deficiency hits us first, with the loop institutionalized (log, workshops, gap rule); (3) methodology improvements are made using the methodology; (4) a wrong convention produces bad files *including its own*, so incoherence surfaces fast. Trusting Trust translates as a live caveat: an agent following a flawed instruction to revise instructions propagates the flaw — which is why our promotion loops keep a human oracle where GBrain's SkillOpt accepts on benchmark scores.
+
+Honest disanalogy: compiler self-hosting is a binary milestone; ours is partial and gradual — a human directs the inquiry and accepts edits. "Self-hosting with a human in the loop" is the accurate form (humans write the bootstrapped compiler's patches too).
+
+**Copy guidance:** keep "self-hosting" on outward surfaces — the term covers interpreters (the metacircular evaluator is the canonical self-hosting interpreter) and owns the prestige slot. README now says "in the bootstrapping sense" (was "in the compiler sense"). The interpreter/JIT machinery stays internal.
+
+**Extraction candidate:** the transferable claim — LLM-executed methodologies run as metacircular interpreters: rules interpreted per session, codification as their JIT, trusting-trust as the characteristic failure mode, a human oracle as the mitigation — is `kb/notes/` material once it has carried weight beyond positioning.
+
 ## Propagation
 
 - [x] `pyproject.toml` `description` + `llm-wiki` keyword (2026-06-12)

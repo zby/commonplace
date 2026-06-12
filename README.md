@@ -4,7 +4,7 @@
 
 Commonplace is a framework for agent-operated knowledge bases — LLM wikis in the sense [Karpathy sketched](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f): a persistent, linked markdown layer that AI agents write, navigate, review, and maintain. The framework ships a type system, writing conventions, agent skills, and Python commands for building such a wiki around your own work.
 
-It is **self-hosting**, in the compiler sense. The theory of how to build LLM wikis lives in this repository as notes, and the methodology those notes lay out is executed here, not just described: LLM agents follow it to maintain the very wiki the theory lives in. The skills agents use to write, connect, and validate notes are themselves artifacts in the wiki, written and maintained the same way; the writing conventions govern the very files they are written in. Nothing here is documentation *about* a separate system. The wiki is the system, and reading this repo is watching it run.
+It is **self-hosting**, in the bootstrapping sense. The theory of how to build LLM wikis lives in this repository as notes, and the methodology those notes lay out is executed here, not just described: LLM agents follow it to maintain the very wiki the theory lives in. The skills agents use to write, connect, and validate notes are themselves artifacts in the wiki, written and maintained the same way; the writing conventions govern the very files they are written in. Nothing here is documentation *about* a separate system. The wiki is the system, and reading this repo is watching it run.
 
 **The content is AI-generated** through human-AI collaboration: a human directs the inquiry, and AI agents (Claude, ChatGPT, and others) draft, connect, and maintain the notes.
 
