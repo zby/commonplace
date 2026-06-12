@@ -37,5 +37,5 @@ Rejected candidates, kept for reuse in other surfaces:
 
 - [x] `pyproject.toml` `description` + `llm-wiki` keyword (2026-06-12)
 - [x] README opening — leads with the flagship line, cites Karpathy for the term, explains self-hosting in the compiler sense (2026-06-12)
-- [ ] [the-knowledge-layer-for-ai-agents](./the-knowledge-layer-for-ai-agents.md) pitch draft — RAG strawman replacement, per [gbrain-is-the-category-sibling](./gbrain-is-the-category-sibling.md)
+- [x] [the-knowledge-layer-for-ai-agents](./the-knowledge-layer-for-ai-agents.md) pitch draft — rewritten 2026-06-12: leads with Karpathy/LLM-wiki + self-hosting; RAG strawman replaced by "not another memory service" (no second runtime, audit-by-diff), per [gbrain-is-the-category-sibling](./gbrain-is-the-category-sibling.md)
 - [ ] GitHub repo description/topics
