@@ -169,7 +169,10 @@ Predicates used by `list_kb_note_paths` for the two skip rules.
 Read a note, parse its frontmatter and body, resolve its type. Returns `(parsed, None)` on success or `(None, error_message)` on parse failure.
 
 **`validate_note(path: Path, *, repo_root: Path) -> CheckResults`**
-Run the full deterministic validation pipeline on one note: title/slug length, link health, then schema validation. Returns the populated `CheckResults`.
+Run the full deterministic validation pipeline on one note: title/slug length, link health, registered type-specific rules, then schema validation. Returns the populated `CheckResults`.
+
+**`type_rule(*type_names)`**
+Decorator registering a type-specific rule `(results, parsed, *, repo_root) -> None` for the given type names; `validate_note` runs matching rules between the generic checks and schema validation. Current registrations: quote-citation shape checks for `agent-memory-system-review`, weight/completeness/coverage gates for `tag-readme`.
 
 **`validate_title_and_slug(results, path, document)`**
 Filesystem naming check: title length and slug length against `MAX_NOTE_TITLE_LENGTH` / `MAX_NOTE_SLUG_LENGTH`.

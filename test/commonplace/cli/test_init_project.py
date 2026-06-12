@@ -12,6 +12,7 @@ if str(SRC_ROOT) not in sys.path:
     sys.path.insert(0, str(SRC_ROOT))
 
 from commonplace.cli import init_project as init_project_module  # noqa: E402
+from commonplace.scaffold_manifest import MANIFEST  # noqa: E402
 from commonplace.cli.init_project import (  # noqa: E402
     direnv_warnings,
     init_project,
@@ -127,7 +128,7 @@ def test_init_project_skips_skill_projection_when_symlinks_are_unavailable(
     assert (tmp_path / "kb" / "commonplace" / "instructions" / "cp-skill-write" / "SKILL.md").is_file()
     assert not (tmp_path / ".claude" / "skills" / "cp-skill-write").exists()
     assert len(report.skipped) == (
-        len(init_project_module.PROMOTED_SKILLS) * len(init_project_module.SKILLS_DIRS)
+        len(MANIFEST.promoted_skills) * len(MANIFEST.skills_dirs)
     )
     assert any("symbolic link privilege not held" in reason for _, reason in report.skipped)
 

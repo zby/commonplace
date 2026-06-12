@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import re
+from collections.abc import Callable
 from dataclasses import dataclass, field
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
@@ -58,6 +59,26 @@ class ParsedNote:
     note_type: str
     profile: TypeProfile
     document: ParsedDocument
+
+
+# Type-specific validation rules, registered per type name so adding a
+# cross-file validator is a function plus a registration, not another branch
+# in validate_note. Rules run after the generic checks and before schema
+# validation, in registration order.
+TypeRule = Callable[..., None]
+
+_TYPE_RULES: dict[str, list[TypeRule]] = {}
+
+
+def type_rule(*type_names: str) -> Callable[[TypeRule], TypeRule]:
+    """Register a rule `(results, parsed, *, repo_root) -> None` for the given type names."""
+
+    def register(rule: TypeRule) -> TypeRule:
+        for type_name in type_names:
+            _TYPE_RULES.setdefault(type_name, []).append(rule)
+        return rule
+
+    return register
 
 
 def parse_note(path: Path, *, repo_root: Path) -> tuple[ParsedNote | None, str | None]:
@@ -169,6 +190,12 @@ def _linked_md_targets(parsed: ParsedNote) -> set[Path]:
     return targets
 
 
+@type_rule("agent-memory-system-review")
+def _quote_citation_rule(results: CheckResults, parsed: ParsedNote, *, repo_root: Path) -> None:
+    validate_quote_citations(results, parsed.content)
+
+
+@type_rule("tag-readme")
 def validate_tag_readme(results: CheckResults, parsed: ParsedNote, *, repo_root: Path) -> None:
     """Enforce the tag-readme type contract: weight gates plus the optional
     `complete` (membership) and `covered_by` (coverage) marks (ADR 026)."""
@@ -313,10 +340,8 @@ def validate_note(path: Path, *, repo_root: Path) -> CheckResults:
     results.passes.append("frontmatter: valid delimiters, well-formed YAML")
     validate_title_and_slug(results, parsed.path, parsed.document)
     validate_links_from_document(results, parsed.path, parsed.document.links)
-    if parsed.note_type == "agent-memory-system-review":
-        validate_quote_citations(results, parsed.content)
-    if parsed.note_type == "tag-readme":
-        validate_tag_readme(results, parsed, repo_root=repo_root)
+    for rule in _TYPE_RULES.get(parsed.note_type, []):
+        rule(results, parsed, repo_root=repo_root)
     apply_schema_validation(results, parsed)
     return results
 
