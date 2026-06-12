@@ -79,31 +79,18 @@ rg --version
 
 Commonplace installs into a project-local venv rather than globally, so each project can pin its own version independently.
 
-> **Note:** `llm-commonplace` is not yet published to PyPI. For now, install from a local checkout of this repository. The PyPI-based instructions below are kept as a preview of how it will work once published.
-
-From your project root, install from a local checkout (also works if you're inside the Commonplace repo itself):
+From your project root, install the published package from PyPI.
 
 Linux/macOS:
 
 ```bash
 uv venv
-uv pip install -e /PATH/TO/commonplace
-# or, if you're already in the commonplace directory:
-uv pip install -e .
+uv pip install llm-commonplace
 ```
 
 Windows PowerShell:
 
 ```powershell
-uv venv
-uv pip install -e C:\path\to\commonplace
-# or, if you're already in the commonplace directory:
-uv pip install -e .
-```
-
-Once the package is published, this will become:
-
-```bash
 uv venv
 uv pip install llm-commonplace
 ```
@@ -124,6 +111,13 @@ Windows PowerShell:
 py -3 -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install llm-commonplace
+```
+
+For Commonplace development or local contribution work, install from a checkout instead:
+
+```bash
+uv venv
+uv pip install -e /PATH/TO/commonplace
 ```
 
 ## 2. Initialize the project
@@ -410,11 +404,13 @@ my-project/
 
 ## Updating
 
-Until `llm-commonplace` is on PyPI, update by pulling the latest Commonplace checkout — an editable install (`uv pip install -e`) picks up the changes automatically. Once published, you'll be able to upgrade with:
+Upgrade the project-local package from PyPI:
 
 ```bash
 uv pip install --upgrade llm-commonplace
 ```
+
+If the project uses a source checkout or editable install for Commonplace development, pull that checkout before upgrading or reinstalling the editable package.
 
 Rerun init to pick up any new scaffold files (existing files are preserved):
 
