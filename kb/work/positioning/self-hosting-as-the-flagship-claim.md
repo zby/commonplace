@@ -24,15 +24,18 @@ Direction (2026-06-12): position Commonplace primarily on the self-hosting prope
 - **Self-hosting proves the how, not the why.** Reflexivity alone tells a buyer nothing about their problem (agents forget, hallucinate, produce shallow work). The flagship claim needs a "for what" clause beside it; self-hosting is the proof, not the pitch.
 - **"Wiki" connotations** — anyone-edits, low ceremony — partially conflict with the review-gated quality story; partially help (organic growth, links). Watch whether "wiki" or "knowledge base" wins in reader reactions.
 
-## pyproject description candidates (one line, PyPI)
+## Decision (2026-06-12)
+
+Adopted option 2: **"The theory of LLM wikis, running as one. A framework for agent-operated knowledge: typed, linked, review-gated markdown your agents execute."** The "LLM wiki" ambiguity is accepted: [Karpathy's gist](../../sources/karpathy-llm-wiki.md) made it a current term with the agent-operated reading attached, so the term now buys recognition rather than confusion.
+
+Rejected candidates, kept for reuse in other surfaces:
 
 1. "A framework for wikis that AI agents write, link, review, and run — self-hosting: its theory of LLM-operated wikis ships as one, running."
-2. "The theory of LLM wikis, running as one. A framework for agent-operated knowledge: typed, linked, review-gated markdown your agents execute." *(current favorite — boldest sentence first; the ambiguity lasts one clause)*
-3. "Executable knowledge for AI agents: a wiki framework whose own theory runs as the wiki it describes — prose agents execute, gates that review it, git that audits it."
+2. "Executable knowledge for AI agents: a wiki framework whose own theory runs as the wiki it describes — prose agents execute, gates that review it, git that audits it."
 
-## Propagation once wording settles
+## Propagation
 
-- `pyproject.toml` `description` (none exists yet)
-- README opening paragraph (currently leads with "a knowledge base about building agentic systems"; the self-hosting sentence is buried in clause two)
-- [the-knowledge-layer-for-ai-agents](./the-knowledge-layer-for-ai-agents.md) pitch draft — RAG strawman replacement, per [gbrain-is-the-category-sibling](./gbrain-is-the-category-sibling.md)
-- GitHub repo description/topics
+- [x] `pyproject.toml` `description` + `llm-wiki` keyword (2026-06-12)
+- [x] README opening — leads with the flagship line, cites Karpathy for the term, explains self-hosting in the compiler sense (2026-06-12)
+- [ ] [the-knowledge-layer-for-ai-agents](./the-knowledge-layer-for-ai-agents.md) pitch draft — RAG strawman replacement, per [gbrain-is-the-category-sibling](./gbrain-is-the-category-sibling.md)
+- [ ] GitHub repo description/topics

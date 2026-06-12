@@ -1,6 +1,7 @@
 [project]
 name = "llm-commonplace"
 version = "0.1.0"
+description = "The theory of LLM wikis, running as one. A framework for agent-operated knowledge: typed, linked, review-gated markdown your agents execute."
 readme = "README.md"
 requires-python = ">=3.11"
 license = "MIT AND CC-BY-4.0"
@@ -8,7 +9,7 @@ license-files = ["LICENSE*"]
 authors = [
     { name = "Zbigniew Lukasiak", email = "zzbbyy@gmail.com" },
 ]
-keywords = ["agents", "context-engineering", "knowledge-base", "llm", "markdown"]
+keywords = ["agents", "context-engineering", "knowledge-base", "llm", "llm-wiki", "markdown"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
