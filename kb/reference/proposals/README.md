@@ -13,3 +13,7 @@ Finished but unadopted designs for the Commonplace system. A proposal describes 
 ## Lifecycle
 
 Workshop (`kb/work/`, active exploration, closes) → proposal here (finished, undecided, waits) → ADR (decided and implemented) — or retirement, when a later decision forecloses it.
+
+**Partial adoption moves content out.** When part of a proposal ships, remove it from the proposal: the shipped behavior is described in reference docs and recorded in an ADR, and the proposal keeps only what remains undecided (noting the adoption in its current-state anchor). A proposal that silently retains shipped content has become a false description.
+
+Decision record: [ADR 028](../adr/028-design-proposals-live-in-reference-proposals.md).
