@@ -1,0 +1,105 @@
+{
+  "source": "https://x.com/ChristopherA/status/2065234780497883259",
+  "captured": "2026-06-12T12:17:46.079283+00:00",
+  "family": "x-article",
+  "status_id": "2065234780497883259",
+  "conversation_id": "2065234780497883259",
+  "target_post": {
+    "created_at": "2026-06-12T00:48:36.000Z",
+    "article": {
+      "preview_text": "Fable follows short, principle-level instructions so reliably that the elaborate scaffolding I'd built to keep earlier models on track \u2014 checklists, compliance scripts, sync layers \u2014 became dead",
+      "plain_text": "Fable follows short, principle-level instructions so reliably that the elaborate scaffolding I'd built to keep earlier models on track \u2014 checklists, compliance scripts, sync layers \u2014 became dead weight almost overnight. But one problem got more acute with stronger autonomy, not less: sessions still forget.\nEvery Claude Code session ends mortal. Clear the context, hit auto-compaction, close the laptop, switch machines \u2014 and everything the session knew about your project's goals, decisions, and loose ends is gone. So today I'm releasing claude-workstream-kit, a small open-source system that gives any Claude Code project durable, git-versioned work tracking, designed Fable-first. It's what survived when I rebuilt a much larger private system for the new model \u2014 and the throwing away turned out to be the interesting part.\nThe reconstruction tax\nAI coding sessions are ephemeral by design. The work isn't. A feature lands across a week of sessions. A migration takes a dozen. A research question evolves for a month.\nWhen the work's state lives only in conversation history, every new session pays what I've come to call the reconstruction tax: re-explaining the goal, re-discovering what was decided and why. The visible cost is time and tokens. The quieter cost is drift \u2014 a decision made carefully in session three gets remade differently in session nine, because nothing recorded the original reasoning.\nEveryone who uses these tools seriously has felt this. The common workarounds each cover a slice:\nA growing CLAUDE.md survives sessions \u2014 but it's loaded into every future session forever, and nothing in it ever closes. It becomes a junk drawer.\nThe harness's built-in task tracking and plan mode are good within a session, but their state isn't in your repository and doesn't travel.\nAgent memory is for lessons and preferences \u2014 account-side, per-fact. It's not a ledger of a project's work.\nGitHub Issues and PRs are the right answer for teams \u2014 but their state lives service-side, needs network and auth, and fits code delivery, not exploration.\nA SPEC.md in the repo survives and travels \u2014 but has no resume pointer, no record of decided-versus-open, no definition of done.\nWhat none of these provide: work state that is project-scoped, git-versioned, and portable \u2014 surviving everything the harness can do, and traveling with the repo like tests or docs.\nWorkstreams: two files in git\nThe kit's answer is deliberately small. A workstream is a unit of multi-session work tracked in two markdown files committed to your repo:\nworkstream.md \u2014 everything durable about one piece of work: purpose, a checkbox backlog, decisions with their reasoning, lessons learned, and \u2014 this part matters \u2014 falsifiable deletion criteria written at creation: the conditions under which this work is done and can be archived.\nACTIVE.md \u2014 a per-project pointer: what's active, the current task, the single next action, what's blocked.\nGit does the heavy lifting. Clone the repo and the entire work state moves with it. The commit history is the progress journal. And because the files are flat frontmatter plus checkboxes, a shell one-liner \u2014 or a cheap small model \u2014 can read project status without any parsing machinery. That last property is what makes delegation and autonomous verification practical.\nAround the two files:\nfour short lifecycle skills (create, work, close, handoff),\nthree pinned subagents (a read-only Haiku scout, a Sonnet worker that takes bounded packets, a fresh-context verifier),\na session-start hook that surfaces your state and flags staleness,\nand an idempotent installer.\nZero dependency on user-level configuration. Copy it into a project and it works.\nWhat building it taught me\nTwo findings reshaped the design when I rebuilt for Fable.\nStrong models need less scaffolding, not more. My predecessor system had multi-phase checklists, compliance scripts that verified the model actually did the steps, sync layers to propagate rule updates. Most of that mass existed to manage the model, not the work. Fable-class models invert those economics: they follow principle-level instructions reliably \u2014 and over-prescription actively degrades their output. Every skill in this kit is about a hundred lines. The compliance machinery is replaced by one rule: a checkbox closes only with cited evidence \u2014 a commit hash, a command's output \u2014 that a human can check at the gate.\nThis was validated directly, and here's the part I find genuinely remarkable: the kit was designed, built, and tested largely by an autonomous Fable session operating under the very conventions the kit ships. In the acceptance tests, fully autonomous sessions ran the entire lifecycle and honored every human-authority constraint \u2014 no auto-starting work, no auto-passing checkpoints, no self-certifying its own closure \u2014 from the skill text alone. No enforcement code.\nWork should end well. Most tracking handles starting and doing; almost nothing handles ending. Unclosed work is where knowledge dies. So closure is a first-class phase here: per-criterion evidence presented to a human who decides, lessons that must reach a named destination outside the workstream before archive, and an archive that's a git tag plus one index line \u2014 recoverable, searchable, and no longer taking up space in anyone's context window.\nTry it\nThe kit is small on purpose, and it commits to staying that way: no sync layer, no rule tiers, no machinery duplicating what the platform already does. Everything in it had to clear one bar \u2014 does this produce an artifact or a human decision that nothing native already produces?\ngit clone https://github.com/ChristopherA/claude-workstream-kit ./claude-workstream-kit/install.sh /path/to/your/project\nBSD-2-Clause-Patent licensed. The full design rationale \u2014 including what each alternative is genuinely good at \u2014 is in the repo's docs. If you run multi-session work through Claude Code, I'd like to hear what survives your compactions.",
+      "cover_media": "3_2065234488389709824",
+      "entities": {
+        "urls": [
+          {
+            "text": "https://github.com/ChristopherA/claude-workstream-kit"
+          },
+          {
+            "text": "https://github.com/ChristopherA/claude-workstream-kit"
+          }
+        ]
+      },
+      "title": "Claude Fable 5 Made Most of My Agent Scaffolding Obsolete. Here's What Survived."
+    },
+    "text": "https://t.co/06n01eong2",
+    "conversation_id": "2065234780497883259",
+    "edit_history_tweet_ids": [
+      "2065234780497883259"
+    ],
+    "id": "2065234780497883259",
+    "author_id": "594103",
+    "entities": {
+      "urls": [
+        {
+          "start": 0,
+          "end": 23,
+          "url": "https://t.co/06n01eong2",
+          "expanded_url": "http://x.com/i/article/1780641040757854209",
+          "display_url": "x.com/i/article/1780\u2026",
+          "status": 500,
+          "unwound_url": "https://x.com/i/article/1780641040757854209"
+        }
+      ]
+    }
+  },
+  "posts": [
+    {
+      "article": {
+        "entities": {
+          "urls": [
+            {
+              "text": "https://github.com/ChristopherA/claude-workstream-kit"
+            },
+            {
+              "text": "https://github.com/ChristopherA/claude-workstream-kit"
+            }
+          ]
+        },
+        "cover_media": "3_2065234488389709824",
+        "plain_text": "Fable follows short, principle-level instructions so reliably that the elaborate scaffolding I'd built to keep earlier models on track \u2014 checklists, compliance scripts, sync layers \u2014 became dead weight almost overnight. But one problem got more acute with stronger autonomy, not less: sessions still forget.\nEvery Claude Code session ends mortal. Clear the context, hit auto-compaction, close the laptop, switch machines \u2014 and everything the session knew about your project's goals, decisions, and loose ends is gone. So today I'm releasing claude-workstream-kit, a small open-source system that gives any Claude Code project durable, git-versioned work tracking, designed Fable-first. It's what survived when I rebuilt a much larger private system for the new model \u2014 and the throwing away turned out to be the interesting part.\nThe reconstruction tax\nAI coding sessions are ephemeral by design. The work isn't. A feature lands across a week of sessions. A migration takes a dozen. A research question evolves for a month.\nWhen the work's state lives only in conversation history, every new session pays what I've come to call the reconstruction tax: re-explaining the goal, re-discovering what was decided and why. The visible cost is time and tokens. The quieter cost is drift \u2014 a decision made carefully in session three gets remade differently in session nine, because nothing recorded the original reasoning.\nEveryone who uses these tools seriously has felt this. The common workarounds each cover a slice:\nA growing CLAUDE.md survives sessions \u2014 but it's loaded into every future session forever, and nothing in it ever closes. It becomes a junk drawer.\nThe harness's built-in task tracking and plan mode are good within a session, but their state isn't in your repository and doesn't travel.\nAgent memory is for lessons and preferences \u2014 account-side, per-fact. It's not a ledger of a project's work.\nGitHub Issues and PRs are the right answer for teams \u2014 but their state lives service-side, needs network and auth, and fits code delivery, not exploration.\nA SPEC.md in the repo survives and travels \u2014 but has no resume pointer, no record of decided-versus-open, no definition of done.\nWhat none of these provide: work state that is project-scoped, git-versioned, and portable \u2014 surviving everything the harness can do, and traveling with the repo like tests or docs.\nWorkstreams: two files in git\nThe kit's answer is deliberately small. A workstream is a unit of multi-session work tracked in two markdown files committed to your repo:\nworkstream.md \u2014 everything durable about one piece of work: purpose, a checkbox backlog, decisions with their reasoning, lessons learned, and \u2014 this part matters \u2014 falsifiable deletion criteria written at creation: the conditions under which this work is done and can be archived.\nACTIVE.md \u2014 a per-project pointer: what's active, the current task, the single next action, what's blocked.\nGit does the heavy lifting. Clone the repo and the entire work state moves with it. The commit history is the progress journal. And because the files are flat frontmatter plus checkboxes, a shell one-liner \u2014 or a cheap small model \u2014 can read project status without any parsing machinery. That last property is what makes delegation and autonomous verification practical.\nAround the two files:\nfour short lifecycle skills (create, work, close, handoff),\nthree pinned subagents (a read-only Haiku scout, a Sonnet worker that takes bounded packets, a fresh-context verifier),\na session-start hook that surfaces your state and flags staleness,\nand an idempotent installer.\nZero dependency on user-level configuration. Copy it into a project and it works.\nWhat building it taught me\nTwo findings reshaped the design when I rebuilt for Fable.\nStrong models need less scaffolding, not more. My predecessor system had multi-phase checklists, compliance scripts that verified the model actually did the steps, sync layers to propagate rule updates. Most of that mass existed to manage the model, not the work. Fable-class models invert those economics: they follow principle-level instructions reliably \u2014 and over-prescription actively degrades their output. Every skill in this kit is about a hundred lines. The compliance machinery is replaced by one rule: a checkbox closes only with cited evidence \u2014 a commit hash, a command's output \u2014 that a human can check at the gate.\nThis was validated directly, and here's the part I find genuinely remarkable: the kit was designed, built, and tested largely by an autonomous Fable session operating under the very conventions the kit ships. In the acceptance tests, fully autonomous sessions ran the entire lifecycle and honored every human-authority constraint \u2014 no auto-starting work, no auto-passing checkpoints, no self-certifying its own closure \u2014 from the skill text alone. No enforcement code.\nWork should end well. Most tracking handles starting and doing; almost nothing handles ending. Unclosed work is where knowledge dies. So closure is a first-class phase here: per-criterion evidence presented to a human who decides, lessons that must reach a named destination outside the workstream before archive, and an archive that's a git tag plus one index line \u2014 recoverable, searchable, and no longer taking up space in anyone's context window.\nTry it\nThe kit is small on purpose, and it commits to staying that way: no sync layer, no rule tiers, no machinery duplicating what the platform already does. Everything in it had to clear one bar \u2014 does this produce an artifact or a human decision that nothing native already produces?\ngit clone https://github.com/ChristopherA/claude-workstream-kit ./claude-workstream-kit/install.sh /path/to/your/project\nBSD-2-Clause-Patent licensed. The full design rationale \u2014 including what each alternative is genuinely good at \u2014 is in the repo's docs. If you run multi-session work through Claude Code, I'd like to hear what survives your compactions.",
+        "preview_text": "Fable follows short, principle-level instructions so reliably that the elaborate scaffolding I'd built to keep earlier models on track \u2014 checklists, compliance scripts, sync layers \u2014 became dead",
+        "title": "Claude Fable 5 Made Most of My Agent Scaffolding Obsolete. Here's What Survived."
+      },
+      "entities": {
+        "urls": [
+          {
+            "start": 0,
+            "end": 23,
+            "url": "https://t.co/06n01eong2",
+            "expanded_url": "http://x.com/i/article/1780641040757854209",
+            "display_url": "x.com/i/article/1780\u2026",
+            "status": 500,
+            "unwound_url": "https://x.com/i/article/1780641040757854209"
+          }
+        ]
+      },
+      "conversation_id": "2065234780497883259",
+      "text": "https://t.co/06n01eong2",
+      "created_at": "2026-06-12T00:48:36.000Z",
+      "author_id": "594103",
+      "edit_history_tweet_ids": [
+        "2065234780497883259"
+      ],
+      "id": "2065234780497883259"
+    }
+  ],
+  "users": {
+    "594103": {
+      "id": "594103",
+      "name": "Christopher Allen",
+      "username": "ChristopherA"
+    },
+    "172662132": {
+      "id": "172662132",
+      "name": "Ralf Kronen",
+      "username": "RKronen"
+    },
+    "2045193989528158208": {
+      "id": "2045193989528158208",
+      "name": "Nicholas Blanchard",
+      "username": "corelumen"
+    }
+  },
+  "thread_fetch_error": null
+}

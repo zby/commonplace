@@ -1,0 +1,686 @@
+{
+  "source": "https://x.com/BrainsAndTennis/status/2065190286519906657",
+  "captured": "2026-06-12T10:11:23.632350+00:00",
+  "family": "x-article",
+  "status_id": "2065190286519906657",
+  "conversation_id": "2065190286519906657",
+  "target_post": {
+    "created_at": "2026-06-11T21:51:48.000Z",
+    "article": {
+      "plain_text": "How do you build an agent that actually wins in a domain \u2014 one customers pick because it's better?\nThe basics of an agent have been standardized over the past year: it's a while-loop around a model that calls tools until the task is done. Give it a filesystem, a shell, and let it do most things through that. You can write it in an afternoon, and most people have. Everyone can build an agent \u2014 it really isn't that hard, and, as I'll spell out, it isn't that deep either. What separates a good one from a toy isn't cleverness; it's a real understanding of your domain and the patience to do some tedious, careful work in the few places that matter.\nI've spent almost a year now building the Shortcut agent, which is widely considered the most accurate spreadsheet agent around \u2014 it's deployed inside three of the largest five multi-strategy hedge funds, where being wrong is expensive and nobody grades on a curve. We don't have Microsoft's or Anthropic's distribution. What we have is that the agent is right more often, and in this domain that has been the single most compelling reason customers pick us. So agent performance is the question I think about all day.\nAnd here's the gap I keep running into: plenty is written about building agents, but few about building smart ones. Look at how much the field varies on something as basic as tool count \u2014 Codex and Claude Code ship ~30 tools each; Pi ships 7. When popular agents disagree 4x on the most basic design question, it's a tell: there's no agreed-on principle. So I'm sharing mine, from a year of building one, to demystify the process for anyone building their own.\nHere it is: a smart agent is a compression of its task distribution. The rest of this is just what that means, and what it forces you to build.\nIt all comes down to context compression\nAssume you don't own the environment and you didn't train the model. Then three things are yours to design \u2014 the system prompt, the tools, and the artifacts (skills, curated docs, references) \u2014 and they're all the same thing: the agent's context.\nSo the game is simple to state. With the model fixed, accuracy is a function of context quality: bloated context buries the signal, missing context forces guessing, and both cost you accuracy. And accuracy is what you're selling \u2014 the relationship isn't linear, a task at 99% instead of 95% is generally more than the 5x in error reduction.\nBut your users don't bring you a uniform distribution of problems to solve. They bring you a long tail:\n \nThe agent has to handle all of it. But it cannot hold the union of everything in context at once \u2014 that's the bloated-prompt failure mode. So the real objective is sharper than \"have everything available\": minimize the context spent per task, averaged over the task distribution.\nThis is exactly the problem a CPU faces. A program might touch gigabytes of data, but the storage right next to the processor is tiny \u2014 so computers stack memory in tiers: a small, instant cache (L1), bigger-and-slower ones below it (L2, L3), then main memory and disk. It works because access is long-tailed too: keep the hot set in the fast tier, reach down to the slow tiers only for the rare stuff. A \"cache miss\" is when what you need isn't in the fast tier and you pay to fetch it from a slower one \u2014 exactly the cost you're avoiding on the common path.\nAgents have the same shape, so borrow the same structure. Build your context as L1 / L2 / L3.\n \nAnd here is the law that governs every decision inside this hierarchy: almost every optimization trades compression of information against speed of discovery.\nPut something in L1 and it's instant, but it costs prompt tokens on every single task whether it's used or not. Push it to L3 and it costs nothing until needed \u2014 but then it costs several tool calls to find. Your job is to place each capability at the tier that minimizes total cost across the distribution. That's the whole craft. Let me make it concrete with the domain I know best.\nAside: one tool, not thirty\nBefore the hierarchy, the substrate. Every spreadsheet capability I'm about to describe \u2014 every read, every write, every curated lookup \u2014 is code executed under a single tool.\n \nThe agent writes code; the code calls our functions; the functions touch the sheet. There is no read_range tool, no write_range tool, no make_chart tool. There is one tool, and the API lives inside the code.\nWhy? Because model accuracy degrades as you add tools. That's been consistent in our own experiments, and the effect was larger than I'd assumed going in. Every tool you add is more schema in the prompt, more surface to confuse, more ways to pick the wrong one, especially if the tools occupy overlapping responsibilities. A single execute_code tool collapses all of that into one decision \u2014 write code \u2014 and lets the model compose capabilities with the full expressive power of a programming language or DSL instead of stitching together rigid tool calls (More on this in a future post.)\nThis matters for the hierarchy because it means all three cache tiers are reachable from the same place: the model is always writing code, and L1/L2/L3 are just which functions it knows it can call, and how much work it had to do to find them.\nL1 \u2014 the bread and butter: reading and writing cells\nThis is the 80%. If reading and writing cell ranges isn't excellent, nothing else matters. So this is where we've spent absurd, disproportionate effort. Look at what a single getCellRange actually does.\nReading a range is an act of compression\nA naive range read returns a grid of values. Ours returns a compressed, semantically enriched snapshot designed to maximize signal per token. \nReading a 200-row revenue table where the last column is Units \u00d7 Price:\n \nThree things are happening.\nFirst, formula aliasing. A 500-row column of =A2*B2, =A3*B3, \u2026 is 500 near-identical formulas. We normalize each formula to R1C1 form \u2014 so =A2*B2 and =A3*B3 both become =RC[-2]*RC[-1] \u2014 count the patterns, and any pattern that appears more than ten times collapses to a short alias like F1. The model sees F1 repeated plus one legend line, instead of 500 formulas. Big token savings, zero information loss.\nSecond, free row and column context. When you read C5:E20, what do those bare numbers mean? We scan leftward for the row labels and upward for the header row (picking the header by voting on which nearby row has the most text cells) and attach them, so the model gets Region | Q1 | Q2 and North America | \u2026 for free and never has to guess what a grid of numbers represents.\nThird, style compression. Formatting is information too \u2014 a bold red cell with a 0.00% number format is telling you something \u2014 but listing the full style of every cell would swamp the values. So we group cells by identical style, collapse each group to its connected range, and print one line per group: the range, the cell count, and a compact description. Repeated formatting costs one line no matter how many cells share it, capped at the ten most common styles.\nEvery cell is address:value, with its formula appended in parentheses (aliased to (F1) here). Six hundred formulas became one legend line. Four hundred styled cells became two lines. And the header row the model never explicitly asked for is right there at the bottom. That's the whole table, losslessly, in a fraction of the tokens a raw dump would cost.\nEvery one of these is the compression-vs-discovery tradeoff, won decisively for the common case.\nWriting cells: tell the model what it actually changed, and what looks wrong\nWriting is harder than it looks, because a single execute_code call can change hundreds of cells, and the agent needs to know what happened without re-reading the whole sheet. So after the code runs, we hand back a structured diff of every cell that changed \u2014 and, just as importantly, we compress and triage it.\nHere's a real write and the feedback it produces. The code:\n \nThe diff that comes back:\n \nTwo kinds of compression are doing the work here.\nFirst, the diff is grouped and sampled, not dumped. Changed cells are grouped by sheet and row, each row shown as a column range with a count (Row 2 (D): 1 cells), and only a deterministic sample of cells per row and rows per section is printed, with \"\u2026 and N more\" tallies for the rest. Two hundred writes don't become two hundred lines; they become a handful, and the agent still knows the totals.\nSecond, and more useful, the diff is categorized. It doesn't just report what changed \u2014 it triages each change. Clean writes land under \"Changed without issues.\" Anything that looks suspicious \u2014 an invalid formula like #REF!, an untagged hardcoded number, a hardcoded number buried inside a formula, an implausibly large percentage \u2014 gets pulled into a \"Cells that need review\" section, and the worst offenders are flagged MUST FIX. That #REF! in row 57 would be trivial to miss in a wall of two hundred green diffs; here it's surfaced at the top with a label. The feedback loop isn't \"here's what changed,\" it's \"here's what changed, and here's the part you probably got wrong\" \u2014 a built-in linter on the agent's own edits.\nL1 in one line: the operations on the steep part of the curve get feature-engineered, token-compressed, consequence-reporting wrappers that live in the prompt forever. They're expensive to build, and you build them anyway, because the agent pays the cost on every task.\nL2 \u2014 curated English, on demand\nYou cannot put everything in L1. Conditional formatting, pivot tables, charts, data validation, copy/move semantics \u2014 each is important, each shows up a few times a session, and each has enough surface that documenting it in the system prompt would bloat every task that doesn't use it. Classic L2.\nSo we wrote curated capability specs in English, fetched on demand. The model calls, from inside its code:\n \nThese aren't dumps of type signatures. They're hand-written prose \u2014 a few hundred lines each \u2014 that describe the canonical way to accomplish the task, including the knowledge the raw API will never give you. Take the pivot-table spec. It doesn't just list methods; it teaches the whole recipe, in the right order:\n \nand it bakes in the things you would otherwise learn only by failing repeatedly: that you must suspendLayout()/resumeLayout() around a batch of changes or the table rebuilds on every call; that a value field's aggregation has to be passed as a raw integer (8 for sum) because the friendly enum doesn't exist at runtime. None of that is a quirky footgun \u2014 it's the actual shape of doing pivots correctly, written down once by someone who already paid for it.\nThat's institutional knowledge encoded as a cache line. A raw API reference would give you the method names and leave you to discover the ordering and the runtime gaps yourself. A curated spec hands you the working pattern. The model reads ~1,000 tokens, gets the canonical recipe and the constraints, and writes correct code on the first try.\nThe key property: this costs zero tokens until the task needs it. A task that never touches pivots never pays for the pivot docs. One console.log is the entire discovery cost \u2014 a single cache miss, served fast.\nThe same idea, for executable tools\nL2 isn't only for docs. We apply the identical pattern to deferred tools \u2014 web_search, web_crawl, create_website, etc. Their schemas don't sit in the prompt. Instead there's a meta-tool wall:\n \nThe set of fetched tools is, literally, a session-scoped cache. The model loads a schema once, and from then on it's resident. Same compression-vs-discovery tradeoff, same resolution: keep the prompt small, pay a one-step miss when you actually need the capability. This is the same idea as deferred tools on Claude but we're not locked to one vendor's tool-loading feature to get the behavior.\nL3 \u2014 the raw tome, and the skill that maps it\nThen there's the long tail: the one obscure thing we never wrapped and never wrote a spec for. You can't anticipate it \u2014 by definition. But the agent still has to be able to get there, or it hits a wall and fails the task. Concretely, this is where requests like these end up:\n\"Add a sparkline to each row summarizing its trend\" \u2014 sparklines are a real but rarely-touched API surface.\n\"Set the chart's secondary axis to log scale and recolor just the third series\" \u2014 a chart property three levels deep that no curated spec bothered to cover.\n\"Insert a hyperlink from this cell to that named range, and group these shapes\" \u2014 drawing/shape/hyperlink corners nobody asked about until now.\nSo L3 is the complete raw API \u2014 the entire Office.js surface (Excel plugin) or the entire SpreadJS surface (Shortcut web), dumped to disk. It's a machine-generated reference that is 70k lines long. It contains everything. It's also completely unusable as prompt context \u2014 you'd never paste it in.\nThe trick: you give it a skill \u2014 a short map that teaches it how to mine the tome with bash:\n \nThe skill is ~100 lines. It says: here's the structure, here's how each method and type entry is shaped, here's the grep recipe for each kind of question. With it, the agent goes from \"tens of thousands of lines I can't read\" to \"the 3-6 greps that surface exactly the signature I need.\" That's the L3 access cost \u2014 real, but bounded, and only paid by the rare task that reaches this deep.\nAnd the system prompt makes the escape hatch explicit, so the model knows the path exists and when to take it:\nAPI HIERARCHY \u2014 There are 2 levels of API capability. Wrapped API: convenience functions; some listed directly, others via getAPIInfo(...). NEVER guess \u2014 read the docs in FULL. Raw API: use when the wrapped API doesn't cover your need\u2026 If the wrapped API can't do it, use the raw API \u2014 don't compromise.\nThat last clause is the whole point of L3. The agent should never be stuck. It can miss in L1, drop to L2, and if even the curated spec is silent, descend into the raw tome and still come out with the answer in a sane number of calls.\nHow the prompt budget actually splits\nIt's worth looking at where the tokens go, because the hierarchy shows up directly in the system prompt's shape.\nThe bulk of the prompt is L1 \u2014 on the order of a few hundred lines. Core read/write operations, the execute_code contract, the key types and the handful of methods the agent uses on essentially every task, plus the execution and safety guidelines. This is the part that's resident on every single call, so it's also the part we fight hardest to keep tight.\nL2 is a thin slice on top \u2014 roughly 50 lines. It isn't the specs themselves; it's a curated allowlist of the \"blessed\" methods and the pointers that tell the agent the getXInfo(...) specs exist and when to reach for them. The specs' actual content stays out of the prompt until a console.log pulls it in.\nL3 is essentially 5 lines, the name and description of the skill.md, and other references scattered elsewhere. The raw reference \u2014 70k lines \u2014 lives entirely on disk and never touches the prompt. All that's resident is the short skill file and the one line in the API-hierarchy section pointing at it.\nSo the budget mirrors the frequency curve: most of the prompt is spent on the 80% case, a little on signposting the 15%, and almost nothing on the long tail \u2014 which is exactly the allocation the cache-hierarchy framing predicts.\nThe recipe, ported to your domain\nSpreadsheets are just my example. The structure transfers to any domain. The compression in those system prompts and curated specs is really an encoding of the distribution of your users and the tasks they do \u2014 and you, in your domain, understand that distribution better than anyone. So your job is three questions:\n1. What do you wrap into L1? The bread-and-butter operations on the steep part of the frequency curve. Make them brutally token-efficient and fast, and make them report consequences. Spend disproportionate effort here \u2014 the agent pays this cost on every task.\n2. What do you defer to L2? The important-but-occasional capabilities. Write them as curated, English, gotcha-aware specs reachable in one discovery step. Encode the canonical recipe and the constraints, not just the signatures.\n3. What is your escape hatch (L3)? The raw, complete substrate \u2014 plus a skill that teaches the agent to mine it. It doesn't have to be ergonomic. It has to be reachable, complete, and findable in a bounded number of steps. The agent must be able to \u2014 and will \u2014 eventually find the right information.\nGet those three placements right and you've built an agent that is fast on the common case, capable on the occasional one, and never truly stuck on the rare one \u2014 all while keeping context small enough that the model stays sharp.\nThe hierarchy doesn't disappear \u2014 it moves\nOne closing observation. What counts as L1 is not fixed; it drifts with model strength.\nEarly, weak models needed tiny, single-purpose tools and everything spelled out. Today's models can absorb a larger L2 spec in one shot and reason over more raw L3 detail without choking. So as models improve, yesterday's L3 becomes tomorrow's L2, and yesterday's L2 collapses into L1. The agent's responsibility expands outward; the tiers slide down a level.\nBut the hierarchy itself never goes away \u2014 because context will always be scarce relative to everything you could put in it, and noise will always cost you accuracy. There is no model so large that \"put the right thing in front of it at the right time\" stops mattering.\nBigger context windows tempt people to paste in more. The better instinct is the one CPUs settled on decades ago: summaries in cache, details on demand, the raw substrate as the last resort. Build your agent's context like a memory hierarchy, and accuracy follows.",
+      "cover_media": "3_2065190239384264704",
+      "entities": {
+        "code": [
+          {
+            "language": "typescript",
+            "code": "get_tool_info(\"web_search\")   \u2192 returns the schema, marks it \"fetched\"\nexecute_tool(\"web_search\", \u2026) \u2192 REFUSES unless you fetched it first",
+            "content": "```typescript\nget_tool_info(\"web_search\")   \u2192 returns the schema, marks it \"fetched\"\nexecute_tool(\"web_search\", \u2026) \u2192 REFUSES unless you fetched it first\n```"
+          },
+          {
+            "language": "typescript",
+            "code": "async function execute() {\n  const rows = await sheet.getCellRange(\"Sheet1!A2:C201\");\n  for (let i = 0; i < rows.length; i++) {\n    const r = i + 2;\n    await sheet.setCell(`D${r}`, `=B${r}*C${r}`);\n  }\n}",
+            "content": "```typescript\nasync function execute() {\n  const rows = await sheet.getCellRange(\"Sheet1!A2:C201\");\n  for (let i = 0; i < rows.length; i++) {\n    const r = i + 2;\n    await sheet.setCell(`D${r}`, `=B${r}*C${r}`);\n  }\n}\n```"
+          },
+          {
+            "language": "markdown",
+            "code": "--- CELL DIFF SUMMARY ---\n(Formatted display values shown. \u2205 = undefined/empty.)\n\n  Changed without issues: 199 total cells\n    Sheet1!Row 2 (D): 1 cells\n      \u2192 D2: \u2205 -> 11,988 [=B2*C2]\n    Sheet1!Row 3 (D): 1 cells\n      \u2192 D3: \u2205 -> 8,391.6 [=B3*C3]\n    ... (sampled rows) ...\n    Sheet1!Row 201 (D): 1 cells\n      \u2192 D201: \u2205 -> 4,995 [=B201*C201]\n    ... and 189 more rows\n\n  Cells that need review:\n    MUST FIX: INVALID_FORMULA: 1 total cells\n      Sheet1!Row 57 (D): 1 cells\n        \u2192 D57: \u2205 -> #REF! [=B57*C57]",
+            "content": "```markdown\n--- CELL DIFF SUMMARY ---\n(Formatted display values shown. \u2205 = undefined/empty.)\n\n  Changed without issues: 199 total cells\n    Sheet1!Row 2 (D): 1 cells\n      \u2192 D2: \u2205 -> 11,988 [=B2*C2]\n    Sheet1!Row 3 (D): 1 cells\n      \u2192 D3: \u2205 -> 8,391.6 [=B3*C3]\n    ... (sampled rows) ...\n    Sheet1!Row 201 (D): 1 cells\n      \u2192 D201: \u2205 -> 4,995 [=B201*C201]\n    ... and 189 more rows\n\n  Cells that need review:\n    MUST FIX: INVALID_FORMULA: 1 total cells\n      Sheet1!Row 57 (D): 1 cells\n        \u2192 D57: \u2205 -> #REF! [=B57*C57]\n```"
+          },
+          {
+            "language": "bash",
+            "code": "# from the advanced-api SKILL.md \u2014 the recommended workflow\ngrep -n '\"charts.add\"' api-reference.json -A 5 # find a method\ngrep -n '\"pivots\\.' api-reference.json | head # list a namespace\ngrep -n '\"ChartConfig\"' api-reference.json -A 10 # resolve a type\ngrep -n '\"isEnum\": true' api-reference.json -B2 -A10 # enumerate enums",
+            "content": "```bash\n# from the advanced-api SKILL.md \u2014 the recommended workflow\ngrep -n '\"charts.add\"' api-reference.json -A 5 # find a method\ngrep -n '\"pivots\\.' api-reference.json | head # list a namespace\ngrep -n '\"ChartConfig\"' api-reference.json -A 10 # resolve a type\ngrep -n '\"isEnum\": true' api-reference.json -B2 -A10 # enumerate enums\n```"
+          },
+          {
+            "language": "typescript",
+            "code": "console.log(general.getConditionalFormattingInfo());\nconsole.log(general.getPivotTableInfo());\nconsole.log(general.getChartInfo());\nconsole.log(general.getDataValidationInfo());\nconsole.log(general.getAPIInfo(\"addSpanAt\"));   // any single function, by name",
+            "content": "```typescript\nconsole.log(general.getConditionalFormattingInfo());\nconsole.log(general.getPivotTableInfo());\nconsole.log(general.getChartInfo());\nconsole.log(general.getDataValidationInfo());\nconsole.log(general.getAPIInfo(\"addSpanAt\"));   // any single function, by name\n```"
+          },
+          {
+            "language": "markdown",
+            "code": "+---------------------------------------------+\n  L1   |  ALWAYS RESIDENT - tiny, instant.           |\n       |  The 80%. Lives in the system prompt.       |\n       +---------------------------------------------+\n                  |  miss -> one cheap call\n                  v\n       +---------------------------------------------+\n  L2   |  ON DEMAND - curated English specs.         |\n       |  The next ~15%. One discovery step to load. |\n       +---------------------------------------------+\n                  |  miss -> read the skill, then search\n                  v\n       +---------------------------------------------+\n  L3   |  ESCAPE HATCH - the raw API tome.           |\n       |  The long tail. 3-6 grep calls to mine.     |\n       +---------------------------------------------+",
+            "content": "```markdown\n       +---------------------------------------------+\n  L1   |  ALWAYS RESIDENT - tiny, instant.           |\n       |  The 80%. Lives in the system prompt.       |\n       +---------------------------------------------+\n                  |  miss -> one cheap call\n                  v\n       +---------------------------------------------+\n  L2   |  ON DEMAND - curated English specs.         |\n       |  The next ~15%. One discovery step to load. |\n       +---------------------------------------------+\n                  |  miss -> read the skill, then search\n                  v\n       +---------------------------------------------+\n  L3   |  ESCAPE HATCH - the raw API tome.           |\n       |  The long tail. 3-6 grep calls to mine.     |\n       +---------------------------------------------+\n```"
+          },
+          {
+            "language": "markdown",
+            "code": "how often\n     |\n     | \u2588\u2588\u2588\u2588\n     | \u2588\u2588\u2588\u2588\n     | \u2588\u2588\u2588\u2588\n     | \u2588\u2588\u2588\u2588\n     | \u2588\u2588\u2588\u2588\n     | \u2588\u2588\u2588\u2588\n     | \u2588\u2588\u2588\u2588\n     | \u2588\u2588\u2588\u2588\n     | \u2588\u2588\u2588\u2588\n     | \u2588\u2588\u2588\u2588 \u2593\u2593\u2593\u2593\n     | \u2588\u2588\u2588\u2588 \u2593\u2593\u2593\u2593 \u2591\u2591\u2591\u2591 \u2591\u2591\u2591\u2591 \u2591\u2591\u2591\u2591 \u2591\u2591\u2591\u2591 \u2591\u2591\u2591\u2591 \u2591\u2591\u2591\u2591 \u2591\u2591\u2591\u2591\n     +----------------------------------------------------> task variety\n\n   \u2588\u2588\u2588\u2588  bread-and-butter        the bulk of every session\n   \u2593\u2593\u2593\u2593  crucial-but-occasional  a handful of times a session\n   \u2591\u2591\u2591\u2591  the long tail           each one rare \u2014 but there are many,\n                                 and each still has to work",
+            "content": "```markdown\n  how often\n     |\n     | \u2588\u2588\u2588\u2588\n     | \u2588\u2588\u2588\u2588\n     | \u2588\u2588\u2588\u2588\n     | \u2588\u2588\u2588\u2588\n     | \u2588\u2588\u2588\u2588\n     | \u2588\u2588\u2588\u2588\n     | \u2588\u2588\u2588\u2588\n     | \u2588\u2588\u2588\u2588\n     | \u2588\u2588\u2588\u2588\n     | \u2588\u2588\u2588\u2588 \u2593\u2593\u2593\u2593\n     | \u2588\u2588\u2588\u2588 \u2593\u2593\u2593\u2593 \u2591\u2591\u2591\u2591 \u2591\u2591\u2591\u2591 \u2591\u2591\u2591\u2591 \u2591\u2591\u2591\u2591 \u2591\u2591\u2591\u2591 \u2591\u2591\u2591\u2591 \u2591\u2591\u2591\u2591\n     +----------------------------------------------------> task variety\n\n   \u2588\u2588\u2588\u2588  bread-and-butter        the bulk of every session\n   \u2593\u2593\u2593\u2593  crucial-but-occasional  a handful of times a session\n   \u2591\u2591\u2591\u2591  the long tail           each one rare \u2014 but there are many,\n                                 and each still has to work\n```"
+          },
+          {
+            "language": "typescript",
+            "code": "async function execute() {\n  const data = await sheet.getCellRange(\"Sheet1!A1:D200\");\n  // ...read, compute, write...\n}",
+            "content": "```typescript\nasync function execute() {\n  const data = await sheet.getCellRange(\"Sheet1!A1:D200\");\n  // ...read, compute, write...\n}\n```"
+          },
+          {
+            "language": "typescript",
+            "code": "const pt = sheet.originalSheet.pivotTables.add(\"SalesPivot\", \"SalesData\", 0, 0, ...);\npt.suspendLayout();\npt.add(\"Region\",  \"Region\",        rowField);\npt.add(\"Quarter\", \"Quarter\",       columnField);\npt.add(\"Amount\",  \"Sum of Amount\", valueField, 8);   // 8 = sum\npt.resumeLayout();",
+            "content": "```typescript\nconst pt = sheet.originalSheet.pivotTables.add(\"SalesPivot\", \"SalesData\", 0, 0, ...);\npt.suspendLayout();\npt.add(\"Region\",  \"Region\",        rowField);\npt.add(\"Quarter\", \"Quarter\",       columnField);\npt.add(\"Amount\",  \"Sum of Amount\", valueField, 8);   // 8 = sum\npt.resumeLayout();\n```"
+          },
+          {
+            "language": "markdown",
+            "code": "Common formulas are abbreviated like F1, F2, etc. \n\nA2:North | B2:1200 | C2:9.99 | D2:11988(F1)\nA3:South | B3:840  | C3:9.99 | D3:8391.6(F1)\nA4:West  | B4:1500 | C4:9.99 | D4:14985(F1)\n... (196 more rows, each one line) ...\n\n=F1 -> =RC[-2]*RC[-1]\n\n--- Style patterns ---\nD2:D201: 200 cells (numbers)\n  \u2192 numberFormat:#,##0.00, font.color:#1A7F37\nA2:A201: 200 cells (text)\n  \u2192 font.bold:true\n\n--- Context from cells above ---\nA1:Region | B1:Units | C1:Price | D1:Revenue",
+            "content": "```markdown\nCommon formulas are abbreviated like F1, F2, etc. \n\nA2:North | B2:1200 | C2:9.99 | D2:11988(F1)\nA3:South | B3:840  | C3:9.99 | D3:8391.6(F1)\nA4:West  | B4:1500 | C4:9.99 | D4:14985(F1)\n... (196 more rows, each one line) ...\n\n=F1 -> =RC[-2]*RC[-1]\n\n--- Style patterns ---\nD2:D201: 200 cells (numbers)\n  \u2192 numberFormat:#,##0.00, font.color:#1A7F37\nA2:A201: 200 cells (text)\n  \u2192 font.bold:true\n\n--- Context from cells above ---\nA1:Region | B1:Units | C1:Price | D1:Revenue\n```"
+          }
+        ],
+        "hashtags": [
+          {
+            "start": 140,
+            "end": 144,
+            "text": "REF"
+          },
+          {
+            "start": 359,
+            "end": 363,
+            "text": "REF"
+          }
+        ],
+        "urls": [
+          {
+            "text": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/tool-reference"
+          }
+        ]
+      },
+      "title": "Building a Good Vertical Agent",
+      "preview_text": "How do you build an agent that actually performs in a domain \u2014 one customers pick because it's better?\nThe basics have been standardized over the past year: an agent is a while-loop around a model"
+    },
+    "text": "https://t.co/MVcIdCly31",
+    "conversation_id": "2065190286519906657",
+    "entities": {
+      "urls": [
+        {
+          "start": 0,
+          "end": 23,
+          "url": "https://t.co/MVcIdCly31",
+          "expanded_url": "http://x.com/i/article/2064956632053026816",
+          "display_url": "x.com/i/article/2064\u2026",
+          "status": 500,
+          "unwound_url": "https://x.com/i/article/2064956632053026816"
+        }
+      ]
+    },
+    "id": "2065190286519906657",
+    "edit_history_tweet_ids": [
+      "2065190286519906657"
+    ],
+    "author_id": "1550254833424384007"
+  },
+  "posts": [
+    {
+      "edit_history_tweet_ids": [
+        "2065190286519906657"
+      ],
+      "article": {
+        "cover_media": "3_2065190239384264704",
+        "plain_text": "How do you build an agent that actually wins in a domain \u2014 one customers pick because it's better?\nThe basics of an agent have been standardized over the past year: it's a while-loop around a model that calls tools until the task is done. Give it a filesystem, a shell, and let it do most things through that. You can write it in an afternoon, and most people have. Everyone can build an agent \u2014 it really isn't that hard, and, as I'll spell out, it isn't that deep either. What separates a good one from a toy isn't cleverness; it's a real understanding of your domain and the patience to do some tedious, careful work in the few places that matter.\nI've spent almost a year now building the Shortcut agent, which is widely considered the most accurate spreadsheet agent around \u2014 it's deployed inside three of the largest five multi-strategy hedge funds, where being wrong is expensive and nobody grades on a curve. We don't have Microsoft's or Anthropic's distribution. What we have is that the agent is right more often, and in this domain that has been the single most compelling reason customers pick us. So agent performance is the question I think about all day.\nAnd here's the gap I keep running into: plenty is written about building agents, but few about building smart ones. Look at how much the field varies on something as basic as tool count \u2014 Codex and Claude Code ship ~30 tools each; Pi ships 7. When popular agents disagree 4x on the most basic design question, it's a tell: there's no agreed-on principle. So I'm sharing mine, from a year of building one, to demystify the process for anyone building their own.\nHere it is: a smart agent is a compression of its task distribution. The rest of this is just what that means, and what it forces you to build.\nIt all comes down to context compression\nAssume you don't own the environment and you didn't train the model. Then three things are yours to design \u2014 the system prompt, the tools, and the artifacts (skills, curated docs, references) \u2014 and they're all the same thing: the agent's context.\nSo the game is simple to state. With the model fixed, accuracy is a function of context quality: bloated context buries the signal, missing context forces guessing, and both cost you accuracy. And accuracy is what you're selling \u2014 the relationship isn't linear, a task at 99% instead of 95% is generally more than the 5x in error reduction.\nBut your users don't bring you a uniform distribution of problems to solve. They bring you a long tail:\n \nThe agent has to handle all of it. But it cannot hold the union of everything in context at once \u2014 that's the bloated-prompt failure mode. So the real objective is sharper than \"have everything available\": minimize the context spent per task, averaged over the task distribution.\nThis is exactly the problem a CPU faces. A program might touch gigabytes of data, but the storage right next to the processor is tiny \u2014 so computers stack memory in tiers: a small, instant cache (L1), bigger-and-slower ones below it (L2, L3), then main memory and disk. It works because access is long-tailed too: keep the hot set in the fast tier, reach down to the slow tiers only for the rare stuff. A \"cache miss\" is when what you need isn't in the fast tier and you pay to fetch it from a slower one \u2014 exactly the cost you're avoiding on the common path.\nAgents have the same shape, so borrow the same structure. Build your context as L1 / L2 / L3.\n \nAnd here is the law that governs every decision inside this hierarchy: almost every optimization trades compression of information against speed of discovery.\nPut something in L1 and it's instant, but it costs prompt tokens on every single task whether it's used or not. Push it to L3 and it costs nothing until needed \u2014 but then it costs several tool calls to find. Your job is to place each capability at the tier that minimizes total cost across the distribution. That's the whole craft. Let me make it concrete with the domain I know best.\nAside: one tool, not thirty\nBefore the hierarchy, the substrate. Every spreadsheet capability I'm about to describe \u2014 every read, every write, every curated lookup \u2014 is code executed under a single tool.\n \nThe agent writes code; the code calls our functions; the functions touch the sheet. There is no read_range tool, no write_range tool, no make_chart tool. There is one tool, and the API lives inside the code.\nWhy? Because model accuracy degrades as you add tools. That's been consistent in our own experiments, and the effect was larger than I'd assumed going in. Every tool you add is more schema in the prompt, more surface to confuse, more ways to pick the wrong one, especially if the tools occupy overlapping responsibilities. A single execute_code tool collapses all of that into one decision \u2014 write code \u2014 and lets the model compose capabilities with the full expressive power of a programming language or DSL instead of stitching together rigid tool calls (More on this in a future post.)\nThis matters for the hierarchy because it means all three cache tiers are reachable from the same place: the model is always writing code, and L1/L2/L3 are just which functions it knows it can call, and how much work it had to do to find them.\nL1 \u2014 the bread and butter: reading and writing cells\nThis is the 80%. If reading and writing cell ranges isn't excellent, nothing else matters. So this is where we've spent absurd, disproportionate effort. Look at what a single getCellRange actually does.\nReading a range is an act of compression\nA naive range read returns a grid of values. Ours returns a compressed, semantically enriched snapshot designed to maximize signal per token. \nReading a 200-row revenue table where the last column is Units \u00d7 Price:\n \nThree things are happening.\nFirst, formula aliasing. A 500-row column of =A2*B2, =A3*B3, \u2026 is 500 near-identical formulas. We normalize each formula to R1C1 form \u2014 so =A2*B2 and =A3*B3 both become =RC[-2]*RC[-1] \u2014 count the patterns, and any pattern that appears more than ten times collapses to a short alias like F1. The model sees F1 repeated plus one legend line, instead of 500 formulas. Big token savings, zero information loss.\nSecond, free row and column context. When you read C5:E20, what do those bare numbers mean? We scan leftward for the row labels and upward for the header row (picking the header by voting on which nearby row has the most text cells) and attach them, so the model gets Region | Q1 | Q2 and North America | \u2026 for free and never has to guess what a grid of numbers represents.\nThird, style compression. Formatting is information too \u2014 a bold red cell with a 0.00% number format is telling you something \u2014 but listing the full style of every cell would swamp the values. So we group cells by identical style, collapse each group to its connected range, and print one line per group: the range, the cell count, and a compact description. Repeated formatting costs one line no matter how many cells share it, capped at the ten most common styles.\nEvery cell is address:value, with its formula appended in parentheses (aliased to (F1) here). Six hundred formulas became one legend line. Four hundred styled cells became two lines. And the header row the model never explicitly asked for is right there at the bottom. That's the whole table, losslessly, in a fraction of the tokens a raw dump would cost.\nEvery one of these is the compression-vs-discovery tradeoff, won decisively for the common case.\nWriting cells: tell the model what it actually changed, and what looks wrong\nWriting is harder than it looks, because a single execute_code call can change hundreds of cells, and the agent needs to know what happened without re-reading the whole sheet. So after the code runs, we hand back a structured diff of every cell that changed \u2014 and, just as importantly, we compress and triage it.\nHere's a real write and the feedback it produces. The code:\n \nThe diff that comes back:\n \nTwo kinds of compression are doing the work here.\nFirst, the diff is grouped and sampled, not dumped. Changed cells are grouped by sheet and row, each row shown as a column range with a count (Row 2 (D): 1 cells), and only a deterministic sample of cells per row and rows per section is printed, with \"\u2026 and N more\" tallies for the rest. Two hundred writes don't become two hundred lines; they become a handful, and the agent still knows the totals.\nSecond, and more useful, the diff is categorized. It doesn't just report what changed \u2014 it triages each change. Clean writes land under \"Changed without issues.\" Anything that looks suspicious \u2014 an invalid formula like #REF!, an untagged hardcoded number, a hardcoded number buried inside a formula, an implausibly large percentage \u2014 gets pulled into a \"Cells that need review\" section, and the worst offenders are flagged MUST FIX. That #REF! in row 57 would be trivial to miss in a wall of two hundred green diffs; here it's surfaced at the top with a label. The feedback loop isn't \"here's what changed,\" it's \"here's what changed, and here's the part you probably got wrong\" \u2014 a built-in linter on the agent's own edits.\nL1 in one line: the operations on the steep part of the curve get feature-engineered, token-compressed, consequence-reporting wrappers that live in the prompt forever. They're expensive to build, and you build them anyway, because the agent pays the cost on every task.\nL2 \u2014 curated English, on demand\nYou cannot put everything in L1. Conditional formatting, pivot tables, charts, data validation, copy/move semantics \u2014 each is important, each shows up a few times a session, and each has enough surface that documenting it in the system prompt would bloat every task that doesn't use it. Classic L2.\nSo we wrote curated capability specs in English, fetched on demand. The model calls, from inside its code:\n \nThese aren't dumps of type signatures. They're hand-written prose \u2014 a few hundred lines each \u2014 that describe the canonical way to accomplish the task, including the knowledge the raw API will never give you. Take the pivot-table spec. It doesn't just list methods; it teaches the whole recipe, in the right order:\n \nand it bakes in the things you would otherwise learn only by failing repeatedly: that you must suspendLayout()/resumeLayout() around a batch of changes or the table rebuilds on every call; that a value field's aggregation has to be passed as a raw integer (8 for sum) because the friendly enum doesn't exist at runtime. None of that is a quirky footgun \u2014 it's the actual shape of doing pivots correctly, written down once by someone who already paid for it.\nThat's institutional knowledge encoded as a cache line. A raw API reference would give you the method names and leave you to discover the ordering and the runtime gaps yourself. A curated spec hands you the working pattern. The model reads ~1,000 tokens, gets the canonical recipe and the constraints, and writes correct code on the first try.\nThe key property: this costs zero tokens until the task needs it. A task that never touches pivots never pays for the pivot docs. One console.log is the entire discovery cost \u2014 a single cache miss, served fast.\nThe same idea, for executable tools\nL2 isn't only for docs. We apply the identical pattern to deferred tools \u2014 web_search, web_crawl, create_website, etc. Their schemas don't sit in the prompt. Instead there's a meta-tool wall:\n \nThe set of fetched tools is, literally, a session-scoped cache. The model loads a schema once, and from then on it's resident. Same compression-vs-discovery tradeoff, same resolution: keep the prompt small, pay a one-step miss when you actually need the capability. This is the same idea as deferred tools on Claude but we're not locked to one vendor's tool-loading feature to get the behavior.\nL3 \u2014 the raw tome, and the skill that maps it\nThen there's the long tail: the one obscure thing we never wrapped and never wrote a spec for. You can't anticipate it \u2014 by definition. But the agent still has to be able to get there, or it hits a wall and fails the task. Concretely, this is where requests like these end up:\n\"Add a sparkline to each row summarizing its trend\" \u2014 sparklines are a real but rarely-touched API surface.\n\"Set the chart's secondary axis to log scale and recolor just the third series\" \u2014 a chart property three levels deep that no curated spec bothered to cover.\n\"Insert a hyperlink from this cell to that named range, and group these shapes\" \u2014 drawing/shape/hyperlink corners nobody asked about until now.\nSo L3 is the complete raw API \u2014 the entire Office.js surface (Excel plugin) or the entire SpreadJS surface (Shortcut web), dumped to disk. It's a machine-generated reference that is 70k lines long. It contains everything. It's also completely unusable as prompt context \u2014 you'd never paste it in.\nThe trick: you give it a skill \u2014 a short map that teaches it how to mine the tome with bash:\n \nThe skill is ~100 lines. It says: here's the structure, here's how each method and type entry is shaped, here's the grep recipe for each kind of question. With it, the agent goes from \"tens of thousands of lines I can't read\" to \"the 3-6 greps that surface exactly the signature I need.\" That's the L3 access cost \u2014 real, but bounded, and only paid by the rare task that reaches this deep.\nAnd the system prompt makes the escape hatch explicit, so the model knows the path exists and when to take it:\nAPI HIERARCHY \u2014 There are 2 levels of API capability. Wrapped API: convenience functions; some listed directly, others via getAPIInfo(...). NEVER guess \u2014 read the docs in FULL. Raw API: use when the wrapped API doesn't cover your need\u2026 If the wrapped API can't do it, use the raw API \u2014 don't compromise.\nThat last clause is the whole point of L3. The agent should never be stuck. It can miss in L1, drop to L2, and if even the curated spec is silent, descend into the raw tome and still come out with the answer in a sane number of calls.\nHow the prompt budget actually splits\nIt's worth looking at where the tokens go, because the hierarchy shows up directly in the system prompt's shape.\nThe bulk of the prompt is L1 \u2014 on the order of a few hundred lines. Core read/write operations, the execute_code contract, the key types and the handful of methods the agent uses on essentially every task, plus the execution and safety guidelines. This is the part that's resident on every single call, so it's also the part we fight hardest to keep tight.\nL2 is a thin slice on top \u2014 roughly 50 lines. It isn't the specs themselves; it's a curated allowlist of the \"blessed\" methods and the pointers that tell the agent the getXInfo(...) specs exist and when to reach for them. The specs' actual content stays out of the prompt until a console.log pulls it in.\nL3 is essentially 5 lines, the name and description of the skill.md, and other references scattered elsewhere. The raw reference \u2014 70k lines \u2014 lives entirely on disk and never touches the prompt. All that's resident is the short skill file and the one line in the API-hierarchy section pointing at it.\nSo the budget mirrors the frequency curve: most of the prompt is spent on the 80% case, a little on signposting the 15%, and almost nothing on the long tail \u2014 which is exactly the allocation the cache-hierarchy framing predicts.\nThe recipe, ported to your domain\nSpreadsheets are just my example. The structure transfers to any domain. The compression in those system prompts and curated specs is really an encoding of the distribution of your users and the tasks they do \u2014 and you, in your domain, understand that distribution better than anyone. So your job is three questions:\n1. What do you wrap into L1? The bread-and-butter operations on the steep part of the frequency curve. Make them brutally token-efficient and fast, and make them report consequences. Spend disproportionate effort here \u2014 the agent pays this cost on every task.\n2. What do you defer to L2? The important-but-occasional capabilities. Write them as curated, English, gotcha-aware specs reachable in one discovery step. Encode the canonical recipe and the constraints, not just the signatures.\n3. What is your escape hatch (L3)? The raw, complete substrate \u2014 plus a skill that teaches the agent to mine it. It doesn't have to be ergonomic. It has to be reachable, complete, and findable in a bounded number of steps. The agent must be able to \u2014 and will \u2014 eventually find the right information.\nGet those three placements right and you've built an agent that is fast on the common case, capable on the occasional one, and never truly stuck on the rare one \u2014 all while keeping context small enough that the model stays sharp.\nThe hierarchy doesn't disappear \u2014 it moves\nOne closing observation. What counts as L1 is not fixed; it drifts with model strength.\nEarly, weak models needed tiny, single-purpose tools and everything spelled out. Today's models can absorb a larger L2 spec in one shot and reason over more raw L3 detail without choking. So as models improve, yesterday's L3 becomes tomorrow's L2, and yesterday's L2 collapses into L1. The agent's responsibility expands outward; the tiers slide down a level.\nBut the hierarchy itself never goes away \u2014 because context will always be scarce relative to everything you could put in it, and noise will always cost you accuracy. There is no model so large that \"put the right thing in front of it at the right time\" stops mattering.\nBigger context windows tempt people to paste in more. The better instinct is the one CPUs settled on decades ago: summaries in cache, details on demand, the raw substrate as the last resort. Build your agent's context like a memory hierarchy, and accuracy follows.",
+        "entities": {
+          "code": [
+            {
+              "language": "typescript",
+              "code": "get_tool_info(\"web_search\")   \u2192 returns the schema, marks it \"fetched\"\nexecute_tool(\"web_search\", \u2026) \u2192 REFUSES unless you fetched it first",
+              "content": "```typescript\nget_tool_info(\"web_search\")   \u2192 returns the schema, marks it \"fetched\"\nexecute_tool(\"web_search\", \u2026) \u2192 REFUSES unless you fetched it first\n```"
+            },
+            {
+              "language": "typescript",
+              "code": "async function execute() {\n  const rows = await sheet.getCellRange(\"Sheet1!A2:C201\");\n  for (let i = 0; i < rows.length; i++) {\n    const r = i + 2;\n    await sheet.setCell(`D${r}`, `=B${r}*C${r}`);\n  }\n}",
+              "content": "```typescript\nasync function execute() {\n  const rows = await sheet.getCellRange(\"Sheet1!A2:C201\");\n  for (let i = 0; i < rows.length; i++) {\n    const r = i + 2;\n    await sheet.setCell(`D${r}`, `=B${r}*C${r}`);\n  }\n}\n```"
+            },
+            {
+              "language": "markdown",
+              "code": "--- CELL DIFF SUMMARY ---\n(Formatted display values shown. \u2205 = undefined/empty.)\n\n  Changed without issues: 199 total cells\n    Sheet1!Row 2 (D): 1 cells\n      \u2192 D2: \u2205 -> 11,988 [=B2*C2]\n    Sheet1!Row 3 (D): 1 cells\n      \u2192 D3: \u2205 -> 8,391.6 [=B3*C3]\n    ... (sampled rows) ...\n    Sheet1!Row 201 (D): 1 cells\n      \u2192 D201: \u2205 -> 4,995 [=B201*C201]\n    ... and 189 more rows\n\n  Cells that need review:\n    MUST FIX: INVALID_FORMULA: 1 total cells\n      Sheet1!Row 57 (D): 1 cells\n        \u2192 D57: \u2205 -> #REF! [=B57*C57]",
+              "content": "```markdown\n--- CELL DIFF SUMMARY ---\n(Formatted display values shown. \u2205 = undefined/empty.)\n\n  Changed without issues: 199 total cells\n    Sheet1!Row 2 (D): 1 cells\n      \u2192 D2: \u2205 -> 11,988 [=B2*C2]\n    Sheet1!Row 3 (D): 1 cells\n      \u2192 D3: \u2205 -> 8,391.6 [=B3*C3]\n    ... (sampled rows) ...\n    Sheet1!Row 201 (D): 1 cells\n      \u2192 D201: \u2205 -> 4,995 [=B201*C201]\n    ... and 189 more rows\n\n  Cells that need review:\n    MUST FIX: INVALID_FORMULA: 1 total cells\n      Sheet1!Row 57 (D): 1 cells\n        \u2192 D57: \u2205 -> #REF! [=B57*C57]\n```"
+            },
+            {
+              "language": "bash",
+              "code": "# from the advanced-api SKILL.md \u2014 the recommended workflow\ngrep -n '\"charts.add\"' api-reference.json -A 5 # find a method\ngrep -n '\"pivots\\.' api-reference.json | head # list a namespace\ngrep -n '\"ChartConfig\"' api-reference.json -A 10 # resolve a type\ngrep -n '\"isEnum\": true' api-reference.json -B2 -A10 # enumerate enums",
+              "content": "```bash\n# from the advanced-api SKILL.md \u2014 the recommended workflow\ngrep -n '\"charts.add\"' api-reference.json -A 5 # find a method\ngrep -n '\"pivots\\.' api-reference.json | head # list a namespace\ngrep -n '\"ChartConfig\"' api-reference.json -A 10 # resolve a type\ngrep -n '\"isEnum\": true' api-reference.json -B2 -A10 # enumerate enums\n```"
+            },
+            {
+              "language": "typescript",
+              "code": "console.log(general.getConditionalFormattingInfo());\nconsole.log(general.getPivotTableInfo());\nconsole.log(general.getChartInfo());\nconsole.log(general.getDataValidationInfo());\nconsole.log(general.getAPIInfo(\"addSpanAt\"));   // any single function, by name",
+              "content": "```typescript\nconsole.log(general.getConditionalFormattingInfo());\nconsole.log(general.getPivotTableInfo());\nconsole.log(general.getChartInfo());\nconsole.log(general.getDataValidationInfo());\nconsole.log(general.getAPIInfo(\"addSpanAt\"));   // any single function, by name\n```"
+            },
+            {
+              "language": "markdown",
+              "code": "+---------------------------------------------+\n  L1   |  ALWAYS RESIDENT - tiny, instant.           |\n       |  The 80%. Lives in the system prompt.       |\n       +---------------------------------------------+\n                  |  miss -> one cheap call\n                  v\n       +---------------------------------------------+\n  L2   |  ON DEMAND - curated English specs.         |\n       |  The next ~15%. One discovery step to load. |\n       +---------------------------------------------+\n                  |  miss -> read the skill, then search\n                  v\n       +---------------------------------------------+\n  L3   |  ESCAPE HATCH - the raw API tome.           |\n       |  The long tail. 3-6 grep calls to mine.     |\n       +---------------------------------------------+",
+              "content": "```markdown\n       +---------------------------------------------+\n  L1   |  ALWAYS RESIDENT - tiny, instant.           |\n       |  The 80%. Lives in the system prompt.       |\n       +---------------------------------------------+\n                  |  miss -> one cheap call\n                  v\n       +---------------------------------------------+\n  L2   |  ON DEMAND - curated English specs.         |\n       |  The next ~15%. One discovery step to load. |\n       +---------------------------------------------+\n                  |  miss -> read the skill, then search\n                  v\n       +---------------------------------------------+\n  L3   |  ESCAPE HATCH - the raw API tome.           |\n       |  The long tail. 3-6 grep calls to mine.     |\n       +---------------------------------------------+\n```"
+            },
+            {
+              "language": "markdown",
+              "code": "how often\n     |\n     | \u2588\u2588\u2588\u2588\n     | \u2588\u2588\u2588\u2588\n     | \u2588\u2588\u2588\u2588\n     | \u2588\u2588\u2588\u2588\n     | \u2588\u2588\u2588\u2588\n     | \u2588\u2588\u2588\u2588\n     | \u2588\u2588\u2588\u2588\n     | \u2588\u2588\u2588\u2588\n     | \u2588\u2588\u2588\u2588\n     | \u2588\u2588\u2588\u2588 \u2593\u2593\u2593\u2593\n     | \u2588\u2588\u2588\u2588 \u2593\u2593\u2593\u2593 \u2591\u2591\u2591\u2591 \u2591\u2591\u2591\u2591 \u2591\u2591\u2591\u2591 \u2591\u2591\u2591\u2591 \u2591\u2591\u2591\u2591 \u2591\u2591\u2591\u2591 \u2591\u2591\u2591\u2591\n     +----------------------------------------------------> task variety\n\n   \u2588\u2588\u2588\u2588  bread-and-butter        the bulk of every session\n   \u2593\u2593\u2593\u2593  crucial-but-occasional  a handful of times a session\n   \u2591\u2591\u2591\u2591  the long tail           each one rare \u2014 but there are many,\n                                 and each still has to work",
+              "content": "```markdown\n  how often\n     |\n     | \u2588\u2588\u2588\u2588\n     | \u2588\u2588\u2588\u2588\n     | \u2588\u2588\u2588\u2588\n     | \u2588\u2588\u2588\u2588\n     | \u2588\u2588\u2588\u2588\n     | \u2588\u2588\u2588\u2588\n     | \u2588\u2588\u2588\u2588\n     | \u2588\u2588\u2588\u2588\n     | \u2588\u2588\u2588\u2588\n     | \u2588\u2588\u2588\u2588 \u2593\u2593\u2593\u2593\n     | \u2588\u2588\u2588\u2588 \u2593\u2593\u2593\u2593 \u2591\u2591\u2591\u2591 \u2591\u2591\u2591\u2591 \u2591\u2591\u2591\u2591 \u2591\u2591\u2591\u2591 \u2591\u2591\u2591\u2591 \u2591\u2591\u2591\u2591 \u2591\u2591\u2591\u2591\n     +----------------------------------------------------> task variety\n\n   \u2588\u2588\u2588\u2588  bread-and-butter        the bulk of every session\n   \u2593\u2593\u2593\u2593  crucial-but-occasional  a handful of times a session\n   \u2591\u2591\u2591\u2591  the long tail           each one rare \u2014 but there are many,\n                                 and each still has to work\n```"
+            },
+            {
+              "language": "typescript",
+              "code": "async function execute() {\n  const data = await sheet.getCellRange(\"Sheet1!A1:D200\");\n  // ...read, compute, write...\n}",
+              "content": "```typescript\nasync function execute() {\n  const data = await sheet.getCellRange(\"Sheet1!A1:D200\");\n  // ...read, compute, write...\n}\n```"
+            },
+            {
+              "language": "typescript",
+              "code": "const pt = sheet.originalSheet.pivotTables.add(\"SalesPivot\", \"SalesData\", 0, 0, ...);\npt.suspendLayout();\npt.add(\"Region\",  \"Region\",        rowField);\npt.add(\"Quarter\", \"Quarter\",       columnField);\npt.add(\"Amount\",  \"Sum of Amount\", valueField, 8);   // 8 = sum\npt.resumeLayout();",
+              "content": "```typescript\nconst pt = sheet.originalSheet.pivotTables.add(\"SalesPivot\", \"SalesData\", 0, 0, ...);\npt.suspendLayout();\npt.add(\"Region\",  \"Region\",        rowField);\npt.add(\"Quarter\", \"Quarter\",       columnField);\npt.add(\"Amount\",  \"Sum of Amount\", valueField, 8);   // 8 = sum\npt.resumeLayout();\n```"
+            },
+            {
+              "language": "markdown",
+              "code": "Common formulas are abbreviated like F1, F2, etc. \n\nA2:North | B2:1200 | C2:9.99 | D2:11988(F1)\nA3:South | B3:840  | C3:9.99 | D3:8391.6(F1)\nA4:West  | B4:1500 | C4:9.99 | D4:14985(F1)\n... (196 more rows, each one line) ...\n\n=F1 -> =RC[-2]*RC[-1]\n\n--- Style patterns ---\nD2:D201: 200 cells (numbers)\n  \u2192 numberFormat:#,##0.00, font.color:#1A7F37\nA2:A201: 200 cells (text)\n  \u2192 font.bold:true\n\n--- Context from cells above ---\nA1:Region | B1:Units | C1:Price | D1:Revenue",
+              "content": "```markdown\nCommon formulas are abbreviated like F1, F2, etc. \n\nA2:North | B2:1200 | C2:9.99 | D2:11988(F1)\nA3:South | B3:840  | C3:9.99 | D3:8391.6(F1)\nA4:West  | B4:1500 | C4:9.99 | D4:14985(F1)\n... (196 more rows, each one line) ...\n\n=F1 -> =RC[-2]*RC[-1]\n\n--- Style patterns ---\nD2:D201: 200 cells (numbers)\n  \u2192 numberFormat:#,##0.00, font.color:#1A7F37\nA2:A201: 200 cells (text)\n  \u2192 font.bold:true\n\n--- Context from cells above ---\nA1:Region | B1:Units | C1:Price | D1:Revenue\n```"
+            }
+          ],
+          "hashtags": [
+            {
+              "start": 140,
+              "end": 144,
+              "text": "REF"
+            },
+            {
+              "start": 359,
+              "end": 363,
+              "text": "REF"
+            }
+          ],
+          "urls": [
+            {
+              "text": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/tool-reference"
+            }
+          ]
+        },
+        "preview_text": "How do you build an agent that actually performs in a domain \u2014 one customers pick because it's better?\nThe basics have been standardized over the past year: an agent is a while-loop around a model",
+        "title": "Building a Good Vertical Agent"
+      },
+      "conversation_id": "2065190286519906657",
+      "id": "2065190286519906657",
+      "text": "https://t.co/MVcIdCly31",
+      "author_id": "1550254833424384007",
+      "entities": {
+        "urls": [
+          {
+            "start": 0,
+            "end": 23,
+            "url": "https://t.co/MVcIdCly31",
+            "expanded_url": "http://x.com/i/article/2064956632053026816",
+            "display_url": "x.com/i/article/2064\u2026",
+            "status": 500,
+            "unwound_url": "https://x.com/i/article/2064956632053026816"
+          }
+        ]
+      },
+      "created_at": "2026-06-11T21:51:48.000Z"
+    },
+    {
+      "edit_history_tweet_ids": [
+        "2065207414320927077"
+      ],
+      "in_reply_to_user_id": "1602010929385951232",
+      "conversation_id": "2065190286519906657",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2065201821531230591"
+        }
+      ],
+      "id": "2065207414320927077",
+      "text": "@__sebasgar__ thanks sebas! hope alls well",
+      "author_id": "1550254833424384007",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 13,
+            "username": "__sebasgar__",
+            "id": "1602010929385951232"
+          }
+        ]
+      },
+      "created_at": "2026-06-11T22:59:51.000Z"
+    },
+    {
+      "edit_history_tweet_ids": [
+        "2065223339761922369"
+      ],
+      "in_reply_to_user_id": "1550254833424384007",
+      "conversation_id": "2065190286519906657",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2065190286519906657"
+        }
+      ],
+      "id": "2065223339761922369",
+      "text": "@nicbstme i got inspired by you 6 months later",
+      "author_id": "1550254833424384007",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 9,
+            "username": "nicbstme",
+            "id": "1482049781719388165"
+          }
+        ]
+      },
+      "created_at": "2026-06-12T00:03:08.000Z"
+    },
+    {
+      "edit_history_tweet_ids": [
+        "2065251739826307401"
+      ],
+      "in_reply_to_user_id": "107905358",
+      "conversation_id": "2065190286519906657",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2065211934971252894"
+        }
+      ],
+      "id": "2065251739826307401",
+      "text": "@alokbishoyi97 thank you, appreciate it",
+      "author_id": "1550254833424384007",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 14,
+            "username": "alokbishoyi97",
+            "id": "107905358"
+          }
+        ]
+      },
+      "created_at": "2026-06-12T01:55:59.000Z"
+    },
+    {
+      "edit_history_tweet_ids": [
+        "2065251779424698614"
+      ],
+      "in_reply_to_user_id": "969223956694740994",
+      "conversation_id": "2065190286519906657",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2065249189249028524"
+        }
+      ],
+      "id": "2065251779424698614",
+      "text": "@MengxueBi the best way forward",
+      "author_id": "1550254833424384007",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 10,
+            "username": "MengxueBi",
+            "id": "969223956694740994"
+          }
+        ]
+      },
+      "created_at": "2026-06-12T01:56:09.000Z"
+    },
+    {
+      "edit_history_tweet_ids": [
+        "2065251809581781362"
+      ],
+      "in_reply_to_user_id": "1207822149248962561",
+      "conversation_id": "2065190286519906657",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2065218659723755877"
+        }
+      ],
+      "id": "2065251809581781362",
+      "text": "@enzo_gte thank you sir",
+      "author_id": "1550254833424384007",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 9,
+            "username": "enzo_gte",
+            "id": "1207822149248962561"
+          }
+        ]
+      },
+      "created_at": "2026-06-12T01:56:16.000Z"
+    },
+    {
+      "edit_history_tweet_ids": [
+        "2065293646942093363"
+      ],
+      "in_reply_to_user_id": "1091261746965143552",
+      "conversation_id": "2065190286519906657",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2065285940067881049"
+        }
+      ],
+      "id": "2065293646942093363",
+      "text": "@youplusai love that it can help you!",
+      "author_id": "1550254833424384007",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 10,
+            "username": "youplusai",
+            "id": "1091261746965143552"
+          }
+        ]
+      },
+      "created_at": "2026-06-12T04:42:31.000Z"
+    },
+    {
+      "edit_history_tweet_ids": [
+        "2065294562827083960"
+      ],
+      "in_reply_to_user_id": "8100942",
+      "conversation_id": "2065190286519906657",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2065291817893912812"
+        }
+      ],
+      "id": "2065294562827083960",
+      "text": "@heathweaver in vscode, codex/claude code with codebase as the ground truth. agents can distill the design philosophy well (with very gentle prompting) when it is directly encoded in the codebase",
+      "author_id": "1550254833424384007",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 12,
+            "username": "heathweaver",
+            "id": "8100942"
+          }
+        ]
+      },
+      "created_at": "2026-06-12T04:46:09.000Z"
+    },
+    {
+      "edit_history_tweet_ids": [
+        "2065294676215915005"
+      ],
+      "in_reply_to_user_id": "25711093",
+      "conversation_id": "2065190286519906657",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2065266038791409855"
+        }
+      ],
+      "id": "2065294676215915005",
+      "text": "@peterpme thank you peter^2",
+      "author_id": "1550254833424384007",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 9,
+            "username": "peterpme",
+            "id": "25711093"
+          }
+        ]
+      },
+      "created_at": "2026-06-12T04:46:36.000Z"
+    },
+    {
+      "edit_history_tweet_ids": [
+        "2065294787142644120"
+      ],
+      "in_reply_to_user_id": "1480821020",
+      "conversation_id": "2065190286519906657",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2065286043582988749"
+        }
+      ],
+      "id": "2065294787142644120",
+      "text": "@MisterMarket0 thank you sir!",
+      "author_id": "1550254833424384007",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 14,
+            "username": "MisterMarket0",
+            "id": "1480821020"
+          }
+        ]
+      },
+      "created_at": "2026-06-12T04:47:03.000Z"
+    },
+    {
+      "edit_history_tweet_ids": [
+        "2065294859792171076"
+      ],
+      "in_reply_to_user_id": "591273520",
+      "conversation_id": "2065190286519906657",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2065271884984598948"
+        }
+      ],
+      "id": "2065294859792171076",
+      "text": "@lifeof_jer thank you!",
+      "author_id": "1550254833424384007",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 11,
+            "username": "lifeof_jer",
+            "id": "591273520"
+          }
+        ]
+      },
+      "created_at": "2026-06-12T04:47:20.000Z"
+    },
+    {
+      "edit_history_tweet_ids": [
+        "2065295174679609847"
+      ],
+      "in_reply_to_user_id": "15781023",
+      "conversation_id": "2065190286519906657",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2065294657010225228"
+        }
+      ],
+      "id": "2065295174679609847",
+      "text": "@_vu working towards it",
+      "author_id": "1550254833424384007",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 4,
+            "username": "_vu",
+            "id": "15781023"
+          }
+        ]
+      },
+      "created_at": "2026-06-12T04:48:35.000Z"
+    },
+    {
+      "edit_history_tweet_ids": [
+        "2065298224269938694"
+      ],
+      "in_reply_to_user_id": "1480821020",
+      "conversation_id": "2065190286519906657",
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2065295729199894538"
+        }
+      ],
+      "id": "2065298224269938694",
+      "text": "@MisterMarket0 it all comes from agentic parsing of user data + and some slight bias due to our own taste injection (i.e. pivots are used &lt;2% of queries but when they work  users really love it so we elevate it from L3 to L2 for example)",
+      "author_id": "1550254833424384007",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 14,
+            "username": "MisterMarket0",
+            "id": "1480821020"
+          }
+        ]
+      },
+      "created_at": "2026-06-12T05:00:42.000Z"
+    }
+  ],
+  "users": {
+    "1550254833424384007": {
+      "id": "1550254833424384007",
+      "name": "Peter Wang",
+      "username": "BrainsAndTennis"
+    },
+    "172662132": {
+      "id": "172662132",
+      "name": "Ralf Kronen",
+      "username": "RKronen"
+    },
+    "213208424": {
+      "id": "213208424",
+      "name": "Itamar Weiss",
+      "username": "itamarwe"
+    },
+    "1218983303572787201": {
+      "id": "1218983303572787201",
+      "name": "Aniket",
+      "username": "aniketdotxlsx"
+    },
+    "1572567349": {
+      "id": "1572567349",
+      "name": "Mohammed Arshad",
+      "username": "mdarshad1000"
+    },
+    "1363443768": {
+      "id": "1363443768",
+      "name": "Sachin Anumula",
+      "username": "anumulasachin"
+    },
+    "1480821020": {
+      "id": "1480821020",
+      "name": "Robert L Peters",
+      "username": "MisterMarket0"
+    },
+    "15781023": {
+      "id": "15781023",
+      "name": "vu",
+      "username": "_vu"
+    },
+    "591273520": {
+      "id": "591273520",
+      "name": "JER",
+      "username": "lifeof_jer"
+    },
+    "25711093": {
+      "id": "25711093",
+      "name": "Peter Piekarczyk (\ud83e\udd67\ud83d\ude97\ud83d\udc25)",
+      "username": "peterpme"
+    },
+    "8100942": {
+      "id": "8100942",
+      "name": "Heath Weaver",
+      "username": "heathweaver"
+    },
+    "1091261746965143552": {
+      "id": "1091261746965143552",
+      "name": "Ranga Sampath | Network Expert | AI Things Builder",
+      "username": "youplusai"
+    },
+    "1276159580335112192": {
+      "id": "1276159580335112192",
+      "name": "VJ",
+      "username": "VihaanJagiasi"
+    },
+    "1706455927531147264": {
+      "id": "1706455927531147264",
+      "name": "Pangram",
+      "username": "pangram"
+    },
+    "1730153204292206592": {
+      "id": "1730153204292206592",
+      "name": "Aamir",
+      "username": "aaxsh18"
+    },
+    "1724763806340141056": {
+      "id": "1724763806340141056",
+      "name": "Siege",
+      "username": "siege53175"
+    },
+    "2032025273244475392": {
+      "id": "2032025273244475392",
+      "name": "Ephraim Bismuth",
+      "username": "ephraimbismuth"
+    },
+    "1114436917435744256": {
+      "id": "1114436917435744256",
+      "name": "Richard He",
+      "username": "RealRichomie"
+    },
+    "1898321620277862400": {
+      "id": "1898321620277862400",
+      "name": "Tajwar Sangha",
+      "username": "TajwarSSangha"
+    },
+    "1705169952775311360": {
+      "id": "1705169952775311360",
+      "name": "ka\u00e7\u0131\u015f\u015f\u015f",
+      "username": "kacislardayimm"
+    },
+    "1368750748570296321": {
+      "id": "1368750748570296321",
+      "name": "Adarsh",
+      "username": "adarsh_nagesh"
+    },
+    "1207822149248962561": {
+      "id": "1207822149248962561",
+      "name": "enzo",
+      "username": "enzo_gte"
+    },
+    "969223956694740994": {
+      "id": "969223956694740994",
+      "name": "Mengxue",
+      "username": "MengxueBi"
+    },
+    "107905358": {
+      "id": "107905358",
+      "name": "Alok Bishoyi",
+      "username": "alokbishoyi97"
+    },
+    "15097904": {
+      "id": "15097904",
+      "name": "Nguyen LNP",
+      "username": "nguyen_lnp"
+    },
+    "1602010929385951232": {
+      "id": "1602010929385951232",
+      "name": "Sebas",
+      "username": "__sebasgar__"
+    },
+    "1784075891401973760": {
+      "id": "1784075891401973760",
+      "name": "Jeff Joyce",
+      "username": "J3ffJoyce"
+    },
+    "1597787367812861957": {
+      "id": "1597787367812861957",
+      "name": "Richard Pham",
+      "username": "phamrich_"
+    },
+    "1707518737807486976": {
+      "id": "1707518737807486976",
+      "name": "Manuel Cortes",
+      "username": "Manuel_Cortes_R"
+    },
+    "60953393": {
+      "id": "60953393",
+      "name": "nico",
+      "username": "nicochristie"
+    }
+  },
+  "thread_fetch_error": null
+}
