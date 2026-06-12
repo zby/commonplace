@@ -8,7 +8,7 @@ status: seedling
 
 # Distilled artifacts need source tracking at the source
 
-Distillation produces artifacts optimized for execution: an instruction guides an agent, a skill body runs a workflow, a checklist enforces a policy, a paper presents an argument. The optimization strips lineage by design — the executing reader needs the convention, not the reasoning that produced it, and inline provenance links dilute focus while adding [indirection cost](./indirection-is-costly-in-llm-instructions.md). A well-distilled artifact is deliberately silent about where it came from.
+Distillation shapes an artifact for one consumer: an instruction guides an agent, a skill body runs a workflow, a checklist enforces a policy, a paper presents an argument. The shaping strips lineage by design — the consumer needs the artifact's content, not the reasoning that produced it. The executor is only one kind of consumer, but it is the most demanding and the most common: for a reader who must act on the artifact unassisted, inline provenance dilutes focus and adds [indirection cost](./indirection-is-costly-in-llm-instructions.md) — which is why the default for distilled artifacts is no source backlinks at all, not just for instructions. A well-distilled artifact is deliberately silent about where it came from.
 
 But distilled knowledge stays dependent on what it was distilled from. Sources keep evolving — a methodology claim is revised, a design decision reversed — and each source edit silently puts every downstream distillate at risk. Without a dependency record, a source change names nothing: there is no worklist for staleness review, and the drift is discovered only when a stale artifact misleads someone.
 
@@ -20,7 +20,7 @@ The deeper reason is that the two lineage queries have asymmetric requirements. 
 
 | | Distilled artifact | Source |
 |---|---|---|
-| **Reader** | Executor doing the task | Maintainer changing the knowledge |
+| **Reader** | The consumer the artifact was shaped for (most demandingly: an executor) | Maintainer changing the knowledge |
 | **Lineage carried** | None — focus is the point | Forward pointers to its distillates |
 | **Staleness signal** | None it could act on | Fires at edit time, where change originates |
 

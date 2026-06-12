@@ -111,7 +111,7 @@ Distilled into:
 - [cp-skill-write SKILL.md](../instructions/cp-skill-write/SKILL.md) — the duplicate-check rule
 ```
 
-The distilled artifact itself carries no backlinks to its sources: its reader is an executor, and provenance links dilute focus and add indirection cost. The forward pointer sits where change happens — editing a source note surfaces "these downstream artifacts may now be stale" with zero hops. The reverse query ("what informed this artifact?") is rare and runs as a search: `rg "<artifact-name>" kb/notes/`.
+The distilled artifact itself carries no backlinks to its sources by default. Its reader is the consumer the distillation was shaped for — not always an executor (a paper, a reference doc), but the executor case is demanding and common enough to set the default: provenance links dilute focus and add indirection cost exactly where the artifact must work unassisted. The forward pointer sits where change happens — editing a source note surfaces "these downstream artifacts may now be stale" with zero hops. The reverse query ("what informed this artifact?") is rare and runs as a search: `rg "<artifact-name>" kb/notes/`.
 
 Rationale: [distilled artifacts need source tracking at the source](../notes/distilled-artifacts-need-source-tracking-at-the-source.md).
 
