@@ -15,7 +15,8 @@ from commonplace.review.review_db import (
 )
 from commonplace.review.review_metadata import resolve_review_target
 from commonplace.review.review_model import normalize_model_id
-from commonplace.review.run_review_bundle import build_review_run_prompt, bundle_artifact_dir
+from commonplace.review.executor import bundle_artifact_dir
+from commonplace.review.run_review_bundle import build_review_run_prompt
 
 
 def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:

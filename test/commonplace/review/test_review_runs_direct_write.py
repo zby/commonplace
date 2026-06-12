@@ -7,9 +7,8 @@ import subprocess
 from pathlib import Path
 from types import SimpleNamespace
 
-from commonplace.review import review_db, review_metadata, run_review_bundle
+from commonplace.review import executor, review_db, review_metadata
 from commonplace.review.finalization import record_and_finalize_run
-from commonplace.review.protocol.parser import extract_bundle_reviews
 
 from ._run_cli import run_cli
 
@@ -182,12 +181,12 @@ def _build_codex_bundle_session_log(cwd: str, prompt: str, *, reasoning_effort: 
                 "type": "task_complete",
                 "turn_id": "turn-1",
                 "last_agent_message": (
-                    "=== GATE REVIEW START: prose/source-residue ===\n"
+                    "=== PAIR REVIEW START: kb/notes/sample.md :: prose/source-residue ===\n"
                     "Needs revision.\n\n## Result: WARN\n"
-                    "=== GATE REVIEW END: prose/source-residue ===\n\n"
-                    "=== GATE REVIEW START: semantic/grounding-alignment ===\n"
+                    "=== PAIR REVIEW END: kb/notes/sample.md :: prose/source-residue ===\n\n"
+                    "=== PAIR REVIEW START: kb/notes/sample.md :: semantic/grounding-alignment ===\n"
                     "Looks good.\n\n## Result: PASS\n"
-                    "=== GATE REVIEW END: semantic/grounding-alignment ==="
+                    "=== PAIR REVIEW END: kb/notes/sample.md :: semantic/grounding-alignment ==="
                 ),
             },
         },
@@ -211,17 +210,17 @@ target = session_dir / f"rollout-2026-04-04T09-00-00-{{session_id}}.jsonl"
 shutil.copyfile(os.environ["CODEX_SESSION_LOG_SOURCE"], target)
 
 print(f"session id: {{session_id}}", flush=True)
-print("=== GATE REVIEW START: prose/source-residue ===", flush=True)
+print("=== PAIR REVIEW START: kb/notes/sample.md :: prose/source-residue ===", flush=True)
 print("Needs revision.", flush=True)
 print("", flush=True)
 print("## Result: WARN", flush=True)
-print("=== GATE REVIEW END: prose/source-residue ===", flush=True)
+print("=== PAIR REVIEW END: kb/notes/sample.md :: prose/source-residue ===", flush=True)
 print("", flush=True)
-print("=== GATE REVIEW START: semantic/grounding-alignment ===", flush=True)
+print("=== PAIR REVIEW START: kb/notes/sample.md :: semantic/grounding-alignment ===", flush=True)
 print("Looks good.", flush=True)
 print("", flush=True)
 print("## Result: PASS", flush=True)
-print("=== GATE REVIEW END: semantic/grounding-alignment ===", flush=True)
+print("=== PAIR REVIEW END: kb/notes/sample.md :: semantic/grounding-alignment ===", flush=True)
 """,
         encoding="utf-8",
     )
@@ -249,7 +248,7 @@ def test_create_write_finalize_review_run(tmp_path: Path) -> None:
         db_path=db_path,
     )
     review_run_id = int(created.stdout.strip())
-    assert run_review_bundle.bundle_artifact_dir(repo, review_run_id).is_dir()
+    assert executor.bundle_artifact_dir(repo, review_run_id).is_dir()
 
     prose_review = write(
         repo / "tmp" / "prose.md",
@@ -352,17 +351,17 @@ def test_ingest_bundle_output_finalizes_review_run(tmp_path: Path) -> None:
         bundle_output_path,
         """# Review Bundle
 
-=== GATE REVIEW START: prose/source-residue ===
+=== PAIR REVIEW START: kb/notes/sample.md :: prose/source-residue ===
 ## Findings
 
 **WARN — Residue remains.** Temporary review.
-=== GATE REVIEW END: prose/source-residue ===
+=== PAIR REVIEW END: kb/notes/sample.md :: prose/source-residue ===
 
-=== GATE REVIEW START: semantic/grounding-alignment ===
+=== PAIR REVIEW START: kb/notes/sample.md :: semantic/grounding-alignment ===
 Looks good.
 
 ## Result: PASS
-=== GATE REVIEW END: semantic/grounding-alignment ===
+=== PAIR REVIEW END: kb/notes/sample.md :: semantic/grounding-alignment ===
 """,
     )
 
@@ -401,7 +400,7 @@ Looks good.
         assert len(acceptance_rows) == 2
         assert all(row["accepted_review_id"] is not None for row in acceptance_rows)
 
-    artifact_dir = run_review_bundle.bundle_artifact_dir(repo, review_run_id)
+    artifact_dir = executor.bundle_artifact_dir(repo, review_run_id)
     assert (artifact_dir / "bundle-output.md").is_file()
     assert (artifact_dir / "prose__source-residue.md").is_file()
     assert (artifact_dir / "semantic__grounding-alignment.md").is_file()
@@ -423,7 +422,7 @@ def test_create_review_run_json_output(tmp_path: Path) -> None:
         db_path=db_path,
     )
     payload = json.loads(created.stdout)
-    assert run_review_bundle.bundle_artifact_dir(repo, payload["review_run_id"]).is_dir()
+    assert executor.bundle_artifact_dir(repo, payload["review_run_id"]).is_dir()
     assert payload["note_path"] == "kb/notes/sample.md"
     assert payload["model_id"] == TEST_MODEL
     assert payload["runner"] == "codex"
@@ -464,7 +463,7 @@ def test_create_review_run_with_prompt_uses_bundle_prompt_artifact(tmp_path: Pat
 
     payload = json.loads(created.stdout)
     review_run_id = payload["review_run_id"]
-    artifact_dir = run_review_bundle.bundle_artifact_dir(repo, review_run_id)
+    artifact_dir = executor.bundle_artifact_dir(repo, review_run_id)
     prompt_path = repo / payload["prompt_path"]
 
     assert payload["artifact_dir"] == f"kb/reports/bundle-reviews/review-run-{review_run_id}"
@@ -473,10 +472,10 @@ def test_create_review_run_with_prompt_uses_bundle_prompt_artifact(tmp_path: Pat
     assert "prompt" not in payload
     assert prompt_path.is_file()
     prompt_text = prompt_path.read_text(encoding="utf-8")
-    assert "Write gate reviews for kb/notes/sample.md" in prompt_text
+    assert "Write gate reviews for the requested (note, gate) pairs" in prompt_text
     assert f"Write exactly one markdown document to `{payload['bundle_output_path']}`." in prompt_text
     assert "Return exactly one markdown document in this process's stdout." not in prompt_text
-    assert "=== GATE REVIEW START: prose/source-residue ===" in prompt_text
+    assert "=== PAIR REVIEW START: kb/notes/sample.md :: prose/source-residue ===" in prompt_text
     assert "Requested gate definitions (authoritative for this run):" in prompt_text
     assert artifact_dir.is_dir()
     assert not (artifact_dir / "bundle-output.md").exists()
@@ -993,7 +992,7 @@ for event in [
             "content": [
                 {
                     "type": "text",
-                    "text": "# Review Bundle\\n\\nReview run id: 1\\nTarget: kb/notes/sample.md\\n\\n=== GATE REVIEW START: prose/source-residue ===\\n## Findings\\n\\n**WARN — Residue remains.** Temporary review.\\n=== GATE REVIEW END: prose/source-residue ===\\n\\n=== GATE REVIEW START: semantic/grounding-alignment ===\\nLooks good.\\n\\n## Result: PASS\\n=== GATE REVIEW END: semantic/grounding-alignment ===\\n",
+                    "text": "# Review Bundle\\n\\nReview run id: 1\\nTarget: kb/notes/sample.md\\n\\n=== PAIR REVIEW START: kb/notes/sample.md :: prose/source-residue ===\\n## Findings\\n\\n**WARN — Residue remains.** Temporary review.\\n=== PAIR REVIEW END: kb/notes/sample.md :: prose/source-residue ===\\n\\n=== PAIR REVIEW START: kb/notes/sample.md :: semantic/grounding-alignment ===\\nLooks good.\\n\\n## Result: PASS\\n=== PAIR REVIEW END: kb/notes/sample.md :: semantic/grounding-alignment ===\\n",
                 },
             ],
         },
@@ -1038,7 +1037,7 @@ for event in [
         telemetry = json.loads(run_row["telemetry_json"])
         assert telemetry["model"] == "claude-sonnet-4-6"
         assert telemetry["models"] == ["claude-sonnet-4-6"]
-        assert "=== GATE REVIEW START: prose/source-residue ===" in run_row["raw_bundle_markdown"]
+        assert "=== PAIR REVIEW START: kb/notes/sample.md :: prose/source-residue ===" in run_row["raw_bundle_markdown"]
         gate_rows = conn.execute("SELECT gate_id, model_id FROM gate_reviews ORDER BY gate_id").fetchall()
         assert [(row["gate_id"], row["model_id"]) for row in gate_rows] == [
             ("prose/source-residue", "claude-sonnet-4-6"),
@@ -1050,7 +1049,7 @@ for event in [
             ("semantic/grounding-alignment", "claude-sonnet-4-6"),
         ]
 
-    artifact_dir = run_review_bundle.bundle_artifact_dir(repo, run_row["id"])
+    artifact_dir = executor.bundle_artifact_dir(repo, run_row["id"])
     assert (artifact_dir / "bundle-output.md").is_file()
     assert (artifact_dir / "prose__source-residue.md").is_file()
     assert (artifact_dir / "semantic__grounding-alignment.md").is_file()
@@ -1082,7 +1081,7 @@ for event in [
             "content": [
                 {
                     "type": "text",
-                    "text": "=== GATE REVIEW START: prose/source-residue ===\\nLooks good.\\n\\n## Result: PASS\\n=== GATE REVIEW END: prose/source-residue ===\\n"
+                    "text": "=== PAIR REVIEW START: kb/notes/sample.md :: prose/source-residue ===\\nLooks good.\\n\\n## Result: PASS\\n=== PAIR REVIEW END: kb/notes/sample.md :: prose/source-residue ===\\n"
                 },
             ],
         },
@@ -1300,35 +1299,6 @@ Looks good.
         ]
 
 
-def test_extract_bundle_reviews_ignores_text_outside_gate_blocks() -> None:
-    bundle = """Working notes before the bundle.
-
-# Review Bundle
-
-=== GATE REVIEW START: prose/source-residue ===
-## Findings
-
-**WARN — Residue remains.**
-=== GATE REVIEW END: prose/source-residue ===
-
-Extra trailing note.
-
-=== GATE REVIEW START: semantic/grounding-alignment ===
-Looks good.
-
-## Result: PASS
-=== GATE REVIEW END: semantic/grounding-alignment ===
-"""
-
-    parsed = extract_bundle_reviews(
-        bundle,
-        expected_gate_ids=["prose/source-residue", "semantic/grounding-alignment"],
-    )
-
-    assert parsed["prose/source-residue"].startswith("## Findings")
-    assert parsed["semantic/grounding-alignment"] == "Looks good.\n\n## Result: PASS\n"
-
-
 def test_run_review_bundle_parse_failure_persists_raw_bundle(monkeypatch, tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
     fake_bin = tmp_path / "bin"
@@ -1347,7 +1317,7 @@ for event in [
             "content": [
                 {
                     "type": "text",
-                    "text": "# Review Bundle\\n\\n=== GATE REVIEW START: prose/source-residue ===\\n## Findings\\n\\n**WARN — Residue remains.**\\n=== GATE REVIEW END: prose/source-residue ===\\n",
+                    "text": "# Review Bundle\\n\\n=== PAIR REVIEW START: kb/notes/sample.md :: prose/source-residue ===\\n## Findings\\n\\n**WARN — Residue remains.**\\n=== PAIR REVIEW END: kb/notes/sample.md :: prose/source-residue ===\\n",
                 },
             ],
         },
@@ -1384,10 +1354,10 @@ for event in [
             "SELECT id, status, failure_reason, raw_bundle_markdown FROM review_runs"
         ).fetchone()
         assert run_row["status"] == "failed"
-        assert "missing gate reviews in bundle output" in run_row["failure_reason"]
-        assert "=== GATE REVIEW START: prose/source-residue ===" in run_row["raw_bundle_markdown"]
+        assert "missing pair reviews: semantic/grounding-alignment" in run_row["failure_reason"]
+        assert "=== PAIR REVIEW START: kb/notes/sample.md :: prose/source-residue ===" in run_row["raw_bundle_markdown"]
 
-    artifact_dir = run_review_bundle.bundle_artifact_dir(repo, run_row["id"])
+    artifact_dir = executor.bundle_artifact_dir(repo, run_row["id"])
     assert (artifact_dir / "bundle-output.md").is_file()
     assert not (artifact_dir / "prose__source-residue.md").exists()
 
@@ -1408,5 +1378,5 @@ def test_run_review_bundle_dry_run_does_not_persist_review_run(tmp_path: Path) -
         cwd=repo,
         db_path=db_path,
     )
-    assert "Write gate reviews for kb/notes/sample.md" in result.stdout
+    assert "Write gate reviews for the requested (note, gate) pairs" in result.stdout
     assert not db_path.exists()

@@ -46,6 +46,7 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
                 conn,
                 repo_root=repo_root,
                 review_run_id=args.review_run_id,
+                note_path=review_run.note_path,
                 raw_bundle_markdown=raw_bundle_markdown,
                 expected_gate_ids=expected_gate_ids,
             )

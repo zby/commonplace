@@ -4,7 +4,7 @@ import sqlite3
 import subprocess
 from pathlib import Path
 
-from commonplace.review import run_gate_sweep as run_gate_sweep_lib
+from commonplace.review import executor
 from commonplace.review.review_runners import RunnerResult
 
 from ._run_cli import run_cli
@@ -100,20 +100,16 @@ def test_run_gate_sweep_reviews_multiple_notes_in_one_batch(monkeypatch, tmp_pat
     repo, db_path = build_repo_fixture(tmp_path)
 
     bundle_output = (
-        "=== NOTE START: kb/notes/first.md ===\n"
-        "=== GATE REVIEW START: accessibility/undefined-terms ===\n"
+        "=== PAIR REVIEW START: kb/notes/first.md :: accessibility/undefined-terms ===\n"
         "Needs a definition for Alpha.\n\n"
         "## Result: WARN\n"
-        "=== GATE REVIEW END: accessibility/undefined-terms ===\n"
-        "=== NOTE END: kb/notes/first.md ===\n\n"
-        "=== NOTE START: kb/notes/second.md ===\n"
-        "=== GATE REVIEW START: accessibility/undefined-terms ===\n"
+        "=== PAIR REVIEW END: kb/notes/first.md :: accessibility/undefined-terms ===\n\n"
+        "=== PAIR REVIEW START: kb/notes/second.md :: accessibility/undefined-terms ===\n"
         "No undefined terms found.\n\n"
         "## Result: PASS\n"
-        "=== GATE REVIEW END: accessibility/undefined-terms ===\n"
-        "=== NOTE END: kb/notes/second.md ===\n"
+        "=== PAIR REVIEW END: kb/notes/second.md :: accessibility/undefined-terms ===\n"
     )
-    monkeypatch.setattr(run_gate_sweep_lib, "run_prompt", _fake_run_prompt_factory(bundle_output))
+    monkeypatch.setattr(executor, "run_prompt", _fake_run_prompt_factory(bundle_output))
 
     result = run_gate_sweep(
         repo,
@@ -142,8 +138,11 @@ def test_run_gate_sweep_reviews_multiple_notes_in_one_batch(monkeypatch, tmp_pat
         ).fetchall()
         assert [row["note_path"] for row in run_rows] == ["kb/notes/first.md", "kb/notes/second.md"]
         assert [row["status"] for row in run_rows] == ["completed", "completed"]
-        assert all("=== GATE REVIEW START: accessibility/undefined-terms ===" in row["raw_bundle_markdown"] for row in run_rows)
-        assert all("=== NOTE START:" not in row["raw_bundle_markdown"] for row in run_rows)
+        # Each run's stored bundle is the per-run slice: its own pair only.
+        for row in run_rows:
+            own = f"=== PAIR REVIEW START: {row['note_path']} :: accessibility/undefined-terms ==="
+            assert own in row["raw_bundle_markdown"]
+            assert row["raw_bundle_markdown"].count("=== PAIR REVIEW START:") == 1
 
         review_rows = conn.execute(
             "SELECT note_path, decision, rationale_markdown FROM gate_reviews ORDER BY note_path"
@@ -164,19 +163,17 @@ def test_run_gate_sweep_reviews_multiple_notes_in_one_batch(monkeypatch, tmp_pat
         assert (artifact_dir / "accessibility__undefined-terms.md").is_file()
 
 
-def test_run_gate_sweep_marks_all_runs_failed_when_batch_parse_fails(monkeypatch, tmp_path: Path) -> None:
+def test_run_gate_sweep_salvages_parsed_notes_and_fails_missing_ones(monkeypatch, tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
 
-    # Bundle with only one note — parser will reject because the second note is missing.
+    # Output covers only the first note; the second note's pair is missing.
     bundle_output = (
-        "=== NOTE START: kb/notes/first.md ===\n"
-        "=== GATE REVIEW START: accessibility/undefined-terms ===\n"
+        "=== PAIR REVIEW START: kb/notes/first.md :: accessibility/undefined-terms ===\n"
         "Needs a definition for Alpha.\n\n"
         "## Result: WARN\n"
-        "=== GATE REVIEW END: accessibility/undefined-terms ===\n"
-        "=== NOTE END: kb/notes/first.md ===\n"
+        "=== PAIR REVIEW END: kb/notes/first.md :: accessibility/undefined-terms ===\n"
     )
-    monkeypatch.setattr(run_gate_sweep_lib, "run_prompt", _fake_run_prompt_factory(bundle_output))
+    monkeypatch.setattr(executor, "run_prompt", _fake_run_prompt_factory(bundle_output))
 
     result = run_gate_sweep(
         repo,
@@ -195,19 +192,23 @@ def test_run_gate_sweep_marks_all_runs_failed_when_batch_parse_fails(monkeypatch
     )
 
     assert result.returncode == 1
-    assert "missing note reviews in gate sweep output: kb/notes/second.md" in result.stderr
+    assert "missing pair reviews: accessibility/undefined-terms" in result.stderr
+    assert "Reviewed: 1 notes" in result.stdout
 
     with sqlite3.connect(db_path) as conn:
         conn.row_factory = sqlite3.Row
         run_rows = conn.execute(
             "SELECT note_path, status, failure_reason, raw_bundle_markdown FROM review_runs ORDER BY note_path"
         ).fetchall()
-        assert [row["note_path"] for row in run_rows] == ["kb/notes/first.md", "kb/notes/second.md"]
-        assert [row["status"] for row in run_rows] == ["failed", "failed"]
-        assert all("missing note reviews in gate sweep output: kb/notes/second.md" in row["failure_reason"] for row in run_rows)
-        assert all(row["raw_bundle_markdown"] is None for row in run_rows)
+        assert [(row["note_path"], row["status"]) for row in run_rows] == [
+            ("kb/notes/first.md", "completed"),
+            ("kb/notes/second.md", "failed"),
+        ]
+        assert "missing pair reviews: accessibility/undefined-terms" in run_rows[1]["failure_reason"]
+        # The failed run keeps the raw batch output for debugging.
+        assert "kb/notes/first.md :: accessibility/undefined-terms" in run_rows[1]["raw_bundle_markdown"]
 
-        gate_review_count = conn.execute("SELECT COUNT(*) FROM gate_reviews").fetchone()[0]
+        review_rows = conn.execute("SELECT note_path, decision FROM gate_reviews").fetchall()
+        assert [(row["note_path"], row["decision"]) for row in review_rows] == [("kb/notes/first.md", "warn")]
         acceptance_count = conn.execute("SELECT COUNT(*) FROM acceptance_events").fetchone()[0]
-        assert gate_review_count == 0
-        assert acceptance_count == 0
+        assert acceptance_count == 1

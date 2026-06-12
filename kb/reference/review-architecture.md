@@ -1,5 +1,5 @@
 ---
-description: Code architecture for commonplace.review and commonplace.cli.review - package layout, data model, single-note bundle execution, targeting, prompt format, and repair utilities
+description: Code architecture for commonplace.review and commonplace.cli.review - package layout, data model, the (note, gate)-pair protocol and batch executor, packing callers, targeting, and repair utilities
 type: kb/types/note.md
 tags: []
 status: current
@@ -11,7 +11,7 @@ The review system runs LLM-based quality reviews against KB notes using defined 
 
 For the review workflow and gate definitions, see [../instructions/REVIEW-SYSTEM.md](../instructions/REVIEW-SYSTEM.md). This document covers the code architecture.
 
-> **Sweep commands are experimental.** `review_sweep`, `run_gate_sweep`, `gate_sweep_format`, and `ack_trivial_note_changes` are not yet stabilized and are intentionally not documented in detail here. Treat their interfaces as subject to change.
+> **Sweep commands are experimental.** `review_sweep`, `run_gate_sweep`, and `ack_trivial_note_changes` are not yet stabilized and are intentionally not documented in detail here. Treat their interfaces as subject to change.
 
 ## Package layout
 
@@ -20,7 +20,7 @@ The review subsystem is split between two packages, mirroring the project-wide `
 - **`commonplace.review`** — library code only. Pure functions, dataclasses, the SQLite layer, the runner subprocess wrappers. No `main()` functions, no argparse, no `Path.cwd()` at import time. Importable from any caller without pulling in CLI machinery.
 - **`commonplace.cli.review`** — thin CLI wrappers. Each module is argparse + `Path.cwd()` + `prepare_review_db(...)` + one library call. The `commonplace-*` review entry points in `pyproject.toml` all live here.
 
-For most modules the lib name and the CLI name match. For example `commonplace.review.run_review_bundle` is the library that owns the create_run → runner → record_and_finalize_run pipeline; `commonplace.cli.review.run_review_bundle` is the thin wrapper that argparse-parses the user's invocation and calls into the lib. Two modules (`resolve_gates` and `review_target_selector`) exist in both packages because they were split during the layout migration: lib helpers stayed in `commonplace.review.*`, the CLI `main()` moved to `commonplace.cli.review.*`.
+For most modules the lib name and the CLI name match. For example `commonplace.review.run_review_bundle` is the library that resolves the target and hands one share-note batch to `executor.execute_batch`; `commonplace.cli.review.run_review_bundle` is the thin wrapper that argparse-parses the user's invocation and calls into the lib. Two modules (`resolve_gates` and `review_target_selector`) exist in both packages because they were split during the layout migration: lib helpers stayed in `commonplace.review.*`, the CLI `main()` moved to `commonplace.cli.review.*`.
 
 This document refers to modules by their unqualified names (e.g. `run_review_bundle`, `review_target_selector`) when the distinction doesn't matter. When a particular function or class is called out, it lives in the library package unless explicitly noted as a CLI.
 
@@ -28,15 +28,18 @@ This document refers to modules by their unqualified names (e.g. `run_review_bun
 
 ```
 ┌─────────────────────────────────────────────────┐
-│  Orchestration                                  │
-│  run_review_bundle  create/finalize/ingest      │
+│  Packing (which pairs share one LLM call)       │
+│  run_review_bundle (share-note)                 │
+│  run_gate_sweep (share-gate, experimental)      │
+│  create/finalize/ingest (live agent)            │
+├─────────────────────────────────────────────────┤
+│  Pair protocol & execution                      │
+│  protocol/ (format, prompt, parser, decisions)  │
+│  executor           review_runners              │
 ├─────────────────────────────────────────────────┤
 │  Gate resolution & targeting                    │
 │  resolve_gates      review_target_selector      │
 │  warn_selector                                  │
-├─────────────────────────────────────────────────┤
-│  Execution                                      │
-│  review_runners                                  │
 ├─────────────────────────────────────────────────┤
 │  Data model                                     │
 │  review_db          review_model                │
@@ -45,7 +48,7 @@ This document refers to modules by their unqualified names (e.g. `run_review_bun
 └─────────────────────────────────────────────────┘
 ```
 
-Sweep-related modules (`review_sweep`, `run_gate_sweep`, `gate_sweep_format`, `ack_trivial_note_changes`) exist alongside these layers but are experimental — see the note above.
+The unit of review execution is one **(note, gate) pair**; how many pairs ride in one LLM call is a packing choice made by the top layer, not a protocol difference ([ADR 029](./adr/029-review-execution-unified-on-note-gate-pairs.md)). Sweep-related modules (`review_sweep`, `run_gate_sweep`, `ack_trivial_note_changes`) are experimental — see the note above.
 
 ---
 
@@ -147,27 +150,48 @@ Multi-strategy fallback chain for extracting decisions from review markdown:
 
 ```
 1. resolve_gates     → expand bundle names to gate IDs, filter by note type and traits
-2. create_run        → insert review_run + review_run_gates (status=running)
-3. review_runners    → invoke claude-code or codex CLI with review prompt
-4. attach_execution_data → persist runner artifacts and telemetry
-5. extract results   → parse gate blocks from runner output
-6. record_and_finalize_run → write gate_reviews, validate coverage, mark run completed, append acceptance_events
+2. create_run        → insert review_run + review_run_gates (status=running), one run per note
+3. executor.execute_batch
+   a. protocol/prompt.render_pairs_prompt → one prompt embedding each note and gate text once
+   b. review_runners.run_prompt           → invoke claude-code or codex CLI
+   c. protocol/parser.parse_pair_bundle   → extract pair blocks, canonicalize result footers
+   d. per run: finalize if all its pairs parsed, fail it individually otherwise (salvage)
+4. record_and_finalize_run → write gate_reviews, validate coverage, mark run completed, append acceptance_events
 ```
 
-### run_review_bundle.py — Multi-gate single-note review
+### Pair protocol (`protocol/`) and executor
 
-The bundle protocol owner for multi-gate single-note review. The subprocess path runs multiple gates against one note in a single LLM invocation; the live-agent path renders the same prompt and ingests the same sentinel-delimited bundle format.
+Every output block is keyed by the full (note, gate) pair:
 
-- Resolves markdown links in the note so the reviewer sees linked content
-- Builds a structured prompt with the target note identity, pre-resolved link table, and gate definitions
-- Parses output delimited by `=== GATE REVIEW START/END: {gate-id} ===`
-- Records individual gate_reviews and acceptance_events
+```
+=== PAIR REVIEW START: {note_path} :: {gate_id} ===
+### Summary
+<prose>
 
-The live-agent entry points reuse this protocol without launching a nested runner:
+### Findings
+- <severity>: <finding>
 
-1. `commonplace-create-review-run --with-prompt` creates the run and writes the canonical prompt to `kb/reports/bundle-reviews/review-run-{id}/prompt.md` (path returned as `prompt_path` in the JSON payload)
-2. the current agent reads `prompt_path`, follows it, and writes `kb/reports/bundle-reviews/review-run-{id}/bundle-output.md`
-3. `commonplace-ingest-bundle-output` parses that artifact and finalizes through `record_and_finalize_run`
+### Suggested Revision
+<optional>
+
+## Result: PASS|WARN|FAIL|ERROR
+=== PAIR REVIEW END: {note_path} :: {gate_id} ===
+```
+
+- `protocol/format.py` — sentinel grammar and the ` :: ` pair-key separator. Render-time validation rejects the separator inside note paths or gate ids and reserved `=== … ===` lines inside embedded note/gate text.
+- `protocol/prompt.py` — `render_pairs_prompt(notes, gate_texts, output_mode)` over `NoteReviewTarget`s. Note contents are always embedded; the multi-note shape adds the evaluate-independently rule; `output_mode="file"` swaps the destination bullets for the live-agent path.
+- `protocol/parser.py` — `parse_pair_bundle` raises on structural anomalies (nested/mismatched/unterminated/unexpected/duplicate/empty blocks) but reports missing expected pairs in `missing` instead of raising, so callers salvage the pairs that parsed.
+- `protocol/decisions.py` — decision-line parsing and footer canonicalization; grammar-independent, also used for historical rows.
+- `executor.py` — `execute_batch(targets, gate_texts, …)` owns the shared lifecycle: render, one runner call, telemetry/model-mismatch handling, usage-exhaustion (`UsageExhausted`) and interrupt handling, parse, then per-run finalize or fail. Each run's `bundle-output.md` artifact and `raw_bundle_markdown` hold that run's canonical pair blocks; failed runs keep the raw batch output for debugging.
+
+### Packing callers
+
+- **`run_review_bundle.py` — share-note packing.** One note, all its gates, one call, one run.
+- **`run_gate_sweep.py` — share-gate packing (experimental).** One gate over a chunked note list; one single-gate run per note; a missing pair fails only that note's run while the rest of the batch completes.
+- **Live-agent path** — same protocol without a nested runner:
+  1. `commonplace-create-review-run --with-prompt` creates the run and writes the canonical prompt to `kb/reports/bundle-reviews/review-run-{id}/prompt.md` (path returned as `prompt_path` in the JSON payload)
+  2. the current agent reads `prompt_path`, follows it, and writes `kb/reports/bundle-reviews/review-run-{id}/bundle-output.md`
+  3. `commonplace-ingest-bundle-output` parses that artifact and finalizes through `record_and_finalize_run` (single-run ingest is all-or-nothing)
 
 ### review_runners.py — LLM execution
 
@@ -204,25 +228,6 @@ Also provides:
 ### warn_selector.py
 
 Query effective reviews with `decision="warn"`, skip stale gate revisions and legacy rows without a `review_run_id`, and extract actionable findings from the `### Findings` section.
-
----
-
-## Bundle prompt format (multi-gate, single note)
-
-```
-=== GATE REVIEW START: {gate-id} ===
-### Summary
-<prose>
-
-### Findings
-- <severity>: <finding>
-
-### Suggested Revision
-<optional>
-
-## Result: PASS|WARN|FAIL|ERROR
-=== GATE REVIEW END: {gate-id} ===
-```
 
 ---
 

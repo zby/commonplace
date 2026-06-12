@@ -1,4 +1,11 @@
-"""Parse and canonicalize review protocol output."""
+"""Parse and canonicalize review protocol output.
+
+Output blocks are keyed by (note_path, gate_id). Structural anomalies —
+nested or mismatched sentinels, unexpected or duplicate pairs, empty bodies —
+raise, because the rest of the stream cannot be trusted. Missing expected
+pairs do not raise: callers salvage the pairs that parsed and decide what to
+do about the rest.
+"""
 
 from __future__ import annotations
 
@@ -6,93 +13,104 @@ from dataclasses import dataclass
 from typing import Sequence
 
 from commonplace.review.protocol.decisions import parse_review_decision, rewrite_review_result_footer
-from commonplace.review.protocol.format import BUNDLE_END_RE, BUNDLE_START_RE, NOTE_END_RE, NOTE_START_RE
+from commonplace.review.protocol.format import PAIR_END_RE, PAIR_START_RE
+
+
+PairKey = tuple[str, str]
 
 
 @dataclass(frozen=True)
-class ParsedGateReview:
+class ParsedPairReview:
+    note_path: str
     gate_id: str
     decision: str
     rationale_markdown: str
 
 
-def extract_bundle_reviews(
+@dataclass(frozen=True)
+class ParsedPairBundle:
+    canonical_markdown: str
+    reviews: dict[PairKey, ParsedPairReview]
+    canonical_texts: dict[PairKey, str]
+    missing: list[PairKey]
+
+
+def extract_pair_reviews(
     bundle_markdown: str,
     *,
-    expected_gate_ids: Sequence[str],
-) -> dict[str, str]:
-    expected = set(expected_gate_ids)
-    reviews: dict[str, str] = {}
-    current_gate_id: str | None = None
+    expected_pairs: Sequence[PairKey],
+) -> dict[PairKey, str]:
+    expected = set(expected_pairs)
+    reviews: dict[PairKey, str] = {}
+    current_pair: PairKey | None = None
     current_lines: list[str] = []
 
     for raw_line in bundle_markdown.splitlines():
-        start_match = BUNDLE_START_RE.match(raw_line.strip())
+        start_match = PAIR_START_RE.match(raw_line.strip())
         if start_match is not None:
-            if current_gate_id is not None:
-                raise ValueError(f"nested gate review start before closing {current_gate_id}")
-            gate_id = start_match.group("gate_id")
-            if gate_id not in expected:
-                raise ValueError(f"unexpected gate in bundle output: {gate_id}")
-            if gate_id in reviews:
-                raise ValueError(f"duplicate gate in bundle output: {gate_id}")
-            current_gate_id = gate_id
+            if current_pair is not None:
+                raise ValueError(f"nested pair review start before closing {current_pair[0]} :: {current_pair[1]}")
+            pair = (start_match.group("note_path"), start_match.group("gate_id"))
+            if pair not in expected:
+                raise ValueError(f"unexpected pair in review output: {pair[0]} :: {pair[1]}")
+            if pair in reviews:
+                raise ValueError(f"duplicate pair in review output: {pair[0]} :: {pair[1]}")
+            current_pair = pair
             current_lines = []
             continue
 
-        end_match = BUNDLE_END_RE.match(raw_line.strip())
+        end_match = PAIR_END_RE.match(raw_line.strip())
         if end_match is not None:
-            gate_id = end_match.group("gate_id")
-            if current_gate_id is None:
-                raise ValueError(f"gate review end without start: {gate_id}")
-            if gate_id != current_gate_id:
-                raise ValueError(f"gate review end mismatch: expected {current_gate_id}, found {gate_id}")
+            pair = (end_match.group("note_path"), end_match.group("gate_id"))
+            if current_pair is None:
+                raise ValueError(f"pair review end without start: {pair[0]} :: {pair[1]}")
+            if pair != current_pair:
+                raise ValueError(
+                    f"pair review end mismatch: expected {current_pair[0]} :: {current_pair[1]}, "
+                    f"found {pair[0]} :: {pair[1]}"
+                )
             review_text = "\n".join(current_lines).strip()
             if not review_text:
-                raise ValueError(f"empty review body for gate: {gate_id}")
-            reviews[gate_id] = review_text + "\n"
-            current_gate_id = None
+                raise ValueError(f"empty review body for pair: {pair[0]} :: {pair[1]}")
+            reviews[pair] = review_text + "\n"
+            current_pair = None
             current_lines = []
             continue
 
-        if current_gate_id is not None:
+        if current_pair is not None:
             current_lines.append(raw_line)
 
-    if current_gate_id is not None:
-        raise ValueError(f"unterminated gate review block: {current_gate_id}")
-
-    missing = [gate_id for gate_id in expected_gate_ids if gate_id not in reviews]
-    if missing:
-        raise ValueError(f"missing gate reviews in bundle output: {', '.join(missing)}")
+    if current_pair is not None:
+        raise ValueError(f"unterminated pair review block: {current_pair[0]} :: {current_pair[1]}")
 
     return reviews
 
 
-def rewrite_bundle_result_footers(
+def rewrite_pair_result_footers(
     bundle_markdown: str,
     *,
-    parsed_reviews: dict[str, str],
+    canonical_texts: dict[PairKey, str],
 ) -> str:
     rewritten_lines: list[str] = []
-    current_gate_id: str | None = None
+    current_pair: PairKey | None = None
 
     for raw_line in bundle_markdown.splitlines():
-        start_match = BUNDLE_START_RE.match(raw_line.strip())
+        start_match = PAIR_START_RE.match(raw_line.strip())
         if start_match is not None:
-            current_gate_id = start_match.group("gate_id")
+            current_pair = (start_match.group("note_path"), start_match.group("gate_id"))
             rewritten_lines.append(raw_line)
             continue
 
-        end_match = BUNDLE_END_RE.match(raw_line.strip())
+        end_match = PAIR_END_RE.match(raw_line.strip())
         if end_match is not None:
-            gate_id = end_match.group("gate_id")
-            if current_gate_id == gate_id and gate_id in parsed_reviews:
-                rewritten_lines.extend(parsed_reviews[gate_id].rstrip("\n").splitlines())
+            pair = (end_match.group("note_path"), end_match.group("gate_id"))
+            if current_pair == pair and pair in canonical_texts:
+                rewritten_lines.extend(canonical_texts[pair].rstrip("\n").splitlines())
             rewritten_lines.append(raw_line)
-            current_gate_id = None
+            current_pair = None
             continue
 
-        if current_gate_id is None:
+        if current_pair is None:
             rewritten_lines.append(raw_line)
 
     rewritten = "\n".join(rewritten_lines)
@@ -101,126 +119,30 @@ def rewrite_bundle_result_footers(
     return rewritten
 
 
-def parse_bundle_output(
+def parse_pair_bundle(
     bundle_markdown: str,
     *,
-    expected_gate_ids: Sequence[str],
-) -> tuple[str, dict[str, ParsedGateReview], dict[str, str]]:
-    parsed_reviews = extract_bundle_reviews(bundle_markdown, expected_gate_ids=expected_gate_ids)
-    canonical_reviews: dict[str, str] = {}
-    gate_reviews: dict[str, ParsedGateReview] = {}
-    for gate_id in expected_gate_ids:
-        review_text = parsed_reviews[gate_id]
+    expected_pairs: Sequence[PairKey],
+) -> ParsedPairBundle:
+    extracted = extract_pair_reviews(bundle_markdown, expected_pairs=expected_pairs)
+    canonical_texts: dict[PairKey, str] = {}
+    reviews: dict[PairKey, ParsedPairReview] = {}
+    for pair, review_text in extracted.items():
         decision = parse_review_decision(review_text)
-        canonical_review_text = rewrite_review_result_footer(review_text, decision=decision)
-        canonical_reviews[gate_id] = canonical_review_text
-        gate_reviews[gate_id] = ParsedGateReview(
-            gate_id=gate_id,
+        canonical_text = rewrite_review_result_footer(review_text, decision=decision)
+        canonical_texts[pair] = canonical_text
+        reviews[pair] = ParsedPairReview(
+            note_path=pair[0],
+            gate_id=pair[1],
             decision=decision,
-            rationale_markdown=canonical_review_text,
+            rationale_markdown=canonical_text,
         )
 
-    canonical_bundle_markdown = rewrite_bundle_result_footers(
-        bundle_markdown,
-        parsed_reviews=canonical_reviews,
+    canonical_markdown = rewrite_pair_result_footers(bundle_markdown, canonical_texts=canonical_texts)
+    missing = [pair for pair in expected_pairs if pair not in extracted]
+    return ParsedPairBundle(
+        canonical_markdown=canonical_markdown,
+        reviews=reviews,
+        canonical_texts=canonical_texts,
+        missing=missing,
     )
-    return canonical_bundle_markdown, gate_reviews, canonical_reviews
-
-
-def extract_gate_sweep_reviews(
-    bundle_markdown: str,
-    *,
-    gate_id: str,
-    expected_note_paths: Sequence[str],
-) -> dict[str, str]:
-    expected_paths = list(expected_note_paths)
-    expected = set(expected_paths)
-    reviews: dict[str, str] = {}
-    current_note_path: str | None = None
-    current_lines: list[str] = []
-
-    for raw_line in bundle_markdown.splitlines():
-        start_match = NOTE_START_RE.match(raw_line.strip())
-        if start_match is not None:
-            if current_note_path is not None:
-                raise ValueError(f"nested note review start before closing {current_note_path}")
-            note_path = start_match.group("note_path")
-            if note_path not in expected:
-                raise ValueError(f"unexpected note in gate sweep output: {note_path}")
-            if note_path in reviews:
-                raise ValueError(f"duplicate note in gate sweep output: {note_path}")
-            current_note_path = note_path
-            current_lines = []
-            continue
-
-        end_match = NOTE_END_RE.match(raw_line.strip())
-        if end_match is not None:
-            note_path = end_match.group("note_path")
-            if current_note_path is None:
-                raise ValueError(f"note review end without start: {note_path}")
-            if note_path != current_note_path:
-                raise ValueError(f"note review end mismatch: expected {current_note_path}, found {note_path}")
-            note_block = "\n".join(current_lines).strip()
-            if not note_block:
-                raise ValueError(f"empty note review block: {note_path}")
-            reviews[note_path] = extract_bundle_reviews(note_block, expected_gate_ids=[gate_id])[gate_id]
-            current_note_path = None
-            current_lines = []
-            continue
-
-        if current_note_path is not None:
-            current_lines.append(raw_line)
-
-    if current_note_path is not None:
-        raise ValueError(f"unterminated note review block: {current_note_path}")
-
-    missing = [note_path for note_path in expected_paths if note_path not in reviews]
-    if missing:
-        raise ValueError(f"missing note reviews in gate sweep output: {', '.join(missing)}")
-
-    return reviews
-
-
-def rewrite_gate_sweep_result_footers(
-    bundle_markdown: str,
-    *,
-    gate_id: str,
-    parsed_reviews: dict[str, str],
-) -> str:
-    rewritten_lines: list[str] = []
-    current_note_path: str | None = None
-    current_note_lines: list[str] = []
-
-    for raw_line in bundle_markdown.splitlines():
-        start_match = NOTE_START_RE.match(raw_line.strip())
-        if start_match is not None:
-            current_note_path = start_match.group("note_path")
-            current_note_lines = []
-            rewritten_lines.append(raw_line)
-            continue
-
-        end_match = NOTE_END_RE.match(raw_line.strip())
-        if end_match is not None:
-            note_path = end_match.group("note_path")
-            if current_note_path == note_path and note_path in parsed_reviews:
-                rewritten_note = rewrite_bundle_result_footers(
-                    "\n".join(current_note_lines),
-                    parsed_reviews={gate_id: parsed_reviews[note_path]},
-                )
-                rewritten_lines.extend(rewritten_note.rstrip("\n").splitlines())
-            else:
-                rewritten_lines.extend(current_note_lines)
-            rewritten_lines.append(raw_line)
-            current_note_path = None
-            current_note_lines = []
-            continue
-
-        if current_note_path is not None:
-            current_note_lines.append(raw_line)
-        else:
-            rewritten_lines.append(raw_line)
-
-    rewritten = "\n".join(rewritten_lines)
-    if bundle_markdown.endswith("\n"):
-        return rewritten + "\n"
-    return rewritten

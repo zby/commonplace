@@ -18,7 +18,8 @@ from commonplace.review.paths import GATES_ROOT
 from commonplace.review.resolve_gates import resolve_to_gate_ids
 from commonplace.review.review_db import resolve_db_path
 from commonplace.review.review_target_selector import StaleGate, select_stale_gates
-from commonplace.review.run_review_bundle import UsageExhausted, run_bundle
+from commonplace.review.executor import UsageExhausted
+from commonplace.review.run_review_bundle import run_bundle
 
 
 DEFAULT_PARALLELISM = 4
