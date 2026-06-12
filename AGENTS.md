@@ -82,6 +82,7 @@ Read the target collection's `COLLECTION.md` before writing or connecting artifa
 | `kb/reference/` | descriptive register | Describing the shipped Commonplace system, architecture, type system, commands, and ADRs. |
 | `kb/instructions/` | prescriptive register | Writing procedures, skills, review gates, operational rules, and how-to guidance. |
 | `kb/agent-memory-systems/` | descriptive external-system coverage | Reviewing and comparing external agent memory, knowledge, and context-engineering systems. |
+| `kb/agentic-systems/` | descriptive external-system coverage | Analysing external agentic systems and harnesses as whole systems — execution loops, orchestration APIs, control surfaces. |
 | `kb/sources/` | captured source material | Storing external snapshots, ingests, and source reviews. |
 | `kb/work/` | workshop layer | Holding in-flight investigations, drafts, migration plans, and temporary work that should eventually close or promote durable artifacts. |
 | `kb/types/` | global type surface, not a collection | Looking up shared type specs used across collections. |

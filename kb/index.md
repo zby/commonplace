@@ -18,7 +18,7 @@ This KB is itself agent-operated: a human directs the inquiry, AI agents draft, 
 
 ## Browse
 
-Each collection has a README that serves as its curated landing — all are linked from the top menu. The current collections are [Notes](./notes/README.md), [Reference](./reference/README.md), [Agent Memory Systems](./agent-memory-systems/README.md), [Sources](./sources/README.md), [Instructions](./instructions/README.md), and [Workshops](./work/README.md).
+Each collection has a README that serves as its curated landing — all are linked from the top menu. The current collections are [Notes](./notes/README.md), [Reference](./reference/README.md), [Agent Memory Systems](./agent-memory-systems/README.md), [Agentic Systems](./agentic-systems/README.md), [Sources](./sources/README.md), [Instructions](./instructions/README.md), and [Workshops](./work/README.md).
 
 For deeper navigation:
 
