@@ -101,6 +101,20 @@ Usable from any source to any destination.
 | `defined-in` | reader doesn't know the term; target is under `kb/notes/definitions/` |
 | `see-also` | reader might benefit but author can't name a specific need; escape hatch — use only after ruling out a more specific label |
 
+## Distillation tracking (`Distilled into:`)
+
+When an artifact is distilled from one or more source notes — a skill from methodology notes, a `COLLECTION.md` rule from a design note, a reference doc from a workshop conclusion — the dependency is recorded at the **source**, in a dedicated footer section below `Relevant Notes:`:
+
+```markdown
+Distilled into:
+
+- [cp-skill-write SKILL.md](../instructions/cp-skill-write/SKILL.md) — the duplicate-check rule
+```
+
+The distilled artifact itself carries no backlinks to its sources: its reader is an executor, and provenance links dilute focus and add indirection cost. The forward pointer sits where change happens — editing a source note surfaces "these downstream artifacts may now be stale" with zero hops. The reverse query ("what informed this artifact?") is rare and runs as a search: `rg "<artifact-name>" kb/notes/`.
+
+Rationale: [distilled artifacts need source tracking at the source](../notes/distilled-artifacts-need-source-tracking-at-the-source.md).
+
 ## Limits
 
 The catalogue is guidance, not a closed enum. Add to it, adapt it, or ignore it where a collection has a better local vocabulary. Labels still need shared recognition to carry stable meaning across collections.

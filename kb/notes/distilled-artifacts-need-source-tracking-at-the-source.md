@@ -1,47 +1,44 @@
 ---
-description: Distilled artifacts should not link back to sources (focus), but sources should link forward to distilled targets ("Distilled into:") so that source changes trigger staleness review of downstream artifacts
+description: "Distillation strips lineage from the artifact by design, so the dependency record must live where change happens — visible to whoever edits a source at the moment of editing, not to whoever executes the artifact"
 type: kb/types/note.md
+traits: [title-as-claim]
 tags: [links]
 status: seedling
 ---
 
 # Distilled artifacts need source tracking at the source
 
-Distillation produces artifacts optimized for a single goal — an instruction guides an agent, a skill body executes a workflow, a focused note makes one argument. Inline links to the methodology notes, conversations, and earlier drafts that informed the artifact would dilute that focus. The reader of the instruction doesn't need to follow a link to understand why a convention exists; they need to follow the convention.
+Distillation produces artifacts optimized for execution: an instruction guides an agent, a skill body runs a workflow, a checklist enforces a policy, a paper presents an argument. The optimization strips lineage by design — the executing reader needs the convention, not the reasoning that produced it, and inline provenance links dilute focus while adding [indirection cost](./indirection-is-costly-in-llm-instructions.md). A well-distilled artifact is deliberately silent about where it came from.
 
-But the maintainer needs to know the dependency structure. When a source note changes — a methodology claim is revised, a convention is updated, an architectural decision is reversed — every artifact distilled from that source is potentially stale. Without a record of what went into the distillation, there's no way to know which artifacts to review.
+But distilled knowledge stays dependent on what it was distilled from. Sources keep evolving — a methodology claim is revised, a design decision reversed — and each source edit silently puts every downstream distillate at risk. Without a dependency record, a source change names nothing: there is no worklist for staleness review, and the drift is discovered only when a stale artifact misleads someone.
 
-## Source-side tracking
+The resolution is not to put the lineage back into the artifact but to put it **where change happens**. The staleness signal exists to reach whoever changes a source, at the moment they change it. Lineage recorded inside the artifact is invisible then — nobody re-opens downstream artifacts while editing a source. Lineage recorded at the source is exactly where the editor already is: they see "this has been distilled into X and Y" as they edit, and the review worklist falls out of the edit itself.
 
-The dependency link belongs at the source, not the target. A distillation typically draws from multiple source notes. Each source gets a "Distilled into:" entry in its footer:
+The deeper reason is that the two lineage queries have asymmetric requirements. The forward query — *what depends on what I just changed?* — must be zero-hop at edit time, because its job is to **interrupt**: an answer the editor has to go looking for is an answer they will not look for. The reverse query — *what informed this artifact?* — is a deliberate, rare investigation that can afford a search. Store the pointer on the path that must interrupt; let search serve the path that can wait.
 
-```markdown
-Distilled into:
+## Two audiences, one direction
 
-- [COLLECTION.md](./COLLECTION.md) — the area assignment checklist
-```
-
-This optimizes for the primary maintenance scenario: you're editing a methodology note, you see "Distilled into: WRITING.md", you know to check whether WRITING.md needs updating. No reverse lookup needed. The reverse query ("what informed this instruction?") is cheap: `rg "WRITING.md" kb/notes/` finds all notes linking to the target. The KB is small enough that grep is the query engine.
-
-## Two audiences, one link direction
-
-| | Distilled artifact | Source note |
+| | Distilled artifact | Source |
 |---|---|---|
-| **Reader** | Agent executing a task | Maintainer updating methodology |
-| **Links** | Only to things the reader needs | Forward to distilled targets via "Distilled into:" |
-| **Staleness signal** | None — it doesn't know its sources | Visible — "I changed, and these downstream artifacts may be stale" |
+| **Reader** | Executor doing the task | Maintainer changing the knowledge |
+| **Lineage carried** | None — focus is the point | Forward pointers to its distillates |
+| **Staleness signal** | None it could act on | Fires at edit time, where change originates |
 
-The distilled artifact stays focused. The source note carries the forward pointer. Staleness detection flows in the direction of change: source changes → maintainer sees downstream targets → reviews them.
+Staleness detection flows in the direction of change: source changes → the editor sees the downstream targets → reviews them. What that review *is* depends on the derivation: in the general case it is judgment (re-read and re-distill); where the derivation is mechanical, [the check is free and the regime flips to enforce-or-omit](./a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md).
+
+The shipped encoding of this rule — the `Distilled into:` footer section and the `rg` reverse query — is documented in [link-vocabulary.md](../reference/link-vocabulary.md).
 
 ---
 
 Relevant Notes:
 
-- [skills derive from methodology through distillation](./skills-derive-from-methodology-through-distillation.md) — foundation: the distillation process that produces artifacts needing source tracking
-- [link graph plus timestamps enables make-like staleness detection](./link-graph-plus-timestamps-enables-make-like-staleness-detection.md) — extends: "Distilled into:" links provide the dependency edges that distilled artifacts deliberately omit
-- [indirection is costly in LLM instructions](./indirection-is-costly-in-llm-instructions.md) — motivates: why distilled artifacts shouldn't carry links back to sources
-- [frontloading spares execution context](./frontloading-spares-execution-context.md) — motivates: distillation is a form of frontloading; source-side tracking preserves the pre-frontloaded dependency structure
+- [skills derive from methodology through distillation](./skills-derive-from-methodology-through-distillation.md) — grounds: the distillation relationship that produces artifacts needing source tracking
+- [link graph plus timestamps enables make-like staleness detection](./link-graph-plus-timestamps-enables-make-like-staleness-detection.md) — extends: source-side forward pointers provide the dependency edges that distilled artifacts deliberately omit
+- [indirection is costly in LLM instructions](./indirection-is-costly-in-llm-instructions.md) — grounds: why the artifact side must stay lineage-free
+- [frontloading spares execution context](./frontloading-spares-execution-context.md) — grounds: distillation is a form of frontloading; source-side tracking preserves the dependency structure the frontloaded artifact no longer shows
+- [A derived copy of recomputable truth must be checked or absent](./a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — extends: the deterministic special case — when the derivation is mechanical the staleness check is free, and managed review flips to enforce-or-omit
+- [link-vocabulary.md](../reference/link-vocabulary.md) — evidence: the shipped `Distilled into:` convention encoding this rule
 
 Distilled into:
 
-- [COLLECTION.md](./COLLECTION.md) — the distillation tracking rule
+- [link-vocabulary.md](../reference/link-vocabulary.md) — the `Distilled into:` footer convention
