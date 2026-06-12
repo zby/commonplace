@@ -35,15 +35,23 @@ Shared stance: prose files as operational artifacts, skills as the adoption mech
 4. **Learning-loop oracle.** SkillOpt mutates instructions behind machine benchmarks and held-out gates; Commonplace's gate-learning design holds the oracle at human-accepted edits.
 5. **Product shape.** GBrain is an installable runtime (daemon, MCP transport, OAuth, queues). Commonplace is a methodology plus a thin deterministic CLI inside the harness you already trust.
 
+## The frame that does NOT work
+
+"The system decides vs the methodology decides" collapses on inspection: a methodology *is* a deciding system, because prose is executable by LLMs — Commonplace's own vocabulary says so (instructions, gates, and COLLECTION contracts are system-definition artifacts consumed with binding force). Both GBrain and Commonplace are systems that mix code and prose. The honest differences are the five placement axes above, which compress to:
+
+- **GBrain: code writes, prose reads.** The write path is codified (extraction, consolidation, ranking in TypeScript with embedded LLM calls); consumption is prose-advised (skills tell the host agent what to do).
+- **Commonplace: prose writes, code checks.** Writing and navigation are prose-executed (conventions, contracts); checking is codified (validators, schemas, review ledger).
+
+Plus locus (own daemon vs inside your harness), admission polarity (default-ingest vs default-exclude), revision semantics (numeric decay/supersession vs dialectical contestation), and oracle (machine benchmarks vs human acceptance). Full descriptive treatment: [GBrain as an agentic system](../../agentic-systems/gbrain.md).
+
 ## Consequences for the pitch
 
-- **The category is validated — the RAG strawman is obsolete.** [The knowledge layer for AI agents](./the-knowledge-layer-for-ai-agents.md) contrasts against RAG ("retrieval gives you recall, not reasoning"). GBrain also has markdown, links, skills, and synthesis; a reader who knows GBrain will not be moved by the RAG contrast. The differentiation that survives GBrain is where authority lives and how knowledge earns trust.
-- **The comparative review's flagship finding is the frame.** "The fundamental split is who decides what to remember": GBrain answers *the system decides, continuously*; Commonplace answers *the methodology decides, with review*. That line positions both systems honestly in one sentence and reuses the showcase asset ([related-systems-as-showcase](./related-systems-as-showcase.md)).
-- **Candidate framings to test:** "the knowledge layer your agents can audit"; "git-native, review-gated knowledge — every change to what your agents believe is a diff"; service-native vs git-native as the category split (GBrain anchors one pole, Commonplace the other).
-- **The audiences may genuinely differ.** GBrain serves capture-everything personal/team memory; Commonplace serves teams whose knowledge must be *right* (methodology, design decisions, claims with provenance). "Both" is not a weakness if named: capture-side system feeding a review-gated library is a plausible composition story, not a rivalry.
+- **The category is validated — the RAG strawman is obsolete.** [The knowledge layer for AI agents](./the-knowledge-layer-for-ai-agents.md) contrasts against RAG ("retrieval gives you recall, not reasoning"). GBrain also has markdown, links, skills, and synthesis; a reader who knows GBrain will not be moved by the RAG contrast. The differentiation that survives GBrain is the placement axes — especially "prose writes, code checks" and "runs inside the harness you already trust."
+- **Candidate framings to test:** "the knowledge layer your agents can audit"; "git-native, review-gated knowledge — every change to what your agents believe is a diff"; "no second runtime — your harness is the engine."
+- **The planned capture layer changes the story from rivalry to composition.** Commonplace intends to add a capture-everything layer (decision 2026-06-12), borrowing heavily from GBrain's write side: signal detection, fact extraction with provenance, validity/supersession metadata, consolidation phases, durable background jobs. The differentiating move is keeping the existing promotion boundary: ambient capture lands in a default-ingest layer with expiry and provenance, and only review-gated promotion crosses into the library. That is GBrain's write machinery feeding Commonplace's trust machinery — adopt their capture, keep our oracle.
 
 ## Open questions
 
 - Does the GBrain comparison belong in public positioning (named head-to-head) or only as an internal frame? A respectful named comparison piggybacks on its popularity but invites rebuttal on infrastructure features we lack by design.
-- Is "agent memory system" the wrong shelf for GBrain in our own corpus — should `kb/agentic-systems/` carry a whole-system analysis of it (the review covers memory; the operating-system half, skillpack adoption protocol, and dream-cycle orchestration are agentic-system territory)?
+- Capture-layer design questions to work out before borrowing: where the capture collection lives (workshop-like? its own register?), what expiry and provenance it carries, whether capture writes are agent-mediated (signal-detector-style skill) or service-mediated (we have no daemon — does Minions-style durable background work need a Commonplace answer, or is the harness's own scheduling enough?), and what the promotion gate from capture to library reuses from the review system.
 - GBrain's borrowable ideas (freshness/lineage gates on generated context, maintenance as a phase graph) are also *positioning* evidence: adopting them while keeping git-native authority demonstrates the stance rather than asserting it.

@@ -5,3 +5,4 @@ Coverage of external **agentic systems and harnesses as whole systems** — exec
 ## Analyses
 
 - [Claude Code dynamic workflows](./claude-code-dynamic-workflows.md) — model-authored orchestrator scripts over sub-agents: the first shipped harness exposure of the bounded call beneath the frozen tool loop, mapped onto the [tool-loop cluster](../notes/tool-loop-README.md)
+- [GBrain as an agentic system](./gbrain.md) — the agent-OS half of a popular "memory" project: host-agent adoption protocol, dream-cycle scheduler, durable crash-resumable subagent queue, fail-closed trust boundary, and a gated self-modification loop; memory subsystem reviewed in [agent-memory-systems](../agent-memory-systems/reviews/gbrain.md)
