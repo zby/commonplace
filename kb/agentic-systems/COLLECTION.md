@@ -27,7 +27,7 @@ Organised per destination; label semantics in [link-vocabulary.md](../reference/
 
 - **→ `kb/sources/`** — link the snapshots an analysis is grounded in. Labels: `derived-from`, `evidence`, `see-also`.
 - **→ `kb/notes/`** — search when an analysis maps a system onto theory. Links usually run inverse (theory links in via `evidence`), so promote a novel transferable claim to `kb/notes/` rather than author theory here. Labels: `rationale`, `see-also`.
-- **→ `kb/agent-memory-systems/`** — when the analysed system has a memory subsystem reviewed there. Labels: `part-of` / `contains`, `compares-with`, `see-also`.
+- **→ `kb/agent-memory-systems/`** — when the analysed whole system has a memory, knowledge, or context-engineering subsystem reviewed there. Use `contains` from the whole-system analysis to the subsystem review; use `part-of` only from a subsystem-focused analysis back to the whole system. Labels: `part-of` / `contains`, `compares-with`, `see-also`.
 - **→ `kb/reference/`** — scan when a design element has a direct Commonplace analogue. Labels: `see-also`.
 
 ## Types
@@ -39,7 +39,7 @@ Organised per destination; label semantics in [link-vocabulary.md](../reference/
 
 ## What does NOT belong here
 
-- Memory and knowledge subsystem reviews → `kb/agent-memory-systems/`
+- Memory, knowledge, and context-engineering subsystem reviews → `kb/agent-memory-systems/`
 - Transferable claims about KB methodology or orchestration theory → `kb/notes/`
 - Raw snapshots of external sources → `kb/sources/`
 - Descriptions of the Commonplace system itself → `kb/reference/`

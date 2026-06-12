@@ -27,7 +27,7 @@ Exceptions: ADRs use numbered-decision format (`012-types-for-structure-traits-f
 
 Forward-authored; backlinks are computed. Inline for strongest commitment, with a connective word that fits the argument (e.g. `implements [title](path)`, `rests on [title](path)`, `defined in [title](path)`). Footer for labelled — `- [title](path) — label: context phrase`.
 
-Scan `kb/reference/`, `kb/notes/`, `kb/agent-memory-systems/`, `kb/sources/`, and `kb/instructions/` for link targets. Do not link into `kb/work/` (workshop layer — value is consumed, not imported). The `rationale` edge to `kb/notes/` is the primary theory-ward edge; outbound edges to `kb/agent-memory-systems/` and `kb/sources/` are uncommon (use them when a design choice was informed by a specific external system or source).
+Scan `kb/reference/`, `kb/notes/`, `kb/agent-memory-systems/`, `kb/agentic-systems/`, `kb/sources/`, and `kb/instructions/` for link targets. Do not link into `kb/work/` (workshop layer — value is consumed, not imported). The `rationale` edge to `kb/notes/` is the primary theory-ward edge; outbound edges to `kb/agent-memory-systems/`, `kb/agentic-systems/`, and `kb/sources/` are uncommon (use them when a design choice was informed by a specific external system or source).
 
 **Labels:**
 
@@ -38,8 +38,8 @@ Scan `kb/reference/`, `kb/notes/`, `kb/agent-memory-systems/`, `kb/sources/`, an
 | `supersedes` / `superseded-by` | reference (ADR chains) | current or prior version |
 | `rationale` | notes | this design rests on this claim |
 | `defined-in` | notes/definitions | reader may not know the term |
-| `derived-from` | sources, agent-memory | this design choice was abstracted from this external source/system |
-| `evidence` | sources, agent-memory | this external source/system corroborates the description |
+| `derived-from` | sources, agent-memory, agentic-systems | this design choice was abstracted from this external source/system |
+| `evidence` | sources, agent-memory, agentic-systems | this external source/system corroborates the description |
 | `procedure` | instructions | for how to do this, see this instruction |
 | `see-also` | any | adjacent companion; use sparingly |
 
@@ -56,6 +56,6 @@ Scan `kb/reference/`, `kb/notes/`, `kb/agent-memory-systems/`, `kb/sources/`, an
 
 - Transferable claims about KB methodology → `kb/notes/`
 - Procedures and how-to guidance → `kb/instructions/`
-- Descriptions of external systems → `kb/agent-memory-systems/reviews/`
+- Descriptions of external systems → `kb/agent-memory-systems/reviews/` for memory/context-engineering systems, or `kb/agentic-systems/` for whole agentic systems and harnesses
 - Work in progress → `kb/work/` (workshops)
 - Generated operational artifacts → `kb/reports/`

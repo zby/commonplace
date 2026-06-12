@@ -10,7 +10,7 @@ status: seedling
 
 Trace-derived systems learn from CLI sessions, event streams, assistant turns, run trajectories, or next-state feedback. This note reviews what each system actually does, then draws out the axes that separate them: how they ingest traces (ingestion pattern), what representational form they promote into (distributed-parametric, prose, symbolic, or mixed), and what behavioral authority the result has (knowledge artifact consumed as evidence/advice vs system-definition artifact consumed with instruction, enforcement, routing, validation, evaluation, or learning force).
 
-The review-backed code-inspected systems are Napkin, Pi Self-Learning, OpenViking, Operational Ontology Framework, nao, MemoryOS, ClawVault, CrewAI Memory, cass-memory, Compound Engineering, WUPHF, REM, Autocontext, Meta-Harness, Agentic Harness Engineering, HALO, ARIS, Reflexion, Dynamic Cheatsheet, Agent Workflow Memory, ACE, ExpeL, ReasoningBank, G-Memory, AgentFly, Gnosis, Voyager, OS-Copilot, Tendril, SkillX, SkillWeaver, AriGraph, Amazon Science SAGE, Agent-R, Agent-S, and Self-Training-LLM (source paths noted in per-system reviews). OpenClaw-RL is a TODO for repo-backed review now that a repository exists; its current placement is based on source coverage. The lightweight systems — AgeMem and Trajectory-Informed Memory Generation — are included with lower confidence, based on local ingest notes rather than implementation inspection.
+The review-backed code-inspected systems are Napkin, Pi Self-Learning, OpenViking, Operational Ontology Framework, Claude Workstream Kit, nao, MemoryOS, ClawVault, CrewAI Memory, cass-memory, Compound Engineering, WUPHF, REM, Autocontext, Meta-Harness, Agentic Harness Engineering, HALO, ARIS, Reflexion, Dynamic Cheatsheet, Agent Workflow Memory, ACE, ExpeL, ReasoningBank, G-Memory, AgentFly, Gnosis, Voyager, OS-Copilot, Tendril, SkillX, SkillWeaver, AriGraph, Amazon Science SAGE, Agent-R, Agent-S, and Self-Training-LLM (source paths noted in per-system reviews). OpenClaw-RL is a TODO for repo-backed review now that a repository exists; its current placement is based on source coverage. The lightweight systems — AgeMem and Trajectory-Informed Memory Generation — are included with lower confidence, based on local ingest notes rather than implementation inspection.
 
 **What the survey finds.** Across readable artifacts, structure ranges from minimal verbal hints (Reflexion) through scored flat rules (ACE, ExpeL) to executable code (Voyager, OS-Copilot) — the prose-to-symbolic span. Candidate generation from traces is concrete enough to adapt; the open problem is evaluation — deciding what deserves trust, persistence, and retirement in open-ended domains. The per-system catalog below provides the evidence; the comparative analysis follows it.
 
@@ -83,6 +83,20 @@ A local filesystem runner that learns from a deliberately thin task-result trace
 **Promotion.** Symbolic filesystem artifacts. `learned` strings become `_facts.md` bullets with source/date/confidence metadata, `_spec.md` gets task-local `Learned:` annotations, and handoff markdown records decisions and continuation state. No database, embeddings, or weight update.
 
 **Scope.** Per-project, single-agent. It owns the project artifact schema but not a multi-agent trace bus or shared cross-project memory.
+
+## Claude Workstream Kit
+
+A repo-local active-work ledger for Claude Code, where trace-derived learning is operational state rather than reusable lesson memory.
+
+**Trigger.** Workstream updates happen through explicit lifecycle skills: create, work, handoff, and close. Session-start read-back happens through a hook that prints `ACTIVE.md`, active-workstream status, staleness signals, and handoff inbox counts.
+
+**Source format.** The kit does not parse raw chat transcripts. The source signal is the current work session's concrete outcomes: user gates, task checkboxes, command output, verifier findings, git commits/tags, handoff files, and closure evidence.
+
+**Extraction.** The acting Claude Code agent writes the extraction under procedural skill rules. Completed work becomes evidence notes in `workstream.md`; current state becomes a compact `.state/ACTIVE.md` pointer; closure dispositions route learnings to durable files, handoffs, or explicit drops before the active workstream directory is removed.
+
+**Promotion.** The promoted artifact is not a general memory database. Session activity becomes project-local active work state, then closure extracts anything that should survive outside `.state/`, appends an archive line, creates a `ws/<name>` tag, and resets `ACTIVE.md`.
+
+**Scope.** Per-project and per-workstream. This strengthens the survey by adding an active-work-ledger subtype: the learned artifact is the lifecycle-governed state of unfinished work, with closure as the mechanism that prevents active memory from becoming stale ambient context.
 
 ## nao
 

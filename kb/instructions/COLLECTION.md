@@ -34,7 +34,7 @@ Tests for precision:
 
 Forward-authored; backlinks are computed. Inline for strongest commitment, with a connective word that fits (e.g. `after [title](path)`, `if [title](path)`). Footer for labelled — `- [title](path) — label: context phrase`.
 
-Scan `kb/instructions/`, `kb/notes/`, and `kb/reference/` for link targets. Do not link into `kb/agent-memory-systems/` or `kb/work/`. Keep chains shallow — a procedure that requires chasing five other procedures to execute isn't a procedure, it's a reading list.
+Scan `kb/instructions/`, `kb/notes/`, and `kb/reference/` for link targets. Do not link into `kb/agent-memory-systems/`, `kb/agentic-systems/`, or `kb/work/`. Keep chains shallow — a procedure that requires chasing five other procedures to execute isn't a procedure, it's a reading list.
 
 **Labels:**
 

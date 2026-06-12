@@ -31,6 +31,7 @@ Organised per destination: when to prospect for links, and the authorised labels
 - **→ `kb/sources/`** — for lightweight coverage, link back to the snapshot it was abstracted from; code-grounded reviews cite the repo directly. Labels: `derived-from`, `evidence`, `see-also`.
 - **→ `kb/notes/`** — search when a system's design rests on a theoretical claim. Links usually run inverse (theory links in via `evidence` / `derived-from`), so promote a novel claim to `kb/notes/` rather than author theory in a review. Labels: `rationale`, `evidence` (rare), `defined-in`, `see-also`.
 - **→ `kb/reference/`** — scan when a design element has a direct Commonplace analogue. Labels: `see-also`.
+- **→ `kb/agentic-systems/`** — search when the reviewed memory, knowledge, or context-engineering subsystem is part of a broader agentic harness, or when a whole-system analysis supplies useful comparison context. Labels: `part-of` / `contains`, `compares-with`, `see-also`.
 - **→ `kb/instructions/`** — scan when a review describes a workflow with a Commonplace counterpart. Labels: `see-also`.
 
 `compares-with` (a difference in *systems* on a design axis) is distinct from theoretical `contrasts` (a difference in *claims*); use `compares-with` here.
@@ -49,5 +50,6 @@ Organised per destination: when to prospect for links, and the authorised labels
 - Transferable claims about KB methodology → `kb/notes/`
 - Procedures and how-to guidance → `kb/instructions/`
 - Descriptions of the Commonplace system itself → `kb/reference/`
+- Whole external agentic-system or harness analyses not centered on memory/knowledge/context engineering → `kb/agentic-systems/`
 - Raw snapshots of external sources → `kb/sources/`
 - Work in progress → `kb/work/`

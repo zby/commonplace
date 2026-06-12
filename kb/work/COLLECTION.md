@@ -24,14 +24,14 @@ No constraint. Title fits whatever the workshop produces — claim, topic, plan,
 
 Permissive. Workshops freely cite the library to scaffold new work — library citation is how a workshop grounds itself in established knowledge before adding to it. Inline for prose connectives; footer for labelled — `- [title](path) — label: context phrase`.
 
-Scan `kb/notes/`, `kb/reference/`, `kb/agent-memory-systems/`, `kb/instructions/`, `kb/sources/`, and peer workshops in `kb/work/` for link targets. Workshop links are working notes, not durable graph contracts — borrow from theoretical/descriptive/prescriptive labels as the work calls for, or use a local phrase. Authorisation is loose; the articulation test still applies.
+Scan `kb/notes/`, `kb/reference/`, `kb/agent-memory-systems/`, `kb/agentic-systems/`, `kb/instructions/`, `kb/sources/`, and peer workshops in `kb/work/` for link targets. Workshop links are working notes, not durable graph contracts — borrow from theoretical/descriptive/prescriptive labels as the work calls for, or use a local phrase. Authorisation is loose; the articulation test still applies.
 
 **Labels (suggestions, not authoritative):**
 
 | label | destinations | reader-need / when to use |
 |---|---|---|
 | `extends`, `grounds`, `mechanism`, `contradicts`, `contrasts` | notes | theoretical-shaped (see `kb/reference/link-vocabulary.md`) |
-| `evidence`, `derived-from` | reference, agent-memory, sources | this artifact corroborates / the workshop was abstracted from this |
+| `evidence`, `derived-from` | reference, agent-memory, agentic-systems, sources | this artifact corroborates / the workshop was abstracted from this |
 | `rationale` | notes | this design or rule rests on this claim |
 | `defined-in` | notes/definitions | reader may not know the term |
 | `draws-on`, `tests`, `depends-on`, `produces`, `supersedes` | any | working-state labels — use whichever fits the workshop's progress |
@@ -57,4 +57,5 @@ When the workshop's question is answered, extract the durable conclusions into t
 
 - Anything stable enough to be referenced from the library → promote to the right durable collection
 - External source captures → `kb/sources/`
+- Durable external agentic-system and harness analyses → `kb/agentic-systems/`
 - Generated reports → `kb/reports/`
