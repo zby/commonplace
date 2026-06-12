@@ -47,7 +47,6 @@ packages = ["src/commonplace"]
 include = [
     "/AGENTS.md.template",
     "/.envrc.template",
-    "/kb/agent-memory-systems",
     "/kb/instructions",
     "/kb/notes",
     "/kb/reference",
@@ -72,7 +71,6 @@ include = [
 [tool.hatch.build.targets.wheel.force-include]
 "AGENTS.md.template" = "commonplace/_data/AGENTS.md.template"
 ".envrc.template" = "commonplace/_data/.envrc.template"
-"kb/agent-memory-systems" = "commonplace/_data/kb/agent-memory-systems"
 "kb/instructions" = "commonplace/_data/kb/instructions"
 "kb/notes" = "commonplace/_data/kb/notes"
 "kb/reference" = "commonplace/_data/kb/reference"

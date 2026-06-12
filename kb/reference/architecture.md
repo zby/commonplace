@@ -27,10 +27,6 @@ project/
           review-gates/
           cp-skill-write/
           *.md
-        agent-memory-systems/      ← reviews of external systems cited from notes
-          reviews/
-          lightweight/
-          *.md
       types/                       ← shared global types (`text`, `note`, `instruction`, ...)
       notes/                       ← user's own notes; starts with a COLLECTION.md template
         types/
@@ -67,7 +63,6 @@ The Python package carries the scaffold inputs as packaged data in built wheels.
 | `kb/commonplace/notes/` | Shipped methodology library (theoretical register) |
 | `kb/commonplace/reference/` | Shipped-system documentation plus ADR history |
 | `kb/commonplace/instructions/` | Shipped methodology procedures and cp-skill-* skills |
-| `kb/commonplace/agent-memory-systems/` | Shipped reviews of external agent-memory systems |
 | `kb/types/` | Shared global type contracts — library and user both use and extend |
 | `kb/notes/`, `kb/reference/`, `kb/instructions/` | User's own collections, each with a starter `COLLECTION.md` |
 | `kb/*/types/` | Collection-local structural contracts for specialised documents |
@@ -82,7 +77,7 @@ The Python package carries the scaffold inputs as packaged data in built wheels.
 `commonplace-init` is the install step that materialises the KB surface inside a project. It does four things:
 
 1. Creates the directory shell under `kb/` — the user's collections, the user-space directories, and the `kb/commonplace/` hierarchy.
-2. Copies shipped library trees into `kb/commonplace/{notes,reference,instructions,agent-memory-systems}/`. Shared `kb/types/` and user-space type scaffolds (`kb/sources/types/`, `kb/reports/types/`) land at their conventional top-level locations.
+2. Copies shipped library trees into `kb/commonplace/{notes,reference,instructions}/`. Shared `kb/types/` and user-space type scaffolds (`kb/sources/types/`, `kb/reports/types/`) land at their conventional top-level locations.
 3. Scaffolds minimal `COLLECTION.md` templates into the user's empty collections so that write skills have a starter register and conventions stub to fill in.
 4. Promotes selected skills into known `.claude/skills/cp-skill-*/` and `.agents/skills/cp-skill-*/` runtime surfaces as symlinks into `kb/commonplace/instructions/<name>/`, and resolves project-specific templates such as `AGENTS.md` and `.envrc`. Other agent runtimes may need to link, copy, register, or import the same canonical skill directories into their own discovery surface.
 

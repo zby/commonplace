@@ -401,7 +401,6 @@ my-project/
       notes/
       reference/
       instructions/
-      agent-memory-systems/
     log.md
   CLAUDE.md
 ```

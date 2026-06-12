@@ -25,7 +25,6 @@ Package built distributions with explicit Hatch include mappings. The sdist incl
 - `kb/notes` -> `commonplace/_data/kb/notes`
 - `kb/reference` -> `commonplace/_data/kb/reference`
 - `kb/instructions` -> `commonplace/_data/kb/instructions`
-- `kb/agent-memory-systems` -> `commonplace/_data/kb/agent-memory-systems`
 - shared type and user-space type directories under their matching `_data/kb/...` targets
 - root templates (`AGENTS.md.template`, `.envrc.template`) under `_data/`
 

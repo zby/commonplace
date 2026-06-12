@@ -59,7 +59,7 @@ def test_init_project_seeds_scaffold_files(tmp_path: Path) -> None:
     assert (tmp_path / "kb" / "commonplace" / "reference" / "README.md").is_file()
     assert (tmp_path / "kb" / "commonplace" / "reference" / "types" / "adr.md").is_file()
     assert (tmp_path / "kb" / "commonplace" / "reference" / "types" / "adr.schema.yaml").is_file()
-    assert (tmp_path / "kb" / "commonplace" / "agent-memory-systems" / "README.md").is_file()
+    assert not (tmp_path / "kb" / "commonplace" / "agent-memory-systems").exists()
 
     # User collections get minimal COLLECTION.md templates to fill in.
     assert (tmp_path / "kb" / "notes" / "COLLECTION.md").is_file()

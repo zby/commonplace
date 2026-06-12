@@ -41,7 +41,6 @@ SCAFFOLD_TREES = [
     ("kb/instructions", "kb/commonplace/instructions"),
     ("kb/notes", "kb/commonplace/notes"),
     ("kb/reference", "kb/commonplace/reference"),
-    ("kb/agent-memory-systems", "kb/commonplace/agent-memory-systems"),
     ("kb/reports/types", "kb/reports/types"),
     ("kb/sources/types", "kb/sources/types"),
     ("kb/types", "kb/types"),

@@ -46,7 +46,6 @@ Substitution is a flat string replace in `_write_template`. Templates that don't
 - `kb/commonplace/notes/` — shipped methodology library (from our `kb/notes/`)
 - `kb/commonplace/reference/` — shipped-system documentation and ADRs
 - `kb/commonplace/instructions/` — shipped procedures and `cp-skill-*` skills
-- `kb/commonplace/agent-memory-systems/` — shipped reviews of external systems
 - `kb/types/` — shared global types (`text`, `note`, `instruction`, `definition`, `index`)
 - `kb/reports/types/`, `kb/sources/types/` — collection-local type definitions for user-space collections
 
