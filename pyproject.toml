@@ -43,5 +43,42 @@ build-backend = "hatchling.build"
 [tool.hatch.build.targets.wheel]
 packages = ["src/commonplace"]
 
+[tool.hatch.build.targets.sdist]
+include = [
+    "/AGENTS.md.template",
+    "/.envrc.template",
+    "/kb/agent-memory-systems",
+    "/kb/instructions",
+    "/kb/notes",
+    "/kb/reference",
+    "/kb/reports/types",
+    "/kb/sources/types",
+    "/kb/types",
+    "/src",
+    "/test",
+]
+
+[tool.hatch.build.targets.sdist.force-include]
+"kb/instructions/cp-skill-connect" = "kb/instructions/cp-skill-connect"
+"kb/instructions/cp-skill-convert" = "kb/instructions/cp-skill-convert"
+"kb/instructions/cp-skill-health-check" = "kb/instructions/cp-skill-health-check"
+"kb/instructions/cp-skill-ingest" = "kb/instructions/cp-skill-ingest"
+"kb/instructions/cp-skill-revise-autoreason" = "kb/instructions/cp-skill-revise-autoreason"
+"kb/instructions/cp-skill-revise-iterative" = "kb/instructions/cp-skill-revise-iterative"
+"kb/instructions/cp-skill-snapshot-web" = "kb/instructions/cp-skill-snapshot-web"
+"kb/instructions/cp-skill-validate" = "kb/instructions/cp-skill-validate"
+"kb/instructions/cp-skill-write" = "kb/instructions/cp-skill-write"
+
+[tool.hatch.build.targets.wheel.force-include]
+"AGENTS.md.template" = "commonplace/_data/AGENTS.md.template"
+".envrc.template" = "commonplace/_data/.envrc.template"
+"kb/agent-memory-systems" = "commonplace/_data/kb/agent-memory-systems"
+"kb/instructions" = "commonplace/_data/kb/instructions"
+"kb/notes" = "commonplace/_data/kb/notes"
+"kb/reference" = "commonplace/_data/kb/reference"
+"kb/reports/types" = "commonplace/_data/kb/reports/types"
+"kb/sources/types" = "commonplace/_data/kb/sources/types"
+"kb/types" = "commonplace/_data/kb/types"
+
 [tool.pytest.ini_options]
 testpaths = ["test/commonplace"]

@@ -58,6 +58,8 @@ The shipped library sits under `kb/commonplace/` as a single boundary the user t
 
 The framework implementation itself is not vendored into the project. It is provided by the installed Python package and exposed through `commonplace-*` commands.
 
+The Python package carries the scaffold inputs as packaged data in built wheels. In the source checkout, the same inputs are read directly from the canonical repo paths rather than through duplicate scaffold files or source-tree symlinks.
+
 ## Surface by role
 
 | Area | Role |
@@ -85,6 +87,8 @@ The framework implementation itself is not vendored into the project. It is prov
 4. Promotes selected skills into `.claude/skills/cp-skill-*/` and `.agents/skills/cp-skill-*/` as symlinks into `kb/commonplace/instructions/<name>/`, and resolves project-specific templates such as `AGENTS.md` and `.envrc`.
 
 The result is that the agent's hot path stays inside the project tree. It reads `AGENTS.md`, the target collection's `COLLECTION.md`, and the relevant type files directly from the installed KB rather than jumping out to a separate framework checkout.
+
+The scaffold input side has two modes. Built wheels include canonical KB trees under `commonplace/_data/` via explicit Hatch `force-include` mappings. Editable source checkouts fall back to the repository's canonical `kb/` paths and root templates, so contributors do not maintain duplicate scaffold copies.
 
 ## Boundary between library and user content
 
@@ -120,6 +124,7 @@ Relevant Notes:
 
 - [Reference](./README.md) — overview of the shipped reference collection and operator guide
 - [021-Ship library content under kb/commonplace](./adr/021-ship-library-content-under-kb-commonplace.md) — decision: the library/user boundary and path invariance rules this architecture implements
+- [027-Package scaffold assets without source-tree symlinks](./adr/027-package-scaffold-assets-without-source-tree-symlinks.md) — decision: package scaffold assets through explicit wheel includes plus source-checkout fallback
 - [014-scripts-as-python-package-one-tree-model](./adr/014-scripts-as-python-package-one-tree-model.md) — decision: package-and-init model that ADR-021 refines with the `kb/commonplace/` namespace
 - [013-skills-first-delivery-with-core-local-type-split](./adr/013-skills-first-delivery-with-core-local-type-split.md) — decision: the skills-first model and the core/local type split
 - [type-loading](./type-loading.md) — how shipped type definitions are discovered, including file-relative resolution for collection-local types

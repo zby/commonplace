@@ -1,13 +1,13 @@
 from __future__ import annotations
 
 import sys
-from importlib.resources import as_file, files
 from pathlib import Path
 
 import pytest
 
 
-SRC_ROOT = Path(__file__).resolve().parents[4] / "src"
+REPO_ROOT = Path(__file__).resolve().parents[3]
+SRC_ROOT = REPO_ROOT / "src"
 if str(SRC_ROOT) not in sys.path:
     sys.path.insert(0, str(SRC_ROOT))
 
@@ -16,6 +16,7 @@ from commonplace.cli.init_project import (  # noqa: E402
     direnv_warnings,
     init_project,
     main,
+    _resolve_scaffold_source,
 )
 
 
@@ -164,15 +165,30 @@ def test_init_project_reports_identical_existing_files(tmp_path: Path) -> None:
 
 
 def test_init_project_treats_raw_template_source_as_matching(tmp_path: Path) -> None:
-    data_pkg = files("commonplace") / "_data"
-    with as_file(data_pkg) as scaffold_root:
-        raw_template = (scaffold_root / "AGENTS.md.template").read_text(encoding="utf-8")
+    raw_template = (REPO_ROOT / "AGENTS.md.template").read_text(encoding="utf-8")
     (tmp_path / "AGENTS.md.template").write_text(raw_template, encoding="utf-8")
 
     report = init_project(tmp_path)
 
     assert Path("AGENTS.md.template") in report.preserved_identical
     assert Path("AGENTS.md.template") not in report.preserved_different
+
+
+def test_scaffold_source_resolves_canonical_files_without_data_symlinks() -> None:
+    data_root = SRC_ROOT / "commonplace" / "_data"
+
+    assert _resolve_scaffold_source(data_root, "AGENTS.md.template") == (
+        REPO_ROOT / "AGENTS.md.template"
+    )
+    assert _resolve_scaffold_source(data_root, "kb/instructions") == (
+        REPO_ROOT / "kb" / "instructions"
+    )
+
+
+def test_package_data_tree_has_no_scaffold_symlinks() -> None:
+    data_root = SRC_ROOT / "commonplace" / "_data"
+
+    assert not any(path.is_symlink() for path in data_root.rglob("*"))
 
 
 def test_main_reports_preserved_file_statuses(

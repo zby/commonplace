@@ -41,7 +41,7 @@ Substitution is a flat string replace in `_write_template`. Templates that don't
 - `kb/tasks/backlog/`, `kb/tasks/active/`, `kb/tasks/completed/` — user's task lifecycle
 - `kb/work/`, `kb/reports/`, `kb/reports/connect/`, `kb/reports/types/` — user's workshops and reports
 
-**Scaffold trees** — copied from packaged scaffold assets:
+**Scaffold trees** — copied from scaffold sources. In a built wheel these sources live under packaged `commonplace/_data/`; in an editable source checkout `commonplace-init` falls back to the canonical repo paths:
 
 - `kb/commonplace/notes/` — shipped methodology library (from our `kb/notes/`)
 - `kb/commonplace/reference/` — shipped-system documentation and ADRs
@@ -64,6 +64,15 @@ Each template invites the practitioner to pick a register, state a quality goal,
 - `.envrc.template` → `.envrc`
 
 Both flow through the same `_write_template` helper with the same replacements dictionary.
+
+## Scaffold source resolution
+
+The source tree does not keep symlinked copies of the shipped KB under `src/commonplace/_data/`. Instead, `init_project` resolves each scaffold input by checking two locations:
+
+1. `commonplace/_data/<path>` — packaged wheel data, populated by Hatch `force-include` entries from canonical repo paths. The sdist also explicitly includes those canonical inputs so wheels built from sdists have the same scaffold source.
+2. The canonical repo path — used in editable source checkouts, so edits to `kb/notes/`, `kb/reference/`, `kb/instructions/`, and the root templates are picked up without duplicating files.
+
+The exception is `src/commonplace/_data/templates/`, which contains real scaffold-only files for the user's empty `COLLECTION.md` templates. Those files have no canonical counterpart elsewhere in the KB.
 
 ## Skill promotion
 
@@ -98,6 +107,7 @@ These could all move to generated form later, but the current build-time step co
 Relevant Notes:
 
 - [014-scripts-as-python-package-one-tree-model](./adr/014-scripts-as-python-package-one-tree-model.md) — decision: shipping scripts as an installable Python package and consolidating scaffold into one tree
+- [027-package-scaffold-assets-without-source-tree-symlinks](./adr/027-package-scaffold-assets-without-source-tree-symlinks.md) — decision: package scaffold assets with explicit wheel includes and source-checkout fallback instead of source-tree symlinks
 - [013-skills-first-delivery-with-core-local-type-split](./adr/013-skills-first-delivery-with-core-local-type-split.md) — decision: the skills-first delivery model and the core/local type split that `SCAFFOLD_TREES` and `PROMOTED_SKILLS` implement
 - [006-two-tree-installation-layout](./adr/006-two-tree-installation-layout.md) — decision: the installation layout that `commonplace-init` produces
 - [architecture](./architecture.md) — shipped architecture: where the generation pipeline sits inside the installed surface

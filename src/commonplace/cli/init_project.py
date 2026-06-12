@@ -106,7 +106,7 @@ def _copy_scaffold_tree(
     report: InitReport,
 ) -> None:
     """Recursively copy a scaffold subtree, classifying existing files."""
-    src_dir = scaffold_root / src_rel
+    src_dir = _resolve_scaffold_source(scaffold_root, src_rel)
     for src_file in sorted(src_dir.rglob("*")):
         if not src_file.is_file():
             continue
@@ -130,7 +130,7 @@ def _copy_scaffold_file(
     report: InitReport,
 ) -> None:
     """Copy a single scaffold file, classifying an existing target."""
-    src = scaffold_root / src_rel
+    src = _resolve_scaffold_source(scaffold_root, src_rel)
     rel_path = Path(target_rel)
     target = dest_root / rel_path
     expected_bytes = src.read_bytes()
@@ -166,6 +166,25 @@ def _write_template(
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(text, encoding="utf-8")
     report.created.append(rel_path)
+
+
+def _resolve_scaffold_source(scaffold_root: Path, src_rel: str) -> Path:
+    """Resolve scaffold input from packaged data or a source checkout.
+
+    Wheels include canonical repo files under `commonplace/_data/` through
+    Hatch force-includes. Editable source checkouts do not duplicate those
+    files under `_data`; they read the canonical repo paths directly.
+    """
+    packaged = scaffold_root / src_rel
+    if packaged.exists():
+        return packaged
+
+    source_root = Path(__file__).resolve().parents[3]
+    source = source_root / src_rel
+    if source.exists():
+        return source
+
+    raise FileNotFoundError(f"Scaffold source is missing: {src_rel}")
 
 
 def init_project(root: Path, name: str | None = None) -> InitReport:
@@ -210,7 +229,7 @@ def init_project(root: Path, name: str | None = None) -> InitReport:
             (".envrc.template", ".envrc"),
         ]
         for src_rel, target_rel in templates:
-            src = scaffold_root / src_rel
+            src = _resolve_scaffold_source(scaffold_root, src_rel)
             target = root / target_rel
             _write_template(src, target, Path(target_rel), replacements, report)
 
