@@ -27,6 +27,7 @@ plugins:
         'notes/computational-model-index.md': 'notes/computational-model-README.md'
         'notes/context-engineering-index.md': 'notes/context-engineering-README.md'
         'notes/deploy-time-learning-the-missing-middle.md': 'notes/deploy-time-learning-is-the-missing-middle.md'
+        'notes/distilled-artifacts-need-source-tracking-at-the-source.md': 'notes/distilled-artifacts-need-source-tracking.md'
         'notes/document-classification.md': 'reference/available-types.md'
         'notes/document-system-index.md': 'notes/document-system-README.md'
         'notes/epiplexity-eli5.md': 'work/information-measures/epiplexity-eli5.md'

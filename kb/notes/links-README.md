@@ -37,7 +37,7 @@ Our link semantics (extends, grounds, contradicts, exemplifies) are lighter than
 
 - [backlinks](./backlinks.md) — use cases for inbound link visibility: hub identification, source-to-theory bridging, impact assessment, tension surfacing; four design options with trade-offs
 - [link-strength-is-encoded-in-position-and-prose](./link-strength-is-encoded-in-position-and-prose.md) — inline premise links carry more weight than footer links; position and prose encode commitment level, creating a weighted graph
-- [distilled-artifacts-need-source-tracking-at-the-source](./distilled-artifacts-need-source-tracking-at-the-source.md) — distilled artifacts shouldn't link back to sources (focus), but sources should link forward via "Distilled into:" so source changes trigger staleness review
+- [distilled-artifacts-need-source-tracking-at-the-source](./distilled-artifacts-need-source-tracking.md) — distilled artifacts shouldn't link back to sources (focus), but sources should link forward via "Distilled into:" so source changes trigger staleness review
 
 ## Decisions
 
