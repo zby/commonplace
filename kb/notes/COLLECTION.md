@@ -23,6 +23,10 @@ Apply reach to claim formulation:
 
 **Theory-independence constraint.** The claim must stand if any single cited description is removed — otherwise it's still a description.
 
+**Existential recast for designs.** A design idea is not a weak claim — its free parameters make it evaluable by usefulness, not truth (rationale: [design proposals differ from claims in kind, not confidence](./design-proposals-differ-from-claims-in-kind-not-confidence.md)). It may stay here only recast as an existential claim: the title carries the truth-apt part, and the construction appears as a witness with its free choices explicitly marked. The requirements must be substantive enough that exhibiting any witness is informative; otherwise the design belongs in `kb/reference/proposals/` (ADR 028).
+
+**Hypotheses need no extra machinery.** A hypothesis is an ordinary claim at reduced commitment: claim title plus `status: speculative`. There is no separate epistemic-status field — revisit only if hypotheses start being confused with supported claims.
+
 ## Title and body composability
 
 **Claim titles by default.** Name the note like a claim, not a topic — something that could be true or false.
@@ -56,9 +60,9 @@ Scan `kb/notes/`, `kb/reference/`, `kb/agent-memory-systems/`, `kb/sources/`, an
 | `contradicts` | sym | notes | wants to resolve a disagreement |
 | `contrasts` | sym | notes | wants the neighbouring-shape distinction |
 | `defined-in` | asym | notes/definitions | reader may not know the term |
-| `evidence` | asym | reference, agent-memory, sources | this observation corroborates the claim |
-| `derived-from` | asym | reference, agent-memory, sources | claim was abstracted from this source |
-| `see-also` | asym | reference, agent-memory, sources, instructions | adjacent companion; use sparingly |
+| `evidence` | asym | reference, agent-memory, agentic-systems, sources | this observation corroborates the claim |
+| `derived-from` | asym | reference, agent-memory, agentic-systems, sources | claim was abstracted from this source |
+| `see-also` | asym | reference, agent-memory, agentic-systems, sources, instructions | adjacent companion; use sparingly |
 
 ## Types
 
@@ -72,6 +76,7 @@ Scan `kb/notes/`, `kb/reference/`, `kb/agent-memory-systems/`, `kb/sources/`, an
 
 ## What does NOT belong here
 
+- Unadopted system designs → `kb/reference/proposals/` (`design-proposal` trait), unless recast as an existential claim per above
 - Descriptions of how a specific system works → `kb/reference/` or `kb/agent-memory-systems/`
 - Procedures and how-to guidance → `kb/instructions/`
 - Raw captures without frontmatter → `text` type, any collection

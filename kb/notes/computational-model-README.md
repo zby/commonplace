@@ -26,6 +26,7 @@ What kind of "programs" LLM instructions are, and what programming-language conc
 - [llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) — when the scheduler lives in an LLM conversation it degrades; three recovery strategies
 - [session history should not be the default next context](./session-history-should-not-be-the-default-next-context.md) — stored history and next-context loading are separate decisions; `select` should decide what to load
 - [tool loop](./tool-loop-README.md) — the tool-loop area: loop exposure, hidden schedulers, and the observability problems of framework-owned loops (apparent success, semantic recovery)
+- [Claude Code dynamic workflows](../agentic-systems/claude-code-dynamic-workflows.md) — shipped instance of the cluster: a harness exposing a returning `agent()` plus host-language composition beneath its frozen loop
 
 ## Instruction Properties
 

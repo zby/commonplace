@@ -68,3 +68,4 @@ Relevant Notes:
 - [orchestration model](./bounded-context-orchestration-model.md) — foundation: the base model whose universality the lemma establishes
 - [decomposition heuristics](./decomposition-heuristics-for-bounded-context-scheduling.md) — consequence: the heuristics become transformations between programs the lemma certifies as valid
 - [LLM-mediated schedulers are a degraded variant of the clean model](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) — boundary: LLM-mediated scheduling still decomposes but loses symbolic-orchestration invariant
+- [Claude Code dynamic workflows](../agentic-systems/claude-code-dynamic-workflows.md) — evidence: a shipped program whose non-LLM steps (JS control flow, `pipeline`/`parallel`, deterministic transforms over agent returns) are exactly the symbolic-over-`K` steps the lemma converts

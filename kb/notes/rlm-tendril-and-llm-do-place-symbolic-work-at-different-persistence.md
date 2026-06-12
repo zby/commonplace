@@ -55,3 +55,4 @@ Relevant Notes:
 - [The verifiability gradient](./verifiability-gradient.md) — mechanism: situates llm-do's movement between LLM-backed agents and Python functions
 - [Agent orchestration occupies a multi-dimensional design space](./agent-orchestration-occupies-a-multi-dimensional-design-space.md) — extends: this note fills in one local comparison across scheduler placement, persistence horizon, and representational form
 - [Ingest: Recursive Language Models - what finally gave me the 'aha' moment](../sources/recursive-language-models-what-finally-gave-me-the-aha-moment.ingest.md) — evidence: practitioner walkthrough of RLM's REPL mechanism and symbolic variable return
+- [Claude Code dynamic workflows](../agentic-systems/claude-code-dynamic-workflows.md) — evidence: a placement the comparison does not yet cover — model-authored sandboxed guest-language script, session-ephemeral with whole-script promotion to a reusable `/command`
