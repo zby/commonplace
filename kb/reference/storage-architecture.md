@@ -60,6 +60,7 @@ Notes, gates, instructions, and source material remain file-backed. See [ADR-010
 
 ## See also
 
+- [documentation-site.md](./documentation-site.md) — how the MkDocs site renders these files, the README-vs-index rule, and the reader landing-page inventory
 - [architecture.md](./architecture.md) — installed project layout and surface-by-role
 - [ADR-010](./adr/010-review-state-should-move-to-sqlite-once-reviews-leave-git-and.md) — decision: SQLite for review state
 - [ADR-007](./adr/007-reports-directory-for-generated-snapshots.md) — decision: `kb/reports/` for generated operational artifacts

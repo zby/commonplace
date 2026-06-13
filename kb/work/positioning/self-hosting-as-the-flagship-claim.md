@@ -58,6 +58,8 @@ Honest disanalogy: compiler self-hosting is a binary milestone; ours is partial 
 
 ## Landing-page architecture (2026-06-13)
 
+Durable home: [documentation-site.md](../../reference/documentation-site.md) now carries the landing-page inventory and the README-vs-index rule. Positioning-specific notes below.
+
 Three files, distinct roles — do **not** merge into one:
 
 - `/README.md` (root) — GitHub repo landing, the **tool face** (install, commands, layout, license). Outside `docs_dir: kb`, so GitHub-only.
