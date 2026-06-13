@@ -1,10 +1,10 @@
 # Commonplace
 
-Commonplace is a theory builder and knowledge base for AI agent systems — it stores and processes knowledge, turning accumulated observations into theories with [reach](./notes/first-principles-reasoning-selects-for-explanatory-reach-over.md). Agents operate under [bounded context](./notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md): they can't load everything, so the knowledge they load must cover many situations. See the [Reference](./reference/README.md) collection for architecture, types, and CLI.
+**The theory of LLM wikis, running as one.**
 
-**[Deploy-time learning](./notes/deploy-time-learning-is-the-missing-middle.md)** is the central theory — deployed AI systems improve through structured knowledge that accumulates in the repo alongside the code. The notes here develop that theory and apply it to the design of agent-operated knowledge bases.
+Commonplace is a framework for building LLM wikis — persistent, linked markdown that AI agents write, navigate, review, and maintain, in the sense [Karpathy sketched](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f). This site is that framework running as a wiki: the theory of how to build LLM wikis lives here as notes, and the agents that maintain this repository run on the methodology those notes describe. It is **self-hosting** — reading these pages is reading the system's own source.
 
-This KB is itself agent-operated: a human directs the inquiry, AI agents draft, connect, and maintain the notes. The framework for building knowledge bases is documented using that framework.
+The central theory is **[deploy-time learning](./notes/deploy-time-learning-is-the-missing-middle.md)**: deployed AI systems improve through structured knowledge that accumulates in the repo alongside the code. Agents operate under [bounded context](./notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) — they can't load everything, so the knowledge they load must cover many situations. The notes here develop that theory and apply it to the design of agent-operated knowledge bases. See the [Reference](./reference/README.md) collection for architecture, types, and CLI.
 
 ## Threads worth following
 

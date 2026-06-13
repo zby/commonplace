@@ -56,9 +56,22 @@ Honest disanalogy: compiler self-hosting is a binary milestone; ours is partial 
 
 **Extraction candidate:** the transferable claim — LLM-executed methodologies run as metacircular interpreters: rules interpreted per session, codification as their JIT, trusting-trust as the characteristic failure mode, a human oracle as the mitigation — is `kb/notes/` material once it has carried weight beyond positioning.
 
+## Landing-page architecture (2026-06-13)
+
+Three files, distinct roles — do **not** merge into one:
+
+- `/README.md` (root) — GitHub repo landing, the **tool face** (install, commands, layout, license). Outside `docs_dir: kb`, so GitHub-only.
+- `kb/index.md` — the rendered GitHub Pages **Home** (nav `{"Home": "index.md"}`), the **content face** (theory threads, browse, navigation). This is the site homepage, *not* `kb/README.md`.
+- `kb/README.md` — a small filesystem-routing doc for agents navigating the source tree; the nav hook only builds from subdirectory READMEs, so it does not surface on the site.
+
+Decision: keep them separate. They have genuinely different jobs (adopt-the-tool vs read-the-knowledge), and `docs_dir: kb` puts the root README outside the docs tree, so a literal single-file homepage would need a `docs_dir` move or symlink hack — cost without benefit. The real failure mode is *identity drift* between the two faces (root led with the new positioning while the homepage lagged on the old one); the fix is a shared flagship lede on both, then divergence by job. The shared lede is three sentences — manual sync is acceptable; a build-time single-source for it would be over-engineering.
+
+Open: `kb/README.md` overlaps with the AGENTS.md/CLAUDE.md collection-routing table — possibly redundant, a separate cleanup question from positioning.
+
 ## Propagation
 
 - [x] `pyproject.toml` `description` + `llm-wiki` keyword (2026-06-12)
-- [x] README opening — leads with the flagship line, cites Karpathy for the term, explains self-hosting in the compiler sense (2026-06-12)
+- [x] README opening (root `/README.md`, GitHub repo / tool face) — leads with the flagship line, cites Karpathy for the term, explains self-hosting in the bootstrapping sense (2026-06-12)
+- [x] `kb/index.md` (rendered GitHub Pages homepage / content face) — same flagship lede, then diverges into theory threads + browse (2026-06-13). Note: the site homepage is `kb/index.md`, not `kb/README.md` (which is a source-tree routing doc, not a landing page).
 - [x] [the-knowledge-layer-for-ai-agents](./the-knowledge-layer-for-ai-agents.md) pitch draft — rewritten 2026-06-12: leads with Karpathy/LLM-wiki + self-hosting; RAG strawman replaced by "not another memory service" (no second runtime, audit-by-diff), per [gbrain-is-the-category-sibling](./gbrain-is-the-category-sibling.md)
 - [x] GitHub repo description/topics — description set to the pyproject line; topics: llm-wiki, ai-agents, knowledge-base, markdown, context-engineering, agent-skills, claude-code (2026-06-12)
