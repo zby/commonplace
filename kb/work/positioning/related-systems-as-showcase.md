@@ -8,7 +8,7 @@ status: seedling
 
 # The related-systems reviews are the best proof the knowledge layer works
 
-We have reviews of 15 agent memory systems — Mem0, Graphiti, Cognee, Letta, A-MEM, AgeMem, Ars Contexta, Thalo, ClawVault, CrewAI Memory, Siftly, sift-kg, Spacebot, Decapod, Hindsight, SAGE, and getsentry/skills — plus a [comparative review](../../agent-memory-systems/agentic-memory-systems-comparative-review.md) that synthesizes across all of them along six architectural dimensions.
+We have reviews of 129 agent memory systems — Mem0, Graphiti, Cognee, Letta, A-MEM, AgeMem, Ars Contexta, Thalo, ClawVault, CrewAI Memory, Siftly, sift-kg, Spacebot, Decapod, Hindsight, SAGE, and getsentry/skills among them — plus a [comparative review](../../agent-memory-systems/agentic-memory-systems-comparative-review.md) that synthesizes across all of them along six architectural dimensions.
 
 These reviews were mostly vibed — minimal human input, agent-driven analysis. And they're already useful. Someone choosing an agentic memory system today would benefit from:
 
