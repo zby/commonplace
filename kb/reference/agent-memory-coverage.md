@@ -32,7 +32,7 @@ The requirements come from [Designing a Memory System for LLM-Based Agents](../n
 | Authority | Explicit files, git review, deterministic validation, and semantic review gates provide the current authority model for durable memory changes. | Authority for automatic extraction, promotion, activation, and retirement is not fully specified. |
 | Evaluation | Structural validation and semantic review evaluate artifact quality. | Activation, behavioral uptake, context efficiency, source-alignment health, and promotion economics are not first-class metrics. |
 | Native work environment | Markdown, git, shell commands, `.claude/skills/`, `.agents/skills/`, and package commands let Claude Code, Codex, and similar agents inspect and edit memory where they already work. See [architecture](./architecture.md) and [instruction generation](./instruction-generation.md). | Harness-specific execution policy differs across tools. |
-| Reusable memory distribution | `commonplace-init` installs reusable methodology under `kb/commonplace/` while leaving user collections project-owned. Shared types stay in `kb/types/`; promoted skills are symlinked into harness skill directories. | Local project authority and shipped-library upgrades still require operator judgment. |
+| Reusable memory distribution | `commonplace-init` installs reusable methodology under `kb/commonplace/` while leaving user collections project-owned. Shared types stay in `kb/types/`; promoted skills are linked into harness skill directories. | Local project authority and shipped-library upgrades still require operator judgment. |
 
 ## Boundary
 

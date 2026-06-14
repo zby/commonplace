@@ -1,51 +1,24 @@
 # Installing Commonplace into a project
 
-## Prerequisites
+The steps: check prerequisites, install the library so `commonplace-*` commands run, create the project with `commonplace-init`, set up the control-plane file, install the skills for every agent that will work on the project, and start the runtime. Most steps end with a check you can run before moving on.
 
-- **Python 3.11+** (required)
-- **uv** (required, recommended) or pip
-- **git** (required)
-- **direnv** (optional, recommended on Linux/macOS) — for project-scoped environment variables
-- **ripgrep** (required) — used by agent runtimes for fast KB search
-- **An agent runtime** — Codex, Claude Code, or another internal LLM/IDE that can load a project control-plane file and expose skill/procedure directories to the agent.
+## 1. Prerequisites
 
-## Start-time contract
+### Required
 
-Commonplace is usable when the terminal or agent runtime starts inside the project with this state:
+- **Python 3.11+**
+- **uv** (recommended) or **pip**
+- **git**
+- **ripgrep** (`rg`) — agent runtimes use it for fast KB search
+- **An agent runtime** — Codex, Claude Code, or another LLM/IDE that can load a project control-plane file (`AGENTS.md`/`CLAUDE.md`) and expose skill directories to the agent
 
-- **Project root is the working directory** — relative paths like `kb/notes` resolve to this project.
-- **The project venv is the active command environment** — `commonplace-*` commands resolve from the project-local `.venv`, not from a global install or another project.
-- **Commands run by bare name** — agents can call `commonplace-validate`, `commonplace-init`, and other Commonplace commands without prepending `.venv/bin/`, `.venv\Scripts\`, `uv run`, or `direnv exec`.
-- **The control-plane file is present** — `AGENTS.md` or `CLAUDE.md` contains the project KB goals, routing rules, and command invocation rule.
-- **Runtime skills are discoverable by the active agent** — the `cp-skill-*` skill bodies from `kb/commonplace/instructions/` are installed, linked, copied, or registered in whatever skill directory or plugin surface the active agent runtime actually reads.
-- **Shipped Commonplace collections are present** — `kb/commonplace/notes/`, `kb/commonplace/reference/`, and `kb/commonplace/instructions/` exist and contain the reusable methodology library.
-- **Search works** — `rg` is available for fast KB search.
+### Optional
 
-The concrete shell commands below are examples of ways to satisfy this contract. Linux/macOS usually satisfies it with direnv. Windows usually satisfies it by activating `.venv` in PowerShell or `cmd` before starting the agent runtime. If your company runtime does not automatically read `AGENTS.md` or `CLAUDE.md`, configure it to load the control-plane file as project instructions before starting work.
-
-Acceptance checks:
-
-```bash
-pwd
-command -v commonplace-validate  # should print a path under $PWD/.venv/bin/
-commonplace-init --help
-commonplace-validate kb/commonplace/reference/commands.md
-rg "^description:" kb/commonplace/notes kb/commonplace/reference kb/commonplace/instructions --glob "*.md"
-```
-
-Windows PowerShell equivalents:
-
-```powershell
-Get-Location
-(Get-Command commonplace-validate).Source  # should print a path under .venv\Scripts
-commonplace-init --help
-commonplace-validate kb\commonplace\reference\commands.md
-rg "^description:" kb\commonplace\notes kb\commonplace\reference kb\commonplace\instructions --glob "*.md"
-```
+- **direnv** (Linux/macOS) — optional convenience: auto-activates the project venv on `cd` and keeps uv's cache inside the project. Not needed for a working install; see the [direnv appendix](#appendix-direnv-linuxmacos). The main steps below use plain venv activation.
 
 ### Check prerequisites
 
-Run these checks before proceeding. If any required tool is missing, ask the user to install it before continuing.
+If any required tool is missing, install it before continuing.
 
 Linux/macOS:
 
@@ -53,6 +26,8 @@ Linux/macOS:
 python3 --version   # must be 3.11+
 uv --version        # or: pip --version
 git --version
+rg --version
+direnv version      # optional
 ```
 
 Windows PowerShell:
@@ -61,25 +36,12 @@ Windows PowerShell:
 py -3 --version     # must be 3.11+
 uv --version        # or: py -3 -m pip --version
 git --version
-```
-
-Optional on Linux/macOS:
-
-```bash
-direnv version
-```
-
-On Windows, skip `direnv version` unless you have deliberately installed direnv through WSL, Git Bash, or another Unix-like shell. Check ripgrep with:
-
-```powershell
 rg --version
 ```
 
-## 1. Create a project venv and install the package
+## 2. Install the library and make the commands work
 
-Commonplace installs into a project-local venv rather than globally, so each project can pin its own version independently.
-
-From your project root, install the published package from PyPI.
+The requirement is simply that the `commonplace-*` commands are installed and resolvable in the environment that runs your agent runtime — the shell you launch a command-line runtime (Codex, Claude Code) from, or whatever environment an IDE like Cursor opens the project in. A **project-local venv** is the recommended way to satisfy that, because each project can pin its own version independently; a global or shared install works too, as long as the commands end up on `PATH` where the agent actually runs. The rest of this guide uses a project-local venv. From your project root — create the directory and `cd` into it first if this is a new project:
 
 Linux/macOS:
 
@@ -95,19 +57,17 @@ uv venv
 uv pip install llm-commonplace
 ```
 
-Or without uv:
-
-Linux/macOS:
+Without uv:
 
 ```bash
+# Linux/macOS
 python3 -m venv .venv
 . .venv/bin/activate
 pip install llm-commonplace
 ```
 
-Windows PowerShell:
-
 ```powershell
+# Windows PowerShell
 py -3 -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install llm-commonplace
@@ -116,125 +76,23 @@ python -m pip install llm-commonplace
 For Commonplace development or local contribution work, install from a checkout instead:
 
 ```bash
-uv venv
 uv pip install -e /PATH/TO/commonplace
 ```
 
-## 2. Initialize the project
+### Make `commonplace-*` resolve by bare name
 
-With uv:
-
-```bash
-uv run commonplace-init --name <your-project>
-```
-
-Use `uv run` here because the venv may not be on `PATH` yet.
-
-Without uv, activate the venv first, then run the command by bare name:
-
-Linux/macOS:
+The install puts the `commonplace-*` executables in `.venv/bin/` (Linux/macOS) or `.venv\Scripts\` (Windows), but they are not on your `PATH` yet, so bare-name calls fail. Activate the venv so agents and shells can call `commonplace-validate`, `commonplace-init`, and the rest by bare name. Activation must be redone in each new shell:
 
 ```bash
-. .venv/bin/activate
-commonplace-init --name <your-project>
+. .venv/bin/activate                 # Linux/macOS
 ```
-
-Windows PowerShell:
 
 ```powershell
-.\.venv\Scripts\Activate.ps1
-commonplace-init --name <your-project>
+.\.venv\Scripts\Activate.ps1         # Windows PowerShell
 ```
 
-After step 3, `commonplace-*` commands work directly in shells and agent runtimes that have loaded the project environment.
-
-`commonplace-init` creates convenience skill symlinks for the known `.claude/skills/` and `.agents/skills/` layouts. These are not the whole skill contract; other IDEs and agent runtimes may use different locations. If symlink creation is unavailable on Windows, init still creates the canonical `kb/commonplace/instructions/cp-skill-*` directories and reports the optional skill projections as skipped; use the runtime-specific skill installation procedure in step 4.
-
-```powershell
-uv run commonplace-init --name <your-project>
-```
-
-The `--name` flag sets the project name used in templates. If omitted, it defaults to the directory name.
-
-This creates:
-
-- **User KB directories** — `kb/notes/`, `kb/reference/`, `kb/instructions/`, `kb/sources/`, `kb/tasks/`, `kb/work/`, `kb/reports/`, `kb/log.md`
-- **Commonplace library content** — shipped notes, reference docs, instructions, review gates, and skills under `kb/commonplace/notes/`, `kb/commonplace/reference/`, and `kb/commonplace/instructions/`
-- **Type definitions** — shared types under `kb/types/`, plus source/report type scaffolds
-- **Canonical skills** — `kb/commonplace/instructions/cp-skill-write/`, plus the matching `cp-skill-validate/`, `cp-skill-connect/`, etc. The `cp-skill-` prefix avoids collisions with your project's own skills and with the `commonplace-*` CLI commands.
-- **Known runtime skill projections** — `.claude/skills/cp-skill-*/` and `.agents/skills/cp-skill-*/` symlinks, when the platform permits them
-- **`.envrc`** — project-scoped Unix-shell environment (PATH, UV_CACHE_DIR), ready to use with direnv on Linux/macOS
-- **`AGENTS.md.template`** — control-plane template with project name filled in
-
-Rerunning `commonplace-init` is safe — it never overwrites existing files, so you can rerun after a package upgrade to pick up new scaffold files. The command now reports which preserved files already match the current scaffold and which ones were left untouched because they differ from what the current run would generate.
-
-## 3. Load the project environment
-
-CLI commands live in `.venv/bin/` on Linux/macOS and `.venv\Scripts\` on Windows. Any loader is acceptable if it satisfies the start-time contract above: Commonplace commands resolve by bare name from the project-local venv.
-
-This matters for agent runtimes: if Codex or Claude Code is started from a desktop launcher, service, wrapper script, or another non-interactive environment, it may not inherit the project `PATH`.
-
-### Linux/macOS with direnv (recommended)
-
-The generated `.envrc` adds `.venv/bin` to `PATH` through direnv, so commands work without manual venv activation. It also sets `UV_CACHE_DIR` to avoid permission issues in sandboxed runtimes like Codex.
-
-direnv only loads `.envrc` automatically when your shell has the direnv hook installed and the project directory is entered from that hooked shell.
-
-Install the shell hook once if it is not already present:
-
-```bash
-# bash
-echo 'eval "$(direnv hook bash)"' >> ~/.bashrc
-
-# zsh
-echo 'eval "$(direnv hook zsh)"' >> ~/.zshrc
-```
-
-Restart your shell, enter the project directory, and allow the generated `.envrc`:
-
-```bash
-cd /path/to/your-project
-direnv allow
-```
-
-You should see a `direnv: loading ...` message, and `commonplace-*` commands should resolve from the project venv:
-
-```bash
-command -v commonplace-validate
-```
-
-When using Codex, start it from that same direnv-loaded interactive shell:
-
-```bash
-cd /path/to/your-project
-codex
-```
-
-If Codex is launched from a non-interactive wrapper, wrap the launch explicitly:
-
-```bash
-direnv exec /path/to/your-project codex
-```
-
-For one-off commands in an environment where the hook has not loaded, use:
-
-```bash
-direnv exec . bash -c 'commonplace-validate kb/commonplace/reference/commands.md'
-```
-
-Add the cache and venv directories to `.gitignore`:
-
-```bash
-echo -e ".uv-cache/\n.venv/" >> .gitignore
-```
-
-### Windows PowerShell
-
-Example: activate the project venv before running Commonplace commands or starting an agent runtime:
-
-```powershell
-cd C:\path\to\your-project
-.\.venv\Scripts\Activate.ps1
+```bat
+.venv\Scripts\activate.bat           :: Windows cmd
 ```
 
 If PowerShell blocks activation because script execution is restricted, allow locally signed scripts for your user account, then activate again:
@@ -244,84 +102,63 @@ Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
 .\.venv\Scripts\Activate.ps1
 ```
 
-Verify that the start-time contract is satisfied:
+On Linux/macOS, to skip the per-shell `activate` step (and keep uv's cache inside the project for sandboxed runtimes), set up direnv — see the [direnv appendix](#appendix-direnv-linuxmacos).
 
-```powershell
-Get-Command commonplace-validate
-```
+### Check the commands run
 
-Start the agent runtime from that same activated terminal. For Codex this is:
-
-```powershell
-codex
-```
-
-For Claude Code or an internal IDE/LLM, use the runtime's normal launch command from this activated shell, or configure the IDE's integrated terminal/service environment so `.venv\Scripts` is on `PATH`.
-
-For one-off human commands without activating the terminal first, call the venv executable explicitly. Do not put this form in the control-plane file unless the project has deliberately chosen not to satisfy the bare-command contract:
-
-```powershell
-.\.venv\Scripts\commonplace-validate.exe kb\commonplace\reference\commands.md
-```
-
-Add the cache and venv directories to `.gitignore`:
-
-```powershell
-@(".uv-cache/", ".venv/") | Add-Content .gitignore
-```
-
-### Windows cmd
-
-Example:
-
-```bat
-cd C:\path\to\your-project
-.venv\Scripts\activate.bat
-where commonplace-validate
-codex
-```
-
-### Linux/macOS without direnv
-
-Example: add `.venv/bin` to your PATH globally in `~/.bashrc` or `~/.zshrc`:
+With the venv activated, confirm the entry points resolve:
 
 ```bash
-export PATH=".venv/bin:$PATH"
+command -v commonplace-validate   # Linux/macOS — should print a path under .venv/bin
+commonplace-init --help
 ```
 
-This uses a relative path, so it resolves to whichever project directory you're in. Restart your shell or `source` the file.
-
-## 4. Install runtime skills
-
-Commonplace's source of truth for shipped skills is:
-
-```text
-kb/commonplace/instructions/cp-skill-*/
+```powershell
+(Get-Command commonplace-validate).Source   # Windows — should print a path under .venv\Scripts
+commonplace-init --help
 ```
 
-Each active agent runtime must expose those directories through its own skill discovery mechanism. `commonplace-init` creates symlink projections for two common layouts when the platform permits them:
+## 3. Create the project with commonplace-init
 
-```text
-.claude/skills/cp-skill-*/ -> ../../kb/commonplace/instructions/cp-skill-*/
-.agents/skills/cp-skill-*/ -> ../../kb/commonplace/instructions/cp-skill-*/
+Run `commonplace-init` from the project root. With the venv activated (step 2), call it by bare name:
+
+```bash
+commonplace-init --name <your-project>          # Linux/macOS
 ```
 
-If your runtime uses one of those layouts and symlinks are available, no further work is needed. If your runtime uses a different directory, install the same `cp-skill-*` directories there in the way that runtime expects: symlink, junction, copy, plugin registration, IDE-specific import, or whatever internal extension mechanism exposes reusable instructions to the model.
-
-For an agent doing the installation: inspect your own runtime's skill-discovery rules, then project every `kb/commonplace/instructions/cp-skill-*` directory into that surface. Prefer links or runtime registration when available so updates to `kb/commonplace/instructions/` are visible after rerunning `commonplace-init`; copy only when the runtime or platform cannot follow links.
-
-Acceptance check: from inside the agent runtime, confirm that these skills are available by their `cp-skill-*` names:
-
-```text
-cp-skill-write
-cp-skill-validate
-cp-skill-connect
-cp-skill-health-check
+```powershell
+commonplace-init --name <your-project>          # Windows PowerShell
 ```
 
-## 5. Set up the control-plane file
+The `--name` flag sets the project name used in templates; if omitted it defaults to the directory name.
 
-The control-plane file (`CLAUDE.md` or `AGENTS.md`) must be loaded by the agent runtime. It tells the agent what the KB is for, where to find things, and which skills are available. Codex and Claude-style runtimes usually load these files automatically from the project root; internal runtimes may need an explicit project-instructions setting, plugin configuration, or prompt import.
+This creates:
+
+- **User KB directories** — `kb/notes/`, `kb/reference/`, `kb/instructions/`, `kb/sources/`, `kb/tasks/`, `kb/work/`, `kb/reports/`, `kb/log.md`
+- **Commonplace library content** — shipped notes, reference docs, instructions, review gates, and skills under `kb/commonplace/notes/`, `kb/commonplace/reference/`, and `kb/commonplace/instructions/`
+- **Type definitions** — shared types under `kb/types/`, plus source/report type scaffolds
+- **Canonical skills** — `kb/commonplace/instructions/cp-skill-write/`, plus the matching `cp-skill-validate/`, `cp-skill-connect/`, etc. The `cp-skill-` prefix avoids collisions with your project's own skills and with the `commonplace-*` CLI commands.
+- **Known runtime skill projections** — `.agents/skills/cp-skill-*/` and `.claude/skills/cp-skill-*/` links for two common layouts (step 5 covers other runtimes). On Linux/macOS these are relative symlinks; on Windows, where symlinks need admin rights or Developer Mode, init automatically falls back to a directory junction, which needs neither.
+- **`.envrc`** — project-scoped environment (`PATH`, `UV_CACHE_DIR`) for the optional direnv setup (see the [direnv appendix](#appendix-direnv-linuxmacos)); harmless if you don't use direnv
+- **`AGENTS.md.template`** — control-plane template with the project name filled in
+
+Rerunning `commonplace-init` is safe — it never overwrites existing files, so you can rerun after a package upgrade to pick up new scaffold files. It reports which preserved files already match the current scaffold and which were left untouched because they differ from what the current run would generate.
+
+### Check validation and search
+
+Commonplace works with curated indexes and `rg`; no semantic-search daemon is required.
+
+```bash
+commonplace-validate kb/commonplace/reference/commands.md
+rg "^description:" kb/commonplace/notes kb/commonplace/reference kb/commonplace/instructions --glob "*.md"
+rg "your search terms" kb/ --glob "*.md"
+```
+
+A fresh project has no user notes yet, so `commonplace-validate kb/notes` may report that no notes matched — run it after the first user note exists.
+
+## 4. Set up the control-plane file
+
+The control-plane file (`CLAUDE.md` or `AGENTS.md`) tells the agent what the KB is for, where to find things, and which skills are available. Codex- and Claude-style runtimes load it automatically from the project root; internal runtimes may need an explicit project-instructions setting, plugin config, or prompt import.
 
 **New project** — rename the template:
 
@@ -331,33 +168,48 @@ mv AGENTS.md.template CLAUDE.md
 mv AGENTS.md.template AGENTS.md
 ```
 
-**Existing project with a CLAUDE.md or AGENTS.md** — append the template to your existing file:
+**Existing project that already has a CLAUDE.md or AGENTS.md** — append the template:
 
 ```bash
 cat AGENTS.md.template >> CLAUDE.md
 ```
 
-Then review the merged file and fill in the per-project parts. The template's HTML comments mark every spot, but the load-bearing ones are:
+Then review the merged file and fill in the per-project parts. The template's HTML comments mark every spot; the load-bearing ones are:
 
 - **`KB Goals and Scope`** — Purpose, Scope (the out-of-scope list is what prevents scope creep), and Quality bar. Without these the agent has no basis for inclusion decisions.
-- **Command invocation (in `### Commands`)** — keep the variant that matches the project's start-time contract. The preferred contract is bare-name invocation with the venv command directory on `PATH` (`.venv/bin` through direnv or shell rc on Linux/macOS, `.venv\Scripts` through activation on Windows). If the project deliberately does not put the venv on `PATH`, keep the fallback variant that tells agents to invoke the venv executables directly — `.venv/bin/commonplace-validate` on Linux/macOS or `.venv\Scripts\commonplace-validate.exe` on Windows — otherwise agents will retry failing bare commands.
-- **Navigation entry points** — add curated tag READMEs to the list as they emerge; the comment in the template explains when to create one.
+- **Command invocation (in `### Commands`)** — keep the bare-name variant, which matches the activated venv from step 2 (or the auto-activation in the direnv appendix). If the project deliberately does **not** put the venv on `PATH`, keep the fallback variant telling agents to call the venv executables directly — `.venv/bin/commonplace-validate` or `.venv\Scripts\commonplace-validate.exe` — otherwise agents will retry failing bare commands.
+- **Navigation entry points** — add curated tag READMEs to the list as they emerge; the template comment explains when to create one.
 
-## 6. Verify validation and search
+## 5. Install skills for every agent that will work on the project
 
-Commonplace works with curated indexes and `rg`; no semantic-search daemon is required, and complete generated listings are built only for the published site (never committed).
+**For most agent setups, nothing needs to be done here.** `commonplace-init` already projected the skills into the two common layouts — `.agents/skills/cp-skill-*/` (Codex and others) and `.claude/skills/cp-skill-*/` (Claude Code) — by linking each `cp-skill-*` directory to its source under `kb/commonplace/instructions/`. On Linux/macOS these are relative symlinks; on Windows they are directory junctions when symlinks are unavailable (no admin rights or Developer Mode). If every agent that will work on the project reads one of those two directories, skip to step 6.
 
-```bash
-commonplace-validate kb/commonplace/reference/commands.md
-rg "^description:" kb/commonplace/notes kb/commonplace/reference kb/commonplace/instructions --glob "*.md"
-rg "your search terms" kb/ --glob "*.md"
+You only need to do something here if an agent uses a **different** skill-discovery convention, or runs on a platform where even the junction fallback was skipped (sandboxed filesystems, network volumes). In that case, expose the same source directories where that runtime expects them:
+
+```text
+kb/commonplace/instructions/cp-skill-*/
 ```
 
-A fresh project may have no user notes yet, so `commonplace-validate kb/notes` can report that no notes matched. Run it after the first user note exists.
+Inspect your runtime's skill-discovery rules and project every `cp-skill-*` directory into that surface — symlink, junction, copy, plugin registration, or IDE-specific import. Prefer links or runtime registration over copies, so that rerunning `commonplace-init` after an upgrade stays visible.
 
-## 7. Pre-approve Commonplace CLI commands in Claude Code (optional)
+## 6. Start the runtime
 
-If you use Claude Code, you can skip the permission prompt for each `commonplace-*` command by adding prefix-wildcard allow rules to `.claude/settings.local.json` (user-local, gitignored). Add one `Bash(<name>:*)` entry for each `[project.scripts]` entry in `pyproject.toml`, e.g.:
+Start your agent runtime from a shell where the venv is activated (step 2) so it inherits the environment. On Windows, activate in that shell first, or configure the IDE's integrated terminal/service so `.venv\Scripts` is on `PATH`.
+
+From inside the running runtime, confirm the skills resolve by their `cp-skill-*` names:
+
+```text
+cp-skill-write
+cp-skill-validate
+cp-skill-connect
+cp-skill-health-check
+```
+
+If they don't, run `cp-skill-health-check` (once it is visible) or re-check the projection for your runtime (step 5).
+
+## Pre-approve Commonplace commands in Claude Code (optional)
+
+If you use Claude Code, skip the per-command permission prompt by adding prefix-wildcard allow rules to `.claude/settings.local.json` (user-local, gitignored). Add one `Bash(<name>:*)` entry per `[project.scripts]` entry in `pyproject.toml`:
 
 ```json
 {
@@ -370,7 +222,44 @@ If you use Claude Code, you can skip the permission prompt for each `commonplace
 }
 ```
 
-Prefer `.claude/settings.local.json` over `.claude/settings.json` so the approvals stay local and don't get committed for other contributors.
+Prefer `.claude/settings.local.json` over `.claude/settings.json` so the approvals stay local and aren't committed for other contributors.
+
+## Appendix: direnv (Linux/macOS)
+
+direnv is an optional convenience on top of the plain venv activation in step 2. It does two things:
+
+- **Auto-activation** — adds `.venv/bin` to `PATH` whenever you `cd` into the project, so `commonplace-*` commands resolve by bare name without running `. .venv/bin/activate` in every new shell.
+- **In-project uv cache** — sets `UV_CACHE_DIR` to `.uv-cache/` inside the project, so sandboxed runtimes like Codex don't need privilege escalation to write to a cache outside the project tree.
+
+`commonplace-init` already generated the `.envrc` with both settings, so setup is just installing the hook and allowing the file.
+
+1. Install the direnv shell hook once (skip if already present), then restart your shell:
+
+   ```bash
+   echo 'eval "$(direnv hook bash)"' >> ~/.bashrc   # bash
+   echo 'eval "$(direnv hook zsh)"' >> ~/.zshrc      # zsh
+   ```
+
+2. Allow the generated `.envrc` from the project root:
+
+   ```bash
+   cd /path/to/your-project
+   direnv allow
+   ```
+
+   You should see a `direnv: loading ...` message, and commands resolve by bare name:
+
+   ```bash
+   command -v commonplace-validate
+   ```
+
+direnv populates `.uv-cache/` inside the project (you'll likely want to keep it out of version control). Launch agent runtimes from this direnv-loaded shell so they inherit the environment. If a runtime is started from a non-interactive wrapper that has not run the hook, wrap the launch explicitly:
+
+```bash
+direnv exec /path/to/your-project codex
+```
+
+direnv here is written for Linux/macOS. It may work on Windows through WSL or Git Bash, but that path is untested.
 
 ## Resulting layout
 
@@ -378,7 +267,7 @@ Prefer `.claude/settings.local.json` over `.claude/settings.json` so the approva
 my-project/
   .venv/
   .envrc
-  .claude/
+  .agents/
     skills/
       cp-skill-write/
       cp-skill-validate/

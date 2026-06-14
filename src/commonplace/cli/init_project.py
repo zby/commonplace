@@ -125,6 +125,28 @@ def _resolve_scaffold_source(scaffold_root: Path, src_rel: str) -> Path:
     raise FileNotFoundError(f"Scaffold source is missing: {src_rel}")
 
 
+def _create_junction(target: Path, link: Path) -> bool:
+    """Create a Windows directory junction at ``link`` pointing to ``target``.
+
+    Junctions need neither admin rights nor Developer Mode, unlike real symlinks.
+    Uses the stdlib ``_winapi.CreateJunction`` (Windows-only, undocumented but
+    stable). Returns ``True`` on success, ``False`` if the call is unavailable
+    or fails. The target is resolved to an absolute path, as junctions require.
+
+    ``CreateJunction`` creates the ``link`` directory itself (via
+    ``CreateDirectoryW``) and then sets its reparse point, so ``link`` must not
+    already exist — the caller guarantees this by only falling back here after
+    the ``symlink_to`` attempt on an absent path.
+    """
+    try:
+        import _winapi
+
+        _winapi.CreateJunction(str(target.resolve()), str(link))
+    except (OSError, AttributeError, ImportError):
+        return False
+    return True
+
+
 def init_project(root: Path, name: str | None = None) -> InitReport:
     report = InitReport()
 
@@ -195,6 +217,16 @@ def init_project(root: Path, name: str | None = None) -> InitReport:
             try:
                 link.symlink_to(target, target_is_directory=True)
             except OSError as exc:
+                # On Windows, real symlinks need admin rights or Developer Mode.
+                # A directory junction needs neither and is followed transparently
+                # by tools reading the directory, so fall back to one. Junctions
+                # require an absolute target on the same local volume, so they do
+                # not survive a project move the way the relative symlink does.
+                # `_create_junction` returns False off Windows (no `_winapi`), so
+                # this path is a no-op there and the projection stays skipped.
+                if _create_junction(skill_src, link):
+                    report.created.append(skills_dest / skill_name)
+                    continue
                 report.skipped.append((skills_dest / skill_name, str(exc)))
                 continue
             report.created.append(skills_dest / skill_name)
@@ -224,11 +256,15 @@ def direnv_warnings(root: Path) -> list[str]:
             "'.venv\\Scripts\\activate.bat'."
         )
         lines.append(
-            "If convenience skill symlink creation fails, enable Developer "
-            "Mode, use an elevated terminal, or install the cp-skill-* "
-            "directories into your agent runtime's skill surface manually."
+            "Skill projection uses a directory junction on Windows (no admin "
+            "rights or Developer Mode needed). If even that is skipped (network "
+            "volume, sandboxed filesystem), install the cp-skill-* directories "
+            "into your agent runtime's skill surface manually."
         )
-        lines.append("See INSTALL.md step 3 (Load the project environment) for examples.")
+        lines.append(
+            "See INSTALL.md step 2 (Install the library and make the commands "
+            "work) for examples."
+        )
         return lines
 
     if shutil.which("direnv") is None:
@@ -251,7 +287,7 @@ def direnv_warnings(root: Path) -> list[str]:
             "generated .envrc activates and .venv/bin lands on PATH; install "
             "the direnv shell hook first if you have not already."
         )
-    lines.append("See INSTALL.md step 3 (Load the project environment) for examples.")
+    lines.append("See INSTALL.md (Appendix: direnv) for examples.")
     return lines
 
 

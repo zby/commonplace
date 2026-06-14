@@ -80,7 +80,7 @@ In addition to copying the instructions tree under `kb/commonplace/instructions/
 - `.claude/skills/cp-skill-<skill>/`
 - `.agents/skills/cp-skill-<skill>/`
 
-Each generated projection is a **symlink** pointing at `kb/commonplace/instructions/cp-skill-<skill>/`. This keeps skill discovery working for those runtimes while the canonical skill content stays in one place inside the shipped library. If symlink creation is unavailable, initialization preserves the canonical skill directories and reports the optional runtime projections as skipped.
+Each generated projection is normally a **symlink** pointing at `kb/commonplace/instructions/cp-skill-<skill>/`, keeping skill discovery working for those runtimes while the canonical skill content stays in one place inside the shipped library. On Windows, where symlinks require admin rights or Developer Mode, `init_project` falls back to a **directory junction** (via the stdlib `_winapi.CreateJunction`, which creates the link directory itself and needs neither privilege). Only if both the symlink and the junction fail does initialization preserve the canonical skill directories and report the optional runtime projections as skipped.
 
 The canonical contract is the source directory, not the two generated layouts. Agent runtimes and IDEs that use another skill surface must link, copy, register, or import the same `kb/commonplace/instructions/cp-skill-*` directories according to their own rules.
 

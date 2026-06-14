@@ -17,6 +17,7 @@ from commonplace.cli.init_project import (  # noqa: E402
     direnv_warnings,
     init_project,
     main,
+    _create_junction,
     _resolve_scaffold_source,
 )
 
@@ -131,6 +132,40 @@ def test_init_project_skips_skill_projection_when_symlinks_are_unavailable(
         len(MANIFEST.promoted_skills) * len(MANIFEST.skills_dirs)
     )
     assert any("symbolic link privilege not held" in reason for _, reason in report.skipped)
+
+
+@pytest.mark.skipif(sys.platform == "win32", reason="_winapi is present on Windows")
+def test_create_junction_returns_false_without_winapi(tmp_path: Path) -> None:
+    # Off Windows the stdlib `_winapi` module does not exist, so the helper must
+    # degrade gracefully rather than raise.
+    assert _create_junction(tmp_path, tmp_path / "link") is False
+
+
+def test_init_project_falls_back_to_junction_when_symlink_fails(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    def fail_symlink(
+        self: Path,
+        target: str | Path,
+        target_is_directory: bool = False,
+    ) -> None:
+        raise OSError("symbolic link privilege not held")
+
+    created: list[tuple[Path, Path]] = []
+
+    def fake_junction(target: Path, link: Path) -> bool:
+        link.mkdir(parents=True, exist_ok=True)
+        created.append((target, link))
+        return True
+
+    monkeypatch.setattr(Path, "symlink_to", fail_symlink)
+    monkeypatch.setattr(init_project_module, "_create_junction", fake_junction)
+
+    report = init_project(tmp_path)
+
+    assert Path(".claude/skills/cp-skill-write") in report.created
+    assert not report.skipped
+    assert len(created) == len(MANIFEST.promoted_skills) * len(MANIFEST.skills_dirs)
 
 
 def test_init_project_preserves_existing_real_skill_projection(tmp_path: Path) -> None:
@@ -291,7 +326,7 @@ def test_environment_warnings_on_windows(
     assert lines
     assert any("Windows detected" in line for line in lines)
     assert any("Activate.ps1" in line for line in lines)
-    assert any("Load the project environment" in line for line in lines)
+    assert any("make the commands" in line for line in lines)
 
 
 def test_main_prints_windows_guidance_when_init_fails(

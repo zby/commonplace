@@ -19,7 +19,7 @@ An installed project has one `kb/` root containing two coexisting surfaces:
 Plus two supporting runtime surfaces:
 
 - `commonplace-*` commands provided by the installed Python package
-- promoted framework skills under `.claude/skills/` and `.agents/skills/` (symlinks into `kb/commonplace/instructions/`)
+- promoted framework skills under `.claude/skills/` and `.agents/skills/` (symlinks, or directory junctions on Windows, into `kb/commonplace/instructions/`)
 
 There is no separate vendored `commonplace/` framework tree. The agent's normal path stays inside the project:
 
