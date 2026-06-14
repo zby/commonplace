@@ -1,0 +1,844 @@
+{
+  "source": "https://x.com/ishaansehgal/status/2065129901427130678",
+  "captured": "2026-06-14T20:33:57.858980+00:00",
+  "family": "x-article",
+  "status_id": "2065129901427130678",
+  "conversation_id": "2065129901427130678",
+  "target_post": {
+    "id": "2065129901427130678",
+    "article": {
+      "media_entities": [
+        "3_2064984567203889152"
+      ],
+      "preview_text": "Think about a character you have spent 100 hours playing in Skyrim or Elden Ring.\nWhat exactly is your character?\nIs it the game engine? No.\nIs it the PlayStation? No.\nIs it the controller? No.\nYour",
+      "entities": {
+        "mentions": [
+          {
+            "start": 607,
+            "end": 617,
+            "username": "dexhorthy"
+          }
+        ],
+        "urls": [
+          {
+            "text": "model.next"
+          },
+          {
+            "text": "https://github.com/humanlayer/12-factor-agents"
+          },
+          {
+            "text": "https://www.omnara.com/managed"
+          }
+        ]
+      },
+      "plain_text": "Think about a character you have spent 100 hours playing in Skyrim or Elden Ring.\nWhat exactly is your character?\nIs it the game engine? No.\nIs it the PlayStation? No.\nIs it the controller? No.\nYour character is the save file.\nIf your PlayStation bursts into flames, your character is not dead. You buy another PlayStation, download your save file from the cloud, and your character is exactly where they were, mid-swing.\nAI agents are hitting the same inflection point.\nMost people think an agent is the model, the runtime, or the loop currently executing the task. Those things matter. But they aren't the agent.\nIn this piece I'll argue that an agent is its data: specifically its history of events, which we'll call the log. When the log is constructed correctly, an agent can be resumed from it alone. And that single property unlocks a whole set of capabilities that make even advanced agent use cases easier to reason about and build into everyday applications.\nDefining the agent\nSo what is the log? Defining the agent means defining the log. At its core, the log is the event history: every user input, model output, tool call, and tool result that accumulates as the agent works: an append-only record of everything that happened.\nThe log also carries a reference to the session definition: the system prompt, tool descriptions, and skills the agent is running under. This doesn't change from turn to turn, so it's more a versioned constant than an active part of the stream.\nTogether they form the agent\u2019s full state. Nothing the agent is lives in the runtime, the model, or the tools; they're just interpreters and appenders. They read the durable state, act on it, and write the next event back. So you can hand a fresh executor the same log and it will reconstruct exactly where the agent was and continue from there. The log is enough, on its own, to resume the agent.\nThe log in practice\nOnce you define the agent as the log, the rest of the system gets easier to reason about. Every operation on the agent either reads the log, appends to it, or renders a view of it. The model reads a view and produces the next action. The tool runner executes a tool call and appends the result. The UI reads the log and renders a timeline; the tracing system reads it and renders traces; an auditor reads it to reconstruct what happened. It's the same pattern databases settled on years ago: the tables, indexes, and caches are all projections over an underlying log of changes. (diagram below adapted from @dexhorthy excellent 12-factor agents; worth a read if you haven't.)\n \nIn practice, a simplified loop can look like this:\nwhile session_has_work:\n    take_temporary_lease(session_id)\n    state = reconstruct_from_log(session_id)\n    response = model.next(state)\n    append(response, to=session_log)\n\n    if response.requests_tool:\n        append(tool_call_started, to=session_log)\n        result = run_tool(response.tool_call)\n        append(result, to=session_log)\n        continue\n\n    finish_turn(session_id)\nIt looks simple, but the insight is that each pass claims a temporary lease, reads the log, advances one step, and writes the result back. The loop is idempotent and fault-tolerant: as long as every meaningful state transition is durably written, any executor can pick up the session and carry on.\nCompaction is not the log\nWhile the log can grow indefinitely, a model's view of it can't: context windows are finite. You can't hand the model the entire raw history on every call. This is where compaction comes in. And since compaction replaces everything before it with a summary, doesn't that destroy the claim that the log is the agent?\nNo, it doesn't. Remember, compaction is lossy. A compacted summary doesn't reproduce the agent's state in a smaller form; it throws information away.\nThat actually reinforces the claim. The full log is the record; a compaction is just one projection of it, the way a materialized view isn't the database and a summary isn't the conversation. Keep the raw log and you can always generate new projections from it. Throw the raw log away and keep only the compaction, and you've lost part of the agent. So it's cleanest to treat compaction as a best-effort, lossy fork, one you resume as a new log.\nThe log isn't the whole world\nThere's an obvious objection, worth taking seriously: what about tools that change state outside the log? An agent edits a file, opens a GitHub issue, sends an email. Now there's state living somewhere other than the log. Doesn't that sink the claim?\nNo, it doesn't. You re-derive the agent's state from the log, not the world: if it already sent the email, forking back won't un-send it, and a file it edited may have changed underneath it. The log doesn't make the world deterministic or reversible. It keeps a faithful, resumable record of what the agent did and saw, which is exactly the thing you can't afford to lose. The save file makes the same move: it doesn't contain the Skyrim engine or the map, just the player-specific state needed to drop you back in. And if the world has changed since the agent last ran, the agent \u2014 much like the character \u2014 updates its worldview as it re-engages with what's around it.\nProperties that fall out\nReasoning about agents this way gives you a set of nice system properties. They aren't independent; they all fall out of the same assumption that the log is the agent.\nReliability. Consider what happens today with Claude Code: if the agent reaches a permission prompt and the process dies, and you resume it, the permission prompt is gone and the agent has paused. That's unacceptable in production. When the log is the agent, the executor is allowed to be fallible: a new worker picks up the session, reconstructs the state, and the permission prompt is right where it was. The process died; the agent didn't.\nScalability. Most harnesses run one process per agent, which means the agent is tied to the machine running it. When the log is the state, you flip that model: one process can advance thousands of agents, each reconstructing its state from the log on each turn. The agent isn't tied to any single machine or worker, making failover trivial. And scaling out is just adding more workers: no sticky sessions, no state migration, no coordination overhead.\nForking. Instead of one linear path, you can branch the log. One branch runs on Claude, another on GPT, another on a local Qwen, each exploring a different strategy, in a different sandbox, with different tools. Exploring different approaches becomes a lot simpler to architect.\nMultiplayer. Sharing an agent shouldn't mean copying a transcript into Slack. That's like sharing a screenshot of a database and calling it replication. If the log is the agent, sharing means granting access to a durable history someone else can inspect, resume, or extend.\nMigration. If the agent's identity is trapped inside provider-specific assumptions, moving providers is painful. If the log is the agent, migration becomes an adapter problem. Different models may want different projections, but those are engineering problems, not identity problems. The log is the continuity, and the agent should be able to pick up and resume interchangeably with any model provider.\nThese are only a few examples. Once you start thinking of agents this way, they become pieces of data, and many of the things you can do with data become possible with agents too.\nThe log as a second-class citizen\nMost agent harnesses today treat the log as an afterthought. Claude Code and Codex write transcripts as messy JSONL files to local disk \u2014 in Claude SDK mode, those writes are fire-and-forget, meaning if anything goes wrong before the write completes, that data is gone. OpenCode stores state in a local SQLite file; GitHub issues report corruption and data loss. Durable objects often end up holding different shards, making reconstructing history difficult. The log is a side effect, not the system.\nWhen you treat the log as a first-class citizen \u2014 durable, structured, replayable, and independent of the machine running the agent \u2014 all of these properties become structural. You don't bolt them on. They fall out.\nOwning the log\nOne last point I'd want you to leave with: owning the log matters enormously. If the log is the agent, then whoever owns the log owns the agent.\nLong-term, the strongest form of lock-in isn't model lock-in: models can be swapped. It isn't API or tool lock-in either; those can be wrapped and adapted. The deepest lock-in is log lock-in. If a provider owns the only durable record of your agent, then that provider owns your agent. You can export a projection \u2014 a transcript, say \u2014 and still lose the agent, because the agent isn't its final output; it's the path-dependent history that produced it.\nThis is worth taking seriously right now. Anthropic has Claude Managed Agents. Google has Gemini managed agents. Every major provider is moving to own more of the stack: hosted agent loop, managed memory, sandboxes, compaction, background execution. They want to own your agents, and agents are arguably the most intimate piece of technology you'll ever run. For an agent to be useful, it needs access to your personal information, your company's data, your workflows, your decisions. The log is a record of all of that. If it lives on someone else's infrastructure, under their retention policies, queryable by their systems, then they don't just host your agent. They own it.\nThat's not an argument against managed infrastructure; it's useful and probably inevitable for most teams. But you should know where your log lives, who can inspect it, and whether it can be replayed, forked, migrated, or exported. Once the session log is the primitive, log ownership is agent ownership.\nHow we handle this in practice at Omnara\nAt Omnara we think about agent execution as a set of components coordinated around a durable session log. A worker advances the loop, but the worker isn't the agent; it's just the current executor.\nWhen an agent calls a tool, the worker doesn't have to sit there holding all the state in memory. It writes to the log that a tool call started, dispatches the tool to whatever execution environment it belongs in, and lets it finish elsewhere. When the tool completes, its result gets appended back to the log, and a worker (maybe a different one) reconstructs the state and continues.\nThis matters because agent systems have to survive real-world failure: workers crash, machines restart, sandboxes vanish, tool calls run long, providers fail, users disconnect. If the agent is the running process, all of that is terrifying. If the agent is the log, it's just execution detail. The session keeps going because the agent's state was never trapped inside the thing executing it. Treating the log as the system \u2014 durable, structured, and independent of any single machine \u2014 is the core of how we've built Omnara.\nConclusion\nThe point of this piece was to get you reasoning about agents from first principles. An agent is the durable history of the work being done, and that history is the log.\nOnce you see it this way, a lot falls into place: reliability, scalability, compaction, forking, migration, multiplayer, ownership. It also changes how you build. You stop treating the log as exhaust the system gives off and start treating it as the system itself. The loop becomes an executor over the log. It's the same inversion databases went through years ago: the durable history is primary, and everything else is a projection.\nIf this was useful, stay tuned to what we're building at Omnara. We're getting ready to open-source our managed agent platform, and you can join the waitlist here. \"The log is the agent\" is just one of several pieces we think will make agents far more powerful in the future.",
+      "title": "The Log Is the Agent",
+      "cover_media": "3_2064998298147225600"
+    },
+    "edit_history_tweet_ids": [
+      "2065129901427130678"
+    ],
+    "text": "https://t.co/lKK4Slx8zG",
+    "author_id": "3433773514",
+    "created_at": "2026-06-11T17:51:51.000Z",
+    "conversation_id": "2065129901427130678",
+    "entities": {
+      "urls": [
+        {
+          "start": 0,
+          "end": 23,
+          "url": "https://t.co/lKK4Slx8zG",
+          "expanded_url": "http://x.com/i/article/2064983895096066048",
+          "display_url": "x.com/i/article/2064\u2026",
+          "status": 500,
+          "unwound_url": "https://x.com/i/article/2064983895096066048"
+        }
+      ]
+    }
+  },
+  "posts": [
+    {
+      "article": {
+        "cover_media": "3_2064998298147225600",
+        "media_entities": [
+          "3_2064984567203889152"
+        ],
+        "plain_text": "Think about a character you have spent 100 hours playing in Skyrim or Elden Ring.\nWhat exactly is your character?\nIs it the game engine? No.\nIs it the PlayStation? No.\nIs it the controller? No.\nYour character is the save file.\nIf your PlayStation bursts into flames, your character is not dead. You buy another PlayStation, download your save file from the cloud, and your character is exactly where they were, mid-swing.\nAI agents are hitting the same inflection point.\nMost people think an agent is the model, the runtime, or the loop currently executing the task. Those things matter. But they aren't the agent.\nIn this piece I'll argue that an agent is its data: specifically its history of events, which we'll call the log. When the log is constructed correctly, an agent can be resumed from it alone. And that single property unlocks a whole set of capabilities that make even advanced agent use cases easier to reason about and build into everyday applications.\nDefining the agent\nSo what is the log? Defining the agent means defining the log. At its core, the log is the event history: every user input, model output, tool call, and tool result that accumulates as the agent works: an append-only record of everything that happened.\nThe log also carries a reference to the session definition: the system prompt, tool descriptions, and skills the agent is running under. This doesn't change from turn to turn, so it's more a versioned constant than an active part of the stream.\nTogether they form the agent\u2019s full state. Nothing the agent is lives in the runtime, the model, or the tools; they're just interpreters and appenders. They read the durable state, act on it, and write the next event back. So you can hand a fresh executor the same log and it will reconstruct exactly where the agent was and continue from there. The log is enough, on its own, to resume the agent.\nThe log in practice\nOnce you define the agent as the log, the rest of the system gets easier to reason about. Every operation on the agent either reads the log, appends to it, or renders a view of it. The model reads a view and produces the next action. The tool runner executes a tool call and appends the result. The UI reads the log and renders a timeline; the tracing system reads it and renders traces; an auditor reads it to reconstruct what happened. It's the same pattern databases settled on years ago: the tables, indexes, and caches are all projections over an underlying log of changes. (diagram below adapted from @dexhorthy excellent 12-factor agents; worth a read if you haven't.)\n \nIn practice, a simplified loop can look like this:\nwhile session_has_work:\n    take_temporary_lease(session_id)\n    state = reconstruct_from_log(session_id)\n    response = model.next(state)\n    append(response, to=session_log)\n\n    if response.requests_tool:\n        append(tool_call_started, to=session_log)\n        result = run_tool(response.tool_call)\n        append(result, to=session_log)\n        continue\n\n    finish_turn(session_id)\nIt looks simple, but the insight is that each pass claims a temporary lease, reads the log, advances one step, and writes the result back. The loop is idempotent and fault-tolerant: as long as every meaningful state transition is durably written, any executor can pick up the session and carry on.\nCompaction is not the log\nWhile the log can grow indefinitely, a model's view of it can't: context windows are finite. You can't hand the model the entire raw history on every call. This is where compaction comes in. And since compaction replaces everything before it with a summary, doesn't that destroy the claim that the log is the agent?\nNo, it doesn't. Remember, compaction is lossy. A compacted summary doesn't reproduce the agent's state in a smaller form; it throws information away.\nThat actually reinforces the claim. The full log is the record; a compaction is just one projection of it, the way a materialized view isn't the database and a summary isn't the conversation. Keep the raw log and you can always generate new projections from it. Throw the raw log away and keep only the compaction, and you've lost part of the agent. So it's cleanest to treat compaction as a best-effort, lossy fork, one you resume as a new log.\nThe log isn't the whole world\nThere's an obvious objection, worth taking seriously: what about tools that change state outside the log? An agent edits a file, opens a GitHub issue, sends an email. Now there's state living somewhere other than the log. Doesn't that sink the claim?\nNo, it doesn't. You re-derive the agent's state from the log, not the world: if it already sent the email, forking back won't un-send it, and a file it edited may have changed underneath it. The log doesn't make the world deterministic or reversible. It keeps a faithful, resumable record of what the agent did and saw, which is exactly the thing you can't afford to lose. The save file makes the same move: it doesn't contain the Skyrim engine or the map, just the player-specific state needed to drop you back in. And if the world has changed since the agent last ran, the agent \u2014 much like the character \u2014 updates its worldview as it re-engages with what's around it.\nProperties that fall out\nReasoning about agents this way gives you a set of nice system properties. They aren't independent; they all fall out of the same assumption that the log is the agent.\nReliability. Consider what happens today with Claude Code: if the agent reaches a permission prompt and the process dies, and you resume it, the permission prompt is gone and the agent has paused. That's unacceptable in production. When the log is the agent, the executor is allowed to be fallible: a new worker picks up the session, reconstructs the state, and the permission prompt is right where it was. The process died; the agent didn't.\nScalability. Most harnesses run one process per agent, which means the agent is tied to the machine running it. When the log is the state, you flip that model: one process can advance thousands of agents, each reconstructing its state from the log on each turn. The agent isn't tied to any single machine or worker, making failover trivial. And scaling out is just adding more workers: no sticky sessions, no state migration, no coordination overhead.\nForking. Instead of one linear path, you can branch the log. One branch runs on Claude, another on GPT, another on a local Qwen, each exploring a different strategy, in a different sandbox, with different tools. Exploring different approaches becomes a lot simpler to architect.\nMultiplayer. Sharing an agent shouldn't mean copying a transcript into Slack. That's like sharing a screenshot of a database and calling it replication. If the log is the agent, sharing means granting access to a durable history someone else can inspect, resume, or extend.\nMigration. If the agent's identity is trapped inside provider-specific assumptions, moving providers is painful. If the log is the agent, migration becomes an adapter problem. Different models may want different projections, but those are engineering problems, not identity problems. The log is the continuity, and the agent should be able to pick up and resume interchangeably with any model provider.\nThese are only a few examples. Once you start thinking of agents this way, they become pieces of data, and many of the things you can do with data become possible with agents too.\nThe log as a second-class citizen\nMost agent harnesses today treat the log as an afterthought. Claude Code and Codex write transcripts as messy JSONL files to local disk \u2014 in Claude SDK mode, those writes are fire-and-forget, meaning if anything goes wrong before the write completes, that data is gone. OpenCode stores state in a local SQLite file; GitHub issues report corruption and data loss. Durable objects often end up holding different shards, making reconstructing history difficult. The log is a side effect, not the system.\nWhen you treat the log as a first-class citizen \u2014 durable, structured, replayable, and independent of the machine running the agent \u2014 all of these properties become structural. You don't bolt them on. They fall out.\nOwning the log\nOne last point I'd want you to leave with: owning the log matters enormously. If the log is the agent, then whoever owns the log owns the agent.\nLong-term, the strongest form of lock-in isn't model lock-in: models can be swapped. It isn't API or tool lock-in either; those can be wrapped and adapted. The deepest lock-in is log lock-in. If a provider owns the only durable record of your agent, then that provider owns your agent. You can export a projection \u2014 a transcript, say \u2014 and still lose the agent, because the agent isn't its final output; it's the path-dependent history that produced it.\nThis is worth taking seriously right now. Anthropic has Claude Managed Agents. Google has Gemini managed agents. Every major provider is moving to own more of the stack: hosted agent loop, managed memory, sandboxes, compaction, background execution. They want to own your agents, and agents are arguably the most intimate piece of technology you'll ever run. For an agent to be useful, it needs access to your personal information, your company's data, your workflows, your decisions. The log is a record of all of that. If it lives on someone else's infrastructure, under their retention policies, queryable by their systems, then they don't just host your agent. They own it.\nThat's not an argument against managed infrastructure; it's useful and probably inevitable for most teams. But you should know where your log lives, who can inspect it, and whether it can be replayed, forked, migrated, or exported. Once the session log is the primitive, log ownership is agent ownership.\nHow we handle this in practice at Omnara\nAt Omnara we think about agent execution as a set of components coordinated around a durable session log. A worker advances the loop, but the worker isn't the agent; it's just the current executor.\nWhen an agent calls a tool, the worker doesn't have to sit there holding all the state in memory. It writes to the log that a tool call started, dispatches the tool to whatever execution environment it belongs in, and lets it finish elsewhere. When the tool completes, its result gets appended back to the log, and a worker (maybe a different one) reconstructs the state and continues.\nThis matters because agent systems have to survive real-world failure: workers crash, machines restart, sandboxes vanish, tool calls run long, providers fail, users disconnect. If the agent is the running process, all of that is terrifying. If the agent is the log, it's just execution detail. The session keeps going because the agent's state was never trapped inside the thing executing it. Treating the log as the system \u2014 durable, structured, and independent of any single machine \u2014 is the core of how we've built Omnara.\nConclusion\nThe point of this piece was to get you reasoning about agents from first principles. An agent is the durable history of the work being done, and that history is the log.\nOnce you see it this way, a lot falls into place: reliability, scalability, compaction, forking, migration, multiplayer, ownership. It also changes how you build. You stop treating the log as exhaust the system gives off and start treating it as the system itself. The loop becomes an executor over the log. It's the same inversion databases went through years ago: the durable history is primary, and everything else is a projection.\nIf this was useful, stay tuned to what we're building at Omnara. We're getting ready to open-source our managed agent platform, and you can join the waitlist here. \"The log is the agent\" is just one of several pieces we think will make agents far more powerful in the future.",
+        "title": "The Log Is the Agent",
+        "entities": {
+          "mentions": [
+            {
+              "start": 607,
+              "end": 617,
+              "username": "dexhorthy"
+            }
+          ],
+          "urls": [
+            {
+              "text": "model.next"
+            },
+            {
+              "text": "https://github.com/humanlayer/12-factor-agents"
+            },
+            {
+              "text": "https://www.omnara.com/managed"
+            }
+          ]
+        },
+        "preview_text": "Think about a character you have spent 100 hours playing in Skyrim or Elden Ring.\nWhat exactly is your character?\nIs it the game engine? No.\nIs it the PlayStation? No.\nIs it the controller? No.\nYour"
+      },
+      "edit_history_tweet_ids": [
+        "2065129901427130678"
+      ],
+      "created_at": "2026-06-11T17:51:51.000Z",
+      "entities": {
+        "urls": [
+          {
+            "start": 0,
+            "end": 23,
+            "url": "https://t.co/lKK4Slx8zG",
+            "expanded_url": "http://x.com/i/article/2064983895096066048",
+            "display_url": "x.com/i/article/2064\u2026",
+            "status": 500,
+            "unwound_url": "https://x.com/i/article/2064983895096066048"
+          }
+        ]
+      },
+      "author_id": "3433773514",
+      "conversation_id": "2065129901427130678",
+      "id": "2065129901427130678",
+      "text": "https://t.co/lKK4Slx8zG"
+    },
+    {
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2065130515309740055"
+        }
+      ],
+      "edit_history_tweet_ids": [
+        "2065133902528962697"
+      ],
+      "created_at": "2026-06-11T18:07:45.000Z",
+      "in_reply_to_user_id": "1236811388678361088",
+      "author_id": "3433773514",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 14,
+            "username": "dr_chrisjones",
+            "id": "1236811388678361088"
+          },
+          {
+            "start": 15,
+            "end": 24,
+            "username": "omnaraai",
+            "id": "1938770090872446976"
+          }
+        ]
+      },
+      "conversation_id": "2065129901427130678",
+      "id": "2065133902528962697",
+      "text": "@dr_chrisjones @omnaraai ikr who doesn't love video games"
+    },
+    {
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2065143022615171230"
+        }
+      ],
+      "edit_history_tweet_ids": [
+        "2065153564797002012"
+      ],
+      "created_at": "2026-06-11T19:25:53.000Z",
+      "in_reply_to_user_id": "1951774575458766848",
+      "author_id": "3433773514",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 13,
+            "username": "cassidydalva",
+            "id": "1951774575458766848"
+          },
+          {
+            "start": 42,
+            "end": 53,
+            "username": "MisoLabsAI",
+            "id": "1948172699802775552"
+          }
+        ]
+      },
+      "conversation_id": "2065129901427130678",
+      "id": "2065153564797002012",
+      "text": "@cassidydalva thanks cassidy, excited for @MisoLabsAI !"
+    },
+    {
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2065139452704600066"
+        }
+      ],
+      "edit_history_tweet_ids": [
+        "2065157411271594448"
+      ],
+      "created_at": "2026-06-11T19:41:10.000Z",
+      "in_reply_to_user_id": "1809282278843101185",
+      "author_id": "3433773514",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 13,
+            "username": "nobita_n0bii",
+            "id": "1809282278843101185"
+          }
+        ]
+      },
+      "conversation_id": "2065129901427130678",
+      "id": "2065157411271594448",
+      "text": "@nobita_n0bii yeah, for more constrained tasks they probably more replicable, so identity matters less"
+    },
+    {
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2065133015626391916"
+        }
+      ],
+      "edit_history_tweet_ids": [
+        "2065161301329109382"
+      ],
+      "created_at": "2026-06-11T19:56:37.000Z",
+      "in_reply_to_user_id": "1863615725333540864",
+      "author_id": "3433773514",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 14,
+            "username": "rohan_katakam",
+            "id": "1863615725333540864"
+          }
+        ]
+      },
+      "conversation_id": "2065129901427130678",
+      "id": "2065161301329109382",
+      "text": "@rohan_katakam thanks \ud83d\ude4c the save file analogy seems to click"
+    },
+    {
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2065134164894957812"
+        }
+      ],
+      "edit_history_tweet_ids": [
+        "2065175022294159803"
+      ],
+      "created_at": "2026-06-11T20:51:09.000Z",
+      "in_reply_to_user_id": "1537239770660851718",
+      "author_id": "3433773514",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 11,
+            "username": "007Killpop",
+            "id": "1537239770660851718"
+          }
+        ]
+      },
+      "conversation_id": "2065129901427130678",
+      "id": "2065175022294159803",
+      "text": "@007Killpop perhaps are you referring to your memories?"
+    },
+    {
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2065143015497490872"
+        }
+      ],
+      "edit_history_tweet_ids": [
+        "2065175327748571264"
+      ],
+      "created_at": "2026-06-11T20:52:21.000Z",
+      "in_reply_to_user_id": "2015234942213783552",
+      "author_id": "3433773514",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 11,
+            "username": "AodenTeoMT",
+            "id": "2015234942213783552"
+          }
+        ]
+      },
+      "conversation_id": "2065129901427130678",
+      "id": "2065175327748571264",
+      "text": "@AodenTeoMT yes this is a great point. log being unimpacted allows the identity to survive"
+    },
+    {
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2065252140550070392"
+        }
+      ],
+      "edit_history_tweet_ids": [
+        "2065297872925704606"
+      ],
+      "created_at": "2026-06-12T04:59:18.000Z",
+      "in_reply_to_user_id": "2455759112",
+      "author_id": "3433773514",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 10,
+            "username": "anderslie",
+            "id": "2455759112"
+          }
+        ]
+      },
+      "conversation_id": "2065129901427130678",
+      "id": "2065297872925704606",
+      "text": "@anderslie \ud83d\ude4c"
+    },
+    {
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2065454922548584552"
+        }
+      ],
+      "edit_history_tweet_ids": [
+        "2065494480959205861"
+      ],
+      "created_at": "2026-06-12T18:00:33.000Z",
+      "in_reply_to_user_id": "1939317998084558848",
+      "author_id": "3433773514",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 13,
+            "username": "JackStettner",
+            "id": "1939317998084558848"
+          }
+        ]
+      },
+      "conversation_id": "2065129901427130678",
+      "id": "2065494480959205861",
+      "text": "@JackStettner \ud83d\ude4c"
+    },
+    {
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2065489577759080522"
+        }
+      ],
+      "edit_history_tweet_ids": [
+        "2065495232230133868"
+      ],
+      "created_at": "2026-06-12T18:03:33.000Z",
+      "in_reply_to_user_id": "30439303",
+      "author_id": "3433773514",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 14,
+            "username": "yoheinakajima",
+            "id": "30439303"
+          },
+          {
+            "start": 22,
+            "end": 27,
+            "username": "swyx",
+            "id": "33521530"
+          }
+        ]
+      },
+      "conversation_id": "2065129901427130678",
+      "id": "2065495232230133868",
+      "text": "@yoheinakajima no way @swyx actually mentioned activegraph. would def be down to chat"
+    },
+    {
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2065458502600888682"
+        }
+      ],
+      "edit_history_tweet_ids": [
+        "2065499549905694982"
+      ],
+      "created_at": "2026-06-12T18:20:42.000Z",
+      "in_reply_to_user_id": "1470882661229072388",
+      "note_tweet": {
+        "text": "we store compactions as events and then replay from there forward. today its messy because we hold a pointer in the log to the last compaction point. yeah memory is interesting, both inter and intra session memory should be treated as projections of the log/world state. the log is still the identity boundary"
+      },
+      "author_id": "3433773514",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 15,
+            "username": "roshi_nakamoto",
+            "id": "1470882661229072388"
+          }
+        ]
+      },
+      "conversation_id": "2065129901427130678",
+      "id": "2065499549905694982",
+      "text": "@roshi_nakamoto we store compactions as events and then replay from there forward. today its messy because we hold a pointer in the log to the last compaction point. yeah memory is interesting, both inter and intra session memory should be treated as projections of the log/world state. the log"
+    },
+    {
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2065478814357233832"
+        }
+      ],
+      "edit_history_tweet_ids": [
+        "2065499711881064669"
+      ],
+      "created_at": "2026-06-12T18:21:21.000Z",
+      "in_reply_to_user_id": "1218983303572787201",
+      "author_id": "3433773514",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 14,
+            "username": "aniketdotxlsx",
+            "id": "1218983303572787201"
+          },
+          {
+            "start": 15,
+            "end": 25,
+            "username": "dexhorthy",
+            "id": "820679805259550720"
+          }
+        ]
+      },
+      "conversation_id": "2065129901427130678",
+      "id": "2065499711881064669",
+      "text": "@aniketdotxlsx @dexhorthy yeah truly tons of open problems"
+    },
+    {
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2065252534852411572"
+        }
+      ],
+      "edit_history_tweet_ids": [
+        "2065499843766727171"
+      ],
+      "created_at": "2026-06-12T18:21:52.000Z",
+      "in_reply_to_user_id": "17489187",
+      "author_id": "3433773514",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 10,
+            "username": "jazzyalex",
+            "id": "17489187"
+          }
+        ]
+      },
+      "conversation_id": "2065129901427130678",
+      "id": "2065499843766727171",
+      "text": "@jazzyalex yes exactly"
+    },
+    {
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2065467960882352631"
+        }
+      ],
+      "edit_history_tweet_ids": [
+        "2065500480508473839"
+      ],
+      "created_at": "2026-06-12T18:24:24.000Z",
+      "in_reply_to_user_id": "2055739556108865536",
+      "author_id": "3433773514",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 16,
+            "username": "WrightStarforge",
+            "id": "2055739556108865536"
+          }
+        ]
+      },
+      "conversation_id": "2065129901427130678",
+      "id": "2065500480508473839",
+      "text": "@WrightStarforge I see what you mean, but I think its important to think about identity. Memories can be regenerated from the underlying log; the log can't be regenerated from the memories."
+    },
+    {
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2065521100407128476"
+        }
+      ],
+      "edit_history_tweet_ids": [
+        "2065534846030516400"
+      ],
+      "created_at": "2026-06-12T20:40:57.000Z",
+      "in_reply_to_user_id": "2063997203404713984",
+      "author_id": "3433773514",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 14,
+            "username": "PromptGremlin",
+            "id": "2063997203404713984"
+          }
+        ]
+      },
+      "conversation_id": "2065129901427130678",
+      "id": "2065534846030516400",
+      "text": "@PromptGremlin yep true. and its especially important with how sensitive it is the information we share with agents: personal information, company's data, workflows, your thoughts"
+    },
+    {
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2065524005038067814"
+        }
+      ],
+      "edit_history_tweet_ids": [
+        "2065535200399142912"
+      ],
+      "created_at": "2026-06-12T20:42:22.000Z",
+      "in_reply_to_user_id": "822530507472678912",
+      "author_id": "3433773514",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 10,
+            "username": "gre8tness",
+            "id": "822530507472678912"
+          }
+        ]
+      },
+      "conversation_id": "2065129901427130678",
+      "id": "2065535200399142912",
+      "text": "@gre8tness yeah harness is also becoming more and more dispensable/interchangeable"
+    },
+    {
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2065523370410610883"
+        }
+      ],
+      "edit_history_tweet_ids": [
+        "2065537029421535480"
+      ],
+      "created_at": "2026-06-12T20:49:38.000Z",
+      "in_reply_to_user_id": "1022157402014195712",
+      "author_id": "3433773514",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 8,
+            "username": "yawnxyz",
+            "id": "1022157402014195712"
+          }
+        ]
+      },
+      "conversation_id": "2065129901427130678",
+      "id": "2065537029421535480",
+      "text": "@yawnxyz yes, save file isn\u2019t the whole system; you still need an engine/world to run it. my point is that it\u2019s where the identity lives"
+    },
+    {
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2065536517871685682"
+        }
+      ],
+      "edit_history_tweet_ids": [
+        "2065537497401356401"
+      ],
+      "created_at": "2026-06-12T20:51:29.000Z",
+      "in_reply_to_user_id": "2009300723167801344",
+      "author_id": "3433773514",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 14,
+            "username": "RenobJunction",
+            "id": "2009300723167801344"
+          }
+        ]
+      },
+      "conversation_id": "2065129901427130678",
+      "id": "2065537497401356401",
+      "text": "@RenobJunction its an interesting intersection"
+    },
+    {
+      "referenced_tweets": [
+        {
+          "type": "replied_to",
+          "id": "2065545831487246833"
+        }
+      ],
+      "edit_history_tweet_ids": [
+        "2065558239698469203"
+      ],
+      "created_at": "2026-06-12T22:13:55.000Z",
+      "in_reply_to_user_id": "146391245",
+      "author_id": "3433773514",
+      "entities": {
+        "mentions": [
+          {
+            "start": 0,
+            "end": 9,
+            "username": "solidoxx",
+            "id": "146391245"
+          }
+        ]
+      },
+      "conversation_id": "2065129901427130678",
+      "id": "2065558239698469203",
+      "text": "@solidoxx wdym"
+    }
+  ],
+  "users": {
+    "3433773514": {
+      "id": "3433773514",
+      "name": "Ishaan Sehgal",
+      "username": "ishaansehgal"
+    },
+    "919095338": {
+      "id": "919095338",
+      "name": "Michael Kuliasov",
+      "username": "MKuliasov"
+    },
+    "1699995693673320448": {
+      "id": "1699995693673320448",
+      "name": "Luis Lechuga Ruiz",
+      "username": "LuisLechugaR"
+    },
+    "468660241": {
+      "id": "468660241",
+      "name": "Slyfox",
+      "username": "ansonschu"
+    },
+    "961265690463363073": {
+      "id": "961265690463363073",
+      "name": "woisau",
+      "username": "woisau1"
+    },
+    "233740827": {
+      "id": "233740827",
+      "name": "Ivan Ciraj",
+      "username": "ivanciraj"
+    },
+    "1401839820184309760": {
+      "id": "1401839820184309760",
+      "name": "charlie (zera mode) \ud83e\uddd8\ud83c\udffb\u200d\u2642\ufe0f\u262e\ufe0f\ud83c\udf0d",
+      "username": "PooWhale"
+    },
+    "252407576": {
+      "id": "252407576",
+      "name": "Ilham Hafizovi\u0107",
+      "username": "hfzvc"
+    },
+    "140788293": {
+      "id": "140788293",
+      "name": "MB__",
+      "username": "mandarBadve"
+    },
+    "1819199223063367680": {
+      "id": "1819199223063367680",
+      "name": "Pixeltable",
+      "username": "pixeltablehq"
+    },
+    "8238522": {
+      "id": "8238522",
+      "name": "steve",
+      "username": "SteveMoraco"
+    },
+    "937250672734625792": {
+      "id": "937250672734625792",
+      "name": "Andrew Sheves",
+      "username": "andrewsheves"
+    },
+    "13963262": {
+      "id": "13963262",
+      "name": "Anouar Mansour \ud83e\udd74",
+      "username": "Hankyone"
+    },
+    "1522741688594280448": {
+      "id": "1522741688594280448",
+      "name": "Sriram Kiron",
+      "username": "sriramkiron"
+    },
+    "1880106503430139904": {
+      "id": "1880106503430139904",
+      "name": "Kevin",
+      "username": "kevvv489"
+    },
+    "1387405573642018817": {
+      "id": "1387405573642018817",
+      "name": "Ferbin",
+      "username": "Ferbin08"
+    },
+    "1333996736101163009": {
+      "id": "1333996736101163009",
+      "name": "CloudDynamicsCore",
+      "username": "swemxxff"
+    },
+    "33521530": {
+      "id": "33521530",
+      "name": "swyx",
+      "username": "swyx"
+    },
+    "69023879": {
+      "id": "69023879",
+      "name": "Dinesh",
+      "username": "ndinesh2006"
+    },
+    "146391245": {
+      "id": "146391245",
+      "name": "\u02cf\u02cbNord\u02ce\u02ca",
+      "username": "solidoxx"
+    },
+    "1470882661229072388": {
+      "id": "1470882661229072388",
+      "name": "Storm",
+      "username": "roshi_nakamoto"
+    },
+    "1944441005933285376": {
+      "id": "1944441005933285376",
+      "name": "10b51 Stock Dump",
+      "username": "10b51_StockDump"
+    },
+    "2009300723167801344": {
+      "id": "2009300723167801344",
+      "name": "RenobJunction",
+      "username": "RenobJunction"
+    },
+    "1022157402014195712": {
+      "id": "1022157402014195712",
+      "name": "Jan",
+      "username": "yawnxyz"
+    },
+    "822530507472678912": {
+      "id": "822530507472678912",
+      "name": "Greatness",
+      "username": "gre8tness"
+    },
+    "2063997203404713984": {
+      "id": "2063997203404713984",
+      "name": "PromptGremlin.sh",
+      "username": "PromptGremlin"
+    },
+    "1955993897680691200": {
+      "id": "1955993897680691200",
+      "name": "Kleptobyte",
+      "username": "kleptobyte"
+    },
+    "17489187": {
+      "id": "17489187",
+      "name": "Alexander Malakhov",
+      "username": "jazzyalex"
+    },
+    "30439303": {
+      "id": "30439303",
+      "name": "Yohei",
+      "username": "yoheinakajima"
+    },
+    "5950652": {
+      "id": "5950652",
+      "name": "shikhar",
+      "username": "shikhrr"
+    },
+    "2055739556108865536": {
+      "id": "2055739556108865536",
+      "name": "Wright Starforge",
+      "username": "WrightStarforge"
+    },
+    "1218983303572787201": {
+      "id": "1218983303572787201",
+      "name": "Aniket",
+      "username": "aniketdotxlsx"
+    },
+    "1216004878369054720": {
+      "id": "1216004878369054720",
+      "name": "dale",
+      "username": "daleverett"
+    },
+    "1939317998084558848": {
+      "id": "1939317998084558848",
+      "name": "Jack Stettner",
+      "username": "JackStettner"
+    },
+    "341030111": {
+      "id": "341030111",
+      "name": "Graeme",
+      "username": "GesturingMan"
+    },
+    "2455759112": {
+      "id": "2455759112",
+      "name": "Anders Lie",
+      "username": "anderslie"
+    },
+    "1537239770660851718": {
+      "id": "1537239770660851718",
+      "name": "Diego Alejandro",
+      "username": "007Killpop"
+    },
+    "2015234942213783552": {
+      "id": "2015234942213783552",
+      "name": "Aoden Teo",
+      "username": "AodenTeoMT"
+    },
+    "2045193989528158208": {
+      "id": "2045193989528158208",
+      "name": "Nicholas Blanchard",
+      "username": "corelumen"
+    },
+    "1863615725333540864": {
+      "id": "1863615725333540864",
+      "name": "Rohan Katakam",
+      "username": "rohan_katakam"
+    },
+    "1809282278843101185": {
+      "id": "1809282278843101185",
+      "name": "nobita nobi",
+      "username": "nobita_n0bii"
+    },
+    "1951774575458766848": {
+      "id": "1951774575458766848",
+      "name": "Cassidy Dalva",
+      "username": "cassidydalva"
+    },
+    "1236811388678361088": {
+      "id": "1236811388678361088",
+      "name": "Christopher Jones",
+      "username": "dr_chrisjones"
+    }
+  },
+  "thread_fetch_error": null
+}
