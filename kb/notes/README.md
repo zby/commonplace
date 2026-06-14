@@ -1,31 +1,16 @@
-# Meta
+# Notes
 
-Observations and design work toward a knowledge base for design history.
+The theoretical register of the Commonplace KB: transferable claims, mechanisms, definitions, and synthesis about how agent-operated knowledge bases — LLM wikis — should be built and operated. This is the theory the rest of the repository runs on; the methodology these notes describe is what agents follow to maintain this wiki.
 
-Navigation: [tags index](./tags-README.md).
+The central thread is [deploy-time learning](./deploy-time-learning-is-the-missing-middle.md) — how deployed AI systems improve through structured knowledge that accumulates alongside the code — developed through the [constraining](./definitions/constraining.md), distillation, and discovery operations.
 
-## Goal
+## Navigation
 
-Build a knowledge base that applies [deploy-time learning](./deploy-time-learning-is-the-missing-middle.md), [constraining](./definitions/constraining.md), and the generator/verifier pattern to managing design notes, decisions, and architecture.
+- [tags index](./tags-README.md) — the top-level hub: tag READMEs, foundations, evaluation, and gaps
+- [links index](./links-README.md) — the linking methodology: semantics, navigation, contracts
 
-## Constraint: Claude Code as runtime
+## What belongs here
 
-The knowledge base runs on Claude Code — using skills, hooks, and CLAUDE.md as the execution substrate. The implementation is markdown files, ripgrep queries, shell scripts, and skill definitions.
+A claim earns a note when it changes how someone would build or operate a knowledge base. Notes carry a maturity mark (`seedling` → `current`) and link to the sources or notes they rest on, so a reader knows how much weight a claim holds. Titles are assertions, not topics, so following links reads as a chain of reasoning. Pure pattern-recording without explanation belongs in `kb/log.md`, not here.
 
-## Approach
-
-arscontexta is our first large experiment. These observations evaluate what works and inform what comes next:
-
-- **What to keep** — machinery that earns its complexity (e.g., `/connect` for finding relationships)
-- **What to simplify** — overhead that doesn't pay for itself (e.g., queue management, pipeline chaining)
-- **What to build** — automated quality checks as they become justified by real failures, not taxonomy
-
-The verifiability gradient applies to the knowledge base itself:
-1. Start soft — LLM writes and connects notes (stochastic)
-2. Add filters — automated checks reject bad samples (deterministic code where possible, LLM rubrics where needed)
-3. Constrain search — recurring queries become indexes, tags, structured `rg` patterns
-4. Constrain the filters — LLM rubrics that prove reliable get replaced with deterministic checks
-
-## Status
-
-We're early. Record what you notice. Separate observations from prescriptions — note that something adds complexity before concluding what should replace it.
+See [COLLECTION.md](./COLLECTION.md) for the full writing conventions.
