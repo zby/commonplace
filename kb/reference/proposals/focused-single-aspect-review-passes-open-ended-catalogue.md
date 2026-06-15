@@ -24,7 +24,7 @@ The shipped review subsystem already supplies focused passes and budget-bounded 
 - **Hand-run focused passes** exist outside the registry: `kb/instructions/critique-note.md` (attack the central commitment) and `kb/instructions/composition-friction-gate.md` (audit inferential joints, default-skeptical). Both are report-only and route attention rather than deciding.
 - **Budget-bounded gate loading** is already proposed in [gate-learning-from-accepted-edits](./gate-learning-from-accepted-edits.md) ("a fixed token budget beats a fixed gate count").
 
-Direct evidence from one note this session: three independent modes ran on `current-llm-inference-removes-composition-friction-filter-signal.md` — the critique gate (thesis-level steelman), the composition-friction gate (joint-level), and seven review bundles. The joint-level gate caught an `UNSUPPORTED` inference the thesis-level critique passed over; the sentence and accessibility bundles caught readability and reference debt the logic-focused gates ignored. **No single lens subsumed the others** — direct support for commitments 1 and 2.
+Direct evidence from one note this session: three independent modes ran on `llm-generation-relaxes-goals-where-human-writing-stalls.md` — the critique gate (thesis-level steelman), the composition-friction gate (joint-level), and seven review bundles. The joint-level gate caught an `UNSUPPORTED` inference the thesis-level critique passed over; the sentence and accessibility bundles caught readability and reference debt the logic-focused gates ignored. **No single lens subsumed the others** — direct support for commitments 1 and 2.
 
 ## The free choice: open-ended vs maintained-converging
 
@@ -61,7 +61,7 @@ The design earns adoption if, measured against a single comprehensive pass of eq
 
 Relevant Notes:
 
-- [Current LLM inference removes composition friction's filter and hides its signal](../../notes/current-llm-inference-removes-composition-friction-filter-signal.md) — rationale: why focus gives teeth — a diffuse reviewer is subject to the same fluency-smoothing as the writer, and a separate focused pass reconstructs the signal it would otherwise read past
+- [LLM generation relaxes a goal it can't satisfy and hides the constraint a human writer stalls on](../../notes/llm-generation-relaxes-goals-where-human-writing-stalls.md) — rationale: why focus gives teeth — a diffuse reviewer is subject to the same fluency-smoothing as the writer, and a separate focused pass reconstructs the stalled joint it would otherwise read past
 - [Semantic review catches content errors that structural validation cannot](../../notes/semantic-review-catches-content-errors-that-structural-validation.md) — precedent: a fixed set of focused semantic checks; this proposal generalizes the catalogue to open-ended and budget-bounded
 - [Elicitation requires maintained question-generation systems](../../notes/elicitation-requires-maintained-question-generation-systems.md) — tension: the maintained-converging-checklist model this proposal's anti-completeness stance pushes against
 - [error correction works above chance with decorrelated checks](../../notes/error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — rationale: each focused lens is a weak, decorrelated oracle; combining decorrelated lenses amplifies discriminative power

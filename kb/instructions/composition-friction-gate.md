@@ -5,7 +5,7 @@ type: kb/types/instruction.md
 
 # Reconstruct a note's composition friction
 
-Experimental, run by hand. When an LLM denoises a rough idea into fluent prose, two things that the effort of human composition would have done are lost: the **filter** (an idea with no consistent single form dies at the keyboard) and the **signal** (the felt stall that marks where understanding is thinnest). This gate reconstructs both from outside the text. It is **not a review gate** — it writes no acceptance or freshness state and is not wired into the review system. Write the report; do not touch the note.
+Experimental, run by hand. When an LLM denoises a rough idea into fluent prose, it returns the most plausible artifact it can and never marks whether that artifact is a full solution or the best it could manage with one constraint quietly dropped. The human writer's stall is that missing mark, and it does two jobs: the **filter** (a claim with no consistent single form has no witness, and dies at the keyboard) and the **signal** (the stall locates where understanding is thinnest). This gate reconstructs both from outside the text. It is **not a review gate** — it writes no acceptance or freshness state and is not wired into the review system. Write the report; do not touch the note.
 
 Run it in a **fresh sub-agent**, a different runner than wrote the note, so the checker has no sympathy for the note's framing. Separation is what gives the check teeth: the same generator that wrote smoothly over a gap will read smoothly over it too.
 
@@ -51,4 +51,4 @@ Write to `kb/reports/friction/<note-name>.friction.md`. Mutate nothing else.
 
 Relevant Notes:
 
-- [Current LLM inference removes composition friction's filter and hides its signal](../notes/current-llm-inference-removes-composition-friction-filter-signal.md) — rationale: the filter/signal mechanism this gate reconstructs, and why a self-graded verdict cannot substitute for it
+- [LLM generation relaxes a goal it can't satisfy and hides the constraint a human writer stalls on](../notes/llm-generation-relaxes-goals-where-human-writing-stalls.md) — rationale: the composition stall this gate reconstructs, and why a self-graded verdict cannot substitute for it

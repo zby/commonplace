@@ -1,5 +1,5 @@
 ---
-description: "An LLM's next-token confidence measures how typical a continuation is given the running text, not whether it is true or validly inferred; the two are decoupled (not merely anti-correlated), so soundness cannot be read off generation confidence and must be recomputed by a separate check"
+description: "An LLM's next-token confidence measures how typical a continuation is, not whether it's true or valid; the two are decoupled, so soundness can't be read off confidence and needs a separate check"
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, failure-modes]
@@ -25,11 +25,11 @@ Whether a *separate internal representation* of soundness exists — one a probe
 The same decoupling produces two failures, one per kind of soundness:
 
 - **Correspondence** — a hallucinated *fact* is stated with full fluency, because fabrication is typical-looking text.
-- **Coherence** — an unsupported *inference* reads smoothly, because a connective plus a plausible clause is typical-looking argument. This is the hidden "signal" in [the composition-friction loss](./current-llm-inference-removes-composition-friction-filter-signal.md): the stall a human would feel at a weak "because" is exactly what cannot be read off the model's confidence.
+- **Coherence** — an unsupported *inference* reads smoothly, because a connective plus a plausible clause is typical-looking argument. This is the hidden "signal" in [the composition-friction loss](./llm-generation-relaxes-goals-where-human-writing-stalls.md): the stall a human would feel at a weak "because" is exactly what cannot be read off the model's confidence.
 
 ---
 
 Relevant Notes:
 
-- [Current LLM inference removes composition friction's filter and hides its signal](./current-llm-inference-removes-composition-friction-filter-signal.md) — applied-in: the hidden composition "signal" is this property applied to inferential validity; that note links here for why the signal can't be read off confidence
+- [LLM generation relaxes a goal it can't satisfy and hides the constraint a human writer stalls on](./llm-generation-relaxes-goals-where-human-writing-stalls.md) — applied-in: the hidden composition "signal" is this property applied to inferential validity; that note links here for why the signal can't be read off confidence
 - [the boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — grounds: soundness needs a separate verifier precisely because confidence does not track it
