@@ -1,7 +1,7 @@
 ---
-source: https://arxiv.org/html/2601.22436v2
+source: https://arxiv.org/html/2601.22436v3
 description: Causal-intervention paper showing self-evolving agents rely on raw trajectories more faithfully than condensed experience, exposing a compression-faithfulness gap across frameworks, models, and environments
-captured: 2026-03-22
+captured: 2026-06-15
 capture: web-fetch
 type: kb/sources/types/snapshot.md
 tags: [academic-paper]
@@ -10,14 +10,15 @@ tags: [academic-paper]
 # Large Language Model Agents Are Not Always Faithful Self-Evolvers
 
 Author: Weixiang Zhao, Yingshuo Wang, Yichen Zhang, Yang Deng, Yanyan Zhao, Wanxiang Che, Bing Qin, Ting Liu
-Source: https://arxiv.org/html/2601.22436v2
-Date: 7 Feb 2026 (arXiv v2; originally submitted 30 Jan 2026)
-Comments: 25 pages, 16 figures, 7 tables
+Source: https://arxiv.org/html/2601.22436v3
+Date: 12 Jun 2026 (arXiv v3; v2 7 Feb 2026; originally submitted 30 Jan 2026)
 Subjects: Computation and Language (cs.CL)
+
+Note (capture): v3 retains v2's structure and findings while expanding the backbone set to 13 models — adding GPT-5.2, Gemini-3-Pro, and Claude-Sonnet-4.6 alongside the GPT-4o(-mini), Gemini-2.5-Flash, and Qwen3 variants. The abstract and per-section results below are updated to v3 (13 backbones); inline reference anchors still point to the v2 HTML render.
 
 ###### Abstract
 
-Self-evolving large language model (LLM) agents continually improve by accumulating and reusing past experience, yet it remains unclear whether they faithfully rely on that experience to guide their behavior. We present the first systematic investigation of *experience faithfulness*—the causal dependence of an agent’s decisions on the experience it is given—in self-evolving LLM agents. Using controlled causal interventions on both raw and condensed forms of experience, we comprehensively evaluate four representative frameworks across 10 LLM backbones and 9 environments. Our analysis uncovers a striking asymmetry: while agents consistently depend on raw experience, they often disregard or misinterpret condensed experience, even when it is the only experience provided. This gap persists across single- and multi-agent configurations and across backbone scales. We trace its underlying causes to three factors: the semantic limitations of condensed content, internal processing biases that suppress experience, and task regimes where pretrained priors already suffice. These findings challenge prevailing assumptions about self-evolving methods and underscore the need for more faithful and reliable approaches to experience integration.
+Self-evolving large language model (LLM) agents continually improve by accumulating and reusing past experience, yet it remains unclear whether they faithfully rely on that experience to guide their behavior. We present the first systematic investigation of *experience faithfulness*—the causal dependence of an agent’s decisions on the experience it is given—in self-evolving LLM agents. Using controlled causal interventions on both raw and condensed forms of experience, we comprehensively evaluate four representative frameworks across 13 LLM backbones and 9 environments. Our analysis uncovers a striking asymmetry: while agents consistently depend on raw experience, they often disregard or misinterpret condensed experience, even when it is the only experience provided. This gap persists across single- and multi-agent configurations and across backbone scales. We trace its underlying causes to three factors: the semantic limitations of condensed content, internal processing biases that suppress experience, and task regimes where pretrained priors already suffice. These findings challenge prevailing assumptions about self-evolving methods and underscore the need for more faithful and reliable approaches to experience integration.
 
 ## 1 Introduction
 
@@ -73,7 +74,7 @@ We evaluate four representative self-evolving agents. In the *offline single-age
 In all frameworks, the LLM backbone remains frozen, and behavioral adaptation arises solely from the accumulation, retrieval, and exploitation of external experiences. Further details are provided in Appendix [A](https://arxiv.org/html/2601.22436v2#A1 "Appendix A Self-Evolving Agents ‣ Large Language Model Agents Are Not Always Faithful Self-Evolvers").
 
 Backbone Model.
-Our experiments span 10 LLMs, including closed-source models: GPT-4o(-mini) (Hurst et al., [2024](https://arxiv.org/html/2601.22436v2#bib.bib25 "Gpt-4o system card")) and Gemini-2.5-Flash (Comanici et al., [2025](https://arxiv.org/html/2601.22436v2#bib.bib26 "Gemini 2.5: pushing the frontier with advanced reasoning, multimodality, long context, and next generation agentic capabilities")), which follow the official settings adopted in their respective agent frameworks. In addition, we include a range of open-weight Qwen3 (Yang et al., [2025a](https://arxiv.org/html/2601.22436v2#bib.bib28 "Qwen3 technical report")) variants, 1.7B–32B dense models, 30B-A3B, and 235B-A22B MoEs, to enable more systematic analysis across model scales and architectures.
+Our experiments span 13 LLMs, including closed-source models: GPT-4o(-mini) (Hurst et al., [2024](https://arxiv.org/html/2601.22436v2#bib.bib25 "Gpt-4o system card")), GPT-5.2, Gemini-2.5-Flash (Comanici et al., [2025](https://arxiv.org/html/2601.22436v2#bib.bib26 "Gemini 2.5: pushing the frontier with advanced reasoning, multimodality, long context, and next generation agentic capabilities")), Gemini-3-Pro, and Claude-Sonnet-4.6, which follow the official settings adopted in their respective agent frameworks. In addition, we include a range of open-weight Qwen3 (Yang et al., [2025a](https://arxiv.org/html/2601.22436v2#bib.bib28 "Qwen3 technical report")) variants, 1.7B–32B dense models, 30B-A3B, and 235B-A22B MoEs, to enable more systematic analysis across model scales and architectures.
 
 Environment & Benchmark.
 Follow the official setting in each agent framework, we evaluate across 9 benchmarks in 4 domains:
