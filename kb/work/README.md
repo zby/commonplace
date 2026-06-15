@@ -15,6 +15,7 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 - [read-back-symbol-availability](./read-back-symbol-availability/README.md) — folding the symbol-availability bound on push into the agent-memory-system review framework's read-back treatment, and planning a re-characterization pass over existing reviews
 - [research-wiki-integration](./research-wiki-integration/README.md) — evaluating whether ARIS Research Wiki should become a commonplace workshop subsystem, source workflow upgrade, or only a set of borrowed lifecycle patterns
 - [gate-refactor](./gate-refactor/README.md) — moving review storage and selector state from monolithic review bundles to gate-native definitions, memberships, and per-gate acceptances
+- [review-bundle-packing](./review-bundle-packing/README.md) — measuring and deciding whether review prompts must stay bundle-local or may pack multiple bundles into one run
 - [validation](./validation/README.md) — making validation a reliable part of the workflow: when, what, and how to validate (hooks, skill upgrades, periodic revalidation)
 - [tool-loop-control](./tool-loop-control/README.md) — rewriting the framework-loop note so it starts from why the standard tool loop exists and where convenience should end
 - [obsidian-affordances](./obsidian-affordances/README.md) — deciding which Obsidian-facing affordances are useful compatibility layers versus representation drift for a repo-native KB
