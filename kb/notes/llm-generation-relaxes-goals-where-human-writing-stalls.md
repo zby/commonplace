@@ -3,7 +3,7 @@ description: "On a goal it can't satisfy, a human writer stalls at the unmet con
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, llm-interpretation-errors]
-status: seedling
+status: speculative
 ---
 
 # LLM generation relaxes a goal it can't satisfy and hides the constraint a human writer stalls on
