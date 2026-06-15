@@ -2,7 +2,7 @@
 description: "The default of writing-to-think is an unsearched slip; the LLM's relaxation is shaped by a plausibility objective into camouflage that hides better — and a flagging objective could restore the stall"
 type: kb/types/note.md
 traits: [title-as-claim]
-tags: [learning-theory]
+tags: [learning-theory, llm-interpretation-errors]
 status: speculative
 ---
 
@@ -26,3 +26,6 @@ Relevant Notes:
 
 - [LLM generation relaxes a goal it can't satisfy and hides the constraint a human writer stalls on](./llm-generation-relaxes-goals-where-human-writing-stalls.md) — grounds: the mechanism this builds on — generation emits the most-plausible-looking artifact and never marks whether it was a full witness or a relaxation
 - [the boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — exemplifies: the oracle-rich/poor asymmetry reappears as where the solved/relaxed label can be cheaply obtained
+- [Human writing structures transfer to LLMs because failure modes overlap](./human-writing-structures-transfer-to-llms-because-failure-modes.md) — contrasts: that note treats shared human/LLM failure modes as grounds for convention transfer; this sharpens the boundary — same failure mode, different default process and observability
+- [Human-LLM differences are load-bearing for knowledge system design](./human-llm-differences-are-load-bearing-for-knowledge-system-design.md) — exemplifies: a concrete case of weighing resemblance against difference — a shared failure class still needs different mitigation when the default process differs
+- [Human Routers of Machine Words](../sources/borretti-human-routers-of-machine-words.md) — derived-from: the note quotes Borretti's RLHF / "presentable" framing directly as the inside view of the plausibility objective

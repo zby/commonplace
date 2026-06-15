@@ -2,7 +2,7 @@
 description: "On a goal it can't satisfy, a human writer stalls at the unmet constraint; LLM generation returns a typicality-biased relaxation that hides the hard constraint, displacing the check onto the reader"
 type: kb/types/note.md
 traits: [title-as-claim]
-tags: [learning-theory]
+tags: [learning-theory, llm-interpretation-errors]
 status: seedling
 ---
 
@@ -66,5 +66,6 @@ Relevant Notes:
 - [The machine searches for the camouflage a human writer usually slips into](./machine-searches-for-camouflage-human-writer-slips-into.md) — extends: the human-vs-machine asymmetry (the machine *searches* for the camouflage) and the training corollary that follows from it
 - [constraining](./definitions/constraining.md) — contrasts: concretization is the author's cost of searching for a witness, while constraining is the reader's interpretive latitude — orthogonal axes. (This note's *relaxation* is the optimization sense — dropping a conjunct — not the KB's *relaxing* defined there, which reopens interpretation space.)
 - [vibe-noting](./vibe-noting.md) — extends: names the operational failure mode — a seed rendered into an article — that follows when the witness search is skipped
+- [error correction works with above-chance oracles and decorrelated checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — enables: the open question asks whether a separate operation can reconstruct the stall; this gives the conditions under which a recomputing check actually recovers it
 - [Human Routers of Machine Words](../sources/borretti-human-routers-of-machine-words.md) — derived-from: Borretti's "writing is thinking" polemic, the C/Lisp example, and the Weizenbaum quote are the source this claim abstracts
 - [Borretti ingest](../sources/borretti-human-routers-of-machine-words.ingest.md) — derived-from: the ingest analysis that flagged this synthesis claim and its boundaries
