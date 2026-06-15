@@ -32,7 +32,7 @@ Two things make this worse than mere concealment.
 
 **The relaxation is typicality-biased.** Where the novel constraint is also the least probable to render fluently, it is the one most likely to be shed — the typical, well-trodden constraints surviving. That condition usually holds, since novelty is what makes a constraint rare. And the novel constraint is usually the *point* of the idea. So the relaxation tends to sacrifice the load-bearing crux and preserve the boilerplate, gaining form without the idea gaining structure — the mechanism behind [reverse-compression](./reverse-compression-is-when-llm-output-expands-without-adding.md). This is [confidence tracks typicality, not soundness](./llm-generation-confidence-tracks-typicality-not-soundness.md) operating on constraints: what survives is what is typical, and the conjunct that made the idea worth having is the first thing typicality discards.
 
-**Friction and fluency invert at the crux.** At the load-bearing joint, the human pen stalls *hardest* — the felt resistance bites where understanding is thinnest. At the same joint, the model is *smoothest* — it generates straight over the gap, because typicality stays high even where soundness fails. The exact place a human writer flags is the exact place the model flows. Felt difficulty and machine fluency are anti-correlated with truth at the one constraint that matters.
+**Friction and fluency invert at the crux.** At the load-bearing joint, the human pen stalls *hardest* — the felt resistance bites where understanding is thinnest. At the same joint, the model is *smoothest* — it generates straight over the gap, because typicality stays high even where soundness fails. The exact place a human writer flags is the exact place the model flows. Felt difficulty and machine fluency are anti-correlated with truth at the one constraint that matters — the stronger claim that decoupling alone does not license, holding only where the fluent move over the gap is itself typical.
 
 ## The check moves to the reader, and gets harder
 
@@ -52,7 +52,7 @@ This locates which step must keep a human rather than prohibiting LLM prose outr
 
 ## Relation to hallucination (hypothesis)
 
-The relaxation may be the coherence-side sibling of hallucination. Hallucination fills a gap in *knowledge* with a fluent fact; the relaxation fills a gap in *reasoning* with a fluent "because" — a dropped entailment rather than a dropped fact (coherence vs. correspondence). Both are plausibly two faces of one parent: confidence that tracks typicality rather than soundness, applied to fact and to inference. One sharp asymmetry if it holds — a hallucinated fact is retrievable, so grounding can repair it; a missing witness must be *constructed*, so only a separate constructive search recovers it.
+The relaxation may be the coherence-side sibling of hallucination. Hallucination fills a gap in *knowledge* with a fluent fact; the relaxation fills a gap in *reasoning* with a fluent "because" — a dropped entailment rather than a dropped fact (coherence vs. correspondence). Both are plausibly [two faces of one parent](./llm-generation-confidence-tracks-typicality-not-soundness.md) — confidence that tracks typicality rather than soundness, applied to fact and to inference — the correspondence/coherence split that note sets out directly. One sharp asymmetry if it holds — a hallucinated fact is retrievable, so grounding can repair it; a missing witness must be *constructed*, so only a separate constructive search recovers it.
 
 ## Open questions
 
