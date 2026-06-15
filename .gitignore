@@ -48,6 +48,10 @@ kb/work/connect/
 # critique reports (experimental — see kb/instructions/critique-note.md)
 kb/reports/critique/*
 !kb/reports/critique/README.md
+
+# friction reports (experimental — see kb/instructions/composition-friction-gate.md)
+kb/reports/friction/*
+!kb/reports/friction/README.md
 kb/work/review-db-migration/
 kb/work/review-runs-direct-write/
 
