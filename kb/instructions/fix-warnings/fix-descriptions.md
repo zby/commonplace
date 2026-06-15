@@ -1,5 +1,5 @@
 ---
-description: Fix description warnings from /validate. Rewrites descriptions that are too long, multi-sentence, terminal-punctuated, or title-restating. Can be used standalone, in a sweep, or called by the fix-review-warnings agent when it encounters description issues.
+description: Fix description warnings from validate output or review gates — too short, too long, multi-sentence, terminal-punctuated, or title-restating
 type: kb/types/instruction.md
 ---
 
@@ -11,17 +11,19 @@ If target is empty, ask which note to fix. If target is a name without path, sea
 
 ## What this is
 
-A focused editing pass that fixes description-field warnings from `commonplace-validate`. Descriptions are the most important frontmatter field — they're retrieval filters that help agents decide whether to load the full note. Getting them right requires reading the note, not just compressing the existing description.
+A focused editing pass that fixes description-field warnings from `commonplace-validate` or review gates. Descriptions are the most important frontmatter field — they're retrieval filters that help agents decide whether to load the full note. Getting them right requires reading the note, not just compressing the existing description.
 
 ## Prerequisites
 
-1. Run `commonplace-validate {note-path}` or read a prior validate output to identify description warnings.
+1. Run `commonplace-validate {note-path}` or read the relevant review finding to identify description warnings.
 2. Read the target note in full — title, opening paragraphs, and conclusion at minimum.
 
 ## The rules
 
-From `commonplace-validate`:
+Validator warning:
 - **Length:** 50–200 characters
+
+Review/style rules:
 - **Single statement:** no sentence-ending punctuation mid-description
 - **No terminal punctuation:** don't end with `.` `!` `?`
 - **Discrimination:** must help pick THIS note over similar ones — not restate the title
@@ -30,7 +32,7 @@ From `commonplace-validate`:
 
 The description answers "why THIS note?" not "what is this note about?" The title already states the claim; the description adds what the title can't carry.
 
-**Priority order** (from the validate instruction):
+**Priority order:**
 1. **Mechanism** — how or why the claim works (strongest discriminator)
 2. **Scope** — what domain or boundary the claim operates within
 3. **Implication** — what follows from the claim, or what it enables
@@ -49,7 +51,7 @@ The description answers "why THIS note?" not "what is this note about?" The titl
 
 ## Procedure
 
-1. Identify which validate warnings apply (too long, multi-sentence, terminal punctuation, title restatement).
+1. Identify which warnings apply (too long, multi-sentence, terminal punctuation, title restatement).
 2. Read the note to find the discriminating element.
 3. Write the new description. Check length (aim for 100–180 chars as a sweet spot).
 4. Verify against the rules.
@@ -60,9 +62,7 @@ The description answers "why THIS note?" not "what is this note about?" The titl
 To fix descriptions across many notes:
 
 ```bash
-for c in notes reference instructions agent-memory-systems sources; do
-  commonplace-validate "$c"
-done 2>/dev/null | grep "description:"
+commonplace-validate notes 2>/dev/null | grep "description:"
 ```
 
-This produces a list of all notes with description warnings across the authored library. Process each note using the procedure above.
+Combine this with the review system's `frontmatter/description-discrimination` findings or a saved warning list. Process each note using the procedure above.

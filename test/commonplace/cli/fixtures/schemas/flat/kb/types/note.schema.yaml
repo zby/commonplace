@@ -16,6 +16,14 @@ properties:
       description:
         type: string
         minLength: 1
+        pattern: '\S'
+        allOf:
+          - minLength: 50
+            severity: warn
+            description: description should be at least 50 characters
+          - maxLength: 200
+            severity: warn
+            description: description should be at most 200 characters
       type:
         type: string
       status:

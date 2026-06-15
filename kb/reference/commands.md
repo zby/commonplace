@@ -26,7 +26,7 @@ commonplace-init --root /path/to/project
 
 ### commonplace-validate
 
-Deterministic validator for KB notes. Checks frontmatter validity, enum values, link health, description quality, required sections, and batch signals (orphan detection, seedling counts).
+Deterministic validator for KB notes. Checks frontmatter validity, enum values, link health, structural description presence, description length warnings, required sections, and batch signals (orphan detection, seedling counts). Description discrimination quality is handled by review gates, not deterministic validation.
 
 ```bash
 commonplace-validate notes               # validate one collection by name

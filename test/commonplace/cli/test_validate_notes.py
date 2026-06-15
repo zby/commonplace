@@ -179,7 +179,77 @@ type: kb/types/note.md
 
     assert results.note_type == "note"
     assert results.fails == []
-    assert all("description" not in warning for warning in results.warns)
+    assert "frontmatter.description: description should be at least 50 characters" in results.warns
+    assert all("duplicate" not in warning for warning in results.warns)
+
+
+@pytest.mark.parametrize(
+    ("description_line", "expected"),
+    [
+        ("", "'description' is a required property"),
+        ("description:", "frontmatter.description: None is not of type 'string'"),
+        ('description: ""', "frontmatter.description: '' should be non-empty"),
+        ("description: '   '", "frontmatter.description: '   ' does not match"),
+        (
+            "description: [not, a, string]",
+            "frontmatter.description: ['not', 'a', 'string'] is not of type 'string'",
+        ),
+    ],
+)
+def test_note_description_must_be_present_non_empty_text(
+    tmp_path: Path, description_line: str, expected: str
+) -> None:
+    configure_temp_repo(tmp_path)
+    frontmatter_lines = [
+        line for line in [description_line, "type: kb/types/note.md"] if line
+    ]
+    note = write(
+        tmp_path / "broken.md",
+        "---\n"
+        + "\n".join(frontmatter_lines)
+        + """\n---
+
+# Broken note
+""",
+    )
+
+    results = validation.validate_note(note, repo_root=tmp_path)
+
+    assert results.note_type == "note"
+    assert any(expected in failure for failure in results.fails)
+
+
+@pytest.mark.parametrize(
+    ("description", "expected"),
+    [
+        ("Short but non-empty", "description should be at least 50 characters"),
+        (
+            "Long description "
+            + "with enough repeated words to exceed the upper bound " * 4,
+            "description should be at most 200 characters",
+        ),
+    ],
+)
+def test_note_description_length_outside_style_band_warns(
+    tmp_path: Path, description: str, expected: str
+) -> None:
+    configure_temp_repo(tmp_path)
+    note = write(
+        tmp_path / "description-length.md",
+        f"""---
+description: {description}
+type: kb/types/note.md
+---
+
+# Description length
+""",
+    )
+
+    results = validation.validate_note(note, repo_root=tmp_path)
+
+    assert results.note_type == "note"
+    assert results.fails == []
+    assert f"frontmatter.description: {expected}" in results.warns
 
 
 def test_link_validation_skips_code_and_external_urls(tmp_path: Path) -> None:
@@ -554,7 +624,7 @@ def test_list_kb_note_paths_skips_nested_git_repos(tmp_path: Path) -> None:
     write(
         notes_root / "kept.md",
         """---
-description: Kept note with enough description text to satisfy the deterministic validator heuristics well enough
+description: Kept note with enough description text to satisfy structural validation
 type: kb/types/note.md
 traits: []
 status: current
