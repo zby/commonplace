@@ -26,9 +26,9 @@ LLM generation has no such stop. Give it a goal it cannot fully satisfy and it n
 
 What would produce that? Our hypothesis: generation behaves like an **argmax over plausibility** — the most plausible-looking artifact the trained policy can produce. When that artifact satisfies every conjunct, it *is* a witness; the goal was reached. When it does not, it is a **relaxation**: a plausible witness for a weaker problem with one conjunct dropped. Because the policy emits its argmax either way, there is no discontinuity at the boundary — the dropped conjunct is demoted from hard to soft in silence. The result is a **counterfeit witness**: a real witness for the weaker problem, read as one for the stated problem. The hidden delta is the dropped constraint.
 
-## What's robust, and what's speculative
+## The cost falls on the reader
 
-The mechanism above — argmax over plausibility, the dropped conjunct, the counterfeit witness — is one plausible way to explain the observation, not an established account. What does not depend on it is the observation itself: **the error is hidden.** The output carries no stall, no flag, nothing on its surface marking where a constraint went unmet — fluency tracks [typicality, not soundness](./llm-generation-confidence-tracks-typicality-not-soundness.md), so the surface looks the same whether the constraint was met or dropped. So whatever the mechanism, the cost of finding the gap falls on the reader, who must re-derive what the surface no longer shows.
+The surface looks the same whether the constraint was met or dropped — fluency tracks [typicality, not soundness](./llm-generation-confidence-tracks-typicality-not-soundness.md), so it cannot reveal which. The check can't be offloaded to the output: finding the gap means re-deriving, constraint by constraint, what the surface no longer shows.
 
 ## Scope and boundary
 
