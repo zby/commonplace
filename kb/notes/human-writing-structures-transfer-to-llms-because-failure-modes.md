@@ -1,5 +1,5 @@
 ---
-description: Human writing genres evolved to prevent specific reasoning failures; the same structures help LLMs because LLMs exhibit empirically demonstrated human-like failure modes (content effects on reasoning) — per-convention transfer evaluation, not wholesale analogy
+description: Human writing genres evolved to prevent reasoning failures, and the same structures help LLMs because LLMs share human-like failure modes (content effects on reasoning) — transfer evaluated per convention, not wholesale analogy
 type: kb/types/note.md
 traits: [has-external-sources]
 tags: [type-system]
