@@ -2,7 +2,7 @@
 description: "An LLM's next-token confidence measures how typical a continuation is, not whether it's true or valid; the two are decoupled, so soundness can't be read off confidence and needs a separate check"
 type: kb/types/note.md
 traits: [title-as-claim]
-tags: [learning-theory, failure-modes]
+tags: [learning-theory, failure-modes, llm-interpretation-errors]
 status: speculative
 ---
 
@@ -18,7 +18,7 @@ So confidence and soundness are **decoupled** — and that is weaker than anti-c
 
 Because the signal is not in the generation confidence, you cannot recover it by reading that confidence off — thresholding on token probability, or asking the model "how sure are you," surfaces typicality, not truth or validity. Detecting unsoundness requires a *separate operation* that recomputes what confidence fails to track: an external oracle (a compiler, a test, a retrieval check), a trained probe, or an adversarial pass that re-derives the inference instead of re-reading the prose. This is why the boundary of reliable automation tracks the [availability of a verifier](./the-boundary-of-automation-is-the-boundary-of-verification.md), not the model's apparent certainty.
 
-Whether a *separate internal representation* of soundness exists — one a probe could read from hidden states even though it is absent from the output distribution — is genuinely open; there is evidence models encode some truthfulness signal internally. But that, if it exists, is not the next-token signal, and recovering it is still a separate operation, not the generator volunteering its confidence. Sycophancy adds an independent reason the signal stays hidden: a model tuned to please will suppress an inconvenient judgment even where it could produce one, because the deployment reward favors agreement over correction.
+Whether a *separate internal representation* of soundness exists — one a probe could read from hidden states even though it is absent from the output distribution — is genuinely open; models may encode some truthfulness signal internally, though that is an unsettled empirical question this note does not adjudicate. Even if such a representation exists, it is not the next-token signal, and recovering it is still a separate operation, not the generator volunteering its confidence. Sycophancy — deployment tuning that rewards agreement with the user over correction — adds an independent reason the signal stays hidden: that tuning can bias outputs toward agreement even where internal features could support a correction.
 
 ## Two faces
 
