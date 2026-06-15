@@ -1,5 +1,5 @@
 ---
-description: "Proposal: build the automated note-refinement loop on a source bundle (a workshop holding fixed sources plus 0..n drafts) that emits a set of library notes, instead of on a single note that the loop must keep identity-stable. Reframes non-convergence as search, not a defect: split, drift, and kill become ordinary outcomes, the incumbent safeguard generalizes from best-note to best-emitted-set, and graph identity is conferred only at promotion. The autoreason skill prototypes the single-note version; the new piece is set-valued judging"
+description: "Proposal: build the automated note-refinement loop on a source bundle that emits a set of notes, not a single identity-stable note — reframing non-convergence (split, drift, kill) as search outcomes"
 type: kb/types/note.md
 traits: [design-proposal]
 tags: [kb-maintenance]
