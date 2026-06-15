@@ -20,7 +20,7 @@ When a human writer reaches a constraint that will not go — the joint where th
 
 > Our pen writes the word "because" and suddenly stops. We thought we understood the "why" of something, but discover that we don't. […] Sometimes we connect two clauses with the word "therefore," only to then see that our chain of reasoning is defective.
 
-The stall is a **beacon at the fault**: failure reports itself, localized to the exact conjunct that could not be met. The writer now knows where their understanding ran out.
+The stall is a **beacon at the fault**: failure reports itself, localized to the exact conjunct that could not be met. The writer now knows where their understanding ran out. Stopping is the honest default: most writers halt rather than ship a broken inference. Some paper over the gap, and some ship a mistake they never caught — but for a human those are the exceptions.
 
 LLM generation has no such stop. Give it a goal it cannot fully satisfy and it neither stalls nor refuses: it returns fluent, confident prose that looks like the goal was met. Nothing on the surface marks where it fell short — no hedge at the unmet constraint, no halt, no "this part doesn't work." The output reads as solved whether or not it is, so a reader cannot tell from it which constraint, if any, went unmet. The surface is **camouflage** that points *away* from wherever it failed.
 
@@ -47,7 +47,6 @@ This locates which step must keep a human rather than prohibiting LLM prose outr
 
 Relevant Notes:
 
-- [The machine searches for the camouflage a human writer usually slips into](./machine-searches-for-camouflage-human-writer-slips-into.md) — extends: the human-vs-machine asymmetry (the machine *searches* for the camouflage) and the training corollary that follows from it
 - [constraining](./definitions/constraining.md) — contrasts: concretization is the author's cost of searching for a witness, while constraining is the reader's interpretive latitude — orthogonal axes. (This note's *relaxation* is the optimization sense — dropping a conjunct — not the KB's *relaxing* defined there, which reopens interpretation space.)
 - [vibe-noting](./vibe-noting.md) — extends: names the operational failure mode — a seed rendered into an article — that follows when the witness search is skipped
 - [error correction works with above-chance oracles and decorrelated checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — enables: the open question asks whether a separate operation can recover the hidden error; this gives the conditions under which a recomputing check actually does
