@@ -56,6 +56,9 @@ commonplace-x-snapshot = "commonplace.cli.x_snapshot:main"
 [dependency-groups]
 dev = ["pytest", "ruff"]
 
+[tool.ruff]
+include = ["src/**/*.py", "test/**/*.py"]
+
 [project.optional-dependencies]
 docs = ["mkdocs", "mkdocs-redirects"]
 snapshot = ["python-dotenv", "xdk"]
