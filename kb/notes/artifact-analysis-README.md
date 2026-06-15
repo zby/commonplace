@@ -31,6 +31,7 @@ The vocabulary for analyzing retained artifacts: where behavior-shaping state pe
 ## Applications
 
 - [system-definition artifacts are crystallized reasoning under context pressure](./system-definition-artifacts-are-crystallized-reasoning-under-context.md) — why system-definition artifacts exist at all: reasoning crystallized so it need not be redone in-context
+- [design proposals differ from claims in kind, not confidence](./design-proposals-differ-from-claims-in-kind-not-confidence.md) — applies artifact analysis to proposal placement: free-parameter design artifacts are evaluated by usefulness, not truth
 - [orchestration strategies and run state have opposite persistence](./orchestration-strategies-and-run-state-have-opposite-persistence.md) — a persistence asymmetry the fields predict: strategies accumulate, run state is disposable
 - [ephemeral computation prevents accumulation](./ephemeral-computation-prevents-accumulation.md) — discarding generated artifacts trades accumulation for simplicity; the inverse of codification
 - [ephemerality is safe where embedded operational knowledge has low reach](./ephemerality-is-safe-where-embedded-operational-knowledge-has-low.md) — the boundary rule: discard is safe below the reach threshold, accumulation mandatory above it
