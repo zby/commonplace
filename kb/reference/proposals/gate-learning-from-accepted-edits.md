@@ -1,5 +1,5 @@
 ---
-description: "Proposal: learn review gates from accepted note edits — mine candidates from before/after diffs, track per-gate precision and recall, promote or quarantine through a gate lifecycle, load gates under a token budget. Atomic gates and selector loading already shipped; the learning loop has not"
+description: "Proposal: learn review gates from accepted note edits, with candidate mining, usefulness tracking, lifecycle promotion, and budgeted loading. Atomic gates shipped; learning has not"
 type: kb/types/note.md
 traits: [design-proposal]
 tags: [kb-maintenance]
@@ -45,6 +45,12 @@ Each gate gains: `status` (candidate / active / quarantined / retired), `provena
 
 A fixed token budget beats a fixed gate count — some gates are one line, others need a counterexample. The selector fills the budget from: always-on base gates (cheap, high-precision), lens-specific gates, retrieved gates (matched to the note by tags, vocabulary, type, prior similar failures), with diversity pressure against spending the budget on near-duplicates. Rests on [instruction specificity should match loading frequency](../../notes/instruction-specificity-should-match-loading-frequency.md): always-loaded review instructions stay slim, specificity moves into on-demand gate loading.
 
+## Alternative stance: open-ended, opportunistic, budget-bounded
+
+This proposal assumes a *maintained-converging* registry: mine gates, promote useful ones, prune weak ones, and improve coverage over time. The opposing stance treats the catalogue as irreducibly open-ended. Review then optimizes for **marginal value, not coverage**: run a focused pass while expected accepted-edit yield beats token cost, and allow ad-hoc lenses aimed at one note's specific risk without forcing them into the registry.
+
+The hybrid is plausible: keep a small always-on base set, load registry gates under budget, and spend remaining budget on opportunistic lenses. The disagreement is what review converges toward: a growing maintained registry, or no closed catalogue by design. The case for opportunism rests on focused-pass behavior: a diffuse reviewer can read past weak joints, while a separate single-aspect lens can force the issue that an all-purpose critique smooths over.
+
 ## Risks
 
 - Attribution ambiguity in coupled edits (a structural rewrite also fixes clarity — which gate earned the acceptance?).
@@ -59,6 +65,7 @@ A fixed token budget beats a fixed gate count — some gates are one line, other
 - The promotion metric: precision alone, stable recurrence, or measured contribution to accepted revisions — composite weak signals are a candidate ([quality signals for KB evaluation](../../notes/quality-signals-for-kb-evaluation.md)).
 - Whether revision should see raw gate text or only the findings emitted from gates.
 - Negative gates: mining patterns that looked useful once but later caused mistakes.
+- Maintained-converging vs opportunistic: should review grow a maintained registry, or stay open-ended with ad-hoc lenses governed by marginal value?
 
 ---
 
@@ -69,3 +76,4 @@ Relevant Notes:
 - [instruction specificity should match loading frequency](../../notes/instruction-specificity-should-match-loading-frequency.md) — rationale: budget-bounded selective loading instead of always-growing review prompts
 - [methodology-enforcement-is-constraining](../../notes/methodology-enforcement-is-constraining.md) — rationale: the maturation gradient gates climb from candidate toward deterministic check
 - [review architecture](../review-architecture.md) — part-of: the shipped review subsystem this loop would extend
+- [LLM generation relaxes a goal it can't satisfy and hides the constraint a human writer stalls on](../../notes/llm-generation-relaxes-goals-where-human-writing-stalls.md) — rationale: focused review passes can recover weak joints that diffuse all-purpose review reads past
