@@ -24,6 +24,8 @@ plugins:
         'notes/agent-memory-serves-contextual-competence-through-discoverable-composable-trusted-knowledge.md': 'notes/agent-memory-needs-discoverable-composable-trusted-knowledge-under-bounded-context.md'
         'notes/architecture-index.md': 'notes/architecture-README.md'
         'notes/commonplace-architecture.md': 'reference/architecture.md'
+        'notes/composition-friction-is-a-filter-and-a-signal-that-llm-inference-removes.md': 'notes/current-llm-inference-removes-composition-friction-filter-signal.md'
+        'notes/composition-friction-is-a-filter-and-signal-llm-inference-removes.md': 'notes/current-llm-inference-removes-composition-friction-filter-signal.md'
         'notes/computational-model-index.md': 'notes/computational-model-README.md'
         'notes/context-engineering-index.md': 'notes/context-engineering-README.md'
         'notes/deploy-time-learning-the-missing-middle.md': 'notes/deploy-time-learning-is-the-missing-middle.md'
