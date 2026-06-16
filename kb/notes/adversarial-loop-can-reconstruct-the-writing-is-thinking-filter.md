@@ -29,5 +29,9 @@ If the loop does not in fact reconstruct the filter — if adversarial review an
 Relevant Notes:
 
 - [LLM generation relaxes a goal it can't satisfy and hides the constraint a human writer stalls on](./llm-generation-relaxes-goals-where-human-writing-stalls.md) — grounds: defines the stall an LLM lacks and asks whether a separate operation can reconstruct it; this note answers — the adversarial human-agent loop is that operation
+- [error correction works with above-chance oracles and decorrelated checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — grounds: the filter only fires if "the adversarial pass has teeth" — this formalizes the condition (above-chance, decorrelated checks) under which a check catches more than it adds
+- [the boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — grounds: prose argument has no automatic oracle, so the filter has to be reconstructed somewhere; the human-as-judge loop is the substitute for the missing verifier
+- [Inspectable artifact, not supervision, defeats the blackbox problem](./inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md) — contrasts: the boundary of the claim — that note argues steering needs an *inspectable artifact*, not a human in the loop; here, in the prose-discovery register, human judgment is what's load-bearing
+- [vibe-noting](./vibe-noting.md) — contrasts: names the careless form this note's discipline is defined against — a seed rendered into an article with the judgment skipped
 - [Human Routers of Machine Words](../sources/borretti-human-routers-of-machine-words.md) — derived-from: Borretti's "writing is thinking" polemic is the critique this note concedes and answers
 - [Human Bottlenecks](../sources/fernando-borretti-human-bottlenecks.md) — derived-from: the competence-floor argument this note concedes — the human-as-judge stays bounded by their own knowledge
