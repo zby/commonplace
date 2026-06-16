@@ -60,4 +60,5 @@ Adopt when:
 
 Relevant Notes:
 
+- [Prose has no reliable dereference, so a declared fact must be reinforced where it applies](../../notes/prose-has-no-dereference-reinforce-facts-at-point-of-use.md) — rationale: the banner is a denormalized restatement of status/review-state at the point of reading, and the validator is the normalized check that makes the denormalization safe — this note's claim, applied
 - [LLM generation relaxes a goal it can't satisfy and hides the constraint a human writer stalls on](../../notes/llm-generation-relaxes-goals-where-human-writing-stalls.md) — rationale: delegating the rendering is safe but the judgment must keep a human; an unreviewed note is one where that judgment has not yet happened, which is exactly what the banner must surface
