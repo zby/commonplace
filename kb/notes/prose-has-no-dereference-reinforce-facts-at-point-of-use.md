@@ -3,12 +3,10 @@ description: "Code resolves a name to its value everywhere; LLM-read prose has n
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, artifact-analysis]
-status: speculative
+status: seedling
 ---
 
 # Prose has no reliable dereference, so a declared fact must be reinforced where it applies
-
-*Speculative in its remedy, not its premise. That LLM interpretation is underspecified is established (linked below); what the ablation test must settle is whether restating a fact at the point of use measurably improves adherence to it.*
 
 In a formal system a name dereferences: write `status = SEEDLING` once and the value is carried, exactly, into every context that reads it. The reference resolves the same way regardless of distance, surrounding content, or how non-obvious the application is. This is what makes **single-source-of-truth** safe — declare a fact once, reference it everywhere, and the reference does the propagation.
 
