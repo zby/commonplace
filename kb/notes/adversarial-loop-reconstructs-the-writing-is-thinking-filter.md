@@ -1,12 +1,12 @@
 ---
-description: "The writing-is-thinking filter is the loop's, not the pen's — an adversarial human-agent loop, human as judge, reconstructs what naive delegation loses; the disciplined form of what Borretti condemns"
+description: "The writing-is-thinking filter is the loop's, not the pen's — an adversarial human-agent loop, human as judge, can reconstruct what naive delegation loses; the disciplined form of what Borretti condemns"
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [foundations]
 status: seedling
 ---
 
-# An adversarial human-agent loop reconstructs the writing-is-thinking filter
+# An adversarial human-agent loop can reconstruct the writing-is-thinking filter
 
 Borretti's case against AI writing is largely right, and a defense of agent-operated knowledge work has to concede it. Writing is thinking: concretizing a vague idea is where you find out it is contradictory or weak, so the effort of composition is a filter — [the stall an LLM lacks](./llm-generation-relaxes-goals-where-human-writing-stalls.md). Dumping bullet points into a model and shipping the output unread skips that filter and dumps the verification onto the reader. And a model cannot think for you; your contribution is bounded by your own knowledge. None of this is in dispute.
 
