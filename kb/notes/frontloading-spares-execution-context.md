@@ -2,7 +2,7 @@
 description: Pre-computing known instruction inputs and inserting their results spares execution-context budget inside a later LLM call
 type: kb/types/note.md
 traits: [has-external-sources]
-tags: []
+tags: [computational-model]
 status: seedling
 ---
 

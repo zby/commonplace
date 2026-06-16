@@ -33,6 +33,9 @@ What kind of "programs" LLM instructions are, and what programming-language conc
 - [writing-styles-are-strategies-for-managing-underspecification](./writing-styles-are-strategies-for-managing-underspecification.md) — five observed context-file writing styles as strategies for narrowing the interpretation space
 - [programming-practices-apply-to-prompting](./underspecification-and-indeterminism-complicate-programming-for.md) — typing, testing, version control transfer to prompting with modified cost models
 - [unified-calling-conventions-enable-bidirectional-refactoring](./unified-calling-conventions-enable-bidirectional-refactoring.md) — calling conventions that let components move between neural and symbolic implementations
+- [prose has no reliable dereference, so a declared fact must be reinforced where it applies](./prose-has-no-dereference-reinforce-facts-at-point-of-use.md) — name resolution holds in formal systems but not in LLM-read prose, so single-source-of-truth gives way to checked denormalization
+- [indirection is costly in LLM instructions](./indirection-is-costly-in-llm-instructions.md) — indirection is nearly free at runtime in code but costs context and interpretation overhead on every read in prompts
+- [frontloading spares execution context](./frontloading-spares-execution-context.md) — partial evaluation applied to instructions: precompute known inputs and insert results to spare the consuming call's context budget
 
 ## Error Correction & Reliability
 
