@@ -23,7 +23,7 @@ Denormalization has a cost — the copies can drift from the canonical fact — 
 Reinforcement is not free, and the cost rises with how *conditional* the fact is.
 
 - **Bulk.** Every restatement adds text. An artifact that reinforces several facts — or one fact across many points of use — grows, and length is itself a context cost for the next call that loads it.
-- **Conditional applicability pushes branching back into the prose.** A restatement often does not hold everywhere it could sit: the caveat applies to the first stage but not the rendering stage, or only under some condition. Saying *when* it applies means writing branching logic in prose — the very thing prose is bad at. So denormalization is cheap for facts that hold unconditionally wherever they are restated, and expensive for facts whose scope is itself context-dependent.
+- **Conditional applicability pushes branching somewhere.** A restatement is keyed to one value of the fact — a `seedling` warning fits a seedling note but not a `current` one. Reusing one template across statuses means branching it on the status, conditional logic written in prose (the thing prose is worst at); the alternative is to constrain the workflow so the template is only ever used in that one case — always start a note as `seedling`, say. The branching does not vanish, it just moves from template to process. Denormalization stays cheap only for a fact that holds unconditionally wherever it is restated; a value- or context-dependent fact pays a branching cost somewhere.
 - **The guard is real work.** The external check that keeps copies honest has to be built and run; it is what makes denormalization safe, but it is not free.
 
 ## Scope
