@@ -26,21 +26,21 @@ This isolates the methodology from the framework, which is the whole point.
 
 - **Condensed-only.** It carries no raw trajectories, so there is no raw-experience channel to confound the measurement — this is exactly the paper's clean §4.2 setting where condensed memory is the *only* guidance. Faithfulness of condensed memory is measured without subtracting a raw-experience effect.
 - **Public code** (the only confirmed repo of the four).
-- **Has a real condenser** — it distills reasoning strategies from self-judged success/failure traces. That distillation step is precisely what we replace.
+- **Has a real condenser** — it distills reasoning strategies from self-judged success/failure traces.
 
-**OPEN:** confirm ReasoningBank's condenser output has a clean, swappable seam (a function that turns a trace into the stored memory string). If it's deeply entangled with retrieval, a thin reimplementation of just the condense→store→inject loop may be cheaper than forking.
+**Seam: verified clean (2026-06-15).** The condenser is a single swappable step in `WebArena/induce_memory.py:main()` — `trajectory → one_step_chat(system_msg=SUCCESSFUL_SI|FAILED_SI) → markdown memory_items`. Retrieval (`memory_management.py`, embedding top-k) is separate and orthogonal. No deep fork needed; we replace one system prompt + post-step. Notably the native prompt *already* exhorts "say why / be concrete / when-NOT-to-use" and the paper still finds it inert — so the treatment must add structure + enforcement, not wording. See [condenser-design.md](./condenser-design.md).
 
 ## Treatment vs control
 
-Same trace input, two condensers:
+We do not yet have any trace condensation — the treatment is a **new condenser built from KB theory**, not a tuned prompt. Full design and output schema in [condenser-design.md](./condenser-design.md).
 
-- **Control (naive baseline)** = ReasoningBank's native condenser — the brevity-oriented auto-summary the paper found inert.
-- **Treatment (Commonplace pipeline)** = the trace condensed under our authoring conventions + passed through the relevant review gates (`explanatory-reach`, `claim-strength`, `explication-quality`, `grounding-alignment`, `load-bearing-qualifiers`, etc.), producing a constrained, claim-shaped, actionable artifact in the same slot.
+- **Control (naive baseline)** = ReasoningBank's native condenser (SUCCESSFUL_SI/FAILED_SI, unchanged) — the fair baseline the paper found inert.
+- **Treatment (theory-grounded condenser)** = draft → gate-check → revise, emitting a claim/Trigger/Mechanism/Scope/Form schema (constraining + activation + grounding, enforced rather than exhorted).
 
-**OPEN — the hard part.** The Commonplace pipeline is currently human/agent-in-the-loop with gates that emit warnings, not an automatic condenser. Options:
-1. **Offline hand-built treatment** — author the treatment condensates by hand (or via a gated sub-agent) for a fixed task set. Cheapest path to a *signal*; not yet an automatic loop. Good enough to answer "does gated condensate help at all?"
-2. **Gate-in-the-loop condenser** — wrap the native condenser with a gate pass + revise step. Closer to a real system; more build cost.
-   Start with (1). Only build (2) if (1) shows a positive effect worth productizing.
+**OPEN — automation depth.** Two ways to produce the treatment, tracked as build cost not method:
+1. **Offline / gated-sub-agent** authored condensates for a fixed task set — cheapest path to a *signal*.
+2. **In-loop condenser** that runs draft→gate-check→revise automatically each task — closer to a real system.
+   Start with (1); build (2) only if (1) shows an effect. (How much gate suite runs in-loop is Fork B in the design doc.)
 
 ## Interventions (reimplement)
 
