@@ -22,7 +22,7 @@ For each enumeration or framework:
    - the most extreme instance
    - cases between enumerated items
    - adjacent concepts near the stated boundary
-3. Test whether each case maps cleanly into the framework.
+3. Test whether each case maps cleanly into the framework using the framework's stated criteria. Do not replace the taxonomy with a cleaner one the note does not state.
 
 WARN when a case clearly falls outside the claimed coverage. INFO when coverage is possible but strained.
 

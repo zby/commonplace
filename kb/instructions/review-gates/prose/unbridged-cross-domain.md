@@ -14,6 +14,6 @@ Evidence from one domain is cited as if it directly supports a claim in another 
 
 ## Test
 
-For each cited study or empirical result, compare the source domain to the note's argument domain. If they differ, look for an explicit bridge that states the shared mechanism.
+For each cited study or empirical result, compare the source domain to the note's argument domain. If they differ, look for an explicit bridge in the note that states the shared mechanism.
 
 If the transfer only works as an analogy, the note should say so.

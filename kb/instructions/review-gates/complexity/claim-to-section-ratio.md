@@ -14,4 +14,4 @@ The note has more sections than distinct non-obvious claims, so sections restate
 
 ## Test
 
-List the distinct non-obvious claims, then count sections. If sections outnumber claims, identify which sections are repeating framing instead of adding new substance.
+List the distinct non-obvious claims, then count sections. Treat support sections as justified only when they carry boundary conditions, failure cases, or inference steps that need separate treatment for the note's stated argument. If sections outnumber the claims plus those separately necessary support units, identify which sections are repeating framing instead of adding new substance.

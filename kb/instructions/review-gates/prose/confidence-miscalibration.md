@@ -14,7 +14,7 @@ Speculative frameworks are presented as established, or well-grounded findings a
 
 ## Test
 
-For each framework, taxonomy, or causal model in the note, ask whether it is sourced or the note's own construction. If it is the note's own move, its wording should propose rather than assert. Report all miscalibrated instances.
+For each framework, taxonomy, or causal model in the note, ask whether it is sourced by evidence the artifact presents or cites, or is the note's own construction. If it is the note's own move, its wording should propose rather than assert. Report all miscalibrated instances. Do not treat outside plausibility or the reviewer's agreement with the conclusion as grounding for stronger wording.
 
 Language like `requires`, `consists of`, or `the stages are` asserts. Language like `a plausible decomposition` or `one way to model this` proposes.
 
