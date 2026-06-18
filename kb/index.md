@@ -2,7 +2,13 @@
 
 **The theory of LLM wikis, running as one.**
 
-Commonplace is a framework for building LLM wikis — persistent, linked markdown that AI agents write, navigate, review, and maintain, in the sense [Karpathy sketched](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f). This site is that framework running as a wiki: the theory of how to build LLM wikis lives here as notes, and the agents that maintain this repository run on the methodology those notes describe. It is **self-hosting** — reading these pages is reading the system's own source.
+Commonplace is a framework for agent-operated knowledge bases — LLM wikis in the sense [Karpathy sketched](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f): a persistent, linked markdown layer that AI agents build and maintain around your own work. It ships the type system, writing conventions, agent skills, and Python commands to run one.
+
+A wiki is two things — notes and the links between them — and an LLM wiki is one where the agent produces both: it **concretizes** a vague thought into a committed note, then **[connects](./notes/links-README.md)** it to everything you've already written. That turns an ephemeral chat, where the insight scrolls away, into a durable, growing body of your thinking. The agent takes the two slow parts, drafting and filing; judging whether a claim is _true_ still falls to you — though review gates and refinement loops are moving more of that into the agents too.
+
+It is **self-hosting**, in the bootstrapping sense: the theory of how to build LLM wikis lives here as notes, and the agents that maintain this repository run on the methodology those notes describe. Nothing here is documentation _about_ a separate system — the wiki is the system, and reading these pages is watching it run.
+
+**The content is AI-generated** through human-AI collaboration: a human directs the inquiry, and AI agents (Claude, ChatGPT, and others) draft, connect, and maintain the notes.
 
 The central theory is **[deploy-time learning](./notes/deploy-time-learning-is-the-missing-middle.md)**: deployed AI systems improve through structured knowledge that accumulates in the repo alongside the code. Agents operate under [bounded context](./notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) — they can't load everything, so the knowledge they load must cover many situations. The notes here develop that theory and apply it to the design of agent-operated knowledge bases. See the [Reference](./reference/README.md) collection for architecture, types, and CLI.
 
