@@ -30,6 +30,7 @@ This is a second workshop triage list, not a review. It applies the same screen 
 | [LLM-WIKI-MCP](https://github.com/Electro-resonance/LLM-WIKI-MCP) | [comment 6183384](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6183384#gistcomment-6183384) | MCP-accessible wiki with provenance-aware ingestion, recursive conversational memory, self-maintaining notes, runtime introspection, and agent-callable maintenance tools. | What is canonical memory: wiki pages, sidecar notes, MCP state, or derived indexes? |
 | [LLM-Wiki-v3](https://github.com/vvvvvivekkk/LLM-Wiki-v3) | [comment 6185820](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6185820#gistcomment-6185820) | Markdown+Git source of truth, disposable BM25/vector/graph indexes, source/span/timestamp provenance, supersession rather than deletion, gated autonomous writes, and audit trails. | Which gates prevent autonomous writes from becoming canonical, and are they deterministic, LLM-judged, or human-approved? |
 | [memwiki](https://github.com/hereisSwapnil/memwiki) | [comment 6190759](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6190759#gistcomment-6190759) | Project-local persistent memory for coding agents using `.memory/`, `hot.md`, `log.md`, agent hook files, and domain pages. Directly addresses cross-session coding-agent amnesia. | What artifacts are loaded automatically by each supported agent, and how are stale or duplicated project facts corrected? |
+| [llmwiki-marimo](https://github.com/Clod/llmwiki-marimo) | [comment 6192749](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6192749#gistcomment-6192749) | Local-first Marimo + SQLite LLM Wiki that generates persistent Markdown pages, keeps document/chunk/FTS/citation state in SQLite, exposes a chat agent that reads wiki pages before raw chunks, and has human-in-the-loop answer promotion. | What is canonical memory: generated Markdown pages, SQLite rows, citation graph state, or the local wiki git history, and which parts can change future agent behavior? |
 | [Link](https://github.com/gowtham0992/link) | [comment 6199251](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6199251#gistcomment-6199251) | Local, source-backed memory for AI agents with CLI, MCP support, and official CLI skills for lazy-loaded workflows. | What is the source-backed memory schema, and how do CLI skills or MCP calls select what enters agent context? |
 | [EchoesVault](https://github.com/psinetron/echoes-vault-opencode) | [comment 6202181](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6202181#gistcomment-6202181) | Persistent memory plugin for OpenCode with Markdown memory, event-driven logging, OKF structure, Obsidian-native vault, and surgical index updates. | Are event-driven memory writes triggered and constrained by OpenCode hooks, explicit skills, or model instructions? |
 | [Smriti-MCP](https://github.com/deepak-bhardwaj-ps/smriti-mcp) | [comment 6202957](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6202957#gistcomment-6202957) | MCP-native portable memory service meant to persist across sessions, tools, models, and runtimes. Strong fit for cross-agent read-back and memory authority questions. | What memory operations are available through MCP, and what governance separates remembered facts from retrieved context? |
@@ -67,6 +68,7 @@ Checked on 2026-06-18 against `related-systems/` top-level directory names, `rel
 | Knolo Wiki Librarian Skill | none found | none found |
 | LLM-Wiki-v3 (`vvvvvivekkk/LLM-Wiki-v3`) | none found | none found |
 | memwiki (`hereisSwapnil/memwiki`) | none found | none found |
+| llmwiki-marimo (`Clod/llmwiki-marimo`) | missed in original check; added as `related-systems/Clod--llmwiki-marimo` on 2026-06-18 for review | missed in original check; review added after follow-up inspection |
 | Link (`gowtham0992/link`) | none found | none found |
 | EchoesVault (`psinetron/echoes-vault-opencode`) | none found | none found |
 | Smriti-MCP (`deepak-bhardwaj-ps/smriti-mcp`) | none found | none found |
@@ -100,6 +102,7 @@ Primary repo-backed targets from this second pass:
 - LLM-WIKI-MCP
 - LLM-Wiki-v3
 - memwiki
+- llmwiki-marimo
 - Link
 - EchoesVault
 - Smriti-MCP
@@ -131,6 +134,7 @@ Executable-spec criterion: a spec-first system needs an **activation mechanism**
 | Knolo Wiki Librarian Skill | no public repo found | The gist comment has no repository URL; web search found no stable public repo for this named skill. |
 | [LLM-Wiki-v3](https://github.com/vvvvvivekkk/LLM-Wiki-v3) | real implementation repo | 100 files, 51 code files, `pyproject.toml`, evals, sample knowledge tree, audit log; pushed 2026-06-06. |
 | [memwiki](https://github.com/hereisSwapnil/memwiki) | real small implementation repo | 22 files, 6 code files, `package.json`, `package-lock.json`, `.memory/` scaffold, agent hook files; pushed 2026-06-06. |
+| [llmwiki-marimo](https://github.com/Clod/llmwiki-marimo) | real implementation repo | Marimo notebook apps, Python core, SQLite schema, tests, UAT/eval scripts, programmer manual, and local wiki git snapshot behavior; pushed 2026-06-18. |
 | [Link](https://github.com/gowtham0992/link) | real implementation repo | 215 files, 156 code files, Python package metadata, MCP package metadata, docs/assets; pushed 2026-06-14. |
 | [EchoesVault](https://github.com/psinetron/echoes-vault-opencode) | real small implementation repo | 8 files, TypeScript entrypoint, `package.json`, `tsconfig.json`, README; pushed 2026-06-16. |
 | [Smriti-MCP](https://github.com/deepak-bhardwaj-ps/smriti-mcp) | real implementation repo | 23 files, 13 code files, `pyproject.toml`, `requirements.txt`, MCP server/store code and tests; pushed 2026-06-11. |

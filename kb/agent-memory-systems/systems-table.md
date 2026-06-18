@@ -56,7 +56,7 @@ Curation operations and the full authority and signal flag sets are dropped from
 this compact view; they live in [`systems.csv`](./systems.csv).
 
 
-## The systems (140 code-reviewed)
+## The systems (141 code-reviewed)
 
 | System | What it is | Storage | Read-back | Targeting | Learns from traces | Enforces |
 |---|---|---|---|---|---|---|
@@ -140,6 +140,7 @@ this compact view; they live in [`systems.csv`](./systems.csv).
 | [llm-wiki-coordination](./reviews/llm-wiki-coordination.md) | Markdown protocol layer for multi-agent wiki dialogue, consensus, RoleSpace review, and structural audit | files | pull | — | no | yes |
 | [LLM-WIKI-MCP](./reviews/LLM-WIKI-MCP.md) | local Markdown wiki with SQLite FTS, MCP/CLI retrieval, Ollama ask, provenance ingest, sidecar notes, and ask-history memory | files | both | targeted | yes | yes |
 | [LLM-Wiki-v3](./reviews/LLM-Wiki-v3.md) | Markdown+git wiki with schema validation, provenance-checked ingest, pending review, and hybrid pull retrieval | repo | pull | — | no | yes |
+| [llmwiki-marimo](./reviews/llmwiki-marimo.md) | local Marimo LLM Wiki with generated Markdown pages, SQLite FTS/citation graph, pull chat tools, and repairable wiki memory | files | pull | — | no | yes |
 | [Mem0](./reviews/mem0.md) | memory SDK/server/platform with additive trace extraction, hybrid retrieval, agent plugins, hooks, and pushed context injection | vector | both | targeted | yes | yes |
 | [Memex](./reviews/memex.md) | isolated Claude Code runtime that maintains a markdown wiki through queued ingest, query, and lint jobs | files | pull | — | no | yes |
 | [Memori](./reviews/Memori.md) | SDK and agent integrations with trace-derived augmentation, SQL/Rust storage, hybrid recall, and pre-call memory injection | rdbms | both | targeted | yes | — |
