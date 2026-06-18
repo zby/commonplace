@@ -4,7 +4,7 @@ A survey of external **agent memory systems** — how AI agents store, retrieve,
 **Choosing or designing one?** Scan the [comparison table](./systems-table.md) — one
 row per system, a plain-English description plus the handful of fields that
 actually discriminate. Then read the [comparison](./agentic-memory-systems-comparative-review.md),
-which counts what 129 systems do rather than characterizing them one at a time, and
+which is the existing 129-system synthesis rather than the refreshed 140-row matrix, and
 browse the repo-backed reviews under `reviews/` — each reads the actual
 code and reports what a system _does_, not what its README claims.
 
@@ -32,7 +32,7 @@ The [review type spec](./types/agent-memory-system-review.md) is the operational
 contract that turns these notes into the fixed review sections and the
 backticked lead tokens the [matrix](./systems.csv) is parsed from.
 ## Coverage
-**Two coverage tiers.** Systems with open-source repos get the deep path: clone the repo, read the code, write a review note here. Systems known only from a README or paper get the lightweight path: snapshot a single page into `kb/sources/`, run `/ingest`, and optionally add a standard note under `lightweight/` when the system needs a stable place in this collection.
+**Two coverage tiers.** Systems with inspectable implementations get the deep path: clone the repo, read the code, write a review note here. Systems known only from a README, paper, spec, or non-implementation repo get the lightweight path: snapshot the source into `kb/sources/`, run `/ingest`, and optionally add a standard note under `lightweight/` when the system needs a stable place in this collection.
 
 Browse the roster:
 
@@ -45,7 +45,7 @@ Cross-cutting reads:
 
 - [Comparison table](./systems-table.md) — one scannable row per code-reviewed system
   
-- [Comparison](./agentic-memory-systems-comparative-review.md) — the findings across all 129 code-reviewed systems
+- [Comparison](./agentic-memory-systems-comparative-review.md) — the existing synthesis across the earlier 129 code-reviewed systems; use the table and CSV for the current 140-row matrix
   
 - [Trace-derived learning techniques in related systems](./trace-derived-learning-techniques-in-related-systems.md) — broadens the comparison to artifact-learning and weight-learning systems fed by live traces
   
@@ -65,7 +65,7 @@ Cross-cutting reads:
 
 Remaining columns are hand-classified candidates the script lists but leaves empty; the analyzer flags them as too-sparse until filled. When populating a compound axis (e.g. the trace-derived sub-fields), record the raw observed value first and normalise it into a harness-agnostic vocabulary — the normalisation step is itself the test of whether the category generalises across systems.
 
-**Consumption rule:** a human comparison table is for *choosing* a system, so it covers **code-based reviews only**. Lightweight reviews (doc-only, lower authority) stay in the matrix as segmented backing data (`source_tier=lightweight`) for landscape/survey questions, but are excluded from the consumption table — `analyze_matrix.py` filters to code-based by default (`--all` includes lightweight).
+**Consumption rule:** a human comparison table is for *choosing* a system, so it covers **code-based reviews only**. Lightweight reviews (doc-only or spec-only, lower authority) stay outside the generated code-grounded matrix and table until promoted to an inspected implementation review.
 
 Current mature chooser fields are `storage_substrate`, `representational_form`, `trace_derived`, `read_back_direction`, and the `Read-back signal` one-hots. Pushing shipped static documentation is baseline context, not memory read-back. For system choice, the useful distinction is whether retained memory is pull-only, coarse-pushed, identifier-targeted, or inferred from the current content.
 
