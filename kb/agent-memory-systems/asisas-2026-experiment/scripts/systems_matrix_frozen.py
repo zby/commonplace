@@ -1,9 +1,9 @@
-"""Parse agent-memory-system reviews into comparison-matrix rows.
+"""Frozen parser for the ASISAS-2026 experiment systems matrix.
 
-Pure parsing logic for the systems matrix (``kb/agent-memory-systems/systems.csv``).
-Text-in, row-out, so it is unit-testable; the CLI runner
-(``scripts/build_systems_matrix.py``) owns file discovery, the identity join, and
-CSV writing. Stdlib only (ADR-008 — the package carries no runtime deps).
+This file is a vendored snapshot of ``commonplace.lib.systems_matrix`` at the
+time the ASISAS-2026 experiment artifact was frozen. Keep it local to the
+experiment so later changes to the living Commonplace matrix parser cannot
+silently change the experiment's generated ``systems.csv`` semantics.
 
 The matrix is **faithful**: multi-valued axes are one-hot indicator columns
 (``1`` present / ``0`` assessed-absent / ``''`` not assessed or assessed-unknown),
@@ -15,8 +15,7 @@ Values come only from authored lead tokens, never guessed; an applicable axis
 with no lead token is left blank and flagged, which makes the flag list the
 precise retrofit worklist. A lead line containing only ``not-determinable`` is
 treated as assessed-unknown: it leaves the axis blank without flagging. See
-kb/agent-memory-systems/types/agent-memory-system-review.md for the authoring
-contract.
+``../types/agent-memory-system-review.md`` for the frozen authoring contract.
 """
 from __future__ import annotations
 

@@ -1,0 +1,86 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+allOf:
+  - $ref: "../../../types/note.schema.yaml"
+  - type: object
+    properties:
+      frontmatter:
+        type: object
+        required:
+          - description
+          - type
+          - last-checked
+          - source-tier
+        properties:
+          type:
+            const: kb/agent-memory-systems/asisas-2026-experiment/types/agent-memory-system-review.md
+          last-checked:
+            type: string
+            format: date
+          source-tier:
+            enum: [code-grounded, doc-grounded]
+        additionalProperties: true
+      headings:
+        description: "Required review headings. Borrowable Ideas nests as a ### subsection under ## Comparison with Our System. ## Write side is required in every review (it carries the **Write agency:** verdict; a ### Trace-derived learning sub-section is added only when trace-learning applies). ## Read-back is required in every review (it carries the **Read-back:** verdict; push-specific detail inside the section is used only for push/both read-backs, with targeting recorded by the Read-back signal: a coarse vs instance signal, not a separate flag)."
+        type: array
+        allOf:
+          - contains:
+              const: "## Core Ideas"
+          - contains:
+              const: "## Artifact analysis"
+          - contains:
+              const: "## Comparison with Our System"
+          - contains:
+              const: "## Write side"
+          - contains:
+              const: "## Read-back"
+          - contains:
+              const: "## Curiosity Pass"
+          - contains:
+              const: "## What to Watch"
+  - properties:
+      body:
+        not:
+          pattern: "\\*\\*Representational form:\\*\\*[^\\n]*`mixed`"
+  # Strict write-side / read-side layout. No backcompat for the old layout.
+  - properties:
+      body:
+        pattern: "\\*\\*Write agency:\\*\\*"
+  - properties:
+      body:
+        pattern: "\\*\\*Read-back:\\*\\*"
+  - properties:
+      body:
+        not:
+          pattern: "## Trace-derived learning placement"
+  - properties:
+      body:
+        not:
+          pattern: "## Write-side placement"
+  - properties:
+      body:
+        not:
+          pattern: "## Read-back placement"
+  - properties:
+      body:
+        not:
+          pattern: "\\*\\*Read-back timing:\\*\\*"
+  - properties:
+      frontmatter:
+        properties:
+          tags:
+            not:
+              contains:
+                const: push-activation
+  - if:
+      properties:
+        frontmatter:
+          required:
+            - tags
+          properties:
+            tags:
+              contains:
+                const: trace-derived
+    then:
+      properties:
+        body:
+          pattern: "### Trace-derived learning"

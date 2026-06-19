@@ -30,6 +30,9 @@ AMS = REPO_ROOT / "kb" / "agent-memory-systems"
 REVIEWS_DIR = AMS / "reviews"
 SYSTEMS_CSV = AMS / "systems.csv"
 RELATED_SYSTEMS = REPO_ROOT / "related-systems"
+KARPATHY_GIST_CORE_FILE = (
+    AMS / "asisas-2026-experiment" / "karpathy-gist-agent-memory-reproducible-core.md"
+)
 
 # reviews/ is the code-grounded tier by location; this is authoritative for the
 # written row. Each review's `source-tier` frontmatter is validated against it
@@ -70,6 +73,29 @@ def derive_clone_path(repo_url: str) -> str:
     return ""
 
 
+def github_repo_key(repo_url: str) -> str:
+    """Normalised owner/repo key for GitHub repository URLs."""
+    clean = re.sub(r"[#?].*$", "", repo_url.strip().removesuffix(".git").rstrip("/"))
+    match = re.search(r"github\.com/([^/\s)]+)/([^/\s)]+)$", clean)
+    if not match:
+        return ""
+    owner, repo = match.groups()
+    return f"{owner.lower()}/{repo.lower()}"
+
+
+def read_karpathy_gist_repo_keys() -> set[str]:
+    """Return GitHub repos in the consolidated Karpathy LLM-wiki gist core."""
+    keys: set[str] = set()
+    if not KARPATHY_GIST_CORE_FILE.exists():
+        return keys
+    text = KARPATHY_GIST_CORE_FILE.read_text(encoding="utf-8")
+    for match in re.finditer(r"https://github\.com/[^\s)`>,]+", text):
+        key = github_repo_key(match.group(0))
+        if key:
+            keys.add(key)
+    return keys
+
+
 def read_source_tier(path: Path) -> str | None:
     """Read the `source-tier` frontmatter value, or None if absent (flagged in main)."""
     m = re.search(r"^source-tier:\s*(\S+)", path.read_text(encoding="utf-8"), re.MULTILINE)
@@ -96,6 +122,7 @@ def main() -> int:
         return 1
 
     inventory = load_inventory()
+    karpathy_gist_repo_keys = read_karpathy_gist_repo_keys()
     # identity index: any of {norm name, repo last-seg, clonepath last-seg} -> (repo, clonepath)
     def lastseg(u: str) -> str:
         return norm(re.sub(r"[#?].*$", "", u.rstrip("/")).split("/")[-1]) if u else ""
@@ -141,6 +168,9 @@ def main() -> int:
             legacy_repo, legacy_clone = ident.get(key, ("", ""))
             row["public_repo"] = explicit_repo or legacy_repo
             row["clone_path"] = explicit_clone or derive_clone_path(explicit_repo) or legacy_clone
+            row["found_karpathy_llm_wiki_gist"] = (
+                "1" if github_repo_key(row["public_repo"]) in karpathy_gist_repo_keys else "0"
+            )
             joined += 1
             rows.append(row)
             for f in flags:
@@ -149,6 +179,9 @@ def main() -> int:
         if key in ident:
             row["public_repo"], row["clone_path"] = ident[key]
             joined += 1
+        row["found_karpathy_llm_wiki_gist"] = (
+            "1" if github_repo_key(row["public_repo"]) in karpathy_gist_repo_keys else "0"
+        )
         rows.append(row)
         for f in flags:
             all_flags.append((row["review_file"], f))

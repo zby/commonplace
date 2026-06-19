@@ -41,7 +41,7 @@ A second realisation sharpened the cut: when maintenance is **manual**, it *is* 
 
 **Decision.** Model the review as **write side** (everything that changes the store) and **read side** (read-back, which only serves it). The write side carries two axes — **agency** (`manual`/`automatic`) and **curation operations** — with **trace-derived learning** demoted to a sub-section (the automatic-from-traces case). Manual curation is recorded as `agency: manual` only; it has no separate mechanism (it is authoring on existing content), its provenance is Lineage `authored`, and its quality is an affordances question in Core Ideas. Read-back loses its pre/post "timing" axis: there is one injection point, pre-invocation; the read's *trigger* may be noted, but not a timing.
 
-**Consequences.** Maintenance finally has a home (the curation-operations axis, D4). The `**Read-back timing:**` token and its `rb_pre_action`/`rb_post_action` columns are removed. The trace-derived learning material becomes a `### Trace-derived learning` sub-section under the required `## Write side` section. Rather than spawn a thin "no post-action read-back" note, read-back keeps its operational definition in this review spec and is *situated relative to activation* in [knowledge storage does not imply contextual activation](../notes/knowledge-storage-does-not-imply-contextual-activation.md) (the storage→context step — necessary for activation but not the same as it); the no-post-action point is a corollary of that single pre-invocation injection point.
+**Consequences.** Maintenance finally has a home (the curation-operations axis, D4). The `**Read-back timing:**` token and its `rb_pre_action`/`rb_post_action` columns are removed. The trace-derived learning material becomes a `### Trace-derived learning` sub-section under the required `## Write side` section. Rather than spawn a thin "no post-action read-back" note, read-back keeps its operational definition in this review spec and is *situated relative to activation* in [knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) (the storage→context step — necessary for activation but not the same as it); the no-post-action point is a corollary of that single pre-invocation injection point.
 
 ### D4 — Curation-operations vocabulary
 
@@ -78,12 +78,12 @@ A second realisation sharpened the cut: when maintenance is **manual**, it *is* 
 ## Open follow-ons
 
 - ~~**Review regeneration:** the structural retrofit (write-side heading, `source-tier`, timing removal) landed corpus-wide, but the prose-normalization pass that authored the write-side *tokens* over-tagged them — `synthesize` (the rare op) appeared on 88% of reviews, because a post-hoc axis cannot be back-filled faithfully from prose written before it existed. That approach was abandoned in favor of regenerating reviews from source.~~ — done (all 129 reviews regenerated via the `write-agent-memory-system-review` skill; the [`none` curation token](./types/agent-memory-system-review.md) later split assessed-absent from not-assessed, the gap the over-tagging had exposed).
-- ~~Parser/matrix: add write-agency and curation-operation one-hot columns; drop `rb_pre_action`/`rb_post_action`~~ — done (`wa_*`/`op_*` columns carried; timing columns removed). Validator severity is now per-constraint, fail by default ([ADR-024](../reference/adr/024-schema-severity-is-per-constraint-fail-by-default.md)).
+- ~~Parser/matrix: add write-agency and curation-operation one-hot columns; drop `rb_pre_action`/`rb_post_action`~~ — done (`wa_*`/`op_*` columns carried; timing columns removed). Validator severity is now per-constraint, fail by default ([ADR-024](../../reference/adr/024-schema-severity-is-per-constraint-fail-by-default.md)).
 - ~~Theory note for "no post-action read-back"~~ — resolved by pinning `read-back` in the activation-gap note rather than adding a note.
 
 ---
 
 Relevant Notes:
 
-- [agentic-memory-systems-comparative-review](./agentic-memory-systems-comparative-review.md) — see-also: the synthesis this framework feeds
-- [symbolic context engineering is bounded by symbol availability](../notes/symbolic-context-engineering-is-bounded-by-symbol-availability.md) — rationale: grounds the read-back signal taxonomy and the single-injection-point argument
+- [agentic-memory-systems-comparative-review](../agentic-memory-systems-comparative-review.md) — see-also: the synthesis this framework feeds
+- [symbolic context engineering is bounded by symbol availability](../../notes/symbolic-context-engineering-is-bounded-by-symbol-availability.md) — rationale: grounds the read-back signal taxonomy and the single-injection-point argument
