@@ -87,7 +87,7 @@ AUTOMATIC_AXES = {"Curation operations"}
 COLUMNS = [
     # identity / meta
     "system_name", "review_file", "public_repo", "clone_path",
-    "one_line", "source_tier", "found_karpathy_llm_wiki_gist",
+    "one_line", "source_tier",
     # artifact analysis
     "storage_substrate",
     "representational_form", *FORM,
