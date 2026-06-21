@@ -38,7 +38,7 @@ This reframes the [system-definition artifact](./system-definition-artifacts-are
 
 ## Open Questions
 
-- Does the guarantee degrade gracefully, or is it all-or-nothing? A workflow with a single non-delegated capacity (say, a raw network primitive) seems to lose the whole property — is there a partial-authority middle ground worth modeling?
+- Does the guarantee degrade gracefully, or is it all-or-nothing? A workflow with a single non-delegated channel (say, a raw network primitive) seems to lose the whole property — is there a partial-authority middle ground worth modeling?
 - The argument assumes the delegated agents enforce their own authority correctly. Compilation preserves the boundary *relative to* those agents; it says nothing about whether sequencing previously-isolated calls composes their individual authorities into an emergent one.
 
 ---
