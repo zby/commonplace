@@ -1,6 +1,6 @@
 [project]
 name = "llm-commonplace"
-version = "0.1.1"
+version = "0.1.2"
 description = "The theory of LLM wikis, running as one. A framework for agent-operated knowledge: typed, linked, review-gated markdown your agents execute."
 readme = "README.md"
 requires-python = ">=3.11"
