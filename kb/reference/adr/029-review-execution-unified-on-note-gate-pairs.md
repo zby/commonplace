@@ -1,5 +1,5 @@
 ---
-description: "Review execution is unified on (note, gate) pairs: one sentinel grammar keyed by the full pair, one prompt renderer, one batch executor with a salvage failure policy; bundle and gate sweep become packing strategies over the same pair protocol"
+description: "Review execution is unified on note-gate pairs: one sentinel grammar, renderer, parser, and executor; bundle and gate sweep are packing strategies over the same protocol"
 type: ../types/adr.md
 tags: []
 status: accepted
@@ -12,7 +12,7 @@ status: accepted
 
 ## Context
 
-The unit of review work is one (note, gate) pair — the database already keys `gate_reviews` and acceptance on it — but execution ran through two divergent paths that differed only in which axis they held constant when packing pairs into one LLM call: `run_review_bundle` (one note, many gates, `GATE REVIEW START/END` sentinels) and `run_gate_sweep` (one gate, many notes, `NOTE START/END` sentinels wrapping gate blocks). Each path carried its own prompt renderer, parser, footer-rewriter, and failure policy. The duplication produced concrete defects: the sweep path re-rendered extracted reviews as synthetic single-note bundles and re-parsed them to reach the shared finalize tail; usage-exhaustion detection existed only in the bundle path and interrupt handling only in the sweep path; and parsing was all-or-nothing per call, so one missing block discarded every already-parsed review in the batch. All sweep modules were flagged experimental, so the grammar was free to change.
+The unit of review work is one (note, gate) pair — the selector and acceptance state already reasoned on that key — but execution ran through two divergent paths that differed only in which axis they held constant when packing pairs into one LLM call: `run_review_bundle` (one note, many gates, `GATE REVIEW START/END` sentinels) and `run_gate_sweep` (one gate, many notes, `NOTE START/END` sentinels wrapping gate blocks). Each path carried its own prompt renderer, parser, footer-rewriter, and failure policy. The duplication produced concrete defects: the sweep path re-rendered extracted reviews as synthetic single-note bundles and re-parsed them to reach the shared finalize tail; usage-exhaustion detection existed only in the bundle path and interrupt handling only in the sweep path; and parsing was all-or-nothing per call, so one missing block discarded every already-parsed review in the batch. All sweep modules were flagged experimental, so the grammar was free to change.
 
 ## Decision
 
@@ -23,7 +23,7 @@ The unit of review work is one (note, gate) pair — the database already keys `
 5. **Batching is a packing choice, not a protocol.** `run_review_bundle` is the share-note packing (one note's gates per call) and `run_gate_sweep` the share-gate packing (one gate over a chunked note list, one single-gate run per note); both are thin callers of the executor. `review_sweep`'s thread-pool fan-out over `run_bundle` is untouched. The live-agent path (`create-review-run --with-prompt` → agent writes `bundle-output.md` → `ingest-bundle-output`) consumes the same grammar; per the consolidation decision its single-run ingest remains all-or-nothing.
 6. **Per-run artifacts are pair-grammar slices.** Each run's `bundle-output.md` and DB `raw_bundle_markdown` hold the run's own canonical pair blocks; the full raw batch output is preserved in the debug log and attached to failed runs.
 
-Old-grammar text stored in historical `gate_reviews` rows stays readable: decision parsing (`protocol/decisions.py`) is grammar-independent and unchanged.
+Old-grammar text from historical review artifacts stays readable: decision parsing (`protocol/decisions.py`) is grammar-independent and unchanged. ADR 031 later makes the same pair unit persistent in the SQLite schema by replacing `gate_reviews` with `review_pairs`.
 
 ## Consequences
 
@@ -44,3 +44,4 @@ Relevant Notes:
 
 - [review architecture](../review-architecture.md) — part-of: the subsystem this decision restructures
 - [gate learning from accepted edits](../proposals/gate-learning-from-accepted-edits.md) — see-also: adjacent undecided extension; per-gate accounting interacts with the packing axis
+- [031-review state uses run-owned review pairs](./031-review-state-uses-run-owned-review-pairs.md) — see-also: the storage refinement that makes this protocol's pair unit the persistent row

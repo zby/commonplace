@@ -34,7 +34,7 @@ This created an awkward intermediate form: flat files holding append-like state,
 
 Store review state in local SQLite once reviews are out of git and have accumulated operational metadata.
 
-Concretely:
+The first concrete schema was:
 
 - `review_runs` stores one execution record per review invocation on one note
 - `review_run_gates` stores the captured requested gate set and gate SHAs for that run
@@ -45,6 +45,8 @@ Concretely:
 - `ack` appends an acceptance event instead of rewriting review artifacts
 - review execution creates a run first, writes gate reviews under that run, then finalizes acceptance only after verifying full gate coverage
 - markdown review files become optional imports or rendered inspection views, not the canonical store
+
+ADR 031 later replaces the `review_run_gates`/`gate_reviews` split with run-owned `review_pairs`; the storage boundary and acceptance-event model from this decision remain current.
 
 This is a scoped exception to the repo's files-first architecture, not a reversal of it. Notes, gates, instructions, and source material remain file-backed. The database is justified here because the review subsystem stopped being authored library content and became local operational state.
 
@@ -74,3 +76,4 @@ Relevant Notes:
 
 - [007-reports-directory-for-generated-snapshots](./007-reports-directory-for-generated-snapshots.md) — enables: review artifacts had already moved into `kb/reports/`, which clarified that they were generated operational outputs rather than core notes
 - [review system](../REVIEW-SYSTEM.md) — implements: the current DB-backed review workflow and command surface that followed from this decision
+- [031-review state uses run-owned review pairs](./031-review-state-uses-run-owned-review-pairs.md) — superseded-by: refines the concrete schema while preserving this ADR's SQLite boundary
