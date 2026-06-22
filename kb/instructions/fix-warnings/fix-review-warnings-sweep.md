@@ -1,5 +1,5 @@
 ---
-description: Batch fix of actionable findings from warn reviews across notes. Runs warn_selector to build a priority queue, delegates per-note fixes to sub-agents, and collects fix reports with strategy classifications
+description: Batch fix actionable findings from warn review pairs across notes using warn_selector, sub-agent delegation, and strategy reporting
 type: kb/types/instruction.md
 ---
 
@@ -19,7 +19,7 @@ Check the line count first. If more than 100 lines, tell the user to filter to s
 commonplace-warn-selector --json
 ```
 
-This returns notes sorted by actionable finding count descending, with full finding text and gate ids. Legacy reviews without a `review_run_id` are intentionally excluded, and model partitions are collapsed so each `(note, gate)` contributes at most one current finding.
+This returns notes sorted by actionable finding count descending, with full finding text and gate ids. The selector reads effective completed review pairs, and model partitions are collapsed so each `(note, gate)` contributes at most one current finding.
 
 If the queue is empty, stop — no warn findings to fix.
 

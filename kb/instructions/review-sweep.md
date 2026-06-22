@@ -58,7 +58,7 @@ If the remaining execution set is one gate across many notes, prefer:
 commonplace-run-gate-sweep {gate-id} --runner {codex|claude-code} --model {model-id} [--current] [--note {note-scope} ...]
 ```
 
-This batches notes into one prompt while still recording one review run per note.
+This batches notes into one prompt while recording one gate-packed review run containing one review pair per reviewed note.
 
 If there are many notes, use:
 

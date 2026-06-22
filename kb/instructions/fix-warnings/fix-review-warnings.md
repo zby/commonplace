@@ -1,5 +1,5 @@
 ---
-description: General instruction for fixing actionable findings from current accepted warn reviews. Reads current accepted gate reviews for a note, applies fixes using judgment, classifies each fix by strategy from the taxonomy, and reports results
+description: Fix actionable findings from current accepted warn review pairs for one note, classify fixes by strategy, and report results
 type: kb/types/instruction.md
 ---
 
@@ -15,14 +15,14 @@ An editing pass that fixes actionable findings from prose and/or semantic review
 
 ## Prerequisites
 
-1. Run `commonplace-warn-selector --json {note-path}` to get actionable findings for this note from current accepted run-backed `warn` reviews across all models. This selector ignores legacy rows that are not attached to a review run and collapses model partitions to one current entry per `(note, gate)`. If there are none, report "no warn findings" and stop.
+1. Run `commonplace-warn-selector --json {note-path}` to get actionable findings for this note from current accepted `warn` review pairs across all models. This selector reads effective completed review pairs and collapses model partitions to one current entry per `(note, gate)`. If there are none, report "no warn findings" and stop.
 2. Read the target note in full.
-3. Read the corresponding gate review text from the warn_selector output. The DB-backed review text in the output is the authoritative source.
+3. Read the corresponding review pair text from the warn_selector output. The DB-backed review text in the output is the authoritative source.
 4. Read `kb/instructions/fix-warnings/fix-strategy-taxonomy.md` for the named fix strategies.
 
 ## Procedure
 
-For each actionable finding from the current accepted `warn` gate reviews:
+For each actionable finding from the current accepted `warn` review pairs:
 
 1. **Read the recommendation** in the review finding. It tells you what to fix and usually how.
 2. **Read enough context** around the flagged passage to understand the argument, the evidence relationship, and the flow.
@@ -43,7 +43,7 @@ After all fixes:
 - **Description edits need their own procedure.** If you encounter description issues (from `commonplace-validate` or as a side effect), use `kb/instructions/fix-warnings/fix-descriptions.md` rather than improvising a rewrite.
 - **Don't change arguments.** Fixes change framing, accuracy, and attribution — not the note's claims or structure.
 - **Don't remove examples.** Frame them ("In [domain], for instance...") instead of replacing with abstractions.
-- **Don't update stored reviews.** Gate reviews are regenerated or re-recorded separately from the DB-backed review flow.
+- **Don't update stored reviews.** Review pairs are regenerated or re-recorded separately through the DB-backed review flow.
 - **Verify before assuming staleness.** If a warning claims a path/field/mechanism is stale, check whether it actually exists before removing or updating it.
 
 ## Fix report format
