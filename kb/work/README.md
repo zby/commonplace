@@ -6,6 +6,8 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
+- [create-review-runs](./create-review-runs/README.md) — designing a shared review-run preparation layer for note-packed, gate-packed, and explicit-pair review batches
+- [agent-note-improvement](./agent-note-improvement/README.md) — testing instructions that help agents improve weak existing notes by comparing an older weak revision against a later accepted revision
 - [agent-memory-design](./agent-memory-design/README.md) — continuation workshop for discussing revisions and companion artifacts around `kb/notes/designing-agent-memory-systems.md`
 - [agent-memory-review-rerun](./agent-memory-review-rerun/README.md) — planning and tracking the remaining `systems.csv` agent-memory review reruns after the first six refreshed reviews
 - [ingestion-and-deep-search](./ingestion-and-deep-search/README.md) — revisiting directed reading through `cp-skill-connect`, especially how connect should use installed-KB goals without carrying commonplace-specific assumptions

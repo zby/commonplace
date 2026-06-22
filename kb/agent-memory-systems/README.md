@@ -4,7 +4,7 @@ A survey of external **agent memory systems** — how AI agents store, retrieve,
 **Choosing or designing one?** Scan the [comparison table](./systems-table.md) — one
 row per system, a plain-English description plus the handful of fields that
 actually discriminate. Then read the [comparison](./agentic-memory-systems-comparative-review.md),
-which is the existing 129-system synthesis rather than the refreshed 140-row matrix, and
+which synthesizes the current 141-row matrix, and
 browse the repo-backed reviews under `reviews/` — each reads the actual
 code and reports what a system _does_, not what its README claims.
 
@@ -45,7 +45,7 @@ Cross-cutting reads:
 
 - [Comparison table](./systems-table.md) — one scannable row per code-reviewed system
   
-- [Comparison](./agentic-memory-systems-comparative-review.md) — the existing synthesis across the earlier 129 code-reviewed systems; use the table and CSV for the current 140-row matrix
+- [Comparison](./agentic-memory-systems-comparative-review.md) — the current synthesis across 141 code-reviewed systems
   
 - [Trace-derived learning techniques in related systems](./trace-derived-learning-techniques-in-related-systems.md) — broadens the comparison to artifact-learning and weight-learning systems fed by live traces
   
@@ -61,7 +61,8 @@ Cross-cutting reads:
 **Extractable columns** come straight from each review, so the matrix stays in sync with the prose:
 
 - Backticked **lead tokens** written in the review body where the finding is reached — `storage_substrate` (`files`/`repo`/`sqlite`/`rdbms`/`vector`/`graph`/`kv`/`in-memory`/`prompt-registry`/`model-weights`/`service-object`), `representational_form` (`prose`/`symbolic`/`parametric`), `read_back_direction` (`pull`/`push`/`both`), `Read-back signal`, write agency, curation operations, and trace-derived sub-fields. The token leads its own justifying sentence, so value and reasoning can't drift. The convention lives in the [review type spec](./types/agent-memory-system-review.md).
-- `trace_derived` from the review's `trace-derived` frontmatter tag.
+- `lin_trace_extracted` from the authored `Lineage` tokens: at least one retained artifact comes from traces, such as session logs, execution histories, child-agent reports, request/response history, trajectories, recovery state, or stored interaction history.
+- `trace_derived` from the review's `trace-derived` frontmatter tag: a stricter learning field for automatic writes fed by agent traces that produce durable behavior-shaping memory. `trace_derived` is a subset of `lin_trace_extracted`; systems can retain traces for evidence, recovery, continuity, or debugging without distilling them into lessons, rules, skills, validators, embeddings, adapters, rankers, or other learned memory.
 
 The ASISAS-2026 paper's frozen corpus and Karpathy-gist sample split are deposited separately at DOI `10.5281/zenodo.20759081`, pinned to Commonplace `v0.1.0` (`e957a7b`). This living survey keeps growing and does not maintain that historical sample-origin column.
 

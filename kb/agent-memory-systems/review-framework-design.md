@@ -7,7 +7,7 @@ status: current
 
 # Review framework and comparison matrix: design and decisions
 
-This collection reviews external agent-memory systems against a shared vocabulary so independent systems can be set side by side. Two artifacts carry that comparison: the per-system reviews under `reviews/`, written to the [review type spec](./types/agent-memory-system-review.md), and [`systems.csv`](./systems.csv), a matrix whose comparison axes are parsed from the reviews by `commonplace.lib.systems_matrix` (run via `scripts/build_systems_matrix.py`). The build script also joins identity metadata and reproducible sample-origin markers such as the Karpathy LLM-wiki-gist flag. This note records the motivations and the design decisions behind that machinery, so later changes start from the reasoning rather than re-deriving it.
+This collection reviews external agent-memory systems against a shared vocabulary so independent systems can be set side by side. Two artifacts carry that comparison: the per-system reviews under `reviews/`, written to the [review type spec](./types/agent-memory-system-review.md), and [`systems.csv`](./systems.csv), a matrix whose comparison axes are parsed from the reviews by `commonplace.lib.systems_matrix` (run via `scripts/build_systems_matrix.py`). The build script also joins identity metadata. This note records the motivations and the design decisions behind that machinery, so later changes start from the reasoning rather than re-deriving it.
 
 It is a collection-scoped decision log, deliberately *not* a `kb/reference/adr/` record: those govern the shipped Commonplace system, whereas this governs how *this collection* reviews and compares external systems. The format is ADR-style (context / decision / consequences) for rigour.
 
@@ -23,7 +23,7 @@ A prose-only survey cannot answer "how many systems do X", and a hand-maintained
 
 **Decision.** Encode every multi-valued axis as one-hot indicator columns — one column per controlled value, `1` present / `0` assessed-absent / blank not-assessed. Authors emit the *set* of backticked tokens; the parser one-hots whatever appears. Single-valued axes (`storage_substrate`) stay single; `rb_pull`/`rb_push` derive for free from the direction token.
 
-**Consequences.** The `mixed`/`both` buckets are retired (forbidden by schema for representational form). Each value becomes independently sortable/filterable. The faithful retrofit authored ~9 tokens across each of 129 reviews. Blank-vs-`0` must be kept distinct so "not assessed" never reads as "assessed absent".
+**Consequences.** The `mixed`/`both` buckets are retired (forbidden by schema for representational form). Each value becomes independently sortable/filterable. The faithful retrofit authored ~9 tokens across each review in the then-current corpus. Blank-vs-`0` must be kept distinct so "not assessed" never reads as "assessed absent".
 
 ### D2 — Authored tokens, never mined
 
@@ -57,7 +57,7 @@ A second realisation sharpened the cut: when maintenance is **manual**, it *is* 
 
 **Decision.** The matrix and its consumption table cover `code-grounded` systems only (the `source-tier` frontmatter value the build keys on); `doc-grounded` reviews under `lightweight/` are excluded from the contract and the build.
 
-**Consequences.** Findings quantify the 129 code-grounded systems; doc-grounded coverage remains a landscape surface, not comparison data.
+**Consequences.** Findings quantify the current code-grounded systems; doc-grounded coverage remains a landscape surface, not comparison data.
 
 ### D6 — One review type; evidence tier is a field, not a type
 
@@ -77,7 +77,7 @@ A second realisation sharpened the cut: when maintenance is **manual**, it *is* 
 
 ## Open follow-ons
 
-- ~~**Review regeneration:** the structural retrofit (write-side heading, `source-tier`, timing removal) landed corpus-wide, but the prose-normalization pass that authored the write-side *tokens* over-tagged them — `synthesize` (the rare op) appeared on 88% of reviews, because a post-hoc axis cannot be back-filled faithfully from prose written before it existed. That approach was abandoned in favor of regenerating reviews from source.~~ — done (all 129 reviews regenerated via the `write-agent-memory-system-review` skill; the [`none` curation token](./types/agent-memory-system-review.md) later split assessed-absent from not-assessed, the gap the over-tagging had exposed).
+- ~~**Review regeneration:** the structural retrofit (write-side heading, `source-tier`, timing removal) landed corpus-wide, but the prose-normalization pass that authored the write-side *tokens* over-tagged them — `synthesize` (the rare op) appeared on 88% of reviews, because a post-hoc axis cannot be back-filled faithfully from prose written before it existed. That approach was abandoned in favor of regenerating reviews from source.~~ — done (the then-current review set was regenerated via the `write-agent-memory-system-review` skill; the [`none` curation token](./types/agent-memory-system-review.md) later split assessed-absent from not-assessed, the gap the over-tagging had exposed).
 - ~~Parser/matrix: add write-agency and curation-operation one-hot columns; drop `rb_pre_action`/`rb_post_action`~~ — done (`wa_*`/`op_*` columns carried; timing columns removed). Validator severity is now per-constraint, fail by default ([ADR-024](../reference/adr/024-schema-severity-is-per-constraint-fail-by-default.md)).
 - ~~Theory note for "no post-action read-back"~~ — resolved by pinning `read-back` in the activation-gap note rather than adding a note.
 
