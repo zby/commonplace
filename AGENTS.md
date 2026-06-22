@@ -93,8 +93,7 @@ For the full model, read `kb/reference/navigation.md`. In short: use `rg` for ch
 
 Entry points:
 
-- `kb/notes/tags-README.md` — top-level navigation hub: tag READMEs, foundations, evaluation, gaps
-- `kb/notes/links-README.md` — linking methodology: semantics, navigation, contracts
+- `kb/notes/tags-README.md` — top-level navigation hub: tag READMEs (including links), foundations, evaluation, gaps
 - `kb/agent-memory-systems/README.md` — curated index of external agent-memory/knowledge systems
 - `kb/reference/README.md` — shipped-system documentation entry point: architecture, type system, operator guide, and ADR navigation
 - `kb/reference/adr/` — architecture decision records for the shipped Commonplace system
