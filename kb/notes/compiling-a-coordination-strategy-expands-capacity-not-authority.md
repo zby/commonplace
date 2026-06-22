@@ -1,16 +1,16 @@
 ---
-description: Compiling a coordination strategy into a workflow makes the steps a prompt drives by inference explicit; with no new side-effect channels it expands capacity but not the authority boundary
+description: Compiling a coordination strategy into a side-effect-free workflow makes prompt-driven steps explicit, expanding capacity while preserving the authority boundary
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [computational-model, tool-loop]
 status: seedling
 ---
 
-# Compiling a coordination strategy expands capacity, not authority
+# Compiling coordination into side-effect-free workflows expands capacity, not authority
 
-A prompt that drives a multi-step task does its coordination through repeated inference: the model selects agent A, reads the result, selects B as the next step, loops, and eventually returns. Each coordination step is paid for with a fresh inference pass, and the strategy that links them is inferred again at each turn. A workflow — in this case, a [Claude Code dynamic workflow](../agentic-systems/claude-code-dynamic-workflows.md), a sandboxed script-over-agents workflow system — is the **compiled** form of that same coordination: the call-A-then-B-then-loop logic is lifted out of repeated inference and written down as an explicit external artifact that a runtime executes directly.
+A prompt that drives a multi-step task does its coordination through repeated inference: the model selects agent A, reads the result, selects B as the next step, loops, and eventually returns. Each coordination step is paid for with a fresh inference pass, and the strategy that links them is inferred again at each turn. In the Claude Code case, the workflow is a [dynamic workflow](../agentic-systems/claude-code-dynamic-workflows.md), a sandboxed script-over-agents system. It is the **compiled** form of the same coordination: the call-A-then-B-then-loop logic is lifted out of repeated inference and written as an explicit external artifact that a runtime executes directly.
 
-The entry intuition is the compiler analogy. A prompt-driven run is interpretation — the coordination plan is recomputed on every step. A workflow is compilation — the plan is fixed once in an artifact and then run. This is [codification](./definitions/codification.md) of the strategy for choosing the next agent or tool call in a [bounded-context orchestration model](./bounded-context-orchestration-model.md): the coordination logic crosses from prose that each turn asks the model to infer into a symbolic artifact a runtime consumes.
+The entry intuition is the compiler analogy. A prompt-driven run is interpretation — the coordination plan is recomputed on every step. A workflow is compilation — the plan is fixed once in an artifact and then run. This is [codification](./definitions/codification.md) of the strategy for choosing the next agent or tool call in a [bounded-context orchestration model](./bounded-context-orchestration-model.md), a view of orchestration as repeated choices about the next context-limited agent or tool call: the coordination logic crosses from prose that each turn asks the model to infer into a symbolic artifact a runtime consumes.
 
 ## The side-effect-free execution boundary
 
@@ -22,9 +22,9 @@ The direct guarantee in the Claude Code dynamic-workflow case is narrower than a
 
 **Capacity expands anyway.** A compiled artifact is more than a cached prompt execution. Being external and symbolic, it can store state across steps, exceed a single context window, coordinate many agents, and run far longer than any single inference. None of these are available to a strategy that lives only inside one model's turn-by-turn reasoning. The act of writing the strategy down buys a strictly larger computational envelope — this is the same persistence dividend the [host-language scheduler](./the-practical-scheduler-is-the-host-language.md) collects by letting code, not conversation, hold the run.
 
-The two properties therefore have different sources. Capacity comes from the artifact being **external and persistent** — it escapes the single-context, single-turn envelope. Authority is fixed by the artifact being **sandboxed and channel-less** — every real-world effect is delegated to a pre-existing tool or agent. A restricted execution environment can grant the first while withholding the second. That is why compiling a coordination strategy can be safe to do automatically: it does not widen the security boundary because it holds no side-effect channels to widen it with.
+The two properties therefore have different sources. Capacity comes from the artifact being **external and persistent** — it escapes the single-context, single-turn envelope. Authority is fixed by the artifact being **sandboxed and channel-less** — every real-world effect is delegated to a pre-existing tool or agent. A restricted execution environment can grant the first while withholding the second. That is why automatically compiling a coordination strategy can preserve the authority boundary: the compiled artifact holds no side-effect channels to widen.
 
-This is the same boundary the [different-tools forcing case](./subtasks-that-need-different-tools-force-loop-exposure-in-agent.md) draws between an action alphabet and bookkeeping. A workflow gets to compose calls and project state — bookkeeping over authorized channels — but the action alphabet of any actual effect is still set by the agents and tools it dispatches to. It selects from the authorized surface; it does not construct a new action primitive.
+This is the same boundary the [different-tools forcing case](./subtasks-that-need-different-tools-force-loop-exposure-in-agent.md) draws between an action alphabet — the authorized set of effectful operations agents and tools can perform — and bookkeeping. A workflow gets to compose calls and project state — bookkeeping over authorized channels — but the action alphabet of any actual effect is still set by the agents and tools it dispatches to. It selects from the authorized surface; it does not construct a new action primitive.
 
 ## Why the analogy is imperfect — in the capacity direction only
 
@@ -51,4 +51,4 @@ Relevant Notes:
 - [Claude Code dynamic workflows](../agentic-systems/claude-code-dynamic-workflows.md) — derived-from: the shipped sandboxed-script-over-agents system whose "the script coordinates, agents act" division is the concrete case this claim abstracts
 - [bounded-context orchestration model](./bounded-context-orchestration-model.md) — grounds: the choose-next-step / perform-call decomposition; the coordination being compiled is the choose-next-step logic
 - [orchestration strategies and run-state have opposite persistence economics](./orchestration-strategies-and-run-state-have-opposite-persistence.md) — extends: the compiled coordination strategy is exactly the recurring choose-next-step fragment that note marks as the high-value promotion target
-- [system-definition artifacts are crystallized reasoning under context scarcity](./system-definition-artifacts-are-crystallized-reasoning-under-context.md) — extends: crystallizing reasoning fixes the operative part at write-time; this note adds that crystallizing coordination also buys capacity while still leaving authority on a separate axis
+- [system-definition artifacts are crystallized reasoning under context scarcity](./system-definition-artifacts-are-crystallized-reasoning-under-context.md) — extends: takes write-time crystallization as the base case and adds coordination capacity while keeping authority on a separate axis
