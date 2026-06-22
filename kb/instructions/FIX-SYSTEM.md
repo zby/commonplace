@@ -1,12 +1,12 @@
 # Fix system
 
-The fix system is the complement to the [review system](./REVIEW-SYSTEM.md). Reviews identify problems; the fix system applies corrections. It consumes warn findings from the review DB and produces auditable fix reports.
+The fix system is the complement to the [review system](../reference/REVIEW-SYSTEM.md). Reviews identify problems; the fix system applies corrections. It consumes warn findings from the review DB and produces auditable fix reports.
 
 This system is experimental and opt-in, like the review system it depends on.
 
 ## Concepts
 
-**Warn finding.** An actionable finding extracted from a gate review whose canonical decision is `warn`. The `commonplace-warn-selector` command parses these from the `### Findings` or `### Summary` sections of stored review prose.
+**Warn finding.** An actionable finding extracted from a review pair whose canonical decision is `warn`. The `commonplace-warn-selector` command parses these from the `### Findings` or `### Summary` sections of stored review prose.
 
 **Fix strategy.** A named pattern of review warning + appropriate fix, catalogued in `kb/instructions/fix-warnings/fix-strategy-taxonomy.md`. Agents classify each fix by strategy name to make fixes auditable and to grow the taxonomy over time.
 
@@ -17,7 +17,7 @@ This system is experimental and opt-in, like the review system it depends on.
 The fix system sits downstream of the review system:
 
 ```
-review gates → gate reviews (DB) → warn_selector → fix instruction → edited note + fix report
+review gates → review pairs (DB) → warn_selector → fix instruction → edited note + fix report
 ```
 
 Reviews are never modified by fixes. The review system owns the assessment; the fix system owns the correction. After fixes land, the next review sweep re-evaluates the note against the same gates.
@@ -29,7 +29,6 @@ Reviews are never modified by fixes. The review system owns the assessment; the 
 `commonplace-warn-selector` builds the fix queue from the review DB.
 
 - Reads current accepted reviews across all models
-- Only considers reviews attached to a `review_run_id` (excludes legacy imports)
 - Selects findings from reviews whose canonical decision is `warn`
 - Extracts actionable items from `### Findings` sections (lines starting with `- warn:`)
 - Falls back to `### Summary` or stripped review body when no structured findings exist

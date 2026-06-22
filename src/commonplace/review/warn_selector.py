@@ -15,9 +15,9 @@ from commonplace.review.domain.staleness import classify_staleness
 from commonplace.review.paths import GATES_ROOT
 from commonplace.review.protocol.decisions import strip_explicit_review_result_lines
 from commonplace.review.review_db import (
-    GateReviewRow,
+    ReviewPairRow,
     connect,
-    load_effective_gate_review_map,
+    load_effective_review_pair_map,
     prepare_review_db,
 )
 from commonplace.review.review_metadata import git_blob_sha
@@ -50,8 +50,8 @@ ACTIONABLE_FINDING_RE = re.compile(
 class WarnEntry:
     note_path: str
     gate_id: str
-    review_id: int
-    review_run_id: int | None
+    review_pair_id: int
+    review_run_id: int
     review_text: str
     warn_text: str
 
@@ -117,11 +117,11 @@ def scan_reviews(
         db_path = prepare_review_db(repo_root)
 
     by_note: dict[str, NoteWarns] = {}
-    selected_by_gate: dict[tuple[str, str], GateReviewRow] = {}
+    selected_by_gate: dict[tuple[str, str], ReviewPairRow] = {}
     gate_shas = _current_gate_shas(repo_root)
     stale_gates: set[str] = set()
     with connect(db_path) as conn:
-        effective_reviews = load_effective_gate_review_map(
+        effective_reviews = load_effective_review_pair_map(
             conn,
             note_path=next(iter(note_filter)) if note_filter and len(note_filter) == 1 else None,
             model_id=None,
@@ -129,8 +129,6 @@ def scan_reviews(
 
     for (note_path, gate_id, _model_id), review in sorted(effective_reviews.items()):
         if note_filter and note_path not in note_filter:
-            continue
-        if review.review_run_id is None:
             continue
         current_sha = gate_shas.get(gate_id)
         if current_sha is not None:
@@ -147,17 +145,20 @@ def scan_reviews(
         if staleness is not None:
             stale_gates.add(gate_id)
             continue
-        warns = extract_warns(review.rationale_markdown, decision=review.decision)
+        warns = extract_warns(review.rationale_markdown or "", decision=review.decision or "unknown")
         if not warns:
             continue
 
         gate_key = (note_path, gate_id)
         selected = selected_by_gate.get(gate_key)
-        if selected is None or (review.reviewed_at, review.id) > (selected.reviewed_at, selected.id):
+        if selected is None or (review.reviewed_at or "", review.review_pair_id) > (
+            selected.reviewed_at or "",
+            selected.review_pair_id,
+        ):
             selected_by_gate[gate_key] = review
 
     for (note_path, gate_id), review in sorted(selected_by_gate.items()):
-        warns = extract_warns(review.rationale_markdown, decision=review.decision)
+        warns = extract_warns(review.rationale_markdown or "", decision=review.decision or "unknown")
         for warn_text in warns:
             if note_path not in by_note:
                 by_note[note_path] = NoteWarns(note_path=note_path)
@@ -165,9 +166,9 @@ def scan_reviews(
                 WarnEntry(
                     note_path=note_path,
                     gate_id=gate_id,
-                    review_id=review.id,
+                    review_pair_id=review.review_pair_id,
                     review_run_id=review.review_run_id,
-                    review_text=review.rationale_markdown,
+                    review_text=review.rationale_markdown or "",
                     warn_text=warn_text,
                 )
             )
@@ -186,7 +187,7 @@ def render_json(notes: list[NoteWarns], stale_gates: list[str]) -> str:
                 "warns": [
                     {
                         "gate_id": w.gate_id,
-                        "review_id": w.review_id,
+                        "review_pair_id": w.review_pair_id,
                         "review_run_id": w.review_run_id,
                         "review_text": w.review_text,
                         "text": w.warn_text,

@@ -249,7 +249,7 @@ def resolve_review_target(
     """Resolve gates and capture provenance for a review target.
 
     Returns (note_sha, note_commit, started_at, run_gates, gate_texts) where:
-    - run_gates: list of (gate_id, gate_sha, ordinal) tuples for insert_review_run_gates
+    - run_gates: list of (gate_id, gate_sha, ordinal) tuples for review-pair requests
     - gate_texts: dict of gate_id -> gate body text (frontmatter stripped)
 
     Raises ValueError if note provenance or gate provenance cannot be resolved,

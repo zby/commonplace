@@ -15,7 +15,7 @@ from commonplace.review.review_model import normalize_model_id
 
 def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser = argparse.ArgumentParser(
-        description="Prepare a review batch: create runs for the given pairs and write the canonical prompt.",
+        description="Prepare a review batch: create one run for the given pairs and write the canonical prompt.",
     )
     parser.add_argument(
         "pairs",
@@ -47,14 +47,19 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     except ValueError as exc:
         parser.error(str(exc))
 
+    manifest_payload = json.loads((repo_root / prepared.manifest_path).read_text(encoding="utf-8"))
+    result_paths = {item["review_pair_id"]: item["result_path"] for item in manifest_payload["pairs"]}
     payload = {
-        "review_runs": [
+        "review_run_id": prepared.review_run_id,
+        "pairs": [
             {
-                "review_run_id": target.review_run_id,
-                "note_path": target.note_path,
-                "gate_ids": list(target.gate_ids),
+                "review_pair_id": pair.review_pair_id,
+                "note_path": pair.note_path,
+                "gate_id": pair.gate_id,
+                "status": pair.pair_status,
+                "result_path": result_paths[pair.review_pair_id],
             }
-            for target in prepared.targets
+            for pair in prepared.pairs
         ],
         "skipped_pairs": [
             {"note_path": pair.note_path, "gate_id": pair.gate_id, "reason": pair.reason}
@@ -62,6 +67,7 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
         ],
         "prompt_path": prepared.prompt_path,
         "bundle_output_path": prepared.bundle_output_path,
+        "manifest_path": prepared.manifest_path,
         "model_id": model_id,
         "runner": args.runner,
     }

@@ -49,9 +49,8 @@ Review state is the one subsystem that is not file-backed. The review database s
 
 | Table | Contents |
 |---|---|
-| `review_runs` | One row per review invocation on a note |
-| `review_run_gates` | Gate set captured at run start, with per-gate SHAs |
-| `gate_reviews` | Append-only per-gate review history |
+| `review_runs` | One row per review invocation/prompt |
+| `review_pairs` | One row per requested `(note_path, gate_id)` pair inside a run |
 | `acceptance_events` | Append-only per-gate acceptance history |
 
 Acceptance is keyed by `(note_path, gate_id, model_id)`. Current acceptance for any key is the latest `acceptance_events` row, exposed via the `current_gate_acceptances` view. Selector logic reads current note and gate SHAs from files and compares them against accepted SHAs from the database.

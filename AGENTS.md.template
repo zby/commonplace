@@ -114,5 +114,5 @@ Call `commonplace-*` commands by bare name — the project venv command director
 Invoke commands through the project venv: `.venv/bin/commonplace-validate` on Linux/macOS or `.venv\Scripts\commonplace-validate.exe` on Windows. Bare names will not resolve.
 -->
 
-For review work (single-note review, triage, ack, or sweep), read `kb/commonplace/instructions/REVIEW-SYSTEM.md`.
+For review work (single-note review, triage, ack, or sweep), read `kb/commonplace/reference/REVIEW-SYSTEM.md`.
 For fixing review warnings, read `kb/commonplace/instructions/FIX-SYSTEM.md`.

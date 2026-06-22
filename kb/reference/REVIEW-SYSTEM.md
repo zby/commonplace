@@ -1,10 +1,17 @@
+---
+description: Runtime workflow, storage model, freshness rules, and command surface for the Commonplace review system
+type: kb/types/note.md
+tags: []
+status: current
+---
+
 # Review system
 
-The review system stores per-gate review state in a local SQLite database while keeping notes and gate definitions as markdown files in the repo.
+The review system stores per-pair review state in a local SQLite database while keeping notes and gate definitions as markdown files in the repo.
 
 This system is experimental and opt-in. It is not part of the default note-writing flow, and reviews should not be treated as always-on checks.
 
-It is also a scoped exception to the repo's file-first design. The motivation for that exception is recorded in [ADR-010](../reference/adr/010-review-state-should-move-to-sqlite-once-reviews-leave-git-and.md): review state stopped behaving like authored library content and started behaving like local operational state.
+It is also a scoped exception to the repo's file-first design. The motivation for that exception is recorded in [ADR-010](./adr/010-review-state-should-move-to-sqlite-once-reviews-leave-git-and.md): review state stopped behaving like authored library content and started behaving like local operational state.
 
 ## Concepts
 
@@ -12,7 +19,9 @@ It is also a scoped exception to the repo's file-first design. The motivation fo
 
 **Bundle.** A directory of gates sharing a lens. `semantic` means all gate files under `kb/instructions/review-gates/semantic/`.
 
-**Gate review.** One stored result of applying one gate to one note under one model.
+**Review run.** One review invocation: one rendered prompt, one output artifact directory, and one run-level status.
+
+**Review pair.** One requested `(note_path, gate_id)` pair inside a review run. This is the stored unit of review output and acceptance.
 
 **Acceptance event.** An append-only event recording the accepted note sha and gate sha for one `(note_path, gate_id, model_id)` key.
 
@@ -36,26 +45,30 @@ Schema: packaged with `commonplace.review`
 
 Primary tables:
 
-- `gate_reviews`
-  - append-only review history
-  - one row per reviewed `(note, gate, model)` instance
-  - stores decision, rationale markdown, explicit `model_id`, reviewed note sha, and gate sha
+- `review_runs`
+  - one row per review invocation
+  - stores runner/model, status, packing (`note`, `gate`, or `manual-import`), telemetry, raw bundle markdown, and debug log
+- `review_pairs`
+  - one row per requested `(note_path, gate_id)` pair inside a run
+  - stores pair status (`pending`, `completed`, `missing`), decision, rationale markdown, explicit `model_id`, reviewed note sha, and gate sha
 - `acceptance_events`
   - append-only acceptance history
   - records the accepted baseline for selector and ack
+  - optionally points to `accepted_review_pair_id`; pure acknowledgements leave it null
   - latest event wins for the current-state query
 
 Derived view:
 
 - `current_gate_acceptances`
   - current accepted state per `(note_path, gate_id, model_id)`
-  - defined as the highest `acceptance_events.id` for that key
+  - defined as the highest `acceptance_events.acceptance_event_id` for that key
 
 ### Canonical status vs review prose
 
 The Python layer assigns the canonical DB statuses.
 
-- `gate_reviews.decision` is normalized into lowercase enum values: `pass`, `warn`, `fail`, `error`, `unknown`
+- `review_pairs.decision` is normalized into lowercase enum values: `pass`, `warn`, `fail`, `error`, `unknown`
+- `review_pairs.pair_status` is normalized into lowercase enum values: `pending`, `completed`, `missing`
 - `review_runs.status` is normalized into lowercase enum values: `running`, `completed`, `failed`
 
 The human-readable `rationale_markdown` is not canonical state. It may use different casing or wording inside the review body, for example `## Result: PASS` or `- WARN: ...`. That is acceptable. Treat the DB columns as the source of truth; review-body result lines are parse inputs and readability affordances, not the canonical status layer.
@@ -90,7 +103,7 @@ The canonical live path is:
 1. create a review run
 2. follow the canonical bundle prompt in the current agent
 3. write the sentinel-delimited bundle artifact
-4. ingest the bundle artifact to write gate reviews and append acceptance events
+4. ingest the bundle artifact to complete review pairs and append acceptance events
 
 For live agent work, the preferred path is the prompt-plus-ingest helper chain:
 
@@ -100,8 +113,8 @@ For live agent work, the preferred path is the prompt-plus-ingest helper chain:
 
 A full review write contributes:
 
-1. one `gate_reviews` row per requested gate
-2. one `acceptance_events` row per requested gate with `acceptance_kind = 'full-review'`
+1. one `review_pairs` row per requested pair
+2. one `acceptance_events` row per completed pair with `acceptance_kind = 'full-review'`
 
 The important invariant is that the stored `reviewed_note_sha` and `gate_sha` are the exact values used during review generation.
 
@@ -161,13 +174,10 @@ Human-readable inspection remains required, but it is now a derived view from DB
 
 `commonplace-warn-selector` exists to build a fixing queue from the current review state.
 
-- It reads current accepted reviews across all models from the DB
-- For acceptance rows without an attached review body, it falls back to the latest review row for that accepted `(note_path, gate_id, model_id)` key
-- It only considers reviews attached to a `review_run_id`
+- It reads current accepted review pairs across all models from the DB
+- For acceptance rows without an attached review body, it falls back to the latest completed review pair for that accepted `(note_path, gate_id, model_id)` key
 - It selects actionable findings from reviews whose canonical decision is `warn`
 - It collapses model partitions to one current entry per `(note_path, gate_id)`, choosing the latest accepted warn review for that gate
-
-This intentionally excludes legacy imported rows that are not attached to a review run.
 
 ## Agent workflow
 
@@ -194,4 +204,4 @@ Instruction: `kb/instructions/review-sweep.md`
 
 Use `commonplace-run-gate-sweep {gate-id} --runner {claude-code|codex} --model {model-id} [--current|--note kb/notes kb/reference] [--batch-size N]` when the execution set is one gate across many notes.
 
-This path keeps freshness gate-local and still creates one review run per note, but batches multiple notes into one runner prompt. It is the preferred path when one gate changed and re-reviewing it note-by-note would be needlessly expensive.
+This path keeps freshness gate-local and creates one gate-packed review run per prompt batch. It is the preferred path when one gate changed and re-reviewing it note-by-note would be needlessly expensive.

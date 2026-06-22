@@ -9,8 +9,8 @@ from pathlib import Path
 from commonplace.review.bundle_ingest import parse_and_finalize_bundle_output
 from commonplace.review.review_db import (
     connect,
+    load_review_pairs_for_run,
     load_review_run,
-    load_review_run_gates,
     prepare_review_db,
 )
 
@@ -38,7 +38,10 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
             parser.error(f"review run not found: {args.review_run_id}")
         if review_run.status != "running":
             parser.error(f"review run is not ingestible: {review_run.status}")
-        expected_gate_ids = [row.gate_id for row in load_review_run_gates(conn, review_run_id=args.review_run_id)]
+        expected_pairs = [
+            (row.note_path, row.gate_id)
+            for row in load_review_pairs_for_run(conn, review_run_id=args.review_run_id)
+        ]
 
     with connect(db_path) as conn:
         try:
@@ -46,9 +49,8 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
                 conn,
                 repo_root=repo_root,
                 review_run_id=args.review_run_id,
-                note_path=review_run.note_path,
                 raw_bundle_markdown=raw_bundle_markdown,
-                expected_gate_ids=expected_gate_ids,
+                expected_pairs=expected_pairs,
             )
         except ValueError as exc:
             conn.commit()

@@ -21,12 +21,7 @@ from commonplace.review.finalization import record_and_finalize_run
 from commonplace.review.protocol.format import PAIR_END_TEMPLATE, PAIR_START_TEMPLATE
 from commonplace.review.protocol.parser import ParsedPairBundle, parse_pair_bundle
 from commonplace.review.protocol.prompt import NoteReviewTarget, render_pairs_prompt
-from commonplace.review.review_db import (
-    PendingGateReview,
-    attach_execution_data,
-    connect,
-    fail_review_run,
-)
+from commonplace.review.review_db import PendingReviewPair, attach_execution_data, connect, fail_review_run
 from commonplace.review.review_metadata import iso_now
 from commonplace.review.review_model import build_model_id
 from commonplace.review.runners import run_prompt
@@ -58,11 +53,10 @@ class BatchOutcome:
 
 @dataclass(frozen=True)
 class RunPairs:
-    """One review run's identity and expected gate set, for finalization."""
+    """One review run's identity and expected pair set, for finalization."""
 
-    note_path: str
     review_run_id: int
-    gate_ids: tuple[str, ...]
+    pairs: tuple[tuple[str, str], ...]
 
 
 def encode_stage_filename(gate_id: str) -> str:
@@ -177,23 +171,21 @@ def prepare_note_target(
 
 def assemble_run_document(
     *,
-    note_path: str,
     review_run_id: int,
-    gate_ids: tuple[str, ...],
+    pairs: tuple[tuple[str, str], ...],
     canonical_texts: dict[tuple[str, str], str],
 ) -> tuple[str, dict[str, str]]:
-    """Build the per-run canonical bundle document and its per-gate texts."""
+    """Build the per-run canonical bundle document and pair result texts."""
     lines = [
         "# Review Bundle",
         "",
         f"Review run id: {review_run_id}",
-        f"Target: {note_path}",
         "",
     ]
-    gate_reviews: dict[str, str] = {}
-    for gate_id in gate_ids:
+    pair_reviews: dict[str, str] = {}
+    for note_path, gate_id in pairs:
         review_text = canonical_texts[(note_path, gate_id)]
-        gate_reviews[gate_id] = review_text
+        pair_reviews[f"{note_path} :: {gate_id}"] = review_text
         lines.extend(
             [
                 PAIR_START_TEMPLATE.format(note_path=note_path, gate_id=gate_id),
@@ -202,7 +194,7 @@ def assemble_run_document(
                 "",
             ]
         )
-    return "\n".join(lines), gate_reviews
+    return "\n".join(lines), pair_reviews
 
 
 def fail_running_review_runs(
@@ -220,9 +212,9 @@ def fail_running_review_runs(
     with connect(db_path) as conn:
         rows = conn.execute(
             f"""
-            SELECT id, status
+            SELECT review_run_id, status
             FROM review_runs
-            WHERE id IN ({", ".join("?" for _ in review_run_ids)})
+            WHERE review_run_id IN ({", ".join("?" for _ in review_run_ids)})
             """,
             review_run_ids,
         ).fetchall()
@@ -231,14 +223,14 @@ def fail_running_review_runs(
                 continue
             attach_execution_data(
                 conn,
-                review_run_id=int(row["id"]),
+                review_run_id=int(row["review_run_id"]),
                 telemetry_json=telemetry_json,
                 raw_bundle_markdown=raw_bundle_markdown,
                 debug_log=debug_log,
             )
             fail_review_run(
                 conn,
-                review_run_id=int(row["id"]),
+                review_run_id=int(row["review_run_id"]),
                 failure_reason=failure_reason,
                 completed_at=completed_at,
             )
@@ -248,44 +240,57 @@ def fail_running_review_runs(
 def finalize_run_from_pairs(
     conn,
     *,
-    repo_root: Path,
-    note_path: str,
     review_run_id: int,
-    gate_ids: tuple[str, ...],
+    pairs: tuple[tuple[str, str], ...],
     parsed: ParsedPairBundle,
+    raw_bundle_markdown: str | None = None,
     telemetry_json: str | None = None,
     debug_log: str | None = None,
     actual_model_id: str | None = None,
 ) -> int:
     """Finalize one run from a parsed pair bundle. Raises ValueError on failure
     (the run is failed in the DB before raising)."""
-    run_document, gate_texts = assemble_run_document(
-        note_path=note_path,
+    run_document, _ = assemble_run_document(
         review_run_id=review_run_id,
-        gate_ids=gate_ids,
+        pairs=pairs,
+        canonical_texts=parsed.canonical_texts,
+    )
+    review_pairs = [
+        PendingReviewPair(
+            note_path=note_path,
+            gate_id=gate_id,
+            decision=parsed.reviews[(note_path, gate_id)].decision,
+            rationale_markdown=parsed.reviews[(note_path, gate_id)].rationale_markdown,
+        )
+        for note_path, gate_id in pairs
+    ]
+    return record_and_finalize_run(
+        conn,
+        review_run_id=review_run_id,
+        review_pairs=review_pairs,
+        actual_model_id=actual_model_id,
+        telemetry_json=telemetry_json,
+        raw_bundle_markdown=raw_bundle_markdown or run_document,
+        debug_log=debug_log,
+    )
+
+
+def write_artifacts_for_run(
+    *,
+    repo_root: Path,
+    review_run_id: int,
+    pairs: tuple[tuple[str, str], ...],
+    parsed: ParsedPairBundle,
+) -> None:
+    run_document, pair_texts = assemble_run_document(
+        review_run_id=review_run_id,
+        pairs=pairs,
         canonical_texts=parsed.canonical_texts,
     )
     write_run_artifacts(
         artifact_dir=bundle_artifact_dir(repo_root, review_run_id),
         bundle_markdown=run_document,
-        gate_texts=gate_texts,
-    )
-    gate_reviews = [
-        PendingGateReview(
-            gate_id=gate_id,
-            decision=parsed.reviews[(note_path, gate_id)].decision,
-            rationale_markdown=parsed.reviews[(note_path, gate_id)].rationale_markdown,
-        )
-        for gate_id in gate_ids
-    ]
-    return record_and_finalize_run(
-        conn,
-        review_run_id=review_run_id,
-        gate_reviews=gate_reviews,
-        actual_model_id=actual_model_id,
-        telemetry_json=telemetry_json,
-        raw_bundle_markdown=run_document,
-        debug_log=debug_log,
+        gate_texts=pair_texts,
     )
 
 
@@ -306,7 +311,9 @@ def execute_batch(
     the runner reports exhausted usage, and re-raises KeyboardInterrupt after
     failing all runs.
     """
-    run_ids = [target.review_run_id for target in targets]
+    run_ids = sorted({target.review_run_id for target in targets})
+    if len(run_ids) != 1:
+        raise ValueError("execute_batch expects one review_run_id per prompt")
 
     try:
         prompt = render_pairs_prompt(notes=targets, gate_texts=gate_texts)
@@ -325,11 +332,10 @@ def execute_batch(
         raise
 
     raw_output = result.stdout
-    for target in targets:
-        write_run_artifacts(
-            artifact_dir=bundle_artifact_dir(repo_root, target.review_run_id),
-            bundle_markdown=raw_output,
-        )
+    write_run_artifacts(
+        artifact_dir=bundle_artifact_dir(repo_root, run_ids[0]),
+        bundle_markdown=raw_output,
+    )
 
     telemetry_json = serialize_telemetry(result.telemetry)
     debug_log = combine_logs(result.stdout, result.stderr)
@@ -385,10 +391,7 @@ def execute_batch(
         )
         return BatchOutcome(completed=[], failed=[(rid, str(exc)) for rid in run_ids], runner_returncode=0)
 
-    run_pairs = [
-        RunPairs(note_path=target.note_path, review_run_id=target.review_run_id, gate_ids=target.gate_ids)
-        for target in targets
-    ]
+    run_pairs = [RunPairs(review_run_id=run_ids[0], pairs=tuple(expected_pairs))]
     completed, failed = finalize_runs_from_parsed(
         repo_root=repo_root,
         db_path=db_path,
@@ -413,38 +416,62 @@ def finalize_runs_from_parsed(
     debug_log: str | None = None,
     actual_model_id: str | None = None,
 ) -> tuple[list[int], list[tuple[int, str]]]:
-    """Salvage policy over a parsed pair bundle: finalize each run whose pairs
-    all parsed, fail the rest individually. Returns (completed, failed)."""
-    missing_by_note: dict[str, list[str]] = {}
-    for note_path, gate_id in parsed.missing:
-        missing_by_note.setdefault(note_path, []).append(gate_id)
+    """Finalize parsed runs and write each run's canonical artifacts."""
+    for run in run_pairs:
+        write_artifacts_for_run(
+            repo_root=repo_root,
+            review_run_id=run.review_run_id,
+            pairs=tuple(pair for pair in run.pairs if pair not in set(parsed.missing)),
+            parsed=parsed,
+        )
+    return finalize_run_records_from_parsed(
+        db_path=db_path,
+        run_pairs=run_pairs,
+        parsed=parsed,
+        raw_output=raw_output,
+        telemetry_json=telemetry_json,
+        debug_log=debug_log,
+        actual_model_id=actual_model_id,
+    )
 
+
+def missing_pairs_by_run(
+    run_pairs: list[RunPairs],
+    parsed: ParsedPairBundle,
+) -> dict[int, list[tuple[str, str]]]:
+    missing = set(parsed.missing)
+    missing_by_run: dict[int, list[tuple[str, str]]] = {}
+    for run in run_pairs:
+        run_missing = [pair for pair in run.pairs if pair in missing]
+        if run_missing:
+            missing_by_run[run.review_run_id] = run_missing
+    return missing_by_run
+
+
+def finalize_run_records_from_parsed(
+    *,
+    db_path: Path,
+    run_pairs: list[RunPairs],
+    parsed: ParsedPairBundle,
+    raw_output: str | None = None,
+    telemetry_json: str | None = None,
+    debug_log: str | None = None,
+    actual_model_id: str | None = None,
+) -> tuple[list[int], list[tuple[int, str]]]:
+    """Finalize parsed run records without writing filesystem artifacts."""
     completed: list[int] = []
     failed: list[tuple[int, str]] = []
     for run in run_pairs:
-        missing_gates = missing_by_note.get(run.note_path)
-        if missing_gates:
-            reason = f"missing pair reviews: {', '.join(sorted(missing_gates))}"
-            fail_running_review_runs(
-                db_path=db_path,
-                review_run_ids=[run.review_run_id],
-                failure_reason=reason,
-                debug_log=debug_log,
-                telemetry_json=telemetry_json,
-                raw_bundle_markdown=raw_output,
-            )
-            failed.append((run.review_run_id, reason))
-            continue
-
+        completed_pairs = tuple(pair for pair in run.pairs if pair not in set(parsed.missing))
+        has_missing = len(completed_pairs) != len(run.pairs)
         with connect(db_path) as conn:
             try:
                 finalize_run_from_pairs(
                     conn,
-                    repo_root=repo_root,
-                    note_path=run.note_path,
                     review_run_id=run.review_run_id,
-                    gate_ids=run.gate_ids,
+                    pairs=completed_pairs,
                     parsed=parsed,
+                    raw_bundle_markdown=raw_output if has_missing else None,
                     telemetry_json=telemetry_json,
                     debug_log=debug_log,
                     actual_model_id=actual_model_id,

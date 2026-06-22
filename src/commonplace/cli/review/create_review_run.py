@@ -9,8 +9,9 @@ from pathlib import Path
 
 from commonplace.review.paths import GATES_ROOT
 from commonplace.review.review_db import (
+    ReviewPairRequest,
     connect,
-    create_run,
+    create_run_with_pairs,
     prepare_review_db,
 )
 from commonplace.review.review_metadata import resolve_review_target
@@ -54,15 +55,23 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     gate_ids = [g[0] for g in run_gates]
 
     with connect(db_path) as conn:
-        review_run_id = create_run(
+        review_run_id = create_run_with_pairs(
             conn,
-            note_path=args.note_path,
             model_id=model_id,
             runner=args.runner,
-            reviewed_note_sha=note_sha,
-            reviewed_note_commit=note_commit,
             started_at=started_at,
-            gates=run_gates,
+            packing="note",
+            pairs=[
+                ReviewPairRequest(
+                    note_path=args.note_path,
+                    gate_id=gate_id,
+                    gate_sha=gate_sha,
+                    reviewed_note_sha=note_sha,
+                    reviewed_note_commit=note_commit,
+                    pair_ordinal=ordinal,
+                )
+                for gate_id, gate_sha, ordinal in run_gates
+            ],
         )
         conn.commit()
 

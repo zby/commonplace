@@ -11,7 +11,7 @@ from pathlib import Path
 
 from commonplace.review.executor import execute_batch, prepare_note_target
 from commonplace.review.protocol.prompt import OutputMode, render_pairs_prompt
-from commonplace.review.review_db import connect, create_run, ensure_db
+from commonplace.review.review_db import ReviewPairRequest, connect, create_run_with_pairs, ensure_db
 from commonplace.review.review_metadata import resolve_review_target
 from commonplace.review.review_model import normalize_model_id
 
@@ -77,15 +77,23 @@ def run_bundle(
     ensure_db(repo_root, db_path)
 
     with connect(db_path) as conn:
-        review_run_id = create_run(
+        review_run_id = create_run_with_pairs(
             conn,
-            note_path=note_path,
             model_id=model,
             runner=runner,
-            reviewed_note_sha=note_sha,
-            reviewed_note_commit=note_commit,
             started_at=started_at,
-            gates=run_gates,
+            packing="note",
+            pairs=[
+                ReviewPairRequest(
+                    note_path=note_path,
+                    gate_id=gate_id,
+                    gate_sha=gate_sha,
+                    reviewed_note_sha=note_sha,
+                    reviewed_note_commit=note_commit,
+                    pair_ordinal=ordinal,
+                )
+                for gate_id, gate_sha, ordinal in run_gates
+            ],
         )
         conn.commit()
 

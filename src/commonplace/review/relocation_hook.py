@@ -170,8 +170,7 @@ class ReviewRelocationHook:
         if not plan.db_counts:
             lines.append("Review DB updates: none")
         else:
-            run_sum = sum(count.review_runs for count in plan.db_counts)
-            gate_sum = sum(count.gate_reviews for count in plan.db_counts)
+            pair_sum = sum(count.review_pairs for count in plan.db_counts)
             ack_sum = sum(count.acceptance_events for count in plan.db_counts)
             label = (
                 "Review DB rekeys"
@@ -179,7 +178,7 @@ class ReviewRelocationHook:
                 else "Review DB updates"
             )
             lines.append(
-                f"{label}: review_runs={run_sum}, gate_reviews={gate_sum}, "
+                f"{label}: review_pairs={pair_sum}, "
                 f"acceptance_events={ack_sum}"
             )
         return lines

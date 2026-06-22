@@ -8,6 +8,7 @@ from pathlib import Path
 import pytest
 
 from commonplace.review import resolve_gates, review_db, review_metadata, review_target_selector
+from test.commonplace.review.pair_helpers import accept_pair, insert_completed_pair
 
 from ._run_cli import run_cli
 
@@ -90,31 +91,30 @@ def seed_acceptance(
     gate_id: str,
     commit: str = PLACEHOLDER_COMMIT,
 ) -> None:
-    """Insert a gate_review + acceptance row as if a full review had passed."""
+    """Insert a completed review pair + acceptance as if a full review passed."""
     review_db.ensure_db(repo_root, db_path_for(repo_root))
     note_sha = review_metadata.git_blob_sha(note_abs)
     gate_sha = review_metadata.git_blob_sha(gate_abs)
     with review_db.connect(db_path_for(repo_root)) as conn:
-        review_id = review_db.insert_gate_review(
+        review_pair_id = insert_completed_pair(
             conn,
             note_path=note_path,
             gate_id=gate_id,
             model_id=TEST_MODEL,
             decision="pass",
             rationale_markdown="Looks good.\n\n## Result: PASS\n",
-            evidence_json=None,
             gate_sha=gate_sha,
             reviewed_note_sha=note_sha,
             reviewed_note_commit=commit,
             reviewed_at=REVIEWED_AT,
             review_kind="full-review",
         )
-        review_db.append_acceptance_event(
+        accept_pair(
             conn,
+            review_pair_id=review_pair_id,
             note_path=note_path,
             gate_id=gate_id,
             model_id=TEST_MODEL,
-            accepted_review_id=review_id,
             accepted_note_sha=note_sha,
             accepted_note_commit=commit,
             accepted_gate_sha=gate_sha,
@@ -462,12 +462,12 @@ class TestNoteChanged:
 
 
 class TestAckMetadata:
-    def test_ack_appends_acceptance_event_without_creating_new_gate_reviews(self, tmp_path: Path) -> None:
+    def test_ack_appends_acceptance_event_without_creating_new_review_pairs(self, tmp_path: Path) -> None:
         fixture = build_fixture(tmp_path)
         make_note(fixture["stable"], "Stable title", "\nUpdated line.\n")
 
         with sqlite3.connect(db_path_for(tmp_path)) as conn:
-            gate_review_count_before = conn.execute("SELECT count(*) FROM gate_reviews").fetchone()[0]
+            review_pair_count_before = conn.execute("SELECT count(*) FROM review_pairs").fetchone()[0]
 
         stale_before = review_target_selector.select_stale_gates(
             tmp_path,
@@ -496,18 +496,18 @@ class TestAckMetadata:
 
         with sqlite3.connect(db_path_for(tmp_path)) as conn:
             conn.row_factory = sqlite3.Row
-            gate_review_count_after = conn.execute("SELECT count(*) FROM gate_reviews").fetchone()[0]
+            review_pair_count_after = conn.execute("SELECT count(*) FROM review_pairs").fetchone()[0]
             row = conn.execute(
                 """
-                SELECT accepted_review_id, accepted_note_sha, acceptance_kind
+                SELECT accepted_review_pair_id, accepted_note_sha, acceptance_kind
                 FROM current_gate_acceptances
                 WHERE note_path = ? AND gate_id = ? AND model_id = ?
                 """,
                 ("kb/notes/stable.md", "prose/source-residue", TEST_MODEL),
             ).fetchone()
         assert row is not None
-        assert gate_review_count_after == gate_review_count_before
-        assert row["accepted_review_id"] is None
+        assert review_pair_count_after == review_pair_count_before
+        assert row["accepted_review_pair_id"] is None
         assert row["acceptance_kind"] == "trivial-change-ack"
         assert row["accepted_note_sha"] == review_metadata.git_blob_sha(fixture["stable"])
 
@@ -565,14 +565,14 @@ class TestAckMetadata:
             conn.row_factory = sqlite3.Row
             row = conn.execute(
                 """
-                SELECT accepted_review_id, acceptance_kind
+                SELECT accepted_review_pair_id, acceptance_kind
                 FROM current_gate_acceptances
                 WHERE note_path = ? AND gate_id = ? AND model_id = ?
                 """,
                 ("kb/notes/unreviewed.md", "prose/source-residue", TEST_MODEL),
             ).fetchone()
         assert row is not None
-        assert row["accepted_review_id"] is None
+        assert row["accepted_review_pair_id"] is None
         assert row["acceptance_kind"] == "trivial-change-ack"
 
 

@@ -102,7 +102,7 @@ commonplace-x-snapshot https://x.com/user/status/123456789
 
 ## Review system
 
-The review system runs LLM-based quality reviews against notes using defined review gates. For the full review workflow, read [../instructions/REVIEW-SYSTEM.md](../instructions/REVIEW-SYSTEM.md). For the code architecture, see [review-architecture.md](./review-architecture.md).
+The review system runs LLM-based quality reviews against notes using defined review gates. For the full review workflow, read [REVIEW-SYSTEM.md](./REVIEW-SYSTEM.md). For the code architecture, see [review-architecture.md](./review-architecture.md).
 
 ### commonplace-review-sweep
 
@@ -154,7 +154,7 @@ commonplace-ingest-bundle-output --review-run-id 42 --input-file kb/reports/bund
 
 ### commonplace-prepare-review-batch
 
-Create review runs for an arbitrary set of (note, gate) pairs and render one batch prompt for an external executor (live agent or orchestrator). Returns run ids, skipped pairs, and artifact paths as JSON.
+Create one review run for a note-packed or gate-packed set of `(note, gate)` pairs and render one batch prompt for an external executor (live agent or orchestrator). Returns `review_run_id`, per-pair metadata, skipped pairs, and artifact paths as JSON.
 
 ```bash
 commonplace-prepare-review-batch kb/notes/a.md::prose/source-residue kb/notes/b.md::prose/source-residue --runner live-agent --model claude-opus-4-6
@@ -162,26 +162,10 @@ commonplace-prepare-review-batch kb/notes/a.md::prose/source-residue kb/notes/b.
 
 ### commonplace-ingest-batch-output
 
-Parse a batch's pair-delimited output and finalize its runs with salvage: runs whose pairs all parsed complete, runs with missing pairs fail individually. Exit 1 if any run failed.
+Parse a batch's pair-delimited output and finalize its review run with pair salvage. Completed pairs are stored and accepted; missing pairs are marked `missing`, and the run fails with run-level failure context. Exit 1 if the run failed.
 
 ```bash
-commonplace-ingest-batch-output --review-run-ids 42 43 --input-file kb/reports/bundle-reviews/review-batch-42/bundle-output.md
-```
-
-### commonplace-write-gate-review
-
-Record a single gate review from a file into an existing review run. This remains available for manual edge cases; the normal live-agent bundle path uses `commonplace-ingest-bundle-output`.
-
-```bash
-commonplace-write-gate-review --review-run-id 42 --gate-id prose/source-residue --input-file review-output.md
-```
-
-### commonplace-finalize-review-run
-
-Mark a review run as completed. Validates that all expected gate reviews are present, then appends acceptance events.
-
-```bash
-commonplace-finalize-review-run --review-run-id 42
+commonplace-ingest-batch-output --review-run-id 42 --input-file kb/reports/bundle-reviews/review-run-42/bundle-output.md
 ```
 
 ### commonplace-ack-gate-review
@@ -234,29 +218,21 @@ commonplace-warn-selector --json                                   # JSON output
 
 ## Review maintenance
 
-Operational commands for database repair and migration. All support `--dry-run`.
+Operational commands for database repair and cleanup.
 
-### commonplace-reparse-gate-review-decisions
+### commonplace-prune-superseded-reviews
 
-Re-parse decision values from stored review markdown. Useful after decision parsing logic changes.
+Delete superseded non-current review-pair rows and whole run artifact directories when every pair in the run is obsolete. It does not delete individual files from a retained shared run directory.
 
 ```bash
-commonplace-reparse-gate-review-decisions --dry-run
-commonplace-reparse-gate-review-decisions --review-run-id 42
+commonplace-prune-superseded-reviews --dry-run
+commonplace-prune-superseded-reviews --apply
 ```
 
-### commonplace-repair-manual-import-review-results
+### commonplace-repair-model-partitions
 
-Re-infer decisions for legacy manual-import reviews with stale footers.
-
-```bash
-commonplace-repair-manual-import-review-results --dry-run
-```
-
-### commonplace-prune-superseded-unknown-manual-import-reviews
-
-Delete manual-import reviews with `decision=unknown` that have been replaced by definitive reviews.
+Collapse known model aliases in review runs, review pairs, acceptance events, and legacy rendered review files.
 
 ```bash
-commonplace-prune-superseded-unknown-manual-import-reviews --dry-run
+commonplace-repair-model-partitions --dry-run
 ```

@@ -18,7 +18,7 @@ from commonplace.review.executor import (
 )
 from commonplace.review.paths import GATES_ROOT
 from commonplace.review.protocol.prompt import NoteReviewTarget, render_pairs_prompt
-from commonplace.review.review_db import connect, create_run
+from commonplace.review.review_db import ReviewPairRequest, connect, create_run_with_pairs
 from commonplace.review.review_metadata import committed_file_provenance, iso_now, review_note_provenance
 from commonplace.review.review_model import normalize_model_id
 from commonplace.review.review_target_selector import select_stale_gates
@@ -38,7 +38,7 @@ def prepare_batch_targets(
     runner: str,
     model_id: str,
 ) -> list[NoteReviewTarget]:
-    """Create one single-gate review run per note and return prepared targets.
+    """Create one single-gate review run for this prompt batch.
 
     With db_path=None (dry run) no runs are created and ordinals stand in for
     run ids.
@@ -48,28 +48,38 @@ def prepare_batch_targets(
             prepare_note_target(
                 repo_root=repo_root,
                 note_path=note_path,
-                review_run_id=ordinal,
+                review_run_id=0,
                 gate_ids=(gate_id,),
             )
-            for ordinal, note_path in enumerate(note_paths, start=1)
+            for note_path in note_paths
         ]
 
     targets: list[NoteReviewTarget] = []
     started_at = iso_now()
     with connect(db_path) as conn:
-        for note_path in note_paths:
+        pair_requests: list[ReviewPairRequest] = []
+        for ordinal, note_path in enumerate(note_paths):
             note_sha, note_commit = review_note_provenance(repo_root, Path(note_path))
-            review_run_id = create_run(
-                conn,
-                note_path=note_path,
-                model_id=model_id,
-                runner=runner,
-                reviewed_note_sha=note_sha,
-                reviewed_note_commit=note_commit,
-                started_at=started_at,
-                gates=[(gate_id, gate_sha, 0)],
+            pair_requests.append(
+                ReviewPairRequest(
+                    note_path=note_path,
+                    gate_id=gate_id,
+                    gate_sha=gate_sha,
+                    reviewed_note_sha=note_sha,
+                    reviewed_note_commit=note_commit,
+                    pair_ordinal=ordinal,
+                )
             )
-            bundle_artifact_dir(repo_root, review_run_id).mkdir(parents=True, exist_ok=True)
+        review_run_id = create_run_with_pairs(
+            conn,
+            model_id=model_id,
+            runner=runner,
+            started_at=started_at,
+            packing="gate",
+            pairs=pair_requests,
+        )
+        bundle_artifact_dir(repo_root, review_run_id).mkdir(parents=True, exist_ok=True)
+        for note_path in note_paths:
             targets.append(
                 prepare_note_target(
                     repo_root=repo_root,
@@ -171,11 +181,11 @@ def run_gate_sweep(
         if outcome.runner_returncode != 0:
             return outcome.runner_returncode
 
-        reviewed += len(outcome.completed)
+        reviewed += len(batch_note_paths) if outcome.completed else 0
         failed += len(outcome.failed)
         for review_run_id, reason in outcome.failed:
             print(f"  FAILED run {review_run_id}: {reason}", file=sys.stderr)
-        print(f"{batch_label}: reviewed {len(outcome.completed)} notes")
+        print(f"{batch_label}: reviewed {len(batch_note_paths) if outcome.completed else 0} notes")
 
     if not dry_run:
         print(f"Reviewed: {reviewed} notes")

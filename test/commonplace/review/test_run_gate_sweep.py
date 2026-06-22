@@ -134,33 +134,26 @@ def test_run_gate_sweep_reviews_multiple_notes_in_one_batch(monkeypatch, tmp_pat
     with sqlite3.connect(db_path) as conn:
         conn.row_factory = sqlite3.Row
         run_rows = conn.execute(
-            "SELECT id, note_path, status, raw_bundle_markdown FROM review_runs ORDER BY note_path"
+            "SELECT review_run_id, status, packing, raw_bundle_markdown FROM review_runs"
         ).fetchall()
-        assert [row["note_path"] for row in run_rows] == ["kb/notes/first.md", "kb/notes/second.md"]
-        assert [row["status"] for row in run_rows] == ["completed", "completed"]
-        # Each run's stored bundle is the per-run slice: its own pair only.
-        for row in run_rows:
-            own = f"=== PAIR REVIEW START: {row['note_path']} :: accessibility/undefined-terms ==="
-            assert own in row["raw_bundle_markdown"]
-            assert row["raw_bundle_markdown"].count("=== PAIR REVIEW START:") == 1
+        assert [(row["status"], row["packing"]) for row in run_rows] == [("completed", "gate")]
+        assert run_rows[0]["raw_bundle_markdown"].count("=== PAIR REVIEW START:") == 2
 
-        review_rows = conn.execute(
-            "SELECT note_path, decision, rationale_markdown FROM gate_reviews ORDER BY note_path"
+        pair_rows = conn.execute(
+            "SELECT note_path, decision, rationale_markdown, pair_status FROM review_pairs ORDER BY note_path"
         ).fetchall()
-        assert [(row["note_path"], row["decision"]) for row in review_rows] == [
-            ("kb/notes/first.md", "warn"),
-            ("kb/notes/second.md", "pass"),
+        assert [(row["note_path"], row["decision"], row["pair_status"]) for row in pair_rows] == [
+            ("kb/notes/first.md", "warn", "completed"),
+            ("kb/notes/second.md", "pass", "completed"),
         ]
-        assert review_rows[0]["rationale_markdown"] == "Needs a definition for Alpha.\n\n## Result: WARN\n"
-        assert review_rows[1]["rationale_markdown"] == "No undefined terms found.\n\n## Result: PASS\n"
+        assert pair_rows[0]["rationale_markdown"] == "Needs a definition for Alpha.\n\n## Result: WARN\n"
+        assert pair_rows[1]["rationale_markdown"] == "No undefined terms found.\n\n## Result: PASS\n"
 
         acceptance_count = conn.execute("SELECT COUNT(*) FROM acceptance_events").fetchone()[0]
         assert acceptance_count == 2
 
-    for row in run_rows:
-        artifact_dir = repo / "kb" / "reports" / "bundle-reviews" / f"review-run-{row['id']}"
-        assert (artifact_dir / "bundle-output.md").read_text(encoding="utf-8") == row["raw_bundle_markdown"]
-        assert (artifact_dir / "accessibility__undefined-terms.md").is_file()
+    artifact_dir = repo / "kb" / "reports" / "bundle-reviews" / f"review-run-{run_rows[0]['review_run_id']}"
+    assert (artifact_dir / "bundle-output.md").read_text(encoding="utf-8") == run_rows[0]["raw_bundle_markdown"]
 
 
 def test_run_gate_sweep_salvages_parsed_notes_and_fails_missing_ones(monkeypatch, tmp_path: Path) -> None:
@@ -192,23 +185,22 @@ def test_run_gate_sweep_salvages_parsed_notes_and_fails_missing_ones(monkeypatch
     )
 
     assert result.returncode == 1
-    assert "missing pair reviews: accessibility/undefined-terms" in result.stderr
-    assert "Reviewed: 1 notes" in result.stdout
+    assert "missing pairs: kb/notes/second.md :: accessibility/undefined-terms" in result.stderr
+    assert "Reviewed: 0 notes" in result.stdout
 
     with sqlite3.connect(db_path) as conn:
         conn.row_factory = sqlite3.Row
-        run_rows = conn.execute(
-            "SELECT note_path, status, failure_reason, raw_bundle_markdown FROM review_runs ORDER BY note_path"
-        ).fetchall()
-        assert [(row["note_path"], row["status"]) for row in run_rows] == [
-            ("kb/notes/first.md", "completed"),
-            ("kb/notes/second.md", "failed"),
-        ]
-        assert "missing pair reviews: accessibility/undefined-terms" in run_rows[1]["failure_reason"]
-        # The failed run keeps the raw batch output for debugging.
-        assert "kb/notes/first.md :: accessibility/undefined-terms" in run_rows[1]["raw_bundle_markdown"]
+        run_row = conn.execute(
+            "SELECT status, failure_reason, raw_bundle_markdown FROM review_runs"
+        ).fetchone()
+        assert run_row["status"] == "failed"
+        assert "missing pairs: kb/notes/second.md :: accessibility/undefined-terms" in run_row["failure_reason"]
+        assert "kb/notes/first.md :: accessibility/undefined-terms" in run_row["raw_bundle_markdown"]
 
-        review_rows = conn.execute("SELECT note_path, decision FROM gate_reviews").fetchall()
-        assert [(row["note_path"], row["decision"]) for row in review_rows] == [("kb/notes/first.md", "warn")]
+        pair_rows = conn.execute("SELECT note_path, pair_status, decision FROM review_pairs ORDER BY note_path").fetchall()
+        assert [(row["note_path"], row["pair_status"], row["decision"]) for row in pair_rows] == [
+            ("kb/notes/first.md", "completed", "warn"),
+            ("kb/notes/second.md", "missing", None),
+        ]
         acceptance_count = conn.execute("SELECT COUNT(*) FROM acceptance_events").fetchone()[0]
         assert acceptance_count == 1

@@ -4,6 +4,7 @@ import sqlite3
 from pathlib import Path
 
 from commonplace.review import review_db
+from test.commonplace.review.pair_helpers import accept_pair, insert_completed_pair
 
 from ._run_cli import run_cli
 
@@ -25,35 +26,25 @@ def test_repair_model_partitions_rekeys_known_aliases(tmp_path: Path) -> None:
     review_db.ensure_db(REPO_ROOT, db_path)
 
     with review_db.connect(db_path) as conn:
-        review_run_id = review_db.insert_review_run(
+        review_pair_id = insert_completed_pair(
             conn,
-            note_path="kb/notes/old-note.md",
-            model_id="opus-4-6",
-            runner="claude-code",
-            reviewed_note_sha="note-sha",
-            reviewed_note_commit=None,
-            started_at="2026-04-10T10:00:00+02:00",
-        )
-        review_id = review_db.insert_gate_review(
-            conn,
-            review_run_id=review_run_id,
             note_path="kb/notes/old-note.md",
             gate_id="semantic/internal-consistency",
             model_id="opus-4-6",
             decision="pass",
             rationale_markdown="ok\n\n## Result: PASS\n",
-            evidence_json=None,
             gate_sha="gate-sha",
             reviewed_note_sha="note-sha",
             reviewed_note_commit=None,
             reviewed_at="2026-04-10T10:01:00+02:00",
+            runner="claude-code",
         )
-        review_db.append_acceptance_event(
+        accept_pair(
             conn,
+            review_pair_id=review_pair_id,
             note_path="kb/notes/old-note.md",
             gate_id="semantic/internal-consistency",
             model_id="opus-4-6",
-            accepted_review_id=review_id,
             accepted_note_sha="note-sha",
             accepted_note_commit=None,
             accepted_gate_sha="gate-sha",
@@ -74,7 +65,7 @@ def test_repair_model_partitions_rekeys_known_aliases(tmp_path: Path) -> None:
             SELECT (
                 SELECT count(*) FROM review_runs WHERE model_id = 'opus-4-6'
             ) + (
-                SELECT count(*) FROM gate_reviews WHERE model_id = 'opus-4-6'
+                SELECT count(*) FROM review_pairs WHERE model_id = 'opus-4-6'
             ) + (
                 SELECT count(*) FROM acceptance_events WHERE model_id = 'opus-4-6'
             ) AS count
@@ -85,7 +76,7 @@ def test_repair_model_partitions_rekeys_known_aliases(tmp_path: Path) -> None:
             SELECT (
                 SELECT count(*) FROM review_runs WHERE model_id = 'claude-opus-4-6'
             ) + (
-                SELECT count(*) FROM gate_reviews WHERE model_id = 'claude-opus-4-6'
+                SELECT count(*) FROM review_pairs WHERE model_id = 'claude-opus-4-6'
             ) + (
                 SELECT count(*) FROM acceptance_events WHERE model_id = 'claude-opus-4-6'
             ) AS count

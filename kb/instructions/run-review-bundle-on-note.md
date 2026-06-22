@@ -43,11 +43,10 @@ Write the full sentinel-bracketed review bundle to `bundle_output_path`.
 commonplace-ingest-bundle-output --review-run-id {review-run-id} --input-file {bundle-output-path}
 ```
 
-This parses the bundle with the same parser used by `commonplace-run-review-bundle`, records the per-gate reviews, and finalizes the review run.
+This parses the bundle with the same parser used by `commonplace-run-review-bundle`, records the per-pair reviews, and finalizes the review run.
 
 ## Do not
 
 - Do not run the selector to choose gates before reviewing. This instruction is for explicit execution.
-- Do not invoke `commonplace-record-bundle-review`; that command is no longer part of the shipped CLI.
-- Do not call `commonplace-write-gate-review` in the normal live-agent bundle flow; use `commonplace-ingest-bundle-output` instead.
+- Do not invoke retired manual review-writing commands; use `commonplace-ingest-bundle-output`.
 - Do not skip a requested gate block in the bundle output.

@@ -54,7 +54,7 @@ commonplace-github-snapshot <url>    # snapshot a GitHub issue/PR into kb/source
 commonplace-x-snapshot <url>         # snapshot an X/Twitter thread
 ```
 
-The review system ships as a further family of `commonplace-*` commands; see the [review system overview](https://github.com/zby/commonplace/blob/main/kb/instructions/REVIEW-SYSTEM.md).
+The review system ships as a further family of `commonplace-*` commands; see the [review system overview](https://github.com/zby/commonplace/blob/main/kb/reference/REVIEW-SYSTEM.md).
 
 **Skills** (`cp-skill-*`) are agent procedures the harness auto-loads from their descriptions: when a task matches a skill, the agent invokes it. `commonplace-init` installs them into a consuming project.
 

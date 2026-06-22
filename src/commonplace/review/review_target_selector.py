@@ -285,7 +285,7 @@ def ack_pairs(repo_root: Path, pairs: list[str], model: str, *, db_path: Path | 
                 note_path=note_path,
                 gate_id=gate_id,
                 model_id=model,
-                accepted_review_id=None,
+                accepted_review_pair_id=None,
                 accepted_note_sha=note_sha,
                 accepted_note_commit=note_commit,
                 accepted_gate_sha=current_gate_sha,

@@ -9,7 +9,7 @@ status: current
 
 The review system runs LLM-based quality reviews against KB notes using defined review gates. It tracks provenance (note and gate versions), manages acceptance state, and detects staleness.
 
-For the review workflow and gate definitions, see [../instructions/REVIEW-SYSTEM.md](../instructions/REVIEW-SYSTEM.md). This document covers the code architecture.
+For the review workflow and gate definitions, see [REVIEW-SYSTEM.md](./REVIEW-SYSTEM.md). This document covers the code architecture.
 
 > **Sweep commands are experimental.** `review_sweep`, `run_gate_sweep`, and `ack_trivial_note_changes` are not yet stabilized and are intentionally not documented in detail here. Treat their interfaces as subject to change.
 
@@ -63,10 +63,9 @@ SQLite database, default location `kb/reports/review-store.sqlite` (override wit
 
 | Table | Purpose | Key columns |
 |---|---|---|
-| `review_runs` | Execution records | id, note_path, model_id, runner, status (running/completed/failed), provenance SHAs |
-| `review_run_gates` | Gate set captured at run start | review_run_id, gate_id, gate_sha, ordinal |
-| `gate_reviews` | Individual gate outcomes | review_run_id, note_path, gate_id, decision (pass/warn/fail/error/unknown), rationale_markdown |
-| `acceptance_events` | Append-only acceptance log | note_path, gate_id, model_id, accepted_review_id, acceptance_kind |
+| `review_runs` | Review invocations | review_run_id, model_id, runner, status (running/completed/failed), packing, telemetry/debug/raw output |
+| `review_pairs` | Requested and completed pair outcomes | review_pair_id, review_run_id, note_path, gate_id, pair_status, decision, provenance SHAs |
+| `acceptance_events` | Append-only acceptance log | acceptance_event_id, note_path, gate_id, model_id, accepted_review_pair_id, acceptance_kind |
 
 **Key views:**
 
@@ -114,22 +113,24 @@ Database operations, decision parsing, and record management. The largest module
 - `prepare_review_db(repo_root, db_override=None) -> Path` — convenience helper that resolves and ensures in one call; collapses the four-step bootstrap that every CLI used to open-code
 
 **Note relocation helpers** (called by `commonplace.lib.relocation`):
-- `count_note_path_records(conn, *, note_path) -> NotePathUpdateCounts` — how many `review_runs`/`gate_reviews`/`acceptance_events` rows reference a note path
+- `count_note_path_records(conn, *, note_path) -> NotePathUpdateCounts` — how many `review_pairs`/`acceptance_events` rows reference a note path
 - `rekey_note_path(conn, *, old_note_path, new_note_path) -> NotePathUpdateCounts` — update those rows in place when a note moves
 
 **CRUD operations:**
-- `insert_review_run(conn, ...) -> int` — create run, return ID
-- `insert_gate_review(conn, ...) -> int` — record gate outcome
+- `create_run(conn, ...) -> int` — create a run invocation, return ID
+- `create_review_pairs(conn, ...) -> list[int]` — insert requested pair rows
+- `create_run_with_pairs(conn, ...) -> int` — create a run and its requested pair set
+- `complete_review_pairs(conn, ...) -> list[int]` — record pair outcomes parsed from output
+- `mark_missing_pairs(conn, ...) -> int` — mark requested pairs without output
 - `append_acceptance_event(conn, ...) -> int` — record acceptance
 - `complete_review_run(conn, ...) / fail_review_run(conn, ...)` — finalize run status
-- `load_review_run / load_gate_reviews_for_run / load_gate_reviews_for_note` — query helpers
-- `load_effective_gate_review_map(conn, ...) -> dict` — accepted-or-latest reviews per gate
+- `load_review_run / load_review_pairs_for_run / load_review_pairs_for_note` — query helpers
+- `load_effective_review_pair_map(conn, ...) -> dict` — accepted-or-latest completed review pairs per gate
 - `load_current_acceptances(conn) -> dict` — current acceptance state map
 
 **Lifecycle helpers:**
-- `create_run(conn, ...) -> int` — create the run row plus its captured gate set
 - `attach_execution_data(conn, ...)` — persist telemetry, raw bundle markdown, and debug log
-- `record_and_finalize_run(conn, ...) -> int` — optionally insert gate reviews, rekey to the actual model, validate coverage, complete the run, and append acceptance events
+- `record_and_finalize_run(conn, ...) -> int` — complete parsed pairs, rekey to the actual model, validate coverage, complete or fail the run, and append acceptance events for completed pairs
 
 **Decision parsing (`parse_review_decision`):**
 
@@ -151,13 +152,13 @@ Multi-strategy fallback chain for extracting decisions from review markdown:
 
 ```
 1. resolve_gates     → expand bundle names to gate IDs, filter by note type and traits
-2. create_run        → insert review_run + review_run_gates (status=running), one run per note
+2. create_run_with_pairs → insert review_run + review_pairs (status=running), one run per prompt invocation
 3. executor.execute_batch
    a. protocol/prompt.render_pairs_prompt → one prompt embedding each note and gate text once
    b. review_runners.run_prompt           → invoke claude-code or codex CLI
    c. protocol/parser.parse_pair_bundle   → extract pair blocks, canonicalize result footers
-   d. per run: finalize if all its pairs parsed, fail it individually otherwise (salvage)
-4. record_and_finalize_run → write gate_reviews, validate coverage, mark run completed, append acceptance_events
+   d. per run: complete parsed pairs, mark missing pairs, complete or fail the run
+4. record_and_finalize_run → write review_pairs, validate coverage, mark run completed or failed, append acceptance_events for completed pairs
 ```
 
 ### Pair protocol (`protocol/`) and executor
@@ -188,15 +189,15 @@ Every output block is keyed by the full (note, gate) pair:
 ### Packing callers
 
 - **`run_review_bundle.py` — share-note packing.** One note, all its gates, one call, one run.
-- **`run_gate_sweep.py` — share-gate packing (experimental).** One gate over a chunked note list; one single-gate run per note; a missing pair fails only that note's run while the rest of the batch completes.
+- **`run_gate_sweep.py` — share-gate packing (experimental).** One gate over a chunked note list; one gate-packed run per prompt batch; missing pairs are marked `missing`, parsed pairs are retained, and the invocation records a failure.
 - **Live-agent path (single note)** — same protocol without a nested runner:
   1. `commonplace-create-review-run --with-prompt` creates the run and writes the canonical prompt to `kb/reports/bundle-reviews/review-run-{id}/prompt.md` (path returned as `prompt_path` in the JSON payload)
   2. the current agent reads `prompt_path`, follows it, and writes `kb/reports/bundle-reviews/review-run-{id}/bundle-output.md`
   3. `commonplace-ingest-bundle-output` parses that artifact and finalizes through `record_and_finalize_run` (single-run ingest is all-or-nothing)
 - **External-executor batch path (`batch.py`)** — deterministic ends for any orchestrator that owns its own fan-out (a live agent reviewing many pairs, or a harness workflow spawning sub-agents per batch); decision record: [ADR 030](./adr/030-harness-facing-seams-batch-endpoints-and-runner-adapters.md).
-  1. `commonplace-prepare-review-batch <note>::<gate>... --runner <label> --model <id>` creates one run per note for an arbitrary pair set (inapplicable gates skipped and reported; missing notes/gates and dirty gates fatal) and writes the canonical prompt under `kb/reports/bundle-reviews/review-batch-{first-run-id}/`; returns run ids, skipped pairs, `prompt_path`, and `bundle_output_path` as JSON
+  1. `commonplace-prepare-review-batch <note>::<gate>... --runner <label> --model <id>` creates one note-packed or gate-packed run for the pair set (inapplicable gates skipped and reported; missing notes/gates and dirty gates fatal) and writes the canonical prompt under `kb/reports/bundle-reviews/review-run-{review_run_id}/`; returns `review_run_id`, pair metadata, skipped pairs, `prompt_path`, `bundle_output_path`, and `manifest_path` as JSON
   2. the executor follows the prompt and writes `bundle_output_path`
-  3. `commonplace-ingest-batch-output --review-run-ids <id>... --input-file <path>` finalizes with the executor's salvage policy (shared `finalize_runs_from_parsed`); JSON result, exit 1 if any run failed. Runs in one batch must target distinct notes.
+  3. `commonplace-ingest-batch-output --review-run-id <id> --input-file <path>` finalizes with pair salvage; JSON result, exit 1 if the run failed.
 
 ### runners/ — harness CLI adapters
 
@@ -231,7 +232,7 @@ Also provides:
 
 ### warn_selector.py
 
-Query effective reviews with `decision="warn"`, skip stale gate revisions and legacy rows without a `review_run_id`, and extract actionable findings from the `### Findings` section.
+Query effective completed review pairs with `decision="warn"`, skip stale gate revisions, and extract actionable findings from the `### Findings` section.
 
 ---
 
@@ -241,6 +242,5 @@ These are operational commands for database maintenance. All support `--dry-run`
 
 | Command | Purpose |
 |---|---|
-| `repair-manual-import-review-results` | Re-infer decisions for legacy manual-import reviews |
-| `reparse-gate-review-decisions` | Re-parse decisions from stored markdown (after parser updates) |
-| `prune-superseded-unknown-manual-import-reviews` | Delete manual-import reviews with decision=unknown that have replacements |
+| `prune-superseded-reviews` | Delete superseded non-current review pairs; delete whole run artifact directories only when every pair in the run is obsolete |
+| `repair-model-partitions` | Collapse known model aliases in review runs, review pairs, acceptance events, and legacy rendered review files |

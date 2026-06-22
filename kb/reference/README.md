@@ -150,7 +150,7 @@ For the full read path and scaling direction, see [navigation.md](./navigation.m
 
 *Limitations.* The review UX is still in flux. Gate selection depends on note traits, and acceptance semantics are still more complex than they should be. Treat review as an agent-driven workflow rather than a first-class end-user CLI today.
 
-See [REVIEW-SYSTEM.md](../instructions/REVIEW-SYSTEM.md) and [FIX-SYSTEM.md](../instructions/FIX-SYSTEM.md) for the current design.
+See [REVIEW-SYSTEM.md](./REVIEW-SYSTEM.md) and [FIX-SYSTEM.md](../instructions/FIX-SYSTEM.md) for the current design.
 
 ### Direct CLI commands
 
@@ -197,7 +197,7 @@ Look up how the shipped system is put together: its architecture, type system, a
 Imperative how-to procedures live in [kb/instructions/](../instructions/) rather than this collection, but they are part of the shipped surface:
 
 - Each collection's `COLLECTION.md` — register-specific writing conventions, quality goals, and placement rules
-- [REVIEW-SYSTEM.md](../instructions/REVIEW-SYSTEM.md) — current review-system workflow
+- [REVIEW-SYSTEM.md](./REVIEW-SYSTEM.md) — current review-system workflow
 - [FIX-SYSTEM.md](../instructions/FIX-SYSTEM.md) — current fix-system workflow
 
 ### Decision history

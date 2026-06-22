@@ -34,7 +34,7 @@ Out of scope:
 
 ## Current grounding
 
-- [review system](../../instructions/REVIEW-SYSTEM.md) - current workflow contract.
+- [review system](../../reference/REVIEW-SYSTEM.md) - current workflow contract.
 - [run review bundle on note](../../instructions/run-review-bundle-on-note.md) - live-agent single-note review flow.
 - [review-architecture.md](../../reference/review-architecture.md) - current execution architecture.
 - [review-prompt-consolidation](../review-prompt-consolidation/README.md) - prior decision to share one prompt/parser protocol across live-agent and subprocess paths.

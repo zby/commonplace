@@ -13,7 +13,7 @@ Use this instruction only when the gate meaning stays the same. If the gate sema
 2. Update the stored accepted review text to match the new gate wording. Keep the canonical stored decision aligned.
 3. For each affected current acceptance, append a new acceptance event with:
    - `acceptance_kind = gate-migration`
-   - the same `accepted_review_id`
+   - the same `accepted_review_pair_id`
    - the same `accepted_note_sha`
    - the same `accepted_note_commit`
    - the same `model_id`

@@ -8,6 +8,7 @@ from pathlib import Path
 from commonplace.review import ack_trivial_note_changes, review_db, review_metadata
 from commonplace.review.ack_trivial_note_changes import qualifying_pairs
 from commonplace.review.review_target_selector import ack_pairs
+from test.commonplace.review.pair_helpers import accept_pair, insert_completed_pair
 
 
 TEST_MODEL = "test-model"
@@ -111,26 +112,25 @@ def build_fixture(
     db_path = repo / "kb" / "reports" / "review-store.sqlite"
     review_db.ensure_db(repo, db_path)
     with review_db.connect(db_path) as conn:
-        review_id = review_db.insert_gate_review(
+        review_pair_id = insert_completed_pair(
             conn,
             note_path="kb/notes/sample.md",
             gate_id=gate_id,
             model_id=TEST_MODEL,
             decision="pass",
             rationale_markdown="Looks good.\n\n## Result: PASS\n",
-            evidence_json=None,
             gate_sha=gate_sha,
             reviewed_note_sha=note_sha,
             reviewed_note_commit=commit,
             reviewed_at="2026-04-01T00:00:00+00:00",
             review_kind="full-review",
         )
-        review_db.append_acceptance_event(
+        accept_pair(
             conn,
+            review_pair_id=review_pair_id,
             note_path="kb/notes/sample.md",
             gate_id=gate_id,
             model_id=TEST_MODEL,
-            accepted_review_id=review_id,
             accepted_note_sha=note_sha,
             accepted_note_commit=commit,
             accepted_gate_sha=gate_sha,
@@ -275,26 +275,25 @@ def test_qualifying_pairs_recovers_previous_text_from_git_log_when_blob_sha_is_m
     db_path = repo / "kb" / "reports" / "review-store.sqlite"
     review_db.ensure_db(repo, db_path)
     with review_db.connect(db_path) as conn:
-        review_id = review_db.insert_gate_review(
+        review_pair_id = insert_completed_pair(
             conn,
             note_path="kb/notes/sample.md",
             gate_id="prose/source-residue",
             model_id=TEST_MODEL,
             decision="pass",
             rationale_markdown="Looks good.\n\n## Result: PASS\n",
-            evidence_json=None,
             gate_sha=gate_sha,
             reviewed_note_sha="missing-blob",
             reviewed_note_commit=None,
             reviewed_at="2026-04-04T08:35:54+02:00",
             review_kind="full-review",
         )
-        review_db.append_acceptance_event(
+        accept_pair(
             conn,
+            review_pair_id=review_pair_id,
             note_path="kb/notes/sample.md",
             gate_id="prose/source-residue",
             model_id=TEST_MODEL,
-            accepted_review_id=review_id,
             accepted_note_sha="missing-blob",
             accepted_note_commit=None,
             accepted_gate_sha=gate_sha,

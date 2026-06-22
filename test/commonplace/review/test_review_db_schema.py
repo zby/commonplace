@@ -5,6 +5,7 @@ import sqlite3
 from pathlib import Path
 
 from commonplace.review import review_db
+from test.commonplace.review.pair_helpers import accept_pair, insert_completed_pair
 
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
@@ -57,35 +58,24 @@ def test_rekey_note_path_updates_all_review_tables(tmp_path: Path) -> None:
     review_db.ensure_db(REPO_ROOT, db_path)
 
     with review_db.connect(db_path) as conn:
-        review_run_id = review_db.insert_review_run(
+        review_pair_id = insert_completed_pair(
             conn,
-            note_path="kb/notes/old-note.md",
-            model_id="opus-4-6",
-            runner="codex",
-            reviewed_note_sha="note-sha",
-            reviewed_note_commit="note-commit",
-            started_at="2026-04-10T10:00:00+02:00",
-        )
-        review_id = review_db.insert_gate_review(
-            conn,
-            review_run_id=review_run_id,
             note_path="kb/notes/old-note.md",
             gate_id="semantic/internal-consistency",
             model_id="opus-4-6",
             decision="pass",
             rationale_markdown="ok",
-            evidence_json=None,
             gate_sha="gate-sha",
             reviewed_note_sha="note-sha",
             reviewed_note_commit="note-commit",
             reviewed_at="2026-04-10T10:01:00+02:00",
         )
-        review_db.append_acceptance_event(
+        accept_pair(
             conn,
+            review_pair_id=review_pair_id,
             note_path="kb/notes/old-note.md",
             gate_id="semantic/internal-consistency",
             model_id="opus-4-6",
-            accepted_review_id=review_id,
             accepted_note_sha="note-sha",
             accepted_note_commit="note-commit",
             accepted_gate_sha="gate-sha",
@@ -104,8 +94,7 @@ def test_rekey_note_path_updates_all_review_tables(tmp_path: Path) -> None:
         new_counts = review_db.count_note_path_records(conn, note_path="kb/notes/archive/new-note.md")
         old_counts = review_db.count_note_path_records(conn, note_path="kb/notes/old-note.md")
 
-    assert counts.review_runs == 1
-    assert counts.gate_reviews == 1
+    assert counts.review_pairs == 1
     assert counts.acceptance_events == 1
     assert updated == counts
     assert new_counts == counts

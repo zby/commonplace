@@ -8,6 +8,7 @@ from commonplace.lib import relocation
 from commonplace.lib.naming import MAX_NOTE_SLUG_LENGTH, slugify_note_filename
 from commonplace.review import review_db
 from commonplace.review.relocation_hook import ReviewRelocationHook
+from test.commonplace.review.pair_helpers import insert_completed_pair
 
 
 def write(path: Path, content: str) -> Path:
@@ -163,24 +164,13 @@ review-type: gate-review
     db_path = kb_root / "reports" / "review-store.sqlite"
     review_db.ensure_db(repo_root, db_path)
     with review_db.connect(db_path) as conn:
-        review_run_id = review_db.insert_review_run(
+        insert_completed_pair(
             conn,
-            note_path="kb/notes/old-note.md",
-            model_id="opus-4-6",
-            runner="codex",
-            reviewed_note_sha="note-sha",
-            reviewed_note_commit="note-commit",
-            started_at="2026-04-10T10:00:00+02:00",
-        )
-        review_db.insert_gate_review(
-            conn,
-            review_run_id=review_run_id,
             note_path="kb/notes/old-note.md",
             gate_id="prose/source-residue",
             model_id="opus-4-6",
             decision="pass",
             rationale_markdown="ok",
-            evidence_json=None,
             gate_sha="gate-sha",
             reviewed_note_sha="note-sha",
             reviewed_note_commit="note-commit",
@@ -216,8 +206,7 @@ review-type: gate-review
     with review_db.connect(db_path) as conn:
         counts = review_db.count_note_path_records(conn, note_path="kb/notes/archive/new-note-title.md")
         old_counts = review_db.count_note_path_records(conn, note_path="kb/notes/old-note.md")
-    assert counts.review_runs == 1
-    assert counts.gate_reviews == 1
+    assert counts.review_pairs == 1
     assert old_counts.total == 0
 
 

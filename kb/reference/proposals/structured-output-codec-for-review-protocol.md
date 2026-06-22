@@ -14,7 +14,7 @@ The review protocol's output side is one encoding: sentinel-delimited markdown b
 
 - One encoding: `=== PAIR REVIEW START: {note} :: {gate} ===` blocks ([ADR 029](../adr/029-review-execution-unified-on-note-gate-pairs.md)). `protocol/parser.py` extracts blocks into `ParsedPairBundle`; `protocol/decisions.py` recovers the decision through an ordered fallback chain (explicit flagging phrases → revised-result headers → result headers → severity patterns → bold patterns → legacy → `unknown`) and canonicalizes result footers.
 - The codec is almost contained in `protocol/`: the one leak is `executor.assemble_run_document`, which imports the sentinel templates to assemble per-run artifact documents.
-- Consumers downstream of parsing are encoding-independent already: `gate_reviews.rationale_markdown` stores canonical text, `decision` is an enum column, and `warn_selector` extracts findings from a `### Findings` section convention.
+- Consumers downstream of parsing are encoding-independent already: `review_pairs.rationale_markdown` stores canonical text, `decision` is an enum column, and `warn_selector` extracts findings from a `### Findings` section convention.
 - External executors receive the contract through rendered prompts (`prepare-review-batch`, `create-review-run --with-prompt`) and return text artifacts through ingest commands ([ADR 030](../adr/030-harness-facing-seams-batch-endpoints-and-runner-adapters.md)).
 - Trigger not yet met: schema-validated sub-agent output ships in one harness's workflow scripts; the subprocess CLIs (`claude -p`, `codex exec`) and the live-agent file-artifact path have no equivalent surface the review system could consume today.
 
@@ -31,7 +31,7 @@ A codec is the pair (render the output contract into the prompt, decode raw outp
 
 - **Where codec selection lives.** A flag on prepare/ingest commands chosen by the orchestrator (it knows whether its harness supports schemas), a per-runner-adapter property, or a project-level default. The orchestrator-chooses option matches the medium-pluggability direction of ADR 030.
 - **Schema shape for findings.** Mirror the current markdown sections one-to-one (summary/findings/revision) or take the opportunity to constrain severity to an enum and findings to a list — more validation power, but historical rationale text and the new format diverge in expressiveness.
-- **Canonical stored form.** Keep `rationale_markdown` as the single stored representation (structured output rendered to markdown on ingest), or store the structured object alongside (`evidence_json` column already exists on `gate_reviews`). The first keeps one read path; the second preserves machine-readable findings for the gate-statistics ambitions in [gate learning from accepted edits](./gate-learning-from-accepted-edits.md).
+- **Canonical stored form.** Keep `rationale_markdown` as the single stored representation (structured output rendered to markdown on ingest), or store the structured object alongside (`evidence_json` column already exists on `review_pairs`). The first keeps one read path; the second preserves machine-readable findings for the gate-statistics ambitions in [gate learning from accepted edits](./gate-learning-from-accepted-edits.md).
 - **Whether the markdown codec ever retires.** Free-text markdown is the lowest common denominator every harness supports; retiring it would couple the review system to schema-capable harnesses.
 
 ## Adoption criteria

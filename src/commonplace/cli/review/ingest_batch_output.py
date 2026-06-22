@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Ingest a batch's pair-delimited review output and finalize its runs with salvage."""
+"""Ingest a batch's pair-delimited review output and finalize its run with salvage."""
 
 from __future__ import annotations
 
@@ -14,14 +14,13 @@ from commonplace.review.review_db import prepare_review_db
 
 def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser = argparse.ArgumentParser(
-        description="Parse a batch review output artifact and finalize its review runs.",
+        description="Parse a batch review output artifact and finalize its review run.",
     )
     parser.add_argument(
-        "--review-run-ids",
+        "--review-run-id",
         type=int,
-        nargs="+",
         required=True,
-        help="Review run ids prepared for this batch.",
+        help="Review run id prepared for this batch.",
     )
     parser.add_argument("--input-file", required=True, help="Path to the pair-delimited batch output.")
     parser.add_argument("--db", help="Override COMMONPLACE_REVIEW_DB.")
@@ -39,7 +38,7 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
         completed, failed = ingest_batch_output(
             repo_root=repo_root,
             db_path=db_path,
-            review_run_ids=args.review_run_ids,
+            review_run_id=args.review_run_id,
             raw_bundle_markdown=raw_bundle_markdown,
         )
     except ValueError as exc:

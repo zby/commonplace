@@ -17,7 +17,7 @@ from commonplace.review.review_db import (
 )
 from commonplace.review.review_model import model_alias_target
 
-TABLES = ("review_runs", "gate_reviews", "acceptance_events")
+TABLES = ("review_runs", "review_pairs", "acceptance_events")
 LEGACY_REVIEWS_ROOT = Path("kb/reports/reviews")
 
 
@@ -91,7 +91,7 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
             counts = count_model_id_records(conn, model_id=old_model_id)
             table_counts = {
                 "review_runs": counts.review_runs,
-                "gate_reviews": counts.gate_reviews,
+                "review_pairs": counts.review_pairs,
                 "acceptance_events": counts.acceptance_events,
             }
             planned[(old_model_id, new_model_id)] = table_counts
@@ -129,11 +129,11 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
         print(
             f"{old_model_id} -> {new_model_id}: total={total} "
             f"review_runs={table_counts['review_runs']} "
-            f"gate_reviews={table_counts['gate_reviews']} "
+            f"review_pairs={table_counts['review_pairs']} "
             f"acceptance_events={table_counts['acceptance_events']}"
         )
     print(f"review_runs: {totals['review_runs']}")
-    print(f"gate_reviews: {totals['gate_reviews']}")
+    print(f"review_pairs: {totals['review_pairs']}")
     print(f"acceptance_events: {totals['acceptance_events']}")
     print(f"legacy_review_files: {len(file_moves)}")
     print(f"mode: {'dry-run' if args.dry_run else 'write'}")
