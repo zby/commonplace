@@ -163,6 +163,12 @@ Do not keep compatibility views with those names. They will hide incomplete migr
     
   - lost full-review/manual-import acceptance mappings: 0
     
+  - gate-packed legacy `raw_bundle_markdown` rows preserved in aggregated run-level audit text: 543
+    
+  - gate-packed legacy `debug_log` rows preserved in aggregated run-level audit text: 59
+    
+  - divergent gate-packed legacy `telemetry_json` groups preserved as valid JSON aggregation objects: 1
+    
 
 1. Copy or back up `kb/reports/review-store.sqlite`.
   
@@ -197,6 +203,8 @@ Do not keep compatibility views with those names. They will hide incomplete migr
 - create `legacy_review_run_map(legacy_review_run_id, review_run_id, inferred_packing)` so many legacy gate-sweep run rows can map to one new gate-packed review invocation
   
 - create one new `review_runs` row per inferred note-packed run, one per inferred gate-packed group, and one per manual-import row
+  
+- for inferred gate-packed groups, aggregate legacy sibling `raw_bundle_markdown` and `debug_log` values under legacy run/note headers; keep identical `telemetry_json` as-is and preserve divergent telemetry as a valid JSON aggregation object
   
 - copy old `review_run_gates` into `review_pairs` through `legacy_review_run_map`
   

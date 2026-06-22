@@ -536,6 +536,7 @@ def _copy_inferred_review_runs(conn: sqlite3.Connection) -> None:
             SELECT
                 g.review_run_id,
                 rr.id AS legacy_review_run_id,
+                rr.note_path,
                 rr.model_id,
                 rr.runner,
                 rr.started_at,
@@ -593,19 +594,56 @@ def _copy_inferred_review_runs(conn: sqlite3.Connection) -> None:
                 ELSE NULL
             END,
             (
-                SELECT telemetry_json
-                FROM grouped_runs AS first_run
-                WHERE first_run.legacy_review_run_id = grouped_runs.review_run_id
+                CASE
+                    WHEN COUNT(DISTINCT COALESCE(telemetry_json, '<NULL>')) <= 1 THEN MAX(telemetry_json)
+                    ELSE json_object(
+                        'legacy_gate_packed_telemetry_json_by_run',
+                        json_group_array(
+                            json_object(
+                                'legacy_review_run_id',
+                                legacy_review_run_id,
+                                'note_path',
+                                note_path,
+                                'telemetry_json',
+                                telemetry_json
+                            )
+                        )
+                    )
+                END
             ),
             (
-                SELECT raw_bundle_markdown
-                FROM grouped_runs AS first_run
-                WHERE first_run.legacy_review_run_id = grouped_runs.review_run_id
+                GROUP_CONCAT(
+                    CASE
+                        WHEN raw_bundle_markdown IS NOT NULL
+                        THEN (
+                            '--- legacy review_run '
+                            || legacy_review_run_id
+                            || ' note: '
+                            || note_path
+                            || ' ---'
+                            || char(10)
+                            || raw_bundle_markdown
+                        )
+                    END,
+                    char(10) || char(10)
+                )
             ),
             (
-                SELECT debug_log
-                FROM grouped_runs AS first_run
-                WHERE first_run.legacy_review_run_id = grouped_runs.review_run_id
+                GROUP_CONCAT(
+                    CASE
+                        WHEN debug_log IS NOT NULL
+                        THEN (
+                            '--- legacy review_run '
+                            || legacy_review_run_id
+                            || ' note: '
+                            || note_path
+                            || ' ---'
+                            || char(10)
+                            || debug_log
+                        )
+                    END,
+                    char(10) || char(10)
+                )
             ),
             'gate'
         FROM grouped_runs
