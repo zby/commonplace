@@ -16,7 +16,7 @@ Shipped — proposed alongside this loop and since adopted:
 
 - Atomic gates as single files with a type contract: `kb/instructions/review-gates/{lens}/{name}.md`, type `review-gate`.
 - Per-gate provenance, acceptance, and staleness: `gate_sha`, per-gate acceptance events and current-acceptance views in the review SQLite ledger.
-- Selector machinery: `resolve_gates`, `review_target_selector`, `warn_selector`. The gate-refactor workshop executed the move from monolithic review bundles to gate-native storage.
+- Selector machinery: `resolve_gates`, `review_target_selector`, `warn_selector`. [ADR 031](../adr/031-review-state-uses-run-owned-review-pairs.md) records the move from monolithic review bundles to gate-native, run-owned review pairs.
 
 Not shipped:
 

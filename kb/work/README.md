@@ -6,7 +6,6 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
-- [create-review-runs](./create-review-runs/README.md) — designing a shared review-run preparation layer for note-packed, gate-packed, and explicit-pair review batches
 - [agent-note-improvement](./agent-note-improvement/README.md) — testing instructions that help agents improve weak existing notes by comparing an older weak revision against a later accepted revision
 - [agent-memory-design](./agent-memory-design/README.md) — continuation workshop for discussing revisions and companion artifacts around `kb/notes/designing-agent-memory-systems.md`
 - [agent-memory-review-rerun](./agent-memory-review-rerun/README.md) — planning and tracking the remaining `systems.csv` agent-memory review reruns after the first six refreshed reviews
@@ -16,7 +15,6 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 - [aris-full-trial](./aris-full-trial/README.md) — running a private full-ARIS paper-production trial while keeping only framing and lessons learned in the public KB
 - [read-back-symbol-availability](./read-back-symbol-availability/README.md) — folding the symbol-availability bound on push into the agent-memory-system review framework's read-back treatment, and planning a re-characterization pass over existing reviews
 - [research-wiki-integration](./research-wiki-integration/README.md) — evaluating whether ARIS Research Wiki should become a commonplace workshop subsystem, source workflow upgrade, or only a set of borrowed lifecycle patterns
-- [gate-refactor](./gate-refactor/README.md) — moving review storage and selector state from monolithic review bundles to gate-native definitions, memberships, and per-gate acceptances
 - [review-bundle-packing](./review-bundle-packing/README.md) — measuring and deciding whether review prompts must stay bundle-local or may pack multiple bundles into one run
 - [validation](./validation/README.md) — making validation a reliable part of the workflow: when, what, and how to validate (hooks, skill upgrades, periodic revalidation)
 - [tool-loop-control](./tool-loop-control/README.md) — rewriting the framework-loop note so it starts from why the standard tool loop exists and where convenience should end

@@ -37,9 +37,9 @@ Out of scope:
 - [review system](../../reference/REVIEW-SYSTEM.md) - current workflow contract.
 - [run review bundle on note](../../instructions/run-review-bundle-on-note.md) - live-agent single-note review flow.
 - [review-architecture.md](../../reference/review-architecture.md) - current execution architecture.
-- [review-prompt-consolidation](../review-prompt-consolidation/README.md) - prior decision to share one prompt/parser protocol across live-agent and subprocess paths.
-- [review-run-lifecycle](../review-run-lifecycle/README.md) - lifecycle constraints for review run creation, completion, failure, telemetry, and acceptance.
-- [gate-refactor](../gate-refactor/README.md) - background for gate-native review state.
+- [ADR 029](../../reference/adr/029-review-execution-unified-on-note-gate-pairs.md) - decision to share one pair protocol across packing shapes.
+- [ADR 030](../../reference/adr/030-harness-facing-seams-batch-endpoints-and-runner-adapters.md) - batch prepare/ingest endpoints and runner adapter boundary.
+- [ADR 031](../../reference/adr/031-review-state-uses-run-owned-review-pairs.md) - gate-native persistent review state.
 
 ## Working hypotheses
 
