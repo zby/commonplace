@@ -92,7 +92,7 @@ Constraints and indexes:
   
 - index `(pair_status)`
   
-- optional index `(reviewed_note_sha)` if selector/repair code still needs it
+- index `(reviewed_note_sha)`
   
 
 Important correction to the workshop migration prototype: do not use `UNIQUE (review_run_id, gate_id)`. That prevents gate-packed runs, where many notes share one gate in the same review run.
@@ -117,6 +117,8 @@ Important correction to the workshop migration prototype: do not use `UNIQUE (re
 - replace `accepted_review_id` with `accepted_review_pair_id REFERENCES review_pairs(review_pair_id) ON DELETE SET NULL`
   
 - keep freshness columns: `note_path`, `gate_id`, `model_id`, accepted note/gate shas, accepted timestamp, acceptance kind
+
+- keep `accepted_review_pair_id` nullable for pure ack events such as trivial note-change acknowledgements. Read paths that need review text for a null-pair current acceptance should use the latest completed `review_pairs` row for the same `(note_path, gate_id, model_id)`.
   
 
 Views:
@@ -168,23 +170,23 @@ Do not keep compatibility views with those names. They will hide incomplete migr
   - gate-packed legacy `debug_log` rows preserved in aggregated run-level audit text: 59
     
   - divergent gate-packed legacy `telemetry_json` groups preserved as valid JSON aggregation objects: 1
+
+- preflight cleanup has already been run on `kb/reports/review-store.sqlite`:
+  
+  - `commonplace-repair-manual-import-review-results` updated 135 manual-import rows
+    
+  - `commonplace-reparse-gate-review-decisions` updated 31 decision rows after manual-import repair
+    
+  - `commonplace-prune-superseded-unknown-manual-import-reviews --dry-run` reports 0 target rows
+    
+  - `prune_superseded_reviews.py --dry-run` reports 0 obsolete rows/artifacts
+    
+  - follow-up repair/reparse dry-runs report 0 remaining changes
     
 
 1. Copy or back up `kb/reports/review-store.sqlite`.
   
-2. Run preflight cleanup on the old DB before schema migration:
-  
-
-- prune superseded completed reviews if we still want that cleanup before the move
-  
-- prune superseded unknown manual imports if still needed
-  
-- repair manual-import decisions if still needed
-  
-- reparse decisions if parser changes are pending
-  
-
-3. Run a one-shot destructive schema migration:
+2. Run a one-shot destructive schema migration:
   
 
 - rename old tables to `legacy_review_runs`, `legacy_review_run_gates`, `legacy_gate_reviews`, `legacy_acceptance_events`
@@ -219,7 +221,7 @@ Do not keep compatibility views with those names. They will hide incomplete migr
 - map `legacy_acceptance_events.accepted_review_id` through `legacy_gate_review_map` into `accepted_review_pair_id`
   
 
-4. Verify:
+3. Verify:
   
 
 - row counts match migration expectations
@@ -231,7 +233,7 @@ Do not keep compatibility views with those names. They will hide incomplete migr
 - selectors return the same stale/current keys on a migrated scratch DB
   
 
-5. Drop legacy tables only after scratch validation:
+4. The migration script drops all legacy tables/maps after validation:
   
 
 - `legacy_review_runs`
@@ -247,7 +249,7 @@ Do not keep compatibility views with those names. They will hide incomplete migr
 - `legacy_review_run_map`
   
 
-If we want an audit trail, keep the migration script and the scratch report in the workshop, not legacy tables in the live DB.
+Keep the migration script and scratch reports in the workshop as the audit trail. Do not keep legacy tables in the live DB.
 ## Code Rewrite Plan
 ### Phase 1: Schema And DB API
 Rewrite `src/commonplace/review/review-schema.sql` first.
@@ -258,7 +260,7 @@ Rewrite `src/commonplace/review/review_db.py` around the new domain:
   
 - `ReviewPairRow`
   
-- `PendingReviewPair` or `PendingPairReview`
+- `PendingReviewPair`
   
 - `AcceptanceState` with `accepted_review_pair_id`
   
@@ -272,7 +274,7 @@ Rewrite `src/commonplace/review/review_db.py` around the new domain:
   
 - `load_completed_review_pairs_for_run(...)`
   
-- `complete_review_pair(...)` or `complete_review_pairs(...)`
+- `complete_review_pairs(...)`
   
 - `mark_missing_pairs(...)`
   
@@ -397,7 +399,7 @@ Rules:
   
 - warn selector reads completed `review_pairs`
   
-- ack commands append acceptance events pointing to `review_pair_id` when there is a current accepted pair, or `NULL` for pure ack events if that remains the intended meaning
+- ack commands append acceptance events pointing to `review_pair_id` when there is a current accepted pair, or `NULL` for pure ack events such as trivial note-change acknowledgements
   
 - relocation updates note paths in `review_pairs` and `acceptance_events`; it no longer updates `review_runs.note_path`
   
@@ -421,9 +423,7 @@ Rationale:
 
 - `write-gate-review` and `finalize-review-run` are old manual assembly tools. The live-agent path now uses bundle ingest, and the new pair model should not encourage hand-populating individual results outside the parser.
   
-- manual-import repair and unknown pruning are one-time legacy cleanups. Run them before migration if needed, then remove them from shipped commands.
-  
-- reparse decisions is a one-time repair command. If we still want it, keep it as a workshop script, not an installed command.
+- manual-import repair, unknown pruning, and decision reparse are one-time legacy cleanup paths. The preflight cleanup has already run, so remove them from shipped commands during the clean implementation.
   
 
 Rewrite, not retire:
@@ -462,6 +462,18 @@ The review system document describes the shipped review architecture and command
 
 
 Update packaging entrypoints to remove retired commands.
+
+Remove these `pyproject.toml` script entries:
+
+- `commonplace-write-gate-review`
+  
+- `commonplace-finalize-review-run`
+  
+- `commonplace-repair-manual-import-review-results`
+  
+- `commonplace-prune-superseded-unknown-manual-import-reviews`
+  
+- `commonplace-reparse-gate-review-decisions`
 
 Search production code, tests, and current operational docs after the migration:
 

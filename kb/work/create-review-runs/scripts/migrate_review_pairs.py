@@ -1002,6 +1002,57 @@ def _validate_migrated(conn: sqlite3.Connection, expected: MigrationPlan) -> Non
     if unmapped_current_acceptances:
         raise RuntimeError(f"accepted review events lost their review_pair mapping: {unmapped_current_acceptances}")
 
+    lost_gate_packed_raw = _int(
+        conn,
+        """
+        SELECT COUNT(*)
+        FROM legacy_review_runs AS legacy
+        JOIN legacy_review_run_map AS map
+          ON map.legacy_review_run_id = legacy.id
+        JOIN review_runs AS migrated
+          ON migrated.review_run_id = map.review_run_id
+        WHERE map.inferred_packing = 'gate'
+          AND legacy.raw_bundle_markdown IS NOT NULL
+          AND migrated.raw_bundle_markdown NOT LIKE (
+            '%--- legacy review_run ' || legacy.id || ' note: ' || legacy.note_path || ' ---%'
+          )
+        """,
+    )
+    if lost_gate_packed_raw:
+        raise RuntimeError(f"gate-packed raw bundle audit text lost legacy rows: {lost_gate_packed_raw}")
+
+    lost_gate_packed_debug = _int(
+        conn,
+        """
+        SELECT COUNT(*)
+        FROM legacy_review_runs AS legacy
+        JOIN legacy_review_run_map AS map
+          ON map.legacy_review_run_id = legacy.id
+        JOIN review_runs AS migrated
+          ON migrated.review_run_id = map.review_run_id
+        WHERE map.inferred_packing = 'gate'
+          AND legacy.debug_log IS NOT NULL
+          AND migrated.debug_log NOT LIKE (
+            '%--- legacy review_run ' || legacy.id || ' note: ' || legacy.note_path || ' ---%'
+          )
+        """,
+    )
+    if lost_gate_packed_debug:
+        raise RuntimeError(f"gate-packed debug audit text lost legacy rows: {lost_gate_packed_debug}")
+
+    invalid_gate_packed_telemetry = _int(
+        conn,
+        """
+        SELECT COUNT(*)
+        FROM review_runs
+        WHERE packing = 'gate'
+          AND telemetry_json LIKE '{"legacy_gate_packed_telemetry_json_by_run"%'
+          AND NOT json_valid(telemetry_json)
+        """,
+    )
+    if invalid_gate_packed_telemetry:
+        raise RuntimeError(f"gate-packed aggregated telemetry is invalid JSON: {invalid_gate_packed_telemetry}")
+
     fk_errors = conn.execute("PRAGMA foreign_key_check").fetchall()
     if fk_errors:
         raise RuntimeError(f"foreign key check failed: {fk_errors[:5]}")
@@ -1010,6 +1061,35 @@ def _validate_migrated(conn: sqlite3.Connection, expected: MigrationPlan) -> Non
     integrity_results = [str(row[0]) for row in integrity_rows]
     if integrity_results != ["ok"]:
         raise RuntimeError(f"integrity check failed: {integrity_results[:5]}")
+
+
+def _drop_legacy_schema(conn: sqlite3.Connection) -> None:
+    _exec_many(
+        conn,
+        (
+            "DROP TABLE legacy_review_run_map",
+            "DROP TABLE legacy_gate_review_map",
+            "DROP TABLE legacy_acceptance_events",
+            "DROP TABLE legacy_gate_reviews",
+            "DROP TABLE legacy_review_run_gates",
+            "DROP TABLE legacy_review_runs",
+        ),
+    )
+
+
+def _validate_clean_schema(conn: sqlite3.Connection) -> None:
+    legacy_tables = sorted(name for name in _table_names(conn) if name.startswith("legacy_"))
+    if legacy_tables:
+        raise RuntimeError(f"legacy tables remain after migration: {', '.join(legacy_tables)}")
+
+    fk_errors = conn.execute("PRAGMA foreign_key_check").fetchall()
+    if fk_errors:
+        raise RuntimeError(f"foreign key check failed after legacy drop: {fk_errors[:5]}")
+
+    integrity_rows = conn.execute("PRAGMA integrity_check").fetchall()
+    integrity_results = [str(row[0]) for row in integrity_rows]
+    if integrity_results != ["ok"]:
+        raise RuntimeError(f"integrity check failed after legacy drop: {integrity_results[:5]}")
 
 
 def apply_migration(conn: sqlite3.Connection, expected: MigrationPlan) -> None:
@@ -1026,6 +1106,8 @@ def apply_migration(conn: sqlite3.Connection, expected: MigrationPlan) -> None:
         _record_migration(conn)
         conn.execute("PRAGMA foreign_keys = ON")
         _validate_migrated(conn, expected)
+        _drop_legacy_schema(conn)
+        _validate_clean_schema(conn)
     except Exception:
         conn.execute("ROLLBACK")
         raise
