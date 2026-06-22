@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS review_runs (
     raw_bundle_markdown TEXT,
     debug_log TEXT,
     packing TEXT NOT NULL CHECK (
-        packing IN ('note', 'gate', 'manual-import')
+        packing IN ('note', 'gate')
     )
 );
 
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS review_pairs (
     reviewed_note_commit TEXT,
     reviewed_at TEXT,
     review_kind TEXT NOT NULL CHECK (
-        review_kind IN ('full-review', 'manual-import')
+        review_kind IN ('full-review')
     ),
     UNIQUE (review_run_id, note_path, gate_id),
     UNIQUE (review_run_id, pair_ordinal)

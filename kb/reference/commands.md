@@ -136,13 +136,15 @@ commonplace-run-gate-sweep semantic/grounding-alignment --runner claude-code --m
 
 ### commonplace-create-review-run
 
-Create a review run record in the review database. With `--with-prompt`, also emits the canonical bundle prompt and artifact paths for live-agent review.
+Create a review run record in the review database. With `--with-prompt`, also emits the canonical bundle prompt, `MANIFEST.json`, and artifact paths for live-agent review.
 
 ```bash
 commonplace-create-review-run kb/notes/my-note.md prose --runner claude-code --model claude-opus-4-6
 commonplace-create-review-run kb/notes/my-note.md prose --runner claude-code --model claude-opus-4-6 --json
 commonplace-create-review-run kb/notes/my-note.md prose --runner claude-code --model claude-opus-4-6 --with-prompt
 ```
+
+The `--with-prompt` JSON payload includes `prompt_path`, `bundle_output_path`, and `manifest_path`. The manifest lists each pair and its packing-derived `result_path`; note-packed runs use gate filenames such as `prose__source-residue.md`.
 
 ### commonplace-ingest-bundle-output
 
@@ -154,7 +156,7 @@ commonplace-ingest-bundle-output --review-run-id 42 --input-file kb/reports/bund
 
 ### commonplace-prepare-review-batch
 
-Create one review run for a note-packed or gate-packed set of `(note, gate)` pairs and render one batch prompt for an external executor (live agent or orchestrator). Returns `review_run_id`, per-pair metadata, skipped pairs, and artifact paths as JSON.
+Create one review run for a note-packed or gate-packed set of `(note, gate)` pairs and render one batch prompt for an external executor (live agent or orchestrator). Returns `review_run_id`, per-pair metadata, skipped pairs, and artifact paths, including `manifest_path`, as JSON.
 
 ```bash
 commonplace-prepare-review-batch kb/notes/a.md::prose/source-residue kb/notes/b.md::prose/source-residue --runner live-agent --model claude-opus-4-6
@@ -231,7 +233,7 @@ commonplace-prune-superseded-reviews --apply
 
 ### commonplace-repair-model-partitions
 
-Collapse known model aliases in review runs, review pairs, acceptance events, and legacy rendered review files.
+Collapse known model aliases in review runs, review pairs, and acceptance events.
 
 ```bash
 commonplace-repair-model-partitions --dry-run

@@ -15,6 +15,8 @@ from commonplace.review.protocol.decisions import normalize_review_decision
 DEFAULT_DB_PATH = Path("kb/reports/review-store.sqlite")
 SCHEMA_PATH = "review-schema.sql"
 DB_ENV_VAR = "COMMONPLACE_REVIEW_DB"
+PACKING_VALUES = frozenset({"note", "gate"})
+REVIEW_KIND_VALUES = frozenset({"full-review"})
 
 
 @dataclass(frozen=True)
@@ -201,6 +203,8 @@ def create_run(
     raw_bundle_markdown: str | None = None,
     debug_log: str | None = None,
 ) -> int:
+    if packing not in PACKING_VALUES:
+        raise ValueError(f"invalid review run packing: {packing}")
     cursor = conn.execute(
         """
         INSERT INTO review_runs (
@@ -242,6 +246,8 @@ def create_review_pairs(
 ) -> list[int]:
     review_pair_ids: list[int] = []
     for pair in pairs:
+        if pair.review_kind not in REVIEW_KIND_VALUES:
+            raise ValueError(f"invalid review kind: {pair.review_kind}")
         cursor = conn.execute(
             """
             INSERT INTO review_pairs (
@@ -498,6 +504,8 @@ def complete_review_pairs(
     completed_pair_ids: list[int] = []
     seen: set[tuple[str, str]] = set()
     for review_pair in review_pairs:
+        if review_pair.review_kind not in REVIEW_KIND_VALUES:
+            raise ValueError(f"invalid review kind: {review_pair.review_kind}")
         key = (review_pair.note_path, review_pair.gate_id)
         if key in seen:
             raise ValueError(f"duplicate completed pair: {review_pair.note_path} :: {review_pair.gate_id}")

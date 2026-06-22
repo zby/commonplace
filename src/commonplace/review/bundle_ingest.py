@@ -11,6 +11,7 @@ import sqlite3
 from pathlib import Path
 from typing import Sequence
 
+from commonplace.review.artifacts import write_manifest
 from commonplace.review.executor import (
     bundle_artifact_dir,
     finalize_run_from_pairs,
@@ -18,7 +19,7 @@ from commonplace.review.executor import (
     write_run_artifacts,
 )
 from commonplace.review.protocol.parser import parse_pair_bundle
-from commonplace.review.review_db import fail_review_run, mark_missing_pairs
+from commonplace.review.review_db import fail_review_run, load_review_pairs_for_run, load_review_run, mark_missing_pairs
 from commonplace.review.review_metadata import iso_now
 
 
@@ -53,14 +54,7 @@ def parse_and_finalize_bundle_output(
         raise
 
     completed_pairs = tuple(pair for pair in pairs if pair not in set(parsed.missing))
-    write_artifacts_for_run(
-        repo_root=repo_root,
-        review_run_id=review_run_id,
-        pairs=completed_pairs,
-        parsed=parsed,
-    )
-
-    return finalize_run_from_pairs(
+    completed_count = finalize_run_from_pairs(
         conn,
         review_run_id=review_run_id,
         pairs=completed_pairs,
@@ -70,3 +64,25 @@ def parse_and_finalize_bundle_output(
         debug_log=debug_log,
         actual_model_id=actual_model_id,
     )
+    review_run = load_review_run(conn, review_run_id=review_run_id)
+    updated_pairs = load_review_pairs_for_run(conn, review_run_id=review_run_id)
+    if review_run is not None:
+        write_artifacts_for_run(
+            repo_root=repo_root,
+            review_run_id=review_run_id,
+            pairs=completed_pairs,
+            parsed=parsed,
+            packing=review_run.packing,
+        )
+        artifact_dir_rel = artifact_dir.relative_to(repo_root).as_posix()
+        write_manifest(
+            repo_root=repo_root,
+            artifact_dir=artifact_dir,
+            review_run_id=review_run_id,
+            packing=review_run.packing,
+            prompt_path=f"{artifact_dir_rel}/prompt.md",
+            bundle_output_path=f"{artifact_dir_rel}/bundle-output.md",
+            pairs=updated_pairs,
+            failure_reason=review_run.failure_reason,
+        )
+    return completed_count

@@ -129,10 +129,17 @@ def test_create_review_run_with_prompt_creates_one_note_packed_run(tmp_path: Pat
     review_run_id = payload["review_run_id"]
     assert payload["gate_ids"] == [GATE_ONE, GATE_TWO]
     assert payload["prompt_path"] == f"kb/reports/bundle-reviews/review-run-{review_run_id}/prompt.md"
+    assert payload["manifest_path"] == f"kb/reports/bundle-reviews/review-run-{review_run_id}/MANIFEST.json"
 
     prompt = (repo / payload["prompt_path"]).read_text(encoding="utf-8")
     assert f"=== PAIR REVIEW START: kb/notes/sample.md :: {GATE_ONE} ===" in prompt
     assert f"=== PAIR REVIEW START: kb/notes/sample.md :: {GATE_TWO} ===" in prompt
+    manifest = json.loads((repo / payload["manifest_path"]).read_text(encoding="utf-8"))
+    assert manifest["packing"] == "note"
+    assert [pair["result_path"] for pair in manifest["pairs"]] == [
+        f"kb/reports/bundle-reviews/review-run-{review_run_id}/accessibility__undefined-terms.md",
+        f"kb/reports/bundle-reviews/review-run-{review_run_id}/prose__source-residue.md",
+    ]
 
     with sqlite3.connect(db_path) as conn:
         conn.row_factory = sqlite3.Row
@@ -180,6 +187,14 @@ def test_ingest_bundle_output_finalizes_review_pairs(tmp_path: Path) -> None:
     )
 
     assert result.stdout.strip() == f"completed {prepared['review_run_id']} 2"
+    artifact_dir = repo / "kb" / "reports" / "bundle-reviews" / f"review-run-{prepared['review_run_id']}"
+    assert (artifact_dir / "accessibility__undefined-terms.md").read_text(encoding="utf-8").strip().endswith(
+        "## Result: WARN"
+    )
+    assert (artifact_dir / "prose__source-residue.md").read_text(encoding="utf-8").strip().endswith("## Result: PASS")
+    assert not (artifact_dir / "kb__notes__sample.md :: accessibility__undefined-terms.md").exists()
+    manifest = json.loads((artifact_dir / "MANIFEST.json").read_text(encoding="utf-8"))
+    assert [pair["status"] for pair in manifest["pairs"]] == ["completed", "completed"]
     with sqlite3.connect(db_path) as conn:
         conn.row_factory = sqlite3.Row
         run = conn.execute("SELECT status FROM review_runs").fetchone()

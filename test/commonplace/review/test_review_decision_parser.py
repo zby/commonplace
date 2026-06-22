@@ -40,16 +40,6 @@ def test_parse_review_decision_uses_highest_finding_severity_without_explicit_ou
     assert decisions.parse_review_decision(review_text) == "fail"
 
 
-def test_parse_review_decision_supports_legacy_heading() -> None:
-    review_text = """<!-- REVIEW-METADATA -->
-## PASS
-
-Looks good.
-"""
-
-    assert decisions.parse_review_decision(review_text) == "pass"
-
-
 def test_parse_review_decision_supports_revised_result_override() -> None:
     review_text = """## Result: WARN
 
@@ -156,53 +146,6 @@ No findings.
     assert decisions.rewrite_review_result_footer(review_text, decision="unknown") == (
         "Pass\n\nNo findings.\n\n## Result: UNKNOWN\n"
     )
-
-
-def test_infer_manual_import_review_decision_prefers_legacy_body_over_stale_warn_footer() -> None:
-    review_text = """<!-- REVIEW-METADATA
-note-path: kb/notes/sample.md
--->
-pass
-
-No findings.
-
-## Result: WARN
-"""
-
-    assert decisions.infer_manual_import_review_decision(review_text) == "pass"
-
-
-def test_infer_manual_import_review_decision_handles_yaml_style_legacy_header() -> None:
-    review_text = """---
-gate: prose/bridge-paragraph-duplication
----
-
-No instances found.
-
-## Result: WARN
-"""
-
-    assert decisions.infer_manual_import_review_decision(review_text) == "pass"
-
-
-def test_infer_manual_import_review_decision_supports_relaxed_result_line() -> None:
-    review_text = """## Result: PASS (1 INFO)
-
-The alignment is plausible but not exact.
-"""
-
-    assert decisions.infer_manual_import_review_decision(review_text) == "pass"
-
-
-def test_infer_manual_import_review_decision_supports_bold_result_line() -> None:
-    review_text = """## prose/anthropomorphic-framing
-
-**Result: WARN**
-
-One instance to fix.
-"""
-
-    assert decisions.infer_manual_import_review_decision(review_text) == "warn"
 
 
 def test_ensure_db_does_not_mutate_existing_review_pair_schema(tmp_path: Path) -> None:

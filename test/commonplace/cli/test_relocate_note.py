@@ -142,25 +142,15 @@ def test_resolve_destination_path_accepts_directory_target(tmp_path: Path) -> No
 
 def test_relocate_note_apply_runs_review_relocation_hook(tmp_path: Path, monkeypatch) -> None:
     """End-to-end coverage for ReviewRelocationHook: relocating a note must
-    move its legacy review file and rekey its review-DB rows. Link rewriting,
-    mkdocs redirect updates, and DB rekey mechanics are covered by dedicated
-    unit tests; this test only verifies the hook is wired into relocate_note."""
+    rekey its review-DB rows. Link rewriting, mkdocs redirect updates, and DB
+    rekey mechanics are covered by dedicated unit tests; this test only verifies
+    the hook is wired into relocate_note."""
     repo_root = tmp_path
     kb_root = repo_root / "kb"
     notes_root = kb_root / "notes"
     write(notes_root / "COLLECTION.md", "# Notes collection\n")
     old_note = write(notes_root / "old-note.md", "# Old note\n")
     write(repo_root / "mkdocs.yml", "plugins:\n  - redirects:\n      redirect_maps:\n")
-    legacy_review = write(
-        kb_root / "reports" / "reviews" / "kb__notes__old-note" / "prose__source-residue.opus-4-6.md",
-        """<!-- REVIEW-METADATA
-note-path: kb/notes/old-note.md
-gate-id: prose/source-residue
-review-type: gate-review
--->
-## Result: PASS
-""",
-    )
     db_path = kb_root / "reports" / "review-store.sqlite"
     review_db.ensure_db(repo_root, db_path)
     with review_db.connect(db_path) as conn:
@@ -197,11 +187,6 @@ review-type: gate-review
     assert result == 0
     assert not old_note.exists()
     assert new_note.exists()
-
-    moved_review = kb_root / "reports" / "reviews" / "kb__notes__archive__new-note-title" / legacy_review.name
-    assert not legacy_review.exists()
-    assert moved_review.exists()
-    assert "note-path: kb/notes/archive/new-note-title.md" in moved_review.read_text(encoding="utf-8")
 
     with review_db.connect(db_path) as conn:
         counts = review_db.count_note_path_records(conn, note_path="kb/notes/archive/new-note-title.md")

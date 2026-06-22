@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from commonplace.review.artifacts import encode_stage_filename
 from commonplace.review import executor, review_db
 from test.commonplace.review.pair_helpers import accept_pair
 
@@ -70,7 +71,7 @@ def _write_run_artifacts(repo: Path, review_run_id: int, gate_ids: tuple[str, ..
     (artifact_dir / "bundle-output.md").write_text("raw bundle output\n", encoding="utf-8")
     (artifact_dir / "prompt.md").write_text("prompt\n", encoding="utf-8")
     for gate_id in gate_ids:
-        (artifact_dir / executor.encode_stage_filename(gate_id)).write_text(
+        (artifact_dir / encode_stage_filename(gate_id)).write_text(
             f"{gate_id} review\n",
             encoding="utf-8",
         )
@@ -218,8 +219,8 @@ def test_prune_superseded_reviews_deletes_rows_and_whole_obsolete_run_artifacts(
     assert "mode: apply" in applied.stdout
     assert not old_full_artifacts.exists()
     assert mixed_artifacts.exists()
-    assert (mixed_artifacts / executor.encode_stage_filename("prose/source-residue")).exists()
-    assert (mixed_artifacts / executor.encode_stage_filename("semantic/grounding-alignment")).exists()
+    assert (mixed_artifacts / encode_stage_filename("prose/source-residue")).exists()
+    assert (mixed_artifacts / encode_stage_filename("semantic/grounding-alignment")).exists()
 
     with review_db.connect(db_path) as conn:
         review_pair_ids = {

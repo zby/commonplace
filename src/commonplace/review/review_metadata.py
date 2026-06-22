@@ -15,10 +15,6 @@ _METADATA_BLOCK_RE = re.compile(
     r"\A<!-- REVIEW-METADATA\n(?P<body>.*?)\n-->\n?",
     re.DOTALL,
 )
-_LEGACY_NOTE_HEADER_RE = re.compile(
-    r"^===\s+[A-Z0-9 _-]+ REVIEW:\s+(?P<filename>.+?\.md)\s+===\s*$",
-    re.MULTILINE,
-)
 
 
 @dataclass(frozen=True)
@@ -114,13 +110,6 @@ def detect_review_type(review_path: Path) -> str:
     if len(parts) >= 3:
         return parts[-2]
     return review_path.stem
-
-
-def extract_note_filename(review_text: str) -> str | None:
-    match = _LEGACY_NOTE_HEADER_RE.search(review_text)
-    if match is None:
-        return None
-    return match.group("filename")
 
 
 def _run_git(repo_root: Path, args: list[str]) -> subprocess.CompletedProcess[str]:

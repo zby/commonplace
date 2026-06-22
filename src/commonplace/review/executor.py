@@ -17,11 +17,19 @@ from pathlib import Path
 
 from commonplace.lib import frontmatter
 from commonplace.lib.note_parser import find_markdown_links_with_text
+from commonplace.review.artifacts import write_manifest, write_pair_result_files
 from commonplace.review.finalization import record_and_finalize_run
 from commonplace.review.protocol.format import PAIR_END_TEMPLATE, PAIR_START_TEMPLATE
 from commonplace.review.protocol.parser import ParsedPairBundle, parse_pair_bundle
 from commonplace.review.protocol.prompt import NoteReviewTarget, render_pairs_prompt
-from commonplace.review.review_db import PendingReviewPair, attach_execution_data, connect, fail_review_run
+from commonplace.review.review_db import (
+    PendingReviewPair,
+    attach_execution_data,
+    connect,
+    fail_review_run,
+    load_review_pairs_for_run,
+    load_review_run,
+)
 from commonplace.review.review_metadata import iso_now
 from commonplace.review.review_model import build_model_id
 from commonplace.review.runners import run_prompt
@@ -59,10 +67,6 @@ class RunPairs:
     pairs: tuple[tuple[str, str], ...]
 
 
-def encode_stage_filename(gate_id: str) -> str:
-    return gate_id.replace("/", "__") + ".md"
-
-
 def bundle_artifact_dir(repo_root: Path, review_run_id: int) -> Path:
     return repo_root / BUNDLE_ARTIFACTS_ROOT / f"review-run-{review_run_id}"
 
@@ -71,14 +75,9 @@ def write_run_artifacts(
     *,
     artifact_dir: Path,
     bundle_markdown: str,
-    gate_texts: dict[str, str] | None = None,
 ) -> None:
     artifact_dir.mkdir(parents=True, exist_ok=True)
     (artifact_dir / "bundle-output.md").write_text(bundle_markdown, encoding="utf-8")
-    if gate_texts is None:
-        return
-    for gate_id, review_text in gate_texts.items():
-        (artifact_dir / encode_stage_filename(gate_id)).write_text(review_text, encoding="utf-8")
 
 
 def combine_logs(stdout: str, stderr: str) -> str | None:
@@ -281,16 +280,20 @@ def write_artifacts_for_run(
     review_run_id: int,
     pairs: tuple[tuple[str, str], ...],
     parsed: ParsedPairBundle,
+    packing: str,
 ) -> None:
-    run_document, pair_texts = assemble_run_document(
+    run_document, _ = assemble_run_document(
         review_run_id=review_run_id,
         pairs=pairs,
         canonical_texts=parsed.canonical_texts,
     )
-    write_run_artifacts(
-        artifact_dir=bundle_artifact_dir(repo_root, review_run_id),
-        bundle_markdown=run_document,
-        gate_texts=pair_texts,
+    artifact_dir = bundle_artifact_dir(repo_root, review_run_id)
+    write_run_artifacts(artifact_dir=artifact_dir, bundle_markdown=run_document)
+    write_pair_result_files(
+        artifact_dir=artifact_dir,
+        packing=packing,
+        pairs=pairs,
+        canonical_texts=parsed.canonical_texts,
     )
 
 
@@ -417,14 +420,7 @@ def finalize_runs_from_parsed(
     actual_model_id: str | None = None,
 ) -> tuple[list[int], list[tuple[int, str]]]:
     """Finalize parsed runs and write each run's canonical artifacts."""
-    for run in run_pairs:
-        write_artifacts_for_run(
-            repo_root=repo_root,
-            review_run_id=run.review_run_id,
-            pairs=tuple(pair for pair in run.pairs if pair not in set(parsed.missing)),
-            parsed=parsed,
-        )
-    return finalize_run_records_from_parsed(
+    completed, failed = finalize_run_records_from_parsed(
         db_path=db_path,
         run_pairs=run_pairs,
         parsed=parsed,
@@ -433,6 +429,43 @@ def finalize_runs_from_parsed(
         debug_log=debug_log,
         actual_model_id=actual_model_id,
     )
+    with connect(db_path) as conn:
+        rows_by_run = {
+            run.review_run_id: (
+                load_review_run(conn, review_run_id=run.review_run_id),
+                load_review_pairs_for_run(conn, review_run_id=run.review_run_id),
+            )
+            for run in run_pairs
+        }
+    for run in run_pairs:
+        review_run, updated_pairs = rows_by_run[run.review_run_id]
+        if review_run is None:
+            continue
+        completed_pairs = tuple(
+            (pair.note_path, pair.gate_id)
+            for pair in updated_pairs
+            if pair.pair_status == "completed"
+        )
+        write_artifacts_for_run(
+            repo_root=repo_root,
+            review_run_id=run.review_run_id,
+            pairs=completed_pairs,
+            parsed=parsed,
+            packing=review_run.packing,
+        )
+        artifact_dir = bundle_artifact_dir(repo_root, run.review_run_id)
+        artifact_dir_rel = artifact_dir.relative_to(repo_root).as_posix()
+        write_manifest(
+            repo_root=repo_root,
+            artifact_dir=artifact_dir,
+            review_run_id=run.review_run_id,
+            packing=review_run.packing,
+            prompt_path=f"{artifact_dir_rel}/prompt.md",
+            bundle_output_path=f"{artifact_dir_rel}/bundle-output.md",
+            pairs=updated_pairs,
+            failure_reason=review_run.failure_reason,
+        )
+    return completed, failed
 
 
 def missing_pairs_by_run(

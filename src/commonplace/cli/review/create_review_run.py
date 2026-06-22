@@ -7,11 +7,13 @@ import argparse
 import json
 from pathlib import Path
 
+from commonplace.review.artifacts import write_manifest
 from commonplace.review.paths import GATES_ROOT
 from commonplace.review.review_db import (
     ReviewPairRequest,
     connect,
     create_run_with_pairs,
+    load_review_pairs_for_run,
     prepare_review_db,
 )
 from commonplace.review.review_metadata import resolve_review_target
@@ -73,6 +75,7 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
                 for gate_id, gate_sha, ordinal in run_gates
             ],
         )
+        stored_pairs = load_review_pairs_for_run(conn, review_run_id=review_run_id)
         conn.commit()
 
     artifact_dir = bundle_artifact_dir(repo_root, review_run_id)
@@ -94,6 +97,17 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
             bundle_output_path=bundle_output_path_rel,
         )
         prompt_path.write_text(prompt, encoding="utf-8")
+        manifest_path = write_manifest(
+            repo_root=repo_root,
+            artifact_dir=artifact_dir,
+            review_run_id=review_run_id,
+            packing="note",
+            prompt_path=prompt_path_rel,
+            bundle_output_path=bundle_output_path_rel,
+            pairs=stored_pairs,
+        )
+    else:
+        manifest_path = None
 
     if args.json or args.with_prompt:
         payload = {
@@ -111,6 +125,7 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
         }
         if args.with_prompt:
             payload["prompt_path"] = prompt_path_rel
+            payload["manifest_path"] = manifest_path
         print(
             json.dumps(
                 payload,

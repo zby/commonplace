@@ -1,0 +1,137 @@
+"""Filesystem artifacts for review runs."""
+
+from __future__ import annotations
+
+import json
+from pathlib import Path
+from typing import Protocol, Sequence
+
+
+MANIFEST_NAME = "MANIFEST.json"
+
+
+class ReviewPairForManifest(Protocol):
+    review_pair_id: int
+    note_path: str
+    gate_id: str
+    pair_status: str
+
+
+class SkippedPairForManifest(Protocol):
+    note_path: str
+    gate_id: str
+    reason: str
+
+
+def encode_stage_filename(gate_id: str) -> str:
+    return gate_id.replace("/", "__") + ".md"
+
+
+def _note_filename(note_path: str, all_note_paths: Sequence[str]) -> str:
+    name = Path(note_path).name
+    all_names = [Path(path).name for path in all_note_paths]
+    if all_names.count(name) == 1:
+        return name
+    return note_path.replace("/", "__")
+
+
+def result_filename(
+    *,
+    packing: str,
+    note_path: str,
+    gate_id: str,
+    all_note_paths: Sequence[str],
+) -> str:
+    if packing == "note":
+        return encode_stage_filename(gate_id)
+    if packing == "gate":
+        return _note_filename(note_path, all_note_paths)
+    note_name = _note_filename(note_path, all_note_paths).removesuffix(".md")
+    return f"{note_name}__{encode_stage_filename(gate_id)}"
+
+
+def result_path(
+    *,
+    artifact_dir_rel: str,
+    packing: str,
+    note_path: str,
+    gate_id: str,
+    all_note_paths: Sequence[str],
+) -> str:
+    return (
+        f"{artifact_dir_rel}/"
+        f"{result_filename(packing=packing, note_path=note_path, gate_id=gate_id, all_note_paths=all_note_paths)}"
+    )
+
+
+def write_pair_result_files(
+    *,
+    artifact_dir: Path,
+    packing: str,
+    pairs: Sequence[tuple[str, str]],
+    canonical_texts: dict[tuple[str, str], str],
+) -> None:
+    all_note_paths = [note_path for note_path, _ in pairs]
+    artifact_dir.mkdir(parents=True, exist_ok=True)
+    for note_path, gate_id in pairs:
+        review_text = canonical_texts.get((note_path, gate_id))
+        if review_text is None:
+            continue
+        filename = result_filename(
+            packing=packing,
+            note_path=note_path,
+            gate_id=gate_id,
+            all_note_paths=all_note_paths,
+        )
+        (artifact_dir / filename).write_text(review_text, encoding="utf-8")
+
+
+def write_manifest(
+    *,
+    repo_root: Path,
+    artifact_dir: Path,
+    review_run_id: int,
+    packing: str,
+    prompt_path: str,
+    bundle_output_path: str,
+    pairs: Sequence[ReviewPairForManifest],
+    skipped: Sequence[SkippedPairForManifest] | None = None,
+    failure_reason: str | None = None,
+) -> str:
+    all_note_paths = [pair.note_path for pair in pairs]
+    artifact_dir_rel = artifact_dir.relative_to(repo_root).as_posix()
+    payload_pairs: list[dict[str, object]] = []
+    for pair in pairs:
+        item: dict[str, object] = {
+            "review_pair_id": pair.review_pair_id,
+            "note_path": pair.note_path,
+            "gate_id": pair.gate_id,
+            "status": pair.pair_status,
+            "result_path": result_path(
+                artifact_dir_rel=artifact_dir_rel,
+                packing=packing,
+                note_path=pair.note_path,
+                gate_id=pair.gate_id,
+                all_note_paths=all_note_paths,
+            ),
+        }
+        if failure_reason is not None:
+            item["failure_reason"] = failure_reason
+        payload_pairs.append(item)
+
+    payload: dict[str, object] = {
+        "artifact_schema": "review-run-prompt-v1",
+        "review_run_id": review_run_id,
+        "packing": packing,
+        "prompt_path": prompt_path,
+        "bundle_output_path": bundle_output_path,
+        "pairs": payload_pairs,
+        "skipped_pairs": [
+            {"note_path": pair.note_path, "gate_id": pair.gate_id, "reason": pair.reason}
+            for pair in (skipped or [])
+        ],
+    }
+    manifest_path = artifact_dir / MANIFEST_NAME
+    artifact_dir.mkdir(parents=True, exist_ok=True)
+    manifest_path.write_text(json.dumps(payload, ensure_ascii=True, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    return manifest_path.relative_to(repo_root).as_posix()

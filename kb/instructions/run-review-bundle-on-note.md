@@ -27,6 +27,7 @@ Capture the JSON output, especially:
 - `review_run_id`
 - `prompt_path`
 - `bundle_output_path`
+- `manifest_path`
 - `gate_ids`
 
 Do not invent or reorder `gate_ids`; use exactly what the helper resolves.
@@ -44,6 +45,8 @@ commonplace-ingest-bundle-output --review-run-id {review-run-id} --input-file {b
 ```
 
 This parses the bundle with the same parser used by `commonplace-run-review-bundle`, records the per-pair reviews, and finalizes the review run.
+
+After ingest, `MANIFEST.json` at `manifest_path` is refreshed with pair statuses and per-gate `result_path` files. For this single-note path, parsed review files are named by gate id, for example `sentence__clause-packing.md`.
 
 ## Do not
 

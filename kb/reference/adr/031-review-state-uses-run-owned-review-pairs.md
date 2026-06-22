@@ -31,7 +31,7 @@ Store review execution state as run-owned review pairs.
 
 Concretely:
 
-- `review_runs` stores one prompt invocation and records runner, model, status, telemetry, raw output, debug log, and `packing` (`note`, `gate`, or `manual-import`).
+- `review_runs` stores one prompt invocation and records runner, model, status, telemetry, raw output, debug log, and `packing` (`note` or `gate`).
 - `review_pairs` stores every requested `(note_path, gate_id)` pair inside that run, including pair ordinal, pair status (`pending`, `completed`, `missing`), decision, rationale, evidence, gate SHA, reviewed note SHA, reviewed note commit, model id, review time, and review kind.
 - `acceptance_events` points to the accepted `review_pair_id` when acceptance comes from a completed review; ack and override events may have no accepted pair.
 - The current freshness view remains acceptance-driven: latest acceptance per `(note_path, gate_id, model_id)` is compared to current note and gate SHAs.

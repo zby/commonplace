@@ -47,7 +47,7 @@ Primary tables:
 
 - `review_runs`
   - one row per review invocation
-  - stores runner/model, status, packing (`note`, `gate`, or `manual-import`), telemetry, raw bundle markdown, and debug log
+  - stores runner/model, status, packing (`note` or `gate`), telemetry, raw bundle markdown, and debug log
 - `review_pairs`
   - one row per requested `(note_path, gate_id)` pair inside a run
   - stores pair status (`pending`, `completed`, `missing`), decision, rationale markdown, explicit `model_id`, reviewed note sha, and gate sha
@@ -73,7 +73,7 @@ The Python layer assigns the canonical DB statuses.
 
 The human-readable `rationale_markdown` is not canonical state. It may use different casing or wording inside the review body, for example `## Result: PASS` or `- WARN: ...`. That is acceptable. Treat the DB columns as the source of truth; review-body result lines are parse inputs and readability affordances, not the canonical status layer.
 
-For stored gate review prose, the canonical layout places the parseable `## Result:` line at the end of the review block. The parser still accepts legacy result-first layouts on ingest.
+For stored gate review prose, the canonical layout places the parseable `## Result:` line at the end of the review block.
 
 ## Freshness and staleness
 
@@ -110,6 +110,8 @@ For live agent work, the preferred path is the prompt-plus-ingest helper chain:
 1. `commonplace-create-review-run --with-prompt`
 2. write `kb/reports/bundle-reviews/review-run-{id}/bundle-output.md`
 3. `commonplace-ingest-bundle-output`
+
+The run directory also carries `MANIFEST.json`. The manifest is created with pending pairs when the prompt is created and refreshed after ingest with pair statuses and parsed `result_path` files.
 
 A full review write contributes:
 

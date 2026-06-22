@@ -184,6 +184,7 @@ Every output block is keyed by the full (note, gate) pair:
 - `protocol/prompt.py` — `render_pairs_prompt(notes, gate_texts, output_mode)` over `NoteReviewTarget`s. Note contents are always embedded; the multi-note shape adds the evaluate-independently rule; `output_mode="file"` swaps the destination bullets for the live-agent path.
 - `protocol/parser.py` — `parse_pair_bundle` raises on structural anomalies (nested/mismatched/unterminated/unexpected/duplicate/empty blocks) but reports missing expected pairs in `missing` instead of raising, so callers salvage the pairs that parsed.
 - `protocol/decisions.py` — decision-line parsing and footer canonicalization; grammar-independent, also used for historical rows.
+- `artifacts.py` — shared artifact naming and manifest writing. It is the only place that maps packing to parsed result filenames: note-packed runs use gate filenames, gate-packed runs use note filenames, and mixed fallback uses note-plus-gate filenames.
 - `executor.py` — `execute_batch(targets, gate_texts, …)` owns the shared lifecycle: render, one runner call, telemetry/model-mismatch handling, usage-exhaustion (`UsageExhausted`) and interrupt handling, parse, then per-run finalize or fail. Each run's `bundle-output.md` artifact and `raw_bundle_markdown` hold that run's canonical pair blocks; failed runs keep the raw batch output for debugging.
 
 ### Packing callers
@@ -191,9 +192,9 @@ Every output block is keyed by the full (note, gate) pair:
 - **`run_review_bundle.py` — share-note packing.** One note, all its gates, one call, one run.
 - **`run_gate_sweep.py` — share-gate packing (experimental).** One gate over a chunked note list; one gate-packed run per prompt batch; missing pairs are marked `missing`, parsed pairs are retained, and the invocation records a failure.
 - **Live-agent path (single note)** — same protocol without a nested runner:
-  1. `commonplace-create-review-run --with-prompt` creates the run and writes the canonical prompt to `kb/reports/bundle-reviews/review-run-{id}/prompt.md` (path returned as `prompt_path` in the JSON payload)
+  1. `commonplace-create-review-run --with-prompt` creates the run, writes the canonical prompt to `kb/reports/bundle-reviews/review-run-{id}/prompt.md`, writes `MANIFEST.json`, and returns `prompt_path`, `bundle_output_path`, and `manifest_path` in the JSON payload
   2. the current agent reads `prompt_path`, follows it, and writes `kb/reports/bundle-reviews/review-run-{id}/bundle-output.md`
-  3. `commonplace-ingest-bundle-output` parses that artifact and finalizes through `record_and_finalize_run` (single-run ingest is all-or-nothing)
+  3. `commonplace-ingest-bundle-output` parses that artifact, finalizes through `record_and_finalize_run` (single-run ingest is all-or-nothing), writes packing-derived parsed result files, and refreshes `MANIFEST.json`
 - **External-executor batch path (`batch.py`)** — deterministic ends for any orchestrator that owns its own fan-out (a live agent reviewing many pairs, or a harness workflow spawning sub-agents per batch); decision record: [ADR 030](./adr/030-harness-facing-seams-batch-endpoints-and-runner-adapters.md).
   1. `commonplace-prepare-review-batch <note>::<gate>... --runner <label> --model <id>` creates one note-packed or gate-packed run for the pair set (inapplicable gates skipped and reported; missing notes/gates and dirty gates fatal) and writes the canonical prompt under `kb/reports/bundle-reviews/review-run-{review_run_id}/`; returns `review_run_id`, pair metadata, skipped pairs, `prompt_path`, `bundle_output_path`, and `manifest_path` as JSON
   2. the executor follows the prompt and writes `bundle_output_path`
@@ -243,4 +244,4 @@ These are operational commands for database maintenance. All support `--dry-run`
 | Command | Purpose |
 |---|---|
 | `prune-superseded-reviews` | Delete superseded non-current review pairs; delete whole run artifact directories only when every pair in the run is obsolete |
-| `repair-model-partitions` | Collapse known model aliases in review runs, review pairs, acceptance events, and legacy rendered review files |
+| `repair-model-partitions` | Collapse known model aliases in review runs, review pairs, and acceptance events |

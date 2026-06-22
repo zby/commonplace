@@ -27,7 +27,7 @@ def insert_completed_pair(
         model_id=model_id,
         runner=runner,
         started_at=started,
-        packing="manual-import" if review_kind == "manual-import" else "note",
+        packing="note",
         pairs=[
             review_db.ReviewPairRequest(
                 note_path=note_path,

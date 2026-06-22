@@ -1,5 +1,5 @@
 ---
-description: "The review system's execution medium becomes pluggable at two seams: batch-granular prepare/ingest CLI endpoints let any external orchestrator (live agent, harness workflow) execute review batches, and runner adapters put each subprocess harness CLI behind one registry-backed interface"
+description: "Batch prepare/ingest CLIs expose review pair execution to external orchestrators, and runner adapters put subprocess harness CLIs behind one registry-backed interface"
 type: ../types/adr.md
 tags: []
 status: accepted
@@ -20,9 +20,9 @@ Review execution runs through interchangeable media: a subprocess runner, a live
 ## Decision
 
 1. **Batch-granular endpoints.** `commonplace.review.batch` plus two CLIs expose the executor's batch machinery to external executors:
-   - `commonplace-prepare-review-batch <note-path>::<gate-id>... --runner <label> --model <id>` — creates one review run per note for an arbitrary pair set (inapplicable gates are skipped and reported; missing notes/gates and dirty gates are fatal), renders the canonical pair prompt in file mode, and returns run ids, skipped pairs, `prompt_path`, and `bundle_output_path` as JSON. Batch artifacts live under `kb/reports/bundle-reviews/review-batch-{first-run-id}/`.
-   - `commonplace-ingest-batch-output --review-run-ids <id>... --input-file <path>` — parses the pair output and finalizes with the executor's salvage policy: runs whose pairs all parsed complete, runs with missing pairs fail individually, structural parse errors fail all listed runs. Returns completed/failed as JSON; exit 1 if any run failed.
-   The salvage finalization is shared code (`executor.finalize_runs_from_parsed`), so subprocess and external execution cannot drift. The single-note live-agent flow (`create-review-run`/`ingest-bundle-output`) is unchanged and remains all-or-nothing per its prior decision.
+   - `commonplace-prepare-review-batch <note-path>::<gate-id>... --runner <label> --model <id>` — creates one review run for a note-packed or gate-packed pair set (inapplicable gates are skipped and reported; missing notes/gates and dirty gates are fatal), renders the canonical pair prompt in file mode, and returns `review_run_id`, pair metadata, skipped pairs, `prompt_path`, `bundle_output_path`, and `manifest_path` as JSON. Batch artifacts live under `kb/reports/bundle-reviews/review-run-{review_run_id}/`.
+   - `commonplace-ingest-batch-output --review-run-id <id> --input-file <path>` — parses the pair output and finalizes with the executor's salvage policy: completed pairs are retained, missing pairs are marked `missing`, and structural parse errors fail the run. Returns completed/failed pair status as JSON; exit 1 if the run failed.
+   The salvage finalization is shared code (`executor.finalize_runs_from_parsed`), so subprocess and external execution cannot drift. The single-note live-agent flow (`create-review-run`/`ingest-bundle-output`) remains all-or-nothing per its prior decision, but uses the same pair parser and artifact manifest contract.
 2. **Runner adapters.** `commonplace.review.runners` replaces `review_runners.py`: a `RunnerAdapter` interface (`base.py` — build_command, optional stdout-stream decoding, best-effort telemetry collection), one module per vendor (`claude_code.py`, `codex.py`), and a registry from which `run_prompt` dispatches and the CLIs derive `--runner` choices. Adapters are instantiated per invocation so streaming state feeds telemetry collection. Session-log scraping is explicitly per-adapter and best-effort: returning no telemetry never fails a run. The reviewer-facing system prompt moves to `protocol/prompt.py`.
 
 Adding a harness CLI is now one adapter module plus one registry entry; adding a harness *orchestrator* needs no Python change at all — it consumes the selector, prepare, and ingest endpoints.
@@ -35,8 +35,8 @@ Easier:
 - The `--runner` choice lists can no longer drift from what the code supports.
 
 Harder / accepted costs:
-- Batch ingest requires distinct notes across the listed runs (the pair grammar keys blocks by note within one document); two runs for the same note must ingest separately.
-- The batch prompt artifact directory (`review-batch-{first-run-id}`) is keyed by the first run id — adequate while batch identity is not recorded in the database (see the packing-provenance follow-up in ADR 029).
+- Batch preparation accepts only pair sets with one shared axis (`note` or `gate`) until a mixed-packing caller needs a stronger manifest and naming contract.
+- The live-agent path still treats one note-packed run as all-or-nothing; pair-level salvage is reserved for the batch ingest path.
 - `review_sweep`'s thread-pool fan-out remains, now redundant in principle with orchestrator-owned parallelism; it is kept as the working subprocess sweep and is expected to shrink rather than grow.
 
 ---
