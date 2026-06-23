@@ -80,7 +80,6 @@ Tell the user where the report was saved and what the recommended action is.
 
 **never:**
 
-- Extract atomic claims — this is ingestion, not decomposition
 - Write any files directly other than `.ingest.md`
 - Modify notes, reference docs, instructions, runbooks, policies, ADRs, indexes, collection files, or logs
 - Hallucinate connections — if the source isn't relevant, say so
