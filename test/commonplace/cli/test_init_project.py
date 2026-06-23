@@ -325,8 +325,10 @@ def test_environment_warnings_on_windows(
 
     assert lines
     assert any("Windows detected" in line for line in lines)
+    assert any("this shell can already run commonplace-init" in line for line in lines)
+    assert any("persistent setup" in line for line in lines)
     assert any("Activate.ps1" in line for line in lines)
-    assert any("make the commands" in line for line in lines)
+    assert not any("activate the project venv before running" in line for line in lines)
 
 
 def test_main_prints_windows_guidance_when_init_fails(

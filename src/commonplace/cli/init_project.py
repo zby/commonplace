@@ -248,12 +248,18 @@ def direnv_warnings(root: Path) -> list[str]:
     if sys.platform == "win32":
         lines.append(
             "Windows detected. The generated .envrc is for Unix-like shells; "
-            "activate the project venv before running commonplace-* commands "
-            "or starting an agent runtime."
+            "this shell can already run commonplace-init, but new shells and "
+            "agent runtimes will still need the project venv activated or "
+            ".venv\\Scripts on PATH."
         )
         lines.append(
-            "PowerShell: run '.\\.venv\\Scripts\\Activate.ps1'. cmd: run "
-            "'.venv\\Scripts\\activate.bat'."
+            "For persistent setup, add the activation step or .venv\\Scripts "
+            "PATH entry to the startup/profile used to launch your agent "
+            "runtime."
+        )
+        lines.append(
+            "PowerShell activation: '.\\.venv\\Scripts\\Activate.ps1'. cmd "
+            "activation: '.venv\\Scripts\\activate.bat'."
         )
         lines.append(
             "Skill projection uses a directory junction on Windows (no admin "
