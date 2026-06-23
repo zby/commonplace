@@ -6,6 +6,7 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
+- [connect-maintenance-observations](./connect-maintenance-observations/README.md) — triaging maintenance observations extracted from recent connect reports and separating already-implemented items from open follow-up work
 - [agent-note-improvement](./agent-note-improvement/README.md) — testing instructions that help agents improve weak existing notes by comparing an older weak revision against a later accepted revision
 - [agent-memory-design](./agent-memory-design/README.md) — continuation workshop for discussing revisions and companion artifacts around `kb/notes/designing-agent-memory-systems.md`
 - [agent-memory-review-rerun](./agent-memory-review-rerun/README.md) — planning and tracking the remaining `systems.csv` agent-memory review reruns after the first six refreshed reviews
