@@ -1,6 +1,6 @@
 ---
 name: cp-skill-ingest
-description: Ingest a source into the knowledge base. Accepts a URL (GitHub, X/Twitter, or web page) or a path to an existing snapshot. URLs are snapshotted first, then the snapshot is classified, connected, and analysed. Saves the report as .ingest.md.
+description: Ingest a URL or kb/sources snapshot into a .ingest.md report by snapshotting, running connect, classifying the source, extracting value, and recommending one action.
 type: kb/types/instruction.md
 user-invocable: true
 allowed-tools: Read, Write, Grep, Glob, Bash, Skill
@@ -49,6 +49,9 @@ Read the connection report from `kb/reports/connect/sources/<snapshot-name>.conn
 - Any synthesis opportunities or tensions flagged
 
 This is your connection context for the analysis below.
+The connect report is generated, gitignored working context. Do not cite it, link
+to it, or name its path in the durable ingest report; summarize its findings and
+link only durable KB artifacts or source snapshots.
 
 ## Step 3: Produce the Ingestion Report
 
@@ -56,7 +59,7 @@ Write the analysis as an `ingest-report`, informed by the connections found in S
 
 - `kb/sources/types/ingest-report.md`
 
-Use the type spec's source-type list, extraction standards, limitations guidance, recommended-action guidance, and template. The report should classify the source, summarize it, explain its connections, extract goal-relative value, state limitations, and recommend one advisory next action.
+Use the type spec's source-type list, extraction standards, limitations guidance, recommended-action guidance, and template. The report should classify the source, summarize it, explain its connections without citing the generated connect report, extract goal-relative value, state limitations, and recommend one advisory next action.
 
 ## Step 4: Save the Report
 

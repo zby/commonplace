@@ -19,7 +19,7 @@ Assess fit relative to the installed KB's goals, local collection contracts, and
 - Set `source_type` to the classification of the source being ingested.
 - Use `type: kb/sources/types/ingest-report.md` for the artifact type.
 - Use `domains` for two to four topic tags that make the report searchable.
-- Use file-relative Markdown links in the report body.
+- Use file-relative Markdown links in the report body for durable KB artifacts and source snapshots. Do not link to generated connect reports.
 
 ## Source Type
 
@@ -38,14 +38,14 @@ Choose one `source_type`:
 
 - `Classification` identifies the source type, domain tags, and author signal.
 - `Summary` is one paragraph for someone deciding whether to read the full source.
-- `Connections Found` summarizes the companion connect report and explains how the source fits the current KB.
+- `Connections Found` summarizes the connection discovery findings and explains how the source fits the current KB. The generated connect report is working context only; do not cite it, link to it, or name its path in the ingest report.
 - `Extractable Value` lists three to seven items, ordered by reach and novelty relative to the installed KB's goals and existing KB connections.
 - `Limitations (our opinion)` states where the source should not be trusted or over-generalized.
 - `Recommended Next Action` chooses one specific advisory next action. The ingest report recommends; it does not perform promotion.
 
 ## Extraction Standards
 
-- Base extractable value on what is new relative to the connect report.
+- Base extractable value on what is new relative to the connection context discovered by connect.
 - Favor value that changes, supports, limits, or operationalizes the installed KB's current claims, decisions, policies, practices, or local domain work.
 - Useful value classes include evidence for an existing claim, contradiction or limitation affecting current KB content, reusable method or workflow, data point or empirical result, vocabulary or framing that improves retrieval and discussion, operational warning or failure mode, and candidate artifact to write, update, retire, or review.
 - Mark extractable value items with effort tags: `[quick-win]`, `[experiment]`, `[deep-dive]`, or `[just-a-reference]`.

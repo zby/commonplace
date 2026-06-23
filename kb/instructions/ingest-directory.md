@@ -64,7 +64,7 @@ Read each selected file in full. Form a composite understanding:
 
 Write to `kb/sources/<slug>.ingest.md`, where `<slug>` is the basename of the input directory (e.g. input `tmp/position-bias/` → output `kb/sources/position-bias.ingest.md`). Fill **only** Classification, Summary, and File Manifest. Leave the four connect-informed sections (Connections Found, Extractable Value, Limitations, Recommended Next Action) as the literal string `TO BE FILLED`.
 
-**Do not pre-draft the four placeholder sections even though Step 3 gave you the material to write them.** The point of deferring them is that the connect report in Step 5 reshapes what counts as "new" (Extractable Value should exclude anything the KB already captures) and surfaces tensions (Limitations often cites KB notes the agent hasn't considered). Pre-drafting forces a rewrite and loses the filter connect provides.
+**Do not pre-draft the four placeholder sections even though Step 3 gave you the material to write them.** The point of deferring them is that the connect pass in Step 5 reshapes what counts as "new" (Extractable Value should exclude anything the KB already captures) and surfaces tensions (Limitations often cites KB notes the agent hasn't considered). Pre-drafting forces a rewrite and loses the filter connect provides.
 
 Draft frontmatter:
 
@@ -132,7 +132,12 @@ Wait for the skill to complete before proceeding.
 
 Read the connect report. Replace the four `TO BE FILLED` sections.
 
-**Relative-link depth.** Links you author here are written from `kb/sources/<slug>.ingest.md`. Use `../notes/…`, `../reference/…`, `../agent-memory-systems/…`, `./<other-source>.md` for sibling sources. The connect report lives at a different depth (`kb/reports/connect/sources/…`), so do not copy its link strings verbatim — rewrite paths relative to the ingest report.
+The connect report is generated, gitignored working context. Do not cite it, link
+to it, or name its path in the durable ingest report; summarize its findings and
+link only durable KB artifacts, source snapshots, or source files identified in
+the File Manifest.
+
+**Relative-link depth.** Links you author here are written from `kb/sources/<slug>.ingest.md`. Use `../notes/…`, `../reference/…`, `../agent-memory-systems/…`, `./<other-source>.md` for sibling sources. Candidate artifact links copied from the connect report may be at the wrong depth, so rewrite paths relative to the ingest report.
 
 **Connections Found** — summarise which notes the source connects to, relationship types, and the key insight about how this source fits (or doesn't) into the KB graph.
 
