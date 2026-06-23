@@ -81,13 +81,12 @@ Tell the user where the report was saved and what the recommended action is.
 **never:**
 
 - Write any files directly other than `.ingest.md`
-- Modify notes, reference docs, instructions, runbooks, policies, ADRs, indexes, collection files, or logs
-- Hallucinate connections — if the source isn't relevant, say so
 - Skip running the `cp-skill-connect` skill — the connections are the foundation of the analysis
 
 **always:**
 
 - Run the `cp-skill-connect` skill before doing classification or value extraction
+- If the source is not relevant to this KB, say so
 - Base extractable value on what's NEW relative to connections found
 - Be specific in the recommended action
 - Include effort tags on extractable value items
