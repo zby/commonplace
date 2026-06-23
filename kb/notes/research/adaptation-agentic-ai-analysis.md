@@ -1,253 +1,109 @@
 ---
-description: Catalogues data-driven constraining and relaxing signals from an agentic AI adaptation taxonomy — maps the paper's agent/tool × execution/output signal grid onto llm-do's neural/symbolic spectrum and the constrain/relax cycle
+description: "Maps agentic-adaptation signals onto artifact-analysis axes so KB learning records which retained surface changes, what authority it gains, and how to review it"
 type: kb/types/note.md
+traits: [title-as-claim, has-comparison, has-external-sources]
+tags: [learning-theory, artifact-analysis, agent-memory, context-engineering]
+status: seedling
 ---
 
-# Analysis: Adaptation of Agentic AI (arXiv:2512.16301)
+# Adaptation signals choose pressure; artifact analysis chooses the retained surface
 
-This note analyzes the paper "Adaptation of Agentic AI" and explores how its framework could inform llm-do's design and potential extensions.
+[Adaptation of Agentic AI](../../sources/adaptation-of-agentic-ai-survey-post-training-memory-skills.ingest.md) is useful because it separates adaptation by optimization locus and signal source: A1 updates the agent from tool-execution feedback, A2 updates the agent from output evaluation, T1 trains agent-agnostic tools, and T2 adapts tools under supervision from a fixed agent. That frame answers "where did the update pressure come from?" It does not answer the design question an agent-operated KB has to answer next: what retained behavior-shaping artifact should change, through which authority path, and with what review evidence?
 
-## Paper Overview
+That second question belongs to [axes of artifact analysis](../axes-of-artifact-analysis.md). Once an adaptation signal fires, the durable result may be a prose memory, prompt patch, skill, generated cue, route table, validator, typed schema, retrieval index, learned controller, adapter, or model checkpoint. Those choices differ by [storage substrate](../definitions/storage-substrate.md), [representational form](../definitions/representational-form.md), [lineage](../definitions/lineage.md), and [behavioral authority](../definitions/behavioral-authority.md). The survey's A1/A2/T1/T2 label tells us which component was optimized and what supervision signal was available; artifact analysis tells us what the system has actually learned in retained form and how future agents should trust, load, test, regenerate, or retire it.
 
-The paper presents a taxonomy for adaptation in agentic systems, organizing strategies along two dimensions:
+## What the survey gives
 
-1. **What adapts**: Agent (LLM behavior) vs Tool (external capabilities)
-2. **What triggers adaptation**: Tool-execution signals vs Agent-output signals
+The survey's four-way taxonomy is valuable as a signal map:
 
-## Key Adaptation Mechanisms
+| Survey bucket | Adaptation pressure | Typical signal |
+|---|---|---|
+| A1 | update the agent from tool execution | verifiable tool outcomes: test pass/fail, retrieval relevance, API result |
+| A2 | update the agent from its own output | final answer quality, preference score, holistic task result, judge verdict |
+| T1 | train a reusable tool independently of one fixed agent | tool-level benchmark or pretraining objective |
+| T2 | keep the agent fixed and adapt its environment | frozen-agent outputs supervising retrievers, memory updaters, search subagents, or skill libraries |
 
-### 1. Error-Driven Adaptation (Tool-Execution-Signaled)
+For KB methodology, the key gain is not the names. It is that signal density and component cost become visible. Execution-grounded signals are easier to use than holistic output scores. Updating a retriever, skill, prompt, validator, or memory store is usually cheaper and more inspectable than changing model weights. T2 therefore names a common practical pattern: keep the model fixed and improve the surrounding artifacts.
 
-When tools fail, the error propagates back to the LLM, which adjusts its approach.
+But "tool" is too coarse for Commonplace. A tool may be a symbolic validator, a prose skill, a vector index, a learned reranker, a subprocess wrapper, or a memory curator. A memory module may include raw traces, summaries, embeddings, routing rules, and generated prompts. Treating all of those as "external tools" hides the review method and lifecycle obligations that matter operationally.
 
-**Current llm-do behavior**: This already happens naturally—when a tool call fails, the error message is returned to the LLM in the conversation, and it can retry with different parameters or try a different tool.
+## The missing retained-surface question
 
-**Potential extension**: **Failure logging and analysis**
+An adaptation event should be recorded as two linked decisions:
 
-```yaml
-# Hypothetical worker config
-adaptation:
-  log_failures: true
-  failure_store: ./failures/{worker_name}/
-```
+1. Which pressure was observed?
+2. Which retained surface should absorb it?
 
-The runtime could:
-- Log every tool failure with context (worker, task input, tool called, error, LLM's recovery attempt)
-- Aggregate patterns: "tool X fails 40% of the time when called with pattern Y"
-- Surface insights: "Consider adding instruction about X" or "Tool X needs better error messages"
+The first decision is the survey's frame. The second is artifact analysis.
 
-**Implementation sketch**:
-```python
-# In runtime/ctx.py, wrap tool execution
-async def execute_tool_with_logging(tool, args, context):
-    try:
-        result = await tool(**args)
-        log_success(context, tool, args, result)
-        return result
-    except Exception as e:
-        log_failure(context, tool, args, e)
-        raise  # Let LLM handle retry
-```
+| Observed pressure | Weak retained surface | Stronger retained surface when pattern stabilizes | Review evidence |
+|---|---|---|---|
+| A tool repeatedly fails on one input shape | prose reminder or error note | symbolic validation, argument normalizer, better error message | tests over the failing input class |
+| A worker always runs the same sequence | prompt instruction describing the sequence | orchestrator function, workflow, or script | execution tests and interrupt/retry behavior |
+| Output structure is stable and easy to state | example output in a prompt | schema, parser, or validator | parse/validation tests |
+| Agent outputs reveal recurring search misses | note or source review describing the miss | generated index, cue, query recipe, or retrieval policy | retrieval ablation and link/provenance audit |
+| User overrides a rigid rule repeatedly | exception note | relaxed interface boundary or LLM-mediated judgment slot | integration tests plus override/appeal audit |
+| A memory update improves task outcomes | new memory entry | cue, skill, retriever update, learned policy, or raw-trace retention rule | WITH/WITHOUT behavior comparison and lineage check |
 
-### 2. Prompt Refinement (Agent Adaptation)
+This table is not a promotion ladder. The stronger surface is only stronger when the signal is strong enough and the target form matches the domain. A recurring failure can justify a validator in an exact-spec regime; in a proxy-theory regime, the same failure may justify relaxing a brittle symbolic rule back into a prose/LLM judgment path. This is why the survey's signal taxonomy needs [fixed artifacts split into exact specs and proxy theories](../fixed-artifacts-split-into-exact-specs-and-proxy-theories.md) and [operational signals that a component is a relaxing candidate](../operational-signals-that-a-component-is-a-relaxing-candidate.md) beside it.
 
-Adjusting worker instructions based on observed performance.
+## Constraining and relaxing use the same evidence differently
 
-**Current llm-do support**: Manual—users edit `.worker` files based on observed behavior.
+The old version of this note treated the survey mainly as an `llm-do` feature sketch: log failures, track outcomes, analyze patterns, and suggest prompt edits. Those are still useful operations, but the artifact-analysis frame changes what the analyzer should output. It should not merely say "edit the prompt." It should classify the proposed retained change:
 
-**Potential extension**: **Prompt evolution tracking**
+- **Constrain** when the signal identifies a stable obligation with a strong enough oracle. Examples: add a schema when output shape is settled; add a path normalizer when tool failures are mechanical; codify an orchestration sequence when the same steps recur.
+- **Distill** when the signal carries reusable judgment but not exact procedure. Examples: write a note from repeated troubleshooting, refine a skill from accepted edits, extract a cue from trace-derived mistakes.
+- **Relax** when the codified artifact is a proxy theory showing brittleness. Examples: growing exception lists, frequent user overrides, process constraints that fail in integration, or validation rules whose failure conditions are hard to specify.
 
-Workers could track their own performance and suggest refinements:
+Each action is an artifact move. It changes representational form, authority, lineage, or lifecycle. Storing an LLM output is itself a [constraining](../definitions/constraining.md) move because it commits one sampled interpretation as a retained artifact; storing a prompt tweak, skill rule, or generated cue has the same issue. The adaptation signal can justify the change, but it does not by itself choose the retained form.
 
-```yaml
-# In worker definition
-adaptation:
-  track_outcomes: true
-  outcome_labels: ["success", "partial", "failed", "user_corrected"]
-```
+## Memory and skills are artifact bundles
 
-After each run, optionally prompt user: "How did this go?" Store outcome with task hash. After N runs, analyze:
-- Which task patterns succeed?
-- Which fail?
-- What instructions might help?
+The survey correctly treats memory and skills as adaptation mechanisms rather than passive storage. That corroborates the memory-requirements work, but a system still has to split the bundle. A "memory update" may contain:
 
-**More ambitious**: An `improve_worker` meta-tool that:
-1. Reads failure logs for a worker
-2. Analyzes patterns
-3. Proposes prompt modifications
-4. User approves changes
+- raw trace storage in an audit log;
+- extracted prose facts in a memory file;
+- embeddings and ranking behavior in a vector index;
+- generated cues in an always-loaded prompt view;
+- a symbolic validator mined from repeated mistakes;
+- a skill instruction plus routing metadata;
+- a learned memory-management policy.
 
-This is "constraining" in llm-do terminology—but data-driven rather than intuition-driven.
+Those are different operative parts. They can share one user-facing name while requiring different review methods: read prose, test symbolic code, probe distributed-parametric behavior, and validate lineage for derived views. [Memory design adds operational axes to artifact analysis](../memory-design-adds-operational-axes-to-artifact-analysis.md) adds the policy layer around those parts: capture, derivation, activation, authority assignment, lifecycle, and evaluation. The adaptation survey helps identify where the learning signal comes from; the memory design axes decide whether the resulting artifact is allowed to act later.
 
-### 3. Tool Selection Adaptation
+## Evaluation implication
 
-Dynamically adjusting which tools are available based on task and past success.
+The survey's evaluation section is strongest where it asks for component-counterfactual and dynamics-aware evaluation: swap one component, hold the rest fixed, and track accuracy, cost, safety, and forgetting over time. Artifact analysis makes that requirement sharper. The component to swap is not always a stored object. It may be one consumption path through an object: the retrieval ranking path, the prompt-assembly path, the validator path, or the training-input path.
 
-**Current llm-do support**: Static—toolsets are declared in worker config.
+For Commonplace, an adaptation evaluation should therefore report at least:
 
-**Potential extension**: **Conditional toolsets**
+- the observed signal: execution feedback, output judgment, user override, accepted edit, retrieval failure, or task outcome;
+- the retained artifact and operative part changed;
+- the artifact fields: substrate, form, lineage, authority;
+- the operational memory policy affected: capture, derivation, activation, authority, lifecycle, or evaluation;
+- the counterfactual: what behavior changes when that retained surface is absent, stale, corrupted, or replaced?
 
-```yaml
-toolsets:
-  filesystem:
-    tools: [read_file, write_file]
-  shell:
-    tools: [run_command]
-    # Only enable after certain conditions
-    enable_after:
-      - successful_read_file: 2  # After 2 successful file reads
-      - user_trust_level: high
-```
+Without those fields, endpoint improvement is ambiguous. A better task score could come from a better prompt, a better retriever, a more permissive validator, a memorized shortcut, or a learned policy that overfits the evaluator. The survey identifies the ambiguity; artifact analysis gives the bookkeeping needed to investigate it.
 
-Or dynamic tool recommendations:
-```yaml
-toolsets:
-  delegation:
-    workers: [analyzer, formatter]
-    recommend_based_on:
-      - task_keywords
-      - past_success_rate
-```
+## Boundary
 
-### 4. Online vs Offline Adaptation
+This note is not the main comparison between the survey and the memory-requirements map. That job belongs to [The adaptation survey corroborates memory requirements but misses artifact governance](../agent-memory-requirements/adaptation-survey-corroborates-memory-requirements.md). This note keeps the narrower operational payload that existing backlinks need: data-driven triggers for when to constrain, distill, or relax, interpreted through the retained-artifact taxonomy rather than through `llm-do` feature brainstorming.
 
-**Online**: Real-time adjustments during execution (current LLM retry behavior)
-**Offline**: Pre-computed refinements from historical analysis
+## Open questions
 
-**Current llm-do support**: Mostly online (LLM adapts in-session).
-
-**Potential extension**: **Offline adaptation pipeline**
-
-```bash
-# Analyze past runs
-llm-run analyze --entry orchestrator --since "7 days"
-
-# Output:
-# - 23 runs, 18 successful
-# - Common failure: "file not found" when paths are relative
-# - Suggested instruction addition: "Always use absolute paths"
-# - Tool `formatter` called but failed 4/5 times → review formatter.worker
-```
-
-This could feed into a refinement workflow:
-1. Run workers in production
-2. Periodically analyze logs
-3. Generate suggested improvements
-4. Human reviews and applies
-
-### 5. Agent-Output-Signaled Adaptation
-
-Adaptation triggered by the agent's own reasoning/confidence, not external failures.
-
-**Current llm-do support**: None explicit.
-
-**Potential extension**: **Confidence signaling**
-
-Workers could be instructed to signal uncertainty:
-
-```markdown
-# In worker instructions
-If you are uncertain about the correct approach, use the `signal_uncertainty` tool
-with a description of what you're unsure about. This will pause execution for human input.
-```
-
-Or structured output could include confidence:
-
-```yaml
-result_type:
-  type: object
-  properties:
-    answer:
-      type: string
-    confidence:
-      type: string
-      enum: [high, medium, low]
-    uncertainty_reason:
-      type: string
-```
-
-Low-confidence results could trigger:
-- Automatic human review
-- Logging for later analysis
-- Escalation to a more capable model
-
-## Mapping to llm-do's Spectrum
-
-The paper's framework maps to llm-do's neural/symbolic spectrum:
-
-| Paper Concept | llm-do Equivalent |
-|---------------|-------------------|
-| Agent-agnostic tools | Pure Python tools (no worker calls) |
-| Agent-supervised tools | Hybrid tools with `ctx.deps.call(...)` |
-| Tool-execution-signaled | Error propagation to LLM (existing) |
-| Agent-output-signaled | Confidence signals (potential extension) |
-| Offline adaptation | Failure analysis → prompt refinement |
-| Online adaptation | In-session LLM retry/adjustment |
-
-## Proposed Features (Priority Order)
-
-### P1: Failure Logging
-
-Minimal invasive change. Log tool failures with context to enable later analysis.
-
-```python
-# runtime addition
-class FailureLog:
-    def log(self, worker: str, tool: str, args: dict, error: str, recovery: str):
-        # Append to JSONL file
-        ...
-```
-
-### P2: Run Outcome Tracking
-
-After worker completion, optionally record outcome. Enables offline analysis.
-
-```python
-# CLI addition
-llm-run worker.worker --track-outcome
-# After completion: "Rate outcome: [s]uccess / [p]artial / [f]ailed / [enter] skip"
-```
-
-### P3: Analysis Command
-
-Consume logs to surface patterns.
-
-```bash
-llm-run analyze orchestrator --since 7d
-# Outputs failure patterns, success rates, suggestions
-```
-
-### P4: Confidence Signaling
-
-Add optional `signal_uncertainty` tool to core toolsets. When called, pauses for human input or logs for review.
-
-### P5: Prompt Evolution Suggestions
-
-Meta-worker that reads failure logs and proposes instruction improvements.
-
-## Implications for Bidirectional Refactoring
-
-The paper reinforces llm-do's bidirectional refactoring principle with data-driven triggers:
-
-**Constraining signals** (neural → symbolic):
-- Tool consistently fails with certain input patterns → add validation in Python
-- LLM always calls tools in same sequence → extract to Python orchestration
-- Output structure is always identical → add stricter schema
-
-**Relaxing signals** (symbolic → neural):
-- Python tool has growing exception list → delegate edge cases to worker
-- Validation rules have many special cases → use LLM for underspecified validation
-- User frequently overrides tool behavior → add flexibility via worker
+- Should Commonplace define an "adaptation event" record with fields for signal, retained artifact, artifact axes, operational memory axis, and evaluation counterfactual?
+- Are `source -> note` labels rich enough for source-side parallel-mechanism relationships, or should those remain in ingest prose until they become claims?
+- When a signal suggests both a prompt edit and a validator, should the default be to preserve the prompt change as rationale for the validator or to keep only the symbolic artifact plus tests?
 
 ---
 
 Relevant Notes:
 
-- [constraining](../definitions/constraining.md) — the constraining/relaxing signals catalogued here are the data-driven triggers for the constrain/relax cycle
-- [agentic systems interpret underspecified instructions](../agentic-systems-interpret-underspecified-instructions.md) — foundation: underspecified vs precise semantics; the bidirectional refactoring section is the constrain/relax cycle applied to tool boundaries
-- [operational signals that a component is a relaxing candidate](../operational-signals-that-a-component-is-a-relaxing-candidate.md) — extends: the relaxing signals here (growing exception lists, frequent overrides) are concrete instances of the operational indicators that note catalogues
-- [unified calling conventions enable bidirectional refactoring](../unified-calling-conventions-enable-bidirectional-refactoring.md) — enables: bidirectional refactoring between neural and symbolic only works with unified interfaces; the paper's adaptation mechanisms assume this
-- [fixed artifacts split into exact specs and proxy theories](../fixed-artifacts-split-into-exact-specs-and-proxy-theories.md) — context: the constraining/relaxing signals are empirical indicators of which side of the exact-spec/proxy-theory distinction a component sits on
-
-Sources:
-- [Adaptation of Agentic AI (arXiv:2512.16301)](https://arxiv.org/abs/2512.16301)
+- [Adaptation of Agentic AI ingest](../../sources/adaptation-of-agentic-ai-survey-post-training-memory-skills.ingest.md) - derived-from: source taxonomy whose signal/locus frame this note translates into retained-artifact decisions
+- [Axes of artifact analysis](../axes-of-artifact-analysis.md) - grounds: supplies the storage substrate, representational form, lineage, and behavioral-authority fields that decide what the retained learning surface is
+- [Where It Lives Is Not What It Is ingest](../../sources/where-it-lives-architectural-vocabulary-retained-adaptation.ingest.md) - see-also: external-facing statement of the same artifact-analysis vocabulary; cited for framing, not independent corroboration
+- [The adaptation survey corroborates memory requirements but misses artifact governance](../agent-memory-requirements/adaptation-survey-corroborates-memory-requirements.md) - contrasts: covers the memory-requirements comparison; this note covers operational signal-to-artifact translation
+- [Memory design adds operational axes to artifact analysis](../memory-design-adds-operational-axes-to-artifact-analysis.md) - extends: adds memory-specific capture, derivation, activation, authority, lifecycle, and evaluation policies around the retained artifact
+- [Storing LLM outputs is constraining](../storing-llm-outputs-is-constraining.md) - extends: data-driven adaptation signals tell us when a retained output or prompt change is worth committing
+- [Operational signals that a component is a relaxing candidate](../operational-signals-that-a-component-is-a-relaxing-candidate.md) - extends: relaxing signals are the reverse use of adaptation evidence, when a symbolic/procedural surface is a brittle proxy theory
+- [Unified calling conventions enable bidirectional refactoring](../unified-calling-conventions-enable-bidirectional-refactoring.md) - enables: moving learned behavior between neural/prose/symbolic surfaces is cheaper when call boundaries stay stable

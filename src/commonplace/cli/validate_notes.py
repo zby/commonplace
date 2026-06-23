@@ -8,6 +8,7 @@ from datetime import datetime
 from pathlib import Path
 
 from commonplace.lib.project_paths import (
+    collection_for_path,
     is_collection_dir,
     is_nested_git_repo,
     is_type_definition_content,
@@ -21,6 +22,7 @@ from commonplace.lib.type_resolver import validate_type_specs
 from commonplace.lib.validation import (
     CheckResults,
     orphan_info,
+    parse_note,
     validate_note,
 )
 
@@ -114,6 +116,43 @@ def batch_scope(arg: str, *, repo_root: Path) -> str | None:
     return None
 
 
+def impacted_marked_tag_readmes(paths: list[Path], *, repo_root: Path) -> list[Path]:
+    """Return marked tag READMEs whose claims may be affected by these notes."""
+    seen = {path.resolve() for path in paths}
+    impacted: list[Path] = []
+
+    for path in paths:
+        parsed, parse_error = parse_note(path, repo_root=repo_root)
+        if parse_error or parsed is None or parsed.document.frontmatter is None:
+            continue
+        tags = parsed.document.frontmatter.get("tags")
+        if not isinstance(tags, list):
+            continue
+        try:
+            collection = collection_for_path(path, repo_root)
+        except ValueError:
+            continue
+
+        for tag in tags:
+            if not isinstance(tag, str):
+                continue
+            readme = (collection / f"{tag}-README.md").resolve()
+            if not readme.is_file() or readme in seen:
+                continue
+            readme_parsed, readme_error = parse_note(readme, repo_root=repo_root)
+            if readme_error or readme_parsed is None or readme_parsed.note_type != "tag-readme":
+                continue
+            fm = readme_parsed.document.frontmatter or {}
+            has_checked_mark = fm.get("complete") is True or bool(fm.get("covered_by"))
+            if not has_checked_mark:
+                continue
+
+            impacted.append(readme)
+            seen.add(readme)
+
+    return impacted
+
+
 def validate_collection_structure(collection: Path, *, repo_root: Path) -> list[str]:
     """Return collection-level structural failures for a validation scope."""
     collection = collection.resolve()
@@ -183,6 +222,8 @@ def main(argv: list[str] | None = None) -> int:
     if not paths:
         print("No notes matched target.", file=sys.stderr)
         return 1
+
+    paths.extend(impacted_marked_tag_readmes(paths, repo_root=repo_root))
 
     scope = batch_scope(args.target, repo_root=repo_root)
     inbound = orphan_info(paths) if scope is not None else {}

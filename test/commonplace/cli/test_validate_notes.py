@@ -81,6 +81,47 @@ def configure_temp_repo(tmp_path: Path) -> Path:
     return tmp_path / "kb" / "notes"
 
 
+def configure_tag_readme_repo(tmp_path: Path) -> Path:
+    notes = configure_temp_repo(tmp_path)
+    write_type_spec(
+        tmp_path,
+        "kb/types/tag-readme.md",
+        name="tag-readme",
+        schema="kb/types/tag-readme.schema.yaml",
+    )
+    write(
+        tmp_path / "kb" / "types" / "tag-readme.schema.yaml",
+        """$schema: "https://json-schema.org/draft/2020-12/schema"
+type: object
+required:
+  - frontmatter
+properties:
+  frontmatter:
+    type: object
+    required:
+      - description
+      - type
+      - index_source
+      - index_key
+    properties:
+      type:
+        const: kb/types/tag-readme.md
+      index_source:
+        const: tag
+      index_key:
+        type: string
+      complete:
+        type: boolean
+      covered_by:
+        type: array
+        items:
+          type: string
+    additionalProperties: true
+""",
+    )
+    return notes
+
+
 def test_text_file_has_no_structural_requirements(tmp_path: Path) -> None:
     note = write(tmp_path / "raw-capture.md", "# Raw capture\n\nJust text.\n")
 
@@ -804,6 +845,67 @@ status: current
 
     assert note in notes
     assert report not in notes
+
+
+def test_note_target_also_validates_marked_tag_readmes(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    notes = configure_tag_readme_repo(tmp_path)
+    write(
+        notes / "tagged-note.md",
+        """---
+description: "Tagged note with enough metadata to validate cleanly by itself"
+type: kb/types/note.md
+tags: [kb-design, unmarked]
+status: current
+---
+
+# Tagged note
+""",
+    )
+    write(
+        notes / "kb-design-README.md",
+        """---
+description: "Complete curated head for the kb-design tag"
+type: kb/types/tag-readme.md
+index_source: tag
+index_key: kb-design
+complete: true
+status: current
+---
+
+# kb-design
+
+Orientation paragraph.
+""",
+    )
+    write(
+        notes / "unmarked-README.md",
+        """---
+description: "Selective curated head for the unmarked tag"
+type: kb/types/tag-readme.md
+index_source: tag
+index_key: unmarked
+status: current
+---
+
+# unmarked
+
+Orientation paragraph.
+""",
+    )
+    monkeypatch.chdir(tmp_path)
+
+    exit_code = validate_notes.main(["kb/notes/tagged-note.md"])
+    output = capsys.readouterr().out
+
+    assert exit_code == 1
+    assert "=== VALIDATION: tagged-note.md ===" in output
+    assert "=== VALIDATION: kb-design-README.md ===" in output
+    assert "=== VALIDATION: unmarked-README.md ===" not in output
+    assert "complete mark: missing entry for kb/notes/tagged-note.md" in output
 
 
 def test_bulk_scopes_are_rejected(tmp_path: Path) -> None:
