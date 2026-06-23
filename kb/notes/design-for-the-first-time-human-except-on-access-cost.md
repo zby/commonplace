@@ -1,5 +1,5 @@
 ---
-description: "Treating an LLM agent as a competent first-time human is a good default for designing the systems it consumes — on most affordances. The proxy breaks on access cost, because humans read large artifacts sublinearly while agents load them whole into bounded context."
+description: "Design heuristic for agent-consumed systems: treat agents like competent first-time humans except where linear context loading makes access costs diverge."
 type: kb/types/note.md
 traits: [title-as-claim, has-comparison]
 tags: [document-system, context-engineering]
@@ -28,3 +28,4 @@ Relevant Notes:
 - [human-LLM differences are load-bearing for knowledge system design](./human-llm-differences-are-load-bearing-for-knowledge-system-design.md) — extends: that note lists human-vs-agent need-differences as a table; this note sharpens its navigation row into a single divider — access mode — and adds the per-consumer materialization fix
 - [agents navigate by deciding what to read next](./agents-navigate-by-deciding-what-to-read-next.md) — mechanism: a bare pointer forces loading the whole target to judge relevance, which is why an agent's default read is linear and why a query/search materialization saves context
 - [LLM context is a homoiconic medium](./llm-context-is-a-homoiconic-medium.md) — grounds: the closing text-as-instruction exception rests on there being no program/data boundary in the window, so any loaded text can act as instruction
+- [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — grounds: the closing confabulation exception is the underspecification case, where a human would ask for clarification but an agent may choose one interpretation and proceed
