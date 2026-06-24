@@ -129,7 +129,7 @@ SELECT
 FROM current_gate_acceptances AS a;
 
 CREATE TABLE IF NOT EXISTS review_schema_migrations (
-    version TEXT PRIMARY KEY,
+    migration_name TEXT PRIMARY KEY,
     applied_at TEXT NOT NULL
 );
 

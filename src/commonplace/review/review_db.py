@@ -5,10 +5,12 @@ from __future__ import annotations
 
 import os
 import sqlite3
+from hashlib import sha256
 from dataclasses import dataclass
+from datetime import UTC, datetime
 from importlib import resources
 from pathlib import Path
-from typing import Sequence
+from typing import Callable, Sequence
 
 from commonplace.review.protocol.decisions import normalize_review_decision
 
@@ -17,6 +19,22 @@ SCHEMA_PATH = "review-schema.sql"
 DB_ENV_VAR = "COMMONPLACE_REVIEW_DB"
 PACKING_VALUES = frozenset({"note", "gate"})
 REVIEW_KIND_VALUES = frozenset({"full-review"})
+BASELINE_SCHEMA_MIGRATION = "review-pairs-v1"
+MIGRATIONS_TABLE = "review_schema_migrations"
+
+
+@dataclass(frozen=True)
+class SchemaMigration:
+    migration_name: str
+    apply: Callable[[sqlite3.Connection], None]
+
+
+@dataclass(frozen=True)
+class ReviewFileSnapshot:
+    snapshot_id: int
+    path: str
+    content_sha256: str
+    content_text: str
 
 
 @dataclass(frozen=True)
@@ -145,12 +163,245 @@ def apply_schema(conn: sqlite3.Connection, schema_path: Path) -> None:
 
 
 def init_db(db_path: Path, schema_path: Path) -> None:
-    if db_path.exists():
-        return
     db_path.parent.mkdir(parents=True, exist_ok=True)
     with connect(db_path) as conn:
-        apply_schema(conn, schema_path)
+        if not _table_exists(conn, "review_runs"):
+            apply_schema(conn, schema_path)
+        apply_schema_migrations(conn)
         conn.commit()
+
+
+def _now_utc_iso() -> str:
+    return datetime.now(UTC).isoformat()
+
+
+def _table_exists(conn: sqlite3.Connection, table_name: str) -> bool:
+    row = conn.execute(
+        """
+        SELECT 1
+        FROM sqlite_master
+        WHERE type = 'table'
+          AND name = ?
+        """,
+        (table_name,),
+    ).fetchone()
+    return row is not None
+
+
+def _migration_table_columns(conn: sqlite3.Connection) -> set[str]:
+    return {row["name"] for row in conn.execute(f"PRAGMA table_info({MIGRATIONS_TABLE})").fetchall()}
+
+
+def _table_columns(conn: sqlite3.Connection, table_name: str) -> set[str]:
+    return {row["name"] for row in conn.execute(f"PRAGMA table_info({table_name})").fetchall()}
+
+
+def _create_migration_table(conn: sqlite3.Connection) -> None:
+    conn.execute(
+        f"""
+        CREATE TABLE IF NOT EXISTS {MIGRATIONS_TABLE} (
+            migration_name TEXT PRIMARY KEY,
+            applied_at TEXT NOT NULL
+        )
+        """
+    )
+
+
+def _normalize_migration_table(conn: sqlite3.Connection) -> None:
+    if not _table_exists(conn, MIGRATIONS_TABLE):
+        _create_migration_table(conn)
+        return
+
+    columns = _migration_table_columns(conn)
+    if {"migration_name", "applied_at"}.issubset(columns):
+        return
+    if {"version", "applied_at"}.issubset(columns):
+        legacy_table = f"{MIGRATIONS_TABLE}_legacy_version"
+        conn.execute(f"ALTER TABLE {MIGRATIONS_TABLE} RENAME TO {legacy_table}")
+        _create_migration_table(conn)
+        conn.execute(
+            f"""
+            INSERT OR IGNORE INTO {MIGRATIONS_TABLE} (migration_name, applied_at)
+            SELECT version, applied_at
+            FROM {legacy_table}
+            """
+        )
+        conn.execute(f"DROP TABLE {legacy_table}")
+        return
+
+    raise RuntimeError(f"unsupported {MIGRATIONS_TABLE} shape: {sorted(columns)}")
+
+
+def _record_migration(conn: sqlite3.Connection, migration_name: str) -> None:
+    conn.execute(
+        f"""
+        INSERT OR IGNORE INTO {MIGRATIONS_TABLE} (migration_name, applied_at)
+        VALUES (?, ?)
+        """,
+        (migration_name, _now_utc_iso()),
+    )
+
+
+def _applied_migration_names(conn: sqlite3.Connection) -> set[str]:
+    rows = conn.execute(f"SELECT migration_name FROM {MIGRATIONS_TABLE}").fetchall()
+    return {row["migration_name"] for row in rows}
+
+
+def _add_column_if_missing(conn: sqlite3.Connection, table_name: str, column_name: str, column_sql: str) -> None:
+    if column_name in _table_columns(conn, table_name):
+        return
+    conn.execute(f"ALTER TABLE {table_name} ADD COLUMN {column_sql}")
+
+
+def _migrate_review_file_snapshots(conn: sqlite3.Connection) -> None:
+    conn.execute(
+        """
+        CREATE TABLE IF NOT EXISTS review_file_snapshots (
+            snapshot_id INTEGER PRIMARY KEY,
+            path TEXT NOT NULL,
+            content_sha256 TEXT NOT NULL,
+            content_text TEXT,
+            captured_at TEXT NOT NULL,
+            UNIQUE (path, content_sha256)
+        )
+        """
+    )
+    _add_column_if_missing(
+        conn,
+        "review_pairs",
+        "reviewed_note_snapshot_id",
+        "reviewed_note_snapshot_id INTEGER REFERENCES review_file_snapshots(snapshot_id)",
+    )
+    _add_column_if_missing(
+        conn,
+        "review_pairs",
+        "reviewed_gate_snapshot_id",
+        "reviewed_gate_snapshot_id INTEGER REFERENCES review_file_snapshots(snapshot_id)",
+    )
+    _add_column_if_missing(
+        conn,
+        "acceptance_events",
+        "accepted_note_snapshot_id",
+        "accepted_note_snapshot_id INTEGER REFERENCES review_file_snapshots(snapshot_id)",
+    )
+    _add_column_if_missing(
+        conn,
+        "acceptance_events",
+        "accepted_gate_snapshot_id",
+        "accepted_gate_snapshot_id INTEGER REFERENCES review_file_snapshots(snapshot_id)",
+    )
+    conn.executescript(
+        """
+        DROP VIEW IF EXISTS stale_gate_pairs;
+        DROP VIEW IF EXISTS current_gate_acceptances;
+
+        CREATE VIEW current_gate_acceptances AS
+        SELECT
+            e.note_path,
+            e.gate_id,
+            e.model_id,
+            e.accepted_review_pair_id,
+            e.accepted_note_sha,
+            e.accepted_note_commit,
+            e.accepted_gate_sha,
+            e.accepted_note_snapshot_id,
+            e.accepted_gate_snapshot_id,
+            note_snapshot.content_sha256 AS accepted_note_hash,
+            gate_snapshot.content_sha256 AS accepted_gate_hash,
+            e.accepted_at,
+            e.acceptance_kind
+        FROM acceptance_events AS e
+        LEFT JOIN review_file_snapshots AS note_snapshot
+          ON e.accepted_note_snapshot_id = note_snapshot.snapshot_id
+        LEFT JOIN review_file_snapshots AS gate_snapshot
+          ON e.accepted_gate_snapshot_id = gate_snapshot.snapshot_id
+        JOIN (
+            SELECT
+                note_path,
+                gate_id,
+                model_id,
+                MAX(acceptance_event_id) AS max_id
+            FROM acceptance_events
+            GROUP BY note_path, gate_id, model_id
+        ) AS latest
+          ON e.acceptance_event_id = latest.max_id;
+
+        CREATE VIEW stale_gate_pairs AS
+        SELECT
+            a.note_path,
+            a.gate_id,
+            a.model_id,
+            a.accepted_note_sha,
+            a.accepted_gate_sha,
+            a.accepted_note_snapshot_id,
+            a.accepted_gate_snapshot_id,
+            a.accepted_note_hash,
+            a.accepted_gate_hash
+        FROM current_gate_acceptances AS a;
+        """
+    )
+
+
+SCHEMA_MIGRATIONS: tuple[SchemaMigration, ...] = (
+    SchemaMigration("review-file-snapshots-v1", _migrate_review_file_snapshots),
+)
+
+
+def apply_schema_migrations(conn: sqlite3.Connection) -> None:
+    _normalize_migration_table(conn)
+    if _table_exists(conn, "review_runs"):
+        _record_migration(conn, BASELINE_SCHEMA_MIGRATION)
+
+    applied = _applied_migration_names(conn)
+    for migration in SCHEMA_MIGRATIONS:
+        if migration.migration_name in applied:
+            continue
+        migration.apply(conn)
+        _record_migration(conn, migration.migration_name)
+        applied.add(migration.migration_name)
+
+
+def snapshot_file(conn: sqlite3.Connection, *, repo_root: Path, path: str) -> ReviewFileSnapshot:
+    normalized_path = Path(path).as_posix()
+    path_parts = Path(normalized_path).parts
+    if (
+        Path(normalized_path).is_absolute()
+        or normalized_path == "."
+        or normalized_path.startswith("../")
+        or ".." in path_parts
+    ):
+        raise ValueError(f"snapshot path must be repo-relative: {path}")
+    content_text = (repo_root / normalized_path).read_text(encoding="utf-8")
+    content_sha256 = sha256(content_text.encode("utf-8")).hexdigest()
+    captured_at = _now_utc_iso()
+    conn.execute(
+        """
+        INSERT OR IGNORE INTO review_file_snapshots (
+            path,
+            content_sha256,
+            content_text,
+            captured_at
+        ) VALUES (?, ?, ?, ?)
+        """,
+        (normalized_path, content_sha256, content_text, captured_at),
+    )
+    row = conn.execute(
+        """
+        SELECT snapshot_id, path, content_sha256, content_text
+        FROM review_file_snapshots
+        WHERE path = ?
+          AND content_sha256 = ?
+        """,
+        (normalized_path, content_sha256),
+    ).fetchone()
+    if row is None:
+        raise RuntimeError(f"failed to load review file snapshot: {normalized_path}")
+    return ReviewFileSnapshot(
+        snapshot_id=row["snapshot_id"],
+        path=row["path"],
+        content_sha256=row["content_sha256"],
+        content_text=row["content_text"],
+    )
 
 
 def _review_run_from_row(row: sqlite3.Row) -> ReviewRunRow:
