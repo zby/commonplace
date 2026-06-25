@@ -16,7 +16,7 @@ Legacy rendered review artifacts and archived review outputs. The live review sy
 
 ## Instructions
 
-- **Review one note:** `kb/instructions/run-review-bundle-on-note.md` — explicit note + gates
+- **Review one note:** `kb/instructions/run-review-batches-on-note.md` — explicit note + gates
 - **Batch sweep:** `kb/instructions/review-sweep.md` — run selector, triage by reason, review or ack
 
 ## Running

@@ -80,7 +80,7 @@ Example for current notes in Codex:
 commonplace-review-sweep --model gpt-5-4-xhigh --runner codex --current semantic
 ```
 
-For explicit one-note review from an agent harness, run `kb/instructions/run-review-bundle-on-note.md` once per note.
+For explicit one-note review from an agent harness, run `kb/instructions/run-review-batches-on-note.md` once per note.
 
 Multiple note-local runs can execute in parallel since each note's reviews are independent.
 

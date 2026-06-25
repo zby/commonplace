@@ -126,7 +126,7 @@ If the system has no reachable source code, stop and write a lightweight note in
 
    If a field is absent because the reviewed system has no distinctive mechanism there, leave it absent. If the absence hides an important tradeoff, fix the review before semantic QA.
 
-12. **Run semantic QA.** Run the live-agent procedure from `kb/instructions/run-review-bundle-on-note.md` on the new review note using the `semantic` bundle: create the run and prompt with `commonplace-create-review-runs`, follow the prompt in the current harness, then ingest the sentinel-bracketed output with `commonplace-ingest-bundle-output`. Treat it as a read-only QA loop: extract findings, fix clearly valid issues, and leave uncertain findings for the final report rather than forcing a rewrite.
+12. **Run semantic QA.** Run the live-agent procedure from `kb/instructions/run-review-batches-on-note.md` on the new review note using the `semantic` bundle: create the runs and prompts with `commonplace-create-review-runs`, delegate each returned run to a sub-agent, then ingest each sentinel-bracketed output with `commonplace-ingest-bundle-output`. Treat it as a read-only QA loop: extract findings, fix clearly valid issues, and leave uncertain findings for the final report rather than forcing a rewrite.
 
    Do not use `commonplace-run-review-bundles` for this skill workflow unless the user explicitly authorizes subprocess runner execution, because that command invokes `claude` or `codex exec` internally. If semantic QA cannot be completed through the current harness, report it as a blocked QA step rather than substituting a shell-launched agent.
 

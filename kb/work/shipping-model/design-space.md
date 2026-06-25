@@ -33,7 +33,7 @@ Our source paths reference `kb/notes/...`, `kb/reference/...`, `kb/instructions/
 
 **Category 1: generic "the collection you're operating on" references.** Instructions that describe collection-generic behavior: "documents live in a `kb/` collection such as `kb/notes/`", "determine the source collection from the path (`kb/notes/...` → `notes`)", "read `kb/<collection>/COLLECTION.md`". In a user install, these resolve correctly to the user's own collections. **No translation needed** — this is precisely the dogfooding win from authoring in the user's working position. Probably the majority of the 85 references.
 
-**Category 2: references to specific shipped artifacts.** A specific ADR number (`kb/reference/adr/010-review-state...`), a specific shipped instruction file (`kb/instructions/run-review-bundle-on-note.md`), shipped infrastructure (`kb/instructions/review-gates/{lens}/...`). These point at files that live at the shipped path post-install. **These do need translation.**
+**Category 2: references to specific shipped artifacts.** A specific ADR number (`kb/reference/adr/010-review-state...`), a specific shipped instruction file (`kb/instructions/run-review-batches-on-note.md`), shipped infrastructure (`kb/instructions/review-gates/{lens}/...`). These point at files that live at the shipped path post-install. **These do need translation.**
 
 The exact Category-1 / Category-2 split requires an audit of the 85 references. First-sample readings suggest Category 1 dominates, which significantly reduces the translation burden compared to the earlier "rewrite everything" framing.
 
@@ -52,7 +52,7 @@ The exact Category-1 / Category-2 split requires an audit of the 85 references. 
 - Update `AGENTS.md.template`'s three specific library references to `kb/commonplace/...`.
 - Move shipped trees under `kb/commonplace/` in `SCAFFOLD_TREES`.
 
-Accept: cosmetic drift in Pattern C (code-formatted prose paths like "`kb/instructions/run-review-bundle-on-note.md`" — small population, rewrite display text at ship time if it becomes a support issue).
+Accept: cosmetic drift in Pattern C (code-formatted prose paths like "`kb/instructions/run-review-batches-on-note.md`" — small population, rewrite display text at ship time if it becomes a support issue).
 
 ## Axis 4: Skill root resolution
 

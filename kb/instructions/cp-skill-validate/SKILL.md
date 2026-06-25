@@ -29,4 +29,4 @@ Prefer the narrowest target that covers the user's request. For write/edit workf
 
 Report the script output directly. Do not interpret, supplement, or override its findings.
 
-For judgment-based frontmatter checks, run `kb/instructions/run-review-bundle-on-note.md` with the `frontmatter` bundle.
+For judgment-based frontmatter checks, run `kb/instructions/run-review-batches-on-note.md` with the `frontmatter` bundle.
