@@ -234,7 +234,7 @@ class TestMissingReview:
     def test_claude_opus_alias_queries_canonical_partition(self, tmp_path: Path) -> None:
         build_fixture(tmp_path)
         with review_db.connect(db_path_for(tmp_path)) as conn:
-            review_db.rekey_model_partition(conn, old_model_partition=TEST_MODEL, new_model_partition="claude-opus-4-6")
+            review_db.rekey_model_partition(conn, old_model_partition=TEST_MODEL, new_model_partition="claude-opus")
             conn.commit()
 
         stale = review_target_selector.select_stale_gates(

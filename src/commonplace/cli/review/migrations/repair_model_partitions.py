@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import sys
 from collections import defaultdict
 from pathlib import Path
 
@@ -13,7 +14,7 @@ from commonplace.review.review_db import (
     prepare_review_db,
     rekey_model_partition,
 )
-from commonplace.review.review_model import model_partition_alias_target
+from commonplace.review.review_model import is_registered_model_partition, model_partition_alias_target
 
 TABLES = ("review_runs", "review_pairs", "acceptance_events")
 
@@ -42,11 +43,17 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     db_path = prepare_review_db(repo_root, args.db)
 
     with connect(db_path) as conn:
+        model_partitions = _model_partitions(conn)
         aliases = {
             model_partition: target
-            for model_partition in _model_partitions(conn)
+            for model_partition in model_partitions
             if (target := model_partition_alias_target(model_partition)) is not None
         }
+        unknown_partitions = [
+            model_partition
+            for model_partition in model_partitions
+            if not is_registered_model_partition(model_partition)
+        ]
 
         planned: dict[tuple[str, str], dict[str, int]] = {}
         for old_model_partition, new_model_partition in aliases.items():
@@ -57,6 +64,15 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
                 "acceptance_events": counts.acceptance_events,
             }
             planned[(old_model_partition, new_model_partition)] = table_counts
+
+        if unknown_partitions and not args.dry_run:
+            print(
+                "refusing to repair model partitions with unknown existing partitions",
+                file=sys.stderr,
+            )
+            for model_partition in unknown_partitions:
+                print(f"unknown: {model_partition}", file=sys.stderr)
+            return 1
 
         if not args.dry_run:
             for old_model_partition, new_model_partition in aliases.items():
@@ -80,6 +96,9 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     print(f"review_runs: {totals['review_runs']}")
     print(f"review_pairs: {totals['review_pairs']}")
     print(f"acceptance_events: {totals['acceptance_events']}")
+    print(f"unknown_partitions: {len(unknown_partitions)}")
+    for model_partition in unknown_partitions:
+        print(f"unknown: {model_partition}")
     print(f"mode: {'dry-run' if args.dry_run else 'write'}")
     return 0
 

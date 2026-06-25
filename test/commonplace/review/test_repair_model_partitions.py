@@ -26,7 +26,7 @@ def test_repair_model_partitions_rekeys_known_aliases(tmp_path: Path) -> None:
     review_db.ensure_db(REPO_ROOT, db_path)
 
     with review_db.connect(db_path) as conn:
-        review_pair_id = insert_completed_pair(
+        opus_review_pair_id = insert_completed_pair(
             conn,
             note_path="kb/notes/old-note.md",
             gate_id="semantic/internal-consistency",
@@ -38,17 +38,36 @@ def test_repair_model_partitions_rekeys_known_aliases(tmp_path: Path) -> None:
         )
         accept_pair(
             conn,
-            review_pair_id=review_pair_id,
+            review_pair_id=opus_review_pair_id,
             note_path="kb/notes/old-note.md",
             gate_id="semantic/internal-consistency",
             model_partition="opus-4-6",
             accepted_at="2026-04-10T10:02:00+02:00",
         )
+        fable_review_pair_id = insert_completed_pair(
+            conn,
+            note_path="kb/notes/fable-note.md",
+            gate_id="prose/source-residue",
+            model_partition="claude-fable-5",
+            decision="pass",
+            rationale_markdown="ok\n\n## Result: PASS\n",
+            reviewed_at="2026-04-10T10:03:00+02:00",
+            runner="claude-code",
+        )
+        accept_pair(
+            conn,
+            review_pair_id=fable_review_pair_id,
+            note_path="kb/notes/fable-note.md",
+            gate_id="prose/source-residue",
+            model_partition="claude-fable-5",
+            accepted_at="2026-04-10T10:04:00+02:00",
+        )
         conn.commit()
 
     result = _run_repair(REPO_ROOT, db_path)
 
-    assert "opus-4-6 -> claude-opus-4-6: total=3" in result.stdout
+    assert "claude-fable-5 -> claude-opus-4.8: total=3" in result.stdout
+    assert "opus-4-6 -> claude-opus: total=3" in result.stdout
     assert "mode: write" in result.stdout
 
     with sqlite3.connect(db_path) as conn:
@@ -61,20 +80,38 @@ def test_repair_model_partitions_rekeys_known_aliases(tmp_path: Path) -> None:
                 SELECT count(*) FROM review_pairs WHERE model_partition = 'opus-4-6'
             ) + (
                 SELECT count(*) FROM acceptance_events WHERE model_partition = 'opus-4-6'
+            ) + (
+                SELECT count(*) FROM review_runs WHERE model_partition = 'claude-fable-5'
+            ) + (
+                SELECT count(*) FROM review_pairs WHERE model_partition = 'claude-fable-5'
+            ) + (
+                SELECT count(*) FROM acceptance_events WHERE model_partition = 'claude-fable-5'
             ) AS count
             """
         ).fetchone()["count"]
-        new_count = conn.execute(
+        opus_count = conn.execute(
             """
             SELECT (
-                SELECT count(*) FROM review_runs WHERE model_partition = 'claude-opus-4-6'
+                SELECT count(*) FROM review_runs WHERE model_partition = 'claude-opus'
             ) + (
-                SELECT count(*) FROM review_pairs WHERE model_partition = 'claude-opus-4-6'
+                SELECT count(*) FROM review_pairs WHERE model_partition = 'claude-opus'
             ) + (
-                SELECT count(*) FROM acceptance_events WHERE model_partition = 'claude-opus-4-6'
+                SELECT count(*) FROM acceptance_events WHERE model_partition = 'claude-opus'
+            ) AS count
+            """
+        ).fetchone()["count"]
+        opus_48_count = conn.execute(
+            """
+            SELECT (
+                SELECT count(*) FROM review_runs WHERE model_partition = 'claude-opus-4.8'
+            ) + (
+                SELECT count(*) FROM review_pairs WHERE model_partition = 'claude-opus-4.8'
+            ) + (
+                SELECT count(*) FROM acceptance_events WHERE model_partition = 'claude-opus-4.8'
             ) AS count
             """
         ).fetchone()["count"]
 
     assert old_count == 0
-    assert new_count == 3
+    assert opus_count == 3
+    assert opus_48_count == 3
