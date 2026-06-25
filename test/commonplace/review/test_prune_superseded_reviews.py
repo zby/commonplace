@@ -176,7 +176,6 @@ def test_prune_superseded_reviews_deletes_rows_and_whole_obsolete_run_artifacts(
             gate_id="prose/source-residue",
             model_partition=MODEL_PARTITION,
             accepted_at="2026-01-06T00:01:00Z",
-            acceptance_kind="trivial-change-ack",
         )
         conn.commit()
 

@@ -25,7 +25,6 @@ def insert_completed_pair(
     reviewed_note_snapshot_id: int | None = None,
     reviewed_gate_snapshot_id: int | None = None,
     started_at: str | None = None,
-    review_kind: str = "full-review",
 ) -> int:
     started = started_at or reviewed_at
     gate_path = source_gate_path(gate_id)
@@ -42,7 +41,6 @@ def insert_completed_pair(
                 pair_ordinal=0,
                 reviewed_note_snapshot_id=reviewed_note_snapshot_id,
                 reviewed_gate_snapshot_id=reviewed_gate_snapshot_id,
-                review_kind=review_kind,
             )
         ],
     )
@@ -52,7 +50,6 @@ def insert_completed_pair(
         decision=decision,
         rationale_markdown=rationale_markdown,
         reviewed_at=reviewed_at,
-        review_kind=review_kind,
     )
     review_db.complete_review_pairs(conn, review_run_id=review_run_id, review_pairs=[pair], reviewed_at=reviewed_at)
     review_pair = review_db.load_review_pairs_for_run(conn, review_run_id=review_run_id)[0]
@@ -69,7 +66,6 @@ def accept_pair(
     accepted_at: str,
     accepted_note_snapshot_id: int | None = None,
     accepted_gate_snapshot_id: int | None = None,
-    acceptance_kind: str = "full-review",
 ) -> int:
     return review_db.append_acceptance_event(
         conn,
@@ -80,5 +76,4 @@ def accept_pair(
         accepted_note_snapshot_id=accepted_note_snapshot_id,
         accepted_gate_snapshot_id=accepted_gate_snapshot_id,
         accepted_at=accepted_at,
-        acceptance_kind=acceptance_kind,
     )

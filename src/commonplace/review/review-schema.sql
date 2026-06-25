@@ -56,9 +56,6 @@ CREATE TABLE IF NOT EXISTS review_pairs (
     reviewed_note_snapshot_id INTEGER REFERENCES review_file_snapshots(snapshot_id),
     reviewed_gate_snapshot_id INTEGER REFERENCES review_file_snapshots(snapshot_id),
     reviewed_at TEXT,
-    review_kind TEXT NOT NULL CHECK (
-        review_kind IN ('full-review')
-    ),
     UNIQUE (review_run_id, note_path, gate_path),
     UNIQUE (review_run_id, pair_ordinal)
 );
@@ -80,16 +77,7 @@ CREATE TABLE IF NOT EXISTS acceptance_events (
     accepted_review_pair_id INTEGER REFERENCES review_pairs(review_pair_id) ON DELETE SET NULL,
     accepted_note_snapshot_id INTEGER REFERENCES review_file_snapshots(snapshot_id),
     accepted_gate_snapshot_id INTEGER REFERENCES review_file_snapshots(snapshot_id),
-    accepted_at TEXT NOT NULL,
-    acceptance_kind TEXT NOT NULL CHECK (
-        acceptance_kind IN (
-            'full-review',
-            'gate-migration',
-            'trivial-change-ack',
-            'migration-import',
-            'manual-override'
-        )
-    )
+    accepted_at TEXT NOT NULL
 );
 
 CREATE INDEX IF NOT EXISTS idx_acceptance_events_note_gate_model_partition
@@ -110,8 +98,7 @@ SELECT
     gate_snapshot.content_sha256 AS accepted_gate_hash,
     note_snapshot.content_text AS accepted_note_text,
     gate_snapshot.content_text AS accepted_gate_text,
-    e.accepted_at,
-    e.acceptance_kind
+    e.accepted_at
 FROM acceptance_events AS e
 LEFT JOIN review_file_snapshots AS note_snapshot
   ON e.accepted_note_snapshot_id = note_snapshot.snapshot_id

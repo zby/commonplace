@@ -65,7 +65,6 @@ def record_and_finalize_run(
                 accepted_note_snapshot_id=pair.reviewed_note_snapshot_id,
                 accepted_gate_snapshot_id=pair.reviewed_gate_snapshot_id,
                 accepted_at=finished_at,
-                acceptance_kind="full-review",
             )
 
         failure_reason = _run_coverage_failure(finalized_pairs)

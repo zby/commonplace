@@ -22,7 +22,6 @@ DEFAULT_DB_PATH = Path("kb/reports/review-store.sqlite")
 SCHEMA_PATH = "review-schema.sql"
 DB_ENV_VAR = "COMMONPLACE_REVIEW_DB"
 PACKING_VALUES = frozenset({"note", "gate"})
-REVIEW_KIND_VALUES = frozenset({"full-review"})
 BASELINE_SCHEMA_MIGRATION = "review-pairs-v1"
 MIGRATIONS_TABLE = "review_schema_migrations"
 BUNDLE_ARTIFACTS_ROOT = Path("kb/reports/bundle-reviews")
@@ -55,7 +54,6 @@ class AcceptanceState:
     accepted_note_text: str | None
     accepted_gate_text: str | None
     accepted_at: str
-    acceptance_kind: str
 
     @property
     def gate_id(self) -> str:
@@ -90,7 +88,6 @@ class ReviewPairRow:
     reviewed_note_snapshot_id: int | None
     reviewed_gate_snapshot_id: int | None
     reviewed_at: str | None
-    review_kind: str
 
     @property
     def gate_id(self) -> str:
@@ -104,7 +101,6 @@ class ReviewPairRequest:
     pair_ordinal: int
     reviewed_note_snapshot_id: int | None = None
     reviewed_gate_snapshot_id: int | None = None
-    review_kind: str = "full-review"
 
 
 @dataclass(frozen=True)
@@ -114,7 +110,6 @@ class PendingReviewPair:
     decision: str
     rationale_markdown: str
     reviewed_at: str | None = None
-    review_kind: str = "full-review"
 
 
 @dataclass(frozen=True)
@@ -299,8 +294,7 @@ def _create_current_acceptance_views(conn: sqlite3.Connection) -> None:
             gate_snapshot.content_sha256 AS accepted_gate_hash,
             note_snapshot.content_text AS accepted_note_text,
             gate_snapshot.content_text AS accepted_gate_text,
-            e.accepted_at,
-            e.acceptance_kind
+            e.accepted_at
         FROM acceptance_events AS e
         LEFT JOIN review_file_snapshots AS note_snapshot
           ON e.accepted_note_snapshot_id = note_snapshot.snapshot_id
@@ -828,6 +822,19 @@ def _migrate_review_artifact_bodies_to_files(conn: sqlite3.Connection, repo_root
     _drop_column_if_present(conn, "review_pairs", "evidence_json")
 
 
+def _migrate_minimal_review_state_columns(conn: sqlite3.Connection, repo_root: Path) -> None:
+    del repo_root
+    conn.executescript(
+        """
+        DROP VIEW IF EXISTS stale_gate_pairs;
+        DROP VIEW IF EXISTS current_gate_acceptances;
+        """
+    )
+    _drop_column_if_present(conn, "review_pairs", "review_kind")
+    _drop_column_if_present(conn, "acceptance_events", "acceptance_kind")
+    _create_current_acceptance_views(conn)
+
+
 SCHEMA_MIGRATIONS: tuple[SchemaMigration, ...] = (
     SchemaMigration("review-file-snapshots-v1", _migrate_review_file_snapshots),
     SchemaMigration("review-model-partition-v1", _migrate_model_partition),
@@ -835,6 +842,7 @@ SCHEMA_MIGRATIONS: tuple[SchemaMigration, ...] = (
     SchemaMigration("review-snapshot-only-freshness-v1", _migrate_snapshot_only_freshness),
     SchemaMigration("review-artifact-paths-v1", _migrate_review_artifact_paths),
     SchemaMigration("review-artifact-body-files-v1", _migrate_review_artifact_bodies_to_files),
+    SchemaMigration("review-minimal-state-columns-v1", _migrate_minimal_review_state_columns),
 )
 
 
@@ -935,7 +943,6 @@ def _review_pair_from_row(row: sqlite3.Row) -> ReviewPairRow:
         reviewed_note_snapshot_id=row["reviewed_note_snapshot_id"],
         reviewed_gate_snapshot_id=row["reviewed_gate_snapshot_id"],
         reviewed_at=row["reviewed_at"],
-        review_kind=row["review_kind"],
     )
 
 
@@ -993,8 +1000,6 @@ def create_review_pairs(
 ) -> list[int]:
     review_pair_ids: list[int] = []
     for pair in pairs:
-        if pair.review_kind not in REVIEW_KIND_VALUES:
-            raise ValueError(f"invalid review kind: {pair.review_kind}")
         cursor = conn.execute(
             """
             INSERT INTO review_pairs (
@@ -1005,9 +1010,8 @@ def create_review_pairs(
                 pair_ordinal,
                 pair_status,
                 reviewed_note_snapshot_id,
-                reviewed_gate_snapshot_id,
-                review_kind
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                reviewed_gate_snapshot_id
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             """,
             (
                 review_run_id,
@@ -1018,7 +1022,6 @@ def create_review_pairs(
                 pair_status,
                 pair.reviewed_note_snapshot_id,
                 pair.reviewed_gate_snapshot_id,
-                pair.review_kind,
             ),
         )
         review_pair_ids.append(int(cursor.lastrowid))
@@ -1085,8 +1088,7 @@ def load_review_pairs_for_run(conn: sqlite3.Connection, *, review_run_id: int) -
             result_path,
             reviewed_note_snapshot_id,
             reviewed_gate_snapshot_id,
-            reviewed_at,
-            review_kind
+            reviewed_at
         FROM review_pairs
         WHERE review_run_id = ?
         ORDER BY pair_ordinal, note_path, gate_path
@@ -1142,8 +1144,7 @@ def load_current_acceptances(conn: sqlite3.Connection) -> dict[tuple[str, str, s
             accepted_gate_hash,
             accepted_note_text,
             accepted_gate_text,
-            accepted_at,
-            acceptance_kind
+            accepted_at
         FROM current_gate_acceptances
         """
     ).fetchall()
@@ -1160,7 +1161,6 @@ def load_current_acceptances(conn: sqlite3.Connection) -> dict[tuple[str, str, s
             accepted_note_text=row["accepted_note_text"],
             accepted_gate_text=row["accepted_gate_text"],
             accepted_at=row["accepted_at"],
-            acceptance_kind=row["acceptance_kind"],
         )
         for row in rows
     }
@@ -1242,8 +1242,6 @@ def complete_review_pairs(
     completed_pair_ids: list[int] = []
     seen: set[tuple[str, str]] = set()
     for review_pair in review_pairs:
-        if review_pair.review_kind not in REVIEW_KIND_VALUES:
-            raise ValueError(f"invalid review kind: {review_pair.review_kind}")
         key = (review_pair.note_path, review_pair.gate_path)
         if key in seen:
             raise ValueError(f"duplicate completed pair: {review_pair.note_path} :: {review_pair.gate_path}")
@@ -1261,14 +1259,12 @@ def complete_review_pairs(
             UPDATE review_pairs
             SET pair_status = 'completed',
                 decision = ?,
-                reviewed_at = ?,
-                review_kind = ?
+                reviewed_at = ?
             WHERE review_pair_id = ?
             """,
             (
                 normalized_decision,
                 review_pair.reviewed_at or reviewed_at,
-                review_pair.review_kind,
                 requested_pair.review_pair_id,
             ),
         )
@@ -1321,7 +1317,6 @@ def append_acceptance_event(
     accepted_note_snapshot_id: int | None = None,
     accepted_gate_snapshot_id: int | None = None,
     accepted_at: str,
-    acceptance_kind: str,
 ) -> int:
     cursor = conn.execute(
         """
@@ -1332,9 +1327,8 @@ def append_acceptance_event(
             accepted_review_pair_id,
             accepted_note_snapshot_id,
             accepted_gate_snapshot_id,
-            accepted_at,
-            acceptance_kind
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            accepted_at
+        ) VALUES (?, ?, ?, ?, ?, ?, ?)
         """,
         (
             note_path,
@@ -1344,7 +1338,6 @@ def append_acceptance_event(
             accepted_note_snapshot_id,
             accepted_gate_snapshot_id,
             accepted_at,
-            acceptance_kind,
         ),
     )
     return int(cursor.lastrowid)
@@ -1432,6 +1425,48 @@ def rekey_model_partition(
     )
 
 
+def prune_obsolete_snapshot_content(conn: sqlite3.Connection) -> int:
+    """Drop retained text for snapshots not needed for freshness or in-flight prompts."""
+    conn.execute(
+        """
+        WITH retained_snapshots AS (
+            SELECT accepted_note_snapshot_id AS snapshot_id
+            FROM current_gate_acceptances
+            WHERE accepted_note_snapshot_id IS NOT NULL
+
+            UNION
+
+            SELECT accepted_gate_snapshot_id AS snapshot_id
+            FROM current_gate_acceptances
+            WHERE accepted_gate_snapshot_id IS NOT NULL
+
+            UNION
+
+            SELECT reviewed_note_snapshot_id AS snapshot_id
+            FROM review_pairs
+            WHERE pair_status != 'completed'
+              AND reviewed_note_snapshot_id IS NOT NULL
+
+            UNION
+
+            SELECT reviewed_gate_snapshot_id AS snapshot_id
+            FROM review_pairs
+            WHERE pair_status != 'completed'
+              AND reviewed_gate_snapshot_id IS NOT NULL
+        )
+        UPDATE review_file_snapshots
+        SET content_text = NULL
+        WHERE content_text IS NOT NULL
+          AND snapshot_id NOT IN (
+              SELECT snapshot_id
+              FROM retained_snapshots
+          )
+        """
+    )
+    row = conn.execute("SELECT changes() AS changed_rows").fetchone()
+    return int(row["changed_rows"])
+
+
 def load_review_pairs_for_note(
     conn: sqlite3.Connection,
     *,
@@ -1452,8 +1487,7 @@ def load_review_pairs_for_note(
             result_path,
             reviewed_note_snapshot_id,
             reviewed_gate_snapshot_id,
-            reviewed_at,
-            review_kind
+            reviewed_at
         FROM review_pairs
         WHERE note_path = ? AND model_partition = ?
         ORDER BY gate_path, reviewed_at, review_pair_id
@@ -1484,8 +1518,7 @@ def load_latest_completed_review_pair(
             result_path,
             reviewed_note_snapshot_id,
             reviewed_gate_snapshot_id,
-            reviewed_at,
-            review_kind
+            reviewed_at
         FROM review_pairs
         WHERE note_path = ?
           AND gate_path = ?
@@ -1542,8 +1575,7 @@ def load_effective_review_pair_map(
             COALESCE(accepted.result_path, latest.result_path) AS result_path,
             COALESCE(accepted.reviewed_note_snapshot_id, latest.reviewed_note_snapshot_id) AS reviewed_note_snapshot_id,
             COALESCE(accepted.reviewed_gate_snapshot_id, latest.reviewed_gate_snapshot_id) AS reviewed_gate_snapshot_id,
-            COALESCE(accepted.reviewed_at, latest.reviewed_at) AS reviewed_at,
-            COALESCE(accepted.review_kind, latest.review_kind) AS review_kind
+            COALESCE(accepted.reviewed_at, latest.reviewed_at) AS reviewed_at
         FROM current_gate_acceptances AS a
         LEFT JOIN review_pairs AS accepted
           ON accepted.review_pair_id = a.accepted_review_pair_id

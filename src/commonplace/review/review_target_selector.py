@@ -285,7 +285,6 @@ def ack_pairs(
                 accepted_note_snapshot_id=note_snapshot.snapshot_id,
                 accepted_gate_snapshot_id=gate_snapshot.snapshot_id,
                 accepted_at=iso_now(),
-                acceptance_kind="trivial-change-ack",
             )
             acked.append((note_path, gate_id_from_stored_path(gate_path)))
         conn.commit()

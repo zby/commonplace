@@ -126,7 +126,7 @@ A full review write contributes:
 1. one `review_pairs` row per requested pair
 2. `review_runs.bundle_output_path` pointing to the run bundle artifact
 3. `review_pairs.result_path` pointing to each per-pair review artifact
-4. one `acceptance_events` row per completed pair with `acceptance_kind = 'full-review'`
+4. one `acceptance_events` row per completed pair; `accepted_review_pair_id` points back to the completed review pair
 
 The important invariant is that the stored note and gate snapshot IDs identify the exact file text used during prompt generation.
 
@@ -135,7 +135,7 @@ The important invariant is that the stored note and gate snapshot IDs identify t
 `ack` no longer rewrites a markdown file. It appends a new `acceptance_events` row with:
 
 - snapshot IDs for the current note and gate text
-- `acceptance_kind = 'trivial-change-ack'`
+- `accepted_review_pair_id = NULL`
 
 This advances the accepted baseline without overwriting review prose or mutating a review artifact.
 

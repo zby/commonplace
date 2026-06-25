@@ -112,7 +112,6 @@ def seed_warn_review(repo: Path, db_path: Path) -> None:
             accepted_note_snapshot_id=note_snapshot.snapshot_id,
             accepted_gate_snapshot_id=gate_snapshot.snapshot_id,
             accepted_at=REVIEWED_AT,
-            acceptance_kind="full-review",
         )
         conn.commit()
 

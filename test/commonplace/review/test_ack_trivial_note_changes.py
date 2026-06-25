@@ -104,7 +104,6 @@ def build_fixture(
             reviewed_note_snapshot_id=note_snapshot.snapshot_id,
             reviewed_gate_snapshot_id=gate_snapshot.snapshot_id,
             reviewed_at="2026-04-01T00:00:00+00:00",
-            review_kind="full-review",
         )
         accept_pair(
             conn,
@@ -115,7 +114,6 @@ def build_fixture(
             accepted_note_snapshot_id=note_snapshot.snapshot_id,
             accepted_gate_snapshot_id=gate_snapshot.snapshot_id,
             accepted_at="2026-04-01T00:00:00+00:00",
-            acceptance_kind="full-review",
         )
         conn.commit()
 
@@ -167,7 +165,6 @@ def seed_snapshot_review(repo: Path, db_path: Path, *, note_path: str, gate_path
             accepted_note_snapshot_id=note_snapshot.snapshot_id,
             accepted_gate_snapshot_id=gate_snapshot.snapshot_id,
             accepted_at="2026-04-01T00:00:00+00:00",
-            acceptance_kind="full-review",
         )
         conn.commit()
 
@@ -258,7 +255,6 @@ def test_qualifying_pairs_finds_note_with_only_unwatched_changes_and_ack_records
         row = conn.execute(
             """
             SELECT
-                acceptance_kind,
                 accepted_note_snapshot_id,
                 accepted_gate_snapshot_id,
                 accepted_note_hash,
@@ -269,11 +265,10 @@ def test_qualifying_pairs_finds_note_with_only_unwatched_changes_and_ack_records
             ("kb/notes/sample.md", "kb/instructions/review-gates/prose/source-residue.md", TEST_MODEL),
         ).fetchone()
     assert row is not None
-    assert row[0] == "trivial-change-ack"
+    assert row[0] is not None
     assert row[1] is not None
     assert row[2] is not None
     assert row[3] is not None
-    assert row[4] is not None
 
 
 def test_qualifying_pairs_uses_snapshot_text_without_git(tmp_path: Path) -> None:
@@ -357,7 +352,6 @@ def test_qualifying_pairs_skips_rows_without_snapshot_text(tmp_path: Path) -> No
             reviewed_note_snapshot_id=note_snapshot.snapshot_id,
             reviewed_gate_snapshot_id=gate_snapshot.snapshot_id,
             reviewed_at="2026-04-04T08:35:54+02:00",
-            review_kind="full-review",
         )
         accept_pair(
             conn,
@@ -368,7 +362,6 @@ def test_qualifying_pairs_skips_rows_without_snapshot_text(tmp_path: Path) -> No
             accepted_note_snapshot_id=note_snapshot.snapshot_id,
             accepted_gate_snapshot_id=gate_snapshot.snapshot_id,
             accepted_at="2026-04-04T08:36:13+02:00",
-            acceptance_kind="full-review",
         )
         conn.commit()
 

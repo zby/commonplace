@@ -107,7 +107,6 @@ def seed_acceptance(
             reviewed_note_snapshot_id=note_snapshot.snapshot_id,
             reviewed_gate_snapshot_id=gate_snapshot.snapshot_id,
             reviewed_at=REVIEWED_AT,
-            review_kind="full-review",
         )
         accept_pair(
             conn,
@@ -118,7 +117,6 @@ def seed_acceptance(
             accepted_note_snapshot_id=note_snapshot.snapshot_id,
             accepted_gate_snapshot_id=gate_snapshot.snapshot_id,
             accepted_at=REVIEWED_AT,
-            acceptance_kind="full-review",
         )
         conn.commit()
 
@@ -173,7 +171,6 @@ def seed_snapshot_acceptance(
             accepted_note_snapshot_id=note_snapshot.snapshot_id,
             accepted_gate_snapshot_id=gate_snapshot.snapshot_id,
             accepted_at=REVIEWED_AT,
-            acceptance_kind="full-review",
         )
         conn.commit()
 
@@ -603,7 +600,7 @@ class TestAckMetadata:
             review_pair_count_after = conn.execute("SELECT count(*) FROM review_pairs").fetchone()[0]
             row = conn.execute(
                 """
-                SELECT accepted_review_pair_id, accepted_note_hash, acceptance_kind
+                SELECT accepted_review_pair_id, accepted_note_hash
                 FROM current_gate_acceptances
                 WHERE note_path = ? AND gate_path = ? AND model_partition = ?
                 """,
@@ -612,7 +609,6 @@ class TestAckMetadata:
         assert row is not None
         assert review_pair_count_after == review_pair_count_before
         assert row["accepted_review_pair_id"] is None
-        assert row["acceptance_kind"] == "trivial-change-ack"
         assert row["accepted_note_hash"] is not None
 
     def test_ack_allows_dirty_note_and_records_snapshot_baseline(self, tmp_path: Path) -> None:
@@ -627,7 +623,7 @@ class TestAckMetadata:
             conn.row_factory = sqlite3.Row
             row = conn.execute(
                 """
-                SELECT accepted_note_snapshot_id, accepted_note_hash, acceptance_kind
+                SELECT accepted_note_snapshot_id, accepted_note_hash
                 FROM current_gate_acceptances
                 WHERE note_path = ? AND gate_path = ? AND model_partition = ?
                 """,
@@ -636,7 +632,6 @@ class TestAckMetadata:
         assert row is not None
         assert row["accepted_note_snapshot_id"] is not None
         assert row["accepted_note_hash"] is not None
-        assert row["acceptance_kind"] == "trivial-change-ack"
 
     def test_ack_rejects_invalid_pair_without_exiting(self, tmp_path: Path) -> None:
         build_fixture(tmp_path)
@@ -679,7 +674,7 @@ class TestAckMetadata:
             conn.row_factory = sqlite3.Row
             row = conn.execute(
                 """
-                SELECT accepted_review_pair_id, acceptance_kind
+                SELECT accepted_review_pair_id
                 FROM current_gate_acceptances
                 WHERE note_path = ? AND gate_path = ? AND model_partition = ?
                 """,
@@ -687,7 +682,6 @@ class TestAckMetadata:
             ).fetchone()
         assert row is not None
         assert row["accepted_review_pair_id"] is None
-        assert row["acceptance_kind"] == "trivial-change-ack"
 
 
 class TestDiffGeneration:

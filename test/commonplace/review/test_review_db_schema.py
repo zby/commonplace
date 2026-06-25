@@ -21,6 +21,7 @@ EXPECTED_SCHEMA_MIGRATIONS = {
     "review-snapshot-only-freshness-v1",
     "review-artifact-paths-v1",
     "review-artifact-body-files-v1",
+    "review-minimal-state-columns-v1",
 }
 
 
@@ -87,7 +88,6 @@ def test_ensure_db_initializes_schema_that_can_store_current_acceptance(tmp_path
             gate_id="semantic/internal-consistency",
             model_partition="opus-4-6",
             accepted_at="2026-04-10T10:02:00+02:00",
-            acceptance_kind="full-review",
         )
         view_row = conn.execute(
             """
@@ -131,11 +131,13 @@ def test_ensure_db_backfills_still_fresh_legacy_acceptance_snapshots(tmp_path: P
             ALTER TABLE review_pairs ADD COLUMN gate_sha TEXT;
             ALTER TABLE review_pairs ADD COLUMN reviewed_note_sha TEXT;
             ALTER TABLE review_pairs ADD COLUMN reviewed_note_commit TEXT;
+            ALTER TABLE review_pairs ADD COLUMN review_kind TEXT;
             ALTER TABLE review_pairs ADD COLUMN rationale_markdown TEXT;
             ALTER TABLE review_pairs ADD COLUMN evidence_json TEXT;
             ALTER TABLE acceptance_events ADD COLUMN accepted_note_sha TEXT;
             ALTER TABLE acceptance_events ADD COLUMN accepted_note_commit TEXT;
             ALTER TABLE acceptance_events ADD COLUMN accepted_gate_sha TEXT;
+            ALTER TABLE acceptance_events ADD COLUMN acceptance_kind TEXT;
             ALTER TABLE review_runs ADD COLUMN raw_bundle_markdown TEXT;
             ALTER TABLE review_runs ADD COLUMN debug_log TEXT;
             """
@@ -298,9 +300,11 @@ def test_ensure_db_backfills_still_fresh_legacy_acceptance_snapshots(tmp_path: P
     assert "raw_bundle_markdown" not in table_columns["review_runs"]
     assert "debug_log" not in table_columns["review_runs"]
     assert "reviewed_note_sha" not in table_columns["review_pairs"]
+    assert "review_kind" not in table_columns["review_pairs"]
     assert "rationale_markdown" not in table_columns["review_pairs"]
     assert "evidence_json" not in table_columns["review_pairs"]
     assert "accepted_note_sha" not in table_columns["acceptance_events"]
+    assert "acceptance_kind" not in table_columns["acceptance_events"]
 
 
 def test_ensure_db_renames_legacy_model_id_columns_to_model_partition(tmp_path: Path) -> None:
@@ -339,8 +343,7 @@ def test_ensure_db_renames_legacy_model_id_columns_to_model_partition(tmp_path: 
                 pair_ordinal,
                 pair_status,
                 decision,
-                reviewed_at,
-                review_kind
+                reviewed_at
             ) VALUES (
                 1,
                 1,
@@ -350,8 +353,7 @@ def test_ensure_db_renames_legacy_model_id_columns_to_model_partition(tmp_path: 
                 0,
                 'completed',
                 'pass',
-                '2026-04-10T10:01:00+02:00',
-                'full-review'
+                '2026-04-10T10:01:00+02:00'
             )
             """
         )
@@ -363,16 +365,14 @@ def test_ensure_db_renames_legacy_model_id_columns_to_model_partition(tmp_path: 
                 gate_id,
                 model_id,
                 accepted_review_pair_id,
-                accepted_at,
-                acceptance_kind
+                accepted_at
             ) VALUES (
                 1,
                 'kb/notes/legacy-model.md',
                 'semantic/internal-consistency',
                 'opus-4-6',
                 1,
-                '2026-04-10T10:02:00+02:00',
-                'full-review'
+                '2026-04-10T10:02:00+02:00'
             )
             """
         )
@@ -522,6 +522,83 @@ def test_snapshot_file_rehydrates_hash_only_snapshot_rows(tmp_path: Path) -> Non
     assert stored_text == "rehydrate me\n"
 
 
+def test_prune_obsolete_snapshot_content_keeps_current_and_pending_text(tmp_path: Path) -> None:
+    db_path = tmp_path / "review-store.sqlite"
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    files = {
+        "kb/notes/old.md": "old note\n",
+        "kb/instructions/review-gates/prose/old.md": "old gate\n",
+        "kb/notes/current.md": "current note\n",
+        "kb/instructions/review-gates/prose/current.md": "current gate\n",
+        "kb/notes/pending.md": "pending note\n",
+        "kb/instructions/review-gates/prose/pending.md": "pending gate\n",
+    }
+    for rel_path, content in files.items():
+        path = repo / rel_path
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(content, encoding="utf-8")
+
+    review_db.ensure_db(REPO_ROOT, db_path)
+
+    with review_db.connect(db_path) as conn:
+        old_note = review_db.snapshot_file(conn, repo_root=repo, path="kb/notes/old.md")
+        old_gate = review_db.snapshot_file(conn, repo_root=repo, path="kb/instructions/review-gates/prose/old.md")
+        current_note = review_db.snapshot_file(conn, repo_root=repo, path="kb/notes/current.md")
+        current_gate = review_db.snapshot_file(
+            conn,
+            repo_root=repo,
+            path="kb/instructions/review-gates/prose/current.md",
+        )
+        pending_note = review_db.snapshot_file(conn, repo_root=repo, path="kb/notes/pending.md")
+        pending_gate = review_db.snapshot_file(
+            conn,
+            repo_root=repo,
+            path="kb/instructions/review-gates/prose/pending.md",
+        )
+        review_db.append_acceptance_event(
+            conn,
+            note_path="kb/notes/current.md",
+            gate_path="kb/instructions/review-gates/prose/current.md",
+            model_partition="opus-4-6",
+            accepted_review_pair_id=None,
+            accepted_note_snapshot_id=current_note.snapshot_id,
+            accepted_gate_snapshot_id=current_gate.snapshot_id,
+            accepted_at="2026-04-10T10:02:00+02:00",
+        )
+        review_db.create_run_with_pairs(
+            conn,
+            model_partition="opus-4-6",
+            runner="test-runner",
+            started_at="2026-04-10T10:03:00+02:00",
+            packing="note",
+            pairs=[
+                review_db.ReviewPairRequest(
+                    note_path="kb/notes/pending.md",
+                    gate_path="kb/instructions/review-gates/prose/pending.md",
+                    pair_ordinal=0,
+                    reviewed_note_snapshot_id=pending_note.snapshot_id,
+                    reviewed_gate_snapshot_id=pending_gate.snapshot_id,
+                )
+            ],
+        )
+        pruned = review_db.prune_obsolete_snapshot_content(conn)
+        rows = {
+            int(row["snapshot_id"]): row["content_text"]
+            for row in conn.execute(
+                "SELECT snapshot_id, content_text FROM review_file_snapshots"
+            ).fetchall()
+        }
+
+    assert pruned == 2
+    assert rows[old_note.snapshot_id] is None
+    assert rows[old_gate.snapshot_id] is None
+    assert rows[current_note.snapshot_id] == "current note\n"
+    assert rows[current_gate.snapshot_id] == "current gate\n"
+    assert rows[pending_note.snapshot_id] == "pending note\n"
+    assert rows[pending_gate.snapshot_id] == "pending gate\n"
+
+
 def test_current_acceptance_view_exposes_snapshot_hashes(tmp_path: Path) -> None:
     db_path = tmp_path / "review-store.sqlite"
     repo = tmp_path / "repo"
@@ -549,7 +626,6 @@ def test_current_acceptance_view_exposes_snapshot_hashes(tmp_path: Path) -> None
             gate_id="prose/sample",
             model_partition="opus-4-6",
             accepted_at="2026-04-10T10:02:00+02:00",
-            acceptance_kind="trivial-change-ack",
         )
         conn.execute(
             """
@@ -610,7 +686,6 @@ def test_rekey_note_path_updates_all_review_tables(tmp_path: Path) -> None:
             gate_id="semantic/internal-consistency",
             model_partition="opus-4-6",
             accepted_at="2026-04-10T10:02:00+02:00",
-            acceptance_kind="full-review",
         )
 
         counts = review_db.count_note_path_records(conn, note_path="kb/notes/old-note.md")

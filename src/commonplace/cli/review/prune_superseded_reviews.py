@@ -10,7 +10,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from commonplace.review.executor import bundle_artifact_dir
-from commonplace.review.review_db import connect, prepare_review_db
+from commonplace.review.review_db import connect, prepare_review_db, prune_obsolete_snapshot_content
 
 
 @dataclass(frozen=True)
@@ -25,6 +25,7 @@ class PrunePlan:
     obsolete_review_pairs: tuple[ObsoleteReviewPair, ...]
     obsolete_run_ids: tuple[int, ...]
     obsolete_run_artifact_dirs: tuple[Path, ...]
+    obsolete_snapshot_content_rows: int
 
 
 def _placeholders(values: tuple[int, ...]) -> str:
@@ -203,7 +204,48 @@ def build_prune_plan(repo_root: Path, conn: sqlite3.Connection) -> PrunePlan:
         obsolete_review_pairs=obsolete_review_pairs,
         obsolete_run_ids=obsolete_run_ids,
         obsolete_run_artifact_dirs=tuple(sorted(run_artifact_dirs, key=lambda path: path.as_posix())),
+        obsolete_snapshot_content_rows=_obsolete_snapshot_content_row_count(conn),
     )
+
+
+def _obsolete_snapshot_content_row_count(conn: sqlite3.Connection) -> int:
+    row = conn.execute(
+        """
+        WITH retained_snapshots AS (
+            SELECT accepted_note_snapshot_id AS snapshot_id
+            FROM current_gate_acceptances
+            WHERE accepted_note_snapshot_id IS NOT NULL
+
+            UNION
+
+            SELECT accepted_gate_snapshot_id AS snapshot_id
+            FROM current_gate_acceptances
+            WHERE accepted_gate_snapshot_id IS NOT NULL
+
+            UNION
+
+            SELECT reviewed_note_snapshot_id AS snapshot_id
+            FROM review_pairs
+            WHERE pair_status != 'completed'
+              AND reviewed_note_snapshot_id IS NOT NULL
+
+            UNION
+
+            SELECT reviewed_gate_snapshot_id AS snapshot_id
+            FROM review_pairs
+            WHERE pair_status != 'completed'
+              AND reviewed_gate_snapshot_id IS NOT NULL
+        )
+        SELECT COUNT(*) AS count
+        FROM review_file_snapshots
+        WHERE content_text IS NOT NULL
+          AND snapshot_id NOT IN (
+              SELECT snapshot_id
+              FROM retained_snapshots
+          )
+        """
+    ).fetchone()
+    return int(row["count"] if row is not None else 0)
 
 
 def _delete_ids(conn: sqlite3.Connection, table: str, id_column: str, ids: tuple[int, ...]) -> None:
@@ -221,6 +263,7 @@ def apply_prune_plan(repo_root: Path, conn: sqlite3.Connection, plan: PrunePlan)
     _delete_ids(conn, "acceptance_events", "acceptance_event_id", plan.obsolete_acceptance_event_ids)
     _delete_ids(conn, "review_pairs", "review_pair_id", obsolete_review_pair_ids)
     _delete_ids(conn, "review_runs", "review_run_id", plan.obsolete_run_ids)
+    prune_obsolete_snapshot_content(conn)
     conn.commit()
 
     for path in plan.obsolete_run_artifact_dirs:
@@ -252,6 +295,7 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     print(f"obsolete_review_pairs: {len(plan.obsolete_review_pairs)}")
     print(f"obsolete_review_runs: {len(plan.obsolete_run_ids)}")
     print(f"obsolete_run_artifact_dirs: {len(plan.obsolete_run_artifact_dirs)}")
+    print(f"obsolete_snapshot_content_rows: {plan.obsolete_snapshot_content_rows}")
     print(f"mode: {'apply' if args.apply else 'dry-run'}")
     return 0
 

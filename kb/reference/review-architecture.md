@@ -63,10 +63,10 @@ SQLite database, default location `kb/reports/review-store.sqlite` (override wit
 
 | Table | Purpose | Key columns |
 |---|---|---|
-| `review_runs` | Review invocations | review_run_id, model_partition, runner, status (running/completed/failed), packing, telemetry/debug/raw output |
+| `review_runs` | Review invocations | review_run_id, model_partition, runner, status (running/completed/failed), packing, telemetry_json, bundle_output_path |
 | `review_file_snapshots` | Role-neutral file snapshots for review inputs | snapshot_id, path, content_sha256, content_text |
 | `review_pairs` | Requested and completed pair outcomes | review_pair_id, review_run_id, note_path, gate_path, pair_status, decision, snapshot IDs |
-| `acceptance_events` | Append-only acceptance log | acceptance_event_id, note_path, gate_path, model_partition, accepted_review_pair_id, snapshot IDs, acceptance_kind |
+| `acceptance_events` | Append-only acceptance log | acceptance_event_id, note_path, gate_path, model_partition, accepted_review_pair_id, snapshot IDs |
 
 **Key views:**
 

@@ -26,7 +26,6 @@ class ReviewMetadata:
     last_accepted_note_sha: str | None = None
     last_accepted_note_commit: str | None = None
     last_accepted_at: str | None = None
-    last_acceptance_kind: str | None = None
     review_type: str | None = None
     gate_id: str | None = None
     gate_fingerprint: str | None = None
@@ -63,7 +62,6 @@ def parse_review_metadata(review_text: str) -> ReviewMetadata | None:
         last_accepted_note_sha=fields.get("last-accepted-note-sha"),
         last_accepted_note_commit=fields.get("last-accepted-note-commit"),
         last_accepted_at=fields.get("last-accepted-at"),
-        last_acceptance_kind=fields.get("last-acceptance-kind"),
         review_type=fields.get("review-type"),
         gate_id=fields.get("gate-id"),
         gate_fingerprint=fields.get("gate-fingerprint"),
@@ -82,7 +80,6 @@ def render_review_metadata(metadata: ReviewMetadata) -> str:
         ("last-accepted-note-sha", metadata.last_accepted_note_sha),
         ("last-accepted-note-commit", metadata.last_accepted_note_commit),
         ("last-accepted-at", metadata.last_accepted_at),
-        ("last-acceptance-kind", metadata.last_acceptance_kind),
         ("review-type", metadata.review_type),
     ]
     for key, value in fields:

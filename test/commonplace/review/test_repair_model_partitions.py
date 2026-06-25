@@ -43,7 +43,6 @@ def test_repair_model_partitions_rekeys_known_aliases(tmp_path: Path) -> None:
             gate_id="semantic/internal-consistency",
             model_partition="opus-4-6",
             accepted_at="2026-04-10T10:02:00+02:00",
-            acceptance_kind="full-review",
         )
         conn.commit()
 
