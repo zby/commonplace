@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Create, execute, and finalize one bundle review run."""
+"""Create, execute, and finalize note-local review bundle runs."""
 
 from __future__ import annotations
 
@@ -7,12 +7,12 @@ import argparse
 from pathlib import Path
 
 from commonplace.review.review_db import resolve_db_path
-from commonplace.review.run_review_bundle import run_bundle
+from commonplace.review.run_review_bundles import run_bundles
 from commonplace.review.runners import runner_names
 
 
 def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Run one review bundle and persist it into the review DB.")
+    parser = argparse.ArgumentParser(description="Run note-local review bundles and persist them into the review DB.")
     parser.add_argument("note_path", help="Repository-relative note path.")
     parser.add_argument("gate_or_bundle", nargs="+", help="Gate IDs and/or bundle names.")
     parser.add_argument("--runner", required=True, choices=runner_names())
@@ -33,7 +33,7 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     db_path = resolve_db_path(repo_root, args.db)
 
     try:
-        return run_bundle(
+        return run_bundles(
             repo_root=repo_root,
             db_path=db_path,
             note_path=args.note_path,

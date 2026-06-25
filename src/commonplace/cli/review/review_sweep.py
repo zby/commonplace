@@ -1,7 +1,7 @@
 """Batch review sweep using the direct-write review runner.
 
 Selects stale (note, gate) pairs via review_target_selector.select_stale_gates
-and runs each bundled note through run_review_bundle.run_bundle, in
+and runs each bundled note through run_review_bundles.run_bundles, in
 parallel worker threads.
 """
 
@@ -19,7 +19,7 @@ from commonplace.review.resolve_gates import resolve_to_gate_ids
 from commonplace.review.review_db import resolve_db_path
 from commonplace.review.review_target_selector import StaleGate, select_stale_gates
 from commonplace.review.executor import UsageExhausted
-from commonplace.review.run_review_bundle import run_bundle
+from commonplace.review.run_review_bundles import run_bundles
 from commonplace.review.runners import runner_names
 
 
@@ -107,7 +107,7 @@ def collect_sweep_jobs(
 
 
 def render_bundle_review_command(*, runner: str, model: str, job: SweepJob) -> str:
-    args = ["commonplace-run-review-bundle", "--runner", runner, "--model", model, job.note_path, *job.gates]
+    args = ["commonplace-run-review-bundles", "--runner", runner, "--model", model, job.note_path, *job.gates]
     return " ".join(args)
 
 
@@ -153,7 +153,7 @@ def sweep_bundle(
     def _submit(executor: ThreadPoolExecutor, job: SweepJob) -> None:
         print(f"--- Reviewing: {job.note_path} ({' '.join(job.gates)})")
         future = executor.submit(
-            run_bundle,
+            run_bundles,
             repo_root=repo_root,
             db_path=db_path,
             note_path=job.note_path,

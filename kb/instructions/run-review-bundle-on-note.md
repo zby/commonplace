@@ -3,7 +3,7 @@ description: Run review gates on one note from inside a live agent harness
 type: kb/types/instruction.md
 ---
 
-# Run a review bundle on one note
+# Run review bundles on one note
 
 Review a specific note against an explicit list of gates from inside the current agent harness.
 
@@ -16,35 +16,36 @@ Do not run the selector to choose gates. Treat the provided list as the exact ex
 
 ## Live agent path
 
-### 1. Create the review run and canonical prompt
+### 1. Create review runs and canonical prompts
 
 ```bash
-commonplace-create-review-run --runner {codex|claude-code} --model {model-id} --with-prompt {note-path} {gate-or-bundle}...
+commonplace-create-review-runs --runner {codex|claude-code|live-agent} --model {model-partition} {note-path} {gate-or-bundle}...
 ```
 
-Capture the JSON output, especially:
+The helper groups the requested gates by bundle/lens and returns a JSON object with `runs`. Capture each run object, especially:
 
 - `review_run_id`
 - `prompt_path`
 - `bundle_output_path`
 - `manifest_path`
 - `gate_ids`
+- `gate_paths`
 
-Do not invent or reorder `gate_ids`; use exactly what the helper resolves.
+Do not invent, merge, or reorder runs. Use exactly the run grouping and `gate_ids` the helper resolves.
 
-### 2. Follow the canonical prompt
+### 2. Follow each canonical prompt
 
-Read the file at `prompt_path` and treat it as the authoritative reviewer instruction. It contains the reading scope, gate definitions, link-resolution table, and sentinel output contract for this run.
+For each item in `runs`, read the file at `prompt_path` and treat it as the authoritative reviewer instruction. It contains the reading scope, gate definitions, link-resolution table, and sentinel output contract for that run.
 
-Write the full sentinel-bracketed review bundle to `bundle_output_path`.
+Write the full sentinel-bracketed review bundle to that run's `bundle_output_path`. Do not combine multiple runs into one output file.
 
-### 3. Ingest the bundle output
+### 3. Ingest each bundle output
 
 ```bash
 commonplace-ingest-bundle-output --review-run-id {review-run-id} --input-file {bundle-output-path}
 ```
 
-This parses the bundle with the same parser used by `commonplace-run-review-bundle`, records the per-pair reviews, and finalizes the review run.
+Run ingest once per completed run. This parses the bundle with the same parser used by `commonplace-run-review-bundles`, records the per-pair reviews, and finalizes the review run.
 
 After ingest, `MANIFEST.json` at `manifest_path` is refreshed with pair statuses and per-gate `result_path` files. For this single-note path, parsed review files are named by gate id, for example `sentence__clause-packing.md`.
 

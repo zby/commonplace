@@ -115,12 +115,13 @@ commonplace-review-sweep --all-gates kb/notes kb/reference --model claude-opus-4
 commonplace-review-sweep prose kb/notes kb/reference --model claude-opus-4-6 --runner claude-code --dry-run   # preview what would run
 ```
 
-### commonplace-run-review-bundle
+### commonplace-run-review-bundles
 
-Run a review bundle (set of gates) on a single note.
+Run review bundles on a single note through a subprocess runner. Requested gates are grouped by bundle/lens, so a multi-bundle request creates one runner call per bundle.
 
 ```bash
-commonplace-run-review-bundle kb/notes/my-note.md prose --runner claude-code --model claude-opus-4-6
+commonplace-run-review-bundles kb/notes/my-note.md prose --runner claude-code --model claude-opus-4-6
+commonplace-run-review-bundles kb/notes/my-note.md accessibility prose semantic --runner codex --model codex
 ```
 
 ### commonplace-run-gate-sweep
@@ -134,17 +135,16 @@ commonplace-run-gate-sweep semantic/grounding-alignment --runner claude-code --m
 commonplace-run-gate-sweep semantic/grounding-alignment --runner claude-code --model claude-opus-4-6 --note kb/notes kb/reference --dry-run
 ```
 
-### commonplace-create-review-run
+### commonplace-create-review-runs
 
-Create a review run record in the review database. With `--with-prompt`, also emits the canonical bundle prompt, `MANIFEST.json`, and artifact paths for live-agent review.
+Create one or more review run records in the review database and write their canonical prompts, `MANIFEST.json` files, and artifact paths for live-agent review. Requested gates are grouped by bundle/lens so each run stays focused.
 
 ```bash
-commonplace-create-review-run kb/notes/my-note.md prose --runner claude-code --model claude-opus-4-6
-commonplace-create-review-run kb/notes/my-note.md prose --runner claude-code --model claude-opus-4-6 --json
-commonplace-create-review-run kb/notes/my-note.md prose --runner claude-code --model claude-opus-4-6 --with-prompt
+commonplace-create-review-runs kb/notes/my-note.md prose --runner claude-code --model claude-opus-4-6
+commonplace-create-review-runs kb/notes/my-note.md accessibility prose semantic --runner live-agent --model codex
 ```
 
-The `--with-prompt` JSON payload includes `prompt_path`, `bundle_output_path`, and `manifest_path`. The manifest lists each pair and its packing-derived `result_path`; note-packed runs use gate filenames such as `prose__source-residue.md`.
+The command prints a JSON payload with a `runs` array. Each run includes `review_run_id`, `prompt_path`, `bundle_output_path`, `manifest_path`, `gate_ids`, and `gate_paths`. The manifest lists each pair and its packing-derived `result_path`; note-packed runs use gate filenames such as `prose__source-residue.md`.
 
 ### commonplace-ingest-bundle-output
 

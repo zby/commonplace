@@ -126,9 +126,9 @@ If the system has no reachable source code, stop and write a lightweight note in
 
    If a field is absent because the reviewed system has no distinctive mechanism there, leave it absent. If the absence hides an important tradeoff, fix the review before semantic QA.
 
-12. **Run semantic QA.** Run the live-agent procedure from `kb/instructions/run-review-bundle-on-note.md` on the new review note using the `semantic` bundle: create the run and prompt with `commonplace-create-review-run --with-prompt`, follow the prompt in the current harness, then ingest the sentinel-bracketed output with `commonplace-ingest-bundle-output`. Treat it as a read-only QA loop: extract findings, fix clearly valid issues, and leave uncertain findings for the final report rather than forcing a rewrite.
+12. **Run semantic QA.** Run the live-agent procedure from `kb/instructions/run-review-bundle-on-note.md` on the new review note using the `semantic` bundle: create the run and prompt with `commonplace-create-review-runs`, follow the prompt in the current harness, then ingest the sentinel-bracketed output with `commonplace-ingest-bundle-output`. Treat it as a read-only QA loop: extract findings, fix clearly valid issues, and leave uncertain findings for the final report rather than forcing a rewrite.
 
-   Do not use `commonplace-run-review-bundle` for this skill workflow unless the user explicitly authorizes subprocess runner execution, because that command invokes `claude` or `codex exec` internally. If semantic QA cannot be completed through the current harness, report it as a blocked QA step rather than substituting a shell-launched agent.
+   Do not use `commonplace-run-review-bundles` for this skill workflow unless the user explicitly authorizes subprocess runner execution, because that command invokes `claude` or `codex exec` internally. If semantic QA cannot be completed through the current harness, report it as a blocked QA step rather than substituting a shell-launched agent.
 
 13. **Validate.** Run:
     ```bash
@@ -166,5 +166,5 @@ Report:
 - overwrite or repurpose an existing checkout whose remote points to a different owner/repo
 - force-pull, delete, or reset a checkout to handle conflicts
 - run `codex`, `codex exec`, `claude`, or another agent CLI from the shell to bypass delegation or worker limits
-- use `commonplace-run-review-bundle` in this workflow without explicit authorization for its subprocess runner
+- use `commonplace-run-review-bundles` in this workflow without explicit authorization for its subprocess runner
 - leave the review unvalidated

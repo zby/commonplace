@@ -20,16 +20,16 @@ The review subsystem is split between two packages, mirroring the project-wide `
 - **`commonplace.review`** — library code only. Pure functions, dataclasses, the SQLite layer, the runner subprocess wrappers. No `main()` functions, no argparse, no `Path.cwd()` at import time. Importable from any caller without pulling in CLI machinery.
 - **`commonplace.cli.review`** — thin CLI wrappers. Each module is argparse + `Path.cwd()` + `prepare_review_db(...)` + one library call. The `commonplace-*` review entry points in `pyproject.toml` all live here.
 
-For most modules the lib name and the CLI name match. For example `commonplace.review.run_review_bundle` is the library that resolves the target and hands one share-note batch to `executor.execute_batch`; `commonplace.cli.review.run_review_bundle` is the thin wrapper that argparse-parses the user's invocation and calls into the lib. Two modules (`resolve_gates` and `review_target_selector`) exist in both packages because they were split during the layout migration: lib helpers stayed in `commonplace.review.*`, the CLI `main()` moved to `commonplace.cli.review.*`.
+For most modules the lib name and the CLI name match. For example `commonplace.review.run_review_bundles` is the library that resolves note-local gate requests into bundle-sized runner calls and hands each batch to `executor.execute_batch`; `commonplace.cli.review.run_review_bundles` is the thin wrapper that argparse-parses the user's invocation and calls into the lib. Two modules (`resolve_gates` and `review_target_selector`) exist in both packages because they were split during the layout migration: lib helpers stayed in `commonplace.review.*`, the CLI `main()` moved to `commonplace.cli.review.*`.
 
-This document refers to modules by their unqualified names (e.g. `run_review_bundle`, `review_target_selector`) when the distinction doesn't matter. When a particular function or class is called out, it lives in the library package unless explicitly noted as a CLI.
+This document refers to modules by their unqualified names (e.g. `run_review_bundles`, `review_target_selector`) when the distinction doesn't matter. When a particular function or class is called out, it lives in the library package unless explicitly noted as a CLI.
 
 ## Architecture overview
 
 ```
 ┌─────────────────────────────────────────────────┐
 │  Packing (which pairs share one LLM call)       │
-│  run_review_bundle (share-note)                 │
+│  run_review_bundles (note-local bundle groups)  │
 │  run_gate_sweep (share-gate, experimental)      │
 │  batch + create/finalize/ingest (external       │
 │  executors: live agent, orchestrator)           │
@@ -186,13 +186,13 @@ Every output block is keyed by the full (note, gate) pair:
 
 ### Packing callers
 
-- **`run_review_bundle.py` — share-note packing.** One note, all its gates, one call, one run.
+- **`run_review_bundles.py` — note-local bundle packing.** One note, requested gates grouped by bundle/lens; one subprocess runner call and one review run per group.
 - **`run_gate_sweep.py` — share-gate packing (experimental).** One gate over a chunked note list; one gate-packed run per prompt batch; missing pairs are marked `missing`, parsed pairs are retained, and the invocation records a failure.
 - **Live-agent path (single note)** — same protocol without a nested runner:
-  1. `commonplace-create-review-run --with-prompt` creates the run, writes the canonical prompt to `kb/reports/bundle-reviews/review-run-{id}/prompt.md`, writes `MANIFEST.json`, and returns `prompt_path`, `bundle_output_path`, and `manifest_path` in the JSON payload
-  2. the prompt is rendered from the snapshots attached to the created pair rows
-  3. the current agent reads `prompt_path`, follows it, and writes `kb/reports/bundle-reviews/review-run-{id}/bundle-output.md`
-  4. `commonplace-ingest-bundle-output` parses that artifact, finalizes through `record_and_finalize_run` (single-run ingest is all-or-nothing), writes packing-derived parsed result files, stores their paths, and refreshes `MANIFEST.json`
+  1. `commonplace-create-review-runs` groups requested gates by bundle/lens, creates one note-packed run per group, writes each canonical prompt to `kb/reports/bundle-reviews/review-run-{id}/prompt.md`, writes `MANIFEST.json`, and returns a JSON `runs` array with each run's `prompt_path`, `bundle_output_path`, and `manifest_path`
+  2. each prompt is rendered from the snapshots attached to that run's created pair rows
+  3. the current agent reads each `prompt_path`, follows it, and writes the matching `kb/reports/bundle-reviews/review-run-{id}/bundle-output.md`
+  4. `commonplace-ingest-bundle-output` parses each artifact, finalizes through `record_and_finalize_run` (single-run ingest is all-or-nothing), writes packing-derived parsed result files, stores their paths, and refreshes `MANIFEST.json`
 - **External-executor batch path (`batch.py`)** — deterministic ends for any orchestrator that owns its own fan-out (a live agent reviewing many pairs, or a harness workflow spawning sub-agents per batch); decision record: [ADR 030](./adr/030-harness-facing-seams-batch-endpoints-and-runner-adapters.md).
   1. `commonplace-prepare-review-batch <note>::<gate>... --runner <label> --model <partition>` creates one note-packed or gate-packed run for the pair set (inapplicable gates skipped and reported; missing notes/gates fatal) and writes the canonical prompt from captured snapshots under `kb/reports/bundle-reviews/review-run-{review_run_id}/`; returns `review_run_id`, pair metadata, skipped pairs, `prompt_path`, `bundle_output_path`, and `manifest_path` as JSON
   2. the executor follows the prompt and writes `bundle_output_path`

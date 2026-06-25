@@ -108,18 +108,18 @@ There is no separate bundle manifest hash in the current tree. If bundle-level m
 
 The canonical live path is:
 
-1. create a review run
-2. follow the canonical bundle prompt in the current agent
-3. write the sentinel-delimited bundle artifact
-4. ingest the bundle artifact to complete review pairs and append acceptance events
+1. create one or more review runs for the requested gates
+2. follow each canonical bundle prompt in the current agent
+3. write each sentinel-delimited bundle artifact
+4. ingest each bundle artifact to complete review pairs and append acceptance events
 
 For live agent work, the preferred path is the prompt-plus-ingest helper chain:
 
-1. `commonplace-create-review-run --with-prompt`
-2. write `kb/reports/bundle-reviews/review-run-{id}/bundle-output.md`
-3. `commonplace-ingest-bundle-output`
+1. `commonplace-create-review-runs`
+2. for each returned run, write `kb/reports/bundle-reviews/review-run-{id}/bundle-output.md`
+3. run `commonplace-ingest-bundle-output` for each completed run
 
-The run directory also carries `MANIFEST.json`. The manifest is created with pending pairs when the prompt is created and refreshed after ingest with pair statuses and parsed `result_path` files.
+The helper groups requested gates by bundle/lens, so a request for multiple bundles creates multiple focused prompt contexts. Each run directory also carries `MANIFEST.json`. The manifest is created with pending pairs when the prompt is created and refreshed after ingest with pair statuses and parsed `result_path` files.
 
 A full review write contributes:
 
@@ -200,10 +200,10 @@ Human-readable inspection remains required, but it is now a derived view from DB
 
 Instruction: `kb/instructions/run-review-bundle-on-note.md`
 
-1. `commonplace-create-review-run --runner {codex|claude-code} --model {model-partition} --with-prompt {note} {gate-or-bundle}...`
-2. Read the file at `prompt_path` from the JSON output and follow it in the current agent
-3. Write the sentinel-delimited review bundle to `bundle_output_path`
-4. `commonplace-ingest-bundle-output --review-run-id {id} --input-file {bundle_output_path}`
+1. `commonplace-create-review-runs --runner {codex|claude-code|live-agent} --model {model-partition} {note} {gate-or-bundle}...`
+2. For each item in the returned `runs` array, read `prompt_path` and follow it in the current agent
+3. Write that run's sentinel-delimited review bundle to `bundle_output_path`
+4. `commonplace-ingest-bundle-output --review-run-id {id} --input-file {bundle_output_path}` for each run
 
 ### Sweep
 

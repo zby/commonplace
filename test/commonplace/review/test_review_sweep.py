@@ -34,12 +34,12 @@ def test_review_sweep_aborts_immediately_on_usage_exhaustion(
 
     calls: list[str] = []
 
-    def fake_run_bundle(*, repo_root, db_path, note_path, gate_or_bundle, runner, model, dry_run):
+    def fake_run_bundles(*, repo_root, db_path, note_path, gate_or_bundle, runner, model, dry_run):
         calls.append(note_path)
         raise UsageExhausted()
 
     monkeypatch.setattr(review_sweep, "select_stale_gates", fake_select_stale_gates)
-    monkeypatch.setattr(review_sweep, "run_bundle", fake_run_bundle)
+    monkeypatch.setattr(review_sweep, "run_bundles", fake_run_bundles)
 
     exit_code = review_sweep.main(["--model", "test-model", "prose", "kb/notes"])
     stderr = capsys.readouterr().err
@@ -61,11 +61,11 @@ def test_review_sweep_passes_current_flag_to_selector(
         captured_kwargs.update(kwargs)
         return []
 
-    def fake_run_bundle(**kwargs):
-        raise AssertionError("run_bundle should not be called when selector returns no stale pairs")
+    def fake_run_bundles(**kwargs):
+        raise AssertionError("run_bundles should not be called when selector returns no stale pairs")
 
     monkeypatch.setattr(review_sweep, "select_stale_gates", fake_select_stale_gates)
-    monkeypatch.setattr(review_sweep, "run_bundle", fake_run_bundle)
+    monkeypatch.setattr(review_sweep, "run_bundles", fake_run_bundles)
 
     exit_code = review_sweep.main(["--model", "test-model", "--current", "prose"])
 
@@ -92,7 +92,7 @@ def test_review_sweep_runs_up_to_four_reviews_in_parallel_by_default(
     max_in_flight = 0
     lock = threading.Lock()
 
-    def fake_run_bundle(*, repo_root, db_path, note_path, gate_or_bundle, runner, model, dry_run):
+    def fake_run_bundles(*, repo_root, db_path, note_path, gate_or_bundle, runner, model, dry_run):
         nonlocal current_in_flight, max_in_flight
         with lock:
             current_in_flight += 1
@@ -104,7 +104,7 @@ def test_review_sweep_runs_up_to_four_reviews_in_parallel_by_default(
         return 0
 
     monkeypatch.setattr(review_sweep, "select_stale_gates", fake_select_stale_gates)
-    monkeypatch.setattr(review_sweep, "run_bundle", fake_run_bundle)
+    monkeypatch.setattr(review_sweep, "run_bundles", fake_run_bundles)
 
     exit_code = review_sweep.main(["--model", "test-model", "prose", "kb/notes"])
 
@@ -112,7 +112,7 @@ def test_review_sweep_runs_up_to_four_reviews_in_parallel_by_default(
     assert max_in_flight >= 4
 
 
-def test_review_sweep_passes_runner_to_run_review_bundle(
+def test_review_sweep_passes_runner_to_run_review_bundles(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     repo = make_fake_repo(tmp_path)
@@ -124,12 +124,12 @@ def test_review_sweep_passes_runner_to_run_review_bundle(
 
     captured: dict[str, object] = {}
 
-    def fake_run_bundle(**kwargs):
+    def fake_run_bundles(**kwargs):
         captured.update(kwargs)
         return 0
 
     monkeypatch.setattr(review_sweep, "select_stale_gates", fake_select_stale_gates)
-    monkeypatch.setattr(review_sweep, "run_bundle", fake_run_bundle)
+    monkeypatch.setattr(review_sweep, "run_bundles", fake_run_bundles)
 
     exit_code = review_sweep.main(["--model", "test-model", "--runner", "codex", "--current", "prose"])
 
