@@ -136,13 +136,9 @@ LLM constraints (no persistent memory, no direct perception, no habit formation)
 
 Relevant Notes:
 
-- [Title as claim enables traversal as reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — extends: that note already carves out multi-claim and definitional docs from claim-title conventions; those are documents in the descriptive register getting a different convention because they play a different role in traversal
 - [Reach informs KB design](./brainstorming-how-reach-informs-kb-design.md) — qualifies: reach is the quality axis for the theoretical register specifically, not a universal goal; descriptions optimize for economy and prescriptions for precision
-- [Deploy-time learning is the missing middle](./deploy-time-learning-is-the-missing-middle.md) — enables: per-register conventions are deploy-time artifacts, to be iterated from use rather than designed upfront
-- [The verifiability gradient](./verifiability-gradient.md) — the ladder those deploy-time artifacts sit on
 - [First-principles reasoning selects for explanatory reach](./first-principles-reasoning-selects-for-explanatory-reach-over.md) — foundation: the reach concept that serves as the quality criterion for the theoretical register
 - [Why directories despite their costs](./why-directories-despite-their-costs.md) — extends: the three-register split provides a principled reason for directory-level separation beyond topic grouping
-- [Distillation](./definitions/distillation.md) — foundation: the theory → prescription path is a distillation step; the full chain (theory → prescription → implementation → description) shows how registers connect through work
 - [Skills derive from methodology through distillation](./skills-derive-from-methodology-through-distillation.md) — exemplifies: methodology → skill is an instance of the theory → prescription distillation path
 - [Agent memory needs discoverable, composable, trusted knowledge under bounded context](./agent-memory-needs-discoverable-composable-trusted-knowledge-under.md) — grounds: the three properties apply differently per register; reach is the quality criterion for the theoretical register, economy and precision serve the other two
 - [A functioning KB needs a workshop layer](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — extends: the library/workshop distinction adds a temporal dimension orthogonal to registers — library documents (all three registers) accumulate value, while workshop documents consume it through lifecycle progression
