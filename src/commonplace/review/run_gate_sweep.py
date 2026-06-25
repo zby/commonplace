@@ -6,6 +6,7 @@ wrapper.
 
 from __future__ import annotations
 
+from dataclasses import dataclass
 import sys
 from pathlib import Path
 
@@ -16,11 +17,16 @@ from commonplace.review.executor import (
     execute_batch,
     prepare_note_target,
 )
-from commonplace.review.paths import GATES_ROOT
+from commonplace.review.freshness import capture_review_inputs
+from commonplace.review.paths import normalize_gate_path
 from commonplace.review.protocol.prompt import NoteReviewTarget, render_pairs_prompt
-from commonplace.review.review_db import ReviewPairRequest, connect, create_run_with_pairs
-from commonplace.review.review_metadata import committed_file_provenance, iso_now, review_note_provenance
-from commonplace.review.review_model import normalize_model_id
+from commonplace.review.review_db import (
+    connect,
+    create_run_with_pairs,
+    load_review_pairs_for_run,
+)
+from commonplace.review.review_metadata import iso_now
+from commonplace.review.review_model import normalize_model_partition
 from commonplace.review.review_target_selector import select_stale_gates
 
 
@@ -28,55 +34,69 @@ def chunked(items: list[str], size: int) -> list[list[str]]:
     return [items[index : index + size] for index in range(0, len(items), size)]
 
 
+@dataclass(frozen=True)
+class PreparedGateBatch:
+    targets: list[NoteReviewTarget]
+    gate_texts: dict[str, str]
+
+
+def batch_pair_status_counts(db_path: Path, review_run_ids: list[int]) -> tuple[int, int]:
+    completed = 0
+    missing = 0
+    with connect(db_path) as conn:
+        for review_run_id in review_run_ids:
+            for pair in load_review_pairs_for_run(conn, review_run_id=review_run_id):
+                if pair.pair_status == "completed":
+                    completed += 1
+                elif pair.pair_status == "missing":
+                    missing += 1
+    return completed, missing
+
+
 def prepare_batch_targets(
     *,
     repo_root: Path,
     db_path: Path | None,
     note_paths: list[str],
-    gate_id: str,
-    gate_sha: str,
+    gate_path: str,
     runner: str,
-    model_id: str,
-) -> list[NoteReviewTarget]:
+    model_partition: str,
+) -> PreparedGateBatch:
     """Create one single-gate review run for this prompt batch.
 
     With db_path=None (dry run) no runs are created and ordinals stand in for
     run ids.
     """
     if db_path is None:
-        return [
-            prepare_note_target(
-                repo_root=repo_root,
-                note_path=note_path,
-                review_run_id=0,
-                gate_ids=(gate_id,),
-            )
-            for note_path in note_paths
-        ]
+        gate_text = frontmatter.strip((repo_root / gate_path).read_text(encoding="utf-8")).lstrip("\n")
+        return PreparedGateBatch(
+            targets=[
+                prepare_note_target(
+                    repo_root=repo_root,
+                    note_path=note_path,
+                    review_run_id=0,
+                    gate_paths=(gate_path,),
+                )
+                for note_path in note_paths
+            ],
+            gate_texts={gate_path: gate_text},
+        )
 
     targets: list[NoteReviewTarget] = []
     started_at = iso_now()
     with connect(db_path) as conn:
-        pair_requests: list[ReviewPairRequest] = []
-        for ordinal, note_path in enumerate(note_paths):
-            note_sha, note_commit = review_note_provenance(repo_root, Path(note_path))
-            pair_requests.append(
-                ReviewPairRequest(
-                    note_path=note_path,
-                    gate_id=gate_id,
-                    gate_sha=gate_sha,
-                    reviewed_note_sha=note_sha,
-                    reviewed_note_commit=note_commit,
-                    pair_ordinal=ordinal,
-                )
-            )
+        captured_inputs = capture_review_inputs(
+            conn,
+            repo_root=repo_root,
+            pairs=[(note_path, gate_path) for note_path in note_paths],
+        )
         review_run_id = create_run_with_pairs(
             conn,
-            model_id=model_id,
+            model_partition=model_partition,
             runner=runner,
             started_at=started_at,
             packing="gate",
-            pairs=pair_requests,
+            pairs=captured_inputs.pair_requests,
         )
         bundle_artifact_dir(repo_root, review_run_id).mkdir(parents=True, exist_ok=True)
         for note_path in note_paths:
@@ -85,18 +105,19 @@ def prepare_batch_targets(
                     repo_root=repo_root,
                     note_path=note_path,
                     review_run_id=review_run_id,
-                    gate_ids=(gate_id,),
+                    gate_paths=(gate_path,),
+                    note_text=captured_inputs.note_texts[note_path],
                 )
             )
         conn.commit()
-    return targets
+    return PreparedGateBatch(targets=targets, gate_texts=captured_inputs.gate_texts)
 
 
 def run_gate_sweep(
     *,
     repo_root: Path,
     db_path: Path,
-    gate_id: str,
+    gate_path: str,
     runner: str,
     model: str,
     note_paths: list[str] | None,
@@ -110,18 +131,17 @@ def run_gate_sweep(
     errors so the caller can translate them to argparse-style failures.
     """
     runner_model = model
-    model = normalize_model_id(model)
-    gate_id = gate_id.removesuffix(".md")
-    gate_abs = repo_root / GATES_ROOT / f"{gate_id}.md"
+    model = normalize_model_partition(model)
+    raw_gate = gate_path
+    gate_path = normalize_gate_path(repo_root, raw_gate)
+    gate_abs = repo_root / gate_path
     if not gate_abs.is_file():
-        raise ValueError(f"gate not found: {gate_id}")
-    gate_text = frontmatter.strip(gate_abs.read_text(encoding="utf-8")).lstrip("\n")
-    gate_sha, _ = committed_file_provenance(repo_root, gate_abs, kind="gate")
+        raise ValueError(f"gate not found: {gate_path}")
 
     stale_records = select_stale_gates(
         repo_root,
         model=model,
-        gate_ids=[gate_id],
+        gate_ids=[gate_path],
         note_filter=note_paths,
         current_only=current_only,
         include_diff=False,
@@ -138,23 +158,25 @@ def run_gate_sweep(
 
     reviewed = 0
     failed = 0
+    missing = 0
     for batch_index, batch_note_paths in enumerate(batches, start=1):
-        targets = prepare_batch_targets(
+        prepared_batch = prepare_batch_targets(
             repo_root=repo_root,
             db_path=None if dry_run else db_path,
             note_paths=batch_note_paths,
-            gate_id=gate_id,
-            gate_sha=gate_sha,
+            gate_path=gate_path,
             runner=runner,
-            model_id=model,
+            model_partition=model,
         )
+        targets = prepared_batch.targets
         batch_label = f"Batch {batch_index}/{len(batches)}"
         print(f"{batch_label}: launching {runner} for {len(targets)} notes", file=sys.stderr)
         for target in targets:
             print(f"  - {target.note_path} (review run id: {target.review_run_id})", file=sys.stderr)
+        review_run_ids = sorted({target.review_run_id for target in targets})
 
         if dry_run:
-            prompt = render_pairs_prompt(notes=targets, gate_texts={gate_id: gate_text})
+            prompt = render_pairs_prompt(notes=targets, gate_texts=prepared_batch.gate_texts)
             if batch_index > 1:
                 print()
                 print(f"=== BATCH {batch_index}/{len(batches)} ===")
@@ -166,10 +188,10 @@ def run_gate_sweep(
                 repo_root=repo_root,
                 db_path=db_path,
                 targets=targets,
-                gate_texts={gate_id: gate_text},
+                gate_texts=prepared_batch.gate_texts,
                 runner=runner,
                 runner_model=runner_model,
-                model_id=model,
+                model_partition=model,
             )
         except KeyboardInterrupt:
             print("gate sweep interrupted", file=sys.stderr)
@@ -178,18 +200,23 @@ def run_gate_sweep(
             print("error: runner reported usage exhausted; aborting sweep.", file=sys.stderr)
             return 1
 
-        if outcome.runner_returncode != 0:
-            return outcome.runner_returncode
-
-        reviewed += len(batch_note_paths) if outcome.completed else 0
+        completed_count, missing_count = batch_pair_status_counts(db_path, review_run_ids)
+        reviewed += completed_count
+        missing += missing_count
         failed += len(outcome.failed)
         for review_run_id, reason in outcome.failed:
             print(f"  FAILED run {review_run_id}: {reason}", file=sys.stderr)
-        print(f"{batch_label}: reviewed {len(batch_note_paths) if outcome.completed else 0} notes")
+        print(f"{batch_label}: reviewed {completed_count} notes")
+        if missing_count:
+            print(f"{batch_label}: missing {missing_count} notes", file=sys.stderr)
+        if outcome.runner_returncode != 0:
+            return outcome.runner_returncode
 
     if not dry_run:
         print(f"Reviewed: {reviewed} notes")
+        if missing:
+            print(f"Missing:  {missing} notes", file=sys.stderr)
         if failed:
-            print(f"Failed:   {failed} notes", file=sys.stderr)
+            print(f"Failed:   {failed} run(s)", file=sys.stderr)
             return 1
     return 0

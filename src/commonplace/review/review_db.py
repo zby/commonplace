@@ -12,6 +12,8 @@ from importlib import resources
 from pathlib import Path
 from typing import Callable, Sequence
 
+from commonplace.review.paths import normalize_gate_path
+from commonplace.review.paths import gate_id_from_stored_path
 from commonplace.review.protocol.decisions import normalize_review_decision
 
 DEFAULT_DB_PATH = Path("kb/reports/review-store.sqlite")
@@ -26,7 +28,7 @@ MIGRATIONS_TABLE = "review_schema_migrations"
 @dataclass(frozen=True)
 class SchemaMigration:
     migration_name: str
-    apply: Callable[[sqlite3.Connection], None]
+    apply: Callable[[sqlite3.Connection, Path], None]
 
 
 @dataclass(frozen=True)
@@ -40,20 +42,30 @@ class ReviewFileSnapshot:
 @dataclass(frozen=True)
 class AcceptanceState:
     note_path: str
-    gate_id: str
-    model_id: str
+    gate_path: str
+    model_partition: str
     accepted_review_pair_id: int | None
     accepted_note_sha: str
     accepted_note_commit: str | None
     accepted_gate_sha: str
+    accepted_note_snapshot_id: int | None
+    accepted_gate_snapshot_id: int | None
+    accepted_note_hash: str | None
+    accepted_gate_hash: str | None
+    accepted_note_text: str | None
+    accepted_gate_text: str | None
     accepted_at: str
     acceptance_kind: str
+
+    @property
+    def gate_id(self) -> str:
+        return gate_id_from_stored_path(self.gate_path)
 
 
 @dataclass(frozen=True)
 class ReviewRunRow:
     review_run_id: int
-    model_id: str
+    model_partition: str
     runner: str
     started_at: str
     completed_at: str | None
@@ -70,8 +82,8 @@ class ReviewPairRow:
     review_pair_id: int
     review_run_id: int
     note_path: str
-    gate_id: str
-    model_id: str
+    gate_path: str
+    model_partition: str
     pair_ordinal: int
     pair_status: str
     decision: str | None
@@ -80,25 +92,33 @@ class ReviewPairRow:
     gate_sha: str
     reviewed_note_sha: str
     reviewed_note_commit: str | None
+    reviewed_note_snapshot_id: int | None
+    reviewed_gate_snapshot_id: int | None
     reviewed_at: str | None
     review_kind: str
+
+    @property
+    def gate_id(self) -> str:
+        return gate_id_from_stored_path(self.gate_path)
 
 
 @dataclass(frozen=True)
 class ReviewPairRequest:
     note_path: str
-    gate_id: str
+    gate_path: str
     gate_sha: str
     reviewed_note_sha: str
     reviewed_note_commit: str | None
     pair_ordinal: int
+    reviewed_note_snapshot_id: int | None = None
+    reviewed_gate_snapshot_id: int | None = None
     review_kind: str = "full-review"
 
 
 @dataclass(frozen=True)
 class PendingReviewPair:
     note_path: str
-    gate_id: str
+    gate_path: str
     decision: str
     rationale_markdown: str
     evidence_json: str | None = None
@@ -117,7 +137,7 @@ class NotePathUpdateCounts:
 
 
 @dataclass(frozen=True)
-class ModelIdUpdateCounts:
+class ModelPartitionUpdateCounts:
     review_runs: int = 0
     review_pairs: int = 0
     acceptance_events: int = 0
@@ -148,7 +168,7 @@ def resolve_db_path(repo_root: Path, db_override: str | None = None) -> Path:
 
 def ensure_db(repo_root: Path, db_path: Path) -> None:
     with resources.as_file(resources.files("commonplace.review") / SCHEMA_PATH) as schema_path:
-        init_db(db_path, schema_path)
+        init_db(db_path, schema_path, repo_root=repo_root)
 
 
 def prepare_review_db(repo_root: Path, db_override: str | None = None) -> Path:
@@ -162,12 +182,12 @@ def apply_schema(conn: sqlite3.Connection, schema_path: Path) -> None:
     conn.executescript(schema_path.read_text(encoding="utf-8"))
 
 
-def init_db(db_path: Path, schema_path: Path) -> None:
+def init_db(db_path: Path, schema_path: Path, *, repo_root: Path) -> None:
     db_path.parent.mkdir(parents=True, exist_ok=True)
     with connect(db_path) as conn:
         if not _table_exists(conn, "review_runs"):
             apply_schema(conn, schema_path)
-        apply_schema_migrations(conn)
+        apply_schema_migrations(conn, repo_root=repo_root)
         conn.commit()
 
 
@@ -253,7 +273,82 @@ def _add_column_if_missing(conn: sqlite3.Connection, table_name: str, column_nam
     conn.execute(f"ALTER TABLE {table_name} ADD COLUMN {column_sql}")
 
 
-def _migrate_review_file_snapshots(conn: sqlite3.Connection) -> None:
+def _model_partition_column(conn: sqlite3.Connection, table_name: str) -> str:
+    columns = _table_columns(conn, table_name)
+    if "model_partition" in columns:
+        return "model_partition"
+    if "model_id" in columns:
+        return "model_id"
+    raise RuntimeError(f"{table_name} has no model partition column")
+
+
+def _gate_path_column(conn: sqlite3.Connection, table_name: str) -> str:
+    columns = _table_columns(conn, table_name)
+    if "gate_path" in columns:
+        return "gate_path"
+    if "gate_id" in columns:
+        return "gate_id"
+    raise RuntimeError(f"{table_name} has no gate path column")
+
+
+def _create_current_acceptance_views(conn: sqlite3.Connection) -> None:
+    gate_column = _gate_path_column(conn, "acceptance_events")
+    model_column = _model_partition_column(conn, "acceptance_events")
+    conn.executescript(
+        f"""
+        CREATE VIEW current_gate_acceptances AS
+        SELECT
+            e.note_path,
+            e.{gate_column} AS {gate_column},
+            e.{model_column} AS {model_column},
+            e.accepted_review_pair_id,
+            e.accepted_note_sha,
+            e.accepted_note_commit,
+            e.accepted_gate_sha,
+            e.accepted_note_snapshot_id,
+            e.accepted_gate_snapshot_id,
+            note_snapshot.content_sha256 AS accepted_note_hash,
+            gate_snapshot.content_sha256 AS accepted_gate_hash,
+            note_snapshot.content_text AS accepted_note_text,
+            gate_snapshot.content_text AS accepted_gate_text,
+            e.accepted_at,
+            e.acceptance_kind
+        FROM acceptance_events AS e
+        LEFT JOIN review_file_snapshots AS note_snapshot
+          ON e.accepted_note_snapshot_id = note_snapshot.snapshot_id
+        LEFT JOIN review_file_snapshots AS gate_snapshot
+          ON e.accepted_gate_snapshot_id = gate_snapshot.snapshot_id
+        JOIN (
+            SELECT
+                note_path,
+                {gate_column},
+                {model_column},
+                MAX(acceptance_event_id) AS max_id
+            FROM acceptance_events
+            GROUP BY note_path, {gate_column}, {model_column}
+        ) AS latest
+          ON e.acceptance_event_id = latest.max_id;
+
+        CREATE VIEW stale_gate_pairs AS
+        SELECT
+            a.note_path,
+            a.{gate_column} AS {gate_column},
+            a.{model_column} AS {model_column},
+            a.accepted_note_sha,
+            a.accepted_gate_sha,
+            a.accepted_note_snapshot_id,
+            a.accepted_gate_snapshot_id,
+            a.accepted_note_hash,
+            a.accepted_gate_hash,
+            a.accepted_note_text,
+            a.accepted_gate_text
+        FROM current_gate_acceptances AS a;
+        """
+    )
+
+
+def _migrate_review_file_snapshots(conn: sqlite3.Connection, repo_root: Path) -> None:
+    del repo_root
     conn.execute(
         """
         CREATE TABLE IF NOT EXISTS review_file_snapshots (
@@ -294,60 +389,164 @@ def _migrate_review_file_snapshots(conn: sqlite3.Connection) -> None:
         """
         DROP VIEW IF EXISTS stale_gate_pairs;
         DROP VIEW IF EXISTS current_gate_acceptances;
-
-        CREATE VIEW current_gate_acceptances AS
-        SELECT
-            e.note_path,
-            e.gate_id,
-            e.model_id,
-            e.accepted_review_pair_id,
-            e.accepted_note_sha,
-            e.accepted_note_commit,
-            e.accepted_gate_sha,
-            e.accepted_note_snapshot_id,
-            e.accepted_gate_snapshot_id,
-            note_snapshot.content_sha256 AS accepted_note_hash,
-            gate_snapshot.content_sha256 AS accepted_gate_hash,
-            e.accepted_at,
-            e.acceptance_kind
-        FROM acceptance_events AS e
-        LEFT JOIN review_file_snapshots AS note_snapshot
-          ON e.accepted_note_snapshot_id = note_snapshot.snapshot_id
-        LEFT JOIN review_file_snapshots AS gate_snapshot
-          ON e.accepted_gate_snapshot_id = gate_snapshot.snapshot_id
-        JOIN (
-            SELECT
-                note_path,
-                gate_id,
-                model_id,
-                MAX(acceptance_event_id) AS max_id
-            FROM acceptance_events
-            GROUP BY note_path, gate_id, model_id
-        ) AS latest
-          ON e.acceptance_event_id = latest.max_id;
-
-        CREATE VIEW stale_gate_pairs AS
-        SELECT
-            a.note_path,
-            a.gate_id,
-            a.model_id,
-            a.accepted_note_sha,
-            a.accepted_gate_sha,
-            a.accepted_note_snapshot_id,
-            a.accepted_gate_snapshot_id,
-            a.accepted_note_hash,
-            a.accepted_gate_hash
-        FROM current_gate_acceptances AS a;
         """
     )
+    _create_current_acceptance_views(conn)
+
+
+def _rename_column_if_present(
+    conn: sqlite3.Connection,
+    *,
+    table_name: str,
+    old_name: str,
+    new_name: str,
+) -> None:
+    columns = _table_columns(conn, table_name)
+    if new_name in columns:
+        return
+    if old_name not in columns:
+        raise RuntimeError(f"{table_name} has neither {old_name} nor {new_name}")
+    conn.execute(f"ALTER TABLE {table_name} RENAME COLUMN {old_name} TO {new_name}")
+
+
+def _migrate_model_partition(conn: sqlite3.Connection, repo_root: Path) -> None:
+    del repo_root
+    gate_column = _gate_path_column(conn, "review_pairs")
+    conn.executescript(
+        """
+        DROP VIEW IF EXISTS stale_gate_pairs;
+        DROP VIEW IF EXISTS current_gate_acceptances;
+        DROP INDEX IF EXISTS idx_review_runs_model_started;
+        DROP INDEX IF EXISTS idx_review_pairs_note_gate_model;
+        DROP INDEX IF EXISTS idx_acceptance_events_note_gate_model;
+        DROP INDEX IF EXISTS idx_acceptance_events_latest_by_key;
+        """
+    )
+    _rename_column_if_present(
+        conn,
+        table_name="review_runs",
+        old_name="model_id",
+        new_name="model_partition",
+    )
+    _rename_column_if_present(
+        conn,
+        table_name="review_pairs",
+        old_name="model_id",
+        new_name="model_partition",
+    )
+    _rename_column_if_present(
+        conn,
+        table_name="acceptance_events",
+        old_name="model_id",
+        new_name="model_partition",
+    )
+    conn.executescript(
+        f"""
+        CREATE INDEX IF NOT EXISTS idx_review_runs_model_partition_started
+        ON review_runs(model_partition, started_at DESC);
+
+        CREATE INDEX IF NOT EXISTS idx_review_pairs_note_gate_model_partition
+        ON review_pairs(note_path, {gate_column}, model_partition);
+
+        CREATE INDEX IF NOT EXISTS idx_acceptance_events_note_gate_model_partition
+        ON acceptance_events(note_path, {gate_column}, model_partition, accepted_at DESC);
+
+        CREATE INDEX IF NOT EXISTS idx_acceptance_events_latest_by_key
+        ON acceptance_events(note_path, {gate_column}, model_partition, acceptance_event_id DESC);
+        """
+    )
+    _create_current_acceptance_views(conn)
+
+
+def _legacy_gate_id_values(conn: sqlite3.Connection) -> list[str]:
+    values: set[str] = set()
+    for table_name in ("review_pairs", "acceptance_events"):
+        if "gate_id" not in _table_columns(conn, table_name):
+            continue
+        rows = conn.execute(f"SELECT DISTINCT gate_id FROM {table_name}").fetchall()
+        values.update(row["gate_id"] for row in rows if row["gate_id"])
+    return sorted(values)
+
+
+def _resolve_legacy_gate_ids(repo_root: Path, gate_ids: Sequence[str]) -> dict[str, str]:
+    mapping: dict[str, str] = {}
+    unresolved: list[str] = []
+    for gate_id in gate_ids:
+        try:
+            mapping[gate_id] = normalize_gate_path(repo_root, gate_id)
+        except (FileNotFoundError, ValueError):
+            unresolved.append(gate_id)
+    if unresolved:
+        formatted = ", ".join(unresolved)
+        raise ValueError(f"cannot resolve legacy review gate_id value(s): {formatted}")
+    return mapping
+
+
+def _migrate_gate_path(conn: sqlite3.Connection, repo_root: Path) -> None:
+    gate_mapping = _resolve_legacy_gate_ids(repo_root, _legacy_gate_id_values(conn))
+    conn.executescript(
+        """
+        DROP VIEW IF EXISTS stale_gate_pairs;
+        DROP VIEW IF EXISTS current_gate_acceptances;
+        DROP INDEX IF EXISTS idx_review_pairs_note_gate_model;
+        DROP INDEX IF EXISTS idx_review_pairs_note_gate_model_partition;
+        DROP INDEX IF EXISTS idx_acceptance_events_note_gate_model;
+        DROP INDEX IF EXISTS idx_acceptance_events_note_gate_model_partition;
+        DROP INDEX IF EXISTS idx_acceptance_events_latest_by_key;
+        """
+    )
+    _rename_column_if_present(
+        conn,
+        table_name="review_pairs",
+        old_name="gate_id",
+        new_name="gate_path",
+    )
+    _rename_column_if_present(
+        conn,
+        table_name="acceptance_events",
+        old_name="gate_id",
+        new_name="gate_path",
+    )
+    for legacy_gate_id, gate_path in gate_mapping.items():
+        conn.execute(
+            """
+            UPDATE review_pairs
+            SET gate_path = ?
+            WHERE gate_path = ?
+            """,
+            (gate_path, legacy_gate_id),
+        )
+        conn.execute(
+            """
+            UPDATE acceptance_events
+            SET gate_path = ?
+            WHERE gate_path = ?
+            """,
+            (gate_path, legacy_gate_id),
+        )
+    conn.executescript(
+        """
+        CREATE INDEX IF NOT EXISTS idx_review_pairs_note_gate_model_partition
+        ON review_pairs(note_path, gate_path, model_partition);
+
+        CREATE INDEX IF NOT EXISTS idx_acceptance_events_note_gate_model_partition
+        ON acceptance_events(note_path, gate_path, model_partition, accepted_at DESC);
+
+        CREATE INDEX IF NOT EXISTS idx_acceptance_events_latest_by_key
+        ON acceptance_events(note_path, gate_path, model_partition, acceptance_event_id DESC);
+        """
+    )
+    _create_current_acceptance_views(conn)
 
 
 SCHEMA_MIGRATIONS: tuple[SchemaMigration, ...] = (
     SchemaMigration("review-file-snapshots-v1", _migrate_review_file_snapshots),
+    SchemaMigration("review-model-partition-v1", _migrate_model_partition),
+    SchemaMigration("review-gate-path-v1", _migrate_gate_path),
 )
 
 
-def apply_schema_migrations(conn: sqlite3.Connection) -> None:
+def apply_schema_migrations(conn: sqlite3.Connection, *, repo_root: Path) -> None:
     _normalize_migration_table(conn)
     if _table_exists(conn, "review_runs"):
         _record_migration(conn, BASELINE_SCHEMA_MIGRATION)
@@ -356,7 +555,7 @@ def apply_schema_migrations(conn: sqlite3.Connection) -> None:
     for migration in SCHEMA_MIGRATIONS:
         if migration.migration_name in applied:
             continue
-        migration.apply(conn)
+        migration.apply(conn, repo_root)
         _record_migration(conn, migration.migration_name)
         applied.add(migration.migration_name)
 
@@ -385,6 +584,17 @@ def snapshot_file(conn: sqlite3.Connection, *, repo_root: Path, path: str) -> Re
         """,
         (normalized_path, content_sha256, content_text, captured_at),
     )
+    conn.execute(
+        """
+        UPDATE review_file_snapshots
+        SET content_text = ?,
+            captured_at = ?
+        WHERE path = ?
+          AND content_sha256 = ?
+          AND content_text IS NULL
+        """,
+        (content_text, captured_at, normalized_path, content_sha256),
+    )
     row = conn.execute(
         """
         SELECT snapshot_id, path, content_sha256, content_text
@@ -407,7 +617,7 @@ def snapshot_file(conn: sqlite3.Connection, *, repo_root: Path, path: str) -> Re
 def _review_run_from_row(row: sqlite3.Row) -> ReviewRunRow:
     return ReviewRunRow(
         review_run_id=row["review_run_id"],
-        model_id=row["model_id"],
+        model_partition=row["model_partition"],
         runner=row["runner"],
         started_at=row["started_at"],
         completed_at=row["completed_at"],
@@ -425,8 +635,8 @@ def _review_pair_from_row(row: sqlite3.Row) -> ReviewPairRow:
         review_pair_id=row["review_pair_id"],
         review_run_id=row["review_run_id"],
         note_path=row["note_path"],
-        gate_id=row["gate_id"],
-        model_id=row["model_id"],
+        gate_path=row["gate_path"],
+        model_partition=row["model_partition"],
         pair_ordinal=row["pair_ordinal"],
         pair_status=row["pair_status"],
         decision=row["decision"],
@@ -435,6 +645,8 @@ def _review_pair_from_row(row: sqlite3.Row) -> ReviewPairRow:
         gate_sha=row["gate_sha"],
         reviewed_note_sha=row["reviewed_note_sha"],
         reviewed_note_commit=row["reviewed_note_commit"],
+        reviewed_note_snapshot_id=row["reviewed_note_snapshot_id"],
+        reviewed_gate_snapshot_id=row["reviewed_gate_snapshot_id"],
         reviewed_at=row["reviewed_at"],
         review_kind=row["review_kind"],
     )
@@ -443,7 +655,7 @@ def _review_pair_from_row(row: sqlite3.Row) -> ReviewPairRow:
 def create_run(
     conn: sqlite3.Connection,
     *,
-    model_id: str,
+    model_partition: str,
     runner: str,
     started_at: str,
     packing: str,
@@ -459,7 +671,7 @@ def create_run(
     cursor = conn.execute(
         """
         INSERT INTO review_runs (
-            model_id,
+            model_partition,
             runner,
             started_at,
             completed_at,
@@ -472,7 +684,7 @@ def create_run(
         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """,
         (
-            model_id,
+            model_partition,
             runner,
             started_at,
             completed_at,
@@ -491,7 +703,7 @@ def create_review_pairs(
     conn: sqlite3.Connection,
     *,
     review_run_id: int,
-    model_id: str,
+    model_partition: str,
     pairs: Sequence[ReviewPairRequest],
     pair_status: str = "pending",
 ) -> list[int]:
@@ -504,26 +716,30 @@ def create_review_pairs(
             INSERT INTO review_pairs (
                 review_run_id,
                 note_path,
-                gate_id,
-                model_id,
+                gate_path,
+                model_partition,
                 pair_ordinal,
                 pair_status,
                 gate_sha,
                 reviewed_note_sha,
                 reviewed_note_commit,
+                reviewed_note_snapshot_id,
+                reviewed_gate_snapshot_id,
                 review_kind
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """,
             (
                 review_run_id,
                 pair.note_path,
-                pair.gate_id,
-                model_id,
+                pair.gate_path,
+                model_partition,
                 pair.pair_ordinal,
                 pair_status,
                 pair.gate_sha,
                 pair.reviewed_note_sha,
                 pair.reviewed_note_commit,
+                pair.reviewed_note_snapshot_id,
+                pair.reviewed_gate_snapshot_id,
                 pair.review_kind,
             ),
         )
@@ -534,7 +750,7 @@ def create_review_pairs(
 def create_run_with_pairs(
     conn: sqlite3.Connection,
     *,
-    model_id: str,
+    model_partition: str,
     runner: str,
     started_at: str,
     packing: str,
@@ -542,13 +758,13 @@ def create_run_with_pairs(
 ) -> int:
     review_run_id = create_run(
         conn,
-        model_id=model_id,
+        model_partition=model_partition,
         runner=runner,
         started_at=started_at,
         packing=packing,
         status="running",
     )
-    create_review_pairs(conn, review_run_id=review_run_id, model_id=model_id, pairs=pairs)
+    create_review_pairs(conn, review_run_id=review_run_id, model_partition=model_partition, pairs=pairs)
     return review_run_id
 
 
@@ -557,7 +773,7 @@ def load_review_run(conn: sqlite3.Connection, *, review_run_id: int) -> ReviewRu
         """
         SELECT
             review_run_id,
-            model_id,
+            model_partition,
             runner,
             started_at,
             completed_at,
@@ -584,8 +800,8 @@ def load_review_pairs_for_run(conn: sqlite3.Connection, *, review_run_id: int) -
             review_pair_id,
             review_run_id,
             note_path,
-            gate_id,
-            model_id,
+            gate_path,
+            model_partition,
             pair_ordinal,
             pair_status,
             decision,
@@ -594,11 +810,13 @@ def load_review_pairs_for_run(conn: sqlite3.Connection, *, review_run_id: int) -
             gate_sha,
             reviewed_note_sha,
             reviewed_note_commit,
+            reviewed_note_snapshot_id,
+            reviewed_gate_snapshot_id,
             reviewed_at,
             review_kind
         FROM review_pairs
         WHERE review_run_id = ?
-        ORDER BY pair_ordinal, note_path, gate_id
+        ORDER BY pair_ordinal, note_path, gate_path
         """,
         (review_run_id,),
     ).fetchall()
@@ -614,26 +832,38 @@ def load_current_acceptances(conn: sqlite3.Connection) -> dict[tuple[str, str, s
         """
         SELECT
             note_path,
-            gate_id,
-            model_id,
+            gate_path,
+            model_partition,
             accepted_review_pair_id,
             accepted_note_sha,
             accepted_note_commit,
             accepted_gate_sha,
+            accepted_note_snapshot_id,
+            accepted_gate_snapshot_id,
+            accepted_note_hash,
+            accepted_gate_hash,
+            accepted_note_text,
+            accepted_gate_text,
             accepted_at,
             acceptance_kind
         FROM current_gate_acceptances
         """
     ).fetchall()
     return {
-        (row["note_path"], row["gate_id"], row["model_id"]): AcceptanceState(
+        (row["note_path"], row["gate_path"], row["model_partition"]): AcceptanceState(
             note_path=row["note_path"],
-            gate_id=row["gate_id"],
-            model_id=row["model_id"],
+            gate_path=row["gate_path"],
+            model_partition=row["model_partition"],
             accepted_review_pair_id=row["accepted_review_pair_id"],
             accepted_note_sha=row["accepted_note_sha"],
             accepted_note_commit=row["accepted_note_commit"],
             accepted_gate_sha=row["accepted_gate_sha"],
+            accepted_note_snapshot_id=row["accepted_note_snapshot_id"],
+            accepted_gate_snapshot_id=row["accepted_gate_snapshot_id"],
+            accepted_note_hash=row["accepted_note_hash"],
+            accepted_gate_hash=row["accepted_gate_hash"],
+            accepted_note_text=row["accepted_note_text"],
+            accepted_gate_text=row["accepted_gate_text"],
             accepted_at=row["accepted_at"],
             acceptance_kind=row["acceptance_kind"],
         )
@@ -717,30 +947,6 @@ def fail_review_run(
     )
 
 
-def rekey_review_run_model(
-    conn: sqlite3.Connection,
-    *,
-    review_run_id: int,
-    model_id: str,
-) -> None:
-    conn.execute(
-        """
-        UPDATE review_runs
-        SET model_id = ?
-        WHERE review_run_id = ?
-        """,
-        (model_id, review_run_id),
-    )
-    conn.execute(
-        """
-        UPDATE review_pairs
-        SET model_id = ?
-        WHERE review_run_id = ?
-        """,
-        (model_id, review_run_id),
-    )
-
-
 def complete_review_pairs(
     conn: sqlite3.Connection,
     *,
@@ -749,7 +955,7 @@ def complete_review_pairs(
     reviewed_at: str,
 ) -> list[int]:
     requested = {
-        (pair.note_path, pair.gate_id): pair
+        (pair.note_path, pair.gate_path): pair
         for pair in load_review_pairs_for_run(conn, review_run_id=review_run_id)
     }
     completed_pair_ids: list[int] = []
@@ -757,14 +963,14 @@ def complete_review_pairs(
     for review_pair in review_pairs:
         if review_pair.review_kind not in REVIEW_KIND_VALUES:
             raise ValueError(f"invalid review kind: {review_pair.review_kind}")
-        key = (review_pair.note_path, review_pair.gate_id)
+        key = (review_pair.note_path, review_pair.gate_path)
         if key in seen:
-            raise ValueError(f"duplicate completed pair: {review_pair.note_path} :: {review_pair.gate_id}")
+            raise ValueError(f"duplicate completed pair: {review_pair.note_path} :: {review_pair.gate_path}")
         seen.add(key)
         requested_pair = requested.get(key)
         if requested_pair is None:
             raise ValueError(
-                f"pair {review_pair.note_path} :: {review_pair.gate_id} is not part of review run {review_run_id}"
+                f"pair {review_pair.note_path} :: {review_pair.gate_path} is not part of review run {review_run_id}"
             )
         normalized_decision = normalize_review_decision(review_pair.decision)
         if normalized_decision is None:
@@ -812,17 +1018,17 @@ def mark_missing_pairs(
         return int(cursor.rowcount or 0)
 
     count = 0
-    for note_path, gate_id in pairs:
+    for note_path, gate_path in pairs:
         cursor = conn.execute(
             """
             UPDATE review_pairs
             SET pair_status = 'missing'
             WHERE review_run_id = ?
               AND note_path = ?
-              AND gate_id = ?
+              AND gate_path = ?
               AND pair_status != 'completed'
             """,
-            (review_run_id, note_path, gate_id),
+            (review_run_id, note_path, gate_path),
         )
         count += int(cursor.rowcount or 0)
     return count
@@ -832,12 +1038,14 @@ def append_acceptance_event(
     conn: sqlite3.Connection,
     *,
     note_path: str,
-    gate_id: str,
-    model_id: str,
+    gate_path: str,
+    model_partition: str,
     accepted_review_pair_id: int | None,
     accepted_note_sha: str,
     accepted_note_commit: str | None,
     accepted_gate_sha: str,
+    accepted_note_snapshot_id: int | None = None,
+    accepted_gate_snapshot_id: int | None = None,
     accepted_at: str,
     acceptance_kind: str,
 ) -> int:
@@ -845,24 +1053,28 @@ def append_acceptance_event(
         """
         INSERT INTO acceptance_events (
             note_path,
-            gate_id,
-            model_id,
+            gate_path,
+            model_partition,
             accepted_review_pair_id,
             accepted_note_sha,
             accepted_note_commit,
             accepted_gate_sha,
+            accepted_note_snapshot_id,
+            accepted_gate_snapshot_id,
             accepted_at,
             acceptance_kind
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """,
         (
             note_path,
-            gate_id,
-            model_id,
+            gate_path,
+            model_partition,
             accepted_review_pair_id,
             accepted_note_sha,
             accepted_note_commit,
             accepted_gate_sha,
+            accepted_note_snapshot_id,
+            accepted_gate_snapshot_id,
             accepted_at,
             acceptance_kind,
         ),
@@ -910,42 +1122,42 @@ def rekey_note_path(
     )
 
 
-def count_model_id_records(
+def count_model_partition_records(
     conn: sqlite3.Connection,
     *,
-    model_id: str,
-) -> ModelIdUpdateCounts:
+    model_partition: str,
+) -> ModelPartitionUpdateCounts:
     def count_rows(table: str) -> int:
         row = conn.execute(
-            f"SELECT COUNT(*) AS count FROM {table} WHERE model_id = ?",
-            (model_id,),
+            f"SELECT COUNT(*) AS count FROM {table} WHERE model_partition = ?",
+            (model_partition,),
         ).fetchone()
         return int(row["count"]) if row is not None else 0
 
-    return ModelIdUpdateCounts(
+    return ModelPartitionUpdateCounts(
         review_runs=count_rows("review_runs"),
         review_pairs=count_rows("review_pairs"),
         acceptance_events=count_rows("acceptance_events"),
     )
 
 
-def rekey_model_id(
+def rekey_model_partition(
     conn: sqlite3.Connection,
     *,
-    old_model_id: str,
-    new_model_id: str,
-) -> ModelIdUpdateCounts:
-    if old_model_id == new_model_id:
-        return ModelIdUpdateCounts()
+    old_model_partition: str,
+    new_model_partition: str,
+) -> ModelPartitionUpdateCounts:
+    if old_model_partition == new_model_partition:
+        return ModelPartitionUpdateCounts()
 
     def update_rows(table: str) -> int:
         cursor = conn.execute(
-            f"UPDATE {table} SET model_id = ? WHERE model_id = ?",
-            (new_model_id, old_model_id),
+            f"UPDATE {table} SET model_partition = ? WHERE model_partition = ?",
+            (new_model_partition, old_model_partition),
         )
         return int(cursor.rowcount or 0)
 
-    return ModelIdUpdateCounts(
+    return ModelPartitionUpdateCounts(
         review_runs=update_rows("review_runs"),
         review_pairs=update_rows("review_pairs"),
         acceptance_events=update_rows("acceptance_events"),
@@ -956,7 +1168,7 @@ def load_review_pairs_for_note(
     conn: sqlite3.Connection,
     *,
     note_path: str,
-    model_id: str,
+    model_partition: str,
 ) -> list[ReviewPairRow]:
     rows = conn.execute(
         """
@@ -964,8 +1176,8 @@ def load_review_pairs_for_note(
             review_pair_id,
             review_run_id,
             note_path,
-            gate_id,
-            model_id,
+            gate_path,
+            model_partition,
             pair_ordinal,
             pair_status,
             decision,
@@ -974,13 +1186,15 @@ def load_review_pairs_for_note(
             gate_sha,
             reviewed_note_sha,
             reviewed_note_commit,
+            reviewed_note_snapshot_id,
+            reviewed_gate_snapshot_id,
             reviewed_at,
             review_kind
         FROM review_pairs
-        WHERE note_path = ? AND model_id = ?
-        ORDER BY gate_id, reviewed_at, review_pair_id
+        WHERE note_path = ? AND model_partition = ?
+        ORDER BY gate_path, reviewed_at, review_pair_id
         """,
-        (note_path, model_id),
+        (note_path, model_partition),
     ).fetchall()
     return [_review_pair_from_row(row) for row in rows]
 
@@ -989,8 +1203,8 @@ def load_latest_completed_review_pair(
     conn: sqlite3.Connection,
     *,
     note_path: str,
-    gate_id: str,
-    model_id: str,
+    gate_path: str,
+    model_partition: str,
 ) -> ReviewPairRow | None:
     row = conn.execute(
         """
@@ -998,8 +1212,8 @@ def load_latest_completed_review_pair(
             review_pair_id,
             review_run_id,
             note_path,
-            gate_id,
-            model_id,
+            gate_path,
+            model_partition,
             pair_ordinal,
             pair_status,
             decision,
@@ -1008,17 +1222,19 @@ def load_latest_completed_review_pair(
             gate_sha,
             reviewed_note_sha,
             reviewed_note_commit,
+            reviewed_note_snapshot_id,
+            reviewed_gate_snapshot_id,
             reviewed_at,
             review_kind
         FROM review_pairs
         WHERE note_path = ?
-          AND gate_id = ?
-          AND model_id = ?
+          AND gate_path = ?
+          AND model_partition = ?
           AND pair_status = 'completed'
         ORDER BY reviewed_at DESC, review_pair_id DESC
         LIMIT 1
         """,
-        (note_path, gate_id, model_id),
+        (note_path, gate_path, model_partition),
     ).fetchone()
     if row is None:
         return None
@@ -1029,13 +1245,13 @@ def load_effective_review_pair_map(
     conn: sqlite3.Connection,
     *,
     note_path: str | None = None,
-    model_id: str | None,
+    model_partition: str | None,
 ) -> dict[tuple[str, str, str], ReviewPairRow]:
     where_clauses: list[str] = []
     params: list[str] = []
-    if model_id is not None:
-        where_clauses.append("a.model_id = ?")
-        params.append(model_id)
+    if model_partition is not None:
+        where_clauses.append("a.model_partition = ?")
+        params.append(model_partition)
     if note_path is not None:
         where_clauses.append("a.note_path = ?")
         params.append(note_path)
@@ -1048,7 +1264,7 @@ def load_effective_review_pair_map(
             SELECT
                 rp.*,
                 ROW_NUMBER() OVER (
-                    PARTITION BY rp.note_path, rp.gate_id, rp.model_id
+                    PARTITION BY rp.note_path, rp.gate_path, rp.model_partition
                     ORDER BY rp.reviewed_at DESC, rp.review_pair_id DESC
                 ) AS rn
             FROM review_pairs AS rp
@@ -1058,8 +1274,8 @@ def load_effective_review_pair_map(
             COALESCE(accepted.review_pair_id, latest.review_pair_id) AS review_pair_id,
             COALESCE(accepted.review_run_id, latest.review_run_id) AS review_run_id,
             COALESCE(accepted.note_path, latest.note_path) AS note_path,
-            COALESCE(accepted.gate_id, latest.gate_id) AS gate_id,
-            COALESCE(accepted.model_id, latest.model_id) AS model_id,
+            COALESCE(accepted.gate_path, latest.gate_path) AS gate_path,
+            COALESCE(accepted.model_partition, latest.model_partition) AS model_partition,
             COALESCE(accepted.pair_ordinal, latest.pair_ordinal) AS pair_ordinal,
             COALESCE(accepted.pair_status, latest.pair_status) AS pair_status,
             COALESCE(accepted.decision, latest.decision) AS decision,
@@ -1068,6 +1284,8 @@ def load_effective_review_pair_map(
             COALESCE(accepted.gate_sha, latest.gate_sha) AS gate_sha,
             COALESCE(accepted.reviewed_note_sha, latest.reviewed_note_sha) AS reviewed_note_sha,
             COALESCE(accepted.reviewed_note_commit, latest.reviewed_note_commit) AS reviewed_note_commit,
+            COALESCE(accepted.reviewed_note_snapshot_id, latest.reviewed_note_snapshot_id) AS reviewed_note_snapshot_id,
+            COALESCE(accepted.reviewed_gate_snapshot_id, latest.reviewed_gate_snapshot_id) AS reviewed_gate_snapshot_id,
             COALESCE(accepted.reviewed_at, latest.reviewed_at) AS reviewed_at,
             COALESCE(accepted.review_kind, latest.review_kind) AS review_kind
         FROM current_gate_acceptances AS a
@@ -1075,8 +1293,8 @@ def load_effective_review_pair_map(
           ON accepted.review_pair_id = a.accepted_review_pair_id
         LEFT JOIN latest_review_pairs AS latest
           ON latest.note_path = a.note_path
-         AND latest.gate_id = a.gate_id
-         AND latest.model_id = a.model_id
+         AND latest.gate_path = a.gate_path
+         AND latest.model_partition = a.model_partition
          AND latest.rn = 1
         {where_sql}
         """,
@@ -1086,6 +1304,6 @@ def load_effective_review_pair_map(
     for row in rows:
         if row["review_pair_id"] is None:
             continue
-        key = (row["note_path"], row["gate_id"], row["model_id"])
+        key = (row["note_path"], row["gate_path"], row["model_partition"])
         result[key] = _review_pair_from_row(row)
     return result

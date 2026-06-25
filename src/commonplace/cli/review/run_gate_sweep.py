@@ -35,7 +35,7 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
         return run_gate_sweep(
             repo_root=repo_root,
             db_path=db_path,
-            gate_id=args.gate_id,
+            gate_path=args.gate_id,
             runner=args.runner,
             model=args.model,
             note_paths=args.note_paths,

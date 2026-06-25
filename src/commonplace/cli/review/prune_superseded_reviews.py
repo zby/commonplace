@@ -38,7 +38,7 @@ def _current_acceptance_event_ids(conn: sqlite3.Connection) -> tuple[int, ...]:
             SELECT
                 acceptance_event_id,
                 ROW_NUMBER() OVER (
-                    PARTITION BY note_path, gate_id, model_id
+                    PARTITION BY note_path, gate_path, model_partition
                     ORDER BY acceptance_event_id DESC
                 ) AS rn
             FROM acceptance_events
@@ -57,7 +57,7 @@ def _current_review_pair_ids(conn: sqlite3.Connection) -> tuple[int, ...]:
 
     Current acceptance rows may have accepted_review_pair_id=NULL for pure
     acknowledgements. Those keys read through to the latest completed pair for
-    the same (note_path, gate_id, model_id), so pruning must retain that pair.
+    the same (note_path, gate_path, model_partition), so pruning must retain that pair.
     """
     rows = conn.execute(
         """
@@ -65,11 +65,11 @@ def _current_review_pair_ids(conn: sqlite3.Connection) -> tuple[int, ...]:
             SELECT
                 acceptance_event_id,
                 note_path,
-                gate_id,
-                model_id,
+                gate_path,
+                model_partition,
                 accepted_review_pair_id,
                 ROW_NUMBER() OVER (
-                    PARTITION BY note_path, gate_id, model_id
+                    PARTITION BY note_path, gate_path, model_partition
                     ORDER BY acceptance_event_id DESC
                 ) AS rn
             FROM acceptance_events
@@ -78,10 +78,10 @@ def _current_review_pair_ids(conn: sqlite3.Connection) -> tuple[int, ...]:
             SELECT
                 review_pair_id,
                 note_path,
-                gate_id,
-                model_id,
+                gate_path,
+                model_partition,
                 ROW_NUMBER() OVER (
-                    PARTITION BY note_path, gate_id, model_id
+                    PARTITION BY note_path, gate_path, model_partition
                     ORDER BY reviewed_at DESC, review_pair_id DESC
                 ) AS rn
             FROM review_pairs
@@ -91,8 +91,8 @@ def _current_review_pair_ids(conn: sqlite3.Connection) -> tuple[int, ...]:
         FROM latest_acceptance AS a
         LEFT JOIN latest_review_pair AS rp
           ON rp.note_path = a.note_path
-         AND rp.gate_id = a.gate_id
-         AND rp.model_id = a.model_id
+         AND rp.gate_path = a.gate_path
+         AND rp.model_partition = a.model_partition
          AND rp.rn = 1
         WHERE a.rn = 1
           AND COALESCE(a.accepted_review_pair_id, rp.review_pair_id) IS NOT NULL
@@ -133,8 +133,8 @@ def _obsolete_review_pairs(
         FROM review_pairs AS rp
         JOIN review_pairs AS current
           ON current.note_path = rp.note_path
-         AND current.gate_id = rp.gate_id
-         AND current.model_id = rp.model_id
+         AND current.gate_path = rp.gate_path
+         AND current.model_partition = rp.model_partition
         WHERE current.review_pair_id IN ({_placeholders(current_review_pair_ids)})
           AND rp.review_pair_id NOT IN ({_placeholders(current_review_pair_ids)})
           AND rp.pair_status != 'pending'

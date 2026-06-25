@@ -11,14 +11,13 @@ from pathlib import Path
 from typing import Any
 
 from commonplace.lib import frontmatter
-from commonplace.review.paths import GATES_ROOT
 from commonplace.review.review_db import (
     connect,
     load_current_acceptances,
     prepare_review_db,
 )
 from commonplace.review.review_metadata import file_text_at_commit, file_text_at_provenance
-from commonplace.review.review_model import normalize_model_id
+from commonplace.review.review_model import normalize_model_partition
 from commonplace.review.review_target_selector import select_stale_gates
 
 
@@ -167,7 +166,7 @@ def qualifying_pairs(
     current_only: bool = False,
     db_path: Path | None = None,
 ) -> list[str]:
-    model = normalize_model_id(model)
+    model = normalize_model_partition(model)
     if db_path is None:
         db_path = prepare_review_db(repo_root)
     stale_records = [
@@ -192,26 +191,31 @@ def qualifying_pairs(
     gate_watches_cache: dict[str, set[str] | None] = {}
     pairs: list[str] = []
     for record in stale_records:
-        acceptance = acceptances.get((record.note_path, record.gate_id, model))
+        acceptance = acceptances.get((record.note_path, record.gate_path, model))
         if acceptance is None:
             continue
 
-        if record.gate_id not in gate_watches_cache:
-            gate_watches_cache[record.gate_id] = _load_gate_watches(repo_root / GATES_ROOT / f"{record.gate_id}.md")
-        watches = gate_watches_cache[record.gate_id]
+        if record.gate_path not in gate_watches_cache:
+            gate_watches_cache[record.gate_path] = _load_gate_watches(repo_root / record.gate_path)
+        watches = gate_watches_cache[record.gate_path]
         if watches is None:
             continue
 
-        previous_key = (record.note_path, acceptance.accepted_note_sha, acceptance.accepted_note_commit)
-        if previous_key not in previous_text_cache:
-            previous_text_cache[previous_key] = _load_previous_note_text(
-                repo_root,
-                note_path=record.note_path,
-                accepted_note_sha=acceptance.accepted_note_sha,
-                accepted_note_commit=acceptance.accepted_note_commit,
-                accepted_at=acceptance.accepted_at,
-            )
-        previous_text = previous_text_cache[previous_key]
+        if acceptance.accepted_note_text is not None:
+            previous_text = acceptance.accepted_note_text
+        elif acceptance.accepted_note_hash is not None:
+            previous_text = None
+        else:
+            previous_key = (record.note_path, acceptance.accepted_note_sha, acceptance.accepted_note_commit)
+            if previous_key not in previous_text_cache:
+                previous_text_cache[previous_key] = _load_previous_note_text(
+                    repo_root,
+                    note_path=record.note_path,
+                    accepted_note_sha=acceptance.accepted_note_sha,
+                    accepted_note_commit=acceptance.accepted_note_commit,
+                    accepted_at=acceptance.accepted_at,
+                )
+            previous_text = previous_text_cache[previous_key]
         if previous_text is None:
             continue
 
@@ -224,6 +228,6 @@ def qualifying_pairs(
             current_text,
             watches=watches,
         ):
-            pairs.append(f"{record.note_path}:{record.gate_id}")
+            pairs.append(f"{record.note_path}:{record.gate_path}")
 
     return sorted(set(pairs))

@@ -39,7 +39,7 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
         if review_run.status != "running":
             parser.error(f"review run is not ingestible: {review_run.status}")
         expected_pairs = [
-            (row.note_path, row.gate_id)
+            (row.note_path, row.gate_path)
             for row in load_review_pairs_for_run(conn, review_run_id=args.review_run_id)
         ]
 

@@ -5,12 +5,19 @@ import sqlite3
 from commonplace.review import review_db
 
 
+def source_gate_path(gate: str) -> str:
+    normalized = gate.strip().removesuffix(".md")
+    if normalized.startswith("kb/"):
+        return gate.strip()
+    return f"kb/instructions/review-gates/{normalized}.md"
+
+
 def insert_completed_pair(
     conn: sqlite3.Connection,
     *,
     note_path: str,
     gate_id: str,
-    model_id: str,
+    model_partition: str,
     decision: str,
     rationale_markdown: str,
     gate_sha: str,
@@ -22,16 +29,17 @@ def insert_completed_pair(
     review_kind: str = "full-review",
 ) -> int:
     started = started_at or reviewed_at
+    gate_path = source_gate_path(gate_id)
     review_run_id = review_db.create_run_with_pairs(
         conn,
-        model_id=model_id,
+        model_partition=model_partition,
         runner=runner,
         started_at=started,
         packing="note",
         pairs=[
             review_db.ReviewPairRequest(
                 note_path=note_path,
-                gate_id=gate_id,
+                gate_path=gate_path,
                 gate_sha=gate_sha,
                 reviewed_note_sha=reviewed_note_sha,
                 reviewed_note_commit=reviewed_note_commit,
@@ -42,7 +50,7 @@ def insert_completed_pair(
     )
     pair = review_db.PendingReviewPair(
         note_path=note_path,
-        gate_id=gate_id,
+        gate_path=gate_path,
         decision=decision,
         rationale_markdown=rationale_markdown,
         reviewed_at=reviewed_at,
@@ -59,7 +67,7 @@ def accept_pair(
     review_pair_id: int | None,
     note_path: str,
     gate_id: str,
-    model_id: str,
+    model_partition: str,
     accepted_note_sha: str,
     accepted_gate_sha: str,
     accepted_at: str,
@@ -69,8 +77,8 @@ def accept_pair(
     return review_db.append_acceptance_event(
         conn,
         note_path=note_path,
-        gate_id=gate_id,
-        model_id=model_id,
+        gate_path=source_gate_path(gate_id),
+        model_partition=model_partition,
         accepted_review_pair_id=review_pair_id,
         accepted_note_sha=accepted_note_sha,
         accepted_note_commit=accepted_note_commit,

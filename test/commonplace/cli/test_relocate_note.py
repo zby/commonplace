@@ -158,7 +158,7 @@ def test_relocate_note_apply_runs_review_relocation_hook(tmp_path: Path, monkeyp
             conn,
             note_path="kb/notes/old-note.md",
             gate_id="prose/source-residue",
-            model_id="opus-4-6",
+            model_partition="opus-4-6",
             decision="pass",
             rationale_markdown="ok",
             gate_sha="gate-sha",

@@ -19,7 +19,7 @@ import sys
 from pathlib import Path
 
 from commonplace.lib import frontmatter
-from commonplace.review.paths import GATES_ROOT
+from commonplace.review.paths import review_gates_dir
 from commonplace.review.resolve_gates import resolve_to_gate_ids
 
 
@@ -35,7 +35,7 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     args = parser.parse_args(argv)
 
     repo_root = cwd if cwd is not None else Path.cwd()
-    gates_dir = repo_root / GATES_ROOT
+    gates_dir = review_gates_dir(repo_root)
     try:
         gate_ids = resolve_to_gate_ids(args.gates, gates_dir)
     except FileNotFoundError as exc:

@@ -37,7 +37,7 @@ REVIEW_RUNNER_SYSTEM_PROMPT = (
 class NoteReviewTarget:
     note_path: str
     review_run_id: int
-    gate_ids: tuple[str, ...]
+    gate_paths: tuple[str, ...]
     note_text: str
     resolved_links: Sequence[tuple[str, str, str]] = ()
     unresolved_links: Sequence[tuple[str, str]] = ()
@@ -65,23 +65,23 @@ def _validate_targets(
             raise ValueError(f"note_path must not contain {PAIR_KEY_SEPARATOR!r}: {note_path}")
         if note_path in seen_notes:
             raise ValueError(f"duplicate note in review target list: {note_path}")
-        if not note.gate_ids:
+        if not note.gate_paths:
             raise ValueError(f"note has no requested gates: {note_path}")
-        if len(set(note.gate_ids)) != len(note.gate_ids):
+        if len(set(note.gate_paths)) != len(note.gate_paths):
             raise ValueError(f"duplicate gate requested for note: {note_path}")
         if not note.note_text.strip():
             raise ValueError(f"note_text must not be empty: {note_path}")
         _validate_embedded_text(note_path, note.note_text)
         seen_notes.add(note_path)
 
-    requested_gate_ids = {gate_id for note in notes for gate_id in note.gate_ids}
-    for gate_id in sorted(requested_gate_ids):
-        if PAIR_KEY_SEPARATOR in gate_id:
-            raise ValueError(f"gate_id must not contain {PAIR_KEY_SEPARATOR!r}: {gate_id}")
-        gate_text = gate_texts.get(gate_id)
+    requested_gate_paths = {gate_path for note in notes for gate_path in note.gate_paths}
+    for gate_path in sorted(requested_gate_paths):
+        if PAIR_KEY_SEPARATOR in gate_path:
+            raise ValueError(f"gate_path must not contain {PAIR_KEY_SEPARATOR!r}: {gate_path}")
+        gate_text = gate_texts.get(gate_path)
         if gate_text is None or not gate_text.strip():
-            raise ValueError(f"missing gate text: {gate_id}")
-        _validate_embedded_text(f"gate {gate_id}", gate_text)
+            raise ValueError(f"missing gate text: {gate_path}")
+        _validate_embedded_text(f"gate {gate_path}", gate_text)
 
 
 def render_pairs_prompt(
@@ -92,7 +92,7 @@ def render_pairs_prompt(
     bundle_output_path: str | None = None,
 ) -> str:
     _validate_targets(notes, gate_texts)
-    gate_ids = sorted({gate_id for note in notes for gate_id in note.gate_ids})
+    gate_paths = sorted({gate_path for note in notes for gate_path in note.gate_paths})
 
     if output_mode == "file":
         if bundle_output_path is None:
@@ -130,8 +130,8 @@ def render_pairs_prompt(
             *destination_lines,
             "- Use exactly one block per requested (note, gate) pair.",
             "- Use these exact sentinels for every block:",
-            "  === PAIR REVIEW START: <note-path> :: <gate-id> ===",
-            "  === PAIR REVIEW END: <note-path> :: <gate-id> ===",
+            "  === PAIR REVIEW START: <note-path> :: <gate-path> ===",
+            "  === PAIR REVIEW END: <note-path> :: <gate-path> ===",
             DECISION_LINE_INSTRUCTION,
             "- Make the decision line the last non-empty line inside each block.",
             "- End output after the final block.",
@@ -140,8 +140,8 @@ def render_pairs_prompt(
         ]
     )
     for note in notes:
-        for gate_id in note.gate_ids:
-            lines.append(f"- {note.note_path} :: {gate_id} (review run id: {note.review_run_id})")
+        for gate_path in note.gate_paths:
+            lines.append(f"- {note.note_path} :: {gate_path} (review run id: {note.review_run_id})")
 
     lines.extend(
         [
@@ -196,11 +196,11 @@ def render_pairs_prompt(
             "Requested gate definitions (authoritative for this run):",
         ]
     )
-    for gate_id in gate_ids:
+    for gate_path in gate_paths:
         lines.extend(
             [
-                f"=== gate: {gate_id} ===",
-                gate_texts[gate_id].rstrip(),
+                f"=== gate: {gate_path} ===",
+                gate_texts[gate_path].rstrip(),
                 "",
             ]
         )
@@ -212,10 +212,10 @@ def render_pairs_prompt(
         ]
     )
     for note in notes:
-        for gate_id in note.gate_ids:
+        for gate_path in note.gate_paths:
             lines.extend(
                 [
-                    PAIR_START_TEMPLATE.format(note_path=note.note_path, gate_id=gate_id),
+                    PAIR_START_TEMPLATE.format(note_path=note.note_path, gate_path=gate_path),
                     "### Summary",
                     "<short paragraph>",
                     "",
@@ -226,7 +226,7 @@ def render_pairs_prompt(
                     "<optional; omit if not needed>",
                     "",
                     RESULT_LINE_TEMPLATE,
-                    PAIR_END_TEMPLATE.format(note_path=note.note_path, gate_id=gate_id),
+                    PAIR_END_TEMPLATE.format(note_path=note.note_path, gate_path=gate_path),
                     "",
                 ]
             )

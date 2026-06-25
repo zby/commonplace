@@ -10,13 +10,13 @@ import re
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from commonplace.review.domain.snapshots import AcceptanceSnapshot, GateSnapshot, NoteSnapshot
-from commonplace.review.domain.staleness import classify_staleness
-from commonplace.review.paths import GATES_ROOT
+from commonplace.review.freshness import file_content_sha256
+from commonplace.review.paths import review_gates_dir
 from commonplace.review.protocol.decisions import strip_explicit_review_result_lines
 from commonplace.review.review_db import (
     ReviewPairRow,
     connect,
+    load_current_acceptances,
     load_effective_review_pair_map,
     prepare_review_db,
 )
@@ -49,7 +49,7 @@ ACTIONABLE_FINDING_RE = re.compile(
 @dataclass
 class WarnEntry:
     note_path: str
-    gate_id: str
+    gate_path: str
     review_pair_id: int
     review_run_id: int
     review_text: str
@@ -99,12 +99,18 @@ def extract_warns(review_text: str, *, decision: str) -> list[str]:
 
 def _current_gate_shas(repo_root: Path) -> dict[str, str]:
     """Compute current git blob SHA for each gate file on disk."""
-    gates_dir = repo_root / GATES_ROOT
+    gates_dir = review_gates_dir(repo_root)
     shas: dict[str, str] = {}
     for gate_file in gates_dir.rglob("*.md"):
-        gate_id = str(gate_file.relative_to(gates_dir).with_suffix("")).replace("\\", "/")
-        shas[gate_id] = git_blob_sha(gate_file)
+        gate_path = gate_file.relative_to(repo_root).as_posix()
+        shas[gate_path] = git_blob_sha(gate_file)
     return shas
+
+
+def _current_gate_content_hash(gate_path: Path) -> str | None:
+    if not gate_path.is_file():
+        return None
+    return file_content_sha256(gate_path)
 
 
 def scan_reviews(
@@ -118,38 +124,38 @@ def scan_reviews(
 
     by_note: dict[str, NoteWarns] = {}
     selected_by_gate: dict[tuple[str, str], ReviewPairRow] = {}
-    gate_shas = _current_gate_shas(repo_root)
+    gate_shas: dict[str, str] = {}
     stale_gates: set[str] = set()
     with connect(db_path) as conn:
         effective_reviews = load_effective_review_pair_map(
             conn,
             note_path=next(iter(note_filter)) if note_filter and len(note_filter) == 1 else None,
-            model_id=None,
+            model_partition=None,
         )
+        acceptances = load_current_acceptances(conn)
 
-    for (note_path, gate_id, _model_id), review in sorted(effective_reviews.items()):
+    for (note_path, gate_path, model_partition), review in sorted(effective_reviews.items()):
         if note_filter and note_path not in note_filter:
             continue
-        current_sha = gate_shas.get(gate_id)
-        if current_sha is not None:
-            staleness = classify_staleness(
-                NoteSnapshot(path=note_path, blob_sha=review.reviewed_note_sha),
-                GateSnapshot(id=gate_id, blob_sha=current_sha),
-                AcceptanceSnapshot(
-                    accepted_note_sha=review.reviewed_note_sha,
-                    accepted_gate_sha=review.gate_sha,
-                ),
-            )
+        acceptance = acceptances.get((note_path, gate_path, model_partition))
+        if acceptance is not None and acceptance.accepted_gate_hash is not None:
+            current_gate_hash = _current_gate_content_hash(repo_root / gate_path)
+            accepted_gate_hash = acceptance.accepted_gate_hash
         else:
-            staleness = None
-        if staleness is not None:
-            stale_gates.add(gate_id)
+            if gate_path not in gate_shas:
+                gate_file = repo_root / gate_path
+                if gate_file.is_file():
+                    gate_shas[gate_path] = git_blob_sha(gate_file)
+            current_gate_hash = gate_shas.get(gate_path)
+            accepted_gate_hash = review.gate_sha
+        if current_gate_hash is not None and current_gate_hash != accepted_gate_hash:
+            stale_gates.add(gate_path)
             continue
         warns = extract_warns(review.rationale_markdown or "", decision=review.decision or "unknown")
         if not warns:
             continue
 
-        gate_key = (note_path, gate_id)
+        gate_key = (note_path, gate_path)
         selected = selected_by_gate.get(gate_key)
         if selected is None or (review.reviewed_at or "", review.review_pair_id) > (
             selected.reviewed_at or "",
@@ -157,7 +163,7 @@ def scan_reviews(
         ):
             selected_by_gate[gate_key] = review
 
-    for (note_path, gate_id), review in sorted(selected_by_gate.items()):
+    for (note_path, gate_path), review in sorted(selected_by_gate.items()):
         warns = extract_warns(review.rationale_markdown or "", decision=review.decision or "unknown")
         for warn_text in warns:
             if note_path not in by_note:
@@ -165,7 +171,7 @@ def scan_reviews(
             by_note[note_path].warns.append(
                 WarnEntry(
                     note_path=note_path,
-                    gate_id=gate_id,
+                    gate_path=gate_path,
                     review_pair_id=review.review_pair_id,
                     review_run_id=review.review_run_id,
                     review_text=review.rationale_markdown or "",
@@ -186,7 +192,7 @@ def render_json(notes: list[NoteWarns], stale_gates: list[str]) -> str:
                 "warn_count": nw.count,
                 "warns": [
                     {
-                        "gate_id": w.gate_id,
+                        "gate_path": w.gate_path,
                         "review_pair_id": w.review_pair_id,
                         "review_run_id": w.review_run_id,
                         "review_text": w.review_text,
@@ -212,5 +218,5 @@ def render_grouped(notes: list[NoteWarns], stale_gates: list[str]) -> str:
         lines.append(f"{nw.note_path} ({nw.count} warn findings)")
         for w in nw.warns:
             first_line = w.warn_text.split("\n")[0][:100]
-            lines.append(f"  - {w.gate_id}: {first_line}")
+            lines.append(f"  - {w.gate_path}: {first_line}")
     return "\n".join(lines)

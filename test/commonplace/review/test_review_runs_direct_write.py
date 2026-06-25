@@ -13,6 +13,9 @@ from ._run_cli import run_cli
 
 GATE_ONE = "accessibility/undefined-terms"
 GATE_TWO = "prose/source-residue"
+GATE_ONE_PATH = "kb/instructions/review-gates/accessibility/undefined-terms.md"
+GATE_TWO_PATH = "kb/instructions/review-gates/prose/source-residue.md"
+INSTALLED_GATE_ONE_PATH = "kb/commonplace/instructions/review-gates/accessibility/undefined-terms.md"
 
 
 def write(path: Path, content: str) -> Path:
@@ -71,18 +74,22 @@ def commit_all(path: Path, message: str) -> None:
     subprocess.run(["git", "commit", "-m", message], cwd=path, check=True, capture_output=True)
 
 
-def build_repo_fixture(tmp_path: Path) -> tuple[Path, Path]:
+def build_repo_fixture(
+    tmp_path: Path,
+    *,
+    gates_root: Path = Path("kb/instructions/review-gates"),
+) -> tuple[Path, Path]:
     repo = tmp_path / "repo"
     repo.mkdir()
     init_repo(repo)
     make_note(repo / "kb" / "notes" / "sample.md")
     make_gate(
-        repo / "kb" / "instructions" / "review-gates" / "accessibility" / "undefined-terms.md",
+        repo / gates_root / "accessibility" / "undefined-terms.md",
         GATE_ONE,
         "accessibility",
     )
     make_gate(
-        repo / "kb" / "instructions" / "review-gates" / "prose" / "source-residue.md",
+        repo / gates_root / "prose" / "source-residue.md",
         GATE_TWO,
         "prose",
     )
@@ -101,9 +108,9 @@ def pair_block(note_path: str, gate_id: str, body: str, decision: str) -> str:
 
 def bundle_output() -> str:
     return (
-        pair_block("kb/notes/sample.md", GATE_ONE, "Needs a definition for Alpha.", "WARN")
+        pair_block("kb/notes/sample.md", GATE_ONE_PATH, "Needs a definition for Alpha.", "WARN")
         + "\n"
-        + pair_block("kb/notes/sample.md", GATE_TWO, "No residue found.", "PASS")
+        + pair_block("kb/notes/sample.md", GATE_TWO_PATH, "No residue found.", "PASS")
     )
 
 
@@ -127,32 +134,126 @@ def test_create_review_run_with_prompt_creates_one_note_packed_run(tmp_path: Pat
 
     payload = json.loads(result.stdout)
     review_run_id = payload["review_run_id"]
-    assert payload["gate_ids"] == [GATE_ONE, GATE_TWO]
+    assert payload["gate_paths"] == [GATE_ONE_PATH, GATE_TWO_PATH]
     assert payload["prompt_path"] == f"kb/reports/bundle-reviews/review-run-{review_run_id}/prompt.md"
     assert payload["manifest_path"] == f"kb/reports/bundle-reviews/review-run-{review_run_id}/MANIFEST.json"
 
     prompt = (repo / payload["prompt_path"]).read_text(encoding="utf-8")
-    assert f"=== PAIR REVIEW START: kb/notes/sample.md :: {GATE_ONE} ===" in prompt
-    assert f"=== PAIR REVIEW START: kb/notes/sample.md :: {GATE_TWO} ===" in prompt
+    assert f"=== PAIR REVIEW START: kb/notes/sample.md :: {GATE_ONE_PATH} ===" in prompt
+    assert f"=== PAIR REVIEW START: kb/notes/sample.md :: {GATE_TWO_PATH} ===" in prompt
     manifest = json.loads((repo / payload["manifest_path"]).read_text(encoding="utf-8"))
     assert manifest["packing"] == "note"
     assert [pair["result_path"] for pair in manifest["pairs"]] == [
-        f"kb/reports/bundle-reviews/review-run-{review_run_id}/accessibility__undefined-terms.md",
-        f"kb/reports/bundle-reviews/review-run-{review_run_id}/prose__source-residue.md",
+        f"kb/reports/bundle-reviews/review-run-{review_run_id}/kb__instructions__review-gates__accessibility__undefined-terms.md",
+        f"kb/reports/bundle-reviews/review-run-{review_run_id}/kb__instructions__review-gates__prose__source-residue.md",
     ]
 
     with sqlite3.connect(db_path) as conn:
         conn.row_factory = sqlite3.Row
         run = conn.execute("SELECT status, runner, packing FROM review_runs").fetchone()
         assert (run["status"], run["runner"], run["packing"]) == ("running", "live-agent", "note")
-        pair_rows = conn.execute("SELECT gate_id, pair_status FROM review_pairs ORDER BY pair_ordinal").fetchall()
-        assert [(row["gate_id"], row["pair_status"]) for row in pair_rows] == [
-            (GATE_ONE, "pending"),
-            (GATE_TWO, "pending"),
+        pair_rows = conn.execute(
+            """
+            SELECT
+                rp.gate_path,
+                rp.pair_status,
+                rp.reviewed_note_snapshot_id,
+                rp.reviewed_gate_snapshot_id,
+                note_snapshot.content_text AS note_text,
+                gate_snapshot.content_text AS gate_text
+            FROM review_pairs AS rp
+            JOIN review_file_snapshots AS note_snapshot
+              ON rp.reviewed_note_snapshot_id = note_snapshot.snapshot_id
+            JOIN review_file_snapshots AS gate_snapshot
+              ON rp.reviewed_gate_snapshot_id = gate_snapshot.snapshot_id
+            ORDER BY rp.pair_ordinal
+            """
+        ).fetchall()
+        assert [(row["gate_path"], row["pair_status"]) for row in pair_rows] == [
+            (GATE_ONE_PATH, "pending"),
+            (GATE_TWO_PATH, "pending"),
         ]
+        assert {row["reviewed_note_snapshot_id"] for row in pair_rows} != {None}
+        assert all(row["reviewed_gate_snapshot_id"] is not None for row in pair_rows)
+        assert all("Term Alpha appears before its definition." in row["note_text"] for row in pair_rows)
+        assert all("Fixture gate." in row["gate_text"] for row in pair_rows)
         run_columns = {row["name"] for row in conn.execute("PRAGMA table_info(review_runs)").fetchall()}
         assert "note_path" not in run_columns
         assert "reviewed_note_sha" not in run_columns
+
+
+def test_create_review_run_snapshots_dirty_gate_text(tmp_path: Path) -> None:
+    repo, db_path = build_repo_fixture(tmp_path)
+    dirty_gate_text = """---
+gate_id: accessibility/undefined-terms
+name: Undefined Terms
+lens: accessibility
+watches: [body]
+staleness: changed
+---
+
+## Failure mode
+
+Dirty gate marker.
+"""
+    (repo / GATE_ONE_PATH).write_text(dirty_gate_text, encoding="utf-8")
+
+    result = run_cli(
+        "create_review_run",
+        "kb/notes/sample.md",
+        GATE_ONE,
+        "--runner",
+        "live-agent",
+        "--model",
+        "test-model",
+        "--with-prompt",
+        "--json",
+        cwd=repo,
+        db_path=db_path,
+    )
+
+    payload = json.loads(result.stdout)
+    prompt = (repo / payload["prompt_path"]).read_text(encoding="utf-8")
+    assert "Dirty gate marker." in prompt
+    with sqlite3.connect(db_path) as conn:
+        conn.row_factory = sqlite3.Row
+        row = conn.execute(
+            """
+            SELECT snapshot.content_text
+            FROM review_pairs AS rp
+            JOIN review_file_snapshots AS snapshot
+              ON rp.reviewed_gate_snapshot_id = snapshot.snapshot_id
+            WHERE rp.gate_path = ?
+            """,
+            (GATE_ONE_PATH,),
+        ).fetchone()
+    assert row is not None
+    assert "Dirty gate marker." in row["content_text"]
+
+
+def test_create_review_run_resolves_installed_commonplace_gates(tmp_path: Path) -> None:
+    repo, db_path = build_repo_fixture(
+        tmp_path,
+        gates_root=Path("kb/commonplace/instructions/review-gates"),
+    )
+
+    result = run_cli(
+        "create_review_run",
+        "kb/notes/sample.md",
+        GATE_ONE,
+        "--runner",
+        "live-agent",
+        "--model",
+        "test-model",
+        "--with-prompt",
+        "--json",
+        cwd=repo,
+        db_path=db_path,
+    )
+
+    payload = json.loads(result.stdout)
+    assert payload["gate_paths"] == [INSTALLED_GATE_ONE_PATH]
+    assert payload["gates"][0]["gate_path"] == INSTALLED_GATE_ONE_PATH
 
 
 def test_ingest_bundle_output_finalizes_review_pairs(tmp_path: Path) -> None:
@@ -188,22 +289,46 @@ def test_ingest_bundle_output_finalizes_review_pairs(tmp_path: Path) -> None:
 
     assert result.stdout.strip() == f"completed {prepared['review_run_id']} 2"
     artifact_dir = repo / "kb" / "reports" / "bundle-reviews" / f"review-run-{prepared['review_run_id']}"
-    assert (artifact_dir / "accessibility__undefined-terms.md").read_text(encoding="utf-8").strip().endswith(
+    assert (
+        artifact_dir / "kb__instructions__review-gates__accessibility__undefined-terms.md"
+    ).read_text(encoding="utf-8").strip().endswith(
         "## Result: WARN"
     )
-    assert (artifact_dir / "prose__source-residue.md").read_text(encoding="utf-8").strip().endswith("## Result: PASS")
-    assert not (artifact_dir / "kb__notes__sample.md :: accessibility__undefined-terms.md").exists()
+    assert (
+        artifact_dir / "kb__instructions__review-gates__prose__source-residue.md"
+    ).read_text(encoding="utf-8").strip().endswith("## Result: PASS")
+    assert not (artifact_dir / "kb__notes__sample.md :: kb__instructions__review-gates__accessibility__undefined-terms.md").exists()
     manifest = json.loads((artifact_dir / "MANIFEST.json").read_text(encoding="utf-8"))
     assert [pair["status"] for pair in manifest["pairs"]] == ["completed", "completed"]
     with sqlite3.connect(db_path) as conn:
         conn.row_factory = sqlite3.Row
         run = conn.execute("SELECT status FROM review_runs").fetchone()
         assert run["status"] == "completed"
-        pairs = conn.execute("SELECT gate_id, decision, pair_status FROM review_pairs ORDER BY pair_ordinal").fetchall()
-        assert [(row["gate_id"], row["decision"], row["pair_status"]) for row in pairs] == [
-            (GATE_ONE, "warn", "completed"),
-            (GATE_TWO, "pass", "completed"),
+        pairs = conn.execute("SELECT gate_path, decision, pair_status FROM review_pairs ORDER BY pair_ordinal").fetchall()
+        assert [(row["gate_path"], row["decision"], row["pair_status"]) for row in pairs] == [
+            (GATE_ONE_PATH, "warn", "completed"),
+            (GATE_TWO_PATH, "pass", "completed"),
         ]
+        snapshot_rows = conn.execute(
+            """
+            SELECT
+                rp.reviewed_note_snapshot_id,
+                rp.reviewed_gate_snapshot_id,
+                ae.accepted_note_snapshot_id,
+                ae.accepted_gate_snapshot_id
+            FROM review_pairs AS rp
+            JOIN acceptance_events AS ae
+              ON ae.accepted_review_pair_id = rp.review_pair_id
+            ORDER BY rp.pair_ordinal
+            """
+        ).fetchall()
+        assert [
+            (
+                row["accepted_note_snapshot_id"] == row["reviewed_note_snapshot_id"],
+                row["accepted_gate_snapshot_id"] == row["reviewed_gate_snapshot_id"],
+            )
+            for row in snapshot_rows
+        ] == [(True, True), (True, True)]
         assert conn.execute("SELECT COUNT(*) FROM acceptance_events").fetchone()[0] == 2
 
 

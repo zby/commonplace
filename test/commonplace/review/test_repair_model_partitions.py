@@ -30,7 +30,7 @@ def test_repair_model_partitions_rekeys_known_aliases(tmp_path: Path) -> None:
             conn,
             note_path="kb/notes/old-note.md",
             gate_id="semantic/internal-consistency",
-            model_id="opus-4-6",
+            model_partition="opus-4-6",
             decision="pass",
             rationale_markdown="ok\n\n## Result: PASS\n",
             gate_sha="gate-sha",
@@ -44,7 +44,7 @@ def test_repair_model_partitions_rekeys_known_aliases(tmp_path: Path) -> None:
             review_pair_id=review_pair_id,
             note_path="kb/notes/old-note.md",
             gate_id="semantic/internal-consistency",
-            model_id="opus-4-6",
+            model_partition="opus-4-6",
             accepted_note_sha="note-sha",
             accepted_note_commit=None,
             accepted_gate_sha="gate-sha",
@@ -63,22 +63,22 @@ def test_repair_model_partitions_rekeys_known_aliases(tmp_path: Path) -> None:
         old_count = conn.execute(
             """
             SELECT (
-                SELECT count(*) FROM review_runs WHERE model_id = 'opus-4-6'
+                SELECT count(*) FROM review_runs WHERE model_partition = 'opus-4-6'
             ) + (
-                SELECT count(*) FROM review_pairs WHERE model_id = 'opus-4-6'
+                SELECT count(*) FROM review_pairs WHERE model_partition = 'opus-4-6'
             ) + (
-                SELECT count(*) FROM acceptance_events WHERE model_id = 'opus-4-6'
+                SELECT count(*) FROM acceptance_events WHERE model_partition = 'opus-4-6'
             ) AS count
             """
         ).fetchone()["count"]
         new_count = conn.execute(
             """
             SELECT (
-                SELECT count(*) FROM review_runs WHERE model_id = 'claude-opus-4-6'
+                SELECT count(*) FROM review_runs WHERE model_partition = 'claude-opus-4-6'
             ) + (
-                SELECT count(*) FROM review_pairs WHERE model_id = 'claude-opus-4-6'
+                SELECT count(*) FROM review_pairs WHERE model_partition = 'claude-opus-4-6'
             ) + (
-                SELECT count(*) FROM acceptance_events WHERE model_id = 'claude-opus-4-6'
+                SELECT count(*) FROM acceptance_events WHERE model_partition = 'claude-opus-4-6'
             ) AS count
             """
         ).fetchone()["count"]

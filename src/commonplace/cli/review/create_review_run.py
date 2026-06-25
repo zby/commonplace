@@ -8,16 +8,15 @@ import json
 from pathlib import Path
 
 from commonplace.review.artifacts import write_manifest
-from commonplace.review.paths import GATES_ROOT
+from commonplace.review.freshness import capture_review_inputs
 from commonplace.review.review_db import (
-    ReviewPairRequest,
     connect,
     create_run_with_pairs,
     load_review_pairs_for_run,
     prepare_review_db,
 )
 from commonplace.review.review_metadata import resolve_review_target
-from commonplace.review.review_model import normalize_model_id
+from commonplace.review.review_model import normalize_model_partition
 from commonplace.review.executor import bundle_artifact_dir
 from commonplace.review.run_review_bundle import build_review_run_prompt
 
@@ -41,39 +40,34 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     note_abs = repo_root / args.note_path
     if not note_abs.is_file():
         parser.error(f"note not found: {args.note_path}")
-    model_id = args.model.strip()
-    if not model_id:
+    model_partition = args.model.strip()
+    if not model_partition:
         parser.error("--model must not be empty")
-    model_id = normalize_model_id(model_id)
+    model_partition = normalize_model_partition(model_partition)
 
     db_path = prepare_review_db(repo_root, args.db)
 
     try:
-        note_sha, note_commit, started_at, run_gates, gate_texts = resolve_review_target(
+        _note_sha, _note_commit, started_at, run_gates, _gate_texts = resolve_review_target(
             repo_root, args.note_path, args.gate_or_bundle,
         )
     except ValueError as exc:
         parser.error(str(exc))
-    gate_ids = [g[0] for g in run_gates]
+    gate_paths = [g[0] for g in run_gates]
 
     with connect(db_path) as conn:
+        captured_inputs = capture_review_inputs(
+            conn,
+            repo_root=repo_root,
+            pairs=[(args.note_path, gate_path) for gate_path in gate_paths],
+        )
         review_run_id = create_run_with_pairs(
             conn,
-            model_id=model_id,
+            model_partition=model_partition,
             runner=args.runner,
             started_at=started_at,
             packing="note",
-            pairs=[
-                ReviewPairRequest(
-                    note_path=args.note_path,
-                    gate_id=gate_id,
-                    gate_sha=gate_sha,
-                    reviewed_note_sha=note_sha,
-                    reviewed_note_commit=note_commit,
-                    pair_ordinal=ordinal,
-                )
-                for gate_id, gate_sha, ordinal in run_gates
-            ],
+            pairs=captured_inputs.pair_requests,
         )
         stored_pairs = load_review_pairs_for_run(conn, review_run_id=review_run_id)
         conn.commit()
@@ -90,11 +84,12 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
         prompt = build_review_run_prompt(
             repo_root=repo_root,
             note_path=args.note_path,
-            gate_ids=gate_ids,
-            gate_texts=gate_texts,
+            gate_paths=gate_paths,
+            gate_texts=captured_inputs.gate_texts,
             review_run_id=review_run_id,
             output_mode="file",
             bundle_output_path=bundle_output_path_rel,
+            note_text=captured_inputs.note_texts[args.note_path],
         )
         prompt_path.write_text(prompt, encoding="utf-8")
         manifest_path = write_manifest(
@@ -113,12 +108,12 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
         payload = {
             "review_run_id": review_run_id,
             "note_path": args.note_path,
-            "gate_ids": gate_ids,
+            "gate_paths": gate_paths,
             "gates": [
-                {"gate_id": gid, "path": str(GATES_ROOT / f"{gid}.md"), "text": gate_texts[gid]}
-                for gid in gate_ids
+                {"gate_path": gate_path, "text": captured_inputs.gate_texts[gate_path]}
+                for gate_path in gate_paths
             ],
-            "model_id": model_id,
+            "model_partition": model_partition,
             "runner": args.runner,
             "artifact_dir": artifact_dir_rel,
             "bundle_output_path": bundle_output_path_rel,

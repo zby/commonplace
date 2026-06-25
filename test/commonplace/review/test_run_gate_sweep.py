@@ -11,6 +11,7 @@ from ._run_cli import run_cli
 
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
+GATE_PATH = "kb/instructions/review-gates/accessibility/undefined-terms.md"
 
 
 def write(path: Path, content: str) -> Path:
@@ -100,14 +101,14 @@ def test_run_gate_sweep_reviews_multiple_notes_in_one_batch(monkeypatch, tmp_pat
     repo, db_path = build_repo_fixture(tmp_path)
 
     bundle_output = (
-        "=== PAIR REVIEW START: kb/notes/first.md :: accessibility/undefined-terms ===\n"
+        f"=== PAIR REVIEW START: kb/notes/first.md :: {GATE_PATH} ===\n"
         "Needs a definition for Alpha.\n\n"
         "## Result: WARN\n"
-        "=== PAIR REVIEW END: kb/notes/first.md :: accessibility/undefined-terms ===\n\n"
-        "=== PAIR REVIEW START: kb/notes/second.md :: accessibility/undefined-terms ===\n"
+        f"=== PAIR REVIEW END: kb/notes/first.md :: {GATE_PATH} ===\n\n"
+        f"=== PAIR REVIEW START: kb/notes/second.md :: {GATE_PATH} ===\n"
         "No undefined terms found.\n\n"
         "## Result: PASS\n"
-        "=== PAIR REVIEW END: kb/notes/second.md :: accessibility/undefined-terms ===\n"
+        f"=== PAIR REVIEW END: kb/notes/second.md :: {GATE_PATH} ===\n"
     )
     monkeypatch.setattr(executor, "run_prompt", _fake_run_prompt_factory(bundle_output))
 
@@ -161,10 +162,10 @@ def test_run_gate_sweep_salvages_parsed_notes_and_fails_missing_ones(monkeypatch
 
     # Output covers only the first note; the second note's pair is missing.
     bundle_output = (
-        "=== PAIR REVIEW START: kb/notes/first.md :: accessibility/undefined-terms ===\n"
+        f"=== PAIR REVIEW START: kb/notes/first.md :: {GATE_PATH} ===\n"
         "Needs a definition for Alpha.\n\n"
         "## Result: WARN\n"
-        "=== PAIR REVIEW END: kb/notes/first.md :: accessibility/undefined-terms ===\n"
+        f"=== PAIR REVIEW END: kb/notes/first.md :: {GATE_PATH} ===\n"
     )
     monkeypatch.setattr(executor, "run_prompt", _fake_run_prompt_factory(bundle_output))
 
@@ -185,8 +186,11 @@ def test_run_gate_sweep_salvages_parsed_notes_and_fails_missing_ones(monkeypatch
     )
 
     assert result.returncode == 1
-    assert "missing pairs: kb/notes/second.md :: accessibility/undefined-terms" in result.stderr
-    assert "Reviewed: 0 notes" in result.stdout
+    assert f"missing pairs: kb/notes/second.md :: {GATE_PATH}" in result.stderr
+    assert "Batch 1/1: reviewed 1 notes" in result.stdout
+    assert "Reviewed: 1 notes" in result.stdout
+    assert "Missing:  1 notes" in result.stderr
+    assert "Failed:   1 run(s)" in result.stderr
 
     with sqlite3.connect(db_path) as conn:
         conn.row_factory = sqlite3.Row
@@ -194,8 +198,8 @@ def test_run_gate_sweep_salvages_parsed_notes_and_fails_missing_ones(monkeypatch
             "SELECT status, failure_reason, raw_bundle_markdown FROM review_runs"
         ).fetchone()
         assert run_row["status"] == "failed"
-        assert "missing pairs: kb/notes/second.md :: accessibility/undefined-terms" in run_row["failure_reason"]
-        assert "kb/notes/first.md :: accessibility/undefined-terms" in run_row["raw_bundle_markdown"]
+        assert f"missing pairs: kb/notes/second.md :: {GATE_PATH}" in run_row["failure_reason"]
+        assert f"kb/notes/first.md :: {GATE_PATH}" in run_row["raw_bundle_markdown"]
 
         pair_rows = conn.execute("SELECT note_path, pair_status, decision FROM review_pairs ORDER BY note_path").fetchall()
         assert [(row["note_path"], row["pair_status"], row["decision"]) for row in pair_rows] == [

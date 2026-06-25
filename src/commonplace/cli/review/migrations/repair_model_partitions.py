@@ -9,21 +9,21 @@ from pathlib import Path
 
 from commonplace.review.review_db import (
     connect,
-    count_model_id_records,
+    count_model_partition_records,
     prepare_review_db,
-    rekey_model_id,
+    rekey_model_partition,
 )
-from commonplace.review.review_model import model_alias_target
+from commonplace.review.review_model import model_partition_alias_target
 
 TABLES = ("review_runs", "review_pairs", "acceptance_events")
 
 
-def _model_ids(conn) -> list[str]:
-    model_ids: set[str] = set()
+def _model_partitions(conn) -> list[str]:
+    model_partitions: set[str] = set()
     for table in TABLES:
-        rows = conn.execute(f"SELECT DISTINCT model_id FROM {table}").fetchall()
-        model_ids.update(row["model_id"] for row in rows)
-    return sorted(model_ids)
+        rows = conn.execute(f"SELECT DISTINCT model_partition FROM {table}").fetchall()
+        model_partitions.update(row["model_partition"] for row in rows)
+    return sorted(model_partitions)
 
 
 def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
@@ -43,36 +43,36 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
 
     with connect(db_path) as conn:
         aliases = {
-            model_id: target
-            for model_id in _model_ids(conn)
-            if (target := model_alias_target(model_id)) is not None
+            model_partition: target
+            for model_partition in _model_partitions(conn)
+            if (target := model_partition_alias_target(model_partition)) is not None
         }
 
         planned: dict[tuple[str, str], dict[str, int]] = {}
-        for old_model_id, new_model_id in aliases.items():
-            counts = count_model_id_records(conn, model_id=old_model_id)
+        for old_model_partition, new_model_partition in aliases.items():
+            counts = count_model_partition_records(conn, model_partition=old_model_partition)
             table_counts = {
                 "review_runs": counts.review_runs,
                 "review_pairs": counts.review_pairs,
                 "acceptance_events": counts.acceptance_events,
             }
-            planned[(old_model_id, new_model_id)] = table_counts
+            planned[(old_model_partition, new_model_partition)] = table_counts
 
         if not args.dry_run:
-            for old_model_id, new_model_id in aliases.items():
-                rekey_model_id(conn, old_model_id=old_model_id, new_model_id=new_model_id)
+            for old_model_partition, new_model_partition in aliases.items():
+                rekey_model_partition(conn, old_model_partition=old_model_partition, new_model_partition=new_model_partition)
             conn.commit()
 
     totals = defaultdict(int)
-    for (_old_model_id, _new_model_id), table_counts in planned.items():
+    for (_old_model_partition, _new_model_partition), table_counts in planned.items():
         for table, count in table_counts.items():
             totals[table] += count
 
     print(f"aliases: {len(planned)}")
-    for (old_model_id, new_model_id), table_counts in sorted(planned.items()):
+    for (old_model_partition, new_model_partition), table_counts in sorted(planned.items()):
         total = sum(table_counts.values())
         print(
-            f"{old_model_id} -> {new_model_id}: total={total} "
+            f"{old_model_partition} -> {new_model_partition}: total={total} "
             f"review_runs={table_counts['review_runs']} "
             f"review_pairs={table_counts['review_pairs']} "
             f"acceptance_events={table_counts['acceptance_events']}"

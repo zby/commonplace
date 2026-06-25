@@ -63,13 +63,14 @@ SQLite database, default location `kb/reports/review-store.sqlite` (override wit
 
 | Table | Purpose | Key columns |
 |---|---|---|
-| `review_runs` | Review invocations | review_run_id, model_id, runner, status (running/completed/failed), packing, telemetry/debug/raw output |
-| `review_pairs` | Requested and completed pair outcomes | review_pair_id, review_run_id, note_path, gate_id, pair_status, decision, provenance SHAs |
-| `acceptance_events` | Append-only acceptance log | acceptance_event_id, note_path, gate_id, model_id, accepted_review_pair_id, acceptance_kind |
+| `review_runs` | Review invocations | review_run_id, model_partition, runner, status (running/completed/failed), packing, telemetry/debug/raw output |
+| `review_file_snapshots` | Role-neutral file snapshots for review inputs | snapshot_id, path, content_sha256, content_text |
+| `review_pairs` | Requested and completed pair outcomes | review_pair_id, review_run_id, note_path, gate_path, pair_status, decision, snapshot IDs, transitional provenance SHAs |
+| `acceptance_events` | Append-only acceptance log | acceptance_event_id, note_path, gate_path, model_partition, accepted_review_pair_id, snapshot IDs, acceptance_kind |
 
 **Key views:**
 
-- `current_gate_acceptances` — latest acceptance for each (note, gate, model) triple
+- `current_gate_acceptances` — latest acceptance for each `(note_path, gate_path, model_partition)` triple
 - `stale_gate_pairs` — current acceptance states for staleness detection
 
 **Acceptance kinds:** `full-review`, `gate-migration`, `trivial-change-ack`, `migration-import`, `manual-override`
@@ -79,9 +80,9 @@ SQLite database, default location `kb/reports/review-store.sqlite` (override wit
 Encode and normalize model identifiers with reasoning effort levels.
 
 - `encode_model(model) -> str` — sanitize model names (lowercase, special chars → hyphens)
-- `normalize_model_id(model_id) -> str` — collapse known aliases such as `opus-4-6` into canonical review partitions
+- `normalize_model_partition(model_partition) -> str` — collapse known aliases such as `opus-4-6` into canonical review partitions
 - `normalize_reasoning_effort(raw) -> str | None` — validate from {low, medium, high, xhigh}
-- `build_model_id(model, reasoning_effort) -> str` — canonical ID like `"claude-3-5-sonnet-xhigh"`
+- `build_model_partition(model, reasoning_effort) -> str` — canonical ID like `"claude-3-5-sonnet-xhigh"`
 
 ### review_metadata.py
 
@@ -100,7 +101,7 @@ Git-backed provenance tracking and metadata block management.
 
 ### paths.py
 
-Filesystem path constants used across the review subsystem. Currently exposes `GATES_ROOT = Path("kb/instructions/review-gates")`. Lives in its own module so the data layer (`review_db.py`) doesn't have to own filesystem constants about gate locations.
+Filesystem path constants and gate identity helpers used across the review subsystem. It resolves the active gate catalog (`kb/instructions/review-gates` in source checkouts, installed framework gates in generated projects), converts human-facing gate ids such as `prose/source-residue` into repo-relative `gate_path` values, and derives display shorthands from stored paths. Lives in its own module so the data layer (`review_db.py`) does not have to own filesystem constants about gate locations.
 
 ### review_db.py
 
@@ -111,6 +112,7 @@ Database operations, decision parsing, and record management. The largest module
 - `resolve_db_path(repo_root, db_override=None) -> Path` — resolve DB location, honoring an optional `--db` override
 - `ensure_db(repo_root, db_path)` — initialize from schema if needed
 - `prepare_review_db(repo_root, db_override=None) -> Path` — convenience helper that resolves and ensures in one call; collapses the four-step bootstrap that every CLI used to open-code
+- `snapshot_file(conn, repo_root, path)` — capture or rehydrate the exact UTF-8 file text for a repo-relative note or gate path, keyed by `(path, content_sha256)`
 
 **Note relocation helpers** (called by `commonplace.lib.relocation`):
 - `count_note_path_records(conn, *, note_path) -> NotePathUpdateCounts` — how many `review_pairs`/`acceptance_events` rows reference a note path
@@ -151,14 +153,15 @@ Multi-strategy fallback chain for extracting decisions from review markdown:
 ### Review execution flow
 
 ```
-1. resolve_gates     → expand bundle names to gate IDs, filter by note type and traits
-2. create_run_with_pairs → insert review_run + review_pairs (status=running), one run per prompt invocation
-3. executor.execute_batch
+1. resolve_gates     → expand bundle names to gate IDs, filter by note type and traits, then normalize selected gates to paths before persistence
+2. freshness.capture_review_inputs → snapshot note/gate files, produce prompt text and `ReviewPairRequest`s with snapshot IDs
+3. create_run_with_pairs → insert review_run + review_pairs (status=running), one run per prompt invocation
+4. executor.execute_batch
    a. protocol/prompt.render_pairs_prompt → one prompt embedding each note and gate text once
    b. review_runners.run_prompt           → invoke claude-code or codex CLI
    c. protocol/parser.parse_pair_bundle   → extract pair blocks, canonicalize result footers
    d. per run: complete parsed pairs, mark missing pairs, complete or fail the run
-4. record_and_finalize_run → write review_pairs, validate coverage, mark run completed or failed, append acceptance_events for completed pairs
+5. record_and_finalize_run → write review_pairs, copy pair snapshot IDs to acceptance events, validate coverage, mark run completed or failed
 ```
 
 ### Pair protocol (`protocol/`) and executor
@@ -166,7 +169,7 @@ Multi-strategy fallback chain for extracting decisions from review markdown:
 Every output block is keyed by the full (note, gate) pair:
 
 ```
-=== PAIR REVIEW START: {note_path} :: {gate_id} ===
+=== PAIR REVIEW START: {note_path} :: {gate_path} ===
 ### Summary
 <prose>
 
@@ -177,11 +180,11 @@ Every output block is keyed by the full (note, gate) pair:
 <optional>
 
 ## Result: PASS|WARN|FAIL|ERROR
-=== PAIR REVIEW END: {note_path} :: {gate_id} ===
+=== PAIR REVIEW END: {note_path} :: {gate_path} ===
 ```
 
-- `protocol/format.py` — sentinel grammar and the ` :: ` pair-key separator. Render-time validation rejects the separator inside note paths or gate ids and reserved `=== … ===` lines inside embedded note/gate text.
-- `protocol/prompt.py` — `render_pairs_prompt(notes, gate_texts, output_mode)` over `NoteReviewTarget`s. Note contents are always embedded; the multi-note shape adds the evaluate-independently rule; `output_mode="file"` swaps the destination bullets for the live-agent path.
+- `protocol/format.py` — sentinel grammar and the ` :: ` pair-key separator. Render-time validation rejects the separator inside note paths or gate paths and reserved `=== … ===` lines inside embedded note/gate text.
+- `protocol/prompt.py` — `render_pairs_prompt(notes, gate_texts, output_mode)` over `NoteReviewTarget`s. Note contents are always embedded from captured target text; the multi-note shape adds the evaluate-independently rule; `output_mode="file"` swaps the destination bullets for the live-agent path.
 - `protocol/parser.py` — `parse_pair_bundle` raises on structural anomalies (nested/mismatched/unterminated/unexpected/duplicate/empty blocks) but reports missing expected pairs in `missing` instead of raising, so callers salvage the pairs that parsed.
 - `protocol/decisions.py` — decision-line parsing and footer canonicalization; grammar-independent, also used for historical rows.
 - `artifacts.py` — shared artifact naming and manifest writing. It is the only place that maps packing to parsed result filenames: note-packed runs use gate filenames, gate-packed runs use note filenames, and mixed fallback uses note-plus-gate filenames.
@@ -193,10 +196,11 @@ Every output block is keyed by the full (note, gate) pair:
 - **`run_gate_sweep.py` — share-gate packing (experimental).** One gate over a chunked note list; one gate-packed run per prompt batch; missing pairs are marked `missing`, parsed pairs are retained, and the invocation records a failure.
 - **Live-agent path (single note)** — same protocol without a nested runner:
   1. `commonplace-create-review-run --with-prompt` creates the run, writes the canonical prompt to `kb/reports/bundle-reviews/review-run-{id}/prompt.md`, writes `MANIFEST.json`, and returns `prompt_path`, `bundle_output_path`, and `manifest_path` in the JSON payload
-  2. the current agent reads `prompt_path`, follows it, and writes `kb/reports/bundle-reviews/review-run-{id}/bundle-output.md`
-  3. `commonplace-ingest-bundle-output` parses that artifact, finalizes through `record_and_finalize_run` (single-run ingest is all-or-nothing), writes packing-derived parsed result files, and refreshes `MANIFEST.json`
+  2. the prompt is rendered from the snapshots attached to the created pair rows
+  3. the current agent reads `prompt_path`, follows it, and writes `kb/reports/bundle-reviews/review-run-{id}/bundle-output.md`
+  4. `commonplace-ingest-bundle-output` parses that artifact, finalizes through `record_and_finalize_run` (single-run ingest is all-or-nothing), writes packing-derived parsed result files, and refreshes `MANIFEST.json`
 - **External-executor batch path (`batch.py`)** — deterministic ends for any orchestrator that owns its own fan-out (a live agent reviewing many pairs, or a harness workflow spawning sub-agents per batch); decision record: [ADR 030](./adr/030-harness-facing-seams-batch-endpoints-and-runner-adapters.md).
-  1. `commonplace-prepare-review-batch <note>::<gate>... --runner <label> --model <id>` creates one note-packed or gate-packed run for the pair set (inapplicable gates skipped and reported; missing notes/gates and dirty gates fatal) and writes the canonical prompt under `kb/reports/bundle-reviews/review-run-{review_run_id}/`; returns `review_run_id`, pair metadata, skipped pairs, `prompt_path`, `bundle_output_path`, and `manifest_path` as JSON
+  1. `commonplace-prepare-review-batch <note>::<gate>... --runner <label> --model <partition>` creates one note-packed or gate-packed run for the pair set (inapplicable gates skipped and reported; missing notes/gates fatal) and writes the canonical prompt from captured snapshots under `kb/reports/bundle-reviews/review-run-{review_run_id}/`; returns `review_run_id`, pair metadata, skipped pairs, `prompt_path`, `bundle_output_path`, and `manifest_path` as JSON
   2. the executor follows the prompt and writes `bundle_output_path`
   3. `commonplace-ingest-batch-output --review-run-id <id> --input-file <path>` finalizes with pair salvage; JSON result, exit 1 if the run failed.
 
@@ -216,9 +220,11 @@ Identifies (note, gate) pairs needing review by comparing current vs. accepted p
 
 | Reason | Meaning |
 |---|---|
-| `missing-review` | No acceptance exists for this (note, gate, model) triple |
-| `note-changed` | Note blob SHA differs from accepted note SHA |
-| `gate-changed` | Gate blob SHA differs from accepted gate SHA |
+| `missing-review` | No acceptance exists for this (note path, gate path, model partition) triple |
+| `note-changed` | Current note content hash differs from the accepted note baseline |
+| `gate-changed` | Current gate content hash differs from the accepted gate baseline |
+
+For snapshot-backed acceptances, the selector compares SHA-256 over current file text with the accepted snapshot hash and generates diffs from accepted snapshot text. Legacy rows without snapshots continue to use the old Git-blob SHA columns until the offline backfill/drop cutover.
 
 Also provides:
 - `ack_pairs(repo_root, pairs, model)` — batch-acknowledge pairs with `trivial-change-ack`
@@ -228,12 +234,12 @@ Also provides:
 
 ### resolve_gates.py
 
-- `resolve_to_gate_ids(args, gates_dir) -> list[str]` — expand bundle names (e.g., `"prose"`) to gate files in `gates_dir/prose/*.md`
-- `applicable_gate_ids_for_note(note_path, gate_ids, gates_dir) -> list[str]` — filter by note `traits` vs gate `requires_trait`, and note `type` vs gate `requires-type`
+- `resolve_to_gate_ids(args, gates_dir) -> list[str]` — expand CLI bundle names (e.g., `"prose"`) to human-facing gate ids from `gates_dir/prose/*.md`
+- `applicable_gate_ids_for_note(note_path, gate_ids, gates_dir) -> list[str]` — filter those gate ids by note `traits` vs gate `requires_trait`, and note `type` vs gate `requires-type`
 
 ### warn_selector.py
 
-Query effective completed review pairs with `decision="warn"`, skip stale gate revisions, and extract actionable findings from the `### Findings` section.
+Query effective completed review pairs with `decision="warn"`, skip stale gate revisions, and extract actionable findings from the `### Findings` section. Gate staleness uses the accepted gate snapshot hash when one is available, with legacy gate SHA fallback for rows not yet backfilled.
 
 ---
 

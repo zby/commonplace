@@ -1,6 +1,6 @@
 """Parse and canonicalize review protocol output.
 
-Output blocks are keyed by (note_path, gate_id). Structural anomalies —
+Output blocks are keyed by (note_path, gate_path). Structural anomalies —
 nested or mismatched sentinels, unexpected or duplicate pairs, empty bodies —
 raise, because the rest of the stream cannot be trusted. Missing expected
 pairs do not raise: callers salvage the pairs that parsed and decide what to
@@ -22,7 +22,7 @@ PairKey = tuple[str, str]
 @dataclass(frozen=True)
 class ParsedPairReview:
     note_path: str
-    gate_id: str
+    gate_path: str
     decision: str
     rationale_markdown: str
 
@@ -50,7 +50,7 @@ def extract_pair_reviews(
         if start_match is not None:
             if current_pair is not None:
                 raise ValueError(f"nested pair review start before closing {current_pair[0]} :: {current_pair[1]}")
-            pair = (start_match.group("note_path"), start_match.group("gate_id"))
+            pair = (start_match.group("note_path"), start_match.group("gate_path"))
             if pair not in expected:
                 raise ValueError(f"unexpected pair in review output: {pair[0]} :: {pair[1]}")
             if pair in reviews:
@@ -61,7 +61,7 @@ def extract_pair_reviews(
 
         end_match = PAIR_END_RE.match(raw_line.strip())
         if end_match is not None:
-            pair = (end_match.group("note_path"), end_match.group("gate_id"))
+            pair = (end_match.group("note_path"), end_match.group("gate_path"))
             if current_pair is None:
                 raise ValueError(f"pair review end without start: {pair[0]} :: {pair[1]}")
             if pair != current_pair:
@@ -97,13 +97,13 @@ def rewrite_pair_result_footers(
     for raw_line in bundle_markdown.splitlines():
         start_match = PAIR_START_RE.match(raw_line.strip())
         if start_match is not None:
-            current_pair = (start_match.group("note_path"), start_match.group("gate_id"))
+            current_pair = (start_match.group("note_path"), start_match.group("gate_path"))
             rewritten_lines.append(raw_line)
             continue
 
         end_match = PAIR_END_RE.match(raw_line.strip())
         if end_match is not None:
-            pair = (end_match.group("note_path"), end_match.group("gate_id"))
+            pair = (end_match.group("note_path"), end_match.group("gate_path"))
             if current_pair == pair and pair in canonical_texts:
                 rewritten_lines.extend(canonical_texts[pair].rstrip("\n").splitlines())
             rewritten_lines.append(raw_line)
@@ -133,7 +133,7 @@ def parse_pair_bundle(
         canonical_texts[pair] = canonical_text
         reviews[pair] = ParsedPairReview(
             note_path=pair[0],
-            gate_id=pair[1],
+            gate_path=pair[1],
             decision=decision,
             rationale_markdown=canonical_text,
         )

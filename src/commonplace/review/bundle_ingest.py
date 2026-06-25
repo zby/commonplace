@@ -32,7 +32,6 @@ def parse_and_finalize_bundle_output(
     expected_pairs: Sequence[tuple[str, str]],
     telemetry_json: str | None = None,
     debug_log: str | None = None,
-    actual_model_id: str | None = None,
 ) -> int:
     artifact_dir = bundle_artifact_dir(repo_root, review_run_id)
     write_run_artifacts(artifact_dir=artifact_dir, bundle_markdown=raw_bundle_markdown)
@@ -62,7 +61,6 @@ def parse_and_finalize_bundle_output(
         raw_bundle_markdown=raw_bundle_markdown if parsed.missing else None,
         telemetry_json=telemetry_json,
         debug_log=debug_log,
-        actual_model_id=actual_model_id,
     )
     review_run = load_review_run(conn, review_run_id=review_run_id)
     updated_pairs = load_review_pairs_for_run(conn, review_run_id=review_run_id)

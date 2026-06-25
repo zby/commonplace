@@ -12,12 +12,12 @@ import re
 
 PAIR_KEY_SEPARATOR = " :: "
 
-PAIR_START_RE = re.compile(r"^=== PAIR REVIEW START: (?P<note_path>.+?) :: (?P<gate_id>.+?) ===$")
-PAIR_END_RE = re.compile(r"^=== PAIR REVIEW END: (?P<note_path>.+?) :: (?P<gate_id>.+?) ===$")
+PAIR_START_RE = re.compile(r"^=== PAIR REVIEW START: (?P<note_path>.+?) :: (?P<gate_path>.+?) ===$")
+PAIR_END_RE = re.compile(r"^=== PAIR REVIEW END: (?P<note_path>.+?) :: (?P<gate_path>.+?) ===$")
 RESERVED_SENTINEL_RE = re.compile(r"^===\s.+\s===$")
 
-PAIR_START_TEMPLATE = "=== PAIR REVIEW START: {note_path} :: {gate_id} ==="
-PAIR_END_TEMPLATE = "=== PAIR REVIEW END: {note_path} :: {gate_id} ==="
+PAIR_START_TEMPLATE = "=== PAIR REVIEW START: {note_path} :: {gate_path} ==="
+PAIR_END_TEMPLATE = "=== PAIR REVIEW END: {note_path} :: {gate_path} ==="
 RESULT_LINE_TEMPLATE = "## Result: PASS|WARN|FAIL|ERROR"
 
 DECISION_LINE_INSTRUCTION = (

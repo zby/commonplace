@@ -9,6 +9,8 @@ from ._run_cli import run_cli
 
 
 GATE = "accessibility/undefined-terms"
+GATE_PATH = "kb/instructions/review-gates/accessibility/undefined-terms.md"
+CLAIM_GATE_PATH = "kb/instructions/review-gates/frontmatter/claim-strength.md"
 
 
 def write(path: Path, content: str) -> Path:
@@ -120,12 +122,12 @@ def test_prepare_review_batch_creates_one_gate_packed_run_and_prompt(tmp_path: P
     assert result.returncode == 0
     payload = json.loads(result.stdout)
     review_run_id = payload["review_run_id"]
-    assert [(pair["note_path"], pair["gate_id"], pair["status"]) for pair in payload["pairs"]] == [
-        ("kb/notes/first.md", GATE, "pending"),
-        ("kb/notes/second.md", GATE, "pending"),
+    assert [(pair["note_path"], pair["gate_path"], pair["status"]) for pair in payload["pairs"]] == [
+        ("kb/notes/first.md", GATE_PATH, "pending"),
+        ("kb/notes/second.md", GATE_PATH, "pending"),
     ]
     assert payload["skipped_pairs"] == [
-        {"note_path": "kb/notes/first.md", "gate_id": "frontmatter/claim-strength", "reason": "not applicable"}
+        {"note_path": "kb/notes/first.md", "gate_path": CLAIM_GATE_PATH, "reason": "not applicable"}
     ]
 
     assert payload["prompt_path"] == f"kb/reports/bundle-reviews/review-run-{review_run_id}/prompt.md"
@@ -134,9 +136,9 @@ def test_prepare_review_batch_creates_one_gate_packed_run_and_prompt(tmp_path: P
 
     prompt_text = (repo / payload["prompt_path"]).read_text(encoding="utf-8")
     assert f"Write exactly one markdown document to `{payload['bundle_output_path']}`." in prompt_text
-    assert f"=== PAIR REVIEW START: kb/notes/first.md :: {GATE} ===" in prompt_text
-    assert f"=== PAIR REVIEW START: kb/notes/second.md :: {GATE} ===" in prompt_text
-    assert prompt_text.count(f"=== gate: {GATE} ===") == 1
+    assert f"=== PAIR REVIEW START: kb/notes/first.md :: {GATE_PATH} ===" in prompt_text
+    assert f"=== PAIR REVIEW START: kb/notes/second.md :: {GATE_PATH} ===" in prompt_text
+    assert prompt_text.count(f"=== gate: {GATE_PATH} ===") == 1
 
     manifest = json.loads((repo / payload["manifest_path"]).read_text(encoding="utf-8"))
     assert manifest["packing"] == "gate"
@@ -152,12 +154,23 @@ def test_prepare_review_batch_creates_one_gate_packed_run_and_prompt(tmp_path: P
             (review_run_id, "running", "live-agent", "gate")
         ]
         pair_rows = conn.execute(
-            "SELECT note_path, gate_id, pair_status FROM review_pairs ORDER BY pair_ordinal"
+            """
+            SELECT
+                note_path,
+                gate_path,
+                pair_status,
+                reviewed_note_snapshot_id,
+                reviewed_gate_snapshot_id
+            FROM review_pairs
+            ORDER BY pair_ordinal
+            """
         ).fetchall()
-        assert [(row["note_path"], row["gate_id"], row["pair_status"]) for row in pair_rows] == [
-            ("kb/notes/first.md", GATE, "pending"),
-            ("kb/notes/second.md", GATE, "pending"),
+        assert [(row["note_path"], row["gate_path"], row["pair_status"]) for row in pair_rows] == [
+            ("kb/notes/first.md", GATE_PATH, "pending"),
+            ("kb/notes/second.md", GATE_PATH, "pending"),
         ]
+        assert all(row["reviewed_note_snapshot_id"] is not None for row in pair_rows)
+        assert all(row["reviewed_gate_snapshot_id"] is not None for row in pair_rows)
 
 
 def test_ingest_batch_output_finalizes_all_pairs(tmp_path: Path) -> None:
@@ -170,9 +183,9 @@ def test_ingest_batch_output_finalizes_all_pairs(tmp_path: Path) -> None:
     output_path = repo / prepared["bundle_output_path"]
     write(
         output_path,
-        pair_block("kb/notes/first.md", GATE, "Needs a definition.", "WARN")
+        pair_block("kb/notes/first.md", GATE_PATH, "Needs a definition.", "WARN")
         + "\n"
-        + pair_block("kb/notes/second.md", GATE, "All terms defined.", "PASS"),
+        + pair_block("kb/notes/second.md", GATE_PATH, "All terms defined.", "PASS"),
     )
 
     result = run_cli(
@@ -222,7 +235,7 @@ def test_ingest_batch_output_salvages_partial_output(tmp_path: Path) -> None:
     review_run_id = prepared["review_run_id"]
 
     output_path = repo / prepared["bundle_output_path"]
-    write(output_path, pair_block("kb/notes/first.md", GATE, "Needs a definition.", "WARN"))
+    write(output_path, pair_block("kb/notes/first.md", GATE_PATH, "Needs a definition.", "WARN"))
 
     result = run_cli(
         "ingest_batch_output",
@@ -239,13 +252,13 @@ def test_ingest_batch_output_salvages_partial_output(tmp_path: Path) -> None:
     payload = json.loads(result.stdout)
     assert payload["completed"] == []
     assert payload["failed"] == [
-        {"review_run_id": review_run_id, "reason": f"missing pairs: kb/notes/second.md :: {GATE}"}
+        {"review_run_id": review_run_id, "reason": f"missing pairs: kb/notes/second.md :: {GATE_PATH}"}
     ]
 
     with sqlite3.connect(db_path) as conn:
         conn.row_factory = sqlite3.Row
         run = conn.execute("SELECT status, failure_reason FROM review_runs").fetchone()
-        assert (run["status"], run["failure_reason"]) == ("failed", f"missing pairs: kb/notes/second.md :: {GATE}")
+        assert (run["status"], run["failure_reason"]) == ("failed", f"missing pairs: kb/notes/second.md :: {GATE_PATH}")
         pairs = [
             (row["note_path"], row["pair_status"], row["decision"])
             for row in conn.execute("SELECT note_path, pair_status, decision FROM review_pairs ORDER BY note_path")

@@ -6,7 +6,7 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from commonplace.review.paths import GATES_ROOT
+from commonplace.review.paths import review_gates_dir
 from commonplace.review.resolve_gates import resolve_to_gate_ids
 from commonplace.review.review_target_selector import (
     ack_pairs,
@@ -47,10 +47,15 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
         parser.error("--model must not be empty")
 
     if args.ack:
-        ack_pairs(repo_root, args.ack, model)
+        try:
+            acked = ack_pairs(repo_root, args.ack, model)
+        except (FileNotFoundError, ValueError) as exc:
+            parser.error(str(exc))
+        for note_path, gate_id in acked:
+            print(f"acked: {note_path} {gate_id}")
         return 0
 
-    gates_dir = repo_root / GATES_ROOT
+    gates_dir = review_gates_dir(repo_root)
 
     if args.all_gates:
         if args.gate_or_bundle:

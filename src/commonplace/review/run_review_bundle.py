@@ -10,27 +10,30 @@ import sys
 from pathlib import Path
 
 from commonplace.review.executor import execute_batch, prepare_note_target
+from commonplace.review.freshness import capture_review_inputs
 from commonplace.review.protocol.prompt import OutputMode, render_pairs_prompt
-from commonplace.review.review_db import ReviewPairRequest, connect, create_run_with_pairs, ensure_db
+from commonplace.review.review_db import connect, create_run_with_pairs, ensure_db
 from commonplace.review.review_metadata import resolve_review_target
-from commonplace.review.review_model import normalize_model_id
+from commonplace.review.review_model import normalize_model_partition
 
 
 def build_review_run_prompt(
     *,
     repo_root: Path,
     note_path: str,
-    gate_ids: list[str],
+    gate_paths: list[str],
     gate_texts: dict[str, str],
     review_run_id: int,
     output_mode: OutputMode = "stdout",
     bundle_output_path: str | None = None,
+    note_text: str | None = None,
 ) -> str:
     target = prepare_note_target(
         repo_root=repo_root,
         note_path=note_path,
         review_run_id=review_run_id,
-        gate_ids=tuple(gate_ids),
+        gate_paths=tuple(gate_paths),
+        note_text=note_text,
     )
     return render_pairs_prompt(
         notes=[target],
@@ -56,18 +59,18 @@ def run_bundle(
     this function assumes both are well-formed.
     """
     runner_model = model
-    model = normalize_model_id(model)
+    model = normalize_model_partition(model)
 
-    note_sha, note_commit, started_at, run_gates, gate_texts = resolve_review_target(
+    _note_sha, _note_commit, started_at, run_gates, gate_texts = resolve_review_target(
         repo_root, note_path, gate_or_bundle,
     )
-    gate_ids = [g[0] for g in run_gates]
+    gate_paths = [g[0] for g in run_gates]
 
     if dry_run:
         dry_run_prompt = build_review_run_prompt(
             repo_root=repo_root,
             note_path=note_path,
-            gate_ids=gate_ids,
+            gate_paths=gate_paths,
             gate_texts=gate_texts,
             review_run_id=0,
         )
@@ -77,23 +80,18 @@ def run_bundle(
     ensure_db(repo_root, db_path)
 
     with connect(db_path) as conn:
+        captured_inputs = capture_review_inputs(
+            conn,
+            repo_root=repo_root,
+            pairs=[(note_path, gate_path) for gate_path in gate_paths],
+        )
         review_run_id = create_run_with_pairs(
             conn,
-            model_id=model,
+            model_partition=model,
             runner=runner,
             started_at=started_at,
             packing="note",
-            pairs=[
-                ReviewPairRequest(
-                    note_path=note_path,
-                    gate_id=gate_id,
-                    gate_sha=gate_sha,
-                    reviewed_note_sha=note_sha,
-                    reviewed_note_commit=note_commit,
-                    pair_ordinal=ordinal,
-                )
-                for gate_id, gate_sha, ordinal in run_gates
-            ],
+            pairs=captured_inputs.pair_requests,
         )
         conn.commit()
 
@@ -101,16 +99,17 @@ def run_bundle(
         repo_root=repo_root,
         note_path=note_path,
         review_run_id=review_run_id,
-        gate_ids=tuple(gate_ids),
+        gate_paths=tuple(gate_paths),
+        note_text=captured_inputs.note_texts[note_path],
     )
     outcome = execute_batch(
         repo_root=repo_root,
         db_path=db_path,
         targets=[target],
-        gate_texts=gate_texts,
+        gate_texts=captured_inputs.gate_texts,
         runner=runner,
         runner_model=runner_model,
-        model_id=model,
+        model_partition=model,
     )
 
     if outcome.runner_returncode != 0:
@@ -119,5 +118,5 @@ def run_bundle(
         for _, reason in outcome.failed:
             print(reason, file=sys.stderr)
         return 1
-    print(f"completed {review_run_id} {len(gate_ids)}")
+    print(f"completed {review_run_id} {len(gate_paths)}")
     return 0

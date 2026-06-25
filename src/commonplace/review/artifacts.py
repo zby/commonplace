@@ -13,18 +13,18 @@ MANIFEST_NAME = "MANIFEST.json"
 class ReviewPairForManifest(Protocol):
     review_pair_id: int
     note_path: str
-    gate_id: str
+    gate_path: str
     pair_status: str
 
 
 class SkippedPairForManifest(Protocol):
     note_path: str
-    gate_id: str
+    gate_path: str
     reason: str
 
 
-def encode_stage_filename(gate_id: str) -> str:
-    return gate_id.replace("/", "__") + ".md"
+def encode_stage_filename(gate_path: str) -> str:
+    return Path(gate_path).with_suffix("").as_posix().replace("/", "__") + ".md"
 
 
 def _note_filename(note_path: str, all_note_paths: Sequence[str]) -> str:
@@ -39,15 +39,15 @@ def result_filename(
     *,
     packing: str,
     note_path: str,
-    gate_id: str,
+    gate_path: str,
     all_note_paths: Sequence[str],
 ) -> str:
     if packing == "note":
-        return encode_stage_filename(gate_id)
+        return encode_stage_filename(gate_path)
     if packing == "gate":
         return _note_filename(note_path, all_note_paths)
     note_name = _note_filename(note_path, all_note_paths).removesuffix(".md")
-    return f"{note_name}__{encode_stage_filename(gate_id)}"
+    return f"{note_name}__{encode_stage_filename(gate_path)}"
 
 
 def result_path(
@@ -55,12 +55,12 @@ def result_path(
     artifact_dir_rel: str,
     packing: str,
     note_path: str,
-    gate_id: str,
+    gate_path: str,
     all_note_paths: Sequence[str],
 ) -> str:
     return (
         f"{artifact_dir_rel}/"
-        f"{result_filename(packing=packing, note_path=note_path, gate_id=gate_id, all_note_paths=all_note_paths)}"
+        f"{result_filename(packing=packing, note_path=note_path, gate_path=gate_path, all_note_paths=all_note_paths)}"
     )
 
 
@@ -73,14 +73,14 @@ def write_pair_result_files(
 ) -> None:
     all_note_paths = [note_path for note_path, _ in pairs]
     artifact_dir.mkdir(parents=True, exist_ok=True)
-    for note_path, gate_id in pairs:
-        review_text = canonical_texts.get((note_path, gate_id))
+    for note_path, gate_path in pairs:
+        review_text = canonical_texts.get((note_path, gate_path))
         if review_text is None:
             continue
         filename = result_filename(
             packing=packing,
             note_path=note_path,
-            gate_id=gate_id,
+            gate_path=gate_path,
             all_note_paths=all_note_paths,
         )
         (artifact_dir / filename).write_text(review_text, encoding="utf-8")
@@ -105,13 +105,13 @@ def write_manifest(
         item: dict[str, object] = {
             "review_pair_id": pair.review_pair_id,
             "note_path": pair.note_path,
-            "gate_id": pair.gate_id,
+            "gate_path": pair.gate_path,
             "status": pair.pair_status,
             "result_path": result_path(
                 artifact_dir_rel=artifact_dir_rel,
                 packing=packing,
                 note_path=pair.note_path,
-                gate_id=pair.gate_id,
+                gate_path=pair.gate_path,
                 all_note_paths=all_note_paths,
             ),
         }
@@ -127,7 +127,7 @@ def write_manifest(
         "bundle_output_path": bundle_output_path,
         "pairs": payload_pairs,
         "skipped_pairs": [
-            {"note_path": pair.note_path, "gate_id": pair.gate_id, "reason": pair.reason}
+            {"note_path": pair.note_path, "gate_path": pair.gate_path, "reason": pair.reason}
             for pair in (skipped or [])
         ],
     }

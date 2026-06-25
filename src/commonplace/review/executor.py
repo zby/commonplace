@@ -31,7 +31,7 @@ from commonplace.review.review_db import (
     load_review_run,
 )
 from commonplace.review.review_metadata import iso_now
-from commonplace.review.review_model import build_model_id
+from commonplace.review.review_model import build_model_partition
 from commonplace.review.runners import run_prompt
 
 
@@ -90,7 +90,7 @@ def serialize_telemetry(telemetry: dict[str, object] | None) -> str | None:
     return json.dumps(telemetry, ensure_ascii=True, sort_keys=True)
 
 
-def model_id_from_telemetry(telemetry: dict[str, object] | None) -> str | None:
+def model_partition_from_telemetry(telemetry: dict[str, object] | None) -> str | None:
     if not isinstance(telemetry, dict):
         return None
     model = telemetry.get("model")
@@ -99,7 +99,7 @@ def model_id_from_telemetry(telemetry: dict[str, object] | None) -> str | None:
     reasoning_effort = telemetry.get("reasoning_effort")
     if reasoning_effort is not None and not isinstance(reasoning_effort, str):
         reasoning_effort = None
-    return build_model_id(model, reasoning_effort)
+    return build_model_partition(model, reasoning_effort)
 
 
 def resolve_note_markdown_links(
@@ -148,10 +148,12 @@ def prepare_note_target(
     repo_root: Path,
     note_path: str,
     review_run_id: int,
-    gate_ids: tuple[str, ...],
+    gate_paths: tuple[str, ...],
+    note_text: str | None = None,
 ) -> NoteReviewTarget:
     note_abs = repo_root / note_path
-    note_text = note_abs.read_text(encoding="utf-8")
+    if note_text is None:
+        note_text = note_abs.read_text(encoding="utf-8")
     note_body = frontmatter.strip(note_text).lstrip("\n")
     resolved_links, unresolved_links = resolve_note_markdown_links(
         repo_root=repo_root,
@@ -161,7 +163,7 @@ def prepare_note_target(
     return NoteReviewTarget(
         note_path=note_path,
         review_run_id=review_run_id,
-        gate_ids=gate_ids,
+        gate_paths=gate_paths,
         note_text=note_text,
         resolved_links=resolved_links,
         unresolved_links=unresolved_links,
@@ -182,14 +184,14 @@ def assemble_run_document(
         "",
     ]
     pair_reviews: dict[str, str] = {}
-    for note_path, gate_id in pairs:
-        review_text = canonical_texts[(note_path, gate_id)]
-        pair_reviews[f"{note_path} :: {gate_id}"] = review_text
+    for note_path, gate_path in pairs:
+        review_text = canonical_texts[(note_path, gate_path)]
+        pair_reviews[f"{note_path} :: {gate_path}"] = review_text
         lines.extend(
             [
-                PAIR_START_TEMPLATE.format(note_path=note_path, gate_id=gate_id),
+                PAIR_START_TEMPLATE.format(note_path=note_path, gate_path=gate_path),
                 review_text.rstrip("\n"),
-                PAIR_END_TEMPLATE.format(note_path=note_path, gate_id=gate_id),
+                PAIR_END_TEMPLATE.format(note_path=note_path, gate_path=gate_path),
                 "",
             ]
         )
@@ -245,7 +247,6 @@ def finalize_run_from_pairs(
     raw_bundle_markdown: str | None = None,
     telemetry_json: str | None = None,
     debug_log: str | None = None,
-    actual_model_id: str | None = None,
 ) -> int:
     """Finalize one run from a parsed pair bundle. Raises ValueError on failure
     (the run is failed in the DB before raising)."""
@@ -257,17 +258,16 @@ def finalize_run_from_pairs(
     review_pairs = [
         PendingReviewPair(
             note_path=note_path,
-            gate_id=gate_id,
-            decision=parsed.reviews[(note_path, gate_id)].decision,
-            rationale_markdown=parsed.reviews[(note_path, gate_id)].rationale_markdown,
+            gate_path=gate_path,
+            decision=parsed.reviews[(note_path, gate_path)].decision,
+            rationale_markdown=parsed.reviews[(note_path, gate_path)].rationale_markdown,
         )
-        for note_path, gate_id in pairs
+        for note_path, gate_path in pairs
     ]
     return record_and_finalize_run(
         conn,
         review_run_id=review_run_id,
         review_pairs=review_pairs,
-        actual_model_id=actual_model_id,
         telemetry_json=telemetry_json,
         raw_bundle_markdown=raw_bundle_markdown or run_document,
         debug_log=debug_log,
@@ -305,7 +305,7 @@ def execute_batch(
     gate_texts: dict[str, str],
     runner: str,
     runner_model: str,
-    model_id: str,
+    model_partition: str,
 ) -> BatchOutcome:
     """Run one batched runner call over the given prepared targets.
 
@@ -342,13 +342,13 @@ def execute_batch(
 
     telemetry_json = serialize_telemetry(result.telemetry)
     debug_log = combine_logs(result.stdout, result.stderr)
-    actual_model_id = model_id_from_telemetry(result.telemetry)
-    if actual_model_id is not None and actual_model_id != model_id:
+    actual_model_partition = model_partition_from_telemetry(result.telemetry)
+    if actual_model_partition is not None and actual_model_partition != model_partition:
         print(
             (
-                f"warning: requested model partition {model_id} "
-                f"does not match runner telemetry {actual_model_id}; "
-                "recording the actual partition"
+                f"warning: requested model partition {model_partition} "
+                f"does not match runner telemetry {actual_model_partition}; "
+                "keeping the declared partition"
             ),
             file=sys.stderr,
         )
@@ -380,7 +380,7 @@ def execute_batch(
             runner_returncode=result.returncode,
         )
 
-    expected_pairs = [(target.note_path, gate_id) for target in targets for gate_id in target.gate_ids]
+    expected_pairs = [(target.note_path, gate_path) for target in targets for gate_path in target.gate_paths]
     try:
         parsed = parse_pair_bundle(raw_output, expected_pairs=expected_pairs)
     except ValueError as exc:
@@ -403,7 +403,6 @@ def execute_batch(
         raw_output=raw_output,
         telemetry_json=telemetry_json,
         debug_log=debug_log,
-        actual_model_id=actual_model_id,
     )
     return BatchOutcome(completed=completed, failed=failed, runner_returncode=0)
 
@@ -417,7 +416,6 @@ def finalize_runs_from_parsed(
     raw_output: str | None = None,
     telemetry_json: str | None = None,
     debug_log: str | None = None,
-    actual_model_id: str | None = None,
 ) -> tuple[list[int], list[tuple[int, str]]]:
     """Finalize parsed runs and write each run's canonical artifacts."""
     completed, failed = finalize_run_records_from_parsed(
@@ -427,7 +425,6 @@ def finalize_runs_from_parsed(
         raw_output=raw_output,
         telemetry_json=telemetry_json,
         debug_log=debug_log,
-        actual_model_id=actual_model_id,
     )
     with connect(db_path) as conn:
         rows_by_run = {
@@ -442,7 +439,7 @@ def finalize_runs_from_parsed(
         if review_run is None:
             continue
         completed_pairs = tuple(
-            (pair.note_path, pair.gate_id)
+            (pair.note_path, pair.gate_path)
             for pair in updated_pairs
             if pair.pair_status == "completed"
         )
@@ -489,7 +486,6 @@ def finalize_run_records_from_parsed(
     raw_output: str | None = None,
     telemetry_json: str | None = None,
     debug_log: str | None = None,
-    actual_model_id: str | None = None,
 ) -> tuple[list[int], list[tuple[int, str]]]:
     """Finalize parsed run records without writing filesystem artifacts."""
     completed: list[int] = []
@@ -507,7 +503,6 @@ def finalize_run_records_from_parsed(
                     raw_bundle_markdown=raw_output if has_missing else None,
                     telemetry_json=telemetry_json,
                     debug_log=debug_log,
-                    actual_model_id=actual_model_id,
                 )
             except ValueError as exc:
                 conn.commit()

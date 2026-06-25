@@ -41,7 +41,12 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
         parser.error("--model must not be empty")
     pairs = [f"{args.note_path}:{gate_id}" for gate_id in args.gate_ids]
     repo_root = cwd if cwd is not None else Path.cwd()
-    ack_pairs(repo_root, pairs, model)
+    try:
+        acked = ack_pairs(repo_root, pairs, model)
+    except (FileNotFoundError, ValueError) as exc:
+        parser.error(str(exc))
+    for note_path, gate_id in acked:
+        print(f"acked: {note_path} {gate_id}")
     return 0
 
 

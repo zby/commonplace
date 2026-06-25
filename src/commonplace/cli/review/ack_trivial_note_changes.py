@@ -8,7 +8,7 @@ from pathlib import Path
 
 from commonplace.review.ack_trivial_note_changes import qualifying_pairs
 from commonplace.review.resolve_gates import resolve_to_gate_ids
-from commonplace.review.paths import GATES_ROOT
+from commonplace.review.paths import review_gates_dir
 from commonplace.review.review_target_selector import ack_pairs
 
 
@@ -37,7 +37,7 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     args = parser.parse_args(argv)
 
     repo_root = cwd if cwd is not None else Path.cwd()
-    gates_dir = repo_root / GATES_ROOT
+    gates_dir = review_gates_dir(repo_root)
     model = args.model.strip()
     if not model:
         parser.error("--model must not be empty")
@@ -73,7 +73,12 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
         print(f"\nWould ack {len(pairs)} stale pair(s).")
         return 0
 
-    ack_pairs(repo_root, pairs, model)
+    try:
+        acked = ack_pairs(repo_root, pairs, model)
+    except (FileNotFoundError, ValueError) as exc:
+        parser.error(str(exc))
+    for note_path, gate_id in acked:
+        print(f"acked: {note_path} {gate_id}")
     print(f"acked {len(pairs)} stale pair(s)")
     return 0
 

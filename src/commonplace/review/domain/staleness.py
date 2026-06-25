@@ -19,8 +19,8 @@ def classify_staleness(
 ) -> Staleness | None:
     if acceptance is None:
         return Staleness("missing-review")
-    if acceptance.accepted_gate_sha != gate.blob_sha:
+    if acceptance.accepted_gate_hash != gate.content_hash:
         return Staleness("gate-changed")
-    if acceptance.accepted_note_sha != note.blob_sha:
+    if acceptance.accepted_note_hash != note.content_hash:
         return Staleness("note-changed")
     return None

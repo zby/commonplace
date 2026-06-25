@@ -10,7 +10,7 @@ from pathlib import Path
 
 from commonplace.review.batch import parse_pair_args, prepare_review_batch
 from commonplace.review.review_db import prepare_review_db
-from commonplace.review.review_model import normalize_model_id
+from commonplace.review.review_model import normalize_model_partition
 
 
 def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
@@ -27,10 +27,10 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser.add_argument("--db", help="Override COMMONPLACE_REVIEW_DB.")
     args = parser.parse_args(argv)
 
-    model_id = args.model.strip()
-    if not model_id:
+    model_partition = args.model.strip()
+    if not model_partition:
         parser.error("--model must not be empty")
-    model_id = normalize_model_id(model_id)
+    model_partition = normalize_model_partition(model_partition)
 
     repo_root = cwd if cwd is not None else Path.cwd()
     db_path = prepare_review_db(repo_root, args.db)
@@ -42,9 +42,9 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
             db_path=db_path,
             pairs=pairs,
             runner=args.runner,
-            model_id=model_id,
+            model_partition=model_partition,
         )
-    except ValueError as exc:
+    except (FileNotFoundError, ValueError) as exc:
         parser.error(str(exc))
 
     manifest_payload = json.loads((repo_root / prepared.manifest_path).read_text(encoding="utf-8"))
@@ -55,20 +55,20 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
             {
                 "review_pair_id": pair.review_pair_id,
                 "note_path": pair.note_path,
-                "gate_id": pair.gate_id,
+                "gate_path": pair.gate_path,
                 "status": pair.pair_status,
                 "result_path": result_paths[pair.review_pair_id],
             }
             for pair in prepared.pairs
         ],
         "skipped_pairs": [
-            {"note_path": pair.note_path, "gate_id": pair.gate_id, "reason": pair.reason}
+            {"note_path": pair.note_path, "gate_path": pair.gate_path, "reason": pair.reason}
             for pair in prepared.skipped
         ],
         "prompt_path": prepared.prompt_path,
         "bundle_output_path": prepared.bundle_output_path,
         "manifest_path": prepared.manifest_path,
-        "model_id": model_id,
+        "model_partition": model_partition,
         "runner": args.runner,
     }
     print(json.dumps(payload, ensure_ascii=True, sort_keys=True))

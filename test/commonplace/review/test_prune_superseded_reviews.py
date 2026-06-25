@@ -4,12 +4,12 @@ from pathlib import Path
 
 from commonplace.review.artifacts import encode_stage_filename
 from commonplace.review import executor, review_db
-from test.commonplace.review.pair_helpers import accept_pair
+from test.commonplace.review.pair_helpers import accept_pair, source_gate_path
 
 from ._run_cli import run_cli
 
 
-MODEL_ID = "test-model"
+MODEL_PARTITION = "test-model"
 NOTE_SHA = "note-sha"
 GATE_SHA = "gate-sha"
 
@@ -29,14 +29,14 @@ def _insert_completed_run(
 ) -> tuple[int, dict[str, int]]:
     run_id = review_db.create_run_with_pairs(
         conn,
-        model_id=MODEL_ID,
+        model_partition=MODEL_PARTITION,
         runner="test-runner",
         started_at=started_at,
         packing="note",
         pairs=[
             review_db.ReviewPairRequest(
                 note_path=note_path,
-                gate_id=gate_id,
+                gate_path=source_gate_path(gate_id),
                 gate_sha=GATE_SHA,
                 reviewed_note_sha=NOTE_SHA,
                 reviewed_note_commit=None,
@@ -51,7 +51,7 @@ def _insert_completed_run(
         review_pairs=[
             review_db.PendingReviewPair(
                 note_path=note_path,
-                gate_id=gate_id,
+                gate_path=source_gate_path(gate_id),
                 decision="pass",
                 rationale_markdown=f"Review for {note_path} {gate_id}.",
                 reviewed_at=started_at,
@@ -61,7 +61,11 @@ def _insert_completed_run(
         reviewed_at=started_at,
     )
     review_db.complete_review_run(conn, review_run_id=run_id, completed_at=started_at)
-    pair_ids = {pair.gate_id: pair.review_pair_id for pair in review_db.load_review_pairs_for_run(conn, review_run_id=run_id)}
+    pair_ids_by_path = {
+        pair.gate_path: pair.review_pair_id
+        for pair in review_db.load_review_pairs_for_run(conn, review_run_id=run_id)
+    }
+    pair_ids = {gate_id: pair_ids_by_path[source_gate_path(gate_id)] for gate_id in gate_ids}
     return run_id, pair_ids
 
 
@@ -101,7 +105,7 @@ def test_prune_superseded_reviews_deletes_rows_and_whole_obsolete_run_artifacts(
             review_pair_id=mixed_pairs["prose/source-residue"],
             note_path="kb/notes/mixed.md",
             gate_id="prose/source-residue",
-            model_id=MODEL_ID,
+            model_partition=MODEL_PARTITION,
             accepted_note_sha=NOTE_SHA,
             accepted_gate_sha=GATE_SHA,
             accepted_at="2026-01-01T00:02:00Z",
@@ -111,7 +115,7 @@ def test_prune_superseded_reviews_deletes_rows_and_whole_obsolete_run_artifacts(
             review_pair_id=current_source_pairs["prose/source-residue"],
             note_path="kb/notes/mixed.md",
             gate_id="prose/source-residue",
-            model_id=MODEL_ID,
+            model_partition=MODEL_PARTITION,
             accepted_note_sha=NOTE_SHA,
             accepted_gate_sha=GATE_SHA,
             accepted_at="2026-01-02T00:01:00Z",
@@ -121,7 +125,7 @@ def test_prune_superseded_reviews_deletes_rows_and_whole_obsolete_run_artifacts(
             review_pair_id=mixed_pairs["semantic/grounding-alignment"],
             note_path="kb/notes/mixed.md",
             gate_id="semantic/grounding-alignment",
-            model_id=MODEL_ID,
+            model_partition=MODEL_PARTITION,
             accepted_note_sha=NOTE_SHA,
             accepted_gate_sha=GATE_SHA,
             accepted_at="2026-01-01T00:03:00Z",
@@ -144,7 +148,7 @@ def test_prune_superseded_reviews_deletes_rows_and_whole_obsolete_run_artifacts(
             review_pair_id=old_full_pairs["prose/source-residue"],
             note_path="kb/notes/full.md",
             gate_id="prose/source-residue",
-            model_id=MODEL_ID,
+            model_partition=MODEL_PARTITION,
             accepted_note_sha=NOTE_SHA,
             accepted_gate_sha=GATE_SHA,
             accepted_at="2026-01-03T00:01:00Z",
@@ -154,7 +158,7 @@ def test_prune_superseded_reviews_deletes_rows_and_whole_obsolete_run_artifacts(
             review_pair_id=current_full_pairs["prose/source-residue"],
             note_path="kb/notes/full.md",
             gate_id="prose/source-residue",
-            model_id=MODEL_ID,
+            model_partition=MODEL_PARTITION,
             accepted_note_sha=NOTE_SHA,
             accepted_gate_sha=GATE_SHA,
             accepted_at="2026-01-04T00:01:00Z",
@@ -177,7 +181,7 @@ def test_prune_superseded_reviews_deletes_rows_and_whole_obsolete_run_artifacts(
             review_pair_id=ack_old_pairs["prose/source-residue"],
             note_path="kb/notes/ack.md",
             gate_id="prose/source-residue",
-            model_id=MODEL_ID,
+            model_partition=MODEL_PARTITION,
             accepted_note_sha=NOTE_SHA,
             accepted_gate_sha=GATE_SHA,
             accepted_at="2026-01-05T00:01:00Z",
@@ -187,7 +191,7 @@ def test_prune_superseded_reviews_deletes_rows_and_whole_obsolete_run_artifacts(
             review_pair_id=None,
             note_path="kb/notes/ack.md",
             gate_id="prose/source-residue",
-            model_id=MODEL_ID,
+            model_partition=MODEL_PARTITION,
             accepted_note_sha=NOTE_SHA,
             accepted_gate_sha=GATE_SHA,
             accepted_at="2026-01-06T00:01:00Z",

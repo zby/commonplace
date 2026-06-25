@@ -9,27 +9,29 @@ status: current
 
 The review system stores per-pair review state in a local SQLite database while keeping notes and gate definitions as markdown files in the repo.
 
+During the review-freshness migration, new review and ack writes also snapshot the exact note and gate file text used for the accepted baseline. The legacy SHA columns remain until the selector flips fully to snapshot comparison and the destructive cleanup drops them.
+
 This system is experimental and opt-in. It is not part of the default note-writing flow, and reviews should not be treated as always-on checks.
 
 It is also a scoped exception to the repo's file-first design. The motivation for that exception is recorded in [ADR-010](./adr/010-review-state-should-move-to-sqlite-once-reviews-leave-git-and.md): review state stopped behaving like authored library content and started behaving like local operational state.
 
 ## Concepts
 
-**Gate.** A markdown file in `kb/instructions/review-gates/{lens}/{name}.md`. The `{lens}/{name}` path is the gate id (for example `prose/source-residue`).
+**Gate.** A markdown file in `kb/instructions/review-gates/{lens}/{name}.md` in a source checkout, or under the installed framework gate catalog in generated projects. The `{lens}/{name}` shorthand is the gate id used at the CLI boundary (for example `prose/source-residue`); persisted freshness state uses the repo-relative gate path.
 
 **Bundle.** A directory of gates sharing a lens. `semantic` means all gate files under `kb/instructions/review-gates/semantic/`.
 
 **Review run.** One review invocation: one rendered prompt, one output artifact directory, and one run-level status.
 
-**Review pair.** One requested `(note_path, gate_id)` pair inside a review run. This is the stored unit of review output and acceptance.
+**Review pair.** One requested `(note_path, gate_path)` pair inside a review run. This is the stored unit of review output and acceptance.
 
-**Acceptance event.** An append-only event recording the accepted note sha and gate sha for one `(note_path, gate_id, model_id)` key.
+**Acceptance event.** An append-only event recording the accepted note sha and gate sha for one `(note_path, gate_path, model_partition)` key.
 
 **Current acceptance.** The latest acceptance event for one key. The selector queries this derived state rather than mutable review-file metadata.
 
 **Rendered review.** Optional human-readable markdown reconstructed from DB rows. Rendered markdown is inspectable output, not canonical state.
 
-**Model partition.** Reviews are partitioned by `model_id`. A review or acceptance for one model does not satisfy freshness for another.
+**Model partition.** Reviews are partitioned by `model_partition`. A review or acceptance for one model does not satisfy freshness for another.
 
 ## Authoring a gate
 
@@ -48,9 +50,12 @@ Primary tables:
 - `review_runs`
   - one row per review invocation
   - stores runner/model, status, packing (`note` or `gate`), telemetry, raw bundle markdown, and debug log
+- `review_file_snapshots`
+  - role-neutral snapshots of KB files by `(path, content_sha256)`
+  - stores exact UTF-8 text when the snapshot must be reusable for prompt rendering or diffing
 - `review_pairs`
-  - one row per requested `(note_path, gate_id)` pair inside a run
-  - stores pair status (`pending`, `completed`, `missing`), decision, rationale markdown, explicit `model_id`, reviewed note sha, and gate sha
+  - one row per requested `(note_path, gate_path)` pair inside a run
+  - stores pair status (`pending`, `completed`, `missing`), decision, rationale markdown, explicit `model_partition`, reviewed note/gate snapshot IDs, and transitional legacy SHA fields
 - `acceptance_events`
   - append-only acceptance history
   - records the accepted baseline for selector and ack
@@ -60,7 +65,7 @@ Primary tables:
 Derived view:
 
 - `current_gate_acceptances`
-  - current accepted state per `(note_path, gate_id, model_id)`
+  - current accepted state per `(note_path, gate_path, model_partition)`
   - defined as the highest `acceptance_events.acceptance_event_id` for that key
 
 ### Canonical status vs review prose
@@ -83,16 +88,18 @@ Three artifacts participate:
 
 1. the current note file
 2. the current gate file
-3. the latest acceptance event for that `(note, gate, model)` key
+3. the latest acceptance event for that `(note_path, gate_path, model_partition)` key
+
+For rows with accepted snapshots, freshness compares SHA-256 over the current file text against the accepted snapshot hashes and reconstructs note diffs from accepted snapshot text. Rows that have not been backfilled yet still use the transitional legacy Git-blob SHA fields.
 
 Rules:
 
 - no acceptance row -> `missing-review`
-- accepted gate sha differs from the current gate sha -> `gate-changed`
-- accepted note sha differs from the current note sha -> `note-changed`
+- accepted gate snapshot hash differs from the current gate hash -> `gate-changed`
+- accepted note snapshot hash differs from the current note hash -> `note-changed`
 - otherwise the pair is fresh
 
-For now, gate freshness is keyed by the raw git blob SHA of the gate file itself. There is no separate bundle manifest hash in the current tree. If bundle-level manifests ever return and become freshness-relevant, this should widen to an effective review-contract hash rather than a leaf gate-file SHA.
+There is no separate bundle manifest hash in the current tree. If bundle-level manifests ever return and become freshness-relevant, this should widen to an effective review-contract hash rather than a leaf gate-file hash.
 
 ## Write paths
 
@@ -118,7 +125,7 @@ A full review write contributes:
 1. one `review_pairs` row per requested pair
 2. one `acceptance_events` row per completed pair with `acceptance_kind = 'full-review'`
 
-The important invariant is that the stored `reviewed_note_sha` and `gate_sha` are the exact values used during review generation.
+The important invariant is that the stored note and gate snapshot IDs identify the exact file text used during prompt generation. During the migration, legacy SHA columns are still populated as transitional selector inputs.
 
 ### Trivial-change acknowledgement
 
@@ -126,6 +133,7 @@ The important invariant is that the stored `reviewed_note_sha` and `gate_sha` ar
 
 - the current note sha
 - the current gate sha
+- snapshot IDs for the current note and gate text
 - `acceptance_kind = 'trivial-change-ack'`
 
 This advances the accepted baseline without overwriting review prose or mutating a review artifact.
@@ -153,7 +161,7 @@ Prompt-facing CLI remains stable:
 - `--all-gates` to check all gates
 - `--note` to filter to specific note paths or directories
 - `--current` to filter to notes with `status: current`
-- `--model {model-id}` selects the review model partition to inspect or write
+- `--model {model-partition}` selects the review model partition to inspect or write
 - `--json`
 - `--reason {missing-review,gate-changed,note-changed}`
 
@@ -161,7 +169,7 @@ Prompt-facing CLI remains stable:
 
 `commonplace-ack-gate-review` requires:
 
-- `--model {model-id}`
+- `--model {model-partition}`
 - positional `note_path`
 - one or more positional `gate_ids`
 - output lines of the form `acked: <note_path> <gate_id>`
@@ -177,9 +185,10 @@ Human-readable inspection remains required, but it is now a derived view from DB
 `commonplace-warn-selector` exists to build a fixing queue from the current review state.
 
 - It reads current accepted review pairs across all models from the DB
-- For acceptance rows without an attached review body, it falls back to the latest completed review pair for that accepted `(note_path, gate_id, model_id)` key
+- For acceptance rows without an attached review body, it falls back to the latest completed review pair for that accepted `(note_path, gate_path, model_partition)` key
+- It skips warn findings whose gate changed since acceptance, using accepted gate snapshot hashes when available and legacy gate SHAs for rows not yet backfilled
 - It selects actionable findings from reviews whose canonical decision is `warn`
-- It collapses model partitions to one current entry per `(note_path, gate_id)`, choosing the latest accepted warn review for that gate
+- It collapses model partitions to one current entry per `(note_path, gate_path)`, choosing the latest accepted warn review for that gate
 
 ## Agent workflow
 
@@ -187,7 +196,7 @@ Human-readable inspection remains required, but it is now a derived view from DB
 
 Instruction: `kb/instructions/run-review-bundle-on-note.md`
 
-1. `commonplace-create-review-run --runner {codex|claude-code} --model {model-id} --with-prompt {note} {gate-or-bundle}...`
+1. `commonplace-create-review-run --runner {codex|claude-code} --model {model-partition} --with-prompt {note} {gate-or-bundle}...`
 2. Read the file at `prompt_path` from the JSON output and follow it in the current agent
 3. Write the sentinel-delimited review bundle to `bundle_output_path`
 4. `commonplace-ingest-bundle-output --review-run-id {id} --input-file {bundle_output_path}`
@@ -196,14 +205,14 @@ Instruction: `kb/instructions/run-review-bundle-on-note.md`
 
 Instruction: `kb/instructions/review-sweep.md`
 
-1. `commonplace-review-target-selector --model {model-id} {bundle-or-all} [--current|--note kb/notes kb/reference] --json` — get stale pairs with diffs
+1. `commonplace-review-target-selector --model {model-partition} {bundle-or-all} [--current|--note kb/notes kb/reference] --json` — get stale pairs with diffs
 2. Triage by reason: `missing-review` and `gate-changed` need fresh reviews; `note-changed` needs diff inspection
 3. For significant changes: run `commonplace-review-sweep`, run `commonplace-run-gate-sweep`, or use `kb/instructions/run-review-bundle-on-note.md` per note/group
 4. `commonplace-review-sweep` runs note-local bundle reviews in parallel, up to 4 at a time by default; override with `REVIEW_SWEEP_JOBS=<n>`
-5. For insignificant changes: run `commonplace-ack-gate-review --model {model-id} {note-path} {gate-id} ...` to append acceptance events
+5. For insignificant changes: run `commonplace-ack-gate-review --model {model-partition} {note-path} {gate-id} ...` to append acceptance events
 
 ### Gate sweep
 
-Use `commonplace-run-gate-sweep {gate-id} --runner {claude-code|codex} --model {model-id} [--current|--note kb/notes kb/reference] [--batch-size N]` when the execution set is one gate across many notes.
+Use `commonplace-run-gate-sweep {gate-id} --runner {claude-code|codex} --model {model-partition} [--current|--note kb/notes kb/reference] [--batch-size N]` when the execution set is one gate across many notes.
 
 This path keeps freshness gate-local and creates one gate-packed review run per prompt batch. It is the preferred path when one gate changed and re-reviewing it note-by-note would be needlessly expensive.

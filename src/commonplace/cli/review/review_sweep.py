@@ -14,7 +14,7 @@ from concurrent.futures import FIRST_COMPLETED, ThreadPoolExecutor, wait
 from dataclasses import dataclass
 from pathlib import Path
 
-from commonplace.review.paths import GATES_ROOT
+from commonplace.review.paths import gate_id_from_stored_path, review_gates_dir
 from commonplace.review.resolve_gates import resolve_to_gate_ids
 from commonplace.review.review_db import resolve_db_path
 from commonplace.review.review_target_selector import StaleGate, select_stale_gates
@@ -67,16 +67,17 @@ def parallelism_from_env() -> int:
 
 def bundle_names(select_all_gates: bool, positional: list[str], repo_root: Path) -> tuple[list[str], list[str]]:
     if select_all_gates:
-        gates_dir = repo_root / GATES_ROOT
+        gates_dir = review_gates_dir(repo_root)
         bundles = sorted(path.name for path in gates_dir.iterdir() if path.is_dir())
         return bundles, positional
     return [positional[0]], positional[1:]
 
 
-def group_stale_gates(records: list[StaleGate]) -> list[SweepJob]:
+def group_stale_gates(repo_root: Path, records: list[StaleGate]) -> list[SweepJob]:
+    del repo_root
     grouped: dict[str, list[str]] = {}
     for record in records:
-        grouped.setdefault(record.note_path, []).append(record.gate_id)
+        grouped.setdefault(record.note_path, []).append(gate_id_from_stored_path(record.gate_path))
     return [
         SweepJob(note_path=note_path, gates=tuple(sorted(gates)))
         for note_path, gates in sorted(grouped.items())
@@ -93,7 +94,7 @@ def collect_sweep_jobs(
 ) -> list[SweepJob]:
     if current_only and note_paths:
         raise SystemExit("error: --current and explicit note paths are mutually exclusive")
-    gates_dir = repo_root / GATES_ROOT
+    gates_dir = review_gates_dir(repo_root)
     gate_ids = resolve_to_gate_ids([bundle], gates_dir)
     stale = select_stale_gates(
         repo_root,
@@ -102,7 +103,7 @@ def collect_sweep_jobs(
         note_filter=note_paths or None,
         current_only=current_only,
     )
-    return group_stale_gates(stale)
+    return group_stale_gates(repo_root, stale)
 
 
 def render_bundle_review_command(*, runner: str, model: str, job: SweepJob) -> str:

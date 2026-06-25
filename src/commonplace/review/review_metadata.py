@@ -238,18 +238,18 @@ def resolve_review_target(
     """Resolve gates and capture provenance for a review target.
 
     Returns (note_sha, note_commit, started_at, run_gates, gate_texts) where:
-    - run_gates: list of (gate_id, gate_sha, ordinal) tuples for review-pair requests
-    - gate_texts: dict of gate_id -> gate body text (frontmatter stripped)
+    - run_gates: list of (gate_path, gate_sha, ordinal) tuples for review-pair requests
+    - gate_texts: dict of gate_path -> gate body text (frontmatter stripped)
 
     Raises ValueError if note provenance or gate provenance cannot be resolved,
     or if no applicable gates are found.
     """
     from commonplace.lib import frontmatter
-    from commonplace.review.paths import GATES_ROOT
+    from commonplace.review.paths import gate_path_for_id, review_gates_dir
     from commonplace.review.resolve_gates import applicable_gate_ids_for_note, resolve_to_gate_ids
 
     note_abs = repo_root / note_path
-    gates_dir = repo_root / GATES_ROOT
+    gates_dir = review_gates_dir(repo_root)
     requested_gate_ids = resolve_to_gate_ids(gate_or_bundle, gates_dir)
     gate_ids = applicable_gate_ids_for_note(note_abs, requested_gate_ids, gates_dir)
     if not gate_ids:
@@ -264,9 +264,10 @@ def resolve_review_target(
         gate_abs = gates_dir / f"{gate_id}.md"
         if not gate_abs.is_file():
             raise ValueError(f"gate not found: {gate_id}")
-        gate_sha, _ = committed_file_provenance(repo_root, gate_abs, kind="gate")
-        run_gates.append((gate_id, gate_sha, ordinal))
-        gate_texts[gate_id] = frontmatter.strip(gate_abs.read_text(encoding="utf-8")).lstrip("\n")
+        gate_path = gate_path_for_id(repo_root, gate_id)
+        gate_sha = git_blob_sha(gate_abs)
+        run_gates.append((gate_path, gate_sha, ordinal))
+        gate_texts[gate_path] = frontmatter.strip(gate_abs.read_text(encoding="utf-8")).lstrip("\n")
 
     return note_sha, note_commit, started_at, run_gates, gate_texts
 

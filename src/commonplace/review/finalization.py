@@ -14,7 +14,7 @@ def _run_coverage_failure(pairs: Sequence[ReviewPairRow]) -> str | None:
     if not pairs:
         return "review run has no pairs"
     missing = [
-        f"{pair.note_path} :: {pair.gate_id}"
+        f"{pair.note_path} :: {pair.gate_path}"
         for pair in pairs
         if pair.pair_status != "completed"
     ]
@@ -28,7 +28,6 @@ def record_and_finalize_run(
     *,
     review_run_id: int,
     review_pairs: Sequence[PendingReviewPair] | None = None,
-    actual_model_id: str | None = None,
     completed_at: str | None = None,
     telemetry_json: str | None = None,
     raw_bundle_markdown: str | None = None,
@@ -50,11 +49,6 @@ def record_and_finalize_run(
             debug_log=debug_log,
         )
 
-        final_model_id = review_run.model_id
-        if actual_model_id is not None and actual_model_id != review_run.model_id:
-            review_db.rekey_review_run_model(conn, review_run_id=review_run_id, model_id=actual_model_id)
-            final_model_id = actual_model_id
-
         if review_pairs is not None:
             review_db.complete_review_pairs(
                 conn,
@@ -69,12 +63,14 @@ def record_and_finalize_run(
             review_db.append_acceptance_event(
                 conn,
                 note_path=pair.note_path,
-                gate_id=pair.gate_id,
-                model_id=final_model_id,
+                gate_path=pair.gate_path,
+                model_partition=review_run.model_partition,
                 accepted_review_pair_id=pair.review_pair_id,
                 accepted_note_sha=pair.reviewed_note_sha,
                 accepted_note_commit=pair.reviewed_note_commit,
                 accepted_gate_sha=pair.gate_sha,
+                accepted_note_snapshot_id=pair.reviewed_note_snapshot_id,
+                accepted_gate_snapshot_id=pair.reviewed_gate_snapshot_id,
                 accepted_at=finished_at,
                 acceptance_kind="full-review",
             )
@@ -101,7 +97,6 @@ def complete_pairs_and_finalize_run(
     *,
     review_run_id: int,
     review_pairs: Sequence[PendingReviewPair],
-    actual_model_id: str | None = None,
     completed_at: str | None = None,
     telemetry_json: str | None = None,
     raw_bundle_markdown: str | None = None,
@@ -111,7 +106,6 @@ def complete_pairs_and_finalize_run(
         conn,
         review_run_id=review_run_id,
         review_pairs=review_pairs,
-        actual_model_id=actual_model_id,
         completed_at=completed_at,
         telemetry_json=telemetry_json,
         raw_bundle_markdown=raw_bundle_markdown,

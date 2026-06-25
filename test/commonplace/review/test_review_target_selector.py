@@ -100,7 +100,7 @@ def seed_acceptance(
             conn,
             note_path=note_path,
             gate_id=gate_id,
-            model_id=TEST_MODEL,
+            model_partition=TEST_MODEL,
             decision="pass",
             rationale_markdown="Looks good.\n\n## Result: PASS\n",
             gate_sha=gate_sha,
@@ -114,10 +114,71 @@ def seed_acceptance(
             review_pair_id=review_pair_id,
             note_path=note_path,
             gate_id=gate_id,
-            model_id=TEST_MODEL,
+            model_partition=TEST_MODEL,
             accepted_note_sha=note_sha,
             accepted_note_commit=commit,
             accepted_gate_sha=gate_sha,
+            accepted_at=REVIEWED_AT,
+            acceptance_kind="full-review",
+        )
+        conn.commit()
+
+
+def seed_snapshot_acceptance(
+    repo_root: Path,
+    *,
+    note_path: str,
+    gate_path: str,
+) -> None:
+    review_db.ensure_db(repo_root, db_path_for(repo_root))
+    with review_db.connect(db_path_for(repo_root)) as conn:
+        note_snapshot = review_db.snapshot_file(conn, repo_root=repo_root, path=note_path)
+        gate_snapshot = review_db.snapshot_file(conn, repo_root=repo_root, path=gate_path)
+        review_run_id = review_db.create_run_with_pairs(
+            conn,
+            model_partition=TEST_MODEL,
+            runner="test-runner",
+            started_at=REVIEWED_AT,
+            packing="note",
+            pairs=[
+                review_db.ReviewPairRequest(
+                    note_path=note_path,
+                    gate_path=gate_path,
+                    gate_sha="legacy-gate-sha",
+                    reviewed_note_sha="legacy-note-sha",
+                    reviewed_note_commit=None,
+                    reviewed_note_snapshot_id=note_snapshot.snapshot_id,
+                    reviewed_gate_snapshot_id=gate_snapshot.snapshot_id,
+                    pair_ordinal=0,
+                )
+            ],
+        )
+        review_db.complete_review_pairs(
+            conn,
+            review_run_id=review_run_id,
+            review_pairs=[
+                review_db.PendingReviewPair(
+                    note_path=note_path,
+                    gate_path=gate_path,
+                    decision="pass",
+                    rationale_markdown="Looks good.\n\n## Result: PASS\n",
+                    reviewed_at=REVIEWED_AT,
+                )
+            ],
+            reviewed_at=REVIEWED_AT,
+        )
+        review_pair = review_db.load_review_pairs_for_run(conn, review_run_id=review_run_id)[0]
+        review_db.append_acceptance_event(
+            conn,
+            note_path=note_path,
+            gate_path=gate_path,
+            model_partition=TEST_MODEL,
+            accepted_review_pair_id=review_pair.review_pair_id,
+            accepted_note_sha="legacy-note-sha",
+            accepted_note_commit=None,
+            accepted_gate_sha="legacy-gate-sha",
+            accepted_note_snapshot_id=note_snapshot.snapshot_id,
+            accepted_gate_snapshot_id=gate_snapshot.snapshot_id,
             accepted_at=REVIEWED_AT,
             acceptance_kind="full-review",
         )
@@ -183,7 +244,7 @@ class TestMissingReview:
     def test_claude_opus_alias_queries_canonical_partition(self, tmp_path: Path) -> None:
         build_fixture(tmp_path)
         with review_db.connect(db_path_for(tmp_path)) as conn:
-            review_db.rekey_model_id(conn, old_model_id=TEST_MODEL, new_model_id="claude-opus-4-6")
+            review_db.rekey_model_partition(conn, old_model_partition=TEST_MODEL, new_model_partition="claude-opus-4-6")
             conn.commit()
 
         stale = review_target_selector.select_stale_gates(
@@ -424,6 +485,31 @@ class TestFreshReview:
         )
         assert stale == []
 
+    def test_snapshot_acceptance_selects_without_git(self, monkeypatch, tmp_path: Path) -> None:
+        notes_dir = tmp_path / "kb" / "notes"
+        gates_dir = tmp_path / "kb" / "instructions" / "review-gates"
+        make_note(notes_dir / "stable.md", "Stable title", "\nLine 1.\n")
+        make_gate(gates_dir / "prose" / "source-residue.md", "prose/source-residue", "prose")
+        seed_snapshot_acceptance(
+            tmp_path,
+            note_path="kb/notes/stable.md",
+            gate_path="kb/instructions/review-gates/prose/source-residue.md",
+        )
+        monkeypatch.setattr(
+            review_target_selector,
+            "git_blob_sha",
+            lambda *_args, **_kwargs: pytest.fail("selector should use snapshot hashes"),
+        )
+
+        stale = review_target_selector.select_stale_gates(
+            tmp_path,
+            model=TEST_MODEL,
+            gate_ids=["prose/source-residue"],
+            note_filter=["kb/notes/stable.md"],
+        )
+
+        assert stale == []
+
 
 class TestGateChanged:
     def test_gate_fingerprint_change_marks_stale(self, tmp_path: Path) -> None:
@@ -460,6 +546,37 @@ class TestNoteChanged:
             ("prose/source-residue", "note-changed"),
         ]
 
+    def test_snapshot_acceptance_diff_does_not_need_git(self, monkeypatch, tmp_path: Path) -> None:
+        notes_dir = tmp_path / "kb" / "notes"
+        gates_dir = tmp_path / "kb" / "instructions" / "review-gates"
+        note = make_note(notes_dir / "stable.md", "Stable title", "\nOriginal line.\n")
+        make_gate(gates_dir / "prose" / "source-residue.md", "prose/source-residue", "prose")
+        seed_snapshot_acceptance(
+            tmp_path,
+            note_path="kb/notes/stable.md",
+            gate_path="kb/instructions/review-gates/prose/source-residue.md",
+        )
+        make_note(note, "Stable title", "\nUpdated line.\n")
+        monkeypatch.setattr(
+            review_target_selector,
+            "git_blob_sha",
+            lambda *_args, **_kwargs: pytest.fail("selector should diff from snapshot text"),
+        )
+
+        stale = review_target_selector.select_stale_gates(
+            tmp_path,
+            model=TEST_MODEL,
+            gate_ids=["prose/source-residue"],
+            note_filter=["kb/notes/stable.md"],
+            include_diff=True,
+        )
+
+        assert len(stale) == 1
+        assert stale[0].reason == "note-changed"
+        assert stale[0].diff is not None
+        assert "Original line" in stale[0].diff
+        assert "Updated line" in stale[0].diff
+
 
 class TestAckMetadata:
     def test_ack_appends_acceptance_event_without_creating_new_review_pairs(self, tmp_path: Path) -> None:
@@ -477,7 +594,7 @@ class TestAckMetadata:
         )
         assert len(stale_before) == 2
 
-        review_target_selector.ack_pairs(
+        acked = review_target_selector.ack_pairs(
             tmp_path,
             [
                 "kb/notes/stable.md:prose/source-residue",
@@ -485,6 +602,10 @@ class TestAckMetadata:
             ],
             TEST_MODEL,
         )
+        assert acked == [
+            ("kb/notes/stable.md", "prose/source-residue"),
+            ("kb/notes/stable.md", "prose/confidence-miscalibration"),
+        ]
 
         stale_after = review_target_selector.select_stale_gates(
             tmp_path,
@@ -501,9 +622,9 @@ class TestAckMetadata:
                 """
                 SELECT accepted_review_pair_id, accepted_note_sha, acceptance_kind
                 FROM current_gate_acceptances
-                WHERE note_path = ? AND gate_id = ? AND model_id = ?
+                WHERE note_path = ? AND gate_path = ? AND model_partition = ?
                 """,
-                ("kb/notes/stable.md", "prose/source-residue", TEST_MODEL),
+                ("kb/notes/stable.md", "kb/instructions/review-gates/prose/source-residue.md", TEST_MODEL),
             ).fetchone()
         assert row is not None
         assert review_pair_count_after == review_pair_count_before
@@ -525,14 +646,24 @@ class TestAckMetadata:
                 """
                 SELECT accepted_note_sha, accepted_note_commit, acceptance_kind
                 FROM current_gate_acceptances
-                WHERE note_path = ? AND gate_id = ? AND model_id = ?
+                WHERE note_path = ? AND gate_path = ? AND model_partition = ?
                 """,
-                ("kb/notes/stable.md", "prose/source-residue", TEST_MODEL),
+                ("kb/notes/stable.md", "kb/instructions/review-gates/prose/source-residue.md", TEST_MODEL),
             ).fetchone()
         assert row is not None
         assert row["accepted_note_sha"] == review_metadata.git_blob_sha(fixture["stable"])
         assert row["accepted_note_commit"] is None
         assert row["acceptance_kind"] == "trivial-change-ack"
+
+    def test_ack_rejects_invalid_pair_without_exiting(self, tmp_path: Path) -> None:
+        build_fixture(tmp_path)
+
+        with pytest.raises(ValueError, match="invalid pair"):
+            review_target_selector.ack_pairs(
+                tmp_path,
+                ["kb/notes/stable.md"],
+                TEST_MODEL,
+            )
 
     def test_ack_does_not_create_review_file_when_missing(self, tmp_path: Path) -> None:
         build_fixture(tmp_path)
@@ -567,9 +698,9 @@ class TestAckMetadata:
                 """
                 SELECT accepted_review_pair_id, acceptance_kind
                 FROM current_gate_acceptances
-                WHERE note_path = ? AND gate_id = ? AND model_id = ?
+                WHERE note_path = ? AND gate_path = ? AND model_partition = ?
                 """,
-                ("kb/notes/unreviewed.md", "prose/source-residue", TEST_MODEL),
+                ("kb/notes/unreviewed.md", "kb/instructions/review-gates/prose/source-residue.md", TEST_MODEL),
             ).fetchone()
         assert row is not None
         assert row["accepted_review_pair_id"] is None
