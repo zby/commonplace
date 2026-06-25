@@ -205,6 +205,7 @@ List stale (note, gate) pairs that need review. Compares current note/gate SHAs 
 commonplace-review-target-selector prose --model claude-opus-4-6 --note kb/notes kb/reference
 commonplace-review-target-selector prose --model claude-opus-4-6 --current --json          # JSON output
 commonplace-review-target-selector prose --model claude-opus-4-6 --note kb/notes kb/reference --reason note-changed     # filter by staleness reason
+commonplace-review-target-selector prose --note kb/notes kb/reference --reason missing-review     # pairs missing under every model partition
 commonplace-review-target-selector prose --model claude-opus-4-6 --ack kb/notes/foo.md:prose/source-residue   # ack a pair
 ```
 

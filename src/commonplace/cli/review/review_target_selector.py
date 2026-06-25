@@ -27,7 +27,13 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser.add_argument("--note", nargs="+", dest="note_paths", help="Filter to specific note paths or directories.")
     parser.add_argument("--current", action="store_true", help="Filter to notes with frontmatter status: current.")
     parser.add_argument("--json", action="store_true", help="JSON output (includes diffs for note-changed).")
-    parser.add_argument("--model", required=True, help="Review model partition to query or acknowledge.")
+    parser.add_argument(
+        "--model",
+        help=(
+            "Review model partition to query or acknowledge. "
+            "Omit only for model-agnostic missing-review coverage."
+        ),
+    )
     parser.add_argument(
         "--reason",
         choices=["missing-review", "gate-changed", "note-changed"],
@@ -42,11 +48,13 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     args = parser.parse_args(argv)
 
     repo_root = cwd if cwd is not None else Path.cwd()
-    model = args.model.strip()
-    if not model:
+    model = args.model.strip() if args.model is not None else None
+    if args.model is not None and not model:
         parser.error("--model must not be empty")
 
     if args.ack:
+        if model is None:
+            parser.error("--model is required with --ack")
         try:
             acked = ack_pairs(repo_root, args.ack, model)
         except (FileNotFoundError, ValueError) as exc:
@@ -72,6 +80,9 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
             parser.error(str(exc))
     else:
         parser.error("provide gate/bundle names or --all-gates")
+
+    if model is None and args.reason not in (None, "missing-review"):
+        parser.error("--model is required unless selecting missing-review coverage")
 
     try:
         records = select_stale_gates(

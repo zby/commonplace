@@ -139,7 +139,7 @@ def note_diff_from_text(note_path: str, previous_text: str, current_text: str) -
 def select_stale_gates(
     repo_root: Path,
     *,
-    model: str,
+    model: str | None,
     gate_ids: list[str],
     note_filter: list[str] | None = None,
     current_only: bool = False,
@@ -154,10 +154,8 @@ def select_stale_gates(
         gate_id = gate_id_for_path(repo_root, gate_path)
         gate_path_by_id[gate_id] = gate_path
         requested_gate_ids.append(gate_id)
-    model = model.strip()
-    if not model:
-        raise ValueError("model is required")
-    model = normalize_model_partition(model)
+    model = model.strip() if model is not None else None
+    model = normalize_model_partition(model) if model else None
     if db_path is None:
         db_path = resolve_db_path(repo_root)
 
@@ -182,6 +180,10 @@ def select_stale_gates(
     ensure_db(repo_root, db_path)
     with connect(db_path) as conn:
         acceptances = load_current_acceptances(conn)
+    accepted_pairs = {
+        (accepted_note_path, accepted_gate_path)
+        for accepted_note_path, accepted_gate_path, _model_partition in acceptances
+    }
 
     stale: list[StaleGate] = []
     for note_abs, note_path in zip(notes, note_paths):
@@ -191,6 +193,11 @@ def select_stale_gates(
             gate_abs = repo_root / gate_path
             if not gate_abs.is_file():
                 raise FileNotFoundError(f"Gate not found: {gate_path}")
+
+            if model is None:
+                if (note_path, gate_path) not in accepted_pairs:
+                    stale.append(StaleGate(note_path, gate_path, "missing-review"))
+                continue
 
             acceptance = acceptances.get((note_path, gate_path, model))
             if acceptance is None:

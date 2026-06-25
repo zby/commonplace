@@ -231,6 +231,28 @@ class TestMissingReview:
             ("prose/source-residue", "missing-review"),
         ]
 
+    def test_missing_review_without_model_partition_uses_any_partition_coverage(self, tmp_path: Path) -> None:
+        build_fixture(tmp_path)
+
+        stable = review_target_selector.select_stale_gates(
+            tmp_path,
+            model=None,
+            gate_ids=["prose/confidence-miscalibration", "prose/source-residue"],
+            note_filter=["kb/notes/stable.md"],
+        )
+        unreviewed = review_target_selector.select_stale_gates(
+            tmp_path,
+            model=None,
+            gate_ids=["prose/confidence-miscalibration", "prose/source-residue"],
+            note_filter=["kb/notes/unreviewed.md"],
+        )
+
+        assert stable == []
+        assert [(s.gate_id, s.reason) for s in unreviewed] == [
+            ("prose/confidence-miscalibration", "missing-review"),
+            ("prose/source-residue", "missing-review"),
+        ]
+
     def test_claude_opus_alias_queries_canonical_partition(self, tmp_path: Path) -> None:
         build_fixture(tmp_path)
         with review_db.connect(db_path_for(tmp_path)) as conn:
@@ -743,17 +765,51 @@ class TestJsonOutput:
             assert "review_path" not in item
 
 
-class TestModelRequired:
-    def test_selector_requires_explicit_model(self, tmp_path: Path) -> None:
+class TestModelOptional:
+    def test_cli_allows_missing_review_without_model(self, tmp_path: Path) -> None:
         build_fixture(tmp_path)
 
-        with pytest.raises(ValueError, match="model is required"):
-            review_target_selector.select_stale_gates(
-                tmp_path,
-                model="",
-                gate_ids=["prose/confidence-miscalibration", "prose/source-residue"],
-                note_filter=["kb/notes/stable.md"],
-            )
+        result = run_cli(
+            "review_target_selector",
+            "prose",
+            "--note",
+            "kb/notes/unreviewed.md",
+            cwd=tmp_path,
+        )
+
+        assert "kb/notes/unreviewed.md" in result.stdout
+        assert "missing-review" in result.stdout
+
+    def test_cli_requires_model_for_non_missing_reason(self, tmp_path: Path) -> None:
+        build_fixture(tmp_path)
+
+        result = run_cli(
+            "review_target_selector",
+            "prose",
+            "--note",
+            "kb/notes/unreviewed.md",
+            "--reason",
+            "note-changed",
+            cwd=tmp_path,
+            check=False,
+        )
+
+        assert result.returncode == 2
+        assert "--model is required unless selecting missing-review coverage" in result.stderr
+
+    def test_cli_requires_model_for_ack(self, tmp_path: Path) -> None:
+        build_fixture(tmp_path)
+
+        result = run_cli(
+            "review_target_selector",
+            "--ack",
+            "kb/notes/stable.md:prose/source-residue",
+            cwd=tmp_path,
+            check=False,
+        )
+
+        assert result.returncode == 2
+        assert "--model is required with --ack" in result.stderr
 
 
 class TestResolveGates:

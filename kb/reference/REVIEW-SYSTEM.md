@@ -151,9 +151,11 @@ It computes:
 
 - current note content hash from the current note file
 - current gate content hash from the current gate file
-- requested model partition from `--model`
+- requested model partition from `--model`, when model-specific freshness is requested
 
 It then compares those values against `current_gate_acceptances`.
+
+If `--model` is omitted, the selector runs only model-agnostic missing-review coverage: a `(note_path, gate_path)` pair is reported as `missing-review` only when there is no current acceptance for that pair under any model partition. This mode does not classify `gate-changed` or `note-changed`, because those require a chosen accepted baseline.
 
 Prompt-facing CLI remains stable:
 
@@ -162,7 +164,7 @@ Prompt-facing CLI remains stable:
 - `--all-gates` to check all gates
 - `--note` to filter to specific note paths or directories
 - `--current` to filter to notes with `status: current`
-- `--model {model-partition}` selects the review model partition to inspect or write
+- `--model {model-partition}` selects the review model partition to inspect or write; omit it only for model-agnostic missing-review coverage
 - `--json`
 - `--reason {missing-review,gate-changed,note-changed}`
 
