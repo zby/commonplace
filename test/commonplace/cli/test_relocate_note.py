@@ -161,9 +161,6 @@ def test_relocate_note_apply_runs_review_relocation_hook(tmp_path: Path, monkeyp
             model_partition="opus-4-6",
             decision="pass",
             rationale_markdown="ok",
-            gate_sha="gate-sha",
-            reviewed_note_sha="note-sha",
-            reviewed_note_commit="note-commit",
             reviewed_at="2026-04-10T10:05:00+02:00",
         )
         conn.commit()

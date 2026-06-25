@@ -11,7 +11,6 @@ import sqlite3
 
 from commonplace.lib import frontmatter
 from commonplace.review.review_db import ReviewPairRequest, snapshot_file
-from commonplace.review.review_metadata import git_blob_sha, review_note_provenance
 
 
 @dataclass(frozen=True)
@@ -35,12 +34,7 @@ def capture_review_inputs(
     repo_root: Path,
     pairs: Sequence[tuple[str, str]],
 ) -> CapturedReviewInputs:
-    """Snapshot note/gate files and build review-pair requests from those snapshots.
-
-    The legacy SHA columns are still populated until the destructive migration
-    drops them, but prompt text and accepted baselines can now refer to the
-    captured snapshot IDs.
-    """
+    """Snapshot note/gate files and build review-pair requests from those snapshots."""
     note_paths = sorted({note_path for note_path, _ in pairs})
     gate_paths = sorted({gate_path for _, gate_path in pairs})
 
@@ -52,26 +46,15 @@ def capture_review_inputs(
         gate_path: snapshot_file(conn, repo_root=repo_root, path=gate_path)
         for gate_path in gate_paths
     }
-    note_provenance = {
-        note_path: review_note_provenance(repo_root, Path(note_path))
-        for note_path in note_paths
-    }
-    gate_shas = {
-        gate_path: git_blob_sha(repo_root / gate_path)
-        for gate_path in gate_paths
-    }
 
     return CapturedReviewInputs(
         pair_requests=[
             ReviewPairRequest(
                 note_path=note_path,
                 gate_path=gate_path,
-                gate_sha=gate_shas[gate_path],
-                reviewed_note_sha=note_provenance[note_path][0],
-                reviewed_note_commit=note_provenance[note_path][1],
+                pair_ordinal=ordinal,
                 reviewed_note_snapshot_id=note_snapshots[note_path].snapshot_id,
                 reviewed_gate_snapshot_id=gate_snapshots[gate_path].snapshot_id,
-                pair_ordinal=ordinal,
             )
             for ordinal, (note_path, gate_path) in enumerate(pairs)
         ],

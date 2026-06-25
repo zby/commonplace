@@ -12,7 +12,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from pathlib import Path
 
-from commonplace.review.artifacts import write_manifest, write_pair_result_files
+from commonplace.review.artifacts import result_paths_by_pair_id, write_manifest, write_pair_result_files
 from commonplace.review.executor import (
     RunPairs,
     bundle_artifact_dir,
@@ -32,6 +32,7 @@ from commonplace.review.review_db import (
     load_review_pairs_for_run,
     load_review_run,
     mark_missing_pairs,
+    set_run_artifact_paths,
 )
 from commonplace.review.review_metadata import iso_now
 
@@ -186,6 +187,7 @@ def prepare_review_batch(
     )
     artifact_dir = bundle_artifact_dir(repo_root, review_run_id)
     bundle_output_path = (artifact_dir / "bundle-output.md").relative_to(repo_root).as_posix()
+    artifact_dir_rel = artifact_dir.relative_to(repo_root).as_posix()
     try:
         prompt = render_pairs_prompt(
             notes=targets,
@@ -215,6 +217,19 @@ def prepare_review_batch(
         pairs=stored_pairs,
         skipped=skipped,
     )
+    with connect(db_path) as conn:
+        set_run_artifact_paths(
+            conn,
+            review_run_id=review_run_id,
+            bundle_output_path=bundle_output_path,
+            result_paths=result_paths_by_pair_id(
+                artifact_dir_rel=artifact_dir_rel,
+                packing=packing,
+                pairs=stored_pairs,
+            ),
+        )
+        stored_pairs = load_review_pairs_for_run(conn, review_run_id=review_run_id)
+        conn.commit()
 
     return PreparedBatch(
         review_run_id=review_run_id,
@@ -232,7 +247,7 @@ def ingest_batch_output(
     repo_root: Path,
     db_path: Path,
     review_run_id: int,
-    raw_bundle_markdown: str,
+    bundle_markdown: str,
 ) -> tuple[list[int], list[tuple[int, str]]]:
     """Parse a batch's pair output and finalize its run with pair salvage."""
     with connect(db_path) as conn:
@@ -244,8 +259,22 @@ def ingest_batch_output(
         stored_pairs = load_review_pairs_for_run(conn, review_run_id=review_run_id)
 
     expected_pairs = [(pair.note_path, pair.gate_path) for pair in stored_pairs]
+    artifact_dir = bundle_artifact_dir(repo_root, review_run_id)
+    artifact_dir.mkdir(parents=True, exist_ok=True)
+    bundle_output_path = (artifact_dir / "bundle-output.md").relative_to(repo_root).as_posix()
+    artifact_dir_rel = artifact_dir.relative_to(repo_root).as_posix()
+    prompt_path = (artifact_dir / "prompt.md").relative_to(repo_root).as_posix()
+    (artifact_dir / "bundle-output.md").write_text(bundle_markdown, encoding="utf-8")
+    with connect(db_path) as conn:
+        set_run_artifact_paths(
+            conn,
+            review_run_id=review_run_id,
+            bundle_output_path=bundle_output_path,
+        )
+        conn.commit()
+
     try:
-        parsed = parse_pair_bundle(raw_bundle_markdown, expected_pairs=expected_pairs)
+        parsed = parse_pair_bundle(bundle_markdown, expected_pairs=expected_pairs)
     except ValueError as exc:
         with connect(db_path) as conn:
             mark_missing_pairs(conn, review_run_id=review_run_id)
@@ -254,7 +283,6 @@ def ingest_batch_output(
             db_path=db_path,
             review_run_ids=[review_run_id],
             failure_reason=str(exc),
-            raw_bundle_markdown=raw_bundle_markdown,
         )
         raise
 
@@ -262,14 +290,8 @@ def ingest_batch_output(
         db_path=db_path,
         run_pairs=[RunPairs(review_run_id=review_run_id, pairs=tuple(expected_pairs))],
         parsed=parsed,
-        raw_output=raw_bundle_markdown,
     )
 
-    artifact_dir = bundle_artifact_dir(repo_root, review_run_id)
-    artifact_dir.mkdir(parents=True, exist_ok=True)
-    bundle_output_path = (artifact_dir / "bundle-output.md").relative_to(repo_root).as_posix()
-    prompt_path = (artifact_dir / "prompt.md").relative_to(repo_root).as_posix()
-    (artifact_dir / "bundle-output.md").write_text(raw_bundle_markdown, encoding="utf-8")
     with connect(db_path) as conn:
         updated_run = load_review_run(conn, review_run_id=review_run_id)
         updated_pairs = load_review_pairs_for_run(conn, review_run_id=review_run_id)
@@ -289,4 +311,16 @@ def ingest_batch_output(
         pairs=updated_pairs,
         failure_reason=updated_run.failure_reason if updated_run is not None else None,
     )
+    with connect(db_path) as conn:
+        set_run_artifact_paths(
+            conn,
+            review_run_id=review_run_id,
+            bundle_output_path=bundle_output_path,
+            result_paths=result_paths_by_pair_id(
+                artifact_dir_rel=artifact_dir_rel,
+                packing=review_run.packing,
+                pairs=updated_pairs,
+            ),
+        )
+        conn.commit()
     return completed, failed

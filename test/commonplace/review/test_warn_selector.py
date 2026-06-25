@@ -2,8 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-import pytest
-
+from commonplace.review.artifacts import result_paths_by_pair_id
 from commonplace.review import review_db, warn_selector
 
 
@@ -69,12 +68,9 @@ def seed_warn_review(repo: Path, db_path: Path) -> None:
                 review_db.ReviewPairRequest(
                     note_path="kb/notes/sample.md",
                     gate_path=GATE_PATH,
-                    gate_sha="legacy-gate-sha",
-                    reviewed_note_sha="legacy-note-sha",
-                    reviewed_note_commit=None,
+                    pair_ordinal=0,
                     reviewed_note_snapshot_id=note_snapshot.snapshot_id,
                     reviewed_gate_snapshot_id=gate_snapshot.snapshot_id,
-                    pair_ordinal=0,
                 )
             ],
         )
@@ -93,15 +89,26 @@ def seed_warn_review(repo: Path, db_path: Path) -> None:
             reviewed_at=REVIEWED_AT,
         )
         review_pair = review_db.load_review_pairs_for_run(conn, review_run_id=review_run_id)[0]
+        artifact_dir_rel = review_db.review_run_artifact_dir_rel(review_run_id)
+        result_paths = result_paths_by_pair_id(
+            artifact_dir_rel=artifact_dir_rel,
+            packing="note",
+            pairs=[review_pair],
+        )
+        result_path = result_paths[review_pair.review_pair_id]
+        write(repo / result_path, "### Findings\n- WARN: actionable finding\n\n## Result: WARN\n")
+        review_db.set_run_artifact_paths(
+            conn,
+            review_run_id=review_run_id,
+            bundle_output_path=f"{artifact_dir_rel}/bundle-output.md",
+            result_paths=result_paths,
+        )
         review_db.append_acceptance_event(
             conn,
             note_path="kb/notes/sample.md",
             gate_path=GATE_PATH,
             model_partition=TEST_MODEL,
             accepted_review_pair_id=review_pair.review_pair_id,
-            accepted_note_sha="legacy-note-sha",
-            accepted_note_commit=None,
-            accepted_gate_sha="legacy-gate-sha",
             accepted_note_snapshot_id=note_snapshot.snapshot_id,
             accepted_gate_snapshot_id=gate_snapshot.snapshot_id,
             accepted_at=REVIEWED_AT,
@@ -110,18 +117,13 @@ def seed_warn_review(repo: Path, db_path: Path) -> None:
         conn.commit()
 
 
-def test_warn_selector_uses_gate_snapshot_hash_without_git(monkeypatch, tmp_path: Path) -> None:
+def test_warn_selector_uses_gate_snapshot_hash_without_git(tmp_path: Path) -> None:
     repo = tmp_path / "repo"
     repo.mkdir()
     make_note(repo / "kb" / "notes" / "sample.md")
     make_gate(repo / GATE_PATH)
     db_path = repo / "kb" / "reports" / "review-store.sqlite"
     seed_warn_review(repo, db_path)
-    monkeypatch.setattr(
-        warn_selector,
-        "git_blob_sha",
-        lambda *_args, **_kwargs: pytest.fail("warn selector should use snapshot hashes"),
-    )
 
     notes, stale_gates = warn_selector.scan_reviews(repo, db_path=db_path)
 
@@ -131,7 +133,7 @@ def test_warn_selector_uses_gate_snapshot_hash_without_git(monkeypatch, tmp_path
     assert notes[0].warns[0].warn_text == "actionable finding"
 
 
-def test_warn_selector_skips_warns_when_snapshot_gate_changed(monkeypatch, tmp_path: Path) -> None:
+def test_warn_selector_skips_warns_when_snapshot_gate_changed(tmp_path: Path) -> None:
     repo = tmp_path / "repo"
     repo.mkdir()
     make_note(repo / "kb" / "notes" / "sample.md")
@@ -139,11 +141,6 @@ def test_warn_selector_skips_warns_when_snapshot_gate_changed(monkeypatch, tmp_p
     db_path = repo / "kb" / "reports" / "review-store.sqlite"
     seed_warn_review(repo, db_path)
     make_gate(gate, extra="\nChanged gate text.\n")
-    monkeypatch.setattr(
-        warn_selector,
-        "git_blob_sha",
-        lambda *_args, **_kwargs: pytest.fail("warn selector should use snapshot hashes"),
-    )
 
     notes, stale_gates = warn_selector.scan_reviews(repo, db_path=db_path)
 

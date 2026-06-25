@@ -11,15 +11,22 @@ import sqlite3
 from pathlib import Path
 from typing import Sequence
 
-from commonplace.review.artifacts import write_manifest
+from commonplace.review.artifacts import result_paths_by_pair_id, write_manifest
 from commonplace.review.executor import (
     bundle_artifact_dir,
     finalize_run_from_pairs,
+    write_debug_log_artifact,
     write_artifacts_for_run,
     write_run_artifacts,
 )
 from commonplace.review.protocol.parser import parse_pair_bundle
-from commonplace.review.review_db import fail_review_run, load_review_pairs_for_run, load_review_run, mark_missing_pairs
+from commonplace.review.review_db import (
+    fail_review_run,
+    load_review_pairs_for_run,
+    load_review_run,
+    mark_missing_pairs,
+    set_run_artifact_paths,
+)
 from commonplace.review.review_metadata import iso_now
 
 
@@ -28,17 +35,25 @@ def parse_and_finalize_bundle_output(
     *,
     repo_root: Path,
     review_run_id: int,
-    raw_bundle_markdown: str,
+    bundle_markdown: str,
     expected_pairs: Sequence[tuple[str, str]],
     telemetry_json: str | None = None,
     debug_log: str | None = None,
 ) -> int:
     artifact_dir = bundle_artifact_dir(repo_root, review_run_id)
-    write_run_artifacts(artifact_dir=artifact_dir, bundle_markdown=raw_bundle_markdown)
+    artifact_dir_rel = artifact_dir.relative_to(repo_root).as_posix()
+    bundle_output_path = f"{artifact_dir_rel}/bundle-output.md"
+    write_run_artifacts(artifact_dir=artifact_dir, bundle_markdown=bundle_markdown)
+    write_debug_log_artifact(artifact_dir=artifact_dir, debug_log=debug_log)
+    set_run_artifact_paths(
+        conn,
+        review_run_id=review_run_id,
+        bundle_output_path=bundle_output_path,
+    )
 
     pairs = tuple(expected_pairs)
     try:
-        parsed = parse_pair_bundle(raw_bundle_markdown, expected_pairs=pairs)
+        parsed = parse_pair_bundle(bundle_markdown, expected_pairs=pairs)
     except ValueError as exc:
         mark_missing_pairs(conn, review_run_id=review_run_id)
         fail_review_run(
@@ -46,8 +61,6 @@ def parse_and_finalize_bundle_output(
             review_run_id=review_run_id,
             failure_reason=str(exc),
             completed_at=iso_now(),
-            raw_bundle_markdown=raw_bundle_markdown,
-            debug_log=debug_log,
             telemetry_json=telemetry_json,
         )
         raise
@@ -58,9 +71,7 @@ def parse_and_finalize_bundle_output(
         review_run_id=review_run_id,
         pairs=completed_pairs,
         parsed=parsed,
-        raw_bundle_markdown=raw_bundle_markdown if parsed.missing else None,
         telemetry_json=telemetry_json,
-        debug_log=debug_log,
     )
     review_run = load_review_run(conn, review_run_id=review_run_id)
     updated_pairs = load_review_pairs_for_run(conn, review_run_id=review_run_id)
@@ -72,15 +83,24 @@ def parse_and_finalize_bundle_output(
             parsed=parsed,
             packing=review_run.packing,
         )
-        artifact_dir_rel = artifact_dir.relative_to(repo_root).as_posix()
         write_manifest(
             repo_root=repo_root,
             artifact_dir=artifact_dir,
             review_run_id=review_run_id,
             packing=review_run.packing,
             prompt_path=f"{artifact_dir_rel}/prompt.md",
-            bundle_output_path=f"{artifact_dir_rel}/bundle-output.md",
+            bundle_output_path=bundle_output_path,
             pairs=updated_pairs,
             failure_reason=review_run.failure_reason,
+        )
+        set_run_artifact_paths(
+            conn,
+            review_run_id=review_run_id,
+            bundle_output_path=bundle_output_path,
+            result_paths=result_paths_by_pair_id(
+                artifact_dir_rel=artifact_dir_rel,
+                packing=review_run.packing,
+                pairs=updated_pairs,
+            ),
         )
     return completed_count

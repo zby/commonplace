@@ -20,11 +20,10 @@ def insert_completed_pair(
     model_partition: str,
     decision: str,
     rationale_markdown: str,
-    gate_sha: str,
-    reviewed_note_sha: str,
     reviewed_at: str,
     runner: str = "test-runner",
-    reviewed_note_commit: str | None = None,
+    reviewed_note_snapshot_id: int | None = None,
+    reviewed_gate_snapshot_id: int | None = None,
     started_at: str | None = None,
     review_kind: str = "full-review",
 ) -> int:
@@ -40,10 +39,9 @@ def insert_completed_pair(
             review_db.ReviewPairRequest(
                 note_path=note_path,
                 gate_path=gate_path,
-                gate_sha=gate_sha,
-                reviewed_note_sha=reviewed_note_sha,
-                reviewed_note_commit=reviewed_note_commit,
                 pair_ordinal=0,
+                reviewed_note_snapshot_id=reviewed_note_snapshot_id,
+                reviewed_gate_snapshot_id=reviewed_gate_snapshot_id,
                 review_kind=review_kind,
             )
         ],
@@ -68,10 +66,9 @@ def accept_pair(
     note_path: str,
     gate_id: str,
     model_partition: str,
-    accepted_note_sha: str,
-    accepted_gate_sha: str,
     accepted_at: str,
-    accepted_note_commit: str | None = None,
+    accepted_note_snapshot_id: int | None = None,
+    accepted_gate_snapshot_id: int | None = None,
     acceptance_kind: str = "full-review",
 ) -> int:
     return review_db.append_acceptance_event(
@@ -80,9 +77,8 @@ def accept_pair(
         gate_path=source_gate_path(gate_id),
         model_partition=model_partition,
         accepted_review_pair_id=review_pair_id,
-        accepted_note_sha=accepted_note_sha,
-        accepted_note_commit=accepted_note_commit,
-        accepted_gate_sha=accepted_gate_sha,
+        accepted_note_snapshot_id=accepted_note_snapshot_id,
+        accepted_gate_snapshot_id=accepted_gate_snapshot_id,
         accepted_at=accepted_at,
         acceptance_kind=acceptance_kind,
     )

@@ -6,7 +6,6 @@ Pure logic lives here; ack_trivial_note_changes.py is the thin CLI wrapper.
 from __future__ import annotations
 
 import re
-import subprocess
 from pathlib import Path
 from typing import Any
 
@@ -16,7 +15,6 @@ from commonplace.review.review_db import (
     load_current_acceptances,
     prepare_review_db,
 )
-from commonplace.review.review_metadata import file_text_at_commit, file_text_at_provenance
 from commonplace.review.review_model import normalize_model_partition
 from commonplace.review.review_target_selector import select_stale_gates
 
@@ -121,42 +119,6 @@ def has_only_unwatched_changes(
     return bool(changed_keys - watched_keys)
 
 
-def _load_previous_note_text(
-    repo_root: Path,
-    *,
-    note_path: str,
-    accepted_note_sha: str,
-    accepted_note_commit: str | None,
-    accepted_at: str | None,
-) -> str | None:
-    previous_text = file_text_at_provenance(
-        repo_root,
-        path=Path(note_path),
-        commit=accepted_note_commit,
-        blob_sha=accepted_note_sha,
-    )
-    if previous_text is None and accepted_at:
-        result = subprocess.run(
-            ["git", "log", "-1", f"--before={accepted_at}", "--format=%H", "--", note_path],
-            cwd=repo_root,
-            capture_output=True,
-            text=True,
-        )
-        commit = result.stdout.strip()
-        if not commit:
-            result = subprocess.run(
-                ["git", "log", "--reverse", f"--after={accepted_at}", "--format=%H", "--", note_path],
-                cwd=repo_root,
-                capture_output=True,
-                text=True,
-            )
-            lines = [line.strip() for line in result.stdout.splitlines() if line.strip()]
-            commit = lines[0] if lines else ""
-        if commit:
-            previous_text = file_text_at_commit(repo_root, commit, Path(note_path))
-    return previous_text
-
-
 def qualifying_pairs(
     repo_root: Path,
     *,
@@ -186,7 +148,6 @@ def qualifying_pairs(
     with connect(db_path) as conn:
         acceptances = load_current_acceptances(conn)
 
-    previous_text_cache: dict[tuple[str, str, str | None], str | None] = {}
     current_text_cache: dict[str, str] = {}
     gate_watches_cache: dict[str, set[str] | None] = {}
     pairs: list[str] = []
@@ -201,21 +162,7 @@ def qualifying_pairs(
         if watches is None:
             continue
 
-        if acceptance.accepted_note_text is not None:
-            previous_text = acceptance.accepted_note_text
-        elif acceptance.accepted_note_hash is not None:
-            previous_text = None
-        else:
-            previous_key = (record.note_path, acceptance.accepted_note_sha, acceptance.accepted_note_commit)
-            if previous_key not in previous_text_cache:
-                previous_text_cache[previous_key] = _load_previous_note_text(
-                    repo_root,
-                    note_path=record.note_path,
-                    accepted_note_sha=acceptance.accepted_note_sha,
-                    accepted_note_commit=acceptance.accepted_note_commit,
-                    accepted_at=acceptance.accepted_at,
-                )
-            previous_text = previous_text_cache[previous_key]
+        previous_text = acceptance.accepted_note_text
         if previous_text is None:
             continue
 

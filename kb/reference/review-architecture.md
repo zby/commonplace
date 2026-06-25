@@ -65,7 +65,7 @@ SQLite database, default location `kb/reports/review-store.sqlite` (override wit
 |---|---|---|
 | `review_runs` | Review invocations | review_run_id, model_partition, runner, status (running/completed/failed), packing, telemetry/debug/raw output |
 | `review_file_snapshots` | Role-neutral file snapshots for review inputs | snapshot_id, path, content_sha256, content_text |
-| `review_pairs` | Requested and completed pair outcomes | review_pair_id, review_run_id, note_path, gate_path, pair_status, decision, snapshot IDs, transitional provenance SHAs |
+| `review_pairs` | Requested and completed pair outcomes | review_pair_id, review_run_id, note_path, gate_path, pair_status, decision, snapshot IDs |
 | `acceptance_events` | Append-only acceptance log | acceptance_event_id, note_path, gate_path, model_partition, accepted_review_pair_id, snapshot IDs, acceptance_kind |
 
 **Key views:**
@@ -86,13 +86,7 @@ Encode and normalize model identifiers with reasoning effort levels.
 
 ### review_metadata.py
 
-Git-backed provenance tracking and metadata block management.
-
-**Provenance functions:**
-- `review_note_provenance(repo_root, path) -> (blob_sha, commit | None)` — get the review baseline for a note; `commit=None` means the baseline came from the current worktree
-- `committed_file_provenance(repo_root, path, *, kind) -> (blob_sha, commit)` — generic file provenance
-- `blob_sha_at_commit(repo_root, commit, path) -> str | None` — file SHA at a specific commit
-- `file_text_at_commit(repo_root, commit, path) -> str | None` — file content at a commit
+Legacy review-file metadata block helpers and historical Git utility functions. New review freshness does not use Git provenance; accepted baselines live in `review_file_snapshots`.
 
 **Metadata blocks:**
 - `parse_review_metadata(review_text) -> ReviewMetadata | None` — extract `<!-- REVIEW-METADATA ... -->` blocks
@@ -132,7 +126,7 @@ Database operations, decision parsing, and record management. The largest module
 
 **Lifecycle helpers:**
 - `attach_execution_data(conn, ...)` — persist telemetry, raw bundle markdown, and debug log
-- `record_and_finalize_run(conn, ...) -> int` — complete parsed pairs, rekey to the actual model, validate coverage, complete or fail the run, and append acceptance events for completed pairs
+- `record_and_finalize_run(conn, ...) -> int` — complete parsed pairs, validate coverage, complete or fail the run, and append acceptance events for completed pairs
 
 **Decision parsing (`parse_review_decision`):**
 
@@ -188,7 +182,7 @@ Every output block is keyed by the full (note, gate) pair:
 - `protocol/parser.py` — `parse_pair_bundle` raises on structural anomalies (nested/mismatched/unterminated/unexpected/duplicate/empty blocks) but reports missing expected pairs in `missing` instead of raising, so callers salvage the pairs that parsed.
 - `protocol/decisions.py` — decision-line parsing and footer canonicalization; grammar-independent, also used for historical rows.
 - `artifacts.py` — shared artifact naming and manifest writing. It is the only place that maps packing to parsed result filenames: note-packed runs use gate filenames, gate-packed runs use note filenames, and mixed fallback uses note-plus-gate filenames.
-- `executor.py` — `execute_batch(targets, gate_texts, …)` owns the shared lifecycle: render, one runner call, telemetry/model-mismatch handling, usage-exhaustion (`UsageExhausted`) and interrupt handling, parse, then per-run finalize or fail. Each run's `bundle-output.md` artifact and `raw_bundle_markdown` hold that run's canonical pair blocks; failed runs keep the raw batch output for debugging.
+- `executor.py` — `execute_batch(targets, gate_texts, …)` owns the shared lifecycle: render, one runner call, telemetry/model-mismatch handling, usage-exhaustion (`UsageExhausted`) and interrupt handling, parse, then per-run finalize or fail. Each run writes `bundle-output.md`, writes per-pair result files, writes `debug.log` when runner diagnostics exist, and stores `review_runs.bundle_output_path` plus `review_pairs.result_path` in the DB.
 
 ### Packing callers
 
@@ -198,11 +192,11 @@ Every output block is keyed by the full (note, gate) pair:
   1. `commonplace-create-review-run --with-prompt` creates the run, writes the canonical prompt to `kb/reports/bundle-reviews/review-run-{id}/prompt.md`, writes `MANIFEST.json`, and returns `prompt_path`, `bundle_output_path`, and `manifest_path` in the JSON payload
   2. the prompt is rendered from the snapshots attached to the created pair rows
   3. the current agent reads `prompt_path`, follows it, and writes `kb/reports/bundle-reviews/review-run-{id}/bundle-output.md`
-  4. `commonplace-ingest-bundle-output` parses that artifact, finalizes through `record_and_finalize_run` (single-run ingest is all-or-nothing), writes packing-derived parsed result files, and refreshes `MANIFEST.json`
+  4. `commonplace-ingest-bundle-output` parses that artifact, finalizes through `record_and_finalize_run` (single-run ingest is all-or-nothing), writes packing-derived parsed result files, stores their paths, and refreshes `MANIFEST.json`
 - **External-executor batch path (`batch.py`)** — deterministic ends for any orchestrator that owns its own fan-out (a live agent reviewing many pairs, or a harness workflow spawning sub-agents per batch); decision record: [ADR 030](./adr/030-harness-facing-seams-batch-endpoints-and-runner-adapters.md).
   1. `commonplace-prepare-review-batch <note>::<gate>... --runner <label> --model <partition>` creates one note-packed or gate-packed run for the pair set (inapplicable gates skipped and reported; missing notes/gates fatal) and writes the canonical prompt from captured snapshots under `kb/reports/bundle-reviews/review-run-{review_run_id}/`; returns `review_run_id`, pair metadata, skipped pairs, `prompt_path`, `bundle_output_path`, and `manifest_path` as JSON
   2. the executor follows the prompt and writes `bundle_output_path`
-  3. `commonplace-ingest-batch-output --review-run-id <id> --input-file <path>` finalizes with pair salvage; JSON result, exit 1 if the run failed.
+  3. `commonplace-ingest-batch-output --review-run-id <id> --input-file <path>` finalizes with pair salvage, stores result paths, and returns JSON; exit 1 if the run failed.
 
 ### runners/ — harness CLI adapters
 
@@ -224,13 +218,13 @@ Identifies (note, gate) pairs needing review by comparing current vs. accepted p
 | `note-changed` | Current note content hash differs from the accepted note baseline |
 | `gate-changed` | Current gate content hash differs from the accepted gate baseline |
 
-For snapshot-backed acceptances, the selector compares SHA-256 over current file text with the accepted snapshot hash and generates diffs from accepted snapshot text. Legacy rows without snapshots continue to use the old Git-blob SHA columns until the offline backfill/drop cutover.
+The selector compares SHA-256 over current file text with the accepted snapshot hash and generates diffs from accepted snapshot text. Rows whose migrated baseline has no accepted snapshots report `missing-review` with diff unavailable.
 
 Also provides:
 - `ack_pairs(repo_root, pairs, model)` — batch-acknowledge pairs with `trivial-change-ack`
 - `list_reviewable_notes(repo_root) / list_current_notes(repo_root)` — top-level `*.md` notes across the configured scan roots (`kb/notes/` and `kb/reference/`), non-recursive, skipping indexes and files without frontmatter
 - explicit note-scope expansion for files and directories; directory operands expand direct child `*.md` files only and skip indexes, files without frontmatter, and content under `types/` directories
-- `note_diff_since()` — unified diff between accepted and current note
+- `note_diff_from_text()` — unified diff between accepted snapshot text and current note text
 
 ### resolve_gates.py
 
@@ -239,7 +233,7 @@ Also provides:
 
 ### warn_selector.py
 
-Query effective completed review pairs with `decision="warn"`, skip stale gate revisions, and extract actionable findings from the `### Findings` section. Gate staleness uses the accepted gate snapshot hash when one is available, with legacy gate SHA fallback for rows not yet backfilled.
+Query effective completed review pairs with `decision="warn"`, skip stale gate revisions, and extract actionable findings from the `### Findings` section. Gate staleness uses the accepted gate snapshot hash.
 
 ---
 

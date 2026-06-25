@@ -30,8 +30,6 @@ def record_and_finalize_run(
     review_pairs: Sequence[PendingReviewPair] | None = None,
     completed_at: str | None = None,
     telemetry_json: str | None = None,
-    raw_bundle_markdown: str | None = None,
-    debug_log: str | None = None,
 ) -> int:
     review_run = review_db.load_review_run(conn, review_run_id=review_run_id)
     if review_run is None:
@@ -45,8 +43,6 @@ def record_and_finalize_run(
             conn,
             review_run_id=review_run_id,
             telemetry_json=telemetry_json,
-            raw_bundle_markdown=raw_bundle_markdown,
-            debug_log=debug_log,
         )
 
         if review_pairs is not None:
@@ -66,9 +62,6 @@ def record_and_finalize_run(
                 gate_path=pair.gate_path,
                 model_partition=review_run.model_partition,
                 accepted_review_pair_id=pair.review_pair_id,
-                accepted_note_sha=pair.reviewed_note_sha,
-                accepted_note_commit=pair.reviewed_note_commit,
-                accepted_gate_sha=pair.gate_sha,
                 accepted_note_snapshot_id=pair.reviewed_note_snapshot_id,
                 accepted_gate_snapshot_id=pair.reviewed_gate_snapshot_id,
                 accepted_at=finished_at,
@@ -99,8 +92,6 @@ def complete_pairs_and_finalize_run(
     review_pairs: Sequence[PendingReviewPair],
     completed_at: str | None = None,
     telemetry_json: str | None = None,
-    raw_bundle_markdown: str | None = None,
-    debug_log: str | None = None,
 ) -> int:
     return record_and_finalize_run(
         conn,
@@ -108,6 +99,4 @@ def complete_pairs_and_finalize_run(
         review_pairs=review_pairs,
         completed_at=completed_at,
         telemetry_json=telemetry_json,
-        raw_bundle_markdown=raw_bundle_markdown,
-        debug_log=debug_log,
     )

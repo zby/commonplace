@@ -149,16 +149,20 @@ def test_prepare_review_batch_creates_one_gate_packed_run_and_prompt(tmp_path: P
 
     with sqlite3.connect(db_path) as conn:
         conn.row_factory = sqlite3.Row
-        run_rows = conn.execute("SELECT review_run_id, status, runner, packing FROM review_runs").fetchall()
+        run_rows = conn.execute(
+            "SELECT review_run_id, status, runner, packing, bundle_output_path FROM review_runs"
+        ).fetchall()
         assert [(row["review_run_id"], row["status"], row["runner"], row["packing"]) for row in run_rows] == [
             (review_run_id, "running", "live-agent", "gate")
         ]
+        assert run_rows[0]["bundle_output_path"] == payload["bundle_output_path"]
         pair_rows = conn.execute(
             """
             SELECT
                 note_path,
                 gate_path,
                 pair_status,
+                result_path,
                 reviewed_note_snapshot_id,
                 reviewed_gate_snapshot_id
             FROM review_pairs
@@ -169,6 +173,7 @@ def test_prepare_review_batch_creates_one_gate_packed_run_and_prompt(tmp_path: P
             ("kb/notes/first.md", GATE_PATH, "pending"),
             ("kb/notes/second.md", GATE_PATH, "pending"),
         ]
+        assert [row["result_path"] for row in pair_rows] == [pair["result_path"] for pair in manifest["pairs"]]
         assert all(row["reviewed_note_snapshot_id"] is not None for row in pair_rows)
         assert all(row["reviewed_gate_snapshot_id"] is not None for row in pair_rows)
 
@@ -204,15 +209,28 @@ def test_ingest_batch_output_finalizes_all_pairs(tmp_path: Path) -> None:
 
     with sqlite3.connect(db_path) as conn:
         conn.row_factory = sqlite3.Row
-        status = conn.execute("SELECT status FROM review_runs").fetchone()["status"]
-        assert status == "completed"
+        run = conn.execute("SELECT status, bundle_output_path FROM review_runs").fetchone()
+        assert run["status"] == "completed"
+        assert run["bundle_output_path"] == prepared["bundle_output_path"]
         decisions = [
-            (row["note_path"], row["decision"], row["pair_status"])
-            for row in conn.execute("SELECT note_path, decision, pair_status FROM review_pairs ORDER BY note_path")
+            (row["note_path"], row["decision"], row["pair_status"], row["result_path"])
+            for row in conn.execute(
+                "SELECT note_path, decision, pair_status, result_path FROM review_pairs ORDER BY note_path"
+            )
         ]
         assert decisions == [
-            ("kb/notes/first.md", "warn", "completed"),
-            ("kb/notes/second.md", "pass", "completed"),
+            (
+                "kb/notes/first.md",
+                "warn",
+                "completed",
+                f"kb/reports/bundle-reviews/review-run-{review_run_id}/first.md",
+            ),
+            (
+                "kb/notes/second.md",
+                "pass",
+                "completed",
+                f"kb/reports/bundle-reviews/review-run-{review_run_id}/second.md",
+            ),
         ]
         acceptance_count = conn.execute("SELECT COUNT(*) FROM acceptance_events").fetchone()[0]
         assert acceptance_count == 2

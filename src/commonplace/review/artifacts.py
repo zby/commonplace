@@ -64,6 +64,25 @@ def result_path(
     )
 
 
+def result_paths_by_pair_id(
+    *,
+    artifact_dir_rel: str,
+    packing: str,
+    pairs: Sequence[ReviewPairForManifest],
+) -> dict[int, str]:
+    all_note_paths = [pair.note_path for pair in pairs]
+    return {
+        pair.review_pair_id: result_path(
+            artifact_dir_rel=artifact_dir_rel,
+            packing=packing,
+            note_path=pair.note_path,
+            gate_path=pair.gate_path,
+            all_note_paths=all_note_paths,
+        )
+        for pair in pairs
+    }
+
+
 def write_pair_result_files(
     *,
     artifact_dir: Path,
@@ -98,8 +117,12 @@ def write_manifest(
     skipped: Sequence[SkippedPairForManifest] | None = None,
     failure_reason: str | None = None,
 ) -> str:
-    all_note_paths = [pair.note_path for pair in pairs]
     artifact_dir_rel = artifact_dir.relative_to(repo_root).as_posix()
+    result_paths = result_paths_by_pair_id(
+        artifact_dir_rel=artifact_dir_rel,
+        packing=packing,
+        pairs=pairs,
+    )
     payload_pairs: list[dict[str, object]] = []
     for pair in pairs:
         item: dict[str, object] = {
@@ -107,13 +130,7 @@ def write_manifest(
             "note_path": pair.note_path,
             "gate_path": pair.gate_path,
             "status": pair.pair_status,
-            "result_path": result_path(
-                artifact_dir_rel=artifact_dir_rel,
-                packing=packing,
-                note_path=pair.note_path,
-                gate_path=pair.gate_path,
-                all_note_paths=all_note_paths,
-            ),
+            "result_path": result_paths[pair.review_pair_id],
         }
         if failure_reason is not None:
             item["failure_reason"] = failure_reason

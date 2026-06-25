@@ -17,9 +17,8 @@ from pathlib import Path
 
 from commonplace.lib import frontmatter
 from commonplace.lib.note_parser import find_markdown_links_with_text
-from commonplace.review.artifacts import write_manifest, write_pair_result_files
+from commonplace.review.artifacts import result_paths_by_pair_id, write_manifest, write_pair_result_files
 from commonplace.review.finalization import record_and_finalize_run
-from commonplace.review.protocol.format import PAIR_END_TEMPLATE, PAIR_START_TEMPLATE
 from commonplace.review.protocol.parser import ParsedPairBundle, parse_pair_bundle
 from commonplace.review.protocol.prompt import NoteReviewTarget, render_pairs_prompt
 from commonplace.review.review_db import (
@@ -29,6 +28,8 @@ from commonplace.review.review_db import (
     fail_review_run,
     load_review_pairs_for_run,
     load_review_run,
+    review_run_artifact_dir_rel,
+    set_run_artifact_paths,
 )
 from commonplace.review.review_metadata import iso_now
 from commonplace.review.review_model import build_model_partition
@@ -36,7 +37,6 @@ from commonplace.review.runners import run_prompt
 
 
 URL_SCHEME_RE = re.compile(r"^[a-z]+://", re.IGNORECASE)
-BUNDLE_ARTIFACTS_ROOT = Path("kb/reports/bundle-reviews")
 USAGE_EXHAUSTION_TEXT = "out of extra usage"
 
 
@@ -68,7 +68,12 @@ class RunPairs:
 
 
 def bundle_artifact_dir(repo_root: Path, review_run_id: int) -> Path:
-    return repo_root / BUNDLE_ARTIFACTS_ROOT / f"review-run-{review_run_id}"
+    return repo_root / review_run_artifact_dir_rel(review_run_id)
+
+
+def bundle_output_path_for_run(repo_root: Path, review_run_id: int) -> str:
+    artifact_dir = bundle_artifact_dir(repo_root, review_run_id)
+    return f"{artifact_dir.relative_to(repo_root).as_posix()}/bundle-output.md"
 
 
 def write_run_artifacts(
@@ -78,6 +83,17 @@ def write_run_artifacts(
 ) -> None:
     artifact_dir.mkdir(parents=True, exist_ok=True)
     (artifact_dir / "bundle-output.md").write_text(bundle_markdown, encoding="utf-8")
+
+
+def write_debug_log_artifact(
+    *,
+    artifact_dir: Path,
+    debug_log: str | None,
+) -> None:
+    if not debug_log:
+        return
+    artifact_dir.mkdir(parents=True, exist_ok=True)
+    (artifact_dir / "debug.log").write_text(debug_log, encoding="utf-8")
 
 
 def combine_logs(stdout: str, stderr: str) -> str | None:
@@ -170,42 +186,12 @@ def prepare_note_target(
     )
 
 
-def assemble_run_document(
-    *,
-    review_run_id: int,
-    pairs: tuple[tuple[str, str], ...],
-    canonical_texts: dict[tuple[str, str], str],
-) -> tuple[str, dict[str, str]]:
-    """Build the per-run canonical bundle document and pair result texts."""
-    lines = [
-        "# Review Bundle",
-        "",
-        f"Review run id: {review_run_id}",
-        "",
-    ]
-    pair_reviews: dict[str, str] = {}
-    for note_path, gate_path in pairs:
-        review_text = canonical_texts[(note_path, gate_path)]
-        pair_reviews[f"{note_path} :: {gate_path}"] = review_text
-        lines.extend(
-            [
-                PAIR_START_TEMPLATE.format(note_path=note_path, gate_path=gate_path),
-                review_text.rstrip("\n"),
-                PAIR_END_TEMPLATE.format(note_path=note_path, gate_path=gate_path),
-                "",
-            ]
-        )
-    return "\n".join(lines), pair_reviews
-
-
 def fail_running_review_runs(
     *,
     db_path: Path,
     review_run_ids: list[int],
     failure_reason: str,
-    debug_log: str | None = None,
     telemetry_json: str | None = None,
-    raw_bundle_markdown: str | None = None,
 ) -> None:
     if not review_run_ids:
         return
@@ -226,8 +212,6 @@ def fail_running_review_runs(
                 conn,
                 review_run_id=int(row["review_run_id"]),
                 telemetry_json=telemetry_json,
-                raw_bundle_markdown=raw_bundle_markdown,
-                debug_log=debug_log,
             )
             fail_review_run(
                 conn,
@@ -244,17 +228,10 @@ def finalize_run_from_pairs(
     review_run_id: int,
     pairs: tuple[tuple[str, str], ...],
     parsed: ParsedPairBundle,
-    raw_bundle_markdown: str | None = None,
     telemetry_json: str | None = None,
-    debug_log: str | None = None,
 ) -> int:
     """Finalize one run from a parsed pair bundle. Raises ValueError on failure
     (the run is failed in the DB before raising)."""
-    run_document, _ = assemble_run_document(
-        review_run_id=review_run_id,
-        pairs=pairs,
-        canonical_texts=parsed.canonical_texts,
-    )
     review_pairs = [
         PendingReviewPair(
             note_path=note_path,
@@ -269,8 +246,6 @@ def finalize_run_from_pairs(
         review_run_id=review_run_id,
         review_pairs=review_pairs,
         telemetry_json=telemetry_json,
-        raw_bundle_markdown=raw_bundle_markdown or run_document,
-        debug_log=debug_log,
     )
 
 
@@ -282,13 +257,7 @@ def write_artifacts_for_run(
     parsed: ParsedPairBundle,
     packing: str,
 ) -> None:
-    run_document, _ = assemble_run_document(
-        review_run_id=review_run_id,
-        pairs=pairs,
-        canonical_texts=parsed.canonical_texts,
-    )
     artifact_dir = bundle_artifact_dir(repo_root, review_run_id)
-    write_run_artifacts(artifact_dir=artifact_dir, bundle_markdown=run_document)
     write_pair_result_files(
         artifact_dir=artifact_dir,
         packing=packing,
@@ -339,9 +308,20 @@ def execute_batch(
         artifact_dir=bundle_artifact_dir(repo_root, run_ids[0]),
         bundle_markdown=raw_output,
     )
+    with connect(db_path) as conn:
+        set_run_artifact_paths(
+            conn,
+            review_run_id=run_ids[0],
+            bundle_output_path=bundle_output_path_for_run(repo_root, run_ids[0]),
+        )
+        conn.commit()
 
     telemetry_json = serialize_telemetry(result.telemetry)
     debug_log = combine_logs(result.stdout, result.stderr)
+    write_debug_log_artifact(
+        artifact_dir=bundle_artifact_dir(repo_root, run_ids[0]),
+        debug_log=debug_log,
+    )
     actual_model_partition = model_partition_from_telemetry(result.telemetry)
     if actual_model_partition is not None and actual_model_partition != model_partition:
         print(
@@ -358,9 +338,7 @@ def execute_batch(
             db_path=db_path,
             review_run_ids=run_ids,
             failure_reason="runner reported usage exhausted",
-            debug_log=debug_log,
             telemetry_json=telemetry_json,
-            raw_bundle_markdown=raw_output,
         )
         raise UsageExhausted()
 
@@ -370,9 +348,7 @@ def execute_batch(
             db_path=db_path,
             review_run_ids=run_ids,
             failure_reason=reason,
-            debug_log=debug_log,
             telemetry_json=telemetry_json,
-            raw_bundle_markdown=raw_output,
         )
         return BatchOutcome(
             completed=[],
@@ -388,9 +364,7 @@ def execute_batch(
             db_path=db_path,
             review_run_ids=run_ids,
             failure_reason=str(exc),
-            debug_log=debug_log,
             telemetry_json=telemetry_json,
-            raw_bundle_markdown=raw_output,
         )
         return BatchOutcome(completed=[], failed=[(rid, str(exc)) for rid in run_ids], runner_returncode=0)
 
@@ -400,9 +374,7 @@ def execute_batch(
         db_path=db_path,
         run_pairs=run_pairs,
         parsed=parsed,
-        raw_output=raw_output,
         telemetry_json=telemetry_json,
-        debug_log=debug_log,
     )
     return BatchOutcome(completed=completed, failed=failed, runner_returncode=0)
 
@@ -413,18 +385,14 @@ def finalize_runs_from_parsed(
     db_path: Path,
     run_pairs: list[RunPairs],
     parsed: ParsedPairBundle,
-    raw_output: str | None = None,
     telemetry_json: str | None = None,
-    debug_log: str | None = None,
 ) -> tuple[list[int], list[tuple[int, str]]]:
     """Finalize parsed runs and write each run's canonical artifacts."""
     completed, failed = finalize_run_records_from_parsed(
         db_path=db_path,
         run_pairs=run_pairs,
         parsed=parsed,
-        raw_output=raw_output,
         telemetry_json=telemetry_json,
-        debug_log=debug_log,
     )
     with connect(db_path) as conn:
         rows_by_run = {
@@ -452,16 +420,29 @@ def finalize_runs_from_parsed(
         )
         artifact_dir = bundle_artifact_dir(repo_root, run.review_run_id)
         artifact_dir_rel = artifact_dir.relative_to(repo_root).as_posix()
+        bundle_output_path = f"{artifact_dir_rel}/bundle-output.md"
         write_manifest(
             repo_root=repo_root,
             artifact_dir=artifact_dir,
             review_run_id=run.review_run_id,
             packing=review_run.packing,
             prompt_path=f"{artifact_dir_rel}/prompt.md",
-            bundle_output_path=f"{artifact_dir_rel}/bundle-output.md",
+            bundle_output_path=bundle_output_path,
             pairs=updated_pairs,
             failure_reason=review_run.failure_reason,
         )
+        with connect(db_path) as conn:
+            set_run_artifact_paths(
+                conn,
+                review_run_id=run.review_run_id,
+                bundle_output_path=bundle_output_path,
+                result_paths=result_paths_by_pair_id(
+                    artifact_dir_rel=artifact_dir_rel,
+                    packing=review_run.packing,
+                    pairs=updated_pairs,
+                ),
+            )
+            conn.commit()
     return completed, failed
 
 
@@ -483,16 +464,13 @@ def finalize_run_records_from_parsed(
     db_path: Path,
     run_pairs: list[RunPairs],
     parsed: ParsedPairBundle,
-    raw_output: str | None = None,
     telemetry_json: str | None = None,
-    debug_log: str | None = None,
 ) -> tuple[list[int], list[tuple[int, str]]]:
     """Finalize parsed run records without writing filesystem artifacts."""
     completed: list[int] = []
     failed: list[tuple[int, str]] = []
     for run in run_pairs:
         completed_pairs = tuple(pair for pair in run.pairs if pair not in set(parsed.missing))
-        has_missing = len(completed_pairs) != len(run.pairs)
         with connect(db_path) as conn:
             try:
                 finalize_run_from_pairs(
@@ -500,9 +478,7 @@ def finalize_run_records_from_parsed(
                     review_run_id=run.review_run_id,
                     pairs=completed_pairs,
                     parsed=parsed,
-                    raw_bundle_markdown=raw_output if has_missing else None,
                     telemetry_json=telemetry_json,
-                    debug_log=debug_log,
                 )
             except ValueError as exc:
                 conn.commit()

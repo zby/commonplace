@@ -135,26 +135,30 @@ def test_run_gate_sweep_reviews_multiple_notes_in_one_batch(monkeypatch, tmp_pat
     with sqlite3.connect(db_path) as conn:
         conn.row_factory = sqlite3.Row
         run_rows = conn.execute(
-            "SELECT review_run_id, status, packing, raw_bundle_markdown FROM review_runs"
+            "SELECT review_run_id, status, packing, bundle_output_path FROM review_runs"
         ).fetchall()
         assert [(row["status"], row["packing"]) for row in run_rows] == [("completed", "gate")]
-        assert run_rows[0]["raw_bundle_markdown"].count("=== PAIR REVIEW START:") == 2
 
         pair_rows = conn.execute(
-            "SELECT note_path, decision, rationale_markdown, pair_status FROM review_pairs ORDER BY note_path"
+            "SELECT note_path, decision, result_path, pair_status FROM review_pairs ORDER BY note_path"
         ).fetchall()
         assert [(row["note_path"], row["decision"], row["pair_status"]) for row in pair_rows] == [
             ("kb/notes/first.md", "warn", "completed"),
             ("kb/notes/second.md", "pass", "completed"),
         ]
-        assert pair_rows[0]["rationale_markdown"] == "Needs a definition for Alpha.\n\n## Result: WARN\n"
-        assert pair_rows[1]["rationale_markdown"] == "No undefined terms found.\n\n## Result: PASS\n"
 
         acceptance_count = conn.execute("SELECT COUNT(*) FROM acceptance_events").fetchone()[0]
         assert acceptance_count == 2
 
     artifact_dir = repo / "kb" / "reports" / "bundle-reviews" / f"review-run-{run_rows[0]['review_run_id']}"
-    assert (artifact_dir / "bundle-output.md").read_text(encoding="utf-8") == run_rows[0]["raw_bundle_markdown"]
+    assert run_rows[0]["bundle_output_path"] == f"kb/reports/bundle-reviews/review-run-{run_rows[0]['review_run_id']}/bundle-output.md"
+    assert (artifact_dir / "bundle-output.md").read_text(encoding="utf-8").count("=== PAIR REVIEW START:") == 2
+    assert (repo / pair_rows[0]["result_path"]).read_text(encoding="utf-8") == (
+        "Needs a definition for Alpha.\n\n## Result: WARN\n"
+    )
+    assert (repo / pair_rows[1]["result_path"]).read_text(encoding="utf-8") == (
+        "No undefined terms found.\n\n## Result: PASS\n"
+    )
 
 
 def test_run_gate_sweep_salvages_parsed_notes_and_fails_missing_ones(monkeypatch, tmp_path: Path) -> None:
@@ -195,16 +199,24 @@ def test_run_gate_sweep_salvages_parsed_notes_and_fails_missing_ones(monkeypatch
     with sqlite3.connect(db_path) as conn:
         conn.row_factory = sqlite3.Row
         run_row = conn.execute(
-            "SELECT status, failure_reason, raw_bundle_markdown FROM review_runs"
+            "SELECT review_run_id, status, failure_reason, bundle_output_path FROM review_runs"
         ).fetchone()
         assert run_row["status"] == "failed"
         assert f"missing pairs: kb/notes/second.md :: {GATE_PATH}" in run_row["failure_reason"]
-        assert f"kb/notes/first.md :: {GATE_PATH}" in run_row["raw_bundle_markdown"]
 
-        pair_rows = conn.execute("SELECT note_path, pair_status, decision FROM review_pairs ORDER BY note_path").fetchall()
+        pair_rows = conn.execute(
+            "SELECT note_path, pair_status, decision, result_path FROM review_pairs ORDER BY note_path"
+        ).fetchall()
         assert [(row["note_path"], row["pair_status"], row["decision"]) for row in pair_rows] == [
             ("kb/notes/first.md", "completed", "warn"),
             ("kb/notes/second.md", "missing", None),
         ]
         acceptance_count = conn.execute("SELECT COUNT(*) FROM acceptance_events").fetchone()[0]
         assert acceptance_count == 1
+
+    artifact_dir = repo / "kb" / "reports" / "bundle-reviews" / f"review-run-{run_row['review_run_id']}"
+    assert f"kb/notes/first.md :: {GATE_PATH}" in (repo / run_row["bundle_output_path"]).read_text(encoding="utf-8")
+    assert (repo / pair_rows[0]["result_path"]).read_text(encoding="utf-8") == (
+        "Needs a definition for Alpha.\n\n## Result: WARN\n"
+    )
+    assert not (artifact_dir / "second.md").exists()

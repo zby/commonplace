@@ -150,13 +150,15 @@ def test_create_review_run_with_prompt_creates_one_note_packed_run(tmp_path: Pat
 
     with sqlite3.connect(db_path) as conn:
         conn.row_factory = sqlite3.Row
-        run = conn.execute("SELECT status, runner, packing FROM review_runs").fetchone()
+        run = conn.execute("SELECT status, runner, packing, bundle_output_path FROM review_runs").fetchone()
         assert (run["status"], run["runner"], run["packing"]) == ("running", "live-agent", "note")
+        assert run["bundle_output_path"] == payload["bundle_output_path"]
         pair_rows = conn.execute(
             """
             SELECT
                 rp.gate_path,
                 rp.pair_status,
+                rp.result_path,
                 rp.reviewed_note_snapshot_id,
                 rp.reviewed_gate_snapshot_id,
                 note_snapshot.content_text AS note_text,
@@ -173,6 +175,7 @@ def test_create_review_run_with_prompt_creates_one_note_packed_run(tmp_path: Pat
             (GATE_ONE_PATH, "pending"),
             (GATE_TWO_PATH, "pending"),
         ]
+        assert [row["result_path"] for row in pair_rows] == [pair["result_path"] for pair in manifest["pairs"]]
         assert {row["reviewed_note_snapshot_id"] for row in pair_rows} != {None}
         assert all(row["reviewed_gate_snapshot_id"] is not None for row in pair_rows)
         assert all("Term Alpha appears before its definition." in row["note_text"] for row in pair_rows)
@@ -387,7 +390,7 @@ def test_run_review_bundle_parse_failure_persists_raw_bundle(monkeypatch, tmp_pa
     assert result.returncode == 1
     with sqlite3.connect(db_path) as conn:
         conn.row_factory = sqlite3.Row
-        run = conn.execute("SELECT status, raw_bundle_markdown, failure_reason FROM review_runs").fetchone()
+        run = conn.execute("SELECT status, bundle_output_path, failure_reason FROM review_runs").fetchone()
         assert run["status"] == "failed"
-        assert run["raw_bundle_markdown"] == "not a pair bundle\n"
+        assert (repo / run["bundle_output_path"]).read_text(encoding="utf-8") == "not a pair bundle\n"
         assert "missing" in run["failure_reason"] or "pair" in run["failure_reason"]

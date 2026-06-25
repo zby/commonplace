@@ -1,17 +1,32 @@
 from __future__ import annotations
 
-from hashlib import sha256
+from hashlib import sha1, sha256
 from importlib import resources
 import sqlite3
 from pathlib import Path
 
 import pytest
 
+from commonplace.review.artifacts import encode_stage_filename
 from commonplace.review import review_db
 from test.commonplace.review.pair_helpers import accept_pair, insert_completed_pair
 
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
+EXPECTED_SCHEMA_MIGRATIONS = {
+    review_db.BASELINE_SCHEMA_MIGRATION,
+    "review-file-snapshots-v1",
+    "review-model-partition-v1",
+    "review-gate-path-v1",
+    "review-snapshot-only-freshness-v1",
+    "review-artifact-paths-v1",
+    "review-artifact-body-files-v1",
+}
+
+
+def legacy_git_blob_sha(content: str) -> str:
+    raw = content.encode("utf-8")
+    return sha1(b"blob " + str(len(raw)).encode("ascii") + b"\0" + raw).hexdigest()
 
 
 def test_ensure_db_does_not_mutate_existing_acceptance_event_schema(tmp_path: Path) -> None:
@@ -63,9 +78,6 @@ def test_ensure_db_initializes_schema_that_can_store_current_acceptance(tmp_path
             model_partition="opus-4-6",
             decision="pass",
             rationale_markdown="ok",
-            gate_sha="gate-sha",
-            reviewed_note_sha="note-sha",
-            reviewed_note_commit="note-commit",
             reviewed_at="2026-04-10T10:01:00+02:00",
         )
         accept_pair(
@@ -74,17 +86,12 @@ def test_ensure_db_initializes_schema_that_can_store_current_acceptance(tmp_path
             note_path="kb/notes/fresh.md",
             gate_id="semantic/internal-consistency",
             model_partition="opus-4-6",
-            accepted_note_sha="note-sha",
-            accepted_note_commit="note-commit",
-            accepted_gate_sha="gate-sha",
             accepted_at="2026-04-10T10:02:00+02:00",
             acceptance_kind="full-review",
         )
         view_row = conn.execute(
             """
             SELECT
-                accepted_note_sha,
-                accepted_gate_sha,
                 accepted_note_snapshot_id,
                 accepted_gate_snapshot_id,
                 accepted_note_hash,
@@ -95,65 +102,134 @@ def test_ensure_db_initializes_schema_that_can_store_current_acceptance(tmp_path
         ).fetchone()
 
     assert view_row is not None
-    assert view_row["accepted_note_sha"] == "note-sha"
-    assert view_row["accepted_gate_sha"] == "gate-sha"
     assert view_row["accepted_note_snapshot_id"] is None
     assert view_row["accepted_gate_snapshot_id"] is None
     assert view_row["accepted_note_hash"] is None
     assert view_row["accepted_gate_hash"] is None
-    assert set(migration_names(db_path)) == {
-        review_db.BASELINE_SCHEMA_MIGRATION,
-        "review-file-snapshots-v1",
-        "review-model-partition-v1",
-        "review-gate-path-v1",
-    }
+    assert set(migration_names(db_path)) == EXPECTED_SCHEMA_MIGRATIONS
 
 
-def test_ensure_db_migrates_existing_acceptances_without_losing_current_view(tmp_path: Path) -> None:
-    db_path = tmp_path / "review-store.sqlite"
+def test_ensure_db_backfills_still_fresh_legacy_acceptance_snapshots(tmp_path: Path) -> None:
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    note_text = "legacy note\n"
+    gate_text = "legacy gate\n"
+    note = repo / "kb" / "notes" / "legacy.md"
+    gate = repo / "kb" / "instructions" / "review-gates" / "semantic" / "internal-consistency.md"
+    note.parent.mkdir(parents=True)
+    gate.parent.mkdir(parents=True)
+    note.write_text(note_text, encoding="utf-8")
+    gate.write_text(gate_text, encoding="utf-8")
+    db_path = repo / "kb" / "reports" / "review-store.sqlite"
+    db_path.parent.mkdir(parents=True)
     schema_text = (resources.files("commonplace.review") / "review-schema.sql").read_text(encoding="utf-8")
 
     with sqlite3.connect(db_path) as conn:
         conn.executescript(schema_text)
+        conn.executescript(
+            """
+            ALTER TABLE review_pairs ADD COLUMN gate_sha TEXT;
+            ALTER TABLE review_pairs ADD COLUMN reviewed_note_sha TEXT;
+            ALTER TABLE review_pairs ADD COLUMN reviewed_note_commit TEXT;
+            ALTER TABLE review_pairs ADD COLUMN rationale_markdown TEXT;
+            ALTER TABLE review_pairs ADD COLUMN evidence_json TEXT;
+            ALTER TABLE acceptance_events ADD COLUMN accepted_note_sha TEXT;
+            ALTER TABLE acceptance_events ADD COLUMN accepted_note_commit TEXT;
+            ALTER TABLE acceptance_events ADD COLUMN accepted_gate_sha TEXT;
+            ALTER TABLE review_runs ADD COLUMN raw_bundle_markdown TEXT;
+            ALTER TABLE review_runs ADD COLUMN debug_log TEXT;
+            """
+        )
         conn.commit()
 
     with review_db.connect(db_path) as conn:
-        review_pair_id = insert_completed_pair(
-            conn,
-            note_path="kb/notes/legacy.md",
-            gate_id="semantic/internal-consistency",
-            model_partition="opus-4-6",
-            decision="pass",
-            rationale_markdown="ok",
-            gate_sha="legacy-gate-sha",
-            reviewed_note_sha="legacy-note-sha",
-            reviewed_note_commit="legacy-note-commit",
-            reviewed_at="2026-04-10T10:01:00+02:00",
+        conn.execute(
+            """
+            INSERT INTO review_runs (
+                review_run_id, model_partition, runner, started_at, status, packing
+            ) VALUES (1, 'opus-4-6', 'test-runner', '2026-04-10T10:00:00+02:00', 'completed', 'note')
+            """
         )
-        accept_pair(
-            conn,
-            review_pair_id=review_pair_id,
-            note_path="kb/notes/legacy.md",
-            gate_id="semantic/internal-consistency",
-            model_partition="opus-4-6",
-            accepted_note_sha="legacy-note-sha",
-            accepted_note_commit="legacy-note-commit",
-            accepted_gate_sha="legacy-gate-sha",
-            accepted_at="2026-04-10T10:02:00+02:00",
-            acceptance_kind="full-review",
+        conn.execute(
+            """
+            INSERT INTO review_pairs (
+                review_pair_id,
+                review_run_id,
+                note_path,
+                gate_path,
+                model_partition,
+                pair_ordinal,
+                pair_status,
+                decision,
+                rationale_markdown,
+                gate_sha,
+                reviewed_note_sha,
+                reviewed_note_commit,
+                reviewed_at,
+                review_kind
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """,
+            (
+                1,
+                1,
+                "kb/notes/legacy.md",
+                "kb/instructions/review-gates/semantic/internal-consistency.md",
+                "opus-4-6",
+                0,
+                "completed",
+                "pass",
+                "ok",
+                legacy_git_blob_sha(gate_text),
+                legacy_git_blob_sha(note_text),
+                "legacy-note-commit",
+                "2026-04-10T10:01:00+02:00",
+                "full-review",
+            ),
+        )
+        conn.execute(
+            """
+            INSERT INTO acceptance_events (
+                acceptance_event_id,
+                note_path,
+                gate_path,
+                model_partition,
+                accepted_review_pair_id,
+                accepted_note_sha,
+                accepted_note_commit,
+                accepted_gate_sha,
+                accepted_at,
+                acceptance_kind
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """,
+            (
+                1,
+                "kb/notes/legacy.md",
+                "kb/instructions/review-gates/semantic/internal-consistency.md",
+                "opus-4-6",
+                1,
+                legacy_git_blob_sha(note_text),
+                "legacy-note-commit",
+                legacy_git_blob_sha(gate_text),
+                "2026-04-10T10:02:00+02:00",
+                "full-review",
+            ),
         )
         conn.commit()
 
-    review_db.ensure_db(REPO_ROOT, db_path)
+    artifact_dir_rel = review_db.review_run_artifact_dir_rel(1)
+    artifact_dir = repo / artifact_dir_rel
+    artifact_dir.mkdir(parents=True)
+    (artifact_dir / "bundle-output.md").write_text("legacy bundle\n", encoding="utf-8")
+    pair_result_path = f"{artifact_dir_rel}/{encode_stage_filename('semantic/internal-consistency')}"
+    (repo / pair_result_path).write_text("legacy pair\n", encoding="utf-8")
+
+    review_db.ensure_db(repo, db_path)
 
     with review_db.connect(db_path) as conn:
         acceptances = review_db.load_current_acceptances(conn)
         view_row = conn.execute(
             """
             SELECT
-                accepted_note_sha,
-                accepted_note_commit,
-                accepted_gate_sha,
                 accepted_note_snapshot_id,
                 accepted_gate_snapshot_id,
                 accepted_note_hash,
@@ -162,17 +238,43 @@ def test_ensure_db_migrates_existing_acceptances_without_losing_current_view(tmp
             WHERE note_path = 'kb/notes/legacy.md'
             """
         ).fetchone()
+        run_path_row = conn.execute(
+            """
+            SELECT bundle_output_path
+            FROM review_runs
+            WHERE review_run_id = 1
+            """
+        ).fetchone()
+        pair_path_row = conn.execute(
+            """
+            SELECT result_path
+            FROM review_pairs
+            WHERE review_pair_id = 1
+            """
+        ).fetchone()
         stale_row = conn.execute(
             """
             SELECT
-                accepted_note_sha,
-                accepted_gate_sha,
                 accepted_note_hash,
                 accepted_gate_hash
             FROM stale_gate_pairs
             WHERE note_path = 'kb/notes/legacy.md'
             """
         ).fetchone()
+        pair_row = conn.execute(
+            """
+            SELECT reviewed_note_snapshot_id, reviewed_gate_snapshot_id
+            FROM review_pairs
+            WHERE review_pair_id = 1
+            """
+        ).fetchone()
+        table_columns = {
+            table_name: {
+                row["name"]
+                for row in conn.execute(f"PRAGMA table_info({table_name})").fetchall()
+            }
+            for table_name in ("review_runs", "review_pairs", "acceptance_events")
+        }
 
     acceptance = acceptances[
         (
@@ -181,17 +283,24 @@ def test_ensure_db_migrates_existing_acceptances_without_losing_current_view(tmp
             "opus-4-6",
         )
     ]
-    assert acceptance.accepted_note_sha == "legacy-note-sha"
-    assert acceptance.accepted_gate_sha == "legacy-gate-sha"
-    assert view_row["accepted_note_commit"] == "legacy-note-commit"
-    assert view_row["accepted_note_snapshot_id"] is None
-    assert view_row["accepted_gate_snapshot_id"] is None
-    assert view_row["accepted_note_hash"] is None
-    assert view_row["accepted_gate_hash"] is None
-    assert stale_row["accepted_note_sha"] == "legacy-note-sha"
-    assert stale_row["accepted_gate_sha"] == "legacy-gate-sha"
-    assert stale_row["accepted_note_hash"] is None
-    assert stale_row["accepted_gate_hash"] is None
+    assert acceptance.accepted_note_snapshot_id == view_row["accepted_note_snapshot_id"]
+    assert acceptance.accepted_gate_snapshot_id == view_row["accepted_gate_snapshot_id"]
+    assert view_row["accepted_note_snapshot_id"] is not None
+    assert view_row["accepted_gate_snapshot_id"] is not None
+    assert view_row["accepted_note_hash"] == sha256(note_text.encode("utf-8")).hexdigest()
+    assert view_row["accepted_gate_hash"] == sha256(gate_text.encode("utf-8")).hexdigest()
+    assert run_path_row["bundle_output_path"] == f"{artifact_dir_rel}/bundle-output.md"
+    assert pair_path_row["result_path"] == pair_result_path
+    assert stale_row["accepted_note_hash"] == view_row["accepted_note_hash"]
+    assert stale_row["accepted_gate_hash"] == view_row["accepted_gate_hash"]
+    assert pair_row["reviewed_note_snapshot_id"] == view_row["accepted_note_snapshot_id"]
+    assert pair_row["reviewed_gate_snapshot_id"] == view_row["accepted_gate_snapshot_id"]
+    assert "raw_bundle_markdown" not in table_columns["review_runs"]
+    assert "debug_log" not in table_columns["review_runs"]
+    assert "reviewed_note_sha" not in table_columns["review_pairs"]
+    assert "rationale_markdown" not in table_columns["review_pairs"]
+    assert "evidence_json" not in table_columns["review_pairs"]
+    assert "accepted_note_sha" not in table_columns["acceptance_events"]
 
 
 def test_ensure_db_renames_legacy_model_id_columns_to_model_partition(tmp_path: Path) -> None:
@@ -230,8 +339,6 @@ def test_ensure_db_renames_legacy_model_id_columns_to_model_partition(tmp_path: 
                 pair_ordinal,
                 pair_status,
                 decision,
-                gate_sha,
-                reviewed_note_sha,
                 reviewed_at,
                 review_kind
             ) VALUES (
@@ -243,8 +350,6 @@ def test_ensure_db_renames_legacy_model_id_columns_to_model_partition(tmp_path: 
                 0,
                 'completed',
                 'pass',
-                'gate-sha',
-                'note-sha',
                 '2026-04-10T10:01:00+02:00',
                 'full-review'
             )
@@ -258,8 +363,6 @@ def test_ensure_db_renames_legacy_model_id_columns_to_model_partition(tmp_path: 
                 gate_id,
                 model_id,
                 accepted_review_pair_id,
-                accepted_note_sha,
-                accepted_gate_sha,
                 accepted_at,
                 acceptance_kind
             ) VALUES (
@@ -268,8 +371,6 @@ def test_ensure_db_renames_legacy_model_id_columns_to_model_partition(tmp_path: 
                 'semantic/internal-consistency',
                 'opus-4-6',
                 1,
-                'note-sha',
-                'gate-sha',
                 '2026-04-10T10:02:00+02:00',
                 'full-review'
             )
@@ -290,7 +391,7 @@ def test_ensure_db_renames_legacy_model_id_columns_to_model_partition(tmp_path: 
         run_row = conn.execute("SELECT model_partition FROM review_runs").fetchone()
         view_row = conn.execute(
             """
-            SELECT gate_path, model_partition, accepted_note_sha, accepted_gate_sha
+            SELECT gate_path, model_partition
             FROM current_gate_acceptances
             WHERE note_path = 'kb/notes/legacy-model.md'
             """
@@ -305,8 +406,6 @@ def test_ensure_db_renames_legacy_model_id_columns_to_model_partition(tmp_path: 
     assert run_row["model_partition"] == "opus-4-6"
     assert view_row["gate_path"] == "kb/instructions/review-gates/semantic/internal-consistency.md"
     assert view_row["model_partition"] == "opus-4-6"
-    assert view_row["accepted_note_sha"] == "note-sha"
-    assert view_row["accepted_gate_sha"] == "gate-sha"
 
 
 def test_ensure_db_applies_pending_schema_migrations_once(tmp_path: Path, monkeypatch) -> None:
@@ -330,13 +429,7 @@ def test_ensure_db_applies_pending_schema_migrations_once(tmp_path: Path, monkey
         probe_rows = conn.execute("SELECT value FROM migration_probe").fetchall()
 
     assert [row["value"] for row in probe_rows] == ["applied"]
-    assert set(migration_names(db_path)) == {
-        review_db.BASELINE_SCHEMA_MIGRATION,
-        "review-file-snapshots-v1",
-        "review-model-partition-v1",
-        "review-gate-path-v1",
-        "999-test-probe",
-    }
+    assert set(migration_names(db_path)) == EXPECTED_SCHEMA_MIGRATIONS | {"999-test-probe"}
 
 
 def test_ensure_db_normalizes_legacy_migration_table_version_column(tmp_path: Path) -> None:
@@ -369,13 +462,7 @@ def test_ensure_db_normalizes_legacy_migration_table_version_column(tmp_path: Pa
 
     assert "migration_name" in columns
     assert "version" not in columns
-    assert set(migration_names(db_path)) == {
-        review_db.BASELINE_SCHEMA_MIGRATION,
-        "legacy-step",
-        "review-file-snapshots-v1",
-        "review-model-partition-v1",
-        "review-gate-path-v1",
-    }
+    assert set(migration_names(db_path)) == EXPECTED_SCHEMA_MIGRATIONS | {"legacy-step"}
 
 
 def test_snapshot_file_deduplicates_per_path_and_hashes_exact_utf8(tmp_path: Path) -> None:
@@ -461,8 +548,6 @@ def test_current_acceptance_view_exposes_snapshot_hashes(tmp_path: Path) -> None
             note_path="kb/notes/sample.md",
             gate_id="prose/sample",
             model_partition="opus-4-6",
-            accepted_note_sha="legacy-note-sha",
-            accepted_gate_sha="legacy-gate-sha",
             accepted_at="2026-04-10T10:02:00+02:00",
             acceptance_kind="trivial-change-ack",
         )
@@ -516,9 +601,6 @@ def test_rekey_note_path_updates_all_review_tables(tmp_path: Path) -> None:
             model_partition="opus-4-6",
             decision="pass",
             rationale_markdown="ok",
-            gate_sha="gate-sha",
-            reviewed_note_sha="note-sha",
-            reviewed_note_commit="note-commit",
             reviewed_at="2026-04-10T10:01:00+02:00",
         )
         accept_pair(
@@ -527,9 +609,6 @@ def test_rekey_note_path_updates_all_review_tables(tmp_path: Path) -> None:
             note_path="kb/notes/old-note.md",
             gate_id="semantic/internal-consistency",
             model_partition="opus-4-6",
-            accepted_note_sha="note-sha",
-            accepted_note_commit="note-commit",
-            accepted_gate_sha="gate-sha",
             accepted_at="2026-04-10T10:02:00+02:00",
             acceptance_kind="full-review",
         )

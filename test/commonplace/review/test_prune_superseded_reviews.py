@@ -10,8 +10,6 @@ from ._run_cli import run_cli
 
 
 MODEL_PARTITION = "test-model"
-NOTE_SHA = "note-sha"
-GATE_SHA = "gate-sha"
 
 
 def _prepare_db(repo: Path) -> Path:
@@ -37,9 +35,6 @@ def _insert_completed_run(
             review_db.ReviewPairRequest(
                 note_path=note_path,
                 gate_path=source_gate_path(gate_id),
-                gate_sha=GATE_SHA,
-                reviewed_note_sha=NOTE_SHA,
-                reviewed_note_commit=None,
                 pair_ordinal=ordinal,
             )
             for ordinal, gate_id in enumerate(gate_ids)
@@ -106,8 +101,6 @@ def test_prune_superseded_reviews_deletes_rows_and_whole_obsolete_run_artifacts(
             note_path="kb/notes/mixed.md",
             gate_id="prose/source-residue",
             model_partition=MODEL_PARTITION,
-            accepted_note_sha=NOTE_SHA,
-            accepted_gate_sha=GATE_SHA,
             accepted_at="2026-01-01T00:02:00Z",
         )
         accept_pair(
@@ -116,8 +109,6 @@ def test_prune_superseded_reviews_deletes_rows_and_whole_obsolete_run_artifacts(
             note_path="kb/notes/mixed.md",
             gate_id="prose/source-residue",
             model_partition=MODEL_PARTITION,
-            accepted_note_sha=NOTE_SHA,
-            accepted_gate_sha=GATE_SHA,
             accepted_at="2026-01-02T00:01:00Z",
         )
         accept_pair(
@@ -126,8 +117,6 @@ def test_prune_superseded_reviews_deletes_rows_and_whole_obsolete_run_artifacts(
             note_path="kb/notes/mixed.md",
             gate_id="semantic/grounding-alignment",
             model_partition=MODEL_PARTITION,
-            accepted_note_sha=NOTE_SHA,
-            accepted_gate_sha=GATE_SHA,
             accepted_at="2026-01-01T00:03:00Z",
         )
 
@@ -149,8 +138,6 @@ def test_prune_superseded_reviews_deletes_rows_and_whole_obsolete_run_artifacts(
             note_path="kb/notes/full.md",
             gate_id="prose/source-residue",
             model_partition=MODEL_PARTITION,
-            accepted_note_sha=NOTE_SHA,
-            accepted_gate_sha=GATE_SHA,
             accepted_at="2026-01-03T00:01:00Z",
         )
         accept_pair(
@@ -159,8 +146,6 @@ def test_prune_superseded_reviews_deletes_rows_and_whole_obsolete_run_artifacts(
             note_path="kb/notes/full.md",
             gate_id="prose/source-residue",
             model_partition=MODEL_PARTITION,
-            accepted_note_sha=NOTE_SHA,
-            accepted_gate_sha=GATE_SHA,
             accepted_at="2026-01-04T00:01:00Z",
         )
 
@@ -182,8 +167,6 @@ def test_prune_superseded_reviews_deletes_rows_and_whole_obsolete_run_artifacts(
             note_path="kb/notes/ack.md",
             gate_id="prose/source-residue",
             model_partition=MODEL_PARTITION,
-            accepted_note_sha=NOTE_SHA,
-            accepted_gate_sha=GATE_SHA,
             accepted_at="2026-01-05T00:01:00Z",
         )
         accept_pair(
@@ -192,8 +175,6 @@ def test_prune_superseded_reviews_deletes_rows_and_whole_obsolete_run_artifacts(
             note_path="kb/notes/ack.md",
             gate_id="prose/source-residue",
             model_partition=MODEL_PARTITION,
-            accepted_note_sha=NOTE_SHA,
-            accepted_gate_sha=GATE_SHA,
             accepted_at="2026-01-06T00:01:00Z",
             acceptance_kind="trivial-change-ack",
         )

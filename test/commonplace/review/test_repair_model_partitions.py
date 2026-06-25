@@ -33,9 +33,6 @@ def test_repair_model_partitions_rekeys_known_aliases(tmp_path: Path) -> None:
             model_partition="opus-4-6",
             decision="pass",
             rationale_markdown="ok\n\n## Result: PASS\n",
-            gate_sha="gate-sha",
-            reviewed_note_sha="note-sha",
-            reviewed_note_commit=None,
             reviewed_at="2026-04-10T10:01:00+02:00",
             runner="claude-code",
         )
@@ -45,9 +42,6 @@ def test_repair_model_partitions_rekeys_known_aliases(tmp_path: Path) -> None:
             note_path="kb/notes/old-note.md",
             gate_id="semantic/internal-consistency",
             model_partition="opus-4-6",
-            accepted_note_sha="note-sha",
-            accepted_note_commit=None,
-            accepted_gate_sha="gate-sha",
             accepted_at="2026-04-10T10:02:00+02:00",
             acceptance_kind="full-review",
         )

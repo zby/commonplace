@@ -7,13 +7,14 @@ import argparse
 import json
 from pathlib import Path
 
-from commonplace.review.artifacts import write_manifest
+from commonplace.review.artifacts import result_paths_by_pair_id, write_manifest
 from commonplace.review.freshness import capture_review_inputs
 from commonplace.review.review_db import (
     connect,
     create_run_with_pairs,
     load_review_pairs_for_run,
     prepare_review_db,
+    set_run_artifact_paths,
 )
 from commonplace.review.review_metadata import resolve_review_target
 from commonplace.review.review_model import normalize_model_partition
@@ -103,6 +104,19 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
         )
     else:
         manifest_path = None
+
+    with connect(db_path) as conn:
+        set_run_artifact_paths(
+            conn,
+            review_run_id=review_run_id,
+            bundle_output_path=bundle_output_path_rel,
+            result_paths=result_paths_by_pair_id(
+                artifact_dir_rel=artifact_dir_rel,
+                packing="note",
+                pairs=stored_pairs,
+            ),
+        )
+        conn.commit()
 
     if args.json or args.with_prompt:
         payload = {

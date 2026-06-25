@@ -18,8 +18,7 @@ CREATE TABLE IF NOT EXISTS review_runs (
     ),
     failure_reason TEXT,
     telemetry_json TEXT,
-    raw_bundle_markdown TEXT,
-    debug_log TEXT,
+    bundle_output_path TEXT,
     packing TEXT NOT NULL CHECK (
         packing IN ('note', 'gate')
     )
@@ -53,11 +52,7 @@ CREATE TABLE IF NOT EXISTS review_pairs (
     decision TEXT CHECK (
         decision IN ('pass', 'warn', 'fail', 'error', 'unknown')
     ),
-    rationale_markdown TEXT,
-    evidence_json TEXT,
-    gate_sha TEXT NOT NULL,
-    reviewed_note_sha TEXT NOT NULL,
-    reviewed_note_commit TEXT,
+    result_path TEXT,
     reviewed_note_snapshot_id INTEGER REFERENCES review_file_snapshots(snapshot_id),
     reviewed_gate_snapshot_id INTEGER REFERENCES review_file_snapshots(snapshot_id),
     reviewed_at TEXT,
@@ -77,18 +72,12 @@ ON review_pairs(review_run_id);
 CREATE INDEX IF NOT EXISTS idx_review_pairs_pair_status
 ON review_pairs(pair_status);
 
-CREATE INDEX IF NOT EXISTS idx_review_pairs_reviewed_sha
-ON review_pairs(reviewed_note_sha);
-
 CREATE TABLE IF NOT EXISTS acceptance_events (
     acceptance_event_id INTEGER PRIMARY KEY,
     note_path TEXT NOT NULL,
     gate_path TEXT NOT NULL,
     model_partition TEXT NOT NULL,
     accepted_review_pair_id INTEGER REFERENCES review_pairs(review_pair_id) ON DELETE SET NULL,
-    accepted_note_sha TEXT NOT NULL,
-    accepted_note_commit TEXT,
-    accepted_gate_sha TEXT NOT NULL,
     accepted_note_snapshot_id INTEGER REFERENCES review_file_snapshots(snapshot_id),
     accepted_gate_snapshot_id INTEGER REFERENCES review_file_snapshots(snapshot_id),
     accepted_at TEXT NOT NULL,
@@ -115,9 +104,6 @@ SELECT
     e.gate_path,
     e.model_partition,
     e.accepted_review_pair_id,
-    e.accepted_note_sha,
-    e.accepted_note_commit,
-    e.accepted_gate_sha,
     e.accepted_note_snapshot_id,
     e.accepted_gate_snapshot_id,
     note_snapshot.content_sha256 AS accepted_note_hash,
@@ -147,8 +133,6 @@ SELECT
     a.note_path,
     a.gate_path,
     a.model_partition,
-    a.accepted_note_sha,
-    a.accepted_gate_sha,
     a.accepted_note_snapshot_id,
     a.accepted_gate_snapshot_id,
     a.accepted_note_hash,
@@ -164,11 +148,12 @@ CREATE TABLE IF NOT EXISTS review_schema_migrations (
 
 -- Query pattern expected for selector:
 --
--- 1. resolve current note sha from git for candidate notes
--- 2. resolve current gate sha from gate files
+-- 1. resolve current note SHA-256 from candidate note files
+-- 2. resolve current gate SHA-256 from gate files
 -- 3. LEFT JOIN current_gate_acceptances view on (note_path, gate_path, model_partition)
 -- 4. classify:
 --      no row                  -> missing-review
---      accepted_gate_sha != ?  -> gate-changed
---      accepted_note_sha != ?  -> note-changed
+--      accepted snapshots null -> missing-review
+--      accepted_gate_hash != ? -> gate-changed
+--      accepted_note_hash != ? -> note-changed
 --      else fresh

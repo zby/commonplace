@@ -21,12 +21,7 @@ from commonplace.review.review_db import (
     resolve_db_path,
     snapshot_file,
 )
-from commonplace.review.review_metadata import (
-    file_text_at_provenance,
-    git_blob_sha,
-    iso_now,
-    review_note_provenance,
-)
+from commonplace.review.review_metadata import iso_now
 from commonplace.review.review_model import normalize_model_partition
 
 NOTES_ROOT = Path("kb/notes")
@@ -124,10 +119,7 @@ def _acceptance_snapshot(acceptance: AcceptanceState | None) -> AcceptanceSnapsh
             accepted_note_hash=acceptance.accepted_note_hash,
             accepted_gate_hash=acceptance.accepted_gate_hash,
         )
-    return AcceptanceSnapshot(
-        accepted_note_hash=acceptance.accepted_note_sha,
-        accepted_gate_hash=acceptance.accepted_gate_sha,
-    )
+    return None
 
 
 def note_diff_from_text(note_path: str, previous_text: str, current_text: str) -> str | None:
@@ -142,32 +134,6 @@ def note_diff_from_text(note_path: str, previous_text: str, current_text: str) -
         )
     ).strip()
     return diff or None
-
-
-def note_diff_since(
-    repo_root: Path,
-    note_path: str,
-    note_abs: Path,
-    accepted_note_sha: str,
-    accepted_note_commit: str | None,
-) -> str | None:
-    previous_text = file_text_at_provenance(
-        repo_root,
-        path=Path(note_path),
-        commit=accepted_note_commit,
-        blob_sha=accepted_note_sha,
-    )
-    if previous_text is None:
-        return None
-
-    current_text = note_abs.read_text(encoding="utf-8")
-    return note_diff_from_text(note_path, previous_text, current_text)
-
-
-def _acceptance_uses_snapshots(acceptance: AcceptanceState | None) -> bool:
-    if acceptance is None:
-        return False
-    return acceptance.accepted_note_hash is not None and acceptance.accepted_gate_hash is not None
 
 
 def select_stale_gates(
@@ -230,19 +196,18 @@ def select_stale_gates(
             if acceptance is None:
                 stale.append(StaleGate(note_path, gate_path, "missing-review"))
                 continue
-            if _acceptance_uses_snapshots(acceptance):
-                current_note_hash = file_content_sha256(note_abs)
-                current_gate_hash = file_content_sha256(gate_abs)
-            else:
-                # Legacy rows still compare against Git-style blob SHAs until the offline backfill/drop cutover.
-                current_note_hash = git_blob_sha(note_abs)
-                current_gate_hash = git_blob_sha(gate_abs)
+            acceptance_snapshot = _acceptance_snapshot(acceptance)
+            if acceptance_snapshot is None:
+                stale.append(StaleGate(note_path, gate_path, "missing-review"))
+                continue
+            current_note_hash = file_content_sha256(note_abs)
+            current_gate_hash = file_content_sha256(gate_abs)
             note_snapshot = NoteSnapshot(path=note_path, content_hash=current_note_hash)
             gate_snapshot = GateSnapshot(id=gate_path, content_hash=current_gate_hash)
             staleness = classify_staleness(
                 note_snapshot,
                 gate_snapshot,
-                _acceptance_snapshot(acceptance),
+                acceptance_snapshot,
             )
             if staleness is None:
                 continue
@@ -250,17 +215,9 @@ def select_stale_gates(
                 assert acceptance is not None
                 diff = None
                 if include_diff:
-                    if _acceptance_uses_snapshots(acceptance) and acceptance.accepted_note_text is not None:
+                    if acceptance.accepted_note_text is not None:
                         current_text = note_abs.read_text(encoding="utf-8")
                         diff = note_diff_from_text(note_path, acceptance.accepted_note_text, current_text)
-                    else:
-                        diff = note_diff_since(
-                            repo_root,
-                            note_path,
-                            note_abs,
-                            acceptance.accepted_note_sha,
-                            acceptance.accepted_note_commit,
-                        )
                 stale.append(StaleGate(note_path, gate_path, staleness.reason, diff=diff))
                 continue
             stale.append(StaleGate(note_path, gate_path, staleness.reason))
@@ -317,11 +274,6 @@ def ack_pairs(
             if not gate_abs.is_file():
                 raise FileNotFoundError(f"gate not found: {gate_path}")
 
-            try:
-                note_sha, note_commit = review_note_provenance(repo_root, Path(note_path))
-            except ValueError as exc:
-                raise ValueError(str(exc)) from exc
-            current_gate_sha = git_blob_sha(gate_abs)
             note_snapshot = snapshot_file(conn, repo_root=repo_root, path=note_path)
             gate_snapshot = snapshot_file(conn, repo_root=repo_root, path=gate_path)
             append_acceptance_event(
@@ -330,9 +282,6 @@ def ack_pairs(
                 gate_path=gate_path,
                 model_partition=model,
                 accepted_review_pair_id=None,
-                accepted_note_sha=note_sha,
-                accepted_note_commit=note_commit,
-                accepted_gate_sha=current_gate_sha,
                 accepted_note_snapshot_id=note_snapshot.snapshot_id,
                 accepted_gate_snapshot_id=gate_snapshot.snapshot_id,
                 accepted_at=iso_now(),

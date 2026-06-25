@@ -5,13 +5,15 @@ from __future__ import annotations
 
 import os
 import sqlite3
-from hashlib import sha256
+from hashlib import sha1, sha256
 from dataclasses import dataclass
 from datetime import UTC, datetime
 from importlib import resources
 from pathlib import Path
-from typing import Callable, Sequence
+from typing import Callable, Mapping, Sequence
 
+from commonplace.review.artifacts import encode_stage_filename
+from commonplace.review.artifacts import result_path as review_artifact_result_path
 from commonplace.review.paths import normalize_gate_path
 from commonplace.review.paths import gate_id_from_stored_path
 from commonplace.review.protocol.decisions import normalize_review_decision
@@ -23,6 +25,7 @@ PACKING_VALUES = frozenset({"note", "gate"})
 REVIEW_KIND_VALUES = frozenset({"full-review"})
 BASELINE_SCHEMA_MIGRATION = "review-pairs-v1"
 MIGRATIONS_TABLE = "review_schema_migrations"
+BUNDLE_ARTIFACTS_ROOT = Path("kb/reports/bundle-reviews")
 
 
 @dataclass(frozen=True)
@@ -45,9 +48,6 @@ class AcceptanceState:
     gate_path: str
     model_partition: str
     accepted_review_pair_id: int | None
-    accepted_note_sha: str
-    accepted_note_commit: str | None
-    accepted_gate_sha: str
     accepted_note_snapshot_id: int | None
     accepted_gate_snapshot_id: int | None
     accepted_note_hash: str | None
@@ -72,8 +72,7 @@ class ReviewRunRow:
     status: str
     failure_reason: str | None
     telemetry_json: str | None
-    raw_bundle_markdown: str | None
-    debug_log: str | None
+    bundle_output_path: str | None
     packing: str
 
 
@@ -87,11 +86,7 @@ class ReviewPairRow:
     pair_ordinal: int
     pair_status: str
     decision: str | None
-    rationale_markdown: str | None
-    evidence_json: str | None
-    gate_sha: str
-    reviewed_note_sha: str
-    reviewed_note_commit: str | None
+    result_path: str | None
     reviewed_note_snapshot_id: int | None
     reviewed_gate_snapshot_id: int | None
     reviewed_at: str | None
@@ -106,9 +101,6 @@ class ReviewPairRow:
 class ReviewPairRequest:
     note_path: str
     gate_path: str
-    gate_sha: str
-    reviewed_note_sha: str
-    reviewed_note_commit: str | None
     pair_ordinal: int
     reviewed_note_snapshot_id: int | None = None
     reviewed_gate_snapshot_id: int | None = None
@@ -121,7 +113,6 @@ class PendingReviewPair:
     gate_path: str
     decision: str
     rationale_markdown: str
-    evidence_json: str | None = None
     reviewed_at: str | None = None
     review_kind: str = "full-review"
 
@@ -302,9 +293,6 @@ def _create_current_acceptance_views(conn: sqlite3.Connection) -> None:
             e.{gate_column} AS {gate_column},
             e.{model_column} AS {model_column},
             e.accepted_review_pair_id,
-            e.accepted_note_sha,
-            e.accepted_note_commit,
-            e.accepted_gate_sha,
             e.accepted_note_snapshot_id,
             e.accepted_gate_snapshot_id,
             note_snapshot.content_sha256 AS accepted_note_hash,
@@ -334,8 +322,6 @@ def _create_current_acceptance_views(conn: sqlite3.Connection) -> None:
             a.note_path,
             a.{gate_column} AS {gate_column},
             a.{model_column} AS {model_column},
-            a.accepted_note_sha,
-            a.accepted_gate_sha,
             a.accepted_note_snapshot_id,
             a.accepted_gate_snapshot_id,
             a.accepted_note_hash,
@@ -345,6 +331,103 @@ def _create_current_acceptance_views(conn: sqlite3.Connection) -> None:
         FROM current_gate_acceptances AS a;
         """
     )
+
+
+def _legacy_git_blob_sha_for_bytes(content: bytes) -> str:
+    return sha1(b"blob " + str(len(content)).encode("ascii") + b"\0" + content).hexdigest()
+
+
+def _legacy_git_blob_sha_for_file(path: Path) -> str | None:
+    try:
+        return _legacy_git_blob_sha_for_bytes(path.read_bytes())
+    except OSError:
+        return None
+
+
+def _drop_column_if_present(conn: sqlite3.Connection, table_name: str, column_name: str) -> None:
+    if column_name not in _table_columns(conn, table_name):
+        return
+    conn.execute(f"ALTER TABLE {table_name} DROP COLUMN {column_name}")
+
+
+def _backfill_current_acceptance_snapshots(conn: sqlite3.Connection, repo_root: Path) -> None:
+    acceptance_columns = _table_columns(conn, "acceptance_events")
+    legacy_columns = {"accepted_note_sha", "accepted_gate_sha"}
+    if not legacy_columns.issubset(acceptance_columns):
+        return
+
+    rows = conn.execute(
+        """
+        WITH latest AS (
+            SELECT
+                note_path,
+                gate_path,
+                model_partition,
+                MAX(acceptance_event_id) AS max_id
+            FROM acceptance_events
+            GROUP BY note_path, gate_path, model_partition
+        )
+        SELECT
+            e.acceptance_event_id,
+            e.note_path,
+            e.gate_path,
+            e.accepted_review_pair_id,
+            e.accepted_note_sha,
+            e.accepted_gate_sha,
+            e.accepted_note_snapshot_id,
+            e.accepted_gate_snapshot_id
+        FROM acceptance_events AS e
+        JOIN latest ON e.acceptance_event_id = latest.max_id
+        WHERE e.accepted_note_snapshot_id IS NULL
+           OR e.accepted_gate_snapshot_id IS NULL
+        """
+    ).fetchall()
+
+    for row in rows:
+        note_path = row["note_path"]
+        gate_path = row["gate_path"]
+        current_note_sha = _legacy_git_blob_sha_for_file(repo_root / note_path)
+        current_gate_sha = _legacy_git_blob_sha_for_file(repo_root / gate_path)
+        if current_note_sha != row["accepted_note_sha"] or current_gate_sha != row["accepted_gate_sha"]:
+            continue
+
+        note_snapshot = snapshot_file(conn, repo_root=repo_root, path=note_path)
+        gate_snapshot = snapshot_file(conn, repo_root=repo_root, path=gate_path)
+        conn.execute(
+            """
+            UPDATE acceptance_events
+            SET accepted_note_snapshot_id = ?,
+                accepted_gate_snapshot_id = ?
+            WHERE acceptance_event_id = ?
+            """,
+            (note_snapshot.snapshot_id, gate_snapshot.snapshot_id, row["acceptance_event_id"]),
+        )
+        if row["accepted_review_pair_id"] is not None:
+            conn.execute(
+                """
+                UPDATE review_pairs
+                SET reviewed_note_snapshot_id = COALESCE(reviewed_note_snapshot_id, ?),
+                    reviewed_gate_snapshot_id = COALESCE(reviewed_gate_snapshot_id, ?)
+                WHERE review_pair_id = ?
+                """,
+                (note_snapshot.snapshot_id, gate_snapshot.snapshot_id, row["accepted_review_pair_id"]),
+            )
+
+
+def _migrate_snapshot_only_freshness(conn: sqlite3.Connection, repo_root: Path) -> None:
+    _backfill_current_acceptance_snapshots(conn, repo_root)
+    conn.executescript(
+        """
+        DROP VIEW IF EXISTS stale_gate_pairs;
+        DROP VIEW IF EXISTS current_gate_acceptances;
+        DROP INDEX IF EXISTS idx_review_pairs_reviewed_sha;
+        """
+    )
+    for column_name in ("gate_sha", "reviewed_note_sha", "reviewed_note_commit"):
+        _drop_column_if_present(conn, "review_pairs", column_name)
+    for column_name in ("accepted_note_sha", "accepted_note_commit", "accepted_gate_sha"):
+        _drop_column_if_present(conn, "acceptance_events", column_name)
+    _create_current_acceptance_views(conn)
 
 
 def _migrate_review_file_snapshots(conn: sqlite3.Connection, repo_root: Path) -> None:
@@ -539,10 +622,219 @@ def _migrate_gate_path(conn: sqlite3.Connection, repo_root: Path) -> None:
     _create_current_acceptance_views(conn)
 
 
+def review_run_artifact_dir_rel(review_run_id: int) -> str:
+    return (BUNDLE_ARTIFACTS_ROOT / f"review-run-{review_run_id}").as_posix()
+
+
+def _result_path_candidates(
+    *,
+    artifact_dir_rel: str,
+    packing: str,
+    note_path: str,
+    gate_path: str,
+    all_note_paths: Sequence[str],
+) -> list[str]:
+    current_path = review_artifact_result_path(
+        artifact_dir_rel=artifact_dir_rel,
+        packing=packing,
+        note_path=note_path,
+        gate_path=gate_path,
+        all_note_paths=all_note_paths,
+    )
+    candidates = [current_path]
+    if packing == "note":
+        legacy_path = f"{artifact_dir_rel}/{encode_stage_filename(gate_id_from_stored_path(gate_path))}"
+        if legacy_path != current_path:
+            candidates.append(legacy_path)
+    return candidates
+
+
+def _migrate_review_artifact_paths(conn: sqlite3.Connection, repo_root: Path) -> None:
+    _add_column_if_missing(
+        conn,
+        "review_runs",
+        "bundle_output_path",
+        "bundle_output_path TEXT",
+    )
+    _add_column_if_missing(
+        conn,
+        "review_pairs",
+        "result_path",
+        "result_path TEXT",
+    )
+
+    run_rows = conn.execute(
+        """
+        SELECT review_run_id, packing
+        FROM review_runs
+        ORDER BY review_run_id
+        """
+    ).fetchall()
+    for run_row in run_rows:
+        review_run_id = int(run_row["review_run_id"])
+        artifact_dir_rel = review_run_artifact_dir_rel(review_run_id)
+        bundle_output_path = f"{artifact_dir_rel}/bundle-output.md"
+        if (repo_root / bundle_output_path).is_file():
+            conn.execute(
+                """
+                UPDATE review_runs
+                SET bundle_output_path = ?
+                WHERE review_run_id = ?
+                """,
+                (bundle_output_path, review_run_id),
+            )
+
+        pair_rows = conn.execute(
+            """
+            SELECT review_pair_id, note_path, gate_path
+            FROM review_pairs
+            WHERE review_run_id = ?
+            ORDER BY pair_ordinal, note_path, gate_path
+            """,
+            (review_run_id,),
+        ).fetchall()
+        all_note_paths = [row["note_path"] for row in pair_rows]
+        for pair_row in pair_rows:
+            path = next(
+                (
+                    candidate
+                    for candidate in _result_path_candidates(
+                        artifact_dir_rel=artifact_dir_rel,
+                        packing=run_row["packing"],
+                        note_path=pair_row["note_path"],
+                        gate_path=pair_row["gate_path"],
+                        all_note_paths=all_note_paths,
+                    )
+                    if (repo_root / candidate).is_file()
+                ),
+                None,
+            )
+            if path is None:
+                continue
+            conn.execute(
+                """
+                UPDATE review_pairs
+                SET result_path = ?
+                WHERE review_pair_id = ?
+                """,
+                (path, pair_row["review_pair_id"]),
+            )
+
+
+def _write_text_artifact(path: Path, text: str) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    if not path.exists():
+        path.write_text(text, encoding="utf-8")
+
+
+def _migrate_review_artifact_bodies_to_files(conn: sqlite3.Connection, repo_root: Path) -> None:
+    _migrate_review_artifact_paths(conn, repo_root)
+
+    run_columns = _table_columns(conn, "review_runs")
+    if "raw_bundle_markdown" in run_columns:
+        rows = conn.execute(
+            """
+            SELECT review_run_id, raw_bundle_markdown, bundle_output_path
+            FROM review_runs
+            WHERE raw_bundle_markdown IS NOT NULL
+            """
+        ).fetchall()
+        for row in rows:
+            artifact_dir_rel = review_run_artifact_dir_rel(int(row["review_run_id"]))
+            bundle_output_path = row["bundle_output_path"] or f"{artifact_dir_rel}/bundle-output.md"
+            _write_text_artifact(repo_root / bundle_output_path, row["raw_bundle_markdown"])
+            conn.execute(
+                """
+                UPDATE review_runs
+                SET bundle_output_path = ?
+                WHERE review_run_id = ?
+                """,
+                (bundle_output_path, row["review_run_id"]),
+            )
+
+    if "debug_log" in run_columns:
+        rows = conn.execute(
+            """
+            SELECT review_run_id, debug_log
+            FROM review_runs
+            WHERE debug_log IS NOT NULL
+            """
+        ).fetchall()
+        for row in rows:
+            debug_log_path = repo_root / review_run_artifact_dir_rel(int(row["review_run_id"])) / "debug.log"
+            _write_text_artifact(debug_log_path, row["debug_log"])
+
+    pair_columns = _table_columns(conn, "review_pairs")
+    if "rationale_markdown" in pair_columns:
+        pair_rows = conn.execute(
+            """
+            SELECT
+                rp.review_pair_id,
+                rp.review_run_id,
+                rp.note_path,
+                rp.gate_path,
+                rp.result_path,
+                rp.rationale_markdown,
+                rr.packing
+            FROM review_pairs AS rp
+            JOIN review_runs AS rr
+              ON rp.review_run_id = rr.review_run_id
+            WHERE rp.rationale_markdown IS NOT NULL
+            ORDER BY rp.review_run_id, rp.pair_ordinal, rp.note_path, rp.gate_path
+            """
+        ).fetchall()
+        note_paths_by_run: dict[int, list[str]] = {}
+        for row in pair_rows:
+            review_run_id = int(row["review_run_id"])
+            if review_run_id not in note_paths_by_run:
+                note_paths_by_run[review_run_id] = [
+                    note_row["note_path"]
+                    for note_row in conn.execute(
+                        """
+                        SELECT note_path
+                        FROM review_pairs
+                        WHERE review_run_id = ?
+                        ORDER BY pair_ordinal, note_path, gate_path
+                        """,
+                        (review_run_id,),
+                    ).fetchall()
+                ]
+
+            artifact_dir_rel = review_run_artifact_dir_rel(review_run_id)
+            candidates = _result_path_candidates(
+                artifact_dir_rel=artifact_dir_rel,
+                packing=row["packing"],
+                note_path=row["note_path"],
+                gate_path=row["gate_path"],
+                all_note_paths=note_paths_by_run[review_run_id],
+            )
+            result_path = row["result_path"] or next(
+                (candidate for candidate in candidates if (repo_root / candidate).is_file()),
+                candidates[0],
+            )
+            _write_text_artifact(repo_root / result_path, row["rationale_markdown"])
+            conn.execute(
+                """
+                UPDATE review_pairs
+                SET result_path = ?
+                WHERE review_pair_id = ?
+                """,
+                (result_path, row["review_pair_id"]),
+            )
+
+    _drop_column_if_present(conn, "review_runs", "raw_bundle_markdown")
+    _drop_column_if_present(conn, "review_runs", "debug_log")
+    _drop_column_if_present(conn, "review_pairs", "rationale_markdown")
+    _drop_column_if_present(conn, "review_pairs", "evidence_json")
+
+
 SCHEMA_MIGRATIONS: tuple[SchemaMigration, ...] = (
     SchemaMigration("review-file-snapshots-v1", _migrate_review_file_snapshots),
     SchemaMigration("review-model-partition-v1", _migrate_model_partition),
     SchemaMigration("review-gate-path-v1", _migrate_gate_path),
+    SchemaMigration("review-snapshot-only-freshness-v1", _migrate_snapshot_only_freshness),
+    SchemaMigration("review-artifact-paths-v1", _migrate_review_artifact_paths),
+    SchemaMigration("review-artifact-body-files-v1", _migrate_review_artifact_bodies_to_files),
 )
 
 
@@ -624,8 +916,7 @@ def _review_run_from_row(row: sqlite3.Row) -> ReviewRunRow:
         status=row["status"],
         failure_reason=row["failure_reason"],
         telemetry_json=row["telemetry_json"],
-        raw_bundle_markdown=row["raw_bundle_markdown"],
-        debug_log=row["debug_log"],
+        bundle_output_path=row["bundle_output_path"],
         packing=row["packing"],
     )
 
@@ -640,11 +931,7 @@ def _review_pair_from_row(row: sqlite3.Row) -> ReviewPairRow:
         pair_ordinal=row["pair_ordinal"],
         pair_status=row["pair_status"],
         decision=row["decision"],
-        rationale_markdown=row["rationale_markdown"],
-        evidence_json=row["evidence_json"],
-        gate_sha=row["gate_sha"],
-        reviewed_note_sha=row["reviewed_note_sha"],
-        reviewed_note_commit=row["reviewed_note_commit"],
+        result_path=row["result_path"],
         reviewed_note_snapshot_id=row["reviewed_note_snapshot_id"],
         reviewed_gate_snapshot_id=row["reviewed_gate_snapshot_id"],
         reviewed_at=row["reviewed_at"],
@@ -663,8 +950,7 @@ def create_run(
     status: str = "running",
     failure_reason: str | None = None,
     telemetry_json: str | None = None,
-    raw_bundle_markdown: str | None = None,
-    debug_log: str | None = None,
+    bundle_output_path: str | None = None,
 ) -> int:
     if packing not in PACKING_VALUES:
         raise ValueError(f"invalid review run packing: {packing}")
@@ -678,10 +964,9 @@ def create_run(
             status,
             failure_reason,
             telemetry_json,
-            raw_bundle_markdown,
-            debug_log,
+            bundle_output_path,
             packing
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         """,
         (
             model_partition,
@@ -691,8 +976,7 @@ def create_run(
             status,
             failure_reason,
             telemetry_json,
-            raw_bundle_markdown,
-            debug_log,
+            bundle_output_path,
             packing,
         ),
     )
@@ -720,13 +1004,10 @@ def create_review_pairs(
                 model_partition,
                 pair_ordinal,
                 pair_status,
-                gate_sha,
-                reviewed_note_sha,
-                reviewed_note_commit,
                 reviewed_note_snapshot_id,
                 reviewed_gate_snapshot_id,
                 review_kind
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
             """,
             (
                 review_run_id,
@@ -735,9 +1016,6 @@ def create_review_pairs(
                 model_partition,
                 pair.pair_ordinal,
                 pair_status,
-                pair.gate_sha,
-                pair.reviewed_note_sha,
-                pair.reviewed_note_commit,
                 pair.reviewed_note_snapshot_id,
                 pair.reviewed_gate_snapshot_id,
                 pair.review_kind,
@@ -780,8 +1058,7 @@ def load_review_run(conn: sqlite3.Connection, *, review_run_id: int) -> ReviewRu
             status,
             failure_reason,
             telemetry_json,
-            raw_bundle_markdown,
-            debug_log,
+            bundle_output_path,
             packing
         FROM review_runs
         WHERE review_run_id = ?
@@ -805,11 +1082,7 @@ def load_review_pairs_for_run(conn: sqlite3.Connection, *, review_run_id: int) -
             pair_ordinal,
             pair_status,
             decision,
-            rationale_markdown,
-            evidence_json,
-            gate_sha,
-            reviewed_note_sha,
-            reviewed_note_commit,
+            result_path,
             reviewed_note_snapshot_id,
             reviewed_gate_snapshot_id,
             reviewed_at,
@@ -827,6 +1100,34 @@ def load_completed_review_pairs_for_run(conn: sqlite3.Connection, *, review_run_
     return [pair for pair in load_review_pairs_for_run(conn, review_run_id=review_run_id) if pair.pair_status == "completed"]
 
 
+def set_run_artifact_paths(
+    conn: sqlite3.Connection,
+    *,
+    review_run_id: int,
+    bundle_output_path: str | None = None,
+    result_paths: Mapping[int, str] | None = None,
+) -> None:
+    if bundle_output_path is not None:
+        conn.execute(
+            """
+            UPDATE review_runs
+            SET bundle_output_path = ?
+            WHERE review_run_id = ?
+            """,
+            (bundle_output_path, review_run_id),
+        )
+    for review_pair_id, path in (result_paths or {}).items():
+        conn.execute(
+            """
+            UPDATE review_pairs
+            SET result_path = ?
+            WHERE review_run_id = ?
+              AND review_pair_id = ?
+            """,
+            (path, review_run_id, review_pair_id),
+        )
+
+
 def load_current_acceptances(conn: sqlite3.Connection) -> dict[tuple[str, str, str], AcceptanceState]:
     rows = conn.execute(
         """
@@ -835,9 +1136,6 @@ def load_current_acceptances(conn: sqlite3.Connection) -> dict[tuple[str, str, s
             gate_path,
             model_partition,
             accepted_review_pair_id,
-            accepted_note_sha,
-            accepted_note_commit,
-            accepted_gate_sha,
             accepted_note_snapshot_id,
             accepted_gate_snapshot_id,
             accepted_note_hash,
@@ -855,9 +1153,6 @@ def load_current_acceptances(conn: sqlite3.Connection) -> dict[tuple[str, str, s
             gate_path=row["gate_path"],
             model_partition=row["model_partition"],
             accepted_review_pair_id=row["accepted_review_pair_id"],
-            accepted_note_sha=row["accepted_note_sha"],
-            accepted_note_commit=row["accepted_note_commit"],
-            accepted_gate_sha=row["accepted_gate_sha"],
             accepted_note_snapshot_id=row["accepted_note_snapshot_id"],
             accepted_gate_snapshot_id=row["accepted_gate_snapshot_id"],
             accepted_note_hash=row["accepted_note_hash"],
@@ -876,18 +1171,14 @@ def attach_execution_data(
     *,
     review_run_id: int,
     telemetry_json: str | None = None,
-    raw_bundle_markdown: str | None = None,
-    debug_log: str | None = None,
 ) -> None:
     conn.execute(
         """
         UPDATE review_runs
-        SET telemetry_json = COALESCE(?, telemetry_json),
-            raw_bundle_markdown = COALESCE(?, raw_bundle_markdown),
-            debug_log = COALESCE(?, debug_log)
+        SET telemetry_json = COALESCE(?, telemetry_json)
         WHERE review_run_id = ?
         """,
-        (telemetry_json, raw_bundle_markdown, debug_log, review_run_id),
+        (telemetry_json, review_run_id),
     )
 
 
@@ -896,8 +1187,6 @@ def complete_review_run(
     *,
     review_run_id: int,
     completed_at: str,
-    raw_bundle_markdown: str | None = None,
-    debug_log: str | None = None,
     telemetry_json: str | None = None,
 ) -> None:
     conn.execute(
@@ -905,13 +1194,11 @@ def complete_review_run(
         UPDATE review_runs
         SET status = 'completed',
             completed_at = ?,
-            raw_bundle_markdown = COALESCE(?, raw_bundle_markdown),
-            debug_log = COALESCE(?, debug_log),
             telemetry_json = COALESCE(?, telemetry_json),
             failure_reason = NULL
         WHERE review_run_id = ?
         """,
-        (completed_at, raw_bundle_markdown, debug_log, telemetry_json, review_run_id),
+        (completed_at, telemetry_json, review_run_id),
     )
 
 
@@ -921,8 +1208,6 @@ def fail_review_run(
     review_run_id: int,
     failure_reason: str,
     completed_at: str,
-    raw_bundle_markdown: str | None = None,
-    debug_log: str | None = None,
     telemetry_json: str | None = None,
 ) -> None:
     conn.execute(
@@ -931,16 +1216,12 @@ def fail_review_run(
         SET status = 'failed',
             completed_at = ?,
             failure_reason = ?,
-            raw_bundle_markdown = COALESCE(?, raw_bundle_markdown),
-            debug_log = COALESCE(?, debug_log),
             telemetry_json = COALESCE(?, telemetry_json)
         WHERE review_run_id = ?
         """,
         (
             completed_at,
             failure_reason,
-            raw_bundle_markdown,
-            debug_log,
             telemetry_json,
             review_run_id,
         ),
@@ -980,16 +1261,12 @@ def complete_review_pairs(
             UPDATE review_pairs
             SET pair_status = 'completed',
                 decision = ?,
-                rationale_markdown = ?,
-                evidence_json = ?,
                 reviewed_at = ?,
                 review_kind = ?
             WHERE review_pair_id = ?
             """,
             (
                 normalized_decision,
-                review_pair.rationale_markdown,
-                review_pair.evidence_json,
                 review_pair.reviewed_at or reviewed_at,
                 review_pair.review_kind,
                 requested_pair.review_pair_id,
@@ -1041,9 +1318,6 @@ def append_acceptance_event(
     gate_path: str,
     model_partition: str,
     accepted_review_pair_id: int | None,
-    accepted_note_sha: str,
-    accepted_note_commit: str | None,
-    accepted_gate_sha: str,
     accepted_note_snapshot_id: int | None = None,
     accepted_gate_snapshot_id: int | None = None,
     accepted_at: str,
@@ -1056,23 +1330,17 @@ def append_acceptance_event(
             gate_path,
             model_partition,
             accepted_review_pair_id,
-            accepted_note_sha,
-            accepted_note_commit,
-            accepted_gate_sha,
             accepted_note_snapshot_id,
             accepted_gate_snapshot_id,
             accepted_at,
             acceptance_kind
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         """,
         (
             note_path,
             gate_path,
             model_partition,
             accepted_review_pair_id,
-            accepted_note_sha,
-            accepted_note_commit,
-            accepted_gate_sha,
             accepted_note_snapshot_id,
             accepted_gate_snapshot_id,
             accepted_at,
@@ -1181,11 +1449,7 @@ def load_review_pairs_for_note(
             pair_ordinal,
             pair_status,
             decision,
-            rationale_markdown,
-            evidence_json,
-            gate_sha,
-            reviewed_note_sha,
-            reviewed_note_commit,
+            result_path,
             reviewed_note_snapshot_id,
             reviewed_gate_snapshot_id,
             reviewed_at,
@@ -1217,11 +1481,7 @@ def load_latest_completed_review_pair(
             pair_ordinal,
             pair_status,
             decision,
-            rationale_markdown,
-            evidence_json,
-            gate_sha,
-            reviewed_note_sha,
-            reviewed_note_commit,
+            result_path,
             reviewed_note_snapshot_id,
             reviewed_gate_snapshot_id,
             reviewed_at,
@@ -1279,11 +1539,7 @@ def load_effective_review_pair_map(
             COALESCE(accepted.pair_ordinal, latest.pair_ordinal) AS pair_ordinal,
             COALESCE(accepted.pair_status, latest.pair_status) AS pair_status,
             COALESCE(accepted.decision, latest.decision) AS decision,
-            COALESCE(accepted.rationale_markdown, latest.rationale_markdown) AS rationale_markdown,
-            COALESCE(accepted.evidence_json, latest.evidence_json) AS evidence_json,
-            COALESCE(accepted.gate_sha, latest.gate_sha) AS gate_sha,
-            COALESCE(accepted.reviewed_note_sha, latest.reviewed_note_sha) AS reviewed_note_sha,
-            COALESCE(accepted.reviewed_note_commit, latest.reviewed_note_commit) AS reviewed_note_commit,
+            COALESCE(accepted.result_path, latest.result_path) AS result_path,
             COALESCE(accepted.reviewed_note_snapshot_id, latest.reviewed_note_snapshot_id) AS reviewed_note_snapshot_id,
             COALESCE(accepted.reviewed_gate_snapshot_id, latest.reviewed_gate_snapshot_id) AS reviewed_gate_snapshot_id,
             COALESCE(accepted.reviewed_at, latest.reviewed_at) AS reviewed_at,

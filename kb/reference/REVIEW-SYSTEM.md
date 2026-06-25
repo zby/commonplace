@@ -9,7 +9,7 @@ status: current
 
 The review system stores per-pair review state in a local SQLite database while keeping notes and gate definitions as markdown files in the repo.
 
-During the review-freshness migration, new review and ack writes also snapshot the exact note and gate file text used for the accepted baseline. The legacy SHA columns remain until the selector flips fully to snapshot comparison and the destructive cleanup drops them.
+Review freshness is independent of Git. Review creation, full-review acceptance, and trivial ack store DB-owned snapshots of the exact note and gate text that form the accepted baseline. Selectors compare current file text against those snapshot hashes.
 
 This system is experimental and opt-in. It is not part of the default note-writing flow, and reviews should not be treated as always-on checks.
 
@@ -25,7 +25,7 @@ It is also a scoped exception to the repo's file-first design. The motivation fo
 
 **Review pair.** One requested `(note_path, gate_path)` pair inside a review run. This is the stored unit of review output and acceptance.
 
-**Acceptance event.** An append-only event recording the accepted note sha and gate sha for one `(note_path, gate_path, model_partition)` key.
+**Acceptance event.** An append-only event recording the accepted note and gate snapshot IDs for one `(note_path, gate_path, model_partition)` key.
 
 **Current acceptance.** The latest acceptance event for one key. The selector queries this derived state rather than mutable review-file metadata.
 
@@ -55,7 +55,7 @@ Primary tables:
   - stores exact UTF-8 text when the snapshot must be reusable for prompt rendering or diffing
 - `review_pairs`
   - one row per requested `(note_path, gate_path)` pair inside a run
-  - stores pair status (`pending`, `completed`, `missing`), decision, rationale markdown, explicit `model_partition`, reviewed note/gate snapshot IDs, and transitional legacy SHA fields
+  - stores pair status (`pending`, `completed`, `missing`), decision, rationale markdown, explicit `model_partition`, and reviewed note/gate snapshot IDs
 - `acceptance_events`
   - append-only acceptance history
   - records the accepted baseline for selector and ack
@@ -76,7 +76,7 @@ The Python layer assigns the canonical DB statuses.
 - `review_pairs.pair_status` is normalized into lowercase enum values: `pending`, `completed`, `missing`
 - `review_runs.status` is normalized into lowercase enum values: `running`, `completed`, `failed`
 
-The human-readable `rationale_markdown` is not canonical state. It may use different casing or wording inside the review body, for example `## Result: PASS` or `- WARN: ...`. That is acceptable. Treat the DB columns as the source of truth; review-body result lines are parse inputs and readability affordances, not the canonical status layer.
+The human-readable review body is not canonical state. Current write paths store it in the per-pair result file named by `review_pairs.result_path`. The DB decision/status columns are the source of truth; review-body result lines such as `## Result: PASS` or `- WARN: ...` are parse inputs and readability affordances.
 
 For stored gate review prose, the canonical layout places the parseable `## Result:` line at the end of the review block.
 
@@ -90,11 +90,12 @@ Three artifacts participate:
 2. the current gate file
 3. the latest acceptance event for that `(note_path, gate_path, model_partition)` key
 
-For rows with accepted snapshots, freshness compares SHA-256 over the current file text against the accepted snapshot hashes and reconstructs note diffs from accepted snapshot text. Rows that have not been backfilled yet still use the transitional legacy Git-blob SHA fields.
+Freshness compares SHA-256 over the current file text against the accepted snapshot hashes and reconstructs note diffs from accepted snapshot text. Migrated rows whose old baseline could not be backfilled have null accepted snapshots and report as `missing-review` with diff unavailable.
 
 Rules:
 
 - no acceptance row -> `missing-review`
+- accepted note or gate snapshot is missing -> `missing-review`
 - accepted gate snapshot hash differs from the current gate hash -> `gate-changed`
 - accepted note snapshot hash differs from the current note hash -> `note-changed`
 - otherwise the pair is fresh
@@ -123,16 +124,16 @@ The run directory also carries `MANIFEST.json`. The manifest is created with pen
 A full review write contributes:
 
 1. one `review_pairs` row per requested pair
-2. one `acceptance_events` row per completed pair with `acceptance_kind = 'full-review'`
+2. `review_runs.bundle_output_path` pointing to the run bundle artifact
+3. `review_pairs.result_path` pointing to each per-pair review artifact
+4. one `acceptance_events` row per completed pair with `acceptance_kind = 'full-review'`
 
-The important invariant is that the stored note and gate snapshot IDs identify the exact file text used during prompt generation. During the migration, legacy SHA columns are still populated as transitional selector inputs.
+The important invariant is that the stored note and gate snapshot IDs identify the exact file text used during prompt generation.
 
 ### Trivial-change acknowledgement
 
 `ack` no longer rewrites a markdown file. It appends a new `acceptance_events` row with:
 
-- the current note sha
-- the current gate sha
 - snapshot IDs for the current note and gate text
 - `acceptance_kind = 'trivial-change-ack'`
 
@@ -148,8 +149,8 @@ The selector still answers:
 
 It computes:
 
-- current note sha from git
-- current gate sha from gate files
+- current note content hash from the current note file
+- current gate content hash from the current gate file
 - requested model partition from `--model`
 
 It then compares those values against `current_gate_acceptances`.
@@ -178,15 +179,16 @@ The storage backend changed from metadata rewrites to append-only DB events.
 
 ### Render/export
 
-Human-readable inspection remains required, but it is now a derived view from DB rows rather than canonical state.
+Human-readable inspection remains required, but it is now a derived view from DB rows and artifact files rather than canonical DB body state.
 
 ### Warn/fix queue
 
 `commonplace-warn-selector` exists to build a fixing queue from the current review state.
 
 - It reads current accepted review pairs across all models from the DB
-- For acceptance rows without an attached review body, it falls back to the latest completed review pair for that accepted `(note_path, gate_path, model_partition)` key
-- It skips warn findings whose gate changed since acceptance, using accepted gate snapshot hashes when available and legacy gate SHAs for rows not yet backfilled
+- For acceptance rows without an attached review pair, it falls back to the latest completed review pair for that accepted `(note_path, gate_path, model_partition)` key
+- It loads review text from `review_pairs.result_path`; if the file is missing, rationale text is unavailable
+- It skips warn findings whose gate changed since acceptance, using accepted gate snapshot hashes
 - It selects actionable findings from reviews whose canonical decision is `warn`
 - It collapses model partitions to one current entry per `(note_path, gate_path)`, choosing the latest accepted warn review for that gate
 

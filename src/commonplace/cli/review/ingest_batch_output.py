@@ -32,14 +32,14 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     input_path = Path(args.input_file)
     if not input_path.is_file():
         parser.error(f"input file not found: {args.input_file}")
-    raw_bundle_markdown = input_path.read_text(encoding="utf-8")
+    bundle_markdown = input_path.read_text(encoding="utf-8")
 
     try:
         completed, failed = ingest_batch_output(
             repo_root=repo_root,
             db_path=db_path,
             review_run_id=args.review_run_id,
-            raw_bundle_markdown=raw_bundle_markdown,
+            bundle_markdown=bundle_markdown,
         )
     except ValueError as exc:
         print(str(exc), file=sys.stderr)
