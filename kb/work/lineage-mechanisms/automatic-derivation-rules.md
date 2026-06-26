@@ -17,16 +17,18 @@ The bitter-lesson-compatible posture is: generate broadly, verify cheaply where 
 
 ## Content Files And Lineage State
 
-The review subsystem suggests a general storage split:
+The extracted note `kb/notes/many-to-many-edge-state-is-where-files-yield-to-a-database.md` gives the storage predicate this draft should use. Files remain the default for content and owner-local lineage. Relational structure is earned when automatic dependency maintenance creates churning state on a many-to-many edge with no natural owner file. That structure may begin as edge files, manifests, or generated indexes; a real database is earned when lookup, churn, and consistency demands outgrow the filesystem version.
+
+The review subsystem demonstrates the split:
 
 - artifact content stays in git-backed files when humans and agents need readable, editable canonical material;
-- lineage events and freshness state move to a queryable store when automation needs indexed current-state lookup, append-only events, selectors, queues, or high-churn metadata.
+- lineage events and freshness state move to an edge-state surface when automation needs indexed current-state lookup over churning many-to-many edge state.
 
-Review markdown files are still useful report outputs, but review acceptance/freshness lineage belongs in SQLite because selectors ask stateful questions. A future artifact-lineage store could apply the same split to notes, source ingests, agent-memory-system reviews, compiled views, cues, and merge-back edits without moving those artifacts' content out of git.
+Review markdown files are still useful report outputs, but review acceptance/freshness lineage belongs in SQLite because selectors ask stateful questions about review edges. Future edge-state surfaces should be investigated where other artifact classes develop the same shape: compiled cues over many notes, source-to-derived refresh meshes, or other automatic dependency maintainers.
 
-The review-specific storage case is extracted in `review-lineage-storage-case.md`. That document tests whether the same behavior could be implemented with markdown review files, JSON/YAML run manifests, append-only event ledgers, and generated current-state indexes instead of SQLite as the canonical store.
+The review-specific storage case now lives in [src-architecture-alternatives/review-lineage-storage-case.md](../src-architecture-alternatives/review-lineage-storage-case.md). That document tests whether the same behavior could be implemented with markdown review files, JSON/YAML run manifests, append-only event ledgers, and generated current-state indexes instead of SQLite as the canonical store.
 
-The candidate store would track facts like:
+The candidate edge-state surface for any future many-to-many dependency mesh would track facts like:
 
 - artifact path, type, and version/hash;
 - source dependencies and source versions;
@@ -36,7 +38,21 @@ The candidate store would track facts like:
 - regeneration commands or responsible producers;
 - retirement, supersession, or direct-edit events.
 
-The open design question is whether this remains review-only, becomes a git-tracked ledger, or becomes a SQLite lineage database for all artifacts.
+The open design question is not "DB for all artifacts." It is which automatic dependency mechanisms cross the many-to-many/churning-edge boundary and what implementation weight they earn: edge files, generated index, purpose-built DB, or generic lineage DB.
+
+## Model Provenance
+
+Derivations are model-conditioned, but the model belongs to the derivation event or retained derivative, not automatically to the durable artifact being edited. The focused treatment is in `model-provenance.md`. The current review DB placement is not assumed optimal for every derivative type; retained generated artifacts may need model provenance in frontmatter.
+
+The rule for this workshop:
+
+- retained one-shot derivatives should record the model/runner/prompt or generator metadata that produced them;
+- generated reports that remain inspectable should carry model provenance in frontmatter, run manifests, or DB rows, with frontmatter especially plausible for typed standalone derivatives;
+- review freshness is keyed by `(note_path, gate_path, model_partition)` because the gate note path identifies the review contract and a model's review acceptance does not transfer to another model;
+- canonical notes revised from generated reports should not grow a "last edited by model" field; if model provenance matters, record it in the commit message, merge-back event, or lineage ledger;
+- deterministic generated views should record the generator/tool version rather than model metadata.
+
+This keeps model provenance where it is useful. A report's model is part of the report's identity as a derivation. A mature note has many edit events and should not pretend its current text is "by" the last model that touched it.
 
 ## Draft Git Retention Rules
 
@@ -47,8 +63,9 @@ The open design question is whether this remains review-only, becomes a git-trac
 | Report producers and type contracts | Yes. | They define the repeatable derivation process. |
 | Cheap candidate reports | Usually no. | Connect reports and many critique/friction reports are working context; rerun beats preserving churn. |
 | Durable source analyses | Yes. | Ingest reports and agent-memory-system reviews are derived, but they are independently useful durable analysis. |
+| Model provenance for retained derivatives | Yes, in the derivative artifact or run manifest. | One-shot generated artifacts need producer provenance; canonical notes need event provenance instead. |
 | Deterministic generated views | No, unless a runtime needs the file and a validator checks it. | Rebuildable truth should be checked or absent. |
-| High-churn operational lineage state | Usually no; use a state store. | Review acceptance/freshness lineage belongs in SQLite because selectors query current state and append events. That may generalize to all artifact lineage. Review prose can still exist as generated markdown report output. |
+| High-churn many-to-many edge state | Usually no; use edge files, a generated index, or a database. | Review acceptance/freshness lineage belongs in SQLite because selectors query current state over review edges. Similar automatic dependency meshes should expect relational edge-state, with implementation weight chosen by churn and lookup needs. Review prose can still exist as generated markdown report output. |
 | Behavior-facing compiled views | Only with explicit source hash, generator, regeneration rule, and direct-edit policy. | A compiled cue, prompt, or skill projection must not drift into independent policy. |
 | Merge-back provenance | Maybe not the report, but yes to enough provenance. | If a report causes a note edit, the new note version is canonical; the derivation event still needs to be recoverable. |
 

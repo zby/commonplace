@@ -29,6 +29,7 @@ The extracted observations are in [extracted-observations.md](./extracted-observ
 - `done` - observation is already reflected in the current worktree.
 - `partial` - the obvious immediate implementation exists, but a residual action remains.
 - `open` - still actionable.
+- `moved` - follow-up was moved into a more specific workshop.
 - `watch` - useful signal, but no immediate edit is clearly warranted.
 - `not-actionable` - capture/tooling limitation or future-only condition.
 
@@ -51,15 +52,15 @@ The extracted observations are in [extracted-observations.md](./extracted-observ
 | not-actionable | Scholarly-critique snapshot lacks precise table-cell structure. | Current snapshot is adequate for prose/caption capture; precise values require the source HTML/PDF. | Only improve snapshot tooling if this recurs. |
 | done | `borretti-human-routers...` had no ingest companion. | `borretti-human-routers-of-machine-words.ingest.md` now exists. | Remaining synthesis belongs to Borretti-cluster note triage, not ingest creation. |
 | not-actionable | PDF extraction artifacts in automata/world-model and long-context-rot snapshots. | These are capture-quality limitations, not graph-maintenance actions. | Track only if PDF capture quality becomes a recurring tooling issue. |
-| partial | Claude dynamic-workflows docs and practitioner article should cross-reference. | The agentic-system analysis links both snapshots; the docs ingest names the paired source and future `compares-with` work. | Decide whether source-to-source `compares-with` belongs in a future synthesis note/ingest revision. |
+| moved | Claude dynamic-workflows docs and practitioner article should cross-reference. | The agentic-system analysis links both snapshots; the docs ingest names the paired source and future `compares-with` work. | Moved to `kb/work/lineage-mechanisms/` as a source-to-source lineage case. |
 | done | `fernando-borretti-human-bottlenecks` had no ingest companion. | `fernando-borretti-human-bottlenecks.ingest.md` now exists. | Remaining action is synthesis selection across the two Borretti ingests. |
 | open | Memory-sharing privacy from the human-to-AI memory survey has no KB note. | Search found shared-memory mentions but no memory-sharing/privacy treatment. | Decide whether "collective privacy" is in scope for Commonplace or only source context. |
-| partial | `how-to-build-your-own-agent-harness...` had no ingest and exposed a sources-label/theory gap. | The ingest exists and records component replaceability as extractable value. `kb/sources/COLLECTION.md` still has no `contrasts`/`parallels` source-to-note label. | Decide whether to add source-link label guidance and whether to write the component-replaceability note. |
+| moved | `how-to-build-your-own-agent-harness...` had no ingest and exposed a sources-label/theory gap. | The ingest exists and records component replaceability as extractable value. `kb/sources/COLLECTION.md` still has no `contrasts`/`parallels` source-to-note label. | Moved to `kb/work/lineage-mechanisms/` as a source-to-note relation-label case. |
 | done | Faithful Self-Evolvers citations pointed at arXiv v2 instead of the local v3 snapshot/ingest. | The three note citations now point at the local snapshot/ingest paths. | None. |
-| partial | `the-log-is-the-agent...` had no ingest and overlaps `scaling-managed-agents...`. | The ingest now exists. Near-duplicate/cross-reference handling still needs a targeted comparison pass. | Decide whether to cross-reference the two ingests and extract the sovereignty/lock-in distinction. |
+| moved | `the-log-is-the-agent...` had no ingest and overlaps `scaling-managed-agents...`. | The ingest now exists. Near-duplicate/cross-reference handling still needs a targeted comparison pass. | Moved to `kb/work/lineage-mechanisms/` as a near-duplicate ingest lineage case. |
 | not-actionable | Long-context-rot PDF capture contains raw `pdftotext -layout` artifacts. | Snapshot is faithful enough; cleaner PDF-to-markdown is a tooling improvement only if repeated. | Track under snapshot tooling if it recurs. |
-| partial | Text-optimization source had no ingest and surfaced "update-time compute" plus external-cognition lineage gaps. | `we-should-take-text-optimization-more-seriously.ingest.md` now exists and records both gaps. No `update-time compute` note/definition exists. | Decide whether `update-time compute` should become a definition/note. |
-| partial | Where-it-lives source lacked ingest and appeared to need attribution edges from the vocabulary notes. | The ingest exists and corrects the direction: the paper was distilled from the notes, so note-to-paper `derived-from` is wrong. The sovereignty-risk axis remains open. | Write a sovereignty-risk synthesis only if it changes artifact-analysis practice. |
+| moved | Text-optimization source had no ingest and surfaced "update-time compute" plus external-cognition lineage gaps. | `we-should-take-text-optimization-more-seriously.ingest.md` now exists and records both gaps. No `update-time compute` note/definition exists. | Moved to `kb/work/lineage-mechanisms/` as an external-cognition lineage case. |
+| moved | Where-it-lives source lacked ingest and appeared to need attribution edges from the vocabulary notes. | The ingest exists and corrects the direction: the paper was distilled from the notes, so note-to-paper `derived-from` is wrong. The sovereignty-risk axis remains open. | Moved to `kb/work/lineage-mechanisms/` as the main inverse-lineage case. |
 
 ## Reports Without Actionable Maintenance Text
 

@@ -6,6 +6,8 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
+- [lineage-mechanisms](./lineage-mechanisms/README.md) — revising lineage mechanisms across sources, generated reports, distillation records, report persistence, and source-to-source/source-to-note relation labels
+- [src-architecture-alternatives](./src-architecture-alternatives/README.md) — alternative architectures for `src/commonplace/` from a full code read; active thread is an append-only event log as review-store source of truth with acceptance events that embed their snapshots
 - [connect-maintenance-observations](./connect-maintenance-observations/README.md) — triaging maintenance observations extracted from recent connect reports and separating already-implemented items from open follow-up work
 - [epistack-competition](./epistack-competition/README.md) — framework-side pointer to the sibling `epistack-casebooks` repo (FLF competition entry): what it's for and the `backlog-to-commonplace.md` protocol for moving ideas between the two repos
 - [agent-note-improvement](./agent-note-improvement/README.md) — testing instructions that help agents improve weak existing notes by comparing an older weak revision against a later accepted revision

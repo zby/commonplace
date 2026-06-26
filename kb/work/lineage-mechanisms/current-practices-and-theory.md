@@ -25,7 +25,7 @@ The key implication is that lineage is not "where did this file come from?" in a
 | Agent-memory-system reviews | Code-grounded reviews use a prepared `source_dir`, inspect an external repository checkout, and record source tier, source identity, reviewed revision, commit-pinned citations, and optional quote anchors. | The review note is durable derived analysis. The source repository remains external source material rather than a KB snapshot. | Need a general rule for external git-backed sources: when revision-pinned pointers are enough, when snapshots are required, and how freshness is reviewed. |
 | Connect reports | `cp-skill-connect` writes `kb/reports/connect/<collection>/<artifact>.connect.md`; reports are generated, gitignored, and candidate-only. | Connect reports are immediate downstream context, not durable graph state. Their maintenance observations need explicit promotion. | Generated reports can accumulate important signals without durable ownership until a workshop like connect-maintenance extracts them. |
 | Report types | `kb/reports/types/connect-report.md` and schema are tracked even though report instances are ignored. | The report contract is durable methodology; report instances are working outputs. | `kb/reports/` mixes tracked methodology files with ignored generated instances, so "reports are ignored" is not the whole rule. |
-| Reviews | Review markdown files remain generated report outputs, while canonical lineage/freshness/acceptance state lives in SQLite acceptance events. Freshness compares current note/gate SHAs to accepted SHAs. | Lineage is explicit for review pairs: note SHA, gate SHA, model partition, acceptance event. | Report files are readable review artifacts, but selectors bind on DB state; the DB/file split is a special exception to file-first design. |
+| Reviews | Review markdown files remain generated report outputs, while canonical lineage/freshness/acceptance state lives in SQLite acceptance events. Freshness is moving from Git SHAs to DB-owned note/gate snapshot hashes. | Lineage is explicit for review pairs: note snapshot, gate snapshot, model partition, acceptance event. | Report files are readable review artifacts, but selectors bind on DB state; the DB/file split is a special exception to file-first design. |
 | Critiques and friction reports | Experimental report-only instructions write reports without acceptance/freshness state. | They create analysis artifacts that may guide edits but do not create canonical review state. | Their lineage and retention policy is weaker than reviews even though the prose may be influential. |
 | Generated indexes | Complete generated listings are build-time-only for the site; agents use committed curated heads plus scoped `rg`. | The generated listing is a derived view over frontmatter and should not become a committed source of truth. | Curated heads remain committed and can still drift; optional marks such as `complete`/`covered_by` are validator-checked. |
 | Ad-hoc distillations | Prompts, source packets, and workshop notes can package selected sources plus caller judgment before a type, schema, command, or skill exists. | They are derived artifacts even when untyped and ephemeral; if retained or reused, lineage needs to say what they compressed and what judgment they frontloaded. | Need a boundary between discardable prompt, reusable workshop artifact, promoted instruction, promoted skill, and report type. |
@@ -70,7 +70,7 @@ That separation is visible in `cp-skill-connect`: the skill explicitly says it o
 
 The automation question is what gets retained after the promotion step. A generated connect report over a note may be discarded, but if it drives an edit to that note, the resulting note version is still derivative at the update-event level. The canonical artifact is now "note after merge-back," not "report plus old note." That means lineage must distinguish artifact role from update provenance: a file can be canonical for readers while its latest version depends on automatic reports, source context, and merge decisions.
 
-The review subsystem shows why this may require a state store, not only file conventions. Review content did not stop being markdown, but review lineage moved to SQLite because selectors need indexed current-state queries and append-only acceptance events. If automatic derivation expands beyond reviews, the same shape may be needed for notes, ingests, source reviews, compiled views, cues, and merge-back edits: files hold canonical content; a lineage store holds dependency edges, source versions, generation events, freshness state, and update queues.
+The review subsystem shows why this may require relational edge-state, not only file conventions. Review content did not stop being markdown, but review lineage moved to SQLite because selectors need indexed current-state queries and append-only acceptance events over a changing note/gate relation. If automatic derivation expands beyond reviews, the same shape may be needed for notes, ingests, source reviews, compiled views, cues, and merge-back edits: files hold canonical content; an edge-state surface holds dependency edges, source versions, generation events, freshness state, and update queues. That surface might begin as edge files or manifests before it earns a real DB.
 
 ## Existing Theory Inventory
 
@@ -112,13 +112,17 @@ This theory directly applies to skills, instructions, and reference artifacts di
 
 `kb/work/derivative-report-uniformity/README.md` already decided that derivative report staleness should record exact facts but decide loosely. The key principle is: strictness follows behavioral authority. Reports can be fuzzy when they are advisory; canonical review state needs stronger tracking.
 
-### Churning many-to-many edge state needs a database
+### Churning many-to-many edge state needs relational structure
 
-`kb/notes/many-to-many-edge-state-is-where-files-yield-to-a-database.md` extracts the storage rule from the review case. ADR 010 moved review state to SQLite after review artifacts stopped behaving like authored files and started behaving like operational lineage: keyed by note, gate, and model; mutated by acceptance events; queried by selectors for freshness. The extracted theory names the structural condition: churning state on an ownerless many-to-many edge.
+`kb/notes/many-to-many-edge-state-is-where-files-yield-to-a-database.md` extracts the storage rule from the review case. ADR 010 moved review state to SQLite after review artifacts stopped behaving like authored files and started behaving like operational lineage: keyed by note, gate, and model; mutated by acceptance events; queried by selectors for freshness. The extracted theory names the structural condition: churning state on an ownerless many-to-many edge. It also softens the implementation claim: a directory of edge files can represent the relation for a while, but that is already a filesystem-backed relational store, and a real database wins when keyed lookup, churn, and consistency demands exceed that surface.
 
-This should be the basis for further investigations. The artifact content can stay in git, but any future automatic dependency-maintenance mechanism that maintains freshness, acceptance, or update state over many-to-many artifact edges will practically need a relational store or a database-equivalent generated index.
+This should be the basis for further investigations. The artifact content can stay in git, but any future automatic dependency-maintenance mechanism that maintains freshness, acceptance, or update state over many-to-many artifact edges should be modeled as relational edge-state first, then assigned an implementation weight: links, edge files, generated index, or real DB.
 
-`review-lineage-storage-case.md` extracts this case for separate analysis, including whether the same operational behavior could be ported into markdown review files plus JSON/YAML manifests, append-only event ledgers, and generated current-state indexes.
+The review-specific storage case is now separated into [src-architecture-alternatives/review-lineage-storage-case.md](../src-architecture-alternatives/review-lineage-storage-case.md), including whether the same operational behavior could be ported into markdown review files plus JSON/YAML manifests, append-only event ledgers, and generated current-state indexes.
+
+### Model provenance belongs to derivation events
+
+`model-provenance.md` separates the model-conditioned derivation event from the durable artifact being edited. Review freshness is keyed by `(note_path, gate_path, model_partition)` because the gate note path identifies the review contract and model identity changes the judgment being accepted, but that model partition currently lives in lineage state, not in the note or gate files. The same rule should apply broadly with a storage decision per type: one-shot retained derivatives may need producer model metadata in frontmatter or manifests; canonical notes should not carry "last edited by model" as frontmatter because their content is revised through many events.
 
 ### Automation expands only with update mechanisms
 
@@ -184,11 +188,17 @@ A note revised from a connect report or review is derivative from its previous v
 
 Question: should Commonplace record merge-back derivation events in commit messages, a git-tracked ledger, a DB, source-side pointers, or some combination keyed by artifact authority?
 
-### 11. Complex automatic dependency maintenance may require a DB
+### 11. Complex automatic dependency maintenance may require edge-state infrastructure
 
-Review lineage moved to SQLite because files were a poor surface for current-state selectors over churning `note × gate × model` edge state. That rationale is not review-specific. Once automatic derivation happens across artifact meshes, selectors will need to ask similar questions: what sources does this artifact version depend on, which generated reports informed it, what source changes invalidate it, what update events have been accepted, and which derivatives are now stale?
+Review lineage moved to SQLite because plain files were a poor surface for current-state selectors over churning review edge state. That rationale is not review-specific. Once automatic derivation happens across artifact meshes, selectors will need to ask similar questions: what sources does this artifact version depend on, which generated reports informed it, what source changes invalidate it, what update events have been accepted, and which derivatives are now stale?
 
-Question: which future dependency-maintenance mechanisms are trees/stars/static meshes that can stay in files, and which become churning many-to-many edge-state systems that need a DB?
+Question: which future dependency-maintenance mechanisms are trees/stars/static meshes that can stay in files or links, which need filesystem-backed edge relations, and which become churning many-to-many edge-state systems that need a DB?
+
+### 12. Authored links are latent dependency edges
+
+The extracted note opens a larger question: every authored link can go stale when either endpoint changes. Most links should not be automatically maintained; many are static reader aids. But some link labels or edge types may have high disruption probability when endpoints change.
+
+Question: can Commonplace rank link and edge types by how likely endpoint changes are to invalidate them, then reserve automatic maintenance for the high-disruption classes while leaving ordinary links to on-demand review?
 
 ## Transferred Case Backlog
 
