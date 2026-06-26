@@ -51,6 +51,7 @@ class PreparedBatch:
     targets: list[NoteReviewTarget]
     pairs: list[ReviewPairRow]
     skipped: list[SkippedPair]
+    result_paths: dict[int, str]
     prompt_path: str
     bundle_output_path: str
     manifest_path: str
@@ -186,6 +187,11 @@ def prepare_review_batch(
     artifact_dir = bundle_artifact_dir(repo_root, review_run_id)
     bundle_output_path = (artifact_dir / "bundle-output.md").relative_to(repo_root).as_posix()
     artifact_dir_rel = artifact_dir.relative_to(repo_root).as_posix()
+    result_paths = result_paths_by_pair_id(
+        artifact_dir_rel=artifact_dir_rel,
+        packing=packing,
+        pairs=stored_pairs,
+    )
     try:
         prompt = render_pairs_prompt(
             notes=targets,
@@ -220,11 +226,7 @@ def prepare_review_batch(
             conn,
             review_run_id=review_run_id,
             bundle_output_path=bundle_output_path,
-            result_paths=result_paths_by_pair_id(
-                artifact_dir_rel=artifact_dir_rel,
-                packing=packing,
-                pairs=stored_pairs,
-            ),
+            result_paths=result_paths,
         )
         stored_pairs = load_review_pairs_for_run(conn, review_run_id=review_run_id)
         conn.commit()
@@ -234,6 +236,7 @@ def prepare_review_batch(
         targets=targets,
         pairs=stored_pairs,
         skipped=skipped,
+        result_paths=result_paths,
         prompt_path=prompt_path,
         bundle_output_path=bundle_output_path,
         manifest_path=manifest_path,

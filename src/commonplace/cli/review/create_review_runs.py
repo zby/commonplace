@@ -15,13 +15,10 @@ from commonplace.review.review_model import normalize_model_partition
 
 def _prepared_run_payload(
     *,
-    repo_root: Path,
     bundle: str,
     gate_ids: list[str],
     prepared: PreparedBatch,
 ) -> dict[str, object]:
-    manifest_payload = json.loads((repo_root / prepared.manifest_path).read_text(encoding="utf-8"))
-    result_paths = {item["review_pair_id"]: item["result_path"] for item in manifest_payload["pairs"]}
     gate_paths = [pair.gate_path for pair in prepared.pairs]
     artifact_dir = Path(prepared.prompt_path).parent.as_posix()
     return {
@@ -35,7 +32,7 @@ def _prepared_run_payload(
                 "note_path": pair.note_path,
                 "gate_path": pair.gate_path,
                 "status": pair.pair_status,
-                "result_path": result_paths[pair.review_pair_id],
+                "result_path": prepared.result_paths[pair.review_pair_id],
             }
             for pair in prepared.pairs
         ],
@@ -89,7 +86,6 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
             )
             runs.append(
                 _prepared_run_payload(
-                    repo_root=repo_root,
                     bundle=group.bundle,
                     gate_ids=group.gate_ids,
                     prepared=prepared,

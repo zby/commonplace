@@ -8,6 +8,7 @@ from pathlib import Path
 import pytest
 
 from commonplace.review import resolve_gates, review_db, review_target_selector
+from commonplace.review.acknowledgement import ack_pairs
 from test.commonplace.review.pair_helpers import accept_pair, insert_completed_pair
 
 from ._run_cli import run_cli
@@ -594,7 +595,7 @@ class TestAckMetadata:
         )
         assert len(stale_before) == 2
 
-        acked = review_target_selector.ack_pairs(
+        acked = ack_pairs(
             tmp_path,
             [
                 "kb/notes/stable.md:prose/source-residue",
@@ -634,7 +635,7 @@ class TestAckMetadata:
     def test_ack_allows_dirty_note_and_records_snapshot_baseline(self, tmp_path: Path) -> None:
         fixture = build_fixture(tmp_path)
         make_note(fixture["stable"], "Stable title", "\nDirty update.\n")
-        review_target_selector.ack_pairs(
+        ack_pairs(
             tmp_path,
             ["kb/notes/stable.md:prose/source-residue"],
             TEST_MODEL,
@@ -657,7 +658,7 @@ class TestAckMetadata:
         build_fixture(tmp_path)
 
         with pytest.raises(ValueError, match="invalid pair"):
-            review_target_selector.ack_pairs(
+            ack_pairs(
                 tmp_path,
                 ["kb/notes/stable.md"],
                 TEST_MODEL,
@@ -673,7 +674,7 @@ class TestAckMetadata:
         )
         assert len(stale_before) == 2
 
-        review_target_selector.ack_pairs(
+        ack_pairs(
             tmp_path,
             [
                 "kb/notes/unreviewed.md:prose/confidence-miscalibration",

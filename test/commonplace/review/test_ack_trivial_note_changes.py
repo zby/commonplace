@@ -4,8 +4,8 @@ import sqlite3
 from pathlib import Path
 
 from commonplace.review import ack_trivial_note_changes, review_db
+from commonplace.review.acknowledgement import ack_pairs
 from commonplace.review.ack_trivial_note_changes import qualifying_pairs
-from commonplace.review.review_target_selector import ack_pairs
 from test.commonplace.review.pair_helpers import accept_pair, insert_completed_pair
 
 

@@ -6,7 +6,7 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from commonplace.review.review_target_selector import ack_pairs
+from commonplace.review.acknowledgement import ack_pairs
 
 
 def build_parser() -> argparse.ArgumentParser:

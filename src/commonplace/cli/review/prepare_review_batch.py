@@ -47,8 +47,6 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     except (FileNotFoundError, ValueError) as exc:
         parser.error(str(exc))
 
-    manifest_payload = json.loads((repo_root / prepared.manifest_path).read_text(encoding="utf-8"))
-    result_paths = {item["review_pair_id"]: item["result_path"] for item in manifest_payload["pairs"]}
     payload = {
         "review_run_id": prepared.review_run_id,
         "pairs": [
@@ -57,7 +55,7 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
                 "note_path": pair.note_path,
                 "gate_path": pair.gate_path,
                 "status": pair.pair_status,
-                "result_path": result_paths[pair.review_pair_id],
+                "result_path": prepared.result_paths[pair.review_pair_id],
             }
             for pair in prepared.pairs
         ],
