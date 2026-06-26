@@ -72,8 +72,6 @@ SQLite database, default location `kb/reports/review-store.sqlite` (override wit
 - `current_gate_acceptances` — latest acceptance for each `(note_path, gate_path, model_partition)` triple
 - `stale_gate_pairs` — current acceptance states for staleness detection
 
-**Acceptance kinds:** `full-review`, `gate-migration`, `trivial-change-ack`, `migration-import`, `manual-override`
-
 ### review_model.py
 
 Encode and normalize model identifiers with reasoning effort levels.
@@ -115,7 +113,7 @@ Database operations, decision parsing, and record management. The largest module
 - `load_current_acceptances(conn) -> dict` — current acceptance state map
 
 **Lifecycle helpers:**
-- `attach_execution_data(conn, ...)` — persist telemetry, raw bundle markdown, and debug log
+- `attach_execution_data(conn, ...)` — persist telemetry
 - `record_and_finalize_run(conn, ...) -> int` — complete parsed pairs, validate coverage, complete or fail the run, and append acceptance events for completed pairs
 
 **Decision parsing (`parse_review_decision`):**
@@ -227,7 +225,7 @@ Query effective completed review pairs with `decision="warn"`, skip stale gate r
 
 ---
 
-## Repair & migration utilities
+## Maintenance Utilities
 
 These are operational commands for database maintenance. All support `--dry-run`.
 

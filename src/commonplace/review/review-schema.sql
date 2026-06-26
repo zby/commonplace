@@ -128,11 +128,6 @@ SELECT
     a.accepted_gate_text
 FROM current_gate_acceptances AS a;
 
-CREATE TABLE IF NOT EXISTS review_schema_migrations (
-    migration_name TEXT PRIMARY KEY,
-    applied_at TEXT NOT NULL
-);
-
 -- Query pattern expected for selector:
 --
 -- 1. resolve current note SHA-256 from candidate note files

@@ -49,13 +49,13 @@ Primary tables:
 
 - `review_runs`
   - one row per review invocation
-  - stores runner/model, status, packing (`note` or `gate`), telemetry, raw bundle markdown, and debug log
+  - stores runner/model, status, packing (`note` or `gate`), telemetry, and the bundle output path
 - `review_file_snapshots`
   - role-neutral snapshots of KB files by `(path, content_sha256)`
   - stores exact UTF-8 text when the snapshot must be reusable for prompt rendering or diffing
 - `review_pairs`
   - one row per requested `(note_path, gate_path)` pair inside a run
-  - stores pair status (`pending`, `completed`, `missing`), decision, rationale markdown, explicit `model_partition`, and reviewed note/gate snapshot IDs
+  - stores pair status (`pending`, `completed`, `missing`), decision, explicit `model_partition`, result path, and reviewed note/gate snapshot IDs
 - `acceptance_events`
   - append-only acceptance history
   - records the accepted baseline for selector and ack
@@ -90,7 +90,7 @@ Three artifacts participate:
 2. the current gate file
 3. the latest acceptance event for that `(note_path, gate_path, model_partition)` key
 
-Freshness compares SHA-256 over the current file text against the accepted snapshot hashes and reconstructs note diffs from accepted snapshot text. Migrated rows whose old baseline could not be backfilled have null accepted snapshots and report as `missing-review` with diff unavailable.
+Freshness compares SHA-256 over the current file text against the accepted snapshot hashes and reconstructs note diffs from accepted snapshot text. Rows with null accepted snapshots report as `missing-review` with diff unavailable.
 
 Rules:
 
