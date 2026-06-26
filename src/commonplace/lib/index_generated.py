@@ -29,6 +29,7 @@ GENERATED_HEADING_BY_SOURCE = {
     "tag": "## Other tagged notes",
     "tag-indexes": "## Other tag indexes",
 }
+URL_SCHEME_RE = re.compile(r"^[a-z][a-z0-9+.-]*:", re.IGNORECASE)
 
 
 def collect_notes_by_tag(
@@ -110,6 +111,24 @@ def extract_curated_links(curated_section: str) -> set[str]:
     return set(re.findall(r"\]\(([^)]+)\)", curated_section))
 
 
+def _display_relpath(path: Path, index_dir: Path) -> str:
+    relpath = Path(os.path.relpath(path, index_dir)).as_posix()
+    if relpath != ".." and not relpath.startswith("../"):
+        relpath = f"./{relpath}"
+    return relpath
+
+
+def _normalize_curated_link_target(target: str) -> str:
+    bare_target = target.split("#", 1)[0]
+    if not bare_target or bare_target.startswith("/") or URL_SCHEME_RE.match(bare_target):
+        return bare_target
+
+    normalized = Path(os.path.normpath(bare_target)).as_posix()
+    if normalized != ".." and not normalized.startswith("../"):
+        normalized = f"./{normalized}"
+    return normalized
+
+
 def build_generated_section(
     entries: list[tuple[Path, str, str]],
     index_dir: Path,
@@ -118,12 +137,15 @@ def build_generated_section(
 ) -> str:
     """Build a generated listing section, excluding already-curated notes."""
     lines = [f"{heading} {MARKER}", ""]
+    normalized_curated_links = (
+        {_normalize_curated_link_target(link) for link in curated_links}
+        if curated_links
+        else set()
+    )
 
     for path, title, desc in sorted(entries, key=lambda x: x[1].lower()):
-        relpath = os.path.relpath(path, index_dir)
-        if not relpath.startswith(".."):
-            relpath = f"./{relpath}"
-        if curated_links and relpath in curated_links:
+        relpath = _display_relpath(path, index_dir)
+        if relpath in normalized_curated_links:
             continue
         entry = f"- [{title}]({relpath})"
         if desc:

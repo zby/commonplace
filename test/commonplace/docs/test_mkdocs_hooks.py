@@ -84,7 +84,7 @@ tags: [kb-design]
         },
         file=SimpleNamespace(abs_src_path=str(index)),
     )
-    curated_body = "# kb-design\n\n## Notes\n\n- [Curated](./curated.md) — placed\n"
+    curated_body = "# kb-design\n\n## Notes\n\n- [Curated](curated.md) — placed\n"
 
     result = mkdocs_hooks.on_page_markdown(
         curated_body,
@@ -95,7 +95,8 @@ tags: [kb-design]
     assert "## Other tagged notes <!-- generated -->" in result
     assert "- [Tagged note](./tagged.md) - Tagged note" in result
     # Curated links are excluded from the generated tail
-    assert result.count("./curated.md") == 1
+    assert result.count("curated.md") == 1
+    assert "- [Curated note](./curated.md)" not in result
 
 
 def test_on_page_markdown_appends_tail_to_tag_readme_type(tmp_path: Path) -> None:
