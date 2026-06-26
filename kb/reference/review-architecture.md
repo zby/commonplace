@@ -44,8 +44,7 @@ This document refers to modules by their unqualified names (e.g. `run_review_bun
 ├─────────────────────────────────────────────────┤
 │  Data model                                     │
 │  review_db          review_model                │
-│  review_metadata    review-schema.sql           │
-│  paths                                          │
+│  review-schema.sql  paths                       │
 └─────────────────────────────────────────────────┘
 ```
 
@@ -83,15 +82,6 @@ Encode and normalize model identifiers with reasoning effort levels.
 - `normalize_model_partition(model_partition) -> str` — collapse known aliases such as `opus-4-6` into canonical review partitions
 - `normalize_reasoning_effort(raw) -> str | None` — validate from {low, medium, high, xhigh}
 - `build_model_partition(model, reasoning_effort) -> str` — canonical ID like `"claude-3-5-sonnet-xhigh"`
-
-### review_metadata.py
-
-Legacy review-file metadata block helpers and historical Git utility functions. New review freshness does not use Git provenance; accepted baselines live in `review_file_snapshots`.
-
-**Metadata blocks:**
-- `parse_review_metadata(review_text) -> ReviewMetadata | None` — extract `<!-- REVIEW-METADATA ... -->` blocks
-- `render_review_metadata(metadata) -> str` — generate metadata block
-- `inject_review_metadata(review_text, metadata) -> str` — insert/update metadata block
 
 ### paths.py
 

@@ -7,7 +7,7 @@ from typing import Sequence
 
 from commonplace.review import review_db
 from commonplace.review.review_db import PendingReviewPair, ReviewPairRow
-from commonplace.review.review_metadata import iso_now
+from commonplace.review.clock import iso_now
 
 
 def _run_coverage_failure(pairs: Sequence[ReviewPairRow]) -> str | None:

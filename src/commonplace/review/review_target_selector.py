@@ -21,7 +21,7 @@ from commonplace.review.review_db import (
     resolve_db_path,
     snapshot_file,
 )
-from commonplace.review.review_metadata import iso_now
+from commonplace.review.clock import iso_now
 from commonplace.review.review_model import normalize_model_partition
 
 NOTES_ROOT = Path("kb/notes")

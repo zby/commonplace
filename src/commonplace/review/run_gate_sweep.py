@@ -25,7 +25,7 @@ from commonplace.review.review_db import (
     create_run_with_pairs,
     load_review_pairs_for_run,
 )
-from commonplace.review.review_metadata import iso_now
+from commonplace.review.clock import iso_now
 from commonplace.review.review_model import normalize_model_partition
 from commonplace.review.review_target_selector import select_stale_gates
 

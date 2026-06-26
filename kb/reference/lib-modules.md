@@ -17,13 +17,13 @@ naming.py         Shared note title and filename-slug constraints
 note_parser.py    Parse markdown notes into a schema-friendly document model
 type_resolver.py  Resolve note types from scoped JSON Schema definitions
 validation.py     Deterministic validation rules for KB notes (commonplace-validate lib)
-relocation.py     Move/rename a KB note: rewrite backlinks, mkdocs config, review exports, DB rekey
+relocation.py     Move/rename a KB note: rewrite backlinks, mkdocs config, hook-owned state
 ```
 
 Dependencies:
 - `note_parser` → `frontmatter`
 - `validation` → `note_parser`, `type_resolver`, `naming`
-- `relocation` → `naming`, `commonplace.review.review_db`, `commonplace.review.review_metadata`
+- `relocation` → `naming`, `project_paths`, optional relocation hooks
 - `type_resolver` is otherwise independent (but requires external packages)
 
 ---
@@ -190,14 +190,14 @@ Batch cross-note analysis: for each note in the list, return `True` if any other
 
 ## relocation
 
-Move or rename a KB note: rewrite inbound and outbound links across the repo, update `mkdocs.yml` redirects, move the review export directory, rewrite review-metadata blocks, and rekey the review SQLite database. Used by `commonplace-relocate-note`.
+Move or rename a KB note: rewrite inbound and outbound links across the repo, update `mkdocs.yml` redirects, and delegate subsystem-specific state updates to relocation hooks. The review hook rekeys the review SQLite database. Used by `commonplace-relocate-note`.
 
 ### Public API
 
-**`relocate_note(*, repo_root: Path, note_arg: str, new_name: str | None = None, dest_path: str | None = None, apply: bool = False) -> int`**
-Top-level orchestrator. Resolves the source note from a path or unique stem, computes the destination, walks all repo markdown files to plan link rewrites, plans the review-export move and DB rekey, and either prints a dry-run plan or executes everything (file move via `git mv` if available, link rewrites, mkdocs update, DB rekey). Returns a process exit code.
+**`relocate_note(*, root: Path, note_arg: str, new_name: str | None = None, dest_path: str | None = None, apply: bool = False, hooks: Sequence[RelocationHook] | None = None) -> int`**
+Top-level orchestrator. Resolves the source note from a path or unique stem, computes the destination, walks all repo markdown files to plan link rewrites, preflights relocation hooks, and either prints a dry-run plan or executes everything (file move via `git mv` if available, link rewrites, mkdocs update, hook execution). Returns a process exit code.
 
-**`resolve_note(arg, *, repo_root, kb_root)`**
+**`resolve_note(arg, *, root)`**
 Find a note by absolute path, repo-relative path, full filename, or unique stem. Searches the entire `kb/` tree, not just `kb/notes/`, so notes can be relocated between collections.
 
 **`resolve_destination_path(source, new_name, dest_path, *, repo_root, kb_root)`**
@@ -212,10 +212,10 @@ For the note that's being moved: rewrite each of its outbound relative links so 
 **`update_mkdocs_config(content, old_docs_path, new_docs_path) -> tuple[str, list[str]]`**
 Update `mkdocs.yml` in place: rewrite any matching `nav` entries and `redirect_maps` targets, and append a new redirect entry from `old_docs_path` to `new_docs_path`. Preserves indentation and quoting style.
 
-**`collect_review_export_updates(source, destination, *, repo_root, kb_root)`**
-Plan the review-export directory move: returns the source dir, destination dir, and a dict of `{review_file: rewritten_content}` for any review files whose `<!-- REVIEW-METADATA -->` block references the old note path.
+**`plan_hooks(hooks, *, root, moves)`** / **`describe_hook_plans(plans)`** / **`execute_hook_plans(plans)`**
+Relocation hook lifecycle used by subsystem integrations such as the review DB rekey hook.
 
 **`move_path(source, destination, *, repo_root)`** / **`move_note(source, destination, *, repo_root)`**
 Move a path on disk, preferring `git mv` and falling back to `Path.rename` if git isn't available. `move_note` is a thin wrapper kept separate so tests can monkeypatch it.
 
-The smaller helpers (`format_relative_link`, `iter_markdown_tokens`, `split_link_target`, `is_relative_markdown_target`, `find_repo_markdown_files`, `reviews_root`, `repo_relative_note_path`, `encode_review_export_dir`, `review_export_dir_for_note`, `rewrite_review_export_metadata`, `is_nested_git_repo_content`) are exported but rarely interesting outside the orchestrator.
+The smaller helpers (`format_relative_link`, `iter_markdown_tokens`, `split_link_target`, `is_relative_markdown_target`, `resolve_directory`, `rewrite_links_to_moved_files`, `rebase_and_rewrite_in_moved_file`, `add_single_redirect`, `is_nested_git_repo_content`) are exported but rarely interesting outside the orchestrator.

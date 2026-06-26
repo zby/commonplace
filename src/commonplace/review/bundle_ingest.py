@@ -27,7 +27,7 @@ from commonplace.review.review_db import (
     mark_missing_pairs,
     set_run_artifact_paths,
 )
-from commonplace.review.review_metadata import iso_now
+from commonplace.review.clock import iso_now
 
 
 def parse_and_finalize_bundle_output(

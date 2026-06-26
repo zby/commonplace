@@ -31,7 +31,7 @@ from commonplace.review.review_db import (
     review_run_artifact_dir_rel,
     set_run_artifact_paths,
 )
-from commonplace.review.review_metadata import iso_now
+from commonplace.review.clock import iso_now
 from commonplace.review.review_model import build_model_partition
 from commonplace.review.runners import run_prompt
 

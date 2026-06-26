@@ -11,7 +11,7 @@ from commonplace.review.freshness import capture_review_inputs
 from commonplace.review.gate_packing import GateBundleGroup, group_requested_gates_by_bundle
 from commonplace.review.protocol.prompt import render_pairs_prompt
 from commonplace.review.review_db import connect, create_run_with_pairs, ensure_db
-from commonplace.review.review_metadata import iso_now
+from commonplace.review.clock import iso_now
 from commonplace.review.review_model import normalize_model_partition
 
 
