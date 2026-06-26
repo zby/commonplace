@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import json
 import re
+import sqlite3
 import sys
 from dataclasses import dataclass
 from pathlib import Path
@@ -22,12 +23,13 @@ from commonplace.review.finalization import record_and_finalize_run
 from commonplace.review.protocol.parser import ParsedPairBundle, parse_pair_bundle
 from commonplace.review.protocol.prompt import NoteReviewTarget, render_pairs_prompt
 from commonplace.review.review_db import (
-    PendingReviewPair,
+    ReviewPairCompletion,
     attach_execution_data,
     connect,
     fail_review_run,
     load_review_pairs_for_run,
     load_review_run,
+    mark_missing_pairs,
     review_run_artifact_dir_rel,
     set_run_artifact_paths,
 )
@@ -94,6 +96,25 @@ def write_debug_log_artifact(
         return
     artifact_dir.mkdir(parents=True, exist_ok=True)
     (artifact_dir / "debug.log").write_text(debug_log, encoding="utf-8")
+
+
+def persist_bundle_artifacts(
+    conn: sqlite3.Connection,
+    *,
+    repo_root: Path,
+    review_run_ids: list[int],
+    bundle_markdown: str,
+    debug_log: str | None = None,
+) -> None:
+    for review_run_id in review_run_ids:
+        artifact_dir = bundle_artifact_dir(repo_root, review_run_id)
+        write_run_artifacts(artifact_dir=artifact_dir, bundle_markdown=bundle_markdown)
+        write_debug_log_artifact(artifact_dir=artifact_dir, debug_log=debug_log)
+        set_run_artifact_paths(
+            conn,
+            review_run_id=review_run_id,
+            bundle_output_path=bundle_output_path_for_run(repo_root, review_run_id),
+        )
 
 
 def combine_logs(stdout: str, stderr: str) -> str | None:
@@ -223,7 +244,7 @@ def fail_running_review_runs(
 
 
 def finalize_run_from_pairs(
-    conn,
+    conn: sqlite3.Connection,
     *,
     review_run_id: int,
     pairs: tuple[tuple[str, str], ...],
@@ -233,11 +254,10 @@ def finalize_run_from_pairs(
     """Finalize one run from a parsed pair bundle. Raises ValueError on failure
     (the run is failed in the DB before raising)."""
     review_pairs = [
-        PendingReviewPair(
+        ReviewPairCompletion(
             note_path=note_path,
             gate_path=gate_path,
             decision=parsed.reviews[(note_path, gate_path)].decision,
-            rationale_markdown=parsed.reviews[(note_path, gate_path)].rationale_markdown,
         )
         for note_path, gate_path in pairs
     ]
@@ -263,6 +283,122 @@ def write_artifacts_for_run(
         packing=packing,
         pairs=pairs,
         canonical_texts=parsed.canonical_texts,
+    )
+
+
+def write_finalized_run_artifacts(
+    conn: sqlite3.Connection,
+    *,
+    repo_root: Path,
+    review_run_id: int,
+    parsed: ParsedPairBundle,
+) -> None:
+    review_run = load_review_run(conn, review_run_id=review_run_id)
+    if review_run is None:
+        return
+    updated_pairs = load_review_pairs_for_run(conn, review_run_id=review_run_id)
+    completed_pairs = tuple(
+        (pair.note_path, pair.gate_path)
+        for pair in updated_pairs
+        if pair.pair_status == "completed"
+    )
+    write_artifacts_for_run(
+        repo_root=repo_root,
+        review_run_id=review_run_id,
+        pairs=completed_pairs,
+        parsed=parsed,
+        packing=review_run.packing,
+    )
+    artifact_dir = bundle_artifact_dir(repo_root, review_run_id)
+    artifact_dir_rel = artifact_dir.relative_to(repo_root).as_posix()
+    bundle_output_path = f"{artifact_dir_rel}/bundle-output.md"
+    write_manifest(
+        repo_root=repo_root,
+        artifact_dir=artifact_dir,
+        review_run_id=review_run_id,
+        packing=review_run.packing,
+        prompt_path=f"{artifact_dir_rel}/prompt.md",
+        bundle_output_path=bundle_output_path,
+        pairs=updated_pairs,
+        failure_reason=review_run.failure_reason,
+    )
+    set_run_artifact_paths(
+        conn,
+        review_run_id=review_run_id,
+        bundle_output_path=bundle_output_path,
+        result_paths=result_paths_by_pair_id(
+            artifact_dir_rel=artifact_dir_rel,
+            packing=review_run.packing,
+            pairs=updated_pairs,
+        ),
+    )
+
+
+def fail_runs_for_bundle_parse_error(
+    conn: sqlite3.Connection,
+    *,
+    review_run_ids: list[int],
+    failure_reason: str,
+    telemetry_json: str | None = None,
+) -> None:
+    completed_at = iso_now()
+    for review_run_id in review_run_ids:
+        mark_missing_pairs(conn, review_run_id=review_run_id)
+        fail_review_run(
+            conn,
+            review_run_id=review_run_id,
+            failure_reason=failure_reason,
+            completed_at=completed_at,
+            telemetry_json=telemetry_json,
+        )
+
+
+def finalize_bundle_markdown(
+    *,
+    repo_root: Path,
+    db_path: Path,
+    run_pairs: list[RunPairs],
+    bundle_markdown: str,
+    telemetry_json: str | None = None,
+    debug_log: str | None = None,
+    raise_parse_errors: bool = False,
+    persist_output: bool = True,
+) -> tuple[list[int], list[tuple[int, str]]]:
+    review_run_ids = [run.review_run_id for run in run_pairs]
+    if persist_output:
+        with connect(db_path) as conn:
+            persist_bundle_artifacts(
+                conn,
+                repo_root=repo_root,
+                review_run_ids=review_run_ids,
+                bundle_markdown=bundle_markdown,
+                debug_log=debug_log,
+            )
+            conn.commit()
+
+    expected_pairs = [pair for run in run_pairs for pair in run.pairs]
+    try:
+        parsed = parse_pair_bundle(bundle_markdown, expected_pairs=expected_pairs)
+    except ValueError as exc:
+        reason = str(exc)
+        with connect(db_path) as conn:
+            fail_runs_for_bundle_parse_error(
+                conn,
+                review_run_ids=review_run_ids,
+                failure_reason=reason,
+                telemetry_json=telemetry_json,
+            )
+            conn.commit()
+        if raise_parse_errors:
+            raise
+        return [], [(review_run_id, reason) for review_run_id in review_run_ids]
+
+    return finalize_runs_from_parsed(
+        repo_root=repo_root,
+        db_path=db_path,
+        run_pairs=run_pairs,
+        parsed=parsed,
+        telemetry_json=telemetry_json,
     )
 
 
@@ -304,24 +440,17 @@ def execute_batch(
         raise
 
     raw_output = result.stdout
-    write_run_artifacts(
-        artifact_dir=bundle_artifact_dir(repo_root, run_ids[0]),
-        bundle_markdown=raw_output,
-    )
-    with connect(db_path) as conn:
-        set_run_artifact_paths(
-            conn,
-            review_run_id=run_ids[0],
-            bundle_output_path=bundle_output_path_for_run(repo_root, run_ids[0]),
-        )
-        conn.commit()
-
     telemetry_json = serialize_telemetry(result.telemetry)
     debug_log = combine_logs(result.stdout, result.stderr)
-    write_debug_log_artifact(
-        artifact_dir=bundle_artifact_dir(repo_root, run_ids[0]),
-        debug_log=debug_log,
-    )
+    with connect(db_path) as conn:
+        persist_bundle_artifacts(
+            conn,
+            repo_root=repo_root,
+            review_run_ids=run_ids,
+            bundle_markdown=raw_output,
+            debug_log=debug_log,
+        )
+        conn.commit()
     actual_model_partition = model_partition_from_telemetry(result.telemetry)
     if actual_model_partition is not None and actual_model_partition != model_partition:
         print(
@@ -357,24 +486,15 @@ def execute_batch(
         )
 
     expected_pairs = [(target.note_path, gate_path) for target in targets for gate_path in target.gate_paths]
-    try:
-        parsed = parse_pair_bundle(raw_output, expected_pairs=expected_pairs)
-    except ValueError as exc:
-        fail_running_review_runs(
-            db_path=db_path,
-            review_run_ids=run_ids,
-            failure_reason=str(exc),
-            telemetry_json=telemetry_json,
-        )
-        return BatchOutcome(completed=[], failed=[(rid, str(exc)) for rid in run_ids], runner_returncode=0)
-
     run_pairs = [RunPairs(review_run_id=run_ids[0], pairs=tuple(expected_pairs))]
-    completed, failed = finalize_runs_from_parsed(
+    completed, failed = finalize_bundle_markdown(
         repo_root=repo_root,
         db_path=db_path,
         run_pairs=run_pairs,
-        parsed=parsed,
+        bundle_markdown=raw_output,
         telemetry_json=telemetry_json,
+        debug_log=debug_log,
+        persist_output=False,
     )
     return BatchOutcome(completed=completed, failed=failed, runner_returncode=0)
 
@@ -395,68 +515,15 @@ def finalize_runs_from_parsed(
         telemetry_json=telemetry_json,
     )
     with connect(db_path) as conn:
-        rows_by_run = {
-            run.review_run_id: (
-                load_review_run(conn, review_run_id=run.review_run_id),
-                load_review_pairs_for_run(conn, review_run_id=run.review_run_id),
-            )
-            for run in run_pairs
-        }
-    for run in run_pairs:
-        review_run, updated_pairs = rows_by_run[run.review_run_id]
-        if review_run is None:
-            continue
-        completed_pairs = tuple(
-            (pair.note_path, pair.gate_path)
-            for pair in updated_pairs
-            if pair.pair_status == "completed"
-        )
-        write_artifacts_for_run(
-            repo_root=repo_root,
-            review_run_id=run.review_run_id,
-            pairs=completed_pairs,
-            parsed=parsed,
-            packing=review_run.packing,
-        )
-        artifact_dir = bundle_artifact_dir(repo_root, run.review_run_id)
-        artifact_dir_rel = artifact_dir.relative_to(repo_root).as_posix()
-        bundle_output_path = f"{artifact_dir_rel}/bundle-output.md"
-        write_manifest(
-            repo_root=repo_root,
-            artifact_dir=artifact_dir,
-            review_run_id=run.review_run_id,
-            packing=review_run.packing,
-            prompt_path=f"{artifact_dir_rel}/prompt.md",
-            bundle_output_path=bundle_output_path,
-            pairs=updated_pairs,
-            failure_reason=review_run.failure_reason,
-        )
-        with connect(db_path) as conn:
-            set_run_artifact_paths(
+        for run in run_pairs:
+            write_finalized_run_artifacts(
                 conn,
+                repo_root=repo_root,
                 review_run_id=run.review_run_id,
-                bundle_output_path=bundle_output_path,
-                result_paths=result_paths_by_pair_id(
-                    artifact_dir_rel=artifact_dir_rel,
-                    packing=review_run.packing,
-                    pairs=updated_pairs,
-                ),
+                parsed=parsed,
             )
-            conn.commit()
+        conn.commit()
     return completed, failed
-
-
-def missing_pairs_by_run(
-    run_pairs: list[RunPairs],
-    parsed: ParsedPairBundle,
-) -> dict[int, list[tuple[str, str]]]:
-    missing = set(parsed.missing)
-    missing_by_run: dict[int, list[tuple[str, str]]] = {}
-    for run in run_pairs:
-        run_missing = [pair for pair in run.pairs if pair in missing]
-        if run_missing:
-            missing_by_run[run.review_run_id] = run_missing
-    return missing_by_run
 
 
 def finalize_run_records_from_parsed(

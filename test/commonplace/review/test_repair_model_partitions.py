@@ -23,7 +23,7 @@ def _run_repair(repo_root: Path, db_path: Path, *, check: bool = True):
 
 def test_repair_model_partitions_rekeys_known_aliases(tmp_path: Path) -> None:
     db_path = tmp_path / "review-store.sqlite"
-    review_db.ensure_db(REPO_ROOT, db_path)
+    review_db.ensure_db(db_path)
 
     with review_db.connect(db_path) as conn:
         opus_review_pair_id = insert_completed_pair(
@@ -32,7 +32,6 @@ def test_repair_model_partitions_rekeys_known_aliases(tmp_path: Path) -> None:
             gate_id="semantic/internal-consistency",
             model_partition="opus-4-6",
             decision="pass",
-            rationale_markdown="ok\n\n## Result: PASS\n",
             reviewed_at="2026-04-10T10:01:00+02:00",
             runner="claude-code",
         )
@@ -50,7 +49,6 @@ def test_repair_model_partitions_rekeys_known_aliases(tmp_path: Path) -> None:
             gate_id="prose/source-residue",
             model_partition="claude-fable-5",
             decision="pass",
-            rationale_markdown="ok\n\n## Result: PASS\n",
             reviewed_at="2026-04-10T10:03:00+02:00",
             runner="claude-code",
         )

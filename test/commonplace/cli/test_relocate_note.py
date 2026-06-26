@@ -152,7 +152,7 @@ def test_relocate_note_apply_runs_review_relocation_hook(tmp_path: Path, monkeyp
     old_note = write(notes_root / "old-note.md", "# Old note\n")
     write(repo_root / "mkdocs.yml", "plugins:\n  - redirects:\n      redirect_maps:\n")
     db_path = kb_root / "reports" / "review-store.sqlite"
-    review_db.ensure_db(repo_root, db_path)
+    review_db.ensure_db(db_path)
     with review_db.connect(db_path) as conn:
         insert_completed_pair(
             conn,
@@ -160,7 +160,6 @@ def test_relocate_note_apply_runs_review_relocation_hook(tmp_path: Path, monkeyp
             gate_id="prose/source-residue",
             model_partition="opus-4-6",
             decision="pass",
-            rationale_markdown="ok",
             reviewed_at="2026-04-10T10:05:00+02:00",
         )
         conn.commit()

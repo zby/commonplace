@@ -158,7 +158,7 @@ def test_ensure_db_does_not_mutate_existing_review_pair_schema(tmp_path: Path) -
         conn.executescript(old_schema)
         conn.commit()
 
-    review_db.ensure_db(REPO_ROOT, db_path)
+    review_db.ensure_db(db_path)
 
     with sqlite3.connect(db_path) as conn:
         row = conn.execute(

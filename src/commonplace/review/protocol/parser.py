@@ -24,7 +24,6 @@ class ParsedPairReview:
     note_path: str
     gate_path: str
     decision: str
-    rationale_markdown: str
 
 
 @dataclass(frozen=True)
@@ -135,7 +134,6 @@ def parse_pair_bundle(
             note_path=pair[0],
             gate_path=pair[1],
             decision=decision,
-            rationale_markdown=canonical_text,
         )
 
     canonical_markdown = rewrite_pair_result_footers(bundle_markdown, canonical_texts=canonical_texts)

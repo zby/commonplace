@@ -6,11 +6,10 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from commonplace.review.bundle_ingest import parse_and_finalize_bundle_output
+from commonplace.review.batch import ingest_batch_output
 from commonplace.review.review_db import (
     connect,
     load_review_pairs_for_run,
-    load_review_run,
     prepare_review_db,
 )
 
@@ -32,30 +31,24 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
         parser.error(f"input file not found: {args.input_file}")
     bundle_markdown = input_path.read_text(encoding="utf-8")
 
-    with connect(db_path) as conn:
-        review_run = load_review_run(conn, review_run_id=args.review_run_id)
-        if review_run is None:
-            parser.error(f"review run not found: {args.review_run_id}")
-        if review_run.status != "running":
-            parser.error(f"review run is not ingestible: {review_run.status}")
-        expected_pairs = [
-            (row.note_path, row.gate_path)
-            for row in load_review_pairs_for_run(conn, review_run_id=args.review_run_id)
-        ]
+    try:
+        _, failed = ingest_batch_output(
+            repo_root=repo_root,
+            db_path=db_path,
+            review_run_id=args.review_run_id,
+            bundle_markdown=bundle_markdown,
+        )
+    except ValueError as exc:
+        parser.error(str(exc))
+    if failed:
+        parser.error("; ".join(reason for _, reason in failed))
 
     with connect(db_path) as conn:
-        try:
-            gate_count = parse_and_finalize_bundle_output(
-                conn,
-                repo_root=repo_root,
-                review_run_id=args.review_run_id,
-                bundle_markdown=bundle_markdown,
-                expected_pairs=expected_pairs,
-            )
-        except ValueError as exc:
-            conn.commit()
-            parser.error(str(exc))
-        conn.commit()
+        gate_count = sum(
+            1
+            for row in load_review_pairs_for_run(conn, review_run_id=args.review_run_id)
+            if row.pair_status == "completed"
+        )
 
     print(f"completed {args.review_run_id} {gate_count}")
     return 0

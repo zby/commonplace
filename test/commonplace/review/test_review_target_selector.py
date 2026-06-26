@@ -92,7 +92,7 @@ def seed_acceptance(
     commit: str = PLACEHOLDER_COMMIT,
 ) -> None:
     """Insert a completed review pair + acceptance as if a full review passed."""
-    review_db.ensure_db(repo_root, db_path_for(repo_root))
+    review_db.ensure_db(db_path_for(repo_root))
     gate_path = gate_abs.relative_to(repo_root).as_posix()
     with review_db.connect(db_path_for(repo_root)) as conn:
         note_snapshot = review_db.snapshot_file(conn, repo_root=repo_root, path=note_path)
@@ -103,7 +103,6 @@ def seed_acceptance(
             gate_id=gate_id,
             model_partition=TEST_MODEL,
             decision="pass",
-            rationale_markdown="Looks good.\n\n## Result: PASS\n",
             reviewed_note_snapshot_id=note_snapshot.snapshot_id,
             reviewed_gate_snapshot_id=gate_snapshot.snapshot_id,
             reviewed_at=REVIEWED_AT,
@@ -127,7 +126,7 @@ def seed_snapshot_acceptance(
     note_path: str,
     gate_path: str,
 ) -> None:
-    review_db.ensure_db(repo_root, db_path_for(repo_root))
+    review_db.ensure_db(db_path_for(repo_root))
     with review_db.connect(db_path_for(repo_root)) as conn:
         note_snapshot = review_db.snapshot_file(conn, repo_root=repo_root, path=note_path)
         gate_snapshot = review_db.snapshot_file(conn, repo_root=repo_root, path=gate_path)
@@ -151,11 +150,10 @@ def seed_snapshot_acceptance(
             conn,
             review_run_id=review_run_id,
             review_pairs=[
-                review_db.PendingReviewPair(
+                review_db.ReviewPairCompletion(
                     note_path=note_path,
                     gate_path=gate_path,
                     decision="pass",
-                    rationale_markdown="Looks good.\n\n## Result: PASS\n",
                     reviewed_at=REVIEWED_AT,
                 )
             ],

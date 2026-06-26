@@ -177,7 +177,7 @@ def select_stale_gates(
         raise ValueError("provide note paths/directories or --current")
 
     note_paths = [note_abs.relative_to(repo_root).as_posix() for note_abs in notes]
-    ensure_db(repo_root, db_path)
+    ensure_db(db_path)
     with connect(db_path) as conn:
         acceptances = load_current_acceptances(conn)
     accepted_pairs = {
@@ -266,7 +266,7 @@ def ack_pairs(
     model = normalize_model_partition(model)
     if db_path is None:
         db_path = resolve_db_path(repo_root)
-    ensure_db(repo_root, db_path)
+    ensure_db(db_path)
     acked: list[tuple[str, str]] = []
     with connect(db_path) as conn:
         for pair in pairs:

@@ -86,7 +86,7 @@ def build_fixture(
     )
 
     db_path = repo / "kb" / "reports" / "review-store.sqlite"
-    review_db.ensure_db(repo, db_path)
+    review_db.ensure_db(db_path)
     with review_db.connect(db_path) as conn:
         note_snapshot = review_db.snapshot_file(conn, repo_root=repo, path="kb/notes/sample.md")
         gate_snapshot = review_db.snapshot_file(
@@ -100,7 +100,6 @@ def build_fixture(
             gate_id=gate_id,
             model_partition=TEST_MODEL,
             decision="pass",
-            rationale_markdown="Looks good.\n\n## Result: PASS\n",
             reviewed_note_snapshot_id=note_snapshot.snapshot_id,
             reviewed_gate_snapshot_id=gate_snapshot.snapshot_id,
             reviewed_at="2026-04-01T00:00:00+00:00",
@@ -121,7 +120,7 @@ def build_fixture(
 
 
 def seed_snapshot_review(repo: Path, db_path: Path, *, note_path: str, gate_path: str) -> None:
-    review_db.ensure_db(repo, db_path)
+    review_db.ensure_db(db_path)
     with review_db.connect(db_path) as conn:
         note_snapshot = review_db.snapshot_file(conn, repo_root=repo, path=note_path)
         gate_snapshot = review_db.snapshot_file(conn, repo_root=repo, path=gate_path)
@@ -145,11 +144,10 @@ def seed_snapshot_review(repo: Path, db_path: Path, *, note_path: str, gate_path
             conn,
             review_run_id=review_run_id,
             review_pairs=[
-                review_db.PendingReviewPair(
+                review_db.ReviewPairCompletion(
                     note_path=note_path,
                     gate_path=gate_path,
                     decision="pass",
-                    rationale_markdown="Looks good.\n\n## Result: PASS\n",
                     reviewed_at="2026-04-01T00:00:00+00:00",
                 )
             ],
@@ -330,7 +328,7 @@ def test_qualifying_pairs_skips_rows_without_snapshot_text(tmp_path: Path) -> No
     )
 
     db_path = repo / "kb" / "reports" / "review-store.sqlite"
-    review_db.ensure_db(repo, db_path)
+    review_db.ensure_db(db_path)
     with review_db.connect(db_path) as conn:
         note_snapshot = review_db.snapshot_file(conn, repo_root=repo, path="kb/notes/sample.md")
         gate_snapshot = review_db.snapshot_file(
@@ -348,7 +346,6 @@ def test_qualifying_pairs_skips_rows_without_snapshot_text(tmp_path: Path) -> No
             gate_id="prose/source-residue",
             model_partition=TEST_MODEL,
             decision="pass",
-            rationale_markdown="Looks good.\n\n## Result: PASS\n",
             reviewed_note_snapshot_id=note_snapshot.snapshot_id,
             reviewed_gate_snapshot_id=gate_snapshot.snapshot_id,
             reviewed_at="2026-04-04T08:35:54+02:00",

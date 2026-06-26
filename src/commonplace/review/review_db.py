@@ -93,11 +93,10 @@ class ReviewPairRequest:
 
 
 @dataclass(frozen=True)
-class PendingReviewPair:
+class ReviewPairCompletion:
     note_path: str
     gate_path: str
     decision: str
-    rationale_markdown: str
     reviewed_at: str | None = None
 
 
@@ -141,15 +140,15 @@ def resolve_db_path(repo_root: Path, db_override: str | None = None) -> Path:
     return repo_root / DEFAULT_DB_PATH
 
 
-def ensure_db(repo_root: Path, db_path: Path) -> None:
+def ensure_db(db_path: Path) -> None:
     with resources.as_file(resources.files("commonplace.review") / SCHEMA_PATH) as schema_path:
-        init_db(db_path, schema_path, repo_root=repo_root)
+        init_db(db_path, schema_path)
 
 
 def prepare_review_db(repo_root: Path, db_override: str | None = None) -> Path:
     """Resolve the review DB path (honoring --db override) and ensure its schema."""
     db_path = resolve_db_path(repo_root, db_override)
-    ensure_db(repo_root, db_path)
+    ensure_db(db_path)
     return db_path
 
 
@@ -157,8 +156,7 @@ def apply_schema(conn: sqlite3.Connection, schema_path: Path) -> None:
     conn.executescript(schema_path.read_text(encoding="utf-8"))
 
 
-def init_db(db_path: Path, schema_path: Path, *, repo_root: Path) -> None:
-    del repo_root
+def init_db(db_path: Path, schema_path: Path) -> None:
     db_path.parent.mkdir(parents=True, exist_ok=True)
     with connect(db_path) as conn:
         if not _table_exists(conn, "review_runs"):
@@ -559,7 +557,7 @@ def complete_review_pairs(
     conn: sqlite3.Connection,
     *,
     review_run_id: int,
-    review_pairs: Sequence[PendingReviewPair],
+    review_pairs: Sequence[ReviewPairCompletion],
     reviewed_at: str,
 ) -> list[int]:
     requested = {

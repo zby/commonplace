@@ -54,7 +54,7 @@ Fixture gate.
 
 
 def seed_warn_review(repo: Path, db_path: Path) -> None:
-    review_db.ensure_db(repo, db_path)
+    review_db.ensure_db(db_path)
     with review_db.connect(db_path) as conn:
         note_snapshot = review_db.snapshot_file(conn, repo_root=repo, path="kb/notes/sample.md")
         gate_snapshot = review_db.snapshot_file(conn, repo_root=repo, path=GATE_PATH)
@@ -78,11 +78,10 @@ def seed_warn_review(repo: Path, db_path: Path) -> None:
             conn,
             review_run_id=review_run_id,
             review_pairs=[
-                review_db.PendingReviewPair(
+                review_db.ReviewPairCompletion(
                     note_path="kb/notes/sample.md",
                     gate_path=GATE_PATH,
                     decision="warn",
-                    rationale_markdown="### Findings\n- WARN: actionable finding\n\n## Result: WARN\n",
                     reviewed_at=REVIEWED_AT,
                 )
             ],

@@ -15,7 +15,7 @@ REPO_ROOT = Path(__file__).resolve().parents[3]
 def test_ensure_db_initializes_schema_that_can_store_current_acceptance(tmp_path: Path) -> None:
     db_path = tmp_path / "review-store.sqlite"
 
-    review_db.ensure_db(REPO_ROOT, db_path)
+    review_db.ensure_db(db_path)
 
     with review_db.connect(db_path) as conn:
         review_pair_id = insert_completed_pair(
@@ -24,7 +24,6 @@ def test_ensure_db_initializes_schema_that_can_store_current_acceptance(tmp_path
             gate_id="semantic/internal-consistency",
             model_partition="opus-4-6",
             decision="pass",
-            rationale_markdown="ok",
             reviewed_at="2026-04-10T10:01:00+02:00",
         )
         accept_pair(
@@ -74,7 +73,7 @@ def test_snapshot_file_deduplicates_per_path_and_hashes_exact_utf8(tmp_path: Pat
     note.write_text("title\n\ncafe\u0301\n", encoding="utf-8")
     gate.write_text("title\n\ncafe\u0301\n", encoding="utf-8")
 
-    review_db.ensure_db(REPO_ROOT, db_path)
+    review_db.ensure_db(db_path)
 
     with review_db.connect(db_path) as conn:
         first = review_db.snapshot_file(conn, repo_root=repo, path="kb/notes/sample.md")
@@ -101,7 +100,7 @@ def test_snapshot_file_rehydrates_hash_only_snapshot_rows(tmp_path: Path) -> Non
     note.parent.mkdir(parents=True)
     note.write_text("rehydrate me\n", encoding="utf-8")
 
-    review_db.ensure_db(REPO_ROOT, db_path)
+    review_db.ensure_db(db_path)
 
     with review_db.connect(db_path) as conn:
         first = review_db.snapshot_file(conn, repo_root=repo, path="kb/notes/sample.md")
@@ -137,7 +136,7 @@ def test_prune_obsolete_snapshot_content_keeps_current_and_pending_text(tmp_path
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(content, encoding="utf-8")
 
-    review_db.ensure_db(REPO_ROOT, db_path)
+    review_db.ensure_db(db_path)
 
     with review_db.connect(db_path) as conn:
         old_note = review_db.snapshot_file(conn, repo_root=repo, path="kb/notes/old.md")
@@ -208,7 +207,7 @@ def test_current_acceptance_view_exposes_snapshot_hashes(tmp_path: Path) -> None
     note.write_text("note text\n", encoding="utf-8")
     gate.write_text("gate text\n", encoding="utf-8")
 
-    review_db.ensure_db(REPO_ROOT, db_path)
+    review_db.ensure_db(db_path)
 
     with review_db.connect(db_path) as conn:
         note_snapshot = review_db.snapshot_file(conn, repo_root=repo, path="kb/notes/sample.md")
@@ -256,7 +255,7 @@ def test_snapshot_file_rejects_non_repo_relative_paths(tmp_path: Path) -> None:
     db_path = tmp_path / "review-store.sqlite"
     repo = tmp_path / "repo"
     repo.mkdir()
-    review_db.ensure_db(REPO_ROOT, db_path)
+    review_db.ensure_db(db_path)
 
     with review_db.connect(db_path) as conn:
         with pytest.raises(ValueError, match="repo-relative"):
@@ -265,7 +264,7 @@ def test_snapshot_file_rejects_non_repo_relative_paths(tmp_path: Path) -> None:
 
 def test_rekey_note_path_updates_all_review_tables(tmp_path: Path) -> None:
     db_path = tmp_path / "review-store.sqlite"
-    review_db.ensure_db(REPO_ROOT, db_path)
+    review_db.ensure_db(db_path)
 
     with review_db.connect(db_path) as conn:
         review_pair_id = insert_completed_pair(
@@ -274,7 +273,6 @@ def test_rekey_note_path_updates_all_review_tables(tmp_path: Path) -> None:
             gate_id="semantic/internal-consistency",
             model_partition="opus-4-6",
             decision="pass",
-            rationale_markdown="ok",
             reviewed_at="2026-04-10T10:01:00+02:00",
         )
         accept_pair(

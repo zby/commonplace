@@ -73,8 +73,7 @@ def bundle_names(select_all_gates: bool, positional: list[str], repo_root: Path)
     return [positional[0]], positional[1:]
 
 
-def group_stale_gates(repo_root: Path, records: list[StaleGate]) -> list[SweepJob]:
-    del repo_root
+def group_stale_gates(records: list[StaleGate]) -> list[SweepJob]:
     grouped: dict[str, list[str]] = {}
     for record in records:
         grouped.setdefault(record.note_path, []).append(gate_id_from_stored_path(record.gate_path))
@@ -103,7 +102,7 @@ def collect_sweep_jobs(
         note_filter=note_paths or None,
         current_only=current_only,
     )
-    return group_stale_gates(repo_root, stale)
+    return group_stale_gates(stale)
 
 
 def render_bundle_review_command(*, runner: str, model: str, job: SweepJob) -> str:

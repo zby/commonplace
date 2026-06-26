@@ -114,7 +114,7 @@ def run_bundles(
     )
 
     if not dry_run:
-        ensure_db(repo_root, db_path)
+        ensure_db(db_path)
 
     for group in groups:
         status = _run_group(

@@ -19,7 +19,6 @@ def insert_completed_pair(
     gate_id: str,
     model_partition: str,
     decision: str,
-    rationale_markdown: str,
     reviewed_at: str,
     runner: str = "test-runner",
     reviewed_note_snapshot_id: int | None = None,
@@ -44,11 +43,10 @@ def insert_completed_pair(
             )
         ],
     )
-    pair = review_db.PendingReviewPair(
+    pair = review_db.ReviewPairCompletion(
         note_path=note_path,
         gate_path=gate_path,
         decision=decision,
-        rationale_markdown=rationale_markdown,
         reviewed_at=reviewed_at,
     )
     review_db.complete_review_pairs(conn, review_run_id=review_run_id, review_pairs=[pair], reviewed_at=reviewed_at)

@@ -14,7 +14,7 @@ MODEL_PARTITION = "test-model"
 
 def _prepare_db(repo: Path) -> Path:
     db_path = repo / "kb" / "reports" / "review-store.sqlite"
-    review_db.ensure_db(repo, db_path)
+    review_db.ensure_db(db_path)
     return db_path
 
 
@@ -44,11 +44,10 @@ def _insert_completed_run(
         conn,
         review_run_id=run_id,
         review_pairs=[
-            review_db.PendingReviewPair(
+            review_db.ReviewPairCompletion(
                 note_path=note_path,
                 gate_path=source_gate_path(gate_id),
                 decision="pass",
-                rationale_markdown=f"Review for {note_path} {gate_id}.",
                 reviewed_at=started_at,
             )
             for gate_id in gate_ids

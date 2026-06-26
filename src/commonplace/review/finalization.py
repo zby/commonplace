@@ -6,7 +6,7 @@ import sqlite3
 from typing import Sequence
 
 from commonplace.review import review_db
-from commonplace.review.review_db import PendingReviewPair, ReviewPairRow
+from commonplace.review.review_db import ReviewPairCompletion, ReviewPairRow
 from commonplace.review.clock import iso_now
 
 
@@ -27,7 +27,7 @@ def record_and_finalize_run(
     conn: sqlite3.Connection,
     *,
     review_run_id: int,
-    review_pairs: Sequence[PendingReviewPair] | None = None,
+    review_pairs: Sequence[ReviewPairCompletion] | None = None,
     completed_at: str | None = None,
     telemetry_json: str | None = None,
 ) -> int:
@@ -88,7 +88,7 @@ def complete_pairs_and_finalize_run(
     conn: sqlite3.Connection,
     *,
     review_run_id: int,
-    review_pairs: Sequence[PendingReviewPair],
+    review_pairs: Sequence[ReviewPairCompletion],
     completed_at: str | None = None,
     telemetry_json: str | None = None,
 ) -> int:

@@ -12,17 +12,16 @@ from __future__ import annotations
 from dataclasses import dataclass
 from pathlib import Path
 
-from commonplace.review.artifacts import result_paths_by_pair_id, write_manifest, write_pair_result_files
+from commonplace.review.artifacts import result_paths_by_pair_id, write_manifest
 from commonplace.review.executor import (
     RunPairs,
     bundle_artifact_dir,
     fail_running_review_runs,
-    finalize_run_records_from_parsed,
+    finalize_bundle_markdown,
     prepare_note_target,
 )
 from commonplace.review.freshness import capture_review_inputs
 from commonplace.review.paths import gate_id_for_path, normalize_gate_path, review_gates_dir
-from commonplace.review.protocol.parser import parse_pair_bundle
 from commonplace.review.protocol.prompt import NoteReviewTarget, render_pairs_prompt
 from commonplace.review.resolve_gates import applicable_gate_ids_for_note
 from commonplace.review.review_db import (
@@ -31,7 +30,6 @@ from commonplace.review.review_db import (
     create_run_with_pairs,
     load_review_pairs_for_run,
     load_review_run,
-    mark_missing_pairs,
     set_run_artifact_paths,
 )
 from commonplace.review.clock import iso_now
@@ -259,68 +257,10 @@ def ingest_batch_output(
         stored_pairs = load_review_pairs_for_run(conn, review_run_id=review_run_id)
 
     expected_pairs = [(pair.note_path, pair.gate_path) for pair in stored_pairs]
-    artifact_dir = bundle_artifact_dir(repo_root, review_run_id)
-    artifact_dir.mkdir(parents=True, exist_ok=True)
-    bundle_output_path = (artifact_dir / "bundle-output.md").relative_to(repo_root).as_posix()
-    artifact_dir_rel = artifact_dir.relative_to(repo_root).as_posix()
-    prompt_path = (artifact_dir / "prompt.md").relative_to(repo_root).as_posix()
-    (artifact_dir / "bundle-output.md").write_text(bundle_markdown, encoding="utf-8")
-    with connect(db_path) as conn:
-        set_run_artifact_paths(
-            conn,
-            review_run_id=review_run_id,
-            bundle_output_path=bundle_output_path,
-        )
-        conn.commit()
-
-    try:
-        parsed = parse_pair_bundle(bundle_markdown, expected_pairs=expected_pairs)
-    except ValueError as exc:
-        with connect(db_path) as conn:
-            mark_missing_pairs(conn, review_run_id=review_run_id)
-            conn.commit()
-        fail_running_review_runs(
-            db_path=db_path,
-            review_run_ids=[review_run_id],
-            failure_reason=str(exc),
-        )
-        raise
-
-    completed, failed = finalize_run_records_from_parsed(
+    return finalize_bundle_markdown(
+        repo_root=repo_root,
         db_path=db_path,
         run_pairs=[RunPairs(review_run_id=review_run_id, pairs=tuple(expected_pairs))],
-        parsed=parsed,
+        bundle_markdown=bundle_markdown,
+        raise_parse_errors=True,
     )
-
-    with connect(db_path) as conn:
-        updated_run = load_review_run(conn, review_run_id=review_run_id)
-        updated_pairs = load_review_pairs_for_run(conn, review_run_id=review_run_id)
-    write_pair_result_files(
-        artifact_dir=artifact_dir,
-        packing=review_run.packing,
-        pairs=[(pair.note_path, pair.gate_path) for pair in updated_pairs],
-        canonical_texts=parsed.canonical_texts,
-    )
-    write_manifest(
-        repo_root=repo_root,
-        artifact_dir=artifact_dir,
-        review_run_id=review_run_id,
-        packing=review_run.packing,
-        prompt_path=prompt_path,
-        bundle_output_path=bundle_output_path,
-        pairs=updated_pairs,
-        failure_reason=updated_run.failure_reason if updated_run is not None else None,
-    )
-    with connect(db_path) as conn:
-        set_run_artifact_paths(
-            conn,
-            review_run_id=review_run_id,
-            bundle_output_path=bundle_output_path,
-            result_paths=result_paths_by_pair_id(
-                artifact_dir_rel=artifact_dir_rel,
-                packing=review_run.packing,
-                pairs=updated_pairs,
-            ),
-        )
-        conn.commit()
-    return completed, failed
