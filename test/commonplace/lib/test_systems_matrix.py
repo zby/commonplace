@@ -176,21 +176,6 @@ def test_curation_none_cannot_be_mixed_with_controlled_values() -> None:
     assert "Curation operations: `none` cannot be mixed with controlled values" in flags
 
 
-def test_legacy_mixed_form_is_flagged_for_decomposition() -> None:
-    text = (
-        "# Old\n\n"
-        "**Storage substrate:** `files` — x\n"
-        "**Representational form:** `mixed` — prose and symbolic\n"
-        "**Lineage:** `authored` — x\n"
-        "**Behavioral authority:** `knowledge` — x\n"
-        "**Read-back:** `pull` — x\n"
-    )
-    row, flags = parse(text)
-    assert row["representational_form"] == ""
-    assert row["form_prose"] == "" and row["form_symbolic"] == ""  # blank, not 0
-    assert "representational_form: legacy `mixed` needs decomposition" in flags
-
-
 def test_off_vocab_single_token_flagged() -> None:
     row, flags = parse("# X\n\n**Read-back:** `sometimes` — off vocab\n")
     assert "read_back_direction: off-vocab `sometimes`" in flags

@@ -267,10 +267,6 @@ def parse_review_text(text: str, review_file: str, source_tier: str) -> tuple[di
                 present.append(value)
         if present:
             row["representational_form"] = ";".join(present)
-        elif re.search(r"`mixed`", line):  # legacy, not yet decomposed
-            for col in FORM:
-                row[col] = ""
-            flags.append("representational_form: legacy `mixed` needs decomposition")
         else:
             flags.append("representational_form: lead token has no controlled value")
 

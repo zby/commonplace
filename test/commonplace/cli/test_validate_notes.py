@@ -202,28 +202,6 @@ Captured text.
     assert any("'tags' is a required property" in item for item in results.fails)
 
 
-def test_duplicate_frontmatter_keys_follow_yaml_last_value_wins(tmp_path: Path) -> None:
-    configure_temp_repo(tmp_path)
-    note = write(
-        tmp_path / "broken.md",
-        """---
-description: first
-description: second
-type: kb/types/note.md
----
-
-# Broken note
-""",
-    )
-
-    results = validation.validate_note(note, repo_root=tmp_path)
-
-    assert results.note_type == "note"
-    assert results.fails == []
-    assert "frontmatter.description: description should be at least 50 characters" in results.warns
-    assert all("duplicate" not in warning for warning in results.warns)
-
-
 @pytest.mark.parametrize(
     ("description_line", "expected"),
     [

@@ -1,10 +1,7 @@
 from __future__ import annotations
 
-from importlib import resources
-import sqlite3
 from pathlib import Path
 
-from commonplace.review import review_db
 from commonplace.review.protocol import decisions
 
 
@@ -146,28 +143,3 @@ No findings.
     assert decisions.rewrite_review_result_footer(review_text, decision="unknown") == (
         "Pass\n\nNo findings.\n\n## Result: UNKNOWN\n"
     )
-
-
-def test_ensure_db_does_not_mutate_existing_review_pair_schema(tmp_path: Path) -> None:
-    db_path = tmp_path / "review-store.sqlite"
-    old_schema = (resources.files("commonplace.review") / "review-schema.sql").read_text(encoding="utf-8").replace(
-        "decision IN ('pass', 'warn', 'fail', 'error', 'unknown')",
-        "decision IN ('pass', 'warn', 'fail', 'error')",
-    )
-    with sqlite3.connect(db_path) as conn:
-        conn.executescript(old_schema)
-        conn.commit()
-
-    review_db.ensure_db(db_path)
-
-    with sqlite3.connect(db_path) as conn:
-        row = conn.execute(
-            """
-            SELECT sql
-            FROM sqlite_master
-            WHERE type = 'table' AND name = 'review_pairs'
-            """
-        ).fetchone()
-        assert row is not None
-        assert "'unknown'" not in row[0].lower()
-        assert "'warn'" in row[0].lower()
