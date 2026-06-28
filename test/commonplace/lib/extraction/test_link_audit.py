@@ -4,6 +4,8 @@ import re
 import sys
 from pathlib import Path
 
+import pytest
+
 
 SRC_ROOT = Path(__file__).resolve().parents[5] / "src"
 if str(SRC_ROOT) not in sys.path:
@@ -18,72 +20,57 @@ def write(path: Path, content: str) -> Path:
     return path
 
 
-def test_finds_all_links_when_no_pattern(tmp_path: Path) -> None:
-    write(tmp_path / "a.md", "see [foo](./foo.md) and [bar](https://example.com)")
+@pytest.mark.parametrize(
+    ("content", "options", "expected_urls"),
+    [
+        (
+            "see [foo](./foo.md) and [bar](https://example.com)",
+            {},
+            ("./foo.md", "https://example.com"),
+        ),
+        (
+            "[x](../sources/x.md) [y](../notes/y.md)",
+            {"url_pattern": "../sources/"},
+            ("../sources/x.md",),
+        ),
+        (
+            "[x](https://x.com) [y](http://y.org) [z](file://z)",
+            {"url_pattern": re.compile(r"^https?://")},
+            ("https://x.com", "http://y.org"),
+        ),
+        (
+            "real [link](./real.md) and `[fake](./fake.md)` example",
+            {},
+            ("./real.md",),
+        ),
+        (
+            "real [link](./real.md) and `[fake](./fake.md)` example",
+            {"include_backtick_matches": True},
+            ("./real.md", "./fake.md"),
+        ),
+    ],
+)
+def test_find_links_filters_and_backtick_handling(
+    tmp_path: Path,
+    content: str,
+    options: dict,
+    expected_urls: tuple[str, ...],
+) -> None:
+    write(tmp_path / "a.md", content)
+
+    found = link_audit.find_links(roots=[tmp_path], **options)
+
+    assert tuple(item.url for item in found) == expected_urls
+
+
+def test_occurrences_include_file_line_text_and_url(tmp_path: Path) -> None:
+    path = write(tmp_path / "a.md", "line 1\nline 2 with [the title](https://example.com/path)\n")
 
     found = link_audit.find_links(roots=[tmp_path])
 
-    assert {f.url for f in found} == {"./foo.md", "https://example.com"}
-
-
-def test_filters_by_substring_pattern(tmp_path: Path) -> None:
-    write(tmp_path / "a.md", "[x](../sources/x.md) [y](../notes/y.md)")
-
-    found = link_audit.find_links(roots=[tmp_path], url_pattern="../sources/")
-
-    assert len(found) == 1
-    assert found[0].url == "../sources/x.md"
-
-
-def test_filters_by_regex_pattern(tmp_path: Path) -> None:
-    write(tmp_path / "a.md", "[x](https://x.com) [y](http://y.org) [z](file://z)")
-
-    found = link_audit.find_links(
-        roots=[tmp_path], url_pattern=re.compile(r"^https?://")
-    )
-
-    assert len(found) == 2
-
-
-def test_skips_backtick_matches_by_default(tmp_path: Path) -> None:
-    write(
-        tmp_path / "a.md",
-        "real [link](./real.md) and `[fake](./fake.md)` example",
-    )
-
-    found = link_audit.find_links(roots=[tmp_path])
-
-    assert len(found) == 1
-    assert found[0].url == "./real.md"
-
-
-def test_includes_backtick_matches_when_requested(tmp_path: Path) -> None:
-    write(
-        tmp_path / "a.md",
-        "real [link](./real.md) and `[fake](./fake.md)` example",
-    )
-
-    found = link_audit.find_links(roots=[tmp_path], include_backtick_matches=True)
-
-    assert {f.url for f in found} == {"./real.md", "./fake.md"}
-
-
-def test_line_numbers_are_1_based(tmp_path: Path) -> None:
-    write(tmp_path / "a.md", "line 1\nline 2 with [link](./foo.md)\n")
-
-    found = link_audit.find_links(roots=[tmp_path])
-
-    assert len(found) == 1
-    assert found[0].line == 2
-
-
-def test_captures_text_and_url(tmp_path: Path) -> None:
-    write(tmp_path / "a.md", "[the title](https://example.com/path)")
-
-    found = link_audit.find_links(roots=[tmp_path])
-
-    assert found[0].text == "the title"
-    assert found[0].url == "https://example.com/path"
+    assert [(item.file, item.line, item.text, item.url) for item in found] == [
+        (path, 2, "the title", "https://example.com/path")
+    ]
 
 
 def test_recurses_subdirectories(tmp_path: Path) -> None:

@@ -3,6 +3,8 @@ from __future__ import annotations
 import sqlite3
 from pathlib import Path
 
+import pytest
+
 from commonplace.review import ack_trivial_note_changes, review_db
 from commonplace.review.acknowledgement import ack_pairs
 from commonplace.review.ack_trivial_note_changes import qualifying_pairs
@@ -170,7 +172,14 @@ def seed_snapshot_review(repo: Path, db_path: Path, *, note_path: str, gate_path
 # --- Pure-function tests: has_only_unwatched_changes ------------------------
 
 
-def _note(description: str, traits: str, tags: str, title: str, body: str) -> str:
+def _note(
+    *,
+    description: str = "Test note",
+    traits: str = "[]",
+    tags: str = "[]",
+    title: str = "Test note",
+    body: str = "Body.",
+) -> str:
     return f"""---
 description: {description}
 type: kb/types/note.md
@@ -184,49 +193,32 @@ status: current
 """
 
 
-def test_has_only_unwatched_changes_accepts_frontmatter_change_for_body_gate() -> None:
-    previous = _note("Test note", "[]", "[]", "Test note", "Body.")
-    current = _note("Test note", "[title-as-claim]", "[computational-model]", "Test note", "Body.")
+@pytest.mark.parametrize(
+    ("current_kwargs", "watches", "expected"),
+    [
+        (
+            {"traits": "[title-as-claim]", "tags": "[computational-model]"},
+            {"body"},
+            True,
+        ),
+        ({"body": "Body changed."}, {"body"}, False),
+        ({"body": "Body changed."}, {"title"}, True),
+        ({"title": "Updated title"}, {"title"}, False),
+        ({"description": "Updated description"}, {"title", "description"}, False),
+        ({"tags": "[computational-model]"}, {"title", "description"}, True),
+    ],
+)
+def test_has_only_unwatched_changes_respects_gate_watch_fields(
+    current_kwargs: dict[str, str],
+    watches: set[str],
+    expected: bool,
+) -> None:
+    previous = _note()
+    current = _note(**current_kwargs)
 
-    assert ack_trivial_note_changes.has_only_unwatched_changes(previous, current, watches={"body"})
-
-
-def test_has_only_unwatched_changes_rejects_body_change_for_body_gate() -> None:
-    previous = _note("Test note", "[]", "[]", "Test note", "Body.")
-    current = _note("Test note", "[]", "[]", "Test note", "Body changed.")
-
-    assert not ack_trivial_note_changes.has_only_unwatched_changes(previous, current, watches={"body"})
-
-
-def test_has_only_unwatched_changes_accepts_body_change_for_title_gate() -> None:
-    previous = _note("Test note", "[]", "[]", "Test note", "Body.")
-    current = _note("Test note", "[]", "[]", "Test note", "Body changed.")
-
-    assert ack_trivial_note_changes.has_only_unwatched_changes(previous, current, watches={"title"})
-
-
-def test_has_only_unwatched_changes_rejects_title_change_for_title_gate() -> None:
-    previous = _note("Test note", "[]", "[]", "Test note", "Body.")
-    current = _note("Test note", "[]", "[]", "Updated title", "Body.")
-
-    assert not ack_trivial_note_changes.has_only_unwatched_changes(previous, current, watches={"title"})
-
-
-def test_has_only_unwatched_changes_rejects_description_change_for_title_description_gate() -> None:
-    previous = _note("Test note", "[]", "[]", "Test note", "Body.")
-    current = _note("Updated description", "[]", "[]", "Test note", "Body.")
-
-    assert not ack_trivial_note_changes.has_only_unwatched_changes(
-        previous, current, watches={"title", "description"}
-    )
-
-
-def test_has_only_unwatched_changes_accepts_tag_change_for_title_description_gate() -> None:
-    previous = _note("Test note", "[]", "[]", "Test note", "Body.")
-    current = _note("Test note", "[]", "[computational-model]", "Test note", "Body.")
-
-    assert ack_trivial_note_changes.has_only_unwatched_changes(
-        previous, current, watches={"title", "description"}
+    assert (
+        ack_trivial_note_changes.has_only_unwatched_changes(previous, current, watches=watches)
+        is expected
     )
 
 
