@@ -18,8 +18,9 @@ def aggregate_field(
     """Return ``{value: [files]}`` for ``field`` across markdown files under roots.
 
     Files without frontmatter, or without the field, are skipped silently.
-    Symlinks are skipped. Values are stringified with ``str()`` for keying;
-    non-string values (lists, dicts, numbers) are stored as their ``repr()``.
+    Symlinks are skipped. String values are keyed directly. Lists are expanded
+    by string item so fields like ``tags`` group by each tag rather than by
+    Python container representation. Other non-string values are skipped.
     """
     out: dict[str, list[Path]] = defaultdict(list)
     for root in roots:
@@ -33,6 +34,12 @@ def aggregate_field(
             if field not in parsed.data:
                 continue
             value = parsed.data[field]
-            key = value if isinstance(value, str) else repr(value)
-            out[key].append(md)
+            if isinstance(value, str):
+                keys = (value,)
+            elif isinstance(value, list):
+                keys = tuple(item for item in value if isinstance(item, str))
+            else:
+                continue
+            for key in keys:
+                out[key].append(md)
     return dict(out)

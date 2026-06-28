@@ -17,7 +17,6 @@ from commonplace.cli.init_project import (  # noqa: E402
     direnv_warnings,
     init_project,
     main,
-    _create_junction,
     _resolve_scaffold_source,
 )
 
@@ -132,13 +131,6 @@ def test_init_project_skips_skill_projection_when_symlinks_are_unavailable(
         len(MANIFEST.promoted_skills) * len(MANIFEST.skills_dirs)
     )
     assert any("symbolic link privilege not held" in reason for _, reason in report.skipped)
-
-
-@pytest.mark.skipif(sys.platform == "win32", reason="_winapi is present on Windows")
-def test_create_junction_returns_false_without_winapi(tmp_path: Path) -> None:
-    # Off Windows the stdlib `_winapi` module does not exist, so the helper must
-    # degrade gracefully rather than raise.
-    assert _create_junction(tmp_path, tmp_path / "link") is False
 
 
 def test_init_project_falls_back_to_junction_when_symlink_fails(

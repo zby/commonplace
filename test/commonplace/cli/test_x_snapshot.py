@@ -27,22 +27,44 @@ class FakeClient:
 
 
 @pytest.mark.parametrize(
-    ("target_post", "posts_sorted_len", "expected_family"),
+    ("target_overrides", "recent_posts", "expected_family"),
     [
-        ({"text": "solo"}, 1, "x-post"),
-        ({"text": "opener"}, 3, "x-thread"),
-        ({"text": "link", "article": {"plain_text": "Article body."}}, 5, "x-article"),
-        ({"text": "solo", "article": {"plain_text": ""}}, 1, "x-post"),
+        ({}, {}, "x-post"),
+        (
+            {},
+            {
+                "1003": {
+                    "id": "1003",
+                    "text": "Thread reply",
+                    "author_id": "42",
+                    "created_at": "2026-04-19T10:01:00Z",
+                    "conversation_id": "1002",
+                }
+            },
+            "x-thread",
+        ),
+        (
+            {"article": {"title": "Article title", "plain_text": "Article body."}},
+            {
+                "1003": {
+                    "id": "1003",
+                    "text": "Thread reply",
+                    "author_id": "42",
+                    "created_at": "2026-04-19T10:01:00Z",
+                    "conversation_id": "1002",
+                }
+            },
+            "x-article",
+        ),
     ],
 )
-def test_classify_family(target_post: dict, posts_sorted_len: int, expected_family: str) -> None:
-    posts_sorted = [{"id": str(i)} for i in range(posts_sorted_len)]
-    assert x_snapshot._classify_family(target_post, posts_sorted) == expected_family
-
-
-def test_x_snapshot_stamps_family_tag_into_frontmatter_and_sidecar(tmp_path: Path, monkeypatch) -> None:
-    """End-to-end wiring: the classifier's output must land in both frontmatter tags
-    and the JSON sidecar. Classifier variants are covered by test_classify_family."""
+def test_x_snapshot_stamps_family_tag_into_frontmatter_and_sidecar(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    target_overrides: dict,
+    recent_posts: dict,
+    expected_family: str,
+) -> None:
     target_post = {
         "id": "1002",
         "text": "Thread opener",
@@ -50,15 +72,7 @@ def test_x_snapshot_stamps_family_tag_into_frontmatter_and_sidecar(tmp_path: Pat
         "created_at": "2026-04-19T10:00:00Z",
         "conversation_id": "1002",
     }
-    recent_posts = {
-        "1003": {
-            "id": "1003",
-            "text": "Thread reply",
-            "author_id": "42",
-            "created_at": "2026-04-19T10:01:00Z",
-            "conversation_id": "1002",
-        }
-    }
+    target_post.update(target_overrides)
     users = {"42": {"id": "42", "username": "alice", "name": "Alice"}}
     monkeypatch.setenv("X_BEARER_TOKEN", "token")
     monkeypatch.setattr(x_snapshot.xdk, "Client", FakeClient)
@@ -82,6 +96,6 @@ def test_x_snapshot_stamps_family_tag_into_frontmatter_and_sidecar(tmp_path: Pat
     sidecar = json.loads(json_path.read_text(encoding="utf-8"))
 
     assert fm["type"] == "kb/sources/types/snapshot.md"
-    assert fm["tags"] == ["x-thread"]
-    assert sidecar["family"] == "x-thread"
+    assert fm["tags"] == [expected_family]
+    assert sidecar["family"] == expected_family
     assert "type" not in sidecar

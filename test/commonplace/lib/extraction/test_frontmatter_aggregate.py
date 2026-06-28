@@ -55,12 +55,17 @@ def test_recurses_subdirectories(tmp_path: Path) -> None:
     assert set(result.keys()) == {"proposed", "accepted"}
 
 
-def test_non_string_values_use_repr(tmp_path: Path) -> None:
-    write(tmp_path / "a.md", "---\ntags:\n  - foo\n  - bar\n---\n# A\n")
+def test_list_values_group_by_string_item(tmp_path: Path) -> None:
+    first = write(tmp_path / "a.md", "---\ntags:\n  - foo\n  - bar\n---\n# A\n")
+    second = write(tmp_path / "b.md", "---\ntags:\n  - bar\n  - baz\n---\n# B\n")
 
     result = frontmatter_aggregate.aggregate_field("tags", roots=[tmp_path])
 
-    assert "['foo', 'bar']" in result
+    assert result == {
+        "foo": [first],
+        "bar": [first, second],
+        "baz": [second],
+    }
 
 
 def test_skips_symlinks(tmp_path: Path) -> None:
