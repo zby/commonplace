@@ -62,7 +62,7 @@ SQLite database, default location `kb/reports/review-store.sqlite` (override wit
 
 | Table | Purpose | Key columns |
 |---|---|---|
-| `review_runs` | Review invocations | review_run_id, model_partition, runner, status (running/completed/failed), packing, telemetry_json, bundle_output_path |
+| `review_runs` | Review invocations | review_run_id, model_partition, runner, status (queued/running/completed/failed), created_at, nullable started_at, packing, telemetry_json, bundle_output_path |
 | `review_file_snapshots` | Role-neutral file snapshots for review inputs | snapshot_id, path, content_sha256, content_text |
 | `review_pairs` | Requested and completed pair outcomes | review_pair_id, review_run_id, note_path, gate_path, pair_status, decision, snapshot IDs |
 | `acceptance_events` | Append-only acceptance log | acceptance_event_id, note_path, gate_path, model_partition, accepted_review_pair_id, snapshot IDs |
@@ -92,7 +92,7 @@ Database operations, decision parsing, and record management. The largest module
 **Connection & setup:**
 - `connect(db_path) -> Connection` — open with Row factory
 - `resolve_db_path(repo_root, db_override=None) -> Path` — resolve DB location, honoring an optional `--db` override
-- `ensure_db(repo_root, db_path)` — initialize from schema if needed
+- `ensure_db(repo_root, db_path)` — initialize from schema if needed, or migrate an existing review store through `PRAGMA user_version`
 - `prepare_review_db(repo_root, db_override=None) -> Path` — convenience helper that resolves and ensures in one call; collapses the four-step bootstrap that every CLI used to open-code
 - `snapshot_file(conn, repo_root, path)` — capture or rehydrate the exact UTF-8 file text for a repo-relative note or gate path, keyed by `(path, content_sha256)`
 
@@ -101,7 +101,7 @@ Database operations, decision parsing, and record management. The largest module
 - `rekey_note_path(conn, *, old_note_path, new_note_path) -> NotePathUpdateCounts` — update those rows in place when a note moves
 
 **CRUD operations:**
-- `create_run(conn, ...) -> int` — create a run invocation, return ID
+- `create_run(conn, ...) -> int` — create a run invocation with explicit status/timing, return ID
 - `create_review_pairs(conn, ...) -> list[int]` — insert requested pair rows
 - `create_run_with_pairs(conn, ...) -> int` — create a run and its requested pair set
 - `complete_review_pairs(conn, ...) -> list[int]` — record pair outcomes parsed from output
@@ -137,7 +137,7 @@ Multi-strategy fallback chain for extracting decisions from review markdown:
 ```
 1. resolve_gates     → expand bundle names to gate IDs, filter by note type and traits, then normalize selected gates to paths before persistence
 2. freshness.capture_review_inputs → snapshot note/gate files, produce prompt text and `ReviewPairRequest`s with snapshot IDs
-3. create_run_with_pairs → insert review_run + review_pairs (status=running), one run per prompt invocation
+3. create_run_with_pairs → insert review_run + review_pairs, one run per prompt invocation (`queued` for live-agent/orchestrator preparation, `running` for immediate subprocess execution)
 4. executor.execute_batch
    a. protocol/prompt.render_pairs_prompt → one prompt embedding each note and gate text once
    b. review_runners.run_prompt           → invoke claude-code or codex CLI
@@ -175,14 +175,14 @@ Every output block is keyed by the full (note, gate) pair:
 ### Packing callers
 
 - **`run_review_bundles.py` — note-local bundle packing.** One note, requested gates grouped by bundle/lens; one subprocess runner call and one review run per group.
-- **`run_gate_sweep.py` — share-gate packing (experimental).** One gate over a chunked note list; one gate-packed run per prompt batch; missing pairs are marked `missing`, parsed pairs are retained, and the invocation records a failure.
+- **`run_gate_sweep.py` — share-gate packing (experimental).** One gate over a chunked note list; one running gate-packed run per prompt batch; missing pairs are marked `missing`, parsed pairs are retained, and the invocation records a failure.
 - **Live-agent path (single note)** — same protocol without a nested runner:
-  1. `commonplace-create-review-runs` groups requested gates by bundle/lens, creates one note-packed run per group, writes each canonical prompt to `kb/reports/bundle-reviews/review-run-{id}/prompt.md`, writes `MANIFEST.json`, and returns a JSON `runs` array with each run's `prompt_path`, `bundle_output_path`, and `manifest_path`
+  1. `commonplace-create-review-runs` groups requested gates by bundle/lens, creates one queued note-packed run per group, writes each canonical prompt to `kb/reports/bundle-reviews/review-run-{id}/prompt.md`, writes `MANIFEST.json`, and returns a JSON `runs` array with each run's `prompt_path`, `bundle_output_path`, and `manifest_path`
   2. each prompt is rendered from the snapshots attached to that run's created pair rows
   3. the parent agent delegates each returned run to a sub-agent, and that sub-agent reads `prompt_path`, follows it, and writes the matching `kb/reports/bundle-reviews/review-run-{id}/bundle-output.md`
   4. `commonplace-ingest-bundle-output` parses each artifact, finalizes through `record_and_finalize_run` (single-run ingest is all-or-nothing), writes packing-derived parsed result files, stores their paths, and refreshes `MANIFEST.json`
 - **External-executor batch path (`batch.py`)** — deterministic ends for any orchestrator that owns its own fan-out (a live agent reviewing many pairs, or a harness workflow spawning sub-agents per batch); decision record: [ADR 030](./adr/030-harness-facing-seams-batch-endpoints-and-runner-adapters.md).
-  1. `commonplace-prepare-review-batch <note>::<gate>... --runner <label> --model <partition>` creates one note-packed or gate-packed run for the pair set (inapplicable gates skipped and reported; missing notes/gates fatal) and writes the canonical prompt from captured snapshots under `kb/reports/bundle-reviews/review-run-{review_run_id}/`; returns `review_run_id`, pair metadata, skipped pairs, `prompt_path`, `bundle_output_path`, and `manifest_path` as JSON
+  1. `commonplace-prepare-review-batch <note>::<gate>... --runner <label> --model <partition>` creates one queued note-packed or gate-packed run for the pair set (inapplicable gates skipped and reported; missing notes/gates fatal) and writes the canonical prompt from captured snapshots under `kb/reports/bundle-reviews/review-run-{review_run_id}/`; returns `review_run_id`, pair metadata, skipped pairs, `prompt_path`, `bundle_output_path`, and `manifest_path` as JSON
   2. the executor follows the prompt and writes `bundle_output_path`
   3. `commonplace-ingest-batch-output --review-run-id <id> --input-file <path>` finalizes with pair salvage, stores result paths, and returns JSON; exit 1 if the run failed.
 

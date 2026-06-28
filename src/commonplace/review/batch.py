@@ -16,7 +16,7 @@ from commonplace.review.artifacts import result_paths_by_pair_id, write_manifest
 from commonplace.review.executor import (
     RunPairs,
     bundle_artifact_dir,
-    fail_running_review_runs,
+    fail_active_review_runs,
     finalize_bundle_markdown,
     prepare_note_target,
 )
@@ -159,7 +159,7 @@ def prepare_review_batch(
         raise ValueError("no applicable pairs to prepare")
     packing = _packing_for_pairs(applicable_pairs)
 
-    started_at = iso_now()
+    created_at = iso_now()
     with connect(db_path) as conn:
         captured_inputs = capture_review_inputs(
             conn,
@@ -170,7 +170,9 @@ def prepare_review_batch(
             conn,
             model_partition=model_partition,
             runner=runner,
-            started_at=started_at,
+            created_at=created_at,
+            started_at=None,
+            status="queued",
             packing=packing,
             pairs=captured_inputs.pair_requests,
         )
@@ -200,7 +202,7 @@ def prepare_review_batch(
             bundle_output_path=bundle_output_path,
         )
     except ValueError as exc:
-        fail_running_review_runs(
+        fail_active_review_runs(
             db_path=db_path,
             review_run_ids=[review_run_id],
             failure_reason=str(exc),
@@ -255,7 +257,7 @@ def ingest_batch_output(
         review_run = load_review_run(conn, review_run_id=review_run_id)
         if review_run is None:
             raise ValueError(f"review run not found: {review_run_id}")
-        if review_run.status != "running":
+        if review_run.status not in {"queued", "running"}:
             raise ValueError(f"review run is not ingestible: {review_run_id} ({review_run.status})")
         stored_pairs = load_review_pairs_for_run(conn, review_run_id=review_run_id)
 

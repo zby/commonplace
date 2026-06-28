@@ -82,5 +82,6 @@ Relevant Notes:
 
 - [010-review state should move to sqlite once reviews leave git and accumulate operational metadata](./010-review-state-should-move-to-sqlite-once-reviews-leave-git-and.md) — supersedes: preserves the SQLite boundary but replaces Git-derived freshness baselines with DB-owned snapshots
 - [031-review state uses run-owned review pairs](./031-review-state-uses-run-owned-review-pairs.md) — see-also: the pair storage model whose reviewed inputs now point at snapshots
+- [033-honest review-run state behind a versioned migration substrate](./033-honest-review-run-state.md) — see-also: the next review-store refinement, adding queued run state and versioned migrations
 - [030-Harness-facing seams: batch prepare/ingest endpoints and runner adapters](./030-harness-facing-seams-batch-endpoints-and-runner-adapters.md) — see-also: the execution seams that become consumers of freshness rather than part of freshness state
 - [storage](../storage-architecture.md) — part-of: the broader storage boundary for authored markdown, derived reports, and SQLite-backed review state

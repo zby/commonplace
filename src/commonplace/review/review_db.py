@@ -10,7 +10,7 @@ from dataclasses import dataclass
 from datetime import UTC, datetime
 from importlib import resources
 from pathlib import Path
-from typing import Mapping, Sequence
+from typing import Callable, Mapping, Sequence
 
 from commonplace.review.paths import gate_id_from_stored_path
 from commonplace.review.protocol.decisions import normalize_review_decision
@@ -19,7 +19,29 @@ DEFAULT_DB_PATH = Path("kb/reports/review-store.sqlite")
 SCHEMA_PATH = "review-schema.sql"
 DB_ENV_VAR = "COMMONPLACE_REVIEW_DB"
 PACKING_VALUES = frozenset({"note", "gate"})
+RUN_STATUS_VALUES = frozenset({"queued", "running", "completed", "failed"})
 BUNDLE_ARTIFACTS_ROOT = Path("kb/reports/bundle-reviews")
+LATEST_REVIEW_SCHEMA_VERSION = 1
+EXPECTED_REVIEW_TABLES = frozenset(
+    {
+        "review_runs",
+        "review_file_snapshots",
+        "review_pairs",
+        "acceptance_events",
+    }
+)
+EXPECTED_REVIEW_INDEXES = frozenset(
+    {
+        "idx_review_runs_model_partition_created",
+        "idx_review_runs_status",
+        "idx_review_pairs_note_gate_model_partition",
+        "idx_review_pairs_review_run_id",
+        "idx_review_pairs_pair_status",
+        "idx_acceptance_events_note_gate_model_partition",
+        "idx_acceptance_events_latest_by_key",
+    }
+)
+EXPECTED_REVIEW_VIEWS = frozenset({"current_gate_acceptances", "stale_gate_pairs"})
 
 
 @dataclass(frozen=True)
@@ -54,7 +76,8 @@ class ReviewRunRow:
     review_run_id: int
     model_partition: str
     runner: str
-    started_at: str
+    created_at: str
+    started_at: str | None
     completed_at: str | None
     status: str
     failure_reason: str | None
@@ -156,12 +179,186 @@ def apply_schema(conn: sqlite3.Connection, schema_path: Path) -> None:
     conn.executescript(schema_path.read_text(encoding="utf-8"))
 
 
+def _get_user_version(conn: sqlite3.Connection) -> int:
+    row = conn.execute("PRAGMA user_version").fetchone()
+    return int(row[0])
+
+
+def _set_user_version(conn: sqlite3.Connection, version: int) -> None:
+    conn.execute(f"PRAGMA user_version = {int(version)}")
+
+
+def _schema_object_names(conn: sqlite3.Connection, object_type: str) -> set[str]:
+    rows = conn.execute(
+        """
+        SELECT name
+        FROM sqlite_master
+        WHERE type = ?
+        """,
+        (object_type,),
+    ).fetchall()
+    return {str(row["name"]) for row in rows}
+
+
+def _assert_expected_schema_objects(conn: sqlite3.Connection) -> None:
+    missing_tables = EXPECTED_REVIEW_TABLES - _schema_object_names(conn, "table")
+    missing_indexes = EXPECTED_REVIEW_INDEXES - _schema_object_names(conn, "index")
+    missing_views = EXPECTED_REVIEW_VIEWS - _schema_object_names(conn, "view")
+    if missing_tables or missing_indexes or missing_views:
+        parts: list[str] = []
+        if missing_tables:
+            parts.append(f"missing tables: {', '.join(sorted(missing_tables))}")
+        if missing_indexes:
+            parts.append(f"missing indexes: {', '.join(sorted(missing_indexes))}")
+        if missing_views:
+            parts.append(f"missing views: {', '.join(sorted(missing_views))}")
+        raise RuntimeError("; ".join(parts))
+
+
+def _assert_foreign_key_integrity(conn: sqlite3.Connection) -> None:
+    violations = conn.execute("PRAGMA foreign_key_check").fetchall()
+    if violations:
+        details = [
+            f"{row['table']} rowid={row['rowid']} parent={row['parent']} fkid={row['fkid']}"
+            for row in violations
+        ]
+        raise RuntimeError(f"foreign key check failed: {'; '.join(details)}")
+
+
+def _assert_review_store_integrity(conn: sqlite3.Connection) -> None:
+    _assert_expected_schema_objects(conn)
+    _assert_foreign_key_integrity(conn)
+
+
+def _count_table_rows(conn: sqlite3.Connection, table_name: str) -> int:
+    row = conn.execute(f"SELECT COUNT(*) AS count FROM {table_name}").fetchone()
+    return int(row["count"]) if row is not None else 0
+
+
+def _migrate_review_schema_v1(conn: sqlite3.Connection) -> None:
+    review_run_count = _count_table_rows(conn, "review_runs")
+    review_pair_count = _count_table_rows(conn, "review_pairs")
+    conn.execute("PRAGMA foreign_keys = OFF")
+    try:
+        conn.execute("BEGIN IMMEDIATE")
+        conn.execute(
+            """
+            CREATE TABLE review_runs_new (
+                review_run_id INTEGER PRIMARY KEY,
+                model_partition TEXT NOT NULL,
+                runner TEXT NOT NULL,
+                created_at TEXT NOT NULL,
+                started_at TEXT,
+                completed_at TEXT,
+                status TEXT NOT NULL CHECK (
+                    status IN ('queued', 'running', 'completed', 'failed')
+                ),
+                failure_reason TEXT,
+                telemetry_json TEXT,
+                bundle_output_path TEXT,
+                packing TEXT NOT NULL CHECK (
+                    packing IN ('note', 'gate')
+                )
+            )
+            """
+        )
+        conn.execute(
+            """
+            INSERT INTO review_runs_new (
+                review_run_id,
+                model_partition,
+                runner,
+                created_at,
+                started_at,
+                completed_at,
+                status,
+                failure_reason,
+                telemetry_json,
+                bundle_output_path,
+                packing
+            )
+            SELECT
+                review_run_id,
+                model_partition,
+                runner,
+                started_at AS created_at,
+                started_at,
+                completed_at,
+                status,
+                failure_reason,
+                telemetry_json,
+                bundle_output_path,
+                packing
+            FROM review_runs
+            """
+        )
+        if _count_table_rows(conn, "review_runs_new") != review_run_count:
+            raise RuntimeError("review_runs migration row count mismatch")
+        conn.execute("DROP TABLE review_runs")
+        conn.execute("ALTER TABLE review_runs_new RENAME TO review_runs")
+        conn.execute(
+            """
+            CREATE INDEX idx_review_runs_model_partition_created
+            ON review_runs(model_partition, created_at DESC)
+            """
+        )
+        conn.execute(
+            """
+            CREATE INDEX idx_review_runs_status
+            ON review_runs(status)
+            """
+        )
+        if _count_table_rows(conn, "review_runs") != review_run_count:
+            raise RuntimeError("review_runs row count changed during migration")
+        if _count_table_rows(conn, "review_pairs") != review_pair_count:
+            raise RuntimeError("review_pairs row count changed during migration")
+        _set_user_version(conn, 1)
+        _assert_review_store_integrity(conn)
+        conn.commit()
+    except Exception:
+        conn.rollback()
+        raise
+    finally:
+        conn.execute("PRAGMA foreign_keys = ON")
+    _assert_foreign_key_integrity(conn)
+
+
+REVIEW_SCHEMA_MIGRATIONS: dict[int, Callable[[sqlite3.Connection], None]] = {
+    1: _migrate_review_schema_v1,
+}
+
+
 def init_db(db_path: Path, schema_path: Path) -> None:
     db_path.parent.mkdir(parents=True, exist_ok=True)
-    with connect(db_path) as conn:
+    conn = connect(db_path)
+    try:
         if not _table_exists(conn, "review_runs"):
             apply_schema(conn, schema_path)
+            _set_user_version(conn, LATEST_REVIEW_SCHEMA_VERSION)
+            _assert_review_store_integrity(conn)
+            conn.commit()
+            return
+
+        current_version = _get_user_version(conn)
+        if current_version > LATEST_REVIEW_SCHEMA_VERSION:
+            raise RuntimeError(
+                f"review DB schema version {current_version} is newer than supported "
+                f"{LATEST_REVIEW_SCHEMA_VERSION}"
+            )
+        for target_version in range(current_version + 1, LATEST_REVIEW_SCHEMA_VERSION + 1):
+            migration = REVIEW_SCHEMA_MIGRATIONS.get(target_version)
+            if migration is None:
+                raise RuntimeError(f"missing review DB migration for version {target_version}")
+            migration(conn)
+            migrated_version = _get_user_version(conn)
+            if migrated_version != target_version:
+                raise RuntimeError(
+                    f"review DB migration {target_version} left user_version={migrated_version}"
+                )
+        _assert_review_store_integrity(conn)
         conn.commit()
+    finally:
+        conn.close()
 
 
 def _now_utc_iso() -> str:
@@ -244,6 +441,7 @@ def _review_run_from_row(row: sqlite3.Row) -> ReviewRunRow:
         review_run_id=row["review_run_id"],
         model_partition=row["model_partition"],
         runner=row["runner"],
+        created_at=row["created_at"],
         started_at=row["started_at"],
         completed_at=row["completed_at"],
         status=row["status"],
@@ -276,21 +474,25 @@ def create_run(
     *,
     model_partition: str,
     runner: str,
-    started_at: str,
+    created_at: str,
+    started_at: str | None,
     packing: str,
+    status: str,
     completed_at: str | None = None,
-    status: str = "running",
     failure_reason: str | None = None,
     telemetry_json: str | None = None,
     bundle_output_path: str | None = None,
 ) -> int:
     if packing not in PACKING_VALUES:
         raise ValueError(f"invalid review run packing: {packing}")
+    if status not in RUN_STATUS_VALUES:
+        raise ValueError(f"invalid review run status: {status}")
     cursor = conn.execute(
         """
         INSERT INTO review_runs (
             model_partition,
             runner,
+            created_at,
             started_at,
             completed_at,
             status,
@@ -298,11 +500,12 @@ def create_run(
             telemetry_json,
             bundle_output_path,
             packing
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """,
         (
             model_partition,
             runner,
+            created_at,
             started_at,
             completed_at,
             status,
@@ -358,7 +561,9 @@ def create_run_with_pairs(
     *,
     model_partition: str,
     runner: str,
-    started_at: str,
+    created_at: str,
+    started_at: str | None,
+    status: str,
     packing: str,
     pairs: Sequence[ReviewPairRequest],
 ) -> int:
@@ -366,9 +571,10 @@ def create_run_with_pairs(
         conn,
         model_partition=model_partition,
         runner=runner,
+        created_at=created_at,
         started_at=started_at,
         packing=packing,
-        status="running",
+        status=status,
     )
     create_review_pairs(conn, review_run_id=review_run_id, model_partition=model_partition, pairs=pairs)
     return review_run_id
@@ -381,6 +587,7 @@ def load_review_run(conn: sqlite3.Connection, *, review_run_id: int) -> ReviewRu
             review_run_id,
             model_partition,
             runner,
+            created_at,
             started_at,
             completed_at,
             status,

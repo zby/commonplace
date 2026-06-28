@@ -11,10 +11,11 @@ CREATE TABLE IF NOT EXISTS review_runs (
     review_run_id INTEGER PRIMARY KEY,
     model_partition TEXT NOT NULL,
     runner TEXT NOT NULL,
-    started_at TEXT NOT NULL,
+    created_at TEXT NOT NULL,
+    started_at TEXT,
     completed_at TEXT,
     status TEXT NOT NULL CHECK (
-        status IN ('running', 'completed', 'failed')
+        status IN ('queued', 'running', 'completed', 'failed')
     ),
     failure_reason TEXT,
     telemetry_json TEXT,
@@ -24,8 +25,8 @@ CREATE TABLE IF NOT EXISTS review_runs (
     )
 );
 
-CREATE INDEX IF NOT EXISTS idx_review_runs_model_partition_started
-ON review_runs(model_partition, started_at DESC);
+CREATE INDEX IF NOT EXISTS idx_review_runs_model_partition_created
+ON review_runs(model_partition, created_at DESC);
 
 CREATE INDEX IF NOT EXISTS idx_review_runs_status
 ON review_runs(status);

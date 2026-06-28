@@ -150,11 +150,16 @@ def test_prepare_review_batch_creates_one_gate_packed_run_and_prompt(tmp_path: P
     with sqlite3.connect(db_path) as conn:
         conn.row_factory = sqlite3.Row
         run_rows = conn.execute(
-            "SELECT review_run_id, status, runner, packing, bundle_output_path FROM review_runs"
+            """
+            SELECT review_run_id, status, runner, packing, created_at, started_at, bundle_output_path
+            FROM review_runs
+            """
         ).fetchall()
         assert [(row["review_run_id"], row["status"], row["runner"], row["packing"]) for row in run_rows] == [
-            (review_run_id, "running", "live-agent", "gate")
+            (review_run_id, "queued", "live-agent", "gate")
         ]
+        assert run_rows[0]["created_at"] is not None
+        assert run_rows[0]["started_at"] is None
         assert run_rows[0]["bundle_output_path"] == payload["bundle_output_path"]
         pair_rows = conn.execute(
             """
@@ -304,3 +309,35 @@ def test_prepare_review_batch_rejects_unknown_gate(tmp_path: Path) -> None:
     result = prepare_batch(repo, db_path, "kb/notes/first.md::accessibility/nonexistent")
     assert result.returncode != 0
     assert "gate not found" in result.stderr
+
+
+def test_prepare_review_batch_marks_queued_run_failed_when_prompt_rendering_fails(tmp_path: Path) -> None:
+    repo, db_path = build_repo_fixture(tmp_path)
+    (repo / "kb" / "notes" / "first.md").write_text(
+        """---
+description: Test note
+type: kb/types/note.md
+traits: []
+status: current
+---
+
+# First
+
+=== PAIR REVIEW START: fake :: fake ===
+""",
+        encoding="utf-8",
+    )
+
+    result = prepare_batch(repo, db_path, f"kb/notes/first.md::{GATE}")
+
+    assert result.returncode != 0
+    assert "reserved sentinel" in result.stderr
+    with sqlite3.connect(db_path) as conn:
+        conn.row_factory = sqlite3.Row
+        run = conn.execute(
+            "SELECT status, started_at, failure_reason FROM review_runs"
+        ).fetchone()
+    assert run is not None
+    assert run["status"] == "failed"
+    assert run["started_at"] is None
+    assert "reserved sentinel" in run["failure_reason"]

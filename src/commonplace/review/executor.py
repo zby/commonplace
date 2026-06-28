@@ -40,6 +40,7 @@ from commonplace.review.runners import run_prompt
 
 URL_SCHEME_RE = re.compile(r"^[a-z]+://", re.IGNORECASE)
 USAGE_EXHAUSTION_TEXT = "out of extra usage"
+ACTIVE_REVIEW_RUN_STATUSES = frozenset({"queued", "running"})
 
 
 class UsageExhausted(Exception):
@@ -207,7 +208,7 @@ def prepare_note_target(
     )
 
 
-def fail_running_review_runs(
+def fail_active_review_runs(
     *,
     db_path: Path,
     review_run_ids: list[int],
@@ -227,7 +228,7 @@ def fail_running_review_runs(
             review_run_ids,
         ).fetchall()
         for row in rows:
-            if row["status"] != "running":
+            if row["status"] not in ACTIVE_REVIEW_RUN_STATUSES:
                 continue
             attach_execution_data(
                 conn,
@@ -426,13 +427,13 @@ def execute_batch(
     try:
         prompt = render_pairs_prompt(notes=targets, gate_texts=gate_texts)
     except ValueError as exc:
-        fail_running_review_runs(db_path=db_path, review_run_ids=run_ids, failure_reason=str(exc))
+        fail_active_review_runs(db_path=db_path, review_run_ids=run_ids, failure_reason=str(exc))
         return BatchOutcome(completed=[], failed=[(rid, str(exc)) for rid in run_ids], runner_returncode=0)
 
     try:
         result = run_prompt(runner=runner, prompt=prompt, repo_root=repo_root, model=runner_model)
     except KeyboardInterrupt:
-        fail_running_review_runs(
+        fail_active_review_runs(
             db_path=db_path,
             review_run_ids=run_ids,
             failure_reason="review batch interrupted",
@@ -463,7 +464,7 @@ def execute_batch(
         )
 
     if USAGE_EXHAUSTION_TEXT in (result.stdout + result.stderr).lower():
-        fail_running_review_runs(
+        fail_active_review_runs(
             db_path=db_path,
             review_run_ids=run_ids,
             failure_reason="runner reported usage exhausted",
@@ -473,7 +474,7 @@ def execute_batch(
 
     if result.returncode != 0:
         reason = f"{runner} exited {result.returncode}"
-        fail_running_review_runs(
+        fail_active_review_runs(
             db_path=db_path,
             review_run_ids=run_ids,
             failure_reason=reason,

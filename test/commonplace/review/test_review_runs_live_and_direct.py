@@ -164,12 +164,18 @@ def test_create_review_runs_groups_cross_lens_gates_by_bundle(tmp_path: Path) ->
     with sqlite3.connect(db_path) as conn:
         conn.row_factory = sqlite3.Row
         run_rows = conn.execute(
-            "SELECT status, runner, packing, bundle_output_path FROM review_runs ORDER BY review_run_id"
+            """
+            SELECT status, runner, packing, created_at, started_at, bundle_output_path
+            FROM review_runs
+            ORDER BY review_run_id
+            """
         ).fetchall()
         assert [(row["status"], row["runner"], row["packing"]) for row in run_rows] == [
-            ("running", "live-agent", "note"),
-            ("running", "live-agent", "note"),
+            ("queued", "live-agent", "note"),
+            ("queued", "live-agent", "note"),
         ]
+        assert [row["started_at"] for row in run_rows] == [None, None]
+        assert all(row["created_at"] is not None for row in run_rows)
         assert run_rows[0]["bundle_output_path"] == first_run["bundle_output_path"]
         assert run_rows[1]["bundle_output_path"] == second_run["bundle_output_path"]
         pair_rows = conn.execute(

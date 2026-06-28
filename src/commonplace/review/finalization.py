@@ -34,7 +34,7 @@ def record_and_finalize_run(
     review_run = review_db.load_review_run(conn, review_run_id=review_run_id)
     if review_run is None:
         raise ValueError(f"review run not found: {review_run_id}")
-    if review_run.status != "running":
+    if review_run.status not in {"queued", "running"}:
         raise ValueError(f"review run is not finalizable: {review_run.status}")
 
     finished_at = completed_at or iso_now()

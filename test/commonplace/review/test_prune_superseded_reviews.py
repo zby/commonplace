@@ -29,7 +29,9 @@ def _insert_completed_run(
         conn,
         model_partition=MODEL_PARTITION,
         runner="test-runner",
+        created_at=started_at,
         started_at=started_at,
+        status="running",
         packing="note",
         pairs=[
             review_db.ReviewPairRequest(

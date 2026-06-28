@@ -57,11 +57,14 @@ def _run_group(
             repo_root=repo_root,
             pairs=[(note_path, gate_path) for gate_path in group.gate_paths],
         )
+        started_at = iso_now()
         review_run_id = create_run_with_pairs(
             conn,
             model_partition=model_partition,
             runner=runner,
-            started_at=iso_now(),
+            created_at=started_at,
+            started_at=started_at,
+            status="running",
             packing="note",
             pairs=captured_inputs.pair_requests,
         )

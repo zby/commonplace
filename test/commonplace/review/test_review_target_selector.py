@@ -135,7 +135,9 @@ def seed_snapshot_acceptance(
             conn,
             model_partition=TEST_MODEL,
             runner="test-runner",
+            created_at=REVIEWED_AT,
             started_at=REVIEWED_AT,
+            status="running",
             packing="note",
             pairs=[
                 review_db.ReviewPairRequest(

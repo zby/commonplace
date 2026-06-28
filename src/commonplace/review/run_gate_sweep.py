@@ -94,7 +94,9 @@ def prepare_batch_targets(
             conn,
             model_partition=model_partition,
             runner=runner,
+            created_at=started_at,
             started_at=started_at,
+            status="running",
             packing="gate",
             pairs=captured_inputs.pair_requests,
         )

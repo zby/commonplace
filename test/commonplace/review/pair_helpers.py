@@ -31,7 +31,9 @@ def insert_completed_pair(
         conn,
         model_partition=model_partition,
         runner=runner,
+        created_at=started,
         started_at=started,
+        status="running",
         packing="note",
         pairs=[
             review_db.ReviewPairRequest(

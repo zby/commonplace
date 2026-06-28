@@ -137,7 +137,7 @@ commonplace-run-gate-sweep semantic/grounding-alignment --runner claude-code --m
 
 ### commonplace-create-review-runs
 
-Create one or more review run records in the review database and write their canonical prompts, `MANIFEST.json` files, and artifact paths for live-agent review. Requested gates are grouped by bundle/lens so each run stays focused.
+Create one or more queued review run records in the review database and write their canonical prompts, `MANIFEST.json` files, and artifact paths for live-agent review. Requested gates are grouped by bundle/lens so each run stays focused.
 
 ```bash
 commonplace-create-review-runs kb/notes/my-note.md prose --runner claude-code --model claude-opus-4-6
@@ -156,7 +156,7 @@ commonplace-ingest-bundle-output --review-run-id 42 --input-file kb/reports/bund
 
 ### commonplace-prepare-review-batch
 
-Create one review run for a note-packed or gate-packed set of `(note, gate)` pairs and render one batch prompt for an external executor (live agent or orchestrator). Returns `review_run_id`, per-pair metadata, skipped pairs, and artifact paths, including `manifest_path`, as JSON.
+Create one queued review run for a note-packed or gate-packed set of `(note, gate)` pairs and render one batch prompt for an external executor (live agent or orchestrator). Returns `review_run_id`, per-pair metadata, skipped pairs, and artifact paths, including `manifest_path`, as JSON.
 
 ```bash
 commonplace-prepare-review-batch kb/notes/a.md::prose/source-residue kb/notes/b.md::prose/source-residue --runner live-agent --model claude-opus-4-6
@@ -199,7 +199,7 @@ commonplace-resolve-gates prose/source-residue semantic/grounding-alignment  # s
 
 ### commonplace-review-target-selector
 
-List stale (note, gate) pairs that need review. Compares current note/gate SHAs against accepted SHAs.
+List stale (note, gate) pairs that need review. Compares current note/gate text hashes against accepted DB snapshots.
 
 ```bash
 commonplace-review-target-selector prose --model claude-opus-4-6 --note kb/notes kb/reference

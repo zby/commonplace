@@ -21,7 +21,7 @@ It is also a scoped exception to the repo's file-first design. The motivation fo
 
 **Bundle.** A directory of gates sharing a lens. `semantic` means all gate files under `kb/instructions/review-gates/semantic/`.
 
-**Review run.** One review invocation: one rendered prompt, one output artifact directory, and one run-level status.
+**Review run.** One review invocation: one rendered prompt, one output artifact directory, and one run-level status. Prepared live-agent runs are `queued` until ingest; subprocess runs are `running` while the runner executes.
 
 **Review pair.** One requested `(note_path, gate_path)` pair inside a review run. This is the stored unit of review output and acceptance.
 
@@ -49,7 +49,7 @@ Primary tables:
 
 - `review_runs`
   - one row per review invocation
-  - stores runner/model, status, packing (`note` or `gate`), telemetry, and the bundle output path
+  - stores runner/model, status, packing (`note` or `gate`), `created_at`, nullable `started_at`, telemetry, and the bundle output path
 - `review_file_snapshots`
   - role-neutral snapshots of KB files by `(path, content_sha256)`
   - stores exact UTF-8 text when the snapshot must be reusable for prompt rendering or diffing
@@ -74,7 +74,9 @@ The Python layer assigns the canonical DB statuses.
 
 - `review_pairs.decision` is normalized into lowercase enum values: `pass`, `warn`, `fail`, `error`, `unknown`
 - `review_pairs.pair_status` is normalized into lowercase enum values: `pending`, `completed`, `missing`
-- `review_runs.status` is normalized into lowercase enum values: `running`, `completed`, `failed`
+- `review_runs.status` is normalized into lowercase enum values: `queued`, `running`, `completed`, `failed`
+
+Run timestamps have distinct meanings: `created_at` is when the run row and prompt inputs were prepared; `started_at` is when an owned subprocess runner started execution and is null for live-agent/orchestrator runs that go directly from `queued` to `completed` or `failed` during ingest.
 
 The human-readable review body is not canonical state. Current write paths store it in the per-pair result file named by `review_pairs.result_path`. The DB decision/status columns are the source of truth; review-body result lines such as `## Result: PASS` or `- WARN: ...` are parse inputs and readability affordances.
 
@@ -108,7 +110,7 @@ There is no separate bundle manifest hash in the current tree. If bundle-level m
 
 The canonical live path is:
 
-1. create one or more review runs for the requested gates
+1. create one or more queued review runs for the requested gates
 2. delegate each returned run prompt to a sub-agent
 3. write each sentinel-delimited bundle artifact
 4. ingest each bundle artifact to complete review pairs and append acceptance events
@@ -219,4 +221,4 @@ Instruction: `kb/instructions/review-sweep.md`
 
 Use `commonplace-run-gate-sweep {gate-id} --runner {claude-code|codex} --model {model-partition} [--current|--note kb/notes kb/reference] [--batch-size N]` when the execution set is one gate across many notes.
 
-This path keeps freshness gate-local and creates one gate-packed review run per prompt batch. It is the preferred path when one gate changed and re-reviewing it note-by-note would be needlessly expensive.
+This path keeps freshness gate-local and creates one running gate-packed review run per prompt batch. It is the preferred path when one gate changed and re-reviewing it note-by-note would be needlessly expensive.

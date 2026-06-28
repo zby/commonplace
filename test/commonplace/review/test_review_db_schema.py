@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from hashlib import sha256
 from pathlib import Path
+import sqlite3
 
 import pytest
 
@@ -10,6 +11,192 @@ from test.commonplace.review.pair_helpers import accept_pair, insert_completed_p
 
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
+
+LEGACY_REVIEW_SCHEMA_SQL = """
+PRAGMA foreign_keys = ON;
+
+CREATE TABLE review_runs (
+    review_run_id INTEGER PRIMARY KEY,
+    model_partition TEXT NOT NULL,
+    runner TEXT NOT NULL,
+    started_at TEXT NOT NULL,
+    completed_at TEXT,
+    status TEXT NOT NULL CHECK (
+        status IN ('running', 'completed', 'failed')
+    ),
+    failure_reason TEXT,
+    telemetry_json TEXT,
+    bundle_output_path TEXT,
+    packing TEXT NOT NULL CHECK (
+        packing IN ('note', 'gate')
+    )
+);
+
+CREATE INDEX idx_review_runs_model_partition_started
+ON review_runs(model_partition, started_at DESC);
+
+CREATE INDEX idx_review_runs_status
+ON review_runs(status);
+
+CREATE TABLE review_file_snapshots (
+    snapshot_id INTEGER PRIMARY KEY,
+    path TEXT NOT NULL,
+    content_sha256 TEXT NOT NULL,
+    content_text TEXT,
+    captured_at TEXT NOT NULL,
+    UNIQUE (path, content_sha256)
+);
+
+CREATE TABLE review_pairs (
+    review_pair_id INTEGER PRIMARY KEY,
+    review_run_id INTEGER NOT NULL REFERENCES review_runs(review_run_id) ON DELETE CASCADE,
+    note_path TEXT NOT NULL,
+    gate_path TEXT NOT NULL,
+    model_partition TEXT NOT NULL,
+    pair_ordinal INTEGER NOT NULL,
+    pair_status TEXT NOT NULL CHECK (
+        pair_status IN ('pending', 'completed', 'missing')
+    ),
+    decision TEXT CHECK (
+        decision IN ('pass', 'warn', 'fail', 'error', 'unknown')
+    ),
+    result_path TEXT,
+    reviewed_note_snapshot_id INTEGER REFERENCES review_file_snapshots(snapshot_id),
+    reviewed_gate_snapshot_id INTEGER REFERENCES review_file_snapshots(snapshot_id),
+    reviewed_at TEXT,
+    UNIQUE (review_run_id, note_path, gate_path),
+    UNIQUE (review_run_id, pair_ordinal)
+);
+
+CREATE INDEX idx_review_pairs_note_gate_model_partition
+ON review_pairs(note_path, gate_path, model_partition);
+
+CREATE INDEX idx_review_pairs_review_run_id
+ON review_pairs(review_run_id);
+
+CREATE INDEX idx_review_pairs_pair_status
+ON review_pairs(pair_status);
+
+CREATE TABLE acceptance_events (
+    acceptance_event_id INTEGER PRIMARY KEY,
+    note_path TEXT NOT NULL,
+    gate_path TEXT NOT NULL,
+    model_partition TEXT NOT NULL,
+    accepted_review_pair_id INTEGER REFERENCES review_pairs(review_pair_id) ON DELETE SET NULL,
+    accepted_note_snapshot_id INTEGER REFERENCES review_file_snapshots(snapshot_id),
+    accepted_gate_snapshot_id INTEGER REFERENCES review_file_snapshots(snapshot_id),
+    accepted_at TEXT NOT NULL
+);
+
+CREATE INDEX idx_acceptance_events_note_gate_model_partition
+ON acceptance_events(note_path, gate_path, model_partition, accepted_at DESC);
+
+CREATE INDEX idx_acceptance_events_latest_by_key
+ON acceptance_events(note_path, gate_path, model_partition, acceptance_event_id DESC);
+
+CREATE VIEW current_gate_acceptances AS
+SELECT
+    e.note_path,
+    e.gate_path,
+    e.model_partition,
+    e.accepted_review_pair_id,
+    e.accepted_note_snapshot_id,
+    e.accepted_gate_snapshot_id,
+    note_snapshot.content_sha256 AS accepted_note_hash,
+    gate_snapshot.content_sha256 AS accepted_gate_hash,
+    note_snapshot.content_text AS accepted_note_text,
+    gate_snapshot.content_text AS accepted_gate_text,
+    e.accepted_at
+FROM acceptance_events AS e
+LEFT JOIN review_file_snapshots AS note_snapshot
+  ON e.accepted_note_snapshot_id = note_snapshot.snapshot_id
+LEFT JOIN review_file_snapshots AS gate_snapshot
+  ON e.accepted_gate_snapshot_id = gate_snapshot.snapshot_id
+JOIN (
+    SELECT
+        note_path,
+        gate_path,
+        model_partition,
+        MAX(acceptance_event_id) AS max_id
+    FROM acceptance_events
+    GROUP BY note_path, gate_path, model_partition
+) AS latest
+  ON e.acceptance_event_id = latest.max_id;
+
+CREATE VIEW stale_gate_pairs AS
+SELECT
+    a.note_path,
+    a.gate_path,
+    a.model_partition,
+    a.accepted_note_snapshot_id,
+    a.accepted_gate_snapshot_id,
+    a.accepted_note_hash,
+    a.accepted_gate_hash,
+    a.accepted_note_text,
+    a.accepted_gate_text
+FROM current_gate_acceptances AS a;
+"""
+
+
+def create_legacy_review_db(db_path: Path) -> None:
+    db_path.parent.mkdir(parents=True, exist_ok=True)
+    with sqlite3.connect(db_path) as conn:
+        conn.execute("PRAGMA foreign_keys = ON")
+        conn.executescript(LEGACY_REVIEW_SCHEMA_SQL)
+        conn.execute(
+            """
+            INSERT INTO review_runs (
+                review_run_id,
+                model_partition,
+                runner,
+                started_at,
+                completed_at,
+                status,
+                packing
+            ) VALUES (1, 'test-model', 'test-runner', '2026-04-10T10:01:00+00:00', NULL, 'running', 'note')
+            """
+        )
+        conn.execute(
+            """
+            INSERT INTO review_pairs (
+                review_pair_id,
+                review_run_id,
+                note_path,
+                gate_path,
+                model_partition,
+                pair_ordinal,
+                pair_status
+            ) VALUES (
+                10,
+                1,
+                'kb/notes/legacy.md',
+                'kb/instructions/review-gates/prose/legacy.md',
+                'test-model',
+                0,
+                'pending'
+            )
+            """
+        )
+        conn.execute(
+            """
+            INSERT INTO acceptance_events (
+                acceptance_event_id,
+                note_path,
+                gate_path,
+                model_partition,
+                accepted_review_pair_id,
+                accepted_at
+            ) VALUES (
+                20,
+                'kb/notes/legacy.md',
+                'kb/instructions/review-gates/prose/legacy.md',
+                'test-model',
+                10,
+                '2026-04-10T10:02:00+00:00'
+            )
+            """
+        )
+        conn.commit()
 
 
 def test_ensure_db_initializes_schema_that_can_store_current_acceptance(tmp_path: Path) -> None:
@@ -53,6 +240,8 @@ def test_ensure_db_initializes_schema_that_can_store_current_acceptance(tmp_path
               AND name = 'review_schema_migrations'
             """
         ).fetchone()
+        user_version = conn.execute("PRAGMA user_version").fetchone()[0]
+        run_columns = {row["name"]: row for row in conn.execute("PRAGMA table_info(review_runs)").fetchall()}
 
     assert view_row is not None
     assert view_row["accepted_note_snapshot_id"] is None
@@ -60,6 +249,90 @@ def test_ensure_db_initializes_schema_that_can_store_current_acceptance(tmp_path
     assert view_row["accepted_note_hash"] is None
     assert view_row["accepted_gate_hash"] is None
     assert migration_table is None
+    assert user_version == review_db.LATEST_REVIEW_SCHEMA_VERSION
+    assert "created_at" in run_columns
+    assert run_columns["started_at"]["notnull"] == 0
+
+
+def test_ensure_db_migrates_legacy_user_version_zero_store(tmp_path: Path) -> None:
+    db_path = tmp_path / "review-store.sqlite"
+    create_legacy_review_db(db_path)
+
+    review_db.ensure_db(db_path)
+
+    with review_db.connect(db_path) as conn:
+        user_version = conn.execute("PRAGMA user_version").fetchone()[0]
+        run = conn.execute(
+            """
+            SELECT created_at, started_at, status
+            FROM review_runs
+            WHERE review_run_id = 1
+            """
+        ).fetchone()
+        pair_count = conn.execute("SELECT COUNT(*) FROM review_pairs").fetchone()[0]
+        acceptance = conn.execute(
+            """
+            SELECT accepted_review_pair_id
+            FROM acceptance_events
+            WHERE acceptance_event_id = 20
+            """
+        ).fetchone()
+        index_names = {
+            row["name"]
+            for row in conn.execute(
+                "SELECT name FROM sqlite_master WHERE type = 'index'"
+            ).fetchall()
+        }
+        foreign_key_violations = conn.execute("PRAGMA foreign_key_check").fetchall()
+
+    assert user_version == review_db.LATEST_REVIEW_SCHEMA_VERSION
+    assert dict(run) == {
+        "created_at": "2026-04-10T10:01:00+00:00",
+        "started_at": "2026-04-10T10:01:00+00:00",
+        "status": "running",
+    }
+    assert pair_count == 1
+    assert acceptance["accepted_review_pair_id"] == 10
+    assert "idx_review_runs_model_partition_created" in index_names
+    assert "idx_review_runs_model_partition_started" not in index_names
+    assert foreign_key_violations == []
+
+
+def test_failed_legacy_migration_rolls_back_and_leaves_old_tables_readable(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    db_path = tmp_path / "review-store.sqlite"
+    create_legacy_review_db(db_path)
+    monkeypatch.setattr(
+        review_db,
+        "EXPECTED_REVIEW_INDEXES",
+        review_db.EXPECTED_REVIEW_INDEXES | {"idx_missing_for_rollback_test"},
+    )
+
+    with pytest.raises(RuntimeError, match="missing indexes"):
+        review_db.ensure_db(db_path)
+
+    with sqlite3.connect(db_path) as conn:
+        conn.row_factory = sqlite3.Row
+        run = conn.execute(
+            """
+            SELECT started_at, status
+            FROM review_runs
+            WHERE review_run_id = 1
+            """
+        ).fetchone()
+        run_columns = {row["name"] for row in conn.execute("PRAGMA table_info(review_runs)").fetchall()}
+        pair_count = conn.execute("SELECT COUNT(*) FROM review_pairs").fetchone()[0]
+        user_version = conn.execute("PRAGMA user_version").fetchone()[0]
+
+    assert dict(run) == {
+        "started_at": "2026-04-10T10:01:00+00:00",
+        "status": "running",
+    }
+    assert "created_at" not in run_columns
+    assert pair_count == 1
+    assert user_version == 0
 
 
 def test_snapshot_file_deduplicates_per_path_and_hashes_exact_utf8(tmp_path: Path) -> None:
@@ -90,6 +363,35 @@ def test_snapshot_file_deduplicates_per_path_and_hashes_exact_utf8(tmp_path: Pat
     assert first.content_sha256 == sha256("title\n\ncafe\u0301\n".encode("utf-8")).hexdigest()
     assert gate_snapshot.snapshot_id != first.snapshot_id
     assert gate_snapshot.content_sha256 == first.content_sha256
+
+
+def test_load_review_run_exposes_created_at_and_nullable_started_at(tmp_path: Path) -> None:
+    db_path = tmp_path / "review-store.sqlite"
+    review_db.ensure_db(db_path)
+
+    with review_db.connect(db_path) as conn:
+        review_run_id = review_db.create_run_with_pairs(
+            conn,
+            model_partition="opus-4-6",
+            runner="live-agent",
+            created_at="2026-04-10T10:03:00+02:00",
+            started_at=None,
+            status="queued",
+            packing="note",
+            pairs=[
+                review_db.ReviewPairRequest(
+                    note_path="kb/notes/pending.md",
+                    gate_path="kb/instructions/review-gates/prose/pending.md",
+                    pair_ordinal=0,
+                )
+            ],
+        )
+        review_run = review_db.load_review_run(conn, review_run_id=review_run_id)
+
+    assert review_run is not None
+    assert review_run.created_at == "2026-04-10T10:03:00+02:00"
+    assert review_run.started_at is None
+    assert review_run.status == "queued"
 
 
 def test_snapshot_file_rehydrates_hash_only_snapshot_rows(tmp_path: Path) -> None:
@@ -167,7 +469,9 @@ def test_prune_obsolete_snapshot_content_keeps_current_and_pending_text(tmp_path
             conn,
             model_partition="opus-4-6",
             runner="test-runner",
+            created_at="2026-04-10T10:03:00+02:00",
             started_at="2026-04-10T10:03:00+02:00",
+            status="running",
             packing="note",
             pairs=[
                 review_db.ReviewPairRequest(
