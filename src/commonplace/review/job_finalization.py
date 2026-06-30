@@ -5,7 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from pathlib import Path
 
-from commonplace.review.executor import JobPairs, finalize_bundle_markdown
+from commonplace.review.executor import finalize_job_bundle_markdown
 from commonplace.review.review_db import connect, load_review_job_plan
 
 
@@ -114,25 +114,20 @@ def finalize_review_job_from_owned_output(
 
     bundle_markdown = bundle_output_path.read_text(encoding="utf-8")
     expected_pairs = tuple((pair.note_path, pair.gate_path) for pair in plan.pairs)
-    try:
-        completed, failed = finalize_bundle_markdown(
-            repo_root=repo_root,
-            db_path=db_path,
-            job_pairs=[JobPairs(review_job_id=review_job_id, pairs=expected_pairs)],
-            bundle_markdown=bundle_markdown,
-            telemetry_json=telemetry_json,
-            persist_output=False,
-        )
-    except ValueError as exc:
-        completed = []
-        failed = [(review_job_id, str(exc))]
+    completed, failure_reason = finalize_job_bundle_markdown(
+        repo_root=repo_root,
+        db_path=db_path,
+        review_job_id=review_job_id,
+        expected_pairs=expected_pairs,
+        bundle_markdown=bundle_markdown,
+        telemetry_json=telemetry_json,
+    )
 
     completed_pair_count = _completed_pair_count(db_path, review_job_id)
     job_status = _job_status(db_path, review_job_id)
-    failed_tuple = tuple(failed)
-    completed_ok = not failed_tuple and completed == [review_job_id]
+    failed_tuple = () if failure_reason is None else ((review_job_id, failure_reason),)
     return FinalizeReviewJobOutcome(
-        completed=completed_ok,
+        completed=completed,
         state_changed=True,
         review_job_id=review_job_id,
         completed_pair_count=completed_pair_count,

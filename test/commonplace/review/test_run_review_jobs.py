@@ -5,7 +5,7 @@ import sqlite3
 from pathlib import Path
 
 from commonplace.lib import frontmatter
-from commonplace.review import executor
+from commonplace.review import run_review_jobs as run_review_jobs_lib
 from commonplace.review.runners import RunnerResult
 
 from ._run_cli import run_cli
@@ -48,7 +48,7 @@ def test_run_review_jobs_executes_claims_and_finalizes_explicit_job(monkeypatch,
             telemetry={"model": "test-model", "reasoning_effort": "high"},
         )
 
-    monkeypatch.setattr(executor, "run_prompt", fake_run_prompt)
+    monkeypatch.setattr(run_review_jobs_lib, "run_prompt", fake_run_prompt)
 
     result = run_cli(
         "run_review_jobs",
@@ -101,7 +101,7 @@ def test_run_review_jobs_queue_mode_respects_partition_and_limit(monkeypatch, tm
     def fake_run_prompt(**_kwargs):
         return RunnerResult(stdout=single_pair_bundle_output(), stderr="", returncode=0, telemetry=None)
 
-    monkeypatch.setattr(executor, "run_prompt", fake_run_prompt)
+    monkeypatch.setattr(run_review_jobs_lib, "run_prompt", fake_run_prompt)
 
     result = run_cli(
         "run_review_jobs",
@@ -137,7 +137,7 @@ def test_run_review_jobs_nonzero_runner_marks_pairs_missing(monkeypatch, tmp_pat
     def fake_run_prompt(**_kwargs):
         return RunnerResult(stdout="partial diagnostic\n", stderr="failed\n", returncode=7, telemetry=None)
 
-    monkeypatch.setattr(executor, "run_prompt", fake_run_prompt)
+    monkeypatch.setattr(run_review_jobs_lib, "run_prompt", fake_run_prompt)
 
     result = run_cli(
         "run_review_jobs",
@@ -171,7 +171,7 @@ def test_run_review_jobs_explicit_preflight_reports_distinct_failures(monkeypatc
     def fail_if_called(**_kwargs):
         raise AssertionError("runner should not be invoked")
 
-    monkeypatch.setattr(executor, "run_prompt", fail_if_called)
+    monkeypatch.setattr(run_review_jobs_lib, "run_prompt", fail_if_called)
     with sqlite3.connect(db_path) as conn:
         conn.execute("UPDATE review_jobs SET prompt_path = NULL WHERE review_job_id = ?", (missing_path["review_job_id"],))
         conn.execute("UPDATE review_jobs SET status = 'running' WHERE review_job_id = ?", (nonqueued["review_job_id"],))

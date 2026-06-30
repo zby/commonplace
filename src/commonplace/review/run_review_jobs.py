@@ -21,7 +21,7 @@ from commonplace.review.review_db import (
     mark_missing_pairs,
 )
 from commonplace.review.review_model import build_model_partition, normalize_reasoning_effort
-from commonplace.review.runners import get_runner
+from commonplace.review.runners import get_runner, run_prompt
 
 
 DEFAULT_LIMIT = 1
@@ -196,7 +196,7 @@ def _run_prompt_quietly(
     effort: str | None,
 ):
     with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
-        return executor.run_prompt(
+        return run_prompt(
             runner=runner,
             prompt=prompt,
             repo_root=repo_root,

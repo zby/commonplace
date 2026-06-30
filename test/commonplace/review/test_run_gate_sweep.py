@@ -5,7 +5,7 @@ import subprocess
 from pathlib import Path
 
 from commonplace.lib import frontmatter
-from commonplace.review import executor
+from commonplace.review import run_review_jobs as run_review_jobs_lib
 from commonplace.review.runners import RunnerResult
 
 from ._run_cli import run_cli
@@ -111,7 +111,7 @@ def test_run_gate_sweep_reviews_multiple_notes_in_one_batch(monkeypatch, tmp_pat
         "## Result: PASS\n"
         f"=== PAIR REVIEW END: kb/notes/second.md :: {GATE_PATH} ===\n"
     )
-    monkeypatch.setattr(executor, "run_prompt", _fake_run_prompt_factory(bundle_output))
+    monkeypatch.setattr(run_review_jobs_lib, "run_prompt", _fake_run_prompt_factory(bundle_output))
 
     result = run_gate_sweep(
         repo,
@@ -172,7 +172,7 @@ def test_run_gate_sweep_salvages_parsed_notes_and_fails_missing_ones(monkeypatch
         "## Result: WARN\n"
         f"=== PAIR REVIEW END: kb/notes/first.md :: {GATE_PATH} ===\n"
     )
-    monkeypatch.setattr(executor, "run_prompt", _fake_run_prompt_factory(bundle_output))
+    monkeypatch.setattr(run_review_jobs_lib, "run_prompt", _fake_run_prompt_factory(bundle_output))
 
     result = run_gate_sweep(
         repo,

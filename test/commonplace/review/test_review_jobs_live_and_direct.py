@@ -7,7 +7,7 @@ import tomllib
 from pathlib import Path
 
 from commonplace.lib import frontmatter
-from commonplace.review import executor
+from commonplace.review import run_review_jobs as run_review_jobs_lib
 from commonplace.review.runners import RunnerResult
 
 from ._run_cli import run_cli
@@ -747,7 +747,7 @@ def test_run_review_bundles_groups_cross_lens_gates(monkeypatch, tmp_path: Path)
             blocks.append(pair_block("kb/notes/sample.md", GATE_TWO_PATH, "No residue found.", "PASS"))
         return RunnerResult(stdout="\n".join(blocks), stderr="", returncode=0, telemetry=None)
 
-    monkeypatch.setattr(executor, "run_prompt", fake_run_prompt)
+    monkeypatch.setattr(run_review_jobs_lib, "run_prompt", fake_run_prompt)
 
     result = run_cli(
         "run_review_bundles",
@@ -789,7 +789,7 @@ def test_run_review_bundles_parse_failure_persists_raw_bundle(monkeypatch, tmp_p
     def fake_run_prompt(**_kwargs):
         return RunnerResult(stdout="not a pair bundle\n", stderr="", returncode=0, telemetry=None)
 
-    monkeypatch.setattr(executor, "run_prompt", fake_run_prompt)
+    monkeypatch.setattr(run_review_jobs_lib, "run_prompt", fake_run_prompt)
 
     result = run_cli(
         "run_review_bundles",
