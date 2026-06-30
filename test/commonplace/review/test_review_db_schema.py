@@ -6,7 +6,7 @@ import sqlite3
 
 import pytest
 
-from commonplace.review import review_db
+from commonplace.review import review_db, review_schema_migrations
 from test.commonplace.review.pair_helpers import accept_pair, insert_completed_pair
 
 
@@ -351,9 +351,9 @@ def test_failed_legacy_migration_rolls_back_and_leaves_old_tables_readable(
     db_path = tmp_path / "review-store.sqlite"
     create_legacy_review_db(db_path)
     monkeypatch.setattr(
-        review_db,
+        review_schema_migrations,
         "EXPECTED_REVIEW_INDEXES",
-        review_db.EXPECTED_REVIEW_INDEXES | {"idx_missing_for_rollback_test"},
+        review_schema_migrations.EXPECTED_REVIEW_INDEXES | {"idx_missing_for_rollback_test"},
     )
 
     with pytest.raises(RuntimeError, match="missing indexes"):
