@@ -12,7 +12,7 @@ Phase 1 fixed it by giving review runs a `queued` state and an honest clock. It 
 
 In scope:
 
-- the review-store migration substrate (`user_version` runner + table-rebuild helper), built once here and reused by all of Phase 2;
+- the review-store migration substrate (`user_version` runner + integrity-check discipline; the table rebuild itself is hand-coded per change as `review_runs_new`, not a reusable helper), built once here and reused by all of Phase 2;
 - the `review_runs` status machine and its timing columns;
 - the two code gates that assume `running`;
 - the run-creation callers that currently rely on the hardcoded `running` default.
@@ -46,12 +46,12 @@ There is **no migration runner today**. `ensure_db` → `init_db` applies the sc
 - add a `LATEST_REVIEW_SCHEMA_VERSION = 1` constant and `PRAGMA user_version` handling;
 - fresh DB creation applies `review-schema.sql`, then sets `PRAGMA user_version = 1`;
 - `ensure_db` reads `user_version` on an existing DB and applies ordered migration functions until current;
-- add a table-rebuild helper (SQLite cannot `ALTER` away `NOT NULL` / a CHECK in place) and a post-migration integrity check (`PRAGMA foreign_key_check`, expected tables/indexes/views present);
+- hand-code the table rebuild (SQLite cannot `ALTER` away `NOT NULL` / a CHECK in place) inline as `review_runs_new` rather than extracting a reusable helper, plus a post-migration integrity check (`PRAGMA foreign_key_check`, expected tables/indexes/views present);
 - migrations live next to `review_db.py`, since every command calls `ensure_db`. A migration that cannot preserve integrity fails and leaves the old DB unchanged.
 
 **Part B — the honest-job-state change is migration version 1.** It rebuilds `review_runs`: create the new-shape table, `INSERT ... SELECT` copying `started_at` into `created_at` (existing rows were all created-as-running, so `created_at := started_at` is correct and `started_at` is preserved), drop, rename, recreate the index on `created_at DESC`. This preserves acceptance history; no store rebuild and no re-review.
 
-The table-rebuild helper must handle dependent foreign keys deliberately. `review_pairs.review_run_id` references `review_runs` with `ON DELETE CASCADE`, so dropping/replacing the parent table with foreign keys active can fail or cascade destructively. For a controlled rebuild, the helper may disable `PRAGMA foreign_keys` only around the table swap, but SQLite requires this outside any active transaction. `ensure_db` must not wrap this controlled swap in an outer `with conn:` transaction:
+The table rebuild must handle dependent foreign keys deliberately. `review_pairs.review_run_id` references `review_runs` with `ON DELETE CASCADE`, so dropping/replacing the parent table with foreign keys active can fail or cascade destructively. For a controlled rebuild, it may disable `PRAGMA foreign_keys` only around the table swap, but SQLite requires this outside any active transaction. `ensure_db` must not wrap this controlled swap in an outer `with conn:` transaction:
 
 1. `PRAGMA foreign_keys = OFF`;
 2. `BEGIN IMMEDIATE` or `BEGIN EXCLUSIVE`;
@@ -64,7 +64,7 @@ The table-rebuild helper must handle dependent foreign keys deliberately. `revie
 
 This is not optional or silent. If the controlled swap proves too fragile in implementation, rebuild `review_runs` and its dependent tables together instead of risking a parent-table drop.
 
-The substrate is the only part of Phase 1 with design content, and it is the foundation every later schema change reuses — which is why it belongs in the first phase rather than being improvised per change.
+The substrate is the only part of Phase 1 with design content. The reusable foundation is the `user_version` runner and the integrity-check discipline; each later schema change still hand-codes its own table rebuild following Phase 1's `review_runs_new` pattern, since no reusable rebuild helper was extracted. That shared discipline is why the substrate belongs in the first phase rather than being improvised per change.
 
 ## Code changes
 
@@ -104,4 +104,4 @@ Phase 1 intentionally does **not** add a generic worker-claim transition. Prepar
 
 ## Done when
 
-`pytest` passes, a prepared run is observably `queued` rather than `running`, an existing review store has been migrated without losing acceptance history, and ADR 033 has been promoted from [adr-draft-033-honest-review-run-state.md](./adr-draft-033-honest-review-run-state.md) if the implementation lands. At that point Phase 2 can begin with the `review_runs`→`review_jobs` rename on a clean, honest state machine.
+`pytest` passes, a prepared run is observably `queued` rather than `running`, an existing review store has been migrated without losing acceptance history, and ADR 033 is published at [ADR 033](../../reference/adr/033-honest-review-run-state.md). At that point Phase 2 can begin with the `review_runs`→`review_jobs` rename on a clean, honest state machine.

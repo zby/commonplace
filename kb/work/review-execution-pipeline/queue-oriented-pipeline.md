@@ -89,6 +89,7 @@ commonplace-create-review-jobs --input targets.json --grouping gate --batch-size
 Responsibilities:
 
 - read selector output (file or stdin, default stdin so `selector | create-jobs` composes);
+- accept direct requested-pair input for explicit QA workflows that must review requested pairs even when they are already fresh;
 - take `model_partition` from the selector output; optional `--model` only validates that it matches;
 - group targets by the requested creation grouping;
 - filter inapplicable pairs defensively if needed;
@@ -163,7 +164,7 @@ This is the most common parallel case in practice — the path in [run-review-ba
 
 Current flow:
 
-1. `commonplace-create-review-runs` creates one run per bundle and returns run objects (`review_run_id`, `prompt_path`, `bundle_output_path`, `manifest_path`).
+1. `commonplace-create-review-runs` creates one run per bundle and returns run objects with the load-bearing prompt and output paths (`review_run_id`, `prompt_path`, `bundle_output_path`).
 2. The parent agent launches **one sub-agent per run**, bounded by the harness concurrency limit, queuing overflow until workers free. Each sub-agent is a pure `prompt_path → bundle_output_path` transducer and is explicitly forbidden from running any `commonplace-*` command or touching review state.
 3. The parent finalizes each finished output with `commonplace-finalize-review-job`.
 
@@ -197,12 +198,12 @@ If a later recovery workflow needs an override, add it then with an operator-fac
 
 ## Creation Mode And Persisted Packing
 
-Job creation from selected targets owns grouping mode; selection only emits stale pairs. The `--grouping` flag is a creation policy. Persisted `packing` remains only `note` or `gate`; `explicit` and `bundle` are not new stored enum values in v1.
+Job creation from selected targets or direct requested-pair input owns grouping mode. Selection only emits stale pairs; direct input exists for explicit QA workflows that must review requested pairs even when they are already fresh. The `--grouping` flag is a creation policy. Persisted `packing` remains only `note` or `gate`; `explicit` and `bundle` are not new stored enum values in v1.
 
 - `note`: group selected pairs by note and bundle/lens; persisted as `packing = note`;
 - `gate`: group selected pairs by gate, chunk notes by `--batch-size`; persisted as `packing = gate`;
 
-A single-note input under `--grouping note` and a single-gate input under `--grouping gate` cover the old explicit batch cases without adding a third grouping mode.
+A single-note requested-pair input under `--grouping note` and a single-gate requested-pair input under `--grouping gate` cover the old direct batch workflows without adding a third grouping or packing mode. Under note grouping, same-note pairs that span bundles still split into one note-packed job per bundle/lens; the replacement preserves explicit requested-pair control, not `prepare_review_batch`'s incidental one-job cardinality.
 
 ## Retry and snapshot freshness (design facts, not open questions)
 
@@ -218,7 +219,7 @@ The goal is net line reduction: the bespoke selection+grouping+execution+paralle
 | Current command | Fate |
 |---|---|
 | `commonplace-review-target-selector` | Stage 1 selector, stabilized JSON output |
-| `commonplace-prepare-review-batch` | Removed; its same-axis batches are expressible as one `--grouping note` or `--grouping gate` input |
+| `commonplace-prepare-review-batch` | Removed after its same-axis requested-pair workflows are expressible through direct pair input plus `--grouping note` or `--grouping gate` |
 | `commonplace-create-review-runs` | Replaced by `create-review-jobs --grouping note`; removed |
 | `commonplace-run-review-bundles` | Thin wrapper (create note-packed jobs for one note, run immediately) — retained for ergonomics |
 | `commonplace-run-gate-sweep` | Retired into `select -> create-jobs --grouping gate -> run-review-jobs` |

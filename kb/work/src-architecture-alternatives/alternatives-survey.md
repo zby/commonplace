@@ -34,7 +34,7 @@ Strip away runs/bundles/packing/sweeps (execution strategy) and the essential do
 
 > `accept(sha256(note_bytes), sha256(gate_bytes), model_partition) → decision + rationale`
 
-An append-only ledger keyed by **content hashes** (not paths) is the whole truth. Key acceptance by content hash rather than `(note_path, gate_path)` and:
+An append-only ledger keyed by **content hashes** (not paths) is the whole truth. Key acceptance by `(note_content_hash, gate_content_hash, model_partition)` rather than `(note_path, gate_path, model_partition)` and:
 
 - **relocation rekeying vanishes** — `count_note_path_records` / `rekey_note_path` in `review_db.py`, called from the 703-line `relocation.py`. Moving a file doesn't change its bytes, so its acceptances still resolve.
 - staleness becomes a pure hash inequality — no diff-from-Git path needed.

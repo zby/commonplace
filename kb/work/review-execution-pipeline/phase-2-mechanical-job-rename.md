@@ -102,7 +102,7 @@ Migration 2 runs from a populated version-1 store. It must preserve row counts, 
 5. Set `PRAGMA user_version = 2`.
 6. Run the existing integrity checks: expected objects, row counts, and `PRAGMA foreign_key_check`.
 
-Modern SQLite (3.25+) propagates `RENAME TO` / `RENAME COLUMN` into dependent foreign keys and the two `UNIQUE (review_run_id, ...)` constraints automatically, so the child FK and uniqueness survive without a rebuild. Confirm `legacy_alter_table` is off (the default). If any dependency makes a rename fragile in practice, fall back to the Phase 1 controlled rebuild helper. Do not silently disable foreign keys or skip the post-migration checks. Prove the chosen path on a v1 fixture with views, indexes, foreign keys, and both null and non-null acceptance rows.
+Modern SQLite (3.25+) propagates `RENAME TO` / `RENAME COLUMN` into dependent foreign keys and the two `UNIQUE (review_run_id, ...)` constraints automatically, so the child FK and uniqueness survive without a rebuild. Confirm `legacy_alter_table` is off (the default). If any dependency makes a rename fragile in practice, fall back to hand-coding the rebuild with the same discipline as Phase 1's `review_runs_new` migration (there is no reusable rebuild helper). Do not silently disable foreign keys or skip the post-migration checks. Prove the chosen path on a v1 fixture with views, indexes, foreign keys, and both null and non-null acceptance rows.
 
 Do not rewrite existing `bundle_output_path`, `result_path`, or manifest files during migration. Historical artifacts may still live under `review-run-{id}` and remain valid because paths are stored. New artifacts created after Phase 2 should use `review-job-{id}`.
 
