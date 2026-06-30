@@ -5,6 +5,7 @@ import subprocess
 from pathlib import Path
 
 from commonplace.lib import frontmatter
+from commonplace.review import review_db
 from commonplace.review import run_review_jobs as run_review_jobs_lib
 from commonplace.review.runners import RunnerResult
 
@@ -98,6 +99,63 @@ def _fake_run_prompt_factory(stdout: str, *, returncode: int = 0):
     return fake_run_prompt
 
 
+def seed_accepted_review(
+    repo: Path,
+    db_path: Path,
+    *,
+    note_path: str,
+    gate_path: str,
+    model_partition: str,
+) -> None:
+    review_db.ensure_db(db_path)
+    with review_db.connect(db_path) as conn:
+        note_snapshot = review_db.snapshot_file(conn, repo_root=repo, path=note_path)
+        gate_snapshot = review_db.snapshot_file(conn, repo_root=repo, path=gate_path)
+        review_job_id = review_db.create_job_with_pairs(
+            conn,
+            model_partition=model_partition,
+            runner="seed-runner",
+            created_at="2026-04-10T10:00:00+00:00",
+            started_at="2026-04-10T10:00:00+00:00",
+            status="running",
+            packing="gate",
+            pairs=[
+                review_db.ReviewPairRequest(
+                    note_path=note_path,
+                    gate_path=gate_path,
+                    pair_ordinal=1,
+                    reviewed_note_snapshot_id=note_snapshot.snapshot_id,
+                    reviewed_gate_snapshot_id=gate_snapshot.snapshot_id,
+                )
+            ],
+        )
+        review_db.complete_review_pairs(
+            conn,
+            review_job_id=review_job_id,
+            review_pairs=[
+                review_db.ReviewPairCompletion(
+                    note_path=note_path,
+                    gate_path=gate_path,
+                    decision="pass",
+                    reviewed_at="2026-04-10T10:01:00+00:00",
+                )
+            ],
+            reviewed_at="2026-04-10T10:01:00+00:00",
+        )
+        review_pair = review_db.load_review_pairs_for_job(conn, review_job_id=review_job_id)[0]
+        review_db.append_acceptance_event(
+            conn,
+            note_path=note_path,
+            gate_path=gate_path,
+            model_partition=model_partition,
+            accepted_review_pair_id=review_pair.review_pair_id,
+            accepted_note_snapshot_id=note_snapshot.snapshot_id,
+            accepted_gate_snapshot_id=gate_snapshot.snapshot_id,
+            accepted_at="2026-04-10T10:02:00+00:00",
+        )
+        conn.commit()
+
+
 def test_run_gate_sweep_reviews_multiple_notes_in_one_batch(monkeypatch, tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
 
@@ -160,6 +218,63 @@ def test_run_gate_sweep_reviews_multiple_notes_in_one_batch(monkeypatch, tmp_pat
     assert frontmatter.strip((repo / pair_rows[1]["result_path"]).read_text(encoding="utf-8")) == (
         "No undefined terms found.\n\n## Result: PASS\n"
     )
+
+
+def test_run_gate_sweep_can_select_pairs_missing_any_review(monkeypatch, tmp_path: Path) -> None:
+    repo, db_path = build_repo_fixture(tmp_path)
+    seed_accepted_review(
+        repo,
+        db_path,
+        note_path="kb/notes/first.md",
+        gate_path=GATE_PATH,
+        model_partition="other-model",
+    )
+
+    bundle_output = (
+        f"=== PAIR REVIEW START: kb/notes/second.md :: {GATE_PATH} ===\n"
+        "No undefined terms found.\n\n"
+        "## Result: PASS\n"
+        f"=== PAIR REVIEW END: kb/notes/second.md :: {GATE_PATH} ===\n"
+    )
+    monkeypatch.setattr(run_review_jobs_lib, "run_prompt", _fake_run_prompt_factory(bundle_output))
+
+    result = run_gate_sweep(
+        repo,
+        "accessibility/undefined-terms",
+        "--runner",
+        "codex",
+        "--model",
+        "test-model",
+        "--missing-any-review",
+        "--batch-size",
+        "2",
+        "--note",
+        "kb/notes/first.md",
+        "kb/notes/second.md",
+        "--db",
+        str(db_path),
+    )
+
+    assert result.returncode == 0
+    assert "Batch 1/1: launching codex for 1 notes" in result.stderr
+    assert "kb/notes/first.md" not in result.stderr
+    assert "kb/notes/second.md" in result.stderr
+    assert "Reviewed: 1 notes" in result.stdout
+
+    with sqlite3.connect(db_path) as conn:
+        conn.row_factory = sqlite3.Row
+        new_pair_rows = conn.execute(
+            """
+            SELECT rp.note_path, j.model_partition, rp.pair_status, rp.decision
+            FROM review_pairs AS rp
+            JOIN review_jobs AS j ON rp.review_job_id = j.review_job_id
+            WHERE j.model_partition = 'test-model'
+            ORDER BY rp.note_path
+            """
+        ).fetchall()
+        assert [(row["note_path"], row["pair_status"], row["decision"]) for row in new_pair_rows] == [
+            ("kb/notes/second.md", "completed", "pass")
+        ]
 
 
 def test_run_gate_sweep_salvages_parsed_notes_and_fails_missing_ones(monkeypatch, tmp_path: Path) -> None:

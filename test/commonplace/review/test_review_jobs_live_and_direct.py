@@ -342,7 +342,7 @@ def test_create_review_jobs_accepts_selector_json_file_and_validates_model(tmp_p
     assert "does not match selector model_partition" in mismatch.stderr
 
 
-def test_create_review_jobs_selector_noop_and_model_agnostic_rejection(tmp_path: Path) -> None:
+def test_create_review_jobs_selector_noop_and_model_agnostic_input(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
     selector_path = repo / "empty-targets.json"
     selector_path.write_text(json.dumps({"model_partition": "test-model", "targets": []}), encoding="utf-8")
@@ -363,6 +363,22 @@ def test_create_review_jobs_selector_noop_and_model_agnostic_rejection(tmp_path:
     assert payload["skipped_pairs"] == []
 
     selector_path.write_text(json.dumps({"model_partition": None, "targets": []}), encoding="utf-8")
+    accepted = run_cli(
+        "create_review_jobs",
+        "--input",
+        "empty-targets.json",
+        "--model",
+        "test-model",
+        "--grouping",
+        "note",
+        cwd=repo,
+        db_path=db_path,
+    )
+    payload = json.loads(accepted.stdout)
+    assert payload["model_partition"] == "test-model"
+    assert payload["created_count"] == 0
+    assert payload["jobs"] == []
+
     rejected = run_cli(
         "create_review_jobs",
         "--input",

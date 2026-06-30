@@ -94,13 +94,14 @@ def _selector_pairs(
     *,
     repo_root: Path,
     raw_json: str,
+    fallback_model: str | None = None,
 ) -> tuple[str, list[RequestedPair]]:
     payload = _load_selector_json(raw_json)
     raw_model = payload.get("model_partition")
     if raw_model is None:
-        raise ValueError("selector JSON model_partition is required for job creation")
+        raw_model = fallback_model
     if not isinstance(raw_model, str) or not raw_model.strip():
-        raise ValueError("selector JSON model_partition must be a non-empty string")
+        raise ValueError("selector JSON model_partition is required unless --model is provided")
     model_partition = normalize_model_partition(raw_model)
     raw_targets = payload.get("targets")
     if not isinstance(raw_targets, list):
@@ -342,6 +343,7 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
             model_partition, requested_pairs = _selector_pairs(
                 repo_root=repo_root,
                 raw_json=_read_input(repo_root, args.input),
+                fallback_model=args.model,
             )
             if args.model is not None:
                 requested_model = args.model.strip()

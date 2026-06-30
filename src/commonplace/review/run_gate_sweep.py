@@ -90,6 +90,7 @@ def run_gate_sweep(
     current_only: bool,
     batch_size: int,
     dry_run: bool,
+    missing_any_review: bool = False,
 ) -> GateSweepOutcome:
     """Run one gate across many notes in batched runner calls.
 
@@ -106,7 +107,7 @@ def run_gate_sweep(
 
     stale_records = select_stale_gates(
         repo_root,
-        model=model,
+        model=None if missing_any_review else model,
         gate_ids=[gate_path],
         note_filter=note_paths,
         current_only=current_only,

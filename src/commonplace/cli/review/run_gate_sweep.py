@@ -22,6 +22,14 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser.add_argument("--batch-size", type=int, default=5, help="Notes per runner invocation.")
     parser.add_argument("--db", help="Override COMMONPLACE_REVIEW_DB.")
     parser.add_argument("--dry-run", action="store_true", help="Print prompts without invoking the runner.")
+    parser.add_argument(
+        "--missing-any-review",
+        action="store_true",
+        help=(
+            "Select only pairs with no accepted review under any model; "
+            "--model still controls the new job partition."
+        ),
+    )
     args = parser.parse_args(argv)
 
     if args.batch_size < 1:
@@ -43,6 +51,7 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
             current_only=args.current,
             batch_size=args.batch_size,
             dry_run=args.dry_run,
+            missing_any_review=args.missing_any_review,
         )
     except (FileNotFoundError, ValueError) as exc:
         parser.error(str(exc))
