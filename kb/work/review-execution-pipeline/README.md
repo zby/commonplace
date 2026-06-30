@@ -69,13 +69,12 @@ The minimal useful refactor is not a new framework. It is a small pipeline core 
 - [queue-oriented-pipeline.md](./queue-oriented-pipeline.md) - proposed selector to queued jobs to queue-worker command shape, with parallelism moved into queue execution.
 - [phase-1-honest-job-state.md](./phase-1-honest-job-state.md) - implemented first phase: migration substrate plus the `queued` status and honest clock, on current table names.
 - [phase-2-mechanical-job-rename.md](./phase-2-mechanical-job-rename.md) - **ready to implement**: mechanical run to job rename, using schema version 2 and preserving Phase 1 behavior while keeping pair vocabulary.
-- [phase-3-job-creation-and-listing.md](./phase-3-job-creation-and-listing.md) - planned: concrete model-specific selector JSON handoff, queued job creation, shared job plan, and job listing.
+- [phase-3-job-creation-and-listing.md](./phase-3-job-creation-and-listing.md) - ready to implement: concrete model-specific selector JSON handoff, queued job creation, shared job plan, and job listing.
 - [phase-4-job-owned-finalization.md](./phase-4-job-owned-finalization.md) - planned: parent-dispatch claiming, finalize by job id using the job-owned output path, write result provenance frontmatter, and retire explicit ingest surfaces.
 - [phase-5-subprocess-job-runner.md](./phase-5-subprocess-job-runner.md) - planned: subprocess workers claim queued jobs, run adapters, and finalize through the shared path.
-- [phase-6-ack-provenance.md](./phase-6-ack-provenance.md) - planned: new ack writes carry forward existing review evidence; legacy nullable cleanup is deferred.
-- [phase-7-no-review-relocation.md](./phase-7-no-review-relocation.md) - planned: relocation no longer rekeys review state.
+- [phase-6-ack-provenance.md](./phase-6-ack-provenance.md) - implemented: new ack writes carry forward existing review evidence; legacy nullable cleanup is deferred.
+- [phase-7-no-review-relocation.md](./phase-7-no-review-relocation.md) - ready to finish implementation: relocation no longer rekeys review state.
 - [phase-8-docs-adr-and-workshop-close.md](./phase-8-docs-adr-and-workshop-close.md) - planned: promote ADR/reference docs and close the workshop.
-- [adr-draft-033-honest-review-run-state.md](./adr-draft-033-honest-review-run-state.md) - Phase 1 draft retained for provenance; promoted as [ADR 033](../../reference/adr/033-honest-review-run-state.md).
 - [adr-draft-034-queued-review-jobs-and-execution-provenance.md](./adr-draft-034-queued-review-jobs-and-execution-provenance.md) - draft ADR for the queued-job SQL model, execution provenance columns, and two execution paths.
 - [implementation-plan.md](./implementation-plan.md) - the remaining queued-job refactor plan; Phase 1 has landed, everything else is Phase 2.
 

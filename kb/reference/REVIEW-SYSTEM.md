@@ -55,11 +55,13 @@ Primary tables:
   - stores exact UTF-8 text when the snapshot must be reusable for prompt rendering or diffing
 - `review_pairs`
   - one row per requested `(note_path, gate_path)` pair inside a job
-  - stores pair status (`pending`, `completed`, `missing`), decision, explicit `model_partition`, result path, and reviewed note/gate snapshot IDs
+  - stores pair status (`pending`, `completed`, `missing`), decision, result path, and reviewed note/gate snapshot IDs
+  - derives model partition from the parent `review_jobs` row
 - `acceptance_events`
   - append-only acceptance history
   - records the accepted baseline for selector and ack
-  - optionally points to `accepted_review_pair_id`; pure acknowledgements leave it null
+  - new full-review and ack writes point `accepted_review_pair_id` to completed review evidence
+  - legacy nullable ack rows remain readable through fallback lookup
   - latest event wins for the current-state query
 
 Derived view:
@@ -138,9 +140,9 @@ The important invariant is that the stored note and gate snapshot IDs identify t
 `ack` no longer rewrites a markdown file. It appends a new `acceptance_events` row with:
 
 - snapshot IDs for the current note and gate text
-- `accepted_review_pair_id = NULL`
+- `accepted_review_pair_id` pointing to the completed review pair being carried forward
 
-This advances the accepted baseline without overwriting review prose or mutating a review artifact.
+Ack fails when there is no completed review pair for the same `(note_path, gate_path, model_partition)`. This advances the accepted baseline without overwriting review prose or mutating a review artifact.
 
 ## Read paths
 

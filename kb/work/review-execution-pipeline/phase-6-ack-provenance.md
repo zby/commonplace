@@ -1,12 +1,12 @@
 # Phase 6: Ack provenance
 
-**Status: ready to implement.** Phase 6 removes review-less acceptance events from the write path by making ack carry forward an existing completed review pair. The first version keeps legacy nullable rows readable and defers the `NOT NULL` migration.
+**Status: implemented.** Phase 6 removed review-less acceptance events from the write path by making ack carry forward an existing completed review pair. The first version keeps legacy nullable rows readable and defers the `NOT NULL` migration.
 
 ## Purpose
 
 Ack means a previous completed review remains valid for the current note/gate snapshots. The acceptance event should point to the review evidence being carried forward.
 
-The current nullable `accepted_review_pair_id` allowed ack rows to omit that provenance. Existing readers compensate by looking through null ack rows to the latest completed pair. This phase makes that implicit behavior explicit in stored data.
+Legacy nullable `accepted_review_pair_id` rows allowed ack rows to omit that provenance. Existing readers compensate by looking through null ack rows to the latest completed pair. This phase made that implicit behavior explicit in stored data for new ack writes.
 
 ## Lookup rule
 

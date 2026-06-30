@@ -213,7 +213,7 @@ For the note that's being moved: rewrite each of its outbound relative links so 
 Update `mkdocs.yml` in place: rewrite any matching `nav` entries and `redirect_maps` targets, and append a new redirect entry from `old_docs_path` to `new_docs_path`. Preserves indentation and quoting style.
 
 **`plan_hooks(hooks, *, root, moves)`** / **`describe_hook_plans(plans)`** / **`execute_hook_plans(plans)`**
-Relocation hook lifecycle used by subsystem integrations such as the review DB rekey hook.
+Relocation hook lifecycle for optional subsystem integrations. Review state is path-keyed and is not a hook consumer.
 
 **`move_path(source, destination, *, repo_root)`** / **`move_note(source, destination, *, repo_root)`**
 Move a path on disk, preferring `git mv` and falling back to `Path.rename` if git isn't available. `move_note` is a thin wrapper kept separate so tests can monkeypatch it.

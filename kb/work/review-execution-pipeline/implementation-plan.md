@@ -132,6 +132,8 @@ The spawned/selected model should be the **newest member of the job's partition*
 
 Reasoning effort is nullable execution provenance, not a required v1 review identity field. In the orchestrator-agent path, Claude Code worker effort is inherited from the parent/session or fixed by a named subagent configuration; the parent records it only if it knows it. In the subprocess path, an effort flag is valid only for runner adapters that can actually set it; unsupported adapters fail early rather than silently ignoring it.
 
+Phase 5 may make the minimal runner-adapter surface change this requires: adapters expose whether they can set effort, and `run_prompt` / `build_command` accept a nullable effort argument that is passed only to supporting adapters. This is an adapter capability boundary, not a general runner refactor.
+
 Finalization stays model-agnostic in v1: the membership gate already ran at execution. Later constraints can require `build_model_partition(runner_model, runner_effort) == model_partition` whenever runner model/effort are present. Runner telemetry can still be stored in `telemetry_json` as optional evidence about whether the runner honored the requested settings; telemetry is distinct from the partition-membership gate.
 
 ### Telemetry is optional and adapter-owned
@@ -155,7 +157,7 @@ review_job_id: 42
 review_pair_id: 101
 note_path: kb/notes/example.md
 gate_path: kb/instructions/review-gates/prose/source-residue.md
-model_partition: claude-opus-4-6
+model_partition: claude-opus
 runner: claude-code
 runner_model: claude-opus-4-6
 runner_effort: high
@@ -164,16 +166,16 @@ reviewed_at: "2026-06-28T12:00:00+00:00"
 ---
 ```
 
-Omit `runner_model` and `runner_effort` from result frontmatter when they are null.
+Keep nullable provenance keys such as `runner_model` and `runner_effort` present in result frontmatter when they are null, encoded as YAML `null`. This matches Phase 4 finalization's deterministic frontmatter contract.
 
 The raw `bundle-output.md` can stay as the runner/agent output contract unless the parser is deliberately made frontmatter-tolerant.
 
 ### Commands share a job plan object
 
-Create one internal value object, named `ReviewJobPlan` or `PreparedReviewJob`, that represents the executable/finalizable job shape:
+Create one internal value object, named `ReviewJobPlan`, that represents the executable/finalizable job shape:
 
 - job id;
-- pending/completed pair rows;
+- all pair rows, including `pending`, `completed`, and `missing`;
 - prompt path;
 - bundle output path;
 - per-pair result paths;
@@ -185,26 +187,34 @@ Create one internal value object, named `ReviewJobPlan` or `PreparedReviewJob`, 
 
 Creation commands write this shape; listing, subprocess execution, and finalization load it. Do not let each command rediscover artifact paths, packing, or pair metadata differently.
 
+The loader has tolerant and strict use modes: listing can tolerate null paths on migrated older rows, while execution and finalization require `prompt_path`, `bundle_output_path`, and per-pair `result_path` to be present and fail clearly if they are not.
+
+Do not put `manifest_path` or `artifact_dir` in the core job plan. `MANIFEST.json` is a human/debug artifact written beside prompt/output files, not load-bearing state read by the pipeline. If a command displays a manifest path, derive it from the artifact layout at the display boundary.
+
 ### Selector JSON is the public handoff
 
-The selector JSON is the only public target-list handoff into job creation. Wrappers may call selector functions internally or pipe the selector JSON into `commonplace-create-review-jobs`, but they should not invent their own target payload shape. This keeps stale-target selection, model-partition declaration, defensive filtering, and grouping boundaries in one place.
+The selector JSON is the only public stale-target handoff into job creation. It is an object-shaped payload with a top-level `model_partition` and `targets`; model-agnostic selector/reporting output uses `model_partition: null` and is rejected as job-creation input. Wrappers may call selector functions internally or pipe the selector JSON into `commonplace-create-review-jobs`, but they should not invent their own stale-target payload shape. This keeps stale-target selection, model-partition declaration, defensive filtering, and grouping boundaries in one place.
+
+Direct requested-pair input is the separate explicit-QA input source for "review these pairs even if fresh" workflows. It is not a third grouping or packing mode: it still resolves through `--grouping note` or `--grouping gate`, and persisted `packing` remains only `note` or `gate`.
 
 ### Ack carries forward an existing review
 
-Target ack semantics are stricter than the current implementation.
+Ack semantics are now stricter than the old review-less write path.
 
 Ack means: an existing completed review remains valid for the current note/gate snapshots. Therefore an acceptance event written by ack must point to the completed review pair being carried forward.
 
-**The review-less ack is an accident, not a feature.** Every real ack today is a trivial-change re-baseline of a pair that was already reviewed: `ack-trivial-note-changes` re-baselines an existing review across an unwatched edit, and `ack-gate-review` is the manual form of the same move. The current `accepted_review_pair_id = NULL` is simply `ack_pairs` never looking up the prior review pair and discarding the link — not an operator ever asserting "accept this with no review behind it." No waiver/suppression workflow exists or is used: nothing accepts a never-reviewed pair on operator fiat. So requiring the link removes no used capability; it recovers provenance that was being thrown away.
+**The review-less ack was an accident, not a feature.** Every real ack is a trivial-change re-baseline of a pair that was already reviewed: `ack-trivial-note-changes` re-baselines an existing review across an unwatched edit, and `ack-gate-review` is the manual form of the same move. The old null-review write was simply `ack_pairs` never looking up the prior review pair and discarding the link — not an operator ever asserting "accept this with no review behind it." No waiver/suppression workflow exists or is used: nothing accepts a never-reviewed pair on operator fiat. So requiring the link removes no used capability; it recovers provenance that was being thrown away.
 
 Target rule:
 
 - if a completed review pair exists for `(note_path, gate_path, model_partition)`, ack appends an acceptance event with the current note/gate snapshots and that review pair id;
 - if no completed review pair exists, ack fails and the pair must be reviewed.
 
-Ack lookup is path-keyed: find the latest completed review pair for the same `note_path`, `gate_path`, and `model_partition`. Content hashes and snapshot ids are the new accepted freshness baseline, not the identity used to choose the carried-forward review.
+Ack lookup is path-keyed: find the latest completed review pair for the same `note_path`, `gate_path`, and `model_partition`, joining pairs through jobs because `review_pairs` does not store `model_partition`. Content hashes and snapshot ids are the new accepted freshness baseline, not the identity used to choose the carried-forward review.
 
-The first version changes the ack write path only: new ack events store `accepted_review_pair_id`, while legacy nullable rows remain readable through existing fallback logic. A later hardening migration can backfill old nulls and make `accepted_review_pair_id` `NOT NULL`. If a deliberate "waive a gate without reviewing" operation is ever wanted, add it as an explicit separate event that records operator and reason — do not reintroduce a null-review acceptance.
+Ack batches are all-or-nothing. The shared `ack_pairs` write path normalizes and dedupes requested pairs, preflights each pair with `load_latest_completed_review_pair`, fails before snapshotting if any pair has no completed review to carry forward, then snapshots current note/gate text and appends acceptance events in one transaction. `commonplace-ack-gate-review`, `commonplace-ack-trivial-note-changes`, and `commonplace-review-target-selector --ack` all inherit this behavior through `ack_pairs`.
+
+The first version changed the ack write path only: new ack events store `accepted_review_pair_id`, while legacy nullable rows remain readable through existing fallback logic. A later hardening migration can backfill old nulls, make `accepted_review_pair_id` `NOT NULL`, and replace `ON DELETE SET NULL` with default `NO ACTION` / restrict-style FK semantics. If a deliberate "waive a gate without reviewing" operation is ever wanted, add it as an explicit separate event that records operator and reason — do not reintroduce a null-review acceptance.
 
 ### Do not relocate review records
 
@@ -227,7 +237,7 @@ Retry means create a new job, recapturing snapshots.
 
 ## ADR Promotion
 
-- Phase 1 is already recorded by [ADR 033](../../reference/adr/033-honest-review-run-state.md). The workshop draft is retained as [adr-draft-033-honest-review-run-state.md](./adr-draft-033-honest-review-run-state.md) for provenance only.
+- Phase 1 is already recorded by [ADR 033](../../reference/adr/033-honest-review-run-state.md).
 - Promote [adr-draft-034-queued-review-jobs-and-execution-provenance.md](./adr-draft-034-queued-review-jobs-and-execution-provenance.md) into `kb/reference/adr/` when the queued-job SQL model and execution paths land. The plan should not duplicate that ADR's decision text.
 
 ## Target Schema Shape
@@ -308,7 +318,7 @@ This file is the shared design overview. Detailed implementation steps, migratio
 - [Phase 3: job creation and listing](./phase-3-job-creation-and-listing.md).
 - [Phase 4: job-owned finalization](./phase-4-job-owned-finalization.md).
 - [Phase 5: subprocess job runner](./phase-5-subprocess-job-runner.md).
-- [Phase 6: ack provenance](./phase-6-ack-provenance.md).
+- [Phase 6: ack provenance](./phase-6-ack-provenance.md) — implemented; legacy nullable cleanup remains deferred hardening.
 - [Phase 7: no review relocation](./phase-7-no-review-relocation.md).
 - [Phase 8: docs, ADR, and workshop close](./phase-8-docs-adr-and-workshop-close.md).
 
