@@ -146,7 +146,7 @@ commonplace-create-review-jobs --model claude-opus-4-6 --note kb/notes/my-note.m
 commonplace-create-review-jobs --model claude-opus-4-6 --pair kb/notes/a.md::prose/source-residue --pair kb/notes/b.md::prose/source-residue --grouping gate --batch-size 5
 ```
 
-The command prints a JSON payload with `input_mode`, `model_partition`, `grouping`, `jobs`, and `skipped_pairs`. Each job includes `review_job_id`, `status`, nullable runner provenance, `packing`, `prompt_path`, `bundle_output_path`, derived `manifest_path`, and pair rows with `gate_id`, `pair_status`, `decision`, and `result_path`. `MANIFEST.json` is display/debug output; pipeline commands use the DB paths as state. Note-packed jobs use gate-leaf filenames such as `source-residue.md`; gate-packed jobs use note filenames such as `my-note.md`.
+The command prints a JSON payload with `input_mode`, `model_partition`, `grouping`, `jobs`, and `skipped_pairs`. Each job includes `review_job_id`, `status`, nullable runner provenance, `packing`, `prompt_path`, `bundle_output_path`, and pair rows with `gate_id`, `pair_status`, `decision`, and `result_path`. `MANIFEST.json` is display/debug output written beside the artifacts, not a returned JSON field; pipeline commands use the DB paths as state. Note-packed jobs use gate-leaf filenames such as `source-residue.md`; gate-packed jobs use note filenames such as `my-note.md`.
 
 ### commonplace-run-review-jobs
 

@@ -18,7 +18,6 @@ from commonplace.review.review_db import (
     connect,
     list_review_job_plans,
     prepare_review_db,
-    review_job_artifact_dir_rel,
 )
 from commonplace.review.review_model import normalize_model_partition
 
@@ -37,10 +36,6 @@ class SkippedRequestedPair:
     gate_path: str | None
     gate_id: str | None
     reason: str
-
-
-def _manifest_path(review_job_id: int) -> str:
-    return f"{review_job_artifact_dir_rel(review_job_id)}/MANIFEST.json"
 
 
 def _normalize_note_path(repo_root: Path, raw: str) -> str:
@@ -255,7 +250,6 @@ def _job_payload(plan: ReviewJobPlan, *, include_timestamps: bool = False) -> di
         "packing": plan.packing,
         "prompt_path": plan.prompt_path,
         "bundle_output_path": plan.bundle_output_path,
-        "manifest_path": _manifest_path(plan.review_job_id),
         "pair_count": len(plan.pairs),
         "pairs": [_pair_payload(pair) for pair in sorted(plan.pairs, key=lambda item: item.pair_ordinal)],
     }

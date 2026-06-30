@@ -135,7 +135,6 @@ def test_create_review_jobs_direct_pairs_creates_one_gate_packed_job_and_prompt(
 
     assert job["prompt_path"] == f"kb/reports/bundle-reviews/review-job-{review_job_id}/prompt.md"
     assert job["bundle_output_path"] == f"kb/reports/bundle-reviews/review-job-{review_job_id}/bundle-output.md"
-    assert job["manifest_path"] == f"kb/reports/bundle-reviews/review-job-{review_job_id}/MANIFEST.json"
 
     prompt_text = (repo / job["prompt_path"]).read_text(encoding="utf-8")
     assert f"Write exactly one markdown document to `{job['bundle_output_path']}`." in prompt_text
@@ -143,7 +142,8 @@ def test_create_review_jobs_direct_pairs_creates_one_gate_packed_job_and_prompt(
     assert f"=== PAIR REVIEW START: kb/notes/second.md :: {GATE_PATH} ===" in prompt_text
     assert prompt_text.count(f"=== gate: {GATE_PATH} ===") == 1
 
-    manifest = json.loads((repo / job["manifest_path"]).read_text(encoding="utf-8"))
+    manifest_path = f"kb/reports/bundle-reviews/review-job-{review_job_id}/MANIFEST.json"
+    manifest = json.loads((repo / manifest_path).read_text(encoding="utf-8"))
     assert manifest["packing"] == "gate"
     assert [pair["result_path"] for pair in manifest["pairs"]] == [
         f"kb/reports/bundle-reviews/review-job-{review_job_id}/first.md",

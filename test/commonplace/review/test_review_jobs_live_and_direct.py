@@ -153,7 +153,7 @@ def test_create_review_jobs_groups_cross_lens_gates_by_bundle(tmp_path: Path) ->
     second_review_job_id = second_job["review_job_id"]
     assert first_job["prompt_path"] == f"kb/reports/bundle-reviews/review-job-{first_review_job_id}/prompt.md"
     assert second_job["prompt_path"] == f"kb/reports/bundle-reviews/review-job-{second_review_job_id}/prompt.md"
-    assert first_job["manifest_path"] == f"kb/reports/bundle-reviews/review-job-{first_review_job_id}/MANIFEST.json"
+    first_manifest_path = f"kb/reports/bundle-reviews/review-job-{first_review_job_id}/MANIFEST.json"
 
     prompt = (repo / first_job["prompt_path"]).read_text(encoding="utf-8")
     assert f"=== PAIR REVIEW START: kb/notes/sample.md :: {GATE_ONE_PATH} ===" in prompt
@@ -161,7 +161,7 @@ def test_create_review_jobs_groups_cross_lens_gates_by_bundle(tmp_path: Path) ->
     second_prompt = (repo / second_job["prompt_path"]).read_text(encoding="utf-8")
     assert f"=== PAIR REVIEW START: kb/notes/sample.md :: {GATE_TWO_PATH} ===" in second_prompt
 
-    manifest = json.loads((repo / first_job["manifest_path"]).read_text(encoding="utf-8"))
+    manifest = json.loads((repo / first_manifest_path).read_text(encoding="utf-8"))
     assert manifest["packing"] == "note"
     assert [pair["result_path"] for pair in manifest["pairs"]] == [
         f"kb/reports/bundle-reviews/review-job-{first_review_job_id}/undefined-terms.md",
@@ -610,7 +610,7 @@ def test_finalize_review_job_uses_job_owned_paths_and_writes_provenance_frontmat
         )
         conn.execute("UPDATE review_pairs SET result_path = ? WHERE review_job_id = ?", (custom_result, review_job_id))
         conn.commit()
-    manifest_path = repo / prepared_job["manifest_path"]
+    manifest_path = repo / f"kb/reports/bundle-reviews/review-job-{review_job_id}/MANIFEST.json"
     manifest_path.write_text("{not valid json", encoding="utf-8")
 
     result = run_cli(
