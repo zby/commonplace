@@ -15,7 +15,9 @@ In scope:
 - update `kb/reference/review-architecture.md`;
 - update command reference docs;
 - update operator docs and review-system docs;
+- audit that docs updated in earlier phases stayed current; command-surface changes should not wait until Phase 8 if agents need those docs during implementation;
 - remove command wrappers that survived only as temporary bridges;
+- clean up the tests from testing obsolete or backcompat paths;
 - remove or archive obsolete workshop files;
 - close the workshop by promoting durable artifacts and deleting the work folder if no active design remains.
 
@@ -36,6 +38,7 @@ The ADR decision text lives in [adr-draft-034-queued-review-jobs-and-execution-p
 - `commonplace-validate` on updated docs;
 - command reference examples match actual CLI flags;
 - no live docs describe removed command surfaces as current;
+- no live docs tell agents to pass `--runner` to `commonplace-create-review-jobs`, use `commonplace-prepare-review-batch`, use ingest commands for job-owned finalization, or treat `MANIFEST.json` as pipeline state;
 - workshop README points only to remaining active work, or the workshop is deleted.
 
 ## Done when
