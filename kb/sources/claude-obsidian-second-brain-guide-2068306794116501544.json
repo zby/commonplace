@@ -1,0 +1,364 @@
+{
+  "source": "https://x.com/undefinedKi/status/2068306794116501544",
+  "captured": "2026-06-30T04:45:33.865959+00:00",
+  "family": "x-article",
+  "status_id": "2068306794116501544",
+  "conversation_id": "2068306794116501544",
+  "target_post": {
+    "entities": {
+      "urls": [
+        {
+          "start": 0,
+          "end": 23,
+          "url": "https://t.co/KADozFhjGF",
+          "expanded_url": "http://x.com/i/article/2067725011880697856",
+          "display_url": "x.com/i/article/2067\u2026",
+          "status": 500,
+          "unwound_url": "https://x.com/i/article/2067725011880697856"
+        }
+      ]
+    },
+    "text": "https://t.co/KADozFhjGF",
+    "article": {
+      "entities": {
+        "code": [
+          {
+            "language": "bash",
+            "code": "claude mcp add google-workspace uvx workspace-mcp --tools calendar",
+            "content": "```bash\nclaude mcp add google-workspace uvx workspace-mcp --tools calendar\n```"
+          },
+          {
+            "language": "none",
+            "code": "Frequency:  Daily, 7:00am\nFolder:     your vault\nPrompt:     Check my vault. File anything new sitting in Inputs\n            folders into the right place and link it. Flag notes\n            that have gone stale. Write me a 3-line summary of what\n            changed overnight.",
+            "content": "```\nFrequency:  Daily, 7:00am\nFolder:     your vault\nPrompt:     Check my vault. File anything new sitting in Inputs\n            folders into the right place and link it. Flag notes\n            that have gone stale. Write me a 3-line summary of what\n            changed overnight.\n```"
+          }
+        ],
+        "mentions": [
+          {
+            "start": 6,
+            "end": 18,
+            "username": "undefinedKi"
+          }
+        ],
+        "urls": [
+          {
+            "text": "claude.com/download"
+          },
+          {
+            "text": "https://obsidian.md/"
+          }
+        ]
+      },
+      "plain_text": "Your best ideas are scattered across a dozen places right now. Notes apps. Browser tabs. Old chats with Claude that you closed and will never find again. Every time you sit down to work, you rebuild context from memory, and you forget most of it.\nA second brain fixes that. It is one place that holds everything you know, with Claude sitting on top of it, reading it, connecting it, and growing it for you. You stop re-explaining yourself every session, because the system already remembers. Ask it anything you have ever written down and it answers from the whole thing.\nThis is the idea Andrej Karpathy popularized in April 2026 with his LLM Wiki pattern. The setup takes an evening, and unlike a chat history that rots, this one gets sharper every single day you use it.\nBelow is the full walkthrough, written so you can follow it even if you have never opened Claude Code or Obsidian before. Every step spells out exactly what to click and what to type.\n \nWhat you are actually building\nTwo tools, two jobs.\nObsidian is the storage. A free notes app that keeps everything as plain text files on your own computer. Notes link to each other, and over time those links form a graph, a visible map of how your ideas connect. It lives on your machine, not in a company's cloud, and the files are yours forever.\nClaude is the brain on top. It reads the entire vault, files new information where it belongs, links it to what is already there, and answers questions across all of it.\nThe whole thing is just text files. That means it is not locked to any one AI. Point a different model at it next year and it still works, because you own the brain, not the tool.\nStep 1: Install Claude Desktop\nGo to claude.com/download in your browser and download the desktop app for your system (Windows or Mac). Run the installer and open the app.\nSign in with your Claude account. You need a paid plan (Pro is $20/month), the free tier will not work for this.\nAt the top of the app you will see tabs: Chat, Cowork, and Code. Click the Code tab. This is Claude Code, the version that can actually read and write files on your computer. If it asks you to upgrade, your plan needs to be paid first.\nStep 2: Install Obsidian and make your vault\nGo to obsidian.md and download Obsidian. It is free. Install it and open it.\nOn the welcome screen, click Create new vault. Give it a name like \"brain,\" pick a folder on your computer to store it, and click Create. That folder is now your second brain. Everything Claude writes will land here as text files.\nMake one note so you have seen how it works: click the new-note icon, type a sentence, then type two square brackets and a word like [[goals]]. That bracketed word becomes a link. That is the core mechanic, notes pointing at notes. Claude will do this linking for you automatically later.\nStep 3: Turn on the connection inside Obsidian\nClaude needs a door into your vault. Obsidian opens one with a plugin.\nIn Obsidian, click the Settings gear (bottom left). In the menu, click Community plugins, then Turn on community plugins. Click Browse, search for Local REST API, click it, then Install, then Enable.\nNow click on Local REST API in your installed plugins list to open its settings. You will see an API Key, a long string of letters and numbers. Copy it and keep it somewhere for the next step. Leave Obsidian open, the connection only works while the app is running.\nStep 4: Connect Claude to the vault\nNow you tell Claude how to reach that door. In the Claude Code tab, you have a place to type commands. Paste this in, but first replace PASTE-YOUR-KEY-HERE with the key you copied:\nclaude mcp add-json obsidian-vault '{ \"type\": \"stdio\", \"command\": \"uvx\", \"args\": [\"mcp-obsidian\"], \"env\": { \"OBSIDIAN_API_KEY\": \"PASTE-YOUR-KEY-HERE\", \"OBSIDIAN_HOST\": \"127.0.0.1\", \"OBSIDIAN_PORT\": \"27124\" } }'\nObsidian shows the key with the word \"Bearer\" in front of it. Do not include that word. Paste only the string of letters and numbers after it, nothing else.\nThis wires Claude to your vault through MCP, the standard way Claude talks to other apps. After it runs, type this to test it: \"list every file in my Obsidian vault.\" If Claude reads your notes back to you, the connection works. If it cannot, make sure Obsidian is still open and the plugin is enabled.\nStep 5: Load yourself into the brain\nRight now Claude can read your vault but knows nothing about you. An empty brain is useless. Fix that first, and don't type it all out by hand. Make Claude interview you.\nIn the Claude panel inside Obsidian, paste this:\nYou are setting up my second brain. Interview me ONE question at a time to build my profile. Ask about: who I am and what I do, my goals for this year, how I want you to talk to me, my strengths and weaknesses, and my current projects. Wait for each answer before the next question. When finished, write everything into a file called CLAUDE.md at the vault root, structured with headers, so you load it automatically every session.\nAnswer like you're briefing a new co-founder. The more real your answers, the more the brain knows you. When it finishes, open CLAUDE.md in your vault, your whole context is now saved. You never re-explain yourself again.\nStep 6: Create a project with the right structure\nYour CLAUDE.md is the strategy layer. Projects are where work happens. Each one is its own folder so Claude focuses on a single job instead of your whole life at once. Have Claude build it. Paste:\nCreate a project folder in my vault called youtube-channel. Inside it, create four folders: Inputs, Process, Outputs, Feedback. Then write a CLAUDE.md inside that project folder describing what this project is, its one goal, and your specific role in helping me hit it. Interview me if you need details.\nSwap youtube-channel for whatever you're building. You now have a clean pipeline: ideas land in Inputs, Claude works in Process, finished work goes to Outputs, results and metrics go to Feedback. Repeat this for every area, content, finances, clients.\nStep 7: Open a single project to work in it\nThis is the move that keeps it sharp. Don't work from the giant vault. Open just the project so Claude sees only that job.\nIn Obsidian, click the vault name at the bottom left, then:\nManage vaults  \u2192  Open folder as a vault  \u2192  pick your project folder  \u2192  Trust\nClaude now reads only that project's CLAUDE.md. It knows exactly what it's helping with and ignores everything else. The big vault plans. A single project ships.\nStep 8: Build a skill so you never repeat yourself\nA skill is a saved workflow Claude runs on command. Anything you do more than once becomes one. Inside a project, paste:\nI want to turn this into a reusable skill. Here is how I do [the task], with an example: [paste your example or steps]. Save this as a markdown skill file inside this project's skills folder, with a clear name and a description of when to trigger it.\nNext time, you just say run the [name] skill and it executes your way, instantly. Build one per repeated task: writing client emails, prepping a video, categorizing bank statements.\nStep 9: Wire in live data (calendar, email)\nStatic notes are half the brain. Connect what changes in real time. To add Google Calendar, run this in the Claude Code terminal:\n \nFollow the Google sign-in (OAuth) it opens, and grant read access. Now you can say:\nRead my calendar for today, log what I committed to in each meeting into my tasks project, and flag anything without a clear next step.\nAdd Gmail, Slack, or Notion the same way. Always grant read-only where you can, the brain should read your data, not delete it.\nStep 10: Put it on autopilot\nOnce your skills work, schedule them so the brain maintains itself. In Claude Desktop, open the Schedule tab in the sidebar, click + New task, and fill in:\n \nOr just tell Claude in any session: set up a daily task at 7am that organizes my vault and summarizes what changed. You wake up to a brain that filed itself overnight.\nOne rule you never break: keys, not prompts. Telling an agent \"don't delete this\" is a suggestion, not a safety setting. If it technically can delete a file or send an email, assume one day it will. Control access at the permission level, read-only and scoped keys, not with words.\nBonus: skip the setup with a ready-made repo\nIf you would rather not wire it from scratch, the open-source community already packaged the whole thing. Search these on GitHub:\nclaude-obsidian by AgriciDaniel. A self-organizing second brain built on the Karpathy wiki pattern. It scaffolds the vault, sets up the connection for you, and ships presets for different roles, executive, builder, creator, researcher, so the structure matches how you work.\nobsidian-second-brain by eugeniughelbur. Comes with 43 ready commands like /obsidian-save, /obsidian-daily, and /obsidian-find. Works across Claude, Codex, and Gemini, so you are never locked to one tool.\nsecond-brain-starter by coleam00. It interviews you, generates a plan for a proactive assistant, then builds it from plain text files, Python, and an Obsidian vault.\nAll of them are just text files and scripts. Clone one, then reshape it into your own private version.\nWhat you have after these steps\nBefore this, Claude forgets you the moment you close the tab. Every session starts cold. You are the one holding all the context, and you lose most of it.\nAfter this, Claude has a memory of your entire life and work. A vault that holds everything, a model that picks up exactly where it left off, a graph that grows itself while you sleep. All plain text. All yours. All running on whatever model you point at it.\nSame subscription. Completely different machine.\nYou are not building a Claude setup. You are building your own memory, and it gets smarter every day you feed it.\nAlmost nobody does this. Most people will read all nine steps and build nothing.\nThe ones who start today will open their graph in a month and freeze, because it knows things they had forgotten they knew. And they will never go back to a blank chat box again.\nIf this was useful, head to my profile and follow. I write about AI, Claude, and systems that actually run.\nCiao,\n@undefinedKi",
+      "preview_text": "Your best ideas are scattered across a dozen places right now. Notes apps. Browser tabs. Old chats with Claude that you closed and will never find again. Every time you sit down to work, you rebuild",
+      "title": "How to Build an AI Second Brain With Claude and Obsidian That Gets Smarter Every Day (Full Guide)",
+      "cover_media": "3_2068095472753930242",
+      "media_entities": [
+        "3_2068046361346338817"
+      ]
+    },
+    "edit_history_tweet_ids": [
+      "2068306794116501544"
+    ],
+    "id": "2068306794116501544",
+    "created_at": "2026-06-20T12:15:41.000Z",
+    "author_id": "3075199947",
+    "conversation_id": "2068306794116501544"
+  },
+  "posts": [
+    {
+      "entities": {
+        "urls": [
+          {
+            "start": 0,
+            "end": 23,
+            "url": "https://t.co/KADozFhjGF",
+            "expanded_url": "http://x.com/i/article/2067725011880697856",
+            "display_url": "x.com/i/article/2067\u2026",
+            "status": 500,
+            "unwound_url": "https://x.com/i/article/2067725011880697856"
+          }
+        ]
+      },
+      "text": "https://t.co/KADozFhjGF",
+      "article": {
+        "entities": {
+          "code": [
+            {
+              "language": "bash",
+              "code": "claude mcp add google-workspace uvx workspace-mcp --tools calendar",
+              "content": "```bash\nclaude mcp add google-workspace uvx workspace-mcp --tools calendar\n```"
+            },
+            {
+              "language": "none",
+              "code": "Frequency:  Daily, 7:00am\nFolder:     your vault\nPrompt:     Check my vault. File anything new sitting in Inputs\n            folders into the right place and link it. Flag notes\n            that have gone stale. Write me a 3-line summary of what\n            changed overnight.",
+              "content": "```\nFrequency:  Daily, 7:00am\nFolder:     your vault\nPrompt:     Check my vault. File anything new sitting in Inputs\n            folders into the right place and link it. Flag notes\n            that have gone stale. Write me a 3-line summary of what\n            changed overnight.\n```"
+            }
+          ],
+          "mentions": [
+            {
+              "start": 6,
+              "end": 18,
+              "username": "undefinedKi"
+            }
+          ],
+          "urls": [
+            {
+              "text": "claude.com/download"
+            },
+            {
+              "text": "https://obsidian.md/"
+            }
+          ]
+        },
+        "plain_text": "Your best ideas are scattered across a dozen places right now. Notes apps. Browser tabs. Old chats with Claude that you closed and will never find again. Every time you sit down to work, you rebuild context from memory, and you forget most of it.\nA second brain fixes that. It is one place that holds everything you know, with Claude sitting on top of it, reading it, connecting it, and growing it for you. You stop re-explaining yourself every session, because the system already remembers. Ask it anything you have ever written down and it answers from the whole thing.\nThis is the idea Andrej Karpathy popularized in April 2026 with his LLM Wiki pattern. The setup takes an evening, and unlike a chat history that rots, this one gets sharper every single day you use it.\nBelow is the full walkthrough, written so you can follow it even if you have never opened Claude Code or Obsidian before. Every step spells out exactly what to click and what to type.\n \nWhat you are actually building\nTwo tools, two jobs.\nObsidian is the storage. A free notes app that keeps everything as plain text files on your own computer. Notes link to each other, and over time those links form a graph, a visible map of how your ideas connect. It lives on your machine, not in a company's cloud, and the files are yours forever.\nClaude is the brain on top. It reads the entire vault, files new information where it belongs, links it to what is already there, and answers questions across all of it.\nThe whole thing is just text files. That means it is not locked to any one AI. Point a different model at it next year and it still works, because you own the brain, not the tool.\nStep 1: Install Claude Desktop\nGo to claude.com/download in your browser and download the desktop app for your system (Windows or Mac). Run the installer and open the app.\nSign in with your Claude account. You need a paid plan (Pro is $20/month), the free tier will not work for this.\nAt the top of the app you will see tabs: Chat, Cowork, and Code. Click the Code tab. This is Claude Code, the version that can actually read and write files on your computer. If it asks you to upgrade, your plan needs to be paid first.\nStep 2: Install Obsidian and make your vault\nGo to obsidian.md and download Obsidian. It is free. Install it and open it.\nOn the welcome screen, click Create new vault. Give it a name like \"brain,\" pick a folder on your computer to store it, and click Create. That folder is now your second brain. Everything Claude writes will land here as text files.\nMake one note so you have seen how it works: click the new-note icon, type a sentence, then type two square brackets and a word like [[goals]]. That bracketed word becomes a link. That is the core mechanic, notes pointing at notes. Claude will do this linking for you automatically later.\nStep 3: Turn on the connection inside Obsidian\nClaude needs a door into your vault. Obsidian opens one with a plugin.\nIn Obsidian, click the Settings gear (bottom left). In the menu, click Community plugins, then Turn on community plugins. Click Browse, search for Local REST API, click it, then Install, then Enable.\nNow click on Local REST API in your installed plugins list to open its settings. You will see an API Key, a long string of letters and numbers. Copy it and keep it somewhere for the next step. Leave Obsidian open, the connection only works while the app is running.\nStep 4: Connect Claude to the vault\nNow you tell Claude how to reach that door. In the Claude Code tab, you have a place to type commands. Paste this in, but first replace PASTE-YOUR-KEY-HERE with the key you copied:\nclaude mcp add-json obsidian-vault '{ \"type\": \"stdio\", \"command\": \"uvx\", \"args\": [\"mcp-obsidian\"], \"env\": { \"OBSIDIAN_API_KEY\": \"PASTE-YOUR-KEY-HERE\", \"OBSIDIAN_HOST\": \"127.0.0.1\", \"OBSIDIAN_PORT\": \"27124\" } }'\nObsidian shows the key with the word \"Bearer\" in front of it. Do not include that word. Paste only the string of letters and numbers after it, nothing else.\nThis wires Claude to your vault through MCP, the standard way Claude talks to other apps. After it runs, type this to test it: \"list every file in my Obsidian vault.\" If Claude reads your notes back to you, the connection works. If it cannot, make sure Obsidian is still open and the plugin is enabled.\nStep 5: Load yourself into the brain\nRight now Claude can read your vault but knows nothing about you. An empty brain is useless. Fix that first, and don't type it all out by hand. Make Claude interview you.\nIn the Claude panel inside Obsidian, paste this:\nYou are setting up my second brain. Interview me ONE question at a time to build my profile. Ask about: who I am and what I do, my goals for this year, how I want you to talk to me, my strengths and weaknesses, and my current projects. Wait for each answer before the next question. When finished, write everything into a file called CLAUDE.md at the vault root, structured with headers, so you load it automatically every session.\nAnswer like you're briefing a new co-founder. The more real your answers, the more the brain knows you. When it finishes, open CLAUDE.md in your vault, your whole context is now saved. You never re-explain yourself again.\nStep 6: Create a project with the right structure\nYour CLAUDE.md is the strategy layer. Projects are where work happens. Each one is its own folder so Claude focuses on a single job instead of your whole life at once. Have Claude build it. Paste:\nCreate a project folder in my vault called youtube-channel. Inside it, create four folders: Inputs, Process, Outputs, Feedback. Then write a CLAUDE.md inside that project folder describing what this project is, its one goal, and your specific role in helping me hit it. Interview me if you need details.\nSwap youtube-channel for whatever you're building. You now have a clean pipeline: ideas land in Inputs, Claude works in Process, finished work goes to Outputs, results and metrics go to Feedback. Repeat this for every area, content, finances, clients.\nStep 7: Open a single project to work in it\nThis is the move that keeps it sharp. Don't work from the giant vault. Open just the project so Claude sees only that job.\nIn Obsidian, click the vault name at the bottom left, then:\nManage vaults  \u2192  Open folder as a vault  \u2192  pick your project folder  \u2192  Trust\nClaude now reads only that project's CLAUDE.md. It knows exactly what it's helping with and ignores everything else. The big vault plans. A single project ships.\nStep 8: Build a skill so you never repeat yourself\nA skill is a saved workflow Claude runs on command. Anything you do more than once becomes one. Inside a project, paste:\nI want to turn this into a reusable skill. Here is how I do [the task], with an example: [paste your example or steps]. Save this as a markdown skill file inside this project's skills folder, with a clear name and a description of when to trigger it.\nNext time, you just say run the [name] skill and it executes your way, instantly. Build one per repeated task: writing client emails, prepping a video, categorizing bank statements.\nStep 9: Wire in live data (calendar, email)\nStatic notes are half the brain. Connect what changes in real time. To add Google Calendar, run this in the Claude Code terminal:\n \nFollow the Google sign-in (OAuth) it opens, and grant read access. Now you can say:\nRead my calendar for today, log what I committed to in each meeting into my tasks project, and flag anything without a clear next step.\nAdd Gmail, Slack, or Notion the same way. Always grant read-only where you can, the brain should read your data, not delete it.\nStep 10: Put it on autopilot\nOnce your skills work, schedule them so the brain maintains itself. In Claude Desktop, open the Schedule tab in the sidebar, click + New task, and fill in:\n \nOr just tell Claude in any session: set up a daily task at 7am that organizes my vault and summarizes what changed. You wake up to a brain that filed itself overnight.\nOne rule you never break: keys, not prompts. Telling an agent \"don't delete this\" is a suggestion, not a safety setting. If it technically can delete a file or send an email, assume one day it will. Control access at the permission level, read-only and scoped keys, not with words.\nBonus: skip the setup with a ready-made repo\nIf you would rather not wire it from scratch, the open-source community already packaged the whole thing. Search these on GitHub:\nclaude-obsidian by AgriciDaniel. A self-organizing second brain built on the Karpathy wiki pattern. It scaffolds the vault, sets up the connection for you, and ships presets for different roles, executive, builder, creator, researcher, so the structure matches how you work.\nobsidian-second-brain by eugeniughelbur. Comes with 43 ready commands like /obsidian-save, /obsidian-daily, and /obsidian-find. Works across Claude, Codex, and Gemini, so you are never locked to one tool.\nsecond-brain-starter by coleam00. It interviews you, generates a plan for a proactive assistant, then builds it from plain text files, Python, and an Obsidian vault.\nAll of them are just text files and scripts. Clone one, then reshape it into your own private version.\nWhat you have after these steps\nBefore this, Claude forgets you the moment you close the tab. Every session starts cold. You are the one holding all the context, and you lose most of it.\nAfter this, Claude has a memory of your entire life and work. A vault that holds everything, a model that picks up exactly where it left off, a graph that grows itself while you sleep. All plain text. All yours. All running on whatever model you point at it.\nSame subscription. Completely different machine.\nYou are not building a Claude setup. You are building your own memory, and it gets smarter every day you feed it.\nAlmost nobody does this. Most people will read all nine steps and build nothing.\nThe ones who start today will open their graph in a month and freeze, because it knows things they had forgotten they knew. And they will never go back to a blank chat box again.\nIf this was useful, head to my profile and follow. I write about AI, Claude, and systems that actually run.\nCiao,\n@undefinedKi",
+        "preview_text": "Your best ideas are scattered across a dozen places right now. Notes apps. Browser tabs. Old chats with Claude that you closed and will never find again. Every time you sit down to work, you rebuild",
+        "title": "How to Build an AI Second Brain With Claude and Obsidian That Gets Smarter Every Day (Full Guide)",
+        "cover_media": "3_2068095472753930242",
+        "media_entities": [
+          "3_2068046361346338817"
+        ]
+      },
+      "edit_history_tweet_ids": [
+        "2068306794116501544"
+      ],
+      "id": "2068306794116501544",
+      "created_at": "2026-06-20T12:15:41.000Z",
+      "author_id": "3075199947",
+      "conversation_id": "2068306794116501544"
+    }
+  ],
+  "users": {
+    "3075199947": {
+      "id": "3075199947",
+      "name": "Yarchi",
+      "username": "undefinedKi"
+    },
+    "1887168271436468226": {
+      "id": "1887168271436468226",
+      "name": "Rohan Rao",
+      "username": "simply_rohan_"
+    },
+    "1790667407775666176": {
+      "id": "1790667407775666176",
+      "name": "AI Backbone",
+      "username": "ai_backbone"
+    },
+    "2006573079213031424": {
+      "id": "2006573079213031424",
+      "name": "Allent Stark",
+      "username": "allentstark"
+    },
+    "1748984096850665472": {
+      "id": "1748984096850665472",
+      "name": "StarHaze",
+      "username": "ST4RHaze"
+    },
+    "1757179006565089280": {
+      "id": "1757179006565089280",
+      "name": "Ciara Eleonore",
+      "username": "CiaraEleon75303"
+    },
+    "1480748881428111361": {
+      "id": "1480748881428111361",
+      "name": "Mohit Nagaraj \u2604\ufe0f",
+      "username": "mohit_nagaraj"
+    },
+    "2033871880705478659": {
+      "id": "2033871880705478659",
+      "name": "Senge",
+      "username": "senge0301"
+    },
+    "1691067971978854401": {
+      "id": "1691067971978854401",
+      "name": "Tim",
+      "username": "grass_the_touch"
+    },
+    "1197172908063281152": {
+      "id": "1197172908063281152",
+      "name": "chainVelora",
+      "username": "chainVel0ra"
+    },
+    "1757928274980925440": {
+      "id": "1757928274980925440",
+      "name": "Epoch Digital Media",
+      "username": "epochdm"
+    },
+    "1460656460103258122": {
+      "id": "1460656460103258122",
+      "name": "Ojasvika Sahu (Oz)",
+      "username": "Ozacle23"
+    },
+    "2046337841202937856": {
+      "id": "2046337841202937856",
+      "name": "Mahmoud Muhammed",
+      "username": "AiHelw"
+    },
+    "1745530986992164864": {
+      "id": "1745530986992164864",
+      "name": "Jett Featherston",
+      "username": "jettyfeather"
+    },
+    "104500505": {
+      "id": "104500505",
+      "name": "__name__",
+      "username": "def_username__"
+    },
+    "2069917283405742080": {
+      "id": "2069917283405742080",
+      "name": "Joel Hawk",
+      "username": "ToughAd1534"
+    },
+    "1515622822172893185": {
+      "id": "1515622822172893185",
+      "name": "Adea",
+      "username": "Adea0x"
+    },
+    "148083631": {
+      "id": "148083631",
+      "name": "Phani \u0964 \u0c2b\u0c23\u0c3f \u0964 \u092b\u0928\u0940 \u0964 \ud83e\uddf8\ud83d\udef5",
+      "username": "phaniksl"
+    },
+    "133604928": {
+      "id": "133604928",
+      "name": "Gabriel Hautclocq",
+      "username": "gabsoftware"
+    },
+    "958268060": {
+      "id": "958268060",
+      "name": "isabel fuentes",
+      "username": "buck12vv9b"
+    },
+    "2162791236": {
+      "id": "2162791236",
+      "name": "Alpine Cols",
+      "username": "AlpineCols"
+    },
+    "1741834403196682240": {
+      "id": "1741834403196682240",
+      "name": "Sumit Pathak",
+      "username": "sumitweets92"
+    },
+    "1664301801426808834": {
+      "id": "1664301801426808834",
+      "name": "Zumer",
+      "username": "zumercreator"
+    },
+    "2069304346320539648": {
+      "id": "2069304346320539648",
+      "name": "Paperloom",
+      "username": "PaperloomApp"
+    },
+    "958212125607976960": {
+      "id": "958212125607976960",
+      "name": "Abhishek Jaiswal",
+      "username": "ErAbhiJais"
+    },
+    "1546090046880727040": {
+      "id": "1546090046880727040",
+      "name": "Market",
+      "username": "alphasearchmkt"
+    },
+    "1608188270952779778": {
+      "id": "1608188270952779778",
+      "name": "\u2695\ufe0fAspie Eye \ud83c\uddfa\ud83c\uddf8",
+      "username": "Ivory_Towerz"
+    },
+    "1669009103518138369": {
+      "id": "1669009103518138369",
+      "name": "Virexontic",
+      "username": "Virexontic"
+    },
+    "43692758": {
+      "id": "43692758",
+      "name": "\ud835\udc73\ud835\udc96\ud835\udc84\ud835\udc82\ud835\udc94 \ud835\udc6a\ud835\udc82\ud835\udc9b\ud835\udc86\ud835\udc8d\ud835\udc8d\ud835\udc8a",
+      "username": "othelucas"
+    },
+    "1720665183188922368": {
+      "id": "1720665183188922368",
+      "name": "Grok",
+      "username": "grok"
+    },
+    "1553068556073537539": {
+      "id": "1553068556073537539",
+      "name": "Nick Whitehead",
+      "username": "Nick94w"
+    },
+    "2032526443067166720": {
+      "id": "2032526443067166720",
+      "name": "Morigan Plays",
+      "username": "MoriganPlays"
+    },
+    "914201234": {
+      "id": "914201234",
+      "name": "Michael Wu",
+      "username": "its_michaelwu"
+    },
+    "2065059030834241536": {
+      "id": "2065059030834241536",
+      "name": "Samaiaixx",
+      "username": "Samaiaixx"
+    },
+    "410398708": {
+      "id": "410398708",
+      "name": "Masculinity Revelation",
+      "username": "Rhet_Eric"
+    },
+    "338171407": {
+      "id": "338171407",
+      "name": "Adam Winters",
+      "username": "AdamDWinters"
+    },
+    "1706455927531147264": {
+      "id": "1706455927531147264",
+      "name": "Pangram",
+      "username": "pangram"
+    },
+    "1771600890237198336": {
+      "id": "1771600890237198336",
+      "name": "sky",
+      "username": "skydotcs"
+    },
+    "1860285112530649088": {
+      "id": "1860285112530649088",
+      "name": "J'",
+      "username": "CycleHunter1"
+    },
+    "895814938995957760": {
+      "id": "895814938995957760",
+      "name": "Thread Reader App",
+      "username": "threadreaderapp"
+    },
+    "239329980": {
+      "id": "239329980",
+      "name": "Neil Payne",
+      "username": "Nidg31"
+    },
+    "47598713": {
+      "id": "47598713",
+      "name": "\ud83c\uddf3\ud83c\uddf1 Arjan Ommering\u2122",
+      "username": "arjanommering"
+    },
+    "1611076605853458437": {
+      "id": "1611076605853458437",
+      "name": "matthew carcanague",
+      "username": "matthewcarcana1"
+    },
+    "1811146543732293633": {
+      "id": "1811146543732293633",
+      "name": "Mal",
+      "username": "Auctorati_"
+    },
+    "1083502207": {
+      "id": "1083502207",
+      "name": "Kacey Collins",
+      "username": "KaceyCollins2"
+    },
+    "315778257": {
+      "id": "315778257",
+      "name": "Blockey",
+      "username": "Qykey"
+    }
+  },
+  "thread_fetch_error": null
+}
