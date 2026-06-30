@@ -1,10 +1,10 @@
-"""Execute batched pair reviews: one runner call, per-run salvage and finalize.
+"""Execute batched pair reviews: one runner call, per-job salvage and finalize.
 
 The executor owns the lifecycle shared by every packing shape: render one
 prompt for a set of note targets, invoke the runner once, parse pair blocks,
-then finalize each review run whose pairs all came back and fail the rest.
+then finalize each review job whose pairs all came back and fail the rest.
 Failure policy lives here once: usage exhaustion, interrupts, runner errors,
-structural parse errors, and per-run missing pairs.
+structural parse errors, and per-job missing pairs.
 """
 
 from __future__ import annotations
@@ -19,19 +19,19 @@ from pathlib import Path
 from commonplace.lib import frontmatter
 from commonplace.lib.note_parser import find_markdown_links_with_text
 from commonplace.review.artifacts import result_paths_by_pair_id, write_manifest, write_pair_result_files
-from commonplace.review.finalization import record_and_finalize_run
+from commonplace.review.finalization import record_and_finalize_job
 from commonplace.review.protocol.parser import ParsedPairBundle, parse_pair_bundle
 from commonplace.review.protocol.prompt import NoteReviewTarget, render_pairs_prompt
 from commonplace.review.review_db import (
     ReviewPairCompletion,
     attach_execution_data,
     connect,
-    fail_review_run,
-    load_review_pairs_for_run,
-    load_review_run,
+    fail_review_job,
+    load_review_pairs_for_job,
+    load_review_job,
     mark_missing_pairs,
-    review_run_artifact_dir_rel,
-    set_run_artifact_paths,
+    review_job_artifact_dir_rel,
+    set_job_artifact_paths,
 )
 from commonplace.review.clock import iso_now
 from commonplace.review.review_model import build_model_partition
@@ -40,7 +40,7 @@ from commonplace.review.runners import run_prompt
 
 URL_SCHEME_RE = re.compile(r"^[a-z]+://", re.IGNORECASE)
 USAGE_EXHAUSTION_TEXT = "out of extra usage"
-ACTIVE_REVIEW_RUN_STATUSES = frozenset({"queued", "running"})
+ACTIVE_REVIEW_JOB_STATUSES = frozenset({"queued", "running"})
 
 
 class UsageExhausted(Exception):
@@ -63,23 +63,23 @@ class BatchOutcome:
 
 
 @dataclass(frozen=True)
-class RunPairs:
-    """One review run's identity and expected pair set, for finalization."""
+class JobPairs:
+    """One review job's identity and expected pair set, for finalization."""
 
-    review_run_id: int
+    review_job_id: int
     pairs: tuple[tuple[str, str], ...]
 
 
-def bundle_artifact_dir(repo_root: Path, review_run_id: int) -> Path:
-    return repo_root / review_run_artifact_dir_rel(review_run_id)
+def bundle_artifact_dir(repo_root: Path, review_job_id: int) -> Path:
+    return repo_root / review_job_artifact_dir_rel(review_job_id)
 
 
-def bundle_output_path_for_run(repo_root: Path, review_run_id: int) -> str:
-    artifact_dir = bundle_artifact_dir(repo_root, review_run_id)
+def bundle_output_path_for_job(repo_root: Path, review_job_id: int) -> str:
+    artifact_dir = bundle_artifact_dir(repo_root, review_job_id)
     return f"{artifact_dir.relative_to(repo_root).as_posix()}/bundle-output.md"
 
 
-def write_run_artifacts(
+def write_job_artifacts(
     *,
     artifact_dir: Path,
     bundle_markdown: str,
@@ -103,18 +103,18 @@ def persist_bundle_artifacts(
     conn: sqlite3.Connection,
     *,
     repo_root: Path,
-    review_run_ids: list[int],
+    review_job_ids: list[int],
     bundle_markdown: str,
     debug_log: str | None = None,
 ) -> None:
-    for review_run_id in review_run_ids:
-        artifact_dir = bundle_artifact_dir(repo_root, review_run_id)
-        write_run_artifacts(artifact_dir=artifact_dir, bundle_markdown=bundle_markdown)
+    for review_job_id in review_job_ids:
+        artifact_dir = bundle_artifact_dir(repo_root, review_job_id)
+        write_job_artifacts(artifact_dir=artifact_dir, bundle_markdown=bundle_markdown)
         write_debug_log_artifact(artifact_dir=artifact_dir, debug_log=debug_log)
-        set_run_artifact_paths(
+        set_job_artifact_paths(
             conn,
-            review_run_id=review_run_id,
-            bundle_output_path=bundle_output_path_for_run(repo_root, review_run_id),
+            review_job_id=review_job_id,
+            bundle_output_path=bundle_output_path_for_job(repo_root, review_job_id),
         )
 
 
@@ -185,7 +185,7 @@ def prepare_note_target(
     *,
     repo_root: Path,
     note_path: str,
-    review_run_id: int,
+    review_job_id: int,
     gate_paths: tuple[str, ...],
     note_text: str | None = None,
 ) -> NoteReviewTarget:
@@ -200,7 +200,7 @@ def prepare_note_target(
     )
     return NoteReviewTarget(
         note_path=note_path,
-        review_run_id=review_run_id,
+        review_job_id=review_job_id,
         gate_paths=gate_paths,
         note_text=note_text,
         resolved_links=resolved_links,
@@ -208,52 +208,52 @@ def prepare_note_target(
     )
 
 
-def fail_active_review_runs(
+def fail_active_review_jobs(
     *,
     db_path: Path,
-    review_run_ids: list[int],
+    review_job_ids: list[int],
     failure_reason: str,
     telemetry_json: str | None = None,
 ) -> None:
-    if not review_run_ids:
+    if not review_job_ids:
         return
     completed_at = iso_now()
     with connect(db_path) as conn:
         rows = conn.execute(
             f"""
-            SELECT review_run_id, status
-            FROM review_runs
-            WHERE review_run_id IN ({", ".join("?" for _ in review_run_ids)})
+            SELECT review_job_id, status
+            FROM review_jobs
+            WHERE review_job_id IN ({", ".join("?" for _ in review_job_ids)})
             """,
-            review_run_ids,
+            review_job_ids,
         ).fetchall()
         for row in rows:
-            if row["status"] not in ACTIVE_REVIEW_RUN_STATUSES:
+            if row["status"] not in ACTIVE_REVIEW_JOB_STATUSES:
                 continue
             attach_execution_data(
                 conn,
-                review_run_id=int(row["review_run_id"]),
+                review_job_id=int(row["review_job_id"]),
                 telemetry_json=telemetry_json,
             )
-            fail_review_run(
+            fail_review_job(
                 conn,
-                review_run_id=int(row["review_run_id"]),
+                review_job_id=int(row["review_job_id"]),
                 failure_reason=failure_reason,
                 completed_at=completed_at,
             )
         conn.commit()
 
 
-def finalize_run_from_pairs(
+def finalize_job_from_pairs(
     conn: sqlite3.Connection,
     *,
-    review_run_id: int,
+    review_job_id: int,
     pairs: tuple[tuple[str, str], ...],
     parsed: ParsedPairBundle,
     telemetry_json: str | None = None,
 ) -> int:
-    """Finalize one run from a parsed pair bundle. Raises ValueError on failure
-    (the run is failed in the DB before raising)."""
+    """Finalize one job from a parsed pair bundle. Raises ValueError on failure
+    (the job is failed in the DB before raising)."""
     review_pairs = [
         ReviewPairCompletion(
             note_path=note_path,
@@ -262,23 +262,23 @@ def finalize_run_from_pairs(
         )
         for note_path, gate_path in pairs
     ]
-    return record_and_finalize_run(
+    return record_and_finalize_job(
         conn,
-        review_run_id=review_run_id,
+        review_job_id=review_job_id,
         review_pairs=review_pairs,
         telemetry_json=telemetry_json,
     )
 
 
-def write_artifacts_for_run(
+def write_artifacts_for_job(
     *,
     repo_root: Path,
-    review_run_id: int,
+    review_job_id: int,
     pairs: tuple[tuple[str, str], ...],
     parsed: ParsedPairBundle,
     packing: str,
 ) -> None:
-    artifact_dir = bundle_artifact_dir(repo_root, review_run_id)
+    artifact_dir = bundle_artifact_dir(repo_root, review_job_id)
     write_pair_result_files(
         artifact_dir=artifact_dir,
         packing=packing,
@@ -287,67 +287,67 @@ def write_artifacts_for_run(
     )
 
 
-def write_finalized_run_artifacts(
+def write_finalized_job_artifacts(
     conn: sqlite3.Connection,
     *,
     repo_root: Path,
-    review_run_id: int,
+    review_job_id: int,
     parsed: ParsedPairBundle,
 ) -> None:
-    review_run = load_review_run(conn, review_run_id=review_run_id)
-    if review_run is None:
+    review_job = load_review_job(conn, review_job_id=review_job_id)
+    if review_job is None:
         return
-    updated_pairs = load_review_pairs_for_run(conn, review_run_id=review_run_id)
+    updated_pairs = load_review_pairs_for_job(conn, review_job_id=review_job_id)
     completed_pairs = tuple(
         (pair.note_path, pair.gate_path)
         for pair in updated_pairs
         if pair.pair_status == "completed"
     )
-    write_artifacts_for_run(
+    write_artifacts_for_job(
         repo_root=repo_root,
-        review_run_id=review_run_id,
+        review_job_id=review_job_id,
         pairs=completed_pairs,
         parsed=parsed,
-        packing=review_run.packing,
+        packing=review_job.packing,
     )
-    artifact_dir = bundle_artifact_dir(repo_root, review_run_id)
+    artifact_dir = bundle_artifact_dir(repo_root, review_job_id)
     artifact_dir_rel = artifact_dir.relative_to(repo_root).as_posix()
     bundle_output_path = f"{artifact_dir_rel}/bundle-output.md"
     write_manifest(
         repo_root=repo_root,
         artifact_dir=artifact_dir,
-        review_run_id=review_run_id,
-        packing=review_run.packing,
+        review_job_id=review_job_id,
+        packing=review_job.packing,
         prompt_path=f"{artifact_dir_rel}/prompt.md",
         bundle_output_path=bundle_output_path,
         pairs=updated_pairs,
-        failure_reason=review_run.failure_reason,
+        failure_reason=review_job.failure_reason,
     )
-    set_run_artifact_paths(
+    set_job_artifact_paths(
         conn,
-        review_run_id=review_run_id,
+        review_job_id=review_job_id,
         bundle_output_path=bundle_output_path,
         result_paths=result_paths_by_pair_id(
             artifact_dir_rel=artifact_dir_rel,
-            packing=review_run.packing,
+            packing=review_job.packing,
             pairs=updated_pairs,
         ),
     )
 
 
-def fail_runs_for_bundle_parse_error(
+def fail_jobs_for_bundle_parse_error(
     conn: sqlite3.Connection,
     *,
-    review_run_ids: list[int],
+    review_job_ids: list[int],
     failure_reason: str,
     telemetry_json: str | None = None,
 ) -> None:
     completed_at = iso_now()
-    for review_run_id in review_run_ids:
-        mark_missing_pairs(conn, review_run_id=review_run_id)
-        fail_review_run(
+    for review_job_id in review_job_ids:
+        mark_missing_pairs(conn, review_job_id=review_job_id)
+        fail_review_job(
             conn,
-            review_run_id=review_run_id,
+            review_job_id=review_job_id,
             failure_reason=failure_reason,
             completed_at=completed_at,
             telemetry_json=telemetry_json,
@@ -358,46 +358,46 @@ def finalize_bundle_markdown(
     *,
     repo_root: Path,
     db_path: Path,
-    run_pairs: list[RunPairs],
+    job_pairs: list[JobPairs],
     bundle_markdown: str,
     telemetry_json: str | None = None,
     debug_log: str | None = None,
     raise_parse_errors: bool = False,
     persist_output: bool = True,
 ) -> tuple[list[int], list[tuple[int, str]]]:
-    review_run_ids = [run.review_run_id for run in run_pairs]
+    review_job_ids = [job.review_job_id for job in job_pairs]
     if persist_output:
         with connect(db_path) as conn:
             persist_bundle_artifacts(
                 conn,
                 repo_root=repo_root,
-                review_run_ids=review_run_ids,
+                review_job_ids=review_job_ids,
                 bundle_markdown=bundle_markdown,
                 debug_log=debug_log,
             )
             conn.commit()
 
-    expected_pairs = [pair for run in run_pairs for pair in run.pairs]
+    expected_pairs = [pair for job in job_pairs for pair in job.pairs]
     try:
         parsed = parse_pair_bundle(bundle_markdown, expected_pairs=expected_pairs)
     except ValueError as exc:
         reason = str(exc)
         with connect(db_path) as conn:
-            fail_runs_for_bundle_parse_error(
+            fail_jobs_for_bundle_parse_error(
                 conn,
-                review_run_ids=review_run_ids,
+                review_job_ids=review_job_ids,
                 failure_reason=reason,
                 telemetry_json=telemetry_json,
             )
             conn.commit()
         if raise_parse_errors:
             raise
-        return [], [(review_run_id, reason) for review_run_id in review_run_ids]
+        return [], [(review_job_id, reason) for review_job_id in review_job_ids]
 
-    return finalize_runs_from_parsed(
+    return finalize_jobs_from_parsed(
         repo_root=repo_root,
         db_path=db_path,
-        run_pairs=run_pairs,
+        job_pairs=job_pairs,
         parsed=parsed,
         telemetry_json=telemetry_json,
     )
@@ -415,27 +415,27 @@ def execute_batch(
 ) -> BatchOutcome:
     """Run one batched runner call over the given prepared targets.
 
-    Every target must already have its review run created (status running).
-    Returns a BatchOutcome; raises UsageExhausted after failing all runs if
+    Every target must already have its review job created (status running).
+    Returns a BatchOutcome; raises UsageExhausted after failing all jobs if
     the runner reports exhausted usage, and re-raises KeyboardInterrupt after
-    failing all runs.
+    failing all jobs.
     """
-    run_ids = sorted({target.review_run_id for target in targets})
-    if len(run_ids) != 1:
-        raise ValueError("execute_batch expects one review_run_id per prompt")
+    job_ids = sorted({target.review_job_id for target in targets})
+    if len(job_ids) != 1:
+        raise ValueError("execute_batch expects one review_job_id per prompt")
 
     try:
         prompt = render_pairs_prompt(notes=targets, gate_texts=gate_texts)
     except ValueError as exc:
-        fail_active_review_runs(db_path=db_path, review_run_ids=run_ids, failure_reason=str(exc))
-        return BatchOutcome(completed=[], failed=[(rid, str(exc)) for rid in run_ids], runner_returncode=0)
+        fail_active_review_jobs(db_path=db_path, review_job_ids=job_ids, failure_reason=str(exc))
+        return BatchOutcome(completed=[], failed=[(rid, str(exc)) for rid in job_ids], runner_returncode=0)
 
     try:
         result = run_prompt(runner=runner, prompt=prompt, repo_root=repo_root, model=runner_model)
     except KeyboardInterrupt:
-        fail_active_review_runs(
+        fail_active_review_jobs(
             db_path=db_path,
-            review_run_ids=run_ids,
+            review_job_ids=job_ids,
             failure_reason="review batch interrupted",
         )
         raise
@@ -447,7 +447,7 @@ def execute_batch(
         persist_bundle_artifacts(
             conn,
             repo_root=repo_root,
-            review_run_ids=run_ids,
+            review_job_ids=job_ids,
             bundle_markdown=raw_output,
             debug_log=debug_log,
         )
@@ -464,9 +464,9 @@ def execute_batch(
         )
 
     if USAGE_EXHAUSTION_TEXT in (result.stdout + result.stderr).lower():
-        fail_active_review_runs(
+        fail_active_review_jobs(
             db_path=db_path,
-            review_run_ids=run_ids,
+            review_job_ids=job_ids,
             failure_reason="runner reported usage exhausted",
             telemetry_json=telemetry_json,
         )
@@ -474,24 +474,24 @@ def execute_batch(
 
     if result.returncode != 0:
         reason = f"{runner} exited {result.returncode}"
-        fail_active_review_runs(
+        fail_active_review_jobs(
             db_path=db_path,
-            review_run_ids=run_ids,
+            review_job_ids=job_ids,
             failure_reason=reason,
             telemetry_json=telemetry_json,
         )
         return BatchOutcome(
             completed=[],
-            failed=[(rid, reason) for rid in run_ids],
+            failed=[(rid, reason) for rid in job_ids],
             runner_returncode=result.returncode,
         )
 
     expected_pairs = [(target.note_path, gate_path) for target in targets for gate_path in target.gate_paths]
-    run_pairs = [RunPairs(review_run_id=run_ids[0], pairs=tuple(expected_pairs))]
+    job_pairs = [JobPairs(review_job_id=job_ids[0], pairs=tuple(expected_pairs))]
     completed, failed = finalize_bundle_markdown(
         repo_root=repo_root,
         db_path=db_path,
-        run_pairs=run_pairs,
+        job_pairs=job_pairs,
         bundle_markdown=raw_output,
         telemetry_json=telemetry_json,
         debug_log=debug_log,
@@ -500,59 +500,59 @@ def execute_batch(
     return BatchOutcome(completed=completed, failed=failed, runner_returncode=0)
 
 
-def finalize_runs_from_parsed(
+def finalize_jobs_from_parsed(
     *,
     repo_root: Path,
     db_path: Path,
-    run_pairs: list[RunPairs],
+    job_pairs: list[JobPairs],
     parsed: ParsedPairBundle,
     telemetry_json: str | None = None,
 ) -> tuple[list[int], list[tuple[int, str]]]:
-    """Finalize parsed runs and write each run's canonical artifacts."""
-    completed, failed = finalize_run_records_from_parsed(
+    """Finalize parsed jobs and write each job's canonical artifacts."""
+    completed, failed = finalize_job_records_from_parsed(
         db_path=db_path,
-        run_pairs=run_pairs,
+        job_pairs=job_pairs,
         parsed=parsed,
         telemetry_json=telemetry_json,
     )
     with connect(db_path) as conn:
-        for run in run_pairs:
-            write_finalized_run_artifacts(
+        for job in job_pairs:
+            write_finalized_job_artifacts(
                 conn,
                 repo_root=repo_root,
-                review_run_id=run.review_run_id,
+                review_job_id=job.review_job_id,
                 parsed=parsed,
             )
         conn.commit()
     return completed, failed
 
 
-def finalize_run_records_from_parsed(
+def finalize_job_records_from_parsed(
     *,
     db_path: Path,
-    run_pairs: list[RunPairs],
+    job_pairs: list[JobPairs],
     parsed: ParsedPairBundle,
     telemetry_json: str | None = None,
 ) -> tuple[list[int], list[tuple[int, str]]]:
-    """Finalize parsed run records without writing filesystem artifacts."""
+    """Finalize parsed job records without writing filesystem artifacts."""
     completed: list[int] = []
     failed: list[tuple[int, str]] = []
-    for run in run_pairs:
-        completed_pairs = tuple(pair for pair in run.pairs if pair not in set(parsed.missing))
+    for job in job_pairs:
+        completed_pairs = tuple(pair for pair in job.pairs if pair not in set(parsed.missing))
         with connect(db_path) as conn:
             try:
-                finalize_run_from_pairs(
+                finalize_job_from_pairs(
                     conn,
-                    review_run_id=run.review_run_id,
+                    review_job_id=job.review_job_id,
                     pairs=completed_pairs,
                     parsed=parsed,
                     telemetry_json=telemetry_json,
                 )
             except ValueError as exc:
                 conn.commit()
-                failed.append((run.review_run_id, str(exc)))
+                failed.append((job.review_job_id, str(exc)))
                 continue
             conn.commit()
-        completed.append(run.review_run_id)
+        completed.append(job.review_job_id)
 
     return completed, failed

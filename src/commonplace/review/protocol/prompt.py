@@ -23,10 +23,10 @@ from commonplace.review.protocol.format import (
 OutputMode = Literal["stdout", "file"]
 
 # Appended as the system prompt by subprocess runner adapters; the task
-# prompt rendered below carries the per-run specifics.
+# prompt rendered below carries the per-job specifics.
 REVIEW_RUNNER_SYSTEM_PROMPT = (
     "Your goal is to write a series of review artifacts for the requested gates. "
-    "The task prompt provides the exact note, gate definitions, and output contract for the run. "
+    "The task prompt provides the exact note, gate definitions, and output contract for the job. "
     "Stay within the target note, the provided gate definitions, and only the linked neighborhood that the active gates require. "
     "Do not do broad repository exploration or search for alternate gate definitions. "
     "Treat helper scripts as command interfaces; inspect workflow files or script source only if a command fails and you need to debug it."
@@ -36,7 +36,7 @@ REVIEW_RUNNER_SYSTEM_PROMPT = (
 @dataclass(frozen=True)
 class NoteReviewTarget:
     note_path: str
-    review_run_id: int
+    review_job_id: int
     gate_paths: tuple[str, ...]
     note_text: str
     resolved_links: Sequence[tuple[str, str, str]] = ()
@@ -112,7 +112,7 @@ def render_pairs_prompt(
     lines = [
         "Write gate reviews for the requested (note, gate) pairs listed below.",
         "",
-        "Reading scope for this run:",
+        "Reading scope for this job:",
         "- All target note contents and gate definitions are included below. Do not read them from disk.",
         "- For semantic grounding or consistency checks, follow only links that appear in a target note.",
         "- When following a markdown link from a target note, use that note's pre-resolved path table below instead of searching for targets by name.",
@@ -126,7 +126,7 @@ def render_pairs_prompt(
     lines.extend(
         [
             "",
-            "Output contract for this run:",
+            "Output contract for this job:",
             *destination_lines,
             "- Use exactly one block per requested (note, gate) pair.",
             "- Use these exact sentinels for every block:",
@@ -136,12 +136,12 @@ def render_pairs_prompt(
             "- Make the decision line the last non-empty line inside each block.",
             "- End output after the final block.",
             "",
-            "Requested pairs for this run:",
+            "Requested pairs for this job:",
         ]
     )
     for note in notes:
         for gate_path in note.gate_paths:
-            lines.append(f"- {note.note_path} :: {gate_path} (review run id: {note.review_run_id})")
+            lines.append(f"- {note.note_path} :: {gate_path} (review job id: {note.review_job_id})")
 
     lines.extend(
         [
@@ -178,7 +178,7 @@ def render_pairs_prompt(
     lines.extend(
         [
             "",
-            "Target note contents (authoritative for this run):",
+            "Target note contents (authoritative for this job):",
         ]
     )
     for note in notes:
@@ -193,7 +193,7 @@ def render_pairs_prompt(
     lines.extend(
         [
             "",
-            "Requested gate definitions (authoritative for this run):",
+            "Requested gate definitions (authoritative for this job):",
         ]
     )
     for gate_path in gate_paths:

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Ingest a sentinel-delimited review bundle into an existing review run."""
+"""Ingest a sentinel-delimited review bundle into an existing review job."""
 
 from __future__ import annotations
 
@@ -9,16 +9,16 @@ from pathlib import Path
 from commonplace.review.batch import ingest_batch_output
 from commonplace.review.review_db import (
     connect,
-    load_review_pairs_for_run,
+    load_review_pairs_for_job,
     prepare_review_db,
 )
 
 
 def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser = argparse.ArgumentParser(
-        description="Parse a review bundle artifact and finalize its review run.",
+        description="Parse a review bundle artifact and finalize its review job.",
     )
-    parser.add_argument("--review-run-id", type=int, required=True, help="Review run id to ingest.")
+    parser.add_argument("--review-job-id", type=int, required=True, help="Review job id to ingest.")
     parser.add_argument("--input-file", required=True, help="Path to sentinel-delimited bundle output.")
     parser.add_argument("--db", help="Override COMMONPLACE_REVIEW_DB.")
     args = parser.parse_args(argv)
@@ -35,7 +35,7 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
         _, failed = ingest_batch_output(
             repo_root=repo_root,
             db_path=db_path,
-            review_run_id=args.review_run_id,
+            review_job_id=args.review_job_id,
             bundle_markdown=bundle_markdown,
         )
     except ValueError as exc:
@@ -46,11 +46,11 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     with connect(db_path) as conn:
         gate_count = sum(
             1
-            for row in load_review_pairs_for_run(conn, review_run_id=args.review_run_id)
+            for row in load_review_pairs_for_job(conn, review_job_id=args.review_job_id)
             if row.pair_status == "completed"
         )
 
-    print(f"completed {args.review_run_id} {gate_count}")
+    print(f"completed {args.review_job_id} {gate_count}")
     return 0
 
 

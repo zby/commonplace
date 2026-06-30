@@ -19,12 +19,12 @@ DEFAULT_DB_PATH = Path("kb/reports/review-store.sqlite")
 SCHEMA_PATH = "review-schema.sql"
 DB_ENV_VAR = "COMMONPLACE_REVIEW_DB"
 PACKING_VALUES = frozenset({"note", "gate"})
-RUN_STATUS_VALUES = frozenset({"queued", "running", "completed", "failed"})
+JOB_STATUS_VALUES = frozenset({"queued", "running", "completed", "failed"})
 BUNDLE_ARTIFACTS_ROOT = Path("kb/reports/bundle-reviews")
-LATEST_REVIEW_SCHEMA_VERSION = 1
+LATEST_REVIEW_SCHEMA_VERSION = 2
 EXPECTED_REVIEW_TABLES = frozenset(
     {
-        "review_runs",
+        "review_jobs",
         "review_file_snapshots",
         "review_pairs",
         "acceptance_events",
@@ -32,10 +32,10 @@ EXPECTED_REVIEW_TABLES = frozenset(
 )
 EXPECTED_REVIEW_INDEXES = frozenset(
     {
-        "idx_review_runs_model_partition_created",
-        "idx_review_runs_status",
+        "idx_review_jobs_model_partition_created",
+        "idx_review_jobs_status",
         "idx_review_pairs_note_gate_model_partition",
-        "idx_review_pairs_review_run_id",
+        "idx_review_pairs_review_job_id",
         "idx_review_pairs_pair_status",
         "idx_acceptance_events_note_gate_model_partition",
         "idx_acceptance_events_latest_by_key",
@@ -72,8 +72,8 @@ class AcceptanceState:
 
 
 @dataclass(frozen=True)
-class ReviewRunRow:
-    review_run_id: int
+class ReviewJobRow:
+    review_job_id: int
     model_partition: str
     runner: str
     created_at: str
@@ -89,7 +89,7 @@ class ReviewRunRow:
 @dataclass(frozen=True)
 class ReviewPairRow:
     review_pair_id: int
-    review_run_id: int
+    review_job_id: int
     note_path: str
     gate_path: str
     model_partition: str
@@ -135,13 +135,13 @@ class NotePathUpdateCounts:
 
 @dataclass(frozen=True)
 class ModelPartitionUpdateCounts:
-    review_runs: int = 0
+    review_jobs: int = 0
     review_pairs: int = 0
     acceptance_events: int = 0
 
     @property
     def total(self) -> int:
-        return self.review_runs + self.review_pairs + self.acceptance_events
+        return self.review_jobs + self.review_pairs + self.acceptance_events
 
 
 def connect(db_path: Path) -> sqlite3.Connection:
@@ -313,6 +313,56 @@ def _migrate_review_schema_v1(conn: sqlite3.Connection) -> None:
         if _count_table_rows(conn, "review_pairs") != review_pair_count:
             raise RuntimeError("review_pairs row count changed during migration")
         _set_user_version(conn, 1)
+        _assert_foreign_key_integrity(conn)
+        conn.commit()
+    except Exception:
+        conn.rollback()
+        raise
+    finally:
+        conn.execute("PRAGMA foreign_keys = ON")
+    _assert_foreign_key_integrity(conn)
+
+
+def _migrate_review_schema_v2(conn: sqlite3.Connection) -> None:
+    review_job_count = _count_table_rows(conn, "review_runs")
+    review_pair_count = _count_table_rows(conn, "review_pairs")
+    conn.execute("PRAGMA legacy_alter_table = OFF")
+    legacy_alter_table = conn.execute("PRAGMA legacy_alter_table").fetchone()
+    if int(legacy_alter_table[0]) != 0:
+        raise RuntimeError("review DB migration 2 requires PRAGMA legacy_alter_table = OFF")
+    try:
+        conn.execute("BEGIN IMMEDIATE")
+        conn.execute("DROP INDEX IF EXISTS idx_review_runs_model_partition_created")
+        conn.execute("DROP INDEX IF EXISTS idx_review_runs_status")
+        conn.execute("DROP INDEX IF EXISTS idx_review_pairs_review_run_id")
+        conn.execute("ALTER TABLE review_runs RENAME TO review_jobs")
+        conn.execute("ALTER TABLE review_jobs RENAME COLUMN review_run_id TO review_job_id")
+        conn.execute("ALTER TABLE review_pairs RENAME COLUMN review_run_id TO review_job_id")
+        conn.execute(
+            """
+            CREATE INDEX idx_review_jobs_model_partition_created
+            ON review_jobs(model_partition, created_at DESC)
+            """
+        )
+        conn.execute(
+            """
+            CREATE INDEX idx_review_jobs_status
+            ON review_jobs(status)
+            """
+        )
+        conn.execute(
+            """
+            CREATE INDEX idx_review_pairs_review_job_id
+            ON review_pairs(review_job_id)
+            """
+        )
+        if _count_table_rows(conn, "review_jobs") != review_job_count:
+            raise RuntimeError("review_jobs row count changed during migration")
+        if _count_table_rows(conn, "review_pairs") != review_pair_count:
+            raise RuntimeError("review_pairs row count changed during migration")
+        if _table_exists(conn, "review_runs"):
+            raise RuntimeError("review_runs table still exists after migration")
+        _set_user_version(conn, 2)
         _assert_review_store_integrity(conn)
         conn.commit()
     except Exception:
@@ -325,6 +375,7 @@ def _migrate_review_schema_v1(conn: sqlite3.Connection) -> None:
 
 REVIEW_SCHEMA_MIGRATIONS: dict[int, Callable[[sqlite3.Connection], None]] = {
     1: _migrate_review_schema_v1,
+    2: _migrate_review_schema_v2,
 }
 
 
@@ -332,7 +383,11 @@ def init_db(db_path: Path, schema_path: Path) -> None:
     db_path.parent.mkdir(parents=True, exist_ok=True)
     conn = connect(db_path)
     try:
-        if not _table_exists(conn, "review_runs"):
+        has_review_jobs = _table_exists(conn, "review_jobs")
+        has_review_runs = _table_exists(conn, "review_runs")
+        if has_review_jobs and has_review_runs:
+            raise RuntimeError("review DB contains both review_jobs and legacy review_runs tables")
+        if not has_review_jobs and not has_review_runs:
             apply_schema(conn, schema_path)
             _set_user_version(conn, LATEST_REVIEW_SCHEMA_VERSION)
             _assert_review_store_integrity(conn)
@@ -340,6 +395,10 @@ def init_db(db_path: Path, schema_path: Path) -> None:
             return
 
         current_version = _get_user_version(conn)
+        if has_review_jobs and current_version < 2:
+            raise RuntimeError(
+                f"review DB has review_jobs table but user_version={current_version}; expected 2"
+            )
         if current_version > LATEST_REVIEW_SCHEMA_VERSION:
             raise RuntimeError(
                 f"review DB schema version {current_version} is newer than supported "
@@ -378,8 +437,8 @@ def _table_exists(conn: sqlite3.Connection, table_name: str) -> bool:
     return row is not None
 
 
-def review_run_artifact_dir_rel(review_run_id: int) -> str:
-    return (BUNDLE_ARTIFACTS_ROOT / f"review-run-{review_run_id}").as_posix()
+def review_job_artifact_dir_rel(review_job_id: int) -> str:
+    return (BUNDLE_ARTIFACTS_ROOT / f"review-job-{review_job_id}").as_posix()
 
 
 def snapshot_file(conn: sqlite3.Connection, *, repo_root: Path, path: str) -> ReviewFileSnapshot:
@@ -436,9 +495,9 @@ def snapshot_file(conn: sqlite3.Connection, *, repo_root: Path, path: str) -> Re
     )
 
 
-def _review_run_from_row(row: sqlite3.Row) -> ReviewRunRow:
-    return ReviewRunRow(
-        review_run_id=row["review_run_id"],
+def _review_job_from_row(row: sqlite3.Row) -> ReviewJobRow:
+    return ReviewJobRow(
+        review_job_id=row["review_job_id"],
         model_partition=row["model_partition"],
         runner=row["runner"],
         created_at=row["created_at"],
@@ -455,7 +514,7 @@ def _review_run_from_row(row: sqlite3.Row) -> ReviewRunRow:
 def _review_pair_from_row(row: sqlite3.Row) -> ReviewPairRow:
     return ReviewPairRow(
         review_pair_id=row["review_pair_id"],
-        review_run_id=row["review_run_id"],
+        review_job_id=row["review_job_id"],
         note_path=row["note_path"],
         gate_path=row["gate_path"],
         model_partition=row["model_partition"],
@@ -469,7 +528,7 @@ def _review_pair_from_row(row: sqlite3.Row) -> ReviewPairRow:
     )
 
 
-def create_run(
+def create_job(
     conn: sqlite3.Connection,
     *,
     model_partition: str,
@@ -484,12 +543,12 @@ def create_run(
     bundle_output_path: str | None = None,
 ) -> int:
     if packing not in PACKING_VALUES:
-        raise ValueError(f"invalid review run packing: {packing}")
-    if status not in RUN_STATUS_VALUES:
-        raise ValueError(f"invalid review run status: {status}")
+        raise ValueError(f"invalid review job packing: {packing}")
+    if status not in JOB_STATUS_VALUES:
+        raise ValueError(f"invalid review job status: {status}")
     cursor = conn.execute(
         """
-        INSERT INTO review_runs (
+        INSERT INTO review_jobs (
             model_partition,
             runner,
             created_at,
@@ -521,7 +580,7 @@ def create_run(
 def create_review_pairs(
     conn: sqlite3.Connection,
     *,
-    review_run_id: int,
+    review_job_id: int,
     model_partition: str,
     pairs: Sequence[ReviewPairRequest],
     pair_status: str = "pending",
@@ -531,7 +590,7 @@ def create_review_pairs(
         cursor = conn.execute(
             """
             INSERT INTO review_pairs (
-                review_run_id,
+                review_job_id,
                 note_path,
                 gate_path,
                 model_partition,
@@ -542,7 +601,7 @@ def create_review_pairs(
             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             """,
             (
-                review_run_id,
+                review_job_id,
                 pair.note_path,
                 pair.gate_path,
                 model_partition,
@@ -556,7 +615,7 @@ def create_review_pairs(
     return review_pair_ids
 
 
-def create_run_with_pairs(
+def create_job_with_pairs(
     conn: sqlite3.Connection,
     *,
     model_partition: str,
@@ -567,7 +626,7 @@ def create_run_with_pairs(
     packing: str,
     pairs: Sequence[ReviewPairRequest],
 ) -> int:
-    review_run_id = create_run(
+    review_job_id = create_job(
         conn,
         model_partition=model_partition,
         runner=runner,
@@ -576,15 +635,15 @@ def create_run_with_pairs(
         packing=packing,
         status=status,
     )
-    create_review_pairs(conn, review_run_id=review_run_id, model_partition=model_partition, pairs=pairs)
-    return review_run_id
+    create_review_pairs(conn, review_job_id=review_job_id, model_partition=model_partition, pairs=pairs)
+    return review_job_id
 
 
-def load_review_run(conn: sqlite3.Connection, *, review_run_id: int) -> ReviewRunRow | None:
+def load_review_job(conn: sqlite3.Connection, *, review_job_id: int) -> ReviewJobRow | None:
     row = conn.execute(
         """
         SELECT
-            review_run_id,
+            review_job_id,
             model_partition,
             runner,
             created_at,
@@ -595,22 +654,22 @@ def load_review_run(conn: sqlite3.Connection, *, review_run_id: int) -> ReviewRu
             telemetry_json,
             bundle_output_path,
             packing
-        FROM review_runs
-        WHERE review_run_id = ?
+        FROM review_jobs
+        WHERE review_job_id = ?
         """,
-        (review_run_id,),
+        (review_job_id,),
     ).fetchone()
     if row is None:
         return None
-    return _review_run_from_row(row)
+    return _review_job_from_row(row)
 
 
-def load_review_pairs_for_run(conn: sqlite3.Connection, *, review_run_id: int) -> list[ReviewPairRow]:
+def load_review_pairs_for_job(conn: sqlite3.Connection, *, review_job_id: int) -> list[ReviewPairRow]:
     rows = conn.execute(
         """
         SELECT
             review_pair_id,
-            review_run_id,
+            review_job_id,
             note_path,
             gate_path,
             model_partition,
@@ -622,43 +681,43 @@ def load_review_pairs_for_run(conn: sqlite3.Connection, *, review_run_id: int) -
             reviewed_gate_snapshot_id,
             reviewed_at
         FROM review_pairs
-        WHERE review_run_id = ?
+        WHERE review_job_id = ?
         ORDER BY pair_ordinal, note_path, gate_path
         """,
-        (review_run_id,),
+        (review_job_id,),
     ).fetchall()
     return [_review_pair_from_row(row) for row in rows]
 
 
-def load_completed_review_pairs_for_run(conn: sqlite3.Connection, *, review_run_id: int) -> list[ReviewPairRow]:
-    return [pair for pair in load_review_pairs_for_run(conn, review_run_id=review_run_id) if pair.pair_status == "completed"]
+def load_completed_review_pairs_for_job(conn: sqlite3.Connection, *, review_job_id: int) -> list[ReviewPairRow]:
+    return [pair for pair in load_review_pairs_for_job(conn, review_job_id=review_job_id) if pair.pair_status == "completed"]
 
 
-def set_run_artifact_paths(
+def set_job_artifact_paths(
     conn: sqlite3.Connection,
     *,
-    review_run_id: int,
+    review_job_id: int,
     bundle_output_path: str | None = None,
     result_paths: Mapping[int, str] | None = None,
 ) -> None:
     if bundle_output_path is not None:
         conn.execute(
             """
-            UPDATE review_runs
+            UPDATE review_jobs
             SET bundle_output_path = ?
-            WHERE review_run_id = ?
+            WHERE review_job_id = ?
             """,
-            (bundle_output_path, review_run_id),
+            (bundle_output_path, review_job_id),
         )
     for review_pair_id, path in (result_paths or {}).items():
         conn.execute(
             """
             UPDATE review_pairs
             SET result_path = ?
-            WHERE review_run_id = ?
+            WHERE review_job_id = ?
               AND review_pair_id = ?
             """,
-            (path, review_run_id, review_pair_id),
+            (path, review_job_id, review_pair_id),
         )
 
 
@@ -701,61 +760,61 @@ def load_current_acceptances(conn: sqlite3.Connection) -> dict[tuple[str, str, s
 def attach_execution_data(
     conn: sqlite3.Connection,
     *,
-    review_run_id: int,
+    review_job_id: int,
     telemetry_json: str | None = None,
 ) -> None:
     conn.execute(
         """
-        UPDATE review_runs
+        UPDATE review_jobs
         SET telemetry_json = COALESCE(?, telemetry_json)
-        WHERE review_run_id = ?
+        WHERE review_job_id = ?
         """,
-        (telemetry_json, review_run_id),
+        (telemetry_json, review_job_id),
     )
 
 
-def complete_review_run(
+def complete_review_job(
     conn: sqlite3.Connection,
     *,
-    review_run_id: int,
+    review_job_id: int,
     completed_at: str,
     telemetry_json: str | None = None,
 ) -> None:
     conn.execute(
         """
-        UPDATE review_runs
+        UPDATE review_jobs
         SET status = 'completed',
             completed_at = ?,
             telemetry_json = COALESCE(?, telemetry_json),
             failure_reason = NULL
-        WHERE review_run_id = ?
+        WHERE review_job_id = ?
         """,
-        (completed_at, telemetry_json, review_run_id),
+        (completed_at, telemetry_json, review_job_id),
     )
 
 
-def fail_review_run(
+def fail_review_job(
     conn: sqlite3.Connection,
     *,
-    review_run_id: int,
+    review_job_id: int,
     failure_reason: str,
     completed_at: str,
     telemetry_json: str | None = None,
 ) -> None:
     conn.execute(
         """
-        UPDATE review_runs
+        UPDATE review_jobs
         SET status = 'failed',
             completed_at = ?,
             failure_reason = ?,
             telemetry_json = COALESCE(?, telemetry_json)
-        WHERE review_run_id = ?
+        WHERE review_job_id = ?
         """,
         (
             completed_at,
             failure_reason,
             telemetry_json,
-            review_run_id,
+            review_job_id,
         ),
     )
 
@@ -763,13 +822,13 @@ def fail_review_run(
 def complete_review_pairs(
     conn: sqlite3.Connection,
     *,
-    review_run_id: int,
+    review_job_id: int,
     review_pairs: Sequence[ReviewPairCompletion],
     reviewed_at: str,
 ) -> list[int]:
     requested = {
         (pair.note_path, pair.gate_path): pair
-        for pair in load_review_pairs_for_run(conn, review_run_id=review_run_id)
+        for pair in load_review_pairs_for_job(conn, review_job_id=review_job_id)
     }
     completed_pair_ids: list[int] = []
     seen: set[tuple[str, str]] = set()
@@ -781,7 +840,7 @@ def complete_review_pairs(
         requested_pair = requested.get(key)
         if requested_pair is None:
             raise ValueError(
-                f"pair {review_pair.note_path} :: {review_pair.gate_path} is not part of review run {review_run_id}"
+                f"pair {review_pair.note_path} :: {review_pair.gate_path} is not part of review job {review_job_id}"
             )
         normalized_decision = normalize_review_decision(review_pair.decision)
         if normalized_decision is None:
@@ -807,7 +866,7 @@ def complete_review_pairs(
 def mark_missing_pairs(
     conn: sqlite3.Connection,
     *,
-    review_run_id: int,
+    review_job_id: int,
     pairs: Sequence[tuple[str, str]] | None = None,
 ) -> int:
     if pairs is None:
@@ -815,10 +874,10 @@ def mark_missing_pairs(
             """
             UPDATE review_pairs
             SET pair_status = 'missing'
-            WHERE review_run_id = ?
+            WHERE review_job_id = ?
               AND pair_status != 'completed'
             """,
-            (review_run_id,),
+            (review_job_id,),
         )
         return int(cursor.rowcount or 0)
 
@@ -828,12 +887,12 @@ def mark_missing_pairs(
             """
             UPDATE review_pairs
             SET pair_status = 'missing'
-            WHERE review_run_id = ?
+            WHERE review_job_id = ?
               AND note_path = ?
               AND gate_path = ?
               AND pair_status != 'completed'
             """,
-            (review_run_id, note_path, gate_path),
+            (review_job_id, note_path, gate_path),
         )
         count += int(cursor.rowcount or 0)
     return count
@@ -928,7 +987,7 @@ def count_model_partition_records(
         return int(row["count"]) if row is not None else 0
 
     return ModelPartitionUpdateCounts(
-        review_runs=count_rows("review_runs"),
+        review_jobs=count_rows("review_jobs"),
         review_pairs=count_rows("review_pairs"),
         acceptance_events=count_rows("acceptance_events"),
     )
@@ -951,7 +1010,7 @@ def rekey_model_partition(
         return int(cursor.rowcount or 0)
 
     return ModelPartitionUpdateCounts(
-        review_runs=update_rows("review_runs"),
+        review_jobs=update_rows("review_jobs"),
         review_pairs=update_rows("review_pairs"),
         acceptance_events=update_rows("acceptance_events"),
     )
@@ -1009,7 +1068,7 @@ def load_review_pairs_for_note(
         """
         SELECT
             review_pair_id,
-            review_run_id,
+            review_job_id,
             note_path,
             gate_path,
             model_partition,
@@ -1040,7 +1099,7 @@ def load_latest_completed_review_pair(
         """
         SELECT
             review_pair_id,
-            review_run_id,
+            review_job_id,
             note_path,
             gate_path,
             model_partition,
@@ -1097,7 +1156,7 @@ def load_effective_review_pair_map(
         )
         SELECT
             COALESCE(accepted.review_pair_id, latest.review_pair_id) AS review_pair_id,
-            COALESCE(accepted.review_run_id, latest.review_run_id) AS review_run_id,
+            COALESCE(accepted.review_job_id, latest.review_job_id) AS review_job_id,
             COALESCE(accepted.note_path, latest.note_path) AS note_path,
             COALESCE(accepted.gate_path, latest.gate_path) AS gate_path,
             COALESCE(accepted.model_partition, latest.model_partition) AS model_partition,

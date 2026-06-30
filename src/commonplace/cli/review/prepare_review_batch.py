@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Create review runs for an arbitrary set of (note, gate) pairs and render
+"""Create review jobs for an arbitrary set of (note, gate) pairs and render
 one batch prompt for an external executor (live agent or orchestrator)."""
 
 from __future__ import annotations
@@ -15,15 +15,15 @@ from commonplace.review.review_model import normalize_model_partition
 
 def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser = argparse.ArgumentParser(
-        description="Prepare a review batch: create one run for the given pairs and write the canonical prompt.",
+        description="Prepare a review batch: create one job for the given pairs and write the canonical prompt.",
     )
     parser.add_argument(
         "pairs",
         nargs="+",
         help="Pairs in note-path::gate-id form, e.g. kb/notes/foo.md::prose/source-residue",
     )
-    parser.add_argument("--runner", required=True, help="Runner label recorded on the runs, e.g. live-agent.")
-    parser.add_argument("--model", required=True, help="Review model partition for these runs.")
+    parser.add_argument("--runner", required=True, help="Runner label recorded on the jobs, e.g. live-agent.")
+    parser.add_argument("--model", required=True, help="Review model partition for these jobs.")
     parser.add_argument("--db", help="Override COMMONPLACE_REVIEW_DB.")
     args = parser.parse_args(argv)
 
@@ -48,7 +48,7 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
         parser.error(str(exc))
 
     payload = {
-        "review_run_id": prepared.review_run_id,
+        "review_job_id": prepared.review_job_id,
         "pairs": [
             {
                 "review_pair_id": pair.review_pair_id,

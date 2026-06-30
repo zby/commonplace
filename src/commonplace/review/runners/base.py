@@ -41,7 +41,7 @@ class RunnerAdapter(ABC):
 
     Telemetry is best-effort by design: it is scraped from vendor session
     logs whose formats are undocumented, so collect_telemetry returning None
-    must never fail a review run.
+    must never fail a review job.
     """
 
     name: ClassVar[str]

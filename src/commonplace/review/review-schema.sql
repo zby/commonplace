@@ -1,14 +1,14 @@
 -- SQLite schema for canonical review storage.
 --
--- `review_runs` records one review invocation: one prompt/run directory.
+-- `review_jobs` records one review invocation: one prompt/job directory.
 -- `review_pairs` records each requested (note_path, gate_path) pair inside
 -- that invocation. Freshness and selector state remain acceptance-driven and
 -- gate-local.
 
 PRAGMA foreign_keys = ON;
 
-CREATE TABLE IF NOT EXISTS review_runs (
-    review_run_id INTEGER PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS review_jobs (
+    review_job_id INTEGER PRIMARY KEY,
     model_partition TEXT NOT NULL,
     runner TEXT NOT NULL,
     created_at TEXT NOT NULL,
@@ -25,11 +25,11 @@ CREATE TABLE IF NOT EXISTS review_runs (
     )
 );
 
-CREATE INDEX IF NOT EXISTS idx_review_runs_model_partition_created
-ON review_runs(model_partition, created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_review_jobs_model_partition_created
+ON review_jobs(model_partition, created_at DESC);
 
-CREATE INDEX IF NOT EXISTS idx_review_runs_status
-ON review_runs(status);
+CREATE INDEX IF NOT EXISTS idx_review_jobs_status
+ON review_jobs(status);
 
 CREATE TABLE IF NOT EXISTS review_file_snapshots (
     snapshot_id INTEGER PRIMARY KEY,
@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS review_file_snapshots (
 
 CREATE TABLE IF NOT EXISTS review_pairs (
     review_pair_id INTEGER PRIMARY KEY,
-    review_run_id INTEGER NOT NULL REFERENCES review_runs(review_run_id) ON DELETE CASCADE,
+    review_job_id INTEGER NOT NULL REFERENCES review_jobs(review_job_id) ON DELETE CASCADE,
     note_path TEXT NOT NULL,
     gate_path TEXT NOT NULL,
     model_partition TEXT NOT NULL,
@@ -57,15 +57,15 @@ CREATE TABLE IF NOT EXISTS review_pairs (
     reviewed_note_snapshot_id INTEGER REFERENCES review_file_snapshots(snapshot_id),
     reviewed_gate_snapshot_id INTEGER REFERENCES review_file_snapshots(snapshot_id),
     reviewed_at TEXT,
-    UNIQUE (review_run_id, note_path, gate_path),
-    UNIQUE (review_run_id, pair_ordinal)
+    UNIQUE (review_job_id, note_path, gate_path),
+    UNIQUE (review_job_id, pair_ordinal)
 );
 
 CREATE INDEX IF NOT EXISTS idx_review_pairs_note_gate_model_partition
 ON review_pairs(note_path, gate_path, model_partition);
 
-CREATE INDEX IF NOT EXISTS idx_review_pairs_review_run_id
-ON review_pairs(review_run_id);
+CREATE INDEX IF NOT EXISTS idx_review_pairs_review_job_id
+ON review_pairs(review_job_id);
 
 CREATE INDEX IF NOT EXISTS idx_review_pairs_pair_status
 ON review_pairs(pair_status);

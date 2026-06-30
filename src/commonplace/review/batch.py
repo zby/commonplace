@@ -14,9 +14,9 @@ from pathlib import Path
 
 from commonplace.review.artifacts import result_paths_by_pair_id, write_manifest
 from commonplace.review.executor import (
-    RunPairs,
+    JobPairs,
     bundle_artifact_dir,
-    fail_active_review_runs,
+    fail_active_review_jobs,
     finalize_bundle_markdown,
     prepare_note_target,
 )
@@ -27,10 +27,10 @@ from commonplace.review.resolve_gates import applicable_gate_ids_for_note
 from commonplace.review.review_db import (
     ReviewPairRow,
     connect,
-    create_run_with_pairs,
-    load_review_pairs_for_run,
-    load_review_run,
-    set_run_artifact_paths,
+    create_job_with_pairs,
+    load_review_pairs_for_job,
+    load_review_job,
+    set_job_artifact_paths,
 )
 from commonplace.review.clock import iso_now
 
@@ -47,7 +47,7 @@ class SkippedPair:
 
 @dataclass(frozen=True)
 class PreparedBatch:
-    review_run_id: int
+    review_job_id: int
     targets: list[NoteReviewTarget]
     pairs: list[ReviewPairRow]
     skipped: list[SkippedPair]
@@ -88,7 +88,7 @@ def _packing_for_pairs(pairs: list[tuple[str, str]]) -> str:
 def _targets_for_pairs(
     *,
     repo_root: Path,
-    review_run_id: int,
+    review_job_id: int,
     packing: str,
     pairs: list[tuple[str, str]],
     note_texts: dict[str, str] | None = None,
@@ -99,7 +99,7 @@ def _targets_for_pairs(
             prepare_note_target(
                 repo_root=repo_root,
                 note_path=note_path,
-                review_run_id=review_run_id,
+                review_job_id=review_job_id,
                 gate_paths=tuple(gate_path for _, gate_path in pairs),
                 note_text=note_texts.get(note_path) if note_texts else None,
             )
@@ -108,7 +108,7 @@ def _targets_for_pairs(
         prepare_note_target(
             repo_root=repo_root,
             note_path=note_path,
-            review_run_id=review_run_id,
+            review_job_id=review_job_id,
             gate_paths=(gate_path,),
             note_text=note_texts.get(note_path) if note_texts else None,
         )
@@ -153,7 +153,7 @@ def prepare_review_batch(
     runner: str,
     model_partition: str,
 ) -> PreparedBatch:
-    """Create one review run for the given note-packed or gate-packed pairs."""
+    """Create one review job for the given note-packed or gate-packed pairs."""
     applicable_pairs, skipped = _applicable_pairs(repo_root, pairs)
     if not applicable_pairs:
         raise ValueError("no applicable pairs to prepare")
@@ -166,7 +166,7 @@ def prepare_review_batch(
             repo_root=repo_root,
             pairs=applicable_pairs,
         )
-        review_run_id = create_run_with_pairs(
+        review_job_id = create_job_with_pairs(
             conn,
             model_partition=model_partition,
             runner=runner,
@@ -176,17 +176,17 @@ def prepare_review_batch(
             packing=packing,
             pairs=captured_inputs.pair_requests,
         )
-        stored_pairs = load_review_pairs_for_run(conn, review_run_id=review_run_id)
+        stored_pairs = load_review_pairs_for_job(conn, review_job_id=review_job_id)
         conn.commit()
 
     targets = _targets_for_pairs(
         repo_root=repo_root,
-        review_run_id=review_run_id,
+        review_job_id=review_job_id,
         packing=packing,
         pairs=applicable_pairs,
         note_texts=captured_inputs.note_texts,
     )
-    artifact_dir = bundle_artifact_dir(repo_root, review_run_id)
+    artifact_dir = bundle_artifact_dir(repo_root, review_job_id)
     bundle_output_path = (artifact_dir / "bundle-output.md").relative_to(repo_root).as_posix()
     artifact_dir_rel = artifact_dir.relative_to(repo_root).as_posix()
     result_paths = result_paths_by_pair_id(
@@ -202,9 +202,9 @@ def prepare_review_batch(
             bundle_output_path=bundle_output_path,
         )
     except ValueError as exc:
-        fail_active_review_runs(
+        fail_active_review_jobs(
             db_path=db_path,
-            review_run_ids=[review_run_id],
+            review_job_ids=[review_job_id],
             failure_reason=str(exc),
         )
         raise
@@ -216,7 +216,7 @@ def prepare_review_batch(
     manifest_path = write_manifest(
         repo_root=repo_root,
         artifact_dir=artifact_dir,
-        review_run_id=review_run_id,
+        review_job_id=review_job_id,
         packing=packing,
         prompt_path=prompt_path,
         bundle_output_path=bundle_output_path,
@@ -224,17 +224,17 @@ def prepare_review_batch(
         skipped=skipped,
     )
     with connect(db_path) as conn:
-        set_run_artifact_paths(
+        set_job_artifact_paths(
             conn,
-            review_run_id=review_run_id,
+            review_job_id=review_job_id,
             bundle_output_path=bundle_output_path,
             result_paths=result_paths,
         )
-        stored_pairs = load_review_pairs_for_run(conn, review_run_id=review_run_id)
+        stored_pairs = load_review_pairs_for_job(conn, review_job_id=review_job_id)
         conn.commit()
 
     return PreparedBatch(
-        review_run_id=review_run_id,
+        review_job_id=review_job_id,
         targets=targets,
         pairs=stored_pairs,
         skipped=skipped,
@@ -249,23 +249,23 @@ def ingest_batch_output(
     *,
     repo_root: Path,
     db_path: Path,
-    review_run_id: int,
+    review_job_id: int,
     bundle_markdown: str,
 ) -> tuple[list[int], list[tuple[int, str]]]:
-    """Parse a batch's pair output and finalize its run with pair salvage."""
+    """Parse a batch's pair output and finalize its job with pair salvage."""
     with connect(db_path) as conn:
-        review_run = load_review_run(conn, review_run_id=review_run_id)
-        if review_run is None:
-            raise ValueError(f"review run not found: {review_run_id}")
-        if review_run.status not in {"queued", "running"}:
-            raise ValueError(f"review run is not ingestible: {review_run_id} ({review_run.status})")
-        stored_pairs = load_review_pairs_for_run(conn, review_run_id=review_run_id)
+        review_job = load_review_job(conn, review_job_id=review_job_id)
+        if review_job is None:
+            raise ValueError(f"review job not found: {review_job_id}")
+        if review_job.status not in {"queued", "running"}:
+            raise ValueError(f"review job is not ingestible: {review_job_id} ({review_job.status})")
+        stored_pairs = load_review_pairs_for_job(conn, review_job_id=review_job_id)
 
     expected_pairs = [(pair.note_path, pair.gate_path) for pair in stored_pairs]
     return finalize_bundle_markdown(
         repo_root=repo_root,
         db_path=db_path,
-        run_pairs=[RunPairs(review_run_id=review_run_id, pairs=tuple(expected_pairs))],
+        job_pairs=[JobPairs(review_job_id=review_job_id, pairs=tuple(expected_pairs))],
         bundle_markdown=bundle_markdown,
         raise_parse_errors=True,
     )

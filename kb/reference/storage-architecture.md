@@ -49,8 +49,8 @@ Review state is the one subsystem that is not file-backed. The review database s
 
 | Table | Contents |
 |---|---|
-| `review_runs` | One row per review invocation/prompt, with `queued`/`running`/`completed`/`failed` status and created/started/completed timing |
-| `review_pairs` | One row per requested `(note_path, gate_path)` pair inside a run |
+| `review_jobs` | One row per review invocation/prompt, with `queued`/`running`/`completed`/`failed` status and created/started/completed timing |
+| `review_pairs` | One row per requested `(note_path, gate_path)` pair inside a job |
 | `acceptance_events` | Append-only per-gate acceptance history |
 
 Acceptance is keyed by `(note_path, gate_path, model_partition)`. Current acceptance for any key is the latest `acceptance_events` row, exposed via the `current_gate_acceptances` view. Selector logic reads current note and gate content from files and compares their hashes against accepted DB-owned snapshots.

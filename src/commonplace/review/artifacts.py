@@ -1,4 +1,4 @@
-"""Filesystem artifacts for review runs."""
+"""Filesystem artifacts for review jobs."""
 
 from __future__ import annotations
 
@@ -109,7 +109,7 @@ def write_manifest(
     *,
     repo_root: Path,
     artifact_dir: Path,
-    review_run_id: int,
+    review_job_id: int,
     packing: str,
     prompt_path: str,
     bundle_output_path: str,
@@ -137,8 +137,8 @@ def write_manifest(
         payload_pairs.append(item)
 
     payload: dict[str, object] = {
-        "artifact_schema": "review-run-prompt-v1",
-        "review_run_id": review_run_id,
+        "artifact_schema": "review-job-prompt-v1",
+        "review_job_id": review_job_id,
         "packing": packing,
         "prompt_path": prompt_path,
         "bundle_output_path": bundle_output_path,

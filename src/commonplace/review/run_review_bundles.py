@@ -10,7 +10,7 @@ from commonplace.review.executor import execute_batch, prepare_note_target
 from commonplace.review.freshness import capture_review_inputs
 from commonplace.review.gate_packing import GateBundleGroup, group_requested_gates_by_bundle
 from commonplace.review.protocol.prompt import render_pairs_prompt
-from commonplace.review.review_db import connect, create_run_with_pairs, ensure_db
+from commonplace.review.review_db import connect, create_job_with_pairs, ensure_db
 from commonplace.review.clock import iso_now
 from commonplace.review.review_model import normalize_model_partition
 
@@ -24,7 +24,7 @@ def _dry_run_prompt(
     target = prepare_note_target(
         repo_root=repo_root,
         note_path=note_path,
-        review_run_id=0,
+        review_job_id=0,
         gate_paths=tuple(group.gate_paths),
     )
     gate_texts = {
@@ -58,7 +58,7 @@ def _run_group(
             pairs=[(note_path, gate_path) for gate_path in group.gate_paths],
         )
         started_at = iso_now()
-        review_run_id = create_run_with_pairs(
+        review_job_id = create_job_with_pairs(
             conn,
             model_partition=model_partition,
             runner=runner,
@@ -73,7 +73,7 @@ def _run_group(
     target = prepare_note_target(
         repo_root=repo_root,
         note_path=note_path,
-        review_run_id=review_run_id,
+        review_job_id=review_job_id,
         gate_paths=tuple(group.gate_paths),
         note_text=captured_inputs.note_texts[note_path],
     )
@@ -93,7 +93,7 @@ def _run_group(
         for _, reason in outcome.failed:
             print(reason, file=sys.stderr)
         return 1
-    print(f"completed {review_run_id} {len(group.gate_paths)}")
+    print(f"completed {review_job_id} {len(group.gate_paths)}")
     return 0
 
 

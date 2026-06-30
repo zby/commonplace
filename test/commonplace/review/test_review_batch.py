@@ -108,7 +108,7 @@ def pair_block(note_path: str, gate_id: str, body: str, decision: str) -> str:
     )
 
 
-def test_prepare_review_batch_creates_one_gate_packed_run_and_prompt(tmp_path: Path) -> None:
+def test_prepare_review_batch_creates_one_gate_packed_job_and_prompt(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
 
     result = prepare_batch(
@@ -121,7 +121,7 @@ def test_prepare_review_batch_creates_one_gate_packed_run_and_prompt(tmp_path: P
 
     assert result.returncode == 0
     payload = json.loads(result.stdout)
-    review_run_id = payload["review_run_id"]
+    review_job_id = payload["review_job_id"]
     assert [(pair["note_path"], pair["gate_path"], pair["status"]) for pair in payload["pairs"]] == [
         ("kb/notes/first.md", GATE_PATH, "pending"),
         ("kb/notes/second.md", GATE_PATH, "pending"),
@@ -130,9 +130,9 @@ def test_prepare_review_batch_creates_one_gate_packed_run_and_prompt(tmp_path: P
         {"note_path": "kb/notes/first.md", "gate_path": CLAIM_GATE_PATH, "reason": "not applicable"}
     ]
 
-    assert payload["prompt_path"] == f"kb/reports/bundle-reviews/review-run-{review_run_id}/prompt.md"
-    assert payload["bundle_output_path"] == f"kb/reports/bundle-reviews/review-run-{review_run_id}/bundle-output.md"
-    assert payload["manifest_path"] == f"kb/reports/bundle-reviews/review-run-{review_run_id}/MANIFEST.json"
+    assert payload["prompt_path"] == f"kb/reports/bundle-reviews/review-job-{review_job_id}/prompt.md"
+    assert payload["bundle_output_path"] == f"kb/reports/bundle-reviews/review-job-{review_job_id}/bundle-output.md"
+    assert payload["manifest_path"] == f"kb/reports/bundle-reviews/review-job-{review_job_id}/MANIFEST.json"
 
     prompt_text = (repo / payload["prompt_path"]).read_text(encoding="utf-8")
     assert f"Write exactly one markdown document to `{payload['bundle_output_path']}`." in prompt_text
@@ -143,24 +143,24 @@ def test_prepare_review_batch_creates_one_gate_packed_run_and_prompt(tmp_path: P
     manifest = json.loads((repo / payload["manifest_path"]).read_text(encoding="utf-8"))
     assert manifest["packing"] == "gate"
     assert [pair["result_path"] for pair in manifest["pairs"]] == [
-        f"kb/reports/bundle-reviews/review-run-{review_run_id}/first.md",
-        f"kb/reports/bundle-reviews/review-run-{review_run_id}/second.md",
+        f"kb/reports/bundle-reviews/review-job-{review_job_id}/first.md",
+        f"kb/reports/bundle-reviews/review-job-{review_job_id}/second.md",
     ]
 
     with sqlite3.connect(db_path) as conn:
         conn.row_factory = sqlite3.Row
-        run_rows = conn.execute(
+        job_rows = conn.execute(
             """
-            SELECT review_run_id, status, runner, packing, created_at, started_at, bundle_output_path
-            FROM review_runs
+            SELECT review_job_id, status, runner, packing, created_at, started_at, bundle_output_path
+            FROM review_jobs
             """
         ).fetchall()
-        assert [(row["review_run_id"], row["status"], row["runner"], row["packing"]) for row in run_rows] == [
-            (review_run_id, "queued", "live-agent", "gate")
+        assert [(row["review_job_id"], row["status"], row["runner"], row["packing"]) for row in job_rows] == [
+            (review_job_id, "queued", "live-agent", "gate")
         ]
-        assert run_rows[0]["created_at"] is not None
-        assert run_rows[0]["started_at"] is None
-        assert run_rows[0]["bundle_output_path"] == payload["bundle_output_path"]
+        assert job_rows[0]["created_at"] is not None
+        assert job_rows[0]["started_at"] is None
+        assert job_rows[0]["bundle_output_path"] == payload["bundle_output_path"]
         pair_rows = conn.execute(
             """
             SELECT
@@ -188,7 +188,7 @@ def test_ingest_batch_output_finalizes_all_pairs(tmp_path: Path) -> None:
     prepared = json.loads(
         prepare_batch(repo, db_path, f"kb/notes/first.md::{GATE}", f"kb/notes/second.md::{GATE}").stdout
     )
-    review_run_id = prepared["review_run_id"]
+    review_job_id = prepared["review_job_id"]
 
     output_path = repo / prepared["bundle_output_path"]
     write(
@@ -200,8 +200,8 @@ def test_ingest_batch_output_finalizes_all_pairs(tmp_path: Path) -> None:
 
     result = run_cli(
         "ingest_batch_output",
-        "--review-run-id",
-        str(review_run_id),
+        "--review-job-id",
+        str(review_job_id),
         "--input-file",
         str(output_path),
         cwd=repo,
@@ -210,13 +210,13 @@ def test_ingest_batch_output_finalizes_all_pairs(tmp_path: Path) -> None:
 
     payload = json.loads(result.stdout)
     assert payload["failed"] == []
-    assert payload["completed"] == [review_run_id]
+    assert payload["completed"] == [review_job_id]
 
     with sqlite3.connect(db_path) as conn:
         conn.row_factory = sqlite3.Row
-        run = conn.execute("SELECT status, bundle_output_path FROM review_runs").fetchone()
-        assert run["status"] == "completed"
-        assert run["bundle_output_path"] == prepared["bundle_output_path"]
+        job = conn.execute("SELECT status, bundle_output_path FROM review_jobs").fetchone()
+        assert job["status"] == "completed"
+        assert job["bundle_output_path"] == prepared["bundle_output_path"]
         decisions = [
             (row["note_path"], row["decision"], row["pair_status"], row["result_path"])
             for row in conn.execute(
@@ -228,19 +228,19 @@ def test_ingest_batch_output_finalizes_all_pairs(tmp_path: Path) -> None:
                 "kb/notes/first.md",
                 "warn",
                 "completed",
-                f"kb/reports/bundle-reviews/review-run-{review_run_id}/first.md",
+                f"kb/reports/bundle-reviews/review-job-{review_job_id}/first.md",
             ),
             (
                 "kb/notes/second.md",
                 "pass",
                 "completed",
-                f"kb/reports/bundle-reviews/review-run-{review_run_id}/second.md",
+                f"kb/reports/bundle-reviews/review-job-{review_job_id}/second.md",
             ),
         ]
         acceptance_count = conn.execute("SELECT COUNT(*) FROM acceptance_events").fetchone()[0]
         assert acceptance_count == 2
 
-    artifact_dir = repo / "kb" / "reports" / "bundle-reviews" / f"review-run-{review_run_id}"
+    artifact_dir = repo / "kb" / "reports" / "bundle-reviews" / f"review-job-{review_job_id}"
     shared_bundle = (artifact_dir / "bundle-output.md").read_text(encoding="utf-8")
     assert shared_bundle.count("=== PAIR REVIEW START:") == 2
     assert (artifact_dir / "first.md").read_text(encoding="utf-8").strip().endswith("## Result: WARN")
@@ -255,15 +255,15 @@ def test_ingest_batch_output_salvages_partial_output(tmp_path: Path) -> None:
     prepared = json.loads(
         prepare_batch(repo, db_path, f"kb/notes/first.md::{GATE}", f"kb/notes/second.md::{GATE}").stdout
     )
-    review_run_id = prepared["review_run_id"]
+    review_job_id = prepared["review_job_id"]
 
     output_path = repo / prepared["bundle_output_path"]
     write(output_path, pair_block("kb/notes/first.md", GATE_PATH, "Needs a definition.", "WARN"))
 
     result = run_cli(
         "ingest_batch_output",
-        "--review-run-id",
-        str(review_run_id),
+        "--review-job-id",
+        str(review_job_id),
         "--input-file",
         str(output_path),
         cwd=repo,
@@ -275,13 +275,13 @@ def test_ingest_batch_output_salvages_partial_output(tmp_path: Path) -> None:
     payload = json.loads(result.stdout)
     assert payload["completed"] == []
     assert payload["failed"] == [
-        {"review_run_id": review_run_id, "reason": f"missing pairs: kb/notes/second.md :: {GATE_PATH}"}
+        {"review_job_id": review_job_id, "reason": f"missing pairs: kb/notes/second.md :: {GATE_PATH}"}
     ]
 
     with sqlite3.connect(db_path) as conn:
         conn.row_factory = sqlite3.Row
-        run = conn.execute("SELECT status, failure_reason FROM review_runs").fetchone()
-        assert (run["status"], run["failure_reason"]) == ("failed", f"missing pairs: kb/notes/second.md :: {GATE_PATH}")
+        job = conn.execute("SELECT status, failure_reason FROM review_jobs").fetchone()
+        assert (job["status"], job["failure_reason"]) == ("failed", f"missing pairs: kb/notes/second.md :: {GATE_PATH}")
         pairs = [
             (row["note_path"], row["pair_status"], row["decision"])
             for row in conn.execute("SELECT note_path, pair_status, decision FROM review_pairs ORDER BY note_path")
@@ -292,7 +292,7 @@ def test_ingest_batch_output_salvages_partial_output(tmp_path: Path) -> None:
         ]
         assert conn.execute("SELECT COUNT(*) FROM acceptance_events").fetchone()[0] == 1
 
-    artifact_dir = repo / "kb" / "reports" / "bundle-reviews" / f"review-run-{review_run_id}"
+    artifact_dir = repo / "kb" / "reports" / "bundle-reviews" / f"review-job-{review_job_id}"
     manifest = json.loads((artifact_dir / "MANIFEST.json").read_text(encoding="utf-8"))
     assert [pair["status"] for pair in manifest["pairs"]] == ["completed", "missing"]
 
@@ -311,7 +311,7 @@ def test_prepare_review_batch_rejects_unknown_gate(tmp_path: Path) -> None:
     assert "gate not found" in result.stderr
 
 
-def test_prepare_review_batch_marks_queued_run_failed_when_prompt_rendering_fails(tmp_path: Path) -> None:
+def test_prepare_review_batch_marks_queued_job_failed_when_prompt_rendering_fails(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
     (repo / "kb" / "notes" / "first.md").write_text(
         """---
@@ -334,10 +334,10 @@ status: current
     assert "reserved sentinel" in result.stderr
     with sqlite3.connect(db_path) as conn:
         conn.row_factory = sqlite3.Row
-        run = conn.execute(
-            "SELECT status, started_at, failure_reason FROM review_runs"
+        job = conn.execute(
+            "SELECT status, started_at, failure_reason FROM review_jobs"
         ).fetchone()
-    assert run is not None
-    assert run["status"] == "failed"
-    assert run["started_at"] is None
-    assert "reserved sentinel" in run["failure_reason"]
+    assert job is not None
+    assert job["status"] == "failed"
+    assert job["started_at"] is None
+    assert "reserved sentinel" in job["failure_reason"]

@@ -58,7 +58,7 @@ def seed_warn_review(repo: Path, db_path: Path) -> None:
     with review_db.connect(db_path) as conn:
         note_snapshot = review_db.snapshot_file(conn, repo_root=repo, path="kb/notes/sample.md")
         gate_snapshot = review_db.snapshot_file(conn, repo_root=repo, path=GATE_PATH)
-        review_run_id = review_db.create_run_with_pairs(
+        review_job_id = review_db.create_job_with_pairs(
             conn,
             model_partition=TEST_MODEL,
             runner="test-runner",
@@ -78,7 +78,7 @@ def seed_warn_review(repo: Path, db_path: Path) -> None:
         )
         review_db.complete_review_pairs(
             conn,
-            review_run_id=review_run_id,
+            review_job_id=review_job_id,
             review_pairs=[
                 review_db.ReviewPairCompletion(
                     note_path="kb/notes/sample.md",
@@ -89,8 +89,8 @@ def seed_warn_review(repo: Path, db_path: Path) -> None:
             ],
             reviewed_at=REVIEWED_AT,
         )
-        review_pair = review_db.load_review_pairs_for_run(conn, review_run_id=review_run_id)[0]
-        artifact_dir_rel = review_db.review_run_artifact_dir_rel(review_run_id)
+        review_pair = review_db.load_review_pairs_for_job(conn, review_job_id=review_job_id)[0]
+        artifact_dir_rel = review_db.review_job_artifact_dir_rel(review_job_id)
         result_paths = result_paths_by_pair_id(
             artifact_dir_rel=artifact_dir_rel,
             packing="note",
@@ -98,9 +98,9 @@ def seed_warn_review(repo: Path, db_path: Path) -> None:
         )
         result_path = result_paths[review_pair.review_pair_id]
         write(repo / result_path, "### Findings\n- WARN: actionable finding\n\n## Result: WARN\n")
-        review_db.set_run_artifact_paths(
+        review_db.set_job_artifact_paths(
             conn,
-            review_run_id=review_run_id,
+            review_job_id=review_job_id,
             bundle_output_path=f"{artifact_dir_rel}/bundle-output.md",
             result_paths=result_paths,
         )

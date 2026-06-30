@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Ingest a batch's pair-delimited review output and finalize its run with salvage."""
+"""Ingest a batch's pair-delimited review output and finalize its job with salvage."""
 
 from __future__ import annotations
 
@@ -14,13 +14,13 @@ from commonplace.review.review_db import prepare_review_db
 
 def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser = argparse.ArgumentParser(
-        description="Parse a batch review output artifact and finalize its review run.",
+        description="Parse a batch review output artifact and finalize its review job.",
     )
     parser.add_argument(
-        "--review-run-id",
+        "--review-job-id",
         type=int,
         required=True,
-        help="Review run id prepared for this batch.",
+        help="Review job id prepared for this batch.",
     )
     parser.add_argument("--input-file", required=True, help="Path to the pair-delimited batch output.")
     parser.add_argument("--db", help="Override COMMONPLACE_REVIEW_DB.")
@@ -38,7 +38,7 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
         completed, failed = ingest_batch_output(
             repo_root=repo_root,
             db_path=db_path,
-            review_run_id=args.review_run_id,
+            review_job_id=args.review_job_id,
             bundle_markdown=bundle_markdown,
         )
     except ValueError as exc:
@@ -47,7 +47,7 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
 
     payload = {
         "completed": completed,
-        "failed": [{"review_run_id": review_run_id, "reason": reason} for review_run_id, reason in failed],
+        "failed": [{"review_job_id": review_job_id, "reason": reason} for review_job_id, reason in failed],
     }
     print(json.dumps(payload, ensure_ascii=True, sort_keys=True))
     return 0 if not failed else 1

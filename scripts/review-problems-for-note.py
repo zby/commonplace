@@ -18,6 +18,8 @@ import sqlite3
 import sys
 from pathlib import Path
 
+from commonplace.review.review_db import ensure_db
+
 
 PROBLEM_DECISIONS = {"warn", "fail", "error"}
 
@@ -107,10 +109,11 @@ def extract_problem_findings(review_text: str, decision: str) -> list[str]:
 
 
 def load_effective_problem_reviews(
+    repo_root: Path,
     conn: sqlite3.Connection,
     *,
     note_paths: list[str],
-    model_id: str | None,
+    model_partition: str | None,
 ) -> list[dict[str, object]]:
     params: list[str] = []
     where: list[str] = []
@@ -119,58 +122,66 @@ def load_effective_problem_reviews(
         placeholders = ", ".join("?" for _ in note_paths)
         where.append(f"a.note_path IN ({placeholders})")
         params.extend(note_paths)
-    if model_id:
-        where.append("a.model_id = ?")
-        params.append(model_id)
+    if model_partition:
+        where.append("a.model_partition = ?")
+        params.append(model_partition)
     where.append("COALESCE(accepted.decision, latest.decision) IN ('warn', 'fail', 'error')")
 
     rows = conn.execute(
         f"""
-        WITH latest_gate_reviews AS (
+        WITH latest_review_pairs AS (
             SELECT
-                gr.*,
+                rp.*,
                 ROW_NUMBER() OVER (
-                    PARTITION BY gr.note_path, gr.gate_id, gr.model_id
-                    ORDER BY gr.reviewed_at DESC, gr.id DESC
+                    PARTITION BY rp.note_path, rp.gate_path, rp.model_partition
+                    ORDER BY rp.reviewed_at DESC, rp.review_pair_id DESC
                 ) AS rn
-            FROM gate_reviews AS gr
+            FROM review_pairs AS rp
+            WHERE rp.pair_status = 'completed'
         )
         SELECT
-            COALESCE(accepted.id, latest.id) AS review_id,
-            COALESCE(accepted.review_run_id, latest.review_run_id) AS review_run_id,
+            COALESCE(accepted.review_pair_id, latest.review_pair_id) AS review_pair_id,
+            COALESCE(accepted.review_job_id, latest.review_job_id) AS review_job_id,
             COALESCE(accepted.note_path, latest.note_path) AS note_path,
-            COALESCE(accepted.gate_id, latest.gate_id) AS gate_id,
-            COALESCE(accepted.model_id, latest.model_id) AS model_id,
+            COALESCE(accepted.gate_path, latest.gate_path) AS gate_path,
+            COALESCE(accepted.model_partition, latest.model_partition) AS model_partition,
             COALESCE(accepted.decision, latest.decision) AS decision,
-            COALESCE(accepted.rationale_markdown, latest.rationale_markdown) AS review_text,
+            COALESCE(accepted.result_path, latest.result_path) AS result_path,
             COALESCE(accepted.reviewed_at, latest.reviewed_at) AS reviewed_at
         FROM current_gate_acceptances AS a
-        LEFT JOIN gate_reviews AS accepted
-          ON accepted.id = a.accepted_review_id
-        LEFT JOIN latest_gate_reviews AS latest
+        LEFT JOIN review_pairs AS accepted
+          ON accepted.review_pair_id = a.accepted_review_pair_id
+        LEFT JOIN latest_review_pairs AS latest
           ON latest.note_path = a.note_path
-         AND latest.gate_id = a.gate_id
-         AND latest.model_id = a.model_id
+         AND latest.gate_path = a.gate_path
+         AND latest.model_partition = a.model_partition
          AND latest.rn = 1
         WHERE {" AND ".join(where)}
-        ORDER BY note_path, gate_id, model_id
+        ORDER BY note_path, gate_path, model_partition
         """,
         params,
     ).fetchall()
 
     reviews: list[dict[str, object]] = []
     for row in rows:
-        if row["review_id"] is None:
+        if row["review_pair_id"] is None:
             continue
-        review_text = row["review_text"] or ""
+        result_path = row["result_path"]
+        if not result_path:
+            continue
+        try:
+            review_text = (repo_root / result_path).read_text(encoding="utf-8")
+        except OSError:
+            continue
         reviews.append(
             {
                 "note_path": row["note_path"],
-                "gate_id": row["gate_id"],
+                "gate_path": row["gate_path"],
                 "decision": row["decision"],
-                "model_id": row["model_id"],
-                "review_id": row["review_id"],
-                "review_run_id": row["review_run_id"],
+                "model_partition": row["model_partition"],
+                "review_pair_id": row["review_pair_id"],
+                "review_job_id": row["review_job_id"],
+                "result_path": result_path,
                 "reviewed_at": row["reviewed_at"],
                 "findings": extract_problem_findings(review_text, row["decision"]),
                 "suggested_revision": extract_section(review_text, SUGGESTED_REVISION_RE),
@@ -195,8 +206,8 @@ def render_grouped(reviews: list[dict[str, object]], *, include_full: bool) -> s
             current_note = note_path
 
         lines.append(
-            f"- {review['gate_id']} [{str(review['decision']).upper()}] "
-            f"model={review['model_id']} run={review['review_run_id']} review={review['review_id']}"
+            f"- {review['gate_path']} [{str(review['decision']).upper()}] "
+            f"model={review['model_partition']} job={review['review_job_id']} pair={review['review_pair_id']}"
         )
         findings = review["findings"]
         if isinstance(findings, list) and findings:
@@ -225,11 +236,17 @@ def main() -> int:
     if not db_path.exists():
         print(f"Review DB not found: {db_path}", file=sys.stderr)
         return 1
+    ensure_db(db_path)
 
     note_paths = [normalize_note_path(repo_root, raw) for raw in args.note_paths]
     with sqlite3.connect(db_path) as conn:
         conn.row_factory = sqlite3.Row
-        reviews = load_effective_problem_reviews(conn, note_paths=note_paths, model_id=args.model)
+        reviews = load_effective_problem_reviews(
+            repo_root,
+            conn,
+            note_paths=note_paths,
+            model_partition=args.model,
+        )
 
     if args.json:
         print(json.dumps(reviews, indent=2))

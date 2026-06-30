@@ -27,7 +27,7 @@ def insert_completed_pair(
 ) -> int:
     started = started_at or reviewed_at
     gate_path = source_gate_path(gate_id)
-    review_run_id = review_db.create_run_with_pairs(
+    review_job_id = review_db.create_job_with_pairs(
         conn,
         model_partition=model_partition,
         runner=runner,
@@ -51,8 +51,8 @@ def insert_completed_pair(
         decision=decision,
         reviewed_at=reviewed_at,
     )
-    review_db.complete_review_pairs(conn, review_run_id=review_run_id, review_pairs=[pair], reviewed_at=reviewed_at)
-    review_pair = review_db.load_review_pairs_for_run(conn, review_run_id=review_run_id)[0]
+    review_db.complete_review_pairs(conn, review_job_id=review_job_id, review_pairs=[pair], reviewed_at=reviewed_at)
+    review_pair = review_db.load_review_pairs_for_job(conn, review_job_id=review_job_id)[0]
     return review_pair.review_pair_id
 
 

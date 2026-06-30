@@ -13,7 +13,7 @@ GATE_TEXT = "## Check\n\nFlag terms that are used before they are defined."
 def make_target(note_path: str, run_id: int, gate_paths: tuple[str, ...] = (GATE,), **kwargs) -> NoteReviewTarget:
     return NoteReviewTarget(
         note_path=note_path,
-        review_run_id=run_id,
+        review_job_id=run_id,
         gate_paths=gate_paths,
         note_text=kwargs.pop("note_text", f"# Note\n\nBody of {note_path}."),
         **kwargs,
@@ -37,8 +37,8 @@ def test_render_pairs_prompt_multi_note_shares_gate_and_lists_pairs() -> None:
 
     assert "Evaluate each note independently." in prompt
     assert "Do not read them from disk" in prompt
-    assert f"- kb/notes/first.md :: {GATE} (review run id: 101)" in prompt
-    assert f"- kb/notes/second.md :: {GATE} (review run id: 102)" in prompt
+    assert f"- kb/notes/first.md :: {GATE} (review job id: 101)" in prompt
+    assert f"- kb/notes/second.md :: {GATE} (review job id: 102)" in prompt
     assert "- [concept](./concept.md) -> kb/notes/concept.md" in prompt
     assert "- [missing](./missing.md)" in prompt
     # Note contents are frontloaded
@@ -69,9 +69,9 @@ def test_render_pairs_prompt_file_output_mode_names_destination() -> None:
         notes=[make_target("kb/notes/only.md", 7)],
         gate_texts={GATE: GATE_TEXT},
         output_mode="file",
-        bundle_output_path="kb/reports/bundle-reviews/review-run-7/bundle-output.md",
+        bundle_output_path="kb/reports/bundle-reviews/review-job-7/bundle-output.md",
     )
-    assert "Write exactly one markdown document to `kb/reports/bundle-reviews/review-run-7/bundle-output.md`." in prompt
+    assert "Write exactly one markdown document to `kb/reports/bundle-reviews/review-job-7/bundle-output.md`." in prompt
     assert "Return exactly one markdown document in this process's stdout." not in prompt
 
 

@@ -21,9 +21,9 @@ It is also a scoped exception to the repo's file-first design. The motivation fo
 
 **Bundle.** A directory of gates sharing a lens. `semantic` means all gate files under `kb/instructions/review-gates/semantic/`.
 
-**Review run.** One review invocation: one rendered prompt, one output artifact directory, and one run-level status. Prepared live-agent runs are `queued` until ingest; subprocess runs are `running` while the runner executes.
+**Review job.** One review invocation: one rendered prompt, one output artifact directory, and one job-level status. Prepared live-agent jobs are `queued` until ingest; subprocess jobs are `running` while the runner executes.
 
-**Review pair.** One requested `(note_path, gate_path)` pair inside a review run. This is the stored unit of review output and acceptance.
+**Review pair.** One requested `(note_path, gate_path)` pair inside a review job. This is the stored unit of review output and acceptance.
 
 **Acceptance event.** An append-only event recording the accepted note and gate snapshot IDs for one `(note_path, gate_path, model_partition)` key.
 
@@ -47,14 +47,14 @@ Schema: packaged with `commonplace.review`
 
 Primary tables:
 
-- `review_runs`
+- `review_jobs`
   - one row per review invocation
   - stores runner/model, status, packing (`note` or `gate`), `created_at`, nullable `started_at`, telemetry, and the bundle output path
 - `review_file_snapshots`
   - role-neutral snapshots of KB files by `(path, content_sha256)`
   - stores exact UTF-8 text when the snapshot must be reusable for prompt rendering or diffing
 - `review_pairs`
-  - one row per requested `(note_path, gate_path)` pair inside a run
+  - one row per requested `(note_path, gate_path)` pair inside a job
   - stores pair status (`pending`, `completed`, `missing`), decision, explicit `model_partition`, result path, and reviewed note/gate snapshot IDs
 - `acceptance_events`
   - append-only acceptance history
@@ -74,9 +74,9 @@ The Python layer assigns the canonical DB statuses.
 
 - `review_pairs.decision` is normalized into lowercase enum values: `pass`, `warn`, `fail`, `error`, `unknown`
 - `review_pairs.pair_status` is normalized into lowercase enum values: `pending`, `completed`, `missing`
-- `review_runs.status` is normalized into lowercase enum values: `queued`, `running`, `completed`, `failed`
+- `review_jobs.status` is normalized into lowercase enum values: `queued`, `running`, `completed`, `failed`
 
-Run timestamps have distinct meanings: `created_at` is when the run row and prompt inputs were prepared; `started_at` is when an owned subprocess runner started execution and is null for live-agent/orchestrator runs that go directly from `queued` to `completed` or `failed` during ingest.
+Job timestamps have distinct meanings: `created_at` is when the job row and prompt inputs were prepared; `started_at` is when an owned subprocess runner started execution and is null for live-agent/orchestrator jobs that go directly from `queued` to `completed` or `failed` during ingest.
 
 The human-readable review body is not canonical state. Current write paths store it in the per-pair result file named by `review_pairs.result_path`. The DB decision/status columns are the source of truth; review-body result lines such as `## Result: PASS` or `- WARN: ...` are parse inputs and readability affordances.
 
@@ -110,23 +110,23 @@ There is no separate bundle manifest hash in the current tree. If bundle-level m
 
 The canonical live path is:
 
-1. create one or more queued review runs for the requested gates
-2. delegate each returned run prompt to a sub-agent
+1. create one or more queued review jobs for the requested gates
+2. delegate each returned job prompt to a sub-agent
 3. write each sentinel-delimited bundle artifact
 4. ingest each bundle artifact to complete review pairs and append acceptance events
 
 For live agent work, the preferred path is the prompt-plus-ingest helper chain:
 
-1. `commonplace-create-review-runs`
-2. for each returned run, launch a sub-agent that reads its `prompt_path` and writes `kb/reports/bundle-reviews/review-run-{id}/bundle-output.md`
+1. `commonplace-create-review-jobs`
+2. for each returned job, launch a sub-agent that reads its `prompt_path` and writes `kb/reports/bundle-reviews/review-job-{id}/bundle-output.md`
 3. run `commonplace-ingest-bundle-output` for each completed sub-agent output
 
-The helper groups requested gates by bundle/lens, so a request for multiple bundles creates multiple focused prompt contexts. Each run directory also carries `MANIFEST.json`. The manifest is created with pending pairs when the prompt is created and refreshed after ingest with pair statuses and parsed `result_path` files.
+The helper groups requested gates by bundle/lens, so a request for multiple bundles creates multiple focused prompt contexts. Each job directory also carries `MANIFEST.json`. The manifest is created with pending pairs when the prompt is created and refreshed after ingest with pair statuses and parsed `result_path` files.
 
 A full review write contributes:
 
 1. one `review_pairs` row per requested pair
-2. `review_runs.bundle_output_path` pointing to the run bundle artifact
+2. `review_jobs.bundle_output_path` pointing to the job bundle artifact
 3. `review_pairs.result_path` pointing to each per-pair review artifact
 4. one `acceptance_events` row per completed pair; `accepted_review_pair_id` points back to the completed review pair
 
@@ -157,7 +157,7 @@ It computes:
 
 It then compares those values against `current_gate_acceptances`.
 
-If `--model` is omitted, the selector runs only model-agnostic missing-review coverage: a `(note_path, gate_path)` pair is reported as `missing-review` only when there is no current acceptance for that pair under any model partition. This mode does not classify `gate-changed` or `note-changed`, because those require a chosen accepted baseline.
+If `--model` is omitted, the selector reports only model-agnostic missing-review coverage: a `(note_path, gate_path)` pair is reported as `missing-review` only when there is no current acceptance for that pair under any model partition. This mode does not classify `gate-changed` or `note-changed`, because those require a chosen accepted baseline.
 
 Prompt-facing CLI remains stable:
 
@@ -202,10 +202,10 @@ Human-readable inspection remains required, but it is now a derived view from DB
 
 Instruction: `kb/instructions/run-review-batches-on-note.md`
 
-1. `commonplace-create-review-runs --runner {codex|claude-code|live-agent} --model {model-partition} {note} {gate-or-bundle}...`
-2. For each item in the returned `runs` array, launch a sub-agent with that run's `prompt_path` and `bundle_output_path`
-3. Each sub-agent writes that run's sentinel-delimited review bundle to `bundle_output_path`
-4. The parent ingests each completed output with `commonplace-ingest-bundle-output --review-run-id {id} --input-file {bundle_output_path}`
+1. `commonplace-create-review-jobs --runner {codex|claude-code|live-agent} --model {model-partition} {note} {gate-or-bundle}...`
+2. For each item in the returned `jobs` array, launch a sub-agent with that job's `prompt_path` and `bundle_output_path`
+3. Each sub-agent writes that job's sentinel-delimited review bundle to `bundle_output_path`
+4. The parent ingests each completed output with `commonplace-ingest-bundle-output --review-job-id {id} --input-file {bundle_output_path}`
 
 ### Sweep
 
@@ -214,11 +214,11 @@ Instruction: `kb/instructions/review-sweep.md`
 1. `commonplace-review-target-selector --model {model-partition} {bundle-or-all} [--current|--note kb/notes kb/reference] --json` — get stale pairs with diffs
 2. Triage by reason: `missing-review` and `gate-changed` need fresh reviews; `note-changed` needs diff inspection
 3. For significant changes: run `commonplace-review-sweep`, run `commonplace-run-gate-sweep`, or use `kb/instructions/run-review-batches-on-note.md` per note/group
-4. `commonplace-review-sweep` runs note-local bundle reviews in parallel, up to 4 at a time by default; override with `REVIEW_SWEEP_JOBS=<n>`
+4. `commonplace-review-sweep` executes note-local bundle reviews in parallel, up to 4 at a time by default; override with `REVIEW_SWEEP_JOBS=<n>`
 5. For insignificant changes: run `commonplace-ack-gate-review --model {model-partition} {note-path} {gate-id} ...` to append acceptance events
 
 ### Gate sweep
 
 Use `commonplace-run-gate-sweep {gate-id} --runner {claude-code|codex} --model {model-partition} [--current|--note kb/notes kb/reference] [--batch-size N]` when the execution set is one gate across many notes.
 
-This path keeps freshness gate-local and creates one running gate-packed review run per prompt batch. It is the preferred path when one gate changed and re-reviewing it note-by-note would be needlessly expensive.
+This path keeps freshness gate-local and creates one running gate-packed review job per prompt batch. It is the preferred path when one gate changed and re-reviewing it note-by-note would be needlessly expensive.

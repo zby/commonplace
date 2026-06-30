@@ -49,7 +49,7 @@ class WarnEntry:
     note_path: str
     gate_path: str
     review_pair_id: int
-    review_run_id: int
+    review_job_id: int
     result_path: str | None
     review_text: str
     warn_text: str
@@ -168,7 +168,7 @@ def scan_reviews(
                     note_path=note_path,
                     gate_path=gate_path,
                     review_pair_id=review.review_pair_id,
-                    review_run_id=review.review_run_id,
+                    review_job_id=review.review_job_id,
                     result_path=review.result_path,
                     review_text=review_text,
                     warn_text=warn_text,
@@ -190,7 +190,7 @@ def render_json(notes: list[NoteWarns], stale_gates: list[str]) -> str:
                     {
                         "gate_path": w.gate_path,
                         "review_pair_id": w.review_pair_id,
-                        "review_run_id": w.review_run_id,
+                        "review_job_id": w.review_job_id,
                         "result_path": w.result_path,
                         "review_text": w.review_text,
                         "text": w.warn_text,

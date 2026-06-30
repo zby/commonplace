@@ -136,10 +136,10 @@ def test_run_gate_sweep_reviews_multiple_notes_in_one_batch(monkeypatch, tmp_pat
 
     with sqlite3.connect(db_path) as conn:
         conn.row_factory = sqlite3.Row
-        run_rows = conn.execute(
-            "SELECT review_run_id, status, packing, bundle_output_path FROM review_runs"
+        job_rows = conn.execute(
+            "SELECT review_job_id, status, packing, bundle_output_path FROM review_jobs"
         ).fetchall()
-        assert [(row["status"], row["packing"]) for row in run_rows] == [("completed", "gate")]
+        assert [(row["status"], row["packing"]) for row in job_rows] == [("completed", "gate")]
 
         pair_rows = conn.execute(
             "SELECT note_path, decision, result_path, pair_status FROM review_pairs ORDER BY note_path"
@@ -152,8 +152,8 @@ def test_run_gate_sweep_reviews_multiple_notes_in_one_batch(monkeypatch, tmp_pat
         acceptance_count = conn.execute("SELECT COUNT(*) FROM acceptance_events").fetchone()[0]
         assert acceptance_count == 2
 
-    artifact_dir = repo / "kb" / "reports" / "bundle-reviews" / f"review-run-{run_rows[0]['review_run_id']}"
-    assert run_rows[0]["bundle_output_path"] == f"kb/reports/bundle-reviews/review-run-{run_rows[0]['review_run_id']}/bundle-output.md"
+    artifact_dir = repo / "kb" / "reports" / "bundle-reviews" / f"review-job-{job_rows[0]['review_job_id']}"
+    assert job_rows[0]["bundle_output_path"] == f"kb/reports/bundle-reviews/review-job-{job_rows[0]['review_job_id']}/bundle-output.md"
     assert (artifact_dir / "bundle-output.md").read_text(encoding="utf-8").count("=== PAIR REVIEW START:") == 2
     assert (repo / pair_rows[0]["result_path"]).read_text(encoding="utf-8") == (
         "Needs a definition for Alpha.\n\n## Result: WARN\n"
@@ -163,7 +163,7 @@ def test_run_gate_sweep_reviews_multiple_notes_in_one_batch(monkeypatch, tmp_pat
     )
 
 
-def test_prepare_batch_targets_creates_running_run_with_honest_start(tmp_path: Path) -> None:
+def test_prepare_batch_targets_creates_running_job_with_honest_start(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
     ensure_db(db_path)
 
@@ -179,7 +179,7 @@ def test_prepare_batch_targets_creates_running_run_with_honest_start(tmp_path: P
     with sqlite3.connect(db_path) as conn:
         conn.row_factory = sqlite3.Row
         row = conn.execute(
-            "SELECT status, created_at, started_at FROM review_runs"
+            "SELECT status, created_at, started_at FROM review_jobs"
         ).fetchone()
 
     assert row["status"] == "running"
@@ -220,15 +220,15 @@ def test_run_gate_sweep_salvages_parsed_notes_and_fails_missing_ones(monkeypatch
     assert "Batch 1/1: reviewed 1 notes" in result.stdout
     assert "Reviewed: 1 notes" in result.stdout
     assert "Missing:  1 notes" in result.stderr
-    assert "Failed:   1 run(s)" in result.stderr
+    assert "Failed:   1 job(s)" in result.stderr
 
     with sqlite3.connect(db_path) as conn:
         conn.row_factory = sqlite3.Row
-        run_row = conn.execute(
-            "SELECT review_run_id, status, failure_reason, bundle_output_path FROM review_runs"
+        job_row = conn.execute(
+            "SELECT review_job_id, status, failure_reason, bundle_output_path FROM review_jobs"
         ).fetchone()
-        assert run_row["status"] == "failed"
-        assert f"missing pairs: kb/notes/second.md :: {GATE_PATH}" in run_row["failure_reason"]
+        assert job_row["status"] == "failed"
+        assert f"missing pairs: kb/notes/second.md :: {GATE_PATH}" in job_row["failure_reason"]
 
         pair_rows = conn.execute(
             "SELECT note_path, pair_status, decision, result_path FROM review_pairs ORDER BY note_path"
@@ -240,8 +240,8 @@ def test_run_gate_sweep_salvages_parsed_notes_and_fails_missing_ones(monkeypatch
         acceptance_count = conn.execute("SELECT COUNT(*) FROM acceptance_events").fetchone()[0]
         assert acceptance_count == 1
 
-    artifact_dir = repo / "kb" / "reports" / "bundle-reviews" / f"review-run-{run_row['review_run_id']}"
-    assert f"kb/notes/first.md :: {GATE_PATH}" in (repo / run_row["bundle_output_path"]).read_text(encoding="utf-8")
+    artifact_dir = repo / "kb" / "reports" / "bundle-reviews" / f"review-job-{job_row['review_job_id']}"
+    assert f"kb/notes/first.md :: {GATE_PATH}" in (repo / job_row["bundle_output_path"]).read_text(encoding="utf-8")
     assert (repo / pair_rows[0]["result_path"]).read_text(encoding="utf-8") == (
         "Needs a definition for Alpha.\n\n## Result: WARN\n"
     )

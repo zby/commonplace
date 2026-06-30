@@ -241,7 +241,15 @@ def test_ensure_db_initializes_schema_that_can_store_current_acceptance(tmp_path
             """
         ).fetchone()
         user_version = conn.execute("PRAGMA user_version").fetchone()[0]
-        run_columns = {row["name"]: row for row in conn.execute("PRAGMA table_info(review_runs)").fetchall()}
+        job_columns = {row["name"]: row for row in conn.execute("PRAGMA table_info(review_jobs)").fetchall()}
+        has_legacy_runs = conn.execute(
+            """
+            SELECT 1
+            FROM sqlite_master
+            WHERE type = 'table'
+              AND name = 'review_runs'
+            """
+        ).fetchone()
 
     assert view_row is not None
     assert view_row["accepted_note_snapshot_id"] is None
@@ -250,8 +258,9 @@ def test_ensure_db_initializes_schema_that_can_store_current_acceptance(tmp_path
     assert view_row["accepted_gate_hash"] is None
     assert migration_table is None
     assert user_version == review_db.LATEST_REVIEW_SCHEMA_VERSION
-    assert "created_at" in run_columns
-    assert run_columns["started_at"]["notnull"] == 0
+    assert "created_at" in job_columns
+    assert job_columns["started_at"]["notnull"] == 0
+    assert has_legacy_runs is None
 
 
 def test_ensure_db_migrates_legacy_user_version_zero_store(tmp_path: Path) -> None:
@@ -262,14 +271,15 @@ def test_ensure_db_migrates_legacy_user_version_zero_store(tmp_path: Path) -> No
 
     with review_db.connect(db_path) as conn:
         user_version = conn.execute("PRAGMA user_version").fetchone()[0]
-        run = conn.execute(
+        job = conn.execute(
             """
             SELECT created_at, started_at, status
-            FROM review_runs
-            WHERE review_run_id = 1
+            FROM review_jobs
+            WHERE review_job_id = 1
             """
         ).fetchone()
         pair_count = conn.execute("SELECT COUNT(*) FROM review_pairs").fetchone()[0]
+        pair_columns = {row["name"] for row in conn.execute("PRAGMA table_info(review_pairs)").fetchall()}
         acceptance = conn.execute(
             """
             SELECT accepted_review_pair_id
@@ -284,18 +294,31 @@ def test_ensure_db_migrates_legacy_user_version_zero_store(tmp_path: Path) -> No
             ).fetchall()
         }
         foreign_key_violations = conn.execute("PRAGMA foreign_key_check").fetchall()
+        has_legacy_runs = conn.execute(
+            """
+            SELECT 1
+            FROM sqlite_master
+            WHERE type = 'table'
+              AND name = 'review_runs'
+            """
+        ).fetchone()
 
     assert user_version == review_db.LATEST_REVIEW_SCHEMA_VERSION
-    assert dict(run) == {
+    assert dict(job) == {
         "created_at": "2026-04-10T10:01:00+00:00",
         "started_at": "2026-04-10T10:01:00+00:00",
         "status": "running",
     }
     assert pair_count == 1
+    assert "review_job_id" in pair_columns
+    assert "review_run_id" not in pair_columns
     assert acceptance["accepted_review_pair_id"] == 10
-    assert "idx_review_runs_model_partition_created" in index_names
+    assert "idx_review_jobs_model_partition_created" in index_names
     assert "idx_review_runs_model_partition_started" not in index_names
+    assert "idx_review_pairs_review_job_id" in index_names
+    assert "idx_review_pairs_review_run_id" not in index_names
     assert foreign_key_violations == []
+    assert has_legacy_runs is None
 
 
 def test_failed_legacy_migration_rolls_back_and_leaves_old_tables_readable(
@@ -315,24 +338,24 @@ def test_failed_legacy_migration_rolls_back_and_leaves_old_tables_readable(
 
     with sqlite3.connect(db_path) as conn:
         conn.row_factory = sqlite3.Row
-        run = conn.execute(
+        legacy_run = conn.execute(
             """
             SELECT started_at, status
             FROM review_runs
             WHERE review_run_id = 1
             """
         ).fetchone()
-        run_columns = {row["name"] for row in conn.execute("PRAGMA table_info(review_runs)").fetchall()}
+        legacy_run_columns = {row["name"] for row in conn.execute("PRAGMA table_info(review_runs)").fetchall()}
         pair_count = conn.execute("SELECT COUNT(*) FROM review_pairs").fetchone()[0]
         user_version = conn.execute("PRAGMA user_version").fetchone()[0]
 
-    assert dict(run) == {
+    assert dict(legacy_run) == {
         "started_at": "2026-04-10T10:01:00+00:00",
         "status": "running",
     }
-    assert "created_at" not in run_columns
+    assert "created_at" in legacy_run_columns
     assert pair_count == 1
-    assert user_version == 0
+    assert user_version == 1
 
 
 def test_snapshot_file_deduplicates_per_path_and_hashes_exact_utf8(tmp_path: Path) -> None:
@@ -365,12 +388,12 @@ def test_snapshot_file_deduplicates_per_path_and_hashes_exact_utf8(tmp_path: Pat
     assert gate_snapshot.content_sha256 == first.content_sha256
 
 
-def test_load_review_run_exposes_created_at_and_nullable_started_at(tmp_path: Path) -> None:
+def test_load_review_job_exposes_created_at_and_nullable_started_at(tmp_path: Path) -> None:
     db_path = tmp_path / "review-store.sqlite"
     review_db.ensure_db(db_path)
 
     with review_db.connect(db_path) as conn:
-        review_run_id = review_db.create_run_with_pairs(
+        review_job_id = review_db.create_job_with_pairs(
             conn,
             model_partition="opus-4-6",
             runner="live-agent",
@@ -386,12 +409,12 @@ def test_load_review_run_exposes_created_at_and_nullable_started_at(tmp_path: Pa
                 )
             ],
         )
-        review_run = review_db.load_review_run(conn, review_run_id=review_run_id)
+        review_job = review_db.load_review_job(conn, review_job_id=review_job_id)
 
-    assert review_run is not None
-    assert review_run.created_at == "2026-04-10T10:03:00+02:00"
-    assert review_run.started_at is None
-    assert review_run.status == "queued"
+    assert review_job is not None
+    assert review_job.created_at == "2026-04-10T10:03:00+02:00"
+    assert review_job.started_at is None
+    assert review_job.status == "queued"
 
 
 def test_snapshot_file_rehydrates_hash_only_snapshot_rows(tmp_path: Path) -> None:
@@ -465,7 +488,7 @@ def test_prune_obsolete_snapshot_content_keeps_current_and_pending_text(tmp_path
             accepted_gate_snapshot_id=current_gate.snapshot_id,
             accepted_at="2026-04-10T10:02:00+02:00",
         )
-        review_db.create_run_with_pairs(
+        review_db.create_job_with_pairs(
             conn,
             model_partition="opus-4-6",
             runner="test-runner",

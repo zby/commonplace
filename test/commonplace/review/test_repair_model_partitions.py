@@ -73,13 +73,13 @@ def test_repair_model_partitions_rekeys_known_aliases(tmp_path: Path) -> None:
         old_count = conn.execute(
             """
             SELECT (
-                SELECT count(*) FROM review_runs WHERE model_partition = 'opus-4-6'
+                SELECT count(*) FROM review_jobs WHERE model_partition = 'opus-4-6'
             ) + (
                 SELECT count(*) FROM review_pairs WHERE model_partition = 'opus-4-6'
             ) + (
                 SELECT count(*) FROM acceptance_events WHERE model_partition = 'opus-4-6'
             ) + (
-                SELECT count(*) FROM review_runs WHERE model_partition = 'claude-fable-5'
+                SELECT count(*) FROM review_jobs WHERE model_partition = 'claude-fable-5'
             ) + (
                 SELECT count(*) FROM review_pairs WHERE model_partition = 'claude-fable-5'
             ) + (
@@ -90,7 +90,7 @@ def test_repair_model_partitions_rekeys_known_aliases(tmp_path: Path) -> None:
         opus_count = conn.execute(
             """
             SELECT (
-                SELECT count(*) FROM review_runs WHERE model_partition = 'claude-opus'
+                SELECT count(*) FROM review_jobs WHERE model_partition = 'claude-opus'
             ) + (
                 SELECT count(*) FROM review_pairs WHERE model_partition = 'claude-opus'
             ) + (
@@ -101,7 +101,7 @@ def test_repair_model_partitions_rekeys_known_aliases(tmp_path: Path) -> None:
         opus_48_count = conn.execute(
             """
             SELECT (
-                SELECT count(*) FROM review_runs WHERE model_partition = 'claude-opus-4.8'
+                SELECT count(*) FROM review_jobs WHERE model_partition = 'claude-opus-4.8'
             ) + (
                 SELECT count(*) FROM review_pairs WHERE model_partition = 'claude-opus-4.8'
             ) + (

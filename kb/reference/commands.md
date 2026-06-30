@@ -102,11 +102,11 @@ commonplace-x-snapshot https://x.com/user/status/123456789
 
 ## Review system
 
-The review system runs LLM-based quality reviews against notes using defined review gates. For the full review workflow, read [REVIEW-SYSTEM.md](./REVIEW-SYSTEM.md). For the code architecture, see [review-architecture.md](./review-architecture.md).
+The review system executes LLM-based quality reviews against notes using defined review gates. For the full review workflow, read [REVIEW-SYSTEM.md](./REVIEW-SYSTEM.md). For the code architecture, see [review-architecture.md](./review-architecture.md).
 
 ### commonplace-review-sweep
 
-Run a full review sweep — selects notes needing review and runs gate bundles on them.
+Run a full review sweep — selects notes needing review and executes gate bundles on them.
 
 ```bash
 commonplace-review-sweep prose kb/notes kb/reference --model claude-opus-4-6 --runner claude-code
@@ -135,28 +135,28 @@ commonplace-run-gate-sweep semantic/grounding-alignment --runner claude-code --m
 commonplace-run-gate-sweep semantic/grounding-alignment --runner claude-code --model claude-opus-4-6 --note kb/notes kb/reference --dry-run
 ```
 
-### commonplace-create-review-runs
+### commonplace-create-review-jobs
 
-Create one or more queued review run records in the review database and write their canonical prompts, `MANIFEST.json` files, and artifact paths for live-agent review. Requested gates are grouped by bundle/lens so each run stays focused.
+Create one or more queued review job records in the review database and write their canonical prompts, `MANIFEST.json` files, and artifact paths for live-agent review. Requested gates are grouped by bundle/lens so each job stays focused.
 
 ```bash
-commonplace-create-review-runs kb/notes/my-note.md prose --runner claude-code --model claude-opus-4-6
-commonplace-create-review-runs kb/notes/my-note.md accessibility prose semantic --runner live-agent --model codex
+commonplace-create-review-jobs kb/notes/my-note.md prose --runner claude-code --model claude-opus-4-6
+commonplace-create-review-jobs kb/notes/my-note.md accessibility prose semantic --runner live-agent --model codex
 ```
 
-The command prints a JSON payload with a `runs` array. Each run includes `review_run_id`, `prompt_path`, `bundle_output_path`, `manifest_path`, `gate_ids`, and `gate_paths`. The manifest lists each pair and its packing-derived `result_path`; note-packed runs use gate filenames such as `prose__source-residue.md`.
+The command prints a JSON payload with a `jobs` array. Each job includes `review_job_id`, `prompt_path`, `bundle_output_path`, `manifest_path`, `gate_ids`, and `gate_paths`. The manifest lists each pair and its packing-derived `result_path`; note-packed jobs use gate filenames such as `prose__source-residue.md`.
 
 ### commonplace-ingest-bundle-output
 
-Parse a sentinel-delimited review bundle and finalize its existing review run.
+Parse a sentinel-delimited review bundle and finalize its existing review job.
 
 ```bash
-commonplace-ingest-bundle-output --review-run-id 42 --input-file kb/reports/bundle-reviews/review-run-42/bundle-output.md
+commonplace-ingest-bundle-output --review-job-id 42 --input-file kb/reports/bundle-reviews/review-job-42/bundle-output.md
 ```
 
 ### commonplace-prepare-review-batch
 
-Create one queued review run for a note-packed or gate-packed set of `(note, gate)` pairs and render one batch prompt for an external executor (live agent or orchestrator). Returns `review_run_id`, per-pair metadata, skipped pairs, and artifact paths, including `manifest_path`, as JSON.
+Create one queued review job for a note-packed or gate-packed set of `(note, gate)` pairs and render one batch prompt for an external executor (live agent or orchestrator). Returns `review_job_id`, per-pair metadata, skipped pairs, and artifact paths, including `manifest_path`, as JSON.
 
 ```bash
 commonplace-prepare-review-batch kb/notes/a.md::prose/source-residue kb/notes/b.md::prose/source-residue --runner live-agent --model claude-opus-4-6
@@ -164,10 +164,10 @@ commonplace-prepare-review-batch kb/notes/a.md::prose/source-residue kb/notes/b.
 
 ### commonplace-ingest-batch-output
 
-Parse a batch's pair-delimited output and finalize its review run with pair salvage. Completed pairs are stored and accepted; missing pairs are marked `missing`, and the run fails with run-level failure context. Exit 1 if the run failed.
+Parse a batch's pair-delimited output and finalize its review job with pair salvage. Completed pairs are stored and accepted; missing pairs are marked `missing`, and the job fails with job-level failure context. Exit 1 if the job failed.
 
 ```bash
-commonplace-ingest-batch-output --review-run-id 42 --input-file kb/reports/bundle-reviews/review-run-42/bundle-output.md
+commonplace-ingest-batch-output --review-job-id 42 --input-file kb/reports/bundle-reviews/review-job-42/bundle-output.md
 ```
 
 ### commonplace-ack-gate-review
@@ -225,7 +225,7 @@ Operational commands for database repair and cleanup.
 
 ### commonplace-prune-superseded-reviews
 
-Delete superseded non-current review-pair rows and whole run artifact directories when every pair in the run is obsolete. It does not delete individual files from a retained shared run directory.
+Delete superseded non-current review-pair rows and whole job artifact directories when every pair in the job is obsolete. It does not delete individual files from a retained shared job directory.
 
 ```bash
 commonplace-prune-superseded-reviews --dry-run
@@ -234,7 +234,7 @@ commonplace-prune-superseded-reviews --apply
 
 ### commonplace-repair-model-partitions
 
-Collapse known model aliases in review runs, review pairs, and acceptance events.
+Collapse known model aliases in review jobs, review pairs, and acceptance events.
 
 ```bash
 commonplace-repair-model-partitions --dry-run

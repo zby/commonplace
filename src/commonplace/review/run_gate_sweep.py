@@ -22,8 +22,8 @@ from commonplace.review.paths import normalize_gate_path
 from commonplace.review.protocol.prompt import NoteReviewTarget, render_pairs_prompt
 from commonplace.review.review_db import (
     connect,
-    create_run_with_pairs,
-    load_review_pairs_for_run,
+    create_job_with_pairs,
+    load_review_pairs_for_job,
 )
 from commonplace.review.clock import iso_now
 from commonplace.review.review_model import normalize_model_partition
@@ -40,12 +40,12 @@ class PreparedGateBatch:
     gate_texts: dict[str, str]
 
 
-def batch_pair_status_counts(db_path: Path, review_run_ids: list[int]) -> tuple[int, int]:
+def batch_pair_status_counts(db_path: Path, review_job_ids: list[int]) -> tuple[int, int]:
     completed = 0
     missing = 0
     with connect(db_path) as conn:
-        for review_run_id in review_run_ids:
-            for pair in load_review_pairs_for_run(conn, review_run_id=review_run_id):
+        for review_job_id in review_job_ids:
+            for pair in load_review_pairs_for_job(conn, review_job_id=review_job_id):
                 if pair.pair_status == "completed":
                     completed += 1
                 elif pair.pair_status == "missing":
@@ -62,10 +62,10 @@ def prepare_batch_targets(
     runner: str,
     model_partition: str,
 ) -> PreparedGateBatch:
-    """Create one single-gate review run for this prompt batch.
+    """Create one single-gate review job for this prompt batch.
 
-    With db_path=None (dry run) no runs are created and ordinals stand in for
-    run ids.
+    With db_path=None (dry run), no jobs are created and `review_job_id=0`
+    is used in the rendered prompt.
     """
     if db_path is None:
         gate_text = frontmatter.strip((repo_root / gate_path).read_text(encoding="utf-8")).lstrip("\n")
@@ -74,7 +74,7 @@ def prepare_batch_targets(
                 prepare_note_target(
                     repo_root=repo_root,
                     note_path=note_path,
-                    review_run_id=0,
+                    review_job_id=0,
                     gate_paths=(gate_path,),
                 )
                 for note_path in note_paths
@@ -90,7 +90,7 @@ def prepare_batch_targets(
             repo_root=repo_root,
             pairs=[(note_path, gate_path) for note_path in note_paths],
         )
-        review_run_id = create_run_with_pairs(
+        review_job_id = create_job_with_pairs(
             conn,
             model_partition=model_partition,
             runner=runner,
@@ -100,13 +100,13 @@ def prepare_batch_targets(
             packing="gate",
             pairs=captured_inputs.pair_requests,
         )
-        bundle_artifact_dir(repo_root, review_run_id).mkdir(parents=True, exist_ok=True)
+        bundle_artifact_dir(repo_root, review_job_id).mkdir(parents=True, exist_ok=True)
         for note_path in note_paths:
             targets.append(
                 prepare_note_target(
                     repo_root=repo_root,
                     note_path=note_path,
-                    review_run_id=review_run_id,
+                    review_job_id=review_job_id,
                     gate_paths=(gate_path,),
                     note_text=captured_inputs.note_texts[note_path],
                 )
@@ -174,8 +174,8 @@ def run_gate_sweep(
         batch_label = f"Batch {batch_index}/{len(batches)}"
         print(f"{batch_label}: launching {runner} for {len(targets)} notes", file=sys.stderr)
         for target in targets:
-            print(f"  - {target.note_path} (review run id: {target.review_run_id})", file=sys.stderr)
-        review_run_ids = sorted({target.review_run_id for target in targets})
+            print(f"  - {target.note_path} (review job id: {target.review_job_id})", file=sys.stderr)
+        review_job_ids = sorted({target.review_job_id for target in targets})
 
         if dry_run:
             prompt = render_pairs_prompt(notes=targets, gate_texts=prepared_batch.gate_texts)
@@ -202,12 +202,12 @@ def run_gate_sweep(
             print("error: runner reported usage exhausted; aborting sweep.", file=sys.stderr)
             return 1
 
-        completed_count, missing_count = batch_pair_status_counts(db_path, review_run_ids)
+        completed_count, missing_count = batch_pair_status_counts(db_path, review_job_ids)
         reviewed += completed_count
         missing += missing_count
         failed += len(outcome.failed)
-        for review_run_id, reason in outcome.failed:
-            print(f"  FAILED run {review_run_id}: {reason}", file=sys.stderr)
+        for review_job_id, reason in outcome.failed:
+            print(f"  FAILED job {review_job_id}: {reason}", file=sys.stderr)
         print(f"{batch_label}: reviewed {completed_count} notes")
         if missing_count:
             print(f"{batch_label}: missing {missing_count} notes", file=sys.stderr)
@@ -219,6 +219,6 @@ def run_gate_sweep(
         if missing:
             print(f"Missing:  {missing} notes", file=sys.stderr)
         if failed:
-            print(f"Failed:   {failed} run(s)", file=sys.stderr)
+            print(f"Failed:   {failed} job(s)", file=sys.stderr)
             return 1
     return 0

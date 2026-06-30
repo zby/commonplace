@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Create one or more review runs and capture their requested gate sets."""
+"""Create one or more review jobs and capture their requested gate sets."""
 
 from __future__ import annotations
 
@@ -13,7 +13,7 @@ from commonplace.review.review_db import prepare_review_db
 from commonplace.review.review_model import normalize_model_partition
 
 
-def _prepared_run_payload(
+def _prepared_job_payload(
     *,
     bundle: str,
     gate_ids: list[str],
@@ -22,7 +22,7 @@ def _prepared_run_payload(
     gate_paths = [pair.gate_path for pair in prepared.pairs]
     artifact_dir = Path(prepared.prompt_path).parent.as_posix()
     return {
-        "review_run_id": prepared.review_run_id,
+        "review_job_id": prepared.review_job_id,
         "bundle": bundle,
         "gate_ids": gate_ids,
         "gate_paths": gate_paths,
@@ -49,12 +49,12 @@ def _prepared_run_payload(
 
 def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser = argparse.ArgumentParser(
-        description="Create one or more note-local review runs, grouped by gate bundle.",
+        description="Create one or more note-local review jobs, grouped by gate bundle.",
     )
     parser.add_argument("note_path", help="Repository-relative note path.")
     parser.add_argument("gate_or_bundle", nargs="+", help="Gate IDs and/or bundle names.")
     parser.add_argument("--runner", required=True, help="Runner label, e.g. claude-code, codex, or live-agent.")
-    parser.add_argument("--model", required=True, help="Review model partition for these runs.")
+    parser.add_argument("--model", required=True, help="Review model partition for these jobs.")
     parser.add_argument("--db", help="Override COMMONPLACE_REVIEW_DB.")
     args = parser.parse_args(argv)
 
@@ -75,7 +75,7 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
             note_path=args.note_path,
             gate_or_bundle=args.gate_or_bundle,
         )
-        runs = []
+        jobs = []
         for group in groups:
             prepared = prepare_review_batch(
                 repo_root=repo_root,
@@ -84,8 +84,8 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
                 runner=args.runner,
                 model_partition=model_partition,
             )
-            runs.append(
-                _prepared_run_payload(
+            jobs.append(
+                _prepared_job_payload(
                     bundle=group.bundle,
                     gate_ids=group.gate_ids,
                     prepared=prepared,
@@ -98,7 +98,7 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
         "note_path": args.note_path,
         "model_partition": model_partition,
         "runner": args.runner,
-        "runs": runs,
+        "jobs": jobs,
     }
     print(json.dumps(payload, ensure_ascii=True, sort_keys=True))
     return 0

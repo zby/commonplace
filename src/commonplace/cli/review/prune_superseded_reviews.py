@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Prune superseded review-pair rows and whole-run artifacts."""
+"""Prune superseded review-pair rows and whole-job artifacts."""
 
 from __future__ import annotations
 
@@ -16,15 +16,15 @@ from commonplace.review.review_db import connect, prepare_review_db, prune_obsol
 @dataclass(frozen=True)
 class ObsoleteReviewPair:
     review_pair_id: int
-    review_run_id: int
+    review_job_id: int
 
 
 @dataclass(frozen=True)
 class PrunePlan:
     obsolete_acceptance_event_ids: tuple[int, ...]
     obsolete_review_pairs: tuple[ObsoleteReviewPair, ...]
-    obsolete_run_ids: tuple[int, ...]
-    obsolete_run_artifact_dirs: tuple[Path, ...]
+    obsolete_job_ids: tuple[int, ...]
+    obsolete_job_artifact_dirs: tuple[Path, ...]
     obsolete_snapshot_content_rows: int
 
 
@@ -130,7 +130,7 @@ def _obsolete_review_pairs(
         return ()
     rows = conn.execute(
         f"""
-        SELECT rp.review_pair_id, rp.review_run_id
+        SELECT rp.review_pair_id, rp.review_job_id
         FROM review_pairs AS rp
         JOIN review_pairs AS current
           ON current.note_path = rp.note_path
@@ -146,43 +146,43 @@ def _obsolete_review_pairs(
     return tuple(
         ObsoleteReviewPair(
             review_pair_id=int(row["review_pair_id"]),
-            review_run_id=int(row["review_run_id"]),
+            review_job_id=int(row["review_job_id"]),
         )
         for row in rows
     )
 
 
-def _obsolete_run_ids(conn: sqlite3.Connection, obsolete_review_pair_ids: tuple[int, ...]) -> tuple[int, ...]:
+def _obsolete_job_ids(conn: sqlite3.Connection, obsolete_review_pair_ids: tuple[int, ...]) -> tuple[int, ...]:
     if not obsolete_review_pair_ids:
         return ()
     rows = conn.execute(
         f"""
         WITH obsolete_pairs AS (
-            SELECT review_pair_id, review_run_id
+            SELECT review_pair_id, review_job_id
             FROM review_pairs
             WHERE review_pair_id IN ({_placeholders(obsolete_review_pair_ids)})
         ),
-        candidate_runs AS (
-            SELECT DISTINCT review_run_id
+        candidate_jobs AS (
+            SELECT DISTINCT review_job_id
             FROM obsolete_pairs
         ),
         retained_pairs AS (
-            SELECT rp.review_run_id
+            SELECT rp.review_job_id
             FROM review_pairs AS rp
-            JOIN candidate_runs AS cr
-              ON cr.review_run_id = rp.review_run_id
+            JOIN candidate_jobs AS cj
+              ON cj.review_job_id = rp.review_job_id
             WHERE rp.review_pair_id NOT IN ({_placeholders(obsolete_review_pair_ids)})
         )
-        SELECT cr.review_run_id
-        FROM candidate_runs AS cr
+        SELECT cj.review_job_id
+        FROM candidate_jobs AS cj
         LEFT JOIN retained_pairs AS retained
-          ON retained.review_run_id = cr.review_run_id
-        WHERE retained.review_run_id IS NULL
-        ORDER BY cr.review_run_id
+          ON retained.review_job_id = cj.review_job_id
+        WHERE retained.review_job_id IS NULL
+        ORDER BY cj.review_job_id
         """,
         (*obsolete_review_pair_ids, *obsolete_review_pair_ids),
     ).fetchall()
-    return tuple(int(row["review_run_id"]) for row in rows)
+    return tuple(int(row["review_job_id"]) for row in rows)
 
 
 def build_prune_plan(repo_root: Path, conn: sqlite3.Connection) -> PrunePlan:
@@ -191,19 +191,19 @@ def build_prune_plan(repo_root: Path, conn: sqlite3.Connection) -> PrunePlan:
     obsolete_acceptance_event_ids = _obsolete_acceptance_event_ids(conn, current_acceptance_event_ids)
     obsolete_review_pairs = _obsolete_review_pairs(conn, current_review_pair_ids)
     obsolete_review_pair_ids = tuple(pair.review_pair_id for pair in obsolete_review_pairs)
-    obsolete_run_ids = _obsolete_run_ids(conn, obsolete_review_pair_ids)
+    obsolete_job_ids = _obsolete_job_ids(conn, obsolete_review_pair_ids)
 
-    run_artifact_dirs: list[Path] = []
-    for review_run_id in obsolete_run_ids:
-        artifact_dir = bundle_artifact_dir(repo_root, review_run_id)
+    job_artifact_dirs: list[Path] = []
+    for review_job_id in obsolete_job_ids:
+        artifact_dir = bundle_artifact_dir(repo_root, review_job_id)
         if artifact_dir.exists():
-            run_artifact_dirs.append(artifact_dir)
+            job_artifact_dirs.append(artifact_dir)
 
     return PrunePlan(
         obsolete_acceptance_event_ids=obsolete_acceptance_event_ids,
         obsolete_review_pairs=obsolete_review_pairs,
-        obsolete_run_ids=obsolete_run_ids,
-        obsolete_run_artifact_dirs=tuple(sorted(run_artifact_dirs, key=lambda path: path.as_posix())),
+        obsolete_job_ids=obsolete_job_ids,
+        obsolete_job_artifact_dirs=tuple(sorted(job_artifact_dirs, key=lambda path: path.as_posix())),
         obsolete_snapshot_content_rows=_obsolete_snapshot_content_row_count(conn),
     )
 
@@ -262,18 +262,18 @@ def apply_prune_plan(repo_root: Path, conn: sqlite3.Connection, plan: PrunePlan)
     obsolete_review_pair_ids = tuple(pair.review_pair_id for pair in plan.obsolete_review_pairs)
     _delete_ids(conn, "acceptance_events", "acceptance_event_id", plan.obsolete_acceptance_event_ids)
     _delete_ids(conn, "review_pairs", "review_pair_id", obsolete_review_pair_ids)
-    _delete_ids(conn, "review_runs", "review_run_id", plan.obsolete_run_ids)
+    _delete_ids(conn, "review_jobs", "review_job_id", plan.obsolete_job_ids)
     prune_obsolete_snapshot_content(conn)
     conn.commit()
 
-    for path in plan.obsolete_run_artifact_dirs:
+    for path in plan.obsolete_job_artifact_dirs:
         shutil.rmtree(path, ignore_errors=True)
 
 
 def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser = argparse.ArgumentParser(
         description=(
-            "Prune superseded review-pair rows and whole-run artifacts. "
+            "Prune superseded review-pair rows and whole-job artifacts. "
             "Keeps the current accepted pair per (note, gate, model)."
         )
     )
@@ -293,8 +293,8 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
 
     print(f"obsolete_acceptance_events: {len(plan.obsolete_acceptance_event_ids)}")
     print(f"obsolete_review_pairs: {len(plan.obsolete_review_pairs)}")
-    print(f"obsolete_review_runs: {len(plan.obsolete_run_ids)}")
-    print(f"obsolete_run_artifact_dirs: {len(plan.obsolete_run_artifact_dirs)}")
+    print(f"obsolete_review_jobs: {len(plan.obsolete_job_ids)}")
+    print(f"obsolete_job_artifact_dirs: {len(plan.obsolete_job_artifact_dirs)}")
     print(f"obsolete_snapshot_content_rows: {plan.obsolete_snapshot_content_rows}")
     print(f"mode: {'apply' if args.apply else 'dry-run'}")
     return 0

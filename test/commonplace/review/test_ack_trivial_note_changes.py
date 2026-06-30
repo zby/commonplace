@@ -126,7 +126,7 @@ def seed_snapshot_review(repo: Path, db_path: Path, *, note_path: str, gate_path
     with review_db.connect(db_path) as conn:
         note_snapshot = review_db.snapshot_file(conn, repo_root=repo, path=note_path)
         gate_snapshot = review_db.snapshot_file(conn, repo_root=repo, path=gate_path)
-        review_run_id = review_db.create_run_with_pairs(
+        review_job_id = review_db.create_job_with_pairs(
             conn,
             model_partition=TEST_MODEL,
             runner="test-runner",
@@ -146,7 +146,7 @@ def seed_snapshot_review(repo: Path, db_path: Path, *, note_path: str, gate_path
         )
         review_db.complete_review_pairs(
             conn,
-            review_run_id=review_run_id,
+            review_job_id=review_job_id,
             review_pairs=[
                 review_db.ReviewPairCompletion(
                     note_path=note_path,
@@ -157,7 +157,7 @@ def seed_snapshot_review(repo: Path, db_path: Path, *, note_path: str, gate_path
             ],
             reviewed_at="2026-04-01T00:00:00+00:00",
         )
-        review_pair = review_db.load_review_pairs_for_run(conn, review_run_id=review_run_id)[0]
+        review_pair = review_db.load_review_pairs_for_job(conn, review_job_id=review_job_id)[0]
         review_db.append_acceptance_event(
             conn,
             note_path=note_path,
