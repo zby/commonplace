@@ -4,6 +4,15 @@ import subprocess
 from pathlib import Path
 
 from commonplace.lib import relocation
+from commonplace.review import review_db, review_target_selector
+from test.commonplace.cli.relocation_review_helpers import (
+    GATE_ID,
+    TEST_MODEL,
+    make_gate,
+    make_reviewable_note,
+    review_state_rows,
+    seed_accepted_review,
+)
 
 
 def write(path: Path, content: str) -> Path:
@@ -150,6 +159,94 @@ plugins:
     mkdocs_content = (tmp_path / "mkdocs.yml").read_text()
     assert "'notes/related-systems/foo.md': 'agent-memory-systems/foo.md'" in mkdocs_content
     assert "'notes/stale.md': 'notes/new.md'" in mkdocs_content
+
+
+def test_relocate_directory_apply_leaves_review_state_rows_and_artifact_paths_unchanged(
+    tmp_path: Path, capsys
+) -> None:
+    source_dir = tmp_path / "kb" / "notes" / "related-systems"
+    foo = make_reviewable_note(source_dir / "foo.md", "Foo")
+    bar = make_reviewable_note(source_dir / "bar.md", "Bar")
+    make_gate(tmp_path)
+
+    db_path = tmp_path / "kb" / "reports" / "review-store.sqlite"
+    seed_accepted_review(tmp_path, db_path, note_path="kb/notes/related-systems/foo.md")
+    seed_accepted_review(tmp_path, db_path, note_path="kb/notes/related-systems/bar.md")
+    with review_db.connect(db_path) as conn:
+        rows_before = review_state_rows(conn)
+
+    exit_code = relocation.relocate_directory(
+        root=tmp_path,
+        source_arg="kb/notes/related-systems",
+        dest_path="kb/agent-memory-systems",
+        apply=True,
+    )
+
+    output = capsys.readouterr().out.lower()
+    assert exit_code == 0
+    assert "review" not in output
+    assert not foo.exists()
+    assert not bar.exists()
+    assert (tmp_path / "kb" / "agent-memory-systems" / "foo.md").is_file()
+    assert (tmp_path / "kb" / "agent-memory-systems" / "bar.md").is_file()
+
+    with review_db.connect(db_path) as conn:
+        rows_after = review_state_rows(conn)
+        old_foo_pairs = review_db.load_review_pairs_for_note(
+            conn,
+            note_path="kb/notes/related-systems/foo.md",
+            model_partition=TEST_MODEL,
+        )
+        old_bar_pairs = review_db.load_review_pairs_for_note(
+            conn,
+            note_path="kb/notes/related-systems/bar.md",
+            model_partition=TEST_MODEL,
+        )
+        new_foo_pairs = review_db.load_review_pairs_for_note(
+            conn,
+            note_path="kb/agent-memory-systems/foo.md",
+            model_partition=TEST_MODEL,
+        )
+        new_bar_pairs = review_db.load_review_pairs_for_note(
+            conn,
+            note_path="kb/agent-memory-systems/bar.md",
+            model_partition=TEST_MODEL,
+        )
+
+    assert rows_after == rows_before
+    assert [pair.note_path for pair in old_bar_pairs + old_foo_pairs] == [
+        "kb/notes/related-systems/bar.md",
+        "kb/notes/related-systems/foo.md",
+    ]
+    assert new_foo_pairs == []
+    assert new_bar_pairs == []
+    assert [row["prompt_path"] for row in rows_after["review_jobs"]] == [
+        "kb/reports/bundle-reviews/review-job-1/prompt.md",
+        "kb/reports/bundle-reviews/review-job-2/prompt.md",
+    ]
+    assert [row["bundle_output_path"] for row in rows_after["review_jobs"]] == [
+        "kb/reports/bundle-reviews/review-job-1/bundle-output.md",
+        "kb/reports/bundle-reviews/review-job-2/bundle-output.md",
+    ]
+    assert [row["result_path"] for row in rows_after["review_pairs"]] == [
+        "kb/reports/bundle-reviews/review-job-1/source-residue.md",
+        "kb/reports/bundle-reviews/review-job-2/source-residue.md",
+    ]
+
+    stale = review_target_selector.select_stale_gates(
+        tmp_path,
+        model=TEST_MODEL,
+        gate_ids=[GATE_ID],
+        note_filter=[
+            "kb/agent-memory-systems/bar.md",
+            "kb/agent-memory-systems/foo.md",
+        ],
+        db_path=db_path,
+    )
+    assert [(record.note_path, record.gate_id, record.reason) for record in stale] == [
+        ("kb/agent-memory-systems/bar.md", GATE_ID, "missing-review"),
+        ("kb/agent-memory-systems/foo.md", GATE_ID, "missing-review"),
+    ]
 
 
 def test_relocate_directory_rejects_existing_destination(tmp_path: Path) -> None:

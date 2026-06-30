@@ -319,7 +319,7 @@ This file is the shared design overview. Detailed implementation steps, migratio
 - [Phase 4: job-owned finalization](./phase-4-job-owned-finalization.md).
 - [Phase 5: subprocess job runner](./phase-5-subprocess-job-runner.md).
 - [Phase 6: ack provenance](./phase-6-ack-provenance.md) — implemented; legacy nullable cleanup remains deferred hardening.
-- [Phase 7: no review relocation](./phase-7-no-review-relocation.md).
+- [Phase 7: no review relocation](./phase-7-no-review-relocation.md) — implemented.
 - [Phase 8: docs, ADR, and workshop close](./phase-8-docs-adr-and-workshop-close.md).
 
 ## Non-goals

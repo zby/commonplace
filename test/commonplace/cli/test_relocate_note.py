@@ -1,32 +1,26 @@
 from __future__ import annotations
 
 from pathlib import Path
-import sqlite3
 
 import pytest
 
 from commonplace.lib import relocation
 from commonplace.lib.naming import MAX_NOTE_SLUG_LENGTH, slugify_note_filename
-from commonplace.review import review_db
-from test.commonplace.review.pair_helpers import accept_pair, insert_completed_pair
+from commonplace.review import review_db, review_target_selector
+from test.commonplace.cli.relocation_review_helpers import (
+    GATE_ID,
+    TEST_MODEL,
+    make_gate,
+    make_reviewable_note,
+    review_state_rows,
+    seed_accepted_review,
+)
 
 
 def write(path: Path, content: str) -> Path:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(content, encoding="utf-8")
     return path
-
-
-def count_note_review_rows(conn: sqlite3.Connection, note_path: str) -> tuple[int, int]:
-    pair_row = conn.execute(
-        "SELECT COUNT(*) AS count FROM review_pairs WHERE note_path = ?",
-        (note_path,),
-    ).fetchone()
-    acceptance_row = conn.execute(
-        "SELECT COUNT(*) AS count FROM acceptance_events WHERE note_path = ?",
-        (note_path,),
-    ).fetchone()
-    return int(pair_row["count"]), int(acceptance_row["count"])
 
 
 def test_rewrite_links_to_relocated_note_updates_real_links_only(tmp_path: Path) -> None:
@@ -152,33 +146,20 @@ def test_resolve_destination_path_accepts_directory_target(tmp_path: Path) -> No
     assert destination == notes_root / "archive" / "old-note.md"
 
 
-def test_relocate_note_apply_leaves_review_state_path_keyed(tmp_path: Path, monkeypatch) -> None:
+def test_relocate_note_apply_leaves_review_state_rows_and_artifact_paths_unchanged(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
     repo_root = tmp_path
     kb_root = repo_root / "kb"
     notes_root = kb_root / "notes"
     write(notes_root / "COLLECTION.md", "# Notes collection\n")
-    old_note = write(notes_root / "old-note.md", "# Old note\n")
+    old_note = make_reviewable_note(notes_root / "old-note.md")
+    make_gate(repo_root)
     write(repo_root / "mkdocs.yml", "plugins:\n  - redirects:\n      redirect_maps:\n")
     db_path = kb_root / "reports" / "review-store.sqlite"
-    review_db.ensure_db(db_path)
+    review_pair_id = seed_accepted_review(repo_root, db_path, note_path="kb/notes/old-note.md")
     with review_db.connect(db_path) as conn:
-        review_pair_id = insert_completed_pair(
-            conn,
-            note_path="kb/notes/old-note.md",
-            gate_id="prose/source-residue",
-            model_partition="opus-4-6",
-            decision="pass",
-            reviewed_at="2026-04-10T10:05:00+02:00",
-        )
-        accept_pair(
-            conn,
-            review_pair_id=review_pair_id,
-            note_path="kb/notes/old-note.md",
-            gate_id="prose/source-residue",
-            model_partition="opus-4-6",
-            accepted_at="2026-04-10T10:06:00+02:00",
-        )
-        conn.commit()
+        rows_before = review_state_rows(conn)
 
     def fake_move(source: Path, destination: Path, *, repo_root: Path) -> str:
         destination.parent.mkdir(parents=True, exist_ok=True)
@@ -195,15 +176,43 @@ def test_relocate_note_apply_leaves_review_state_path_keyed(tmp_path: Path, monk
     )
 
     new_note = notes_root / "archive" / "new-note-title.md"
+    output = capsys.readouterr().out.lower()
     assert result == 0
+    assert "review" not in output
     assert not old_note.exists()
     assert new_note.exists()
 
     with review_db.connect(db_path) as conn:
-        new_counts = count_note_review_rows(conn, "kb/notes/archive/new-note-title.md")
-        old_counts = count_note_review_rows(conn, "kb/notes/old-note.md")
-    assert new_counts == (0, 0)
-    assert old_counts == (1, 1)
+        rows_after = review_state_rows(conn)
+        old_pairs = review_db.load_review_pairs_for_note(
+            conn,
+            note_path="kb/notes/old-note.md",
+            model_partition=TEST_MODEL,
+        )
+        new_pairs = review_db.load_review_pairs_for_note(
+            conn,
+            note_path="kb/notes/archive/new-note-title.md",
+            model_partition=TEST_MODEL,
+        )
+
+    assert rows_after == rows_before
+    assert old_pairs[0].review_pair_id == review_pair_id
+    assert new_pairs == []
+    artifact_dir = review_db.review_job_artifact_dir_rel(1)
+    assert rows_after["review_jobs"][0]["prompt_path"] == f"{artifact_dir}/prompt.md"
+    assert rows_after["review_jobs"][0]["bundle_output_path"] == f"{artifact_dir}/bundle-output.md"
+    assert rows_after["review_pairs"][0]["result_path"] == f"{artifact_dir}/source-residue.md"
+
+    stale = review_target_selector.select_stale_gates(
+        repo_root,
+        model=TEST_MODEL,
+        gate_ids=[GATE_ID],
+        note_filter=["kb/notes/archive/new-note-title.md"],
+        db_path=db_path,
+    )
+    assert [(record.note_path, record.gate_id, record.reason) for record in stale] == [
+        ("kb/notes/archive/new-note-title.md", GATE_ID, "missing-review")
+    ]
 
 
 def test_relocate_note_apply_moves_file_with_to_directory(tmp_path: Path, monkeypatch) -> None:
@@ -241,42 +250,6 @@ See [concept](./definitions/concept.md)
     assert new_note.exists()
     relocated_text = new_note.read_text(encoding="utf-8")
     assert "[concept](../definitions/concept.md)" in relocated_text
-
-
-def test_relocate_note_hook_plan_failure_aborts_before_core_writes(tmp_path: Path) -> None:
-    repo_root = tmp_path
-    notes_root = repo_root / "kb" / "notes"
-    write(notes_root / "COLLECTION.md", "# Notes collection\n")
-    old_note = write(notes_root / "old-note.md", "# Old note\n")
-    write(
-        repo_root / "mkdocs.yml",
-        """plugins:
-  - redirects:
-      redirect_maps:
-""",
-    )
-
-    class FailingHook:
-        def plan(self, *, root: Path, moves) -> object:
-            raise RuntimeError("preflight failed")
-
-        def describe(self, plan: object) -> list[str]:
-            return []
-
-        def execute(self, plan: object) -> None:
-            raise AssertionError("execute should not run")
-
-    result = relocation.relocate_note(
-        root=repo_root,
-        note_arg="old-note",
-        dest_path="kb/notes/archive/old-note.md",
-        apply=True,
-        hooks=[FailingHook()],
-    )
-
-    assert result == 1
-    assert old_note.exists()
-    assert not (notes_root / "archive" / "old-note.md").exists()
 
 
 def test_relocate_note_apply_moves_note_across_kb_collections(

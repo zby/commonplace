@@ -17,13 +17,13 @@ naming.py         Shared note title and filename-slug constraints
 note_parser.py    Parse markdown notes into a schema-friendly document model
 type_resolver.py  Resolve note types from scoped JSON Schema definitions
 validation.py     Deterministic validation rules for KB notes (commonplace-validate lib)
-relocation.py     Move/rename a KB note: rewrite backlinks, mkdocs config, hook-owned state
+relocation.py     Move/rename a KB note or directory: rewrite backlinks and mkdocs config
 ```
 
 Dependencies:
 - `note_parser` → `frontmatter`
 - `validation` → `note_parser`, `type_resolver`, `naming`
-- `relocation` → `naming`, `project_paths`, optional relocation hooks
+- `relocation` → `naming`, `project_paths`
 - `type_resolver` is otherwise independent (but requires external packages)
 
 ---
@@ -194,8 +194,8 @@ Move or rename a KB note: rewrite inbound and outbound links across the repo and
 
 ### Public API
 
-**`relocate_note(*, root: Path, note_arg: str, new_name: str | None = None, dest_path: str | None = None, apply: bool = False, hooks: Sequence[RelocationHook] | None = None) -> int`**
-Top-level orchestrator. Resolves the source note from a path or unique stem, computes the destination, walks all repo markdown files to plan link rewrites, preflights any supplied relocation hooks, and either prints a dry-run plan or executes everything (file move via `git mv` if available, link rewrites, mkdocs update, hook execution). Returns a process exit code.
+**`relocate_note(*, root: Path, note_arg: str, new_name: str | None = None, dest_path: str | None = None, apply: bool = False) -> int`**
+Top-level orchestrator. Resolves the source note from a path or unique stem, computes the destination, walks all repo markdown files to plan link rewrites, and either prints a dry-run plan or executes everything (file move via `git mv` if available, link rewrites, mkdocs update). Returns a process exit code.
 
 **`resolve_note(arg, *, root)`**
 Find a note by absolute path, repo-relative path, full filename, or unique stem. Searches the entire `kb/` tree, not just `kb/notes/`, so notes can be relocated between collections.
@@ -211,9 +211,6 @@ For the note that's being moved: rewrite each of its outbound relative links so 
 
 **`update_mkdocs_config(content, old_docs_path, new_docs_path) -> tuple[str, list[str]]`**
 Update `mkdocs.yml` in place: rewrite any matching `nav` entries and `redirect_maps` targets, and append a new redirect entry from `old_docs_path` to `new_docs_path`. Preserves indentation and quoting style.
-
-**`plan_hooks(hooks, *, root, moves)`** / **`describe_hook_plans(plans)`** / **`execute_hook_plans(plans)`**
-Relocation hook lifecycle for optional subsystem integrations. Review state is path-keyed and is not a hook consumer.
 
 **`move_path(source, destination, *, repo_root)`** / **`move_note(source, destination, *, repo_root)`**
 Move a path on disk, preferring `git mv` and falling back to `Path.rename` if git isn't available. `move_note` is a thin wrapper kept separate so tests can monkeypatch it.

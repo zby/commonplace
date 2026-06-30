@@ -73,8 +73,8 @@ The minimal useful refactor is not a new framework. It is a small pipeline core 
 - [phase-4-job-owned-finalization.md](./phase-4-job-owned-finalization.md) - planned: parent-dispatch claiming, finalize by job id using the job-owned output path, write result provenance frontmatter, and retire explicit ingest surfaces.
 - [phase-5-subprocess-job-runner.md](./phase-5-subprocess-job-runner.md) - planned: subprocess workers claim queued jobs, run adapters, and finalize through the shared path.
 - [phase-6-ack-provenance.md](./phase-6-ack-provenance.md) - implemented: new ack writes carry forward existing review evidence; legacy nullable cleanup is deferred.
-- [phase-7-no-review-relocation.md](./phase-7-no-review-relocation.md) - ready to finish implementation: relocation no longer rekeys review state.
-- [phase-8-docs-adr-and-workshop-close.md](./phase-8-docs-adr-and-workshop-close.md) - planned: promote ADR/reference docs and close the workshop.
+- [phase-7-no-review-relocation.md](./phase-7-no-review-relocation.md) - implemented: relocation no longer rekeys review state.
+- [phase-8-docs-adr-and-workshop-close.md](./phase-8-docs-adr-and-workshop-close.md) - ready to implement: promote ADR/reference docs and close the workshop.
 - [adr-draft-034-queued-review-jobs-and-execution-provenance.md](./adr-draft-034-queued-review-jobs-and-execution-provenance.md) - draft ADR for the queued-job SQL model, execution provenance columns, and two execution paths.
 - [implementation-plan.md](./implementation-plan.md) - the remaining queued-job refactor plan; Phase 1 has landed, everything else is Phase 2.
 

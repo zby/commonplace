@@ -1,6 +1,6 @@
 # Phase 8: Docs, ADR, and workshop close
 
-**Status: planned.** Phase 8 promotes the durable decisions and closes the workshop after the queued-job pipeline behavior has landed.
+**Status: ready to implement.** Phase 8 promotes the durable decisions and closes the workshop after the queued-job pipeline behavior has landed.
 
 ## Purpose
 

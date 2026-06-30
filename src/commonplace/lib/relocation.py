@@ -6,10 +6,7 @@ import os
 import re
 import subprocess
 import sys
-from collections.abc import Sequence
-from dataclasses import dataclass
 from pathlib import Path
-from typing import Protocol
 
 from commonplace.lib.naming import ensure_note_slug_length, slugify_note_filename
 from commonplace.lib.project_paths import (
@@ -26,52 +23,6 @@ TOKEN_PATTERN = re.compile(
 EXTERNAL_TARGET = re.compile(r"^[a-z][a-z0-9+.-]*:")
 REDIRECT_MAP_HEADER = re.compile(r"^(\s*)redirect_maps:\s*$")
 REDIRECT_ENTRY = re.compile(r"^\s*['\"]([^'\"]+)['\"]:\s+['\"]([^'\"]+)['\"]\s*$")
-
-
-@dataclass(frozen=True)
-class NotePathMove:
-    old_path: Path
-    new_path: Path
-
-
-class RelocationHook(Protocol):
-    def plan(self, *, root: Path, moves: Sequence[NotePathMove]) -> object | None:
-        """Return an opaque hook plan, or None when the hook has no work."""
-        ...
-
-    def execute(self, plan: object) -> None:
-        """Execute hook work after the core relocation has written its changes."""
-        ...
-
-    def describe(self, plan: object) -> list[str]:
-        """Return human-readable dry-run/apply output for a hook plan."""
-        ...
-
-
-def plan_hooks(
-    hooks: Sequence[RelocationHook] | None,
-    *,
-    root: Path,
-    moves: Sequence[NotePathMove],
-) -> list[tuple[RelocationHook, object]]:
-    plans: list[tuple[RelocationHook, object]] = []
-    for hook in hooks or []:
-        plan = hook.plan(root=root, moves=moves)
-        if plan is not None:
-            plans.append((hook, plan))
-    return plans
-
-
-def describe_hook_plans(plans: Sequence[tuple[RelocationHook, object]]) -> list[str]:
-    lines: list[str] = []
-    for hook, plan in plans:
-        lines.extend(hook.describe(plan))
-    return lines
-
-
-def execute_hook_plans(plans: Sequence[tuple[RelocationHook, object]]) -> None:
-    for hook, plan in plans:
-        hook.execute(plan)
 
 
 def resolve_note(arg: str, *, root: Path) -> Path:
@@ -470,7 +421,6 @@ def relocate_directory(
     redirect_from: str | None = None,
     redirect_to: str | None = None,
     apply: bool = False,
-    hooks: Sequence[RelocationHook] | None = None,
 ) -> int:
     repo_root = root.resolve()
     kb_root = project_kb_root(repo_root)
@@ -497,16 +447,6 @@ def relocate_directory(
         moves[f.resolve()] = (destination / rel).resolve()
 
     md_moves = {k: v for k, v in moves.items() if k.suffix == ".md"}
-    note_moves = [
-        NotePathMove(old_path=old_path, new_path=new_path)
-        for old_path, new_path in sorted(md_moves.items())
-    ]
-    try:
-        hook_plans = plan_hooks(hooks, root=repo_root, moves=note_moves)
-    except Exception as exc:
-        print(f"Hook preflight failed: {exc}", file=sys.stderr)
-        return 1
-
     # Rewrite links across the repo
     markdown_updates: dict[Path, tuple[Path, str, list[str]]] = {}
     for md_file in find_repo_markdown_files(repo_root):
@@ -554,9 +494,6 @@ def relocate_directory(
     else:
         print("MkDocs updates: none")
 
-    for line in describe_hook_plans(hook_plans):
-        print(line)
-
     if not apply:
         print("\nThis was a dry run. Pass --apply to execute.")
         return 0
@@ -589,12 +526,6 @@ def relocate_directory(
     if mkdocs_updated is not None:
         mkdocs_config.write_text(mkdocs_updated, encoding="utf-8")
 
-    try:
-        execute_hook_plans(hook_plans)
-    except Exception as exc:
-        print(f"Hook execution failed after core relocation: {exc}", file=sys.stderr)
-        return 1
-
     print(f"\nMove strategy: {strategy}")
     print("Done.")
     return 0
@@ -607,7 +538,6 @@ def relocate_note(
     new_name: str | None = None,
     dest_path: str | None = None,
     apply: bool = False,
-    hooks: Sequence[RelocationHook] | None = None,
 ) -> int:
     repo_root = root.resolve()
     kb_root = project_kb_root(repo_root)
@@ -631,15 +561,6 @@ def relocate_note(
 
     old_docs_path = source.relative_to(kb_root).as_posix()
     new_docs_path = destination.relative_to(kb_root).as_posix()
-    try:
-        hook_plans = plan_hooks(
-            hooks,
-            root=repo_root,
-            moves=[NotePathMove(old_path=source, new_path=destination)],
-        )
-    except Exception as exc:
-        print(f"Hook preflight failed: {exc}", file=sys.stderr)
-        return 1
 
     markdown_updates: dict[Path, tuple[str, list[str]]] = {}
 
@@ -680,9 +601,6 @@ def relocate_note(
     else:
         print("MkDocs updates: none")
 
-    for line in describe_hook_plans(hook_plans):
-        print(line)
-
     if not apply:
         print("\nThis was a dry run. Pass --apply to execute.")
         return 0
@@ -692,12 +610,6 @@ def relocate_note(
         target = destination if path.resolve() == source else path
         target.write_text(updated, encoding="utf-8")
     mkdocs_config.write_text(mkdocs_updated, encoding="utf-8")
-    try:
-        execute_hook_plans(hook_plans)
-    except Exception as exc:
-        print(f"Hook execution failed after core relocation: {exc}", file=sys.stderr)
-        return 1
-
     print(f"\nMove strategy: {strategy}")
     print("Done.")
     return 0

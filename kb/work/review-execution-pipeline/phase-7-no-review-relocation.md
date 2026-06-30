@@ -1,6 +1,6 @@
 # Phase 7: No review relocation
 
-**Status: ready to finish implementation.** The review relocation hook and review DB rekey helper API have been removed. Remaining work is to tighten verification around unchanged review rows, directory relocation, selector behavior, and stale tests/docs.
+**Status: implemented.** Relocation no longer hooks into review state, and tests cover unchanged review rows, unchanged artifact paths, directory relocation, selector behavior, and removed legacy hook/rekey behavior.
 
 ## Purpose
 
