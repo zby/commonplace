@@ -8,10 +8,6 @@ from pathlib import Path
 SOURCE_GATES_ROOT = Path("kb/instructions/review-gates")
 INSTALLED_GATES_ROOT = Path("kb/commonplace/instructions/review-gates")
 
-# Backward-compatible name for source-checkout callers. Runtime code should use
-# review_gates_dir() so installed projects resolve the shipped library location.
-GATES_ROOT = SOURCE_GATES_ROOT
-
 
 def _reject_unsafe_relative(raw: str, *, kind: str) -> None:
     path = Path(raw)

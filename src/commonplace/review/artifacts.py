@@ -8,6 +8,8 @@ from typing import Protocol, Sequence
 
 import yaml
 
+from commonplace.review.review_db import review_job_artifact_dir_rel
+
 
 MANIFEST_NAME = "MANIFEST.json"
 
@@ -44,6 +46,10 @@ class SkippedPairForManifest(Protocol):
     note_path: str
     gate_path: str
     reason: str
+
+
+def bundle_artifact_dir(repo_root: Path, review_job_id: int) -> Path:
+    return repo_root / review_job_artifact_dir_rel(review_job_id)
 
 
 def encode_stage_filename(gate_path: str) -> str:

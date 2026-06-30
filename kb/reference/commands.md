@@ -104,37 +104,6 @@ commonplace-x-snapshot https://x.com/user/status/123456789
 
 The review system executes LLM-based quality reviews against notes using defined review gates. For the full review workflow, read [REVIEW-SYSTEM.md](./REVIEW-SYSTEM.md). For the code architecture, see [review-architecture.md](./review-architecture.md).
 
-### commonplace-review-sweep
-
-Run a full review sweep. This is a retained convenience wrapper: it selects notes needing review, creates queued note-packed jobs, then runs them through the queued subprocess runner.
-
-```bash
-commonplace-review-sweep prose kb/notes kb/reference --model claude-opus-4-6 --runner claude-code
-commonplace-review-sweep prose --model claude-opus-4-6 --runner claude-code --current   # only current-status notes
-commonplace-review-sweep --all-gates kb/notes kb/reference --model claude-opus-4-6 --runner claude-code       # all gate bundles
-commonplace-review-sweep prose kb/notes kb/reference --model claude-opus-4-6 --runner claude-code --dry-run   # preview what would run
-```
-
-### commonplace-run-review-bundles
-
-Run review bundles on a single note through a subprocess runner. This is a retained convenience wrapper: requested gates are grouped by bundle/lens, queued as note-packed jobs, then run through `commonplace-run-review-jobs`.
-
-```bash
-commonplace-run-review-bundles kb/notes/my-note.md prose --runner claude-code --model claude-opus-4-6
-commonplace-run-review-bundles kb/notes/my-note.md accessibility prose semantic --runner codex --model codex
-```
-
-### commonplace-run-gate-sweep
-
-Run a single gate across multiple notes in batched prompts. This is a retained convenience wrapper: it creates queued gate-packed jobs, then runs them through `commonplace-run-review-jobs`.
-
-```bash
-commonplace-run-gate-sweep semantic/grounding-alignment --runner claude-code --model claude-opus-4-6 --note kb/notes kb/reference
-commonplace-run-gate-sweep semantic/grounding-alignment --runner claude-code --model claude-opus-4-6 --current --batch-size 5
-commonplace-run-gate-sweep semantic/grounding-alignment --runner claude-code --model claude-opus-4-6 --note kb/notes/specific.md
-commonplace-run-gate-sweep semantic/grounding-alignment --runner claude-code --model claude-opus-4-6 --note kb/notes kb/reference --dry-run
-```
-
 ### commonplace-create-review-jobs
 
 Create one or more queued review job records in the review database and write their canonical prompts, `MANIFEST.json` files, and artifact paths for live-agent review. Creation is runner-agnostic: `runner`, `runner_model`, and `runner_effort` stay null until execution.
@@ -144,21 +113,9 @@ commonplace-review-target-selector --mode requested --json --model claude-opus-4
   | commonplace-create-review-jobs --input - --grouping note
 commonplace-review-target-selector --json --model claude-opus-4-6 prose --note kb/notes/my-note.md \
   | commonplace-create-review-jobs --input - --grouping note
-commonplace-create-review-jobs --model claude-opus-4-6 --pair kb/notes/a.md::prose/source-residue --pair kb/notes/b.md::prose/source-residue --grouping gate --batch-size 5
 ```
 
 The canonical path is selector JSON piped into `--input -`. The command prints a JSON payload with `input_mode`, `model_partition`, `grouping`, `jobs`, and `skipped_pairs`. Each job includes `review_job_id`, `status`, nullable runner provenance, `packing`, `prompt_path`, `bundle_output_path`, and pair rows with `gate_id`, `pair_status`, `decision`, and `result_path`. `MANIFEST.json` is display/debug output written beside the artifacts, not a returned JSON field; pipeline commands use the DB paths as state. Note-packed jobs use gate-leaf filenames such as `source-residue.md`; gate-packed jobs use note filenames such as `my-note.md`.
-
-### commonplace-run-review-jobs
-
-Run queued review jobs through a subprocess runner. The command selects queued jobs whose stored `model_partition` matches `build_model_partition(--model, --effort)`, claims each job, reads its persisted `prompt_path`, writes runner stdout to its persisted `bundle_output_path`, and finalizes through the job-owned finalization path.
-
-```bash
-commonplace-run-review-jobs --runner codex --model gpt-5 --limit 20
-commonplace-run-review-jobs --runner codex --model gpt-5 --review-job-id 42
-```
-
-`--review-job-id` is a narrowing/debug option, not a separate input protocol: the job must still be queued and in the requested model partition. `--effort` is accepted only for runner adapters that can set effort; unsupported adapters fail before claiming jobs. The command prints one JSON payload with `requested`, `jobs`, `skipped`, counts, and `usage_exhausted`.
 
 ### commonplace-review-job-list
 
@@ -227,7 +184,6 @@ commonplace-review-target-selector prose --model claude-opus-4-6 --current --jso
 commonplace-review-target-selector prose --model claude-opus-4-6 --note kb/notes kb/reference --reason note-changed     # filter by staleness reason
 commonplace-review-target-selector prose --note kb/notes kb/reference --reason missing-review     # pairs missing under every model partition
 commonplace-review-target-selector --mode requested prose --model claude-opus-4-6 --note kb/notes/my-note.md --json
-commonplace-review-target-selector prose --model claude-opus-4-6 --ack kb/notes/foo.md:prose/source-residue   # ack a pair
 ```
 
 ### commonplace-warn-selector

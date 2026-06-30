@@ -1,5 +1,5 @@
 ---
-description: "Review execution is unified on note-gate pairs: one sentinel grammar, renderer, parser, and executor; bundle and gate sweep are packing strategies over the same protocol"
+description: "Review execution is unified on note-gate pairs: one sentinel grammar, renderer, parser, and finalization path; note and gate packing are strategies over the same protocol"
 type: ../types/adr.md
 tags: []
 status: accepted
@@ -12,31 +12,31 @@ status: accepted
 
 ## Context
 
-The unit of review work is one (note, gate) pair — the selector and acceptance state already reasoned on that key — but execution ran through two divergent paths that differed only in which axis they held constant when packing pairs into one LLM call: `run_review_bundles` (one note, bundle-grouped gates) and `run_gate_sweep` (one gate, many notes, `NOTE START/END` sentinels wrapping gate blocks). Each path carried its own prompt renderer, parser, footer-rewriter, and failure policy. The duplication produced concrete defects: the sweep path re-rendered extracted reviews as synthetic single-note bundles and re-parsed them to reach the shared finalize tail; usage-exhaustion detection existed only in the bundle path and interrupt handling only in the sweep path; and parsing was all-or-nothing per call, so one missing block discarded every already-parsed review in the batch. All sweep modules were flagged experimental, so the grammar was free to change.
+The unit of review work is one (note, gate) pair — the selector and acceptance state already reasoned on that key — but execution previously ran through two divergent paths that differed only in which axis they held constant when packing pairs into one LLM call. Each path carried its own prompt renderer, parser, footer-rewriter, and failure policy. The duplication produced concrete defects: one path re-rendered extracted reviews as synthetic single-note bundles and re-parsed them to reach the shared finalize tail; failure detection differed across paths; and parsing was all-or-nothing per call, so one missing block discarded every already-parsed review in the batch. The experimental grammar was free to change.
 
 ## Decision
 
 1. **One pair grammar.** Every output block is keyed by the full pair: `=== PAIR REVIEW START: {note_path} :: {gate_id} ===` … `=== PAIR REVIEW END: … ===` (`protocol/format.py`). The ` :: ` separator is rejected in note paths and gate ids at render time, as are reserved `=== … ===` sentinel lines inside embedded note or gate text.
 2. **One renderer.** `render_pairs_prompt` (`protocol/prompt.py`) takes N note targets and M gate definitions, embeds each note text and each gate text exactly once, and requests one block per requested pair. Note contents are always embedded (`Do not read them from disk`), in both single-note and multi-note shapes; the multi-note shape adds the evaluate-independently rule. `output_mode` (`stdout`/`file`) is preserved for the live-agent path.
 3. **One parser with salvage semantics.** `parse_pair_bundle` (`protocol/parser.py`) raises on structural anomalies (nested, mismatched, unterminated, unexpected, duplicate, or empty blocks) because the rest of the stream is untrustworthy, but a missing expected pair is reported in `missing`, not raised — callers salvage what parsed.
-4. **One executor.** `executor.execute_batch` owns the shared lifecycle: render, one runner call, telemetry and model-mismatch handling, usage-exhaustion and interrupt handling, parse, then per-run finalize. A run whose pairs all came back is finalized; a run with missing pairs is failed individually with the raw batch output attached; other runs in the batch are unaffected. Within one run finalization stays all-or-nothing (coverage validation in `record_and_finalize_run` is unchanged).
-5. **Batching is a packing choice, not a protocol.** `run_review_bundles` is the note-local bundle packing (one note, one bundle/lens per call) and `run_gate_sweep` the share-gate packing (one gate over a chunked note list, one single-gate run per note); both are thin callers of the executor. `review_sweep`'s thread-pool fan-out over `run_bundles` is untouched. The live-agent path (`create-review-runs` → agent writes `bundle-output.md` for each returned run → `ingest-bundle-output`) consumes the same grammar; per the consolidation decision each run's ingest remains all-or-nothing.
-6. **Per-run artifacts are pair-grammar slices.** Each run's `bundle-output.md` holds the run's own pair-block stream; parsed result files are named from the run's packing strategy, and `MANIFEST.json` maps pairs to those files. Later storage work moved review bodies out of DB columns, so the DB now records artifact paths instead of storing `raw_bundle_markdown`.
+4. **One finalization path.** Shared job-output code owns parse, result-file writes, pair completion, missing-pair marking, acceptance events, and job status. A job whose pairs all came back is completed; a job with missing pairs is failed with the raw batch output attached while completed pairs remain salvageable.
+5. **Batching is a packing choice, not a protocol.** Note-packed jobs and gate-packed jobs both use the same pair grammar, parser, and finalization path. The parent agent or harness owns fan-out; Commonplace owns deterministic job creation and finalization.
+6. **Per-job artifacts are pair-grammar slices.** Each job's `bundle-output.md` holds the job's own pair-block stream; parsed result files are named from the job's packing strategy, and `MANIFEST.json` maps pairs to those files. Later storage work moved review bodies out of DB columns, so the DB now records artifact paths instead of storing raw review markdown.
 
-ADR 031 later makes the same pair unit persistent in the SQLite schema by replacing `gate_reviews` with `review_pairs`.
+ADR 031 later makes the same pair unit persistent in the SQLite schema by replacing the earlier gate-specific rows with `review_pairs`.
 
 ## Consequences
 
 Easier:
 - Protocol changes (new fields, sentinel rules, coverage checks) are made once; the parse→render→parse round trip and the twin parsers/rewriters are gone.
 - Partial batch failures salvage completed reviews and fail only the missing runs — the dominant efficiency win when many small checks run at scale.
-- Failure policy (usage exhaustion, interrupts, runner errors) is uniform across packing shapes.
-- Mixed-axis packing (arbitrary pairs per call) is structurally supported by the renderer/parser/executor, available when a caller wants it.
+- Failure policy is uniform across packing shapes.
+- Mixed-axis packing (arbitrary pairs per call) is structurally supported by the renderer/parser boundary, available if a future caller needs it.
 
 Harder / accepted costs:
 - Notes whose body contains a reserved `=== … ===` line can no longer be reviewed by either path (previously the single-note bundle path did not embed the note and tolerated this). Render fails loudly; an escaping scheme can be added if this bites.
 - The pair key repeats the shared axis in every sentinel — a small token cost paid for a parser that never infers a missing axis from prompt context.
-- Packing shape is not yet recorded as run provenance; per-pair cost attribution from per-call telemetry remains approximate. Recording strategy/batch id on `review_runs` is a candidate follow-up, as is re-asking only missing pairs in a follow-up call.
+- Per-pair cost attribution from per-call telemetry remains approximate. Re-asking only missing pairs in a follow-up call is a candidate follow-up.
 
 ---
 

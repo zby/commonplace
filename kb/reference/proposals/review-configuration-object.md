@@ -1,5 +1,5 @@
 ---
-description: "Proposal: a ReviewConfig object owned by commonplace.review, consolidating the review subsystem's project-shape constants (scan roots, gates root, artifact root, db path, sweep parallelism) with per-project override — deliberately not a global ProjectConfig, so the experimental db-backed review subsystem stays decoupled from the stable core"
+description: "Proposal: a ReviewConfig object owned by commonplace.review, consolidating the review subsystem's project-shape constants (scan roots, gates root, artifact root, db path) with per-project override — deliberately not a global ProjectConfig, so the experimental db-backed review subsystem stays decoupled from the stable core"
 type: kb/types/note.md
 traits: [design-proposal]
 tags: [kb-maintenance]
@@ -19,12 +19,11 @@ Project-shape constants partition cleanly by owner:
 | Constant | Module | What it pins |
 |---|---|---|
 | `NOTES_ROOT`, `REFERENCE_ROOT` | `review/review_target_selector.py` | which collections are reviewable (scan roots) |
-| `GATES_ROOT` | `review/paths.py` | where review gates live |
-| `BUNDLE_ARTIFACTS_ROOT` | `review/executor.py` | where review artifacts are written |
+| gate catalog roots | `review/paths.py` | where review gates live |
+| `BUNDLE_ARTIFACTS_ROOT` | `review/review_db.py` + `review/artifacts.py` | where review artifacts are written |
 | `DEFAULT_DB_PATH` | `review/review_db.py` | review store location (env override `COMMONPLACE_REVIEW_DB` exists) |
-| `DEFAULT_PARALLELISM` + `REVIEW_SWEEP_JOBS` env | `cli/review/review_sweep.py` | sweep fan-out width |
 
-Override mechanisms are inconsistent: the DB path has an env var and a `--db` flag, parallelism has a different env var, the rest have nothing.
+Override mechanisms are inconsistent: the DB path has an env var and a `--db` flag; the rest have no project override.
 
 **Core-owned**: the scaffold/promoted-skills policy was the one core entry in this proposal's original table; it shipped separately as `commonplace.scaffold_manifest` (data the installer executes), which already gives the stable core its policy-as-data form without a runtime config object. `lib/project_paths.py` covers indexing concerns and is untouched. No core constant currently needs per-project variation.
 
@@ -32,7 +31,7 @@ The hardcoded scan roots are the operative limitation: `list_reviewable_notes` w
 
 ## The design
 
-One frozen dataclass `ReviewConfig` in `commonplace.review`, holding the review-owned table above, constructed once per CLI invocation from defaults merged with a per-project override source, and passed explicitly to the functions that consume it — no module-global mutation, no import-time `Path.cwd()`, following the existing `repo_root`/`db_path` threading convention. It subsumes the two ad-hoc env overrides (`COMMONPLACE_REVIEW_DB`, `REVIEW_SWEEP_JOBS`) so the override story is uniform.
+One frozen dataclass `ReviewConfig` in `commonplace.review`, holding the review-owned table above, constructed once per CLI invocation from defaults merged with a per-project override source, and passed explicitly to the functions that consume it — no module-global mutation, no import-time `Path.cwd()`, following the existing `repo_root`/`db_path` threading convention. It subsumes the current DB env override (`COMMONPLACE_REVIEW_DB`) so the override story is uniform.
 
 The core deliberately gets nothing: if a stable-core constant ever needs per-project variation, it gets its own object then, with its own (slower) change cadence. The two configs share at most an override-file format, not a type.
 

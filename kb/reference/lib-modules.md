@@ -96,7 +96,7 @@ All markdown headings, ignoring those inside fenced code blocks.
 All `[text](url)` link URLs, ignoring links inside code regions.
 
 **`find_markdown_links_with_text(body: str) -> tuple[tuple[str, str], ...]`**
-All `[text](url)` links as `(text, url)` pairs, ignoring links inside code regions. Used by `commonplace.review.run_review_bundles` when it needs to render link tables in prompts.
+All `[text](url)` links as `(text, url)` pairs, ignoring links inside code regions. Used by review prompt preparation when rendering link tables in prompts.
 
 **`extract_body_dates(body: str) -> tuple[str, ...]`**
 Deduplicated ISO dates found in body text.

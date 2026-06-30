@@ -1,11 +1,11 @@
-"""Job-owned review finalization shared by CLIs and queue runners."""
+"""Job-owned review finalization for harness-orchestrated review batches."""
 
 from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
 
-from commonplace.review.executor import finalize_job_bundle_markdown
+from commonplace.review.job_output import finalize_job_bundle_markdown
 from commonplace.review.review_db import connect, load_review_job_plan
 
 

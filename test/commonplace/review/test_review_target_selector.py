@@ -1059,19 +1059,20 @@ class TestModelOptional:
         assert result.returncode == 2
         assert "--model is required unless selecting missing-review coverage" in result.stderr
 
-    def test_cli_requires_model_for_ack(self, tmp_path: Path) -> None:
+    def test_cli_rejects_removed_ack_option(self, tmp_path: Path) -> None:
         build_fixture(tmp_path)
+        removed_option = "--" + "ack"
 
         result = run_cli(
             "review_target_selector",
-            "--ack",
+            removed_option,
             "kb/notes/stable.md:prose/source-residue",
             cwd=tmp_path,
             check=False,
         )
 
         assert result.returncode == 2
-        assert "--model is required with --ack" in result.stderr
+        assert f"unrecognized arguments: {removed_option}" in result.stderr
 
     def test_cli_requires_model_for_requested_mode(self, tmp_path: Path) -> None:
         build_fixture(tmp_path)
@@ -1115,33 +1116,6 @@ class TestModelOptional:
             ).fetchone()
         assert row is not None
         assert row[0] is not None
-
-    def test_review_target_selector_ack_cli_writes_non_null_review_pair_id(self, tmp_path: Path) -> None:
-        fixture = build_fixture(tmp_path)
-        make_note(fixture["stable"], "Stable title", "\nUpdated line.\n")
-
-        result = run_cli(
-            "review_target_selector",
-            "--model",
-            TEST_MODEL,
-            "--ack",
-            "kb/notes/stable.md:prose/source-residue",
-            cwd=tmp_path,
-        )
-
-        assert "acked: kb/notes/stable.md prose/source-residue" in result.stdout
-        with sqlite3.connect(db_path_for(tmp_path)) as conn:
-            row = conn.execute(
-                """
-                SELECT accepted_review_pair_id
-                FROM current_gate_acceptances
-                WHERE note_path = ? AND gate_path = ? AND model_partition = ?
-                """,
-                ("kb/notes/stable.md", "kb/instructions/review-gates/prose/source-residue.md", TEST_MODEL),
-            ).fetchone()
-        assert row is not None
-        assert row[0] is not None
-
 
 class TestResolveGates:
     def test_individual_gate_resolves(self, tmp_path: Path) -> None:

@@ -59,7 +59,7 @@ def insert_completed_pair(
 def accept_pair(
     conn: sqlite3.Connection,
     *,
-    review_pair_id: int | None,
+    review_pair_id: int,
     note_path: str,
     gate_id: str,
     model_partition: str,

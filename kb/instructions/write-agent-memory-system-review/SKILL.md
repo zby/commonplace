@@ -128,7 +128,7 @@ If the system has no reachable source code, stop and write a lightweight note in
 
 12. **Run semantic QA.** Run the live-agent procedure from `kb/instructions/run-review-batches.md` on the new review note using requested mode with the `semantic` bundle: select target pairs with `commonplace-review-target-selector --mode requested`, create jobs from selector JSON with `commonplace-create-review-jobs --input -`, claim each dispatched job with `commonplace-claim-review-job`, delegate each claimed job to a sub-agent, then finalize each sentinel-bracketed output with `commonplace-finalize-review-job`. Treat it as a read-only QA loop: extract findings, fix clearly valid issues, and leave uncertain findings for the final report rather than forcing a rewrite.
 
-   Do not use `commonplace-run-review-bundles` for this skill workflow unless the user explicitly authorizes subprocess runner execution, because that command invokes `claude` or `codex exec` internally. If semantic QA cannot be completed through the current harness, report it as a blocked QA step rather than substituting a shell-launched agent.
+   If semantic QA cannot be completed through the current harness, report it as a blocked QA step rather than substituting a shell-launched agent.
 
 13. **Validate.** Run:
     ```bash
@@ -166,5 +166,4 @@ Report:
 - overwrite or repurpose an existing checkout whose remote points to a different owner/repo
 - force-pull, delete, or reset a checkout to handle conflicts
 - run `codex`, `codex exec`, `claude`, or another agent CLI from the shell to bypass delegation or worker limits
-- use `commonplace-run-review-bundles` in this workflow without explicit authorization for its subprocess runner
 - leave the review unvalidated

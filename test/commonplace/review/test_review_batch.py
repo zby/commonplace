@@ -87,12 +87,31 @@ def build_repo_fixture(tmp_path: Path) -> tuple[Path, Path]:
     return repo, db_path
 
 
-def create_gate_jobs(repo: Path, db_path: Path, *pairs: str):
-    args: list[str] = []
-    for pair in pairs:
-        args.extend(["--pair", pair])
-    args.extend(["--model", "test-model", "--grouping", "gate"])
-    return run_cli("create_review_jobs", *args, cwd=repo, db_path=db_path, check=False)
+def target(note_path: str, gate_path: str, gate_id: str, reason: str = "requested") -> dict[str, str]:
+    return {
+        "note_path": note_path,
+        "gate_path": gate_path,
+        "gate_id": gate_id,
+        "reason": reason,
+    }
+
+
+def create_gate_jobs(repo: Path, db_path: Path, targets: list[dict[str, str]]):
+    selector_path = repo / "targets.json"
+    selector_path.write_text(
+        json.dumps({"model_partition": "test-model", "targets": targets}),
+        encoding="utf-8",
+    )
+    return run_cli(
+        "create_review_jobs",
+        "--input",
+        "targets.json",
+        "--grouping",
+        "gate",
+        cwd=repo,
+        db_path=db_path,
+        check=False,
+    )
 
 
 def pair_block(note_path: str, gate_id: str, body: str, decision: str) -> str:
@@ -104,15 +123,17 @@ def pair_block(note_path: str, gate_id: str, body: str, decision: str) -> str:
     )
 
 
-def test_create_review_jobs_direct_pairs_creates_one_gate_packed_job_and_prompt(tmp_path: Path) -> None:
+def test_create_review_jobs_selector_creates_one_gate_packed_job_and_prompt(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
 
     result = create_gate_jobs(
         repo,
         db_path,
-        f"kb/notes/first.md::{GATE}",
-        f"kb/notes/second.md::{GATE}",
-        "kb/notes/first.md::frontmatter/claim-strength",
+        [
+            target("kb/notes/first.md", GATE_PATH, GATE),
+            target("kb/notes/second.md", GATE_PATH, GATE),
+            target("kb/notes/first.md", CLAIM_GATE_PATH, "frontmatter/claim-strength"),
+        ],
     )
 
     assert result.returncode == 0
@@ -188,7 +209,16 @@ def test_create_review_jobs_direct_pairs_creates_one_gate_packed_job_and_prompt(
 
 def test_finalize_review_job_finalizes_all_gate_packed_pairs(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
-    prepared = json.loads(create_gate_jobs(repo, db_path, f"kb/notes/first.md::{GATE}", f"kb/notes/second.md::{GATE}").stdout)
+    prepared = json.loads(
+        create_gate_jobs(
+            repo,
+            db_path,
+            [
+                target("kb/notes/first.md", GATE_PATH, GATE),
+                target("kb/notes/second.md", GATE_PATH, GATE),
+            ],
+        ).stdout
+    )
     prepared_job = prepared["jobs"][0]
     review_job_id = prepared_job["review_job_id"]
 
@@ -257,7 +287,16 @@ def test_finalize_review_job_finalizes_all_gate_packed_pairs(tmp_path: Path) -> 
 
 def test_finalize_review_job_salvages_partial_output(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
-    prepared = json.loads(create_gate_jobs(repo, db_path, f"kb/notes/first.md::{GATE}", f"kb/notes/second.md::{GATE}").stdout)
+    prepared = json.loads(
+        create_gate_jobs(
+            repo,
+            db_path,
+            [
+                target("kb/notes/first.md", GATE_PATH, GATE),
+                target("kb/notes/second.md", GATE_PATH, GATE),
+            ],
+        ).stdout
+    )
     prepared_job = prepared["jobs"][0]
     review_job_id = prepared_job["review_job_id"]
 
@@ -304,7 +343,9 @@ def test_finalize_review_job_salvages_partial_output(tmp_path: Path) -> None:
 
 def test_finalize_review_job_artifact_write_failure_does_not_accept_review(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
-    prepared = json.loads(create_gate_jobs(repo, db_path, f"kb/notes/first.md::{GATE}").stdout)
+    prepared = json.loads(
+        create_gate_jobs(repo, db_path, [target("kb/notes/first.md", GATE_PATH, GATE)]).stdout
+    )
     prepared_job = prepared["jobs"][0]
     review_job_id = prepared_job["review_job_id"]
     output_path = repo / prepared_job["bundle_output_path"]
@@ -347,7 +388,9 @@ def test_finalize_review_job_artifact_write_failure_does_not_accept_review(tmp_p
 
 def test_finalize_review_job_missing_output_does_not_change_job_state(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
-    prepared = json.loads(create_gate_jobs(repo, db_path, f"kb/notes/first.md::{GATE}").stdout)
+    prepared = json.loads(
+        create_gate_jobs(repo, db_path, [target("kb/notes/first.md", GATE_PATH, GATE)]).stdout
+    )
     prepared_job = prepared["jobs"][0]
     review_job_id = prepared_job["review_job_id"]
 
@@ -375,7 +418,9 @@ def test_finalize_review_job_missing_output_does_not_change_job_state(tmp_path: 
 
 def test_finalize_review_job_parse_error_marks_job_failed(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
-    prepared = json.loads(create_gate_jobs(repo, db_path, f"kb/notes/first.md::{GATE}").stdout)
+    prepared = json.loads(
+        create_gate_jobs(repo, db_path, [target("kb/notes/first.md", GATE_PATH, GATE)]).stdout
+    )
     prepared_job = prepared["jobs"][0]
     review_job_id = prepared_job["review_job_id"]
     output_path = repo / prepared_job["bundle_output_path"]
@@ -410,7 +455,9 @@ def test_finalize_review_job_parse_error_marks_job_failed(tmp_path: Path) -> Non
 
 def test_finalize_review_job_rejects_completed_job(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
-    prepared = json.loads(create_gate_jobs(repo, db_path, f"kb/notes/first.md::{GATE}").stdout)
+    prepared = json.loads(
+        create_gate_jobs(repo, db_path, [target("kb/notes/first.md", GATE_PATH, GATE)]).stdout
+    )
     prepared_job = prepared["jobs"][0]
     review_job_id = prepared_job["review_job_id"]
     output_path = repo / prepared_job["bundle_output_path"]
@@ -434,21 +481,7 @@ def test_finalize_review_job_rejects_completed_job(tmp_path: Path) -> None:
     }
 
 
-def test_create_review_jobs_direct_pairs_rejects_malformed_pair(tmp_path: Path) -> None:
-    repo, db_path = build_repo_fixture(tmp_path)
-    result = create_gate_jobs(repo, db_path, "kb/notes/first.md")
-    assert result.returncode != 0
-    assert "malformed pair" in result.stderr
-
-
-def test_create_review_jobs_direct_pairs_rejects_unknown_gate(tmp_path: Path) -> None:
-    repo, db_path = build_repo_fixture(tmp_path)
-    result = create_gate_jobs(repo, db_path, "kb/notes/first.md::accessibility/nonexistent")
-    assert result.returncode != 0
-    assert "gate not found" in result.stderr
-
-
-def test_create_review_jobs_direct_pairs_marks_queued_job_failed_when_prompt_rendering_fails(tmp_path: Path) -> None:
+def test_create_review_jobs_selector_marks_queued_job_failed_when_prompt_rendering_fails(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
     (repo / "kb" / "notes" / "first.md").write_text(
         """---
@@ -465,7 +498,7 @@ status: current
         encoding="utf-8",
     )
 
-    result = create_gate_jobs(repo, db_path, f"kb/notes/first.md::{GATE}")
+    result = create_gate_jobs(repo, db_path, [target("kb/notes/first.md", GATE_PATH, GATE)])
 
     assert result.returncode != 0
     assert "reserved sentinel" in result.stderr

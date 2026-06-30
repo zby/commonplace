@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS acceptance_events (
     note_path TEXT NOT NULL,
     gate_path TEXT NOT NULL,
     model_partition TEXT NOT NULL,
-    accepted_review_pair_id INTEGER REFERENCES review_pairs(review_pair_id) ON DELETE SET NULL,
+    accepted_review_pair_id INTEGER NOT NULL REFERENCES review_pairs(review_pair_id),
     accepted_note_snapshot_id INTEGER REFERENCES review_file_snapshots(snapshot_id),
     accepted_gate_snapshot_id INTEGER REFERENCES review_file_snapshots(snapshot_id),
     accepted_at TEXT NOT NULL

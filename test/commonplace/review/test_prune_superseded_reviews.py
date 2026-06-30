@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from commonplace.review.artifacts import encode_stage_filename
-from commonplace.review import executor, review_db
+from commonplace.review.artifacts import bundle_artifact_dir, encode_stage_filename
+from commonplace.review import review_db
 from test.commonplace.review.pair_helpers import accept_pair, source_gate_path
 
 from ._run_cli import run_cli
@@ -66,7 +66,7 @@ def _insert_completed_job(
 
 
 def _write_job_artifacts(repo: Path, review_job_id: int, gate_ids: tuple[str, ...]) -> Path:
-    artifact_dir = executor.bundle_artifact_dir(repo, review_job_id)
+    artifact_dir = bundle_artifact_dir(repo, review_job_id)
     artifact_dir.mkdir(parents=True, exist_ok=True)
     (artifact_dir / "bundle-output.md").write_text("raw bundle output\n", encoding="utf-8")
     (artifact_dir / "prompt.md").write_text("prompt\n", encoding="utf-8")
@@ -172,7 +172,7 @@ def test_prune_superseded_reviews_deletes_rows_and_whole_obsolete_job_artifacts(
         )
         accept_pair(
             conn,
-            review_pair_id=None,
+            review_pair_id=ack_latest_pairs["prose/source-residue"],
             note_path="kb/notes/ack.md",
             gate_id="prose/source-residue",
             model_partition=MODEL_PARTITION,

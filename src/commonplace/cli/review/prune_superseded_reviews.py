@@ -9,7 +9,7 @@ import sqlite3
 from dataclasses import dataclass
 from pathlib import Path
 
-from commonplace.review.executor import bundle_artifact_dir
+from commonplace.review.artifacts import bundle_artifact_dir
 from commonplace.review.review_db import connect, prepare_review_db, prune_obsolete_snapshot_content
 
 
@@ -54,14 +54,7 @@ def _current_acceptance_event_ids(conn: sqlite3.Connection) -> tuple[int, ...]:
 
 
 def _current_review_pair_ids(conn: sqlite3.Connection) -> tuple[int, ...]:
-    """Return the retained review pair for each current acceptance key.
-
-    Legacy acceptance rows may be missing accepted review-pair links from the
-    old acknowledgement write path. Those keys read through to the latest
-    completed pair for the same (note_path, gate_path, model_partition), so
-    pruning must retain that pair until the legacy nullable rows are hardened
-    away.
-    """
+    """Return the retained review pair for each current acceptance key."""
     rows = conn.execute(
         """
         WITH latest_acceptance AS (
@@ -76,31 +69,10 @@ def _current_review_pair_ids(conn: sqlite3.Connection) -> tuple[int, ...]:
                     ORDER BY acceptance_event_id DESC
                 ) AS rn
             FROM acceptance_events
-        ),
-        latest_review_pair AS (
-            SELECT
-                rp.review_pair_id,
-                rp.note_path,
-                rp.gate_path,
-                j.model_partition,
-                ROW_NUMBER() OVER (
-                    PARTITION BY rp.note_path, rp.gate_path, j.model_partition
-                    ORDER BY rp.reviewed_at DESC, rp.review_pair_id DESC
-                ) AS rn
-            FROM review_pairs AS rp
-            JOIN review_jobs AS j
-              ON j.review_job_id = rp.review_job_id
-            WHERE rp.pair_status = 'completed'
         )
-        SELECT COALESCE(a.accepted_review_pair_id, rp.review_pair_id) AS review_pair_id
+        SELECT accepted_review_pair_id AS review_pair_id
         FROM latest_acceptance AS a
-        LEFT JOIN latest_review_pair AS rp
-          ON rp.note_path = a.note_path
-         AND rp.gate_path = a.gate_path
-         AND rp.model_partition = a.model_partition
-         AND rp.rn = 1
         WHERE a.rn = 1
-          AND COALESCE(a.accepted_review_pair_id, rp.review_pair_id) IS NOT NULL
         ORDER BY review_pair_id
         """
     ).fetchall()

@@ -20,7 +20,7 @@ Inputs:
 - selector mode — `requested` for explicit execution, or default stale selection
 - grouping — `note` or `gate`
 
-Always create jobs from selector JSON. Do not use `commonplace-create-review-jobs --note` or `--pair` unless the user explicitly asks for a compatibility path.
+Always create jobs from selector JSON. The job creator has no direct note or pair mode.
 
 If the harness cannot launch sub-agents or workers, stop and report that review-batch delegation is unavailable. Do not review the batches locally unless the user explicitly authorizes a local fallback for this run.
 

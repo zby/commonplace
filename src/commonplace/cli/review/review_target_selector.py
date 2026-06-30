@@ -6,7 +6,6 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from commonplace.review.acknowledgement import ack_pairs
 from commonplace.review.paths import review_gates_dir
 from commonplace.review.resolve_gates import resolve_to_gate_ids
 from commonplace.review.review_target_selector import (
@@ -47,29 +46,12 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
         choices=["missing-review", "gate-changed", "note-changed"],
         help="Filter output to a single staleness reason.",
     )
-    parser.add_argument(
-        "--ack",
-        nargs="+",
-        metavar="NOTE:GATE",
-        help="Ack (note, gate) pairs. Format: note_path:gate_id",
-    )
     args = parser.parse_args(argv)
 
     repo_root = cwd if cwd is not None else Path.cwd()
     model = args.model.strip() if args.model is not None else None
     if args.model is not None and not model:
         parser.error("--model must not be empty")
-
-    if args.ack:
-        if model is None:
-            parser.error("--model is required with --ack")
-        try:
-            acked = ack_pairs(repo_root, args.ack, model)
-        except (FileNotFoundError, ValueError) as exc:
-            parser.error(str(exc))
-        for note_path, gate_id in acked:
-            print(f"acked: {note_path} {gate_id}")
-        return 0
 
     gates_dir = review_gates_dir(repo_root)
 

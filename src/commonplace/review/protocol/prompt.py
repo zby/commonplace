@@ -22,8 +22,8 @@ from commonplace.review.protocol.format import (
 
 OutputMode = Literal["stdout", "file"]
 
-# Appended as the system prompt by subprocess runner adapters; the task
-# prompt rendered below carries the per-job specifics.
+# Used as the reviewer system prompt; the task prompt rendered below carries
+# the per-job specifics.
 REVIEW_RUNNER_SYSTEM_PROMPT = (
     "Your goal is to write a series of review artifacts for the requested gates. "
     "The task prompt provides the exact note, gate definitions, and output contract for the job. "

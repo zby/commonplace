@@ -14,10 +14,7 @@ from typing import Mapping, Sequence
 
 from commonplace.review.paths import gate_id_from_stored_path
 from commonplace.review.protocol.decisions import normalize_review_decision
-from commonplace.review.review_schema_migrations import (
-    LATEST_REVIEW_SCHEMA_VERSION as LATEST_REVIEW_SCHEMA_VERSION,
-    init_db,
-)
+from commonplace.review.review_schema import init_db
 
 DEFAULT_DB_PATH = Path("kb/reports/review-store.sqlite")
 SCHEMA_PATH = "review-schema.sql"
@@ -40,7 +37,7 @@ class AcceptanceState:
     note_path: str
     gate_path: str
     model_partition: str
-    accepted_review_pair_id: int | None
+    accepted_review_pair_id: int
     accepted_note_snapshot_id: int | None
     accepted_gate_snapshot_id: int | None
     accepted_note_hash: str | None
@@ -835,11 +832,13 @@ def append_acceptance_event(
     note_path: str,
     gate_path: str,
     model_partition: str,
-    accepted_review_pair_id: int | None,
+    accepted_review_pair_id: int,
     accepted_note_snapshot_id: int | None = None,
     accepted_gate_snapshot_id: int | None = None,
     accepted_at: str,
 ) -> int:
+    if accepted_review_pair_id is None:
+        raise ValueError("accepted_review_pair_id is required")
     cursor = conn.execute(
         """
         INSERT INTO acceptance_events (
@@ -1037,76 +1036,31 @@ def load_effective_review_pair_map(
         where_sql = "WHERE " + " AND ".join(where_clauses)
     rows = conn.execute(
         f"""
-        WITH latest_review_pairs AS (
-            SELECT
-                rp.review_pair_id,
-                rp.review_job_id,
-                rp.note_path,
-                rp.gate_path,
-                j.model_partition AS model_partition,
-                rp.pair_ordinal,
-                rp.pair_status,
-                rp.decision,
-                rp.result_path,
-                rp.reviewed_note_snapshot_id,
-                rp.reviewed_gate_snapshot_id,
-                rp.reviewed_at,
-                ROW_NUMBER() OVER (
-                    PARTITION BY rp.note_path, rp.gate_path, j.model_partition
-                    ORDER BY rp.reviewed_at DESC, rp.review_pair_id DESC
-                ) AS rn
-            FROM review_pairs AS rp
-            JOIN review_jobs AS j
-              ON j.review_job_id = rp.review_job_id
-            WHERE rp.pair_status = 'completed'
-        ),
-        accepted_review_pairs AS (
-            SELECT
-                rp.review_pair_id,
-                rp.review_job_id,
-                rp.note_path,
-                rp.gate_path,
-                j.model_partition AS model_partition,
-                rp.pair_ordinal,
-                rp.pair_status,
-                rp.decision,
-                rp.result_path,
-                rp.reviewed_note_snapshot_id,
-                rp.reviewed_gate_snapshot_id,
-                rp.reviewed_at
-            FROM review_pairs AS rp
-            JOIN review_jobs AS j
-              ON j.review_job_id = rp.review_job_id
-        )
         SELECT
-            COALESCE(accepted.review_pair_id, latest.review_pair_id) AS review_pair_id,
-            COALESCE(accepted.review_job_id, latest.review_job_id) AS review_job_id,
-            COALESCE(accepted.note_path, latest.note_path) AS note_path,
-            COALESCE(accepted.gate_path, latest.gate_path) AS gate_path,
-            COALESCE(accepted.model_partition, latest.model_partition, a.model_partition) AS model_partition,
-            COALESCE(accepted.pair_ordinal, latest.pair_ordinal) AS pair_ordinal,
-            COALESCE(accepted.pair_status, latest.pair_status) AS pair_status,
-            COALESCE(accepted.decision, latest.decision) AS decision,
-            COALESCE(accepted.result_path, latest.result_path) AS result_path,
-            COALESCE(accepted.reviewed_note_snapshot_id, latest.reviewed_note_snapshot_id) AS reviewed_note_snapshot_id,
-            COALESCE(accepted.reviewed_gate_snapshot_id, latest.reviewed_gate_snapshot_id) AS reviewed_gate_snapshot_id,
-            COALESCE(accepted.reviewed_at, latest.reviewed_at) AS reviewed_at
+            rp.review_pair_id,
+            rp.review_job_id,
+            rp.note_path,
+            rp.gate_path,
+            j.model_partition AS model_partition,
+            rp.pair_ordinal,
+            rp.pair_status,
+            rp.decision,
+            rp.result_path,
+            rp.reviewed_note_snapshot_id,
+            rp.reviewed_gate_snapshot_id,
+            rp.reviewed_at
         FROM current_gate_acceptances AS a
-        LEFT JOIN accepted_review_pairs AS accepted
-          ON accepted.review_pair_id = a.accepted_review_pair_id
-        LEFT JOIN latest_review_pairs AS latest
-          ON latest.note_path = a.note_path
-         AND latest.gate_path = a.gate_path
-         AND latest.model_partition = a.model_partition
-         AND latest.rn = 1
+        JOIN review_pairs AS rp
+          ON rp.review_pair_id = a.accepted_review_pair_id
+        JOIN review_jobs AS j
+          ON j.review_job_id = rp.review_job_id
+         AND j.model_partition = a.model_partition
         {where_sql}
         """,
         tuple(params),
     ).fetchall()
     result: dict[tuple[str, str, str], ReviewPairRow] = {}
     for row in rows:
-        if row["review_pair_id"] is None:
-            continue
         key = (row["note_path"], row["gate_path"], row["model_partition"])
         result[key] = _review_pair_from_row(row)
     return result

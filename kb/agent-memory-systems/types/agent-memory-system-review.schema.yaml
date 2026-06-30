@@ -41,7 +41,7 @@ allOf:
       body:
         not:
           pattern: "\\*\\*Representational form:\\*\\*[^\\n]*`mixed`"
-  # Strict write-side / read-side layout. No backcompat for the old layout.
+  # Strict write-side / read-side layout. No support for the old layout.
   - properties:
       body:
         pattern: "\\*\\*Write agency:\\*\\*"

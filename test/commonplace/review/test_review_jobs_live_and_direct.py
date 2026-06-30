@@ -7,8 +7,6 @@ import tomllib
 from pathlib import Path
 
 from commonplace.lib import frontmatter
-from commonplace.review import run_review_jobs as run_review_jobs_lib
-from commonplace.review.runners import RunnerResult
 
 from ._run_cli import run_cli
 
@@ -120,27 +118,51 @@ def single_pair_bundle_output() -> str:
     return pair_block("kb/notes/sample.md", GATE_ONE_PATH, "Needs a definition for Alpha.", "WARN")
 
 
+def create_jobs_from_targets(
+    repo: Path,
+    db_path: Path,
+    targets: list[dict[str, str]],
+    *,
+    grouping: str = "note",
+    model: str = "test-model",
+    batch_size: int | None = None,
+):
+    selector_path = repo / "targets.json"
+    selector_path.write_text(
+        json.dumps({"model_partition": model, "targets": targets}),
+        encoding="utf-8",
+    )
+    args = ["--input", "targets.json", "--grouping", grouping]
+    if batch_size is not None:
+        args.extend(["--batch-size", str(batch_size)])
+    return run_cli("create_review_jobs", *args, cwd=repo, db_path=db_path)
+
+
+def target(note_path: str, gate_path: str, gate_id: str, reason: str = "requested") -> dict[str, str]:
+    return {
+        "note_path": note_path,
+        "gate_path": gate_path,
+        "gate_id": gate_id,
+        "reason": reason,
+    }
+
+
 def test_create_review_jobs_groups_cross_lens_gates_by_bundle(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
 
-    result = run_cli(
-        "create_review_jobs",
-        "--note",
-        "kb/notes/sample.md",
-        GATE_ONE,
-        GATE_TWO,
-        "--model",
-        "test-model",
-        "--grouping",
-        "note",
-        cwd=repo,
-        db_path=db_path,
+    result = create_jobs_from_targets(
+        repo,
+        db_path,
+        [
+            target("kb/notes/sample.md", GATE_ONE_PATH, GATE_ONE),
+            target("kb/notes/sample.md", GATE_TWO_PATH, GATE_TWO),
+        ],
     )
 
     payload = json.loads(result.stdout)
     assert "runs" not in payload
     jobs = payload["jobs"]
-    assert payload["input_mode"] == "direct-note"
+    assert payload["input_mode"] == "selector"
     assert payload["model_partition"] == "test-model"
     assert payload["grouping"] == "note"
     assert payload["created_count"] == 2
@@ -234,17 +256,10 @@ Dirty gate marker.
 """
     (repo / GATE_ONE_PATH).write_text(dirty_gate_text, encoding="utf-8")
 
-    result = run_cli(
-        "create_review_jobs",
-        "--note",
-        "kb/notes/sample.md",
-        GATE_ONE,
-        "--model",
-        "test-model",
-        "--grouping",
-        "note",
-        cwd=repo,
-        db_path=db_path,
+    result = create_jobs_from_targets(
+        repo,
+        db_path,
+        [target("kb/notes/sample.md", GATE_ONE_PATH, GATE_ONE)],
     )
 
     payload = json.loads(result.stdout)
@@ -272,17 +287,10 @@ def test_create_review_jobs_resolves_installed_commonplace_gates(tmp_path: Path)
         gates_root=Path("kb/commonplace/instructions/review-gates"),
     )
 
-    result = run_cli(
-        "create_review_jobs",
-        "--note",
-        "kb/notes/sample.md",
-        GATE_ONE,
-        "--model",
-        "test-model",
-        "--grouping",
-        "note",
-        cwd=repo,
-        db_path=db_path,
+    result = create_jobs_from_targets(
+        repo,
+        db_path,
+        [target("kb/notes/sample.md", INSTALLED_GATE_ONE_PATH, GATE_ONE)],
     )
 
     payload = json.loads(result.stdout)
@@ -393,30 +401,24 @@ def test_create_review_jobs_selector_noop_and_model_agnostic_input(tmp_path: Pat
     assert "model_partition is required" in rejected.stderr
 
 
-def test_create_review_jobs_direct_pairs_gate_grouping_chunks_and_lists(tmp_path: Path) -> None:
+def test_create_review_jobs_selector_gate_grouping_chunks_and_lists(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
     make_note(repo / "kb" / "notes" / "other.md")
 
-    result = run_cli(
-        "create_review_jobs",
-        "--pair",
-        f"kb/notes/sample.md::{GATE_ONE}",
-        "--pair",
-        f"kb/notes/other.md::{GATE_ONE_PATH}",
-        "--pair",
-        f"kb/notes/sample.md::{GATE_ONE_PATH}",
-        "--model",
-        "test-model",
-        "--grouping",
-        "gate",
-        "--batch-size",
-        "1",
-        cwd=repo,
-        db_path=db_path,
+    result = create_jobs_from_targets(
+        repo,
+        db_path,
+        [
+            target("kb/notes/sample.md", GATE_ONE_PATH, GATE_ONE),
+            target("kb/notes/other.md", GATE_ONE_PATH, GATE_ONE),
+            target("kb/notes/sample.md", GATE_ONE_PATH, GATE_ONE),
+        ],
+        grouping="gate",
+        batch_size=1,
     )
 
     payload = json.loads(result.stdout)
-    assert payload["input_mode"] == "direct-pair"
+    assert payload["input_mode"] == "selector"
     assert payload["created_count"] == 2
     assert payload["skipped_pairs"] == [
         {
@@ -449,14 +451,21 @@ def test_create_review_jobs_direct_pairs_gate_grouping_chunks_and_lists(tmp_path
 
 def test_create_review_jobs_rejects_batch_size_with_note_grouping(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
+    selector_path = repo / "targets.json"
+    selector_path.write_text(
+        json.dumps(
+            {
+                "model_partition": "test-model",
+                "targets": [target("kb/notes/sample.md", GATE_ONE_PATH, GATE_ONE)],
+            }
+        ),
+        encoding="utf-8",
+    )
 
     result = run_cli(
         "create_review_jobs",
-        "--note",
-        "kb/notes/sample.md",
-        GATE_ONE,
-        "--model",
-        "test-model",
+        "--input",
+        "targets.json",
         "--grouping",
         "note",
         "--batch-size",
@@ -476,25 +485,27 @@ def test_public_review_entry_points_replace_ingest_surfaces() -> None:
 
     assert scripts["commonplace-claim-review-job"] == "commonplace.cli.review.claim_review_job:main"
     assert scripts["commonplace-finalize-review-job"] == "commonplace.cli.review.finalize_review_job:main"
-    assert scripts["commonplace-run-review-jobs"] == "commonplace.cli.review.run_review_jobs:main"
-    assert "commonplace-ingest-bundle-output" not in scripts
-    assert "commonplace-ingest-batch-output" not in scripts
+    assert scripts["commonplace-review-target-selector"] == "commonplace.cli.review.review_target_selector:main"
+    assert scripts["commonplace-create-review-jobs"] == "commonplace.cli.review.create_review_jobs:main"
+    removed_scripts = [
+        "commonplace-" + "ingest-bundle-output",
+        "commonplace-" + "ingest-" + "batch-output",
+        "commonplace-" + "run-review-jobs",
+        "commonplace-" + "run-review-bundles",
+        "commonplace-" + "run-gate-sweep",
+        "commonplace-" + "review-sweep",
+    ]
+    for script_name in removed_scripts:
+        assert script_name not in scripts
 
 
 def test_claim_review_job_records_dispatch_provenance_and_rejects_second_claim(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
     prepared = json.loads(
-        run_cli(
-            "create_review_jobs",
-            "--note",
-            "kb/notes/sample.md",
-            GATE_ONE,
-            "--model",
-            "test-model",
-            "--grouping",
-            "note",
-            cwd=repo,
-            db_path=db_path,
+        create_jobs_from_targets(
+            repo,
+            db_path,
+            [target("kb/notes/sample.md", GATE_ONE_PATH, GATE_ONE)],
         ).stdout
     )
     prepared_job = prepared["jobs"][0]
@@ -550,17 +561,11 @@ def test_claim_review_job_records_dispatch_provenance_and_rejects_second_claim(t
 def test_claim_review_job_validates_model_effort_partition(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
     prepared = json.loads(
-        run_cli(
-            "create_review_jobs",
-            "--note",
-            "kb/notes/sample.md",
-            GATE_ONE,
-            "--model",
-            "unknown-model-high",
-            "--grouping",
-            "note",
-            cwd=repo,
-            db_path=db_path,
+        create_jobs_from_targets(
+            repo,
+            db_path,
+            [target("kb/notes/sample.md", GATE_ONE_PATH, GATE_ONE)],
+            model="unknown-model-high",
         ).stdout
     )
     review_job_id = prepared["jobs"][0]["review_job_id"]
@@ -601,17 +606,10 @@ def test_claim_review_job_validates_model_effort_partition(tmp_path: Path) -> No
 def test_finalize_review_job_uses_job_owned_paths_and_writes_provenance_frontmatter(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
     prepared = json.loads(
-        run_cli(
-            "create_review_jobs",
-            "--note",
-            "kb/notes/sample.md",
-            GATE_ONE,
-            "--model",
-            "test-model",
-            "--grouping",
-            "note",
-            cwd=repo,
-            db_path=db_path,
+        create_jobs_from_targets(
+            repo,
+            db_path,
+            [target("kb/notes/sample.md", GATE_ONE_PATH, GATE_ONE)],
         ).stdout
     )
     prepared_job = prepared["jobs"][0]
@@ -675,17 +673,10 @@ def test_finalize_review_job_uses_job_owned_paths_and_writes_provenance_frontmat
 def test_finalize_review_job_finalizes_running_job(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
     prepared = json.loads(
-        run_cli(
-            "create_review_jobs",
-            "--note",
-            "kb/notes/sample.md",
-            GATE_ONE,
-            "--model",
-            "test-model",
-            "--grouping",
-            "note",
-            cwd=repo,
-            db_path=db_path,
+        create_jobs_from_targets(
+            repo,
+            db_path,
+            [target("kb/notes/sample.md", GATE_ONE_PATH, GATE_ONE)],
         ).stdout
     )
     prepared_job = prepared["jobs"][0]
@@ -746,84 +737,3 @@ def test_finalize_review_job_finalizes_running_job(tmp_path: Path) -> None:
             for row in snapshot_rows
         ] == [(True, True)]
         assert conn.execute("SELECT COUNT(*) FROM acceptance_events").fetchone()[0] == 1
-
-
-def test_run_review_bundles_groups_cross_lens_gates(monkeypatch, tmp_path: Path) -> None:
-    repo, db_path = build_repo_fixture(tmp_path)
-
-    prompts: list[str] = []
-
-    def fake_run_prompt(**kwargs):
-        prompt = kwargs["prompt"]
-        prompts.append(prompt)
-        blocks = []
-        if GATE_ONE_PATH in prompt:
-            blocks.append(pair_block("kb/notes/sample.md", GATE_ONE_PATH, "Needs a definition for Alpha.", "WARN"))
-        if GATE_TWO_PATH in prompt:
-            blocks.append(pair_block("kb/notes/sample.md", GATE_TWO_PATH, "No residue found.", "PASS"))
-        return RunnerResult(stdout="\n".join(blocks), stderr="", returncode=0, telemetry=None)
-
-    monkeypatch.setattr(run_review_jobs_lib, "run_prompt", fake_run_prompt)
-
-    result = run_cli(
-        "run_review_bundles",
-        "kb/notes/sample.md",
-        GATE_ONE,
-        GATE_TWO,
-        "--runner",
-        "codex",
-        "--model",
-        "test-model",
-        cwd=repo,
-        db_path=db_path,
-    )
-
-    assert result.returncode == 0
-    assert "completed 1 1" in result.stdout
-    assert "completed 2 1" in result.stdout
-    assert len(prompts) == 2
-    assert GATE_ONE_PATH in prompts[0]
-    assert GATE_TWO_PATH not in prompts[0]
-    assert GATE_TWO_PATH in prompts[1]
-    with sqlite3.connect(db_path) as conn:
-        conn.row_factory = sqlite3.Row
-        jobs = conn.execute("SELECT status, packing FROM review_jobs ORDER BY review_job_id").fetchall()
-        assert [(job["status"], job["packing"]) for job in jobs] == [
-            ("completed", "note"),
-            ("completed", "note"),
-        ]
-        decisions = [
-            row["decision"]
-            for row in conn.execute("SELECT decision FROM review_pairs ORDER BY review_job_id, pair_ordinal")
-        ]
-        assert decisions == ["warn", "pass"]
-
-
-def test_run_review_bundles_parse_failure_persists_raw_bundle(monkeypatch, tmp_path: Path) -> None:
-    repo, db_path = build_repo_fixture(tmp_path)
-
-    def fake_run_prompt(**_kwargs):
-        return RunnerResult(stdout="not a pair bundle\n", stderr="", returncode=0, telemetry=None)
-
-    monkeypatch.setattr(run_review_jobs_lib, "run_prompt", fake_run_prompt)
-
-    result = run_cli(
-        "run_review_bundles",
-        "kb/notes/sample.md",
-        GATE_ONE,
-        "--runner",
-        "codex",
-        "--model",
-        "test-model",
-        cwd=repo,
-        db_path=db_path,
-        check=False,
-    )
-
-    assert result.returncode == 1
-    with sqlite3.connect(db_path) as conn:
-        conn.row_factory = sqlite3.Row
-        job = conn.execute("SELECT status, bundle_output_path, failure_reason FROM review_jobs").fetchone()
-        assert job["status"] == "failed"
-        assert (repo / job["bundle_output_path"]).read_text(encoding="utf-8") == "not a pair bundle\n"
-        assert "missing" in job["failure_reason"] or "pair" in job["failure_reason"]

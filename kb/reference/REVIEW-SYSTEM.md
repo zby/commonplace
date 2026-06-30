@@ -21,7 +21,7 @@ It is also a scoped exception to the repo's file-first design. The motivation fo
 
 **Bundle.** A directory of gates sharing a lens. `semantic` means all gate files under `kb/instructions/review-gates/semantic/`.
 
-**Review job.** One review invocation: one rendered prompt, one output artifact directory, and one job-level status. Prepared live-agent jobs are `queued` until a parent claims them for dispatch; subprocess jobs are `running` while the runner executes.
+**Review job.** One review invocation: one rendered prompt, one output artifact directory, and one job-level status. Jobs are `queued` until a parent claims them for dispatch, then `running` while the worker executes.
 
 **Review pair.** One requested `(note_path, gate_path)` pair inside a review job. This is the stored unit of review output and acceptance.
 
@@ -61,7 +61,6 @@ Primary tables:
   - append-only acceptance history
   - records the accepted baseline for selector and ack
   - new full-review and ack writes point `accepted_review_pair_id` to completed review evidence
-  - legacy nullable ack rows remain readable through fallback lookup
   - latest event wins for the current-state query
 
 Derived view:
@@ -78,7 +77,7 @@ The Python layer assigns the canonical DB statuses.
 - `review_pairs.pair_status` is normalized into lowercase enum values: `pending`, `completed`, `missing`
 - `review_jobs.status` is normalized into lowercase enum values: `queued`, `running`, `completed`, `failed`
 
-Job timestamps have distinct meanings: `created_at` is when the job row and prompt inputs were prepared; `started_at` is when an owned subprocess runner started execution or when a parent claimed a live-agent/orchestrator job for dispatch. Finalization still accepts `queued` for manual recovery when output was produced before an explicit claim.
+Job timestamps have distinct meanings: `created_at` is when the job row and prompt inputs were prepared; `started_at` is when a parent claimed a job for dispatch. Finalization still accepts `queued` for manual recovery when output was produced before an explicit claim.
 
 The human-readable review body is not canonical state. Current write paths store it in the per-pair result file named by `review_pairs.result_path`. The DB decision/status columns are the source of truth; review-body result lines such as `## Result: PASS` or `- WARN: ...` are parse inputs and readability affordances.
 
@@ -211,18 +210,8 @@ Instruction: `kb/instructions/run-review-batches.md`
 4. Each sub-agent writes that job's sentinel-delimited review bundle to `bundle_output_path`
 5. The parent finalizes each completed output with `commonplace-finalize-review-job --review-job-id {id}`
 
-### Sweep
+### Stale review
 
-Instruction: `kb/instructions/review-sweep.md`
+Use the same `kb/instructions/run-review-batches.md` procedure for stale review. Select stale pairs with `commonplace-review-target-selector --model {model-partition} {gate-or-bundle}... --note {note-or-dir}... --json`, create jobs from that selector JSON, and choose `--grouping note` or `--grouping gate` according to the intended prompt shape.
 
-1. `commonplace-review-target-selector --model {model-partition} {bundle-or-all} [--current|--note kb/notes kb/reference] --json` — get stale pairs with diffs
-2. Triage by reason: `missing-review` and `gate-changed` need fresh reviews; `note-changed` needs diff inspection
-3. For significant changes from an agent harness: use `kb/instructions/run-review-batches.md` with selector JSON and `--grouping note` or `--grouping gate`
-4. `commonplace-review-sweep` executes note-local bundle reviews in parallel, up to 4 at a time by default; override with `REVIEW_SWEEP_JOBS=<n>`
-5. For insignificant changes: run `commonplace-ack-gate-review --model {model-partition} {note-path} {gate-id} ...` to append acceptance events
-
-### Gate sweep
-
-Use `commonplace-run-gate-sweep {gate-id} --runner {claude-code|codex} --model {model-partition} [--current|--note kb/notes kb/reference] [--batch-size N]` when the execution set is one gate across many notes.
-
-This path keeps freshness gate-local and creates one running gate-packed review job per prompt batch. It is the preferred path when one gate changed and re-reviewing it note-by-note would be needlessly expensive.
+For `note-changed` pairs, inspect the selector diff first. If the change is insignificant for the gate, run `commonplace-ack-gate-review --model {model-partition} {note-path} {gate-id} ...` instead of creating a fresh review job.

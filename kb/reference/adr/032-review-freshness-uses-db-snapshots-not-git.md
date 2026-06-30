@@ -12,7 +12,7 @@ status: accepted
 
 ## Context
 
-[ADR 010](./010-review-state-should-move-to-sqlite-once-reviews-leave-git-and.md) made review state a scoped SQLite exception once review artifacts stopped behaving like authored markdown. [ADR 031](./031-review-state-uses-run-owned-review-pairs.md) then made the persistent unit of review work a run-owned note/gate pair.
+[ADR 010](./010-review-state-should-move-to-sqlite-once-reviews-leave-git-and.md) made review state a scoped SQLite exception once review artifacts stopped behaving like authored markdown. [ADR 031](./031-review-state-uses-run-owned-review-pairs.md) then made the persistent unit of review work an invocation-owned note/gate pair.
 
 Freshness still depended on Git. The selector compared current files to accepted Git-style SHAs, batch paths checked committed gate state, and diffs relied on repository history. That coupling was tolerable inside this repo, where operators share a disciplined commit workflow, but it is wrong for installed systems:
 
@@ -34,7 +34,7 @@ Freshness compares the current filesystem text of the note and gate against the 
 Freshness and execution are separate subsystem surfaces:
 
 - freshness owns snapshots, accepted baselines, stale/missing selection, ack, and full-review acceptance;
-- execution owns run creation, prompt rendering, runner invocation, batch grouping, ingest, and readable artifacts.
+- execution owns job creation, prompt rendering, batch grouping, finalization, and readable artifacts.
 
 Execution may ask freshness which review pairs need attention and may record completed acceptance through freshness APIs. Freshness does not know about runners, prompt paths, packing, batch sizes, retries, or orchestration.
 
@@ -50,7 +50,7 @@ note_path x gate_path x model_partition
 
 Freshness treats `model_partition` as opaque. A partition value may coincide with a runner or harness label, but freshness does not interpret it as a runner name.
 
-Telemetry is evidence, not identity. Post-run model telemetry may be stored and inspected, and mismatches may warn, but telemetry must not re-key `review_runs`, `review_pairs`, or `acceptance_events`. The migration renames the physical review-state columns from `model_id` to `model_partition` in the same window as the semantic change, so there is no long-lived mismatch between schema and concept.
+Telemetry is evidence, not identity. Post-review model telemetry may be stored and inspected, and mismatches may warn, but telemetry must not re-key `review_jobs`, `review_pairs`, or `acceptance_events`.
 
 This decision is the first concrete step toward a more universal lineage system, but the implementation remains current-review-only. The universal part is the shape: file-path inputs, DB-owned accepted baselines, a stable target partition, a selector that emits stale targets, and execution kept outside freshness state. It does not introduce a generic lineage schema, polymorphic input tables, package asset lineage, source/report lineage, or generic diff infrastructure.
 
@@ -63,9 +63,9 @@ Easier:
 - Prompt rendering and acceptance can refer to the exact text that was reviewed, closing races where a file changes between selection, prompt creation, and acceptance.
 - Review rationale text remains a filesystem artifact. The database stores decisions and artifact paths (`bundle_output_path`, per-pair `result_path`) instead of duplicating full review bodies.
 - Review becomes the first lineage-backed file-input target kind: two KB file paths plus a model partition, not a review-only gate-id exception.
-- Batch runners, live-agent workflows, subprocess runners, and future automation can share the same freshness selector without being encoded into freshness state.
+- Parent-dispatched workflows and future automation can share the same freshness selector without being encoded into freshness state.
 - Model-side review partitions stop being mutable keys. A run is accepted under the partition the caller declared before execution.
-- The schema uses the same name as the concept, avoiding a compatibility era where `model_id` means "not necessarily a model id."
+- The schema uses the same name as the concept, avoiding an ambiguous era where `model_id` means "not necessarily a model id."
 - Coarse live-agent partitions such as `codex` are honest: they say what the system knows before the run, instead of pretending to know a literal model id.
 
 Harder / accepted costs:
@@ -73,7 +73,7 @@ Harder / accepted costs:
 - The review database stores duplicated note and gate text for accepted baselines, so it grows with review history. This is accepted because review state already crossed the SQLite boundary, and the stored text is what makes Git independence possible.
 - Exact historical diffs are available only when the accepted snapshot text is retained. If old snapshot bodies are garbage-collected, freshness can still compare hashes but diff text may be unavailable.
 - `model_partition` is less precise than `model_id` by name. That imprecision is deliberate: the value is a freshness partition, not necessarily a literal observed model.
-- The migration uses a stopped-operation window. It does not preserve live selector compatibility while legacy accepted rows still carry only Git-style SHA fields; instead, it backfills snapshots for still-fresh acceptances, flips the system to snapshot-only freshness, and drops the legacy SHA/commit columns before operation resumes. Rows whose old baselines cannot be reconstructed no longer provide valid freshness baselines and report `missing-review` with diff unavailable; the old `note-changed` versus `gate-changed` attribution is intentionally lost for those migrated rows.
+- The current implementation is schema-current only. Old stores whose accepted baselines cannot be represented as DB-owned snapshots must be recreated; they do not provide valid freshness baselines.
 - Review remains a scoped SQLite exception while authored notes, gates, instructions, and source material remain markdown files. The database stores operational review state and accepted baselines, not primary KB content.
 
 ---
@@ -82,6 +82,6 @@ Relevant Notes:
 
 - [010-review state should move to sqlite once reviews leave git and accumulate operational metadata](./010-review-state-should-move-to-sqlite-once-reviews-leave-git-and.md) — supersedes: preserves the SQLite boundary but replaces Git-derived freshness baselines with DB-owned snapshots
 - [031-review state uses run-owned review pairs](./031-review-state-uses-run-owned-review-pairs.md) — see-also: the pair storage model whose reviewed inputs now point at snapshots
-- [033-honest review-run state behind a versioned migration substrate](./033-honest-review-run-state.md) — see-also: the next review-store refinement, adding queued run state and versioned migrations
-- [030-Harness-facing seams: batch prepare/ingest endpoints and runner adapters](./030-harness-facing-seams-batch-endpoints-and-runner-adapters.md) — see-also: the execution seams that become consumers of freshness rather than part of freshness state
+- [033-honest review state behind a versioned migration substrate](./033-honest-review-run-state.md) — see-also: the next review-store refinement, adding queued state
+- [030-Harness-facing seams: batch prepare/ingest endpoints and runner adapters](./030-harness-facing-seams-batch-endpoints-and-runner-adapters.md) — historical: an intermediate execution seam that remained a consumer of freshness rather than part of freshness state
 - [storage](../storage-architecture.md) — part-of: the broader storage boundary for authored markdown, derived reports, and SQLite-backed review state

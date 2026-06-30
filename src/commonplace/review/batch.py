@@ -1,8 +1,8 @@
-"""Batch-granular review job preparation for harness-orchestrated execution.
+"""Batch-granular review job preparation for parent-dispatched execution.
 
-These are the deterministic ends of a review batch when something other than
-the subprocess runner executes it. prepare creates one review invocation for a
-note-packed or gate-packed set of pairs and renders the canonical prompt.
+These are the deterministic ends of a review batch. Preparation creates one
+queued review job for a note-packed or gate-packed set of pairs and renders the
+canonical prompt for a parent-dispatched worker.
 """
 
 from __future__ import annotations
@@ -10,9 +10,10 @@ from __future__ import annotations
 from dataclasses import dataclass
 from pathlib import Path
 
-from commonplace.review.artifacts import result_paths_by_pair_id, write_manifest
-from commonplace.review.executor import bundle_artifact_dir, fail_active_review_jobs, prepare_note_target
+from commonplace.review.artifacts import bundle_artifact_dir, result_paths_by_pair_id, write_manifest
 from commonplace.review.freshness import capture_review_inputs
+from commonplace.review.job_output import fail_active_review_jobs
+from commonplace.review.job_prompt import prepare_note_target
 from commonplace.review.protocol.prompt import NoteReviewTarget, render_pairs_prompt
 from commonplace.review.review_db import (
     ReviewPairRow,

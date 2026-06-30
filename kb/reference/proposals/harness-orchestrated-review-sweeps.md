@@ -8,11 +8,11 @@ status: seedling
 
 # Harness-orchestrated review sweeps
 
-Review sweeps need fan-out: many (note, gate) pairs, packed into batches, executed in parallel, with per-batch failure isolation. Today the package supplies that fan-out itself (`review_sweep`'s thread pool over subprocess runners). Harnesses are beginning to ship sub-agent orchestration as a first-class feature — Claude Code's dynamic workflows expose `agent()`/`parallel()` under a model-authored script — which does the same job with native progress display, concurrency caps, isolation, and budgets, and without the fragile half of the subprocess path (session-log scraping, stream decoding, usage-exhaustion string matching). This proposal holds the sweep-orchestration design for that medium. It is deliberately unadopted: the feature is single-vendor, and committing the framework's operating procedure to one harness's proprietary surface contradicts the portability goal that motivates it.
+Review sweeps need fan-out: many (note, gate) pairs, packed into batches, executed in parallel, with per-batch failure isolation. Commonplace now leaves fan-out to the parent agent or harness: the package creates queued jobs, records claims, and finalizes worker output, while the parent owns model calls, concurrency caps, budgets, and retries. Harnesses are beginning to ship sub-agent orchestration as a first-class feature — Claude Code's dynamic workflows expose `agent()`/`parallel()` under a model-authored script — which can perform that parent role with native progress display and isolation. This proposal holds the sweep-orchestration design for that medium. It is deliberately unadopted as a framework-specific script: the feature is single-vendor, and committing the framework's operating procedure to one harness's proprietary surface contradicts the portability goal that motivates it.
 
 ## Current state (as of 2026-06-30)
 
-- The execution seams exist and are validated. [ADR 034](../adr/034-queued-review-jobs-and-execution-provenance.md) supersedes the older prepare/ingest surfaces with queued jobs: `commonplace-create-review-jobs --pair ... --grouping {note,gate}`, `commonplace-claim-review-job`, and `commonplace-finalize-review-job`. One experiment ran a real slice end-to-end on the older seam (selector → two prepared batches → a 12-line workflow script with one reviewer agent per batch in parallel → ingest; 4 pairs recorded, zero Python changes; observations in `kb/log.md`, 2026-06-12). The experiment remains evidence for the orchestration pattern, not for the current command names.
+- The execution seams exist and are validated. [ADR 034](../adr/034-queued-review-jobs-and-execution-provenance.md) defines queued jobs: selector JSON -> `commonplace-create-review-jobs --input ... --grouping {note,gate}` -> `commonplace-claim-review-job` -> worker output -> `commonplace-finalize-review-job`. One experiment ran a real slice end-to-end on an older seam (selector -> two prepared batches -> a 12-line workflow script with one reviewer agent per batch in parallel -> ingest; 4 pairs recorded, zero Python changes; observations in `kb/log.md`, 2026-06-12). The experiment remains evidence for the orchestration pattern, not for current command names.
 - The orchestration feature is Claude Code-only ([dynamic workflows](../../agentic-systems/claude-code-dynamic-workflows.md)). No comparable scriptable sub-agent surface is known in the other harness this project runs (codex CLI).
 - The workflow script sandbox has no shell or filesystem, so it cannot invoke `commonplace-*` commands; only the parent conversation or sub-agents can.
 - Frictions observed in the experiment: workflow `args` input did not reach the script (data had to be inlined); no token telemetry landed on the review records (the harness reports usage per workflow); the recorded model partition was the orchestrator's assertion. ADR 034 now treats telemetry as optional execution evidence, not review identity.
@@ -23,7 +23,7 @@ Five roles, with the harness owning exactly one:
 
 1. **Work-list** — `commonplace-review-target-selector --json` emits stale pairs (deterministic, Python).
 2. **Packing** — group pairs into batches (share-note or share-gate); trivial in any language, owned by the orchestrator.
-3. **Prepare** — `commonplace-create-review-jobs --pair ... --grouping {note,gate}` per batch or batch group: job creation, canonical prompt, and pending pair rows (deterministic, Python).
+3. **Prepare** — `commonplace-create-review-jobs --input ... --grouping {note,gate}` per selector payload or batch group: job creation, canonical prompt, and pending pair rows (deterministic, Python).
 4. **Fan-out** — the harness feature: one reviewer agent per batch, in parallel. Reviewers are hermetic: they read the batch's `prompt.md`, write its `bundle-output.md`, and are forbidden from running `commonplace-*` commands — judgment only, no bookkeeping.
 5. **Finalize** — `commonplace-finalize-review-job --review-job-id ...` per job: parse, salvage, persist pair results, append acceptance events, and refresh inspection artifacts (deterministic, Python).
 
@@ -42,7 +42,7 @@ Adopt as framework methodology when a second harness ships a comparable scriptab
 
 ## Risks
 
-- **Vendor coupling by stealth.** If the convenient path is workflow-only, sweep practice drifts to one harness even without a documented commitment; the subprocess path must remain the reference implementation until the adoption trigger fires.
+- **Vendor coupling by stealth.** If the convenient path is workflow-only, sweep practice drifts to one harness even without a documented commitment; the parent-dispatched CLI workflow must remain the reference implementation until the adoption trigger fires.
 - **Attribution decay.** Telemetry-less external runs weaken per-gate cost statistics; trusted-assertion model partitions weaken partition semantics. Both are acceptable for occasional use and corrosive at scale — the execution-metadata free choice should be resolved before this becomes the default sweep path.
 - **Orchestration recipes are unversioned.** A thread pool in the package is tested code; a workflow script re-derived per run is not. Parse failures still land safely (salvage policy), but recipe drift is invisible until a run misbehaves.
 

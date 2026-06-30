@@ -17,7 +17,6 @@ Legacy rendered review artifacts and archived review outputs. The live review sy
 ## Instructions
 
 - **Review batches:** `kb/instructions/run-review-batches.md` — selector JSON, grouped review jobs, live-agent delegation, and finalization
-- **Batch sweep:** `kb/instructions/review-sweep.md` — run selector, triage by reason, review or ack
 
 ## Running
 
@@ -37,4 +36,4 @@ commonplace-ack-gate-review --model gpt-5-4-xhigh kb/notes/backlinks.md prose/so
 
 ## Status
 
-New live reviews are recorded in `kb/reports/review-store.sqlite` via the direct-write review-run flow. Files under this directory are optional rendered exports, backups, or historical artifacts.
+New live reviews are recorded in `kb/reports/review-store.sqlite` via queued review jobs. Files under this directory are optional rendered exports, backups, or historical artifacts.

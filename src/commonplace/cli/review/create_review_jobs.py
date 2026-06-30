@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Create queued review jobs from selector output or direct requested pairs."""
+"""Create queued review jobs from selector output."""
 
 from __future__ import annotations
 
@@ -10,7 +10,6 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from commonplace.review.batch import prepare_grouped_review_job
-from commonplace.review.gate_packing import bundle_for_gate_id
 from commonplace.review.paths import gate_id_for_path, normalize_gate_path, review_gates_dir
 from commonplace.review.resolve_gates import applicable_gate_ids_for_note
 from commonplace.review.review_db import (
@@ -52,32 +51,6 @@ def _normalize_gate(repo_root: Path, raw: str) -> tuple[str, str]:
     gate_path = normalize_gate_path(repo_root, raw)
     gate_id = gate_id_for_path(repo_root, gate_path)
     return gate_path, gate_id
-
-
-def _resolve_gate_or_bundle_inputs(repo_root: Path, raw_inputs: list[str]) -> list[tuple[str, str]]:
-    gates_dir = review_gates_dir(repo_root)
-    resolved: list[tuple[str, str]] = []
-    for raw in raw_inputs:
-        bundle_dir = gates_dir / raw
-        if bundle_dir.is_dir():
-            for gate_file in sorted(bundle_dir.glob("*.md")):
-                gate_id = f"{raw}/{gate_file.stem}"
-                gate_path = gate_file.relative_to(repo_root).as_posix()
-                resolved.append((gate_path, gate_id))
-            continue
-        resolved.append(_normalize_gate(repo_root, raw))
-    return resolved
-
-
-def _parse_pair_arg(repo_root: Path, raw_pair: str) -> RequestedPair:
-    note_raw, separator, gate_raw = raw_pair.partition("::")
-    note_raw = note_raw.strip()
-    gate_raw = gate_raw.strip()
-    if not separator or not note_raw or not gate_raw:
-        raise ValueError(f"malformed pair (expected note-path::gate): {raw_pair}")
-    note_path = _normalize_note_path(repo_root, note_raw)
-    gate_path, gate_id = _normalize_gate(repo_root, gate_raw)
-    return RequestedPair(note_path=note_path, gate_path=gate_path, gate_id=gate_id, reason="requested")
 
 
 def _load_selector_json(raw_json: str) -> dict[str, object]:
@@ -198,10 +171,17 @@ def _filter_applicable_pairs(
     return applicable, skipped
 
 
+def _bundle_for_gate_id(gate_id: str) -> str:
+    bundle, separator, _ = gate_id.partition("/")
+    if not separator:
+        return ""
+    return bundle
+
+
 def _note_groups(pairs: list[RequestedPair]) -> list[list[RequestedPair]]:
     grouped: dict[tuple[str, str], list[RequestedPair]] = {}
     for pair in pairs:
-        grouped.setdefault((pair.note_path, bundle_for_gate_id(pair.gate_id)), []).append(pair)
+        grouped.setdefault((pair.note_path, _bundle_for_gate_id(pair.gate_id)), []).append(pair)
     return list(grouped.values())
 
 
@@ -292,40 +272,18 @@ def _read_input(repo_root: Path, path: str | None) -> str:
     return input_path.read_text(encoding="utf-8")
 
 
-def _validate_mode(args: argparse.Namespace, parser: argparse.ArgumentParser) -> str:
-    has_input = args.input is not None
-    has_note = args.note is not None
-    has_pair = bool(args.pairs)
-    has_positional = bool(args.gate_or_bundle)
-
+def _validate_args(args: argparse.Namespace, parser: argparse.ArgumentParser) -> None:
     if args.grouping == "note" and args.batch_size is not None:
         parser.error("--batch-size is only valid with --grouping gate")
-
-    if has_input and (has_note or has_pair or has_positional):
-        parser.error("--input cannot be combined with --note, --pair, or positional gate/bundle arguments")
-    if has_note and has_pair:
-        parser.error("--note and --pair are mutually exclusive")
-    if has_pair and has_positional:
-        parser.error("--pair cannot be combined with positional gate/bundle arguments")
-    if has_note:
-        if not has_positional:
-            parser.error("direct note input requires one or more gate/bundle arguments")
-        return "direct-note"
-    if has_pair:
-        return "direct-pair"
-    if has_positional:
-        parser.error("positional gate/bundle arguments require --note")
-    return "selector"
+    if args.input is None:
+        parser.error("--input is required; pass selector JSON path or '-' for stdin")
 
 
 def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser = argparse.ArgumentParser(
-        description="Create queued review jobs from selector JSON or direct requested pairs.",
+        description="Create queued review jobs from selector JSON.",
     )
-    parser.add_argument("gate_or_bundle", nargs="*", help="Direct-note gate IDs, gate paths, or bundle names.")
-    parser.add_argument("--input", help="Selector JSON path, or '-' for stdin.")
-    parser.add_argument("--note", help="Direct-note repo-relative note path.")
-    parser.add_argument("--pair", dest="pairs", action="append", help="Direct pair as NOTE::GATE. May be repeated.")
+    parser.add_argument("--input", required=True, help="Selector JSON path, or '-' for stdin.")
     parser.add_argument("--model", help="Review model partition. Required for direct input; validation-only for selector input.")
     parser.add_argument("--grouping", required=True, choices=["note", "gate"], help="Job grouping axis.")
     parser.add_argument("--batch-size", type=int, help="Note targets per gate-packed job. Defaults to 5.")
@@ -336,37 +294,23 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
         parser.error("--batch-size must be a positive integer")
     batch_size = args.batch_size or 5
     repo_root = cwd if cwd is not None else Path.cwd()
-    input_mode = _validate_mode(args, parser)
+    _validate_args(args, parser)
 
     try:
-        if input_mode == "selector":
-            model_partition, requested_pairs = _selector_pairs(
-                repo_root=repo_root,
-                raw_json=_read_input(repo_root, args.input),
-                fallback_model=args.model,
-            )
-            if args.model is not None:
-                requested_model = args.model.strip()
-                if not requested_model:
-                    parser.error("--model must not be empty")
-                requested_model = normalize_model_partition(requested_model)
-                if requested_model != model_partition:
-                    parser.error(
-                        f"--model {requested_model!r} does not match selector model_partition {model_partition!r}"
-                    )
-        else:
-            if args.model is None or not args.model.strip():
-                parser.error("--model is required for direct input")
-            model_partition = normalize_model_partition(args.model)
-            if input_mode == "direct-note":
-                assert args.note is not None
-                note_path = _normalize_note_path(repo_root, args.note)
-                requested_pairs = [
-                    RequestedPair(note_path=note_path, gate_path=gate_path, gate_id=gate_id, reason="requested")
-                    for gate_path, gate_id in _resolve_gate_or_bundle_inputs(repo_root, args.gate_or_bundle)
-                ]
-            else:
-                requested_pairs = [_parse_pair_arg(repo_root, raw_pair) for raw_pair in args.pairs or []]
+        model_partition, requested_pairs = _selector_pairs(
+            repo_root=repo_root,
+            raw_json=_read_input(repo_root, args.input),
+            fallback_model=args.model,
+        )
+        if args.model is not None:
+            requested_model = args.model.strip()
+            if not requested_model:
+                parser.error("--model must not be empty")
+            requested_model = normalize_model_partition(requested_model)
+            if requested_model != model_partition:
+                parser.error(
+                    f"--model {requested_model!r} does not match selector model_partition {model_partition!r}"
+                )
 
         unique_pairs, skipped_duplicates = _drop_duplicate_pairs(requested_pairs)
         applicable_pairs, skipped_inapplicable = _filter_applicable_pairs(repo_root, unique_pairs)
@@ -398,7 +342,7 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
         parser.error(str(exc))
 
     payload = {
-        "input_mode": input_mode,
+        "input_mode": "selector",
         "model_partition": model_partition,
         "grouping": args.grouping,
         "created_count": len(plans),
