@@ -10,6 +10,8 @@ from commonplace.review.acknowledgement import ack_pairs
 from commonplace.review.ack_trivial_note_changes import qualifying_pairs
 from test.commonplace.review.pair_helpers import accept_pair, insert_completed_pair
 
+from ._run_cli import run_cli
+
 
 TEST_MODEL = "test-model"
 
@@ -247,6 +249,7 @@ def test_qualifying_pairs_finds_note_with_only_unwatched_changes_and_ack_records
         row = conn.execute(
             """
             SELECT
+                accepted_review_pair_id,
                 accepted_note_snapshot_id,
                 accepted_gate_snapshot_id,
                 accepted_note_hash,
@@ -261,6 +264,36 @@ def test_qualifying_pairs_finds_note_with_only_unwatched_changes_and_ack_records
     assert row[1] is not None
     assert row[2] is not None
     assert row[3] is not None
+    assert row[4] is not None
+
+
+def test_ack_trivial_note_changes_cli_writes_non_null_review_pair_id(tmp_path: Path) -> None:
+    repo, db_path = build_fixture(tmp_path)
+    note_path = repo / "kb" / "notes" / "sample.md"
+    make_note(note_path, "\nBody.\n", traits="[title-as-claim]", tags="[computational-model]")
+
+    result = run_cli(
+        "ack_trivial_note_changes",
+        "prose/source-residue",
+        "--note",
+        "kb/notes",
+        "--model",
+        TEST_MODEL,
+        cwd=repo,
+    )
+
+    assert "acked: kb/notes/sample.md prose/source-residue" in result.stdout
+    with sqlite3.connect(db_path) as conn:
+        row = conn.execute(
+            """
+            SELECT accepted_review_pair_id
+            FROM current_gate_acceptances
+            WHERE note_path = ? AND gate_path = ? AND model_partition = ?
+            """,
+            ("kb/notes/sample.md", "kb/instructions/review-gates/prose/source-residue.md", TEST_MODEL),
+        ).fetchone()
+    assert row is not None
+    assert row[0] is not None
 
 
 def test_qualifying_pairs_uses_snapshot_text_without_git(tmp_path: Path) -> None:

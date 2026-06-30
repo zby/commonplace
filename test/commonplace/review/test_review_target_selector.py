@@ -587,7 +587,20 @@ class TestAckMetadata:
         make_note(fixture["stable"], "Stable title", "\nUpdated line.\n")
 
         with sqlite3.connect(db_path_for(tmp_path)) as conn:
+            conn.row_factory = sqlite3.Row
             review_pair_count_before = conn.execute("SELECT count(*) FROM review_pairs").fetchone()[0]
+            source_review_pair = conn.execute(
+                """
+                SELECT rp.review_pair_id
+                FROM review_pairs AS rp
+                JOIN review_jobs AS j
+                  ON j.review_job_id = rp.review_job_id
+                WHERE rp.note_path = ?
+                  AND rp.gate_path = ?
+                  AND j.model_partition = ?
+                """,
+                ("kb/notes/stable.md", "kb/instructions/review-gates/prose/source-residue.md", TEST_MODEL),
+            ).fetchone()
 
         stale_before = review_target_selector.select_stale_gates(
             tmp_path,
@@ -631,7 +644,7 @@ class TestAckMetadata:
             ).fetchone()
         assert row is not None
         assert review_pair_count_after == review_pair_count_before
-        assert row["accepted_review_pair_id"] is None
+        assert row["accepted_review_pair_id"] == source_review_pair["review_pair_id"]
         assert row["accepted_note_hash"] is not None
 
     def test_ack_allows_dirty_note_and_records_snapshot_baseline(self, tmp_path: Path) -> None:
@@ -656,6 +669,114 @@ class TestAckMetadata:
         assert row["accepted_note_snapshot_id"] is not None
         assert row["accepted_note_hash"] is not None
 
+    def test_ack_after_gate_change_carries_forward_review_pair_and_records_gate_snapshot(
+        self, tmp_path: Path
+    ) -> None:
+        fixture = build_fixture(tmp_path)
+        write(
+            fixture["gate_prose_sr"],
+            """---
+gate_id: prose/source-residue
+name: Source Residue
+lens: prose
+watches: [body]
+staleness: changed
+---
+
+## Failure mode
+
+Fixture gate with accepted wording update.
+
+## Test
+
+Fixture test.
+""",
+        )
+
+        with sqlite3.connect(db_path_for(tmp_path)) as conn:
+            conn.row_factory = sqlite3.Row
+            source_review_pair = conn.execute(
+                """
+                SELECT rp.review_pair_id
+                FROM review_pairs AS rp
+                JOIN review_jobs AS j
+                  ON j.review_job_id = rp.review_job_id
+                WHERE rp.note_path = ?
+                  AND rp.gate_path = ?
+                  AND j.model_partition = ?
+                """,
+                ("kb/notes/stable.md", "kb/instructions/review-gates/prose/source-residue.md", TEST_MODEL),
+            ).fetchone()
+
+        ack_pairs(
+            tmp_path,
+            ["kb/notes/stable.md:prose/source-residue"],
+            TEST_MODEL,
+        )
+
+        with sqlite3.connect(db_path_for(tmp_path)) as conn:
+            conn.row_factory = sqlite3.Row
+            row = conn.execute(
+                """
+                SELECT accepted_review_pair_id, accepted_gate_snapshot_id, accepted_gate_hash
+                FROM current_gate_acceptances
+                WHERE note_path = ? AND gate_path = ? AND model_partition = ?
+                """,
+                ("kb/notes/stable.md", "kb/instructions/review-gates/prose/source-residue.md", TEST_MODEL),
+            ).fetchone()
+        assert row is not None
+        assert row["accepted_review_pair_id"] == source_review_pair["review_pair_id"]
+        assert row["accepted_gate_snapshot_id"] is not None
+        assert row["accepted_gate_hash"] is not None
+
+    def test_ack_lookup_uses_parent_job_model_partition(self, tmp_path: Path) -> None:
+        fixture = build_fixture(tmp_path)
+        make_note(fixture["stable"], "Stable title", "\nUpdated line.\n")
+
+        with sqlite3.connect(db_path_for(tmp_path)) as conn:
+            conn.row_factory = sqlite3.Row
+            expected_pair = conn.execute(
+                """
+                SELECT rp.review_pair_id
+                FROM review_pairs AS rp
+                JOIN review_jobs AS j
+                  ON j.review_job_id = rp.review_job_id
+                WHERE rp.note_path = ?
+                  AND rp.gate_path = ?
+                  AND j.model_partition = ?
+                """,
+                ("kb/notes/stable.md", "kb/instructions/review-gates/prose/source-residue.md", TEST_MODEL),
+            ).fetchone()
+            other_pair_id = insert_completed_pair(
+                conn,
+                note_path="kb/notes/stable.md",
+                gate_id="prose/source-residue",
+                model_partition="other-model",
+                decision="pass",
+                reviewed_at="2026-04-02T00:00:00+00:00",
+            )
+            conn.commit()
+
+        ack_pairs(
+            tmp_path,
+            ["kb/notes/stable.md:prose/source-residue"],
+            TEST_MODEL,
+        )
+
+        with sqlite3.connect(db_path_for(tmp_path)) as conn:
+            conn.row_factory = sqlite3.Row
+            row = conn.execute(
+                """
+                SELECT accepted_review_pair_id
+                FROM current_gate_acceptances
+                WHERE note_path = ? AND gate_path = ? AND model_partition = ?
+                """,
+                ("kb/notes/stable.md", "kb/instructions/review-gates/prose/source-residue.md", TEST_MODEL),
+            ).fetchone()
+        assert row is not None
+        assert row["accepted_review_pair_id"] == expected_pair["review_pair_id"]
+        assert row["accepted_review_pair_id"] != other_pair_id
+
     def test_ack_rejects_invalid_pair_without_exiting(self, tmp_path: Path) -> None:
         build_fixture(tmp_path)
 
@@ -666,7 +787,7 @@ class TestAckMetadata:
                 TEST_MODEL,
             )
 
-    def test_ack_does_not_create_review_file_when_missing(self, tmp_path: Path) -> None:
+    def test_ack_rejects_pair_without_completed_review_and_writes_nothing(self, tmp_path: Path) -> None:
         build_fixture(tmp_path)
         stale_before = review_target_selector.select_stale_gates(
             tmp_path,
@@ -675,15 +796,19 @@ class TestAckMetadata:
             note_filter=["kb/notes/unreviewed.md"],
         )
         assert len(stale_before) == 2
+        with sqlite3.connect(db_path_for(tmp_path)) as conn:
+            acceptance_count_before = conn.execute("SELECT count(*) FROM acceptance_events").fetchone()[0]
+            snapshot_count_before = conn.execute("SELECT count(*) FROM review_file_snapshots").fetchone()[0]
 
-        ack_pairs(
-            tmp_path,
-            [
-                "kb/notes/unreviewed.md:prose/confidence-miscalibration",
-                "kb/notes/unreviewed.md:prose/source-residue",
-            ],
-            TEST_MODEL,
-        )
+        with pytest.raises(ValueError, match="no completed review pair"):
+            ack_pairs(
+                tmp_path,
+                [
+                    "kb/notes/unreviewed.md:prose/confidence-miscalibration",
+                    "kb/notes/unreviewed.md:prose/source-residue",
+                ],
+                TEST_MODEL,
+            )
 
         stale_after = review_target_selector.select_stale_gates(
             tmp_path,
@@ -691,20 +816,80 @@ class TestAckMetadata:
             gate_ids=["prose/confidence-miscalibration", "prose/source-residue"],
             note_filter=["kb/notes/unreviewed.md"],
         )
-        assert stale_after == []
+        assert len(stale_after) == 2
 
         with sqlite3.connect(db_path_for(tmp_path)) as conn:
-            conn.row_factory = sqlite3.Row
-            row = conn.execute(
+            acceptance_count_after = conn.execute("SELECT count(*) FROM acceptance_events").fetchone()[0]
+            snapshot_count_after = conn.execute("SELECT count(*) FROM review_file_snapshots").fetchone()[0]
+        assert acceptance_count_after == acceptance_count_before
+        assert snapshot_count_after == snapshot_count_before
+
+    def test_ack_multi_pair_preflight_is_all_or_nothing(self, tmp_path: Path) -> None:
+        fixture = build_fixture(tmp_path)
+        make_note(fixture["stable"], "Stable title", "\nUpdated line.\n")
+
+        with sqlite3.connect(db_path_for(tmp_path)) as conn:
+            acceptance_count_before = conn.execute("SELECT count(*) FROM acceptance_events").fetchone()[0]
+            snapshot_count_before = conn.execute("SELECT count(*) FROM review_file_snapshots").fetchone()[0]
+
+        with pytest.raises(ValueError, match="no completed review pair"):
+            ack_pairs(
+                tmp_path,
+                [
+                    "kb/notes/stable.md:prose/source-residue",
+                    "kb/notes/unreviewed.md:prose/source-residue",
+                ],
+                TEST_MODEL,
+            )
+
+        stale_after = review_target_selector.select_stale_gates(
+            tmp_path,
+            model=TEST_MODEL,
+            gate_ids=["prose/source-residue"],
+            note_filter=["kb/notes/stable.md"],
+        )
+        assert len(stale_after) == 1
+        with sqlite3.connect(db_path_for(tmp_path)) as conn:
+            acceptance_count_after = conn.execute("SELECT count(*) FROM acceptance_events").fetchone()[0]
+            snapshot_count_after = conn.execute("SELECT count(*) FROM review_file_snapshots").fetchone()[0]
+        assert acceptance_count_after == acceptance_count_before
+        assert snapshot_count_after == snapshot_count_before
+
+    def test_ack_dedupes_requested_pairs_before_writing_acceptance_events(self, tmp_path: Path) -> None:
+        fixture = build_fixture(tmp_path)
+        make_note(fixture["stable"], "Stable title", "\nUpdated line.\n")
+        gate_path = "kb/instructions/review-gates/prose/source-residue.md"
+
+        with sqlite3.connect(db_path_for(tmp_path)) as conn:
+            acceptance_count_before = conn.execute(
                 """
-                SELECT accepted_review_pair_id
-                FROM current_gate_acceptances
+                SELECT count(*)
+                FROM acceptance_events
                 WHERE note_path = ? AND gate_path = ? AND model_partition = ?
                 """,
-                ("kb/notes/unreviewed.md", "kb/instructions/review-gates/prose/source-residue.md", TEST_MODEL),
-            ).fetchone()
-        assert row is not None
-        assert row["accepted_review_pair_id"] is None
+                ("kb/notes/stable.md", gate_path, TEST_MODEL),
+            ).fetchone()[0]
+
+        acked = ack_pairs(
+            tmp_path,
+            [
+                "kb/notes/stable.md:prose/source-residue",
+                f"kb/notes/stable.md:{gate_path}",
+            ],
+            TEST_MODEL,
+        )
+
+        with sqlite3.connect(db_path_for(tmp_path)) as conn:
+            acceptance_count_after = conn.execute(
+                """
+                SELECT count(*)
+                FROM acceptance_events
+                WHERE note_path = ? AND gate_path = ? AND model_partition = ?
+                """,
+                ("kb/notes/stable.md", gate_path, TEST_MODEL),
+            ).fetchone()[0]
+        assert acked == [("kb/notes/stable.md", "prose/source-residue")]
+        assert acceptance_count_after == acceptance_count_before + 1
 
 
 class TestDiffGeneration:
@@ -827,6 +1012,58 @@ class TestModelOptional:
 
         assert result.returncode == 2
         assert "--model is required with --ack" in result.stderr
+
+    def test_ack_gate_review_cli_writes_non_null_review_pair_id(self, tmp_path: Path) -> None:
+        fixture = build_fixture(tmp_path)
+        make_note(fixture["stable"], "Stable title", "\nUpdated line.\n")
+
+        result = run_cli(
+            "ack_gate_review",
+            "kb/notes/stable.md",
+            "--model",
+            TEST_MODEL,
+            "prose/source-residue",
+            cwd=tmp_path,
+        )
+
+        assert "acked: kb/notes/stable.md prose/source-residue" in result.stdout
+        with sqlite3.connect(db_path_for(tmp_path)) as conn:
+            row = conn.execute(
+                """
+                SELECT accepted_review_pair_id
+                FROM current_gate_acceptances
+                WHERE note_path = ? AND gate_path = ? AND model_partition = ?
+                """,
+                ("kb/notes/stable.md", "kb/instructions/review-gates/prose/source-residue.md", TEST_MODEL),
+            ).fetchone()
+        assert row is not None
+        assert row[0] is not None
+
+    def test_review_target_selector_ack_cli_writes_non_null_review_pair_id(self, tmp_path: Path) -> None:
+        fixture = build_fixture(tmp_path)
+        make_note(fixture["stable"], "Stable title", "\nUpdated line.\n")
+
+        result = run_cli(
+            "review_target_selector",
+            "--model",
+            TEST_MODEL,
+            "--ack",
+            "kb/notes/stable.md:prose/source-residue",
+            cwd=tmp_path,
+        )
+
+        assert "acked: kb/notes/stable.md prose/source-residue" in result.stdout
+        with sqlite3.connect(db_path_for(tmp_path)) as conn:
+            row = conn.execute(
+                """
+                SELECT accepted_review_pair_id
+                FROM current_gate_acceptances
+                WHERE note_path = ? AND gate_path = ? AND model_partition = ?
+                """,
+                ("kb/notes/stable.md", "kb/instructions/review-gates/prose/source-residue.md", TEST_MODEL),
+            ).fetchone()
+        assert row is not None
+        assert row[0] is not None
 
 
 class TestResolveGates:
