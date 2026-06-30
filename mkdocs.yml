@@ -18,6 +18,7 @@ plugins:
       redirect_maps:
         'agent-memory-systems/landscape.md': 'agent-memory-systems/README.md'
         'agent-memory-systems/related-systems-index.md': 'agent-memory-systems/README.md'
+        'instructions/run-review-batches-on-note.md': 'instructions/run-review-batches.md'
         'notes/a-declared-mark-is-an-accelerator-never-a-load-bearing-wall.md': 'reference/mark-semantics.md'
         'notes/a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md': 'notes/an-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trusted-knowledge.md'
         'notes/agent-memory-index.md': 'notes/agent-memory-README.md'

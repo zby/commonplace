@@ -35,7 +35,7 @@ Out of scope:
 ## Current grounding
 
 - [review system](../../reference/REVIEW-SYSTEM.md) - current workflow contract.
-- [run review batches on note](../../instructions/run-review-batches-on-note.md) - live-agent single-note review flow.
+- [run review batches](../../instructions/run-review-batches.md) - live-agent review flow for selector-created batches.
 - [review-architecture.md](../../reference/review-architecture.md) - current execution architecture.
 - [ADR 029](../../reference/adr/029-review-execution-unified-on-note-gate-pairs.md) - decision to share one pair protocol across packing shapes.
 - [ADR 030](../../reference/adr/030-harness-facing-seams-batch-endpoints-and-runner-adapters.md) - batch prepare/ingest endpoints and runner adapter boundary.

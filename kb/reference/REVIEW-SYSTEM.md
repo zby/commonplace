@@ -201,11 +201,11 @@ Human-readable inspection remains required, but it is now a derived view from DB
 
 ## Agent workflow
 
-### Running review batches on a note
+### Running review batches
 
-Instruction: `kb/instructions/run-review-batches-on-note.md`
+Instruction: `kb/instructions/run-review-batches.md`
 
-1. `commonplace-review-target-selector --mode requested --model {model-partition} {gate-or-bundle}... --note {note} --json | commonplace-create-review-jobs --input - --grouping note`
+1. `commonplace-review-target-selector ... --json | commonplace-create-review-jobs --input - --grouping {note|gate}`
 2. For each dispatched item in the returned `jobs` array, run `commonplace-claim-review-job --review-job-id {id} --runner {worker} --model {model} [--effort {effort}]`
 3. Launch a sub-agent with that job's `prompt_path` and `bundle_output_path`
 4. Each sub-agent writes that job's sentinel-delimited review bundle to `bundle_output_path`
@@ -217,7 +217,7 @@ Instruction: `kb/instructions/review-sweep.md`
 
 1. `commonplace-review-target-selector --model {model-partition} {bundle-or-all} [--current|--note kb/notes kb/reference] --json` — get stale pairs with diffs
 2. Triage by reason: `missing-review` and `gate-changed` need fresh reviews; `note-changed` needs diff inspection
-3. For significant changes: run `commonplace-review-sweep`, run `commonplace-run-gate-sweep`, or use `kb/instructions/run-review-batches-on-note.md` per note/group
+3. For significant changes from an agent harness: use `kb/instructions/run-review-batches.md` with selector JSON and `--grouping note` or `--grouping gate`
 4. `commonplace-review-sweep` executes note-local bundle reviews in parallel, up to 4 at a time by default; override with `REVIEW_SWEEP_JOBS=<n>`
 5. For insignificant changes: run `commonplace-ack-gate-review --model {model-partition} {note-path} {gate-id} ...` to append acceptance events
 

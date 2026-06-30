@@ -380,7 +380,7 @@ Generated: 2026-04-20
 - `kb/instructions/review-sweep.md`
 - `kb/instructions/review-triage.md`
 - `kb/instructions/revise-note.md`
-- `kb/instructions/run-review-batches-on-note.md`
+- `kb/instructions/run-review-batches.md`
 - `kb/instructions/write-agent-memory-system-review.md`
 - `kb/instructions/write-instruction.md`
 - `kb/types/instruction.template.md`

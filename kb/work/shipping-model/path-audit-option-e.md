@@ -115,13 +115,13 @@ All 24 migrated files validate clean; all 234 tests pass.
 
 ### Pattern C — Within-collection absolute references
 
-**Example.** `REVIEW-SYSTEM.md`: "Instruction: `kb/instructions/run-review-batches-on-note.md`" — a code-formatted text reference from one file in `kb/instructions/` to another. Or inside a note, prose text like "see `kb/notes/distillation-is-transformation-not-selection.md`" (rare — notes mostly use markdown links).
+**Example.** `REVIEW-SYSTEM.md`: "Instruction: `kb/instructions/run-review-batches.md`" — a code-formatted text reference from one file in `kb/instructions/` to another. Or inside a note, prose text like "see `kb/notes/distillation-is-transformation-not-selection.md`" (rare — notes mostly use markdown links).
 
 **What they are.** Absolute paths as display text (code-fenced or prose), not markdown links. The path is shown to the user as-is.
 
-**Option E result.** ⚠️ Link click-through is moot (these aren't links), but the *displayed text* becomes inaccurate. A user reading shipped `REVIEW-SYSTEM.md` sees "Instruction: `kb/instructions/run-review-batches-on-note.md`" but the file is actually at `kb/commonplace/instructions/run-review-batches-on-note.md`. Cosmetic but confusing if the user tries to grep or open by the displayed path.
+**Option E result.** ⚠️ Link click-through is moot (these aren't links), but the *displayed text* becomes inaccurate. A user reading shipped `REVIEW-SYSTEM.md` sees "Instruction: `kb/instructions/run-review-batches.md`" but the file is actually at `kb/commonplace/instructions/run-review-batches.md`. Cosmetic but confusing if the user tries to grep or open by the displayed path.
 
-**Options:** (a) rewrite display text at ship time, (b) accept cosmetic drift, (c) rewrite source to use relative references in prose ("`./run-review-batches-on-note.md`" — ugly).
+**Options:** (a) rewrite display text at ship time, (b) accept cosmetic drift, (c) rewrite source to use relative references in prose ("`./run-review-batches.md`" — ugly).
 
 **Estimated share.** Small — probably <10% of the 713. Most cross-file references use markdown links (Pattern D/E), not absolute paths as prose.
 
@@ -149,11 +149,11 @@ This is the crucial pattern for E's viability: sibling-relative URLs are invaria
 
 ### Pattern F — Markdown links with absolute paths from repo root
 
-**Example.** `[kb/instructions/run-review-batches-on-note.md](kb/instructions/run-review-batches-on-note.md)` — URL is an absolute path from the repo root.
+**Example.** `[kb/instructions/run-review-batches.md](kb/instructions/run-review-batches.md)` — URL is an absolute path from the repo root.
 
 **What they are.** Links where the URL is treated as a repo-root-relative path (works in GitHub's renderer and some tools; doesn't work as a file-system relative path from the current file's directory).
 
-**Option E result.** ⚠️ Depends on renderer. If the renderer treats the URL as "path from repo root," it resolves to `kb/instructions/...` — the user's own (empty) collection, not the library. Broken. If we rewrite to sibling-relative (`./run-review-batches-on-note.md` for within-collection, `../reference/...` for cross-collection), works under both source and ship.
+**Option E result.** ⚠️ Depends on renderer. If the renderer treats the URL as "path from repo root," it resolves to `kb/instructions/...` — the user's own (empty) collection, not the library. Broken. If we rewrite to sibling-relative (`./run-review-batches.md` for within-collection, `../reference/...` for cross-collection), works under both source and ship.
 
 **Estimated share.** Unclear; mixed with Pattern D. Needs a more specific grep distinguishing `[...](kb/...)` (absolute URL) from `[...](./...)` and `[...](../...)` (relative).
 
@@ -180,7 +180,7 @@ These are Pattern E variants and Pattern F variants where the display text itsel
 1. **Shared `kb/types/` stays at top level** — do not nest it under `kb/commonplace/`. This keeps B1 frontmatter pointers invariant. Matches current `init_project.py` behavior.
 2. **Collection-local types (B2) use B2b** (confirmed 2026-04-23): migrate to file-relative frontmatter (`type: ../types/...` for notes in subdirectories, `type: ./types/...` for notes at collection root — same convention as markdown links). Extend the type resolver to accept file-relative paths (~1–2h of work, precedent exists for `$ref`). Invariant across source and ship. B1 (global `kb/types/`) stays absolute because file-relative would break across the namespace boundary (shared `kb/types/` lives outside `kb/commonplace/`).
 3. **Rewrite Patterns E and F to Pattern D** — convert `../kb/reference/...` and `kb/reference/...` (absolute URL) links to sibling-relative `../reference/...`. One-time mechanical rewrite, affects a small number of links (Pattern E has 1 known case; F needs a precise count but is bounded).
-4. **Accept cosmetic drift in Pattern C** — prose text like "`kb/instructions/run-review-batches-on-note.md`" shown to a user reading the shipped file will be inaccurate (the file is at `kb/commonplace/instructions/...`). Either rewrite display text at ship time or live with it. Small population.
+4. **Accept cosmetic drift in Pattern C** — prose text like "`kb/instructions/run-review-batches.md`" shown to a user reading the shipped file will be inaccurate (the file is at `kb/commonplace/instructions/...`). Either rewrite display text at ship time or live with it. Small population.
 
 Under these conditions, Option E ships with **zero translation of Pattern-A content (the majority)**, no translation for B1 frontmatter, a bounded one-pass migration for B2 frontmatter, and a one-pass conversion of E/F → D.
 

@@ -83,7 +83,7 @@ Not yet audited: `kb/notes/` and `kb/reference/` shipped content. Internal links
 
 ## Immediate implications for the namespacing decision
 
-- Of the 85 hardcoded `kb/{notes,reference,instructions}/` references in shipped instructions, only a subset needs translation: references to specific shipped artifacts (e.g. `kb/reference/adr/010-...md`, `kb/instructions/run-review-batches-on-note.md`). Generic references ("a collection such as `kb/notes/`", "read `kb/<collection>/COLLECTION.md`") resolve correctly to the user's own collection and need no change. An audit is needed to split the 85 into these categories.
+- Of the 85 hardcoded `kb/{notes,reference,instructions}/` references in shipped instructions, only a subset needs translation: references to specific shipped artifacts (e.g. `kb/reference/adr/010-...md`, `kb/instructions/run-review-batches.md`). Generic references ("a collection such as `kb/notes/`", "read `kb/<collection>/COLLECTION.md`") resolve correctly to the user's own collection and need no change. An audit is needed to split the 85 into these categories.
 - The `PROMOTED_SKILLS` list points at `kb/instructions/<name>/` — if shipped instructions move to `kb/cp-instructions/<name>/` or `kb/commonplace/instructions/<name>/`, the symlink target path in `init_project.py:206` needs updating.
 - `DEFAULT_DIRS` needs reshaping: create empty user collections at top-level, create the shipped hierarchy separately.
 - `AGENTS.md.template` likely references library paths that would need translation. Not audited yet.
