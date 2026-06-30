@@ -40,6 +40,23 @@ The execution table is renamed mechanically:
 
 `model_partition` no longer lives on `review_pairs`; completed pairs inherit the model partition through their parent job. `model_partition` remains the freshness and acceptance identity key.
 
+The physical column removal has API and maintenance consequences. `ReviewPairRow.model_partition` remains available in the first version as a derived loader field, populated by joining `review_pairs` to `review_jobs`; repair/rekey tooling treats only `review_jobs` and `acceptance_events` as model-partition tables.
+
+Schema changes use the versioned migration substrate from ADR 033. Constraint changes and column drops use hand-coded rebuilds with the same row-count, foreign-key, index/view recreation, `user_version`, and integrity-check discipline as the Phase 1 migration unless a tested helper is extracted in the same phase.
+
+Only load-bearing artifact paths become state: `review_jobs.prompt_path`, `review_jobs.bundle_output_path`, and `review_pairs.result_path`. `MANIFEST.json` remains a written human/debug artifact beside the prompt and output files. `manifest_path` and `artifact_dir` are not DB columns and are not core job-plan fields; commands may derive a manifest path for display, but no pipeline command reads `MANIFEST.json` as state.
+
+### Keep creation inputs explicit without adding explicit packing
+
+Job creation accepts two input sources:
+
+- model-specific selector JSON with a concrete top-level `model_partition` and a `targets` array whose entries carry normalized gate identity (`gate_path` and `gate_id`);
+- direct requested-pair input for explicit QA workflows that must review named pairs even when stale selection would skip them as fresh.
+
+Both input sources resolve through `--grouping note` or `--grouping gate`, and persisted `packing` remains only `note` or `gate`. There is no `explicit` grouping and no `packing = explicit`.
+
+Direct requested-pair input requires `--model`, because no selector payload supplies the job's `model_partition`. Removing `commonplace-prepare-review-batch` waits until `commonplace-create-review-jobs` covers its direct same-axis pair workflow through these two grouping modes.
+
 ### Store runner provenance separately from freshness identity
 
 `review_jobs` carries nullable execution-provenance columns:
@@ -128,12 +145,16 @@ Easier:
 - One queued job table supports both subprocess execution and orchestrator-agent execution.
 - `model_partition` stays stable as the acceptance/freshness key while concrete model and effort provenance is still available for debugging.
 - The SQL model no longer duplicates model partition on every pair row; model partition is inherited through the parent job.
+- Direct requested-pair review workflows are preserved without adding a third persisted packing mode.
+- The manifest remains an inspection artifact instead of becoming another piece of database/API state.
 - Orchestrator-agent execution remains usable even when the harness cannot request per-worker effort or expose reliable telemetry.
 - Runner telemetry can vary by harness without infecting the core queue/finalization code.
 
 Harder / accepted costs:
 
 - The store has nullable execution provenance columns, so readers must distinguish "unknown" from "known concrete value."
+- Pair readers and model-partition repair tooling must join through jobs once `review_pairs.model_partition` is removed.
+- Operational docs and instructions must move with the command surface, because stale creation flags or `commonplace-prepare-review-batch` references would mislead agents before final workshop cleanup.
 - The system trusts executor-side validation in v1; hard SQL constraints between `model_partition`, `runner_model`, and `runner_effort` wait for a model-partition registry.
 - Orchestrator-dispatched jobs can be abandoned in `running` if the parent dies; v1 handles that through manual recovery rather than leases.
 - Telemetry cannot be treated as universal evidence. Some jobs will have `telemetry_json = NULL` even when they completed correctly.
