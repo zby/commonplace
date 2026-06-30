@@ -27,8 +27,8 @@ In scope:
 - support optional explicit `--review-job-id` narrowing for recovery/debug runs;
 - implement sequential execution only in the first slice; do not implement multi-worker parallelism in this phase;
 - select candidate jobs with `list_review_job_plans(..., status="queued", model_partition=requested_partition, require_paths=False)`;
-- claim selected jobs with the Phase 4 `claim_review_job` helper, which atomically sets `status = 'running'`, `started_at`, `runner`, `runner_model`, and nullable `runner_effort`;
-- treat `ReviewJobClaimError` as an unclaimed job, not a partially failed execution;
+- claim selected jobs with the Phase 4 `claim_review_job` helper, which atomically sets `status = 'running'`, `started_at`, `runner`, `runner_model`, and nullable `runner_effort`; pass it the required keyword-only `model_partition=requested_partition`;
+- treat `ReviewJobClaimError` as an unclaimed job, not a partially failed execution; explicit `--review-job-id` runs must preflight the unfiltered job before claiming, because the queue-mode filtered candidate list cannot represent the full set of missing, non-queued, wrong-partition, and missing-path failures;
 - use the `ReviewJobPlan` returned by `claim_review_job`; it has already loaded with `require_paths=True`;
 - validate `build_model_partition(--model, --effort) == review_jobs.model_partition` before claiming a job, with `--effort` allowed only when the adapter can set it;
 - make the minimal runner-adapter API/capability change required for effort support: adapters declare whether they can set effort, and `run_prompt` / `build_command` accept nullable effort;
@@ -100,7 +100,21 @@ list_review_job_plans(
 )
 ```
 
-Apply `--review-job-id` and `--limit` to that candidate list. Because explicit job-id runs are for recovery/debug, a missing job, non-queued job, wrong-partition job, or missing load-bearing path is an operational failure and exits nonzero. In queue-driven mode, a job that cannot be claimed is reported under `skipped` and the runner continues to the next candidate.
+Queue-driven mode uses that filtered list directly, then applies `--limit`. A queued candidate that cannot be claimed is reported under `skipped`, and the runner continues to the next candidate.
+
+Explicit `--review-job-id` mode does not start from the filtered candidate list. It first loads the requested job with:
+
+```python
+load_review_job_plan(
+    conn,
+    review_job_id=requested_review_job_id,
+    require_paths=False,
+)
+```
+
+Because explicit job-id runs are for recovery/debug, a missing job, non-queued job, wrong-partition job, or missing load-bearing path is an operational failure and exits nonzero before runner invocation. Preflight in that order: job exists, `status == "queued"`, `model_partition == requested_partition`, `prompt_path` present, `bundle_output_path` present, and every pair has `result_path` present. Only after that preflight should the runner call `claim_review_job`.
+
+This preflight is for precise operator-facing errors, not for replacing the atomic claim. `claim_review_job` still performs the authoritative short transaction, including the model-partition and path guards, so a lost race or concurrent state change remains a `ReviewJobClaimError` after preflight.
 
 Claiming is a short transaction:
 
@@ -124,6 +138,8 @@ WHERE review_job_id = ? AND status = 'queued'
 ```
 
 Do not duplicate that SQL in the runner. Call the Phase 4 `claim_review_job` helper so command-line claiming and subprocess claiming cannot diverge.
+
+Signature precision for the implementer (verified against the committed Phase 4 code): `claim_review_job` takes a required keyword-only `model_partition=`; `list_review_job_plans`'s `status`/`model_partition`/`require_paths` are keyword-only; `build_model_partition`'s second parameter is named `reasoning_effort`, not `effort`; `model_partition` lives on `review_jobs`, not `review_pairs`; and `require_paths` is a loader argument, not a `ReviewJobPlan` field. Use these exact names in code even where this plan's prose abbreviates them.
 
 If zero rows are updated, another worker claimed or completed the job, the job does not belong to the requested model partition, or it lacks load-bearing paths. The helper raises `ReviewJobClaimError`. Queue-driven runs skip and report the reason; explicit job-id runs fail before model execution. Missing required job-plan paths are not execution failures because no execution was claimed.
 
@@ -221,6 +237,8 @@ The preferred first implementation is to keep the public convenience commands bu
 
 If a command is not worth keeping, retire it from `pyproject.toml` and documentation in this phase. Do not leave any public subprocess command that still calls `create_job_with_pairs` and `execute_batch` directly as its durable execution path.
 
+The `create_job_with_pairs` + `execute_batch` coupling does not live in the `cli/review/*.py` wrapper scripts; those delegate one layer down. `execute_batch` (in `executor.py`) is the function that does create-job → render prompt → `run_prompt` → persist → `attach_execution_data` in one shot, and it is invoked from the `review/run_review_bundles.py` and `review/run_gate_sweep.py` lib modules (`review_sweep` reaches it through `run_bundles`). Target those lib modules, not the CLI entrypoints, when removing the bespoke create+execute path.
+
 ## Tests
 
 - sequential runner completes queued jobs;
@@ -232,6 +250,7 @@ If a command is not worth keeping, retire it from `pyproject.toml` and documenta
 - runner uses the `ReviewJobPlan` returned by claim;
 - missing required job-plan paths produce a claim failure without changing job state;
 - explicit `--review-job-id` with missing required paths exits nonzero before runner invocation;
+- explicit `--review-job-id` failures report distinct reasons for wrong-partition vs missing-path vs non-queued, proving the runner uses an unfiltered preflight load rather than reading them off the single `ReviewJobClaimError`;
 - runner does not read `MANIFEST.json`;
 - two workers cannot claim the same queued job;
 - runner receives the concrete `--model` as its model argument;
