@@ -12,24 +12,24 @@ Inputs:
 - first argument: `{note-path}` — repository-relative note path, for example `kb/notes/linking-theory.md`
 - remaining arguments: `{gate-or-bundle}...` — one or more gate ids or bundle names, for example `semantic/grounding-alignment`, `prose/source-residue`, or `prose` (= all prose gates)
 
-Do not run the selector to choose gates. Treat the provided list as the exact execution set.
+Do not run stale selection to choose gates. Use the selector only in requested mode to normalize the provided execution set.
 
 If the harness cannot launch sub-agents or workers, stop and report that review-batch delegation is unavailable. Do not review the batches locally unless the user explicitly authorizes a local fallback for this run.
 
 ## Live agent path
 
-### 1. Create review jobs and canonical prompts
+### 1. Select requested pairs and create review jobs
 
 ```bash
-commonplace-create-review-jobs --model {model-partition} --note {note-path} {gate-or-bundle}... --grouping note
+commonplace-review-target-selector --mode requested --model {model-partition} {gate-or-bundle}... --note {note-path} --json \
+  | commonplace-create-review-jobs --input - --grouping note
 ```
 
-The helper groups the requested gates by bundle/lens and returns a JSON object with `jobs`. Creation is runner-agnostic; runner provenance stays null until a later execution path records it. Capture each job object, especially:
+The selector emits the explicitly requested applicable `(note, gate)` pairs. The creator consumes that JSON, groups the pairs by bundle/lens, creates queued review jobs, writes canonical prompts, and returns a JSON object with `jobs`. Creation is runner-agnostic; runner provenance stays null until a later execution path records it. Capture each job object, especially:
 
 - `review_job_id`
 - `prompt_path`
 - `bundle_output_path`
-- `manifest_path`
 - each pair's `gate_id` and `gate_path`
 
 Each returned job is one review batch for this procedure. Do not invent, merge, or reorder jobs. Use exactly the job grouping and pair list the helper resolves.
@@ -84,7 +84,7 @@ An output object with `"targets": []` means the requested pairs are fresh for th
 
 ## Do not
 
-- Do not run the selector to choose gates before reviewing. This instruction is for explicit execution.
+- Do not run stale selection to choose gates before reviewing. This instruction is for explicit execution.
 - Do not let the parent agent perform the review judgment when sub-agent delegation is available.
 - Do not invoke retired manual review-writing or ingest commands; use `commonplace-finalize-review-job`.
 - Do not skip a requested gate block in the bundle output.

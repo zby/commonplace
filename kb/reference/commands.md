@@ -140,13 +140,14 @@ commonplace-run-gate-sweep semantic/grounding-alignment --runner claude-code --m
 Create one or more queued review job records in the review database and write their canonical prompts, `MANIFEST.json` files, and artifact paths for live-agent review. Creation is runner-agnostic: `runner`, `runner_model`, and `runner_effort` stay null until execution.
 
 ```bash
-commonplace-review-target-selector --json --model claude-opus-4-6 prose --note kb/notes/my-note.md > targets.json
-commonplace-create-review-jobs --input targets.json --grouping note
-commonplace-create-review-jobs --model claude-opus-4-6 --note kb/notes/my-note.md accessibility prose semantic --grouping note
+commonplace-review-target-selector --mode requested --json --model claude-opus-4-6 accessibility prose semantic --note kb/notes/my-note.md \
+  | commonplace-create-review-jobs --input - --grouping note
+commonplace-review-target-selector --json --model claude-opus-4-6 prose --note kb/notes/my-note.md \
+  | commonplace-create-review-jobs --input - --grouping note
 commonplace-create-review-jobs --model claude-opus-4-6 --pair kb/notes/a.md::prose/source-residue --pair kb/notes/b.md::prose/source-residue --grouping gate --batch-size 5
 ```
 
-The command prints a JSON payload with `input_mode`, `model_partition`, `grouping`, `jobs`, and `skipped_pairs`. Each job includes `review_job_id`, `status`, nullable runner provenance, `packing`, `prompt_path`, `bundle_output_path`, and pair rows with `gate_id`, `pair_status`, `decision`, and `result_path`. `MANIFEST.json` is display/debug output written beside the artifacts, not a returned JSON field; pipeline commands use the DB paths as state. Note-packed jobs use gate-leaf filenames such as `source-residue.md`; gate-packed jobs use note filenames such as `my-note.md`.
+The canonical path is selector JSON piped into `--input -`. The command prints a JSON payload with `input_mode`, `model_partition`, `grouping`, `jobs`, and `skipped_pairs`. Each job includes `review_job_id`, `status`, nullable runner provenance, `packing`, `prompt_path`, `bundle_output_path`, and pair rows with `gate_id`, `pair_status`, `decision`, and `result_path`. `MANIFEST.json` is display/debug output written beside the artifacts, not a returned JSON field; pipeline commands use the DB paths as state. Note-packed jobs use gate-leaf filenames such as `source-residue.md`; gate-packed jobs use note filenames such as `my-note.md`.
 
 ### commonplace-run-review-jobs
 
@@ -218,13 +219,14 @@ commonplace-resolve-gates prose/source-residue semantic/grounding-alignment  # s
 
 ### commonplace-review-target-selector
 
-List stale (note, gate) pairs that need review. Compares current note/gate text hashes against accepted DB snapshots.
+List review target pairs. Default mode lists stale `(note, gate)` pairs by comparing current note/gate text hashes against accepted DB snapshots. `--mode requested` emits the explicitly requested applicable pairs without checking freshness, for piping into `commonplace-create-review-jobs --input -`.
 
 ```bash
 commonplace-review-target-selector prose --model claude-opus-4-6 --note kb/notes kb/reference
 commonplace-review-target-selector prose --model claude-opus-4-6 --current --json          # JSON output
 commonplace-review-target-selector prose --model claude-opus-4-6 --note kb/notes kb/reference --reason note-changed     # filter by staleness reason
 commonplace-review-target-selector prose --note kb/notes kb/reference --reason missing-review     # pairs missing under every model partition
+commonplace-review-target-selector --mode requested prose --model claude-opus-4-6 --note kb/notes/my-note.md --json
 commonplace-review-target-selector prose --model claude-opus-4-6 --ack kb/notes/foo.md:prose/source-residue   # ack a pair
 ```
 

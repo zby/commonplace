@@ -119,7 +119,7 @@ The canonical live path is:
 
 For live agent work, the preferred path is the prompt-plus-finalize helper chain:
 
-1. `commonplace-create-review-jobs`
+1. `commonplace-review-target-selector --mode requested {gate-or-bundle}... --model {model-partition} --note {note} --json | commonplace-create-review-jobs --input - --grouping note`
 2. for each returned job, run `commonplace-claim-review-job --review-job-id {id} --runner {worker} --model {model} [--effort {effort}]`
 3. launch a sub-agent that reads the job's `prompt_path` and writes the job's `bundle_output_path`
 4. run `commonplace-finalize-review-job --review-job-id {id}` for each completed sub-agent output
@@ -205,7 +205,7 @@ Human-readable inspection remains required, but it is now a derived view from DB
 
 Instruction: `kb/instructions/run-review-batches-on-note.md`
 
-1. `commonplace-create-review-jobs --model {model-partition} --note {note} {gate-or-bundle}... --grouping note`
+1. `commonplace-review-target-selector --mode requested --model {model-partition} {gate-or-bundle}... --note {note} --json | commonplace-create-review-jobs --input - --grouping note`
 2. For each dispatched item in the returned `jobs` array, run `commonplace-claim-review-job --review-job-id {id} --runner {worker} --model {model} [--effort {effort}]`
 3. Launch a sub-agent with that job's `prompt_path` and `bundle_output_path`
 4. Each sub-agent writes that job's sentinel-delimited review bundle to `bundle_output_path`

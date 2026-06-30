@@ -12,13 +12,20 @@ from commonplace.review.resolve_gates import resolve_to_gate_ids
 from commonplace.review.review_target_selector import (
     render_grouped,
     render_json,
+    select_requested_gates,
     select_stale_gates,
 )
 from commonplace.review.review_model import normalize_model_partition
 
 
 def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
-    parser = argparse.ArgumentParser(description="List stale (note, gate) review pairs.")
+    parser = argparse.ArgumentParser(description="List review target (note, gate) pairs.")
+    parser.add_argument(
+        "--mode",
+        choices=["stale", "requested"],
+        default="stale",
+        help="Select stale pairs or emit the explicitly requested applicable pairs.",
+    )
     parser.add_argument(
         "gate_or_bundle",
         nargs="*",
@@ -82,18 +89,30 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     else:
         parser.error("provide gate/bundle names or --all-gates")
 
-    if model is None and args.reason not in (None, "missing-review"):
+    if args.mode == "requested" and args.reason is not None:
+        parser.error("--reason is only valid with --mode stale")
+    if args.mode == "requested" and model is None:
+        parser.error("--model is required with --mode requested")
+    if args.mode == "stale" and model is None and args.reason not in (None, "missing-review"):
         parser.error("--model is required unless selecting missing-review coverage")
 
     try:
-        records = select_stale_gates(
-            repo_root,
-            model=model,
-            gate_ids=gate_ids,
-            note_filter=args.note_paths,
-            current_only=args.current,
-            include_diff=args.json,
-        )
+        if args.mode == "requested":
+            records = select_requested_gates(
+                repo_root,
+                gate_ids=gate_ids,
+                note_filter=args.note_paths,
+                current_only=args.current,
+            )
+        else:
+            records = select_stale_gates(
+                repo_root,
+                model=model,
+                gate_ids=gate_ids,
+                note_filter=args.note_paths,
+                current_only=args.current,
+                include_diff=args.json,
+            )
     except (FileNotFoundError, ValueError) as exc:
         parser.error(str(exc))
 

@@ -967,6 +967,65 @@ class TestJsonOutput:
         assert payload["model_partition"] == TEST_MODEL
         assert payload["targets"][0]["gate_id"] == "prose/source-residue"
 
+    def test_requested_mode_emits_explicit_applicable_pairs(self, tmp_path: Path) -> None:
+        build_fixture(tmp_path)
+
+        result = run_cli(
+            "review_target_selector",
+            "--mode",
+            "requested",
+            "--model",
+            TEST_MODEL,
+            "prose",
+            "semantic/grounding-alignment",
+            "--note",
+            "kb/notes/stable.md",
+            "--json",
+            cwd=tmp_path,
+        )
+
+        payload = json.loads(result.stdout)
+        assert payload["model_partition"] == TEST_MODEL
+        assert [(item["gate_id"], item["reason"]) for item in payload["targets"]] == [
+            ("prose/confidence-miscalibration", "requested"),
+            ("prose/source-residue", "requested"),
+            ("semantic/grounding-alignment", "requested"),
+        ]
+
+    def test_requested_mode_json_feeds_create_review_jobs(self, tmp_path: Path) -> None:
+        build_fixture(tmp_path)
+        selector_result = run_cli(
+            "review_target_selector",
+            "--mode",
+            "requested",
+            "--model",
+            TEST_MODEL,
+            "prose",
+            "semantic/grounding-alignment",
+            "--note",
+            "kb/notes/stable.md",
+            "--json",
+            cwd=tmp_path,
+        )
+        input_path = tmp_path / "targets.json"
+        input_path.write_text(selector_result.stdout, encoding="utf-8")
+
+        create_result = run_cli(
+            "create_review_jobs",
+            "--input",
+            "targets.json",
+            "--grouping",
+            "note",
+            cwd=tmp_path,
+            db_path=db_path_for(tmp_path),
+        )
+
+        payload = json.loads(create_result.stdout)
+        assert payload["input_mode"] == "selector"
+        assert payload["model_partition"] == TEST_MODEL
+        assert payload["created_count"] == 2
+        assert [job["pair_count"] for job in payload["jobs"]] == [2, 1]
+
 
 class TestModelOptional:
     def test_cli_allows_missing_review_without_model(self, tmp_path: Path) -> None:
@@ -1013,6 +1072,23 @@ class TestModelOptional:
 
         assert result.returncode == 2
         assert "--model is required with --ack" in result.stderr
+
+    def test_cli_requires_model_for_requested_mode(self, tmp_path: Path) -> None:
+        build_fixture(tmp_path)
+
+        result = run_cli(
+            "review_target_selector",
+            "--mode",
+            "requested",
+            "prose",
+            "--note",
+            "kb/notes/stable.md",
+            cwd=tmp_path,
+            check=False,
+        )
+
+        assert result.returncode == 2
+        assert "--model is required with --mode requested" in result.stderr
 
     def test_ack_gate_review_cli_writes_non_null_review_pair_id(self, tmp_path: Path) -> None:
         fixture = build_fixture(tmp_path)

@@ -96,6 +96,45 @@ def list_current_notes(repo_root: Path) -> list[Path]:
     ]
 
 
+def _select_notes(
+    repo_root: Path,
+    *,
+    note_filter: list[str] | None,
+    current_only: bool,
+) -> list[Path]:
+    if note_filter and current_only:
+        raise ValueError("--note and --current are mutually exclusive")
+
+    if note_filter:
+        notes: list[Path] = []
+        seen: set[Path] = set()
+        for raw in note_filter:
+            for path in _expand_note_filter(repo_root, raw):
+                if path in seen:
+                    continue
+                seen.add(path)
+                notes.append(path)
+        return notes
+    if current_only:
+        return list_current_notes(repo_root)
+    raise ValueError("provide note paths/directories or --current")
+
+
+def _normalize_requested_gate_ids(
+    repo_root: Path,
+    gate_ids: list[str],
+) -> tuple[Path, dict[str, str], list[str]]:
+    gates_dir = review_gates_dir(repo_root)
+    gate_path_by_id: dict[str, str] = {}
+    requested_gate_ids: list[str] = []
+    for raw_gate in gate_ids:
+        gate_path = normalize_gate_path(repo_root, raw_gate)
+        gate_id = gate_id_for_path(repo_root, gate_path)
+        gate_path_by_id[gate_id] = gate_path
+        requested_gate_ids.append(gate_id)
+    return gates_dir, gate_path_by_id, requested_gate_ids
+
+
 @dataclass(frozen=True)
 class StaleGate:
     note_path: str
@@ -143,36 +182,13 @@ def select_stale_gates(
     include_diff: bool = False,
     db_path: Path | None = None,
 ) -> list[StaleGate]:
-    gates_dir = review_gates_dir(repo_root)
-    gate_path_by_id: dict[str, str] = {}
-    requested_gate_ids: list[str] = []
-    for raw_gate in gate_ids:
-        gate_path = normalize_gate_path(repo_root, raw_gate)
-        gate_id = gate_id_for_path(repo_root, gate_path)
-        gate_path_by_id[gate_id] = gate_path
-        requested_gate_ids.append(gate_id)
+    gates_dir, gate_path_by_id, requested_gate_ids = _normalize_requested_gate_ids(repo_root, gate_ids)
     model = model.strip() if model is not None else None
     model = normalize_model_partition(model) if model else None
     if db_path is None:
         db_path = resolve_db_path(repo_root)
 
-    if note_filter and current_only:
-        raise ValueError("--note and --current are mutually exclusive")
-
-    if note_filter:
-        notes: list[Path] = []
-        seen: set[Path] = set()
-        for raw in note_filter:
-            for path in _expand_note_filter(repo_root, raw):
-                if path in seen:
-                    continue
-                seen.add(path)
-                notes.append(path)
-    elif current_only:
-        notes = list_current_notes(repo_root)
-    else:
-        raise ValueError("provide note paths/directories or --current")
-
+    notes = _select_notes(repo_root, note_filter=note_filter, current_only=current_only)
     note_paths = [note_abs.relative_to(repo_root).as_posix() for note_abs in notes]
     ensure_db(db_path)
     with connect(db_path) as conn:
@@ -227,6 +243,30 @@ def select_stale_gates(
             stale.append(StaleGate(note_path, gate_path, staleness.reason))
 
     return sorted(stale, key=lambda s: (s.note_path, s.gate_path))
+
+
+def select_requested_gates(
+    repo_root: Path,
+    *,
+    gate_ids: list[str],
+    note_filter: list[str] | None = None,
+    current_only: bool = False,
+) -> list[StaleGate]:
+    gates_dir, gate_path_by_id, requested_gate_ids = _normalize_requested_gate_ids(repo_root, gate_ids)
+    notes = _select_notes(repo_root, note_filter=note_filter, current_only=current_only)
+
+    requested: list[StaleGate] = []
+    for note_abs in notes:
+        note_path = note_abs.relative_to(repo_root).as_posix()
+        applicable_gate_ids = applicable_gate_ids_for_note(note_abs, requested_gate_ids, gates_dir)
+        for gate_id in applicable_gate_ids:
+            gate_path = gate_path_by_id[gate_id]
+            gate_abs = repo_root / gate_path
+            if not gate_abs.is_file():
+                raise FileNotFoundError(f"Gate not found: {gate_path}")
+            requested.append(StaleGate(note_path, gate_path, "requested"))
+
+    return sorted(requested, key=lambda s: (s.note_path, s.gate_path))
 
 
 def render_json(records: list[StaleGate], *, model_partition: str | None = None) -> str:
