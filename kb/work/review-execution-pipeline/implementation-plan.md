@@ -20,10 +20,8 @@ Mechanical rename:
 
 - `review_runs` -> `review_jobs`
 - `review_run_id` -> `review_job_id`
-- `review_pairs` -> `review_job_items`
-- `review_pair_id` -> `review_job_item_id`
 
-Phase 2 starts with this mechanical rename. It may be its own commit, but it is the first Phase 2 slice so every new command, helper, migration, JSON shape, and test uses the target job vocabulary from the start. Do not introduce behavioral changes while this churn is in flight.
+Phase 2 starts with this mechanical rename. It may be its own commit, but it is the first Phase 2 slice so every new command, helper, migration, JSON shape, and test uses the target job vocabulary from the start. `review_pairs` and pair vocabulary stay because the pair is the load-bearing `(note_path, gate_path)` protocol unit. Do not introduce behavioral changes while this churn is in flight.
 
 ### Queue state lives on jobs
 
@@ -37,10 +35,10 @@ queued, running, completed, failed
 
 Meanings:
 
-- `queued`: prompt and item rows exist; no worker has claimed execution.
+- `queued`: prompt and pair rows exist; no worker has claimed execution.
 - `running`: a subprocess worker has claimed the job.
-- `completed`: all required items completed and accepted.
-- `failed`: preparation, execution, parse, or coverage failed; salvaged completed items may still be retained per existing policy.
+- `completed`: all required pairs completed and accepted.
+- `failed`: preparation, execution, parse, or coverage failed; salvaged completed pairs may still be retained per existing policy.
 
 ### Job timing must be honest
 
@@ -102,11 +100,11 @@ If a future recovery workflow needs a noncanonical path, add an explicit `--bund
 - `acceptance_events`
 - generated per-pair review-result Markdown frontmatter
 
-It should not be duplicated on `review_job_items`. Completed items inherit model through their job.
+It should not be duplicated on `review_pairs`. Completed pairs inherit model through their job.
 
 `model_partition` remains the freshness and acceptance key. Treat it as opaque; do not add a `model_partitions` table in Phase 2.
 
-Store the concrete runner model separately as nullable `review_jobs.runner_model`. `runner_model` is the CLI/model-adapter argument passed to the subprocess runner when it is known. It may be `NULL` for live-agent execution or runner-default execution. It is not part of freshness identity, and changing a runner default later must not re-key existing jobs or acceptances.
+For the first version, do not store a separate runner-model column. Subprocess execution can pass the job's `model_partition` as the runner model argument and store only `runner` as execution provenance. If queued execution later needs to distinguish freshness partition from runner argument, add nullable `review_jobs.runner_model` in the runner phase or a later migration.
 
 A future `model_partitions` registry may centralize aliases and runner defaults, but that is deferred to a proposal rather than implemented in this queue refactor: [model partition registry](../../reference/proposals/model-partition-registry.md).
 
@@ -115,18 +113,15 @@ Generated canonical per-pair result files should include frontmatter like:
 ```yaml
 ---
 review_job_id: 42
-review_job_item_id: 101
+review_pair_id: 101
 note_path: kb/notes/example.md
 gate_path: kb/instructions/review-gates/prose/source-residue.md
 model_partition: claude-opus-4-6
 runner: claude-code
-runner_model: claude-opus-4-6
 decision: warn
 reviewed_at: "2026-06-28T12:00:00+00:00"
 ---
 ```
-
-Omit `runner_model` from generated frontmatter when the job has no concrete runner-model value.
 
 The raw `bundle-output.md` can stay as the runner/agent output contract unless the parser is deliberately made frontmatter-tolerant.
 
@@ -135,16 +130,15 @@ The raw `bundle-output.md` can stay as the runner/agent output contract unless t
 Create one internal value object, named `ReviewJobPlan` or `PreparedReviewJob`, that represents the executable/finalizable job shape:
 
 - job id;
-- pending/completed item rows;
+- pending/completed pair rows;
 - prompt path;
 - bundle output path;
-- per-item result paths;
+- per-pair result paths;
 - packing;
 - runner;
-- model partition;
-- runner model.
+- model partition.
 
-Creation commands write this shape; listing, subprocess execution, and finalization load it. Do not let each command rediscover artifact paths, packing, or item metadata differently.
+Creation commands write this shape; listing, subprocess execution, and finalization load it. Do not let each command rediscover artifact paths, packing, or pair metadata differently.
 
 ### Selector JSON is the public handoff
 
@@ -154,16 +148,18 @@ The selector JSON is the only public target-list handoff into job creation. Wrap
 
 Target ack semantics are stricter than the current implementation.
 
-Ack means: an existing completed review remains valid for the current note/gate snapshots. Therefore an acceptance event written by ack must point to the completed review item being carried forward.
+Ack means: an existing completed review remains valid for the current note/gate snapshots. Therefore an acceptance event written by ack must point to the completed review pair being carried forward.
 
-**The review-less ack is an accident, not a feature.** Every real ack today is a trivial-change re-baseline of a pair that was already reviewed: `ack-trivial-note-changes` re-baselines an existing review across an unwatched edit, and `ack-gate-review` is the manual form of the same move. The current `accepted_review_pair_id = NULL` is simply `ack_pairs` never looking up the prior review item and discarding the link — not an operator ever asserting "accept this with no review behind it." No waiver/suppression workflow exists or is used: nothing accepts a never-reviewed pair on operator fiat. So requiring the link removes no used capability; it recovers provenance that was being thrown away.
+**The review-less ack is an accident, not a feature.** Every real ack today is a trivial-change re-baseline of a pair that was already reviewed: `ack-trivial-note-changes` re-baselines an existing review across an unwatched edit, and `ack-gate-review` is the manual form of the same move. The current `accepted_review_pair_id = NULL` is simply `ack_pairs` never looking up the prior review pair and discarding the link — not an operator ever asserting "accept this with no review behind it." No waiver/suppression workflow exists or is used: nothing accepts a never-reviewed pair on operator fiat. So requiring the link removes no used capability; it recovers provenance that was being thrown away.
 
 Target rule:
 
-- if a completed review item exists for `(note_path, gate_path, model_partition)`, ack appends an acceptance event with the current note/gate snapshots and that review item id;
-- if no completed review item exists, ack fails and the pair must be reviewed.
+- if a completed review pair exists for `(note_path, gate_path, model_partition)`, ack appends an acceptance event with the current note/gate snapshots and that review pair id;
+- if no completed review pair exists, ack fails and the pair must be reviewed.
 
-`accepted_review_job_item_id` becomes `NOT NULL`. If a deliberate "waive a gate without reviewing" operation is ever wanted, add it as an explicit separate event that records operator and reason — do not reintroduce a null-review acceptance.
+Ack lookup is path-keyed: find the latest completed review pair for the same `note_path`, `gate_path`, and `model_partition`. Content hashes and snapshot ids are the new accepted freshness baseline, not the identity used to choose the carried-forward review.
+
+The first version changes the ack write path only: new ack events store `accepted_review_pair_id`, while legacy nullable rows remain readable through existing fallback logic. A later hardening migration can backfill old nulls and make `accepted_review_pair_id` `NOT NULL`. If a deliberate "waive a gate without reviewing" operation is ever wanted, add it as an explicit separate event that records operator and reason — do not reintroduce a null-review acceptance.
 
 ### Do not relocate review records
 
@@ -193,10 +189,10 @@ This refactor changes the shipped review architecture and its persisted schema, 
 **Phase 2 takes a later number** (034+, assigned when it lands). It should record:
 
 - review execution as a queued-job pipeline with two execution media (subprocess runner, orchestrator-driven agents) over one job state machine;
-- the acceptance-provenance tightening — ack carries forward an existing review item, and the review-less acceptance event is removed as an accident rather than a deprecated feature;
+- the acceptance-provenance tightening — ack carries forward an existing review pair, and the review-less acceptance event is removed as an accident rather than a deprecated feature;
 - the explicit no-relocation simplification for review records.
 
-The Phase 2 ADR supersedes [ADR 031](../../reference/adr/031-review-state-uses-run-owned-review-pairs.md) (`review_pairs` → `review_jobs` + `review_job_items`) and extends [ADR 029](../../reference/adr/029-review-execution-unified-on-note-gate-pairs.md), [ADR 030](../../reference/adr/030-harness-facing-seams-batch-endpoints-and-runner-adapters.md), and [ADR 033](../../reference/adr/033-honest-review-run-state.md). The acceptance-semantics change may warrant its own sibling ADR; decide when drafting. The `queued` state and honest clock are *not* Phase 2's to record as new decisions — ADR 033 owns them.
+The Phase 2 ADR updates [ADR 031](../../reference/adr/031-review-state-uses-run-owned-review-pairs.md) for the `review_runs` -> `review_jobs` execution-record rename while keeping `review_pairs`, and extends [ADR 029](../../reference/adr/029-review-execution-unified-on-note-gate-pairs.md), [ADR 030](../../reference/adr/030-harness-facing-seams-batch-endpoints-and-runner-adapters.md), and [ADR 033](../../reference/adr/033-honest-review-run-state.md). The acceptance-semantics change may warrant its own sibling ADR; decide when drafting. The `queued` state and honest clock are *not* Phase 2's to record as new decisions — ADR 033 owns them.
 
 ## Target Schema Shape
 
@@ -206,8 +202,7 @@ This is the target shape, not necessarily one patch.
 review_jobs (
     review_job_id INTEGER PRIMARY KEY,
     model_partition TEXT NOT NULL,
-    runner TEXT NOT NULL,
-    runner_model TEXT,
+    runner TEXT,
     created_at TEXT NOT NULL,
     started_at TEXT,
     completed_at TEXT,
@@ -219,20 +214,20 @@ review_jobs (
     packing TEXT NOT NULL CHECK (packing IN ('note', 'gate'))
 )
 
-review_job_items (
-    review_job_item_id INTEGER PRIMARY KEY,
+review_pairs (
+    review_pair_id INTEGER PRIMARY KEY,
     review_job_id INTEGER NOT NULL REFERENCES review_jobs(review_job_id) ON DELETE CASCADE,
     note_path TEXT NOT NULL,
     gate_path TEXT NOT NULL,
-    item_ordinal INTEGER NOT NULL,
-    item_status TEXT NOT NULL CHECK (item_status IN ('pending', 'completed', 'missing')),
+    pair_ordinal INTEGER NOT NULL,
+    pair_status TEXT NOT NULL CHECK (pair_status IN ('pending', 'completed', 'missing')),
     decision TEXT CHECK (decision IN ('pass', 'warn', 'fail', 'error', 'unknown')),
     reviewed_note_snapshot_id INTEGER REFERENCES review_file_snapshots(snapshot_id),
     reviewed_gate_snapshot_id INTEGER REFERENCES review_file_snapshots(snapshot_id),
     result_path TEXT,
     reviewed_at TEXT,
     UNIQUE (review_job_id, note_path, gate_path),
-    UNIQUE (review_job_id, item_ordinal)
+    UNIQUE (review_job_id, pair_ordinal)
 )
 
 acceptance_events (
@@ -240,18 +235,18 @@ acceptance_events (
     note_path TEXT NOT NULL,
     gate_path TEXT NOT NULL,
     model_partition TEXT NOT NULL,
-    accepted_review_job_item_id INTEGER NOT NULL REFERENCES review_job_items(review_job_item_id),
+    accepted_review_pair_id INTEGER REFERENCES review_pairs(review_pair_id),
     accepted_note_snapshot_id INTEGER REFERENCES review_file_snapshots(snapshot_id),
     accepted_gate_snapshot_id INTEGER REFERENCES review_file_snapshots(snapshot_id),
     accepted_at TEXT NOT NULL
 )
 ```
 
-Path keys stay direct on job items and acceptance events. No `review_targets` table in v1.
+Path keys stay direct on review pairs and acceptance events. No `review_targets` table in v1.
 
-**Artifact paths are stored in v1.** `prompt_path` and `bundle_output_path` stay on `review_jobs` because the command design depends on them: `commonplace-finalize-review-job --review-job-id` loads `bundle_output_path` from the job, and `commonplace-review-job-list` shows both. Per-item `result_path` likewise stays on `review_job_items`. Deriving these from id instead of storing them is a separate later option, not v1 — keeping them removes a load-bearing column the rest of the plan reads.
+**Artifact paths are stored in v1.** `prompt_path` and `bundle_output_path` stay on `review_jobs` because the command design depends on them: `commonplace-finalize-review-job --review-job-id` loads `bundle_output_path` from the job, and `commonplace-review-job-list` shows both. Per-pair `result_path` likewise stays on `review_pairs`. Deriving these from id instead of storing them is a separate later option, not v1 — keeping them removes a load-bearing column the rest of the plan reads.
 
-**`packing` persists the physical prompt shape only: `note` or `gate`.** The `explicit` and `bundle` values that appear on `commonplace-create-review-jobs` are *groupings*, not stored packing — they describe how targets are grouped at creation time and each resolves to a persisted `note` or `gate` packing. Do not widen the `packing` CHECK for them.
+**`packing` persists the physical prompt shape only: `note` or `gate`.** The `--grouping` values on `commonplace-create-review-jobs` are *groupings*, not stored packing — `note` and `gate` grouping each resolve to the matching persisted packing. Do not add grouping-only values to the `packing` CHECK.
 
 ## Command Shape
 
@@ -283,29 +278,30 @@ Selection emits stale pairs only. It does not own packing, job creation, executi
 ### 2. Create queued jobs
 
 ```bash
-commonplace-create-review-jobs --input targets.json --grouping note --runner codex --runner-model gpt-5
-commonplace-create-review-jobs --input targets.json --grouping gate --batch-size 5 --runner claude-code --runner-model claude-opus-4-6
+commonplace-create-review-jobs --input targets.json --grouping note
+commonplace-create-review-jobs --input targets.json --grouping gate --batch-size 5
 ```
 
 Responsibilities:
 
 - read selector output from file or stdin;
-- take `model_partition` from the selector input; `--model` is optional and, if given, must match the input's `model_partition` (mismatch is an error). Do not silently let a flag override the declared input model;
-- store `--runner-model` on the job when supplied; leave `runner_model` null when the runner should use its default or when the job is live-agent/orchestrator-driven;
+- take concrete `model_partition` from the selector input; `--model` is optional and, if given, must match the input's `model_partition` (mismatch is an error). Do not silently let a flag override the declared input model;
+- reject model-agnostic selector output as job-creation input in the first version; use it only for coverage/reporting;
+- do not accept `--runner` or `--runner-model` during creation; runner provenance is set by execution;
 - treat selector JSON as the public handoff; wrappers must call the selector or pass its JSON through rather than constructing a private target payload;
 - group targets by grouping;
 - filter inapplicable pairs defensively;
 - capture note/gate snapshots;
-- create `queued` jobs and pending job items;
+- create `queued` jobs and pending review pairs;
 - render prompt and manifest;
 - assign the job-owned `bundle-output.md` path.
 
 Groupings (the `--grouping` flag) describe how targets are grouped. Each resolves to a persisted `packing` of `note` or `gate` — the groupings are not new `packing` enum values (see [Target Schema Shape](#target-schema-shape)):
 
 - `note` → `packing = note`: group selected pairs by note and bundle/lens;
-- `gate` → `packing = gate`: group selected pairs by gate, chunk notes by `--batch-size`;
-- `explicit` → `packing = note` or `gate`: accept an already grouped same-axis batch from an orchestrator, persisting whichever physical shape it is;
-- `bundle` → `packing = note`: stricter note grouping that preserves bundle-local prompts, if needed.
+- `gate` → `packing = gate`: group selected pairs by gate, chunk notes by `--batch-size`.
+
+There is no separate `explicit` or `bundle` grouping. A pre-grouped same-axis batch (the old `prepare-review-batch` input) is just a single-note input under `--grouping note` or a single-gate input under `--grouping gate`; each yields one job. See [phase-3-job-creation-and-listing.md](./phase-3-job-creation-and-listing.md).
 
 ### 3. Inspect queued jobs
 
@@ -315,7 +311,7 @@ commonplace-review-job-list --status queued
 commonplace-review-job-list --json
 ```
 
-Show job id, status, prompt path, output path, item count, packing, runner, runner model when present, model partition, age, and failure reason.
+Show job id, status, prompt path, output path, pair count, packing, runner when present, model partition, age, and failure reason.
 
 ### 4. Execute queued jobs through subprocesses
 
@@ -328,7 +324,7 @@ Responsibilities:
 
 - claim queued jobs with the atomic `queued -> running` update;
 - invoke the runner adapter for each prompt;
-- pass the job's `runner_model` to the runner adapter when non-null, and omit a model argument when it is null;
+- pass the job's `model_partition` as the runner model argument in the first version;
 - write `bundle-output.md` and debug logs;
 - finalize each job;
 - enforce parallelism, retry, and usage-exhaustion policy.
@@ -365,9 +361,9 @@ Responsibilities:
 - reject `completed` and `failed`;
 - read the job-owned `bundle-output.md`;
 - parse output keyed by `(note_path, gate_path)`;
-- salvage completed items when some pairs are missing;
+- salvage completed pairs when some pairs are missing;
 - write canonical per-pair result Markdown with frontmatter;
-- append acceptance events for completed items;
+- append acceptance events for completed pairs;
 - mark the job `completed` or `failed`.
 
 ## Existing Command Fates
@@ -375,13 +371,13 @@ Responsibilities:
 | Current command | Fate |
 |---|---|
 | `commonplace-review-target-selector` | Stage 1 selector, stabilized JSON output |
-| `commonplace-prepare-review-batch` | Folded into `commonplace-create-review-jobs --grouping explicit`; removed |
+| `commonplace-prepare-review-batch` | Removed; its single same-axis batch is a single-group `--grouping note` or `--grouping gate` input |
 | `commonplace-create-review-runs` | Replaced by `commonplace-create-review-jobs --grouping note`; removed |
 | `commonplace-run-review-bundles` | Retained as a thin ergonomic wrapper: create note-packed jobs for one note, then run immediately |
 | `commonplace-run-gate-sweep` | Retired into `select -> create-jobs --grouping gate -> run-review-jobs` |
 | `commonplace-review-sweep` | Retired into `select -> create-jobs -> run-review-jobs --parallel N` |
 | `commonplace-ingest-bundle-output` / `commonplace-ingest-batch-output` | Removed immediately; replaced by `commonplace-finalize-review-job --review-job-id` |
-| `commonplace-ack-gate-review` / `commonplace-ack-trivial-note-changes` | Retained, but require an existing completed review item and carry it forward |
+| `commonplace-ack-gate-review` / `commonplace-ack-trivial-note-changes` | Retained, but require an existing completed review pair and carry it forward |
 
 ## Migration Invariants
 
@@ -389,8 +385,8 @@ Each schema change runs against an existing populated review DB, not a fresh one
 
 0. **Schema changes go through explicit migrations.** Phase 1 added the `user_version` migration runner and table-rebuild path, consuming schema version 1. Phase 2 starts at version 2 and must add ordered migrations on top of that substrate for every table rename, column rename, nullability change, index change, and CHECK change; editing `review-schema.sql` alone is insufficient for existing stores.
 1. **Queued ingest path stays widened in both gates.** Phase 1 widened both `batch.ingest` and `record_and_finalize_run` to accept `queued` or `running`. Phase 2 must preserve that behavior when the APIs are renamed to jobs; updating only the public finalize command while regressing the shared finalization gate would recreate the old bug.
-2. **Null acks must be backfilled before the `NOT NULL` constraint.** Existing `acceptance_events` rows have `accepted_review_pair_id = NULL`, and readers deliberately recover them: `_effective_review` (`review_db.py:881`) and prune's `_current_review_pair_ids` (`prune_superseded_reviews.py:56`) both read a null ack *through* to the latest completed pair for its `(note_path, gate_path, model_partition)`. Tightening to `NOT NULL` requires: (a) backfill each null row to the same latest-completed item the readers would have resolved, failing loudly if none exists; (b) only then add the constraint; (c) only then remove the read-through fallback from those readers. A null row with no resolvable completed pair is a data-integrity stop, not a silent drop. The migration should print or return a diagnostic table with `acceptance_event_id`, `note_path`, `gate_path`, and `model_partition`; the operator repairs the rows by re-reviewing or by explicit manual repair, then reruns the migration.
-3. **Item model partition has live readers and tooling.** Dropping `review_job_items.model_partition` is not just a column drop: the `latest_review_pairs` CTE partitions by `rp.model_partition`, the index `idx_review_pairs_note_gate_model_partition` keys on it, and `rekey_model_partition` updates it. Migration must replace the index, rewrite those queries to join model through `review_jobs`, and drop the column from the rekey tool — together, or the rekey tool writes a column that no longer exists.
+2. **Null acks must be backfilled before the `NOT NULL` constraint.** Existing `acceptance_events` rows have `accepted_review_pair_id = NULL`, and readers deliberately recover them: `_effective_review` (`review_db.py:881`) and prune's `_current_review_pair_ids` (`prune_superseded_reviews.py:56`) both read a null ack *through* to the latest completed pair for its `(note_path, gate_path, model_partition)`. Tightening to `NOT NULL` requires: (a) backfill each null row to the same latest-completed pair the readers would have resolved, failing loudly if none exists; (b) only then add the constraint; (c) only then remove the read-through fallback from those readers. A null row with no resolvable completed pair is a data-integrity stop, not a silent drop. The migration should print or return a diagnostic table with `acceptance_event_id`, `note_path`, `gate_path`, and `model_partition`; the operator repairs the rows by re-reviewing or by explicit manual repair, then reruns the migration.
+3. **Pair model partition has live readers and tooling.** Dropping `review_pairs.model_partition` (the v1 simplified model layout, landing in Slice 3 / Phase 3) is not just a column drop: the `latest_review_pairs` CTE partitions by `rp.model_partition`, the index `idx_review_pairs_note_gate_model_partition` keys on it, and `rekey_model_partition` updates it. Migration must replace the index, rewrite those queries to join model through `review_jobs`, and drop the column from the rekey tool — together, or the rekey tool writes a column that no longer exists.
 
 ## Migration Mechanism
 
@@ -435,8 +431,10 @@ Phase 2 begins with the `review_runs`→`review_jobs` rename, then builds the co
 
 ### Slice 2: Mechanical rename
 
+Detailed implementation plan: [phase-2-mechanical-job-rename.md](./phase-2-mechanical-job-rename.md).
+
 - Rename run terminology to job terminology across schema, DB helpers, command output, manifests, and docs.
-- Rename acceptance-event references from `accepted_review_pair_id` to `accepted_review_job_item_id`.
+- Keep `review_pairs`, `review_pair_id`, and `accepted_review_pair_id` vocabulary unchanged.
 - Keep this slice mechanical: no new command behavior, grouping behavior, ack semantics, or runner changes.
 - Implement the rename as migration version 2 or later, preserving Phase 1's `created_at`, nullable `started_at`, `queued` status, and created-time index semantics.
 
@@ -448,111 +446,39 @@ Tests:
 
 ### Slice 3: Stable selector and job creation
 
-- Stabilize `commonplace-review-target-selector --json` as the target-list producer contract.
-- Add `commonplace-create-review-jobs`.
-- Add nullable `review_jobs.runner_model` and persist `--runner-model` when supplied.
-- Introduce the internal `ReviewJobPlan` / `PreparedReviewJob` loader used by the new job commands.
-- Move grouping responsibility into job creation.
-- Render prompt/manifests during job creation.
+Detailed implementation plan: [phase-3-job-creation-and-listing.md](./phase-3-job-creation-and-listing.md).
 
-Tests:
-
-- selector JSON includes top-level `model_partition`;
-- create jobs rejects a `--model` value that does not match selector JSON;
-- create jobs stores `runner_model` when supplied and leaves it null when omitted;
-- wrappers consume selector JSON or selector functions instead of private target payloads;
-- note grouping produces one job per note/bundle group;
-- gate grouping chunks as requested;
-- dry/inapplicable targets are handled consistently.
+Stabilize concrete model-specific selector JSON, create queued jobs from that handoff, add shared job-plan loading, and add job listing. Adopt the v1 simplified model layout in the same migration: drop `review_pairs.model_partition`, join model through `review_jobs`, and update the readers and `rekey_model_partition` that touch it (see invariant 3). Defer `runner_model`.
 
 ### Slice 4: Job-owned finalization
 
-- Add `commonplace-finalize-review-job --review-job-id`.
-- Read `bundle_output_path` from the job.
-- Load job/item/artifact metadata through the shared job-plan object.
-- Remove both old public ingest commands immediately: `commonplace-ingest-bundle-output` and `commonplace-ingest-batch-output`.
-- Remove v1 path override.
-- Keep recovery by editing the canonical output file in place.
+Detailed implementation plan: [phase-4-job-owned-finalization.md](./phase-4-job-owned-finalization.md).
 
-Tests:
+Finalize by job id using persisted output paths, preserve salvage behavior, write result provenance frontmatter, and retire explicit ingest surfaces.
 
-- finalization reads job-owned output;
-- missing output file errors clearly;
-- old `--input-file` surface and old ingest commands are rejected/absent.
+### Slice 5: Subprocess job runner
 
-### Slice 5: Model provenance and item model cleanup
+Detailed implementation plan: [phase-5-subprocess-job-runner.md](./phase-5-subprocess-job-runner.md).
 
-This is more than a column drop — see [Migration Invariants](#migration-invariants) #3.
-
-- Write `model_partition`, `runner`, and optional `runner_model` into generated per-pair result Markdown frontmatter (do this first, so artifacts stay self-describing before the column goes).
-- Rewrite queries that read `review_pairs.model_partition` to join model through `review_jobs` — notably the `latest_review_pairs` CTE in `_effective_review`.
-- Replace the index `idx_review_pairs_note_gate_model_partition` with one keyed on the columns that remain.
-- Drop `review_job_items.model_partition` and remove it from `rekey_model_partition` in the same migration.
-- Keep the `model_partitions` registry out of this slice; the deferred registry proposal is for alias/default metadata, not review identity.
-
-Tests:
-
-- result Markdown frontmatter includes `model_partition`;
-- result Markdown frontmatter includes `runner_model` only when the job has one;
-- warn selector, effective-review lookup, and pruning still resolve model through the job;
-- `rekey_model_partition` updates jobs and acceptance events only, with no reference to the dropped column;
-- acceptance state remains keyed by `(note_path, gate_path, model_partition)`.
+Run queued jobs through subprocess adapters, starting sequentially, using atomic claim and shared finalization.
 
 ### Slice 6: Ack provenance
 
-This slice corrects the accidental review-less ack, not a deprecation of a used feature (see the ack design decision). It carries a one-time migration — see [Migration Invariants](#migration-invariants) #2 — so the steps are ordered:
+Detailed implementation plan: [phase-6-ack-provenance.md](./phase-6-ack-provenance.md).
 
-- Change ack to find the existing completed review item for `(note_path, gate_path, model_partition)` and store its id on the acceptance event; keep accepted snapshot ids as the current note/gate snapshots at ack time.
-- Backfill existing null `accepted_review_job_item_id` rows to the latest-completed item their readers already resolve to; fail loudly on any null row with no resolvable completed item.
-- Report unresolved rows as `acceptance_event_id`, `note_path`, `gate_path`, and `model_partition` so the operator can re-review or manually repair them before rerunning the migration.
-- Only after backfill, make `accepted_review_job_item_id` `NOT NULL`.
-- Only after the constraint holds, remove the read-through-to-latest fallback from `_effective_review` (`review_db.py:881`) and prune's `_current_review_pair_ids` (`prune_superseded_reviews.py:56`).
-- Fail ack when no completed item exists.
-
-Tests:
-
-- ack after a note-only trivial change carries forward the old review item and new note snapshot;
-- ack with no completed review fails;
-- backfill maps each legacy null ack to the same item the old read-through resolved; a null ack with no completed pair stops the migration;
-- after fallback removal, effective-review and pruning still return the carried-forward item;
-- current acceptance points to the carried-forward review item;
-- warn selector can still load the review text from the accepted item.
+Require new ack writes to carry forward an existing completed review pair using `(note_path, gate_path, model_partition)` lookup. Defer legacy null backfill, `NOT NULL`, and fallback removal.
 
 ### Slice 7: No review relocation
 
-- Remove review DB rekeying from relocation hooks for the target v1 path.
-- Treat moved paths as needing review under the new path.
-- Keep old path-keyed review history as historical evidence only.
+Detailed implementation plan: [phase-7-no-review-relocation.md](./phase-7-no-review-relocation.md).
 
-Tests:
+Remove review-state rekeying from relocation flows and treat moved paths as needing fresh review.
 
-- relocating a note does not mutate review job items or acceptance events;
-- selector reports the moved path as needing review unless separately reviewed.
+### Slice 8: Promote to an ADR and update reference docs
 
-### Slice 8: Subprocess job runner
+Detailed implementation plan: [phase-8-docs-adr-and-workshop-close.md](./phase-8-docs-adr-and-workshop-close.md).
 
-- Add `commonplace-run-review-jobs` with sequential execution first.
-- Use existing runner adapters.
-- Claim jobs with the atomic `queued -> running` update.
-- Pass `runner_model` to the runner adapter when non-null; omit model argument when null.
-- Preserve usage-exhaustion behavior.
-- Move existing `review_sweep` parallelism here after sequential behavior is stable.
-- For parallel mode, use one SQLite connection per worker, short transactions, and `busy_timeout`; never hold a transaction while the runner process is executing.
-
-Tests:
-
-- sequential runner completes queued jobs;
-- two workers cannot claim the same queued job;
-- runner receives `runner_model` when set and uses runner default behavior when null;
-- failures mark jobs failed and preserve salvaged completed items;
-- usage exhaustion stops subsequent jobs.
-
-### Slice 9: Promote to an ADR and update reference docs
-
-- Draft the Phase 2 ADR (034+, assigned when it lands) capturing the queued-job pipeline, the job state machine, the acceptance-provenance change, and the no-relocation simplification (see [Promotion: write an ADR](#promotion-write-an-adr)).
-- Mark it superseding ADR 031 and extending ADR 029 / 030.
-- Update `kb/reference/review-architecture.md` to describe the queued-job model and the new command stages.
-- Close the workshop: promote durable artifacts, then delete the work folder.
+Promote ADR/reference docs, clean up old command documentation, and close the workshop when no active design remains.
 
 ## Non-goals
 
@@ -562,7 +488,7 @@ Tests:
 - Do not relocate historical review records on note move.
 - Do not introduce `review_targets` in v1.
 - Do not introduce a `model_partitions` table in Phase 2; keep the deferred registry in `kb/reference/proposals/`.
-- Do not preserve review-less acceptance events as a waiver mechanism; they are an accident being removed, not a feature. A deliberate waive operation, if ever needed, is a separate explicit event.
+- Do not preserve review-less acceptance events as a waiver mechanism. First stop writing them; later backfill and constrain legacy rows. A deliberate waive operation, if ever needed, is a separate explicit event.
 - Do not reset failed jobs to `queued` in v1.
 - Do not expose an output path override in v1 finalization.
 - Do not switch this workshop to the content-hash/event-log source-of-truth alternative; that remains owned by `src-architecture-alternatives`.
@@ -572,5 +498,5 @@ Tests:
 1. Orchestrator jobs do not need a formal lease/timeout in v1; parent listing plus manual recovery is enough.
 2. `commonplace-ingest-bundle-output` and `commonplace-ingest-batch-output` are replaced by `commonplace-finalize-review-job --review-job-id`; no compatibility wrapper is kept.
 3. `prompt_path`, `bundle_output_path`, and `result_path` stay stored in v1 because the command surface reads them ([Target Schema Shape](#target-schema-shape)). Deriving paths from id instead is a possible later change, not part of this work.
-4. `runner_model` is stored on jobs as nullable execution metadata. `model_partition` remains the opaque freshness/acceptance key.
+4. `runner_model` is deferred from the first version. `model_partition` remains the opaque freshness/acceptance key and can be passed to subprocess runners as the first runner-model argument.
 5. The `model_partitions` table is deferred to a reference proposal about aliases, validation, and default runner-model lookup.

@@ -1,12 +1,12 @@
 # Phase 1: Honest job state
 
-**Status: ready to implement.** This is the uncontested first phase extracted from [implementation-plan.md](./implementation-plan.md). It carries no new commands, no acceptance-data migration, no acceptance-semantics change, and no rename. Everything else in the queued-job design stays in the main plan as Phase 2 (design, not yet scheduled).
+**Status: implemented.** This was the uncontested first phase extracted from [implementation-plan.md](./implementation-plan.md), and is recorded by [ADR 033](../../reference/adr/033-honest-review-run-state.md). It carried no new commands, no acceptance-data migration, no acceptance-semantics change, and no rename. Everything else in the queued-job design stays in the main plan as Phase 2.
 
 ## Why this is worth doing on its own
 
 The live-agent / orchestrator path records a prepared prompt as `running` before any reviewer has touched it: `src/commonplace/review/review_db.py:create_run_with_pairs` hardcodes `status="running"`, and `review_runs.started_at` is `NOT NULL`, so a prepared run must claim a start time it does not have. That is a real bug in the current system, independent of the queue.
 
-Phase 1 fixes it by giving review runs a `queued` state and an honest clock. It is also a strict prerequisite for the queued-job pipeline, so none of the work is wasted if Phase 2 slips.
+Phase 1 fixed it by giving review runs a `queued` state and an honest clock. It is also a strict prerequisite for the queued-job pipeline, so none of the work is wasted if Phase 2 slips.
 
 ## Scope
 
@@ -17,7 +17,7 @@ In scope:
 - the two code gates that assume `running`;
 - the run-creation callers that currently rely on the hardcoded `running` default.
 
-Out of scope (stays Phase 2): the `create-review-jobs` / `run-review-jobs` / `job-list` commands, the shared execution core, the selector contract reshape, dropping item-level `model_partition`, ack provenance, no-relocation, the parallel runner, and the `review_runs`→`review_jobs` rename. **Phase 1 keeps the current names** (`review_runs`, `review_pairs`) to stay minimal; the rename is the first task of Phase 2.
+Out of scope (stays Phase 2): the `create-review-jobs` / `run-review-jobs` / `job-list` commands, the shared execution core, the selector contract reshape, dropping pair-level `model_partition`, ack provenance, no-relocation, the parallel runner, and the `review_runs`->`review_jobs` rename. **Phase 1 keeps the current names** (`review_runs`, `review_pairs`) to stay minimal; the rename is the first task of Phase 2.
 
 ## Schema change
 
