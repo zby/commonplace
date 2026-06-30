@@ -56,7 +56,7 @@ def capture_review_inputs(
                 reviewed_note_snapshot_id=note_snapshots[note_path].snapshot_id,
                 reviewed_gate_snapshot_id=gate_snapshots[gate_path].snapshot_id,
             )
-            for ordinal, (note_path, gate_path) in enumerate(pairs)
+            for ordinal, (note_path, gate_path) in enumerate(pairs, start=1)
         ],
         note_texts={
             note_path: snapshot.content_text

@@ -229,18 +229,25 @@ def select_stale_gates(
     return sorted(stale, key=lambda s: (s.note_path, s.gate_path))
 
 
-def render_json(records: list[StaleGate]) -> str:
+def render_json(records: list[StaleGate], *, model_partition: str | None = None) -> str:
     items = []
     for record in records:
         entry: dict[str, str] = {
             "note_path": record.note_path,
             "gate_path": record.gate_path,
+            "gate_id": record.gate_id,
             "reason": record.reason,
         }
         if record.diff is not None:
             entry["diff"] = record.diff
         items.append(entry)
-    return json.dumps(items, indent=2)
+    return json.dumps(
+        {
+            "model_partition": model_partition,
+            "targets": items,
+        },
+        indent=2,
+    )
 
 
 def print_grouped(records: list[StaleGate]) -> None:

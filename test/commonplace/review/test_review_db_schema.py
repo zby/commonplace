@@ -242,6 +242,13 @@ def test_ensure_db_initializes_schema_that_can_store_current_acceptance(tmp_path
         ).fetchone()
         user_version = conn.execute("PRAGMA user_version").fetchone()[0]
         job_columns = {row["name"]: row for row in conn.execute("PRAGMA table_info(review_jobs)").fetchall()}
+        pair_columns = {row["name"] for row in conn.execute("PRAGMA table_info(review_pairs)").fetchall()}
+        index_names = {
+            row["name"]
+            for row in conn.execute(
+                "SELECT name FROM sqlite_master WHERE type = 'index'"
+            ).fetchall()
+        }
         has_legacy_runs = conn.execute(
             """
             SELECT 1
@@ -260,6 +267,13 @@ def test_ensure_db_initializes_schema_that_can_store_current_acceptance(tmp_path
     assert user_version == review_db.LATEST_REVIEW_SCHEMA_VERSION
     assert "created_at" in job_columns
     assert job_columns["started_at"]["notnull"] == 0
+    assert job_columns["runner"]["notnull"] == 0
+    assert "runner_model" in job_columns
+    assert "runner_effort" in job_columns
+    assert "prompt_path" in job_columns
+    assert "model_partition" not in pair_columns
+    assert "idx_review_pairs_note_gate" in index_names
+    assert "idx_review_pairs_note_gate_model_partition" not in index_names
     assert has_legacy_runs is None
 
 
@@ -273,13 +287,14 @@ def test_ensure_db_migrates_legacy_user_version_zero_store(tmp_path: Path) -> No
         user_version = conn.execute("PRAGMA user_version").fetchone()[0]
         job = conn.execute(
             """
-            SELECT created_at, started_at, status
+            SELECT created_at, started_at, status, runner, runner_model, runner_effort, prompt_path
             FROM review_jobs
             WHERE review_job_id = 1
             """
         ).fetchone()
         pair_count = conn.execute("SELECT COUNT(*) FROM review_pairs").fetchone()[0]
         pair_columns = {row["name"] for row in conn.execute("PRAGMA table_info(review_pairs)").fetchall()}
+        job_columns = {row["name"]: row for row in conn.execute("PRAGMA table_info(review_jobs)").fetchall()}
         acceptance = conn.execute(
             """
             SELECT accepted_review_pair_id
@@ -308,13 +323,21 @@ def test_ensure_db_migrates_legacy_user_version_zero_store(tmp_path: Path) -> No
         "created_at": "2026-04-10T10:01:00+00:00",
         "started_at": "2026-04-10T10:01:00+00:00",
         "status": "running",
+        "runner": "test-runner",
+        "runner_model": None,
+        "runner_effort": None,
+        "prompt_path": None,
     }
     assert pair_count == 1
     assert "review_job_id" in pair_columns
     assert "review_run_id" not in pair_columns
+    assert "model_partition" not in pair_columns
+    assert job_columns["runner"]["notnull"] == 0
     assert acceptance["accepted_review_pair_id"] == 10
     assert "idx_review_jobs_model_partition_created" in index_names
     assert "idx_review_runs_model_partition_started" not in index_names
+    assert "idx_review_pairs_note_gate" in index_names
+    assert "idx_review_pairs_note_gate_model_partition" not in index_names
     assert "idx_review_pairs_review_job_id" in index_names
     assert "idx_review_pairs_review_run_id" not in index_names
     assert foreign_key_violations == []
@@ -338,24 +361,28 @@ def test_failed_legacy_migration_rolls_back_and_leaves_old_tables_readable(
 
     with sqlite3.connect(db_path) as conn:
         conn.row_factory = sqlite3.Row
-        legacy_run = conn.execute(
+        migrated_job = conn.execute(
             """
-            SELECT started_at, status
-            FROM review_runs
-            WHERE review_run_id = 1
+            SELECT created_at, started_at, status
+            FROM review_jobs
+            WHERE review_job_id = 1
             """
         ).fetchone()
-        legacy_run_columns = {row["name"] for row in conn.execute("PRAGMA table_info(review_runs)").fetchall()}
+        job_columns = {row["name"] for row in conn.execute("PRAGMA table_info(review_jobs)").fetchall()}
+        pair_columns = {row["name"] for row in conn.execute("PRAGMA table_info(review_pairs)").fetchall()}
         pair_count = conn.execute("SELECT COUNT(*) FROM review_pairs").fetchone()[0]
         user_version = conn.execute("PRAGMA user_version").fetchone()[0]
 
-    assert dict(legacy_run) == {
+    assert dict(migrated_job) == {
+        "created_at": "2026-04-10T10:01:00+00:00",
         "started_at": "2026-04-10T10:01:00+00:00",
         "status": "running",
     }
-    assert "created_at" in legacy_run_columns
+    assert "created_at" in job_columns
+    assert "runner_model" not in job_columns
+    assert "model_partition" in pair_columns
     assert pair_count == 1
-    assert user_version == 1
+    assert user_version == 2
 
 
 def test_snapshot_file_deduplicates_per_path_and_hashes_exact_utf8(tmp_path: Path) -> None:

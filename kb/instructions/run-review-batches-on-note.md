@@ -21,19 +21,18 @@ If the harness cannot launch sub-agents or workers, stop and report that review-
 ### 1. Create review jobs and canonical prompts
 
 ```bash
-commonplace-create-review-jobs --runner {codex|claude-code|live-agent} --model {model-partition} {note-path} {gate-or-bundle}...
+commonplace-create-review-jobs --model {model-partition} --note {note-path} {gate-or-bundle}... --grouping note
 ```
 
-The helper groups the requested gates by bundle/lens and returns a JSON object with `jobs`. Capture each job object, especially:
+The helper groups the requested gates by bundle/lens and returns a JSON object with `jobs`. Creation is runner-agnostic; runner provenance stays null until a later execution path records it. Capture each job object, especially:
 
 - `review_job_id`
 - `prompt_path`
 - `bundle_output_path`
 - `manifest_path`
-- `gate_ids`
-- `gate_paths`
+- each pair's `gate_id` and `gate_path`
 
-Each returned job is one review batch for this procedure. Do not invent, merge, or reorder jobs. Use exactly the job grouping and `gate_ids` the helper resolves.
+Each returned job is one review batch for this procedure. Do not invent, merge, or reorder jobs. Use exactly the job grouping and pair list the helper resolves.
 
 ### 2. Delegate each job to a sub-agent
 
@@ -63,7 +62,7 @@ commonplace-ingest-bundle-output --review-job-id {review-job-id} --input-file {b
 
 Run ingest once per completed sub-agent output. This parses the bundle with the same parser used by `commonplace-run-review-bundles`, records the per-pair reviews, and finalizes the review job.
 
-After ingest, `MANIFEST.json` at `manifest_path` is refreshed with pair statuses and per-gate `result_path` files. For this single-note path, parsed review files are named by gate id, for example `sentence__clause-packing.md`.
+After ingest, `MANIFEST.json` at `manifest_path` is refreshed with pair statuses and per-gate `result_path` files. For this single-note path, parsed review files are named by the gate leaf, for example `clause-packing.md`.
 
 ### 4. Verify the requested set
 
@@ -73,7 +72,7 @@ After all jobs ingest, check the same note and requested gate set under the same
 commonplace-review-target-selector --model {model-partition} {gate-or-bundle}... --note {note-path} --json
 ```
 
-An empty array means the requested pairs are fresh for that model partition.
+An output object with `"targets": []` means the requested pairs are fresh for that model partition.
 
 ## Do not
 

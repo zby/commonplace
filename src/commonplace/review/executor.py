@@ -140,6 +140,24 @@ def model_partition_from_telemetry(telemetry: dict[str, object] | None) -> str |
     return build_model_partition(model, reasoning_effort)
 
 
+def runner_model_from_telemetry(telemetry: dict[str, object] | None) -> str | None:
+    if not isinstance(telemetry, dict):
+        return None
+    model = telemetry.get("model")
+    if not isinstance(model, str) or not model.strip():
+        return None
+    return model.strip()
+
+
+def runner_effort_from_telemetry(telemetry: dict[str, object] | None) -> str | None:
+    if not isinstance(telemetry, dict):
+        return None
+    reasoning_effort = telemetry.get("reasoning_effort")
+    if not isinstance(reasoning_effort, str) or not reasoning_effort.strip():
+        return None
+    return reasoning_effort.strip().lower()
+
+
 def resolve_note_markdown_links(
     *,
     repo_root: Path,
@@ -442,6 +460,8 @@ def execute_batch(
 
     raw_output = result.stdout
     telemetry_json = serialize_telemetry(result.telemetry)
+    concrete_runner_model = runner_model_from_telemetry(result.telemetry) or runner_model
+    concrete_runner_effort = runner_effort_from_telemetry(result.telemetry)
     debug_log = combine_logs(result.stdout, result.stderr)
     with connect(db_path) as conn:
         persist_bundle_artifacts(
@@ -451,6 +471,14 @@ def execute_batch(
             bundle_markdown=raw_output,
             debug_log=debug_log,
         )
+        for review_job_id in job_ids:
+            attach_execution_data(
+                conn,
+                review_job_id=review_job_id,
+                telemetry_json=telemetry_json,
+                runner_model=concrete_runner_model,
+                runner_effort=concrete_runner_effort,
+            )
         conn.commit()
     actual_model_partition = model_partition_from_telemetry(result.telemetry)
     if actual_model_partition is not None and actual_model_partition != model_partition:

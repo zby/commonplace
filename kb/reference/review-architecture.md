@@ -62,7 +62,7 @@ SQLite database, default location `kb/reports/review-store.sqlite` (override wit
 
 | Table | Purpose | Key columns |
 |---|---|---|
-| `review_jobs` | Review invocations | review_job_id, model_partition, runner, status (queued/running/completed/failed), created_at, nullable started_at, packing, telemetry_json, bundle_output_path |
+| `review_jobs` | Review invocations | review_job_id, model_partition, nullable runner/runner_model/runner_effort, status (queued/running/completed/failed), created_at, nullable started_at, packing, telemetry_json, prompt_path, bundle_output_path |
 | `review_file_snapshots` | Role-neutral file snapshots for review inputs | snapshot_id, path, content_sha256, content_text |
 | `review_pairs` | Requested and completed pair outcomes | review_pair_id, review_job_id, note_path, gate_path, pair_status, decision, snapshot IDs |
 | `acceptance_events` | Append-only acceptance log | acceptance_event_id, note_path, gate_path, model_partition, accepted_review_pair_id, snapshot IDs |
@@ -108,7 +108,8 @@ Database operations, decision parsing, and record management. The largest module
 - `mark_missing_pairs(conn, ...) -> int` — mark requested pairs without output
 - `append_acceptance_event(conn, ...) -> int` — record acceptance
 - `complete_review_job(conn, ...) / fail_review_job(conn, ...)` — finalize job status
-- `load_review_job / load_review_pairs_for_job / load_review_pairs_for_note` — query helpers
+- `load_review_job / load_review_pairs_for_job / load_review_pairs_for_note` — query helpers; pair rows derive `model_partition` by joining through `review_jobs`
+- `load_review_job_plan / list_review_job_plans` — shared job-plan loaders for creation, listing, and later execution/finalization paths
 - `load_effective_review_pair_map(conn, ...) -> dict` — accepted-or-latest completed review pairs per gate
 - `load_current_acceptances(conn) -> dict` — current acceptance state map
 
@@ -169,7 +170,7 @@ Every output block is keyed by the full (note, gate) pair:
 - `protocol/prompt.py` — `render_pairs_prompt(notes, gate_texts, output_mode)` over `NoteReviewTarget`s. Note contents are always embedded from captured target text; the multi-note shape adds the evaluate-independently rule; `output_mode="file"` swaps the destination bullets for the live-agent path.
 - `protocol/parser.py` — `parse_pair_bundle` raises on structural anomalies (nested/mismatched/unterminated/unexpected/duplicate/empty blocks) but reports missing expected pairs in `missing` instead of raising, so callers salvage the pairs that parsed.
 - `protocol/decisions.py` — decision-line parsing and footer canonicalization; grammar-independent, also used for historical rows.
-- `artifacts.py` — shared artifact naming and manifest writing. It is the only place that maps packing to parsed result filenames: note-packed jobs use gate filenames, gate-packed jobs use note filenames, and mixed fallback uses note-plus-gate filenames.
+- `artifacts.py` — shared artifact naming and manifest writing. It is the only place that maps packing to parsed result filenames: note-packed jobs use gate-leaf filenames, gate-packed jobs use note filenames, and unsupported packing values fail.
 - `executor.py` — `execute_batch(targets, gate_texts, …)` owns the shared lifecycle: render, one runner call, telemetry/model-mismatch handling, usage-exhaustion (`UsageExhausted`) and interrupt handling, parse, then per-job finalize or fail. Each job writes `bundle-output.md`, writes per-pair result files, writes `debug.log` when runner diagnostics exist, and stores `review_jobs.bundle_output_path` plus `review_pairs.result_path` in the DB.
 
 ### Packing callers
@@ -177,12 +178,12 @@ Every output block is keyed by the full (note, gate) pair:
 - **`run_review_bundles.py` — note-local bundle packing.** One note, requested gates grouped by bundle/lens; one subprocess runner call and one review job per group.
 - **`run_gate_sweep.py` — share-gate packing (experimental).** One gate over a chunked note list; one running gate-packed job per prompt batch; missing pairs are marked `missing`, parsed pairs are retained, and the invocation records a failure.
 - **Live-agent path (single note)** — same protocol without a nested runner:
-  1. `commonplace-create-review-jobs` groups requested gates by bundle/lens, creates one queued note-packed job per group, writes each canonical prompt to `kb/reports/bundle-reviews/review-job-{id}/prompt.md`, writes `MANIFEST.json`, and returns a JSON `jobs` array with each job's `prompt_path`, `bundle_output_path`, and `manifest_path`
+  1. `commonplace-create-review-jobs --model <partition> --note <note> <gate-or-bundle>... --grouping note` groups requested gates by bundle/lens, creates one queued note-packed job per group with null runner provenance, writes each canonical prompt to `kb/reports/bundle-reviews/review-job-{id}/prompt.md`, writes `MANIFEST.json`, and returns a JSON `jobs` array with each job's `prompt_path`, `bundle_output_path`, `manifest_path`, and pair rows
   2. each prompt is rendered from the snapshots attached to that job's created pair rows
   3. the parent agent delegates each returned job to a sub-agent, and that sub-agent reads `prompt_path`, follows it, and writes the matching `kb/reports/bundle-reviews/review-job-{id}/bundle-output.md`
   4. `commonplace-ingest-bundle-output` parses each artifact, finalizes through `record_and_finalize_job` (single-job ingest is all-or-nothing), writes packing-derived parsed result files, stores their paths, and refreshes `MANIFEST.json`
-- **External-executor batch path (`batch.py`)** — deterministic ends for any orchestrator that owns its own fan-out (a live agent reviewing many pairs, or a harness workflow spawning sub-agents per batch); decision record: [ADR 030](./adr/030-harness-facing-seams-batch-endpoints-and-runner-adapters.md).
-  1. `commonplace-prepare-review-batch <note>::<gate>... --runner <label> --model <partition>` creates one queued note-packed or gate-packed job for the pair set (inapplicable gates skipped and reported; missing notes/gates fatal) and writes the canonical prompt from captured snapshots under `kb/reports/bundle-reviews/review-job-{review_job_id}/`; returns `review_job_id`, pair metadata, skipped pairs, `prompt_path`, `bundle_output_path`, and `manifest_path` as JSON
+- **External-executor direct-pair path (`commonplace-create-review-jobs --pair`)** — deterministic creation for orchestrators that already know the exact `(note, gate)` pairs; decision record: [ADR 030](./adr/030-harness-facing-seams-batch-endpoints-and-runner-adapters.md).
+  1. `commonplace-create-review-jobs --model <partition> --pair <note>::<gate>... --grouping {note,gate}` creates queued note-packed or gate-packed jobs for the pair set (inapplicable gates skipped and reported; missing notes/gates fatal) and writes canonical prompts from captured snapshots under `kb/reports/bundle-reviews/review-job-{review_job_id}/`; returns job and pair metadata, skipped pairs, `prompt_path`, `bundle_output_path`, and derived `manifest_path` values as JSON
   2. the executor follows the prompt and writes `bundle_output_path`
   3. `commonplace-ingest-batch-output --review-job-id <id> --input-file <path>` finalizes with pair salvage, stores result paths, and returns JSON; exit 1 if the job failed.
 

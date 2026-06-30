@@ -64,8 +64,9 @@ def test_repair_model_partitions_rekeys_known_aliases(tmp_path: Path) -> None:
 
     result = _run_repair(REPO_ROOT, db_path)
 
-    assert "claude-fable-5 -> claude-opus-4.8: total=3" in result.stdout
-    assert "opus-4-6 -> claude-opus: total=3" in result.stdout
+    assert "claude-fable-5 -> claude-opus-4.8: total=2" in result.stdout
+    assert "opus-4-6 -> claude-opus: total=2" in result.stdout
+    assert "review_pairs=" not in result.stdout
     assert "mode: write" in result.stdout
 
     with sqlite3.connect(db_path) as conn:
@@ -75,13 +76,9 @@ def test_repair_model_partitions_rekeys_known_aliases(tmp_path: Path) -> None:
             SELECT (
                 SELECT count(*) FROM review_jobs WHERE model_partition = 'opus-4-6'
             ) + (
-                SELECT count(*) FROM review_pairs WHERE model_partition = 'opus-4-6'
-            ) + (
                 SELECT count(*) FROM acceptance_events WHERE model_partition = 'opus-4-6'
             ) + (
                 SELECT count(*) FROM review_jobs WHERE model_partition = 'claude-fable-5'
-            ) + (
-                SELECT count(*) FROM review_pairs WHERE model_partition = 'claude-fable-5'
             ) + (
                 SELECT count(*) FROM acceptance_events WHERE model_partition = 'claude-fable-5'
             ) AS count
@@ -92,8 +89,6 @@ def test_repair_model_partitions_rekeys_known_aliases(tmp_path: Path) -> None:
             SELECT (
                 SELECT count(*) FROM review_jobs WHERE model_partition = 'claude-opus'
             ) + (
-                SELECT count(*) FROM review_pairs WHERE model_partition = 'claude-opus'
-            ) + (
                 SELECT count(*) FROM acceptance_events WHERE model_partition = 'claude-opus'
             ) AS count
             """
@@ -103,13 +98,11 @@ def test_repair_model_partitions_rekeys_known_aliases(tmp_path: Path) -> None:
             SELECT (
                 SELECT count(*) FROM review_jobs WHERE model_partition = 'claude-opus-4.8'
             ) + (
-                SELECT count(*) FROM review_pairs WHERE model_partition = 'claude-opus-4.8'
-            ) + (
                 SELECT count(*) FROM acceptance_events WHERE model_partition = 'claude-opus-4.8'
             ) AS count
             """
         ).fetchone()["count"]
 
     assert old_count == 0
-    assert opus_count == 3
-    assert opus_48_count == 3
+    assert opus_count == 2
+    assert opus_48_count == 2

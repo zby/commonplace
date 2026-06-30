@@ -20,11 +20,11 @@ Inputs:
 commonplace-review-target-selector --model {model-id} {bundle-or-all} --note {note-scope} --json --reason note-changed
 ```
 
-If the output is an empty array, stop — nothing to triage.
+If the output object has `"targets": []`, stop — nothing to triage.
 
 ### 2. For each note-changed pair, judge the diff
 
-For each entry, read the `diff` field and the `gate_id`. Ask: does this diff affect what the gate tests?
+For each entry in `targets`, read the `diff` field and the `gate_id`. Ask: does this diff affect what the gate tests?
 
 Guidelines:
 

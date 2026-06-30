@@ -43,11 +43,10 @@ def result_filename(
     all_note_paths: Sequence[str],
 ) -> str:
     if packing == "note":
-        return encode_stage_filename(gate_path)
+        return Path(gate_path).name
     if packing == "gate":
         return _note_filename(note_path, all_note_paths)
-    note_name = _note_filename(note_path, all_note_paths).removesuffix(".md")
-    return f"{note_name}__{encode_stage_filename(gate_path)}"
+    raise ValueError(f"unsupported review job packing: {packing}")
 
 
 def result_path(

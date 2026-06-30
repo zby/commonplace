@@ -10,7 +10,11 @@ PRAGMA foreign_keys = ON;
 CREATE TABLE IF NOT EXISTS review_jobs (
     review_job_id INTEGER PRIMARY KEY,
     model_partition TEXT NOT NULL,
-    runner TEXT NOT NULL,
+    -- Execution adapter/medium, nullable until a queued job is claimed or run.
+    runner TEXT,
+    -- Concrete runner execution provenance, nullable until known.
+    runner_model TEXT,
+    runner_effort TEXT,
     created_at TEXT NOT NULL,
     started_at TEXT,
     completed_at TEXT,
@@ -19,6 +23,7 @@ CREATE TABLE IF NOT EXISTS review_jobs (
     ),
     failure_reason TEXT,
     telemetry_json TEXT,
+    prompt_path TEXT,
     bundle_output_path TEXT,
     packing TEXT NOT NULL CHECK (
         packing IN ('note', 'gate')
@@ -45,7 +50,6 @@ CREATE TABLE IF NOT EXISTS review_pairs (
     review_job_id INTEGER NOT NULL REFERENCES review_jobs(review_job_id) ON DELETE CASCADE,
     note_path TEXT NOT NULL,
     gate_path TEXT NOT NULL,
-    model_partition TEXT NOT NULL,
     pair_ordinal INTEGER NOT NULL,
     pair_status TEXT NOT NULL CHECK (
         pair_status IN ('pending', 'completed', 'missing')
@@ -61,8 +65,8 @@ CREATE TABLE IF NOT EXISTS review_pairs (
     UNIQUE (review_job_id, pair_ordinal)
 );
 
-CREATE INDEX IF NOT EXISTS idx_review_pairs_note_gate_model_partition
-ON review_pairs(note_path, gate_path, model_partition);
+CREATE INDEX IF NOT EXISTS idx_review_pairs_note_gate
+ON review_pairs(note_path, gate_path);
 
 CREATE INDEX IF NOT EXISTS idx_review_pairs_review_job_id
 ON review_pairs(review_job_id);

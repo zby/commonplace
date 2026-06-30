@@ -123,13 +123,14 @@ def test_create_review_jobs_groups_cross_lens_gates_by_bundle(tmp_path: Path) ->
 
     result = run_cli(
         "create_review_jobs",
+        "--note",
         "kb/notes/sample.md",
         GATE_ONE,
         GATE_TWO,
-        "--runner",
-        "live-agent",
         "--model",
         "test-model",
+        "--grouping",
+        "note",
         cwd=repo,
         db_path=db_path,
     )
@@ -137,10 +138,12 @@ def test_create_review_jobs_groups_cross_lens_gates_by_bundle(tmp_path: Path) ->
     payload = json.loads(result.stdout)
     assert "runs" not in payload
     jobs = payload["jobs"]
-    assert payload["note_path"] == "kb/notes/sample.md"
+    assert payload["input_mode"] == "direct-note"
     assert payload["model_partition"] == "test-model"
-    assert [job["bundle"] for job in jobs] == ["accessibility", "prose"]
-    assert [job["gate_paths"] for job in jobs] == [[GATE_ONE_PATH], [GATE_TWO_PATH]]
+    assert payload["grouping"] == "note"
+    assert payload["created_count"] == 2
+    assert payload["skipped_pairs"] == []
+    assert [[pair["gate_path"] for pair in job["pairs"]] for job in jobs] == [[GATE_ONE_PATH], [GATE_TWO_PATH]]
 
     first_job = jobs[0]
     second_job = jobs[1]
@@ -159,24 +162,26 @@ def test_create_review_jobs_groups_cross_lens_gates_by_bundle(tmp_path: Path) ->
     manifest = json.loads((repo / first_job["manifest_path"]).read_text(encoding="utf-8"))
     assert manifest["packing"] == "note"
     assert [pair["result_path"] for pair in manifest["pairs"]] == [
-        f"kb/reports/bundle-reviews/review-job-{first_review_job_id}/kb__instructions__review-gates__accessibility__undefined-terms.md",
+        f"kb/reports/bundle-reviews/review-job-{first_review_job_id}/undefined-terms.md",
     ]
 
     with sqlite3.connect(db_path) as conn:
         conn.row_factory = sqlite3.Row
         job_rows = conn.execute(
             """
-            SELECT status, runner, packing, created_at, started_at, bundle_output_path
+            SELECT status, runner, runner_model, runner_effort, packing, created_at, started_at, prompt_path, bundle_output_path
             FROM review_jobs
             ORDER BY review_job_id
             """
         ).fetchall()
-        assert [(row["status"], row["runner"], row["packing"]) for row in job_rows] == [
-            ("queued", "live-agent", "note"),
-            ("queued", "live-agent", "note"),
+        assert [(row["status"], row["runner"], row["runner_model"], row["runner_effort"], row["packing"]) for row in job_rows] == [
+            ("queued", None, None, None, "note"),
+            ("queued", None, None, None, "note"),
         ]
         assert [row["started_at"] for row in job_rows] == [None, None]
         assert all(row["created_at"] is not None for row in job_rows)
+        assert job_rows[0]["prompt_path"] == first_job["prompt_path"]
+        assert job_rows[1]["prompt_path"] == second_job["prompt_path"]
         assert job_rows[0]["bundle_output_path"] == first_job["bundle_output_path"]
         assert job_rows[1]["bundle_output_path"] == second_job["bundle_output_path"]
         pair_rows = conn.execute(
@@ -229,12 +234,13 @@ Dirty gate marker.
 
     result = run_cli(
         "create_review_jobs",
+        "--note",
         "kb/notes/sample.md",
         GATE_ONE,
-        "--runner",
-        "live-agent",
         "--model",
         "test-model",
+        "--grouping",
+        "note",
         cwd=repo,
         db_path=db_path,
     )
@@ -266,18 +272,184 @@ def test_create_review_jobs_resolves_installed_commonplace_gates(tmp_path: Path)
 
     result = run_cli(
         "create_review_jobs",
+        "--note",
         "kb/notes/sample.md",
         GATE_ONE,
-        "--runner",
-        "live-agent",
         "--model",
         "test-model",
+        "--grouping",
+        "note",
         cwd=repo,
         db_path=db_path,
     )
 
     payload = json.loads(result.stdout)
-    assert payload["jobs"][0]["gate_paths"] == [INSTALLED_GATE_ONE_PATH]
+    assert [pair["gate_path"] for pair in payload["jobs"][0]["pairs"]] == [INSTALLED_GATE_ONE_PATH]
+
+
+def test_create_review_jobs_accepts_selector_json_file_and_validates_model(tmp_path: Path) -> None:
+    repo, db_path = build_repo_fixture(tmp_path)
+    selector_path = repo / "targets.json"
+    selector_path.write_text(
+        json.dumps(
+            {
+                "model_partition": "test-model",
+                "targets": [
+                    {
+                        "note_path": "kb/notes/sample.md",
+                        "gate_path": GATE_ONE_PATH,
+                        "gate_id": GATE_ONE,
+                        "reason": "missing-review",
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    result = run_cli(
+        "create_review_jobs",
+        "--input",
+        "targets.json",
+        "--model",
+        "test-model",
+        "--grouping",
+        "note",
+        cwd=repo,
+        db_path=db_path,
+    )
+
+    payload = json.loads(result.stdout)
+    assert payload["input_mode"] == "selector"
+    assert payload["created_count"] == 1
+    assert payload["jobs"][0]["pairs"][0]["gate_id"] == GATE_ONE
+
+    mismatch = run_cli(
+        "create_review_jobs",
+        "--input",
+        "targets.json",
+        "--model",
+        "other-model",
+        "--grouping",
+        "note",
+        cwd=repo,
+        db_path=db_path,
+        check=False,
+    )
+    assert mismatch.returncode == 2
+    assert "does not match selector model_partition" in mismatch.stderr
+
+
+def test_create_review_jobs_selector_noop_and_model_agnostic_rejection(tmp_path: Path) -> None:
+    repo, db_path = build_repo_fixture(tmp_path)
+    selector_path = repo / "empty-targets.json"
+    selector_path.write_text(json.dumps({"model_partition": "test-model", "targets": []}), encoding="utf-8")
+
+    result = run_cli(
+        "create_review_jobs",
+        "--input",
+        "empty-targets.json",
+        "--grouping",
+        "gate",
+        cwd=repo,
+        db_path=db_path,
+    )
+
+    payload = json.loads(result.stdout)
+    assert payload["created_count"] == 0
+    assert payload["jobs"] == []
+    assert payload["skipped_pairs"] == []
+
+    selector_path.write_text(json.dumps({"model_partition": None, "targets": []}), encoding="utf-8")
+    rejected = run_cli(
+        "create_review_jobs",
+        "--input",
+        "empty-targets.json",
+        "--grouping",
+        "note",
+        cwd=repo,
+        db_path=db_path,
+        check=False,
+    )
+    assert rejected.returncode == 2
+    assert "model_partition is required" in rejected.stderr
+
+
+def test_create_review_jobs_direct_pairs_gate_grouping_chunks_and_lists(tmp_path: Path) -> None:
+    repo, db_path = build_repo_fixture(tmp_path)
+    make_note(repo / "kb" / "notes" / "other.md")
+
+    result = run_cli(
+        "create_review_jobs",
+        "--pair",
+        f"kb/notes/sample.md::{GATE_ONE}",
+        "--pair",
+        f"kb/notes/other.md::{GATE_ONE_PATH}",
+        "--pair",
+        f"kb/notes/sample.md::{GATE_ONE_PATH}",
+        "--model",
+        "test-model",
+        "--grouping",
+        "gate",
+        "--batch-size",
+        "1",
+        cwd=repo,
+        db_path=db_path,
+    )
+
+    payload = json.loads(result.stdout)
+    assert payload["input_mode"] == "direct-pair"
+    assert payload["created_count"] == 2
+    assert payload["skipped_pairs"] == [
+        {
+            "note_path": "kb/notes/sample.md",
+            "gate_path": GATE_ONE_PATH,
+            "gate_id": GATE_ONE,
+            "reason": "duplicate",
+        }
+    ]
+    assert [[pair["result_path"].split("/")[-1] for pair in job["pairs"]] for job in payload["jobs"]] == [
+        ["sample.md"],
+        ["other.md"],
+    ]
+
+    listed = run_cli(
+        "review_job_list",
+        "--status",
+        "queued",
+        "--json",
+        cwd=repo,
+        db_path=db_path,
+    )
+    list_payload = json.loads(listed.stdout)
+    assert list_payload["filters"] == {"model_partition": None, "status": "queued"}
+    assert list_payload["count"] == 2
+    assert [job["runner"] for job in list_payload["jobs"]] == [None, None]
+    assert [job["runner_model"] for job in list_payload["jobs"]] == [None, None]
+    assert [job["pairs"][0]["reviewed_at"] for job in list_payload["jobs"]] == [None, None]
+
+
+def test_create_review_jobs_rejects_batch_size_with_note_grouping(tmp_path: Path) -> None:
+    repo, db_path = build_repo_fixture(tmp_path)
+
+    result = run_cli(
+        "create_review_jobs",
+        "--note",
+        "kb/notes/sample.md",
+        GATE_ONE,
+        "--model",
+        "test-model",
+        "--grouping",
+        "note",
+        "--batch-size",
+        "2",
+        cwd=repo,
+        db_path=db_path,
+        check=False,
+    )
+
+    assert result.returncode == 2
+    assert "--batch-size is only valid with --grouping gate" in result.stderr
 
 
 def test_ingest_bundle_output_finalizes_review_pairs(tmp_path: Path) -> None:
@@ -285,12 +457,13 @@ def test_ingest_bundle_output_finalizes_review_pairs(tmp_path: Path) -> None:
     prepared = json.loads(
         run_cli(
             "create_review_jobs",
+            "--note",
             "kb/notes/sample.md",
             GATE_ONE,
-            "--runner",
-            "live-agent",
             "--model",
             "test-model",
+            "--grouping",
+            "note",
             cwd=repo,
             db_path=db_path,
         ).stdout
@@ -311,9 +484,7 @@ def test_ingest_bundle_output_finalizes_review_pairs(tmp_path: Path) -> None:
 
     assert result.stdout.strip() == f"completed {prepared_job['review_job_id']} 1"
     artifact_dir = repo / "kb" / "reports" / "bundle-reviews" / f"review-job-{prepared_job['review_job_id']}"
-    assert (
-        artifact_dir / "kb__instructions__review-gates__accessibility__undefined-terms.md"
-    ).read_text(encoding="utf-8").strip().endswith(
+    assert (artifact_dir / "undefined-terms.md").read_text(encoding="utf-8").strip().endswith(
         "## Result: WARN"
     )
     assert not (artifact_dir / "kb__notes__sample.md :: kb__instructions__review-gates__accessibility__undefined-terms.md").exists()

@@ -23,19 +23,19 @@ Launch a sub-agent to run `kb/instructions/review-triage.md` with `{bundle-or-al
 ### 2. Inventory
 
 ```bash
-commonplace-review-target-selector --model {model-id} {bundle-or-all} --note {note-scope} --json | wc -l
+commonplace-review-target-selector --model {model-id} {bundle-or-all} --note {note-scope} --json
 ```
 
 Or for current notes only:
 
 ```bash
-commonplace-review-target-selector --model {model-id} {bundle-or-all} --current --json | wc -l
+commonplace-review-target-selector --model {model-id} {bundle-or-all} --current --json
 ```
 
-Check the line count first (~5 lines per stale pair in JSON output).
+Check the `targets` array in the JSON object.
 
-- **0–2 lines** (empty array): stop — everything is fresh or acked.
-- **More than 100 lines** (~20+ pairs): stop and tell the user to run `commonplace-review-sweep` instead. This instruction cannot orchestrate that many sub-agents.
+- **`"targets": []`**: stop — everything is fresh or acked.
+- **More than ~20 targets**: stop and tell the user to run `commonplace-review-sweep` instead. This instruction cannot orchestrate that many sub-agents.
 - **Otherwise**: read the JSON output and continue.
 
 ```bash

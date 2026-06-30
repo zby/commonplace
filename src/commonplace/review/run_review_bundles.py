@@ -62,6 +62,7 @@ def _run_group(
             conn,
             model_partition=model_partition,
             runner=runner,
+            runner_model=runner_model,
             created_at=started_at,
             started_at=started_at,
             status="running",

@@ -15,7 +15,7 @@ The review protocol's output side is one encoding: sentinel-delimited markdown b
 - One encoding: `=== PAIR REVIEW START: {note} :: {gate} ===` blocks ([ADR 029](../adr/029-review-execution-unified-on-note-gate-pairs.md)). `protocol/parser.py` extracts blocks into `ParsedPairBundle`; `protocol/decisions.py` recovers the decision through an ordered fallback chain (explicit flagging phrases → revised-result headers → result headers → severity patterns → bold patterns → `unknown`) and canonicalizes result footers.
 - The codec is almost contained in `protocol/`: the one leak is `executor.assemble_run_document`, which imports the sentinel templates to assemble per-run artifact documents.
 - Consumers downstream of parsing are mostly encoding-independent already: `review_pairs.decision` stores the parsed enum, `review_pairs.result_path` points to the retained markdown review body, and `warn_selector` extracts findings from a `### Findings` section convention in that artifact.
-- External executors receive the contract through rendered prompts (`prepare-review-batch`, `create-review-runs`) and return text artifacts through ingest commands ([ADR 030](../adr/030-harness-facing-seams-batch-endpoints-and-runner-adapters.md)).
+- External executors receive the contract through rendered prompts (`commonplace-create-review-jobs --pair ... --grouping {note,gate}` for queued jobs; historical ADR 030 used `prepare-review-batch`) and return text artifacts through ingest commands.
 - Trigger not yet met: schema-validated sub-agent output ships in one harness's workflow scripts; the subprocess CLIs (`claude -p`, `codex exec`) and the live-agent file-artifact path have no equivalent surface the review system could consume today.
 
 ## The design

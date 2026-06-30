@@ -61,6 +61,7 @@ def prepare_batch_targets(
     gate_path: str,
     runner: str,
     model_partition: str,
+    runner_model: str | None = None,
 ) -> PreparedGateBatch:
     """Create one single-gate review job for this prompt batch.
 
@@ -94,6 +95,7 @@ def prepare_batch_targets(
             conn,
             model_partition=model_partition,
             runner=runner,
+            runner_model=runner_model,
             created_at=started_at,
             started_at=started_at,
             status="running",
@@ -169,6 +171,7 @@ def run_gate_sweep(
             gate_path=gate_path,
             runner=runner,
             model_partition=model,
+            runner_model=runner_model,
         )
         targets = prepared_batch.targets
         batch_label = f"Batch {batch_index}/{len(batches)}"

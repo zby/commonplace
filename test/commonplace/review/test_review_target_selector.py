@@ -751,7 +751,7 @@ class TestDiffGeneration:
 
 
 class TestJsonOutput:
-    def test_json_output_omits_review_path(self, tmp_path: Path) -> None:
+    def test_json_output_is_object_envelope_with_gate_ids(self, tmp_path: Path) -> None:
         build_fixture(tmp_path)
         stale = review_target_selector.select_stale_gates(
             tmp_path,
@@ -760,10 +760,26 @@ class TestJsonOutput:
             note_filter=["kb/notes/unreviewed.md"],
         )
         json_str = review_target_selector.render_json(stale)
-        items = json.loads(json_str)
-        assert len(items) == 2
-        for item in items:
+        payload = json.loads(json_str)
+        assert payload["model_partition"] is None
+        assert len(payload["targets"]) == 2
+        for item in payload["targets"]:
+            assert "gate_id" in item
             assert "review_path" not in item
+
+    def test_json_output_carries_model_partition_when_provided(self, tmp_path: Path) -> None:
+        build_fixture(tmp_path)
+        stale = review_target_selector.select_stale_gates(
+            tmp_path,
+            model=TEST_MODEL,
+            gate_ids=["prose/source-residue"],
+            note_filter=["kb/notes/unreviewed.md"],
+        )
+
+        payload = json.loads(review_target_selector.render_json(stale, model_partition=TEST_MODEL))
+
+        assert payload["model_partition"] == TEST_MODEL
+        assert payload["targets"][0]["gate_id"] == "prose/source-residue"
 
 
 class TestModelOptional:

@@ -16,7 +16,7 @@ from commonplace.review.review_db import (
 )
 from commonplace.review.review_model import is_registered_model_partition, model_partition_alias_target
 
-TABLES = ("review_jobs", "review_pairs", "acceptance_events")
+TABLES = ("review_jobs", "acceptance_events")
 
 
 def _model_partitions(conn) -> list[str]:
@@ -60,7 +60,6 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
             counts = count_model_partition_records(conn, model_partition=old_model_partition)
             table_counts = {
                 "review_jobs": counts.review_jobs,
-                "review_pairs": counts.review_pairs,
                 "acceptance_events": counts.acceptance_events,
             }
             planned[(old_model_partition, new_model_partition)] = table_counts
@@ -90,11 +89,9 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
         print(
             f"{old_model_partition} -> {new_model_partition}: total={total} "
             f"review_jobs={table_counts['review_jobs']} "
-            f"review_pairs={table_counts['review_pairs']} "
             f"acceptance_events={table_counts['acceptance_events']}"
         )
     print(f"review_jobs: {totals['review_jobs']}")
-    print(f"review_pairs: {totals['review_pairs']}")
     print(f"acceptance_events: {totals['acceptance_events']}")
     print(f"unknown_partitions: {len(unknown_partitions)}")
     for model_partition in unknown_partitions:

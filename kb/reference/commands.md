@@ -137,14 +137,25 @@ commonplace-run-gate-sweep semantic/grounding-alignment --runner claude-code --m
 
 ### commonplace-create-review-jobs
 
-Create one or more queued review job records in the review database and write their canonical prompts, `MANIFEST.json` files, and artifact paths for live-agent review. Requested gates are grouped by bundle/lens so each job stays focused.
+Create one or more queued review job records in the review database and write their canonical prompts, `MANIFEST.json` files, and artifact paths for live-agent review. Creation is runner-agnostic: `runner`, `runner_model`, and `runner_effort` stay null until execution.
 
 ```bash
-commonplace-create-review-jobs kb/notes/my-note.md prose --runner claude-code --model claude-opus-4-6
-commonplace-create-review-jobs kb/notes/my-note.md accessibility prose semantic --runner live-agent --model codex
+commonplace-review-target-selector --json --model claude-opus-4-6 prose --note kb/notes/my-note.md > targets.json
+commonplace-create-review-jobs --input targets.json --grouping note
+commonplace-create-review-jobs --model claude-opus-4-6 --note kb/notes/my-note.md accessibility prose semantic --grouping note
+commonplace-create-review-jobs --model claude-opus-4-6 --pair kb/notes/a.md::prose/source-residue --pair kb/notes/b.md::prose/source-residue --grouping gate --batch-size 5
 ```
 
-The command prints a JSON payload with a `jobs` array. Each job includes `review_job_id`, `prompt_path`, `bundle_output_path`, `manifest_path`, `gate_ids`, and `gate_paths`. The manifest lists each pair and its packing-derived `result_path`; note-packed jobs use gate filenames such as `prose__source-residue.md`.
+The command prints a JSON payload with `input_mode`, `model_partition`, `grouping`, `jobs`, and `skipped_pairs`. Each job includes `review_job_id`, `status`, nullable runner provenance, `packing`, `prompt_path`, `bundle_output_path`, `manifest_path`, and pair rows with `gate_id`, `pair_status`, `decision`, and `result_path`. Note-packed jobs use gate-leaf filenames such as `source-residue.md`; gate-packed jobs use note filenames such as `my-note.md`.
+
+### commonplace-review-job-list
+
+List review jobs and their pair rows.
+
+```bash
+commonplace-review-job-list --status queued --json
+commonplace-review-job-list --model claude-opus-4-6
+```
 
 ### commonplace-ingest-bundle-output
 
@@ -152,14 +163,6 @@ Parse a sentinel-delimited review bundle and finalize its existing review job.
 
 ```bash
 commonplace-ingest-bundle-output --review-job-id 42 --input-file kb/reports/bundle-reviews/review-job-42/bundle-output.md
-```
-
-### commonplace-prepare-review-batch
-
-Create one queued review job for a note-packed or gate-packed set of `(note, gate)` pairs and render one batch prompt for an external executor (live agent or orchestrator). Returns `review_job_id`, per-pair metadata, skipped pairs, and artifact paths, including `manifest_path`, as JSON.
-
-```bash
-commonplace-prepare-review-batch kb/notes/a.md::prose/source-residue kb/notes/b.md::prose/source-residue --runner live-agent --model claude-opus-4-6
 ```
 
 ### commonplace-ingest-batch-output

@@ -202,7 +202,7 @@ Human-readable inspection remains required, but it is now a derived view from DB
 
 Instruction: `kb/instructions/run-review-batches-on-note.md`
 
-1. `commonplace-create-review-jobs --runner {codex|claude-code|live-agent} --model {model-partition} {note} {gate-or-bundle}...`
+1. `commonplace-create-review-jobs --model {model-partition} --note {note} {gate-or-bundle}... --grouping note`
 2. For each item in the returned `jobs` array, launch a sub-agent with that job's `prompt_path` and `bundle_output_path`
 3. Each sub-agent writes that job's sentinel-delimited review bundle to `bundle_output_path`
 4. The parent ingests each completed output with `commonplace-ingest-bundle-output --review-job-id {id} --input-file {bundle_output_path}`

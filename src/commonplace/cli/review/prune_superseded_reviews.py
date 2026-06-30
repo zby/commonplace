@@ -77,16 +77,18 @@ def _current_review_pair_ids(conn: sqlite3.Connection) -> tuple[int, ...]:
         ),
         latest_review_pair AS (
             SELECT
-                review_pair_id,
-                note_path,
-                gate_path,
-                model_partition,
+                rp.review_pair_id,
+                rp.note_path,
+                rp.gate_path,
+                j.model_partition,
                 ROW_NUMBER() OVER (
-                    PARTITION BY note_path, gate_path, model_partition
-                    ORDER BY reviewed_at DESC, review_pair_id DESC
+                    PARTITION BY rp.note_path, rp.gate_path, j.model_partition
+                    ORDER BY rp.reviewed_at DESC, rp.review_pair_id DESC
                 ) AS rn
-            FROM review_pairs
-            WHERE pair_status = 'completed'
+            FROM review_pairs AS rp
+            JOIN review_jobs AS j
+              ON j.review_job_id = rp.review_job_id
+            WHERE rp.pair_status = 'completed'
         )
         SELECT COALESCE(a.accepted_review_pair_id, rp.review_pair_id) AS review_pair_id
         FROM latest_acceptance AS a
@@ -135,7 +137,11 @@ def _obsolete_review_pairs(
         JOIN review_pairs AS current
           ON current.note_path = rp.note_path
          AND current.gate_path = rp.gate_path
-         AND current.model_partition = rp.model_partition
+        JOIN review_jobs AS rp_job
+          ON rp_job.review_job_id = rp.review_job_id
+        JOIN review_jobs AS current_job
+          ON current_job.review_job_id = current.review_job_id
+         AND current_job.model_partition = rp_job.model_partition
         WHERE current.review_pair_id IN ({_placeholders(current_review_pair_ids)})
           AND rp.review_pair_id NOT IN ({_placeholders(current_review_pair_ids)})
           AND rp.pair_status != 'pending'

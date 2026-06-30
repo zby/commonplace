@@ -21,7 +21,7 @@ DB_ENV_VAR = "COMMONPLACE_REVIEW_DB"
 PACKING_VALUES = frozenset({"note", "gate"})
 JOB_STATUS_VALUES = frozenset({"queued", "running", "completed", "failed"})
 BUNDLE_ARTIFACTS_ROOT = Path("kb/reports/bundle-reviews")
-LATEST_REVIEW_SCHEMA_VERSION = 2
+LATEST_REVIEW_SCHEMA_VERSION = 3
 EXPECTED_REVIEW_TABLES = frozenset(
     {
         "review_jobs",
@@ -31,6 +31,17 @@ EXPECTED_REVIEW_TABLES = frozenset(
     }
 )
 EXPECTED_REVIEW_INDEXES = frozenset(
+    {
+        "idx_review_jobs_model_partition_created",
+        "idx_review_jobs_status",
+        "idx_review_pairs_note_gate",
+        "idx_review_pairs_review_job_id",
+        "idx_review_pairs_pair_status",
+        "idx_acceptance_events_note_gate_model_partition",
+        "idx_acceptance_events_latest_by_key",
+    }
+)
+EXPECTED_REVIEW_INDEXES_V2 = frozenset(
     {
         "idx_review_jobs_model_partition_created",
         "idx_review_jobs_status",
@@ -75,13 +86,16 @@ class AcceptanceState:
 class ReviewJobRow:
     review_job_id: int
     model_partition: str
-    runner: str
+    runner: str | None
+    runner_model: str | None
+    runner_effort: str | None
     created_at: str
     started_at: str | None
     completed_at: str | None
     status: str
     failure_reason: str | None
     telemetry_json: str | None
+    prompt_path: str | None
     bundle_output_path: str | None
     packing: str
 
@@ -136,12 +150,30 @@ class NotePathUpdateCounts:
 @dataclass(frozen=True)
 class ModelPartitionUpdateCounts:
     review_jobs: int = 0
-    review_pairs: int = 0
     acceptance_events: int = 0
 
     @property
     def total(self) -> int:
-        return self.review_jobs + self.review_pairs + self.acceptance_events
+        return self.review_jobs + self.acceptance_events
+
+
+@dataclass(frozen=True)
+class ReviewJobPlan:
+    review_job_id: int
+    model_partition: str
+    runner: str | None
+    runner_model: str | None
+    runner_effort: str | None
+    created_at: str
+    started_at: str | None
+    completed_at: str | None
+    status: str
+    failure_reason: str | None
+    telemetry_json: str | None
+    prompt_path: str | None
+    bundle_output_path: str | None
+    packing: str
+    pairs: tuple[ReviewPairRow, ...]
 
 
 def connect(db_path: Path) -> sqlite3.Connection:
@@ -200,9 +232,15 @@ def _schema_object_names(conn: sqlite3.Connection, object_type: str) -> set[str]
     return {str(row["name"]) for row in rows}
 
 
-def _assert_expected_schema_objects(conn: sqlite3.Connection) -> None:
+def _assert_expected_schema_objects(
+    conn: sqlite3.Connection,
+    *,
+    expected_indexes: frozenset[str] | None = None,
+) -> None:
+    if expected_indexes is None:
+        expected_indexes = EXPECTED_REVIEW_INDEXES
     missing_tables = EXPECTED_REVIEW_TABLES - _schema_object_names(conn, "table")
-    missing_indexes = EXPECTED_REVIEW_INDEXES - _schema_object_names(conn, "index")
+    missing_indexes = expected_indexes - _schema_object_names(conn, "index")
     missing_views = EXPECTED_REVIEW_VIEWS - _schema_object_names(conn, "view")
     if missing_tables or missing_indexes or missing_views:
         parts: list[str] = []
@@ -225,8 +263,12 @@ def _assert_foreign_key_integrity(conn: sqlite3.Connection) -> None:
         raise RuntimeError(f"foreign key check failed: {'; '.join(details)}")
 
 
-def _assert_review_store_integrity(conn: sqlite3.Connection) -> None:
-    _assert_expected_schema_objects(conn)
+def _assert_review_store_integrity(
+    conn: sqlite3.Connection,
+    *,
+    expected_indexes: frozenset[str] | None = None,
+) -> None:
+    _assert_expected_schema_objects(conn, expected_indexes=expected_indexes)
     _assert_foreign_key_integrity(conn)
 
 
@@ -363,6 +405,251 @@ def _migrate_review_schema_v2(conn: sqlite3.Connection) -> None:
         if _table_exists(conn, "review_runs"):
             raise RuntimeError("review_runs table still exists after migration")
         _set_user_version(conn, 2)
+        _assert_review_store_integrity(conn, expected_indexes=EXPECTED_REVIEW_INDEXES_V2)
+        conn.commit()
+    except Exception:
+        conn.rollback()
+        raise
+    finally:
+        conn.execute("PRAGMA foreign_keys = ON")
+    _assert_foreign_key_integrity(conn)
+
+
+def _recreate_review_store_indexes_and_views(conn: sqlite3.Connection) -> None:
+    conn.execute(
+        """
+        CREATE INDEX idx_review_jobs_model_partition_created
+        ON review_jobs(model_partition, created_at DESC)
+        """
+    )
+    conn.execute(
+        """
+        CREATE INDEX idx_review_jobs_status
+        ON review_jobs(status)
+        """
+    )
+    conn.execute(
+        """
+        CREATE INDEX idx_review_pairs_note_gate
+        ON review_pairs(note_path, gate_path)
+        """
+    )
+    conn.execute(
+        """
+        CREATE INDEX idx_review_pairs_review_job_id
+        ON review_pairs(review_job_id)
+        """
+    )
+    conn.execute(
+        """
+        CREATE INDEX idx_review_pairs_pair_status
+        ON review_pairs(pair_status)
+        """
+    )
+    conn.execute(
+        """
+        CREATE INDEX idx_acceptance_events_note_gate_model_partition
+        ON acceptance_events(note_path, gate_path, model_partition, accepted_at DESC)
+        """
+    )
+    conn.execute(
+        """
+        CREATE INDEX idx_acceptance_events_latest_by_key
+        ON acceptance_events(note_path, gate_path, model_partition, acceptance_event_id DESC)
+        """
+    )
+    conn.execute(
+        """
+        CREATE VIEW current_gate_acceptances AS
+        SELECT
+            e.note_path,
+            e.gate_path,
+            e.model_partition,
+            e.accepted_review_pair_id,
+            e.accepted_note_snapshot_id,
+            e.accepted_gate_snapshot_id,
+            note_snapshot.content_sha256 AS accepted_note_hash,
+            gate_snapshot.content_sha256 AS accepted_gate_hash,
+            note_snapshot.content_text AS accepted_note_text,
+            gate_snapshot.content_text AS accepted_gate_text,
+            e.accepted_at
+        FROM acceptance_events AS e
+        LEFT JOIN review_file_snapshots AS note_snapshot
+          ON e.accepted_note_snapshot_id = note_snapshot.snapshot_id
+        LEFT JOIN review_file_snapshots AS gate_snapshot
+          ON e.accepted_gate_snapshot_id = gate_snapshot.snapshot_id
+        JOIN (
+            SELECT
+                note_path,
+                gate_path,
+                model_partition,
+                MAX(acceptance_event_id) AS max_id
+            FROM acceptance_events
+            GROUP BY note_path, gate_path, model_partition
+        ) AS latest
+          ON e.acceptance_event_id = latest.max_id
+        """
+    )
+    conn.execute(
+        """
+        CREATE VIEW stale_gate_pairs AS
+        SELECT
+            a.note_path,
+            a.gate_path,
+            a.model_partition,
+            a.accepted_note_snapshot_id,
+            a.accepted_gate_snapshot_id,
+            a.accepted_note_hash,
+            a.accepted_gate_hash,
+            a.accepted_note_text,
+            a.accepted_gate_text
+        FROM current_gate_acceptances AS a
+        """
+    )
+
+
+def _migrate_review_schema_v3(conn: sqlite3.Connection) -> None:
+    review_job_count = _count_table_rows(conn, "review_jobs")
+    review_pair_count = _count_table_rows(conn, "review_pairs")
+    conn.execute("PRAGMA foreign_keys = OFF")
+    try:
+        conn.execute("BEGIN IMMEDIATE")
+        conn.execute("DROP VIEW IF EXISTS stale_gate_pairs")
+        conn.execute("DROP VIEW IF EXISTS current_gate_acceptances")
+        conn.execute("DROP INDEX IF EXISTS idx_review_jobs_model_partition_created")
+        conn.execute("DROP INDEX IF EXISTS idx_review_jobs_status")
+        conn.execute("DROP INDEX IF EXISTS idx_review_pairs_note_gate_model_partition")
+        conn.execute("DROP INDEX IF EXISTS idx_review_pairs_review_job_id")
+        conn.execute("DROP INDEX IF EXISTS idx_review_pairs_pair_status")
+        conn.execute("DROP INDEX IF EXISTS idx_acceptance_events_note_gate_model_partition")
+        conn.execute("DROP INDEX IF EXISTS idx_acceptance_events_latest_by_key")
+        conn.execute(
+            """
+            CREATE TABLE review_jobs_new (
+                review_job_id INTEGER PRIMARY KEY,
+                model_partition TEXT NOT NULL,
+                runner TEXT,
+                runner_model TEXT,
+                runner_effort TEXT,
+                created_at TEXT NOT NULL,
+                started_at TEXT,
+                completed_at TEXT,
+                status TEXT NOT NULL CHECK (
+                    status IN ('queued', 'running', 'completed', 'failed')
+                ),
+                failure_reason TEXT,
+                telemetry_json TEXT,
+                prompt_path TEXT,
+                bundle_output_path TEXT,
+                packing TEXT NOT NULL CHECK (
+                    packing IN ('note', 'gate')
+                )
+            )
+            """
+        )
+        conn.execute(
+            """
+            INSERT INTO review_jobs_new (
+                review_job_id,
+                model_partition,
+                runner,
+                runner_model,
+                runner_effort,
+                created_at,
+                started_at,
+                completed_at,
+                status,
+                failure_reason,
+                telemetry_json,
+                prompt_path,
+                bundle_output_path,
+                packing
+            )
+            SELECT
+                review_job_id,
+                model_partition,
+                runner,
+                NULL AS runner_model,
+                NULL AS runner_effort,
+                created_at,
+                started_at,
+                completed_at,
+                status,
+                failure_reason,
+                telemetry_json,
+                NULL AS prompt_path,
+                bundle_output_path,
+                packing
+            FROM review_jobs
+            """
+        )
+        conn.execute(
+            """
+            CREATE TABLE review_pairs_new (
+                review_pair_id INTEGER PRIMARY KEY,
+                review_job_id INTEGER NOT NULL REFERENCES review_jobs(review_job_id) ON DELETE CASCADE,
+                note_path TEXT NOT NULL,
+                gate_path TEXT NOT NULL,
+                pair_ordinal INTEGER NOT NULL,
+                pair_status TEXT NOT NULL CHECK (
+                    pair_status IN ('pending', 'completed', 'missing')
+                ),
+                decision TEXT CHECK (
+                    decision IN ('pass', 'warn', 'fail', 'error', 'unknown')
+                ),
+                result_path TEXT,
+                reviewed_note_snapshot_id INTEGER REFERENCES review_file_snapshots(snapshot_id),
+                reviewed_gate_snapshot_id INTEGER REFERENCES review_file_snapshots(snapshot_id),
+                reviewed_at TEXT,
+                UNIQUE (review_job_id, note_path, gate_path),
+                UNIQUE (review_job_id, pair_ordinal)
+            )
+            """
+        )
+        conn.execute(
+            """
+            INSERT INTO review_pairs_new (
+                review_pair_id,
+                review_job_id,
+                note_path,
+                gate_path,
+                pair_ordinal,
+                pair_status,
+                decision,
+                result_path,
+                reviewed_note_snapshot_id,
+                reviewed_gate_snapshot_id,
+                reviewed_at
+            )
+            SELECT
+                review_pair_id,
+                review_job_id,
+                note_path,
+                gate_path,
+                pair_ordinal,
+                pair_status,
+                decision,
+                result_path,
+                reviewed_note_snapshot_id,
+                reviewed_gate_snapshot_id,
+                reviewed_at
+            FROM review_pairs
+            """
+        )
+        if _count_table_rows(conn, "review_jobs_new") != review_job_count:
+            raise RuntimeError("review_jobs migration row count mismatch")
+        if _count_table_rows(conn, "review_pairs_new") != review_pair_count:
+            raise RuntimeError("review_pairs migration row count mismatch")
+        conn.execute("DROP TABLE review_pairs")
+        conn.execute("DROP TABLE review_jobs")
+        conn.execute("ALTER TABLE review_jobs_new RENAME TO review_jobs")
+        conn.execute("ALTER TABLE review_pairs_new RENAME TO review_pairs")
+        _recreate_review_store_indexes_and_views(conn)
+        if _count_table_rows(conn, "review_jobs") != review_job_count:
+            raise RuntimeError("review_jobs row count changed during migration")
+        if _count_table_rows(conn, "review_pairs") != review_pair_count:
+            raise RuntimeError("review_pairs row count changed during migration")
+        _set_user_version(conn, 3)
         _assert_review_store_integrity(conn)
         conn.commit()
     except Exception:
@@ -376,6 +663,7 @@ def _migrate_review_schema_v2(conn: sqlite3.Connection) -> None:
 REVIEW_SCHEMA_MIGRATIONS: dict[int, Callable[[sqlite3.Connection], None]] = {
     1: _migrate_review_schema_v1,
     2: _migrate_review_schema_v2,
+    3: _migrate_review_schema_v3,
 }
 
 
@@ -500,12 +788,15 @@ def _review_job_from_row(row: sqlite3.Row) -> ReviewJobRow:
         review_job_id=row["review_job_id"],
         model_partition=row["model_partition"],
         runner=row["runner"],
+        runner_model=row["runner_model"],
+        runner_effort=row["runner_effort"],
         created_at=row["created_at"],
         started_at=row["started_at"],
         completed_at=row["completed_at"],
         status=row["status"],
         failure_reason=row["failure_reason"],
         telemetry_json=row["telemetry_json"],
+        prompt_path=row["prompt_path"],
         bundle_output_path=row["bundle_output_path"],
         packing=row["packing"],
     )
@@ -532,14 +823,17 @@ def create_job(
     conn: sqlite3.Connection,
     *,
     model_partition: str,
-    runner: str,
+    runner: str | None,
     created_at: str,
     started_at: str | None,
     packing: str,
     status: str,
+    runner_model: str | None = None,
+    runner_effort: str | None = None,
     completed_at: str | None = None,
     failure_reason: str | None = None,
     telemetry_json: str | None = None,
+    prompt_path: str | None = None,
     bundle_output_path: str | None = None,
 ) -> int:
     if packing not in PACKING_VALUES:
@@ -551,25 +845,31 @@ def create_job(
         INSERT INTO review_jobs (
             model_partition,
             runner,
+            runner_model,
+            runner_effort,
             created_at,
             started_at,
             completed_at,
             status,
             failure_reason,
             telemetry_json,
+            prompt_path,
             bundle_output_path,
             packing
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """,
         (
             model_partition,
             runner,
+            runner_model,
+            runner_effort,
             created_at,
             started_at,
             completed_at,
             status,
             failure_reason,
             telemetry_json,
+            prompt_path,
             bundle_output_path,
             packing,
         ),
@@ -581,7 +881,6 @@ def create_review_pairs(
     conn: sqlite3.Connection,
     *,
     review_job_id: int,
-    model_partition: str,
     pairs: Sequence[ReviewPairRequest],
     pair_status: str = "pending",
 ) -> list[int]:
@@ -593,18 +892,16 @@ def create_review_pairs(
                 review_job_id,
                 note_path,
                 gate_path,
-                model_partition,
                 pair_ordinal,
                 pair_status,
                 reviewed_note_snapshot_id,
                 reviewed_gate_snapshot_id
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            ) VALUES (?, ?, ?, ?, ?, ?, ?)
             """,
             (
                 review_job_id,
                 pair.note_path,
                 pair.gate_path,
-                model_partition,
                 pair.pair_ordinal,
                 pair_status,
                 pair.reviewed_note_snapshot_id,
@@ -619,23 +916,31 @@ def create_job_with_pairs(
     conn: sqlite3.Connection,
     *,
     model_partition: str,
-    runner: str,
+    runner: str | None,
     created_at: str,
     started_at: str | None,
     status: str,
     packing: str,
     pairs: Sequence[ReviewPairRequest],
+    runner_model: str | None = None,
+    runner_effort: str | None = None,
+    prompt_path: str | None = None,
+    bundle_output_path: str | None = None,
 ) -> int:
     review_job_id = create_job(
         conn,
         model_partition=model_partition,
         runner=runner,
+        runner_model=runner_model,
+        runner_effort=runner_effort,
         created_at=created_at,
         started_at=started_at,
         packing=packing,
         status=status,
+        prompt_path=prompt_path,
+        bundle_output_path=bundle_output_path,
     )
-    create_review_pairs(conn, review_job_id=review_job_id, model_partition=model_partition, pairs=pairs)
+    create_review_pairs(conn, review_job_id=review_job_id, pairs=pairs)
     return review_job_id
 
 
@@ -646,12 +951,15 @@ def load_review_job(conn: sqlite3.Connection, *, review_job_id: int) -> ReviewJo
             review_job_id,
             model_partition,
             runner,
+            runner_model,
+            runner_effort,
             created_at,
             started_at,
             completed_at,
             status,
             failure_reason,
             telemetry_json,
+            prompt_path,
             bundle_output_path,
             packing
         FROM review_jobs
@@ -668,21 +976,23 @@ def load_review_pairs_for_job(conn: sqlite3.Connection, *, review_job_id: int) -
     rows = conn.execute(
         """
         SELECT
-            review_pair_id,
-            review_job_id,
-            note_path,
-            gate_path,
-            model_partition,
-            pair_ordinal,
-            pair_status,
-            decision,
-            result_path,
-            reviewed_note_snapshot_id,
-            reviewed_gate_snapshot_id,
-            reviewed_at
-        FROM review_pairs
-        WHERE review_job_id = ?
-        ORDER BY pair_ordinal, note_path, gate_path
+            rp.review_pair_id,
+            rp.review_job_id,
+            rp.note_path,
+            rp.gate_path,
+            j.model_partition AS model_partition,
+            rp.pair_ordinal,
+            rp.pair_status,
+            rp.decision,
+            rp.result_path,
+            rp.reviewed_note_snapshot_id,
+            rp.reviewed_gate_snapshot_id,
+            rp.reviewed_at
+        FROM review_pairs AS rp
+        JOIN review_jobs AS j
+          ON j.review_job_id = rp.review_job_id
+        WHERE rp.review_job_id = ?
+        ORDER BY rp.pair_ordinal, rp.note_path, rp.gate_path
         """,
         (review_job_id,),
     ).fetchall()
@@ -693,13 +1003,114 @@ def load_completed_review_pairs_for_job(conn: sqlite3.Connection, *, review_job_
     return [pair for pair in load_review_pairs_for_job(conn, review_job_id=review_job_id) if pair.pair_status == "completed"]
 
 
+def _job_plan_from_job(conn: sqlite3.Connection, job: ReviewJobRow, *, require_paths: bool) -> ReviewJobPlan:
+    pairs = tuple(load_review_pairs_for_job(conn, review_job_id=job.review_job_id))
+    if require_paths:
+        missing: list[str] = []
+        if job.prompt_path is None:
+            missing.append("prompt_path")
+        if job.bundle_output_path is None:
+            missing.append("bundle_output_path")
+        missing_pair_ids = [str(pair.review_pair_id) for pair in pairs if pair.result_path is None]
+        if missing_pair_ids:
+            missing.append(f"result_path for review_pair_id(s): {', '.join(missing_pair_ids)}")
+        if missing:
+            raise ValueError(
+                f"review job {job.review_job_id} is missing load-bearing path(s): {', '.join(missing)}"
+            )
+    return ReviewJobPlan(
+        review_job_id=job.review_job_id,
+        model_partition=job.model_partition,
+        runner=job.runner,
+        runner_model=job.runner_model,
+        runner_effort=job.runner_effort,
+        created_at=job.created_at,
+        started_at=job.started_at,
+        completed_at=job.completed_at,
+        status=job.status,
+        failure_reason=job.failure_reason,
+        telemetry_json=job.telemetry_json,
+        prompt_path=job.prompt_path,
+        bundle_output_path=job.bundle_output_path,
+        packing=job.packing,
+        pairs=pairs,
+    )
+
+
+def load_review_job_plan(
+    conn: sqlite3.Connection,
+    *,
+    review_job_id: int,
+    require_paths: bool = False,
+) -> ReviewJobPlan | None:
+    job = load_review_job(conn, review_job_id=review_job_id)
+    if job is None:
+        return None
+    return _job_plan_from_job(conn, job, require_paths=require_paths)
+
+
+def list_review_job_plans(
+    conn: sqlite3.Connection,
+    *,
+    status: str | None = None,
+    model_partition: str | None = None,
+    require_paths: bool = False,
+) -> list[ReviewJobPlan]:
+    where_clauses: list[str] = []
+    params: list[str] = []
+    if status is not None:
+        where_clauses.append("status = ?")
+        params.append(status)
+    if model_partition is not None:
+        where_clauses.append("model_partition = ?")
+        params.append(model_partition)
+    where_sql = f"WHERE {' AND '.join(where_clauses)}" if where_clauses else ""
+    rows = conn.execute(
+        f"""
+        SELECT
+            review_job_id,
+            model_partition,
+            runner,
+            runner_model,
+            runner_effort,
+            created_at,
+            started_at,
+            completed_at,
+            status,
+            failure_reason,
+            telemetry_json,
+            prompt_path,
+            bundle_output_path,
+            packing
+        FROM review_jobs
+        {where_sql}
+        ORDER BY created_at ASC, review_job_id ASC
+        """,
+        tuple(params),
+    ).fetchall()
+    return [
+        _job_plan_from_job(conn, _review_job_from_row(row), require_paths=require_paths)
+        for row in rows
+    ]
+
+
 def set_job_artifact_paths(
     conn: sqlite3.Connection,
     *,
     review_job_id: int,
+    prompt_path: str | None = None,
     bundle_output_path: str | None = None,
     result_paths: Mapping[int, str] | None = None,
 ) -> None:
+    if prompt_path is not None:
+        conn.execute(
+            """
+            UPDATE review_jobs
+            SET prompt_path = ?
+            WHERE review_job_id = ?
+            """,
+            (prompt_path, review_job_id),
+        )
     if bundle_output_path is not None:
         conn.execute(
             """
@@ -762,14 +1173,18 @@ def attach_execution_data(
     *,
     review_job_id: int,
     telemetry_json: str | None = None,
+    runner_model: str | None = None,
+    runner_effort: str | None = None,
 ) -> None:
     conn.execute(
         """
         UPDATE review_jobs
-        SET telemetry_json = COALESCE(?, telemetry_json)
+        SET telemetry_json = COALESCE(?, telemetry_json),
+            runner_model = COALESCE(?, runner_model),
+            runner_effort = COALESCE(?, runner_effort)
         WHERE review_job_id = ?
         """,
-        (telemetry_json, review_job_id),
+        (telemetry_json, runner_model, runner_effort, review_job_id),
     )
 
 
@@ -988,7 +1403,6 @@ def count_model_partition_records(
 
     return ModelPartitionUpdateCounts(
         review_jobs=count_rows("review_jobs"),
-        review_pairs=count_rows("review_pairs"),
         acceptance_events=count_rows("acceptance_events"),
     )
 
@@ -1011,7 +1425,6 @@ def rekey_model_partition(
 
     return ModelPartitionUpdateCounts(
         review_jobs=update_rows("review_jobs"),
-        review_pairs=update_rows("review_pairs"),
         acceptance_events=update_rows("acceptance_events"),
     )
 
@@ -1067,21 +1480,23 @@ def load_review_pairs_for_note(
     rows = conn.execute(
         """
         SELECT
-            review_pair_id,
-            review_job_id,
-            note_path,
-            gate_path,
-            model_partition,
-            pair_ordinal,
-            pair_status,
-            decision,
-            result_path,
-            reviewed_note_snapshot_id,
-            reviewed_gate_snapshot_id,
-            reviewed_at
-        FROM review_pairs
-        WHERE note_path = ? AND model_partition = ?
-        ORDER BY gate_path, reviewed_at, review_pair_id
+            rp.review_pair_id,
+            rp.review_job_id,
+            rp.note_path,
+            rp.gate_path,
+            j.model_partition AS model_partition,
+            rp.pair_ordinal,
+            rp.pair_status,
+            rp.decision,
+            rp.result_path,
+            rp.reviewed_note_snapshot_id,
+            rp.reviewed_gate_snapshot_id,
+            rp.reviewed_at
+        FROM review_pairs AS rp
+        JOIN review_jobs AS j
+          ON j.review_job_id = rp.review_job_id
+        WHERE rp.note_path = ? AND j.model_partition = ?
+        ORDER BY rp.gate_path, rp.reviewed_at, rp.review_pair_id
         """,
         (note_path, model_partition),
     ).fetchall()
@@ -1098,24 +1513,26 @@ def load_latest_completed_review_pair(
     row = conn.execute(
         """
         SELECT
-            review_pair_id,
-            review_job_id,
-            note_path,
-            gate_path,
-            model_partition,
-            pair_ordinal,
-            pair_status,
-            decision,
-            result_path,
-            reviewed_note_snapshot_id,
-            reviewed_gate_snapshot_id,
-            reviewed_at
-        FROM review_pairs
-        WHERE note_path = ?
-          AND gate_path = ?
-          AND model_partition = ?
-          AND pair_status = 'completed'
-        ORDER BY reviewed_at DESC, review_pair_id DESC
+            rp.review_pair_id,
+            rp.review_job_id,
+            rp.note_path,
+            rp.gate_path,
+            j.model_partition AS model_partition,
+            rp.pair_ordinal,
+            rp.pair_status,
+            rp.decision,
+            rp.result_path,
+            rp.reviewed_note_snapshot_id,
+            rp.reviewed_gate_snapshot_id,
+            rp.reviewed_at
+        FROM review_pairs AS rp
+        JOIN review_jobs AS j
+          ON j.review_job_id = rp.review_job_id
+        WHERE rp.note_path = ?
+          AND rp.gate_path = ?
+          AND j.model_partition = ?
+          AND rp.pair_status = 'completed'
+        ORDER BY rp.reviewed_at DESC, rp.review_pair_id DESC
         LIMIT 1
         """,
         (note_path, gate_path, model_partition),
@@ -1146,20 +1563,51 @@ def load_effective_review_pair_map(
         f"""
         WITH latest_review_pairs AS (
             SELECT
-                rp.*,
+                rp.review_pair_id,
+                rp.review_job_id,
+                rp.note_path,
+                rp.gate_path,
+                j.model_partition AS model_partition,
+                rp.pair_ordinal,
+                rp.pair_status,
+                rp.decision,
+                rp.result_path,
+                rp.reviewed_note_snapshot_id,
+                rp.reviewed_gate_snapshot_id,
+                rp.reviewed_at,
                 ROW_NUMBER() OVER (
-                    PARTITION BY rp.note_path, rp.gate_path, rp.model_partition
+                    PARTITION BY rp.note_path, rp.gate_path, j.model_partition
                     ORDER BY rp.reviewed_at DESC, rp.review_pair_id DESC
                 ) AS rn
             FROM review_pairs AS rp
+            JOIN review_jobs AS j
+              ON j.review_job_id = rp.review_job_id
             WHERE rp.pair_status = 'completed'
+        ),
+        accepted_review_pairs AS (
+            SELECT
+                rp.review_pair_id,
+                rp.review_job_id,
+                rp.note_path,
+                rp.gate_path,
+                j.model_partition AS model_partition,
+                rp.pair_ordinal,
+                rp.pair_status,
+                rp.decision,
+                rp.result_path,
+                rp.reviewed_note_snapshot_id,
+                rp.reviewed_gate_snapshot_id,
+                rp.reviewed_at
+            FROM review_pairs AS rp
+            JOIN review_jobs AS j
+              ON j.review_job_id = rp.review_job_id
         )
         SELECT
             COALESCE(accepted.review_pair_id, latest.review_pair_id) AS review_pair_id,
             COALESCE(accepted.review_job_id, latest.review_job_id) AS review_job_id,
             COALESCE(accepted.note_path, latest.note_path) AS note_path,
             COALESCE(accepted.gate_path, latest.gate_path) AS gate_path,
-            COALESCE(accepted.model_partition, latest.model_partition) AS model_partition,
+            COALESCE(accepted.model_partition, latest.model_partition, a.model_partition) AS model_partition,
             COALESCE(accepted.pair_ordinal, latest.pair_ordinal) AS pair_ordinal,
             COALESCE(accepted.pair_status, latest.pair_status) AS pair_status,
             COALESCE(accepted.decision, latest.decision) AS decision,
@@ -1168,7 +1616,7 @@ def load_effective_review_pair_map(
             COALESCE(accepted.reviewed_gate_snapshot_id, latest.reviewed_gate_snapshot_id) AS reviewed_gate_snapshot_id,
             COALESCE(accepted.reviewed_at, latest.reviewed_at) AS reviewed_at
         FROM current_gate_acceptances AS a
-        LEFT JOIN review_pairs AS accepted
+        LEFT JOIN accepted_review_pairs AS accepted
           ON accepted.review_pair_id = a.accepted_review_pair_id
         LEFT JOIN latest_review_pairs AS latest
           ON latest.note_path = a.note_path

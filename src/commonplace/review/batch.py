@@ -150,7 +150,7 @@ def prepare_review_batch(
     repo_root: Path,
     db_path: Path,
     pairs: list[tuple[str, str]],
-    runner: str,
+    runner: str | None,
     model_partition: str,
 ) -> PreparedBatch:
     """Create one review job for the given note-packed or gate-packed pairs."""
@@ -158,21 +158,50 @@ def prepare_review_batch(
     if not applicable_pairs:
         raise ValueError("no applicable pairs to prepare")
     packing = _packing_for_pairs(applicable_pairs)
+    return prepare_grouped_review_job(
+        repo_root=repo_root,
+        db_path=db_path,
+        pairs=applicable_pairs,
+        skipped=skipped,
+        packing=packing,
+        runner=runner,
+        model_partition=model_partition,
+    )
 
+
+def prepare_grouped_review_job(
+    *,
+    repo_root: Path,
+    db_path: Path,
+    pairs: list[tuple[str, str]],
+    skipped: list[SkippedPair] | None = None,
+    packing: str,
+    runner: str | None,
+    model_partition: str,
+    runner_model: str | None = None,
+    runner_effort: str | None = None,
+    status: str = "queued",
+    started_at: str | None = None,
+) -> PreparedBatch:
+    """Create one review job for already-normalized, applicable pairs."""
+    if not pairs:
+        raise ValueError("no pairs to prepare")
     created_at = iso_now()
     with connect(db_path) as conn:
         captured_inputs = capture_review_inputs(
             conn,
             repo_root=repo_root,
-            pairs=applicable_pairs,
+            pairs=pairs,
         )
         review_job_id = create_job_with_pairs(
             conn,
             model_partition=model_partition,
             runner=runner,
+            runner_model=runner_model,
+            runner_effort=runner_effort,
             created_at=created_at,
-            started_at=None,
-            status="queued",
+            started_at=started_at,
+            status=status,
             packing=packing,
             pairs=captured_inputs.pair_requests,
         )
@@ -183,7 +212,7 @@ def prepare_review_batch(
         repo_root=repo_root,
         review_job_id=review_job_id,
         packing=packing,
-        pairs=applicable_pairs,
+        pairs=pairs,
         note_texts=captured_inputs.note_texts,
     )
     artifact_dir = bundle_artifact_dir(repo_root, review_job_id)
@@ -227,6 +256,7 @@ def prepare_review_batch(
         set_job_artifact_paths(
             conn,
             review_job_id=review_job_id,
+            prompt_path=prompt_path,
             bundle_output_path=bundle_output_path,
             result_paths=result_paths,
         )
@@ -237,7 +267,7 @@ def prepare_review_batch(
         review_job_id=review_job_id,
         targets=targets,
         pairs=stored_pairs,
-        skipped=skipped,
+        skipped=skipped or [],
         result_paths=result_paths,
         prompt_path=prompt_path,
         bundle_output_path=bundle_output_path,

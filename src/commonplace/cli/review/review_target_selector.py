@@ -14,6 +14,7 @@ from commonplace.review.review_target_selector import (
     render_json,
     select_stale_gates,
 )
+from commonplace.review.review_model import normalize_model_partition
 
 
 def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
@@ -100,7 +101,7 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
         records = [record for record in records if record.reason == args.reason]
 
     if args.json:
-        print(render_json(records))
+        print(render_json(records, model_partition=normalize_model_partition(model) if model is not None else None))
     else:
         print_grouped(records)
     return 0

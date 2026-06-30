@@ -12,7 +12,7 @@ Review sweeps need fan-out: many (note, gate) pairs, packed into batches, execut
 
 ## Current state (as of 2026-06-12)
 
-- The execution seams exist and are validated. [ADR 030](../adr/030-harness-facing-seams-batch-endpoints-and-runner-adapters.md) shipped `commonplace-prepare-review-batch` and `commonplace-ingest-batch-output`; one experiment ran a real slice end-to-end (selector → two prepared batches → a 12-line workflow script with one reviewer agent per batch in parallel → ingest; 4 pairs recorded, zero Python changes; observations in `kb/log.md`, 2026-06-12).
+- The execution seams exist and are validated. [ADR 030](../adr/030-harness-facing-seams-batch-endpoints-and-runner-adapters.md) shipped `commonplace-prepare-review-batch` and `commonplace-ingest-batch-output`; Phase 3 supersedes the prepare command with `commonplace-create-review-jobs --pair ... --grouping {note,gate}`. One experiment ran a real slice end-to-end on the older seam (selector → two prepared batches → a 12-line workflow script with one reviewer agent per batch in parallel → ingest; 4 pairs recorded, zero Python changes; observations in `kb/log.md`, 2026-06-12).
 - The orchestration feature is Claude Code-only ([dynamic workflows](../../agentic-systems/claude-code-dynamic-workflows.md)). No comparable scriptable sub-agent surface is known in the other harness this project runs (codex CLI).
 - The workflow script sandbox has no shell or filesystem, so it cannot invoke `commonplace-*` commands; only the parent conversation or sub-agents can.
 - Frictions observed in the experiment: workflow `args` input did not reach the script (data had to be inlined); no token telemetry lands on the review runs (the harness reports usage per workflow, ingest accepts none); the recorded model partition is the orchestrator's unverified assertion, where the subprocess path rekeys from scraped telemetry.
@@ -23,7 +23,7 @@ Five roles, with the harness owning exactly one:
 
 1. **Work-list** — `commonplace-review-target-selector --json` emits stale pairs (deterministic, Python).
 2. **Packing** — group pairs into batches (share-note or share-gate); trivial in any language, owned by the orchestrator.
-3. **Prepare** — `commonplace-prepare-review-batch` per batch: run creation, provenance, canonical prompt (deterministic, Python).
+3. **Prepare** — `commonplace-create-review-jobs --pair ... --grouping {note,gate}` per batch or batch group: job creation, provenance, canonical prompt (deterministic, Python).
 4. **Fan-out** — the harness feature: one reviewer agent per batch, in parallel. Reviewers are hermetic: they read the batch's `prompt.md`, write its `bundle-output.md`, and are forbidden from running `commonplace-*` commands — judgment only, no bookkeeping.
 5. **Ingest** — `commonplace-ingest-batch-output` per batch: parse, salvage, finalize (deterministic, Python).
 
