@@ -15,7 +15,6 @@ import sys
 from pathlib import Path
 
 from commonplace.lib.relocation import relocate_directory
-from commonplace.review.relocation_hook import ReviewRelocationHook
 
 
 def main() -> None:
@@ -47,7 +46,6 @@ def main() -> None:
                 redirect_from=redirect_from,
                 redirect_to=redirect_to,
                 apply=args.apply,
-                hooks=[ReviewRelocationHook()],
             )
         )
     except (FileNotFoundError, ValueError) as exc:

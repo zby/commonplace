@@ -1,20 +1,32 @@
 from __future__ import annotations
 
 from pathlib import Path
+import sqlite3
 
 import pytest
 
 from commonplace.lib import relocation
 from commonplace.lib.naming import MAX_NOTE_SLUG_LENGTH, slugify_note_filename
 from commonplace.review import review_db
-from commonplace.review.relocation_hook import ReviewRelocationHook
-from test.commonplace.review.pair_helpers import insert_completed_pair
+from test.commonplace.review.pair_helpers import accept_pair, insert_completed_pair
 
 
 def write(path: Path, content: str) -> Path:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(content, encoding="utf-8")
     return path
+
+
+def count_note_review_rows(conn: sqlite3.Connection, note_path: str) -> tuple[int, int]:
+    pair_row = conn.execute(
+        "SELECT COUNT(*) AS count FROM review_pairs WHERE note_path = ?",
+        (note_path,),
+    ).fetchone()
+    acceptance_row = conn.execute(
+        "SELECT COUNT(*) AS count FROM acceptance_events WHERE note_path = ?",
+        (note_path,),
+    ).fetchone()
+    return int(pair_row["count"]), int(acceptance_row["count"])
 
 
 def test_rewrite_links_to_relocated_note_updates_real_links_only(tmp_path: Path) -> None:
@@ -140,11 +152,7 @@ def test_resolve_destination_path_accepts_directory_target(tmp_path: Path) -> No
     assert destination == notes_root / "archive" / "old-note.md"
 
 
-def test_relocate_note_apply_runs_review_relocation_hook(tmp_path: Path, monkeypatch) -> None:
-    """End-to-end coverage for ReviewRelocationHook: relocating a note must
-    rekey its review-DB rows. Link rewriting, mkdocs redirect updates, and DB
-    rekey mechanics are covered by dedicated unit tests; this test only verifies
-    the hook is wired into relocate_note."""
+def test_relocate_note_apply_leaves_review_state_path_keyed(tmp_path: Path, monkeypatch) -> None:
     repo_root = tmp_path
     kb_root = repo_root / "kb"
     notes_root = kb_root / "notes"
@@ -154,13 +162,21 @@ def test_relocate_note_apply_runs_review_relocation_hook(tmp_path: Path, monkeyp
     db_path = kb_root / "reports" / "review-store.sqlite"
     review_db.ensure_db(db_path)
     with review_db.connect(db_path) as conn:
-        insert_completed_pair(
+        review_pair_id = insert_completed_pair(
             conn,
             note_path="kb/notes/old-note.md",
             gate_id="prose/source-residue",
             model_partition="opus-4-6",
             decision="pass",
             reviewed_at="2026-04-10T10:05:00+02:00",
+        )
+        accept_pair(
+            conn,
+            review_pair_id=review_pair_id,
+            note_path="kb/notes/old-note.md",
+            gate_id="prose/source-residue",
+            model_partition="opus-4-6",
+            accepted_at="2026-04-10T10:06:00+02:00",
         )
         conn.commit()
 
@@ -176,7 +192,6 @@ def test_relocate_note_apply_runs_review_relocation_hook(tmp_path: Path, monkeyp
         note_arg="old-note",
         dest_path="kb/notes/archive/new-note-title.md",
         apply=True,
-        hooks=[ReviewRelocationHook()],
     )
 
     new_note = notes_root / "archive" / "new-note-title.md"
@@ -185,10 +200,10 @@ def test_relocate_note_apply_runs_review_relocation_hook(tmp_path: Path, monkeyp
     assert new_note.exists()
 
     with review_db.connect(db_path) as conn:
-        counts = review_db.count_note_path_records(conn, note_path="kb/notes/archive/new-note-title.md")
-        old_counts = review_db.count_note_path_records(conn, note_path="kb/notes/old-note.md")
-    assert counts.review_pairs == 1
-    assert old_counts.total == 0
+        new_counts = count_note_review_rows(conn, "kb/notes/archive/new-note-title.md")
+        old_counts = count_note_review_rows(conn, "kb/notes/old-note.md")
+    assert new_counts == (0, 0)
+    assert old_counts == (1, 1)
 
 
 def test_relocate_note_apply_moves_file_with_to_directory(tmp_path: Path, monkeypatch) -> None:

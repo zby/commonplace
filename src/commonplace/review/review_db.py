@@ -142,16 +142,6 @@ class ReviewJobClaimError(ValueError):
 
 
 @dataclass(frozen=True)
-class NotePathUpdateCounts:
-    review_pairs: int = 0
-    acceptance_events: int = 0
-
-    @property
-    def total(self) -> int:
-        return self.review_pairs + self.acceptance_events
-
-
-@dataclass(frozen=True)
 class ModelPartitionUpdateCounts:
     review_jobs: int = 0
     acceptance_events: int = 0
@@ -1415,46 +1405,6 @@ def append_acceptance_event(
         ),
     )
     return int(cursor.lastrowid)
-
-
-def count_note_path_records(
-    conn: sqlite3.Connection,
-    *,
-    note_path: str,
-) -> NotePathUpdateCounts:
-    def count_rows(table: str) -> int:
-        row = conn.execute(
-            f"SELECT COUNT(*) AS count FROM {table} WHERE note_path = ?",
-            (note_path,),
-        ).fetchone()
-        return int(row["count"]) if row is not None else 0
-
-    return NotePathUpdateCounts(
-        review_pairs=count_rows("review_pairs"),
-        acceptance_events=count_rows("acceptance_events"),
-    )
-
-
-def rekey_note_path(
-    conn: sqlite3.Connection,
-    *,
-    old_note_path: str,
-    new_note_path: str,
-) -> NotePathUpdateCounts:
-    if old_note_path == new_note_path:
-        return NotePathUpdateCounts()
-
-    def update_rows(table: str) -> int:
-        cursor = conn.execute(
-            f"UPDATE {table} SET note_path = ? WHERE note_path = ?",
-            (new_note_path, old_note_path),
-        )
-        return int(cursor.rowcount or 0)
-
-    return NotePathUpdateCounts(
-        review_pairs=update_rows("review_pairs"),
-        acceptance_events=update_rows("acceptance_events"),
-    )
 
 
 def count_model_partition_records(

@@ -15,7 +15,6 @@ import sys
 from pathlib import Path
 
 from commonplace.lib.relocation import relocate_note
-from commonplace.review.relocation_hook import ReviewRelocationHook
 
 
 def main() -> None:
@@ -36,7 +35,6 @@ def main() -> None:
                 new_name=args.new_name,
                 dest_path=args.dest_path,
                 apply=args.apply,
-                hooks=[ReviewRelocationHook()],
             )
         )
     except (FileNotFoundError, ValueError) as exc:
