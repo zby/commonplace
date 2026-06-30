@@ -6,6 +6,8 @@ import json
 from pathlib import Path
 from typing import Protocol, Sequence
 
+import yaml
+
 
 MANIFEST_NAME = "MANIFEST.json"
 
@@ -15,6 +17,27 @@ class ReviewPairForManifest(Protocol):
     note_path: str
     gate_path: str
     pair_status: str
+    result_path: str | None
+
+
+class ReviewJobForResult(Protocol):
+    review_job_id: int
+    model_partition: str
+    runner: str | None
+    runner_model: str | None
+    runner_effort: str | None
+
+
+class ReviewPairForResult(Protocol):
+    review_pair_id: int
+    review_job_id: int
+    note_path: str
+    gate_path: str
+    model_partition: str
+    pair_status: str
+    decision: str | None
+    result_path: str | None
+    reviewed_at: str | None
 
 
 class SkippedPairForManifest(Protocol):
@@ -104,6 +127,60 @@ def write_pair_result_files(
         (artifact_dir / filename).write_text(review_text, encoding="utf-8")
 
 
+def _repo_relative_output_path(repo_root: Path, stored_path: str) -> Path:
+    result_path = Path(stored_path)
+    if result_path.is_absolute():
+        raise ValueError(f"result_path must be repo-relative: {stored_path}")
+    target = (repo_root / result_path).resolve()
+    repo_root_resolved = repo_root.resolve()
+    if not target.is_relative_to(repo_root_resolved):
+        raise ValueError(f"result_path escapes repo root: {stored_path}")
+    return target
+
+
+def result_frontmatter(
+    *,
+    job: ReviewJobForResult,
+    pair: ReviewPairForResult,
+) -> str:
+    payload = {
+        "review_job_id": job.review_job_id,
+        "review_pair_id": pair.review_pair_id,
+        "note_path": pair.note_path,
+        "gate_path": pair.gate_path,
+        "model_partition": job.model_partition,
+        "runner": job.runner,
+        "runner_model": job.runner_model,
+        "runner_effort": job.runner_effort,
+        "decision": pair.decision,
+        "reviewed_at": pair.reviewed_at,
+    }
+    return "---\n" + yaml.safe_dump(payload, allow_unicode=False, sort_keys=False) + "---\n"
+
+
+def write_pair_result_files_to_persisted_paths(
+    *,
+    repo_root: Path,
+    job: ReviewJobForResult,
+    pairs: Sequence[ReviewPairForResult],
+    canonical_texts: dict[tuple[str, str], str],
+) -> None:
+    for pair in pairs:
+        if pair.pair_status != "completed":
+            continue
+        if pair.result_path is None:
+            raise ValueError(f"completed review pair {pair.review_pair_id} is missing result_path")
+        review_text = canonical_texts.get((pair.note_path, pair.gate_path))
+        if review_text is None:
+            continue
+        output_path = _repo_relative_output_path(repo_root, pair.result_path)
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        output_path.write_text(
+            result_frontmatter(job=job, pair=pair) + review_text,
+            encoding="utf-8",
+        )
+
+
 def write_manifest(
     *,
     repo_root: Path,
@@ -129,7 +206,7 @@ def write_manifest(
             "note_path": pair.note_path,
             "gate_path": pair.gate_path,
             "status": pair.pair_status,
-            "result_path": result_paths[pair.review_pair_id],
+            "result_path": pair.result_path or result_paths[pair.review_pair_id],
         }
         if failure_reason is not None:
             item["failure_reason"] = failure_reason

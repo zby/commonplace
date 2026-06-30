@@ -137,6 +137,10 @@ class ReviewPairCompletion:
     reviewed_at: str | None = None
 
 
+class ReviewJobClaimError(ValueError):
+    """Raised when a queued review job cannot be claimed for dispatch."""
+
+
 @dataclass(frozen=True)
 class NotePathUpdateCounts:
     review_pairs: int = 0
@@ -1092,6 +1096,70 @@ def list_review_job_plans(
         _job_plan_from_job(conn, _review_job_from_row(row), require_paths=require_paths)
         for row in rows
     ]
+
+
+def claim_review_job(
+    conn: sqlite3.Connection,
+    *,
+    review_job_id: int,
+    runner: str,
+    runner_model: str,
+    runner_effort: str | None,
+    model_partition: str,
+    started_at: str | None = None,
+) -> ReviewJobPlan:
+    """Atomically claim a queued review job for parent-dispatched execution."""
+    claimed_at = started_at or _now_utc_iso()
+    cursor = conn.execute(
+        """
+        UPDATE review_jobs
+        SET status = 'running',
+            started_at = ?,
+            runner = ?,
+            runner_model = ?,
+            runner_effort = ?,
+            failure_reason = NULL
+        WHERE review_job_id = ?
+          AND status = 'queued'
+          AND model_partition = ?
+          AND prompt_path IS NOT NULL
+          AND bundle_output_path IS NOT NULL
+          AND NOT EXISTS (
+              SELECT 1
+              FROM review_pairs AS rp
+              WHERE rp.review_job_id = review_jobs.review_job_id
+                AND rp.result_path IS NULL
+          )
+        """,
+        (
+            claimed_at,
+            runner,
+            runner_model,
+            runner_effort,
+            review_job_id,
+            model_partition,
+        ),
+    )
+    if int(cursor.rowcount or 0) != 1:
+        job = load_review_job(conn, review_job_id=review_job_id)
+        if job is None:
+            raise ReviewJobClaimError(f"review job not found: {review_job_id}")
+        if job.status != "queued":
+            raise ReviewJobClaimError(f"review job is not claimable: {job.status}")
+        if job.model_partition != model_partition:
+            raise ReviewJobClaimError(
+                f"review job model_partition {job.model_partition!r} does not match claimed partition {model_partition!r}"
+            )
+        try:
+            _job_plan_from_job(conn, job, require_paths=True)
+        except ValueError as exc:
+            raise ReviewJobClaimError(str(exc)) from exc
+        raise ReviewJobClaimError(f"review job could not be claimed: {review_job_id}")
+
+    plan = load_review_job_plan(conn, review_job_id=review_job_id, require_paths=True)
+    if plan is None:
+        raise ReviewJobClaimError(f"review job not found after claim: {review_job_id}")
+    return plan
 
 
 def set_job_artifact_paths(

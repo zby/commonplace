@@ -1,10 +1,8 @@
-"""Batch-granular prepare/ingest for harness-orchestrated review execution.
+"""Batch-granular review job preparation for harness-orchestrated execution.
 
 These are the deterministic ends of a review batch when something other than
 the subprocess runner executes it. prepare creates one review invocation for a
-note-packed or gate-packed set of pairs and renders the canonical prompt;
-ingest parses pair output and finalizes pair records with the executor's
-salvage policy.
+note-packed or gate-packed set of pairs and renders the canonical prompt.
 """
 
 from __future__ import annotations
@@ -13,29 +11,17 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from commonplace.review.artifacts import result_paths_by_pair_id, write_manifest
-from commonplace.review.executor import (
-    JobPairs,
-    bundle_artifact_dir,
-    fail_active_review_jobs,
-    finalize_bundle_markdown,
-    prepare_note_target,
-)
+from commonplace.review.executor import bundle_artifact_dir, fail_active_review_jobs, prepare_note_target
 from commonplace.review.freshness import capture_review_inputs
-from commonplace.review.paths import gate_id_for_path, normalize_gate_path, review_gates_dir
 from commonplace.review.protocol.prompt import NoteReviewTarget, render_pairs_prompt
-from commonplace.review.resolve_gates import applicable_gate_ids_for_note
 from commonplace.review.review_db import (
     ReviewPairRow,
     connect,
     create_job_with_pairs,
     load_review_pairs_for_job,
-    load_review_job,
     set_job_artifact_paths,
 )
 from commonplace.review.clock import iso_now
-
-
-PAIR_ARG_SEPARATOR = "::"
 
 
 @dataclass(frozen=True)
@@ -55,34 +41,6 @@ class PreparedBatch:
     prompt_path: str
     bundle_output_path: str
     manifest_path: str
-
-
-def parse_pair_args(raw_pairs: list[str]) -> list[tuple[str, str]]:
-    """Parse `note-path::gate` arguments into raw (note_path, gate) pairs."""
-    pairs: list[tuple[str, str]] = []
-    seen: set[tuple[str, str]] = set()
-    for raw in raw_pairs:
-        note_path, separator, gate_path = raw.partition(PAIR_ARG_SEPARATOR)
-        note_path = note_path.strip()
-        gate_path = gate_path.strip()
-        if not separator or not note_path or not gate_path:
-            raise ValueError(f"malformed pair (expected note-path::gate): {raw}")
-        pair = (note_path, gate_path)
-        if pair in seen:
-            raise ValueError(f"duplicate pair: {raw}")
-        seen.add(pair)
-        pairs.append(pair)
-    return pairs
-
-
-def _packing_for_pairs(pairs: list[tuple[str, str]]) -> str:
-    note_paths = {note_path for note_path, _ in pairs}
-    gate_paths = {gate_path for _, gate_path in pairs}
-    if len(note_paths) == 1:
-        return "note"
-    if len(gate_paths) == 1:
-        return "gate"
-    raise ValueError("review batch pairs must share one note or one gate")
 
 
 def _targets_for_pairs(
@@ -114,59 +72,6 @@ def _targets_for_pairs(
         )
         for note_path, gate_path in pairs
     ]
-
-
-def _applicable_pairs(repo_root: Path, pairs: list[tuple[str, str]]) -> tuple[list[tuple[str, str]], list[SkippedPair]]:
-    gates_dir = review_gates_dir(repo_root)
-    grouped: dict[str, list[tuple[str, str]]] = {}
-    for note_path, raw_gate in pairs:
-        gate_path = normalize_gate_path(repo_root, raw_gate)
-        gate_id = gate_id_for_path(repo_root, gate_path)
-        grouped.setdefault(note_path, []).append((gate_id, gate_path))
-
-    applicable_by_note: dict[str, set[str]] = {}
-    skipped: list[SkippedPair] = []
-    for note_path, gates in grouped.items():
-        note_abs = repo_root / note_path
-        if not note_abs.is_file():
-            raise ValueError(f"note not found: {note_path}")
-        applicable = set(applicable_gate_ids_for_note(note_abs, [gate_id for gate_id, _ in gates], gates_dir))
-        applicable_by_note[note_path] = applicable
-        for gate_id, gate_path in gates:
-            if gate_id not in applicable:
-                skipped.append(SkippedPair(note_path=note_path, gate_path=gate_path, reason="not applicable"))
-
-    applicable_pairs = [
-        (note_path, gate_path)
-        for note_path, gates in grouped.items()
-        for gate_id, gate_path in gates
-        if gate_id in applicable_by_note[note_path]
-    ]
-    return applicable_pairs, skipped
-
-
-def prepare_review_batch(
-    *,
-    repo_root: Path,
-    db_path: Path,
-    pairs: list[tuple[str, str]],
-    runner: str | None,
-    model_partition: str,
-) -> PreparedBatch:
-    """Create one review job for the given note-packed or gate-packed pairs."""
-    applicable_pairs, skipped = _applicable_pairs(repo_root, pairs)
-    if not applicable_pairs:
-        raise ValueError("no applicable pairs to prepare")
-    packing = _packing_for_pairs(applicable_pairs)
-    return prepare_grouped_review_job(
-        repo_root=repo_root,
-        db_path=db_path,
-        pairs=applicable_pairs,
-        skipped=skipped,
-        packing=packing,
-        runner=runner,
-        model_partition=model_partition,
-    )
 
 
 def prepare_grouped_review_job(
@@ -272,30 +177,4 @@ def prepare_grouped_review_job(
         prompt_path=prompt_path,
         bundle_output_path=bundle_output_path,
         manifest_path=manifest_path,
-    )
-
-
-def ingest_batch_output(
-    *,
-    repo_root: Path,
-    db_path: Path,
-    review_job_id: int,
-    bundle_markdown: str,
-) -> tuple[list[int], list[tuple[int, str]]]:
-    """Parse a batch's pair output and finalize its job with pair salvage."""
-    with connect(db_path) as conn:
-        review_job = load_review_job(conn, review_job_id=review_job_id)
-        if review_job is None:
-            raise ValueError(f"review job not found: {review_job_id}")
-        if review_job.status not in {"queued", "running"}:
-            raise ValueError(f"review job is not ingestible: {review_job_id} ({review_job.status})")
-        stored_pairs = load_review_pairs_for_job(conn, review_job_id=review_job_id)
-
-    expected_pairs = [(pair.note_path, pair.gate_path) for pair in stored_pairs]
-    return finalize_bundle_markdown(
-        repo_root=repo_root,
-        db_path=db_path,
-        job_pairs=[JobPairs(review_job_id=review_job_id, pairs=tuple(expected_pairs))],
-        bundle_markdown=bundle_markdown,
-        raise_parse_errors=True,
     )

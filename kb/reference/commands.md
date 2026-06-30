@@ -157,21 +157,26 @@ commonplace-review-job-list --status queued --json
 commonplace-review-job-list --model claude-opus-4-6
 ```
 
-### commonplace-ingest-bundle-output
+### commonplace-claim-review-job
 
-Parse a sentinel-delimited review bundle and finalize its existing review job.
-
-```bash
-commonplace-ingest-bundle-output --review-job-id 42 --input-file kb/reports/bundle-reviews/review-job-42/bundle-output.md
-```
-
-### commonplace-ingest-batch-output
-
-Parse a batch's pair-delimited output and finalize its review job with pair salvage. Completed pairs are stored and accepted; missing pairs are marked `missing`, and the job fails with job-level failure context. Exit 1 if the job failed.
+Claim a queued review job for parent-dispatched worker execution. The command records dispatch provenance and moves the job to `running`; it does not execute the worker.
 
 ```bash
-commonplace-ingest-batch-output --review-job-id 42 --input-file kb/reports/bundle-reviews/review-job-42/bundle-output.md
+commonplace-claim-review-job --review-job-id 42 --runner codex --model gpt-5
+commonplace-claim-review-job --review-job-id 42 --runner codex --model gpt-5 --effort high
 ```
+
+The command validates `build_model_partition(--model, --effort)` against the job's `model_partition`, records `started_at`, `runner`, `runner_model`, and nullable `runner_effort`, and prints JSON for both success and operational failure.
+
+### commonplace-finalize-review-job
+
+Finalize a review job from its persisted `review_jobs.bundle_output_path`. Completed pairs are stored and accepted; missing pairs are marked `missing`, and the job fails with job-level failure context. Exit 1 if the job failed or if a precondition fails before state changes.
+
+```bash
+commonplace-finalize-review-job --review-job-id 42
+```
+
+The command accepts `queued` or `running` jobs, rejects `completed` and `failed`, reads the job-owned `bundle-output.md`, writes per-pair result files to stored `review_pairs.result_path` values with provenance frontmatter, refreshes `MANIFEST.json`, and prints JSON for success, mutated failure, and precondition failure.
 
 ### commonplace-ack-gate-review
 

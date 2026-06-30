@@ -31,7 +31,7 @@ This document refers to modules by their unqualified names (e.g. `run_review_bun
 │  Packing (which pairs share one LLM call)       │
 │  run_review_bundles (note-local bundle groups)  │
 │  run_gate_sweep (share-gate, experimental)      │
-│  batch + create/finalize/ingest (external       │
+│  batch + create/claim/finalize (external        │
 │  executors: live agent, orchestrator)           │
 ├─────────────────────────────────────────────────┤
 │  Pair protocol & execution                      │
@@ -180,12 +180,13 @@ Every output block is keyed by the full (note, gate) pair:
 - **Live-agent path (single note)** — same protocol without a nested runner:
   1. `commonplace-create-review-jobs --model <partition> --note <note> <gate-or-bundle>... --grouping note` groups requested gates by bundle/lens, creates one queued note-packed job per group with null runner provenance, writes each canonical prompt to `kb/reports/bundle-reviews/review-job-{id}/prompt.md`, writes `MANIFEST.json`, and returns a JSON `jobs` array with each job's `prompt_path`, `bundle_output_path`, `manifest_path`, and pair rows
   2. each prompt is rendered from the snapshots attached to that job's created pair rows
-  3. the parent agent delegates each returned job to a sub-agent, and that sub-agent reads `prompt_path`, follows it, and writes the matching `kb/reports/bundle-reviews/review-job-{id}/bundle-output.md`
-  4. `commonplace-ingest-bundle-output` parses each artifact, finalizes through `record_and_finalize_job` (single-job ingest is all-or-nothing), writes packing-derived parsed result files, stores their paths, and refreshes `MANIFEST.json`
+  3. the parent agent claims each dispatched job with `commonplace-claim-review-job --review-job-id <id> --runner <worker> --model <model> [--effort <effort>]`
+  4. the parent agent delegates each claimed job to a sub-agent, and that sub-agent reads `prompt_path`, follows it, and writes the matching `bundle_output_path`
+  5. `commonplace-finalize-review-job --review-job-id <id>` parses the job-owned artifact, finalizes through `record_and_finalize_job`, writes parsed result files to persisted `review_pairs.result_path` values with provenance frontmatter, and refreshes `MANIFEST.json`
 - **External-executor direct-pair path (`commonplace-create-review-jobs --pair`)** — deterministic creation for orchestrators that already know the exact `(note, gate)` pairs; decision record: [ADR 030](./adr/030-harness-facing-seams-batch-endpoints-and-runner-adapters.md).
   1. `commonplace-create-review-jobs --model <partition> --pair <note>::<gate>... --grouping {note,gate}` creates queued note-packed or gate-packed jobs for the pair set (inapplicable gates skipped and reported; missing notes/gates fatal) and writes canonical prompts from captured snapshots under `kb/reports/bundle-reviews/review-job-{review_job_id}/`; returns job and pair metadata, skipped pairs, `prompt_path`, `bundle_output_path`, and derived `manifest_path` values as JSON
-  2. the executor follows the prompt and writes `bundle_output_path`
-  3. `commonplace-ingest-batch-output --review-job-id <id> --input-file <path>` finalizes with pair salvage, stores result paths, and returns JSON; exit 1 if the job failed.
+  2. the parent claims each dispatched job with `commonplace-claim-review-job`, then the executor follows the prompt and writes `bundle_output_path`
+  3. `commonplace-finalize-review-job --review-job-id <id>` finalizes with pair salvage and returns JSON; exit 1 if the job failed.
 
 ### runners/ — harness CLI adapters
 

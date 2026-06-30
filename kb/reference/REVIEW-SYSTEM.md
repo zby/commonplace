@@ -21,7 +21,7 @@ It is also a scoped exception to the repo's file-first design. The motivation fo
 
 **Bundle.** A directory of gates sharing a lens. `semantic` means all gate files under `kb/instructions/review-gates/semantic/`.
 
-**Review job.** One review invocation: one rendered prompt, one output artifact directory, and one job-level status. Prepared live-agent jobs are `queued` until ingest; subprocess jobs are `running` while the runner executes.
+**Review job.** One review invocation: one rendered prompt, one output artifact directory, and one job-level status. Prepared live-agent jobs are `queued` until a parent claims them for dispatch; subprocess jobs are `running` while the runner executes.
 
 **Review pair.** One requested `(note_path, gate_path)` pair inside a review job. This is the stored unit of review output and acceptance.
 
@@ -76,7 +76,7 @@ The Python layer assigns the canonical DB statuses.
 - `review_pairs.pair_status` is normalized into lowercase enum values: `pending`, `completed`, `missing`
 - `review_jobs.status` is normalized into lowercase enum values: `queued`, `running`, `completed`, `failed`
 
-Job timestamps have distinct meanings: `created_at` is when the job row and prompt inputs were prepared; `started_at` is when an owned subprocess runner started execution and is null for live-agent/orchestrator jobs that go directly from `queued` to `completed` or `failed` during ingest.
+Job timestamps have distinct meanings: `created_at` is when the job row and prompt inputs were prepared; `started_at` is when an owned subprocess runner started execution or when a parent claimed a live-agent/orchestrator job for dispatch. Finalization still accepts `queued` for manual recovery when output was produced before an explicit claim.
 
 The human-readable review body is not canonical state. Current write paths store it in the per-pair result file named by `review_pairs.result_path`. The DB decision/status columns are the source of truth; review-body result lines such as `## Result: PASS` or `- WARN: ...` are parse inputs and readability affordances.
 
@@ -111,17 +111,18 @@ There is no separate bundle manifest hash in the current tree. If bundle-level m
 The canonical live path is:
 
 1. create one or more queued review jobs for the requested gates
-2. delegate each returned job prompt to a sub-agent
+2. claim each dispatched job with concrete worker provenance
 3. write each sentinel-delimited bundle artifact
-4. ingest each bundle artifact to complete review pairs and append acceptance events
+4. finalize each job by id to complete review pairs and append acceptance events
 
-For live agent work, the preferred path is the prompt-plus-ingest helper chain:
+For live agent work, the preferred path is the prompt-plus-finalize helper chain:
 
 1. `commonplace-create-review-jobs`
-2. for each returned job, launch a sub-agent that reads its `prompt_path` and writes `kb/reports/bundle-reviews/review-job-{id}/bundle-output.md`
-3. run `commonplace-ingest-bundle-output` for each completed sub-agent output
+2. for each returned job, run `commonplace-claim-review-job --review-job-id {id} --runner {worker} --model {model} [--effort {effort}]`
+3. launch a sub-agent that reads the job's `prompt_path` and writes the job's `bundle_output_path`
+4. run `commonplace-finalize-review-job --review-job-id {id}` for each completed sub-agent output
 
-The helper groups requested gates by bundle/lens, so a request for multiple bundles creates multiple focused prompt contexts. Each job directory also carries `MANIFEST.json`. The manifest is created with pending pairs when the prompt is created and refreshed after ingest with pair statuses and parsed `result_path` files.
+The helper groups requested gates by bundle/lens, so a request for multiple bundles creates multiple focused prompt contexts. Each job directory also carries `MANIFEST.json`. The manifest is created with pending pairs when the prompt is created and refreshed after finalization with pair statuses and parsed `result_path` files.
 
 A full review write contributes:
 
@@ -203,9 +204,10 @@ Human-readable inspection remains required, but it is now a derived view from DB
 Instruction: `kb/instructions/run-review-batches-on-note.md`
 
 1. `commonplace-create-review-jobs --model {model-partition} --note {note} {gate-or-bundle}... --grouping note`
-2. For each item in the returned `jobs` array, launch a sub-agent with that job's `prompt_path` and `bundle_output_path`
-3. Each sub-agent writes that job's sentinel-delimited review bundle to `bundle_output_path`
-4. The parent ingests each completed output with `commonplace-ingest-bundle-output --review-job-id {id} --input-file {bundle_output_path}`
+2. For each dispatched item in the returned `jobs` array, run `commonplace-claim-review-job --review-job-id {id} --runner {worker} --model {model} [--effort {effort}]`
+3. Launch a sub-agent with that job's `prompt_path` and `bundle_output_path`
+4. Each sub-agent writes that job's sentinel-delimited review bundle to `bundle_output_path`
+5. The parent finalizes each completed output with `commonplace-finalize-review-job --review-job-id {id}`
 
 ### Sweep
 

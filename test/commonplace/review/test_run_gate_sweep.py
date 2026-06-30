@@ -4,6 +4,7 @@ import sqlite3
 import subprocess
 from pathlib import Path
 
+from commonplace.lib import frontmatter
 from commonplace.review import executor
 from commonplace.review.review_db import ensure_db
 from commonplace.review.run_gate_sweep import prepare_batch_targets
@@ -155,10 +156,10 @@ def test_run_gate_sweep_reviews_multiple_notes_in_one_batch(monkeypatch, tmp_pat
     artifact_dir = repo / "kb" / "reports" / "bundle-reviews" / f"review-job-{job_rows[0]['review_job_id']}"
     assert job_rows[0]["bundle_output_path"] == f"kb/reports/bundle-reviews/review-job-{job_rows[0]['review_job_id']}/bundle-output.md"
     assert (artifact_dir / "bundle-output.md").read_text(encoding="utf-8").count("=== PAIR REVIEW START:") == 2
-    assert (repo / pair_rows[0]["result_path"]).read_text(encoding="utf-8") == (
+    assert frontmatter.strip((repo / pair_rows[0]["result_path"]).read_text(encoding="utf-8")) == (
         "Needs a definition for Alpha.\n\n## Result: WARN\n"
     )
-    assert (repo / pair_rows[1]["result_path"]).read_text(encoding="utf-8") == (
+    assert frontmatter.strip((repo / pair_rows[1]["result_path"]).read_text(encoding="utf-8")) == (
         "No undefined terms found.\n\n## Result: PASS\n"
     )
 
@@ -242,7 +243,7 @@ def test_run_gate_sweep_salvages_parsed_notes_and_fails_missing_ones(monkeypatch
 
     artifact_dir = repo / "kb" / "reports" / "bundle-reviews" / f"review-job-{job_row['review_job_id']}"
     assert f"kb/notes/first.md :: {GATE_PATH}" in (repo / job_row["bundle_output_path"]).read_text(encoding="utf-8")
-    assert (repo / pair_rows[0]["result_path"]).read_text(encoding="utf-8") == (
+    assert frontmatter.strip((repo / pair_rows[0]["result_path"]).read_text(encoding="utf-8")) == (
         "Needs a definition for Alpha.\n\n## Result: WARN\n"
     )
     assert not (artifact_dir / "second.md").exists()

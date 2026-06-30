@@ -18,7 +18,11 @@ from pathlib import Path
 
 from commonplace.lib import frontmatter
 from commonplace.lib.note_parser import find_markdown_links_with_text
-from commonplace.review.artifacts import result_paths_by_pair_id, write_manifest, write_pair_result_files
+from commonplace.review.artifacts import (
+    result_paths_by_pair_id,
+    write_manifest,
+    write_pair_result_files_to_persisted_paths,
+)
 from commonplace.review.finalization import record_and_finalize_job
 from commonplace.review.protocol.parser import ParsedPairBundle, parse_pair_bundle
 from commonplace.review.protocol.prompt import NoteReviewTarget, render_pairs_prompt
@@ -29,6 +33,7 @@ from commonplace.review.review_db import (
     fail_review_job,
     load_review_pairs_for_job,
     load_review_job,
+    load_review_job_plan,
     mark_missing_pairs,
     review_job_artifact_dir_rel,
     set_job_artifact_paths,
@@ -79,6 +84,11 @@ def bundle_output_path_for_job(repo_root: Path, review_job_id: int) -> str:
     return f"{artifact_dir.relative_to(repo_root).as_posix()}/bundle-output.md"
 
 
+def prompt_path_for_job(repo_root: Path, review_job_id: int) -> str:
+    artifact_dir = bundle_artifact_dir(repo_root, review_job_id)
+    return f"{artifact_dir.relative_to(repo_root).as_posix()}/prompt.md"
+
+
 def write_job_artifacts(
     *,
     artifact_dir: Path,
@@ -115,6 +125,35 @@ def persist_bundle_artifacts(
             conn,
             review_job_id=review_job_id,
             bundle_output_path=bundle_output_path_for_job(repo_root, review_job_id),
+        )
+
+
+def persist_prompt_artifacts(
+    conn: sqlite3.Connection,
+    *,
+    repo_root: Path,
+    review_job_ids: list[int],
+    prompt: str,
+) -> None:
+    for review_job_id in review_job_ids:
+        artifact_dir = bundle_artifact_dir(repo_root, review_job_id)
+        artifact_dir.mkdir(parents=True, exist_ok=True)
+        (artifact_dir / "prompt.md").write_text(prompt, encoding="utf-8")
+        artifact_dir_rel = artifact_dir.relative_to(repo_root).as_posix()
+        review_job = load_review_job(conn, review_job_id=review_job_id)
+        if review_job is None:
+            continue
+        pairs = load_review_pairs_for_job(conn, review_job_id=review_job_id)
+        set_job_artifact_paths(
+            conn,
+            review_job_id=review_job_id,
+            prompt_path=prompt_path_for_job(repo_root, review_job_id),
+            bundle_output_path=bundle_output_path_for_job(repo_root, review_job_id),
+            result_paths=result_paths_by_pair_id(
+                artifact_dir_rel=artifact_dir_rel,
+                packing=review_job.packing,
+                pairs=pairs,
+            ),
         )
 
 
@@ -288,20 +327,27 @@ def finalize_job_from_pairs(
     )
 
 
-def write_artifacts_for_job(
+def write_job_manifest_from_db(
+    conn: sqlite3.Connection,
     *,
     repo_root: Path,
     review_job_id: int,
-    pairs: tuple[tuple[str, str], ...],
-    parsed: ParsedPairBundle,
-    packing: str,
 ) -> None:
+    plan = load_review_job_plan(conn, review_job_id=review_job_id, require_paths=True)
+    if plan is None:
+        return
     artifact_dir = bundle_artifact_dir(repo_root, review_job_id)
-    write_pair_result_files(
+    assert plan.prompt_path is not None
+    assert plan.bundle_output_path is not None
+    write_manifest(
+        repo_root=repo_root,
         artifact_dir=artifact_dir,
-        packing=packing,
-        pairs=pairs,
-        canonical_texts=parsed.canonical_texts,
+        review_job_id=review_job_id,
+        packing=plan.packing,
+        prompt_path=plan.prompt_path,
+        bundle_output_path=plan.bundle_output_path,
+        pairs=plan.pairs,
+        failure_reason=plan.failure_reason,
     )
 
 
@@ -312,45 +358,16 @@ def write_finalized_job_artifacts(
     review_job_id: int,
     parsed: ParsedPairBundle,
 ) -> None:
-    review_job = load_review_job(conn, review_job_id=review_job_id)
-    if review_job is None:
+    plan = load_review_job_plan(conn, review_job_id=review_job_id, require_paths=True)
+    if plan is None:
         return
-    updated_pairs = load_review_pairs_for_job(conn, review_job_id=review_job_id)
-    completed_pairs = tuple(
-        (pair.note_path, pair.gate_path)
-        for pair in updated_pairs
-        if pair.pair_status == "completed"
-    )
-    write_artifacts_for_job(
+    write_pair_result_files_to_persisted_paths(
         repo_root=repo_root,
-        review_job_id=review_job_id,
-        pairs=completed_pairs,
-        parsed=parsed,
-        packing=review_job.packing,
+        job=plan,
+        pairs=plan.pairs,
+        canonical_texts=parsed.canonical_texts,
     )
-    artifact_dir = bundle_artifact_dir(repo_root, review_job_id)
-    artifact_dir_rel = artifact_dir.relative_to(repo_root).as_posix()
-    bundle_output_path = f"{artifact_dir_rel}/bundle-output.md"
-    write_manifest(
-        repo_root=repo_root,
-        artifact_dir=artifact_dir,
-        review_job_id=review_job_id,
-        packing=review_job.packing,
-        prompt_path=f"{artifact_dir_rel}/prompt.md",
-        bundle_output_path=bundle_output_path,
-        pairs=updated_pairs,
-        failure_reason=review_job.failure_reason,
-    )
-    set_job_artifact_paths(
-        conn,
-        review_job_id=review_job_id,
-        bundle_output_path=bundle_output_path,
-        result_paths=result_paths_by_pair_id(
-            artifact_dir_rel=artifact_dir_rel,
-            packing=review_job.packing,
-            pairs=updated_pairs,
-        ),
-    )
+    write_job_manifest_from_db(conn, repo_root=repo_root, review_job_id=review_job_id)
 
 
 def fail_jobs_for_bundle_parse_error(
@@ -407,6 +424,12 @@ def finalize_bundle_markdown(
                 failure_reason=reason,
                 telemetry_json=telemetry_json,
             )
+            for review_job_id in review_job_ids:
+                write_job_manifest_from_db(
+                    conn,
+                    repo_root=repo_root,
+                    review_job_id=review_job_id,
+                )
             conn.commit()
         if raise_parse_errors:
             raise
@@ -447,6 +470,15 @@ def execute_batch(
     except ValueError as exc:
         fail_active_review_jobs(db_path=db_path, review_job_ids=job_ids, failure_reason=str(exc))
         return BatchOutcome(completed=[], failed=[(rid, str(exc)) for rid in job_ids], runner_returncode=0)
+
+    with connect(db_path) as conn:
+        persist_prompt_artifacts(
+            conn,
+            repo_root=repo_root,
+            review_job_ids=job_ids,
+            prompt=prompt,
+        )
+        conn.commit()
 
     try:
         result = run_prompt(runner=runner, prompt=prompt, repo_root=repo_root, model=runner_model)
