@@ -38,7 +38,7 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     gates_dir = review_gates_dir(repo_root)
     try:
         gate_ids = resolve_to_gate_ids(args.gates, gates_dir)
-    except FileNotFoundError as exc:
+    except (FileNotFoundError, ValueError) as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 1
 

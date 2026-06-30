@@ -18,6 +18,7 @@ from commonplace.review.review_db import (
     fail_review_job,
     list_review_job_plans,
     load_review_job_plan,
+    mark_missing_pairs,
 )
 from commonplace.review.review_model import build_model_partition, normalize_reasoning_effort
 from commonplace.review.runners import get_runner
@@ -175,6 +176,7 @@ def _fail_claimed_job(
     telemetry_json: str | None = None,
 ) -> None:
     with connect(db_path) as conn:
+        mark_missing_pairs(conn, review_job_id=review_job_id)
         fail_review_job(
             conn,
             review_job_id=review_job_id,

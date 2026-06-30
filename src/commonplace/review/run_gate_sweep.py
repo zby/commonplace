@@ -7,7 +7,6 @@ wrapper.
 from __future__ import annotations
 
 from dataclasses import dataclass
-import sys
 from pathlib import Path
 
 from commonplace.lib import frontmatter
@@ -32,6 +31,17 @@ def chunked(items: list[str], size: int) -> list[list[str]]:
 class PreparedGateBatch:
     targets: list[NoteReviewTarget]
     gate_texts: dict[str, str]
+
+
+@dataclass(frozen=True)
+class GateSweepOutcome:
+    exit_code: int
+    stdout: str = ""
+    stderr: str = ""
+
+
+def _append_line(text: str, line: str = "") -> str:
+    return text + line + "\n"
 
 
 def batch_pair_status_counts(db_path: Path, review_job_ids: list[int]) -> tuple[int, int]:
@@ -80,7 +90,7 @@ def run_gate_sweep(
     current_only: bool,
     batch_size: int,
     dry_run: bool,
-) -> int:
+) -> GateSweepOutcome:
     """Run one gate across many notes in batched runner calls.
 
     Returns a process exit code. Raises ValueError on input/precondition
@@ -106,11 +116,11 @@ def run_gate_sweep(
 
     sweep_note_paths = [record.note_path for record in stale_records]
     if not sweep_note_paths:
-        print("Reviewed: 0 notes")
-        return 0
+        return GateSweepOutcome(exit_code=0, stdout="Reviewed: 0 notes\n")
 
     batches = chunked(sweep_note_paths, batch_size)
-    print(f"Selected: {len(sweep_note_paths)} notes across {len(batches)} batches", file=sys.stderr)
+    stdout = ""
+    stderr = f"Selected: {len(sweep_note_paths)} notes across {len(batches)} batches\n"
 
     reviewed = 0
     failed = 0
@@ -136,16 +146,16 @@ def run_gate_sweep(
             targets = prepared.targets
             review_job_ids = [prepared.review_job_id]
         batch_label = f"Batch {batch_index}/{len(batches)}"
-        print(f"{batch_label}: launching {runner} for {len(targets)} notes", file=sys.stderr)
+        stderr = _append_line(stderr, f"{batch_label}: launching {runner} for {len(targets)} notes")
         for target in targets:
-            print(f"  - {target.note_path} (review job id: {target.review_job_id})", file=sys.stderr)
+            stderr = _append_line(stderr, f"  - {target.note_path} (review job id: {target.review_job_id})")
 
         if dry_run:
             prompt = render_pairs_prompt(notes=targets, gate_texts=prepared_batch.gate_texts)
             if batch_index > 1:
-                print()
-                print(f"=== BATCH {batch_index}/{len(batches)} ===")
-            print(prompt)
+                stdout = _append_line(stdout)
+                stdout = _append_line(stdout, f"=== BATCH {batch_index}/{len(batches)} ===")
+            stdout = _append_line(stdout, prompt)
             continue
 
         payload, status = run_review_jobs(
@@ -156,11 +166,11 @@ def run_gate_sweep(
             review_job_id=review_job_ids[0],
         )
         if status == 130:
-            print("gate sweep interrupted", file=sys.stderr)
-            return 130
+            stderr = _append_line(stderr, "gate sweep interrupted")
+            return GateSweepOutcome(exit_code=130, stdout=stdout, stderr=stderr)
         if payload.get("usage_exhausted"):
-            print("error: runner reported usage exhausted; aborting sweep.", file=sys.stderr)
-            return 1
+            stderr = _append_line(stderr, "error: runner reported usage exhausted; aborting sweep.")
+            return GateSweepOutcome(exit_code=1, stdout=stdout, stderr=stderr)
 
         completed_count, missing_count = batch_pair_status_counts(db_path, review_job_ids)
         reviewed += completed_count
@@ -171,20 +181,23 @@ def run_gate_sweep(
                 continue
             if job.get("status") == "failed":
                 failed += 1
-                print(f"  FAILED job {job['review_job_id']}: {job.get('failure_reason')}", file=sys.stderr)
+                stderr = _append_line(
+                    stderr,
+                    f"  FAILED job {job['review_job_id']}: {job.get('failure_reason')}",
+                )
             if isinstance(job.get("runner_returncode"), int):
                 runner_returncode = int(job["runner_returncode"])
-        print(f"{batch_label}: reviewed {completed_count} notes")
+        stdout = _append_line(stdout, f"{batch_label}: reviewed {completed_count} notes")
         if missing_count:
-            print(f"{batch_label}: missing {missing_count} notes", file=sys.stderr)
+            stderr = _append_line(stderr, f"{batch_label}: missing {missing_count} notes")
         if runner_returncode != 0:
-            return runner_returncode
+            return GateSweepOutcome(exit_code=runner_returncode, stdout=stdout, stderr=stderr)
 
     if not dry_run:
-        print(f"Reviewed: {reviewed} notes")
+        stdout = _append_line(stdout, f"Reviewed: {reviewed} notes")
         if missing:
-            print(f"Missing:  {missing} notes", file=sys.stderr)
+            stderr = _append_line(stderr, f"Missing:  {missing} notes")
         if failed:
-            print(f"Failed:   {failed} job(s)", file=sys.stderr)
-            return 1
-    return 0
+            stderr = _append_line(stderr, f"Failed:   {failed} job(s)")
+            return GateSweepOutcome(exit_code=1, stdout=stdout, stderr=stderr)
+    return GateSweepOutcome(exit_code=0, stdout=stdout, stderr=stderr)

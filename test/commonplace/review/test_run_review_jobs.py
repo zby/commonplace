@@ -130,6 +130,38 @@ def test_run_review_jobs_queue_mode_respects_partition_and_limit(monkeypatch, tm
     ]
 
 
+def test_run_review_jobs_nonzero_runner_marks_pairs_missing(monkeypatch, tmp_path: Path) -> None:
+    repo, db_path = build_repo_fixture(tmp_path)
+    job = _create_single_job(repo, db_path)
+
+    def fake_run_prompt(**_kwargs):
+        return RunnerResult(stdout="partial diagnostic\n", stderr="failed\n", returncode=7, telemetry=None)
+
+    monkeypatch.setattr(executor, "run_prompt", fake_run_prompt)
+
+    result = run_cli(
+        "run_review_jobs",
+        "--runner",
+        "codex",
+        "--model",
+        "test-model",
+        "--review-job-id",
+        str(job["review_job_id"]),
+        cwd=repo,
+        db_path=db_path,
+        check=False,
+    )
+
+    payload = json.loads(result.stdout)
+    assert result.returncode == 1
+    assert payload["jobs"][0]["status"] == "failed"
+    assert payload["jobs"][0]["failure_reason"] == "codex exited 7"
+    with sqlite3.connect(db_path) as conn:
+        conn.row_factory = sqlite3.Row
+        pair = conn.execute("SELECT pair_status, decision FROM review_pairs").fetchone()
+    assert (pair["pair_status"], pair["decision"]) == ("missing", None)
+
+
 def test_run_review_jobs_explicit_preflight_reports_distinct_failures(monkeypatch, tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
     wrong_partition = _create_single_job(repo, db_path)

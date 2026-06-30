@@ -13,6 +13,12 @@ INSTALLED_GATES_ROOT = Path("kb/commonplace/instructions/review-gates")
 GATES_ROOT = SOURCE_GATES_ROOT
 
 
+def _reject_unsafe_relative(raw: str, *, kind: str) -> None:
+    path = Path(raw)
+    if path.is_absolute() or raw in {"", "."} or ".." in path.parts:
+        raise ValueError(f"{kind} must be relative and stay inside the review gate catalog: {raw}")
+
+
 def review_gates_dir(repo_root: Path) -> Path:
     """Return the gate catalog directory for this project layout.
 
@@ -30,18 +36,24 @@ def review_gates_dir(repo_root: Path) -> Path:
 def gate_path_for_id(repo_root: Path, gate_id: str) -> str:
     """Resolve a gate shorthand to the repo-relative gate markdown path."""
     normalized = gate_id.strip().removesuffix(".md")
+    _reject_unsafe_relative(normalized, kind="gate id")
     gates_dir = review_gates_dir(repo_root)
-    gate_abs = gates_dir / f"{normalized}.md"
+    gate_abs = (gates_dir / f"{normalized}.md").resolve()
+    gates_dir_resolved = gates_dir.resolve()
+    if not gate_abs.is_relative_to(gates_dir_resolved):
+        raise ValueError(f"gate id is outside the review gate catalog: {gate_id}")
     if not gate_abs.is_file():
         raise FileNotFoundError(f"gate not found: {gate_id}")
-    return gate_abs.relative_to(repo_root).as_posix()
+    return gate_abs.relative_to(repo_root.resolve()).as_posix()
 
 
 def gate_id_for_path(repo_root: Path, gate_path: str) -> str:
     """Derive the human-facing gate shorthand from a repo-relative gate path."""
-    gate_abs = repo_root / gate_path
+    _reject_unsafe_relative(gate_path, kind="gate path")
+    gate_abs = (repo_root / gate_path).resolve()
+    gates_dir = review_gates_dir(repo_root).resolve()
     try:
-        rel = gate_abs.relative_to(review_gates_dir(repo_root))
+        rel = gate_abs.relative_to(gates_dir)
     except ValueError as exc:
         raise ValueError(f"gate path is outside the review gate catalog: {gate_path}") from exc
     return rel.with_suffix("").as_posix()
@@ -65,13 +77,20 @@ def normalize_gate_path(repo_root: Path, gate: str) -> str:
     raw = gate.strip()
     if not raw:
         raise ValueError("gate must not be empty")
+    _reject_unsafe_relative(raw, kind="gate path")
     candidate = Path(raw)
     if candidate.is_absolute():
         raise ValueError(f"gate path must be repo-relative: {gate}")
     if raw.endswith(".md") or raw.startswith("kb/"):
-        gate_abs = repo_root / candidate
+        gate_abs = (repo_root / candidate).resolve()
         if gate_abs.is_file():
-            return candidate.as_posix()
+            gates_dir = review_gates_dir(repo_root).resolve()
+            if not gate_abs.is_relative_to(gates_dir):
+                raise ValueError(f"gate path is outside the review gate catalog: {gate}")
+            return gate_abs.relative_to(repo_root.resolve()).as_posix()
         if raw.startswith("kb/"):
+            gates_dir = review_gates_dir(repo_root).resolve()
+            if not gate_abs.is_relative_to(gates_dir):
+                raise ValueError(f"gate path is outside the review gate catalog: {gate}")
             raise FileNotFoundError(f"gate not found: {gate}")
     return gate_path_for_id(repo_root, raw)

@@ -8,9 +8,17 @@ from typing import Any
 from commonplace.lib import frontmatter
 
 
+def _reject_unsafe_gate_arg(arg: str) -> None:
+    path = Path(arg)
+    if path.is_absolute() or arg.strip() in {"", "."} or ".." in path.parts:
+        raise ValueError(f"gate id or bundle must stay inside the review gate catalog: {arg}")
+
+
 def resolve_to_gate_ids(args: list[str], gates_dir: Path) -> list[str]:
     gate_ids: list[str] = []
     for arg in args:
+        arg = arg.strip()
+        _reject_unsafe_gate_arg(arg)
         bundle_dir = gates_dir / arg
         if bundle_dir.is_dir():
             for gate_file in sorted(bundle_dir.glob("*.md")):

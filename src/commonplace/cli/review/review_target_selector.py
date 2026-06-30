@@ -10,7 +10,7 @@ from commonplace.review.acknowledgement import ack_pairs
 from commonplace.review.paths import review_gates_dir
 from commonplace.review.resolve_gates import resolve_to_gate_ids
 from commonplace.review.review_target_selector import (
-    print_grouped,
+    render_grouped,
     render_json,
     select_stale_gates,
 )
@@ -72,12 +72,12 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
         bundles = sorted(d.name for d in gates_dir.iterdir() if d.is_dir())
         try:
             gate_ids = resolve_to_gate_ids(bundles, gates_dir)
-        except FileNotFoundError as exc:
+        except (FileNotFoundError, ValueError) as exc:
             parser.error(str(exc))
     elif args.gate_or_bundle:
         try:
             gate_ids = resolve_to_gate_ids(args.gate_or_bundle, gates_dir)
-        except FileNotFoundError as exc:
+        except (FileNotFoundError, ValueError) as exc:
             parser.error(str(exc))
     else:
         parser.error("provide gate/bundle names or --all-gates")
@@ -103,7 +103,9 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     if args.json:
         print(render_json(records, model_partition=normalize_model_partition(model) if model is not None else None))
     else:
-        print_grouped(records)
+        output = render_grouped(records)
+        if output:
+            print(output)
     return 0
 
 

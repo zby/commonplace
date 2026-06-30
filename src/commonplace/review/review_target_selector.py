@@ -250,11 +250,13 @@ def render_json(records: list[StaleGate], *, model_partition: str | None = None)
     )
 
 
-def print_grouped(records: list[StaleGate]) -> None:
+def render_grouped(records: list[StaleGate]) -> str:
     grouped: dict[str, list[StaleGate]] = {}
     for record in records:
         grouped.setdefault(record.note_path, []).append(record)
+    lines: list[str] = []
     for note_path in sorted(grouped):
-        print(note_path)
+        lines.append(note_path)
         for record in sorted(grouped[note_path], key=lambda item: item.gate_path):
-            print(f"  - {record.gate_path} ({record.reason})")
+            lines.append(f"  - {record.gate_path} ({record.reason})")
+    return "\n".join(lines)

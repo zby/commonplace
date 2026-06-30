@@ -292,6 +292,7 @@ def fail_active_review_jobs(
                 review_job_id=int(row["review_job_id"]),
                 telemetry_json=telemetry_json,
             )
+            mark_missing_pairs(conn, review_job_id=int(row["review_job_id"]))
             fail_review_job(
                 conn,
                 review_job_id=int(row["review_job_id"]),
@@ -569,21 +570,71 @@ def finalize_jobs_from_parsed(
     telemetry_json: str | None = None,
 ) -> tuple[list[int], list[tuple[int, str]]]:
     """Finalize parsed jobs and write each job's canonical artifacts."""
-    completed, failed = finalize_job_records_from_parsed(
-        db_path=db_path,
-        job_pairs=job_pairs,
-        parsed=parsed,
-        telemetry_json=telemetry_json,
-    )
-    with connect(db_path) as conn:
-        for job in job_pairs:
-            write_finalized_job_artifacts(
-                conn,
-                repo_root=repo_root,
-                review_job_id=job.review_job_id,
-                parsed=parsed,
-            )
-        conn.commit()
+    completed: list[int] = []
+    failed: list[tuple[int, str]] = []
+    for job in job_pairs:
+        completed_pairs = tuple(pair for pair in job.pairs if pair not in set(parsed.missing))
+        with connect(db_path) as conn:
+            try:
+                finalize_job_from_pairs(
+                    conn,
+                    review_job_id=job.review_job_id,
+                    pairs=completed_pairs,
+                    parsed=parsed,
+                    telemetry_json=telemetry_json,
+                )
+            except ValueError as exc:
+                failure_reason = str(exc)
+                try:
+                    # Coverage failures still salvage completed pairs; write
+                    # those artifacts before committing the failed job state.
+                    write_finalized_job_artifacts(
+                        conn,
+                        repo_root=repo_root,
+                        review_job_id=job.review_job_id,
+                        parsed=parsed,
+                    )
+                except (OSError, ValueError) as artifact_exc:
+                    conn.rollback()
+                    mark_missing_pairs(conn, review_job_id=job.review_job_id)
+                    fail_review_job(
+                        conn,
+                        review_job_id=job.review_job_id,
+                        failure_reason=str(artifact_exc),
+                        completed_at=iso_now(),
+                        telemetry_json=telemetry_json,
+                    )
+                    conn.commit()
+                    failed.append((job.review_job_id, str(artifact_exc)))
+                    continue
+                conn.commit()
+                failed.append((job.review_job_id, failure_reason))
+                continue
+
+            try:
+                # Keep DB completion/acceptance uncommitted until the derived
+                # result artifacts are safely written.
+                write_finalized_job_artifacts(
+                    conn,
+                    repo_root=repo_root,
+                    review_job_id=job.review_job_id,
+                    parsed=parsed,
+                )
+            except (OSError, ValueError) as exc:
+                conn.rollback()
+                mark_missing_pairs(conn, review_job_id=job.review_job_id)
+                fail_review_job(
+                    conn,
+                    review_job_id=job.review_job_id,
+                    failure_reason=str(exc),
+                    completed_at=iso_now(),
+                    telemetry_json=telemetry_json,
+                )
+                conn.commit()
+                failed.append((job.review_job_id, str(exc)))
+                continue
+            conn.commit()
+        completed.append(job.review_job_id)
     return completed, failed
 
 

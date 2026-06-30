@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import sys
 from pathlib import Path
 
 from commonplace.review.review_db import prepare_review_db
@@ -32,7 +33,7 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     db_path = prepare_review_db(repo_root, args.db)
 
     try:
-        return run_gate_sweep(
+        outcome = run_gate_sweep(
             repo_root=repo_root,
             db_path=db_path,
             gate_path=args.gate_id,
@@ -45,6 +46,11 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
         )
     except (FileNotFoundError, ValueError) as exc:
         parser.error(str(exc))
+    if outcome.stdout:
+        print(outcome.stdout, end="")
+    if outcome.stderr:
+        print(outcome.stderr, end="", file=sys.stderr)
+    return outcome.exit_code
 
 
 if __name__ == "__main__":

@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-import sys
+from dataclasses import dataclass
 from pathlib import Path
 
 from commonplace.lib import frontmatter
@@ -13,6 +13,13 @@ from commonplace.review.protocol.prompt import render_pairs_prompt
 from commonplace.review.review_db import ensure_db
 from commonplace.review.review_model import normalize_model_partition
 from commonplace.review.run_review_jobs import run_review_jobs
+
+
+@dataclass(frozen=True)
+class RunBundlesOutcome:
+    exit_code: int
+    stdout: str = ""
+    stderr: str = ""
 
 
 def _dry_run_prompt(
@@ -34,6 +41,10 @@ def _dry_run_prompt(
     return render_pairs_prompt(notes=[target], gate_texts=gate_texts)
 
 
+def _append_line(text: str, line: str) -> str:
+    return text + line + "\n"
+
+
 def _run_group(
     *,
     repo_root: Path,
@@ -44,12 +55,13 @@ def _run_group(
     runner_model: str,
     model_partition: str,
     dry_run: bool,
-) -> int:
+) -> RunBundlesOutcome:
     if dry_run:
-        print(f"=== Bundle: {group.bundle} ===")
-        print(_dry_run_prompt(repo_root=repo_root, note_path=note_path, group=group))
-        print()
-        return 0
+        prompt = _dry_run_prompt(repo_root=repo_root, note_path=note_path, group=group)
+        return RunBundlesOutcome(
+            exit_code=0,
+            stdout=f"=== Bundle: {group.bundle} ===\n{prompt}\n\n",
+        )
 
     prepared = prepare_grouped_review_job(
         repo_root=repo_root,
@@ -67,17 +79,21 @@ def _run_group(
         review_job_id=prepared.review_job_id,
     )
 
+    stderr = ""
     for job in payload.get("jobs", []):
         if not isinstance(job, dict):
             continue
         if job.get("failure_reason"):
-            print(job["failure_reason"], file=sys.stderr)
+            stderr = _append_line(stderr, str(job["failure_reason"]))
     if payload.get("usage_exhausted"):
         raise UsageExhausted()
     if status != 0:
-        return status
-    print(f"completed {prepared.review_job_id} {len(group.gate_paths)}")
-    return 0
+        return RunBundlesOutcome(exit_code=status, stderr=stderr)
+    return RunBundlesOutcome(
+        exit_code=0,
+        stdout=f"completed {prepared.review_job_id} {len(group.gate_paths)}\n",
+        stderr=stderr,
+    )
 
 
 def run_bundles(
@@ -89,7 +105,7 @@ def run_bundles(
     runner: str,
     model: str,
     dry_run: bool,
-) -> int:
+) -> RunBundlesOutcome:
     """Run requested gates as one subprocess call per bundle/lens."""
     runner_model = model
     model_partition = normalize_model_partition(model)
@@ -102,8 +118,10 @@ def run_bundles(
     if not dry_run:
         ensure_db(db_path)
 
+    stdout = ""
+    stderr = ""
     for group in groups:
-        status = _run_group(
+        outcome = _run_group(
             repo_root=repo_root,
             db_path=db_path,
             note_path=note_path,
@@ -113,6 +131,8 @@ def run_bundles(
             model_partition=model_partition,
             dry_run=dry_run,
         )
-        if status != 0:
-            return status
-    return 0
+        stdout += outcome.stdout
+        stderr += outcome.stderr
+        if outcome.exit_code != 0:
+            return RunBundlesOutcome(exit_code=outcome.exit_code, stdout=stdout, stderr=stderr)
+    return RunBundlesOutcome(exit_code=0, stdout=stdout, stderr=stderr)

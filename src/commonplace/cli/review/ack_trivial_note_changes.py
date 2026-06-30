@@ -46,9 +46,15 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
         if args.gate_or_bundle:
             parser.error("gate/bundle names and --all-gates are mutually exclusive")
         bundles = sorted(d.name for d in gates_dir.iterdir() if d.is_dir())
-        gate_ids = resolve_to_gate_ids(bundles, gates_dir)
+        try:
+            gate_ids = resolve_to_gate_ids(bundles, gates_dir)
+        except (FileNotFoundError, ValueError) as exc:
+            parser.error(str(exc))
     elif args.gate_or_bundle:
-        gate_ids = resolve_to_gate_ids(args.gate_or_bundle, gates_dir)
+        try:
+            gate_ids = resolve_to_gate_ids(args.gate_or_bundle, gates_dir)
+        except (FileNotFoundError, ValueError) as exc:
+            parser.error(str(exc))
     else:
         parser.error("provide gate/bundle names or --all-gates")
 

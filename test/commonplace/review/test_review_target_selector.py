@@ -9,6 +9,7 @@ import pytest
 
 from commonplace.review import resolve_gates, review_db, review_target_selector
 from commonplace.review.acknowledgement import ack_pairs
+from commonplace.review.paths import gate_id_for_path, gate_path_for_id, normalize_gate_path
 from test.commonplace.review.pair_helpers import accept_pair, insert_completed_pair
 
 from ._run_cli import run_cli
@@ -1105,6 +1106,20 @@ class TestResolveGates:
 
         with pytest.raises(FileNotFoundError, match="prose/nonexistent"):
             resolve_gates.resolve_to_gate_ids(["prose/nonexistent"], gates_dir)
+
+    def test_gate_resolution_rejects_parent_directory_traversal(self, tmp_path: Path) -> None:
+        gates_dir = tmp_path / "kb" / "instructions" / "review-gates"
+        gates_dir.mkdir(parents=True, exist_ok=True)
+        write(tmp_path / "kb" / "instructions" / "not-a-gate.md", "outside catalog\n")
+
+        with pytest.raises(ValueError, match="review gate catalog"):
+            resolve_gates.resolve_to_gate_ids(["../not-a-gate"], gates_dir)
+        with pytest.raises(ValueError, match="review gate catalog"):
+            gate_path_for_id(tmp_path, "../not-a-gate")
+        with pytest.raises(ValueError, match="review gate catalog"):
+            normalize_gate_path(tmp_path, "kb/instructions/review-gates/../not-a-gate.md")
+        with pytest.raises(ValueError, match="review gate catalog"):
+            gate_id_for_path(tmp_path, "kb/instructions/review-gates/../not-a-gate.md")
 
     def test_applicable_gate_ids_for_note_filters_by_requires_trait(self, tmp_path: Path) -> None:
         notes_dir = tmp_path / "kb" / "notes"

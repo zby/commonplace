@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import sys
 from pathlib import Path
 
 from commonplace.review.review_db import resolve_db_path
@@ -33,7 +34,7 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     db_path = resolve_db_path(repo_root, args.db)
 
     try:
-        return run_bundles(
+        outcome = run_bundles(
             repo_root=repo_root,
             db_path=db_path,
             note_path=args.note_path,
@@ -42,8 +43,13 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
             model=review_model,
             dry_run=args.dry_run,
         )
-    except ValueError as exc:
+    except (FileNotFoundError, ValueError) as exc:
         parser.error(str(exc))
+    if outcome.stdout:
+        print(outcome.stdout, end="")
+    if outcome.stderr:
+        print(outcome.stderr, end="", file=sys.stderr)
+    return outcome.exit_code
 
 
 if __name__ == "__main__":

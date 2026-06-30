@@ -19,7 +19,7 @@ from commonplace.review.resolve_gates import resolve_to_gate_ids
 from commonplace.review.review_db import resolve_db_path
 from commonplace.review.review_target_selector import StaleGate, select_stale_gates
 from commonplace.review.executor import UsageExhausted
-from commonplace.review.run_review_bundles import run_bundles
+from commonplace.review.run_review_bundles import RunBundlesOutcome, run_bundles
 from commonplace.review.runners import runner_names
 
 
@@ -173,7 +173,7 @@ def sweep_bundle(
             for future in done:
                 job = in_flight.pop(future)
                 try:
-                    status = future.result()
+                    result = future.result()
                 except UsageExhausted:
                     print(
                         "error: runner reported usage exhausted; aborting sweep immediately.",
@@ -182,6 +182,14 @@ def sweep_bundle(
                     for queued in list(in_flight):
                         queued.cancel()
                     return reviewed, failed, True
+                if isinstance(result, RunBundlesOutcome):
+                    if result.stdout:
+                        print(result.stdout, end="")
+                    if result.stderr:
+                        print(result.stderr, end="", file=sys.stderr)
+                    status = result.exit_code
+                else:
+                    status = int(result)
                 if status == 0:
                     reviewed += 1
                 else:
