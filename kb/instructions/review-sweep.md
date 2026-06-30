@@ -1,5 +1,5 @@
 ---
-description: Batch review sweep — run the selector, triage note-changed pairs, and execute direct-write review jobs for the rest
+description: Batch review sweep — run the selector, triage note-changed pairs, and execute queued review jobs for the rest
 type: kb/types/instruction.md
 ---
 
@@ -72,7 +72,7 @@ Or:
 commonplace-review-sweep --model {model-id} --current {bundle-or-all}
 ```
 
-`commonplace-review-sweep` executes note-local bundle reviews in parallel, up to 4 at a time by default. Override with `REVIEW_SWEEP_JOBS=<n>` if needed.
+`commonplace-review-sweep` creates and runs note-local queued review jobs in parallel, up to 4 at a time by default. Override with `REVIEW_SWEEP_JOBS=<n>` if needed.
 
 Example for current notes in Codex:
 

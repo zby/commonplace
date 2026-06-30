@@ -124,7 +124,7 @@ For live agent work, the preferred path is the prompt-plus-finalize helper chain
 3. launch a sub-agent that reads the job's `prompt_path` and writes the job's `bundle_output_path`
 4. run `commonplace-finalize-review-job --review-job-id {id}` for each completed sub-agent output
 
-The helper groups requested gates by bundle/lens, so a request for multiple bundles creates multiple focused prompt contexts. Each job directory also carries `MANIFEST.json`. The manifest is created with pending pairs when the prompt is created and refreshed after finalization with pair statuses and parsed `result_path` files.
+The helper groups requested gates by bundle/lens, so a request for multiple bundles creates multiple focused prompt contexts. Each job directory also carries `MANIFEST.json` for display/debug inspection. The manifest is created with pending pairs when the prompt is created and refreshed after finalization with pair statuses and parsed `result_path` files; pipeline commands use database paths, not the manifest, as state.
 
 A full review write contributes:
 

@@ -10,10 +10,10 @@ status: seedling
 
 The KB's bet is that quality comes from a human judging in the loop — *the work is reviewing.* But unreviewed notes get published anyway (the maintainer routinely promotes seedlings without a review pass), and the only "treat with caution" signal is the `status` frontmatter field. That field is invisible to a human reading rendered markdown and easy for an agent to skim past in the body. So the KB ships unjudged content with no signal at the point of reading — which makes the review discipline invisible and silently asks every reader to trust content the loop never checked. This proposal holds a design for the missing signal: a standardized **trust banner** at the top of a note, derived from its review-state, that warns the reader when the loop has not judged it — and a validator check that keeps the banner honest.
 
-## Current state (as of 2026-06-16)
+## Current state (as of 2026-06-30)
 
 - **`status` exists but is metadata-only.** Notes carry `status: seedling | speculative | current` in frontmatter. It is machine-readable but not surfaced in the body; a reader of rendered markdown never sees it, and an agent reading the body may not foreground it.
-- **Review-state is tracked, separately.** The review subsystem records accepted gate reviews per note under a `review_run_id` (consumed by `commonplace-warn-selector`). Whether a note has passed review is therefore known — but it lives in the review DB, not in the note.
+- **Review-state is tracked, separately.** The review subsystem records accepted gate reviews in SQLite through `review_jobs`, `review_pairs`, and `acceptance_events` (consumed by `commonplace-review-target-selector`, `commonplace-warn-selector`, and ack commands). Whether a note has passed review is therefore known — but it lives in the review DB, not in the note.
 - **Maturity and review-state are different axes.** A note can be `seedling` but reviewed, or `current` but stale-reviewed. `status` is a maturity proxy; it is not the same as "the loop judged this."
 - **An ad-hoc precedent already exists.** Some notes (e.g. `llm-generation-confidence-tracks-typicality-not-soundness.md`) carry a hand-written italic `*Speculative…*` line under the H1. It is exactly this banner, done once, by hand, unstandardised and unenforced.
 - **The validator counts seedlings** as a batch signal but checks no in-body warning.

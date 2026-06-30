@@ -106,7 +106,7 @@ The review system executes LLM-based quality reviews against notes using defined
 
 ### commonplace-review-sweep
 
-Run a full review sweep — selects notes needing review and executes gate bundles on them.
+Run a full review sweep. This is a retained convenience wrapper: it selects notes needing review, creates queued note-packed jobs, then runs them through the queued subprocess runner.
 
 ```bash
 commonplace-review-sweep prose kb/notes kb/reference --model claude-opus-4-6 --runner claude-code
@@ -117,7 +117,7 @@ commonplace-review-sweep prose kb/notes kb/reference --model claude-opus-4-6 --r
 
 ### commonplace-run-review-bundles
 
-Run review bundles on a single note through a subprocess runner. Requested gates are grouped by bundle/lens, so a multi-bundle request creates one runner call per bundle.
+Run review bundles on a single note through a subprocess runner. This is a retained convenience wrapper: requested gates are grouped by bundle/lens, queued as note-packed jobs, then run through `commonplace-run-review-jobs`.
 
 ```bash
 commonplace-run-review-bundles kb/notes/my-note.md prose --runner claude-code --model claude-opus-4-6
@@ -126,7 +126,7 @@ commonplace-run-review-bundles kb/notes/my-note.md accessibility prose semantic 
 
 ### commonplace-run-gate-sweep
 
-Run a single gate across multiple notes in batched prompts.
+Run a single gate across multiple notes in batched prompts. This is a retained convenience wrapper: it creates queued gate-packed jobs, then runs them through `commonplace-run-review-jobs`.
 
 ```bash
 commonplace-run-gate-sweep semantic/grounding-alignment --runner claude-code --model claude-opus-4-6 --note kb/notes kb/reference
@@ -146,7 +146,7 @@ commonplace-create-review-jobs --model claude-opus-4-6 --note kb/notes/my-note.m
 commonplace-create-review-jobs --model claude-opus-4-6 --pair kb/notes/a.md::prose/source-residue --pair kb/notes/b.md::prose/source-residue --grouping gate --batch-size 5
 ```
 
-The command prints a JSON payload with `input_mode`, `model_partition`, `grouping`, `jobs`, and `skipped_pairs`. Each job includes `review_job_id`, `status`, nullable runner provenance, `packing`, `prompt_path`, `bundle_output_path`, `manifest_path`, and pair rows with `gate_id`, `pair_status`, `decision`, and `result_path`. Note-packed jobs use gate-leaf filenames such as `source-residue.md`; gate-packed jobs use note filenames such as `my-note.md`.
+The command prints a JSON payload with `input_mode`, `model_partition`, `grouping`, `jobs`, and `skipped_pairs`. Each job includes `review_job_id`, `status`, nullable runner provenance, `packing`, `prompt_path`, `bundle_output_path`, derived `manifest_path`, and pair rows with `gate_id`, `pair_status`, `decision`, and `result_path`. `MANIFEST.json` is display/debug output; pipeline commands use the DB paths as state. Note-packed jobs use gate-leaf filenames such as `source-residue.md`; gate-packed jobs use note filenames such as `my-note.md`.
 
 ### commonplace-run-review-jobs
 
@@ -187,7 +187,7 @@ Finalize a review job from its persisted `review_jobs.bundle_output_path`. Compl
 commonplace-finalize-review-job --review-job-id 42
 ```
 
-The command accepts `queued` or `running` jobs, rejects `completed` and `failed`, reads the job-owned `bundle-output.md`, writes per-pair result files to stored `review_pairs.result_path` values with provenance frontmatter, refreshes `MANIFEST.json`, and prints JSON for success, mutated failure, and precondition failure.
+The command accepts `queued` or `running` jobs, rejects `completed` and `failed`, reads the job-owned `bundle-output.md`, writes per-pair result files to stored `review_pairs.result_path` values with provenance frontmatter, refreshes `MANIFEST.json` for inspection, and prints JSON for success, mutated failure, and precondition failure.
 
 ### commonplace-ack-gate-review
 
@@ -253,7 +253,7 @@ commonplace-prune-superseded-reviews --apply
 
 ### commonplace-repair-model-partitions
 
-Collapse known model aliases in review jobs, review pairs, and acceptance events.
+Collapse known model aliases in review jobs and acceptance events. Pair rows derive model partition through their parent job.
 
 ```bash
 commonplace-repair-model-partitions --dry-run

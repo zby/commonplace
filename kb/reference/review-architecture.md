@@ -1,5 +1,5 @@
 ---
-description: Code architecture for commonplace.review and commonplace.cli.review - package layout, data model, the (note, gate)-pair protocol and batch executor, packing callers, targeting, and repair utilities
+description: Code architecture for commonplace.review and commonplace.cli.review - package layout, data model, the (note, gate)-pair protocol, queued execution, packing callers, targeting, and repair utilities
 type: kb/types/note.md
 tags: []
 status: current
@@ -20,7 +20,7 @@ The review subsystem is split between two packages, mirroring the project-wide `
 - **`commonplace.review`** — library code only. Pure functions, dataclasses, the SQLite layer, the runner subprocess wrappers. No `main()` functions, no argparse, no `Path.cwd()` at import time. Importable from any caller without pulling in CLI machinery.
 - **`commonplace.cli.review`** — thin CLI wrappers. Each module is argparse + `Path.cwd()` + `prepare_review_db(...)` + one library call. The `commonplace-*` review entry points in `pyproject.toml` all live here.
 
-For most modules the lib name and the CLI name match. For example `commonplace.review.run_review_bundles` is the library that resolves note-local gate requests into bundle-sized runner calls and hands each batch to `executor.execute_batch`; `commonplace.cli.review.run_review_bundles` is the thin wrapper that argparse-parses the user's invocation and calls into the lib. Two modules (`resolve_gates` and `review_target_selector`) exist in both packages because they were split during the layout migration: lib helpers stayed in `commonplace.review.*`, the CLI `main()` moved to `commonplace.cli.review.*`.
+For most modules the lib name and the CLI name match. For example `commonplace.review.run_review_bundles` is the library that resolves note-local gate requests into queued note-packed jobs and hands those jobs to `run_review_jobs`; `commonplace.cli.review.run_review_bundles` is the thin wrapper that argparse-parses the user's invocation and calls into the lib. Two modules (`resolve_gates` and `review_target_selector`) exist in both packages because they were split during the layout migration: lib helpers stayed in `commonplace.review.*`, the CLI `main()` moved to `commonplace.cli.review.*`.
 
 This document refers to modules by their unqualified names (e.g. `run_review_bundles`, `review_target_selector`) when the distinction doesn't matter. When a particular function or class is called out, it lives in the library package unless explicitly noted as a CLI.
 
@@ -139,11 +139,11 @@ Multi-strategy fallback chain for extracting decisions from review markdown:
 1. resolve_gates     → expand bundle names to gate IDs, filter by note type and traits, then normalize selected gates to paths before persistence
 2. freshness.capture_review_inputs → snapshot note/gate files, produce prompt text and `ReviewPairRequest`s with snapshot IDs
 3. create_job_with_pairs → insert review_job + review_pairs, one job per prompt invocation (`queued` for live-agent/orchestrator preparation, `running` for immediate subprocess execution)
-4. executor.execute_batch
-   a. protocol/prompt.render_pairs_prompt → one prompt embedding each note and gate text once
-   b. review_runners.run_prompt           → invoke claude-code or codex CLI
-   c. protocol/parser.parse_pair_bundle   → extract pair blocks, canonicalize result footers
-   d. per job: complete parsed pairs, mark missing pairs, complete or fail the job
+4. run_review_jobs
+   a. claim_review_job                    → atomically claim the queued job and attach runner provenance
+   b. runners.run_prompt                  → invoke claude-code or codex CLI with the persisted prompt
+   c. write bundle_output_path/debug.log  → persist runner stdout and diagnostics
+   d. job_finalization                    → parse the job-owned bundle output and finalize the job
 5. record_and_finalize_job → write review_pairs, copy pair snapshot IDs to acceptance events, validate coverage, mark job completed or failed
 ```
 
@@ -172,18 +172,18 @@ Every output block is keyed by the full (note, gate) pair:
 - `protocol/decisions.py` — decision-line parsing and footer canonicalization; grammar-independent, also used for historical rows.
 - `artifacts.py` — shared artifact naming and manifest writing. It is the only place that maps packing to parsed result filenames: note-packed jobs use gate-leaf filenames, gate-packed jobs use note filenames, and unsupported packing values fail.
 - `run_review_jobs.py` — sequential subprocess queue consumer. It selects queued jobs by model partition, claims through `claim_review_job`, reads the persisted prompt, writes runner stdout to the persisted bundle output path, records telemetry/debug logs, and finalizes through the job-owned finalization helper.
-- `executor.py` — lower-level pair parsing/finalization utilities and the older batch executor surface. Public subprocess commands route through queued jobs; finalization still reuses `finalize_bundle_markdown` so parser, salvage, result-artifact, and manifest behavior stay shared.
+- `job_finalization.py` and `executor.py` — job-owned output finalization and shared lower-level helpers. `job_finalization` owns the public "finalize this job id" operation; `executor` keeps note-target preparation, active-job failure, telemetry helpers, and the single-job parse/finalize helpers used by that operation.
 
 ### Packing callers
 
 - **`run_review_bundles.py` — note-local bundle packing.** One note, requested gates grouped by bundle/lens; creates queued note-packed jobs and immediately runs those job ids through `run_review_jobs`.
 - **`run_gate_sweep.py` — share-gate packing (experimental).** One gate over a chunked note list; creates queued gate-packed jobs and immediately runs those job ids through `run_review_jobs`.
 - **Live-agent path (single note)** — same protocol without a nested runner:
-  1. `commonplace-create-review-jobs --model <partition> --note <note> <gate-or-bundle>... --grouping note` groups requested gates by bundle/lens, creates one queued note-packed job per group with null runner provenance, writes each canonical prompt to `kb/reports/bundle-reviews/review-job-{id}/prompt.md`, writes `MANIFEST.json`, and returns a JSON `jobs` array with each job's `prompt_path`, `bundle_output_path`, `manifest_path`, and pair rows
+  1. `commonplace-create-review-jobs --model <partition> --note <note> <gate-or-bundle>... --grouping note` groups requested gates by bundle/lens, creates one queued note-packed job per group with null runner provenance, writes each canonical prompt to `kb/reports/bundle-reviews/review-job-{id}/prompt.md`, writes `MANIFEST.json` for inspection, and returns a JSON `jobs` array with each job's `prompt_path`, `bundle_output_path`, derived `manifest_path`, and pair rows
   2. each prompt is rendered from the snapshots attached to that job's created pair rows
   3. the parent agent claims each dispatched job with `commonplace-claim-review-job --review-job-id <id> --runner <worker> --model <model> [--effort <effort>]`
   4. the parent agent delegates each claimed job to a sub-agent, and that sub-agent reads `prompt_path`, follows it, and writes the matching `bundle_output_path`
-  5. `commonplace-finalize-review-job --review-job-id <id>` parses the job-owned artifact, finalizes through `record_and_finalize_job`, writes parsed result files to persisted `review_pairs.result_path` values with provenance frontmatter, and refreshes `MANIFEST.json`
+  5. `commonplace-finalize-review-job --review-job-id <id>` parses the job-owned artifact, finalizes through `record_and_finalize_job`, writes parsed result files to persisted `review_pairs.result_path` values with provenance frontmatter, and refreshes `MANIFEST.json` for inspection
 - **External-executor direct-pair path (`commonplace-create-review-jobs --pair`)** — deterministic creation for orchestrators that already know the exact `(note, gate)` pairs; decision record: [ADR 030](./adr/030-harness-facing-seams-batch-endpoints-and-runner-adapters.md).
   1. `commonplace-create-review-jobs --model <partition> --pair <note>::<gate>... --grouping {note,gate}` creates queued note-packed or gate-packed jobs for the pair set (inapplicable gates skipped and reported; missing notes/gates fatal) and writes canonical prompts from captured snapshots under `kb/reports/bundle-reviews/review-job-{review_job_id}/`; returns job and pair metadata, skipped pairs, `prompt_path`, `bundle_output_path`, and derived `manifest_path` values as JSON
   2. the parent claims each dispatched job with `commonplace-claim-review-job`, then the executor follows the prompt and writes `bundle_output_path`
@@ -235,4 +235,4 @@ These are operational commands for database maintenance. All support `--dry-run`
 | Command | Purpose |
 |---|---|
 | `prune-superseded-reviews` | Delete superseded non-current review pairs; delete whole job artifact directories only when every pair in the job is obsolete |
-| `repair-model-partitions` | Collapse known model aliases in review jobs, review pairs, and acceptance events |
+| `repair-model-partitions` | Collapse known model aliases in review jobs and acceptance events; pair rows derive model partition through jobs |

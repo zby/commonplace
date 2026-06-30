@@ -1,5 +1,5 @@
 ---
-description: "Proposal: run review sweeps through a harness's sub-agent orchestration feature (workflow scripts) instead of the Python thread pool — wiring validated by one Claude Code experiment, adoption deferred until comparable orchestration surfaces exist in more than one harness"
+description: "Proposal: run review sweeps through harness sub-agent orchestration once comparable surfaces exist in more than one harness"
 type: kb/types/note.md
 traits: [design-proposal]
 tags: [kb-maintenance]
@@ -10,12 +10,12 @@ status: seedling
 
 Review sweeps need fan-out: many (note, gate) pairs, packed into batches, executed in parallel, with per-batch failure isolation. Today the package supplies that fan-out itself (`review_sweep`'s thread pool over subprocess runners). Harnesses are beginning to ship sub-agent orchestration as a first-class feature — Claude Code's dynamic workflows expose `agent()`/`parallel()` under a model-authored script — which does the same job with native progress display, concurrency caps, isolation, and budgets, and without the fragile half of the subprocess path (session-log scraping, stream decoding, usage-exhaustion string matching). This proposal holds the sweep-orchestration design for that medium. It is deliberately unadopted: the feature is single-vendor, and committing the framework's operating procedure to one harness's proprietary surface contradicts the portability goal that motivates it.
 
-## Current state (as of 2026-06-12)
+## Current state (as of 2026-06-30)
 
-- The execution seams exist and are validated. [ADR 030](../adr/030-harness-facing-seams-batch-endpoints-and-runner-adapters.md) shipped `commonplace-prepare-review-batch` and `commonplace-ingest-batch-output`; Phase 3 supersedes the prepare command with `commonplace-create-review-jobs --pair ... --grouping {note,gate}`. One experiment ran a real slice end-to-end on the older seam (selector → two prepared batches → a 12-line workflow script with one reviewer agent per batch in parallel → ingest; 4 pairs recorded, zero Python changes; observations in `kb/log.md`, 2026-06-12).
+- The execution seams exist and are validated. [ADR 034](../adr/034-queued-review-jobs-and-execution-provenance.md) supersedes the older prepare/ingest surfaces with queued jobs: `commonplace-create-review-jobs --pair ... --grouping {note,gate}`, `commonplace-claim-review-job`, and `commonplace-finalize-review-job`. One experiment ran a real slice end-to-end on the older seam (selector → two prepared batches → a 12-line workflow script with one reviewer agent per batch in parallel → ingest; 4 pairs recorded, zero Python changes; observations in `kb/log.md`, 2026-06-12). The experiment remains evidence for the orchestration pattern, not for the current command names.
 - The orchestration feature is Claude Code-only ([dynamic workflows](../../agentic-systems/claude-code-dynamic-workflows.md)). No comparable scriptable sub-agent surface is known in the other harness this project runs (codex CLI).
 - The workflow script sandbox has no shell or filesystem, so it cannot invoke `commonplace-*` commands; only the parent conversation or sub-agents can.
-- Frictions observed in the experiment: workflow `args` input did not reach the script (data had to be inlined); no token telemetry lands on the review runs (the harness reports usage per workflow, ingest accepts none); the recorded model partition is the orchestrator's unverified assertion, where the subprocess path rekeys from scraped telemetry.
+- Frictions observed in the experiment: workflow `args` input did not reach the script (data had to be inlined); no token telemetry landed on the review records (the harness reports usage per workflow); the recorded model partition was the orchestrator's assertion. ADR 034 now treats telemetry as optional execution evidence, not review identity.
 
 ## The design
 
@@ -23,17 +23,17 @@ Five roles, with the harness owning exactly one:
 
 1. **Work-list** — `commonplace-review-target-selector --json` emits stale pairs (deterministic, Python).
 2. **Packing** — group pairs into batches (share-note or share-gate); trivial in any language, owned by the orchestrator.
-3. **Prepare** — `commonplace-create-review-jobs --pair ... --grouping {note,gate}` per batch or batch group: job creation, provenance, canonical prompt (deterministic, Python).
+3. **Prepare** — `commonplace-create-review-jobs --pair ... --grouping {note,gate}` per batch or batch group: job creation, canonical prompt, and pending pair rows (deterministic, Python).
 4. **Fan-out** — the harness feature: one reviewer agent per batch, in parallel. Reviewers are hermetic: they read the batch's `prompt.md`, write its `bundle-output.md`, and are forbidden from running `commonplace-*` commands — judgment only, no bookkeeping.
-5. **Ingest** — `commonplace-ingest-batch-output` per batch: parse, salvage, finalize (deterministic, Python).
+5. **Finalize** — `commonplace-finalize-review-job --review-job-id ...` per job: parse, salvage, persist pair results, append acceptance events, and refresh inspection artifacts (deterministic, Python).
 
-The interface between the worlds is files and JSON, never calls: prepare's JSON output feeds the script as data; agents and Python meet at the artifact directory; ingest reads files. The Python endpoints are the fixed point across execution media — a review recorded this way is indistinguishable in the ledger from one recorded by the subprocess runner.
+The interface between the worlds is files and JSON, never calls: creation/listing JSON feeds the script as data; agents and Python meet at the artifact directory; finalization reads job-owned files. The Python endpoints are the fixed point across execution media — a review recorded this way is indistinguishable in the ledger from one recorded by the subprocess runner.
 
 ## Free choices
 
 - **Wiring of the deterministic steps.** Parent-interleaved (the conversation runs select/prepare/ingest between workflows — the validated shape) versus coordinator-agent (a sub-agent runs the commands via shell, enabling a self-contained loop-until-no-stale-pairs script). The first keeps agents judgment-only; the second buys script-driven multi-round control flow at the cost of spending LLM calls on deterministic work and blurring the hermetic-reviewer boundary.
 - **Promotion form.** An instruction in `kb/instructions/` describing the procedure (harness-neutral prose, the orchestrator re-derives the script each time) versus a saved workflow script (executable, but vendor-locked and dependent on the `args` mechanism working). The instruction form survives harness churn; the script form is faster to invoke.
-- **Execution metadata on ingest.** Extend `commonplace-ingest-batch-output` with optional model-id and usage arguments so external executors can attribute what they know, versus leaving external runs telemetry-less. Interacts with the packing-provenance follow-up in [ADR 029](../adr/029-review-execution-unified-on-note-gate-pairs.md).
+- **Execution metadata at claim/finalize.** `commonplace-claim-review-job` records known runner/model/effort provenance before dispatch; finalization can later attach optional telemetry when a harness exposes it. The open choice is how much parent-orchestrator evidence to collect and how to present telemetry gaps.
 - **Output codec.** Sentinel files (today) versus schema-validated agent returns — the trigger question lives in [structured-output codec for the review protocol](./structured-output-codec-for-review-protocol.md); this proposal's medium is the first where that trigger is arguably met.
 
 ## Adoption criteria

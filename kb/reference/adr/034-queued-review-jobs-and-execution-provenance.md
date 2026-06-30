@@ -1,21 +1,25 @@
 ---
-description: "DRAFT for ADR 034 - queued review jobs store freshness identity separately from nullable execution provenance across subprocess and orchestrator execution paths"
-type: kb/types/note.md
+description: "Queued review jobs store freshness identity separately from nullable execution provenance across subprocess and orchestrator execution paths"
+type: ../types/adr.md
+tags: []
+status: accepted
 ---
 
-# DRAFT 034-Queued review jobs and execution provenance
+# 034-Queued review jobs and execution provenance
 
-**Status:** draft
+**Status:** accepted
 **Date:** 2026-06-30
 
 ## Context
 
-[ADR 029](../../reference/adr/029-review-execution-unified-on-note-gate-pairs.md) unified review execution on `(note_path, gate_path)` pairs, [ADR 030](../../reference/adr/030-harness-facing-seams-batch-endpoints-and-runner-adapters.md) exposed harness-facing prepare/ingest seams and runner adapters, [ADR 031](../../reference/adr/031-review-state-uses-run-owned-review-pairs.md) made the pair unit persistent in SQLite, [ADR 032](../../reference/adr/032-review-freshness-uses-db-snapshots-not-git.md) made freshness DB-owned and keyed by `model_partition`, and [ADR 033](../../reference/adr/033-honest-review-run-state.md) added a migration substrate plus an honest `queued` state and clock.
+[ADR 029](./029-review-execution-unified-on-note-gate-pairs.md) unified review execution on `(note_path, gate_path)` pairs, [ADR 030](./030-harness-facing-seams-batch-endpoints-and-runner-adapters.md) exposed harness-facing prepare/ingest seams and runner adapters, [ADR 031](./031-review-state-uses-run-owned-review-pairs.md) made the pair unit persistent in SQLite, [ADR 032](./032-review-freshness-uses-db-snapshots-not-git.md) made freshness DB-owned and keyed by `model_partition`, and [ADR 033](./033-honest-review-run-state.md) added a migration substrate plus an honest `queued` state and clock.
 
 The next review-execution refactor changes the SQL model again. It turns the execution record from a "run" into a queued "job", removes duplicated pair-level model metadata, and makes the same queued jobs executable through two media:
 
 - a subprocess queue runner (`commonplace-run-review-jobs`) that Commonplace owns directly and that can pass concrete arguments to runner adapters;
 - an orchestrator-agent path where the parent agent creates or lists queued jobs, delegates each prompt to a worker agent, and finalizes the worker's output.
+
+The same implementation also tightens adjacent provenance policies that were coupled to the old execution surface: acknowledgement must carry forward concrete review evidence, and note relocation must not pretend path-keyed review history automatically transfers to a new path.
 
 The two media do not expose the same controls. A subprocess adapter may be able to request a concrete model and maybe a reasoning effort. An orchestrator may be able to select a worker model, but some harnesses cannot request effort per worker; Claude Code sub-agent effort is inherited from the parent/session or fixed by subagent configuration. Some harnesses expose reliable telemetry through events or logs; others expose none. Treating all of that as universal, required identity would either make the common orchestrator path unusable or encourage false precision.
 
@@ -55,7 +59,21 @@ Job creation accepts two input sources:
 
 Both input sources resolve through `--grouping note` or `--grouping gate`, and persisted `packing` remains only `note` or `gate`. There is no `explicit` grouping and no `packing = explicit`.
 
-Direct requested-pair input requires `--model`, because no selector payload supplies the job's `model_partition`. Removing `commonplace-prepare-review-batch` waits until `commonplace-create-review-jobs` covers its direct same-axis pair workflow through these two grouping modes.
+Direct requested-pair input requires `--model`, because no selector payload supplies the job's `model_partition`. Because `commonplace-create-review-jobs` covers the direct same-axis pair workflow through these two grouping modes, the old prepare/ingest/finalize-run compatibility command surfaces are retired rather than documented as current.
+
+### Require ack to carry review evidence
+
+Acceptance events written by full review and by acknowledgement point `accepted_review_pair_id` at a completed review pair. Ack is a trivial-change re-baseline of existing review evidence, not a waiver mechanism.
+
+Ack lookup remains path- and model-partition-keyed: it carries forward the latest completed review pair for the same `(note_path, gate_path, model_partition)`, then snapshots the current note and gate text as the new accepted baseline. If no completed review pair exists, ack fails and the pair must be reviewed.
+
+Legacy nullable acceptance rows remain readable through fallback lookup until a later hardening migration backfills old nulls and tightens the schema. New writes must not create review-less acceptance events.
+
+### Do not relocate path-keyed review history
+
+Review identity remains path-keyed. Note and directory relocation do not rekey `review_jobs`, `review_pairs`, `acceptance_events`, or stored artifact paths such as `prompt_path`, `bundle_output_path`, and `result_path`.
+
+The old path-keyed rows remain historical evidence under the old path. A moved note needs fresh review under the new path unless a later explicit review-history or target-identity workflow is designed.
 
 ### Store runner provenance separately from freshness identity
 
@@ -125,6 +143,14 @@ The queued DB rows are shared, but the orchestrator's workers are pure file tran
 
 `commonplace-run-review-jobs` is not passed the orchestrator's worker list. It is a subprocess queue consumer. The orchestrator path uses job creation/listing, `commonplace-claim-review-job`, and finalization directly.
 
+The old user-facing wrappers are retained only where they compose the queued stages:
+
+- `commonplace-review-sweep` selects stale targets, creates queued note-packed jobs, and runs them through the subprocess queue runner;
+- `commonplace-run-review-bundles` creates queued note-packed jobs for one note and runs those job ids through the subprocess queue runner;
+- `commonplace-run-gate-sweep` creates queued gate-packed jobs and runs those job ids through the subprocess queue runner.
+
+They are convenience surfaces over the queued pipeline, not separate persistence paths.
+
 ### Make telemetry optional and adapter-owned
 
 Telemetry is evidence, not identity. It can help diagnose whether a runner honored `runner_model`, `runner_effort`, and `model_partition`, but it does not re-key review state.
@@ -149,11 +175,16 @@ Easier:
 - The manifest remains an inspection artifact instead of becoming another piece of database/API state.
 - Orchestrator-agent execution remains usable even when the harness cannot request per-worker effort or expose reliable telemetry.
 - Runner telemetry can vary by harness without infecting the core queue/finalization code.
+- Ack provenance no longer drops the completed review pair that justifies the accepted baseline.
+- Relocation is simpler and avoids misleading review lineage transfer across path changes.
+- Existing sweep/bundle/gate command habits can stay while their implementation converges on queued jobs.
 
 Harder / accepted costs:
 
 - The store has nullable execution provenance columns, so readers must distinguish "unknown" from "known concrete value."
 - Pair readers and model-partition repair tooling must join through jobs once `review_pairs.model_partition` is removed.
+- Legacy nullable acceptance rows require reader fallback until the hardening migration removes that compatibility path.
+- Moved notes need fresh review under their new path.
 - Operational docs and instructions must move with the command surface, because stale creation flags or `commonplace-prepare-review-batch` references would mislead agents before final workshop cleanup.
 - The system trusts executor-side validation in v1; hard SQL constraints between `model_partition`, `runner_model`, and `runner_effort` wait for a model-partition registry.
 - Orchestrator-dispatched jobs can be abandoned in `running` if the parent dies; v1 handles that through manual recovery rather than leases.
@@ -164,9 +195,9 @@ Harder / accepted costs:
 
 Relevant Notes:
 
-- [029-review execution unified on (note, gate) pairs](../../reference/adr/029-review-execution-unified-on-note-gate-pairs.md) - extends: preserves the pair protocol and keeps `review_pairs` as the child row shape.
-- [030-Harness-facing seams: batch prepare/ingest endpoints and runner adapters](../../reference/adr/030-harness-facing-seams-batch-endpoints-and-runner-adapters.md) - extends: keeps runner adapters but moves queue consumption behind `commonplace-run-review-jobs`.
-- [031-review state uses run-owned review pairs](../../reference/adr/031-review-state-uses-run-owned-review-pairs.md) - supersedes-in-part: renames runs to jobs and removes pair-level model duplication while keeping pair ownership.
-- [032-Review freshness uses DB snapshots, not Git](../../reference/adr/032-review-freshness-uses-db-snapshots-not-git.md) - extends: keeps `model_partition` as the frozen freshness key and does not re-key from telemetry.
-- [033-Honest review-run state behind a versioned migration substrate](../../reference/adr/033-honest-review-run-state.md) - extends: uses the queued/running/completed/failed state and versioned migrations added there.
-- [model partition registry](../../reference/proposals/model-partition-registry.md) - deferred: future aliases, defaults, effort compatibility, and hard constraints.
+- [029-review execution unified on (note, gate) pairs](./029-review-execution-unified-on-note-gate-pairs.md) - extends: preserves the pair protocol and keeps `review_pairs` as the child row shape.
+- [030-Harness-facing seams: batch prepare/ingest endpoints and runner adapters](./030-harness-facing-seams-batch-endpoints-and-runner-adapters.md) - extends: keeps runner adapters but moves queue consumption behind `commonplace-run-review-jobs`.
+- [031-review state uses run-owned review pairs](./031-review-state-uses-run-owned-review-pairs.md) - supersedes-in-part: renames runs to jobs and removes pair-level model duplication while keeping pair ownership.
+- [032-Review freshness uses DB snapshots, not Git](./032-review-freshness-uses-db-snapshots-not-git.md) - extends: keeps `model_partition` as the frozen freshness key and does not re-key from telemetry.
+- [033-Honest review-run state behind a versioned migration substrate](./033-honest-review-run-state.md) - extends: uses the queued/running/completed/failed state and versioned migrations added there.
+- [model partition registry](../proposals/model-partition-registry.md) - deferred: future aliases, defaults, effort compatibility, and hard constraints.

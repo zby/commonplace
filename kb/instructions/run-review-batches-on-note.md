@@ -70,7 +70,7 @@ commonplace-finalize-review-job --review-job-id {review-job-id}
 
 Run finalization once per completed sub-agent output. This reads the job-owned `bundle_output_path`, parses the bundle with the same parser used by `commonplace-run-review-bundles`, records the per-pair reviews, and finalizes the review job.
 
-After finalization, `MANIFEST.json` at `manifest_path` is refreshed with pair statuses and per-gate `result_path` files. For this single-note path, parsed review files are named by the gate leaf, for example `clause-packing.md`.
+After finalization, `MANIFEST.json` at `manifest_path` is refreshed for inspection with pair statuses and per-gate `result_path` files. Treat database paths as pipeline state; do not read `MANIFEST.json` to decide what to finalize. For this single-note path, parsed review files are named by the gate leaf, for example `clause-packing.md`.
 
 ### 4. Verify the requested set
 

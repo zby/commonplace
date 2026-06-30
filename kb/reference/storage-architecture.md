@@ -49,13 +49,13 @@ Review state is the one subsystem that is not file-backed. The review database s
 
 | Table | Contents |
 |---|---|
-| `review_jobs` | One row per review invocation/prompt, with `queued`/`running`/`completed`/`failed` status and created/started/completed timing |
-| `review_pairs` | One row per requested `(note_path, gate_path)` pair inside a job |
+| `review_jobs` | One row per review invocation/prompt, with freshness `model_partition`, nullable runner provenance, `queued`/`running`/`completed`/`failed` status, created/started/completed timing, and prompt/output artifact paths |
+| `review_pairs` | One row per requested `(note_path, gate_path)` pair inside a job; model partition is derived through the parent job |
 | `acceptance_events` | Append-only per-gate acceptance history |
 
 Acceptance is keyed by `(note_path, gate_path, model_partition)`. Current acceptance for any key is the latest `acceptance_events` row, exposed via the `current_gate_acceptances` view. Selector logic reads current note and gate content from files and compares their hashes against accepted DB-owned snapshots.
 
-Notes, gates, instructions, and source material remain file-backed. See [ADR-010](./adr/010-review-state-should-move-to-sqlite-once-reviews-leave-git-and.md), [ADR-032](./adr/032-review-freshness-uses-db-snapshots-not-git.md), and [ADR-033](./adr/033-honest-review-run-state.md) for the rationale.
+Notes, gates, instructions, and source material remain file-backed. See [ADR-010](./adr/010-review-state-should-move-to-sqlite-once-reviews-leave-git-and.md), [ADR-032](./adr/032-review-freshness-uses-db-snapshots-not-git.md), [ADR-033](./adr/033-honest-review-run-state.md), and [ADR-034](./adr/034-queued-review-jobs-and-execution-provenance.md) for the rationale.
 
 ## See also
 

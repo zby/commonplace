@@ -56,9 +56,11 @@ def _current_acceptance_event_ids(conn: sqlite3.Connection) -> tuple[int, ...]:
 def _current_review_pair_ids(conn: sqlite3.Connection) -> tuple[int, ...]:
     """Return the retained review pair for each current acceptance key.
 
-    Current acceptance rows may have accepted_review_pair_id=NULL for pure
-    acknowledgements. Those keys read through to the latest completed pair for
-    the same (note_path, gate_path, model_partition), so pruning must retain that pair.
+    Legacy acceptance rows may be missing accepted review-pair links from the
+    old acknowledgement write path. Those keys read through to the latest
+    completed pair for the same (note_path, gate_path, model_partition), so
+    pruning must retain that pair until the legacy nullable rows are hardened
+    away.
     """
     rows = conn.execute(
         """

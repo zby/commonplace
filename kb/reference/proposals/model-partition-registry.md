@@ -12,7 +12,7 @@ Commonplace review identity is `(note_path, gate_path, model_partition)`. `model
 
 This is a later simplification, not a requirement for the queued-job pipeline. Jobs can store both `model_partition` and nullable `runner_model` without a partition table.
 
-## Current state (as of 2026-06-28)
+## Current state (as of 2026-06-30)
 
 ADR 032 defines `model_partition` as a declared, frozen model-side freshness partition. Freshness treats it as opaque: a partition can be exact, coarse, or parameterized, but telemetry must not re-key review state after execution.
 
@@ -20,7 +20,7 @@ The current alias registry is in code. `src/commonplace/review/review_model.py` 
 
 Existing subprocess paths already distinguish the declared partition from the concrete runner model in places: commands normalize the user-supplied model into a `model_partition`, but pass a `runner_model` value to runner adapters.
 
-The queued-job design keeps v1 small: `review_jobs.model_partition` is the freshness key, `review_jobs.runner_model` is nullable execution metadata, and there is no `model_partitions` table in the Phase 2 schema.
+ADR 034 shipped the queued-job design without adopting this registry: `review_jobs.model_partition` is the freshness key, `review_jobs.runner_model` is nullable execution metadata, and there is no `model_partitions`, `model_partition_aliases`, or `model_partition_runner_models` table in the review schema.
 
 ## Proposed shape
 

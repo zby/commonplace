@@ -126,7 +126,7 @@ For the full read path and scaling direction, see [navigation.md](./navigation.m
 
 - "Validate `kb/notes/foo.md`."
 - "Run validation across the whole KB and report any failures."
-- Or run `uv run commonplace-validate kb/notes/foo.md`.
+- Or run `commonplace-validate kb/notes/foo.md`.
 
 *What happens.* The validator checks schemas, links, filename constraints, and type-specific structural requirements.
 
@@ -158,10 +158,10 @@ Most operations go through the agent, but a few CLI commands are reasonable to r
 
 | Command | Purpose |
 |---|---|
-| `uv run commonplace-validate <path>` | Run the deterministic validator on a note or directory |
-| `uv run commonplace-relocate-note <note> --to <dest> [--apply]` | Move or rename a note with link rewrites and mkdocs redirect; dry-run by default |
-| `uv run commonplace-github-snapshot <url>` | Snapshot a GitHub issue, PR, or repo README into `kb/sources/` |
-| `uv run commonplace-x-snapshot <url>` | Snapshot a Twitter/X post into `kb/sources/` |
+| `commonplace-validate <path>` | Run the deterministic validator on a note or directory |
+| `commonplace-relocate-note <note> --to <dest> [--apply]` | Move or rename a note with link rewrites and mkdocs redirect; dry-run by default |
+| `commonplace-github-snapshot <url>` | Snapshot a GitHub issue, PR, or repo README into `kb/sources/` |
+| `commonplace-x-snapshot <url>` | Snapshot a Twitter/X post into `kb/sources/` |
 
 `commonplace-relocate-note` dry-runs by default. Pass `--apply` to write changes.
 
