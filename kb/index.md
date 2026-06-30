@@ -6,7 +6,7 @@ Commonplace is a growing body of research on how to design knowledge so AI agent
 
 A wiki is two things — notes and the links between them — and an LLM wiki is one where the agent produces both: it **concretizes** a vague thought into a committed note, then **[connects](./notes/links-README.md)** it to everything you've already written. That turns an ephemeral chat, where the insight scrolls away, into a durable, growing body of your thinking. The agent takes the two slow parts, drafting and filing; judging whether a claim is _true_ still falls to you — though review gates and refinement loops are moving more of that into the agents too.
 
-It is **self-hosting**, in the bootstrapping sense: the theory of how to build LLM wikis lives here as notes, and the agents that maintain this repository run on the methodology those notes describe. Nothing here is documentation _about_ a separate system — the wiki is the system, and reading these pages is watching it run.
+It is **self-hosting**, in the bootstrapping sense: the research lives here as notes, and the agents that maintain this repository run on the methodology those notes describe. Nothing here is documentation _about_ a separate system — the wiki is the system, and reading these pages is watching it run.
 
 **The content is AI-generated** through human-AI collaboration: a human directs the inquiry, and AI agents (Claude, ChatGPT, and others) draft, connect, and maintain the notes.
 
