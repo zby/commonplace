@@ -9,7 +9,7 @@ It is **self-hosting**, in the bootstrapping sense. The research lives in this r
 
 **The content is AI-generated** through human-AI collaboration: a human directs the inquiry, and AI agents (Claude, ChatGPT, and others) draft, connect, and maintain the notes.
 
-Rendered notes are available at <https://zby.github.io/commonplace/>. The HTML site is easier to browse than raw Markdown when reading across the KB.
+Rendered notes are available at <https://zby.github.io/commonplace/> — the easiest way to read across the KB, and the front door to the research itself. The notes are where the theory lives; start with [deploy-time learning](https://github.com/zby/commonplace/blob/main/kb/notes/deploy-time-learning-is-the-missing-middle.md) and follow the links from there.
 ## What's in the box
 ```
 kb/                       Knowledge base
@@ -33,6 +33,8 @@ src/commonplace/          Packaged operational engine
   docs/                   Rendered-site (MkDocs) hooks and assets
 ```
 ## Key ideas
+The design principles the system is built on — distinct from the research claims they rest on, which live in the [notes](https://zby.github.io/commonplace/).
+
 **Title as claim, not topic.** Note titles are assertions that work as prose when linked: "approvals guard against LLM mistakes not active attacks" instead of "approvals system". Following links reads like a chain of reasoning — [why this works](https://github.com/zby/commonplace/blob/main/kb/notes/title-as-claim-enables-traversal-as-reasoning.md).
 
 **Progressive refinement.** Capture with zero friction — a file with no frontmatter is a valid `text`, with zero structural requirements. Add frontmatter and it becomes a `note`. A note can later take a specialized type — a `definition`, an `adr` — but only when its content earns the extra structure. Structure is earned, not imposed ([the wikiwiki principle](https://github.com/zby/commonplace/blob/main/kb/notes/wikiwiki-principle-lowest-friction-capture-then-progressive-refinement.md)).
