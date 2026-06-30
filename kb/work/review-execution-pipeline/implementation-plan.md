@@ -36,7 +36,7 @@ queued, running, completed, failed
 Meanings:
 
 - `queued`: prompt and pair rows exist; no worker has claimed execution.
-- `running`: a subprocess worker has claimed the job.
+- `running`: an executor has claimed or dispatched the job.
 - `completed`: all required pairs completed and accepted.
 - `failed`: preparation, execution, parse, or coverage failed; salvaged completed pairs may still be retained per existing policy.
 
@@ -50,14 +50,14 @@ started_at TEXT,
 completed_at TEXT
 ```
 
-`created_at` is preparation time. `started_at` is worker claim/start time. Orchestrator-driven jobs may go `queued -> completed` with `started_at = NULL`. Phase 2 carries this shape forward into `review_jobs`.
+`created_at` is preparation time. `started_at` is worker claim/start time. Normal executor paths move `queued -> running` when they claim or dispatch a job, setting execution provenance in the same update. Finalization still accepts `queued` as a recovery/transitional tolerance, but ordinary orchestrator and subprocess execution should record `started_at`.
 
 ### Two execution media share one queue
 
 There are two execution media over the same persisted jobs:
 
 - **subprocess runner path**: an operator, CI job, scheduled process, or wrapper runs `commonplace-run-review-jobs`; the command pulls queued jobs from the DB, claims them, invokes runner adapters, and finalizes;
-- **orchestrator-agent path**: the parent agent lists queued jobs, dispatches workers itself, and finalizes when each worker writes the expected output.
+- **orchestrator-agent path**: the parent agent lists queued jobs, claims each dispatched job with known provenance, dispatches workers itself, and finalizes when each worker writes the expected output.
 
 For the dominant live-agent/orchestrator path, sub-agents are pure file transducers:
 
@@ -65,24 +65,30 @@ For the dominant live-agent/orchestrator path, sub-agents are pure file transduc
 prompt_path -> bundle_output_path
 ```
 
-They must not run `commonplace-*` commands or mutate review state. The parent creates jobs, delegates prompt files, and finalizes outputs. Therefore v1 does not need transactional multi-process claiming for the orchestrator path, and orchestrator workers do not call `commonplace-run-review-jobs`.
+They must not run `commonplace-*` commands or mutate review state. The parent creates jobs, claims dispatched jobs, delegates prompt files, and finalizes outputs. Therefore v1 does not need transactional multi-process claiming among orchestrator workers, and orchestrator workers do not call `commonplace-run-review-jobs`.
 
-The subprocess runner can still mark jobs `running` because Commonplace owns that subprocess execution.
+Both execution media use the same underlying `queued -> running` transition. The subprocess runner calls it internally; the orchestrator parent calls it before dispatching a worker.
 
 ### Claiming and concurrency policy
 
-V1 has no formal lease/timeout for orchestrator-driven jobs. The parent lists queued jobs, dispatches each prompt path once, and finalizes the job when the worker writes the job-owned output file. Manual recovery handles abandoned orchestrator jobs.
+V1 has no formal lease/timeout for orchestrator-driven jobs. The parent lists queued jobs, claims each dispatched prompt path once through `commonplace-claim-review-job`, and finalizes the job when the worker writes the job-owned output file. Manual recovery handles abandoned orchestrator jobs left in `running`.
 
-The subprocess runner is queue-driven by default. It claims queued jobs from the DB, optionally narrowed by explicit `--review-job-id` values for recovery/debug runs. Claiming is an atomic update:
+Claiming is an atomic update that records execution provenance at the same moment the job becomes `running`:
 
 ```sql
 UPDATE review_jobs
-SET status = 'running', started_at = ?
+SET status = 'running',
+    started_at = ?,
+    runner = ?,
+    runner_model = ?,
+    runner_effort = ?
 WHERE review_job_id = ? AND status = 'queued'
   AND model_partition = ?
 ```
 
-If the update affects zero rows, another worker claimed or completed the job and the runner skips it.
+If the update affects zero rows, another worker claimed or completed the job and the claimant skips it or reports the mismatch for explicit job-id dispatch.
+
+The subprocess runner is queue-driven by default. It claims queued jobs from the DB, optionally narrowed by explicit `--review-job-id` values for recovery/debug runs.
 
 Start with a sequential subprocess runner. When parallelism is reintroduced, use one SQLite connection per worker, set a `busy_timeout`, keep transactions short, and never hold a database transaction while a model process is running.
 
@@ -110,18 +116,34 @@ It should not be duplicated on `review_pairs`. Completed pairs inherit model thr
 
 `model_partition` remains the freshness and acceptance key. Treat it as opaque; do not add a `model_partitions` table in Phase 2.
 
-For the first version, do not store separate runner-model or runner-effort columns. The concrete model is **supplied by the executor at execution time**, not derived from the stored `model_partition`: `normalize_model_partition` is many-to-one, so a partition cannot be turned back into a runnable model id.
+`runner` is the execution adapter/medium (`codex`, `claude-code`, orchestrator, etc.), not the concrete model. Store concrete execution settings separately as nullable provenance:
+
+- `runner_model`: the concrete model requested or selected for execution, set when the job is claimed/dispatched if known;
+- `runner_effort`: the concrete thinking/reasoning effort requested, selected, or inherited for execution, set when the job is claimed/dispatched if known.
+
+The concrete model and effort are **supplied by the executor at execution time**, not derived from the stored `model_partition`: `normalize_model_partition` / `build_model_partition` is many-to-one, so a partition cannot be turned back into a runnable model id or effort. If effort is unavailable for a runner/session, leave `runner_effort` null rather than guessing.
 
 **The model is validated at execution, against the job's partition**, before any model call:
 
-- the subprocess runner enforces it in code before claim/execution: `normalize_model_partition(--model) == job.model_partition`; mismatched jobs are not claimed;
+- the subprocess runner enforces it in code before claim/execution: `build_model_partition(--model, --effort) == job.model_partition`; mismatched jobs are not claimed;
 - the orchestrator enforces it by instruction: the parent spawns or selects each worker with a concrete model that is a member of the job's partition.
 
 The spawned/selected model should be the **newest member of the job's partition** — capped by the partition, not the newest model overall (which may belong to a different partition: the harness's current `opus` could be `claude-opus-4-8`, a *different* partition from `claude-opus`). A newest-member-per-partition lookup is part of the deferred `model_partitions` registry; until it exists, the orchestrator instruction names the model explicitly.
 
-Reasoning effort is not a v1 review identity field. In the orchestrator-agent path, Claude Code worker effort is inherited from the parent/session or fixed by a named subagent configuration; the parent should not treat effort as a per-job dynamic request. In the subprocess path, an effort flag should be added only for runner adapters that can actually set it; unsupported adapters fail early rather than silently ignoring it. Making effort a deliberate freshness distinction is a registry change, deferred.
+Reasoning effort is nullable execution provenance, not a required v1 review identity field. In the orchestrator-agent path, Claude Code worker effort is inherited from the parent/session or fixed by a named subagent configuration; the parent records it only if it knows it. In the subprocess path, an effort flag is valid only for runner adapters that can actually set it; unsupported adapters fail early rather than silently ignoring it.
 
-Finalization stays model-agnostic in v1: the membership gate already ran at execution. Runner telemetry can still be stored in `telemetry_json` as a secondary "did the runner honor the requested model" check, distinct from the partition-membership gate. If execution later needs first-class provenance for concrete model or effort, add nullable execution-provenance fields then.
+Finalization stays model-agnostic in v1: the membership gate already ran at execution. Later constraints can require `build_model_partition(runner_model, runner_effort) == model_partition` whenever runner model/effort are present. Runner telemetry can still be stored in `telemetry_json` as optional evidence about whether the runner honored the requested settings; telemetry is distinct from the partition-membership gate.
+
+### Telemetry is optional and adapter-owned
+
+Telemetry is best-effort execution evidence, not required review state. A missing telemetry record, malformed vendor log, or unsupported harness must not fail a review job.
+
+Telemetry collection belongs behind a stable runner/harness API, separate from queue claiming, subprocess execution, parsing, and finalization. Each implementation may gather evidence differently: process stdout, stream events, vendor session logs, parent-orchestrator reports, or no telemetry at all. The stable contract is:
+
+- input: runner name, repo root, prompt/output paths or sent prompt, stdout/stderr/log handles, and known execution provenance;
+- output: either `None` or a plain JSON-serializable mapping;
+- storage: `review_jobs.telemetry_json`, updated only when telemetry is available;
+- behavior: telemetry can warn about mismatches with `runner_model` / `runner_effort` / `model_partition`, but it does not mutate freshness identity.
 
 A future `model_partitions` registry may centralize aliases and runner defaults, but that is deferred to a proposal rather than implemented in this queue refactor: [model partition registry](../../reference/proposals/model-partition-registry.md).
 
@@ -135,10 +157,14 @@ note_path: kb/notes/example.md
 gate_path: kb/instructions/review-gates/prose/source-residue.md
 model_partition: claude-opus-4-6
 runner: claude-code
+runner_model: claude-opus-4-6
+runner_effort: high
 decision: warn
 reviewed_at: "2026-06-28T12:00:00+00:00"
 ---
 ```
+
+Omit `runner_model` and `runner_effort` from result frontmatter when they are null.
 
 The raw `bundle-output.md` can stay as the runner/agent output contract unless the parser is deliberately made frontmatter-tolerant.
 
@@ -153,6 +179,8 @@ Create one internal value object, named `ReviewJobPlan` or `PreparedReviewJob`, 
 - per-pair result paths;
 - packing;
 - runner;
+- runner model;
+- runner effort;
 - model partition.
 
 Creation commands write this shape; listing, subprocess execution, and finalization load it. Do not let each command rediscover artifact paths, packing, or pair metadata differently.
@@ -197,19 +225,10 @@ Do not reset failed jobs to `queued` in v1. `create-review-jobs` captures note/g
 
 Retry means create a new job, recapturing snapshots.
 
-## Promotion: write an ADR
+## ADR Promotion
 
-This refactor changes the shipped review architecture and its persisted schema, so it is promoted through ADRs rather than left as workshop notes — one per phase, as each lands.
-
-**Phase 1 is recorded by [ADR 033](../../reference/adr/033-honest-review-run-state.md)** (the migration substrate plus the honest, queue-capable run state). The review DB is now at `user_version = 1`; later schema changes start at version 2. The workshop draft is retained as [adr-draft-033-honest-review-run-state.md](./adr-draft-033-honest-review-run-state.md) for provenance only.
-
-**Phase 2 takes a later number** (034+, assigned when it lands). It should record:
-
-- review execution as a queued-job pipeline with two execution media (subprocess runner, orchestrator-driven agents) over one job state machine;
-- the acceptance-provenance tightening — ack carries forward an existing review pair, and the review-less acceptance event is removed as an accident rather than a deprecated feature;
-- the explicit no-relocation simplification for review records.
-
-The Phase 2 ADR updates [ADR 031](../../reference/adr/031-review-state-uses-run-owned-review-pairs.md) for the `review_runs` -> `review_jobs` execution-record rename while keeping `review_pairs`, and extends [ADR 029](../../reference/adr/029-review-execution-unified-on-note-gate-pairs.md), [ADR 030](../../reference/adr/030-harness-facing-seams-batch-endpoints-and-runner-adapters.md), and [ADR 033](../../reference/adr/033-honest-review-run-state.md). The acceptance-semantics change may warrant its own sibling ADR; decide when drafting. The `queued` state and honest clock are *not* Phase 2's to record as new decisions — ADR 033 owns them.
+- Phase 1 is already recorded by [ADR 033](../../reference/adr/033-honest-review-run-state.md). The workshop draft is retained as [adr-draft-033-honest-review-run-state.md](./adr-draft-033-honest-review-run-state.md) for provenance only.
+- Promote [adr-draft-034-queued-review-jobs-and-execution-provenance.md](./adr-draft-034-queued-review-jobs-and-execution-provenance.md) into `kb/reference/adr/` when the queued-job SQL model and execution paths land. The plan should not duplicate that ADR's decision text.
 
 ## Target Schema Shape
 
@@ -220,6 +239,8 @@ review_jobs (
     review_job_id INTEGER PRIMARY KEY,
     model_partition TEXT NOT NULL,
     runner TEXT,
+    runner_model TEXT,
+    runner_effort TEXT,
     created_at TEXT NOT NULL,
     started_at TEXT,
     completed_at TEXT,
@@ -272,10 +293,11 @@ The canonical commands are:
 - `commonplace-review-target-selector` for target selection;
 - `commonplace-create-review-jobs` for queued job creation;
 - `commonplace-review-job-list` for queue inspection and orchestrator dispatch;
+- `commonplace-claim-review-job` for parent-orchestrator dispatch bookkeeping;
 - `commonplace-run-review-jobs` for subprocess/script execution;
 - `commonplace-finalize-review-job` for job-owned output finalization.
 
-`commonplace-run-review-jobs` is not passed the orchestrator's worker list in the normal path. It is a queue consumer: it selects queued jobs from the DB, optionally narrowed by explicit job ids, then claims and runs them. The orchestrator path uses `commonplace-review-job-list` and `commonplace-finalize-review-job` directly.
+`commonplace-run-review-jobs` is not passed the orchestrator's worker list in the normal path. It is a queue consumer: it selects queued jobs from the DB, optionally narrowed by explicit job ids, then claims and runs them. The orchestrator path uses `commonplace-review-job-list`, `commonplace-claim-review-job`, and `commonplace-finalize-review-job` directly.
 
 ## Phase Plans
 
@@ -308,5 +330,5 @@ This file is the shared design overview. Detailed implementation steps, migratio
 1. Orchestrator jobs do not need a formal lease/timeout in v1; parent listing plus manual recovery is enough.
 2. `commonplace-ingest-bundle-output` and `commonplace-ingest-batch-output` are replaced by `commonplace-finalize-review-job --review-job-id`; no compatibility wrapper is kept.
 3. `prompt_path`, `bundle_output_path`, and `result_path` stay stored in v1 because the command surface reads them ([Target Schema Shape](#target-schema-shape)). Deriving paths from id instead is a possible later change, not part of this work.
-4. `runner_model` and `runner_effort` are deferred from the first version. `model_partition` remains the opaque freshness/acceptance key; concrete model selection happens at execution time and is validated against that partition.
+4. `runner_model` and `runner_effort` are nullable execution provenance on `review_jobs`. `model_partition` remains the opaque freshness/acceptance key; concrete model/effort selection happens at execution time and is validated against that partition. Hard constraints that enforce this relationship are deferred.
 5. The `model_partitions` table is deferred to a reference proposal about aliases, validation, and default runner-model lookup.

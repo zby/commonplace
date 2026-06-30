@@ -1,6 +1,6 @@
 ---
 description: "DRAFT for ADR 033 — review runs gain a queued state and an honest created/started clock, introduced through a new versioned migration substrate for the review store"
-status: promoted
+type: kb/types/note.md
 ---
 
 > **Promoted draft.** Phase 1 landed and this decision was promoted as [ADR 033](../../reference/adr/033-honest-review-run-state.md). Scope tracks [phase-1-honest-job-state.md](./phase-1-honest-job-state.md).

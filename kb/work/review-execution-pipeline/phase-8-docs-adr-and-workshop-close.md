@@ -10,9 +10,8 @@ Turn the implementation into durable reference knowledge and remove workshop sca
 
 In scope:
 
-- draft and promote the Phase 2+ ADR, likely ADR 034;
-- record the queued-job pipeline, execution media, command surface, ack-provenance tightening, and no-relocation decision;
-- mark the new ADR as superseding ADR 031 and extending ADR 029, ADR 030, and ADR 033;
+- promote [adr-draft-034-queued-review-jobs-and-execution-provenance.md](./adr-draft-034-queued-review-jobs-and-execution-provenance.md) into `kb/reference/adr/` with the next available ADR number;
+- adjust the promoted ADR links so it supersedes-in-part ADR 031 and extends ADR 029, ADR 030, ADR 032, and ADR 033;
 - update `kb/reference/review-architecture.md`;
 - update command reference docs;
 - update operator docs and review-system docs;
@@ -27,21 +26,9 @@ Out of scope:
 - adopting the model partition registry proposal;
 - adopting the content-hash/event-log source-of-truth alternative.
 
-## ADR content
+## ADR handling
 
-The ADR should record:
-
-- review execution as a queued-job pipeline;
-- two execution media: subprocess runner and orchestrator-driven agents;
-- one job state machine over both media;
-- selector JSON as the target handoff;
-- job-owned prompt/output paths;
-- the first-version simplification that keeps `model_partition` as freshness identity while concrete subprocess model is supplied at execution time and validated against the partition;
-- the orchestrator-agent limitation that thinking effort is inherited from the parent/session or fixed subagent configuration, not dynamically requested per job;
-- ack carrying forward existing review evidence;
-- no automatic review relocation.
-
-If acceptance provenance feels too large for the same ADR, split it into a sibling ADR rather than burying it in reference docs.
+The ADR decision text lives in [adr-draft-034-queued-review-jobs-and-execution-provenance.md](./adr-draft-034-queued-review-jobs-and-execution-provenance.md). Phase 8 should move that draft into the reference collection after implementation, update relative links/frontmatter/status, and avoid duplicating ADR content in the phase plan.
 
 ## Tests and validation
 

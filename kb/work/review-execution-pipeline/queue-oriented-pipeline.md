@@ -43,12 +43,12 @@ with clean meanings:
 - `completed`: all required pairs completed and accepted;
 - `failed`: execution, parse, or coverage failed; salvaged pairs may be retained per policy.
 
-`created_at` records preparation time. `started_at` records worker claim/start time and remains null for jobs that go directly from `queued` to `completed` through the orchestrator finalization path.
+`created_at` records preparation time. `started_at` records worker claim/start time. Normal subprocess and orchestrator executor paths mark a job `running` when they claim or dispatch it; finalization still accepts `queued` for manual recovery or transitional outputs that were produced without an explicit dispatch update.
 
 **These schema changes are required.** The workshop scope now treats the queue/job schema changes as part of the simplification, so the queue work travels with a small schema migration (the `review_runs.status` CHECK constraint, the clock change above, plus the table/column rename above) and likely a short ADR. Two concrete code consequences:
 
 - the `status IN (...)` CHECK in `review-schema.sql` gains `queued`;
-- `batch.ingest` currently rejects any job whose status is not `running` (`batch.py:258`). Finalization must accept `queued` too, because the orchestrator path finalizes a job that was never marked `running`. Decision: **finalization accepts `queued` or `running`, rejects `completed`/`failed`.**
+- `batch.ingest` currently rejects any job whose status is not `running` (`batch.py:258`). Finalization must accept `queued` too, because a manual/orchestrator recovery path may have a valid job-owned output for a job that was never marked `running`. Decision: **finalization accepts `queued` or `running`, rejects `completed`/`failed`.**
 
 This also removes the existing live-agent lie where a prepared prompt is recorded as `running` before any reviewer has started.
 
@@ -126,35 +126,32 @@ commonplace-run-review-jobs --runner claude-code --model claude-opus-4-6 --paral
 
 Responsibilities:
 
-- select queued jobs whose `model_partition` matches `normalize_model_partition(--model)`;
+- select queued jobs whose `model_partition` matches `build_model_partition(--model, --effort)`;
 - optionally narrow selection with explicit job ids for recovery/debug runs;
 - claim selected queued jobs;
-- mark each claimed job `running`;
+- mark each claimed job `running` with `runner`, `runner_model`, and nullable `runner_effort`;
 - invoke the runner adapter for each prompt;
 - pass the concrete `--model` to the runner adapter;
+- pass effort only to adapters that can actually set it;
+- collect telemetry through an optional adapter-owned API;
 - write `bundle-output.md` and debug logs;
 - parse/finalize each job;
 - enforce parallelism, retry, and abort policy.
 
 This absorbs the thread-pool parallelism currently embedded in `commonplace-review-sweep`.
 
-### 5. Execute queued jobs (agent-worker medium)
+### 5. Dispatch queued jobs (agent-worker medium)
 
 ```bash
 commonplace-review-job-list --status queued --json
-commonplace-finalize-review-job --review-job-id {id}
-```
-
-Or, if claiming needs to be explicit:
-
-```bash
-commonplace-claim-review-job --runner live-agent --json
+commonplace-claim-review-job --review-job-id {id} --runner orchestrator --model {model} [--effort {effort}]
 commonplace-finalize-review-job --review-job-id {id}
 ```
 
 Responsibilities:
 
-- let the parent/current agent or an external harness claim one queued prompt;
+- let the parent/current agent or an external harness dispatch one queued prompt;
+- mark the dispatched job `running` with known runner/model/effort provenance;
 - have the worker follow `prompt_path` and write `bundle_output_path`;
 - finalize through the same parser/finalizer as subprocess workers.
 
@@ -175,16 +172,16 @@ Mapping onto the queue design:
 | Today | Queue-oriented |
 |---|---|
 | `create-review-runs` (one note, bundle-grouped) | `create-review-jobs --grouping note` -> jobs land `queued` |
-| parent fans out sub-agents over the returned runs | parent fans out sub-agents over the returned/`job-list`ed queued jobs |
-| parent ingests each | parent finalizes each (job `queued` -> `completed`) |
+| parent fans out sub-agents over the returned runs | parent claims selected jobs, then fans out sub-agents over the returned/`job-list`ed jobs |
+| parent ingests each | parent finalizes each (`running` -> `completed`; `queued` is accepted only for recovery) |
 
 Two consequences fall out, and both **simplify** the design:
 
-1. **The parent is the sole DB writer.** Sub-agents never touch review state; they only read a prompt and write a file. So the queue here is not a contended shared queue — it is a worklist the single orchestrator process dispenses. **Transactional claiming (former open question 4) is not needed for this path, and it is the common one.** It would only be needed if independent worker *processes* claimed jobs directly from the DB, which neither the orchestrator path nor the v1 subprocess runner does.
+1. **The parent is the sole DB writer.** Sub-agents never touch review state; they only read a prompt and write a file. So the queue here is not a contended shared queue — it is a worklist the single orchestrator process dispenses. **Transactional multi-process claiming is not needed for this path, and it is the common one.** It is needed only when independent subprocess workers claim jobs directly from the DB.
 
-2. **The `running` state is optional bookkeeping here, not a correctness requirement.** Because finalization accepts `queued`, the orchestrator can go `queued -> completed` without an intervening `running`. Marking `running` at dispatch is still *useful* for crash visibility (which jobs were handed out but never finalized), so the orchestrator MAY claim, but v1 does not require it. The subprocess runner, by contrast, always marks `running` because it holds the live subprocess.
+2. **The `running` transition is where execution provenance is recorded.** The parent should mark a job `running` at dispatch with `runner`, `runner_model`, and nullable `runner_effort`. If the harness cannot expose effort, `runner_effort` stays null. Finalization still accepts `queued` for recovery, but the normal orchestrator flow records dispatch.
 
-Net effect on the instruction file: `create-review-runs` -> `create-review-jobs`, returned objects carry `status: queued`, and ingest becomes finalize-by-job-id. The dominant path migrates with a rename and a narrower finalization surface.
+Net effect on the instruction file: `create-review-runs` -> `create-review-jobs`, returned objects carry `status: queued`, the parent claims each dispatched job, and ingest becomes finalize-by-job-id. The dominant path migrates with a rename and a narrower finalization surface.
 
 ## Bundle Output Path Ownership
 
@@ -236,7 +233,7 @@ A small number of ergonomic wrappers stay and compose the stages; the experiment
 1. Does the orchestrator path ever need a formal lease/timeout, or is `job-list` + manual recovery enough? *(v1: manual.)*
 2. If a future recovery workflow needs a noncanonical output path, add `--bundle-output`, or always edit the job-owned file in place?
 
-Resolved and moved out of this list: queue storage (status column, not a second table); transactional claiming (not needed — single-writer orchestrator and single-process v1 runner); retry semantics (new job, see above); selector diffs (inspection-only); input channel (file or stdin).
+Resolved and moved out of this list: queue storage (status column, not a second table); orchestrator leases (not needed in v1 because the parent is the single DB writer); subprocess claiming (atomic update, one SQLite connection per worker when parallelism returns); retry semantics (new job, see above); selector diffs (inspection-only); input channel (file or stdin).
 
 Important simplification: historical review records are not relocated on note move. Review identity remains path-keyed; a moved path needs fresh review under the new path. Ack can only carry forward an existing completed review pair for the same path/model.
 
@@ -245,7 +242,7 @@ Important simplification: historical review records are not relocated on note mo
 1. Phase 1 landed the migration substrate, `queued`, and honest job timing on the old table names.
 2. Phase 2 mechanically renames `review_runs` / `review_run_id` to `review_jobs` / `review_job_id`.
 3. Phase 3 stabilizes selector JSON, creates queued jobs, adds job listing, and drops pair-level `model_partition`.
-4. Phase 4 finalizes by job id, writes result provenance frontmatter, and removes explicit ingest surfaces.
+4. Phase 4 adds parent-dispatch claiming, finalizes by job id, writes result provenance frontmatter, and removes explicit ingest surfaces.
 5. Phase 5 adds the sequential subprocess job runner.
 6. Phase 6 makes ack carry forward an existing completed review pair.
 7. Phase 7 stops relocating review state on note moves.

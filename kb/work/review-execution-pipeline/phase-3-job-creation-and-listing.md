@@ -12,7 +12,7 @@ This phase completes the "create and inspect" half of the queued-job pipeline. I
 
 In scope:
 
-- stabilize `commonplace-review-target-selector --json` as the public handoff into job creation;
+- stabilize {==`commonplace-review-target-selector --json` as the public handoff into job creation==}{>>Current `render_json` returns a bare array and omits both the top-level `model_partition` and `gate_id`. This phase should explicitly call out the selector JSON shape change, including tests/docs for the old array shape disappearing or for a separate job-creation payload mode if the array output stays.<<}{id="c1" by="Codex" at="2026-06-30T04:58:08.000Z"};
 - require selector JSON used for job creation to carry a concrete top-level `model_partition`;
 - leave model-agnostic "missing under any model" coverage as a selector/reporting mode, not as input to job creation;
 - extend `commonplace-create-review-jobs` beyond the Phase 2 renamed single-note command shape;
@@ -20,11 +20,11 @@ In scope:
 - support two grouping values, each choosing the partition axis and resolving to a persisted `packing`:
   - `note` -> one job per note/bundle group, `packing = note`;
   - `gate` -> one job per gate, chunked by `--batch-size`, `packing = gate`;
-- remove `commonplace-prepare-review-batch`; no dedicated `explicit` grouping is added, because its same-axis batches are already expressible — a single-note input under `--grouping note` and a single-gate input under `--grouping gate` each yield exactly one job, which is all `prepare_review_batch` ever produced (it already rejects anything that is not single-note or single-gate);
+- {==remove `commonplace-prepare-review-batch`; no dedicated `explicit` grouping is added, because its same-axis batches are already expressible — a single-note input under `--grouping note` and a single-gate input under `--grouping gate` each yield exactly one job, which is all `prepare_review_batch` ever produced (it already rejects anything that is not single-note or single-gate)==}{>>This is true only for stale-target creation. The existing explicit one-note QA workflow can request a gate even when the selector would omit it as fresh, and `run-review-batches-on-note.md` currently says not to let the selector choose gates. Either keep `prepare-review-batch` until an explicit-pairs path exists in `create-review-jobs`, or add that explicit path in this phase before removing the command.<<}{id="c2" by="Codex" at="2026-06-30T04:58:08.000Z"};
 - do not require or record a runner at creation time; runner choice belongs to later execution;
 - make `review_jobs.runner` nullable execution provenance instead of creation-time intent;
-- do not add `runner_model` or runner effort at job creation; execution supplies concrete runner settings and validates them against the job's `model_partition`;
-- adopt the v1 simplified model layout: drop `review_pairs.model_partition`, keeping `model_partition` on `review_jobs` and `acceptance_events`; a completed pair inherits its model through its job;
+- add nullable `runner_model` and `runner_effort` execution-provenance columns, but leave them null at job creation;
+- adopt the v1 simplified model layout: drop {==`review_pairs.model_partition`, keeping `model_partition` on `review_jobs` and `acceptance_events`; a completed pair inherits its model through its job==}{>>Spell out the Python row/API consequence. `ReviewPairRow` currently exposes `model_partition` and many readers build rows directly from `review_pairs`; after the column drop, either every pair loader must join `review_jobs` and keep the field populated, or the dataclass and all callers must lose that field. Leaving this implicit makes the migration deceptively small.<<}{id="c3" by="Codex" at="2026-06-30T04:58:08.000Z"};
 - land the readers and tooling the drop requires (the `latest_review_pairs` CTE, the pair index, `create_review_pairs`, and `rekey_model_partition`) in the same migration;
 - introduce a shared `ReviewJobPlan` / `PreparedReviewJob` loader used by job creation, listing, later finalization, and later subprocess execution;
 - render prompt and manifest during creation;
@@ -78,14 +78,16 @@ Selector JSON for job creation is model-specific:
 
 Migration version 3 makes two coordinated changes on the existing v2 store.
 
-**`review_jobs`:** change `runner` from `NOT NULL` to nullable execution provenance, and add `prompt_path`:
+**`review_jobs`:** change `runner` from `NOT NULL` to nullable execution provenance, add nullable concrete execution-provenance fields, and add `prompt_path`:
 
 ```sql
 -- runner is nullable because queued jobs are runner-agnostic until an execution phase claims or performs them.
 ALTER TABLE review_jobs ADD COLUMN prompt_path TEXT;
+ALTER TABLE review_jobs ADD COLUMN runner_model TEXT;
+ALTER TABLE review_jobs ADD COLUMN runner_effort TEXT;
 ```
 
-SQLite cannot drop a `NOT NULL` constraint with a plain `ALTER TABLE`, so use the existing migration rebuild helper for `review_jobs` if Phase 2 left `runner TEXT NOT NULL` in place. The fresh `review-schema.sql` model should carry a short comment beside nullable `runner` explaining that runner is execution provenance, not job-creation intent.
+SQLite cannot drop a `NOT NULL` constraint with a plain `ALTER TABLE`, so use {==the existing migration rebuild helper==}{>>There is no generic rebuild helper in the current code; v1 hand-coded `review_runs_new`. Either this phase should add a reusable helper first, or the plan should say to hand-code the `review_jobs` and `review_pairs` rebuilds with the same FK-off, row-count, user_version, and integrity-check discipline as v1.<<}{id="c4" by="Codex" at="2026-06-30T04:58:08.000Z"} for `review_jobs` if Phase 2 left `runner TEXT NOT NULL` in place. The fresh `review-schema.sql` model should carry short comments explaining that `runner` is the execution adapter/medium, while `runner_model` and `runner_effort` are nullable concrete execution provenance.
 
 **`review_pairs` — the v1 simplified model layout:** drop `review_pairs.model_partition`. `model_partition` stays on `review_jobs` and `acceptance_events`; a completed pair inherits its model through its job. This is not a lone column drop — it must land with its readers and tooling in the same migration, or the store breaks:
 
@@ -97,18 +99,18 @@ SQLite cannot drop a `NOT NULL` constraint with a plain `ALTER TABLE`, so use th
 
 The fresh `review-schema.sql` omits `review_pairs.model_partition`.
 
-`bundle_output_path` already exists. `result_path` already lives on `review_pairs`. `acceptance_events.model_partition` stays — it is part of the acceptance freshness key `(note_path, gate_path, model_partition)`, even though completed pairs now inherit model through their job. `runner_model` and runner effort are intentionally absent from creation; add execution-provenance fields later only if persisted concrete model/effort becomes necessary.
+`bundle_output_path` already exists. `result_path` already lives on `review_pairs`. `acceptance_events.model_partition` stays — it is part of the acceptance freshness key `(note_path, gate_path, model_partition)`, even though completed pairs now inherit model through their job. `runner_model` and `runner_effort` are intentionally null at creation and are set only by execution/dispatch paths when known.
 
 ## Shared job plan
 
 The shared plan object should contain:
 
 - `review_job_id`;
-- job row metadata: status, nullable runner, model partition, packing, artifact paths;
+- job row metadata: status, nullable runner, nullable runner model/effort, model partition, packing, artifact paths;
 - pending/completed `ReviewPairRow` rows;
 - prompt path;
 - bundle output path;
-- per-pair result paths.
+- per-pair result paths. {>>Include `manifest_path` or `artifact_dir` in this shared plan too. Creation writes `MANIFEST.json` and finalization later refreshes it; if the plan omits that path, later phases will rediscover artifact layout independently, contrary to the invariant below.<<}{id="c5" by="Codex" at="2026-06-30T04:58:08.000Z"}
 
 Do not let creation, listing, finalization, and runner code rediscover artifact paths independently.
 
@@ -118,6 +120,7 @@ Do not let creation, listing, finalization, and runner code rediscover artifact 
 - create jobs rejects selector JSON with missing or null `model_partition`;
 - create jobs rejects a mismatched `--model`;
 - create jobs stores null `runner`;
+- create jobs stores null `runner_model` and `runner_effort`;
 - create jobs stores `prompt_path` and `bundle_output_path`;
 - note grouping creates one job per note/bundle group;
 - gate grouping chunks by `--batch-size`;
