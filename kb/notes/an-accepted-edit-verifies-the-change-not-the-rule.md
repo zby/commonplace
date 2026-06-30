@@ -28,6 +28,7 @@ The asymmetry does not make accepted edits weak evidence — they are the best a
 
 Relevant Notes:
 
+- [abstract an experience into a lesson only when you can state where the lesson stops](./abstract-an-experience-only-when-you-can-state-the-boundary.md) — exemplifies: the accepted edit is a success/confirmation that verifies the instance but imports an unearned boundary if abstracted into a rule
 - [trace-derived memory earns authority per operation, not at capture](./trace-derived-memory-earns-authority-per-operation-not-at-capture.md) — exemplifies: acceptance is a verify-rung oracle and rule extraction a distill-rung operation; this asymmetry is the per-operation claim at the verify/distill boundary
 - [spec-mining-as-codification](./spec-mining-as-codification.md) — grounds: accepted behavior is the seed material rules are mined from
 - [oracle-strength-spectrum](./oracle-strength-spectrum.md) — grounds: the instance/rule asymmetry is a position change on the oracle-strength spectrum within one learning loop
