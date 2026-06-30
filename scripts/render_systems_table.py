@@ -71,7 +71,7 @@ COLUMNS = [
 
 FRONTMATTER = """\
 ---
-description: "Human-readable comparison table of the code-reviewed agent memory systems: a one-line description plus the fields that discriminate — storage substrate, read-back direction, push targeting (coarse vs instance), trace-derived learning, and whether memory acts as an enforced gate. Rebuild with scripts/render_systems_table.py; full flag sets live in systems.csv."
+description: "Generated comparison table for code-reviewed agent memory systems: one-line summaries plus storage, read-back, targeting, trace-derived learning, and enforcement."
 type: kb/types/note.md
 traits: [has-comparison]
 tags: [agent-memory]

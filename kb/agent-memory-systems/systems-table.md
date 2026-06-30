@@ -1,5 +1,5 @@
 ---
-description: "Human-readable comparison table of the code-reviewed agent memory systems: a one-line description plus the fields that discriminate — storage substrate, read-back direction, push targeting (coarse vs instance), trace-derived learning, and whether memory acts as an enforced gate. Rebuild with scripts/render_systems_table.py; full flag sets live in systems.csv."
+description: "Generated comparison table for code-reviewed agent memory systems: one-line summaries plus storage, read-back, targeting, trace-derived learning, and enforcement."
 type: kb/types/note.md
 traits: [has-comparison]
 tags: [agent-memory]
@@ -56,7 +56,7 @@ Curation operations and the full authority and signal flag sets are dropped from
 this compact view; they live in [`systems.csv`](./systems.csv).
 
 
-## The systems (141 code-reviewed)
+## The systems (142 code-reviewed)
 
 | System | What it is | Storage | Read-back | Targeting | Learns from traces | Enforces |
 |---|---|---|---|---|---|---|
@@ -178,6 +178,7 @@ this compact view; they live in [`systems.csv`](./systems.csv).
 | [Siftly](./reviews/siftly.md) | local SQLite Twitter/X bookmark knowledge base with AI enrichment, category routing, FTS5 search, LLM reranking, mindmap, exports, and JSON CLI | sqlite | pull | — | no | — |
 | [Signet AI](./reviews/signetai.md) | local-first daemon memory with SQLite, FTS/vector/graph recall, hook injection, transcript lineage, and guarded repair paths | sqlite | both | targeted | yes | yes |
 | [SkillNote](./reviews/skillnote.md) | self-hosted SKILL.md registry with collections, imports, sync adapters, usage/rating feedback, and prompt-derived draft candidates | rdbms | both | targeted | yes | — |
+| [SkillRL](./reviews/SkillRL.md) | trajectory-derived SkillBank JSON, prompt-time skill push, dynamic failed-trajectory updates, and SFT/RL policy learning | files | push | targeted | yes | — |
 | [SkillWeaver](./reviews/SkillWeaver.md) | web-agent trajectories distilled into Playwright API skills with LLM relevance push and verification metadata | files | push | targeted | yes | yes |
 | [SkillX](./reviews/SkillX.md) | trajectory-derived planning, functional, and atomic skill libraries with filtering, merging, and prompt-time retrieval | files | push | targeted | yes | — |
 | [Smriti-MCP](./reviews/smriti-mcp.md) | MCP markdown memory server with file-backed notes, lexical recall, traces, salience, wikilinks, and agent-mediated consolidation | files | pull | — | yes | — |
