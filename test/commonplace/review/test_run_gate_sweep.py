@@ -6,8 +6,6 @@ from pathlib import Path
 
 from commonplace.lib import frontmatter
 from commonplace.review import executor
-from commonplace.review.review_db import ensure_db
-from commonplace.review.run_gate_sweep import prepare_batch_targets
 from commonplace.review.runners import RunnerResult
 
 from ._run_cli import run_cli
@@ -162,30 +160,6 @@ def test_run_gate_sweep_reviews_multiple_notes_in_one_batch(monkeypatch, tmp_pat
     assert frontmatter.strip((repo / pair_rows[1]["result_path"]).read_text(encoding="utf-8")) == (
         "No undefined terms found.\n\n## Result: PASS\n"
     )
-
-
-def test_prepare_batch_targets_creates_running_job_with_honest_start(tmp_path: Path) -> None:
-    repo, db_path = build_repo_fixture(tmp_path)
-    ensure_db(db_path)
-
-    prepare_batch_targets(
-        repo_root=repo,
-        db_path=db_path,
-        note_paths=["kb/notes/first.md"],
-        gate_path=GATE_PATH,
-        runner="codex",
-        model_partition="test-model",
-    )
-
-    with sqlite3.connect(db_path) as conn:
-        conn.row_factory = sqlite3.Row
-        row = conn.execute(
-            "SELECT status, created_at, started_at FROM review_jobs"
-        ).fetchone()
-
-    assert row["status"] == "running"
-    assert row["created_at"] is not None
-    assert row["started_at"] == row["created_at"]
 
 
 def test_run_gate_sweep_salvages_parsed_notes_and_fails_missing_ones(monkeypatch, tmp_path: Path) -> None:

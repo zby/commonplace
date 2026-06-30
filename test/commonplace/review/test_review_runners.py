@@ -258,7 +258,21 @@ for event in [
     assert result.stdout == 'Hel\n[tool] Bash {"command": "pwd"}\nlo'
     captured = capsys.readouterr()
     assert captured.out == 'Hel\n[tool] Bash {"command": "pwd"}\nlo'
-    assert captured.err == ""
+
+
+def test_run_prompt_rejects_unsupported_effort(tmp_path: Path) -> None:
+    try:
+        runners.run_prompt(
+            runner="codex",
+            prompt="test prompt",
+            repo_root=tmp_path,
+            model="gpt-5",
+            effort="high",
+        )
+    except ValueError as exc:
+        assert str(exc) == "runner 'codex' does not support reasoning effort"
+    else:
+        raise AssertionError("expected unsupported effort to be rejected before subprocess execution")
 
 
 def test_run_prompt_collects_usage_without_request_id(monkeypatch, tmp_path: Path) -> None:

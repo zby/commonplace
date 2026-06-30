@@ -11,23 +11,17 @@ import sys
 from pathlib import Path
 
 from commonplace.lib import frontmatter
-from commonplace.review.executor import (
-    UsageExhausted,
-    bundle_artifact_dir,
-    execute_batch,
-    prepare_note_target,
-)
-from commonplace.review.freshness import capture_review_inputs
+from commonplace.review.batch import prepare_grouped_review_job
+from commonplace.review.executor import prepare_note_target
 from commonplace.review.paths import normalize_gate_path
 from commonplace.review.protocol.prompt import NoteReviewTarget, render_pairs_prompt
 from commonplace.review.review_db import (
     connect,
-    create_job_with_pairs,
     load_review_pairs_for_job,
 )
-from commonplace.review.clock import iso_now
 from commonplace.review.review_model import normalize_model_partition
 from commonplace.review.review_target_selector import select_stale_gates
+from commonplace.review.run_review_jobs import run_review_jobs
 
 
 def chunked(items: list[str], size: int) -> list[list[str]]:
@@ -56,65 +50,23 @@ def batch_pair_status_counts(db_path: Path, review_job_ids: list[int]) -> tuple[
 def prepare_batch_targets(
     *,
     repo_root: Path,
-    db_path: Path | None,
     note_paths: list[str],
     gate_path: str,
-    runner: str,
-    model_partition: str,
-    runner_model: str | None = None,
 ) -> PreparedGateBatch:
-    """Create one single-gate review job for this prompt batch.
-
-    With db_path=None (dry run), no jobs are created and `review_job_id=0`
-    is used in the rendered prompt.
-    """
-    if db_path is None:
-        gate_text = frontmatter.strip((repo_root / gate_path).read_text(encoding="utf-8")).lstrip("\n")
-        return PreparedGateBatch(
-            targets=[
-                prepare_note_target(
-                    repo_root=repo_root,
-                    note_path=note_path,
-                    review_job_id=0,
-                    gate_paths=(gate_path,),
-                )
-                for note_path in note_paths
-            ],
-            gate_texts={gate_path: gate_text},
-        )
-
-    targets: list[NoteReviewTarget] = []
-    started_at = iso_now()
-    with connect(db_path) as conn:
-        captured_inputs = capture_review_inputs(
-            conn,
-            repo_root=repo_root,
-            pairs=[(note_path, gate_path) for note_path in note_paths],
-        )
-        review_job_id = create_job_with_pairs(
-            conn,
-            model_partition=model_partition,
-            runner=runner,
-            runner_model=runner_model,
-            created_at=started_at,
-            started_at=started_at,
-            status="running",
-            packing="gate",
-            pairs=captured_inputs.pair_requests,
-        )
-        bundle_artifact_dir(repo_root, review_job_id).mkdir(parents=True, exist_ok=True)
-        for note_path in note_paths:
-            targets.append(
-                prepare_note_target(
-                    repo_root=repo_root,
-                    note_path=note_path,
-                    review_job_id=review_job_id,
-                    gate_paths=(gate_path,),
-                    note_text=captured_inputs.note_texts[note_path],
-                )
+    """Build dry-run targets without creating review jobs."""
+    gate_text = frontmatter.strip((repo_root / gate_path).read_text(encoding="utf-8")).lstrip("\n")
+    return PreparedGateBatch(
+        targets=[
+            prepare_note_target(
+                repo_root=repo_root,
+                note_path=note_path,
+                review_job_id=0,
+                gate_paths=(gate_path,),
             )
-        conn.commit()
-    return PreparedGateBatch(targets=targets, gate_texts=captured_inputs.gate_texts)
+            for note_path in note_paths
+        ],
+        gate_texts={gate_path: gate_text},
+    )
 
 
 def run_gate_sweep(
@@ -164,21 +116,29 @@ def run_gate_sweep(
     failed = 0
     missing = 0
     for batch_index, batch_note_paths in enumerate(batches, start=1):
-        prepared_batch = prepare_batch_targets(
-            repo_root=repo_root,
-            db_path=None if dry_run else db_path,
-            note_paths=batch_note_paths,
-            gate_path=gate_path,
-            runner=runner,
-            model_partition=model,
-            runner_model=runner_model,
-        )
-        targets = prepared_batch.targets
+        if dry_run:
+            prepared_batch = prepare_batch_targets(
+                repo_root=repo_root,
+                note_paths=batch_note_paths,
+                gate_path=gate_path,
+            )
+            targets = prepared_batch.targets
+            review_job_ids = sorted({target.review_job_id for target in targets})
+        else:
+            prepared = prepare_grouped_review_job(
+                repo_root=repo_root,
+                db_path=db_path,
+                pairs=[(note_path, gate_path) for note_path in batch_note_paths],
+                packing="gate",
+                runner=None,
+                model_partition=model,
+            )
+            targets = prepared.targets
+            review_job_ids = [prepared.review_job_id]
         batch_label = f"Batch {batch_index}/{len(batches)}"
         print(f"{batch_label}: launching {runner} for {len(targets)} notes", file=sys.stderr)
         for target in targets:
             print(f"  - {target.note_path} (review job id: {target.review_job_id})", file=sys.stderr)
-        review_job_ids = sorted({target.review_job_id for target in targets})
 
         if dry_run:
             prompt = render_pairs_prompt(notes=targets, gate_texts=prepared_batch.gate_texts)
@@ -188,34 +148,37 @@ def run_gate_sweep(
             print(prompt)
             continue
 
-        try:
-            outcome = execute_batch(
-                repo_root=repo_root,
-                db_path=db_path,
-                targets=targets,
-                gate_texts=prepared_batch.gate_texts,
-                runner=runner,
-                runner_model=runner_model,
-                model_partition=model,
-            )
-        except KeyboardInterrupt:
+        payload, status = run_review_jobs(
+            repo_root=repo_root,
+            db_path=db_path,
+            runner=runner,
+            model=runner_model,
+            review_job_id=review_job_ids[0],
+        )
+        if status == 130:
             print("gate sweep interrupted", file=sys.stderr)
             return 130
-        except UsageExhausted:
+        if payload.get("usage_exhausted"):
             print("error: runner reported usage exhausted; aborting sweep.", file=sys.stderr)
             return 1
 
         completed_count, missing_count = batch_pair_status_counts(db_path, review_job_ids)
         reviewed += completed_count
         missing += missing_count
-        failed += len(outcome.failed)
-        for review_job_id, reason in outcome.failed:
-            print(f"  FAILED job {review_job_id}: {reason}", file=sys.stderr)
+        runner_returncode = 0
+        for job in payload.get("jobs", []):
+            if not isinstance(job, dict):
+                continue
+            if job.get("status") == "failed":
+                failed += 1
+                print(f"  FAILED job {job['review_job_id']}: {job.get('failure_reason')}", file=sys.stderr)
+            if isinstance(job.get("runner_returncode"), int):
+                runner_returncode = int(job["runner_returncode"])
         print(f"{batch_label}: reviewed {completed_count} notes")
         if missing_count:
             print(f"{batch_label}: missing {missing_count} notes", file=sys.stderr)
-        if outcome.runner_returncode != 0:
-            return outcome.runner_returncode
+        if runner_returncode != 0:
+            return runner_returncode
 
     if not dry_run:
         print(f"Reviewed: {reviewed} notes")

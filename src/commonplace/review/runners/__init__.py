@@ -40,10 +40,13 @@ def run_prompt(
     prompt: str,
     repo_root: Path,
     model: str | None = None,
+    effort: str | None = None,
 ) -> RunnerResult:
     adapter = get_runner(runner)
+    if effort is not None and not adapter.supports_effort:
+        raise ValueError(f"runner {runner!r} does not support reasoning effort")
     session_log_snapshot = adapter.snapshot_session_logs(repo_root)
-    cmd, sent_prompt = adapter.build_command(prompt=prompt, repo_root=repo_root, model=model)
+    cmd, sent_prompt = adapter.build_command(prompt=prompt, repo_root=repo_root, model=model, effort=effort)
 
     process = subprocess.Popen(
         cmd,

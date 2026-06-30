@@ -96,9 +96,9 @@ Database operations, decision parsing, and record management. The largest module
 - `prepare_review_db(repo_root, db_override=None) -> Path` — convenience helper that resolves and ensures in one call; collapses the four-step bootstrap that every CLI used to open-code
 - `snapshot_file(conn, repo_root, path)` — capture or rehydrate the exact UTF-8 file text for a repo-relative note or gate path, keyed by `(path, content_sha256)`
 
-**Note relocation helpers** (called by `commonplace.lib.relocation`):
-- `count_note_path_records(conn, *, note_path) -> NotePathUpdateCounts` — how many `review_pairs`/`acceptance_events` rows reference a note path
-- `rekey_note_path(conn, *, old_note_path, new_note_path) -> NotePathUpdateCounts` — update those rows in place when a note moves
+Review state is path-keyed. Note relocation does not rekey `review_pairs`,
+`review_jobs`, `acceptance_events`, or stored artifact paths; the moved path
+needs fresh review.
 
 **CRUD operations:**
 - `create_job(conn, ...) -> int` — create a job invocation with explicit status/timing, return ID
@@ -171,12 +171,13 @@ Every output block is keyed by the full (note, gate) pair:
 - `protocol/parser.py` — `parse_pair_bundle` raises on structural anomalies (nested/mismatched/unterminated/unexpected/duplicate/empty blocks) but reports missing expected pairs in `missing` instead of raising, so callers salvage the pairs that parsed.
 - `protocol/decisions.py` — decision-line parsing and footer canonicalization; grammar-independent, also used for historical rows.
 - `artifacts.py` — shared artifact naming and manifest writing. It is the only place that maps packing to parsed result filenames: note-packed jobs use gate-leaf filenames, gate-packed jobs use note filenames, and unsupported packing values fail.
-- `executor.py` — `execute_batch(targets, gate_texts, …)` owns the shared lifecycle: render, one runner call, telemetry/model-mismatch handling, usage-exhaustion (`UsageExhausted`) and interrupt handling, parse, then per-job finalize or fail. Each job writes `bundle-output.md`, writes per-pair result files, writes `debug.log` when runner diagnostics exist, and stores `review_jobs.bundle_output_path` plus `review_pairs.result_path` in the DB.
+- `run_review_jobs.py` — sequential subprocess queue consumer. It selects queued jobs by model partition, claims through `claim_review_job`, reads the persisted prompt, writes runner stdout to the persisted bundle output path, records telemetry/debug logs, and finalizes through the job-owned finalization helper.
+- `executor.py` — lower-level pair parsing/finalization utilities and the older batch executor surface. Public subprocess commands route through queued jobs; finalization still reuses `finalize_bundle_markdown` so parser, salvage, result-artifact, and manifest behavior stay shared.
 
 ### Packing callers
 
-- **`run_review_bundles.py` — note-local bundle packing.** One note, requested gates grouped by bundle/lens; one subprocess runner call and one review job per group.
-- **`run_gate_sweep.py` — share-gate packing (experimental).** One gate over a chunked note list; one running gate-packed job per prompt batch; missing pairs are marked `missing`, parsed pairs are retained, and the invocation records a failure.
+- **`run_review_bundles.py` — note-local bundle packing.** One note, requested gates grouped by bundle/lens; creates queued note-packed jobs and immediately runs those job ids through `run_review_jobs`.
+- **`run_gate_sweep.py` — share-gate packing (experimental).** One gate over a chunked note list; creates queued gate-packed jobs and immediately runs those job ids through `run_review_jobs`.
 - **Live-agent path (single note)** — same protocol without a nested runner:
   1. `commonplace-create-review-jobs --model <partition> --note <note> <gate-or-bundle>... --grouping note` groups requested gates by bundle/lens, creates one queued note-packed job per group with null runner provenance, writes each canonical prompt to `kb/reports/bundle-reviews/review-job-{id}/prompt.md`, writes `MANIFEST.json`, and returns a JSON `jobs` array with each job's `prompt_path`, `bundle_output_path`, `manifest_path`, and pair rows
   2. each prompt is rendered from the snapshots attached to that job's created pair rows

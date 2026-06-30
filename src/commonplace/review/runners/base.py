@@ -45,13 +45,21 @@ class RunnerAdapter(ABC):
     """
 
     name: ClassVar[str]
+    supports_effort: ClassVar[bool] = False
 
     @abstractmethod
     def snapshot_session_logs(self, repo_root: Path) -> dict[Path, int]:
         """Snapshot session-log mtimes before the run, to find the new log after."""
 
     @abstractmethod
-    def build_command(self, *, prompt: str, repo_root: Path, model: str | None) -> tuple[list[str], str]:
+    def build_command(
+        self,
+        *,
+        prompt: str,
+        repo_root: Path,
+        model: str | None,
+        effort: str | None,
+    ) -> tuple[list[str], str]:
         """Return (argv, sent_prompt) — sent_prompt is the prompt text the
         harness actually receives (some adapters prepend the system prompt)."""
 

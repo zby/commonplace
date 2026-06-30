@@ -148,6 +148,17 @@ commonplace-create-review-jobs --model claude-opus-4-6 --pair kb/notes/a.md::pro
 
 The command prints a JSON payload with `input_mode`, `model_partition`, `grouping`, `jobs`, and `skipped_pairs`. Each job includes `review_job_id`, `status`, nullable runner provenance, `packing`, `prompt_path`, `bundle_output_path`, `manifest_path`, and pair rows with `gate_id`, `pair_status`, `decision`, and `result_path`. Note-packed jobs use gate-leaf filenames such as `source-residue.md`; gate-packed jobs use note filenames such as `my-note.md`.
 
+### commonplace-run-review-jobs
+
+Run queued review jobs through a subprocess runner. The command selects queued jobs whose stored `model_partition` matches `build_model_partition(--model, --effort)`, claims each job, reads its persisted `prompt_path`, writes runner stdout to its persisted `bundle_output_path`, and finalizes through the job-owned finalization path.
+
+```bash
+commonplace-run-review-jobs --runner codex --model gpt-5 --limit 20
+commonplace-run-review-jobs --runner codex --model gpt-5 --review-job-id 42
+```
+
+`--review-job-id` is a narrowing/debug option, not a separate input protocol: the job must still be queued and in the requested model partition. `--effort` is accepted only for runner adapters that can set effort; unsupported adapters fail before claiming jobs. The command prints one JSON payload with `requested`, `jobs`, `skipped`, counts, and `usage_exhausted`.
+
 ### commonplace-review-job-list
 
 List review jobs and their pair rows.

@@ -460,6 +460,7 @@ def test_public_review_entry_points_replace_ingest_surfaces() -> None:
 
     assert scripts["commonplace-claim-review-job"] == "commonplace.cli.review.claim_review_job:main"
     assert scripts["commonplace-finalize-review-job"] == "commonplace.cli.review.finalize_review_job:main"
+    assert scripts["commonplace-run-review-jobs"] == "commonplace.cli.review.run_review_jobs:main"
     assert "commonplace-ingest-bundle-output" not in scripts
     assert "commonplace-ingest-batch-output" not in scripts
 

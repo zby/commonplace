@@ -244,7 +244,14 @@ class CodexRunner(RunnerAdapter):
     def snapshot_session_logs(self, repo_root: Path) -> dict[Path, int]:
         return snapshot_codex_session_logs()
 
-    def build_command(self, *, prompt: str, repo_root: Path, model: str | None) -> tuple[list[str], str]:
+    def build_command(
+        self,
+        *,
+        prompt: str,
+        repo_root: Path,
+        model: str | None,
+        effort: str | None,
+    ) -> tuple[list[str], str]:
         cmd = ["codex", "exec", "--full-auto", "-C", str(repo_root)]
         if model:
             cmd.extend(["--model", model])

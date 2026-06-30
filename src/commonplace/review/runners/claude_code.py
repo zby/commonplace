@@ -406,7 +406,14 @@ class ClaudeCodeRunner(RunnerAdapter):
     def snapshot_session_logs(self, repo_root: Path) -> dict[Path, int]:
         return snapshot_claude_session_logs(repo_root)
 
-    def build_command(self, *, prompt: str, repo_root: Path, model: str | None) -> tuple[list[str], str]:
+    def build_command(
+        self,
+        *,
+        prompt: str,
+        repo_root: Path,
+        model: str | None,
+        effort: str | None,
+    ) -> tuple[list[str], str]:
         cmd = [
             "claude",
             "-p",

@@ -6,13 +6,13 @@ import sys
 from pathlib import Path
 
 from commonplace.lib import frontmatter
-from commonplace.review.executor import execute_batch, prepare_note_target
-from commonplace.review.freshness import capture_review_inputs
+from commonplace.review.batch import prepare_grouped_review_job
+from commonplace.review.executor import UsageExhausted, prepare_note_target
 from commonplace.review.gate_packing import GateBundleGroup, group_requested_gates_by_bundle
 from commonplace.review.protocol.prompt import render_pairs_prompt
-from commonplace.review.review_db import connect, create_job_with_pairs, ensure_db
-from commonplace.review.clock import iso_now
+from commonplace.review.review_db import ensure_db
 from commonplace.review.review_model import normalize_model_partition
+from commonplace.review.run_review_jobs import run_review_jobs
 
 
 def _dry_run_prompt(
@@ -51,50 +51,32 @@ def _run_group(
         print()
         return 0
 
-    with connect(db_path) as conn:
-        captured_inputs = capture_review_inputs(
-            conn,
-            repo_root=repo_root,
-            pairs=[(note_path, gate_path) for gate_path in group.gate_paths],
-        )
-        started_at = iso_now()
-        review_job_id = create_job_with_pairs(
-            conn,
-            model_partition=model_partition,
-            runner=runner,
-            runner_model=runner_model,
-            created_at=started_at,
-            started_at=started_at,
-            status="running",
-            packing="note",
-            pairs=captured_inputs.pair_requests,
-        )
-        conn.commit()
-
-    target = prepare_note_target(
-        repo_root=repo_root,
-        note_path=note_path,
-        review_job_id=review_job_id,
-        gate_paths=tuple(group.gate_paths),
-        note_text=captured_inputs.note_texts[note_path],
-    )
-    outcome = execute_batch(
+    prepared = prepare_grouped_review_job(
         repo_root=repo_root,
         db_path=db_path,
-        targets=[target],
-        gate_texts=captured_inputs.gate_texts,
-        runner=runner,
-        runner_model=runner_model,
+        pairs=[(note_path, gate_path) for gate_path in group.gate_paths],
+        packing="note",
+        runner=None,
         model_partition=model_partition,
     )
+    payload, status = run_review_jobs(
+        repo_root=repo_root,
+        db_path=db_path,
+        runner=runner,
+        model=runner_model,
+        review_job_id=prepared.review_job_id,
+    )
 
-    if outcome.runner_returncode != 0:
-        return outcome.runner_returncode
-    if outcome.failed:
-        for _, reason in outcome.failed:
-            print(reason, file=sys.stderr)
-        return 1
-    print(f"completed {review_job_id} {len(group.gate_paths)}")
+    for job in payload.get("jobs", []):
+        if not isinstance(job, dict):
+            continue
+        if job.get("failure_reason"):
+            print(job["failure_reason"], file=sys.stderr)
+    if payload.get("usage_exhausted"):
+        raise UsageExhausted()
+    if status != 0:
+        return status
+    print(f"completed {prepared.review_job_id} {len(group.gate_paths)}")
     return 0
 
 
