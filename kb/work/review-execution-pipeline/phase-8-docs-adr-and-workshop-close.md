@@ -36,7 +36,8 @@ The ADR should record:
 - one job state machine over both media;
 - selector JSON as the target handoff;
 - job-owned prompt/output paths;
-- the first-version simplification that uses `model_partition` as the subprocess runner model argument and defers separate `runner_model` persistence;
+- the first-version simplification that keeps `model_partition` as freshness identity while concrete subprocess model is supplied at execution time and validated against the partition;
+- the orchestrator-agent limitation that thinking effort is inherited from the parent/session or fixed subagent configuration, not dynamically requested per job;
 - ack carrying forward existing review evidence;
 - no automatic review relocation.
 

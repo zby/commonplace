@@ -23,7 +23,7 @@ In scope:
 - remove `commonplace-prepare-review-batch`; no dedicated `explicit` grouping is added, because its same-axis batches are already expressible — a single-note input under `--grouping note` and a single-gate input under `--grouping gate` each yield exactly one job, which is all `prepare_review_batch` ever produced (it already rejects anything that is not single-note or single-gate);
 - do not require or record a runner at creation time; runner choice belongs to later execution;
 - make `review_jobs.runner` nullable execution provenance instead of creation-time intent;
-- do not add `runner_model`; the first version can pass `model_partition` to subprocess runners if they need a model argument;
+- do not add `runner_model` or runner effort at job creation; execution supplies concrete runner settings and validates them against the job's `model_partition`;
 - adopt the v1 simplified model layout: drop `review_pairs.model_partition`, keeping `model_partition` on `review_jobs` and `acceptance_events`; a completed pair inherits its model through its job;
 - land the readers and tooling the drop requires (the `latest_review_pairs` CTE, the pair index, `create_review_pairs`, and `rekey_model_partition`) in the same migration;
 - introduce a shared `ReviewJobPlan` / `PreparedReviewJob` loader used by job creation, listing, later finalization, and later subprocess execution;
@@ -97,7 +97,7 @@ SQLite cannot drop a `NOT NULL` constraint with a plain `ALTER TABLE`, so use th
 
 The fresh `review-schema.sql` omits `review_pairs.model_partition`.
 
-`bundle_output_path` already exists. `result_path` already lives on `review_pairs`. `acceptance_events.model_partition` stays — it is part of the acceptance freshness key `(note_path, gate_path, model_partition)`, even though completed pairs now inherit model through their job. `runner_model` is intentionally absent from the first version; add it later only if persisted runner-model provenance becomes necessary.
+`bundle_output_path` already exists. `result_path` already lives on `review_pairs`. `acceptance_events.model_partition` stays — it is part of the acceptance freshness key `(note_path, gate_path, model_partition)`, even though completed pairs now inherit model through their job. `runner_model` and runner effort are intentionally absent from creation; add execution-provenance fields later only if persisted concrete model/effort becomes necessary.
 
 ## Shared job plan
 
@@ -123,6 +123,7 @@ Do not let creation, listing, finalization, and runner code rediscover artifact 
 - gate grouping chunks by `--batch-size`;
 - a single-note input under `--grouping note` and a single-gate input under `--grouping gate` each yield exactly one job (the former `prepare-review-batch` cases);
 - creation does not accept `--runner` or `--runner-model`;
+- creation does not accept runner effort;
 - all created jobs are `queued` with null runner provenance;
 - `commonplace-prepare-review-batch` is gone;
 - after migration v3, `review_pairs` has no `model_partition` column, and `idx_review_pairs_note_gate` replaces `idx_review_pairs_note_gate_model_partition`;

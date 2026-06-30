@@ -52,7 +52,12 @@ completed_at TEXT
 
 `created_at` is preparation time. `started_at` is worker claim/start time. Orchestrator-driven jobs may go `queued -> completed` with `started_at = NULL`. Phase 2 carries this shape forward into `review_jobs`.
 
-### Parent/orchestrator is the DB writer
+### Two execution media share one queue
+
+There are two execution media over the same persisted jobs:
+
+- **subprocess runner path**: an operator, CI job, scheduled process, or wrapper runs `commonplace-run-review-jobs`; the command pulls queued jobs from the DB, claims them, invokes runner adapters, and finalizes;
+- **orchestrator-agent path**: the parent agent lists queued jobs, dispatches workers itself, and finalizes when each worker writes the expected output.
 
 For the dominant live-agent/orchestrator path, sub-agents are pure file transducers:
 
@@ -60,7 +65,7 @@ For the dominant live-agent/orchestrator path, sub-agents are pure file transduc
 prompt_path -> bundle_output_path
 ```
 
-They must not run `commonplace-*` commands or mutate review state. The parent creates jobs, delegates prompt files, and finalizes outputs. Therefore v1 does not need transactional multi-process claiming for the orchestrator path.
+They must not run `commonplace-*` commands or mutate review state. The parent creates jobs, delegates prompt files, and finalizes outputs. Therefore v1 does not need transactional multi-process claiming for the orchestrator path, and orchestrator workers do not call `commonplace-run-review-jobs`.
 
 The subprocess runner can still mark jobs `running` because Commonplace owns that subprocess execution.
 
@@ -68,12 +73,13 @@ The subprocess runner can still mark jobs `running` because Commonplace owns tha
 
 V1 has no formal lease/timeout for orchestrator-driven jobs. The parent lists queued jobs, dispatches each prompt path once, and finalizes the job when the worker writes the job-owned output file. Manual recovery handles abandoned orchestrator jobs.
 
-The subprocess runner claims jobs because Commonplace owns the worker process. Claiming is an atomic update:
+The subprocess runner is queue-driven by default. It claims queued jobs from the DB, optionally narrowed by explicit `--review-job-id` values for recovery/debug runs. Claiming is an atomic update:
 
 ```sql
 UPDATE review_jobs
 SET status = 'running', started_at = ?
 WHERE review_job_id = ? AND status = 'queued'
+  AND model_partition = ?
 ```
 
 If the update affects zero rows, another worker claimed or completed the job and the runner skips it.
@@ -104,7 +110,18 @@ It should not be duplicated on `review_pairs`. Completed pairs inherit model thr
 
 `model_partition` remains the freshness and acceptance key. Treat it as opaque; do not add a `model_partitions` table in Phase 2.
 
-For the first version, do not store a separate runner-model column. Subprocess execution can pass the job's `model_partition` as the runner model argument and store only `runner` as execution provenance. If queued execution later needs to distinguish freshness partition from runner argument, add nullable `review_jobs.runner_model` in the runner phase or a later migration.
+For the first version, do not store separate runner-model or runner-effort columns. The concrete model is **supplied by the executor at execution time**, not derived from the stored `model_partition`: `normalize_model_partition` is many-to-one, so a partition cannot be turned back into a runnable model id.
+
+**The model is validated at execution, against the job's partition**, before any model call:
+
+- the subprocess runner enforces it in code before claim/execution: `normalize_model_partition(--model) == job.model_partition`; mismatched jobs are not claimed;
+- the orchestrator enforces it by instruction: the parent spawns or selects each worker with a concrete model that is a member of the job's partition.
+
+The spawned/selected model should be the **newest member of the job's partition** — capped by the partition, not the newest model overall (which may belong to a different partition: the harness's current `opus` could be `claude-opus-4-8`, a *different* partition from `claude-opus`). A newest-member-per-partition lookup is part of the deferred `model_partitions` registry; until it exists, the orchestrator instruction names the model explicitly.
+
+Reasoning effort is not a v1 review identity field. In the orchestrator-agent path, Claude Code worker effort is inherited from the parent/session or fixed by a named subagent configuration; the parent should not treat effort as a per-job dynamic request. In the subprocess path, an effort flag should be added only for runner adapters that can actually set it; unsupported adapters fail early rather than silently ignoring it. Making effort a deliberate freshness distinction is a registry change, deferred.
+
+Finalization stays model-agnostic in v1: the membership gate already ran at execution. Runner telemetry can still be stored in `telemetry_json` as a secondary "did the runner honor the requested model" check, distinct from the partition-membership gate. If execution later needs first-class provenance for concrete model or effort, add nullable execution-provenance fields then.
 
 A future `model_partitions` registry may centralize aliases and runner defaults, but that is deferred to a proposal rather than implemented in this queue refactor: [model partition registry](../../reference/proposals/model-partition-registry.md).
 
@@ -248,237 +265,30 @@ Path keys stay direct on review pairs and acceptance events. No `review_targets`
 
 **`packing` persists the physical prompt shape only: `note` or `gate`.** The `--grouping` values on `commonplace-create-review-jobs` are *groupings*, not stored packing — `note` and `gate` grouping each resolve to the matching persisted packing. Do not add grouping-only values to the `packing` CHECK.
 
-## Command Shape
+## Command Surface Overview
 
-### 1. Select stale targets
+The canonical commands are:
 
-```bash
-commonplace-review-target-selector --json --model {model-partition} {bundle-or-gate...} --note kb/notes
-commonplace-review-target-selector --json --model {model-partition} --all-gates --current
-```
+- `commonplace-review-target-selector` for target selection;
+- `commonplace-create-review-jobs` for queued job creation;
+- `commonplace-review-job-list` for queue inspection and orchestrator dispatch;
+- `commonplace-run-review-jobs` for subprocess/script execution;
+- `commonplace-finalize-review-job` for job-owned output finalization.
 
-Target JSON producer contract:
+`commonplace-run-review-jobs` is not passed the orchestrator's worker list in the normal path. It is a queue consumer: it selects queued jobs from the DB, optionally narrowed by explicit job ids, then claims and runs them. The orchestrator path uses `commonplace-review-job-list` and `commonplace-finalize-review-job` directly.
 
-```json
-{
-  "model_partition": "claude-opus-4-6",
-  "targets": [
-    {
-      "note_path": "kb/notes/example.md",
-      "gate_path": "kb/instructions/review-gates/prose/source-residue.md",
-      "gate_id": "prose/source-residue",
-      "reason": "missing-review"
-    }
-  ]
-}
-```
+## Phase Plans
 
-Selection emits stale pairs only. It does not own packing, job creation, execution, or parallelism.
+This file is the shared design overview. Detailed implementation steps, migrations, and tests live in the phase files:
 
-### 2. Create queued jobs
-
-```bash
-commonplace-create-review-jobs --input targets.json --grouping note
-commonplace-create-review-jobs --input targets.json --grouping gate --batch-size 5
-```
-
-Responsibilities:
-
-- read selector output from file or stdin;
-- take concrete `model_partition` from the selector input; `--model` is optional and, if given, must match the input's `model_partition` (mismatch is an error). Do not silently let a flag override the declared input model;
-- reject model-agnostic selector output as job-creation input in the first version; use it only for coverage/reporting;
-- do not accept `--runner` or `--runner-model` during creation; runner provenance is set by execution;
-- treat selector JSON as the public handoff; wrappers must call the selector or pass its JSON through rather than constructing a private target payload;
-- group targets by grouping;
-- filter inapplicable pairs defensively;
-- capture note/gate snapshots;
-- create `queued` jobs and pending review pairs;
-- render prompt and manifest;
-- assign the job-owned `bundle-output.md` path.
-
-Groupings (the `--grouping` flag) describe how targets are grouped. Each resolves to a persisted `packing` of `note` or `gate` — the groupings are not new `packing` enum values (see [Target Schema Shape](#target-schema-shape)):
-
-- `note` → `packing = note`: group selected pairs by note and bundle/lens;
-- `gate` → `packing = gate`: group selected pairs by gate, chunk notes by `--batch-size`.
-
-There is no separate `explicit` or `bundle` grouping. A pre-grouped same-axis batch (the old `prepare-review-batch` input) is just a single-note input under `--grouping note` or a single-gate input under `--grouping gate`; each yields one job. See [phase-3-job-creation-and-listing.md](./phase-3-job-creation-and-listing.md).
-
-### 3. Inspect queued jobs
-
-```bash
-commonplace-review-job-list --model {model-partition}
-commonplace-review-job-list --status queued
-commonplace-review-job-list --json
-```
-
-Show job id, status, prompt path, output path, pair count, packing, runner when present, model partition, age, and failure reason.
-
-### 4. Execute queued jobs through subprocesses
-
-```bash
-commonplace-run-review-jobs --runner codex --parallel 4 --limit 20
-commonplace-run-review-jobs --runner claude-code --parallel 1 --stop-on-usage-exhausted
-```
-
-Responsibilities:
-
-- claim queued jobs with the atomic `queued -> running` update;
-- invoke the runner adapter for each prompt;
-- pass the job's `model_partition` as the runner model argument in the first version;
-- write `bundle-output.md` and debug logs;
-- finalize each job;
-- enforce parallelism, retry, and usage-exhaustion policy.
-
-Start with sequential execution. Move `commonplace-review-sweep` thread-pool behavior into this command later, using one SQLite connection per worker and no open transaction around runner execution.
-
-### 5. Execute queued jobs through agents
-
-Parent/orchestrator path:
-
-```bash
-commonplace-review-job-list --status queued --json
-commonplace-finalize-review-job --review-job-id {id}
-```
-
-The parent gives each worker a prompt path and expected output path. The worker only writes the output file. The parent finalizes.
-
-Claiming remains informal in v1: no formal lease, timeout, or DB claim command is required for orchestrator jobs. A future command can be added if abandoned-or-duplicate orchestrator work becomes a real operational problem:
-
-```bash
-commonplace-claim-review-job --runner live-agent --json
-```
-
-### 6. Finalize review job output
-
-```bash
-commonplace-finalize-review-job --review-job-id {id}
-```
-
-Responsibilities:
-
-- load the job;
-- accept jobs in `queued` or `running`;
-- reject `completed` and `failed`;
-- read the job-owned `bundle-output.md`;
-- parse output keyed by `(note_path, gate_path)`;
-- salvage completed pairs when some pairs are missing;
-- write canonical per-pair result Markdown with frontmatter;
-- append acceptance events for completed pairs;
-- mark the job `completed` or `failed`.
-
-## Existing Command Fates
-
-| Current command | Fate |
-|---|---|
-| `commonplace-review-target-selector` | Stage 1 selector, stabilized JSON output |
-| `commonplace-prepare-review-batch` | Removed; its single same-axis batch is a single-group `--grouping note` or `--grouping gate` input |
-| `commonplace-create-review-runs` | Replaced by `commonplace-create-review-jobs --grouping note`; removed |
-| `commonplace-run-review-bundles` | Retained as a thin ergonomic wrapper: create note-packed jobs for one note, then run immediately |
-| `commonplace-run-gate-sweep` | Retired into `select -> create-jobs --grouping gate -> run-review-jobs` |
-| `commonplace-review-sweep` | Retired into `select -> create-jobs -> run-review-jobs --parallel N` |
-| `commonplace-ingest-bundle-output` / `commonplace-ingest-batch-output` | Removed immediately; replaced by `commonplace-finalize-review-job --review-job-id` |
-| `commonplace-ack-gate-review` / `commonplace-ack-trivial-note-changes` | Retained, but require an existing completed review pair and carry it forward |
-
-## Migration Invariants
-
-Each schema change runs against an existing populated review DB, not a fresh one. The slices must hold these invariants on the live store, in this order:
-
-0. **Schema changes go through explicit migrations.** Phase 1 added the `user_version` migration runner and table-rebuild path, consuming schema version 1. Phase 2 starts at version 2 and must add ordered migrations on top of that substrate for every table rename, column rename, nullability change, index change, and CHECK change; editing `review-schema.sql` alone is insufficient for existing stores.
-1. **Queued ingest path stays widened in both gates.** Phase 1 widened both `batch.ingest` and `record_and_finalize_run` to accept `queued` or `running`. Phase 2 must preserve that behavior when the APIs are renamed to jobs; updating only the public finalize command while regressing the shared finalization gate would recreate the old bug.
-2. **Null acks must be backfilled before the `NOT NULL` constraint.** Existing `acceptance_events` rows have `accepted_review_pair_id = NULL`, and readers deliberately recover them: `_effective_review` (`review_db.py:881`) and prune's `_current_review_pair_ids` (`prune_superseded_reviews.py:56`) both read a null ack *through* to the latest completed pair for its `(note_path, gate_path, model_partition)`. Tightening to `NOT NULL` requires: (a) backfill each null row to the same latest-completed pair the readers would have resolved, failing loudly if none exists; (b) only then add the constraint; (c) only then remove the read-through fallback from those readers. A null row with no resolvable completed pair is a data-integrity stop, not a silent drop. The migration should print or return a diagnostic table with `acceptance_event_id`, `note_path`, `gate_path`, and `model_partition`; the operator repairs the rows by re-reviewing or by explicit manual repair, then reruns the migration.
-3. **Pair model partition has live readers and tooling.** Dropping `review_pairs.model_partition` (the v1 simplified model layout, landing in Slice 3 / Phase 3) is not just a column drop: the `latest_review_pairs` CTE partitions by `rp.model_partition`, the index `idx_review_pairs_note_gate_model_partition` keys on it, and `rekey_model_partition` updates it. Migration must replace the index, rewrite those queries to join model through `review_jobs`, and drop the column from the rekey tool — together, or the rekey tool writes a column that no longer exists.
-
-## Migration Mechanism
-
-Reuse the Phase 1 review-store migration layer.
-
-SQLite `PRAGMA user_version` is the stored schema version. `ensure_db` should continue to:
-
-1. create a fresh DB from `review-schema.sql` and set `user_version` to the latest schema version when no review tables exist;
-2. read `user_version` for existing DBs;
-3. apply ordered migration functions until the DB reaches the latest version;
-4. run a lightweight post-migration integrity check (`PRAGMA foreign_key_check`, expected tables/indexes/views exist, and no unresolved legacy null ack rows before the NOT NULL migration completes).
-
-Migration functions live near `review_db.py` rather than as one-off operator scripts because every command calls `ensure_db`. Most migrations can own a normal transaction internally. Migrations that SQLite cannot express with simple `ALTER TABLE` must rebuild tables explicitly:
-
-```text
-PRAGMA foreign_keys = OFF;   # only when the table swap needs it, outside any active transaction
-BEGIN;
-CREATE TABLE new_table (...target schema...);
-INSERT INTO new_table (...) SELECT ... FROM old_table;
-DROP TABLE old_table;
-ALTER TABLE new_table RENAME TO old_table;
-CREATE INDEX ...;
-CREATE VIEW ...;
-PRAGMA foreign_key_check;
-PRAGMA user_version = N;
-COMMIT;
-PRAGMA foreign_keys = ON;    # in a finally path
-PRAGMA foreign_key_check;
-```
-
-Do not wrap a foreign-key-off table swap inside an outer `with conn:` transaction; SQLite only honors `PRAGMA foreign_keys` changes outside an active transaction. The rebuild helper must disable neither foreign keys nor data checks silently. If a migration cannot preserve integrity, it fails and leaves the old DB unchanged. The ack backfill migration is intentionally fail-fast: it reports the offending `(acceptance_event_id, note_path, gate_path, model_partition)` rows and requires re-review or manual repair before continuing.
-
-## Phasing
-
-**Phase 1 — the migration substrate (Slice 0) plus honest job state (Slice 1) — has landed.** It is recorded in [phase-1-honest-job-state.md](./phase-1-honest-job-state.md) and [ADR 033](../../reference/adr/033-honest-review-run-state.md): a `user_version` migration runner, the `queued` status, honest `created_at` / nullable `started_at`, the two status gates, and the run-creation fix, all on the current table names.
-
-Everything below is **Phase 2**. The remaining Phase 2 choices are resolved here: rename first, use a shared job-plan object, treat selector JSON as the public handoff, skip orchestrator leases in v1, run subprocess jobs sequentially before parallelizing, and defer the `model_partitions` table to a proposal. Phase 2 reuses the Phase 1 migration substrate for every schema change here, beginning with schema version 2.
-
-## Implementation Slices (Phase 2)
-
-Phase 2 begins with the `review_runs`→`review_jobs` rename, then builds the command pipeline. Slices 0 and 1 have moved to the Phase 1 file.
-
-### Slice 2: Mechanical rename
-
-Detailed implementation plan: [phase-2-mechanical-job-rename.md](./phase-2-mechanical-job-rename.md).
-
-- Rename run terminology to job terminology across schema, DB helpers, command output, manifests, and docs.
-- Keep `review_pairs`, `review_pair_id`, and `accepted_review_pair_id` vocabulary unchanged.
-- Keep this slice mechanical: no new command behavior, grouping behavior, ack semantics, or runner changes.
-- Implement the rename as migration version 2 or later, preserving Phase 1's `created_at`, nullable `started_at`, `queued` status, and created-time index semantics.
-
-Tests:
-
-- full review test suite passes after rename;
-- command JSON uses `review_job_id`;
-- migrations preserve existing rows under the renamed tables and columns.
-
-### Slice 3: Stable selector and job creation
-
-Detailed implementation plan: [phase-3-job-creation-and-listing.md](./phase-3-job-creation-and-listing.md).
-
-Stabilize concrete model-specific selector JSON, create queued jobs from that handoff, add shared job-plan loading, and add job listing. Adopt the v1 simplified model layout in the same migration: drop `review_pairs.model_partition`, join model through `review_jobs`, and update the readers and `rekey_model_partition` that touch it (see invariant 3). Defer `runner_model`.
-
-### Slice 4: Job-owned finalization
-
-Detailed implementation plan: [phase-4-job-owned-finalization.md](./phase-4-job-owned-finalization.md).
-
-Finalize by job id using persisted output paths, preserve salvage behavior, write result provenance frontmatter, and retire explicit ingest surfaces.
-
-### Slice 5: Subprocess job runner
-
-Detailed implementation plan: [phase-5-subprocess-job-runner.md](./phase-5-subprocess-job-runner.md).
-
-Run queued jobs through subprocess adapters, starting sequentially, using atomic claim and shared finalization.
-
-### Slice 6: Ack provenance
-
-Detailed implementation plan: [phase-6-ack-provenance.md](./phase-6-ack-provenance.md).
-
-Require new ack writes to carry forward an existing completed review pair using `(note_path, gate_path, model_partition)` lookup. Defer legacy null backfill, `NOT NULL`, and fallback removal.
-
-### Slice 7: No review relocation
-
-Detailed implementation plan: [phase-7-no-review-relocation.md](./phase-7-no-review-relocation.md).
-
-Remove review-state rekeying from relocation flows and treat moved paths as needing fresh review.
-
-### Slice 8: Promote to an ADR and update reference docs
-
-Detailed implementation plan: [phase-8-docs-adr-and-workshop-close.md](./phase-8-docs-adr-and-workshop-close.md).
-
-Promote ADR/reference docs, clean up old command documentation, and close the workshop when no active design remains.
+- [Phase 1: honest job state](./phase-1-honest-job-state.md) — implemented and recorded by [ADR 033](../../reference/adr/033-honest-review-run-state.md).
+- [Phase 2: mechanical job rename](./phase-2-mechanical-job-rename.md).
+- [Phase 3: job creation and listing](./phase-3-job-creation-and-listing.md).
+- [Phase 4: job-owned finalization](./phase-4-job-owned-finalization.md).
+- [Phase 5: subprocess job runner](./phase-5-subprocess-job-runner.md).
+- [Phase 6: ack provenance](./phase-6-ack-provenance.md).
+- [Phase 7: no review relocation](./phase-7-no-review-relocation.md).
+- [Phase 8: docs, ADR, and workshop close](./phase-8-docs-adr-and-workshop-close.md).
 
 ## Non-goals
 
@@ -498,5 +308,5 @@ Promote ADR/reference docs, clean up old command documentation, and close the wo
 1. Orchestrator jobs do not need a formal lease/timeout in v1; parent listing plus manual recovery is enough.
 2. `commonplace-ingest-bundle-output` and `commonplace-ingest-batch-output` are replaced by `commonplace-finalize-review-job --review-job-id`; no compatibility wrapper is kept.
 3. `prompt_path`, `bundle_output_path`, and `result_path` stay stored in v1 because the command surface reads them ([Target Schema Shape](#target-schema-shape)). Deriving paths from id instead is a possible later change, not part of this work.
-4. `runner_model` is deferred from the first version. `model_partition` remains the opaque freshness/acceptance key and can be passed to subprocess runners as the first runner-model argument.
+4. `runner_model` and `runner_effort` are deferred from the first version. `model_partition` remains the opaque freshness/acceptance key; concrete model selection happens at execution time and is validated against that partition.
 5. The `model_partitions` table is deferred to a reference proposal about aliases, validation, and default runner-model lookup.

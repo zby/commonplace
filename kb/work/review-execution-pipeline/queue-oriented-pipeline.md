@@ -10,7 +10,7 @@ select stale targets -> create queued review jobs -> execute queued jobs -> inge
 
 Neither stale-target selection nor job creation owns parallelism. Parallelism lives in whoever *consumes* the queue, and there are two such consumers:
 
-- the **subprocess runner** (`commonplace-run-review-jobs`) owns parallelism when Commonplace itself shells out to `codex` / `claude-code`;
+- the **subprocess runner** (`commonplace-run-review-jobs`) owns parallelism when an operator/automation process asks Commonplace to shell out to `codex` / `claude-code`;
 - the **orchestrator agent** owns parallelism when it fans out its own agent workers over queued jobs (the dominant path today — see [Orchestrator-driven execution](#orchestrator-driven-execution)).
 
 Both consume the same queued jobs. Selection and creation stay sequential and side-effect-light.
@@ -43,12 +43,12 @@ with clean meanings:
 - `completed`: all required pairs completed and accepted;
 - `failed`: execution, parse, or coverage failed; salvaged pairs may be retained per policy.
 
-`created_at` records preparation time. `started_at` records worker claim/start time and remains null for jobs that go directly from `queued` to `completed` through the orchestrator ingest path.
+`created_at` records preparation time. `started_at` records worker claim/start time and remains null for jobs that go directly from `queued` to `completed` through the orchestrator finalization path.
 
 **These schema changes are required.** The workshop scope now treats the queue/job schema changes as part of the simplification, so the queue work travels with a small schema migration (the `review_runs.status` CHECK constraint, the clock change above, plus the table/column rename above) and likely a short ADR. Two concrete code consequences:
 
 - the `status IN (...)` CHECK in `review-schema.sql` gains `queued`;
-- `batch.ingest` currently rejects any job whose status is not `running` (`batch.py:258`). Ingest must accept `queued` too, because the orchestrator path finalizes a job that was never marked `running`. Decision: **ingest accepts `queued` or `running`, rejects `completed`/`failed`.**
+- `batch.ingest` currently rejects any job whose status is not `running` (`batch.py:258`). Finalization must accept `queued` too, because the orchestrator path finalizes a job that was never marked `running`. Decision: **finalization accepts `queued` or `running`, rejects `completed`/`failed`.**
 
 This also removes the existing live-agent lie where a prepared prompt is recorded as `running` before any reviewer has started.
 
@@ -120,15 +120,18 @@ Subsumes the existing `review-run-status-command` proposal; queue execution make
 ### 4. Execute queued jobs (subprocess medium)
 
 ```bash
-commonplace-run-review-jobs --runner codex --parallel 4 --limit 20
-commonplace-run-review-jobs --runner claude-code --parallel 1 --stop-on-usage-exhausted
+commonplace-run-review-jobs --runner codex --model gpt-5 --parallel 4 --limit 20
+commonplace-run-review-jobs --runner claude-code --model claude-opus-4-6 --parallel 1 --stop-on-usage-exhausted
 ```
 
 Responsibilities:
 
-- claim queued jobs;
+- select queued jobs whose `model_partition` matches `normalize_model_partition(--model)`;
+- optionally narrow selection with explicit job ids for recovery/debug runs;
+- claim selected queued jobs;
 - mark each claimed job `running`;
 - invoke the runner adapter for each prompt;
+- pass the concrete `--model` to the runner adapter;
 - write `bundle-output.md` and debug logs;
 - parse/finalize each job;
 - enforce parallelism, retry, and abort policy.
@@ -179,7 +182,7 @@ Two consequences fall out, and both **simplify** the design:
 
 1. **The parent is the sole DB writer.** Sub-agents never touch review state; they only read a prompt and write a file. So the queue here is not a contended shared queue — it is a worklist the single orchestrator process dispenses. **Transactional claiming (former open question 4) is not needed for this path, and it is the common one.** It would only be needed if independent worker *processes* claimed jobs directly from the DB, which neither the orchestrator path nor the v1 subprocess runner does.
 
-2. **The `running` state is optional bookkeeping here, not a correctness requirement.** Because ingest accepts `queued`, the orchestrator can go `queued → completed` without an intervening `running`. Marking `running` at dispatch is still *useful* for crash visibility (which jobs were handed out but never ingested), so the orchestrator MAY claim, but v1 does not require it. The subprocess runner, by contrast, always marks `running` because it holds the live subprocess.
+2. **The `running` state is optional bookkeeping here, not a correctness requirement.** Because finalization accepts `queued`, the orchestrator can go `queued -> completed` without an intervening `running`. Marking `running` at dispatch is still *useful* for crash visibility (which jobs were handed out but never finalized), so the orchestrator MAY claim, but v1 does not require it. The subprocess runner, by contrast, always marks `running` because it holds the live subprocess.
 
 Net effect on the instruction file: `create-review-runs` -> `create-review-jobs`, returned objects carry `status: queued`, and ingest becomes finalize-by-job-id. The dominant path migrates with a rename and a narrower finalization surface.
 
