@@ -12,7 +12,7 @@ This system is experimental and opt-in, like the review system it depends on.
 
 **Fix report.** A per-note markdown file in `kb/reports/fixes/{note-stem}.fix-report.md` that maps each warning to the fix applied, the strategy used, and the status (fixed or deferred).
 
-## Architecture
+## Pipeline
 
 The fix system sits downstream of the review system:
 
@@ -31,7 +31,7 @@ Reviews are never modified by fixes. The review system owns the assessment; the 
 - Reads current accepted reviews across all models
 - Selects findings from reviews whose canonical decision is `warn`
 - Extracts actionable items from `### Findings` sections (lines starting with `- warn:`)
-- Falls back to `### Summary` or stripped review body when no structured findings exist
+- When a warn review has no `- warn:` items, falls back in order to the `### Summary` section, then the whole `### Findings` block, then the result-stripped review body
 - Collapses model partitions to one current entry per `(note_path, gate_id)`, choosing the latest accepted warn review
 
 CLI:

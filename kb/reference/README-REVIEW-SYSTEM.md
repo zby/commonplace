@@ -103,7 +103,7 @@ Ack fails when there is no completed review for the same `(note_path, gate_path,
 
 ## Building a warn/fix queue
 
-`commonplace-warn-selector` builds a fixing queue from the current review state — the actionable findings from reviews whose decision is `warn`:
+`commonplace-warn-selector` builds a fixing queue from the current review state — the actionable findings from reviews whose decision is `warn`. It is the entry point to the [fix system](../instructions/FIX-SYSTEM.md), which turns these findings into applied corrections and fix reports.
 
 - it reads current accepted review pairs across all models
 - it loads each review's rationale text from the accepted pair's result file (unavailable if the file is missing)
