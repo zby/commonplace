@@ -2,7 +2,10 @@
 
 ## Position
 
-Third phase. Revise this file after phase 2 lands; its exact tasks depend on the derived-path and status representation chosen there.
+Third phase, revised after the phase 2 implementation. Phase 2 proved two constraints that shape this phase:
+
+- `ReviewPairRow.result_path` is not pair-local. It is derived from the parent job id, the parent job's `packing`, and the complete pair set for the job. Code that needs result paths must stay job-scoped or consume `ReviewPairRow` values loaded through `review_db`; do not add `result_path` back to the schema and do not introduce a pair-only path helper.
+- Finalization is already consolidated into `src/commonplace/review/finalization.py`. Treat that module as the baseline behavioral core. Do not recreate the old `job_output.py` / `job_finalization.py` split.
 
 ## Prerequisite
 
@@ -10,12 +13,17 @@ Phase 2 complete:
 
 - artifact paths are derived
 - schema no longer stores path fields (`started_at`, `prompt_path`, `bundle_output_path`, `result_path` gone)
-- `pair_status`, `mark_missing_pairs`, `running`, and partial salvage are still present — Route B deferred them to this phase
+- `pair_status`, `mark_missing_pairs`, `running`, and partial salvage are still present - Route B deferred them to this phase
 - review tests pass
 
-Phase 1 consolidated finalization into `src/commonplace/review/finalization.py`; there is no `job_output.py` or `job_finalization.py`. Parser calls, artifact writes, DB completion/acceptance, manifest refresh, and failure marking are now in that single module. `attach_execution_data` remains in `review_db.py`.
+Current code baseline:
 
-Phase 2 centralized derived artifact paths in `artifacts.py`: `review_job_artifact_dir_rel`, `prompt_path_rel`, `bundle_output_path_rel`, `manifest_path_rel`, `result_path`, and `result_paths_by_pair_id`. `write_pair_result_files_to_derived_paths` writes per-pair review artifacts. `ReviewJobRow` no longer carries path fields or `started_at`; `ReviewJobPlan` still exposes derived `prompt_path` and `bundle_output_path`; `ReviewPairRow.result_path` is derived from the parent job's packing and full pair set.
+- `artifacts.py` owns derived job paths: `review_job_artifact_dir_rel`, `prompt_path_rel`, `bundle_output_path_rel`, `manifest_path_rel`, `result_path`, and `result_paths_by_pair_id`.
+- `write_pair_result_files_to_derived_paths` writes per-pair artifacts from a job plus the job's full pair set.
+- `ReviewJobRow` no longer carries path fields or `started_at`.
+- `ReviewJobPlan` exposes derived `prompt_path` and `bundle_output_path`.
+- `ReviewPairRow.result_path` is derived during DB loading from the parent job's packing and complete pair set.
+- `attach_execution_data` currently writes `telemetry_json`, `runner_model`, and `runner_effort`; it does not write `runner`. Phase 3 must extend it or replace it with a finalization provenance helper.
 
 ## Purpose
 
@@ -28,40 +36,71 @@ Simplify the behavioral core of review execution:
 
 ## Scope
 
-This phase intentionally changes public behavior. It should update tests as behavior changes, but full documentation and ADR cleanup can wait for phase 4.
+This phase intentionally changes public behavior. It should update tests as behavior changes. Update live operational instructions in this phase when a removed command would break an agent workflow; broader reference and ADR cleanup can wait for phase 4.
 
-## Tasks
+## Implementation Order
 
-### Finalization-Time Provenance
+### 1. Finalization-Time Provenance
 
-- Add optional `--runner`, `--model`, and `--effort` to `commonplace-finalize-review-job`. All three are optional (unlike the claim CLI, where `--model` was required).
-- Flag contract: `--effort` requires `--model`, because `build_model_partition(model, effort)` needs a model. Supplying `--effort` (or `--model`) without `--model` is a `parser.error`, not a silent skip. `--runner` may be supplied alone — it records the runner without triggering partition validation.
+- Add optional `--runner`, `--model`, and `--effort` to `commonplace-finalize-review-job`. All three are optional.
+- Flag contract:
+  - `--effort` requires `--model`, because `build_model_partition(model, effort)` needs a model.
+  - `--model` may be supplied without `--runner`; it validates and records model provenance.
+  - `--runner` may be supplied alone; it records the runner without model partition validation.
+  - `--effort` without `--model` is a `parser.error`, not a silent skip.
 - When `--model` is supplied, validate `build_model_partition(--model, --effort)` against the job's `model_partition` before any state mutation.
-- Record `runner`, `runner_model`, and `runner_effort` before job completion in the same transaction. Reuse `attach_execution_data` (`review_db.py`) for this — it already writes exactly these provenance fields. Move its live use from the claim path to the consolidated finalization path; do not delete it as "claim-specific."
-- Smoke finalization with and without provenance flags.
-- Verify a model/effort mismatch fails before state mutation.
+- Thread provenance through `finalize_review_job_from_owned_output`, `finalize_job_bundle_markdown`, `finalize_job_from_parsed`, and the DB finalization function.
+- Extend `attach_execution_data` to accept `runner`, or replace it with a finalization-focused helper that writes `runner`, `runner_model`, `runner_effort`, and `telemetry_json`. Keep telemetry support; it is not claim-specific.
+- Record provenance in the same DB transaction that completes or fails the job. Provenance validation happens before mutation; provenance writing happens before job completion/failure.
+- Smoke finalization with no provenance flags, with `--runner` only, with `--model`, and with `--model --effort`.
+- Verify a model/effort mismatch fails before any job, pair, acceptance, or artifact state changes.
 
-### Claim and Running Removal
+### 2. Remove Claim and Running
 
-- Remove `commonplace-claim-review-job` if phase 1 inventory found no active external dependency.
+- Remove `commonplace-claim-review-job`.
 - Remove the script entry point from `pyproject.toml`.
-- Remove claim-specific DB functions and tests. Note `attach_execution_data` is **not** claim-specific after the step above — it is now the finalization provenance writer and must survive.
-- Remove `running` from job status values and schema checks.
-- Remove `started_at` payload/display assumptions if any survived phase 2.
+- Delete `src/commonplace/cli/review/claim_review_job.py`.
+- Remove `review_db.claim_review_job`, `ReviewJobClaimError`, and claim-specific tests.
+- Remove `running` from job status values and schema checks. The active finalizable state is `queued`; terminal states are `completed` and `failed`.
+- Update `ACTIVE_REVIEW_JOB_STATUSES`, job-list filtering/descriptions, fixtures, and test helpers so they no longer seed or expect `running`.
+- Move all dispatch provenance assertions from claim tests to finalization tests.
+- Update live instructions that would otherwise invoke the removed command, especially `kb/instructions/run-review-batches.md` and the semantic-QA step in `kb/instructions/write-agent-memory-system-review/SKILL.md`. Leave historical ADR/reference explanation for phase 4 unless a current procedure would be broken.
 
-### All-Or-Nothing Finalization
+### 3. All-Or-Nothing Finalization
 
-- Missing expected pairs become fatal for the whole job.
-- Do not complete any pair until all expected pairs parse and all artifact writes are valid.
-- Append acceptance events only after the whole job is ready to complete.
-- On parse, coverage, or artifact failure, mark the job failed and append no acceptance events.
-- Remove `mark_missing_pairs` and missing-pair status code paths. (Route B deferred these from phase 2, so they are still present at the start of this phase.)
-- Drop the `review_pairs.pair_status` column and its `idx_review_pairs_pair_status` index from `review-schema.sql`, since pair status is now derived from the job status. Bump `REVIEW_SCHEMA_VERSION` again and remove `idx_review_pairs_pair_status` from `EXPECTED_REVIEW_INDEXES` in `review_schema.py`.
-- Update pruning and warning selection assumptions so accepted pairs come only from completed jobs.
+Replace partial salvage with one job-level invariant:
 
-### Strict Live Parser
+- A pair is accepted only when its parent job is `completed` and the pair has a non-null strict decision.
+- A queued job has no accepted pairs.
+- A failed job has no accepted pairs, no pair decisions, and no acceptance events.
 
-- Add a strict live decision parser.
+Do not replace `pair_status` with another persisted per-pair state. Derive display status from the parent job:
+
+- job `queued` -> pair display state `pending`
+- job `completed` -> pair display state `completed`
+- job `failed` -> pair display state `failed` or `not accepted`
+
+Implementation details:
+
+- Missing expected pairs are fatal for the whole job.
+- Extra, duplicate, malformed, or empty pair blocks remain fatal for the whole job.
+- Parse and coverage validation must finish before DB pair completion or acceptance events.
+- Precompute every expected `ReviewPairCompletion` and every derived result path from the loaded job plan before mutating state.
+- Keep all result-path work job-scoped by using `result_paths_by_pair_id` / `write_pair_result_files_to_derived_paths`; do not make finalization depend on pair-local path derivation.
+- Validate every result path is repo-relative and inside the repo before completing pairs or appending acceptance events.
+- Within the DB transaction, write provenance, complete all pair rows, append acceptance events, and complete the job only after all preflight checks have passed.
+- Keep acceptance events after pair completion, but before commit, so DB rollback removes both together.
+- Write result artifacts only after all paths have been prevalidated. If a filesystem write fails, roll back the DB transaction, mark the job failed in a failure transaction, and append no acceptance events. The evidence invariant is DB-owned: selectors must ignore artifacts from non-completed jobs.
+- Refresh `MANIFEST.json` after final state is known. The manifest is display/debug output; it must not become pipeline state.
+- On parse, coverage, path, DB, or artifact failure, mark the job failed and leave pair decisions null.
+- Remove `mark_missing_pairs` and all missing-pair status code paths.
+- Drop the `review_pairs.pair_status` column and `idx_review_pairs_pair_status` index from `review-schema.sql`.
+- Bump `REVIEW_SCHEMA_VERSION` and remove `idx_review_pairs_pair_status` from `EXPECTED_REVIEW_INDEXES` in `review_schema.py`.
+- Update pruning and warning selection assumptions so accepted pairs come only from completed jobs. If warning selection reads result files through `ReviewPairRow.result_path`, ensure the row came from a completed job query.
+
+### 4. Strict Live Parser
+
+- Add a strict live decision parser and make `parse_pair_bundle` use it for live finalization.
 - Require exactly one final result line inside each pair block:
 
 ```text
@@ -71,10 +110,19 @@ This phase intentionally changes public behavior. It should update tests as beha
 ## Result: ERROR
 ```
 
+- Treat missing result lines, duplicate result lines, aliases, and conflicting result signals as parse failures.
 - Remove live use of fallback inference from severity bullets, `INFO`/`OK`, `Verdict`, `Outcome`, revised result, flagging phrases, and bold first-line decisions.
-- Delete fallback parser tests or move them under an explicit legacy parser if historical parsing is still useful.
+- Delete fallback parser tests or move them under an explicit legacy parser if historical parsing is still useful. The live path must not call the legacy parser.
 - Update prompt text to make aliases invalid in live output.
-- Drop `unknown` from the `review_pairs.decision` `CHECK` enum in `review-schema.sql`. It existed only to hold the permissive fallback; strict parsing never emits it, and the store is schema-current so no legacy rows need it. Remove any code path that writes or branches on `decision = 'unknown'`.
+- Drop `unknown` from the `review_pairs.decision` `CHECK` enum in `review-schema.sql`. It existed only to hold permissive fallback output. Strict parsing never emits it, and the store is schema-current, so no legacy rows need it.
+- Remove code paths that write, normalize, rank, or branch on `decision = 'unknown'` in live review storage. Non-live historical helpers may retain legacy `unknown` only if they are clearly named and isolated from finalization.
+
+### 5. Artifact and Manifest Shape
+
+- Remove `pair_status` from artifact protocols where it represents persisted state.
+- If `MANIFEST.json` still displays per-pair status, compute it from job status during manifest writing rather than storing or reading it from `review_pairs`.
+- Preserve derived `result_path` values in manifests for completed jobs. For failed jobs, either omit result paths or keep them only as expected display paths with clear failed job state; do not let failed-job paths become evidence.
+- Keep provenance frontmatter in result files. It should reflect finalization-time `runner`, `runner_model`, and `runner_effort`.
 
 ## Expected Delta
 
@@ -90,27 +138,35 @@ Moderate production reduction in finalization, DB status helpers, CLI command su
 
 Before ending this phase:
 
-- Structural sweep: `rg "claim-review-job|claim_review_job|running|started_at|missing pairs|mark_missing_pairs|pair_status" src test kb/reference kb/instructions kb/work/review-system-simplification`. These terms are specific enough that every hit is in scope.
-- Parser-alias sweep, scoped to review parser/finalization surfaces only: `rg "INFO|OK|Verdict|Outcome|Revised result|flagging as" src/commonplace/review/protocol test/commonplace/review`. Do not run these generic words across the whole tree — `INFO`/`OK`/`Verdict`/`Outcome` hit unrelated gates, CLI output, and docs. Only live-parser and parser-test hits matter here.
-- For each in-scope hit, remove it, update it to finalization-time provenance/all-or-nothing/strict parsing, or mark it explicitly as historical/deferred.
-- Delete the claim CLI module, pyproject entry, tests, and docs if claim is removed.
-- Delete partial-salvage tests and fixtures if all-or-nothing finalization is implemented.
+- Structural sweep: `rg "claim-review-job|claim_review_job|running|started_at|missing pairs|mark_missing_pairs|pair_status" src test kb/reference kb/instructions kb/work/review-system-simplification`. Every in-scope hit must be removed, rewritten to finalization-time provenance/all-or-nothing behavior, or explicitly marked historical/deferred.
+- Path-state sweep: `rg "prompt_path|bundle_output_path|result_path|set_job_artifact_paths" src test kb/reference kb/instructions kb/work/review-system-simplification`. `prompt_path`, `bundle_output_path`, and `result_path` may remain as derived paths, manifest display fields, or result-file frontmatter; no hit may imply persisted schema state.
+- Parser-alias sweep, scoped to review parser/finalization surfaces only: `rg "INFO|OK|Verdict|Outcome|Revised result|flagging as|unknown" src/commonplace/review/protocol test/commonplace/review`. Do not run these generic words across the whole tree. Only live-parser and parser-test hits matter here.
+- Delete the claim CLI module, pyproject entry, tests, and live operational docs.
+- Delete partial-salvage tests and fixtures.
 - Delete or quarantine permissive parser tests under an explicit legacy parser if historical parsing is retained.
 - Update phase 4 with the exact public commands, flags, status values, parser rules, and retained legacy references after this phase.
 
 ## Verification
 
+- `ruff check src/commonplace/review src/commonplace/cli/review test/commonplace/review`
 - `pytest test/commonplace/review`
-- Smoke finalization both with and without provenance flags.
-- Smoke a two-pair job with one missing block: job fails, no pair decisions are stored, no acceptance events are appended, and no result files are accepted as evidence.
+- `pytest test/commonplace/cli/test_relocate_note.py test/commonplace/cli/test_relocate_directory.py`
+- Smoke finalization with no provenance flags.
+- Smoke finalization with `--runner`.
+- Smoke finalization with `--model --effort`.
+- Smoke a model/effort mismatch: command fails and leaves job state unchanged.
+- Smoke a two-pair job with one missing block: job fails, pair decisions remain null, no acceptance events are appended, and selectors do not treat any result files as evidence.
 - Tests for valid strict footer and invalid alias/footer shapes.
 - `git diff --check`
 
 ## Exit Criteria
 
-- Normal workflow has no mandatory claim command.
+- Normal workflow has no claim command.
 - Job statuses are `queued`, `completed`, and `failed`.
-- Failed jobs append no acceptance events.
+- `review_pairs` has no `pair_status` column.
+- Failed jobs append no acceptance events and leave no pair decisions.
 - Live finalization uses strict result parsing.
+- Finalization provenance is supplied through `commonplace-finalize-review-job`.
+- Result path derivation remains centralized and job-scoped.
 - Phase 4 docs/ADR tasks are revised to match the exact public surface after this phase.
 - Cleanup gate is complete; no unowned claim/running/salvage/permissive-parser leftovers remain.
