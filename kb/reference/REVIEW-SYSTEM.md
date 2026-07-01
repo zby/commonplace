@@ -29,7 +29,12 @@ It is also a scoped exception to the repo's file-first design. The motivation fo
 
 **Current acceptance.** The latest acceptance event for one key. The selector queries this derived state rather than mutable review-file metadata.
 
-**Rendered review.** Optional human-readable markdown reconstructed from DB rows. Rendered markdown is inspectable output, not canonical state.
+**Derived review output.** Human-readable artifacts that are inspectable output, not canonical state — the DB `decision` and job-status columns are the source of truth. Two kinds, by provenance:
+
+- **Per-pair result files** carry the reviewer's prose. The finalizer writes them from the parsed `bundle-output.md`, not from the DB — the DB stores the pair `decision`, never the review body.
+- **`MANIFEST.json`** is reconstructed from DB rows (job/pair statuses, derived paths, decisions) and holds no prose.
+
+Only the manifest is reproducible from the DB alone; a lost result file would need the original bundle output to rewrite.
 
 **Model partition.** Reviews are partitioned by `model_partition`. A review or acceptance for one model does not satisfy freshness for another.
 
