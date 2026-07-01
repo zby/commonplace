@@ -87,6 +87,69 @@ Extract helper code only when it reduces repetition in files already being touch
 - Updated later phase files if inventory changes their assumptions.
 - Behavior-preserving code consolidation.
 
+## Phase 1 Implementation Notes
+
+Implemented on 2026-07-01.
+
+### Inventory Result
+
+- Direct production imports of `commonplace.review.domain`, `job_output`, and `job_finalization` were removed.
+- `src/commonplace/review/domain/` no longer has live source files; `NoteSnapshot`, `GateSnapshot`, `AcceptanceSnapshot`, `Staleness`, and `classify_staleness` now live in `src/commonplace/review/freshness.py`.
+- `src/commonplace/review/job_output.py` and `src/commonplace/review/job_finalization.py` were deleted. Their behavior moved into `src/commonplace/review/finalization.py`.
+- `commonplace-finalize-review-job` now imports `finalize_review_job_from_owned_output` from `commonplace.review.finalization`.
+- `batch.py` now imports `fail_active_review_jobs` from `commonplace.review.finalization`.
+- `commonplace-repair-model-partitions` remains live only as a package entry point, command docs/architecture docs, and `test/commonplace/review/test_repair_model_partitions.py`. No current workflow code imports it. This supports deleting the command in phase 4 if no external use is intentionally retained.
+
+Behavior intentionally retained for later phases:
+
+- persisted `prompt_path`, `bundle_output_path`, and `result_path`
+- `pair_status`
+- `running` and `started_at`
+- `commonplace-claim-review-job`
+- partial salvage from failed multi-pair finalization
+- permissive live result parsing and `unknown`
+
+Line counts after phase 1:
+
+- Production review Python: **5,326 lines** across **34 files** (`src/commonplace/review/` + `src/commonplace/cli/review/`), down from 5,345 lines.
+- Review tests: **4,322 lines** across **14 files** (`test/commonplace/review/`), unchanged.
+
+The phase 1 line reduction is small because the deleted modules were folded into the single finalization module rather than behavior being removed.
+
+### Test Audit Result
+
+Public behavior tests to keep, with expected rewrites as state simplifies:
+
+- `test/commonplace/review/test_review_batch.py` covers job creation, prompt artifacts, finalization success/failure, and manifest behavior. Keep the workflow coverage, but phase 2 must rewrite stored path assertions and delete/rewrite tests that mutate `result_path`.
+- `test/commonplace/review/test_review_jobs_live_and_direct.py` covers public command wiring and end-to-end job behavior. Keep the create/finalize workflow coverage, but phase 2 must rewrite path payload/DB assertions and phase 3 must replace claim-specific provenance checks with finalization-time provenance checks.
+- `test/commonplace/review/test_review_target_selector.py`, `test_ack_trivial_note_changes.py`, `test_warn_selector.py`, and `test_prune_superseded_reviews.py` cover public selector/ack/warn/prune behavior. Keep the behavior coverage, but rewrite fixture setup that seeds `running`/`started_at` once those fields disappear.
+- `test/commonplace/cli/test_relocate_note.py` and `test/commonplace/cli/test_relocate_directory.py` are review-adjacent public behavior tests. Keep relocation behavior coverage, but phase 2 must remove direct persisted artifact-path assertions and update their `review_db` fixture setup.
+
+Internal scaffolding tests to delete or rewrite in later phases:
+
+- `test_review_batch.py::test_finalize_review_job_artifact_write_failure_does_not_accept_review` and `test_finalize_review_job_validates_all_result_paths_before_writing` mutate stored `result_path`; delete or replace with derived-path traversal checks in phase 2.
+- `test_review_jobs_live_and_direct.py::test_finalize_review_job_uses_job_owned_paths_and_writes_provenance_frontmatter` mutates `bundle_output_path` and `result_path`; split the durable provenance/frontmatter assertion from the custom-path behavior, then remove the custom-path half in phase 2.
+- `test_review_batch.py::test_finalize_review_job_salvages_partial_output` asserts partial salvage and one acceptance event from a failed job; delete or invert when all-or-nothing finalization lands in phase 3 (Route B keeps salvage until then).
+- `test_review_jobs_live_and_direct.py::test_finalize_review_job_finalizes_running_job`, the claim tests, and any tests expecting `started_at`/`running` become phase 3 rewrites or deletions when claim/running disappear.
+- Parser fallback tests in `test_review_decision_parser.py` and permissive parsing expectations in `test_review_protocol.py` are phase 3 candidates for deletion or quarantine under an explicit legacy parser.
+
+Migration/repair tests that depend on dead command surface:
+
+- `test/commonplace/review/test_repair_model_partitions.py` depends on `commonplace-repair-model-partitions` and should be deleted with the command in phase 4 if the phase 1 inventory result remains accepted.
+
+### Consolidated Module Handoff
+
+The finalization code now has these phase-relevant entry points in `src/commonplace/review/finalization.py`:
+
+- `finalize_review_job_from_owned_output` — public library operation behind `commonplace-finalize-review-job`
+- `FinalizeReviewJobOutcome` — CLI payload/exit-code wrapper
+- `finalize_job_bundle_markdown` and `finalize_job_from_parsed` — bundle parsing and orchestration
+- `record_and_finalize_job` / `complete_pairs_and_finalize_job` — DB completion and acceptance
+- `write_finalized_job_artifacts` / `write_job_manifest_from_db` — artifact writes and manifest refresh
+- `fail_active_review_jobs` / `fail_job_for_bundle_parse_error` — failure marking
+
+No compatibility wrappers were retained for `job_output.py`, `job_finalization.py`, or `commonplace.review.domain`.
+
 ## Cleanup Gate
 
 Before ending this phase:

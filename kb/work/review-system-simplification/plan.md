@@ -110,10 +110,10 @@ Remove from `review_jobs`:
 - `reviewed_gate_snapshot_id`
 - `reviewed_at`
 
-Remove from `review_pairs`:
+Remove from `review_pairs` (both by end of Phase 3):
 
 - `pair_status`
-- `result_path`
+- `result_path` (in Phase 2, with the other path columns)
 
 Pair status becomes derived:
 
@@ -121,7 +121,7 @@ Pair status becomes derived:
 - job `completed` and `decision IS NOT NULL` -> completed
 - job `failed` -> failed at the job level; no pair is accepted
 
-This derived rule *is* all-or-nothing: once "job failed -> no pair accepted" holds, partial salvage is already gone. Removing the `pair_status` column (Phase 2) and cutting salvage (Phase 3) are therefore coupled. Phase 2 must either keep salvage working by retaining a way to record the completed subset until Phase 3, or move the salvage cut into Phase 2. Do not leave a state where the column is gone but finalization still tries to accept a partial subset from a failed job.
+This derived rule *is* all-or-nothing: once "job failed -> no pair accepted" holds, partial salvage is already gone. Removing the `pair_status` column and cutting salvage are therefore coupled and must land together. **Decision: Route B** — both stay through Phase 2 (a paths-only phase) and are cut together in Phase 3 with the rest of the acceptance-semantics changes. This avoids the broken middle state where the column is gone but finalization still tries to accept a partial subset from a failed job.
 
 The `decision` enum currently includes `unknown`, which exists only to hold the permissive parser's fallback. Once live parsing is strict (Phase 3), no new row can be `unknown`; drop it from the schema `CHECK` in the same phase, since the store is schema-current and not migrated.
 

@@ -9,9 +9,11 @@ Third phase. Revise this file after phase 2 lands; its exact tasks depend on the
 Phase 2 complete:
 
 - artifact paths are derived
-- schema no longer stores path fields
-- pair status representation is simplified or ready to finish simplifying
+- schema no longer stores path fields (`started_at`, `prompt_path`, `bundle_output_path`, `result_path` gone)
+- `pair_status`, `mark_missing_pairs`, `running`, and partial salvage are still present — Route B deferred them to this phase
 - review tests pass
+
+Phase 1 consolidated finalization into `src/commonplace/review/finalization.py`; there is no `job_output.py` or `job_finalization.py`. Parser calls, artifact writes, DB completion/acceptance, manifest refresh, and failure marking are now in that single module. `attach_execution_data` remains in `review_db.py`.
 
 ## Purpose
 
@@ -32,7 +34,7 @@ This phase intentionally changes public behavior. It should update tests as beha
 
 - Add optional `--runner`, `--model`, and `--effort` to `commonplace-finalize-review-job`.
 - Validate supplied `--model`/`--effort` with `build_model_partition` against the job's `model_partition`.
-- Record `runner`, `runner_model`, and `runner_effort` before job completion in the same transaction. Reuse `attach_execution_data` (`review_db.py`) for this — it already writes exactly these provenance fields. Move it from the claim path to the finalization path; do not delete it as "claim-specific."
+- Record `runner`, `runner_model`, and `runner_effort` before job completion in the same transaction. Reuse `attach_execution_data` (`review_db.py`) for this — it already writes exactly these provenance fields. Move its live use from the claim path to the consolidated finalization path; do not delete it as "claim-specific."
 - Smoke finalization with and without provenance flags.
 - Verify a model/effort mismatch fails before state mutation.
 
@@ -50,7 +52,8 @@ This phase intentionally changes public behavior. It should update tests as beha
 - Do not complete any pair until all expected pairs parse and all artifact writes are valid.
 - Append acceptance events only after the whole job is ready to complete.
 - On parse, coverage, or artifact failure, mark the job failed and append no acceptance events.
-- Remove `mark_missing_pairs` and missing-pair status code paths if phase 2 did not already remove them.
+- Remove `mark_missing_pairs` and missing-pair status code paths. (Route B deferred these from phase 2, so they are still present at the start of this phase.)
+- Drop the `review_pairs.pair_status` column and its `idx_review_pairs_pair_status` index from `review-schema.sql`, since pair status is now derived from the job status. Bump `REVIEW_SCHEMA_VERSION` again and remove `idx_review_pairs_pair_status` from `EXPECTED_REVIEW_INDEXES` in `review_schema.py`.
 - Update pruning and warning selection assumptions so accepted pairs come only from completed jobs.
 
 ### Strict Live Parser
