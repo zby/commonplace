@@ -32,8 +32,9 @@ This phase intentionally changes public behavior. It should update tests as beha
 
 ### Finalization-Time Provenance
 
-- Add optional `--runner`, `--model`, and `--effort` to `commonplace-finalize-review-job`.
-- Validate supplied `--model`/`--effort` with `build_model_partition` against the job's `model_partition`.
+- Add optional `--runner`, `--model`, and `--effort` to `commonplace-finalize-review-job`. All three are optional (unlike the claim CLI, where `--model` was required).
+- Flag contract: `--effort` requires `--model`, because `build_model_partition(model, effort)` needs a model. Supplying `--effort` (or `--model`) without `--model` is a `parser.error`, not a silent skip. `--runner` may be supplied alone — it records the runner without triggering partition validation.
+- When `--model` is supplied, validate `build_model_partition(--model, --effort)` against the job's `model_partition` before any state mutation.
 - Record `runner`, `runner_model`, and `runner_effort` before job completion in the same transaction. Reuse `attach_execution_data` (`review_db.py`) for this — it already writes exactly these provenance fields. Move its live use from the claim path to the consolidated finalization path; do not delete it as "claim-specific."
 - Smoke finalization with and without provenance flags.
 - Verify a model/effort mismatch fails before state mutation.
@@ -87,8 +88,9 @@ Moderate production reduction in finalization, DB status helpers, CLI command su
 
 Before ending this phase:
 
-- Run `rg "claim-review-job|claim_review_job|running|started_at|missing pairs|mark_missing_pairs|pair_status|INFO|OK|Verdict|Outcome|Revised result|flagging as" src test kb/reference kb/instructions kb/work/review-system-simplification`.
-- For each hit, remove it, update it to finalization-time provenance/all-or-nothing/strict parsing, or mark it explicitly as historical/deferred.
+- Structural sweep: `rg "claim-review-job|claim_review_job|running|started_at|missing pairs|mark_missing_pairs|pair_status" src test kb/reference kb/instructions kb/work/review-system-simplification`. These terms are specific enough that every hit is in scope.
+- Parser-alias sweep, scoped to review parser/finalization surfaces only: `rg "INFO|OK|Verdict|Outcome|Revised result|flagging as" src/commonplace/review/protocol test/commonplace/review`. Do not run these generic words across the whole tree — `INFO`/`OK`/`Verdict`/`Outcome` hit unrelated gates, CLI output, and docs. Only live-parser and parser-test hits matter here.
+- For each in-scope hit, remove it, update it to finalization-time provenance/all-or-nothing/strict parsing, or mark it explicitly as historical/deferred.
 - Delete the claim CLI module, pyproject entry, tests, and docs if claim is removed.
 - Delete partial-salvage tests and fixtures if all-or-nothing finalization is implemented.
 - Delete or quarantine permissive parser tests under an explicit legacy parser if historical parsing is retained.
