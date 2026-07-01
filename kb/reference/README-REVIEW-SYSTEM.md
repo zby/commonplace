@@ -79,19 +79,9 @@ The full procedure is in [run review batches](../instructions/run-review-batches
 
 **Finalization-time provenance is optional.** When supplied, `--model` (with optional `--effort`) is validated against the job's model partition before any state changes, and the runner/model/effort are recorded. `--effort` requires `--model`. `--telemetry-json` stores opaque harness telemetry without making it review identity.
 
-## Reviewing stale pairs
-
-Use the same [run review batches](../instructions/run-review-batches.md) procedure. Select stale pairs for a model partition:
-
-```
-commonplace-review-target-selector --model {model-partition} {gate-or-bundle}... --note {note-or-dir}... --json
-```
-
-Then create jobs from that JSON with `--grouping note` or `--grouping gate`.
-
-For `note-changed` pairs, inspect the selector diff first. If the change is insignificant for the gate, acknowledge it instead of running a fresh review (see below).
-
 ## Acknowledging trivial changes
+
+For a `note-changed` pair, inspect the selector diff (see [Reading freshness](#reading-freshness)) first. If the change is insignificant for the gate, acknowledge it instead of running a fresh review.
 
 `commonplace-ack-gate-review` advances the accepted baseline when a note changed but not in a way that matters for the gate. It carries the existing review forward: it records the current note and gate text as newly accepted, pointing at the completed review pair being reused. It does not rewrite any file or review prose.
 
@@ -115,7 +105,7 @@ Ack fails when there is no completed review for the same `(note_path, gate_path,
 **Selector** — `commonplace-review-target-selector`:
 
 - positional gate ids and/or bundle names (e.g. `prose`, `semantic/grounding-alignment`)
-- `--all-gates` to check all gates
+- `--all-gates` selects every applicable gate in place of naming ids/bundles (mutually exclusive with them). Like every selector flag it only *chooses* pairs — the selected `(note, gate)` pairs still run through create-jobs → review → finalize; it is not a one-shot "run all gates" command
 - `--note` to filter to specific note paths or directories
 - `--current` to filter to notes with `status: current`
 - `--model {model-partition}` selects the review model partition to inspect or write; omit it only for model-agnostic missing-review coverage

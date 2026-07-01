@@ -15,7 +15,7 @@ Use this procedure for either:
 Inputs:
 
 - `{model-partition}` — review model partition, for example `claude-opus` or `codex`. Derive it from the orchestrator's own model (see below), not a guessed default.
-- `{gate-or-bundle}...` or `--all-gates` — gate ids or bundle names, for example `semantic/grounding-alignment`, `prose/source-residue`, or `prose`
+- which gates to select — `{gate-or-bundle}...` (gate ids or bundle names, for example `semantic/grounding-alignment`, `prose/source-residue`, or `prose`), or `--all-gates` to select every applicable gate. `--all-gates` chooses pairs only; the run still proceeds through the create-jobs → delegate → finalize steps below
 - note scope — `--note {note-or-dir}...` or `--current`
 - selector mode — `requested` for explicit execution, or default stale selection
 - grouping — `note` or `gate`
