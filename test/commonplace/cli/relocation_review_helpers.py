@@ -6,7 +6,8 @@ from pathlib import Path
 from commonplace.review import review_db
 
 
-TEST_MODEL = "opus-4-6"
+TEST_MODEL = "claude-opus"
+TEST_RUNNER_MODEL = "opus-4-6"
 REVIEWED_AT = "2026-04-10T10:05:00+02:00"
 ACCEPTED_AT = "2026-04-10T10:06:00+02:00"
 GATE_ID = "prose/source-residue"
@@ -75,7 +76,7 @@ def seed_accepted_review(repo_root: Path, db_path: Path, *, note_path: str) -> i
             conn,
             model_partition=TEST_MODEL,
             runner="test-runner",
-            runner_model=TEST_MODEL,
+            runner_model=TEST_RUNNER_MODEL,
             runner_effort="high",
             created_at=REVIEWED_AT,
             status="queued",

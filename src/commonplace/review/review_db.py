@@ -14,14 +14,12 @@ from typing import Sequence
 
 from commonplace.review.artifacts import bundle_output_path_rel, prompt_path_rel, result_paths_by_pair_id
 from commonplace.review.paths import gate_id_from_stored_path
-from commonplace.review.protocol.decisions import normalize_review_decision
 from commonplace.review.review_model import build_model_partition, normalize_model_partition, normalize_reasoning_effort
 from commonplace.review.review_schema import init_db
 
 DEFAULT_DB_PATH = Path("kb/reports/review-store.sqlite")
 SCHEMA_PATH = "review-schema.sql"
 DB_ENV_VAR = "COMMONPLACE_REVIEW_DB"
-PACKING_VALUES = frozenset({"note", "gate"})
 JOB_STATUS_VALUES = frozenset({"queued", "completed", "failed"})
 
 
@@ -349,10 +347,7 @@ def create_job(
     failure_reason: str | None = None,
     telemetry_json: str | None = None,
 ) -> int:
-    if packing not in PACKING_VALUES:
-        raise ValueError(f"invalid review job packing: {packing}")
-    if status not in JOB_STATUS_VALUES:
-        raise ValueError(f"invalid review job status: {status}")
+    model_partition = normalize_model_partition(model_partition)
     runner_effort = _validated_runner_effort(
         model_partition=model_partition,
         runner_model=runner_model,
@@ -741,9 +736,6 @@ def complete_review_pairs(
             raise ValueError(
                 f"pair {review_pair.note_path} :: {review_pair.gate_path} is not part of review job {review_job_id}"
             )
-        normalized_decision = normalize_review_decision(review_pair.decision)
-        if normalized_decision is None:
-            raise ValueError(f"invalid review decision: {review_pair.decision}")
         conn.execute(
             """
             UPDATE review_pairs
@@ -752,7 +744,7 @@ def complete_review_pairs(
             WHERE review_pair_id = ?
             """,
             (
-                normalized_decision,
+                review_pair.decision,
                 review_pair.reviewed_at or reviewed_at,
                 requested_pair.review_pair_id,
             ),
@@ -774,6 +766,7 @@ def append_acceptance_event(
 ) -> int:
     if accepted_review_pair_id is None:
         raise ValueError("accepted_review_pair_id is required")
+    model_partition = normalize_model_partition(model_partition)
     row = conn.execute(
         """
         SELECT

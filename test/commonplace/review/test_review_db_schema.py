@@ -120,6 +120,92 @@ def test_append_acceptance_event_requires_review_pair(tmp_path: Path) -> None:
             )
 
 
+def test_db_checks_remain_final_enum_backstop(tmp_path: Path) -> None:
+    db_path = tmp_path / "review-store.sqlite"
+    review_db.ensure_db(db_path)
+
+    with review_db.connect(db_path) as conn:
+        with pytest.raises(sqlite3.IntegrityError):
+            conn.execute(
+                """
+                INSERT INTO review_jobs (
+                    model_partition,
+                    created_at,
+                    status,
+                    packing
+                ) VALUES (?, ?, ?, ?)
+                """,
+                ("test-model", "2026-04-10T10:03:00+02:00", "waiting", "note"),
+            )
+        with pytest.raises(sqlite3.IntegrityError):
+            conn.execute(
+                """
+                INSERT INTO review_jobs (
+                    model_partition,
+                    created_at,
+                    status,
+                    packing
+                ) VALUES (?, ?, ?, ?)
+                """,
+                ("test-model", "2026-04-10T10:03:00+02:00", "queued", "bundle"),
+            )
+        review_job_id = review_db.create_job(
+            conn,
+            model_partition="test-model",
+            runner=None,
+            created_at="2026-04-10T10:03:00+02:00",
+            status="queued",
+            packing="note",
+        )
+        with pytest.raises(sqlite3.IntegrityError):
+            conn.execute(
+                """
+                INSERT INTO review_pairs (
+                    review_job_id,
+                    note_path,
+                    gate_path,
+                    pair_ordinal,
+                    decision
+                ) VALUES (?, ?, ?, ?, ?)
+                """,
+                (
+                    review_job_id,
+                    "kb/notes/current.md",
+                    "kb/instructions/review-gates/prose/current.md",
+                    0,
+                    "maybe",
+                ),
+            )
+
+
+def test_model_partition_writes_are_canonicalized(tmp_path: Path) -> None:
+    db_path = tmp_path / "review-store.sqlite"
+    review_db.ensure_db(db_path)
+
+    with review_db.connect(db_path) as conn:
+        review_pair_id = insert_completed_pair(
+            conn,
+            note_path="kb/notes/fresh.md",
+            gate_id="semantic/internal-consistency",
+            model_partition="opus-4-6",
+            decision="pass",
+            reviewed_at="2026-04-10T10:01:00+02:00",
+        )
+        accept_pair(
+            conn,
+            review_pair_id=review_pair_id,
+            note_path="kb/notes/fresh.md",
+            gate_id="semantic/internal-consistency",
+            model_partition="opus-4-6",
+            accepted_at="2026-04-10T10:02:00+02:00",
+        )
+        job_model = conn.execute("SELECT model_partition FROM review_jobs").fetchone()[0]
+        acceptance_model = conn.execute("SELECT model_partition FROM acceptance_events").fetchone()[0]
+
+    assert job_model == "claude-opus"
+    assert acceptance_model == "claude-opus"
+
+
 def test_current_acceptance_view_filters_incomplete_jobs_and_null_decisions(tmp_path: Path) -> None:
     db_path = tmp_path / "review-store.sqlite"
     review_db.ensure_db(db_path)
@@ -210,7 +296,7 @@ def test_current_acceptance_view_filters_incomplete_jobs_and_null_decisions(tmp_
             (
                 "kb/notes/fresh.md",
                 "kb/instructions/review-gates/semantic/internal-consistency.md",
-                "opus-4-6",
+                "claude-opus",
                 null_decision_pair_id,
                 "2026-04-10T10:06:00+02:00",
             ),

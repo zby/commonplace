@@ -10,7 +10,6 @@ from typing import Sequence
 from commonplace.review.artifacts import (
     bundle_artifact_dir,
     repo_relative_path,
-    result_paths_by_pair_id,
     write_manifest,
     write_pair_result_files_to_derived_paths,
 )
@@ -18,7 +17,7 @@ from commonplace.review import review_db
 from commonplace.review.clock import iso_now
 from commonplace.review.protocol.parser import ParsedPairBundle, parse_pair_bundle
 from commonplace.review.review_db import ReviewPairCompletion, ReviewPairRow
-from commonplace.review.review_model import build_model_partition, normalize_model_partition
+from commonplace.review.review_model import build_model_partition
 
 
 ACTIVE_REVIEW_JOB_STATUSES = frozenset({"queued"})
@@ -132,7 +131,7 @@ def finalize_review_job_from_owned_output(
             return _precondition_failure(review_job_id, f"review job is not finalizable: {plan.status}")
         model_partition = execution.derived_model_partition
         if model_partition is not None:
-            if model_partition != normalize_model_partition(plan.model_partition):
+            if model_partition != plan.model_partition:
                 return _precondition_failure(
                     review_job_id,
                     f"review job model_partition {plan.model_partition!r} does not match supplied partition {model_partition!r}",
@@ -173,7 +172,6 @@ def finalize_review_job_from_owned_output(
         try:
             parsed = parse_pair_bundle(bundle_markdown, expected_pairs=expected_pairs)
             review_pairs = _review_pair_completions(expected_pairs=expected_pairs, parsed=parsed)
-            _prevalidate_result_paths(repo_root, plan)
             finalized_pairs = record_and_finalize_job(
                 conn,
                 review_job_id=review_job_id,
@@ -342,16 +340,6 @@ def _review_pair_completions(
         )
         for note_path, gate_path in expected_pairs
     )
-
-
-def _prevalidate_result_paths(repo_root: Path, plan: review_db.ReviewJobPlan) -> None:
-    result_paths = result_paths_by_pair_id(
-        review_job_id=plan.review_job_id,
-        packing=plan.packing,
-        pairs=plan.pairs,
-    )
-    for path in result_paths.values():
-        repo_relative_path(repo_root, path, label="result_path")
 
 
 def _refresh_manifest_warning(
