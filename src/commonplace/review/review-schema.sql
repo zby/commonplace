@@ -124,19 +124,6 @@ LEFT JOIN review_file_snapshots AS gate_snapshot
 JOIN latest
   ON e.acceptance_event_id = latest.max_id;
 
-CREATE VIEW IF NOT EXISTS stale_gate_pairs AS
-SELECT
-    a.note_path,
-    a.gate_path,
-    a.model_partition,
-    a.accepted_note_snapshot_id,
-    a.accepted_gate_snapshot_id,
-    a.accepted_note_hash,
-    a.accepted_gate_hash,
-    a.accepted_note_text,
-    a.accepted_gate_text
-FROM current_gate_acceptances AS a;
-
 -- Query pattern expected for selector:
 --
 -- 1. resolve current note SHA-256 from candidate note files

@@ -25,7 +25,7 @@ EXPECTED_REVIEW_INDEXES = frozenset(
         "idx_acceptance_events_latest_by_key",
     }
 )
-EXPECTED_REVIEW_VIEWS = frozenset({"current_gate_acceptances", "stale_gate_pairs"})
+EXPECTED_REVIEW_VIEWS = frozenset({"current_gate_acceptances"})
 
 
 def init_db(db_path: Path, schema_path: Path) -> None:
