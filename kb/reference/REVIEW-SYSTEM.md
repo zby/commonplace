@@ -21,7 +21,7 @@ It is also a scoped exception to the repo's file-first design. The motivation fo
 
 **Bundle.** A directory of gates sharing a lens. `semantic` means all gate files under `kb/instructions/review-gates/semantic/`.
 
-**Review job.** One review invocation: one rendered prompt, one output artifact directory, and one job-level status. Jobs are `queued` until a parent claims them for dispatch, then `running` while the worker executes.
+**Review job.** One review invocation: one rendered prompt, one output artifact directory, and one job-level status. Jobs are `queued` until finalization marks them `completed` or `failed`.
 
 **Review pair.** One requested `(note_path, gate_path)` pair inside a review job. This is the stored unit of review output and acceptance.
 
@@ -56,7 +56,7 @@ Primary tables:
   - stores exact UTF-8 text when the snapshot must be reusable for prompt rendering or diffing
 - `review_pairs`
   - one row per requested `(note_path, gate_path)` pair inside a job
-  - stores pair status (`pending`, `completed`, `missing`), decision, and reviewed note/gate snapshot IDs
+  - stores decision and reviewed note/gate snapshot IDs
   - derives model partition from the parent `review_jobs` row
 - `acceptance_events`
   - append-only acceptance history
@@ -68,21 +68,20 @@ Derived view:
 
 - `current_gate_acceptances`
   - current accepted state per `(note_path, gate_path, model_partition)`
-  - defined as the highest `acceptance_events.acceptance_event_id` for that key
+  - defined as the highest `acceptance_events.acceptance_event_id` for that key after filtering to completed jobs with non-null pair decisions
 
 ### Canonical status vs review prose
 
 The Python layer assigns the canonical DB statuses.
 
-- `review_pairs.decision` is normalized into lowercase enum values: `pass`, `warn`, `fail`, `error`, `unknown`
-- `review_pairs.pair_status` is normalized into lowercase enum values: `pending`, `completed`, `missing`
-- `review_jobs.status` is normalized into lowercase enum values: `queued`, `running`, `completed`, `failed`
+- `review_pairs.decision` is normalized into lowercase enum values: `pass`, `warn`, `fail`, `error`
+- `review_jobs.status` is normalized into lowercase enum values: `queued`, `completed`, `failed`
 
-`created_at` is when the job row and prompt inputs were prepared. Claiming a job records runner provenance and moves it to `running`, but there is no separate start timestamp.
+`created_at` is when the job row and prompt inputs were prepared. Runner provenance is optional and is recorded during finalization.
 
-The human-readable review body is not canonical state. Current write paths store it in the per-pair result file at the derived result path for the job and pair. The DB decision/status columns are the source of truth; review-body result lines such as `## Result: PASS` or `- WARN: ...` are parse inputs and readability affordances.
+The human-readable review body is not canonical state. Current write paths store it in the per-pair result file at the derived result path for the job and pair. The DB decision and job-status columns are the source of truth; review-body result lines such as `## Result: PASS` are parse inputs and readability affordances.
 
-For stored gate review prose, the canonical layout places the parseable `## Result:` line at the end of the review block.
+For stored gate review prose, the canonical layout places exactly one parseable `## Result: PASS|WARN|FAIL|ERROR` line at the end of each review block. Aliases such as `Verdict`, `Outcome`, `INFO`, `OK`, and `UNKNOWN` are invalid in live finalization output.
 
 ## Freshness and staleness
 
@@ -113,25 +112,25 @@ There is no separate bundle manifest hash in the current tree. If bundle-level m
 The canonical live path is:
 
 1. create one or more queued review jobs for the requested gates
-2. claim each dispatched job with concrete worker provenance
-3. write each sentinel-delimited bundle artifact
-4. finalize each job by id to complete review pairs and append acceptance events
+2. dispatch each job to a worker that writes the sentinel-delimited bundle artifact
+3. finalize each job by id, optionally recording concrete worker provenance
 
 For live agent work, the preferred path is the prompt-plus-finalize helper chain:
 
 1. `commonplace-review-target-selector --mode requested {gate-or-bundle}... --model {model-partition} --note {note} --json | commonplace-create-review-jobs --input - --grouping note`
-2. for each returned job, run `commonplace-claim-review-job --review-job-id {id} --runner {worker} --model {model} [--effort {effort}]`
-3. launch a sub-agent that reads the job's derived `prompt_path` and writes the job's derived `bundle_output_path`
-4. run `commonplace-finalize-review-job --review-job-id {id}` for each completed sub-agent output
+2. launch a sub-agent that reads the job's derived `prompt_path` and writes the job's derived `bundle_output_path`
+3. run `commonplace-finalize-review-job --review-job-id {id} [--runner {worker}] [--model {model} [--effort {effort}]]` for each completed sub-agent output
 
-The helper groups requested gates by bundle/lens, so a request for multiple bundles creates multiple focused prompt contexts. Each job directory also carries `MANIFEST.json` for display/debug inspection. The manifest is created with pending pairs when the prompt is created and refreshed after finalization with pair statuses and derived `result_path` files; pipeline commands use derived job paths, not the manifest, as state.
+The helper groups requested gates by bundle/lens, so a request for multiple bundles creates multiple focused prompt contexts. Each job directory also carries `MANIFEST.json` for display/debug inspection. The manifest is created with pending display states when the prompt is created and refreshed after finalization with job-derived pair display states and derived `result_path` files; pipeline commands use derived job paths, not the manifest, as state.
 
 A full review write contributes:
 
 1. one `review_pairs` row per requested pair
 2. a derived job bundle artifact at `kb/reports/bundle-reviews/review-job-{review_job_id}/bundle-output.md`
 3. derived per-pair review artifacts under the same job directory
-4. one `acceptance_events` row per completed pair; `accepted_review_pair_id` points back to the completed review pair
+4. one `acceptance_events` row per pair only when the whole job finalizes successfully; `accepted_review_pair_id` points back to the completed review pair
+
+Finalization is all-or-nothing. Missing, duplicate, unexpected, malformed, or result-less pair blocks fail the job and append no acceptance events. Result-file write failures are fatal evidence failures; `MANIFEST.json` refresh failures after DB completion are non-fatal warnings in the finalize JSON payload.
 
 The important invariant is that the stored note and gate snapshot IDs identify the exact file text used during prompt generation.
 
@@ -206,10 +205,9 @@ Human-readable inspection remains required, but it is now a derived view from DB
 Instruction: `kb/instructions/run-review-batches.md`
 
 1. `commonplace-review-target-selector ... --json | commonplace-create-review-jobs --input - --grouping {note|gate}`
-2. For each dispatched item in the returned `jobs` array, run `commonplace-claim-review-job --review-job-id {id} --runner {worker} --model {model} [--effort {effort}]`
-3. Launch a sub-agent with that job's derived `prompt_path` and `bundle_output_path`
-4. Each sub-agent writes that job's sentinel-delimited review bundle to `bundle_output_path`
-5. The parent finalizes each completed output with `commonplace-finalize-review-job --review-job-id {id}`
+2. Launch a sub-agent with that job's derived `prompt_path` and `bundle_output_path`
+3. Each sub-agent writes that job's sentinel-delimited review bundle to `bundle_output_path`
+4. The parent finalizes each completed output with `commonplace-finalize-review-job --review-job-id {id} [--runner {worker}] [--model {model} [--effort {effort}]]`
 
 ### Stale review
 

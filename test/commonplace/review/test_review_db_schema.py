@@ -79,6 +79,7 @@ def test_ensure_db_initializes_current_schema(tmp_path: Path) -> None:
     assert "prompt_path" not in job_columns
     assert "bundle_output_path" not in job_columns
     assert "model_partition" not in pair_columns
+    assert "pair_status" not in pair_columns
     assert "result_path" not in pair_columns
     assert acceptance_columns["accepted_review_pair_id"]["notnull"] == 1
     assert "idx_review_pairs_note_gate" in index_names
@@ -117,6 +118,113 @@ def test_append_acceptance_event_requires_review_pair(tmp_path: Path) -> None:
                 accepted_review_pair_id=invalid_pair_id,
                 accepted_at="2026-04-10T10:02:00+02:00",
             )
+
+
+def test_current_acceptance_view_filters_incomplete_jobs_and_null_decisions(tmp_path: Path) -> None:
+    db_path = tmp_path / "review-store.sqlite"
+    review_db.ensure_db(db_path)
+
+    with review_db.connect(db_path) as conn:
+        current_pair_id = insert_completed_pair(
+            conn,
+            note_path="kb/notes/fresh.md",
+            gate_id="semantic/internal-consistency",
+            model_partition="opus-4-6",
+            decision="pass",
+            reviewed_at="2026-04-10T10:01:00+02:00",
+        )
+        accept_pair(
+            conn,
+            review_pair_id=current_pair_id,
+            note_path="kb/notes/fresh.md",
+            gate_id="semantic/internal-consistency",
+            model_partition="opus-4-6",
+            accepted_at="2026-04-10T10:02:00+02:00",
+        )
+        queued_job_id = review_db.create_job_with_pairs(
+            conn,
+            model_partition="opus-4-6",
+            runner="test-runner",
+            created_at="2026-04-10T10:03:00+02:00",
+            status="queued",
+            packing="note",
+            pairs=[
+                review_db.ReviewPairRequest(
+                    note_path="kb/notes/fresh.md",
+                    gate_path="kb/instructions/review-gates/semantic/internal-consistency.md",
+                    pair_ordinal=0,
+                )
+            ],
+        )
+        review_db.complete_review_pairs(
+            conn,
+            review_job_id=queued_job_id,
+            review_pairs=[
+                review_db.ReviewPairCompletion(
+                    note_path="kb/notes/fresh.md",
+                    gate_path="kb/instructions/review-gates/semantic/internal-consistency.md",
+                    decision="warn",
+                    reviewed_at="2026-04-10T10:03:30+02:00",
+                )
+            ],
+            reviewed_at="2026-04-10T10:03:30+02:00",
+        )
+        queued_pair_id = review_db.load_review_pairs_for_job(conn, review_job_id=queued_job_id)[0].review_pair_id
+        accept_pair(
+            conn,
+            review_pair_id=queued_pair_id,
+            note_path="kb/notes/fresh.md",
+            gate_id="semantic/internal-consistency",
+            model_partition="opus-4-6",
+            accepted_at="2026-04-10T10:04:00+02:00",
+        )
+        null_decision_job_id = review_db.create_job_with_pairs(
+            conn,
+            model_partition="opus-4-6",
+            runner="test-runner",
+            created_at="2026-04-10T10:05:00+02:00",
+            status="completed",
+            packing="note",
+            pairs=[
+                review_db.ReviewPairRequest(
+                    note_path="kb/notes/fresh.md",
+                    gate_path="kb/instructions/review-gates/semantic/internal-consistency.md",
+                    pair_ordinal=0,
+                )
+            ],
+        )
+        null_decision_pair_id = review_db.load_review_pairs_for_job(
+            conn,
+            review_job_id=null_decision_job_id,
+        )[0].review_pair_id
+        conn.execute(
+            """
+            INSERT INTO acceptance_events (
+                note_path,
+                gate_path,
+                model_partition,
+                accepted_review_pair_id,
+                accepted_at
+            ) VALUES (?, ?, ?, ?, ?)
+            """,
+            (
+                "kb/notes/fresh.md",
+                "kb/instructions/review-gates/semantic/internal-consistency.md",
+                "opus-4-6",
+                null_decision_pair_id,
+                "2026-04-10T10:06:00+02:00",
+            ),
+        )
+
+        view_row = conn.execute(
+            """
+            SELECT accepted_review_pair_id
+            FROM current_gate_acceptances
+            WHERE note_path = 'kb/notes/fresh.md'
+            """
+        ).fetchone()
+
+    assert view_row["accepted_review_pair_id"] == current_pair_id
 
 
 def test_snapshot_file_deduplicates_per_path_and_hashes_exact_utf8(tmp_path: Path) -> None:
@@ -266,7 +374,7 @@ def test_prune_obsolete_snapshot_content_keeps_current_and_pending_text(tmp_path
             model_partition="opus-4-6",
             runner="test-runner",
             created_at="2026-04-10T10:03:00+02:00",
-            status="running",
+            status="queued",
             packing="note",
             pairs=[
                 review_db.ReviewPairRequest(

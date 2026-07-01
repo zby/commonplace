@@ -63,19 +63,6 @@ def normalize_model_partition(model_partition: str) -> str:
     return MODEL_PARTITION_ALIASES.get(encoded_model, encoded_model)
 
 
-def is_registered_model_partition(model_partition: str) -> bool:
-    encoded_model = encode_model(model_partition)
-    return encoded_model in MODEL_PARTITION_ALIASES
-
-
-def model_partition_alias_target(model_partition: str) -> str | None:
-    encoded_model = encode_model(model_partition)
-    target = MODEL_PARTITION_ALIASES.get(encoded_model)
-    if target is None or target == model_partition:
-        return None
-    return target
-
-
 def normalize_reasoning_effort(raw: str | None) -> str | None:
     if raw is None:
         return None

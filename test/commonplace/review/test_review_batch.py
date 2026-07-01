@@ -141,9 +141,9 @@ def test_create_review_jobs_selector_creates_one_gate_packed_job_and_prompt(tmp_
     assert payload["created_count"] == 1
     job = payload["jobs"][0]
     review_job_id = job["review_job_id"]
-    assert [(pair["note_path"], pair["gate_path"], pair["pair_status"]) for pair in job["pairs"]] == [
-        ("kb/notes/first.md", GATE_PATH, "pending"),
-        ("kb/notes/second.md", GATE_PATH, "pending"),
+    assert [(pair["note_path"], pair["gate_path"]) for pair in job["pairs"]] == [
+        ("kb/notes/first.md", GATE_PATH),
+        ("kb/notes/second.md", GATE_PATH),
     ]
     assert payload["skipped_pairs"] == [
         {
@@ -188,16 +188,15 @@ def test_create_review_jobs_selector_creates_one_gate_packed_job_and_prompt(tmp_
             SELECT
                 note_path,
                 gate_path,
-                pair_status,
                 reviewed_note_snapshot_id,
                 reviewed_gate_snapshot_id
             FROM review_pairs
             ORDER BY pair_ordinal
             """
         ).fetchall()
-        assert [(row["note_path"], row["gate_path"], row["pair_status"]) for row in pair_rows] == [
-            ("kb/notes/first.md", GATE_PATH, "pending"),
-            ("kb/notes/second.md", GATE_PATH, "pending"),
+        assert [(row["note_path"], row["gate_path"]) for row in pair_rows] == [
+            ("kb/notes/first.md", GATE_PATH),
+            ("kb/notes/second.md", GATE_PATH),
         ]
         assert all(row["reviewed_note_snapshot_id"] is not None for row in pair_rows)
         assert all(row["reviewed_gate_snapshot_id"] is not None for row in pair_rows)
@@ -251,21 +250,17 @@ def test_finalize_review_job_finalizes_all_gate_packed_pairs(tmp_path: Path) -> 
         job = conn.execute("SELECT status FROM review_jobs").fetchone()
         assert job["status"] == "completed"
         decisions = [
-            (row["note_path"], row["decision"], row["pair_status"])
-            for row in conn.execute(
-                "SELECT note_path, decision, pair_status FROM review_pairs ORDER BY note_path"
-            )
+            (row["note_path"], row["decision"])
+            for row in conn.execute("SELECT note_path, decision FROM review_pairs ORDER BY note_path")
         ]
         assert decisions == [
             (
                 "kb/notes/first.md",
                 "warn",
-                "completed",
             ),
             (
                 "kb/notes/second.md",
                 "pass",
-                "completed",
             ),
         ]
         acceptance_count = conn.execute("SELECT COUNT(*) FROM acceptance_events").fetchone()[0]
@@ -284,7 +279,7 @@ def test_finalize_review_job_finalizes_all_gate_packed_pairs(tmp_path: Path) -> 
     assert [pair["status"] for pair in manifest["pairs"]] == ["completed", "completed"]
 
 
-def test_finalize_review_job_salvages_partial_output(tmp_path: Path) -> None:
+def test_finalize_review_job_fails_partial_output_without_salvage(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
     prepared = json.loads(
         create_gate_jobs(
@@ -314,7 +309,7 @@ def test_finalize_review_job_salvages_partial_output(tmp_path: Path) -> None:
     assert result.returncode == 1
     payload = json.loads(result.stdout)
     assert payload["completed"] is False
-    assert payload["completed_pair_count"] == 1
+    assert payload["completed_pair_count"] == 0
     assert payload["state_changed"] is True
     assert payload["failed"] == [
         {"review_job_id": review_job_id, "reason": f"missing pairs: kb/notes/second.md :: {GATE_PATH}"}
@@ -326,18 +321,18 @@ def test_finalize_review_job_salvages_partial_output(tmp_path: Path) -> None:
         job = conn.execute("SELECT status, failure_reason FROM review_jobs").fetchone()
         assert (job["status"], job["failure_reason"]) == ("failed", f"missing pairs: kb/notes/second.md :: {GATE_PATH}")
         pairs = [
-            (row["note_path"], row["pair_status"], row["decision"])
-            for row in conn.execute("SELECT note_path, pair_status, decision FROM review_pairs ORDER BY note_path")
+            (row["note_path"], row["decision"])
+            for row in conn.execute("SELECT note_path, decision FROM review_pairs ORDER BY note_path")
         ]
         assert pairs == [
-            ("kb/notes/first.md", "completed", "warn"),
-            ("kb/notes/second.md", "missing", None),
+            ("kb/notes/first.md", None),
+            ("kb/notes/second.md", None),
         ]
-        assert conn.execute("SELECT COUNT(*) FROM acceptance_events").fetchone()[0] == 1
+        assert conn.execute("SELECT COUNT(*) FROM acceptance_events").fetchone()[0] == 0
 
     artifact_dir = repo / "kb" / "reports" / "bundle-reviews" / f"review-job-{review_job_id}"
     manifest = json.loads((artifact_dir / "MANIFEST.json").read_text(encoding="utf-8"))
-    assert [pair["status"] for pair in manifest["pairs"]] == ["completed", "missing"]
+    assert [pair["status"] for pair in manifest["pairs"]] == ["failed", "failed"]
 
 
 def test_finalize_review_job_missing_output_does_not_change_job_state(tmp_path: Path) -> None:
@@ -401,10 +396,10 @@ def test_finalize_review_job_parse_error_marks_job_failed(tmp_path: Path) -> Non
     with sqlite3.connect(db_path) as conn:
         conn.row_factory = sqlite3.Row
         job = conn.execute("SELECT status, failure_reason FROM review_jobs").fetchone()
-        pair = conn.execute("SELECT pair_status, decision FROM review_pairs").fetchone()
+        pair = conn.execute("SELECT decision FROM review_pairs").fetchone()
     assert job["status"] == "failed"
     assert "unexpected pair" in job["failure_reason"]
-    assert (pair["pair_status"], pair["decision"]) == ("missing", None)
+    assert pair["decision"] is None
 
 
 def test_finalize_review_job_rejects_completed_job(tmp_path: Path) -> None:

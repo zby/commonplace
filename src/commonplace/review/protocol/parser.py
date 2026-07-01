@@ -3,8 +3,8 @@
 Output blocks are keyed by (note_path, gate_path). Structural anomalies —
 nested or mismatched sentinels, unexpected or duplicate pairs, empty bodies —
 raise, because the rest of the stream cannot be trusted. Missing expected
-pairs do not raise: callers salvage the pairs that parsed and decide what to
-do about the rest.
+pairs are reported on the parsed bundle; live finalization treats them as a
+whole-job failure.
 """
 
 from __future__ import annotations

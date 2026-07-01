@@ -214,7 +214,6 @@ def _pair_payload(pair) -> dict[str, object]:
         "gate_path": pair.gate_path,
         "gate_id": pair.gate_id,
         "pair_ordinal": pair.pair_ordinal,
-        "pair_status": pair.pair_status,
         "decision": pair.decision,
         "result_path": pair.result_path,
     }

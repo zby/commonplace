@@ -208,9 +208,9 @@ def test_parse_pair_bundle_parses_decisions_and_reports_missing() -> None:
 
 def test_parse_pair_bundle_canonicalizes_result_footers() -> None:
     bundle = f"""=== PAIR REVIEW START: kb/notes/first.md :: {GATE} ===
-**PASS**
-
 No undefined terms found.
+
+## Result: PASS
 === PAIR REVIEW END: kb/notes/first.md :: {GATE} ===
 """
     parsed = parse_pair_bundle(bundle, expected_pairs=[("kb/notes/first.md", GATE)])
@@ -220,3 +220,14 @@ No undefined terms found.
         f"{canonical.rstrip(chr(10))}\n=== PAIR REVIEW END: kb/notes/first.md :: {GATE} ==="
         in parsed.canonical_markdown
     )
+
+
+def test_parse_pair_bundle_rejects_result_aliases() -> None:
+    bundle = f"""=== PAIR REVIEW START: kb/notes/first.md :: {GATE} ===
+No undefined terms found.
+
+Verdict: PASS
+=== PAIR REVIEW END: kb/notes/first.md :: {GATE} ===
+"""
+    with pytest.raises(ValueError, match="invalid result signal"):
+        parse_pair_bundle(bundle, expected_pairs=[("kb/notes/first.md", GATE)])

@@ -5,7 +5,7 @@ type: kb/types/instruction.md
 
 # Run review batches
 
-Review selected `(note, gate)` pairs from inside the current agent harness. The parent agent coordinates selection, job creation, claiming, finalization, verification, and reporting. Sub-agents perform review judgment.
+Review selected `(note, gate)` pairs from inside the current agent harness. The parent agent coordinates selection, job creation, worker scheduling, finalization, verification, and reporting. Sub-agents perform review judgment.
 
 Use this procedure for either:
 
@@ -66,7 +66,7 @@ Add `--reason {missing-review|gate-changed|note-changed}` to the selector only w
 - Use `--grouping gate` for gate-centric review. Jobs are grouped by gate and chunked by `--batch-size`; use this when many notes need the same gate reviewed.
 - `--batch-size` is valid only with `--grouping gate`.
 
-The selector emits applicable `(note, gate)` pairs. The creator consumes that JSON, creates queued review jobs, writes canonical prompts, and returns a JSON object with `jobs`. Creation is runner-agnostic; runner provenance stays null until a later execution path records it. Capture each job object, especially:
+The selector emits applicable `(note, gate)` pairs. The creator consumes that JSON, creates queued review jobs, writes canonical prompts, and returns a JSON object with `jobs`. Creation is runner-agnostic; runner provenance stays null until finalization records it. Capture each job object, especially:
 
 - `review_job_id`
 - derived `prompt_path`
@@ -78,14 +78,6 @@ Each returned job is one review batch for this procedure. Do not invent, merge, 
 ## Delegate jobs
 
 Launch one sub-agent per returned job, subject to the harness's concurrency limit. If there are more jobs than available workers, queue the remaining jobs and launch them as workers finish.
-
-Before launching a worker for a job, claim it from the parent session:
-
-```bash
-commonplace-claim-review-job --review-job-id {review-job-id} --runner {worker} --model {model-partition}
-```
-
-If the concrete worker model and partition differ, pass the concrete worker model to `--model`. If the worker uses an explicit reasoning effort, also pass `--effort {low|medium|high|xhigh}`. The claim records dispatch provenance only; it does not run the worker.
 
 Give each sub-agent exactly one job object and this task:
 
@@ -101,17 +93,19 @@ Do not finalize the output.
 Return the gates reviewed and their PASS/WARN/FAIL/ERROR decisions.
 ```
 
-The sub-agent owns only its `bundle_output_path`. The parent owns job creation, claim/dispatch bookkeeping, worker scheduling, finalization, verification, and reporting.
+The sub-agent owns only its `bundle_output_path`. The parent owns job creation, dispatch bookkeeping, worker scheduling, finalization, verification, and reporting.
 
 ## Finalize completed jobs
 
 ```bash
-commonplace-finalize-review-job --review-job-id {review-job-id}
+commonplace-finalize-review-job --review-job-id {review-job-id} --runner {worker} --model {worker-model}
 ```
 
-Run finalization once per completed sub-agent output. This reads the job-owned derived `bundle_output_path`, parses the sentinel-bracketed pair bundle, records per-pair reviews, writes result files, appends acceptance events for completed pairs, and finalizes the review job.
+Pass the concrete worker model to `--model`; finalization validates `build_model_partition(--model, --effort)` against the job's `model_partition` before mutating state. If the worker uses an explicit reasoning effort, also pass `--effort {low|medium|high|xhigh}`. If the runner is known but model is not, pass only `--runner`.
 
-After finalization, `MANIFEST.json` in the job artifact directory is refreshed for inspection with pair statuses and derived `result_path` files. Treat the returned job payload and derived job paths as pipeline state; do not read `MANIFEST.json` to decide what to finalize.
+Run finalization once per completed sub-agent output. This reads the job-owned derived `bundle_output_path`, strictly parses the sentinel-bracketed pair bundle, records provenance and per-pair decisions, writes result files, appends acceptance events, and finalizes the review job. Finalization is all-or-nothing: a missing or malformed pair block fails the whole job and records no pair decisions or acceptance events.
+
+After finalization, `MANIFEST.json` in the job artifact directory is refreshed for inspection with job-derived pair display status and derived `result_path` files. Treat the returned job payload and derived job paths as pipeline state; do not read `MANIFEST.json` to decide what to finalize.
 
 ## Verify
 

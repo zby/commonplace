@@ -1,13 +1,13 @@
 ---
-description: "Queued review jobs store freshness identity separately from nullable parent-dispatch provenance; Commonplace owns deterministic job state, not model dispatch"
+description: "Superseded historical decision: queued review jobs stored freshness identity separately from nullable parent-dispatch provenance before finalization-time provenance replaced claim/running"
 type: ../types/adr.md
 tags: []
-status: accepted
+status: superseded
 ---
 
 # 034-Queued review jobs and execution provenance
 
-**Status:** accepted
+**Status:** superseded by [035-Review jobs finalize all-or-nothing with derived artifacts](./035-review-jobs-finalize-all-or-nothing-with-derived-artifacts.md)
 **Date:** 2026-06-30
 
 ## Context
@@ -143,5 +143,6 @@ Relevant Notes:
 - [030-Harness-facing seams: batch prepare/ingest endpoints and runner adapters](./030-harness-facing-seams-batch-endpoints-and-runner-adapters.md) - supersedes: keeps the deterministic seam while removing Commonplace-owned model dispatch.
 - [031-review state uses run-owned review pairs](./031-review-state-uses-run-owned-review-pairs.md) - supersedes-in-part: keeps pair ownership while simplifying the job table and pair model.
 - [032-Review freshness uses DB snapshots, not Git](./032-review-freshness-uses-db-snapshots-not-git.md) - extends: keeps `model_partition` as the frozen freshness key and does not re-key from telemetry.
-- [033-Honest review-run state behind a versioned migration substrate](./033-honest-review-run-state.md) - supersedes-in-part: keeps honest queued/running/completed/failed state while dropping in-place schema transformation.
+- [033-Honest review-run state behind a versioned migration substrate](./033-honest-review-run-state.md) - superseded historical chain: kept honest queued/running/completed/failed state while dropping in-place schema transformation.
+- [035-Review jobs finalize all-or-nothing with derived artifacts](./035-review-jobs-finalize-all-or-nothing-with-derived-artifacts.md) - supersedes: removes claim/running state, persisted artifact paths, partial salvage, and permissive live parsing.
 - [model partition registry](../proposals/model-partition-registry.md) - deferred: future aliases, defaults, effort constraints, and hard constraints.

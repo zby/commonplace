@@ -1,5 +1,5 @@
 ---
-description: "Code architecture for the current Commonplace review subsystem: selector JSON, queued jobs, prompt artifacts, parent-dispatched workers, finalization, freshness, and maintenance utilities"
+description: "Code architecture for the current Commonplace review subsystem: selector JSON, queued jobs, prompt artifacts, parent-dispatched workers, finalization-time provenance, and freshness"
 type: kb/types/note.md
 tags: []
 status: current
@@ -7,7 +7,7 @@ status: current
 
 # Review system architecture (`commonplace.review` + `commonplace.cli.review`)
 
-The review subsystem stores review state in SQLite, renders canonical prompt artifacts for `(note, gate)` pairs, and finalizes worker-written review output. It does not launch reviewer models itself. The parent agent or harness owns worker dispatch; Commonplace owns deterministic selection, job creation, claiming, finalization, freshness, and maintenance.
+The review subsystem stores review state in SQLite, renders canonical prompt artifacts for `(note, gate)` pairs, and finalizes worker-written review output. It does not launch reviewer models itself. The parent agent or harness owns worker dispatch; Commonplace owns deterministic selection, job creation, finalization, freshness, and maintenance.
 
 For the operating workflow, see [REVIEW-SYSTEM.md](./REVIEW-SYSTEM.md) and [run review batches](../instructions/run-review-batches.md).
 
@@ -21,9 +21,8 @@ For the operating workflow, see [REVIEW-SYSTEM.md](./REVIEW-SYSTEM.md) and [run 
 ```
 review_target_selector  -> selector JSON
 create_review_jobs      -> queued review_jobs + review_pairs + prompt artifacts
-claim_review_job        -> running job + worker provenance
 worker/sub-agent        -> writes derived bundle_output_path
-finalize_review_job     -> parse output, write result artifacts, append acceptance
+finalize_review_job     -> validate provenance, parse output, write result artifacts, append acceptance
 ```
 
 The persisted unit is a `review_pairs` row inside one `review_jobs` row. The job's `packing` is either `note` or `gate`; packing controls only which pairs share one prompt and how per-pair result files are named. It is not a separate review protocol.
@@ -60,19 +59,19 @@ SQLite database, default location `kb/reports/review-store.sqlite`; override wit
 
 - `protocol/format.py` defines pair sentinels and render-time reserved-text checks.
 - `protocol/prompt.py` renders canonical review prompts from captured text. In file-output mode, the prompt instructs a worker to write exactly the job's derived `bundle_output_path`.
-- `protocol/parser.py` parses sentinel-bracketed pair output. Structural anomalies fail the job; missing expected pairs are reported so completed pairs can still be salvaged.
-- `protocol/decisions.py` normalizes `PASS`, `WARN`, `FAIL`, and `ERROR` result lines.
-- `finalization.py` is the public library operation behind `commonplace-finalize-review-job`; it loads derived job output, parses bundle output, writes result files, refreshes manifests, completes rows, marks failures, and appends acceptance events.
+- `protocol/parser.py` parses sentinel-bracketed pair output. Structural anomalies, missing expected pairs, duplicates, and malformed result footers fail the whole job.
+- `protocol/decisions.py` strictly accepts exactly one final `## Result: PASS|WARN|FAIL|ERROR` line per pair block.
+- `finalization.py` is the public library operation behind `commonplace-finalize-review-job`; it loads derived job output, validates optional runner/model/effort provenance, parses bundle output, writes result files, completes rows, appends acceptance events, marks failures, and refreshes manifests.
 
 ### State and maintenance
 
-- `review_db.py` owns review rows, claims, status transitions, acceptance events, and query helpers.
+- `review_db.py` owns review rows, finalization state transitions, acceptance events, and query helpers.
 - `review_model.py` normalizes model partitions and optional reasoning-effort labels.
 - `acknowledgement.py` advances accepted baselines for trivial changes while carrying forward completed review evidence.
 - `ack_trivial_note_changes.py` finds stale pairs whose watched note portions did not change.
 - `warn_selector.py` extracts actionable warn findings from effective accepted reviews.
 - `review_schema.py` owns current-schema setup and integrity checks.
-- CLI maintenance modules handle superseded-review pruning and model-partition repair.
+- CLI maintenance modules handle superseded-review pruning.
 
 ## Command Surface
 
@@ -80,7 +79,6 @@ Execution path:
 
 - `commonplace-review-target-selector`
 - `commonplace-create-review-jobs`
-- `commonplace-claim-review-job`
 - `commonplace-finalize-review-job`
 
 State and maintenance:
@@ -91,13 +89,14 @@ State and maintenance:
 - `commonplace-warn-selector`
 - `commonplace-resolve-gates`
 - `commonplace-prune-superseded-reviews`
-- `commonplace-repair-model-partitions`
 
 ## Invariants
 
 - Job creation always consumes selector JSON. There is no direct note/pair creation mode.
 - Worker agents write only the job-owned bundle output file; they do not mutate notes, gates, indexes, manifests, or review DB state.
 - `MANIFEST.json` is inspectable output, not pipeline state.
-- Finalization accepts `queued` or `running` jobs so manually produced output can be recovered.
+- Finalization accepts only `queued` jobs and moves them atomically to `completed` or `failed`.
+- Failed jobs append no acceptance events and leave pair decisions null.
+- `current_gate_acceptances` filters acceptance evidence to completed jobs with non-null pair decisions.
 - Acceptance state is path-keyed; relocating notes or gates requires fresh review under the new path.
 - Missing telemetry is normal. Review identity is `(note_path, gate_path, model_partition)`, not worker-provided execution metadata.

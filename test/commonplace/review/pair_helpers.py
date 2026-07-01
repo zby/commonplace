@@ -30,7 +30,7 @@ def insert_completed_pair(
         model_partition=model_partition,
         runner=runner,
         created_at=reviewed_at,
-        status="running",
+        status="queued",
         packing="note",
         pairs=[
             review_db.ReviewPairRequest(
@@ -49,6 +49,7 @@ def insert_completed_pair(
         reviewed_at=reviewed_at,
     )
     review_db.complete_review_pairs(conn, review_job_id=review_job_id, review_pairs=[pair], reviewed_at=reviewed_at)
+    review_db.complete_review_job(conn, review_job_id=review_job_id, completed_at=reviewed_at)
     review_pair = review_db.load_review_pairs_for_job(conn, review_job_id=review_job_id)[0]
     return review_pair.review_pair_id
 

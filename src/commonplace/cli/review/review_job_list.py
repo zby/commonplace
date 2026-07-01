@@ -36,7 +36,7 @@ def _print_table(jobs: list[dict[str, object]]) -> None:
 
 
 def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
-    parser = argparse.ArgumentParser(description="List queued, running, completed, or failed review jobs.")
+    parser = argparse.ArgumentParser(description="List queued, completed, or failed review jobs.")
     parser.add_argument("--status", choices=sorted(JOB_STATUS_VALUES), help="Filter by job status.")
     parser.add_argument("--model", help="Filter by review model partition.")
     parser.add_argument("--json", action="store_true", help="Print JSON.")

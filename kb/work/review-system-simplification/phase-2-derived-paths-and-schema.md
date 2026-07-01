@@ -1,5 +1,7 @@
 # Phase 2 - derived paths and schema
 
+Historical phase brief. This records the pre-phase state and implementation instructions at the time phase 2 ran; it is not current review-system documentation. Current behavior is recorded in `kb/reference/REVIEW-SYSTEM.md` and ADR 035.
+
 ## Position
 
 Second phase. Revise this file after phase 1 lands, especially if finalization consolidation changes function boundaries or artifact helpers.

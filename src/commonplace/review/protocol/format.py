@@ -21,6 +21,7 @@ PAIR_END_TEMPLATE = "=== PAIR REVIEW END: {note_path} :: {gate_path} ==="
 RESULT_LINE_TEMPLATE = "## Result: PASS|WARN|FAIL|ERROR"
 
 DECISION_LINE_INSTRUCTION = (
-    "- Inside each block, include a decision line in a parseable form such as "
-    "`## Result: PASS` or `## Result: WARN`."
+    "- Inside each block, include exactly one final decision line: "
+    "`## Result: PASS`, `## Result: WARN`, `## Result: FAIL`, or `## Result: ERROR`. "
+    "Do not use aliases such as Verdict, Outcome, INFO, OK, or UNKNOWN."
 )

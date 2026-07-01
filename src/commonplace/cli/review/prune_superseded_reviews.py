@@ -37,12 +37,21 @@ def _current_acceptance_event_ids(conn: sqlite3.Connection) -> tuple[int, ...]:
         """
         WITH ranked AS (
             SELECT
-                acceptance_event_id,
+                e.acceptance_event_id,
                 ROW_NUMBER() OVER (
-                    PARTITION BY note_path, gate_path, model_partition
-                    ORDER BY acceptance_event_id DESC
+                    PARTITION BY e.note_path, e.gate_path, e.model_partition
+                    ORDER BY e.acceptance_event_id DESC
                 ) AS rn
-            FROM acceptance_events
+            FROM acceptance_events AS e
+            JOIN review_pairs AS rp
+              ON rp.review_pair_id = e.accepted_review_pair_id
+             AND rp.note_path = e.note_path
+             AND rp.gate_path = e.gate_path
+            JOIN review_jobs AS j
+              ON j.review_job_id = rp.review_job_id
+             AND j.model_partition = e.model_partition
+            WHERE j.status = 'completed'
+              AND rp.decision IS NOT NULL
         )
         SELECT acceptance_event_id
         FROM ranked
@@ -59,16 +68,25 @@ def _current_review_pair_ids(conn: sqlite3.Connection) -> tuple[int, ...]:
         """
         WITH latest_acceptance AS (
             SELECT
-                acceptance_event_id,
-                note_path,
-                gate_path,
-                model_partition,
-                accepted_review_pair_id,
+                e.acceptance_event_id,
+                e.note_path,
+                e.gate_path,
+                e.model_partition,
+                e.accepted_review_pair_id,
                 ROW_NUMBER() OVER (
-                    PARTITION BY note_path, gate_path, model_partition
-                    ORDER BY acceptance_event_id DESC
+                    PARTITION BY e.note_path, e.gate_path, e.model_partition
+                    ORDER BY e.acceptance_event_id DESC
                 ) AS rn
-            FROM acceptance_events
+            FROM acceptance_events AS e
+            JOIN review_pairs AS rp
+              ON rp.review_pair_id = e.accepted_review_pair_id
+             AND rp.note_path = e.note_path
+             AND rp.gate_path = e.gate_path
+            JOIN review_jobs AS j
+              ON j.review_job_id = rp.review_job_id
+             AND j.model_partition = e.model_partition
+            WHERE j.status = 'completed'
+              AND rp.decision IS NOT NULL
         )
         SELECT accepted_review_pair_id AS review_pair_id
         FROM latest_acceptance AS a
@@ -118,7 +136,7 @@ def _obsolete_review_pairs(
          AND current_job.model_partition = rp_job.model_partition
         WHERE current.review_pair_id IN ({_placeholders(current_review_pair_ids)})
           AND rp.review_pair_id NOT IN ({_placeholders(current_review_pair_ids)})
-          AND rp.pair_status != 'pending'
+          AND rp_job.status != 'queued'
         ORDER BY rp.review_pair_id
         """,
         (*current_review_pair_ids, *current_review_pair_ids),
@@ -205,16 +223,20 @@ def _obsolete_snapshot_content_row_count(conn: sqlite3.Connection) -> int:
             UNION
 
             SELECT reviewed_note_snapshot_id AS snapshot_id
-            FROM review_pairs
-            WHERE pair_status != 'completed'
-              AND reviewed_note_snapshot_id IS NOT NULL
+            FROM review_pairs AS rp
+            JOIN review_jobs AS j
+              ON j.review_job_id = rp.review_job_id
+            WHERE j.status != 'completed'
+              AND rp.reviewed_note_snapshot_id IS NOT NULL
 
             UNION
 
             SELECT reviewed_gate_snapshot_id AS snapshot_id
-            FROM review_pairs
-            WHERE pair_status != 'completed'
-              AND reviewed_gate_snapshot_id IS NOT NULL
+            FROM review_pairs AS rp
+            JOIN review_jobs AS j
+              ON j.review_job_id = rp.review_job_id
+            WHERE j.status != 'completed'
+              AND rp.reviewed_gate_snapshot_id IS NOT NULL
         )
         SELECT COUNT(*) AS count
         FROM review_file_snapshots

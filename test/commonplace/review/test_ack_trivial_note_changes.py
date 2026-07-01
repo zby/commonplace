@@ -133,7 +133,7 @@ def seed_snapshot_review(repo: Path, db_path: Path, *, note_path: str, gate_path
             model_partition=TEST_MODEL,
             runner="test-runner",
             created_at="2026-04-01T00:00:00+00:00",
-            status="running",
+            status="queued",
             packing="note",
             pairs=[
                 review_db.ReviewPairRequest(
@@ -157,6 +157,11 @@ def seed_snapshot_review(repo: Path, db_path: Path, *, note_path: str, gate_path
                 )
             ],
             reviewed_at="2026-04-01T00:00:00+00:00",
+        )
+        review_db.complete_review_job(
+            conn,
+            review_job_id=review_job_id,
+            completed_at="2026-04-01T00:00:00+00:00",
         )
         review_pair = review_db.load_review_pairs_for_job(conn, review_job_id=review_job_id)[0]
         review_db.append_acceptance_event(

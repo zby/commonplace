@@ -61,7 +61,7 @@ Easier:
 - Installed Commonplace review no longer requires users to commit notes and gates in the same way this repo does.
 - Review freshness has one local source of truth: accepted DB snapshots versus current file contents.
 - Prompt rendering and acceptance can refer to the exact text that was reviewed, closing races where a file changes between selection, prompt creation, and acceptance.
-- Review rationale text remains a filesystem artifact. The database stores decisions and artifact paths (`bundle_output_path`, per-pair `result_path`) instead of duplicating full review bodies.
+- Review rationale text remains a filesystem artifact. The database stores decisions and derives artifact paths instead of duplicating full review bodies.
 - Review becomes the first lineage-backed file-input target kind: two KB file paths plus a model partition, not a review-only gate-id exception.
 - Parent-dispatched workflows and future automation can share the same freshness selector without being encoded into freshness state.
 - Model-side review partitions stop being mutable keys. A run is accepted under the partition the caller declared before execution.
@@ -83,5 +83,6 @@ Relevant Notes:
 - [010-review state should move to sqlite once reviews leave git and accumulate operational metadata](./010-review-state-should-move-to-sqlite-once-reviews-leave-git-and.md) — supersedes: preserves the SQLite boundary but replaces Git-derived freshness baselines with DB-owned snapshots
 - [031-review state uses run-owned review pairs](./031-review-state-uses-run-owned-review-pairs.md) — see-also: the pair storage model whose reviewed inputs now point at snapshots
 - [033-honest review state behind a versioned migration substrate](./033-honest-review-run-state.md) — see-also: the next review-store refinement, adding queued state
+- [035-review jobs finalize all-or-nothing with derived artifacts](./035-review-jobs-finalize-all-or-nothing-with-derived-artifacts.md) — extends: derives artifact paths and guards accepted evidence through completed jobs
 - [030-Harness-facing seams: batch prepare/ingest endpoints and runner adapters](./030-harness-facing-seams-batch-endpoints-and-runner-adapters.md) — historical: an intermediate execution seam that remained a consumer of freshness rather than part of freshness state
 - [storage](../storage-architecture.md) — part-of: the broader storage boundary for authored markdown, derived reports, and SQLite-backed review state

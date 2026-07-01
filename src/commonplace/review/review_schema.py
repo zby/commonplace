@@ -6,7 +6,7 @@ from __future__ import annotations
 import sqlite3
 from pathlib import Path
 
-REVIEW_SCHEMA_VERSION = 2
+REVIEW_SCHEMA_VERSION = 3
 EXPECTED_REVIEW_TABLES = frozenset(
     {
         "review_jobs",
@@ -21,7 +21,6 @@ EXPECTED_REVIEW_INDEXES = frozenset(
         "idx_review_jobs_status",
         "idx_review_pairs_note_gate",
         "idx_review_pairs_review_job_id",
-        "idx_review_pairs_pair_status",
         "idx_acceptance_events_note_gate_model_partition",
         "idx_acceptance_events_latest_by_key",
     }

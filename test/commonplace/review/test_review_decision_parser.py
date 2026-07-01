@@ -1,145 +1,42 @@
 from __future__ import annotations
 
-from pathlib import Path
+import pytest
 
 from commonplace.review.protocol import decisions
 
 
-FIXTURES_DIR = Path(__file__).resolve().parent / "fixtures" / "review-decision"
-REPO_ROOT = Path(__file__).resolve().parents[3]
-
-
-def read_fixture(name: str) -> str:
-    return (FIXTURES_DIR / name).read_text(encoding="utf-8")
-
-
-def test_parse_review_decision_concrete_fixtures() -> None:
-    cases = [
-        ("result-pass.md", "pass"),
-        ("semantic-completeness-run6-warn.md", "warn"),
-        ("semantic-grounding-run9-warn.md", "warn"),
-        ("semantic-internal-consistency-run9-info.md", "pass"),
-    ]
-
-    for fixture_name, expected in cases:
-        actual = decisions.parse_review_decision(read_fixture(fixture_name))
-        assert actual == expected, fixture_name
-
-
-def test_parse_review_decision_uses_highest_finding_severity_without_explicit_outcome() -> None:
-    review_text = """## Findings
-
-- INFO: Minor note.
-- WARN: Meaningful issue.
-- FAIL: Blocking problem.
-"""
-
-    assert decisions.parse_review_decision(review_text) == "fail"
-
-
-def test_parse_review_decision_supports_revised_result_override() -> None:
-    review_text = """## Result: WARN
-
-### Findings
-- WARN: Something looked wrong at first.
-
-Revised result: PASS
-"""
-
-    assert decisions.parse_review_decision(review_text) == "pass"
-
-
-def test_parse_review_decision_supports_flagging_phrase_override() -> None:
-    review_text = """## Result: WARN
-
-### Findings
-- INFO: Borderline issue.
-
-Flagging as INFO rather than WARN because the case is defensible.
-"""
-
-    assert decisions.parse_review_decision(review_text) == "pass"
-
-
-def test_parse_review_decision_supports_minor_severity() -> None:
-    review_text = """## Result: WARN
-
-### Findings
-- **minor**: The title is mildly awkward as inline prose.
-- **info**: No rewrite required.
-"""
-
-    assert decisions.parse_review_decision(review_text) == "warn"
-
-
-def test_parse_review_decision_keeps_pass_when_minor_note_is_non_blocking() -> None:
-    review_text = """## Result: PASS
-
-### Findings
-- Minor: The summary could be tighter.
-"""
-
-    assert decisions.parse_review_decision(review_text) == "pass"
-
-
-def test_parse_review_decision_treats_no_violations_with_pass_findings_as_pass() -> None:
-    review_text = """## Result: WARN
-
-### Summary
-No violations found.
-
-### Findings
-- PASS: All bullet items begin with a capitalized lead-in.
-"""
-
-    assert decisions.parse_review_decision(review_text) == "pass"
-
-
-def test_parse_review_decision_returns_unknown_on_conflicting_signals() -> None:
-    review_text = """## Result: WARN
-
-### Findings
-- PASS: The title is clear and aligned.
-"""
-
-    assert decisions.parse_review_decision(review_text) == "unknown"
-
-
-def test_parse_review_decision_returns_unknown_when_no_signal_exists() -> None:
+def test_parse_review_decision_accepts_single_final_result_line() -> None:
     review_text = """### Summary
-No explicit outcome and no severity labels.
+Grounding is aligned.
+
+## Result: PASS
 """
 
-    assert decisions.parse_review_decision(review_text) == "unknown"
+    assert decisions.parse_review_decision(review_text) == "pass"
 
 
 def test_rewrite_review_result_footer_moves_result_to_end() -> None:
-    review_text = """## Result: PASS
+    review_text = """## Result: WARN
 
-Grounding is aligned.
+Grounding needs one citation.
 """
 
-    assert decisions.rewrite_review_result_footer(review_text) == "Grounding is aligned.\n\n## Result: PASS\n"
-
-
-def test_rewrite_review_result_footer_preserves_declared_result_when_parse_is_unknown() -> None:
-    review_text = """## Result: FAIL
-
-### Findings
-- PASS: The title is clear and aligned.
-"""
-
-    assert decisions.rewrite_review_result_footer(review_text) == (
-        "### Findings\n- PASS: The title is clear and aligned.\n\n## Result: FAIL\n"
+    assert decisions.rewrite_review_result_footer(review_text, decision="warn") == (
+        "Grounding needs one citation.\n\n## Result: WARN\n"
     )
 
 
-def test_rewrite_review_result_footer_allows_unknown_when_explicitly_requested() -> None:
-    review_text = """Pass
-
-No findings.
-"""
-
-    assert decisions.rewrite_review_result_footer(review_text, decision="unknown") == (
-        "Pass\n\nNo findings.\n\n## Result: UNKNOWN\n"
-    )
+@pytest.mark.parametrize(
+    ("review_text", "message"),
+    [
+        ("### Summary\nNo explicit outcome.\n", "missing result line"),
+        ("### Summary\nDone.\n\n## Result: OK\n", "invalid result signal"),
+        ("### Summary\nDone.\n\nVerdict: PASS\n", "invalid result signal"),
+        ("### Summary\nDone.\n\n## Result: PASS\n\n## Result: WARN\n", "duplicate result lines"),
+        ("## Result: PASS\n\n### Summary\nDone.\n", "result line must be the last non-empty line"),
+        ("### Summary\nFlagging as WARN.\n\n## Result: PASS\n", "invalid result signal"),
+    ],
+)
+def test_parse_review_decision_rejects_non_strict_live_output(review_text: str, message: str) -> None:
+    with pytest.raises(ValueError, match=message):
+        decisions.parse_review_decision(review_text)

@@ -91,6 +91,7 @@ def seed_acceptance(
     note_abs: Path,
     gate_abs: Path,
     gate_id: str,
+    model_partition: str = TEST_MODEL,
     commit: str = PLACEHOLDER_COMMIT,
 ) -> None:
     """Insert a completed review pair + acceptance as if a full review passed."""
@@ -103,7 +104,7 @@ def seed_acceptance(
             conn,
             note_path=note_path,
             gate_id=gate_id,
-            model_partition=TEST_MODEL,
+            model_partition=model_partition,
             decision="pass",
             reviewed_note_snapshot_id=note_snapshot.snapshot_id,
             reviewed_gate_snapshot_id=gate_snapshot.snapshot_id,
@@ -114,7 +115,7 @@ def seed_acceptance(
             review_pair_id=review_pair_id,
             note_path=note_path,
             gate_id=gate_id,
-            model_partition=TEST_MODEL,
+            model_partition=model_partition,
             accepted_note_snapshot_id=note_snapshot.snapshot_id,
             accepted_gate_snapshot_id=gate_snapshot.snapshot_id,
             accepted_at=REVIEWED_AT,
@@ -137,7 +138,7 @@ def seed_snapshot_acceptance(
             model_partition=TEST_MODEL,
             runner="test-runner",
             created_at=REVIEWED_AT,
-            status="running",
+            status="queued",
             packing="note",
             pairs=[
                 review_db.ReviewPairRequest(
@@ -162,6 +163,7 @@ def seed_snapshot_acceptance(
             ],
             reviewed_at=REVIEWED_AT,
         )
+        review_db.complete_review_job(conn, review_job_id=review_job_id, completed_at=REVIEWED_AT)
         review_pair = review_db.load_review_pairs_for_job(conn, review_job_id=review_job_id)[0]
         review_db.append_acceptance_event(
             conn,
@@ -255,10 +257,23 @@ class TestMissingReview:
         ]
 
     def test_claude_opus_alias_queries_canonical_partition(self, tmp_path: Path) -> None:
-        build_fixture(tmp_path)
-        with review_db.connect(db_path_for(tmp_path)) as conn:
-            review_db.rekey_model_partition(conn, old_model_partition=TEST_MODEL, new_model_partition="claude-opus")
-            conn.commit()
+        fixture = build_fixture(tmp_path)
+        seed_acceptance(
+            tmp_path,
+            note_path="kb/notes/stable.md",
+            note_abs=fixture["stable"],
+            gate_abs=fixture["gate_prose_sr"],
+            gate_id="prose/source-residue",
+            model_partition="claude-opus",
+        )
+        seed_acceptance(
+            tmp_path,
+            note_path="kb/notes/stable.md",
+            note_abs=fixture["stable"],
+            gate_abs=fixture["gate_prose_cm"],
+            gate_id="prose/confidence-miscalibration",
+            model_partition="claude-opus",
+        )
 
         stale = review_target_selector.select_stale_gates(
             tmp_path,

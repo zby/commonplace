@@ -115,7 +115,7 @@ commonplace-review-target-selector --json --model claude-opus-4-6 prose --note k
   | commonplace-create-review-jobs --input - --grouping note
 ```
 
-The canonical path is selector JSON piped into `--input -`. The command prints a JSON payload with `input_mode`, `model_partition`, `grouping`, `jobs`, and `skipped_pairs`. Each job includes `review_job_id`, `status`, nullable runner provenance, `packing`, derived `prompt_path`, derived `bundle_output_path`, and pair rows with `gate_id`, `pair_status`, `decision`, and derived `result_path`. `MANIFEST.json` is display/debug output written beside the artifacts, not a returned JSON field; pipeline commands use derived job paths as state. Note-packed jobs use gate-leaf filenames such as `source-residue.md`; gate-packed jobs use note filenames such as `my-note.md`.
+The canonical path is selector JSON piped into `--input -`. The command prints a JSON payload with `input_mode`, `model_partition`, `grouping`, `jobs`, and `skipped_pairs`. Each job includes `review_job_id`, `status`, nullable runner provenance, `packing`, derived `prompt_path`, derived `bundle_output_path`, and pair rows with `gate_id`, `decision`, and derived `result_path`. `MANIFEST.json` is display/debug output written beside the artifacts, not a returned JSON field; pipeline commands use derived job paths as state. Note-packed jobs use gate-leaf filenames such as `source-residue.md`; gate-packed jobs use note filenames such as `my-note.md`.
 
 ### commonplace-review-job-list
 
@@ -126,26 +126,19 @@ commonplace-review-job-list --status queued --json
 commonplace-review-job-list --model claude-opus-4-6
 ```
 
-### commonplace-claim-review-job
-
-Claim a queued review job for parent-dispatched worker execution. The command records dispatch provenance and moves the job to `running`; it does not execute the worker.
-
-```bash
-commonplace-claim-review-job --review-job-id 42 --runner codex --model gpt-5
-commonplace-claim-review-job --review-job-id 42 --runner codex --model gpt-5 --effort high
-```
-
-The command validates `build_model_partition(--model, --effort)` against the job's `model_partition`, records `runner`, `runner_model`, and nullable `runner_effort`, and prints JSON for both success and operational failure.
-
 ### commonplace-finalize-review-job
 
-Finalize a review job from its derived bundle output path. Completed pairs are stored and accepted; missing pairs are marked `missing`, and the job fails with job-level failure context. Exit 1 if the job failed or if a precondition fails before state changes.
+Finalize a queued review job from its derived bundle output path. The command strictly parses all expected pair blocks, writes per-pair result files, records decisions and acceptance events, and moves the job to `completed` in one successful finalization. Missing, duplicate, unexpected, malformed, or result-less pair blocks fail the whole job and append no acceptance events. Exit 1 if the job failed or if a precondition fails before state changes.
 
 ```bash
 commonplace-finalize-review-job --review-job-id 42
+commonplace-finalize-review-job --review-job-id 42 --runner codex
+commonplace-finalize-review-job --review-job-id 42 --runner codex --model gpt-5 --effort high
 ```
 
-The command accepts `queued` or `running` jobs, rejects `completed` and `failed`, reads the job-owned `bundle-output.md`, writes per-pair result files to derived result paths with provenance frontmatter, refreshes `MANIFEST.json` for inspection, and prints JSON for success, mutated failure, and precondition failure.
+Optional provenance flags are recorded at finalization time. `--runner` may be supplied alone. `--model` may be supplied without `--runner`; it validates `build_model_partition(--model, --effort)` against the job's `model_partition` before state changes. `--effort` requires `--model`.
+
+The command accepts `queued` jobs, rejects `completed` and `failed`, reads the job-owned `bundle-output.md`, writes per-pair result files to derived result paths with provenance frontmatter, refreshes `MANIFEST.json` for inspection, and prints JSON for success, mutated failure, and precondition failure. Result-file write failures are fatal evidence failures. Manifest refresh failures after DB completion do not fail the job; they are returned in an optional top-level `warnings` array.
 
 ### commonplace-ack-gate-review
 
@@ -198,7 +191,7 @@ commonplace-warn-selector --json                                   # JSON output
 
 ## Review maintenance
 
-Operational commands for database repair and cleanup.
+Operational commands for review-store cleanup.
 
 ### commonplace-prune-superseded-reviews
 
@@ -207,12 +200,4 @@ Delete superseded non-current review-pair rows and whole job artifact directorie
 ```bash
 commonplace-prune-superseded-reviews --dry-run
 commonplace-prune-superseded-reviews --apply
-```
-
-### commonplace-repair-model-partitions
-
-Collapse known model aliases in review jobs and acceptance events. Pair rows derive model partition through their parent job.
-
-```bash
-commonplace-repair-model-partitions --dry-run
 ```

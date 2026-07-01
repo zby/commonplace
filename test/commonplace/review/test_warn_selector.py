@@ -62,7 +62,7 @@ def seed_warn_review(repo: Path, db_path: Path) -> None:
             model_partition=TEST_MODEL,
             runner="test-runner",
             created_at=REVIEWED_AT,
-            status="running",
+            status="queued",
             packing="note",
             pairs=[
                 review_db.ReviewPairRequest(
@@ -87,6 +87,7 @@ def seed_warn_review(repo: Path, db_path: Path) -> None:
             ],
             reviewed_at=REVIEWED_AT,
         )
+        review_db.complete_review_job(conn, review_job_id=review_job_id, completed_at=REVIEWED_AT)
         review_pair = review_db.load_review_pairs_for_job(conn, review_job_id=review_job_id)[0]
         assert review_pair.result_path is not None
         write(repo / review_pair.result_path, "### Findings\n- WARN: actionable finding\n\n## Result: WARN\n")

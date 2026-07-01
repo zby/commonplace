@@ -30,7 +30,7 @@ def _insert_completed_job(
         model_partition=MODEL_PARTITION,
         runner="test-runner",
         created_at=reviewed_at,
-        status="running",
+        status="queued",
         packing="note",
         pairs=[
             review_db.ReviewPairRequest(

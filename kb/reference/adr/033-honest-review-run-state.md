@@ -1,5 +1,5 @@
 ---
-description: "Superseded historical decision: honest queued/running review state survived, while the versioned in-place migration substrate was removed"
+description: "Superseded historical decision: honest queued/running review state and an in-place migration substrate were later reduced to schema-current queued/completed/failed jobs"
 type: ../types/adr.md
 tags: []
 status: superseded
@@ -7,7 +7,7 @@ status: superseded
 
 # 033-Honest review state behind a versioned migration substrate
 
-**Status:** superseded by [034-Queued review jobs and execution provenance](./034-queued-review-jobs-and-execution-provenance.md)
+**Status:** superseded by [034-Queued review jobs and execution provenance](./034-queued-review-jobs-and-execution-provenance.md) and [035-Review jobs finalize all-or-nothing with derived artifacts](./035-review-jobs-finalize-all-or-nothing-with-derived-artifacts.md)
 **Date:** 2026-06-28
 
 ## Context
@@ -23,7 +23,7 @@ This ADR introduced two ideas:
 
 ## Decision
 
-The honest state survived and is current. A review job is `queued` after deterministic prompt creation, `running` after a parent claims it for dispatch, and then `completed` or `failed` after finalization.
+The queued state survived, but `running` did not. The current state machine from ADR 035 is `queued`, `completed`, and `failed`; parent dispatch progress is no longer persisted in the review DB.
 
 The migration substrate did not survive the simplification. The current review store is schema-current only: a missing DB is created from the packaged schema; a mismatched review store is rejected and must be recreated.
 
@@ -32,14 +32,14 @@ The migration substrate did not survive the simplification. The current review s
 Kept:
 
 - Prepared prompts are represented honestly as `queued`.
-- `created_at` and `started_at` remain distinct timestamps.
-- Finalization accepts `queued` or `running` for manual recovery when output exists before an explicit claim.
+- Schema-current review-store setup survived: incompatible stores are rejected and recreated rather than transformed in place.
 
 Removed:
 
 - In-place review-store migrations.
 - Historical table-shape transforms.
 - Any promise that old local operational review stores can be opened by the current package.
+- `running` state and `started_at`.
 
 ---
 
@@ -48,3 +48,4 @@ Relevant Notes:
 - [031-review state uses run-owned review pairs](./031-review-state-uses-run-owned-review-pairs.md) — predecessor: defined pair ownership for a review invocation.
 - [032-Review freshness uses DB snapshots, not Git](./032-review-freshness-uses-db-snapshots-not-git.md) — see-also: same SQLite review store and freshness model.
 - [034-Queued review jobs and execution provenance](./034-queued-review-jobs-and-execution-provenance.md) — supersedes: keeps honest job state while removing in-place schema migration.
+- [035-Review jobs finalize all-or-nothing with derived artifacts](./035-review-jobs-finalize-all-or-nothing-with-derived-artifacts.md) — supersedes: reduces live job state to queued/completed/failed.

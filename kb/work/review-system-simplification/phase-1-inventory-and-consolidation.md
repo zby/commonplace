@@ -1,5 +1,7 @@
 # Phase 1 - inventory and consolidation
 
+Historical phase brief. This records the pre-phase state and implementation handoff at the time phase 1 ran; it is not current review-system documentation. Current behavior is recorded in `kb/reference/REVIEW-SYSTEM.md` and ADR 035.
+
 ## Position
 
 First phase. This phase is the only phase intended to run from the original code shape. Later phase files are provisional until this phase updates them.

@@ -1,5 +1,7 @@
 # Phase 3 - finalization behavior
 
+Historical phase brief. This records the phase 3 implementation instructions and cleanup gate; it is not current review-system documentation. Current behavior is recorded in `kb/reference/REVIEW-SYSTEM.md` and ADR 035.
+
 ## Position
 
 Third phase, revised after the phase 2 implementation. Phase 2 proved two constraints that shape this phase:

@@ -1,5 +1,7 @@
 # Review system simplification implementation plan
 
+Closeout status: phase 4 landed durable docs and ADR 035 on 2026-07-01. This workshop is retained only for the explicit deferred follow-up list; current review-system behavior lives in `kb/reference/REVIEW-SYSTEM.md`, `kb/reference/review-architecture.md`, and `kb/reference/adr/035-review-jobs-finalize-all-or-nothing-with-derived-artifacts.md`.
+
 ## Goal
 
 Reduce review-system code and workflow complexity while preserving the parts that are doing real work:

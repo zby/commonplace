@@ -1,5 +1,5 @@
 ---
-description: "Proposal: make the review protocol's output encoding a pluggable codec — sentinel-delimited markdown today, schema-validated structured output when harnesses expose it — so decision parsing stops depending on free-text conventions"
+description: "Proposal: make review output a pluggable codec, with sentinel markdown today and schema-validated structured output when harnesses expose it"
 type: kb/types/note.md
 traits: [design-proposal]
 tags: [kb-maintenance]
@@ -8,12 +8,12 @@ status: seedling
 
 # Structured-output codec for the review protocol
 
-The review protocol's output side is one encoding: sentinel-delimited markdown blocks parsed by a hand-written state machine, with the decision recovered from free text by a multi-strategy fallback chain. Harnesses are starting to offer schema-validated structured output for sub-agent calls — Claude Code's dynamic workflows `agent(prompt, {schema})` forces a validated structured-output tool call and returns a parsed object, with validation retried at the tool-call layer. If that capability generalizes across harnesses, the entire failure class the fallback chain absorbs (missing result lines, bold decisions, `unknown` decisions) disappears at the source. This proposal holds the design for making the output encoding a codec choice rather than a protocol property.
+The review protocol's output side is one encoding: sentinel-delimited markdown blocks parsed by a hand-written state machine, with the decision recovered from a strict final result footer. Harnesses are starting to offer schema-validated structured output for sub-agent calls — Claude Code's dynamic workflows `agent(prompt, {schema})` forces a validated structured-output tool call and returns a parsed object, with validation retried at the tool-call layer. If that capability generalizes across harnesses, the remaining free-text failure classes disappear at the source. This proposal holds the design for making the output encoding a codec choice rather than a protocol property.
 
-## Current state (as of 2026-06-12)
+## Current state (as of 2026-07-01)
 
-- One encoding: `=== PAIR REVIEW START: {note} :: {gate} ===` blocks ([ADR 029](../adr/029-review-execution-unified-on-note-gate-pairs.md)). `protocol/parser.py` extracts blocks into `ParsedPairBundle`; `protocol/decisions.py` recovers the decision through an ordered fallback chain (explicit flagging phrases → revised-result headers → result headers → severity patterns → bold patterns → `unknown`) and canonicalizes result footers.
-- The codec is almost contained in `protocol/`: the one leak is `executor.assemble_run_document`, which imports the sentinel templates to assemble per-run artifact documents.
+- One encoding: `=== PAIR REVIEW START: {note} :: {gate} ===` blocks ([ADR 029](../adr/029-review-execution-unified-on-note-gate-pairs.md)). `protocol/parser.py` extracts blocks into `ParsedPairBundle`; `protocol/decisions.py` requires exactly one final `## Result: PASS|WARN|FAIL|ERROR` line and canonicalizes result footers.
+- The codec is contained in `protocol/` plus finalization/artifact rendering.
 - Consumers downstream of parsing are mostly encoding-independent already: `review_pairs.decision` stores the parsed enum, a derived result artifact path points to the retained markdown review body, and `warn_selector` extracts findings from a `### Findings` section convention in that artifact.
 - External executors receive the contract through rendered prompts created from selector JSON (`commonplace-create-review-jobs --input ... --grouping {note,gate}`), write job-owned output files, and return control to finalization.
 - Trigger not yet met: schema-validated sub-agent output ships in one harness's workflow scripts; the subprocess CLIs (`claude -p`, `codex exec`) and the live-agent file-artifact path have no equivalent surface the review system could consume today.
@@ -25,7 +25,7 @@ A codec is the pair (render the output contract into the prompt, decode raw outp
 - **markdown-sentinel** (today): contract rendered as sentinel instructions plus a block template; decoder is the existing parser + decision chain.
 - **structured** (new): contract expressed as a JSON schema — per pair: note path, gate id, summary, findings (severity + text), optional suggested revision, decision as an enum. The decoder validates and maps to `ParsedPairBundle`; the decision fallback chain is bypassed entirely because the decision arrives as a constrained field. The per-pair markdown result file can be rendered from the structured fields, so warning extraction and human review still use the derived result artifact boundary.
 
-`ParsedPairBundle` is already the codec-independent boundary type; salvage semantics (missing pairs reported, structural errors fatal) translate directly — a missing array entry is a missing pair, a validation failure is a structural error.
+`ParsedPairBundle` is already the codec-independent boundary type. Missing pairs and structural errors both translate to failed live finalization under the all-or-nothing policy; a structured decoder should still distinguish them so callers can report the cause.
 
 ## Free choices
 
@@ -41,7 +41,7 @@ Adopt when a harness medium the project actually uses for reviews exposes schema
 ## Risks
 
 - Two codecs mean two prompt contracts to keep semantically aligned; the codec interface must own both sides (render + decode) so a contract change cannot touch one encoding only.
-- Schema validation failures look terminal but may be retryable at the harness layer; the decoder should distinguish "harness delivered invalid object" (structural) from "model omitted a pair" (salvageable) just as the markdown parser does.
+- Schema validation failures look terminal but may be retryable at the harness layer; the decoder should distinguish "harness delivered invalid object" from "model omitted a pair" for diagnostics even though both fail live finalization.
 - Findings-as-enum tightens what reviewers can express; the markdown codec's prose findings have carried nuance (multi-severity bullets, inline suggested rewrites) that a first schema draft may flatten.
 
 ---

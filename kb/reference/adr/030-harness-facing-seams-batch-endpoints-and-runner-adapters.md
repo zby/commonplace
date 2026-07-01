@@ -17,18 +17,18 @@ Review execution needed a seam where deterministic Python prepared review work a
 1. batch-granular prepare/ingest endpoints for external executors;
 2. adapter objects for subprocess harness CLIs.
 
-The current system keeps the useful seam but removes the subprocess dispatch layer. `commonplace-create-review-jobs` creates queued jobs from selector JSON, `commonplace-claim-review-job` records dispatch provenance, workers write only the job-owned output file, and `commonplace-finalize-review-job` parses and finalizes that output. The parent agent or harness owns fan-out and model calls.
+The current system keeps the useful seam but removes the subprocess dispatch layer. `commonplace-create-review-jobs` creates queued jobs from selector JSON, workers write only the job-owned output file, and `commonplace-finalize-review-job` records optional provenance, parses, and finalizes that output. The parent agent or harness owns fan-out and model calls.
 
 ## Decision
 
-1. **Deterministic endpoints remain.** Job creation, claiming, and finalization are stable command boundaries around prompt artifacts and database state.
+1. **Deterministic endpoints remain.** Job creation and finalization are stable command boundaries around prompt artifacts and database state.
 2. **Subprocess execution is removed.** Commonplace no longer owns model invocation, vendor CLI command construction, stream decoding, or telemetry scraping. Those belong to the parent harness if needed.
-3. **The review protocol remains shared.** The pair grammar, parser, result artifacts, and salvage semantics from ADR 029 are still the boundary between workers and finalization.
+3. **The review protocol remains shared.** The pair grammar, parser, and result artifacts from ADR 029 are still the boundary between workers and finalization. ADR 035 later made live finalization all-or-nothing.
 
 ## Consequences
 
 Easier:
-- Harness-orchestrated review composes from existing endpoints: selector JSON -> queued jobs -> claim -> worker output -> finalize. Parallelism, budgets, and retries belong to the orchestrator.
+- Harness-orchestrated review composes from existing endpoints: selector JSON -> queued jobs -> worker output -> finalize. Parallelism, budgets, and retries belong to the orchestrator.
 - Vendor CLI churn no longer touches Commonplace review code.
 - The command surface is smaller and has one execution story.
 
@@ -41,5 +41,6 @@ Harder / accepted costs:
 Relevant Notes:
 
 - [review architecture](../review-architecture.md) — part-of: the subsystem these seams expose
-- [029-review execution unified on (note, gate) pairs](./029-review-execution-unified-on-note-gate-pairs.md) — see-also: the pair protocol and salvage policy these endpoints surface to external executors
+- [029-review execution unified on (note, gate) pairs](./029-review-execution-unified-on-note-gate-pairs.md) — see-also: the pair protocol these endpoints surface to external executors
+- [035-review jobs finalize all-or-nothing with derived artifacts](./035-review-jobs-finalize-all-or-nothing-with-derived-artifacts.md) — supersedes-in-part: removes claim and partial salvage from the live workflow
 - [Claude Code dynamic workflows](../../agentic-systems/claude-code-dynamic-workflows.md) — derived-from: the harness orchestration model (script coordinates, agents execute, deterministic endpoints at the edges) these seams are shaped for

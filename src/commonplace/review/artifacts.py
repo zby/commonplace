@@ -17,7 +17,6 @@ class ReviewPairForManifest(Protocol):
     review_pair_id: int
     note_path: str
     gate_path: str
-    pair_status: str
     result_path: str | None
 
 
@@ -42,7 +41,6 @@ class ReviewPairForResult(Protocol):
     note_path: str
     gate_path: str
     model_partition: str
-    pair_status: str
     decision: str | None
     result_path: str | None
     reviewed_at: str | None
@@ -203,7 +201,7 @@ def write_pair_result_files_to_derived_paths(
         pairs=pairs,
     )
     for pair in pairs:
-        if pair.pair_status != "completed":
+        if pair.decision is None:
             continue
         review_text = canonical_texts.get((pair.note_path, pair.gate_path))
         if review_text is None:
@@ -230,6 +228,7 @@ def write_manifest(
     repo_root: Path,
     artifact_dir: Path,
     review_job_id: int,
+    job_status: str,
     packing: str,
     prompt_path: str,
     bundle_output_path: str,
@@ -243,12 +242,17 @@ def write_manifest(
         pairs=pairs,
     )
     payload_pairs: list[dict[str, object]] = []
+    pair_display_status = {
+        "queued": "pending",
+        "completed": "completed",
+        "failed": "failed",
+    }.get(job_status, job_status)
     for pair in pairs:
         item: dict[str, object] = {
             "review_pair_id": pair.review_pair_id,
             "note_path": pair.note_path,
             "gate_path": pair.gate_path,
-            "status": pair.pair_status,
+            "status": pair_display_status,
             "result_path": pair.result_path or result_paths[pair.review_pair_id],
         }
         if failure_reason is not None:
@@ -258,6 +262,7 @@ def write_manifest(
     payload: dict[str, object] = {
         "artifact_schema": "review-job-prompt-v1",
         "review_job_id": review_job_id,
+        "status": job_status,
         "packing": packing,
         "prompt_path": prompt_path,
         "bundle_output_path": bundle_output_path,

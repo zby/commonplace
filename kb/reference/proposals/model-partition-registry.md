@@ -16,7 +16,7 @@ This is a later simplification, not a requirement for the queued-job pipeline. J
 
 ADR 032 defines `model_partition` as a declared, frozen model-side freshness partition. Freshness treats it as opaque: a partition can be exact, coarse, or parameterized, but telemetry must not re-key review state after execution.
 
-The current alias registry is in code. `src/commonplace/review/review_model.py` defines `MODEL_PARTITION_REGISTRY`, builds `MODEL_PARTITION_ALIASES`, and exposes helpers such as `normalize_model_partition`, `is_registered_model_partition`, `model_partition_alias_target`, and `build_model_partition`.
+The current alias registry is in code. `src/commonplace/review/review_model.py` defines `MODEL_PARTITION_REGISTRY`, builds `MODEL_PARTITION_ALIASES`, and exposes helpers such as `normalize_model_partition` and `build_model_partition`.
 
 Existing subprocess paths already distinguish the declared partition from the concrete runner model in places: commands normalize the user-supplied model into a `model_partition`, but pass a `runner_model` value to runner adapters.
 

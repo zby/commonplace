@@ -154,6 +154,7 @@ def prepare_grouped_review_job(
         repo_root=repo_root,
         artifact_dir=artifact_dir,
         review_job_id=review_job_id,
+        job_status=status,
         packing=packing,
         prompt_path=prompt_path,
         bundle_output_path=bundle_output_path,

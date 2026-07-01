@@ -78,7 +78,7 @@ def seed_accepted_review(repo_root: Path, db_path: Path, *, note_path: str) -> i
             runner_model="test-runner-model",
             runner_effort="high",
             created_at=REVIEWED_AT,
-            status="running",
+            status="queued",
             packing="note",
             pairs=[
                 review_db.ReviewPairRequest(

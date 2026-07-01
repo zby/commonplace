@@ -207,7 +207,6 @@ def test_create_review_jobs_groups_cross_lens_gates_by_bundle(tmp_path: Path) ->
             """
             SELECT
                 rp.gate_path,
-                rp.pair_status,
                 rp.reviewed_note_snapshot_id,
                 rp.reviewed_gate_snapshot_id,
                 note_snapshot.content_text AS note_text,
@@ -220,9 +219,9 @@ def test_create_review_jobs_groups_cross_lens_gates_by_bundle(tmp_path: Path) ->
             ORDER BY rp.review_job_id, rp.pair_ordinal
             """
         ).fetchall()
-        assert [(row["gate_path"], row["pair_status"]) for row in pair_rows] == [
-            (GATE_ONE_PATH, "pending"),
-            (GATE_TWO_PATH, "pending"),
+        assert [row["gate_path"] for row in pair_rows] == [
+            GATE_ONE_PATH,
+            GATE_TWO_PATH,
         ]
         assert {row["reviewed_note_snapshot_id"] for row in pair_rows} != {None}
         assert all(row["reviewed_gate_snapshot_id"] is not None for row in pair_rows)
@@ -481,11 +480,12 @@ def test_public_review_entry_points_replace_ingest_surfaces() -> None:
     pyproject = tomllib.loads(Path("pyproject.toml").read_text(encoding="utf-8"))
     scripts = pyproject["project"]["scripts"]
 
-    assert scripts["commonplace-claim-review-job"] == "commonplace.cli.review.claim_review_job:main"
     assert scripts["commonplace-finalize-review-job"] == "commonplace.cli.review.finalize_review_job:main"
     assert scripts["commonplace-review-target-selector"] == "commonplace.cli.review.review_target_selector:main"
     assert scripts["commonplace-create-review-jobs"] == "commonplace.cli.review.create_review_jobs:main"
     removed_scripts = [
+        "commonplace-" + "claim-review-job",
+        "commonplace-" + "repair-model-partitions",
         "commonplace-" + "ingest-bundle-output",
         "commonplace-" + "ingest-" + "batch-output",
         "commonplace-" + "run-review-jobs",
@@ -497,65 +497,7 @@ def test_public_review_entry_points_replace_ingest_surfaces() -> None:
         assert script_name not in scripts
 
 
-def test_claim_review_job_records_dispatch_provenance_and_rejects_second_claim(tmp_path: Path) -> None:
-    repo, db_path = build_repo_fixture(tmp_path)
-    prepared = json.loads(
-        create_jobs_from_targets(
-            repo,
-            db_path,
-            [target("kb/notes/sample.md", GATE_ONE_PATH, GATE_ONE)],
-        ).stdout
-    )
-    prepared_job = prepared["jobs"][0]
-
-    claimed = run_cli(
-        "claim_review_job",
-        "--review-job-id",
-        str(prepared_job["review_job_id"]),
-        "--runner",
-        "codex",
-        "--model",
-        "test-model",
-        cwd=repo,
-        db_path=db_path,
-    )
-
-    claim_payload = json.loads(claimed.stdout)
-    assert claim_payload["claimed"] is True
-    assert claim_payload["job"]["status"] == "running"
-    assert claim_payload["job"]["runner"] == "codex"
-    assert claim_payload["job"]["runner_model"] == "test-model"
-    assert claim_payload["job"]["runner_effort"] is None
-    with sqlite3.connect(db_path) as conn:
-        conn.row_factory = sqlite3.Row
-        job = conn.execute("SELECT status, runner, runner_model, runner_effort FROM review_jobs").fetchone()
-        assert job["status"] == "running"
-        assert job["runner"] == "codex"
-        assert job["runner_model"] == "test-model"
-        assert job["runner_effort"] is None
-
-    rejected = run_cli(
-        "claim_review_job",
-        "--review-job-id",
-        str(prepared_job["review_job_id"]),
-        "--runner",
-        "codex",
-        "--model",
-        "test-model",
-        cwd=repo,
-        db_path=db_path,
-        check=False,
-    )
-    assert rejected.returncode == 1
-    rejected_payload = json.loads(rejected.stdout)
-    assert rejected_payload == {
-        "claimed": False,
-        "reason": "review job is not claimable: running",
-        "review_job_id": prepared_job["review_job_id"],
-    }
-
-
-def test_claim_review_job_validates_model_effort_partition(tmp_path: Path) -> None:
+def test_finalize_review_job_validates_model_effort_partition_before_mutation(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
     prepared = json.loads(
         create_jobs_from_targets(
@@ -566,13 +508,12 @@ def test_claim_review_job_validates_model_effort_partition(tmp_path: Path) -> No
         ).stdout
     )
     review_job_id = prepared["jobs"][0]["review_job_id"]
+    write(repo / prepared["jobs"][0]["bundle_output_path"], single_pair_bundle_output())
 
     rejected = run_cli(
-        "claim_review_job",
+        "finalize_review_job",
         "--review-job-id",
         str(review_job_id),
-        "--runner",
-        "external",
         "--model",
         "unknown-model",
         cwd=repo,
@@ -580,10 +521,20 @@ def test_claim_review_job_validates_model_effort_partition(tmp_path: Path) -> No
         check=False,
     )
     assert rejected.returncode == 1
-    assert "does not match claimed partition" in json.loads(rejected.stdout)["reason"]
+    payload = json.loads(rejected.stdout)
+    assert "does not match supplied partition" in payload["reason"]
+    assert payload["state_changed"] is False
+    with sqlite3.connect(db_path) as conn:
+        conn.row_factory = sqlite3.Row
+        job = conn.execute("SELECT status, runner, runner_model, runner_effort FROM review_jobs").fetchone()
+        pair = conn.execute("SELECT decision FROM review_pairs").fetchone()
+        acceptance_count = conn.execute("SELECT COUNT(*) FROM acceptance_events").fetchone()[0]
+    assert (job["status"], job["runner"], job["runner_model"], job["runner_effort"]) == ("queued", None, None, None)
+    assert pair["decision"] is None
+    assert acceptance_count == 0
 
-    claimed = run_cli(
-        "claim_review_job",
+    accepted = run_cli(
+        "finalize_review_job",
         "--review-job-id",
         str(review_job_id),
         "--runner",
@@ -595,9 +546,12 @@ def test_claim_review_job_validates_model_effort_partition(tmp_path: Path) -> No
         cwd=repo,
         db_path=db_path,
     )
-    payload = json.loads(claimed.stdout)
-    assert payload["claimed"] is True
-    assert payload["job"]["runner_effort"] == "high"
+    payload = json.loads(accepted.stdout)
+    assert payload["completed"] is True
+    with sqlite3.connect(db_path) as conn:
+        conn.row_factory = sqlite3.Row
+        job = conn.execute("SELECT runner, runner_model, runner_effort FROM review_jobs").fetchone()
+    assert (job["runner"], job["runner_model"], job["runner_effort"]) == ("external", "unknown-model", "high")
 
 
 def test_finalize_review_job_uses_job_owned_paths_and_writes_provenance_frontmatter(tmp_path: Path) -> None:
@@ -612,12 +566,6 @@ def test_finalize_review_job_uses_job_owned_paths_and_writes_provenance_frontmat
     prepared_job = prepared["jobs"][0]
     review_job_id = prepared_job["review_job_id"]
     write(repo / prepared_job["bundle_output_path"], single_pair_bundle_output())
-    with sqlite3.connect(db_path) as conn:
-        conn.execute(
-            "UPDATE review_jobs SET runner = ?, runner_model = ? WHERE review_job_id = ?",
-            ("live-agent", "reviewer-model", review_job_id),
-        )
-        conn.commit()
     manifest_path = repo / f"kb/reports/bundle-reviews/review-job-{review_job_id}/MANIFEST.json"
     manifest_path.write_text("{not valid json", encoding="utf-8")
 
@@ -625,6 +573,10 @@ def test_finalize_review_job_uses_job_owned_paths_and_writes_provenance_frontmat
         "finalize_review_job",
         "--review-job-id",
         str(review_job_id),
+        "--runner",
+        "live-agent",
+        "--model",
+        "test-model",
         cwd=repo,
         db_path=db_path,
     )
@@ -647,7 +599,7 @@ def test_finalize_review_job_uses_job_owned_paths_and_writes_provenance_frontmat
     assert parsed_frontmatter.data["gate_path"] == GATE_ONE_PATH
     assert parsed_frontmatter.data["model_partition"] == "test-model"
     assert parsed_frontmatter.data["runner"] == "live-agent"
-    assert parsed_frontmatter.data["runner_model"] == "reviewer-model"
+    assert parsed_frontmatter.data["runner_model"] == "test-model"
     assert parsed_frontmatter.data["runner_effort"] is None
     assert "runner_effort: null\n" in result_text
     assert parsed_frontmatter.data["decision"] == "warn"
@@ -664,7 +616,7 @@ def test_finalize_review_job_uses_job_owned_paths_and_writes_provenance_frontmat
     assert parsed_frontmatter.data["reviewed_at"] == row["reviewed_at"]
 
 
-def test_finalize_review_job_finalizes_running_job(tmp_path: Path) -> None:
+def test_finalize_review_job_finalizes_queued_job(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
     prepared = json.loads(
         create_jobs_from_targets(
@@ -674,17 +626,6 @@ def test_finalize_review_job_finalizes_running_job(tmp_path: Path) -> None:
         ).stdout
     )
     prepared_job = prepared["jobs"][0]
-    run_cli(
-        "claim_review_job",
-        "--review-job-id",
-        str(prepared_job["review_job_id"]),
-        "--runner",
-        "external",
-        "--model",
-        "test-model",
-        cwd=repo,
-        db_path=db_path,
-    )
     output_path = repo / prepared_job["bundle_output_path"]
     output_path.write_text(single_pair_bundle_output(), encoding="utf-8")
 
@@ -706,9 +647,9 @@ def test_finalize_review_job_finalizes_running_job(tmp_path: Path) -> None:
         conn.row_factory = sqlite3.Row
         job = conn.execute("SELECT status FROM review_jobs").fetchone()
         assert job["status"] == "completed"
-        pairs = conn.execute("SELECT gate_path, decision, pair_status FROM review_pairs ORDER BY pair_ordinal").fetchall()
-        assert [(row["gate_path"], row["decision"], row["pair_status"]) for row in pairs] == [
-            (GATE_ONE_PATH, "warn", "completed"),
+        pairs = conn.execute("SELECT gate_path, decision FROM review_pairs ORDER BY pair_ordinal").fetchall()
+        assert [(row["gate_path"], row["decision"]) for row in pairs] == [
+            (GATE_ONE_PATH, "warn"),
         ]
         snapshot_rows = conn.execute(
             """

@@ -23,10 +23,7 @@ from commonplace.review.review_db import (
 
 SECTION_END_LOOKAHEAD = (
     r"(?=^###\s|"
-    r"^##\s*(?:Result|Verdict|Outcome)\b|"
-    r"^##\s+(?:pass|warn|fail|error|unknown|info|ok)\s*$|"
-    r"^Verdict:|"
-    r"^(?:[-*]\s*)?Outcome:|"
+    r"^##\s*Result\b|"
     r"\Z)"
 )
 
@@ -142,10 +139,12 @@ def scan_reviews(
         if current_gate_hash is None or current_gate_hash != acceptance.accepted_gate_hash:
             stale_gates.add(gate_path)
             continue
+        if review.decision is None:
+            continue
         review_text = _load_review_text(repo_root, review)
         if review_text is None:
             continue
-        warns = extract_warns(review_text, decision=review.decision or "unknown")
+        warns = extract_warns(review_text, decision=review.decision)
         if not warns:
             continue
 
@@ -159,7 +158,9 @@ def scan_reviews(
             selected_by_gate[gate_key] = (review, review_text)
 
     for (note_path, gate_path), (review, review_text) in sorted(selected_by_gate.items()):
-        warns = extract_warns(review_text, decision=review.decision or "unknown")
+        if review.decision is None:
+            continue
+        warns = extract_warns(review_text, decision=review.decision)
         for warn_text in warns:
             if note_path not in by_note:
                 by_note[note_path] = NoteWarns(note_path=note_path)

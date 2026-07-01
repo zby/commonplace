@@ -1,5 +1,5 @@
 ---
-description: "Review execution is unified on note-gate pairs: one sentinel grammar, renderer, parser, and finalization path; note and gate packing are strategies over the same protocol"
+description: "Review execution is unified on note-gate pairs; note and gate packing share one protocol, while partial salvage was later removed"
 type: ../types/adr.md
 tags: []
 status: accepted
@@ -18,8 +18,8 @@ The unit of review work is one (note, gate) pair — the selector and acceptance
 
 1. **One pair grammar.** Every output block is keyed by the full pair: `=== PAIR REVIEW START: {note_path} :: {gate_id} ===` … `=== PAIR REVIEW END: … ===` (`protocol/format.py`). The ` :: ` separator is rejected in note paths and gate ids at render time, as are reserved `=== … ===` sentinel lines inside embedded note or gate text.
 2. **One renderer.** `render_pairs_prompt` (`protocol/prompt.py`) takes N note targets and M gate definitions, embeds each note text and each gate text exactly once, and requests one block per requested pair. Note contents are always embedded (`Do not read them from disk`), in both single-note and multi-note shapes; the multi-note shape adds the evaluate-independently rule. `output_mode` (`stdout`/`file`) is preserved for the live-agent path.
-3. **One parser with salvage semantics.** `parse_pair_bundle` (`protocol/parser.py`) raises on structural anomalies (nested, mismatched, unterminated, unexpected, duplicate, or empty blocks) because the rest of the stream is untrustworthy, but a missing expected pair is reported in `missing`, not raised — callers salvage what parsed.
-4. **One finalization path.** Shared job-output code owns parse, result-file writes, pair completion, missing-pair marking, acceptance events, and job status. A job whose pairs all came back is completed; a job with missing pairs is failed with the raw batch output attached while completed pairs remain salvageable.
+3. **One parser.** `parse_pair_bundle` (`protocol/parser.py`) raises on structural anomalies (nested, mismatched, unterminated, unexpected, duplicate, or empty blocks) because the rest of the stream is untrustworthy, and reports missing expected pairs in `missing`.
+4. **One finalization path.** Shared finalization code owns parse, result-file writes, pair completion, acceptance events, and job status. ADR 035 later removed the original partial-salvage policy: live finalization now treats missing pairs as whole-job failure and accepts no completed subset from a failed job.
 5. **Batching is a packing choice, not a protocol.** Note-packed jobs and gate-packed jobs both use the same pair grammar, parser, and finalization path. The parent agent or harness owns fan-out; Commonplace owns deterministic job creation and finalization.
 6. **Per-job artifacts are pair-grammar slices.** Each job's `bundle-output.md` holds the job's own pair-block stream; parsed result files are named from the job's packing strategy, and `MANIFEST.json` maps pairs to those files. Later storage work moved review bodies out of DB columns, so the DB now records artifact paths instead of storing raw review markdown.
 
@@ -29,7 +29,7 @@ ADR 031 later makes the same pair unit persistent in the SQLite schema by replac
 
 Easier:
 - Protocol changes (new fields, sentinel rules, coverage checks) are made once; the parse→render→parse round trip and the twin parsers/rewriters are gone.
-- Partial batch failures salvage completed reviews and fail only the missing runs — the dominant efficiency win when many small checks run at scale.
+- Pair coverage failures are represented uniformly; ADR 035 later made live finalization all-or-nothing instead of salvaging completed reviews from failed jobs.
 - Failure policy is uniform across packing shapes.
 - Mixed-axis packing (arbitrary pairs per call) is structurally supported by the renderer/parser boundary, available if a future caller needs it.
 
@@ -45,3 +45,4 @@ Relevant Notes:
 - [review architecture](../review-architecture.md) — part-of: the subsystem this decision restructures
 - [gate learning from accepted edits](../proposals/gate-learning-from-accepted-edits.md) — see-also: adjacent undecided extension; per-gate accounting interacts with the packing axis
 - [031-review state uses run-owned review pairs](./031-review-state-uses-run-owned-review-pairs.md) — see-also: the storage refinement that makes this protocol's pair unit the persistent row
+- [035-review jobs finalize all-or-nothing with derived artifacts](./035-review-jobs-finalize-all-or-nothing-with-derived-artifacts.md) — supersedes-in-part: removes partial salvage from live finalization
