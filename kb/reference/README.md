@@ -144,11 +144,11 @@ For the full read path and scaling direction, see [navigation.md](./navigation.m
 - "Run the semantic review sweep over anything I've changed recently."
 - "Ack the trivial changes in the review queue."
 
-*What happens.* The review system stores state in SQLite, runs one or more gates, writes per-gate reviews, and records acceptance events once all gates report.
+*What happens.* The review system stores state in SQLite, selects target `(note, gate)` pairs, creates queued review jobs, delegates each prompt to a worker, and records acceptance events only after all pairs in the job finalize successfully.
 
 *What you get.* Per-gate `PASS` / `WARN` / `FAIL` decisions with rationale text, plus acceptance history.
 
-*Limitations.* The review UX is still in flux. Gate selection depends on note traits, and acceptance semantics are still more complex than they should be. Treat review as an agent-driven workflow rather than a first-class end-user CLI today.
+*Limitations.* The review UX is still agent-driven. Gate selection depends on note traits, worker delegation is owned by the current harness, and the selector/create/finalize command sequence is more operator-facing than a finished end-user CLI.
 
 See [REVIEW-SYSTEM.md](./REVIEW-SYSTEM.md) and [FIX-SYSTEM.md](../instructions/FIX-SYSTEM.md) for the current design.
 
@@ -213,6 +213,7 @@ Imperative how-to procedures live in [kb/instructions/](../instructions/) rather
 - [ADR-017: COLLECTION.md is the register convention boundary](./adr/017-collection-md-is-the-register-convention-boundary.md) — why collection files own register conventions while types stay structural
 - [ADR-019: collection-owned link vocabulary with per-destination outbound rules](./adr/019-collection-owned-link-vocabulary.md) — why each `COLLECTION.md` owns outbound rules per destination collection, and why the connect/write skills read it directly instead of a compiled topology
 - [ADR-020: theoretical-default link vocabulary additions](./adr/020-theoretical-default-contrasts-mechanism.md) — the `contrasts` and `mechanism` labels and the directional-asymmetry principle for the theoretical register
+- [ADR-035: review jobs finalize all-or-nothing with derived artifacts](./adr/035-review-jobs-finalize-all-or-nothing-with-derived-artifacts.md) — current review-job state model, strict parsing, derived artifact paths, and finalization-time provenance
 
 ## Collection boundary
 

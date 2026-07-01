@@ -39,7 +39,7 @@ The design principles the system is built on — distinct from the research clai
 
 **Progressive refinement.** Capture with zero friction — a file with no frontmatter is a valid `text`, with zero structural requirements. Add frontmatter and it becomes a `note`. A note can later take a specialized type — a `definition`, an `adr` — but only when its content earns the extra structure. Structure is earned, not imposed ([the wikiwiki principle](https://github.com/zby/commonplace/blob/main/kb/notes/wikiwiki-principle-lowest-friction-capture-then-progressive-refinement.md)).
 
-**Files, not database.** Authored knowledge stays file-backed: universal interface, free versioning via git, zero infrastructure. Derived indexes solve scale problems without replacing the source of truth. The current scoped exception is the experimental review system, which stores review state in SQLite because that state behaves like local operational metadata rather than library content; see [ADR 010](https://github.com/zby/commonplace/blob/main/kb/reference/adr/010-review-state-should-move-to-sqlite-once-reviews-leave-git-and.md).
+**Files, not database.** Authored knowledge stays file-backed: universal interface, free versioning via git, zero infrastructure. Derived indexes solve scale problems without replacing the source of truth. The current scoped exception is the experimental review system, which stores review state in SQLite because that state behaves like local operational metadata rather than library content; see [ADR 010](https://github.com/zby/commonplace/blob/main/kb/reference/adr/010-review-state-should-move-to-sqlite-once-reviews-leave-git-and.md) and the current review-job design in [ADR 035](https://github.com/zby/commonplace/blob/main/kb/reference/adr/035-review-jobs-finalize-all-or-nothing-with-derived-artifacts.md).
 
 **The network IS the knowledge.** Individual notes matter less than their relationships. Every link must articulate its relationship (extends, grounds, contradicts, exemplifies) — "related" is not a relationship. An unconnected note is invisible ([linking methodology](https://github.com/zby/commonplace/blob/main/kb/notes/links-README.md)).
 
@@ -56,7 +56,7 @@ commonplace-github-snapshot <url>    # snapshot a GitHub issue/PR into kb/source
 commonplace-x-snapshot <url>         # snapshot an X/Twitter thread
 ```
 
-The review system ships as a further family of `commonplace-*` commands; see the [review system overview](https://github.com/zby/commonplace/blob/main/kb/reference/REVIEW-SYSTEM.md).
+The review system ships as a further family of `commonplace-*` commands for selecting review targets, creating queued jobs, and finalizing worker-written review output; see the [review system overview](https://github.com/zby/commonplace/blob/main/kb/reference/REVIEW-SYSTEM.md).
 
 **Skills** (`cp-skill-*`) are agent procedures the harness auto-loads from their descriptions: when a task matches a skill, the agent invokes it. `commonplace-init` installs them into a consuming project.
 
