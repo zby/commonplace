@@ -10,7 +10,7 @@ status: current
 
 ## Core claim
 
-Links encode *possibilities*, not obligations. If all reachable readers need the content, inline it. If some readers need it and others don't, link — so the subset needing it can follow, the rest can skip.
+Links encode *possibilities*, not obligations. If all reachable readers (readers who can plausibly arrive at this point in the note) need the content, inline it. If some readers need it and others don't, link — so the subset needing it can follow, the rest can skip.
 
 Each link is a bet on reader state:
 
@@ -43,7 +43,7 @@ A label whose reader-need can't be stated in one sentence is a candidate to drop
 
 ## Two reader classes
 
-**Agent readers.** An agent's context state is partially predictable. `CLAUDE.md` is always loaded. Certain skills preload specific definitions, instructions, or index fragments. Upstream reads in the same session bring notes into context. The author can reason about what an agent probably already has before reaching a given link.
+**Agent readers.** An agent's context state is partially predictable. The repo instruction file `CLAUDE.md` is always loaded. Certain skills preload specific definitions, instructions, or index fragments. Upstream reads in the same session bring notes into context. The author can reason about what an agent probably already has before reaching a given link.
 
 **Human readers.** Opaque context. Humans bring prior knowledge but the author can't know what they've seen or what they're currently holding. Links have to assume the worst case.
 
@@ -53,7 +53,8 @@ This KB is agent-operated. Agents are the primary readers.
 
 1. **Optimise for agent follow/skip decisions.** Link vocabulary and placement should serve the agent's reading path.
 2. **Agents are more predictable.** An author can bet on loaded state in ways that would be reckless for humans. This makes link decisions more tractable.
-3. **Humans can follow the agent path.** A link structure optimised for agents still serves humans — possibly with some friction, but without needing a separate design. The inverse fails: human-optimised links (assume nothing pre-loaded, gloss everything, link every term) over-serve agents and waste tokens on always-already-loaded content.
+3. **Humans can follow the agent path.** A link structure optimised for agents still serves humans — possibly with some friction, but without needing a separate design.
+4. **Human-optimised links over-serve agents.** They assume nothing pre-loaded, gloss everything, link every term, and waste tokens on always-already-loaded content.
 
 When agent-optimisation and human-optimisation conflict, agents win. Don't maintain parallel vocabularies.
 
