@@ -95,13 +95,15 @@ Return the gates reviewed and their PASS/WARN/FAIL/ERROR decisions.
 
 The sub-agent owns only its `bundle_output_path`. The parent owns job creation, dispatch bookkeeping, worker scheduling, finalization, verification, and reporting.
 
+If the parent chooses a concrete worker model or effort before dispatch, check that `build_model_partition(worker_model, worker_effort)` matches the job's `model_partition` before launching the sub-agent. Finalization repeats this compatibility check before recording provenance.
+
 ## Finalize completed jobs
 
 ```bash
 commonplace-finalize-review-job --review-job-id {review-job-id} --runner {worker} --model {worker-model}
 ```
 
-Pass the concrete worker model to `--model`; finalization validates `build_model_partition(--model, --effort)` against the job's `model_partition` before mutating state. If the worker uses an explicit reasoning effort, also pass `--effort {low|medium|high|xhigh}`. If the runner is known but model is not, pass only `--runner`.
+Pass the concrete worker model to `--model`; finalization validates `build_model_partition(--model, --effort)` against the job's `model_partition` before mutating state. If the worker uses an explicit reasoning effort, also pass `--effort {low|medium|high|xhigh}`. If the runner is known but model is not, pass only `--runner`. If the harness exposes opaque execution telemetry, pass it with `--telemetry-json`.
 
 Run finalization once per completed sub-agent output. This reads the job-owned derived `bundle_output_path`, strictly parses the sentinel-bracketed pair bundle, records provenance and per-pair decisions, writes result files, appends acceptance events, and finalizes the review job. Finalization is all-or-nothing: a missing or malformed pair block fails the whole job and records no pair decisions or acceptance events.
 

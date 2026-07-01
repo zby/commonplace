@@ -18,10 +18,42 @@ from commonplace.review import review_db
 from commonplace.review.clock import iso_now
 from commonplace.review.protocol.parser import ParsedPairBundle, parse_pair_bundle
 from commonplace.review.review_db import ReviewPairCompletion, ReviewPairRow
-from commonplace.review.review_model import build_model_partition
+from commonplace.review.review_model import build_model_partition, normalize_model_partition
 
 
 ACTIVE_REVIEW_JOB_STATUSES = frozenset({"queued"})
+
+
+@dataclass(frozen=True)
+class ExecutionMetadata:
+    """Optional, per-harness execution provenance recorded at finalize time.
+
+    This is the single seam for worker-provided execution metadata. The core
+    stores these fields uninterpreted — ``telemetry_json`` in particular is an
+    opaque blob the review system never parses. Harnesses that cannot produce
+    provenance leave the fields ``None``; provenance is never required for a
+    review's identity, which is ``(note_path, gate_path, model_partition)``.
+    """
+
+    runner: str | None = None
+    runner_model: str | None = None
+    runner_effort: str | None = None
+    telemetry_json: str | None = None
+
+    @property
+    def is_empty(self) -> bool:
+        return (
+            self.runner is None
+            and self.runner_model is None
+            and self.runner_effort is None
+            and self.telemetry_json is None
+        )
+
+    @property
+    def derived_model_partition(self) -> str | None:
+        if self.runner_model is None:
+            return None
+        return build_model_partition(self.runner_model, self.runner_effort)
 
 
 @dataclass(frozen=True)
@@ -102,10 +134,7 @@ def finalize_review_job_from_owned_output(
     repo_root: Path,
     db_path: Path,
     review_job_id: int,
-    telemetry_json: str | None = None,
-    runner: str | None = None,
-    runner_model: str | None = None,
-    runner_effort: str | None = None,
+    execution: ExecutionMetadata = ExecutionMetadata(),
 ) -> FinalizeReviewJobOutcome:
     """Finalize one review job from its derived bundle output path."""
     with review_db.connect(db_path) as conn:
@@ -117,9 +146,9 @@ def finalize_review_job_from_owned_output(
         return _precondition_failure(review_job_id, f"review job not found: {review_job_id}")
     if plan.status not in ACTIVE_REVIEW_JOB_STATUSES:
         return _precondition_failure(review_job_id, f"review job is not finalizable: {plan.status}")
-    if runner_model is not None:
-        model_partition = build_model_partition(runner_model, runner_effort)
-        if model_partition != plan.model_partition:
+    model_partition = execution.derived_model_partition
+    if model_partition is not None:
+        if model_partition != normalize_model_partition(plan.model_partition):
             return _precondition_failure(
                 review_job_id,
                 f"review job model_partition {plan.model_partition!r} does not match supplied partition {model_partition!r}",
@@ -138,6 +167,21 @@ def finalize_review_job_from_owned_output(
             f"bundle output file not found: {plan.bundle_output_path}",
         )
 
+    # Record execution provenance once, up front. It is attached to the job row
+    # here so it persists whether the job later completes or fails, and so the
+    # finalization pipeline itself carries no execution-metadata plumbing.
+    if not execution.is_empty:
+        with review_db.connect(db_path) as conn:
+            review_db.attach_execution_data(
+                conn,
+                review_job_id=review_job_id,
+                runner=execution.runner,
+                runner_model=execution.runner_model,
+                runner_effort=execution.runner_effort,
+                telemetry_json=execution.telemetry_json,
+            )
+            conn.commit()
+
     bundle_markdown = bundle_output_path.read_text(encoding="utf-8")
     expected_pairs = tuple((pair.note_path, pair.gate_path) for pair in plan.pairs)
     completed, failure_reason, warnings = finalize_job_bundle_markdown(
@@ -146,10 +190,6 @@ def finalize_review_job_from_owned_output(
         review_job_id=review_job_id,
         expected_pairs=expected_pairs,
         bundle_markdown=bundle_markdown,
-        telemetry_json=telemetry_json,
-        runner=runner,
-        runner_model=runner_model,
-        runner_effort=runner_effort,
     )
 
     completed_pair_count = _completed_pair_count(db_path, review_job_id)
@@ -188,10 +228,6 @@ def record_and_finalize_job(
     review_job_id: int,
     review_pairs: Sequence[ReviewPairCompletion] | None = None,
     completed_at: str | None = None,
-    telemetry_json: str | None = None,
-    runner: str | None = None,
-    runner_model: str | None = None,
-    runner_effort: str | None = None,
 ) -> int:
     review_job = review_db.load_review_job(conn, review_job_id=review_job_id)
     if review_job is None:
@@ -223,14 +259,6 @@ def record_and_finalize_job(
         raise ValueError("; ".join(parts))
 
     finished_at = completed_at or iso_now()
-    review_db.attach_execution_data(
-        conn,
-        review_job_id=review_job_id,
-        runner=runner,
-        telemetry_json=telemetry_json,
-        runner_model=runner_model,
-        runner_effort=runner_effort,
-    )
     review_db.complete_review_pairs(
         conn,
         review_job_id=review_job_id,
@@ -258,29 +286,6 @@ def record_and_finalize_job(
     return len(finalized_pairs)
 
 
-def complete_pairs_and_finalize_job(
-    conn: sqlite3.Connection,
-    *,
-    review_job_id: int,
-    review_pairs: Sequence[ReviewPairCompletion],
-    completed_at: str | None = None,
-    telemetry_json: str | None = None,
-    runner: str | None = None,
-    runner_model: str | None = None,
-    runner_effort: str | None = None,
-) -> int:
-    return record_and_finalize_job(
-        conn,
-        review_job_id=review_job_id,
-        review_pairs=review_pairs,
-        completed_at=completed_at,
-        telemetry_json=telemetry_json,
-        runner=runner,
-        runner_model=runner_model,
-        runner_effort=runner_effort,
-    )
-
-
 # Failure marking.
 
 
@@ -289,7 +294,6 @@ def fail_active_review_jobs(
     db_path: Path,
     review_job_ids: list[int],
     failure_reason: str,
-    telemetry_json: str | None = None,
 ) -> None:
     if not review_job_ids:
         return
@@ -306,11 +310,6 @@ def fail_active_review_jobs(
         for row in rows:
             if row["status"] not in ACTIVE_REVIEW_JOB_STATUSES:
                 continue
-            review_db.attach_execution_data(
-                conn,
-                review_job_id=int(row["review_job_id"]),
-                telemetry_json=telemetry_json,
-            )
             review_db.fail_review_job(
                 conn,
                 review_job_id=int(row["review_job_id"]),
@@ -325,25 +324,12 @@ def fail_job_for_bundle_parse_error(
     *,
     review_job_id: int,
     failure_reason: str,
-    telemetry_json: str | None = None,
-    runner: str | None = None,
-    runner_model: str | None = None,
-    runner_effort: str | None = None,
 ) -> None:
-    review_db.attach_execution_data(
-        conn,
-        review_job_id=review_job_id,
-        runner=runner,
-        telemetry_json=telemetry_json,
-        runner_model=runner_model,
-        runner_effort=runner_effort,
-    )
     review_db.fail_review_job(
         conn,
         review_job_id=review_job_id,
         failure_reason=failure_reason,
         completed_at=iso_now(),
-        telemetry_json=telemetry_json,
     )
 
 
@@ -394,36 +380,6 @@ def write_finalized_job_result_artifacts(
 # Bundle parsing call and finalization orchestration.
 
 
-def finalize_job_from_pairs(
-    conn: sqlite3.Connection,
-    *,
-    review_job_id: int,
-    pairs: tuple[tuple[str, str], ...],
-    parsed: ParsedPairBundle,
-    telemetry_json: str | None = None,
-    runner: str | None = None,
-    runner_model: str | None = None,
-    runner_effort: str | None = None,
-) -> int:
-    review_pairs = tuple(
-        ReviewPairCompletion(
-            note_path=note_path,
-            gate_path=gate_path,
-            decision=parsed.reviews[(note_path, gate_path)].decision,
-        )
-        for note_path, gate_path in pairs
-    )
-    return record_and_finalize_job(
-        conn,
-        review_job_id=review_job_id,
-        review_pairs=review_pairs,
-        telemetry_json=telemetry_json,
-        runner=runner,
-        runner_model=runner_model,
-        runner_effort=runner_effort,
-    )
-
-
 def _review_pair_completions(
     *,
     expected_pairs: tuple[tuple[str, str], ...],
@@ -459,20 +415,12 @@ def _fail_review_job_transaction(
     db_path: Path,
     review_job_id: int,
     failure_reason: str,
-    telemetry_json: str | None = None,
-    runner: str | None = None,
-    runner_model: str | None = None,
-    runner_effort: str | None = None,
 ) -> None:
     with review_db.connect(db_path) as conn:
         fail_job_for_bundle_parse_error(
             conn,
             review_job_id=review_job_id,
             failure_reason=failure_reason,
-            telemetry_json=telemetry_json,
-            runner=runner,
-            runner_model=runner_model,
-            runner_effort=runner_effort,
         )
         conn.commit()
 
@@ -493,10 +441,6 @@ def finalize_job_from_parsed(
     review_job_id: int,
     expected_pairs: tuple[tuple[str, str], ...],
     parsed: ParsedPairBundle,
-    telemetry_json: str | None = None,
-    runner: str | None = None,
-    runner_model: str | None = None,
-    runner_effort: str | None = None,
 ) -> tuple[bool, str | None, tuple[str, ...]]:
     try:
         review_pairs = _review_pair_completions(expected_pairs=expected_pairs, parsed=parsed)
@@ -511,10 +455,6 @@ def finalize_job_from_parsed(
             db_path=db_path,
             review_job_id=review_job_id,
             failure_reason=failure_reason,
-            telemetry_json=telemetry_json,
-            runner=runner,
-            runner_model=runner_model,
-            runner_effort=runner_effort,
         )
         warnings = _refresh_manifest_warning(repo_root=repo_root, db_path=db_path, review_job_id=review_job_id)
         return False, failure_reason, warnings
@@ -525,10 +465,6 @@ def finalize_job_from_parsed(
                 conn,
                 review_job_id=review_job_id,
                 review_pairs=review_pairs,
-                telemetry_json=telemetry_json,
-                runner=runner,
-                runner_model=runner_model,
-                runner_effort=runner_effort,
             )
             write_finalized_job_result_artifacts(
                 conn,
@@ -543,10 +479,6 @@ def finalize_job_from_parsed(
                 db_path=db_path,
                 review_job_id=review_job_id,
                 failure_reason=failure_reason,
-                telemetry_json=telemetry_json,
-                runner=runner,
-                runner_model=runner_model,
-                runner_effort=runner_effort,
             )
             warnings = _refresh_manifest_warning(repo_root=repo_root, db_path=db_path, review_job_id=review_job_id)
             return False, failure_reason, warnings
@@ -562,10 +494,6 @@ def finalize_job_bundle_markdown(
     review_job_id: int,
     expected_pairs: tuple[tuple[str, str], ...],
     bundle_markdown: str,
-    telemetry_json: str | None = None,
-    runner: str | None = None,
-    runner_model: str | None = None,
-    runner_effort: str | None = None,
 ) -> tuple[bool, str | None, tuple[str, ...]]:
     try:
         parsed = parse_pair_bundle(bundle_markdown, expected_pairs=expected_pairs)
@@ -575,10 +503,6 @@ def finalize_job_bundle_markdown(
             db_path=db_path,
             review_job_id=review_job_id,
             failure_reason=reason,
-            telemetry_json=telemetry_json,
-            runner=runner,
-            runner_model=runner_model,
-            runner_effort=runner_effort,
         )
         warnings = _refresh_manifest_warning(repo_root=repo_root, db_path=db_path, review_job_id=review_job_id)
         return False, reason, warnings
@@ -589,8 +513,4 @@ def finalize_job_bundle_markdown(
         review_job_id=review_job_id,
         expected_pairs=expected_pairs,
         parsed=parsed,
-        telemetry_json=telemetry_json,
-        runner=runner,
-        runner_model=runner_model,
-        runner_effort=runner_effort,
     )

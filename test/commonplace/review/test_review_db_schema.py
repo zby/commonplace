@@ -284,6 +284,77 @@ def test_load_review_job_exposes_created_at(tmp_path: Path) -> None:
     assert review_job.status == "queued"
 
 
+def test_create_job_validates_runner_model_partition(tmp_path: Path) -> None:
+    db_path = tmp_path / "review-store.sqlite"
+    review_db.ensure_db(db_path)
+
+    with review_db.connect(db_path) as conn:
+        with pytest.raises(ValueError, match="does not match model_partition"):
+            review_db.create_job(
+                conn,
+                model_partition="unknown-model-high",
+                runner="live-agent",
+                runner_model="unknown-model",
+                created_at="2026-04-10T10:03:00+02:00",
+                status="queued",
+                packing="note",
+            )
+
+        review_job_id = review_db.create_job(
+            conn,
+            model_partition="unknown-model-high",
+            runner="live-agent",
+            runner_model="unknown-model",
+            runner_effort="HIGH",
+            created_at="2026-04-10T10:03:00+02:00",
+            status="queued",
+            packing="note",
+        )
+        row = conn.execute(
+            "SELECT runner_model, runner_effort FROM review_jobs WHERE review_job_id = ?",
+            (review_job_id,),
+        ).fetchone()
+
+    assert row["runner_model"] == "unknown-model"
+    assert row["runner_effort"] == "high"
+
+
+def test_attach_execution_data_validates_runner_model_partition(tmp_path: Path) -> None:
+    db_path = tmp_path / "review-store.sqlite"
+    review_db.ensure_db(db_path)
+
+    with review_db.connect(db_path) as conn:
+        review_job_id = review_db.create_job(
+            conn,
+            model_partition="unknown-model-high",
+            runner=None,
+            created_at="2026-04-10T10:03:00+02:00",
+            status="queued",
+            packing="note",
+        )
+
+        with pytest.raises(ValueError, match="does not match model_partition"):
+            review_db.attach_execution_data(
+                conn,
+                review_job_id=review_job_id,
+                runner_model="unknown-model",
+            )
+
+        review_db.attach_execution_data(
+            conn,
+            review_job_id=review_job_id,
+            runner_model="unknown-model",
+            runner_effort="HIGH",
+        )
+        row = conn.execute(
+            "SELECT runner_model, runner_effort FROM review_jobs WHERE review_job_id = ?",
+            (review_job_id,),
+        ).fetchone()
+
+    assert row["runner_model"] == "unknown-model"
+    assert row["runner_effort"] == "high"
+
+
 def test_snapshot_file_rehydrates_hash_only_snapshot_rows(tmp_path: Path) -> None:
     db_path = tmp_path / "review-store.sqlite"
     repo = tmp_path / "repo"

@@ -72,12 +72,12 @@ The full procedure is in [run review batches](../instructions/run-review-batches
 3. Finalize each completed output:
 
    ```
-   commonplace-finalize-review-job --review-job-id {id} [--runner {worker}] [--model {model} [--effort {effort}]]
+   commonplace-finalize-review-job --review-job-id {id} [--runner {worker}] [--model {model} [--effort {effort}]] [--telemetry-json {json}]
    ```
 
 **Finalization is all-or-nothing.** If any expected pair is missing, duplicated, unexpected, malformed, or lacks a valid result line, the job fails and appends no acceptance events — a failed job accepts nothing. On success, every pair is recorded and one acceptance event per pair is appended.
 
-**Finalization-time provenance is optional.** When supplied, `--model` (with optional `--effort`) is validated against the job's model partition before any state changes, and the runner/model/effort are recorded. `--effort` requires `--model`.
+**Finalization-time provenance is optional.** When supplied, `--model` (with optional `--effort`) is validated against the job's model partition before any state changes, and the runner/model/effort are recorded. `--effort` requires `--model`. `--telemetry-json` stores opaque harness telemetry without making it review identity.
 
 ## Reviewing stale pairs
 
@@ -126,7 +126,7 @@ With `--model` omitted, the selector reports only model-agnostic missing-review 
 
 **Create jobs** — `commonplace-create-review-jobs --input - --grouping {note|gate}`. Consumes selector JSON.
 
-**Finalize** — `commonplace-finalize-review-job --review-job-id {id} [--runner {worker}] [--model {model} [--effort {effort}]]`.
+**Finalize** — `commonplace-finalize-review-job --review-job-id {id} [--runner {worker}] [--model {model} [--effort {effort}]] [--telemetry-json {json}]`.
 
 **Ack** — `commonplace-ack-gate-review --model {model-partition} {note_path} {gate_id}...`.
 

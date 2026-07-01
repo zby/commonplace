@@ -48,7 +48,7 @@ def test_init_project_seeds_scaffold_files(tmp_path: Path) -> None:
     assert (tmp_path / "kb" / "commonplace" / "instructions" / "COLLECTION.md").is_file()
     assert (tmp_path / "kb" / "commonplace" / "notes" / "COLLECTION.md").is_file()
     assert (tmp_path / "kb" / "commonplace" / "reference" / "COLLECTION.md").is_file()
-    assert (tmp_path / "kb" / "commonplace" / "reference" / "REVIEW-SYSTEM.md").is_file()
+    assert (tmp_path / "kb" / "commonplace" / "reference" / "README-REVIEW-SYSTEM.md").is_file()
     assert (tmp_path / "kb" / "commonplace" / "instructions" / "FIX-SYSTEM.md").is_file()
     assert (tmp_path / "kb" / "commonplace" / "instructions" / "cp-skill-write" / "SKILL.md").is_file()
     assert (tmp_path / "kb" / "commonplace" / "instructions" / "cp-skill-connect" / "SKILL.md").is_file()

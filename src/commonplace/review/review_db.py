@@ -15,6 +15,7 @@ from typing import Sequence
 from commonplace.review.artifacts import bundle_output_path_rel, prompt_path_rel, result_paths_by_pair_id
 from commonplace.review.paths import gate_id_from_stored_path
 from commonplace.review.protocol.decisions import normalize_review_decision
+from commonplace.review.review_model import build_model_partition, normalize_model_partition, normalize_reasoning_effort
 from commonplace.review.review_schema import init_db
 
 DEFAULT_DB_PATH = Path("kb/reports/review-store.sqlite")
@@ -22,6 +23,32 @@ SCHEMA_PATH = "review-schema.sql"
 DB_ENV_VAR = "COMMONPLACE_REVIEW_DB"
 PACKING_VALUES = frozenset({"note", "gate"})
 JOB_STATUS_VALUES = frozenset({"queued", "completed", "failed"})
+
+
+def _validated_runner_effort(
+    *,
+    model_partition: str,
+    runner_model: str | None,
+    runner_effort: str | None,
+) -> str | None:
+    if runner_effort is not None:
+        normalized_effort = normalize_reasoning_effort(runner_effort)
+        if normalized_effort is None:
+            raise ValueError(f"invalid runner effort: {runner_effort}")
+        runner_effort = normalized_effort
+    if runner_model is None:
+        if runner_effort is not None:
+            raise ValueError("runner_effort requires runner_model")
+        return None
+
+    supplied_partition = build_model_partition(runner_model, runner_effort)
+    expected_partition = normalize_model_partition(model_partition)
+    if supplied_partition != expected_partition:
+        raise ValueError(
+            f"runner model/effort partition {supplied_partition!r} "
+            f"does not match model_partition {expected_partition!r}"
+        )
+    return runner_effort
 
 
 @dataclass(frozen=True)
@@ -326,6 +353,11 @@ def create_job(
         raise ValueError(f"invalid review job packing: {packing}")
     if status not in JOB_STATUS_VALUES:
         raise ValueError(f"invalid review job status: {status}")
+    runner_effort = _validated_runner_effort(
+        model_partition=model_partition,
+        runner_model=runner_model,
+        runner_effort=runner_effort,
+    )
     cursor = conn.execute(
         """
         INSERT INTO review_jobs (
@@ -592,6 +624,26 @@ def attach_execution_data(
     runner_model: str | None = None,
     runner_effort: str | None = None,
 ) -> None:
+    if runner_model is not None or runner_effort is not None:
+        row = conn.execute(
+            """
+            SELECT model_partition, runner_model, runner_effort
+            FROM review_jobs
+            WHERE review_job_id = ?
+            """,
+            (review_job_id,),
+        ).fetchone()
+        if row is None:
+            return
+        effective_model = runner_model if runner_model is not None else row["runner_model"]
+        effective_effort = runner_effort if runner_effort is not None else row["runner_effort"]
+        normalized_effort = _validated_runner_effort(
+            model_partition=row["model_partition"],
+            runner_model=effective_model,
+            runner_effort=effective_effort,
+        )
+        if runner_effort is not None:
+            runner_effort = normalized_effort
     conn.execute(
         """
         UPDATE review_jobs
@@ -610,18 +662,16 @@ def complete_review_job(
     *,
     review_job_id: int,
     completed_at: str,
-    telemetry_json: str | None = None,
 ) -> None:
     conn.execute(
         """
         UPDATE review_jobs
         SET status = 'completed',
             completed_at = ?,
-            telemetry_json = COALESCE(?, telemetry_json),
             failure_reason = NULL
         WHERE review_job_id = ?
         """,
-        (completed_at, telemetry_json, review_job_id),
+        (completed_at, review_job_id),
     )
 
 
@@ -631,7 +681,6 @@ def fail_review_job(
     review_job_id: int,
     failure_reason: str,
     completed_at: str,
-    telemetry_json: str | None = None,
 ) -> None:
     conn.execute(
         """
@@ -658,14 +707,12 @@ def fail_review_job(
         UPDATE review_jobs
         SET status = 'failed',
             completed_at = ?,
-            failure_reason = ?,
-            telemetry_json = COALESCE(?, telemetry_json)
+            failure_reason = ?
         WHERE review_job_id = ?
         """,
         (
             completed_at,
             failure_reason,
-            telemetry_json,
             review_job_id,
         ),
     )

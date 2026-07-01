@@ -7,7 +7,7 @@ import argparse
 import json
 from pathlib import Path
 
-from commonplace.review.finalization import finalize_review_job_from_owned_output
+from commonplace.review.finalization import ExecutionMetadata, finalize_review_job_from_owned_output
 from commonplace.review.review_db import prepare_review_db
 from commonplace.review.review_model import REASONING_EFFORT_VALUES, normalize_reasoning_effort
 
@@ -22,6 +22,10 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser.add_argument("--runner", help="Worker or execution medium that produced the output.")
     parser.add_argument("--model", help="Concrete worker model that produced the output.")
     parser.add_argument("--effort", choices=REASONING_EFFORT_VALUES, help="Concrete worker reasoning effort.")
+    parser.add_argument(
+        "--telemetry-json",
+        help="Opaque per-harness execution telemetry blob, stored verbatim and never interpreted.",
+    )
     parser.add_argument("--db", help="Override COMMONPLACE_REVIEW_DB.")
     args = parser.parse_args(argv)
 
@@ -34,6 +38,7 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     if args.effort is not None and runner_model is None:
         parser.error("--effort requires --model")
     runner_effort = normalize_reasoning_effort(args.effort)
+    telemetry_json = args.telemetry_json if args.telemetry_json else None
 
     repo_root = cwd if cwd is not None else Path.cwd()
     db_path = prepare_review_db(repo_root, args.db)
@@ -41,9 +46,12 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
         repo_root=repo_root,
         db_path=db_path,
         review_job_id=args.review_job_id,
-        runner=runner,
-        runner_model=runner_model,
-        runner_effort=runner_effort,
+        execution=ExecutionMetadata(
+            runner=runner,
+            runner_model=runner_model,
+            runner_effort=runner_effort,
+            telemetry_json=telemetry_json,
+        ),
     )
     _print_json(outcome.to_payload())
     return outcome.exit_code
