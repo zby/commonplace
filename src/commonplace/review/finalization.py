@@ -104,22 +104,6 @@ class FinalizeReviewJobOutcome:
 # Preconditions and output loading.
 
 
-def _completed_pair_count(db_path: Path, review_job_id: int) -> int:
-    with review_db.connect(db_path) as conn:
-        plan = review_db.load_review_job_plan(conn, review_job_id=review_job_id, require_paths=False)
-        if plan is None:
-            return 0
-        return sum(1 for pair in plan.pairs if pair.decision is not None)
-
-
-def _job_status(db_path: Path, review_job_id: int) -> str | None:
-    with review_db.connect(db_path) as conn:
-        plan = review_db.load_review_job_plan(conn, review_job_id=review_job_id, require_paths=False)
-        if plan is None:
-            return None
-        return plan.status
-
-
 def _precondition_failure(review_job_id: int, reason: str) -> FinalizeReviewJobOutcome:
     return FinalizeReviewJobOutcome(
         completed=False,
@@ -142,36 +126,35 @@ def finalize_review_job_from_owned_output(
             plan = review_db.load_review_job_plan(conn, review_job_id=review_job_id, require_paths=True)
         except ValueError as exc:
             return _precondition_failure(review_job_id, str(exc))
-    if plan is None:
-        return _precondition_failure(review_job_id, f"review job not found: {review_job_id}")
-    if plan.status not in ACTIVE_REVIEW_JOB_STATUSES:
-        return _precondition_failure(review_job_id, f"review job is not finalizable: {plan.status}")
-    model_partition = execution.derived_model_partition
-    if model_partition is not None:
-        if model_partition != normalize_model_partition(plan.model_partition):
+        if plan is None:
+            return _precondition_failure(review_job_id, f"review job not found: {review_job_id}")
+        if plan.status not in ACTIVE_REVIEW_JOB_STATUSES:
+            return _precondition_failure(review_job_id, f"review job is not finalizable: {plan.status}")
+        model_partition = execution.derived_model_partition
+        if model_partition is not None:
+            if model_partition != normalize_model_partition(plan.model_partition):
+                return _precondition_failure(
+                    review_job_id,
+                    f"review job model_partition {plan.model_partition!r} does not match supplied partition {model_partition!r}",
+                )
+        try:
+            bundle_output_path = repo_relative_path(
+                repo_root,
+                plan.bundle_output_path,
+                label="bundle output path",
+            )
+        except ValueError as exc:
+            return _precondition_failure(review_job_id, str(exc))
+        if not bundle_output_path.is_file():
             return _precondition_failure(
                 review_job_id,
-                f"review job model_partition {plan.model_partition!r} does not match supplied partition {model_partition!r}",
+                f"bundle output file not found: {plan.bundle_output_path}",
             )
-    try:
-        bundle_output_path = repo_relative_path(
-            repo_root,
-            plan.bundle_output_path,
-            label="bundle output path",
-        )
-    except ValueError as exc:
-        return _precondition_failure(review_job_id, str(exc))
-    if not bundle_output_path.is_file():
-        return _precondition_failure(
-            review_job_id,
-            f"bundle output file not found: {plan.bundle_output_path}",
-        )
 
-    # Record execution provenance once, up front. It is attached to the job row
-    # here so it persists whether the job later completes or fails, and so the
-    # finalization pipeline itself carries no execution-metadata plumbing.
-    if not execution.is_empty:
-        with review_db.connect(db_path) as conn:
+        # Record execution provenance once, up front. It is attached to the job row
+        # here so it persists whether the job later completes or fails, and so the
+        # finalization pipeline itself carries no execution-metadata plumbing.
+        if not execution.is_empty:
             review_db.attach_execution_data(
                 conn,
                 review_job_id=review_job_id,
@@ -181,45 +164,58 @@ def finalize_review_job_from_owned_output(
                 telemetry_json=execution.telemetry_json,
             )
             conn.commit()
+            refreshed_plan = review_db.load_review_job_plan(conn, review_job_id=review_job_id, require_paths=True)
+            if refreshed_plan is not None:
+                plan = refreshed_plan
 
-    bundle_markdown = bundle_output_path.read_text(encoding="utf-8")
-    expected_pairs = tuple((pair.note_path, pair.gate_path) for pair in plan.pairs)
-    completed, failure_reason, warnings = finalize_job_bundle_markdown(
-        repo_root=repo_root,
-        db_path=db_path,
-        review_job_id=review_job_id,
-        expected_pairs=expected_pairs,
-        bundle_markdown=bundle_markdown,
-    )
-
-    completed_pair_count = _completed_pair_count(db_path, review_job_id)
-    job_status = _job_status(db_path, review_job_id)
-    failed_tuple = () if failure_reason is None else ((review_job_id, failure_reason),)
-    return FinalizeReviewJobOutcome(
-        completed=completed,
-        state_changed=True,
-        review_job_id=review_job_id,
-        completed_pair_count=completed_pair_count,
-        failed=failed_tuple,
-        job_status=job_status,
-        warnings=warnings,
-    )
+        bundle_markdown = bundle_output_path.read_text(encoding="utf-8")
+        expected_pairs = tuple((pair.note_path, pair.gate_path) for pair in plan.pairs)
+        try:
+            parsed = parse_pair_bundle(bundle_markdown, expected_pairs=expected_pairs)
+            review_pairs = _review_pair_completions(expected_pairs=expected_pairs, parsed=parsed)
+            _prevalidate_result_paths(repo_root, plan)
+            finalized_pairs = record_and_finalize_job(
+                conn,
+                review_job_id=review_job_id,
+                review_pairs=review_pairs,
+            )
+            write_pair_result_files_to_derived_paths(
+                repo_root=repo_root,
+                job=plan,
+                pairs=finalized_pairs,
+                canonical_texts=parsed.canonical_texts,
+            )
+        except (ValueError, OSError, sqlite3.IntegrityError) as exc:
+            failure_reason = str(exc)
+            warnings = _mark_failed(
+                conn,
+                repo_root=repo_root,
+                review_job_id=review_job_id,
+                failure_reason=failure_reason,
+            )
+            return FinalizeReviewJobOutcome(
+                completed=False,
+                state_changed=True,
+                review_job_id=review_job_id,
+                completed_pair_count=0,
+                failed=((review_job_id, failure_reason),),
+                job_status="failed",
+                warnings=warnings,
+            )
+        conn.commit()
+        warnings = _refresh_manifest_warning(conn, repo_root=repo_root, review_job_id=review_job_id)
+        return FinalizeReviewJobOutcome(
+            completed=True,
+            state_changed=True,
+            review_job_id=review_job_id,
+            completed_pair_count=len(finalized_pairs),
+            failed=(),
+            job_status="completed",
+            warnings=warnings,
+        )
 
 
 # DB completion and acceptance.
-
-
-def _job_coverage_failure(pairs: Sequence[ReviewPairRow]) -> str | None:
-    if not pairs:
-        return "review job has no pairs"
-    missing = [
-        f"{pair.note_path} :: {pair.gate_path}"
-        for pair in pairs
-        if pair.decision is None
-    ]
-    if not missing:
-        return None
-    return f"missing pairs: {', '.join(sorted(missing))}"
 
 
 def record_and_finalize_job(
@@ -228,35 +224,18 @@ def record_and_finalize_job(
     review_job_id: int,
     review_pairs: Sequence[ReviewPairCompletion] | None = None,
     completed_at: str | None = None,
-) -> int:
+) -> list[ReviewPairRow]:
+    """Record trusted completions for a job and return refreshed pair rows.
+
+    The caller owns pair coverage validation before this function runs. This
+    function keeps DB-local validation and acceptance writes together, but does
+    not re-derive whether the completion set exactly matches the requested job.
+    """
     review_job = review_db.load_review_job(conn, review_job_id=review_job_id)
     if review_job is None:
         raise ValueError(f"review job not found: {review_job_id}")
     if review_job.status not in ACTIVE_REVIEW_JOB_STATUSES:
         raise ValueError(f"review job is not finalizable: {review_job.status}")
-    requested_pairs = review_db.load_review_pairs_for_job(conn, review_job_id=review_job_id)
-    if not requested_pairs:
-        raise ValueError("review job has no pairs")
-    expected_keys = {(pair.note_path, pair.gate_path) for pair in requested_pairs}
-    completed_keys = {
-        (pair.note_path, pair.gate_path)
-        for pair in review_pairs or ()
-    }
-    if completed_keys != expected_keys:
-        missing = expected_keys - completed_keys
-        extra = completed_keys - expected_keys
-        parts: list[str] = []
-        if missing:
-            parts.append(
-                "missing pairs: "
-                + ", ".join(f"{note_path} :: {gate_path}" for note_path, gate_path in sorted(missing))
-            )
-        if extra:
-            parts.append(
-                "unexpected pairs: "
-                + ", ".join(f"{note_path} :: {gate_path}" for note_path, gate_path in sorted(extra))
-            )
-        raise ValueError("; ".join(parts))
 
     finished_at = completed_at or iso_now()
     review_db.complete_review_pairs(
@@ -267,9 +246,6 @@ def record_and_finalize_job(
     )
 
     finalized_pairs = review_db.load_review_pairs_for_job(conn, review_job_id=review_job_id)
-    failure_reason = _job_coverage_failure(finalized_pairs)
-    if failure_reason is not None:
-        raise ValueError(failure_reason)
     for pair in finalized_pairs:
         review_db.append_acceptance_event(
             conn,
@@ -283,7 +259,7 @@ def record_and_finalize_job(
         )
 
     review_db.complete_review_job(conn, review_job_id=review_job_id, completed_at=finished_at)
-    return len(finalized_pairs)
+    return finalized_pairs
 
 
 # Failure marking.
@@ -319,20 +295,6 @@ def fail_active_review_jobs(
         conn.commit()
 
 
-def fail_job_for_bundle_parse_error(
-    conn: sqlite3.Connection,
-    *,
-    review_job_id: int,
-    failure_reason: str,
-) -> None:
-    review_db.fail_review_job(
-        conn,
-        review_job_id=review_job_id,
-        failure_reason=failure_reason,
-        completed_at=iso_now(),
-    )
-
-
 # Artifact writes and manifest refresh.
 
 
@@ -356,24 +318,6 @@ def write_job_manifest_from_db(
         bundle_output_path=plan.bundle_output_path,
         pairs=plan.pairs,
         failure_reason=plan.failure_reason,
-    )
-
-
-def write_finalized_job_result_artifacts(
-    conn: sqlite3.Connection,
-    *,
-    repo_root: Path,
-    review_job_id: int,
-    parsed: ParsedPairBundle,
-) -> None:
-    plan = review_db.load_review_job_plan(conn, review_job_id=review_job_id, require_paths=True)
-    if plan is None:
-        return
-    write_pair_result_files_to_derived_paths(
-        repo_root=repo_root,
-        job=plan,
-        pairs=plan.pairs,
-        canonical_texts=parsed.canonical_texts,
     )
 
 
@@ -410,107 +354,32 @@ def _prevalidate_result_paths(repo_root: Path, plan: review_db.ReviewJobPlan) ->
         repo_relative_path(repo_root, path, label="result_path")
 
 
-def _fail_review_job_transaction(
+def _refresh_manifest_warning(
+    conn: sqlite3.Connection,
     *,
-    db_path: Path,
+    repo_root: Path,
     review_job_id: int,
-    failure_reason: str,
-) -> None:
-    with review_db.connect(db_path) as conn:
-        fail_job_for_bundle_parse_error(
-            conn,
-            review_job_id=review_job_id,
-            failure_reason=failure_reason,
-        )
-        conn.commit()
-
-
-def _refresh_manifest_warning(*, repo_root: Path, db_path: Path, review_job_id: int) -> tuple[str, ...]:
+) -> tuple[str, ...]:
     try:
-        with review_db.connect(db_path) as conn:
-            write_job_manifest_from_db(conn, repo_root=repo_root, review_job_id=review_job_id)
+        write_job_manifest_from_db(conn, repo_root=repo_root, review_job_id=review_job_id)
     except (OSError, ValueError) as exc:
         return (f"manifest refresh failed: {exc}",)
     return ()
 
 
-def finalize_job_from_parsed(
+def _mark_failed(
+    conn: sqlite3.Connection,
     *,
     repo_root: Path,
-    db_path: Path,
     review_job_id: int,
-    expected_pairs: tuple[tuple[str, str], ...],
-    parsed: ParsedPairBundle,
-) -> tuple[bool, str | None, tuple[str, ...]]:
-    try:
-        review_pairs = _review_pair_completions(expected_pairs=expected_pairs, parsed=parsed)
-        with review_db.connect(db_path) as conn:
-            plan = review_db.load_review_job_plan(conn, review_job_id=review_job_id, require_paths=True)
-            if plan is None:
-                raise ValueError(f"review job not found: {review_job_id}")
-            _prevalidate_result_paths(repo_root, plan)
-    except ValueError as exc:
-        failure_reason = str(exc)
-        _fail_review_job_transaction(
-            db_path=db_path,
-            review_job_id=review_job_id,
-            failure_reason=failure_reason,
-        )
-        warnings = _refresh_manifest_warning(repo_root=repo_root, db_path=db_path, review_job_id=review_job_id)
-        return False, failure_reason, warnings
-
-    with review_db.connect(db_path) as conn:
-        try:
-            record_and_finalize_job(
-                conn,
-                review_job_id=review_job_id,
-                review_pairs=review_pairs,
-            )
-            write_finalized_job_result_artifacts(
-                conn,
-                repo_root=repo_root,
-                review_job_id=review_job_id,
-                parsed=parsed,
-            )
-        except (OSError, sqlite3.IntegrityError, ValueError) as exc:
-            conn.rollback()
-            failure_reason = str(exc)
-            _fail_review_job_transaction(
-                db_path=db_path,
-                review_job_id=review_job_id,
-                failure_reason=failure_reason,
-            )
-            warnings = _refresh_manifest_warning(repo_root=repo_root, db_path=db_path, review_job_id=review_job_id)
-            return False, failure_reason, warnings
-        conn.commit()
-    warnings = _refresh_manifest_warning(repo_root=repo_root, db_path=db_path, review_job_id=review_job_id)
-    return True, None, warnings
-
-
-def finalize_job_bundle_markdown(
-    *,
-    repo_root: Path,
-    db_path: Path,
-    review_job_id: int,
-    expected_pairs: tuple[tuple[str, str], ...],
-    bundle_markdown: str,
-) -> tuple[bool, str | None, tuple[str, ...]]:
-    try:
-        parsed = parse_pair_bundle(bundle_markdown, expected_pairs=expected_pairs)
-    except ValueError as exc:
-        reason = str(exc)
-        _fail_review_job_transaction(
-            db_path=db_path,
-            review_job_id=review_job_id,
-            failure_reason=reason,
-        )
-        warnings = _refresh_manifest_warning(repo_root=repo_root, db_path=db_path, review_job_id=review_job_id)
-        return False, reason, warnings
-
-    return finalize_job_from_parsed(
-        repo_root=repo_root,
-        db_path=db_path,
+    failure_reason: str,
+) -> tuple[str, ...]:
+    conn.rollback()
+    review_db.fail_review_job(
+        conn,
         review_job_id=review_job_id,
-        expected_pairs=expected_pairs,
-        parsed=parsed,
+        failure_reason=failure_reason,
+        completed_at=iso_now(),
     )
+    conn.commit()
+    return _refresh_manifest_warning(conn, repo_root=repo_root, review_job_id=review_job_id)

@@ -616,6 +616,74 @@ def test_finalize_review_job_uses_job_owned_paths_and_writes_provenance_frontmat
     assert parsed_frontmatter.data["reviewed_at"] == row["reviewed_at"]
 
 
+def test_finalize_review_job_result_write_failure_rolls_back_and_preserves_provenance(
+    tmp_path: Path,
+    monkeypatch,
+) -> None:
+    repo, db_path = build_repo_fixture(tmp_path)
+    prepared = json.loads(
+        create_jobs_from_targets(
+            repo,
+            db_path,
+            [target("kb/notes/sample.md", GATE_ONE_PATH, GATE_ONE)],
+        ).stdout
+    )
+    prepared_job = prepared["jobs"][0]
+    review_job_id = prepared_job["review_job_id"]
+    write(repo / prepared_job["bundle_output_path"], single_pair_bundle_output())
+
+    from commonplace.review import finalization
+
+    def fail_result_write(**_kwargs):
+        raise OSError("simulated result write failure")
+
+    monkeypatch.setattr(finalization, "write_pair_result_files_to_derived_paths", fail_result_write)
+
+    result = run_cli(
+        "finalize_review_job",
+        "--review-job-id",
+        str(review_job_id),
+        "--runner",
+        "live-agent",
+        "--model",
+        "test-model",
+        cwd=repo,
+        db_path=db_path,
+        check=False,
+    )
+
+    assert result.returncode == 1
+    payload = json.loads(result.stdout)
+    assert payload["completed"] is False
+    assert payload["completed_pair_count"] == 0
+    assert payload["failed"] == [
+        {"review_job_id": review_job_id, "reason": "simulated result write failure"}
+    ]
+    assert payload["job"] == {"review_job_id": review_job_id, "status": "failed"}
+    with sqlite3.connect(db_path) as conn:
+        conn.row_factory = sqlite3.Row
+        job = conn.execute(
+            "SELECT status, failure_reason, runner, runner_model, runner_effort FROM review_jobs"
+        ).fetchone()
+        pair = conn.execute("SELECT decision, reviewed_at FROM review_pairs").fetchone()
+        acceptance_count = conn.execute("SELECT COUNT(*) FROM acceptance_events").fetchone()[0]
+    assert (
+        job["status"],
+        job["failure_reason"],
+        job["runner"],
+        job["runner_model"],
+        job["runner_effort"],
+    ) == ("failed", "simulated result write failure", "live-agent", "test-model", None)
+    assert (pair["decision"], pair["reviewed_at"]) == (None, None)
+    assert acceptance_count == 0
+
+    artifact_dir = repo / "kb" / "reports" / "bundle-reviews" / f"review-job-{review_job_id}"
+    assert not (artifact_dir / "undefined-terms.md").exists()
+    manifest = json.loads((artifact_dir / "MANIFEST.json").read_text(encoding="utf-8"))
+    assert manifest["status"] == "failed"
+    assert manifest["pairs"][0]["status"] == "failed"
+
+
 def test_finalize_review_job_finalizes_queued_job(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
     prepared = json.loads(
