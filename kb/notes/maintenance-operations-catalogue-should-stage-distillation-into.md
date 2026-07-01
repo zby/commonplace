@@ -8,7 +8,7 @@ status: current
 
 # Maintenance operations catalogue should stage distillation into instructions
 
-Periodic operations start as manual procedures. A catalogue keeps them visible, comparable, and editable while they are still being learned. Once an operation is stable enough, it should be distilled into `kb/instructions/` as an execution-oriented procedure.
+Periodic operations start as manual procedures. A catalogue keeps them visible, comparable, and editable while they are still being learned. Once an operation is stable enough, it should be [distilled](./definitions/distillation.md) into `kb/instructions/` as an execution-oriented procedure.
 
 This note is that staging ground.
 
