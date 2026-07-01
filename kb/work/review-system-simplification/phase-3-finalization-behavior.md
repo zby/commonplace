@@ -74,11 +74,14 @@ Replace partial salvage with one job-level invariant:
 - A queued job has no accepted pairs.
 - A failed job has no accepted pairs, no pair decisions, and no acceptance events.
 
-Do not replace `pair_status` with another persisted per-pair state. Derive display status from the parent job:
+Do not replace `pair_status` with another persisted per-pair state. Pin the row/API shape explicitly to avoid accidentally recreating per-pair state:
 
-- job `queued` -> pair display state `pending`
-- job `completed` -> pair display state `completed`
-- job `failed` -> pair display state `failed` or `not accepted`
+- `ReviewPairRow` drops `pair_status` and gains **no** status-like replacement field — not `job_status`, not `display_status`. A pair row carries only request identity, snapshots, decision, and the derived `result_path`.
+- Display status is computed at the rendering boundary (JSON payloads, `review_job_list`, manifest writing) from the parent job's status, which `ReviewJobRow`/`ReviewJobPlan` already carry. Do not thread a per-pair status field through those payloads.
+- Derive display status from the parent job:
+  - job `queued` -> pair display state `pending`
+  - job `completed` -> pair display state `completed`
+  - job `failed` -> pair display state `failed` or `not accepted`
 
 Implementation details:
 
@@ -88,11 +91,17 @@ Implementation details:
 - Precompute every expected `ReviewPairCompletion` and every derived result path from the loaded job plan before mutating state.
 - Keep all result-path work job-scoped by using `result_paths_by_pair_id` / `write_pair_result_files_to_derived_paths`; do not make finalization depend on pair-local path derivation.
 - Validate every result path is repo-relative and inside the repo before completing pairs or appending acceptance events.
+- **Refactor note — stop the current partial-salvage failure marking.** Today `record_and_finalize_job` completes pairs, appends acceptance events for the completed subset, *then* runs `_job_coverage_failure` and, on a miss, calls `mark_missing_pairs` + `fail_review_job` in the same committed transaction — so a failed job keeps acceptance events for its completed pairs. Invert this: run coverage/parse preflight *before* any `complete_review_pairs` or `append_acceptance_event` call. `record_and_finalize_job` and `complete_pairs_and_finalize_job` must no longer append-then-fail or call `mark_missing_pairs`; delete that path.
 - Within the DB transaction, write provenance, complete all pair rows, append acceptance events, and complete the job only after all preflight checks have passed.
 - Keep acceptance events after pair completion, but before commit, so DB rollback removes both together.
-- Write result artifacts only after all paths have been prevalidated. If a filesystem write fails, roll back the DB transaction, mark the job failed in a failure transaction, and append no acceptance events. The evidence invariant is DB-owned: selectors must ignore artifacts from non-completed jobs.
-- Refresh `MANIFEST.json` after final state is known. The manifest is display/debug output; it must not become pipeline state.
-- On parse, coverage, path, DB, or artifact failure, mark the job failed and leave pair decisions null.
+- **Enforce the evidence invariant at the boundary, not just by convention.** `current_gate_acceptances` currently trusts raw `acceptance_events`, and `append_acceptance_event` has no job-status guard, so a stray append would leak into freshness. Join `acceptance_events -> review_pairs -> review_jobs` in the `current_gate_acceptances` view and filter `review_jobs.status = 'completed' AND review_pairs.decision IS NOT NULL`. This is the authoritative guard (robust to any caller). Optionally also add a defensive non-null-decision check in `append_acceptance_event`; do not rely on a write-time status check alone, since the job flips to `completed` in the same transaction.
+
+Failure handling separates the two artifact kinds:
+
+- **Result files (evidence): fatal.** Write them only after all paths are prevalidated. If a filesystem write fails, roll back the DB transaction, then mark the job failed in a separate failure transaction, and append no acceptance events.
+- **`MANIFEST.json` (display/debug): non-fatal.** Refresh it only *after* the DB completion transaction has committed. A manifest refresh failure must not fail an already-completed job — report it non-fatally (warn) and leave job state completed. The manifest must never become pipeline state.
+- The evidence invariant is DB-owned: selectors must ignore artifacts from non-completed jobs.
+- On parse, coverage, path, DB, or result-file failure (but not manifest failure), mark the job failed and leave pair decisions null.
 - Remove `mark_missing_pairs` and all missing-pair status code paths.
 - Drop the `review_pairs.pair_status` column and `idx_review_pairs_pair_status` index from `review-schema.sql`.
 - Bump `REVIEW_SCHEMA_VERSION` and remove `idx_review_pairs_pair_status` from `EXPECTED_REVIEW_INDEXES` in `review_schema.py`.
@@ -156,6 +165,7 @@ Before ending this phase:
 - Smoke finalization with `--model --effort`.
 - Smoke a model/effort mismatch: command fails and leaves job state unchanged.
 - Smoke a two-pair job with one missing block: job fails, pair decisions remain null, no acceptance events are appended, and selectors do not treat any result files as evidence.
+- Boundary test: an `acceptance_events` row whose parent job is not `completed` (or whose pair decision is null) does not surface through `current_gate_acceptances` / the selector.
 - Tests for valid strict footer and invalid alias/footer shapes.
 - `git diff --check`
 
@@ -165,6 +175,9 @@ Before ending this phase:
 - Job statuses are `queued`, `completed`, and `failed`.
 - `review_pairs` has no `pair_status` column.
 - Failed jobs append no acceptance events and leave no pair decisions.
+- Acceptance evidence is boundary-enforced: `current_gate_acceptances` excludes acceptance events from non-completed jobs and pairs with null decisions.
+- `ReviewPairRow` carries no persisted or surrogate pair-status field; display status is computed from the parent job at render time.
+- Manifest refresh failure does not fail an already-completed job.
 - Live finalization uses strict result parsing.
 - Finalization provenance is supplied through `commonplace-finalize-review-job`.
 - Result path derivation remains centralized and job-scoped.
