@@ -150,7 +150,7 @@ For the full read path and scaling direction, see [navigation.md](./navigation.m
 
 *Limitations.* The review UX is still agent-driven. Gate selection depends on note traits, worker delegation is owned by the current harness, and the selector/create/finalize command sequence is more operator-facing than a finished end-user CLI.
 
-See [README-REVIEW-SYSTEM.md](./README-REVIEW-SYSTEM.md) and [FIX-SYSTEM.md](../instructions/FIX-SYSTEM.md) for the current design.
+See [README-REVIEW-SYSTEM.md](./README-REVIEW-SYSTEM.md) for how to use the review system and [review-architecture.md](./review-architecture.md) for how it is built; [FIX-SYSTEM.md](../instructions/FIX-SYSTEM.md) covers the complementary fix system.
 
 ### Direct CLI commands
 
@@ -181,7 +181,7 @@ Look up how the shipped system is put together: its architecture, type system, a
 - [mark-semantics.md](./mark-semantics.md) — what the `complete`/`covered_by` marks on tag-READMEs mean for consumers: accelerators over a recoverable query, never load-bearing
 - [control-plane-goals.md](./control-plane-goals.md) — how Commonplace ships KB goals in always-loaded context via `AGENTS.md`
 - [instruction-generation.md](./instruction-generation.md) — build-time instruction generation flow and `commonplace-init`
-- [review-architecture.md](./review-architecture.md) — code architecture for `commonplace.review` and `commonplace.cli.review`
+- [review-architecture.md](./review-architecture.md) — how the review subsystem is built: package layout, storage schema, canonical-state-vs-derived-output, freshness mechanism, module map, and invariants (the build-side companion to [README-REVIEW-SYSTEM.md](./README-REVIEW-SYSTEM.md))
 - [lib-modules.md](./lib-modules.md) — internal API reference for `commonplace.lib` modules
 
 ### Type system and collection model
@@ -197,7 +197,7 @@ Look up how the shipped system is put together: its architecture, type system, a
 Imperative how-to procedures live in [kb/instructions/](../instructions/) rather than this collection, but they are part of the shipped surface:
 
 - Each collection's `COLLECTION.md` — register-specific writing conventions, quality goals, and placement rules
-- [README-REVIEW-SYSTEM.md](./README-REVIEW-SYSTEM.md) — current review-system workflow
+- [README-REVIEW-SYSTEM.md](./README-REVIEW-SYSTEM.md) — how to use the review system: concepts, freshness, the batch workflow, and command surface (the how-it-is-built companion is [review-architecture.md](./review-architecture.md))
 - [FIX-SYSTEM.md](../instructions/FIX-SYSTEM.md) — current fix-system workflow
 
 ### Decision history
