@@ -50,7 +50,7 @@ Scan `kb/instructions/`, `kb/notes/`, and `kb/reference/` for link targets. Do n
 
 ## Frontmatter
 
-Minimal. Plain instructions need `description` and `type: kb/types/instruction.md`. Promoted skills add skill-specific fields (`name`, `allowed-tools`, `context`, `model`) in their `SKILL.md`. Review gates use `type: kb/types/review-gate.md` and the gate-specific fields documented in that type spec; see `../reference/REVIEW-SYSTEM.md` for runtime concepts.
+Minimal. Plain instructions need `description` and `type: kb/types/instruction.md`. Promoted skills add skill-specific fields (`name`, `allowed-tools`, `context`, `model`) in their `SKILL.md`. Review gates use `type: kb/types/review-gate.md` and the gate-specific fields documented in that type spec; see `../reference/README-REVIEW-SYSTEM.md` for runtime concepts.
 
 ## Promoted skills
 

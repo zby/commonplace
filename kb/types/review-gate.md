@@ -9,7 +9,7 @@ schema: kb/types/review-gate.schema.yaml
 
 ## Authoring Instructions
 
-A review gate is one quality check the review system applies to KB artifacts. Each gate is a single markdown file telling a reviewer what failure to look for and how to decide PASS, WARN, or INFO. The review system discovers gates by filesystem location (`kb/instructions/review-gates/{lens}/{name}.md`); this type contract enforces the shape every gate must carry. See `kb/reference/REVIEW-SYSTEM.md` for runtime concepts (bundles, freshness, acceptance) and `kb/reference/review-architecture.md` for the code architecture.
+A review gate is one quality check the review system applies to KB artifacts. Each gate is a single markdown file telling a reviewer what failure to look for and how to decide PASS, WARN, or INFO. The review system discovers gates by filesystem location (`kb/instructions/review-gates/{lens}/{name}.md`); this type contract enforces the shape every gate must carry. See `kb/reference/README-REVIEW-SYSTEM.md` for runtime concepts (bundles, freshness, acceptance) and `kb/reference/review-architecture.md` for the code architecture.
 
 ## Frontmatter
 

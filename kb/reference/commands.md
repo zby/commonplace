@@ -102,7 +102,7 @@ commonplace-x-snapshot https://x.com/user/status/123456789
 
 ## Review system
 
-The review system executes LLM-based quality reviews against notes using defined review gates. For the full review workflow, read [REVIEW-SYSTEM.md](./REVIEW-SYSTEM.md). For the code architecture, see [review-architecture.md](./review-architecture.md).
+The review system executes LLM-based quality reviews against notes using defined review gates. For the full review workflow, read [README-REVIEW-SYSTEM.md](./README-REVIEW-SYSTEM.md). For the code architecture, see [review-architecture.md](./review-architecture.md).
 
 ### commonplace-create-review-jobs
 

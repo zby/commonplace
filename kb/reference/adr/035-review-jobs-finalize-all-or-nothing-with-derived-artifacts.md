@@ -81,4 +81,4 @@ Relevant Notes:
 - [033-Honest review state behind a versioned migration substrate](./033-honest-review-run-state.md) — supersedes-in-part: keeps honest queued work but removes running/start state.
 - [032-Review freshness uses DB snapshots, not Git](./032-review-freshness-uses-db-snapshots-not-git.md) — extends: reinforces DB-owned accepted baselines through the guarded current-acceptance view.
 - [029-review execution unified on (note, gate) pairs](./029-review-execution-unified-on-note-gate-pairs.md) — supersedes-in-part: keeps the pair grammar and packing model while removing partial salvage from live finalization.
-- [review system](../REVIEW-SYSTEM.md) — implemented-by: current operator-facing workflow.
+- [review system](../README-REVIEW-SYSTEM.md) — implemented-by: current operator-facing workflow.

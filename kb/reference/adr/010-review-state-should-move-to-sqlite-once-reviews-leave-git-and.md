@@ -74,5 +74,5 @@ The boundary is: files remain the right default for authored knowledge under git
 Relevant Notes:
 
 - [007-reports-directory-for-generated-snapshots](./007-reports-directory-for-generated-snapshots.md) — enables: review artifacts had already moved into `kb/reports/`, which clarified that they were generated operational outputs rather than core notes
-- [review system](../REVIEW-SYSTEM.md) — implements: the current DB-backed review workflow and command surface that followed from this decision
+- [review system](../README-REVIEW-SYSTEM.md) — implements: the current DB-backed review workflow and command surface that followed from this decision
 - [031-review state uses run-owned review pairs](./031-review-state-uses-run-owned-review-pairs.md) — superseded-by: refines the concrete schema while preserving this ADR's SQLite boundary

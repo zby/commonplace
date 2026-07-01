@@ -1,6 +1,6 @@
 # Fix system
 
-The fix system is the complement to the [review system](../reference/REVIEW-SYSTEM.md). Reviews identify problems; the fix system applies corrections. It consumes warn findings from the review DB and produces auditable fix reports.
+The fix system is the complement to the [review system](../reference/README-REVIEW-SYSTEM.md). Reviews identify problems; the fix system applies corrections. It consumes warn findings from the review DB and produces auditable fix reports.
 
 This system is experimental and opt-in, like the review system it depends on.
 
