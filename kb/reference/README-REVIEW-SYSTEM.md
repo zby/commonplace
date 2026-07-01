@@ -69,11 +69,7 @@ The full procedure is in [run review batches](../instructions/run-review-batches
 
 2. For each job, launch a sub-agent that reads the job's `prompt_path` and writes its review to the job's `bundle_output_path`.
 
-3. Finalize each completed output:
-
-   ```
-   commonplace-finalize-review-job --review-job-id {id} [--runner {worker}] [--model {model} [--effort {effort}]] [--telemetry-json {json}]
-   ```
+3. Finalize each completed output with `commonplace-finalize-review-job` (signature under [Command reference](#command-reference)).
 
 **Finalization is all-or-nothing.** If any expected pair is missing, duplicated, unexpected, malformed, or lacks a valid result line, the job fails and writes no acceptance rows — a failed job accepts nothing. On success, every pair is recorded and the current acceptance row for each pair is upserted.
 
