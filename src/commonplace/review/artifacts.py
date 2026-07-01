@@ -8,10 +8,9 @@ from typing import Protocol, Sequence
 
 import yaml
 
-from commonplace.review.review_db import review_job_artifact_dir_rel
-
 
 MANIFEST_NAME = "MANIFEST.json"
+BUNDLE_ARTIFACTS_ROOT = Path("kb/reports/bundle-reviews")
 
 
 class ReviewPairForManifest(Protocol):
@@ -22,12 +21,19 @@ class ReviewPairForManifest(Protocol):
     result_path: str | None
 
 
+class ReviewPairForPath(Protocol):
+    review_pair_id: int
+    note_path: str
+    gate_path: str
+
+
 class ReviewJobForResult(Protocol):
     review_job_id: int
     model_partition: str
     runner: str | None
     runner_model: str | None
     runner_effort: str | None
+    packing: str
 
 
 class ReviewPairForResult(Protocol):
@@ -50,6 +56,22 @@ class SkippedPairForManifest(Protocol):
 
 def bundle_artifact_dir(repo_root: Path, review_job_id: int) -> Path:
     return repo_root / review_job_artifact_dir_rel(review_job_id)
+
+
+def review_job_artifact_dir_rel(review_job_id: int) -> str:
+    return (BUNDLE_ARTIFACTS_ROOT / f"review-job-{review_job_id}").as_posix()
+
+
+def prompt_path_rel(review_job_id: int) -> str:
+    return f"{review_job_artifact_dir_rel(review_job_id)}/prompt.md"
+
+
+def bundle_output_path_rel(review_job_id: int) -> str:
+    return f"{review_job_artifact_dir_rel(review_job_id)}/bundle-output.md"
+
+
+def manifest_path_rel(review_job_id: int) -> str:
+    return f"{review_job_artifact_dir_rel(review_job_id)}/{MANIFEST_NAME}"
 
 
 def encode_stage_filename(gate_path: str) -> str:
@@ -80,28 +102,28 @@ def result_filename(
 
 def result_path(
     *,
-    artifact_dir_rel: str,
+    review_job_id: int,
     packing: str,
     note_path: str,
     gate_path: str,
     all_note_paths: Sequence[str],
 ) -> str:
     return (
-        f"{artifact_dir_rel}/"
+        f"{review_job_artifact_dir_rel(review_job_id)}/"
         f"{result_filename(packing=packing, note_path=note_path, gate_path=gate_path, all_note_paths=all_note_paths)}"
     )
 
 
 def result_paths_by_pair_id(
     *,
-    artifact_dir_rel: str,
+    review_job_id: int,
     packing: str,
-    pairs: Sequence[ReviewPairForManifest],
+    pairs: Sequence[ReviewPairForPath],
 ) -> dict[int, str]:
     all_note_paths = [pair.note_path for pair in pairs]
     return {
         pair.review_pair_id: result_path(
-            artifact_dir_rel=artifact_dir_rel,
+            review_job_id=review_job_id,
             packing=packing,
             note_path=pair.note_path,
             gate_path=pair.gate_path,
@@ -109,6 +131,17 @@ def result_paths_by_pair_id(
         )
         for pair in pairs
     }
+
+
+def repo_relative_path(repo_root: Path, relative_path: str, *, label: str) -> Path:
+    path = Path(relative_path)
+    if path.is_absolute():
+        raise ValueError(f"{label} must be repo-relative: {relative_path}")
+    target = (repo_root / path).resolve()
+    repo_root_resolved = repo_root.resolve()
+    if not target.is_relative_to(repo_root_resolved):
+        raise ValueError(f"{label} escapes repo root: {relative_path}")
+    return target
 
 
 def write_pair_result_files(
@@ -130,18 +163,10 @@ def write_pair_result_files(
             gate_path=gate_path,
             all_note_paths=all_note_paths,
         )
-        (artifact_dir / filename).write_text(review_text, encoding="utf-8")
-
-
-def _repo_relative_output_path(repo_root: Path, stored_path: str) -> Path:
-    result_path = Path(stored_path)
-    if result_path.is_absolute():
-        raise ValueError(f"result_path must be repo-relative: {stored_path}")
-    target = (repo_root / result_path).resolve()
-    repo_root_resolved = repo_root.resolve()
-    if not target.is_relative_to(repo_root_resolved):
-        raise ValueError(f"result_path escapes repo root: {stored_path}")
-    return target
+        output_path = (artifact_dir / filename).resolve()
+        if not output_path.is_relative_to(artifact_dir.resolve()):
+            raise ValueError(f"result filename escapes artifact dir: {filename}")
+        output_path.write_text(review_text, encoding="utf-8")
 
 
 def result_frontmatter(
@@ -164,7 +189,7 @@ def result_frontmatter(
     return "---\n" + yaml.safe_dump(payload, allow_unicode=False, sort_keys=False) + "---\n"
 
 
-def write_pair_result_files_to_persisted_paths(
+def write_pair_result_files_to_derived_paths(
     *,
     repo_root: Path,
     job: ReviewJobForResult,
@@ -172,15 +197,22 @@ def write_pair_result_files_to_persisted_paths(
     canonical_texts: dict[tuple[str, str], str],
 ) -> None:
     pending_writes: list[tuple[Path, str]] = []
+    result_paths = result_paths_by_pair_id(
+        review_job_id=job.review_job_id,
+        packing=job.packing,
+        pairs=pairs,
+    )
     for pair in pairs:
         if pair.pair_status != "completed":
             continue
-        if pair.result_path is None:
-            raise ValueError(f"completed review pair {pair.review_pair_id} is missing result_path")
         review_text = canonical_texts.get((pair.note_path, pair.gate_path))
         if review_text is None:
             continue
-        output_path = _repo_relative_output_path(repo_root, pair.result_path)
+        output_path = repo_relative_path(
+            repo_root,
+            result_paths[pair.review_pair_id],
+            label="result_path",
+        )
         pending_writes.append(
             (
                 output_path,
@@ -205,9 +237,8 @@ def write_manifest(
     skipped: Sequence[SkippedPairForManifest] | None = None,
     failure_reason: str | None = None,
 ) -> str:
-    artifact_dir_rel = artifact_dir.relative_to(repo_root).as_posix()
     result_paths = result_paths_by_pair_id(
-        artifact_dir_rel=artifact_dir_rel,
+        review_job_id=review_job_id,
         packing=packing,
         pairs=pairs,
     )

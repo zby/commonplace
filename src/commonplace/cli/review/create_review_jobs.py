@@ -238,7 +238,6 @@ def _job_payload(plan: ReviewJobPlan, *, include_timestamps: bool = False) -> di
         payload.update(
             {
                 "created_at": plan.created_at,
-                "started_at": plan.started_at,
                 "completed_at": plan.completed_at,
                 "failure_reason": plan.failure_reason,
             }

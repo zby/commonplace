@@ -14,6 +14,29 @@ from commonplace.review.review_db import ReviewPairRequest, snapshot_file
 
 
 @dataclass(frozen=True)
+class NoteSnapshot:
+    path: str
+    content_hash: str
+
+
+@dataclass(frozen=True)
+class GateSnapshot:
+    id: str
+    content_hash: str
+
+
+@dataclass(frozen=True)
+class AcceptanceSnapshot:
+    accepted_note_hash: str
+    accepted_gate_hash: str
+
+
+@dataclass(frozen=True)
+class Staleness:
+    reason: str
+
+
+@dataclass(frozen=True)
 class CapturedReviewInputs:
     pair_requests: list[ReviewPairRequest]
     note_texts: dict[str, str]
@@ -26,6 +49,20 @@ def content_sha256_for_text(text: str) -> str:
 
 def file_content_sha256(path: Path) -> str:
     return content_sha256_for_text(path.read_text(encoding="utf-8"))
+
+
+def classify_staleness(
+    note: NoteSnapshot,
+    gate: GateSnapshot,
+    acceptance: AcceptanceSnapshot | None,
+) -> Staleness | None:
+    if acceptance is None:
+        return Staleness("missing-review")
+    if acceptance.accepted_gate_hash != gate.content_hash:
+        return Staleness("gate-changed")
+    if acceptance.accepted_note_hash != note.content_hash:
+        return Staleness("note-changed")
+    return None
 
 
 def capture_review_inputs(

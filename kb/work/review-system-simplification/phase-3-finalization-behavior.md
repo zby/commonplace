@@ -15,6 +15,8 @@ Phase 2 complete:
 
 Phase 1 consolidated finalization into `src/commonplace/review/finalization.py`; there is no `job_output.py` or `job_finalization.py`. Parser calls, artifact writes, DB completion/acceptance, manifest refresh, and failure marking are now in that single module. `attach_execution_data` remains in `review_db.py`.
 
+Phase 2 centralized derived artifact paths in `artifacts.py`: `review_job_artifact_dir_rel`, `prompt_path_rel`, `bundle_output_path_rel`, `manifest_path_rel`, `result_path`, and `result_paths_by_pair_id`. `write_pair_result_files_to_derived_paths` writes per-pair review artifacts. `ReviewJobRow` no longer carries path fields or `started_at`; `ReviewJobPlan` still exposes derived `prompt_path` and `bundle_output_path`; `ReviewPairRow.result_path` is derived from the parent job's packing and full pair set.
+
 ## Purpose
 
 Simplify the behavioral core of review execution:

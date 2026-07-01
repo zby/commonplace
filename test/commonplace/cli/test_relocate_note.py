@@ -146,7 +146,7 @@ def test_resolve_destination_path_accepts_directory_target(tmp_path: Path) -> No
     assert destination == notes_root / "archive" / "old-note.md"
 
 
-def test_relocate_note_apply_leaves_review_state_rows_and_artifact_paths_unchanged(
+def test_relocate_note_apply_leaves_review_state_rows_unchanged_and_paths_derived(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
 ) -> None:
     repo_root = tmp_path
@@ -184,6 +184,7 @@ def test_relocate_note_apply_leaves_review_state_rows_and_artifact_paths_unchang
 
     with review_db.connect(db_path) as conn:
         rows_after = review_state_rows(conn)
+        plan = review_db.load_review_job_plan(conn, review_job_id=1)
         old_pairs = review_db.load_review_pairs_for_note(
             conn,
             note_path="kb/notes/old-note.md",
@@ -196,12 +197,15 @@ def test_relocate_note_apply_leaves_review_state_rows_and_artifact_paths_unchang
         )
 
     assert rows_after == rows_before
+    assert plan is not None
     assert old_pairs[0].review_pair_id == review_pair_id
     assert new_pairs == []
-    artifact_dir = review_db.review_job_artifact_dir_rel(1)
-    assert rows_after["review_jobs"][0]["prompt_path"] == f"{artifact_dir}/prompt.md"
-    assert rows_after["review_jobs"][0]["bundle_output_path"] == f"{artifact_dir}/bundle-output.md"
-    assert rows_after["review_pairs"][0]["result_path"] == f"{artifact_dir}/source-residue.md"
+    assert "prompt_path" not in rows_after["review_jobs"][0]
+    assert "bundle_output_path" not in rows_after["review_jobs"][0]
+    assert "result_path" not in rows_after["review_pairs"][0]
+    assert plan.prompt_path == "kb/reports/bundle-reviews/review-job-1/prompt.md"
+    assert plan.bundle_output_path == "kb/reports/bundle-reviews/review-job-1/bundle-output.md"
+    assert old_pairs[0].result_path == "kb/reports/bundle-reviews/review-job-1/source-residue.md"
 
     stale = review_target_selector.select_stale_gates(
         repo_root,

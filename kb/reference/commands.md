@@ -106,7 +106,7 @@ The review system executes LLM-based quality reviews against notes using defined
 
 ### commonplace-create-review-jobs
 
-Create one or more queued review job records in the review database and write their canonical prompts, `MANIFEST.json` files, and artifact paths for live-agent review. Creation is runner-agnostic: `runner`, `runner_model`, and `runner_effort` stay null until execution.
+Create one or more queued review job records in the review database and write their canonical prompts and `MANIFEST.json` files for live-agent review. Artifact paths are derived from the job id and pair set. Creation is runner-agnostic: `runner`, `runner_model`, and `runner_effort` stay null until execution.
 
 ```bash
 commonplace-review-target-selector --mode requested --json --model claude-opus-4-6 accessibility prose semantic --note kb/notes/my-note.md \
@@ -115,7 +115,7 @@ commonplace-review-target-selector --json --model claude-opus-4-6 prose --note k
   | commonplace-create-review-jobs --input - --grouping note
 ```
 
-The canonical path is selector JSON piped into `--input -`. The command prints a JSON payload with `input_mode`, `model_partition`, `grouping`, `jobs`, and `skipped_pairs`. Each job includes `review_job_id`, `status`, nullable runner provenance, `packing`, `prompt_path`, `bundle_output_path`, and pair rows with `gate_id`, `pair_status`, `decision`, and `result_path`. `MANIFEST.json` is display/debug output written beside the artifacts, not a returned JSON field; pipeline commands use the DB paths as state. Note-packed jobs use gate-leaf filenames such as `source-residue.md`; gate-packed jobs use note filenames such as `my-note.md`.
+The canonical path is selector JSON piped into `--input -`. The command prints a JSON payload with `input_mode`, `model_partition`, `grouping`, `jobs`, and `skipped_pairs`. Each job includes `review_job_id`, `status`, nullable runner provenance, `packing`, derived `prompt_path`, derived `bundle_output_path`, and pair rows with `gate_id`, `pair_status`, `decision`, and derived `result_path`. `MANIFEST.json` is display/debug output written beside the artifacts, not a returned JSON field; pipeline commands use derived job paths as state. Note-packed jobs use gate-leaf filenames such as `source-residue.md`; gate-packed jobs use note filenames such as `my-note.md`.
 
 ### commonplace-review-job-list
 
@@ -135,17 +135,17 @@ commonplace-claim-review-job --review-job-id 42 --runner codex --model gpt-5
 commonplace-claim-review-job --review-job-id 42 --runner codex --model gpt-5 --effort high
 ```
 
-The command validates `build_model_partition(--model, --effort)` against the job's `model_partition`, records `started_at`, `runner`, `runner_model`, and nullable `runner_effort`, and prints JSON for both success and operational failure.
+The command validates `build_model_partition(--model, --effort)` against the job's `model_partition`, records `runner`, `runner_model`, and nullable `runner_effort`, and prints JSON for both success and operational failure.
 
 ### commonplace-finalize-review-job
 
-Finalize a review job from its persisted `review_jobs.bundle_output_path`. Completed pairs are stored and accepted; missing pairs are marked `missing`, and the job fails with job-level failure context. Exit 1 if the job failed or if a precondition fails before state changes.
+Finalize a review job from its derived bundle output path. Completed pairs are stored and accepted; missing pairs are marked `missing`, and the job fails with job-level failure context. Exit 1 if the job failed or if a precondition fails before state changes.
 
 ```bash
 commonplace-finalize-review-job --review-job-id 42
 ```
 
-The command accepts `queued` or `running` jobs, rejects `completed` and `failed`, reads the job-owned `bundle-output.md`, writes per-pair result files to stored `review_pairs.result_path` values with provenance frontmatter, refreshes `MANIFEST.json` for inspection, and prints JSON for success, mutated failure, and precondition failure.
+The command accepts `queued` or `running` jobs, rejects `completed` and `failed`, reads the job-owned `bundle-output.md`, writes per-pair result files to derived result paths with provenance frontmatter, refreshes `MANIFEST.json` for inspection, and prints JSON for success, mutated failure, and precondition failure.
 
 ### commonplace-ack-gate-review
 

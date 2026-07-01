@@ -10,8 +10,9 @@ from datetime import UTC, datetime
 from hashlib import sha256
 from importlib import resources
 from pathlib import Path
-from typing import Mapping, Sequence
+from typing import Sequence
 
+from commonplace.review.artifacts import bundle_output_path_rel, prompt_path_rel, result_paths_by_pair_id
 from commonplace.review.paths import gate_id_from_stored_path
 from commonplace.review.protocol.decisions import normalize_review_decision
 from commonplace.review.review_schema import init_db
@@ -21,7 +22,6 @@ SCHEMA_PATH = "review-schema.sql"
 DB_ENV_VAR = "COMMONPLACE_REVIEW_DB"
 PACKING_VALUES = frozenset({"note", "gate"})
 JOB_STATUS_VALUES = frozenset({"queued", "running", "completed", "failed"})
-BUNDLE_ARTIFACTS_ROOT = Path("kb/reports/bundle-reviews")
 
 
 @dataclass(frozen=True)
@@ -59,13 +59,10 @@ class ReviewJobRow:
     runner_model: str | None
     runner_effort: str | None
     created_at: str
-    started_at: str | None
     completed_at: str | None
     status: str
     failure_reason: str | None
     telemetry_json: str | None
-    prompt_path: str | None
-    bundle_output_path: str | None
     packing: str
 
 
@@ -106,6 +103,13 @@ class ReviewPairCompletion:
     reviewed_at: str | None = None
 
 
+@dataclass(frozen=True)
+class _ReviewPairPathInput:
+    review_pair_id: int
+    note_path: str
+    gate_path: str
+
+
 class ReviewJobClaimError(ValueError):
     """Raised when a queued review job cannot be claimed for dispatch."""
 
@@ -128,13 +132,12 @@ class ReviewJobPlan:
     runner_model: str | None
     runner_effort: str | None
     created_at: str
-    started_at: str | None
     completed_at: str | None
     status: str
     failure_reason: str | None
     telemetry_json: str | None
-    prompt_path: str | None
-    bundle_output_path: str | None
+    prompt_path: str
+    bundle_output_path: str
     packing: str
     pairs: tuple[ReviewPairRow, ...]
 
@@ -172,10 +175,6 @@ def prepare_review_db(repo_root: Path, db_override: str | None = None) -> Path:
 
 def _now_utc_iso() -> str:
     return datetime.now(UTC).isoformat()
-
-
-def review_job_artifact_dir_rel(review_job_id: int) -> str:
-    return (BUNDLE_ARTIFACTS_ROOT / f"review-job-{review_job_id}").as_posix()
 
 
 def snapshot_file(conn: sqlite3.Connection, *, repo_root: Path, path: str) -> ReviewFileSnapshot:
@@ -240,18 +239,15 @@ def _review_job_from_row(row: sqlite3.Row) -> ReviewJobRow:
         runner_model=row["runner_model"],
         runner_effort=row["runner_effort"],
         created_at=row["created_at"],
-        started_at=row["started_at"],
         completed_at=row["completed_at"],
         status=row["status"],
         failure_reason=row["failure_reason"],
         telemetry_json=row["telemetry_json"],
-        prompt_path=row["prompt_path"],
-        bundle_output_path=row["bundle_output_path"],
         packing=row["packing"],
     )
 
 
-def _review_pair_from_row(row: sqlite3.Row) -> ReviewPairRow:
+def _review_pair_from_row(row: sqlite3.Row, *, result_path: str | None) -> ReviewPairRow:
     return ReviewPairRow(
         review_pair_id=row["review_pair_id"],
         review_job_id=row["review_job_id"],
@@ -261,11 +257,71 @@ def _review_pair_from_row(row: sqlite3.Row) -> ReviewPairRow:
         pair_ordinal=row["pair_ordinal"],
         pair_status=row["pair_status"],
         decision=row["decision"],
-        result_path=row["result_path"],
+        result_path=result_path,
         reviewed_note_snapshot_id=row["reviewed_note_snapshot_id"],
         reviewed_gate_snapshot_id=row["reviewed_gate_snapshot_id"],
         reviewed_at=row["reviewed_at"],
     )
+
+
+def _result_paths_for_review_jobs(conn: sqlite3.Connection, review_job_ids: set[int]) -> dict[int, str]:
+    if not review_job_ids:
+        return {}
+    placeholders = ", ".join("?" for _ in review_job_ids)
+    rows = conn.execute(
+        f"""
+        SELECT
+            rp.review_pair_id,
+            rp.review_job_id,
+            rp.note_path,
+            rp.gate_path,
+            j.packing
+        FROM review_pairs AS rp
+        JOIN review_jobs AS j
+          ON j.review_job_id = rp.review_job_id
+        WHERE rp.review_job_id IN ({placeholders})
+        ORDER BY rp.review_job_id, rp.pair_ordinal, rp.note_path, rp.gate_path
+        """,
+        tuple(sorted(review_job_ids)),
+    ).fetchall()
+    grouped: dict[int, tuple[str, list[_ReviewPairPathInput]]] = {}
+    for row in rows:
+        review_job_id = int(row["review_job_id"])
+        packing = str(row["packing"])
+        if review_job_id not in grouped:
+            grouped[review_job_id] = (packing, [])
+        grouped[review_job_id][1].append(
+            _ReviewPairPathInput(
+                review_pair_id=int(row["review_pair_id"]),
+                note_path=str(row["note_path"]),
+                gate_path=str(row["gate_path"]),
+            )
+        )
+
+    result: dict[int, str] = {}
+    for review_job_id, (packing, pairs) in grouped.items():
+        result.update(
+            result_paths_by_pair_id(
+                review_job_id=review_job_id,
+                packing=packing,
+                pairs=pairs,
+            )
+        )
+    return result
+
+
+def _review_pairs_from_rows(conn: sqlite3.Connection, rows: Sequence[sqlite3.Row]) -> list[ReviewPairRow]:
+    result_paths = _result_paths_for_review_jobs(
+        conn,
+        {int(row["review_job_id"]) for row in rows},
+    )
+    return [
+        _review_pair_from_row(
+            row,
+            result_path=result_paths.get(int(row["review_pair_id"])),
+        )
+        for row in rows
+    ]
 
 
 def create_job(
@@ -274,7 +330,6 @@ def create_job(
     model_partition: str,
     runner: str | None,
     created_at: str,
-    started_at: str | None,
     packing: str,
     status: str,
     runner_model: str | None = None,
@@ -282,8 +337,6 @@ def create_job(
     completed_at: str | None = None,
     failure_reason: str | None = None,
     telemetry_json: str | None = None,
-    prompt_path: str | None = None,
-    bundle_output_path: str | None = None,
 ) -> int:
     if packing not in PACKING_VALUES:
         raise ValueError(f"invalid review job packing: {packing}")
@@ -297,15 +350,12 @@ def create_job(
             runner_model,
             runner_effort,
             created_at,
-            started_at,
             completed_at,
             status,
             failure_reason,
             telemetry_json,
-            prompt_path,
-            bundle_output_path,
             packing
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """,
         (
             model_partition,
@@ -313,13 +363,10 @@ def create_job(
             runner_model,
             runner_effort,
             created_at,
-            started_at,
             completed_at,
             status,
             failure_reason,
             telemetry_json,
-            prompt_path,
-            bundle_output_path,
             packing,
         ),
     )
@@ -367,14 +414,11 @@ def create_job_with_pairs(
     model_partition: str,
     runner: str | None,
     created_at: str,
-    started_at: str | None,
     status: str,
     packing: str,
     pairs: Sequence[ReviewPairRequest],
     runner_model: str | None = None,
     runner_effort: str | None = None,
-    prompt_path: str | None = None,
-    bundle_output_path: str | None = None,
 ) -> int:
     review_job_id = create_job(
         conn,
@@ -383,11 +427,8 @@ def create_job_with_pairs(
         runner_model=runner_model,
         runner_effort=runner_effort,
         created_at=created_at,
-        started_at=started_at,
         packing=packing,
         status=status,
-        prompt_path=prompt_path,
-        bundle_output_path=bundle_output_path,
     )
     create_review_pairs(conn, review_job_id=review_job_id, pairs=pairs)
     return review_job_id
@@ -403,13 +444,10 @@ def load_review_job(conn: sqlite3.Connection, *, review_job_id: int) -> ReviewJo
             runner_model,
             runner_effort,
             created_at,
-            started_at,
             completed_at,
             status,
             failure_reason,
             telemetry_json,
-            prompt_path,
-            bundle_output_path,
             packing
         FROM review_jobs
         WHERE review_job_id = ?
@@ -433,7 +471,6 @@ def load_review_pairs_for_job(conn: sqlite3.Connection, *, review_job_id: int) -
             rp.pair_ordinal,
             rp.pair_status,
             rp.decision,
-            rp.result_path,
             rp.reviewed_note_snapshot_id,
             rp.reviewed_gate_snapshot_id,
             rp.reviewed_at
@@ -445,7 +482,7 @@ def load_review_pairs_for_job(conn: sqlite3.Connection, *, review_job_id: int) -
         """,
         (review_job_id,),
     ).fetchall()
-    return [_review_pair_from_row(row) for row in rows]
+    return _review_pairs_from_rows(conn, rows)
 
 
 def load_completed_review_pairs_for_job(conn: sqlite3.Connection, *, review_job_id: int) -> list[ReviewPairRow]:
@@ -453,20 +490,8 @@ def load_completed_review_pairs_for_job(conn: sqlite3.Connection, *, review_job_
 
 
 def _job_plan_from_job(conn: sqlite3.Connection, job: ReviewJobRow, *, require_paths: bool) -> ReviewJobPlan:
+    _ = require_paths
     pairs = tuple(load_review_pairs_for_job(conn, review_job_id=job.review_job_id))
-    if require_paths:
-        missing: list[str] = []
-        if job.prompt_path is None:
-            missing.append("prompt_path")
-        if job.bundle_output_path is None:
-            missing.append("bundle_output_path")
-        missing_pair_ids = [str(pair.review_pair_id) for pair in pairs if pair.result_path is None]
-        if missing_pair_ids:
-            missing.append(f"result_path for review_pair_id(s): {', '.join(missing_pair_ids)}")
-        if missing:
-            raise ValueError(
-                f"review job {job.review_job_id} is missing load-bearing path(s): {', '.join(missing)}"
-            )
     return ReviewJobPlan(
         review_job_id=job.review_job_id,
         model_partition=job.model_partition,
@@ -474,13 +499,12 @@ def _job_plan_from_job(conn: sqlite3.Connection, job: ReviewJobRow, *, require_p
         runner_model=job.runner_model,
         runner_effort=job.runner_effort,
         created_at=job.created_at,
-        started_at=job.started_at,
         completed_at=job.completed_at,
         status=job.status,
         failure_reason=job.failure_reason,
         telemetry_json=job.telemetry_json,
-        prompt_path=job.prompt_path,
-        bundle_output_path=job.bundle_output_path,
+        prompt_path=prompt_path_rel(job.review_job_id),
+        bundle_output_path=bundle_output_path_rel(job.review_job_id),
         packing=job.packing,
         pairs=pairs,
     )
@@ -523,13 +547,10 @@ def list_review_job_plans(
             runner_model,
             runner_effort,
             created_at,
-            started_at,
             completed_at,
             status,
             failure_reason,
             telemetry_json,
-            prompt_path,
-            bundle_output_path,
             packing
         FROM review_jobs
         {where_sql}
@@ -551,15 +572,12 @@ def claim_review_job(
     runner_model: str,
     runner_effort: str | None,
     model_partition: str,
-    started_at: str | None = None,
 ) -> ReviewJobPlan:
     """Atomically claim a queued review job for parent-dispatched execution."""
-    claimed_at = started_at or _now_utc_iso()
     cursor = conn.execute(
         """
         UPDATE review_jobs
         SET status = 'running',
-            started_at = ?,
             runner = ?,
             runner_model = ?,
             runner_effort = ?,
@@ -567,17 +585,8 @@ def claim_review_job(
         WHERE review_job_id = ?
           AND status = 'queued'
           AND model_partition = ?
-          AND prompt_path IS NOT NULL
-          AND bundle_output_path IS NOT NULL
-          AND NOT EXISTS (
-              SELECT 1
-              FROM review_pairs AS rp
-              WHERE rp.review_job_id = review_jobs.review_job_id
-                AND rp.result_path IS NULL
-          )
         """,
         (
-            claimed_at,
             runner,
             runner_model,
             runner_effort,
@@ -595,54 +604,12 @@ def claim_review_job(
             raise ReviewJobClaimError(
                 f"review job model_partition {job.model_partition!r} does not match claimed partition {model_partition!r}"
             )
-        try:
-            _job_plan_from_job(conn, job, require_paths=True)
-        except ValueError as exc:
-            raise ReviewJobClaimError(str(exc)) from exc
         raise ReviewJobClaimError(f"review job could not be claimed: {review_job_id}")
 
     plan = load_review_job_plan(conn, review_job_id=review_job_id, require_paths=True)
     if plan is None:
         raise ReviewJobClaimError(f"review job not found after claim: {review_job_id}")
     return plan
-
-
-def set_job_artifact_paths(
-    conn: sqlite3.Connection,
-    *,
-    review_job_id: int,
-    prompt_path: str | None = None,
-    bundle_output_path: str | None = None,
-    result_paths: Mapping[int, str] | None = None,
-) -> None:
-    if prompt_path is not None:
-        conn.execute(
-            """
-            UPDATE review_jobs
-            SET prompt_path = ?
-            WHERE review_job_id = ?
-            """,
-            (prompt_path, review_job_id),
-        )
-    if bundle_output_path is not None:
-        conn.execute(
-            """
-            UPDATE review_jobs
-            SET bundle_output_path = ?
-            WHERE review_job_id = ?
-            """,
-            (bundle_output_path, review_job_id),
-        )
-    for review_pair_id, path in (result_paths or {}).items():
-        conn.execute(
-            """
-            UPDATE review_pairs
-            SET result_path = ?
-            WHERE review_job_id = ?
-              AND review_pair_id = ?
-            """,
-            (path, review_job_id, review_pair_id),
-        )
 
 
 def load_current_acceptances(conn: sqlite3.Connection) -> dict[tuple[str, str, str], AcceptanceState]:
@@ -963,7 +930,6 @@ def load_review_pairs_for_note(
             rp.pair_ordinal,
             rp.pair_status,
             rp.decision,
-            rp.result_path,
             rp.reviewed_note_snapshot_id,
             rp.reviewed_gate_snapshot_id,
             rp.reviewed_at
@@ -975,7 +941,7 @@ def load_review_pairs_for_note(
         """,
         (note_path, model_partition),
     ).fetchall()
-    return [_review_pair_from_row(row) for row in rows]
+    return _review_pairs_from_rows(conn, rows)
 
 
 def load_latest_completed_review_pair(
@@ -996,7 +962,6 @@ def load_latest_completed_review_pair(
             rp.pair_ordinal,
             rp.pair_status,
             rp.decision,
-            rp.result_path,
             rp.reviewed_note_snapshot_id,
             rp.reviewed_gate_snapshot_id,
             rp.reviewed_at
@@ -1014,7 +979,8 @@ def load_latest_completed_review_pair(
     ).fetchone()
     if row is None:
         return None
-    return _review_pair_from_row(row)
+    pairs = _review_pairs_from_rows(conn, [row])
+    return pairs[0]
 
 
 def load_effective_review_pair_map(
@@ -1045,7 +1011,6 @@ def load_effective_review_pair_map(
             rp.pair_ordinal,
             rp.pair_status,
             rp.decision,
-            rp.result_path,
             rp.reviewed_note_snapshot_id,
             rp.reviewed_gate_snapshot_id,
             rp.reviewed_at
@@ -1060,7 +1025,7 @@ def load_effective_review_pair_map(
         tuple(params),
     ).fetchall()
     result: dict[tuple[str, str, str], ReviewPairRow] = {}
-    for row in rows:
-        key = (row["note_path"], row["gate_path"], row["model_partition"])
-        result[key] = _review_pair_from_row(row)
+    for pair in _review_pairs_from_rows(conn, rows):
+        key = (pair.note_path, pair.gate_path, pair.model_partition)
+        result[key] = pair
     return result

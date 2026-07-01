@@ -78,7 +78,6 @@ def seed_accepted_review(repo_root: Path, db_path: Path, *, note_path: str) -> i
             runner_model="test-runner-model",
             runner_effort="high",
             created_at=REVIEWED_AT,
-            started_at=REVIEWED_AT,
             status="running",
             packing="note",
             pairs=[
@@ -105,16 +104,6 @@ def seed_accepted_review(repo_root: Path, db_path: Path, *, note_path: str) -> i
             reviewed_at=REVIEWED_AT,
         )
         review_pair = review_db.load_review_pairs_for_job(conn, review_job_id=review_job_id)[0]
-        artifact_dir = review_db.review_job_artifact_dir_rel(review_job_id)
-        review_db.set_job_artifact_paths(
-            conn,
-            review_job_id=review_job_id,
-            prompt_path=f"{artifact_dir}/prompt.md",
-            bundle_output_path=f"{artifact_dir}/bundle-output.md",
-            result_paths={
-                review_pair.review_pair_id: f"{artifact_dir}/source-residue.md"
-            },
-        )
         review_db.complete_review_job(conn, review_job_id=review_job_id, completed_at=REVIEWED_AT)
         review_db.append_acceptance_event(
             conn,

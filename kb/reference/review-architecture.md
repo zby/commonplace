@@ -22,7 +22,7 @@ For the operating workflow, see [REVIEW-SYSTEM.md](./REVIEW-SYSTEM.md) and [run 
 review_target_selector  -> selector JSON
 create_review_jobs      -> queued review_jobs + review_pairs + prompt artifacts
 claim_review_job        -> running job + worker provenance
-worker/sub-agent        -> writes bundle_output_path
+worker/sub-agent        -> writes derived bundle_output_path
 finalize_review_job     -> parse output, write result artifacts, append acceptance
 ```
 
@@ -34,7 +34,7 @@ SQLite database, default location `kb/reports/review-store.sqlite`; override wit
 
 | Table | Purpose |
 |---|---|
-| `review_jobs` | One prompt/output invocation, with model partition, nullable worker provenance, status, prompt path, bundle output path, and packing |
+| `review_jobs` | One prompt/output invocation, with model partition, nullable worker provenance, status, and packing |
 | `review_pairs` | Requested and completed `(note_path, gate_path)` outcomes inside a job |
 | `review_file_snapshots` | Exact note and gate text captured when the prompt was created |
 | `acceptance_events` | Append-only accepted baselines for freshness |
@@ -51,7 +51,7 @@ SQLite database, default location `kb/reports/review-store.sqlite`; override wit
 
 ### Job creation
 
-- `batch.py` creates queued jobs from normalized pair lists. It snapshots note/gate files, inserts job and pair rows, renders prompts, writes `MANIFEST.json`, and persists prompt/output/result paths.
+- `batch.py` creates queued jobs from normalized pair lists. It snapshots note/gate files, inserts job and pair rows, renders prompts, writes `MANIFEST.json`, and returns derived prompt/output/result paths.
 - `freshness.py` captures snapshot-backed review inputs for prompt generation.
 - `job_prompt.py` prepares `NoteReviewTarget` objects, including resolved and unresolved local markdown links.
 - `artifacts.py` owns artifact directory selection, result-file naming, result frontmatter, per-pair result writes, and manifest writing.
@@ -59,12 +59,10 @@ SQLite database, default location `kb/reports/review-store.sqlite`; override wit
 ### Protocol and finalization
 
 - `protocol/format.py` defines pair sentinels and render-time reserved-text checks.
-- `protocol/prompt.py` renders canonical review prompts from captured text. In file-output mode, the prompt instructs a worker to write exactly the job's `bundle_output_path`.
+- `protocol/prompt.py` renders canonical review prompts from captured text. In file-output mode, the prompt instructs a worker to write exactly the job's derived `bundle_output_path`.
 - `protocol/parser.py` parses sentinel-bracketed pair output. Structural anomalies fail the job; missing expected pairs are reported so completed pairs can still be salvaged.
 - `protocol/decisions.py` normalizes `PASS`, `WARN`, `FAIL`, and `ERROR` result lines.
-- `job_output.py` turns parsed output into completed/missing pair rows, result files, refreshed manifests, and job status.
-- `job_finalization.py` is the public library operation behind `commonplace-finalize-review-job`.
-- `finalization.py` completes rows and appends acceptance events.
+- `finalization.py` is the public library operation behind `commonplace-finalize-review-job`; it loads derived job output, parses bundle output, writes result files, refreshes manifests, completes rows, marks failures, and appends acceptance events.
 
 ### State and maintenance
 

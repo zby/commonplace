@@ -161,7 +161,7 @@ plugins:
     assert "'notes/stale.md': 'notes/new.md'" in mkdocs_content
 
 
-def test_relocate_directory_apply_leaves_review_state_rows_and_artifact_paths_unchanged(
+def test_relocate_directory_apply_leaves_review_state_rows_unchanged_and_paths_derived(
     tmp_path: Path, capsys
 ) -> None:
     source_dir = tmp_path / "kb" / "notes" / "related-systems"
@@ -192,6 +192,10 @@ def test_relocate_directory_apply_leaves_review_state_rows_and_artifact_paths_un
 
     with review_db.connect(db_path) as conn:
         rows_after = review_state_rows(conn)
+        plans = [
+            review_db.load_review_job_plan(conn, review_job_id=1),
+            review_db.load_review_job_plan(conn, review_job_id=2),
+        ]
         old_foo_pairs = review_db.load_review_pairs_for_note(
             conn,
             note_path="kb/notes/related-systems/foo.md",
@@ -220,15 +224,19 @@ def test_relocate_directory_apply_leaves_review_state_rows_and_artifact_paths_un
     ]
     assert new_foo_pairs == []
     assert new_bar_pairs == []
-    assert [row["prompt_path"] for row in rows_after["review_jobs"]] == [
+    assert all(plan is not None for plan in plans)
+    assert "prompt_path" not in rows_after["review_jobs"][0]
+    assert "bundle_output_path" not in rows_after["review_jobs"][0]
+    assert "result_path" not in rows_after["review_pairs"][0]
+    assert [plan.prompt_path for plan in plans if plan is not None] == [
         "kb/reports/bundle-reviews/review-job-1/prompt.md",
         "kb/reports/bundle-reviews/review-job-2/prompt.md",
     ]
-    assert [row["bundle_output_path"] for row in rows_after["review_jobs"]] == [
+    assert [plan.bundle_output_path for plan in plans if plan is not None] == [
         "kb/reports/bundle-reviews/review-job-1/bundle-output.md",
         "kb/reports/bundle-reviews/review-job-2/bundle-output.md",
     ]
-    assert [row["result_path"] for row in rows_after["review_pairs"]] == [
+    assert [pair.result_path for pair in old_foo_pairs + old_bar_pairs] == [
         "kb/reports/bundle-reviews/review-job-1/source-residue.md",
         "kb/reports/bundle-reviews/review-job-2/source-residue.md",
     ]

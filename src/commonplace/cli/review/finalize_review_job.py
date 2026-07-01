@@ -7,7 +7,7 @@ import argparse
 import json
 from pathlib import Path
 
-from commonplace.review.job_finalization import finalize_review_job_from_owned_output
+from commonplace.review.finalization import finalize_review_job_from_owned_output
 from commonplace.review.review_db import prepare_review_db
 
 

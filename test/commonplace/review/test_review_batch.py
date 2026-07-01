@@ -175,7 +175,7 @@ def test_create_review_jobs_selector_creates_one_gate_packed_job_and_prompt(tmp_
         conn.row_factory = sqlite3.Row
         job_rows = conn.execute(
             """
-            SELECT review_job_id, status, runner, packing, created_at, started_at, bundle_output_path
+            SELECT review_job_id, status, runner, packing, created_at
             FROM review_jobs
             """
         ).fetchall()
@@ -183,15 +183,12 @@ def test_create_review_jobs_selector_creates_one_gate_packed_job_and_prompt(tmp_
             (review_job_id, "queued", None, "gate")
         ]
         assert job_rows[0]["created_at"] is not None
-        assert job_rows[0]["started_at"] is None
-        assert job_rows[0]["bundle_output_path"] == job["bundle_output_path"]
         pair_rows = conn.execute(
             """
             SELECT
                 note_path,
                 gate_path,
                 pair_status,
-                result_path,
                 reviewed_note_snapshot_id,
                 reviewed_gate_snapshot_id
             FROM review_pairs
@@ -202,9 +199,14 @@ def test_create_review_jobs_selector_creates_one_gate_packed_job_and_prompt(tmp_
             ("kb/notes/first.md", GATE_PATH, "pending"),
             ("kb/notes/second.md", GATE_PATH, "pending"),
         ]
-        assert [row["result_path"] for row in pair_rows] == [pair["result_path"] for pair in manifest["pairs"]]
         assert all(row["reviewed_note_snapshot_id"] is not None for row in pair_rows)
         assert all(row["reviewed_gate_snapshot_id"] is not None for row in pair_rows)
+        job_columns = {row["name"] for row in conn.execute("PRAGMA table_info(review_jobs)").fetchall()}
+        pair_columns = {row["name"] for row in conn.execute("PRAGMA table_info(review_pairs)").fetchall()}
+        assert "started_at" not in job_columns
+        assert "bundle_output_path" not in job_columns
+        assert "prompt_path" not in job_columns
+        assert "result_path" not in pair_columns
 
 
 def test_finalize_review_job_finalizes_all_gate_packed_pairs(tmp_path: Path) -> None:
@@ -246,13 +248,12 @@ def test_finalize_review_job_finalizes_all_gate_packed_pairs(tmp_path: Path) -> 
 
     with sqlite3.connect(db_path) as conn:
         conn.row_factory = sqlite3.Row
-        job = conn.execute("SELECT status, bundle_output_path FROM review_jobs").fetchone()
+        job = conn.execute("SELECT status FROM review_jobs").fetchone()
         assert job["status"] == "completed"
-        assert job["bundle_output_path"] == prepared_job["bundle_output_path"]
         decisions = [
-            (row["note_path"], row["decision"], row["pair_status"], row["result_path"])
+            (row["note_path"], row["decision"], row["pair_status"])
             for row in conn.execute(
-                "SELECT note_path, decision, pair_status, result_path FROM review_pairs ORDER BY note_path"
+                "SELECT note_path, decision, pair_status FROM review_pairs ORDER BY note_path"
             )
         ]
         assert decisions == [
@@ -260,13 +261,11 @@ def test_finalize_review_job_finalizes_all_gate_packed_pairs(tmp_path: Path) -> 
                 "kb/notes/first.md",
                 "warn",
                 "completed",
-                f"kb/reports/bundle-reviews/review-job-{review_job_id}/first.md",
             ),
             (
                 "kb/notes/second.md",
                 "pass",
                 "completed",
-                f"kb/reports/bundle-reviews/review-job-{review_job_id}/second.md",
             ),
         ]
         acceptance_count = conn.execute("SELECT COUNT(*) FROM acceptance_events").fetchone()[0]
@@ -339,111 +338,6 @@ def test_finalize_review_job_salvages_partial_output(tmp_path: Path) -> None:
     artifact_dir = repo / "kb" / "reports" / "bundle-reviews" / f"review-job-{review_job_id}"
     manifest = json.loads((artifact_dir / "MANIFEST.json").read_text(encoding="utf-8"))
     assert [pair["status"] for pair in manifest["pairs"]] == ["completed", "missing"]
-
-
-def test_finalize_review_job_artifact_write_failure_does_not_accept_review(tmp_path: Path) -> None:
-    repo, db_path = build_repo_fixture(tmp_path)
-    prepared = json.loads(
-        create_gate_jobs(repo, db_path, [target("kb/notes/first.md", GATE_PATH, GATE)]).stdout
-    )
-    prepared_job = prepared["jobs"][0]
-    review_job_id = prepared_job["review_job_id"]
-    output_path = repo / prepared_job["bundle_output_path"]
-    write(output_path, pair_block("kb/notes/first.md", GATE_PATH, "Looks acceptable.", "PASS"))
-
-    with sqlite3.connect(db_path) as conn:
-        conn.execute(
-            "UPDATE review_pairs SET result_path = ? WHERE review_job_id = ?",
-            ("../outside-result.md", review_job_id),
-        )
-        conn.commit()
-
-    result = run_cli(
-        "finalize_review_job",
-        "--review-job-id",
-        str(review_job_id),
-        cwd=repo,
-        db_path=db_path,
-        check=False,
-    )
-
-    assert result.returncode == 1
-    payload = json.loads(result.stdout)
-    assert payload["completed"] is False
-    assert payload["completed_pair_count"] == 0
-    assert payload["state_changed"] is True
-    assert "result_path escapes repo root" in payload["failed"][0]["reason"]
-    assert payload["job"] == {"review_job_id": review_job_id, "status": "failed"}
-    with sqlite3.connect(db_path) as conn:
-        conn.row_factory = sqlite3.Row
-        job = conn.execute("SELECT status, failure_reason FROM review_jobs").fetchone()
-        pair = conn.execute("SELECT pair_status, decision FROM review_pairs").fetchone()
-        acceptance_count = conn.execute("SELECT COUNT(*) FROM acceptance_events").fetchone()[0]
-    assert job["status"] == "failed"
-    assert "result_path escapes repo root" in job["failure_reason"]
-    assert (pair["pair_status"], pair["decision"]) == ("missing", None)
-    assert acceptance_count == 0
-    assert not (repo.parent / "outside-result.md").exists()
-
-
-def test_finalize_review_job_validates_all_result_paths_before_writing(tmp_path: Path) -> None:
-    repo, db_path = build_repo_fixture(tmp_path)
-    prepared = json.loads(
-        create_gate_jobs(
-            repo,
-            db_path,
-            [
-                target("kb/notes/first.md", GATE_PATH, GATE),
-                target("kb/notes/second.md", GATE_PATH, GATE),
-            ],
-        ).stdout
-    )
-    prepared_job = prepared["jobs"][0]
-    review_job_id = prepared_job["review_job_id"]
-    output_path = repo / prepared_job["bundle_output_path"]
-    write(
-        output_path,
-        pair_block("kb/notes/first.md", GATE_PATH, "Looks acceptable.", "PASS")
-        + "\n"
-        + pair_block("kb/notes/second.md", GATE_PATH, "Also acceptable.", "PASS"),
-    )
-
-    first_result_path = repo / f"kb/reports/bundle-reviews/review-job-{review_job_id}/first.md"
-    with sqlite3.connect(db_path) as conn:
-        conn.execute(
-            """
-            UPDATE review_pairs
-            SET result_path = ?
-            WHERE review_job_id = ? AND note_path = ?
-            """,
-            ("../outside-result.md", review_job_id, "kb/notes/second.md"),
-        )
-        conn.commit()
-
-    result = run_cli(
-        "finalize_review_job",
-        "--review-job-id",
-        str(review_job_id),
-        cwd=repo,
-        db_path=db_path,
-        check=False,
-    )
-
-    assert result.returncode == 1
-    payload = json.loads(result.stdout)
-    assert "result_path escapes repo root" in payload["failed"][0]["reason"]
-    assert not first_result_path.exists()
-    with sqlite3.connect(db_path) as conn:
-        conn.row_factory = sqlite3.Row
-        pairs = conn.execute(
-            "SELECT pair_status, decision FROM review_pairs ORDER BY note_path"
-        ).fetchall()
-        acceptance_count = conn.execute("SELECT COUNT(*) FROM acceptance_events").fetchone()[0]
-    assert [(pair["pair_status"], pair["decision"]) for pair in pairs] == [
-        ("missing", None),
-        ("missing", None),
-    ]
-    assert acceptance_count == 0
 
 
 def test_finalize_review_job_missing_output_does_not_change_job_state(tmp_path: Path) -> None:
@@ -565,9 +459,8 @@ status: current
     with sqlite3.connect(db_path) as conn:
         conn.row_factory = sqlite3.Row
         job = conn.execute(
-            "SELECT status, started_at, failure_reason FROM review_jobs"
+            "SELECT status, failure_reason FROM review_jobs"
         ).fetchone()
     assert job is not None
     assert job["status"] == "failed"
-    assert job["started_at"] is None
     assert "reserved sentinel" in job["failure_reason"]

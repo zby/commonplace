@@ -10,9 +10,15 @@ from __future__ import annotations
 from dataclasses import dataclass
 from pathlib import Path
 
-from commonplace.review.artifacts import bundle_artifact_dir, result_paths_by_pair_id, write_manifest
+from commonplace.review.artifacts import (
+    bundle_artifact_dir,
+    bundle_output_path_rel,
+    prompt_path_rel,
+    result_paths_by_pair_id,
+    write_manifest,
+)
 from commonplace.review.freshness import capture_review_inputs
-from commonplace.review.job_output import fail_active_review_jobs
+from commonplace.review.finalization import fail_active_review_jobs
 from commonplace.review.job_prompt import prepare_note_target
 from commonplace.review.protocol.prompt import NoteReviewTarget, render_pairs_prompt
 from commonplace.review.review_db import (
@@ -20,7 +26,6 @@ from commonplace.review.review_db import (
     connect,
     create_job_with_pairs,
     load_review_pairs_for_job,
-    set_job_artifact_paths,
 )
 from commonplace.review.clock import iso_now
 
@@ -87,7 +92,6 @@ def prepare_grouped_review_job(
     runner_model: str | None = None,
     runner_effort: str | None = None,
     status: str = "queued",
-    started_at: str | None = None,
 ) -> PreparedBatch:
     """Create one review job for already-normalized, applicable pairs."""
     if not pairs:
@@ -106,7 +110,6 @@ def prepare_grouped_review_job(
             runner_model=runner_model,
             runner_effort=runner_effort,
             created_at=created_at,
-            started_at=started_at,
             status=status,
             packing=packing,
             pairs=captured_inputs.pair_requests,
@@ -122,10 +125,9 @@ def prepare_grouped_review_job(
         note_texts=captured_inputs.note_texts,
     )
     artifact_dir = bundle_artifact_dir(repo_root, review_job_id)
-    bundle_output_path = (artifact_dir / "bundle-output.md").relative_to(repo_root).as_posix()
-    artifact_dir_rel = artifact_dir.relative_to(repo_root).as_posix()
+    bundle_output_path = bundle_output_path_rel(review_job_id)
     result_paths = result_paths_by_pair_id(
-        artifact_dir_rel=artifact_dir_rel,
+        review_job_id=review_job_id,
         packing=packing,
         pairs=stored_pairs,
     )
@@ -145,9 +147,9 @@ def prepare_grouped_review_job(
         raise
 
     artifact_dir.mkdir(parents=True, exist_ok=True)
-    prompt_abs = artifact_dir / "prompt.md"
+    prompt_path = prompt_path_rel(review_job_id)
+    prompt_abs = repo_root / prompt_path
     prompt_abs.write_text(prompt, encoding="utf-8")
-    prompt_path = prompt_abs.relative_to(repo_root).as_posix()
     manifest_path = write_manifest(
         repo_root=repo_root,
         artifact_dir=artifact_dir,
@@ -158,16 +160,6 @@ def prepare_grouped_review_job(
         pairs=stored_pairs,
         skipped=skipped,
     )
-    with connect(db_path) as conn:
-        set_job_artifact_paths(
-            conn,
-            review_job_id=review_job_id,
-            prompt_path=prompt_path,
-            bundle_output_path=bundle_output_path,
-            result_paths=result_paths,
-        )
-        stored_pairs = load_review_pairs_for_job(conn, review_job_id=review_job_id)
-        conn.commit()
 
     return PreparedBatch(
         review_job_id=review_job_id,

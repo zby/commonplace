@@ -16,15 +16,12 @@ CREATE TABLE IF NOT EXISTS review_jobs (
     runner_model TEXT,
     runner_effort TEXT,
     created_at TEXT NOT NULL,
-    started_at TEXT,
     completed_at TEXT,
     status TEXT NOT NULL CHECK (
         status IN ('queued', 'running', 'completed', 'failed')
     ),
     failure_reason TEXT,
     telemetry_json TEXT,
-    prompt_path TEXT,
-    bundle_output_path TEXT,
     packing TEXT NOT NULL CHECK (
         packing IN ('note', 'gate')
     )
@@ -57,7 +54,6 @@ CREATE TABLE IF NOT EXISTS review_pairs (
     decision TEXT CHECK (
         decision IN ('pass', 'warn', 'fail', 'error', 'unknown')
     ),
-    result_path TEXT,
     reviewed_note_snapshot_id INTEGER REFERENCES review_file_snapshots(snapshot_id),
     reviewed_gate_snapshot_id INTEGER REFERENCES review_file_snapshots(snapshot_id),
     reviewed_at TEXT,

@@ -72,12 +72,14 @@ def test_ensure_db_initializes_current_schema(tmp_path: Path) -> None:
     assert view_row["accepted_gate_hash"] is None
     assert user_version == review_schema.REVIEW_SCHEMA_VERSION
     assert "created_at" in job_columns
-    assert job_columns["started_at"]["notnull"] == 0
+    assert "started_at" not in job_columns
     assert job_columns["runner"]["notnull"] == 0
     assert "runner_model" in job_columns
     assert "runner_effort" in job_columns
-    assert "prompt_path" in job_columns
+    assert "prompt_path" not in job_columns
+    assert "bundle_output_path" not in job_columns
     assert "model_partition" not in pair_columns
+    assert "result_path" not in pair_columns
     assert acceptance_columns["accepted_review_pair_id"]["notnull"] == 1
     assert "idx_review_pairs_note_gate" in index_names
     assert "idx_review_pairs_note_gate_model_partition" not in index_names
@@ -147,7 +149,7 @@ def test_snapshot_file_deduplicates_per_path_and_hashes_exact_utf8(tmp_path: Pat
     assert gate_snapshot.content_sha256 == first.content_sha256
 
 
-def test_load_review_job_exposes_created_at_and_nullable_started_at(tmp_path: Path) -> None:
+def test_load_review_job_exposes_created_at(tmp_path: Path) -> None:
     db_path = tmp_path / "review-store.sqlite"
     review_db.ensure_db(db_path)
 
@@ -157,7 +159,6 @@ def test_load_review_job_exposes_created_at_and_nullable_started_at(tmp_path: Pa
             model_partition="opus-4-6",
             runner="live-agent",
             created_at="2026-04-10T10:03:00+02:00",
-            started_at=None,
             status="queued",
             packing="note",
             pairs=[
@@ -172,7 +173,6 @@ def test_load_review_job_exposes_created_at_and_nullable_started_at(tmp_path: Pa
 
     assert review_job is not None
     assert review_job.created_at == "2026-04-10T10:03:00+02:00"
-    assert review_job.started_at is None
     assert review_job.status == "queued"
 
 
@@ -266,7 +266,6 @@ def test_prune_obsolete_snapshot_content_keeps_current_and_pending_text(tmp_path
             model_partition="opus-4-6",
             runner="test-runner",
             created_at="2026-04-10T10:03:00+02:00",
-            started_at="2026-04-10T10:03:00+02:00",
             status="running",
             packing="note",
             pairs=[

@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from commonplace.review.artifacts import result_paths_by_pair_id
 from commonplace.review import review_db, warn_selector
 
 
@@ -63,7 +62,6 @@ def seed_warn_review(repo: Path, db_path: Path) -> None:
             model_partition=TEST_MODEL,
             runner="test-runner",
             created_at=REVIEWED_AT,
-            started_at=REVIEWED_AT,
             status="running",
             packing="note",
             pairs=[
@@ -90,20 +88,8 @@ def seed_warn_review(repo: Path, db_path: Path) -> None:
             reviewed_at=REVIEWED_AT,
         )
         review_pair = review_db.load_review_pairs_for_job(conn, review_job_id=review_job_id)[0]
-        artifact_dir_rel = review_db.review_job_artifact_dir_rel(review_job_id)
-        result_paths = result_paths_by_pair_id(
-            artifact_dir_rel=artifact_dir_rel,
-            packing="note",
-            pairs=[review_pair],
-        )
-        result_path = result_paths[review_pair.review_pair_id]
-        write(repo / result_path, "### Findings\n- WARN: actionable finding\n\n## Result: WARN\n")
-        review_db.set_job_artifact_paths(
-            conn,
-            review_job_id=review_job_id,
-            bundle_output_path=f"{artifact_dir_rel}/bundle-output.md",
-            result_paths=result_paths,
-        )
+        assert review_pair.result_path is not None
+        write(repo / review_pair.result_path, "### Findings\n- WARN: actionable finding\n\n## Result: WARN\n")
         review_db.append_acceptance_event(
             conn,
             note_path="kb/notes/sample.md",

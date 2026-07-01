@@ -23,16 +23,13 @@ def insert_completed_pair(
     runner: str = "test-runner",
     reviewed_note_snapshot_id: int | None = None,
     reviewed_gate_snapshot_id: int | None = None,
-    started_at: str | None = None,
 ) -> int:
-    started = started_at or reviewed_at
     gate_path = source_gate_path(gate_id)
     review_job_id = review_db.create_job_with_pairs(
         conn,
         model_partition=model_partition,
         runner=runner,
-        created_at=started,
-        started_at=started,
+        created_at=reviewed_at,
         status="running",
         packing="note",
         pairs=[

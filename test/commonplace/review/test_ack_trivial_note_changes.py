@@ -133,7 +133,6 @@ def seed_snapshot_review(repo: Path, db_path: Path, *, note_path: str, gate_path
             model_partition=TEST_MODEL,
             runner="test-runner",
             created_at="2026-04-01T00:00:00+00:00",
-            started_at="2026-04-01T00:00:00+00:00",
             status="running",
             packing="note",
             pairs=[

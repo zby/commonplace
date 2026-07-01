@@ -23,14 +23,13 @@ def _insert_completed_job(
     *,
     note_path: str,
     gate_ids: tuple[str, ...],
-    started_at: str,
+    reviewed_at: str,
 ) -> tuple[int, dict[str, int]]:
     job_id = review_db.create_job_with_pairs(
         conn,
         model_partition=MODEL_PARTITION,
         runner="test-runner",
-        created_at=started_at,
-        started_at=started_at,
+        created_at=reviewed_at,
         status="running",
         packing="note",
         pairs=[
@@ -50,13 +49,13 @@ def _insert_completed_job(
                 note_path=note_path,
                 gate_path=source_gate_path(gate_id),
                 decision="pass",
-                reviewed_at=started_at,
+                reviewed_at=reviewed_at,
             )
             for gate_id in gate_ids
         ],
-        reviewed_at=started_at,
+        reviewed_at=reviewed_at,
     )
-    review_db.complete_review_job(conn, review_job_id=job_id, completed_at=started_at)
+    review_db.complete_review_job(conn, review_job_id=job_id, completed_at=reviewed_at)
     pair_ids_by_path = {
         pair.gate_path: pair.review_pair_id
         for pair in review_db.load_review_pairs_for_job(conn, review_job_id=job_id)
@@ -88,13 +87,13 @@ def test_prune_superseded_reviews_deletes_rows_and_whole_obsolete_job_artifacts(
             conn,
             note_path="kb/notes/mixed.md",
             gate_ids=("prose/source-residue", "semantic/grounding-alignment"),
-            started_at="2026-01-01T00:00:00Z",
+            reviewed_at="2026-01-01T00:00:00Z",
         )
         current_source_job, current_source_pairs = _insert_completed_job(
             conn,
             note_path="kb/notes/mixed.md",
             gate_ids=("prose/source-residue",),
-            started_at="2026-01-02T00:00:00Z",
+            reviewed_at="2026-01-02T00:00:00Z",
         )
         accept_pair(
             conn,
@@ -125,13 +124,13 @@ def test_prune_superseded_reviews_deletes_rows_and_whole_obsolete_job_artifacts(
             conn,
             note_path="kb/notes/full.md",
             gate_ids=("prose/source-residue",),
-            started_at="2026-01-03T00:00:00Z",
+            reviewed_at="2026-01-03T00:00:00Z",
         )
         current_full_job, current_full_pairs = _insert_completed_job(
             conn,
             note_path="kb/notes/full.md",
             gate_ids=("prose/source-residue",),
-            started_at="2026-01-04T00:00:00Z",
+            reviewed_at="2026-01-04T00:00:00Z",
         )
         accept_pair(
             conn,
@@ -154,13 +153,13 @@ def test_prune_superseded_reviews_deletes_rows_and_whole_obsolete_job_artifacts(
             conn,
             note_path="kb/notes/ack.md",
             gate_ids=("prose/source-residue",),
-            started_at="2026-01-05T00:00:00Z",
+            reviewed_at="2026-01-05T00:00:00Z",
         )
         ack_latest_job, ack_latest_pairs = _insert_completed_job(
             conn,
             note_path="kb/notes/ack.md",
             gate_ids=("prose/source-residue",),
-            started_at="2026-01-06T00:00:00Z",
+            reviewed_at="2026-01-06T00:00:00Z",
         )
         accept_pair(
             conn,

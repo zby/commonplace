@@ -14,7 +14,7 @@ The review protocol's output side is one encoding: sentinel-delimited markdown b
 
 - One encoding: `=== PAIR REVIEW START: {note} :: {gate} ===` blocks ([ADR 029](../adr/029-review-execution-unified-on-note-gate-pairs.md)). `protocol/parser.py` extracts blocks into `ParsedPairBundle`; `protocol/decisions.py` recovers the decision through an ordered fallback chain (explicit flagging phrases → revised-result headers → result headers → severity patterns → bold patterns → `unknown`) and canonicalizes result footers.
 - The codec is almost contained in `protocol/`: the one leak is `executor.assemble_run_document`, which imports the sentinel templates to assemble per-run artifact documents.
-- Consumers downstream of parsing are mostly encoding-independent already: `review_pairs.decision` stores the parsed enum, `review_pairs.result_path` points to the retained markdown review body, and `warn_selector` extracts findings from a `### Findings` section convention in that artifact.
+- Consumers downstream of parsing are mostly encoding-independent already: `review_pairs.decision` stores the parsed enum, a derived result artifact path points to the retained markdown review body, and `warn_selector` extracts findings from a `### Findings` section convention in that artifact.
 - External executors receive the contract through rendered prompts created from selector JSON (`commonplace-create-review-jobs --input ... --grouping {note,gate}`), write job-owned output files, and return control to finalization.
 - Trigger not yet met: schema-validated sub-agent output ships in one harness's workflow scripts; the subprocess CLIs (`claude -p`, `codex exec`) and the live-agent file-artifact path have no equivalent surface the review system could consume today.
 
@@ -23,7 +23,7 @@ The review protocol's output side is one encoding: sentinel-delimited markdown b
 A codec is the pair (render the output contract into the prompt, decode raw output into `ParsedPairBundle`). Two codecs:
 
 - **markdown-sentinel** (today): contract rendered as sentinel instructions plus a block template; decoder is the existing parser + decision chain.
-- **structured** (new): contract expressed as a JSON schema — per pair: note path, gate id, summary, findings (severity + text), optional suggested revision, decision as an enum. The decoder validates and maps to `ParsedPairBundle`; the decision fallback chain is bypassed entirely because the decision arrives as a constrained field. The per-pair markdown result file can be rendered from the structured fields, so warning extraction and human review still use the existing `result_path` artifact boundary.
+- **structured** (new): contract expressed as a JSON schema — per pair: note path, gate id, summary, findings (severity + text), optional suggested revision, decision as an enum. The decoder validates and maps to `ParsedPairBundle`; the decision fallback chain is bypassed entirely because the decision arrives as a constrained field. The per-pair markdown result file can be rendered from the structured fields, so warning extraction and human review still use the derived result artifact boundary.
 
 `ParsedPairBundle` is already the codec-independent boundary type; salvage semantics (missing pairs reported, structural errors fatal) translate directly — a missing array entry is a missing pair, a validation failure is a structural error.
 

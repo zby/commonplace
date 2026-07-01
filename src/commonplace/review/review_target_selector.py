@@ -7,9 +7,13 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from commonplace.lib import frontmatter
-from commonplace.review.domain.snapshots import AcceptanceSnapshot, GateSnapshot, NoteSnapshot
-from commonplace.review.domain.staleness import classify_staleness
-from commonplace.review.freshness import file_content_sha256
+from commonplace.review.freshness import (
+    AcceptanceSnapshot,
+    GateSnapshot,
+    NoteSnapshot,
+    classify_staleness,
+    file_content_sha256,
+)
 from commonplace.review.paths import gate_id_for_path, gate_id_from_stored_path, normalize_gate_path, review_gates_dir
 from commonplace.review.resolve_gates import applicable_gate_ids_for_note
 from commonplace.review.review_db import (

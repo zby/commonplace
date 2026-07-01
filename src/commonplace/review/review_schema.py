@@ -6,7 +6,7 @@ from __future__ import annotations
 import sqlite3
 from pathlib import Path
 
-REVIEW_SCHEMA_VERSION = 1
+REVIEW_SCHEMA_VERSION = 2
 EXPECTED_REVIEW_TABLES = frozenset(
     {
         "review_jobs",

@@ -69,8 +69,8 @@ Add `--reason {missing-review|gate-changed|note-changed}` to the selector only w
 The selector emits applicable `(note, gate)` pairs. The creator consumes that JSON, creates queued review jobs, writes canonical prompts, and returns a JSON object with `jobs`. Creation is runner-agnostic; runner provenance stays null until a later execution path records it. Capture each job object, especially:
 
 - `review_job_id`
-- `prompt_path`
-- `bundle_output_path`
+- derived `prompt_path`
+- derived `bundle_output_path`
 - each pair's `gate_id` and `gate_path`
 
 Each returned job is one review batch for this procedure. Do not invent, merge, split, or reorder jobs. Use exactly the job grouping and pair list the creator returns.
@@ -109,9 +109,9 @@ The sub-agent owns only its `bundle_output_path`. The parent owns job creation, 
 commonplace-finalize-review-job --review-job-id {review-job-id}
 ```
 
-Run finalization once per completed sub-agent output. This reads the job-owned `bundle_output_path`, parses the sentinel-bracketed pair bundle, records per-pair reviews, writes result files, appends acceptance events for completed pairs, and finalizes the review job.
+Run finalization once per completed sub-agent output. This reads the job-owned derived `bundle_output_path`, parses the sentinel-bracketed pair bundle, records per-pair reviews, writes result files, appends acceptance events for completed pairs, and finalizes the review job.
 
-After finalization, `MANIFEST.json` in the job artifact directory is refreshed for inspection with pair statuses and `result_path` files. Treat database paths as pipeline state; do not read `MANIFEST.json` to decide what to finalize.
+After finalization, `MANIFEST.json` in the job artifact directory is refreshed for inspection with pair statuses and derived `result_path` files. Treat the returned job payload and derived job paths as pipeline state; do not read `MANIFEST.json` to decide what to finalize.
 
 ## Verify
 

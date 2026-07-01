@@ -193,7 +193,7 @@ def test_create_review_jobs_groups_cross_lens_gates_by_bundle(tmp_path: Path) ->
         conn.row_factory = sqlite3.Row
         job_rows = conn.execute(
             """
-            SELECT status, runner, runner_model, runner_effort, packing, created_at, started_at, prompt_path, bundle_output_path
+            SELECT status, runner, runner_model, runner_effort, packing, created_at
             FROM review_jobs
             ORDER BY review_job_id
             """
@@ -202,18 +202,12 @@ def test_create_review_jobs_groups_cross_lens_gates_by_bundle(tmp_path: Path) ->
             ("queued", None, None, None, "note"),
             ("queued", None, None, None, "note"),
         ]
-        assert [row["started_at"] for row in job_rows] == [None, None]
         assert all(row["created_at"] is not None for row in job_rows)
-        assert job_rows[0]["prompt_path"] == first_job["prompt_path"]
-        assert job_rows[1]["prompt_path"] == second_job["prompt_path"]
-        assert job_rows[0]["bundle_output_path"] == first_job["bundle_output_path"]
-        assert job_rows[1]["bundle_output_path"] == second_job["bundle_output_path"]
         pair_rows = conn.execute(
             """
             SELECT
                 rp.gate_path,
                 rp.pair_status,
-                rp.result_path,
                 rp.reviewed_note_snapshot_id,
                 rp.reviewed_gate_snapshot_id,
                 note_snapshot.content_text AS note_text,
@@ -230,14 +224,18 @@ def test_create_review_jobs_groups_cross_lens_gates_by_bundle(tmp_path: Path) ->
             (GATE_ONE_PATH, "pending"),
             (GATE_TWO_PATH, "pending"),
         ]
-        assert pair_rows[0]["result_path"] == manifest["pairs"][0]["result_path"]
         assert {row["reviewed_note_snapshot_id"] for row in pair_rows} != {None}
         assert all(row["reviewed_gate_snapshot_id"] is not None for row in pair_rows)
         assert all("Term Alpha appears before its definition." in row["note_text"] for row in pair_rows)
         assert all("Fixture gate." in row["gate_text"] for row in pair_rows)
-        run_columns = {row["name"] for row in conn.execute("PRAGMA table_info(review_jobs)").fetchall()}
-        assert "note_path" not in run_columns
-        assert "reviewed_note_sha" not in run_columns
+        job_columns = {row["name"] for row in conn.execute("PRAGMA table_info(review_jobs)").fetchall()}
+        pair_columns = {row["name"] for row in conn.execute("PRAGMA table_info(review_pairs)").fetchall()}
+        assert "note_path" not in job_columns
+        assert "reviewed_note_sha" not in job_columns
+        assert "started_at" not in job_columns
+        assert "prompt_path" not in job_columns
+        assert "bundle_output_path" not in job_columns
+        assert "result_path" not in pair_columns
 
 
 def test_create_review_jobs_snapshots_dirty_gate_text(tmp_path: Path) -> None:
@@ -530,9 +528,8 @@ def test_claim_review_job_records_dispatch_provenance_and_rejects_second_claim(t
     assert claim_payload["job"]["runner_effort"] is None
     with sqlite3.connect(db_path) as conn:
         conn.row_factory = sqlite3.Row
-        job = conn.execute("SELECT status, started_at, runner, runner_model, runner_effort FROM review_jobs").fetchone()
+        job = conn.execute("SELECT status, runner, runner_model, runner_effort FROM review_jobs").fetchone()
         assert job["status"] == "running"
-        assert job["started_at"] is not None
         assert job["runner"] == "codex"
         assert job["runner_model"] == "test-model"
         assert job["runner_effort"] is None
@@ -614,15 +611,12 @@ def test_finalize_review_job_uses_job_owned_paths_and_writes_provenance_frontmat
     )
     prepared_job = prepared["jobs"][0]
     review_job_id = prepared_job["review_job_id"]
-    custom_output = "kb/reports/custom-review-output/job-output.md"
-    custom_result = "kb/reports/custom-review-results/sample-undefined.md"
-    write(repo / custom_output, single_pair_bundle_output())
+    write(repo / prepared_job["bundle_output_path"], single_pair_bundle_output())
     with sqlite3.connect(db_path) as conn:
         conn.execute(
-            "UPDATE review_jobs SET bundle_output_path = ?, runner = ?, runner_model = ? WHERE review_job_id = ?",
-            (custom_output, "live-agent", "reviewer-model", review_job_id),
+            "UPDATE review_jobs SET runner = ?, runner_model = ? WHERE review_job_id = ?",
+            ("live-agent", "reviewer-model", review_job_id),
         )
-        conn.execute("UPDATE review_pairs SET result_path = ? WHERE review_job_id = ?", (custom_result, review_job_id))
         conn.commit()
     manifest_path = repo / f"kb/reports/bundle-reviews/review-job-{review_job_id}/MANIFEST.json"
     manifest_path.write_text("{not valid json", encoding="utf-8")
@@ -644,7 +638,8 @@ def test_finalize_review_job_uses_job_owned_paths_and_writes_provenance_frontmat
         "review_job_id": review_job_id,
         "state_changed": True,
     }
-    result_text = (repo / custom_result).read_text(encoding="utf-8")
+    result_path = f"kb/reports/bundle-reviews/review-job-{review_job_id}/undefined-terms.md"
+    result_text = (repo / result_path).read_text(encoding="utf-8")
     parsed_frontmatter = frontmatter.parse(result_text)
     assert parsed_frontmatter.ok
     assert parsed_frontmatter.data["review_job_id"] == review_job_id
@@ -658,10 +653,9 @@ def test_finalize_review_job_uses_job_owned_paths_and_writes_provenance_frontmat
     assert parsed_frontmatter.data["decision"] == "warn"
     assert parsed_frontmatter.data["reviewed_at"] is not None
     assert frontmatter.strip(result_text) == "Needs a definition for Alpha.\n\n## Result: WARN\n"
-    assert not (repo / f"kb/reports/bundle-reviews/review-job-{review_job_id}/undefined-terms.md").exists()
     refreshed_manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-    assert refreshed_manifest["bundle_output_path"] == custom_output
-    assert refreshed_manifest["pairs"][0]["result_path"] == custom_result
+    assert refreshed_manifest["bundle_output_path"] == prepared_job["bundle_output_path"]
+    assert refreshed_manifest["pairs"][0]["result_path"] == result_path
     assert refreshed_manifest["pairs"][0]["status"] == "completed"
     with sqlite3.connect(db_path) as conn:
         conn.row_factory = sqlite3.Row
