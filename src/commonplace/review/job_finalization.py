@@ -1,4 +1,4 @@
-"""Job-owned review finalization for harness-orchestrated review batches."""
+"""Job-owned review finalization for parent-dispatched review batches."""
 
 from __future__ import annotations
 

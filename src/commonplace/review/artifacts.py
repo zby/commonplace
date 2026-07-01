@@ -171,6 +171,7 @@ def write_pair_result_files_to_persisted_paths(
     pairs: Sequence[ReviewPairForResult],
     canonical_texts: dict[tuple[str, str], str],
 ) -> None:
+    pending_writes: list[tuple[Path, str]] = []
     for pair in pairs:
         if pair.pair_status != "completed":
             continue
@@ -180,11 +181,16 @@ def write_pair_result_files_to_persisted_paths(
         if review_text is None:
             continue
         output_path = _repo_relative_output_path(repo_root, pair.result_path)
-        output_path.parent.mkdir(parents=True, exist_ok=True)
-        output_path.write_text(
-            result_frontmatter(job=job, pair=pair) + review_text,
-            encoding="utf-8",
+        pending_writes.append(
+            (
+                output_path,
+                result_frontmatter(job=job, pair=pair) + review_text,
+            )
         )
+
+    for output_path, content in pending_writes:
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        output_path.write_text(content, encoding="utf-8")
 
 
 def write_manifest(

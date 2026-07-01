@@ -386,6 +386,66 @@ def test_finalize_review_job_artifact_write_failure_does_not_accept_review(tmp_p
     assert not (repo.parent / "outside-result.md").exists()
 
 
+def test_finalize_review_job_validates_all_result_paths_before_writing(tmp_path: Path) -> None:
+    repo, db_path = build_repo_fixture(tmp_path)
+    prepared = json.loads(
+        create_gate_jobs(
+            repo,
+            db_path,
+            [
+                target("kb/notes/first.md", GATE_PATH, GATE),
+                target("kb/notes/second.md", GATE_PATH, GATE),
+            ],
+        ).stdout
+    )
+    prepared_job = prepared["jobs"][0]
+    review_job_id = prepared_job["review_job_id"]
+    output_path = repo / prepared_job["bundle_output_path"]
+    write(
+        output_path,
+        pair_block("kb/notes/first.md", GATE_PATH, "Looks acceptable.", "PASS")
+        + "\n"
+        + pair_block("kb/notes/second.md", GATE_PATH, "Also acceptable.", "PASS"),
+    )
+
+    first_result_path = repo / f"kb/reports/bundle-reviews/review-job-{review_job_id}/first.md"
+    with sqlite3.connect(db_path) as conn:
+        conn.execute(
+            """
+            UPDATE review_pairs
+            SET result_path = ?
+            WHERE review_job_id = ? AND note_path = ?
+            """,
+            ("../outside-result.md", review_job_id, "kb/notes/second.md"),
+        )
+        conn.commit()
+
+    result = run_cli(
+        "finalize_review_job",
+        "--review-job-id",
+        str(review_job_id),
+        cwd=repo,
+        db_path=db_path,
+        check=False,
+    )
+
+    assert result.returncode == 1
+    payload = json.loads(result.stdout)
+    assert "result_path escapes repo root" in payload["failed"][0]["reason"]
+    assert not first_result_path.exists()
+    with sqlite3.connect(db_path) as conn:
+        conn.row_factory = sqlite3.Row
+        pairs = conn.execute(
+            "SELECT pair_status, decision FROM review_pairs ORDER BY note_path"
+        ).fetchall()
+        acceptance_count = conn.execute("SELECT COUNT(*) FROM acceptance_events").fetchone()[0]
+    assert [(pair["pair_status"], pair["decision"]) for pair in pairs] == [
+        ("missing", None),
+        ("missing", None),
+    ]
+    assert acceptance_count == 0
+
+
 def test_finalize_review_job_missing_output_does_not_change_job_state(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
     prepared = json.loads(
