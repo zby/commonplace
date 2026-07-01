@@ -8,6 +8,7 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 - [lineage-mechanisms](./lineage-mechanisms/README.md) — revising lineage mechanisms across sources, generated reports, distillation records, report persistence, and source-to-source/source-to-note relation labels
 - [src-architecture-alternatives](./src-architecture-alternatives/README.md) — alternative architectures for `src/commonplace/` from a full code read; active thread is an append-only event log as review-store source of truth with acceptance events that embed their snapshots
+- [review-system-simplification](./review-system-simplification/plan.md) — implementing review-system simplification: derived artifact paths, finalization-time provenance, all-or-nothing jobs, strict parsing, and smaller freshness/finalization modules
 - [relocation-move-map-engine](./relocation-move-map-engine/README.md) — collapsing note and directory relocation around one move-map engine for link rewriting, file moves, redirects, and removal of review-store rekeying
 - [kb-graph-loader](./kb-graph-loader/README.md) — testing whether validation, generated indexes, docs hooks, and review targeting should share one loaded KB note/graph model
 - [connect-maintenance-observations](./connect-maintenance-observations/README.md) — triaging maintenance observations extracted from recent connect reports and separating already-implemented items from open follow-up work
