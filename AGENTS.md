@@ -120,5 +120,5 @@ The `cp-skill-*` family (`cp-skill-write`, `cp-skill-validate`, `cp-skill-connec
 
 The `llm-commonplace` package provides `commonplace-*` CLI commands for validation, snapshots, note operations, and the review system — reference in [commands.md](./kb/reference/commands.md). Call them and `pytest` by bare name: direnv puts `.venv/bin` on `PATH`, so never prepend `.venv/bin/` or wrap in `direnv exec` or `uv run`. If a bare call genuinely fails, run `cp-skill-health-check`.
 
-For review work (single-note review, triage, ack, or sweep), read `kb/reference/REVIEW-SYSTEM.md`.
+For review work (single-note review, triage, ack, or sweep), read `kb/reference/README-REVIEW-SYSTEM.md`.
 For fixing review warnings, read `kb/instructions/FIX-SYSTEM.md`.
