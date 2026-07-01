@@ -70,6 +70,7 @@ Keep path traversal protection at artifact root and filename derivation boundari
 - Update finalization to read/write derived paths.
 - Update `_job_payload`, `review_job_list`, and manifest rendering.
 - Delete or rewrite tests whose only purpose is mutating stored paths to exercise path-safety code.
+- Rewrite the relocation CLI tests flagged in phase 1 (`relocation_review_helpers.py`, `test_relocate_note.py`, `test_relocate_directory.py`): drop `started_at`/`status='running'` seeding and assert derived paths instead of the removed `prompt_path`/`bundle_output_path`/`result_path` columns.
 
 ## Expected Delta
 

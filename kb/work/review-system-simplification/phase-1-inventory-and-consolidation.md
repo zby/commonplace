@@ -36,15 +36,21 @@ Do not remove persisted artifact paths, claim state, partial salvage, or permiss
 - Check whether `src/commonplace/cli/review/migrations/repair_model_partitions.py` is still used after the migration baseline was squashed at `c2497e16`.
 - Record updated production/test line counts before code edits.
 
+Note: stored path/status behavior is asserted outside `test/commonplace/review/`. The relocation CLI tests also seed and assert these columns and must be in scope:
+
+- `test/commonplace/cli/relocation_review_helpers.py` seeds `running`, `started_at`, `prompt_path`, `bundle_output_path`, and `result_path`.
+- `test/commonplace/cli/test_relocate_note.py` asserts persisted artifact paths (`prompt_path`, `bundle_output_path`, `result_path`).
+- `test/commonplace/cli/test_relocate_directory.py` asserts persisted artifact paths across multiple jobs.
+
 ### Test Audit
 
-Classify review tests as:
+Classify review **and review-adjacent CLI** tests as:
 
 - public behavior tests to keep
 - internal-scaffolding tests to delete or rewrite when later phases remove the scaffolding
 - migration/repair tests that depend on dead command surface
 
-Specifically flag tests that mutate stored `bundle_output_path`/`result_path`, assert `running` or claim behavior, or assert partial salvage from failed jobs.
+Audit both `test/commonplace/review/` and the relocation tests listed above. Specifically flag tests that mutate or assert stored `prompt_path`/`bundle_output_path`/`result_path`, seed or assert `running`/`started_at`/claim behavior, or assert partial salvage from failed jobs. The relocation tests seed jobs directly through `review_db`, so their `create_job_with_pairs` calls will break in phase 2 when `started_at`/`status='running'` and the path columns go away — record now which assertions become obsolete versus which need rewriting to derived paths.
 
 ### Freshness Vocabulary Consolidation
 
@@ -94,7 +100,7 @@ Before ending this phase:
 
 ## Verification
 
-- `pytest test/commonplace/review`
+- `pytest test/commonplace/review test/commonplace/cli/test_relocate_note.py test/commonplace/cli/test_relocate_directory.py` — covers the review-adjacent relocation tests that assert stored path/status columns.
 - `rg "commonplace.review.domain|job_output|job_finalization" src test` should show no live imports after consolidation, except historical workshop text if any.
 - `git diff --check`
 
@@ -102,5 +108,5 @@ Before ending this phase:
 
 - Review tests pass.
 - Later phase files have been revised to reflect the new module layout.
-- The test audit identifies which tests are expected to disappear in phases 2 and 3.
+- The test audit identifies which tests are expected to disappear or need rewriting in phases 2 and 3, including the relocation CLI tests.
 - Cleanup gate is complete; no unowned compatibility wrappers or stale imports remain.
