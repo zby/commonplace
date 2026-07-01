@@ -14,12 +14,13 @@ Use this procedure for either:
 
 Inputs:
 
-- `{model-partition}` — review model partition, for example `claude-opus` or `codex`
+- `{model-partition}` — review model partition, for example `claude-opus` or `codex`. Derive it from the orchestrator's own model (see below), not a guessed default.
 - `{gate-or-bundle}...` or `--all-gates` — gate ids or bundle names, for example `semantic/grounding-alignment`, `prose/source-residue`, or `prose`
 - note scope — `--note {note-or-dir}...` or `--current`
 - selector mode — `requested` for explicit execution, or default stale selection
 - grouping — `note` or `gate`
-- worker model and effort — concrete sub-agent dispatch settings, when the harness can request or report them
+
+The partition is fixed at selection, before any worker runs, so the orchestrator must choose it up front. Sub-agents inherit the orchestrator's model unless explicitly overridden, so read the orchestrator's own exact model ID from its environment context and pick the partition that `build_model_partition` maps it to. Use that partition for the selector `--model`. The worker still reports the model it actually ran, and the orchestrator finalizes with that exact reported model; if the reported model maps to a different partition than the job's, the inheritance assumption broke — re-run under the correct partition rather than forcing the finalize.
 
 Always create jobs from selector JSON. The job creator has no direct note or pair mode.
 
@@ -80,7 +81,7 @@ Each returned job is one review batch for this procedure. Do not invent, merge, 
 
 Launch one sub-agent per returned job, subject to the harness's concurrency limit. If there are more jobs than available workers, queue the remaining jobs and launch them as workers finish.
 
-Before launching a sub-agent, decide the concrete worker model and effort when the harness can request them. The concrete dispatch settings must be compatible with the job's partition: `build_model_partition(worker_model, worker_effort)` must equal the job's `model_partition`. If the harness cannot request or report a concrete model, mark the model as unknown for this job and finalize with only `--runner`.
+Launch workers on the inherited orchestrator model (do not override it), so the model actually run matches the partition chosen at selection. The parent cannot observe which concrete model a sub-agent ran, so it must not record provenance from its own inference: require each worker to report its own exact model ID and reasoning effort when the environment states them, and finalize the job with the reported values. `build_model_partition(reported_model, reported_effort)` must equal the job's `model_partition`; a mismatch means inheritance did not hold. The worker only reports these; it never runs finalization or any other bookkeeping command. If a worker cannot report a concrete model, mark the model as unknown for that job and finalize with only `--runner`.
 
 Give each sub-agent exactly one job object and this task:
 
@@ -94,6 +95,7 @@ Do not edit the reviewed note, review gates, manifests, indexes, or any library 
 Do not run commonplace-* commands.
 Do not finalize the output.
 Return the gates reviewed and their PASS/WARN/FAIL/ERROR decisions.
+Also return your exact model ID and reasoning effort, copied verbatim from the explicit model-ID line in your environment context. Do not guess or infer them.
 ```
 
 The sub-agent owns only its `bundle_output_path`. The parent owns job creation, dispatch bookkeeping, worker scheduling, finalization, verification, and reporting.
@@ -104,7 +106,7 @@ The sub-agent owns only its `bundle_output_path`. The parent owns job creation, 
 commonplace-finalize-review-job --review-job-id {review-job-id} --runner {worker} --model {worker-model}
 ```
 
-Pass the concrete worker model to `--model` whenever it was requested or reported; finalization validates `build_model_partition(--model, --effort)` against the job's `model_partition` before mutating state. If the worker uses an explicit reasoning effort, also pass `--effort {low|medium|high|xhigh}`. Pass only `--runner` when the concrete model is genuinely unavailable. If the harness exposes opaque execution telemetry, pass it with `--telemetry-json`.
+Pass the model the worker reported to `--model`; finalization validates `build_model_partition(--model, --effort)` against the job's `model_partition` before mutating state. If the worker reported an explicit reasoning effort, also pass `--effort {low|medium|high|xhigh}`. Pass only `--runner` when the worker could not report a concrete model. If the harness exposes opaque execution telemetry, pass it with `--telemetry-json`.
 
 Run finalization once per completed sub-agent output. This reads the job-owned derived `bundle_output_path`, strictly parses the sentinel-bracketed pair bundle, records provenance and per-pair decisions, writes result files, appends acceptance events, and finalizes the review job. Finalization is all-or-nothing: a missing or malformed pair block fails the whole job and records no pair decisions or acceptance events.
 

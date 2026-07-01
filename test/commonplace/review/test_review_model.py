@@ -8,6 +8,7 @@ def test_normalize_model_partition_collapses_registered_aliases() -> None:
     assert normalize_model_partition("opus-4.6") == "claude-opus"
     assert normalize_model_partition("claude-opus-4.6") == "claude-opus"
     assert normalize_model_partition("claude-opus-4.8") == "claude-opus-4.8"
+    assert normalize_model_partition("claude-opus-4.8[1m]") == "claude-opus-4.8"
     assert normalize_model_partition("claude-fable-5") == "claude-opus-4.8"
     assert normalize_model_partition("sonnet") == "claude-sonnet"
     assert normalize_model_partition("gpt-5.4-high") == "codex"
@@ -15,6 +16,7 @@ def test_normalize_model_partition_collapses_registered_aliases() -> None:
 
 
 def test_build_model_partition_collapses_effort_for_registered_models() -> None:
+    assert build_model_partition("claude-opus-4.8[1m]") == "claude-opus-4.8"
     assert build_model_partition("gpt-5.4", "xhigh") == "codex"
     assert build_model_partition("gpt-5.5", "high") == "codex-5.5"
     assert build_model_partition("unknown-model", "high") == "unknown-model-high"

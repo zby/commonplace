@@ -43,6 +43,7 @@ MODEL_PARTITION_REGISTRY = {
 
 
 def encode_model(model: str) -> str:
+    model = re.sub(r"\[[^\]]+\]\s*$", "", model.strip())
     return re.sub(r"[^A-Za-z0-9_-]+", "-", model).strip("-").lower()
 
 
