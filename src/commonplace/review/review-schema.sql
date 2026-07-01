@@ -64,8 +64,7 @@ ON review_pairs(note_path, gate_path);
 CREATE INDEX IF NOT EXISTS idx_review_pairs_review_job_id
 ON review_pairs(review_job_id);
 
-CREATE TABLE IF NOT EXISTS acceptance_events (
-    acceptance_event_id INTEGER PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS acceptance (
     note_path TEXT NOT NULL,
     gate_path TEXT NOT NULL,
     model_partition TEXT NOT NULL,
@@ -75,35 +74,10 @@ CREATE TABLE IF NOT EXISTS acceptance_events (
     accepted_at TEXT NOT NULL
 );
 
-CREATE INDEX IF NOT EXISTS idx_acceptance_events_note_gate_model_partition
-ON acceptance_events(note_path, gate_path, model_partition, accepted_at DESC);
-
-CREATE INDEX IF NOT EXISTS idx_acceptance_events_latest_by_key
-ON acceptance_events(note_path, gate_path, model_partition, acceptance_event_id DESC);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_acceptance_note_gate_model_partition
+ON acceptance(note_path, gate_path, model_partition);
 
 CREATE VIEW IF NOT EXISTS current_gate_acceptances AS
-WITH valid_acceptance_events AS (
-    SELECT e.*
-    FROM acceptance_events AS e
-    JOIN review_pairs AS rp
-      ON rp.review_pair_id = e.accepted_review_pair_id
-     AND rp.note_path = e.note_path
-     AND rp.gate_path = e.gate_path
-    JOIN review_jobs AS j
-      ON j.review_job_id = rp.review_job_id
-     AND j.model_partition = e.model_partition
-    WHERE j.status = 'completed'
-      AND rp.decision IS NOT NULL
-),
-latest AS (
-    SELECT
-        note_path,
-        gate_path,
-        model_partition,
-        MAX(acceptance_event_id) AS max_id
-    FROM valid_acceptance_events
-    GROUP BY note_path, gate_path, model_partition
-)
 SELECT
     e.note_path,
     e.gate_path,
@@ -116,13 +90,20 @@ SELECT
     note_snapshot.content_text AS accepted_note_text,
     gate_snapshot.content_text AS accepted_gate_text,
     e.accepted_at
-FROM valid_acceptance_events AS e
+FROM acceptance AS e
+JOIN review_pairs AS rp
+  ON rp.review_pair_id = e.accepted_review_pair_id
+ AND rp.note_path = e.note_path
+ AND rp.gate_path = e.gate_path
+JOIN review_jobs AS j
+  ON j.review_job_id = rp.review_job_id
+ AND j.model_partition = e.model_partition
 LEFT JOIN review_file_snapshots AS note_snapshot
   ON e.accepted_note_snapshot_id = note_snapshot.snapshot_id
 LEFT JOIN review_file_snapshots AS gate_snapshot
   ON e.accepted_gate_snapshot_id = gate_snapshot.snapshot_id
-JOIN latest
-  ON e.acceptance_event_id = latest.max_id;
+WHERE j.status = 'completed'
+  AND rp.decision IS NOT NULL;
 
 -- Query pattern expected for selector:
 --

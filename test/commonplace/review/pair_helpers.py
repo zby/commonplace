@@ -64,8 +64,8 @@ def accept_pair(
     accepted_at: str,
     accepted_note_snapshot_id: int | None = None,
     accepted_gate_snapshot_id: int | None = None,
-) -> int:
-    return review_db.append_acceptance_event(
+) -> review_db.SupersededAcceptance | None:
+    return review_db.upsert_acceptance(
         conn,
         note_path=note_path,
         gate_path=source_gate_path(gate_id),

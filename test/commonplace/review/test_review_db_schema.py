@@ -49,7 +49,7 @@ def test_ensure_db_initializes_current_schema(tmp_path: Path) -> None:
         pair_columns = {row["name"] for row in conn.execute("PRAGMA table_info(review_pairs)").fetchall()}
         acceptance_columns = {
             row["name"]: row
-            for row in conn.execute("PRAGMA table_info(acceptance_events)").fetchall()
+            for row in conn.execute("PRAGMA table_info(acceptance)").fetchall()
         }
         index_names = {
             row["name"]
@@ -81,11 +81,14 @@ def test_ensure_db_initializes_current_schema(tmp_path: Path) -> None:
     assert "model_partition" not in pair_columns
     assert "pair_status" not in pair_columns
     assert "result_path" not in pair_columns
+    assert "acceptance_event_id" not in acceptance_columns
     assert acceptance_columns["accepted_review_pair_id"]["notnull"] == 1
     assert "idx_review_pairs_note_gate" in index_names
     assert "idx_review_pairs_note_gate_model_partition" not in index_names
+    assert "idx_acceptance_note_gate_model_partition" in index_names
+    assert "idx_acceptance_events_latest_by_key" not in index_names
     assert table_names == {
-        "acceptance_events",
+        "acceptance",
         "review_file_snapshots",
         "review_jobs",
         "review_pairs",
@@ -103,14 +106,14 @@ def test_ensure_db_rejects_stale_review_store_shape(tmp_path: Path) -> None:
         review_db.ensure_db(db_path)
 
 
-def test_append_acceptance_event_requires_review_pair(tmp_path: Path) -> None:
+def test_upsert_acceptance_requires_review_pair(tmp_path: Path) -> None:
     db_path = tmp_path / "review-store.sqlite"
     review_db.ensure_db(db_path)
 
     with review_db.connect(db_path) as conn:
         invalid_pair_id = None
         with pytest.raises(ValueError, match="accepted_review_pair_id is required"):
-            review_db.append_acceptance_event(
+            review_db.upsert_acceptance(
                 conn,
                 note_path="kb/notes/current.md",
                 gate_path="kb/instructions/review-gates/prose/current.md",
@@ -200,7 +203,7 @@ def test_model_partition_writes_are_canonicalized(tmp_path: Path) -> None:
             accepted_at="2026-04-10T10:02:00+02:00",
         )
         job_model = conn.execute("SELECT model_partition FROM review_jobs").fetchone()[0]
-        acceptance_model = conn.execute("SELECT model_partition FROM acceptance_events").fetchone()[0]
+        acceptance_model = conn.execute("SELECT model_partition FROM acceptance").fetchone()[0]
 
     assert job_model == "claude-opus"
     assert acceptance_model == "claude-opus"
@@ -236,7 +239,7 @@ def test_current_acceptance_view_filters_incomplete_jobs_and_null_decisions(tmp_
             packing="note",
             pairs=[
                 review_db.ReviewPairRequest(
-                    note_path="kb/notes/fresh.md",
+                    note_path="kb/notes/queued.md",
                     gate_path="kb/instructions/review-gates/semantic/internal-consistency.md",
                     pair_ordinal=0,
                 )
@@ -247,7 +250,7 @@ def test_current_acceptance_view_filters_incomplete_jobs_and_null_decisions(tmp_
             review_job_id=queued_job_id,
             review_pairs=[
                 review_db.ReviewPairCompletion(
-                    note_path="kb/notes/fresh.md",
+                    note_path="kb/notes/queued.md",
                     gate_path="kb/instructions/review-gates/semantic/internal-consistency.md",
                     decision="warn",
                     reviewed_at="2026-04-10T10:03:30+02:00",
@@ -259,7 +262,7 @@ def test_current_acceptance_view_filters_incomplete_jobs_and_null_decisions(tmp_
         accept_pair(
             conn,
             review_pair_id=queued_pair_id,
-            note_path="kb/notes/fresh.md",
+            note_path="kb/notes/queued.md",
             gate_id="semantic/internal-consistency",
             model_partition="opus-4-6",
             accepted_at="2026-04-10T10:04:00+02:00",
@@ -273,7 +276,7 @@ def test_current_acceptance_view_filters_incomplete_jobs_and_null_decisions(tmp_
             packing="note",
             pairs=[
                 review_db.ReviewPairRequest(
-                    note_path="kb/notes/fresh.md",
+                    note_path="kb/notes/null-decision.md",
                     gate_path="kb/instructions/review-gates/semantic/internal-consistency.md",
                     pair_ordinal=0,
                 )
@@ -285,7 +288,7 @@ def test_current_acceptance_view_filters_incomplete_jobs_and_null_decisions(tmp_
         )[0].review_pair_id
         conn.execute(
             """
-            INSERT INTO acceptance_events (
+            INSERT INTO acceptance (
                 note_path,
                 gate_path,
                 model_partition,
@@ -294,7 +297,7 @@ def test_current_acceptance_view_filters_incomplete_jobs_and_null_decisions(tmp_
             ) VALUES (?, ?, ?, ?, ?)
             """,
             (
-                "kb/notes/fresh.md",
+                "kb/notes/null-decision.md",
                 "kb/instructions/review-gates/semantic/internal-consistency.md",
                 "claude-opus",
                 null_decision_pair_id,
@@ -309,8 +312,16 @@ def test_current_acceptance_view_filters_incomplete_jobs_and_null_decisions(tmp_
             WHERE note_path = 'kb/notes/fresh.md'
             """
         ).fetchone()
+        hidden_rows = conn.execute(
+            """
+            SELECT note_path
+            FROM current_gate_acceptances
+            WHERE note_path IN ('kb/notes/queued.md', 'kb/notes/null-decision.md')
+            """
+        ).fetchall()
 
     assert view_row["accepted_review_pair_id"] == current_pair_id
+    assert hidden_rows == []
 
 
 def test_snapshot_file_deduplicates_per_path_and_hashes_exact_utf8(tmp_path: Path) -> None:
@@ -468,17 +479,13 @@ def test_snapshot_file_rehydrates_hash_only_snapshot_rows(tmp_path: Path) -> Non
     assert stored_text == "rehydrate me\n"
 
 
-def test_prune_obsolete_snapshot_content_keeps_current_and_pending_text(tmp_path: Path) -> None:
+def test_prune_superseded_acceptances_deletes_unreferenced_snapshots(tmp_path: Path) -> None:
     db_path = tmp_path / "review-store.sqlite"
     repo = tmp_path / "repo"
     repo.mkdir()
     files = {
-        "kb/notes/old.md": "old note\n",
-        "kb/instructions/review-gates/prose/old.md": "old gate\n",
-        "kb/notes/current.md": "current note\n",
-        "kb/instructions/review-gates/prose/current.md": "current gate\n",
-        "kb/notes/pending.md": "pending note\n",
-        "kb/instructions/review-gates/prose/pending.md": "pending gate\n",
+        "kb/notes/sample.md": "old note\n",
+        "kb/instructions/review-gates/prose/sample.md": "old gate\n",
     }
     for rel_path, content in files.items():
         path = repo / rel_path
@@ -488,76 +495,86 @@ def test_prune_obsolete_snapshot_content_keeps_current_and_pending_text(tmp_path
     review_db.ensure_db(db_path)
 
     with review_db.connect(db_path) as conn:
-        old_note = review_db.snapshot_file(conn, repo_root=repo, path="kb/notes/old.md")
+        old_note = review_db.snapshot_file(conn, repo_root=repo, path="kb/notes/sample.md")
         old_gate = review_db.snapshot_file(
             conn,
             repo_root=repo,
-            path="kb/instructions/review-gates/prose/old.md",
+            path="kb/instructions/review-gates/prose/sample.md",
         )
-        current_note = review_db.snapshot_file(conn, repo_root=repo, path="kb/notes/current.md")
-        current_gate = review_db.snapshot_file(
+        old_pair_id = insert_completed_pair(
             conn,
-            repo_root=repo,
-            path="kb/instructions/review-gates/prose/current.md",
-        )
-        pending_note = review_db.snapshot_file(conn, repo_root=repo, path="kb/notes/pending.md")
-        pending_gate = review_db.snapshot_file(
-            conn,
-            repo_root=repo,
-            path="kb/instructions/review-gates/prose/pending.md",
-        )
-        review_pair_id = insert_completed_pair(
-            conn,
-            note_path="kb/notes/current.md",
-            gate_id="prose/current",
+            note_path="kb/notes/sample.md",
+            gate_id="prose/sample",
             model_partition="opus-4-6",
             decision="pass",
             reviewed_at="2026-04-10T10:01:00+02:00",
-            reviewed_note_snapshot_id=current_note.snapshot_id,
-            reviewed_gate_snapshot_id=current_gate.snapshot_id,
+            reviewed_note_snapshot_id=old_note.snapshot_id,
+            reviewed_gate_snapshot_id=old_gate.snapshot_id,
         )
         accept_pair(
             conn,
-            review_pair_id=review_pair_id,
-            note_path="kb/notes/current.md",
-            gate_id="prose/current",
+            review_pair_id=old_pair_id,
+            note_path="kb/notes/sample.md",
+            gate_id="prose/sample",
             model_partition="opus-4-6",
             accepted_at="2026-04-10T10:02:00+02:00",
+            accepted_note_snapshot_id=old_note.snapshot_id,
+            accepted_gate_snapshot_id=old_gate.snapshot_id,
+        )
+
+        (repo / "kb/notes/sample.md").write_text("current note\n", encoding="utf-8")
+        (repo / "kb/instructions/review-gates/prose/sample.md").write_text("current gate\n", encoding="utf-8")
+        current_note = review_db.snapshot_file(conn, repo_root=repo, path="kb/notes/sample.md")
+        current_gate = review_db.snapshot_file(
+            conn,
+            repo_root=repo,
+            path="kb/instructions/review-gates/prose/sample.md",
+        )
+        current_pair_id = insert_completed_pair(
+            conn,
+            note_path="kb/notes/sample.md",
+            gate_id="prose/sample",
+            model_partition="opus-4-6",
+            decision="pass",
+            reviewed_at="2026-04-10T10:03:00+02:00",
+            reviewed_note_snapshot_id=current_note.snapshot_id,
+            reviewed_gate_snapshot_id=current_gate.snapshot_id,
+        )
+        old_job_id = conn.execute(
+            "SELECT review_job_id FROM review_pairs WHERE review_pair_id = ?",
+            (old_pair_id,),
+        ).fetchone()["review_job_id"]
+        superseded = accept_pair(
+            conn,
+            review_pair_id=current_pair_id,
+            note_path="kb/notes/sample.md",
+            gate_id="prose/sample",
+            model_partition="opus-4-6",
+            accepted_at="2026-04-10T10:04:00+02:00",
             accepted_note_snapshot_id=current_note.snapshot_id,
             accepted_gate_snapshot_id=current_gate.snapshot_id,
         )
-        review_db.create_job_with_pairs(
-            conn,
-            model_partition="opus-4-6",
-            runner="test-runner",
-            created_at="2026-04-10T10:03:00+02:00",
-            status="queued",
-            packing="note",
-            pairs=[
-                review_db.ReviewPairRequest(
-                    note_path="kb/notes/pending.md",
-                    gate_path="kb/instructions/review-gates/prose/pending.md",
-                    pair_ordinal=0,
-                    reviewed_note_snapshot_id=pending_note.snapshot_id,
-                    reviewed_gate_snapshot_id=pending_gate.snapshot_id,
-                )
-            ],
-        )
-        pruned = review_db.prune_obsolete_snapshot_content(conn)
-        rows = {
-            int(row["snapshot_id"]): row["content_text"]
-            for row in conn.execute(
-                "SELECT snapshot_id, content_text FROM review_file_snapshots"
-            ).fetchall()
+        deleted_job_ids = review_db.prune_superseded_acceptances(conn, [superseded])
+        remaining_snapshot_ids = {
+            int(row["snapshot_id"])
+            for row in conn.execute("SELECT snapshot_id FROM review_file_snapshots").fetchall()
         }
+        old_pair = conn.execute(
+            "SELECT review_pair_id FROM review_pairs WHERE review_pair_id = ?",
+            (old_pair_id,),
+        ).fetchone()
+        current_pair = conn.execute(
+            "SELECT review_pair_id FROM review_pairs WHERE review_pair_id = ?",
+            (current_pair_id,),
+        ).fetchone()
 
-    assert pruned == 2
-    assert rows[old_note.snapshot_id] is None
-    assert rows[old_gate.snapshot_id] is None
-    assert rows[current_note.snapshot_id] == "current note\n"
-    assert rows[current_gate.snapshot_id] == "current gate\n"
-    assert rows[pending_note.snapshot_id] == "pending note\n"
-    assert rows[pending_gate.snapshot_id] == "pending gate\n"
+    assert deleted_job_ids == {old_job_id}
+    assert old_pair is None
+    assert current_pair is not None
+    assert old_note.snapshot_id not in remaining_snapshot_ids
+    assert old_gate.snapshot_id not in remaining_snapshot_ids
+    assert current_note.snapshot_id in remaining_snapshot_ids
+    assert current_gate.snapshot_id in remaining_snapshot_ids
 
 
 def test_current_acceptance_view_exposes_snapshot_hashes(tmp_path: Path) -> None:

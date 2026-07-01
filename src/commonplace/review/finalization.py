@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import sqlite3
+import shutil
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Sequence
@@ -100,6 +101,12 @@ class FinalizeReviewJobOutcome:
         return payload
 
 
+@dataclass(frozen=True)
+class FinalizedReviewJob:
+    pairs: list[ReviewPairRow]
+    pruned_review_job_ids: frozenset[int]
+
+
 # Preconditions and output loading.
 
 
@@ -172,7 +179,7 @@ def finalize_review_job_from_owned_output(
         try:
             parsed = parse_pair_bundle(bundle_markdown, expected_pairs=expected_pairs)
             review_pairs = _review_pair_completions(expected_pairs=expected_pairs, parsed=parsed)
-            finalized_pairs = record_and_finalize_job(
+            finalized = record_and_finalize_job(
                 conn,
                 review_job_id=review_job_id,
                 review_pairs=review_pairs,
@@ -180,7 +187,7 @@ def finalize_review_job_from_owned_output(
             write_pair_result_files_to_derived_paths(
                 repo_root=repo_root,
                 job=plan,
-                pairs=finalized_pairs,
+                pairs=finalized.pairs,
                 canonical_texts=parsed.canonical_texts,
             )
         except (ValueError, OSError, sqlite3.IntegrityError) as exc:
@@ -201,12 +208,15 @@ def finalize_review_job_from_owned_output(
                 warnings=warnings,
             )
         conn.commit()
-        warnings = _refresh_manifest_warning(conn, repo_root=repo_root, review_job_id=review_job_id)
+        warnings = (
+            *_remove_pruned_job_artifact_dirs(repo_root, finalized.pruned_review_job_ids),
+            *_refresh_manifest_warning(conn, repo_root=repo_root, review_job_id=review_job_id),
+        )
         return FinalizeReviewJobOutcome(
             completed=True,
             state_changed=True,
             review_job_id=review_job_id,
-            completed_pair_count=len(finalized_pairs),
+            completed_pair_count=len(finalized.pairs),
             failed=(),
             job_status="completed",
             warnings=warnings,
@@ -222,7 +232,7 @@ def record_and_finalize_job(
     review_job_id: int,
     review_pairs: Sequence[ReviewPairCompletion] | None = None,
     completed_at: str | None = None,
-) -> list[ReviewPairRow]:
+) -> FinalizedReviewJob:
     """Record trusted completions for a job and return refreshed pair rows.
 
     The caller owns pair coverage validation before this function runs. This
@@ -244,20 +254,27 @@ def record_and_finalize_job(
     )
 
     finalized_pairs = review_db.load_review_pairs_for_job(conn, review_job_id=review_job_id)
+    superseded_acceptances: list[review_db.SupersededAcceptance | None] = []
     for pair in finalized_pairs:
-        review_db.append_acceptance_event(
-            conn,
-            note_path=pair.note_path,
-            gate_path=pair.gate_path,
-            model_partition=review_job.model_partition,
-            accepted_review_pair_id=pair.review_pair_id,
-            accepted_note_snapshot_id=pair.reviewed_note_snapshot_id,
-            accepted_gate_snapshot_id=pair.reviewed_gate_snapshot_id,
-            accepted_at=finished_at,
+        superseded_acceptances.append(
+            review_db.upsert_acceptance(
+                conn,
+                note_path=pair.note_path,
+                gate_path=pair.gate_path,
+                model_partition=review_job.model_partition,
+                accepted_review_pair_id=pair.review_pair_id,
+                accepted_note_snapshot_id=pair.reviewed_note_snapshot_id,
+                accepted_gate_snapshot_id=pair.reviewed_gate_snapshot_id,
+                accepted_at=finished_at,
+            )
         )
+    pruned_review_job_ids = review_db.prune_superseded_acceptances(conn, superseded_acceptances)
 
     review_db.complete_review_job(conn, review_job_id=review_job_id, completed_at=finished_at)
-    return finalized_pairs
+    return FinalizedReviewJob(
+        pairs=finalized_pairs,
+        pruned_review_job_ids=frozenset(pruned_review_job_ids),
+    )
 
 
 # Failure marking.
@@ -353,6 +370,19 @@ def _refresh_manifest_warning(
     except (OSError, ValueError) as exc:
         return (f"manifest refresh failed: {exc}",)
     return ()
+
+
+def _remove_pruned_job_artifact_dirs(repo_root: Path, review_job_ids: frozenset[int]) -> tuple[str, ...]:
+    warnings: list[str] = []
+    for review_job_id in sorted(review_job_ids):
+        artifact_dir = bundle_artifact_dir(repo_root, review_job_id)
+        if not artifact_dir.exists():
+            continue
+        try:
+            shutil.rmtree(artifact_dir)
+        except OSError as exc:
+            warnings.append(f"artifact directory cleanup failed for review job {review_job_id}: {exc}")
+    return tuple(warnings)
 
 
 def _mark_failed(

@@ -31,7 +31,7 @@ That split removes Commonplace-owned subprocess dispatch and keeps the review pa
 `model_partition` lives on:
 
 - `review_jobs`;
-- `acceptance_events`;
+- `acceptance`;
 - generated per-pair review-result Markdown frontmatter.
 
 `review_pairs` derive model partition through their parent job. `model_partition` remains the freshness and acceptance identity key.
@@ -48,13 +48,13 @@ Job creation accepts selector JSON with a concrete top-level `model_partition` a
 
 ### Require ack to carry review evidence
 
-Acceptance events written by full review and by acknowledgement point `accepted_review_pair_id` at a completed review pair. Ack is a trivial-change re-baseline of existing review evidence, not a waiver mechanism.
+Acceptance rows written by full review and by acknowledgement point `accepted_review_pair_id` at a completed review pair. Ack is a trivial-change re-baseline of existing review evidence, not a waiver mechanism. ADR 036 later changed this from an append-style history to one current row per acceptance key.
 
 Ack lookup remains path- and model-partition-keyed: it carries forward the latest completed review pair for the same `(note_path, gate_path, model_partition)`, then snapshots the current note and gate text as the new accepted baseline. If no completed review pair exists, ack fails and the pair must be reviewed.
 
 ### Do not relocate path-keyed review history
 
-Review identity remains path-keyed. Note and directory relocation do not rekey `review_jobs`, `review_pairs`, `acceptance_events`, or stored artifact paths such as `prompt_path`, `bundle_output_path`, and `result_path`.
+Review identity remains path-keyed. Note and directory relocation do not rekey `review_jobs`, `review_pairs`, `acceptance`, or stored artifact paths such as `prompt_path`, `bundle_output_path`, and `result_path`.
 
 The old path-keyed rows remain historical evidence under the old path. A moved note needs fresh review under the new path unless a later explicit review-history or target-identity workflow is designed.
 

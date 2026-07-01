@@ -31,7 +31,7 @@ Review jobs now have exactly three statuses: `queued`, `completed`, and `failed`
 
 Artifact paths are derived, not persisted. The job directory is `kb/reports/bundle-reviews/review-job-{review_job_id}/`; prompt, bundle output, manifest, and per-pair result paths are pure functions of the job id, packing, and complete pair set.
 
-Finalization is all-or-nothing. The finalizer preflights parse coverage and result paths before mutating acceptance state. Missing, duplicate, unexpected, malformed, or result-less pair blocks fail the whole job. Failed jobs leave pair decisions null and append no acceptance events.
+Finalization is all-or-nothing. The finalizer validates parse coverage before mutating acceptance state, and result-file write failures roll back the DB completion. Missing, duplicate, unexpected, malformed, or result-less pair blocks fail the whole job. Failed jobs leave pair decisions null and write no acceptance rows.
 
 Live parsing is strict: each pair block must end with exactly one final result line:
 
@@ -44,9 +44,11 @@ Live parsing is strict: each pair block must end with exactly one final result l
 
 Aliases and inferred decisions are invalid in live finalization.
 
-Acceptance evidence is guarded at the SQL boundary. `current_gate_acceptances` joins `acceptance_events` through `review_pairs` and `review_jobs`, and only exposes events whose parent job is `completed` and whose pair has a non-null decision. This makes the freshness selector robust even if an accidental acceptance row is inserted.
+Acceptance evidence is guarded at the SQL boundary. `current_gate_acceptances` joins `acceptance` through `review_pairs` and `review_jobs`, and only exposes rows whose parent job is `completed` and whose pair has a non-null decision. This makes the freshness selector robust even if an accidental acceptance row is inserted.
 
 Result files are evidence and remain fatal: a result-file write failure prevents DB completion and then marks the job failed in a separate failure transaction. `MANIFEST.json` is display/debug output, so a manifest refresh failure after DB completion does not fail the job; finalization reports it as a warning.
+
+ADR 036 later changed successful acceptance from append-only events to a current-state upsert and moved superseded-review pruning inline with that success transaction.
 
 The review store remains schema-current only. Incompatible stores must be recreated rather than migrated. The one-shot model-partition repair command was removed with the old migration surface.
 

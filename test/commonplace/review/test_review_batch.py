@@ -263,7 +263,7 @@ def test_finalize_review_job_finalizes_all_gate_packed_pairs(tmp_path: Path) -> 
                 "pass",
             ),
         ]
-        acceptance_count = conn.execute("SELECT COUNT(*) FROM acceptance_events").fetchone()[0]
+        acceptance_count = conn.execute("SELECT COUNT(*) FROM acceptance").fetchone()[0]
         assert acceptance_count == 2
 
     artifact_dir = repo / "kb" / "reports" / "bundle-reviews" / f"review-job-{review_job_id}"
@@ -328,7 +328,7 @@ def test_finalize_review_job_fails_partial_output_without_salvage(tmp_path: Path
             ("kb/notes/first.md", None),
             ("kb/notes/second.md", None),
         ]
-        assert conn.execute("SELECT COUNT(*) FROM acceptance_events").fetchone()[0] == 0
+        assert conn.execute("SELECT COUNT(*) FROM acceptance").fetchone()[0] == 0
 
     artifact_dir = repo / "kb" / "reports" / "bundle-reviews" / f"review-job-{review_job_id}"
     manifest = json.loads((artifact_dir / "MANIFEST.json").read_text(encoding="utf-8"))

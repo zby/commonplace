@@ -165,7 +165,7 @@ def seed_snapshot_acceptance(
         )
         review_db.complete_review_job(conn, review_job_id=review_job_id, completed_at=REVIEWED_AT)
         review_pair = review_db.load_review_pairs_for_job(conn, review_job_id=review_job_id)[0]
-        review_db.append_acceptance_event(
+        review_db.upsert_acceptance(
             conn,
             note_path=note_path,
             gate_path=gate_path,
@@ -597,7 +597,7 @@ class TestNoteChanged:
 
 
 class TestAckMetadata:
-    def test_ack_appends_acceptance_event_without_creating_new_review_pairs(self, tmp_path: Path) -> None:
+    def test_ack_upserts_acceptance_without_creating_new_review_pairs(self, tmp_path: Path) -> None:
         fixture = build_fixture(tmp_path)
         make_note(fixture["stable"], "Stable title", "\nUpdated line.\n")
 
@@ -744,6 +744,55 @@ Fixture test.
         assert row["accepted_gate_snapshot_id"] is not None
         assert row["accepted_gate_hash"] is not None
 
+    def test_repeated_ack_prunes_prior_ack_snapshot_but_keeps_reviewed_snapshot(self, tmp_path: Path) -> None:
+        fixture = build_fixture(tmp_path)
+        gate_path = "kb/instructions/review-gates/prose/source-residue.md"
+
+        with sqlite3.connect(db_path_for(tmp_path)) as conn:
+            conn.row_factory = sqlite3.Row
+            original_snapshot_id = conn.execute(
+                """
+                SELECT accepted_note_snapshot_id
+                FROM current_gate_acceptances
+                WHERE note_path = ? AND gate_path = ? AND model_partition = ?
+                """,
+                ("kb/notes/stable.md", gate_path, TEST_MODEL),
+            ).fetchone()["accepted_note_snapshot_id"]
+
+        make_note(fixture["stable"], "Stable title", "\nFirst ack update.\n")
+        ack_pairs(tmp_path, ["kb/notes/stable.md:prose/source-residue"], TEST_MODEL)
+        with sqlite3.connect(db_path_for(tmp_path)) as conn:
+            conn.row_factory = sqlite3.Row
+            first_ack_snapshot_id = conn.execute(
+                """
+                SELECT accepted_note_snapshot_id
+                FROM current_gate_acceptances
+                WHERE note_path = ? AND gate_path = ? AND model_partition = ?
+                """,
+                ("kb/notes/stable.md", gate_path, TEST_MODEL),
+            ).fetchone()["accepted_note_snapshot_id"]
+
+        make_note(fixture["stable"], "Stable title", "\nSecond ack update.\n")
+        ack_pairs(tmp_path, ["kb/notes/stable.md:prose/source-residue"], TEST_MODEL)
+        with sqlite3.connect(db_path_for(tmp_path)) as conn:
+            conn.row_factory = sqlite3.Row
+            second_ack_snapshot_id = conn.execute(
+                """
+                SELECT accepted_note_snapshot_id
+                FROM current_gate_acceptances
+                WHERE note_path = ? AND gate_path = ? AND model_partition = ?
+                """,
+                ("kb/notes/stable.md", gate_path, TEST_MODEL),
+            ).fetchone()["accepted_note_snapshot_id"]
+            remaining_snapshot_ids = {
+                int(row["snapshot_id"])
+                for row in conn.execute("SELECT snapshot_id FROM review_file_snapshots").fetchall()
+            }
+
+        assert original_snapshot_id in remaining_snapshot_ids
+        assert first_ack_snapshot_id not in remaining_snapshot_ids
+        assert second_ack_snapshot_id in remaining_snapshot_ids
+
     def test_ack_lookup_uses_parent_job_model_partition(self, tmp_path: Path) -> None:
         fixture = build_fixture(tmp_path)
         make_note(fixture["stable"], "Stable title", "\nUpdated line.\n")
@@ -812,7 +861,7 @@ Fixture test.
         )
         assert len(stale_before) == 2
         with sqlite3.connect(db_path_for(tmp_path)) as conn:
-            acceptance_count_before = conn.execute("SELECT count(*) FROM acceptance_events").fetchone()[0]
+            acceptance_count_before = conn.execute("SELECT count(*) FROM acceptance").fetchone()[0]
             snapshot_count_before = conn.execute("SELECT count(*) FROM review_file_snapshots").fetchone()[0]
 
         with pytest.raises(ValueError, match="no completed review pair"):
@@ -834,7 +883,7 @@ Fixture test.
         assert len(stale_after) == 2
 
         with sqlite3.connect(db_path_for(tmp_path)) as conn:
-            acceptance_count_after = conn.execute("SELECT count(*) FROM acceptance_events").fetchone()[0]
+            acceptance_count_after = conn.execute("SELECT count(*) FROM acceptance").fetchone()[0]
             snapshot_count_after = conn.execute("SELECT count(*) FROM review_file_snapshots").fetchone()[0]
         assert acceptance_count_after == acceptance_count_before
         assert snapshot_count_after == snapshot_count_before
@@ -844,7 +893,7 @@ Fixture test.
         make_note(fixture["stable"], "Stable title", "\nUpdated line.\n")
 
         with sqlite3.connect(db_path_for(tmp_path)) as conn:
-            acceptance_count_before = conn.execute("SELECT count(*) FROM acceptance_events").fetchone()[0]
+            acceptance_count_before = conn.execute("SELECT count(*) FROM acceptance").fetchone()[0]
             snapshot_count_before = conn.execute("SELECT count(*) FROM review_file_snapshots").fetchone()[0]
 
         with pytest.raises(ValueError, match="no completed review pair"):
@@ -865,12 +914,12 @@ Fixture test.
         )
         assert len(stale_after) == 1
         with sqlite3.connect(db_path_for(tmp_path)) as conn:
-            acceptance_count_after = conn.execute("SELECT count(*) FROM acceptance_events").fetchone()[0]
+            acceptance_count_after = conn.execute("SELECT count(*) FROM acceptance").fetchone()[0]
             snapshot_count_after = conn.execute("SELECT count(*) FROM review_file_snapshots").fetchone()[0]
         assert acceptance_count_after == acceptance_count_before
         assert snapshot_count_after == snapshot_count_before
 
-    def test_ack_dedupes_requested_pairs_before_writing_acceptance_events(self, tmp_path: Path) -> None:
+    def test_ack_dedupes_requested_pairs_before_upserting_acceptance(self, tmp_path: Path) -> None:
         fixture = build_fixture(tmp_path)
         make_note(fixture["stable"], "Stable title", "\nUpdated line.\n")
         gate_path = "kb/instructions/review-gates/prose/source-residue.md"
@@ -879,7 +928,7 @@ Fixture test.
             acceptance_count_before = conn.execute(
                 """
                 SELECT count(*)
-                FROM acceptance_events
+                FROM acceptance
                 WHERE note_path = ? AND gate_path = ? AND model_partition = ?
                 """,
                 ("kb/notes/stable.md", gate_path, TEST_MODEL),
@@ -898,13 +947,13 @@ Fixture test.
             acceptance_count_after = conn.execute(
                 """
                 SELECT count(*)
-                FROM acceptance_events
+                FROM acceptance
                 WHERE note_path = ? AND gate_path = ? AND model_partition = ?
                 """,
                 ("kb/notes/stable.md", gate_path, TEST_MODEL),
             ).fetchone()[0]
         assert acked == [("kb/notes/stable.md", "prose/source-residue")]
-        assert acceptance_count_after == acceptance_count_before + 1
+        assert acceptance_count_after == acceptance_count_before
 
 
 class TestDiffGeneration:

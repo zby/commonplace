@@ -13,7 +13,7 @@ The KB's bet is that quality comes from a human judging in the loop — *the wor
 ## Current state (as of 2026-06-30)
 
 - **`status` exists but is metadata-only.** Notes carry `status: seedling | speculative | current` in frontmatter. It is machine-readable but not surfaced in the body; a reader of rendered markdown never sees it, and an agent reading the body may not foreground it.
-- **Review-state is tracked, separately.** The review subsystem records accepted gate reviews in SQLite through `review_jobs`, `review_pairs`, and `acceptance_events` (consumed by `commonplace-review-target-selector`, `commonplace-warn-selector`, and ack commands). Whether a note has passed review is therefore known — but it lives in the review DB, not in the note.
+- **Review-state is tracked, separately.** The review subsystem records accepted gate reviews in SQLite through `review_jobs`, `review_pairs`, and `acceptance` (consumed by `commonplace-review-target-selector`, `commonplace-warn-selector`, and ack commands). Whether a note has passed review is therefore known — but it lives in the review DB, not in the note.
 - **Maturity and review-state are different axes.** A note can be `seedling` but reviewed, or `current` but stale-reviewed. `status` is a maturity proxy; it is not the same as "the loop judged this."
 - **An ad-hoc precedent already exists.** Some notes (e.g. `llm-generation-confidence-tracks-typicality-not-soundness.md`) carry a hand-written italic `*Speculative…*` line under the H1. It is exactly this banner, done once, by hand, unstandardised and unenforced.
 - **The validator counts seedlings** as a batch signal but checks no in-body warning.

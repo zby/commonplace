@@ -128,7 +128,7 @@ commonplace-review-job-list --model claude-opus-4-6
 
 ### commonplace-finalize-review-job
 
-Finalize a queued review job from its derived bundle output path. The command strictly parses all expected pair blocks, writes per-pair result files, records decisions and acceptance events, and moves the job to `completed` in one successful finalization. Missing, duplicate, unexpected, malformed, or result-less pair blocks fail the whole job and append no acceptance events. Exit 1 if the job failed or if a precondition fails before state changes.
+Finalize a queued review job from its derived bundle output path. The command strictly parses all expected pair blocks, writes per-pair result files, records decisions, upserts accepted baselines, prunes superseded review evidence, and moves the job to `completed` in one successful finalization. Missing, duplicate, unexpected, malformed, or result-less pair blocks fail the whole job and write no acceptance rows. Exit 1 if the job failed or if a precondition fails before state changes.
 
 ```bash
 commonplace-finalize-review-job --review-job-id 42
@@ -187,17 +187,4 @@ Extract warn-level findings from effective reviews.
 commonplace-warn-selector                                          # all notes
 commonplace-warn-selector kb/notes/my-note.md                     # specific note
 commonplace-warn-selector --json                                   # JSON output
-```
-
-## Review maintenance
-
-Operational commands for review-store cleanup.
-
-### commonplace-prune-superseded-reviews
-
-Delete superseded non-current review-pair rows and whole job artifact directories when every pair in the job is obsolete. It does not delete individual files from a retained shared job directory.
-
-```bash
-commonplace-prune-superseded-reviews --dry-run
-commonplace-prune-superseded-reviews --apply
 ```

@@ -22,7 +22,7 @@ This document describes how the subsystem is built. For how to operate it, see [
 review_target_selector  -> selector JSON
 create_review_jobs      -> queued review_jobs + review_pairs + prompt artifacts
 worker/sub-agent        -> writes derived bundle_output_path
-finalize_review_job     -> validate provenance, parse output, write result artifacts, append acceptance
+finalize_review_job     -> validate provenance, parse output, write result artifacts, upsert acceptance
 ```
 
 The persisted unit is a `review_pairs` row inside one `review_jobs` row. A job's `packing` is either `note` or `gate`; packing controls only which pairs share one prompt and how per-pair result files are named. It is not a separate review protocol.
@@ -36,11 +36,11 @@ SQLite database, default location `kb/reports/review-store.sqlite`; override wit
 | `review_jobs` | One review invocation: model partition, nullable runner/model/effort provenance, status, packing (`note`/`gate`), `created_at`, nullable `completed_at`, telemetry, failure context |
 | `review_pairs` | One requested `(note_path, gate_path)` pair inside a job: decision and reviewed note/gate snapshot IDs; derives `model_partition` from its parent job |
 | `review_file_snapshots` | Role-neutral snapshots by `(path, content_sha256)`, storing exact UTF-8 text when it must be reusable for prompt rendering or diffing |
-| `acceptance_events` | Append-only accepted baselines; `accepted_review_pair_id` points at completed review evidence; the latest event wins per key |
+| `acceptance` | Current accepted baseline per `(note_path, gate_path, model_partition)`; `accepted_review_pair_id` points at review evidence and accepted snapshot IDs pin note/gate text |
 
 Artifact paths — prompt, bundle output, manifest, and per-pair result files — are **derived** from `review_job_id`, packing, and the job's pairs. They are not stored columns.
 
-The `current_gate_acceptances` view derives the latest accepted state per `(note_path, gate_path, model_partition)` key: the highest `acceptance_events.acceptance_event_id` for that key, after filtering to completed jobs with non-null pair decisions. This filter is the evidence boundary — acceptance rows from non-completed jobs never surface as freshness.
+The `current_gate_acceptances` view exposes accepted state per `(note_path, gate_path, model_partition)` key by joining `acceptance` through `review_pairs` and `review_jobs`, after filtering to completed jobs with non-null pair decisions. This filter is the evidence boundary — acceptance rows from non-completed jobs never surface as freshness.
 
 ### Canonical state vs derived output
 
@@ -76,17 +76,17 @@ The selector computes SHA-256 over the current note and gate text and compares i
 - `protocol/prompt.py` renders canonical review prompts from captured text. In file-output mode, the prompt instructs a worker to write exactly the job's derived `bundle_output_path`.
 - `protocol/parser.py` parses sentinel-bracketed pair output. Structural anomalies, missing expected pairs, duplicates, and malformed result footers fail the whole job.
 - `protocol/decisions.py` strictly accepts exactly one final `## Result: PASS|WARN|FAIL|ERROR` line per pair block.
-- `finalization.py` is the public library operation behind `commonplace-finalize-review-job`. It loads derived job output, validates optional runner/model/effort provenance, parses the bundle, and — only after all parse and coverage preflight passes — writes result files, completes pair rows, appends acceptance events, and marks the job completed. Result-file write failures roll back and fail the job in a separate transaction; `MANIFEST.json` refresh runs after DB completion and its failure is a non-fatal warning.
+- `finalization.py` is the public library operation behind `commonplace-finalize-review-job`. It loads derived job output, validates optional runner/model/effort provenance, parses the bundle, and — only after all parse and coverage preflight passes — writes result files, completes pair rows, upserts acceptance, prunes superseded review rows/snapshots, and marks the job completed. Result-file write failures roll back and fail the job in a separate transaction; artifact-dir cleanup and `MANIFEST.json` refresh run after DB completion, with failures reported as non-fatal warnings.
 
 ### State and maintenance
 
-- `review_db.py` owns review rows, finalization state transitions, acceptance events, and query helpers.
+- `review_db.py` owns review rows, finalization state transitions, current acceptance rows, inline superseded-review pruning, and query helpers.
 - `review_model.py` normalizes model partitions and optional reasoning-effort labels.
 - `acknowledgement.py` advances accepted baselines for trivial changes while carrying forward completed review evidence.
 - `ack_trivial_note_changes.py` finds stale pairs whose watched note portions did not change.
 - `warn_selector.py` extracts actionable warn findings from effective accepted reviews.
 - `review_schema.py` owns current-schema setup and integrity checks.
-- CLI maintenance modules handle superseded-review pruning.
+- Superseded-review pruning runs inline on successful acceptance writes; there is no standalone prune command.
 
 ## Command surface
 
@@ -96,14 +96,13 @@ Execution path:
 - `commonplace-create-review-jobs`
 - `commonplace-finalize-review-job`
 
-State and maintenance:
+State and inspection:
 
 - `commonplace-review-job-list`
 - `commonplace-ack-gate-review`
 - `commonplace-ack-trivial-note-changes`
 - `commonplace-warn-selector`
 - `commonplace-resolve-gates`
-- `commonplace-prune-superseded-reviews`
 
 ## Invariants
 
@@ -111,7 +110,8 @@ State and maintenance:
 - Worker agents write only the job-owned bundle output file; they do not mutate notes, gates, indexes, manifests, or review DB state.
 - `MANIFEST.json` is inspectable output, not pipeline state.
 - Finalization accepts only `queued` jobs and moves them atomically to `completed` or `failed`.
-- Failed jobs append no acceptance events and leave pair decisions null.
+- Failed jobs write no acceptance rows and leave pair decisions null.
 - `current_gate_acceptances` filters acceptance evidence to completed jobs with non-null pair decisions.
+- A successful acceptance supersedes the prior row for the same `(note_path, gate_path, model_partition)` key and prunes obsolete review evidence inline.
 - Acceptance state is path-keyed; relocating notes or gates requires fresh review under the new path.
 - Missing telemetry is normal. Review identity is `(note_path, gate_path, model_partition)`, not worker-provided execution metadata.

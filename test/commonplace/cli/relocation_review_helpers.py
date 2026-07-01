@@ -63,7 +63,7 @@ def review_state_rows(conn: sqlite3.Connection) -> dict[str, list[dict[str, obje
     return {
         "review_jobs": table_rows(conn, "review_jobs", "review_job_id"),
         "review_pairs": table_rows(conn, "review_pairs", "review_pair_id"),
-        "acceptance_events": table_rows(conn, "acceptance_events", "acceptance_event_id"),
+        "acceptance": table_rows(conn, "acceptance", "note_path, gate_path, model_partition"),
     }
 
 
@@ -106,7 +106,7 @@ def seed_accepted_review(repo_root: Path, db_path: Path, *, note_path: str) -> i
         )
         review_pair = review_db.load_review_pairs_for_job(conn, review_job_id=review_job_id)[0]
         review_db.complete_review_job(conn, review_job_id=review_job_id, completed_at=REVIEWED_AT)
-        review_db.append_acceptance_event(
+        review_db.upsert_acceptance(
             conn,
             note_path=note_path,
             gate_path=GATE_PATH,

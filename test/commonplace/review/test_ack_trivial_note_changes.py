@@ -164,7 +164,7 @@ def seed_snapshot_review(repo: Path, db_path: Path, *, note_path: str, gate_path
             completed_at="2026-04-01T00:00:00+00:00",
         )
         review_pair = review_db.load_review_pairs_for_job(conn, review_job_id=review_job_id)[0]
-        review_db.append_acceptance_event(
+        review_db.upsert_acceptance(
             conn,
             note_path=note_path,
             gate_path=gate_path,

@@ -27,7 +27,7 @@ The model key also needed correction. The system currently stores and queries a 
 
 Review freshness is owned by the review database, not by Git.
 
-The database stores content snapshots for reviewed KB files. A new snapshot records the repo-relative path, the exact UTF-8 markdown text read from disk, and a SHA-256 over those stored bytes. The snapshot table is shared by note files and gate files; the note/gate distinction is the role of the foreign-key column that points to a snapshot. Review pairs reference the note and gate snapshots used for prompt rendering. Acceptance events reference the snapshots that were accepted. Snapshot text may later be garbage-collected only after the snapshot is no longer needed for current acceptance diffs or in-flight prompt rendering; the path and hash remain as the identity baseline.
+The database stores content snapshots for reviewed KB files. A new snapshot records the repo-relative path, the exact UTF-8 markdown text read from disk, and a SHA-256 over those stored bytes. The snapshot table is shared by note files and gate files; the note/gate distinction is the role of the foreign-key column that points to a snapshot. Review pairs reference the note and gate snapshots used for prompt rendering. Current acceptance rows reference the snapshots that were accepted. Superseded snapshots are deleted only after no current acceptance row and no remaining review pair references them.
 
 Freshness compares the current filesystem text of the note and gate against the accepted snapshot hashes. Git commits, Git blob hashes, and committed-gate preconditions are not part of review correctness. Diffs, when shown, are a review UX over stored snapshot text and current file text; they are not a state dependency.
 
@@ -50,7 +50,7 @@ note_path x gate_path x model_partition
 
 Freshness treats `model_partition` as opaque. A partition value may coincide with a runner or harness label, but freshness does not interpret it as a runner name.
 
-Telemetry is evidence, not identity. Post-review model telemetry may be stored and inspected, and mismatches may warn, but telemetry must not re-key `review_jobs`, `review_pairs`, or `acceptance_events`.
+Telemetry is evidence, not identity. Post-review model telemetry may be stored and inspected, and mismatches may warn, but telemetry must not re-key `review_jobs`, `review_pairs`, or `acceptance`.
 
 This decision is the first concrete step toward a more universal lineage system, but the implementation remains current-review-only. The universal part is the shape: file-path inputs, DB-owned accepted baselines, a stable target partition, a selector that emits stale targets, and execution kept outside freshness state. It does not introduce a generic lineage schema, polymorphic input tables, package asset lineage, source/report lineage, or generic diff infrastructure.
 

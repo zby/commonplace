@@ -6,13 +6,13 @@ from __future__ import annotations
 import sqlite3
 from pathlib import Path
 
-REVIEW_SCHEMA_VERSION = 3
+REVIEW_SCHEMA_VERSION = 4
 EXPECTED_REVIEW_TABLES = frozenset(
     {
         "review_jobs",
         "review_file_snapshots",
         "review_pairs",
-        "acceptance_events",
+        "acceptance",
     }
 )
 EXPECTED_REVIEW_INDEXES = frozenset(
@@ -21,8 +21,7 @@ EXPECTED_REVIEW_INDEXES = frozenset(
         "idx_review_jobs_status",
         "idx_review_pairs_note_gate",
         "idx_review_pairs_review_job_id",
-        "idx_acceptance_events_note_gate_model_partition",
-        "idx_acceptance_events_latest_by_key",
+        "idx_acceptance_note_gate_model_partition",
     }
 )
 EXPECTED_REVIEW_VIEWS = frozenset({"current_gate_acceptances"})
@@ -36,7 +35,7 @@ def init_db(db_path: Path, schema_path: Path) -> None:
         review_tables = {
             table_name
             for table_name in existing_tables
-            if table_name.startswith("review_") or table_name == "acceptance_events"
+            if table_name.startswith("review_") or table_name == "acceptance"
         }
         if not review_tables:
             apply_schema(conn, schema_path)
@@ -94,7 +93,7 @@ def _assert_expected_schema_objects(conn: sqlite3.Connection) -> None:
     review_tables = {
         table_name
         for table_name in tables
-        if table_name.startswith("review_") or table_name == "acceptance_events"
+        if table_name.startswith("review_") or table_name == "acceptance"
     }
     unexpected_tables = review_tables - EXPECTED_REVIEW_TABLES
     missing_tables = EXPECTED_REVIEW_TABLES - tables

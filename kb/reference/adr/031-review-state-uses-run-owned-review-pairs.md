@@ -29,7 +29,7 @@ The durable part of this decision is current:
 - Completed pairs were originally salvageable from a failed containing job; ADR 035 later made live finalization all-or-nothing.
 - Acceptance points at a concrete completed pair, so warnings and stale-state checks can recover the exact reviewed text and provenance.
 
-ADR 034 later simplified the parent row into `review_jobs`, removed pair-level model duplication, required selector JSON as the creation input, and required every acceptance event to carry completed review evidence. ADR 035 later removed claim/running state, pair status, and partial salvage.
+ADR 034 later simplified the parent row into `review_jobs`, removed pair-level model duplication, required selector JSON as the creation input, and required every acceptance row to carry completed review evidence. ADR 035 later removed claim/running state, pair status, and partial salvage. ADR 036 later collapsed acceptance to one current row per key.
 
 ## Consequences
 

@@ -144,9 +144,9 @@ For the full read path and scaling direction, see [navigation.md](./navigation.m
 - "Run the semantic review sweep over anything I've changed recently."
 - "Ack the trivial changes in the review queue."
 
-*What happens.* The review system stores state in SQLite, selects target `(note, gate)` pairs, creates queued review jobs, delegates each prompt to a worker, and records acceptance events only after all pairs in the job finalize successfully.
+*What happens.* The review system stores state in SQLite, selects target `(note, gate)` pairs, creates queued review jobs, delegates each prompt to a worker, and advances acceptance only after all pairs in the job finalize successfully.
 
-*What you get.* Per-gate `PASS` / `WARN` / `FAIL` decisions with rationale text, plus acceptance history.
+*What you get.* Per-gate `PASS` / `WARN` / `FAIL` decisions with rationale text, plus current freshness state.
 
 *Limitations.* The review UX is still agent-driven. Gate selection depends on note traits, worker delegation is owned by the current harness, and the selector/create/finalize command sequence is more operator-facing than a finished end-user CLI.
 
@@ -214,6 +214,7 @@ Imperative how-to procedures live in [kb/instructions/](../instructions/) rather
 - [ADR-019: collection-owned link vocabulary with per-destination outbound rules](./adr/019-collection-owned-link-vocabulary.md) — why each `COLLECTION.md` owns outbound rules per destination collection, and why the connect/write skills read it directly instead of a compiled topology
 - [ADR-020: theoretical-default link vocabulary additions](./adr/020-theoretical-default-contrasts-mechanism.md) — the `contrasts` and `mechanism` labels and the directional-asymmetry principle for the theoretical register
 - [ADR-035: review jobs finalize all-or-nothing with derived artifacts](./adr/035-review-jobs-finalize-all-or-nothing-with-derived-artifacts.md) — current review-job state model, strict parsing, derived artifact paths, and finalization-time provenance
+- [ADR-036: review acceptance is current state, not append-only history](./adr/036-review-acceptance-is-current-state-not-append-only-history.md) — current acceptance rows and inline superseded-review pruning
 
 ## Collection boundary
 

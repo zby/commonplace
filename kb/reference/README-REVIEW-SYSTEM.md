@@ -23,9 +23,9 @@ A full review runs as a short pipeline, from a stale-pair query to a durable acc
 1. **Select** — the selector lists `(note, gate)` pairs that are stale or unreviewed for a given model partition, and says why.
 2. **Create jobs** — selected pairs are packed into one or more queued *review jobs*, each with its own rendered prompt.
 3. **Review** — a worker (typically a sub-agent) reads a job's prompt and writes a single sentinel-delimited `bundle-output.md`.
-4. **Finalize** — the parent parses that output and, only if every expected pair is present and well-formed, records the decisions and appends acceptance events.
+4. **Finalize** — the parent parses that output and, only if every expected pair is present and well-formed, records the decisions and upserts accepted baselines.
 
-Acceptance is the durable outcome. An acceptance event pins the exact note and gate text that was reviewed, so the selector can later tell whether either side has drifted. When a note changes only trivially, an existing acceptance can be carried forward without a fresh review (*ack*).
+Acceptance is the durable outcome. A current acceptance row pins the exact note and gate text that was reviewed, so the selector can later tell whether either side has drifted. When a note changes only trivially, an existing acceptance can be carried forward without a fresh review (*ack*).
 
 ## Concepts
 
@@ -37,7 +37,7 @@ Acceptance is the durable outcome. An acceptance event pins the exact note and g
 
 **Review pair.** One requested `(note_path, gate_path)` pair inside a review job. This is the unit of review output and acceptance. A pair's decision is one of `pass`, `warn`, `fail`, `error`.
 
-**Acceptance event.** A record that a `(note_path, gate_path, model_partition)` key was reviewed against specific note and gate text. Acceptance is what makes a pair "fresh."
+**Acceptance row.** The current record that a `(note_path, gate_path, model_partition)` key was reviewed against specific note and gate text. Acceptance is what makes a pair "fresh."
 
 **Model partition.** Reviews are partitioned by model. A review or acceptance under one model does not satisfy freshness for another.
 
@@ -45,7 +45,7 @@ Human-readable review output — the per-pair result files and each job's `MANIF
 
 ## Reading freshness
 
-The selector reports each requested `(note, gate)` pair as fresh or, if not, why it is stale. It compares three things: the current note file, the current gate file, and the latest acceptance for that `(note_path, gate_path, model_partition)` key.
+The selector reports each requested `(note, gate)` pair as fresh or, if not, why it is stale. It compares three things: the current note file, the current gate file, and the current acceptance for that `(note_path, gate_path, model_partition)` key.
 
 - no acceptance for the pair → `missing-review`
 - accepted note or gate snapshot is missing → `missing-review`
@@ -75,7 +75,7 @@ The full procedure is in [run review batches](../instructions/run-review-batches
    commonplace-finalize-review-job --review-job-id {id} [--runner {worker}] [--model {model} [--effort {effort}]] [--telemetry-json {json}]
    ```
 
-**Finalization is all-or-nothing.** If any expected pair is missing, duplicated, unexpected, malformed, or lacks a valid result line, the job fails and appends no acceptance events — a failed job accepts nothing. On success, every pair is recorded and one acceptance event per pair is appended.
+**Finalization is all-or-nothing.** If any expected pair is missing, duplicated, unexpected, malformed, or lacks a valid result line, the job fails and writes no acceptance rows — a failed job accepts nothing. On success, every pair is recorded and the current acceptance row for each pair is upserted.
 
 **Finalization-time provenance is optional.** When supplied, `--model` (with optional `--effort`) is validated against the job's model partition before any state changes, and the runner/model/effort are recorded. `--effort` requires `--model`. `--telemetry-json` stores opaque harness telemetry without making it review identity.
 

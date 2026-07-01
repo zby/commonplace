@@ -118,6 +118,17 @@ def single_pair_bundle_output() -> str:
     return pair_block("kb/notes/sample.md", GATE_ONE_PATH, "Needs a definition for Alpha.", "WARN")
 
 
+def create_single_review_job(repo: Path, db_path: Path) -> dict[str, object]:
+    prepared = json.loads(
+        create_jobs_from_targets(
+            repo,
+            db_path,
+            [target("kb/notes/sample.md", GATE_ONE_PATH, GATE_ONE)],
+        ).stdout
+    )
+    return prepared["jobs"][0]
+
+
 def create_jobs_from_targets(
     repo: Path,
     db_path: Path,
@@ -528,7 +539,7 @@ def test_finalize_review_job_validates_model_effort_partition_before_mutation(tm
         conn.row_factory = sqlite3.Row
         job = conn.execute("SELECT status, runner, runner_model, runner_effort FROM review_jobs").fetchone()
         pair = conn.execute("SELECT decision FROM review_pairs").fetchone()
-        acceptance_count = conn.execute("SELECT COUNT(*) FROM acceptance_events").fetchone()[0]
+        acceptance_count = conn.execute("SELECT COUNT(*) FROM acceptance").fetchone()[0]
     assert (job["status"], job["runner"], job["runner_model"], job["runner_effort"]) == ("queued", None, None, None)
     assert pair["decision"] is None
     assert acceptance_count == 0
@@ -666,7 +677,7 @@ def test_finalize_review_job_result_write_failure_rolls_back_and_preserves_prove
             "SELECT status, failure_reason, runner, runner_model, runner_effort FROM review_jobs"
         ).fetchone()
         pair = conn.execute("SELECT decision, reviewed_at FROM review_pairs").fetchone()
-        acceptance_count = conn.execute("SELECT COUNT(*) FROM acceptance_events").fetchone()[0]
+        acceptance_count = conn.execute("SELECT COUNT(*) FROM acceptance").fetchone()[0]
     assert (
         job["status"],
         job["failure_reason"],
@@ -727,7 +738,7 @@ def test_finalize_review_job_finalizes_queued_job(tmp_path: Path) -> None:
                 ae.accepted_note_snapshot_id,
                 ae.accepted_gate_snapshot_id
             FROM review_pairs AS rp
-            JOIN acceptance_events AS ae
+            JOIN acceptance AS ae
               ON ae.accepted_review_pair_id = rp.review_pair_id
             ORDER BY rp.pair_ordinal
             """
@@ -739,4 +750,131 @@ def test_finalize_review_job_finalizes_queued_job(tmp_path: Path) -> None:
             )
             for row in snapshot_rows
         ] == [(True, True)]
-        assert conn.execute("SELECT COUNT(*) FROM acceptance_events").fetchone()[0] == 1
+        assert conn.execute("SELECT COUNT(*) FROM acceptance").fetchone()[0] == 1
+
+
+def test_failed_rereview_preserves_previous_acceptance_and_artifacts(tmp_path: Path) -> None:
+    repo, db_path = build_repo_fixture(tmp_path)
+    first_job = create_single_review_job(repo, db_path)
+    first_job_id = int(first_job["review_job_id"])
+    write(repo / str(first_job["bundle_output_path"]), single_pair_bundle_output())
+
+    first_result = run_cli(
+        "finalize_review_job",
+        "--review-job-id",
+        str(first_job_id),
+        cwd=repo,
+        db_path=db_path,
+    )
+    assert json.loads(first_result.stdout)["completed"] is True
+    first_artifact_dir = repo / "kb" / "reports" / "bundle-reviews" / f"review-job-{first_job_id}"
+
+    with sqlite3.connect(db_path) as conn:
+        conn.row_factory = sqlite3.Row
+        first_pair_id = conn.execute(
+            "SELECT review_pair_id FROM review_pairs WHERE review_job_id = ?",
+            (first_job_id,),
+        ).fetchone()["review_pair_id"]
+
+    write(repo / "kb" / "notes" / "sample.md", "---\ndescription: Test note\ntype: kb/types/note.md\ntraits: []\nstatus: current\n---\n\n# Test note\n\nChanged body.\n")
+    second_job = create_single_review_job(repo, db_path)
+    second_job_id = int(second_job["review_job_id"])
+    write(repo / str(second_job["bundle_output_path"]), "not a valid bundle\n")
+
+    failed = run_cli(
+        "finalize_review_job",
+        "--review-job-id",
+        str(second_job_id),
+        cwd=repo,
+        db_path=db_path,
+        check=False,
+    )
+
+    assert failed.returncode == 1
+    with sqlite3.connect(db_path) as conn:
+        conn.row_factory = sqlite3.Row
+        current_acceptance = conn.execute(
+            """
+            SELECT accepted_review_pair_id
+            FROM current_gate_acceptances
+            WHERE note_path = ? AND gate_path = ? AND model_partition = ?
+            """,
+            ("kb/notes/sample.md", GATE_ONE_PATH, "test-model"),
+        ).fetchone()
+        first_job_status = conn.execute(
+            "SELECT status FROM review_jobs WHERE review_job_id = ?",
+            (first_job_id,),
+        ).fetchone()["status"]
+        second_job_status = conn.execute(
+            "SELECT status FROM review_jobs WHERE review_job_id = ?",
+            (second_job_id,),
+        ).fetchone()["status"]
+
+    assert current_acceptance["accepted_review_pair_id"] == first_pair_id
+    assert first_job_status == "completed"
+    assert second_job_status == "failed"
+    assert first_artifact_dir.exists()
+
+
+def test_successful_rereview_prunes_superseded_job_and_artifacts(tmp_path: Path) -> None:
+    repo, db_path = build_repo_fixture(tmp_path)
+    first_job = create_single_review_job(repo, db_path)
+    first_job_id = int(first_job["review_job_id"])
+    write(repo / str(first_job["bundle_output_path"]), single_pair_bundle_output())
+    run_cli(
+        "finalize_review_job",
+        "--review-job-id",
+        str(first_job_id),
+        cwd=repo,
+        db_path=db_path,
+    )
+    first_artifact_dir = repo / "kb" / "reports" / "bundle-reviews" / f"review-job-{first_job_id}"
+    assert first_artifact_dir.exists()
+    with sqlite3.connect(db_path) as conn:
+        conn.row_factory = sqlite3.Row
+        first_pair_id = conn.execute(
+            "SELECT review_pair_id FROM review_pairs WHERE review_job_id = ?",
+            (first_job_id,),
+        ).fetchone()["review_pair_id"]
+
+    write(repo / "kb" / "notes" / "sample.md", "---\ndescription: Test note\ntype: kb/types/note.md\ntraits: []\nstatus: current\n---\n\n# Test note\n\nChanged body.\n")
+    second_job = create_single_review_job(repo, db_path)
+    second_job_id = int(second_job["review_job_id"])
+    write(repo / str(second_job["bundle_output_path"]), single_pair_bundle_output())
+
+    second_result = run_cli(
+        "finalize_review_job",
+        "--review-job-id",
+        str(second_job_id),
+        cwd=repo,
+        db_path=db_path,
+    )
+
+    assert json.loads(second_result.stdout)["completed"] is True
+    second_artifact_dir = repo / "kb" / "reports" / "bundle-reviews" / f"review-job-{second_job_id}"
+    with sqlite3.connect(db_path) as conn:
+        conn.row_factory = sqlite3.Row
+        current_acceptance = conn.execute(
+            """
+            SELECT accepted_review_pair_id
+            FROM current_gate_acceptances
+            WHERE note_path = ? AND gate_path = ? AND model_partition = ?
+            """,
+            ("kb/notes/sample.md", GATE_ONE_PATH, "test-model"),
+        ).fetchone()
+        first_pair = conn.execute(
+            "SELECT review_pair_id FROM review_pairs WHERE review_pair_id = ?",
+            (first_pair_id,),
+        ).fetchone()
+        first_job_row = conn.execute(
+            "SELECT review_job_id FROM review_jobs WHERE review_job_id = ?",
+            (first_job_id,),
+        ).fetchone()
+        acceptance_count = conn.execute("SELECT COUNT(*) FROM acceptance").fetchone()[0]
+
+    assert current_acceptance["accepted_review_pair_id"] != first_pair_id
+    assert first_pair is None
+    assert first_job_row is None
+    assert acceptance_count == 1
+    assert not first_artifact_dir.exists()
+    assert second_artifact_dir.exists()

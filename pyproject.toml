@@ -35,7 +35,6 @@ commonplace-finalize-review-job = "commonplace.cli.review.finalize_review_job:ma
 commonplace-github-snapshot = "commonplace.cli.github_snapshot:main"
 commonplace-init = "commonplace.cli.init_project:main"
 commonplace-promotion-candidates = "commonplace.cli.promotion_candidates:main"
-commonplace-prune-superseded-reviews = "commonplace.cli.review.prune_superseded_reviews:main"
 commonplace-relocate-directory = "commonplace.cli.relocate_directory:main"
 commonplace-relocate-note = "commonplace.cli.relocate_note:main"
 commonplace-review-job-list = "commonplace.cli.review.review_job_list:main"

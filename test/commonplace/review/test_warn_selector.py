@@ -91,7 +91,7 @@ def seed_warn_review(repo: Path, db_path: Path) -> None:
         review_pair = review_db.load_review_pairs_for_job(conn, review_job_id=review_job_id)[0]
         assert review_pair.result_path is not None
         write(repo / review_pair.result_path, "### Findings\n- WARN: actionable finding\n\n## Result: WARN\n")
-        review_db.append_acceptance_event(
+        review_db.upsert_acceptance(
             conn,
             note_path="kb/notes/sample.md",
             gate_path=GATE_PATH,

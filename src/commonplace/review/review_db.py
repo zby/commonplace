@@ -77,6 +77,16 @@ class AcceptanceState:
 
 
 @dataclass(frozen=True)
+class SupersededAcceptance:
+    note_path: str
+    gate_path: str
+    model_partition: str
+    accepted_review_pair_id: int
+    accepted_note_snapshot_id: int | None
+    accepted_gate_snapshot_id: int | None
+
+
+@dataclass(frozen=True)
 class ReviewJobRow:
     review_job_id: int
     model_partition: str
@@ -185,6 +195,10 @@ def prepare_review_db(repo_root: Path, db_override: str | None = None) -> Path:
 
 def _now_utc_iso() -> str:
     return datetime.now(UTC).isoformat()
+
+
+def _placeholders(values: Sequence[object]) -> str:
+    return ", ".join("?" for _ in values)
 
 
 def snapshot_file(conn: sqlite3.Connection, *, repo_root: Path, path: str) -> ReviewFileSnapshot:
@@ -679,17 +693,6 @@ def fail_review_job(
 ) -> None:
     conn.execute(
         """
-        DELETE FROM acceptance_events
-        WHERE accepted_review_pair_id IN (
-            SELECT review_pair_id
-            FROM review_pairs
-            WHERE review_job_id = ?
-        )
-        """,
-        (review_job_id,),
-    )
-    conn.execute(
-        """
         UPDATE review_pairs
         SET decision = NULL,
             reviewed_at = NULL
@@ -753,7 +756,7 @@ def complete_review_pairs(
     return completed_pair_ids
 
 
-def append_acceptance_event(
+def upsert_acceptance(
     conn: sqlite3.Connection,
     *,
     note_path: str,
@@ -763,7 +766,7 @@ def append_acceptance_event(
     accepted_note_snapshot_id: int | None = None,
     accepted_gate_snapshot_id: int | None = None,
     accepted_at: str,
-) -> int:
+) -> SupersededAcceptance | None:
     if accepted_review_pair_id is None:
         raise ValueError("accepted_review_pair_id is required")
     model_partition = normalize_model_partition(model_partition)
@@ -791,9 +794,25 @@ def append_acceptance_event(
         or row["model_partition"] != model_partition
     ):
         raise ValueError(f"accepted review pair does not match acceptance key: {accepted_review_pair_id}")
-    cursor = conn.execute(
+    previous = conn.execute(
         """
-        INSERT INTO acceptance_events (
+        SELECT
+            note_path,
+            gate_path,
+            model_partition,
+            accepted_review_pair_id,
+            accepted_note_snapshot_id,
+            accepted_gate_snapshot_id
+        FROM acceptance
+        WHERE note_path = ?
+          AND gate_path = ?
+          AND model_partition = ?
+        """,
+        (note_path, gate_path, model_partition),
+    ).fetchone()
+    conn.execute(
+        """
+        INSERT INTO acceptance (
             note_path,
             gate_path,
             model_partition,
@@ -802,6 +821,12 @@ def append_acceptance_event(
             accepted_gate_snapshot_id,
             accepted_at
         ) VALUES (?, ?, ?, ?, ?, ?, ?)
+        ON CONFLICT(note_path, gate_path, model_partition)
+        DO UPDATE SET
+            accepted_review_pair_id = excluded.accepted_review_pair_id,
+            accepted_note_snapshot_id = excluded.accepted_note_snapshot_id,
+            accepted_gate_snapshot_id = excluded.accepted_gate_snapshot_id,
+            accepted_at = excluded.accepted_at
         """,
         (
             note_path,
@@ -813,53 +838,119 @@ def append_acceptance_event(
             accepted_at,
         ),
     )
-    return int(cursor.lastrowid)
-
-
-def prune_obsolete_snapshot_content(conn: sqlite3.Connection) -> int:
-    """Drop retained text for snapshots not needed for freshness or in-flight prompts."""
-    conn.execute(
-        """
-        WITH retained_snapshots AS (
-            SELECT accepted_note_snapshot_id AS snapshot_id
-            FROM current_gate_acceptances
-            WHERE accepted_note_snapshot_id IS NOT NULL
-
-            UNION
-
-            SELECT accepted_gate_snapshot_id AS snapshot_id
-            FROM current_gate_acceptances
-            WHERE accepted_gate_snapshot_id IS NOT NULL
-
-            UNION
-
-            SELECT reviewed_note_snapshot_id AS snapshot_id
-            FROM review_pairs AS rp
-            JOIN review_jobs AS j
-              ON j.review_job_id = rp.review_job_id
-            WHERE j.status != 'completed'
-              AND rp.reviewed_note_snapshot_id IS NOT NULL
-
-            UNION
-
-            SELECT reviewed_gate_snapshot_id AS snapshot_id
-            FROM review_pairs AS rp
-            JOIN review_jobs AS j
-              ON j.review_job_id = rp.review_job_id
-            WHERE j.status != 'completed'
-              AND rp.reviewed_gate_snapshot_id IS NOT NULL
-        )
-        UPDATE review_file_snapshots
-        SET content_text = NULL
-        WHERE content_text IS NOT NULL
-          AND snapshot_id NOT IN (
-              SELECT snapshot_id
-              FROM retained_snapshots
-          )
-        """
+    if previous is None:
+        return None
+    return SupersededAcceptance(
+        note_path=previous["note_path"],
+        gate_path=previous["gate_path"],
+        model_partition=previous["model_partition"],
+        accepted_review_pair_id=previous["accepted_review_pair_id"],
+        accepted_note_snapshot_id=previous["accepted_note_snapshot_id"],
+        accepted_gate_snapshot_id=previous["accepted_gate_snapshot_id"],
     )
-    row = conn.execute("SELECT changes() AS changed_rows").fetchone()
-    return int(row["changed_rows"])
+
+
+def prune_superseded_acceptances(
+    conn: sqlite3.Connection,
+    superseded: Sequence[SupersededAcceptance | None],
+) -> set[int]:
+    """Delete superseded review evidence and return whole jobs deleted from the DB."""
+    superseded_rows = [row for row in superseded if row is not None]
+    if not superseded_rows:
+        return set()
+
+    candidate_snapshot_ids: set[int] = {
+        snapshot_id
+        for row in superseded_rows
+        for snapshot_id in (row.accepted_note_snapshot_id, row.accepted_gate_snapshot_id)
+        if snapshot_id is not None
+    }
+    candidate_pair_ids = tuple(sorted({row.accepted_review_pair_id for row in superseded_rows}))
+    obsolete_pair_rows: list[sqlite3.Row] = []
+    if candidate_pair_ids:
+        obsolete_pair_rows = conn.execute(
+            f"""
+            SELECT
+                review_pair_id,
+                review_job_id,
+                reviewed_note_snapshot_id,
+                reviewed_gate_snapshot_id
+            FROM review_pairs AS rp
+            WHERE review_pair_id IN ({_placeholders(candidate_pair_ids)})
+              AND NOT EXISTS (
+                  SELECT 1
+                  FROM acceptance AS a
+                  WHERE a.accepted_review_pair_id = rp.review_pair_id
+              )
+            ORDER BY review_pair_id
+            """,
+            candidate_pair_ids,
+        ).fetchall()
+
+    obsolete_pair_ids = tuple(int(row["review_pair_id"]) for row in obsolete_pair_rows)
+    candidate_job_ids = tuple(sorted({int(row["review_job_id"]) for row in obsolete_pair_rows}))
+    for row in obsolete_pair_rows:
+        for snapshot_id in (row["reviewed_note_snapshot_id"], row["reviewed_gate_snapshot_id"]):
+            if snapshot_id is not None:
+                candidate_snapshot_ids.add(int(snapshot_id))
+
+    deleted_job_ids: set[int] = set()
+    if obsolete_pair_ids:
+        conn.execute(
+            f"""
+            DELETE FROM review_pairs
+            WHERE review_pair_id IN ({_placeholders(obsolete_pair_ids)})
+            """,
+            obsolete_pair_ids,
+        )
+    if candidate_job_ids:
+        deletable_job_rows = conn.execute(
+            f"""
+            SELECT review_job_id
+            FROM review_jobs AS j
+            WHERE review_job_id IN ({_placeholders(candidate_job_ids)})
+              AND NOT EXISTS (
+                  SELECT 1
+                  FROM review_pairs AS rp
+                  WHERE rp.review_job_id = j.review_job_id
+              )
+            ORDER BY review_job_id
+            """,
+            candidate_job_ids,
+        ).fetchall()
+        deleted_job_ids = {int(row["review_job_id"]) for row in deletable_job_rows}
+        deleted_job_id_tuple = tuple(sorted(deleted_job_ids))
+        if deleted_job_id_tuple:
+            conn.execute(
+                f"""
+                DELETE FROM review_jobs
+                WHERE review_job_id IN ({_placeholders(deleted_job_id_tuple)})
+                """,
+                deleted_job_id_tuple,
+            )
+
+    candidate_snapshot_id_tuple = tuple(sorted(candidate_snapshot_ids))
+    if candidate_snapshot_id_tuple:
+        conn.execute(
+            f"""
+            DELETE FROM review_file_snapshots
+            WHERE snapshot_id IN ({_placeholders(candidate_snapshot_id_tuple)})
+              AND NOT EXISTS (
+                  SELECT 1
+                  FROM acceptance AS a
+                  WHERE a.accepted_note_snapshot_id = review_file_snapshots.snapshot_id
+                     OR a.accepted_gate_snapshot_id = review_file_snapshots.snapshot_id
+              )
+              AND NOT EXISTS (
+                  SELECT 1
+                  FROM review_pairs AS rp
+                  WHERE rp.reviewed_note_snapshot_id = review_file_snapshots.snapshot_id
+                     OR rp.reviewed_gate_snapshot_id = review_file_snapshots.snapshot_id
+              )
+            """,
+            candidate_snapshot_id_tuple,
+        )
+    return deleted_job_ids
 
 
 def load_review_pairs_for_note(

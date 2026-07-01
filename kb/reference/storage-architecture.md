@@ -51,11 +51,11 @@ Review state is the one subsystem that is not file-backed. The review database s
 |---|---|
 | `review_jobs` | One row per review invocation/prompt, with freshness `model_partition`, nullable finalization-time runner provenance, `queued`/`completed`/`failed` status, created/completed timing, and packing |
 | `review_pairs` | One row per requested `(note_path, gate_path)` pair inside a job, with nullable completed decision and reviewed snapshot IDs; model partition is derived through the parent job |
-| `acceptance_events` | Append-only per-gate acceptance history |
+| `acceptance` | Current accepted baseline per `(note_path, gate_path, model_partition)` |
 
-Prompt, bundle-output, manifest, and per-pair result paths are derived from the review job id, packing, and pair set. Acceptance is keyed by `(note_path, gate_path, model_partition)`. Current acceptance for any key is the latest acceptance event whose parent job is completed and whose review pair has a non-null decision, exposed via the `current_gate_acceptances` view. Selector logic reads current note and gate content from files and compares their hashes against accepted DB-owned snapshots.
+Prompt, bundle-output, manifest, and per-pair result paths are derived from the review job id, packing, and pair set. Acceptance is keyed by `(note_path, gate_path, model_partition)` and stored as one current row per key. `current_gate_acceptances` exposes only rows whose parent job is completed and whose review pair has a non-null decision. Selector logic reads current note and gate content from files and compares their hashes against accepted DB-owned snapshots. Successful supersede prunes obsolete review rows, unreferenced snapshots, and whole obsolete job artifact directories inline; there is no separate prune command.
 
-Notes, gates, instructions, and source material remain file-backed. See [ADR-010](./adr/010-review-state-should-move-to-sqlite-once-reviews-leave-git-and.md), [ADR-032](./adr/032-review-freshness-uses-db-snapshots-not-git.md), [ADR-033](./adr/033-honest-review-run-state.md), [ADR-034](./adr/034-queued-review-jobs-and-execution-provenance.md), and [ADR-035](./adr/035-review-jobs-finalize-all-or-nothing-with-derived-artifacts.md) for the rationale.
+Notes, gates, instructions, and source material remain file-backed. See [ADR-010](./adr/010-review-state-should-move-to-sqlite-once-reviews-leave-git-and.md), [ADR-032](./adr/032-review-freshness-uses-db-snapshots-not-git.md), [ADR-033](./adr/033-honest-review-run-state.md), [ADR-034](./adr/034-queued-review-jobs-and-execution-provenance.md), [ADR-035](./adr/035-review-jobs-finalize-all-or-nothing-with-derived-artifacts.md), and [ADR-036](./adr/036-review-acceptance-is-current-state-not-append-only-history.md) for the rationale.
 
 ## See also
 

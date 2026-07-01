@@ -2,18 +2,21 @@
 
 from __future__ import annotations
 
+import shutil
 from dataclasses import dataclass
 from pathlib import Path
 
+from commonplace.review.artifacts import bundle_artifact_dir
 from commonplace.review.clock import iso_now
 from commonplace.review.paths import gate_id_from_stored_path, normalize_gate_path
 from commonplace.review.review_db import (
-    append_acceptance_event,
     connect,
     ensure_db,
     load_latest_completed_review_pair,
+    prune_superseded_acceptances,
     resolve_db_path,
     snapshot_file,
+    upsert_acceptance,
 )
 from commonplace.review.review_model import normalize_model_partition
 
@@ -77,6 +80,7 @@ def ack_pairs(
     ensure_db(db_path)
     acked: list[tuple[str, str]] = []
     normalized_pairs = _normalize_requested_pairs(repo_root, pairs)
+    pruned_review_job_ids: set[int] = set()
     with connect(db_path) as conn:
         ack_pairs_to_write: list[AckPair] = []
         for note_path, gate_path in normalized_pairs:
@@ -99,19 +103,27 @@ def ack_pairs(
                 )
             )
 
+        superseded_acceptances = []
         for pair in ack_pairs_to_write:
             note_snapshot = snapshot_file(conn, repo_root=repo_root, path=pair.note_path)
             gate_snapshot = snapshot_file(conn, repo_root=repo_root, path=pair.gate_path)
-            append_acceptance_event(
-                conn,
-                note_path=pair.note_path,
-                gate_path=pair.gate_path,
-                model_partition=model,
-                accepted_review_pair_id=pair.accepted_review_pair_id,
-                accepted_note_snapshot_id=note_snapshot.snapshot_id,
-                accepted_gate_snapshot_id=gate_snapshot.snapshot_id,
-                accepted_at=iso_now(),
+            superseded_acceptances.append(
+                upsert_acceptance(
+                    conn,
+                    note_path=pair.note_path,
+                    gate_path=pair.gate_path,
+                    model_partition=model,
+                    accepted_review_pair_id=pair.accepted_review_pair_id,
+                    accepted_note_snapshot_id=note_snapshot.snapshot_id,
+                    accepted_gate_snapshot_id=gate_snapshot.snapshot_id,
+                    accepted_at=iso_now(),
+                )
             )
             acked.append((pair.note_path, gate_id_from_stored_path(pair.gate_path)))
+        pruned_review_job_ids = prune_superseded_acceptances(conn, superseded_acceptances)
         conn.commit()
+    for review_job_id in sorted(pruned_review_job_ids):
+        artifact_dir = bundle_artifact_dir(repo_root, review_job_id)
+        if artifact_dir.exists():
+            shutil.rmtree(artifact_dir, ignore_errors=True)
     return acked

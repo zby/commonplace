@@ -38,14 +38,14 @@ The current concrete schema is:
 
 - `review_jobs` stores one prompt/output invocation
 - `review_pairs` stores each requested `(note_path, gate_path)` pair inside a job
-- `acceptance_events` stores append-only acceptance history and points at completed review-pair evidence
-- current acceptance is derived by latest event per `(note_path, gate_path, model_partition)`
+- `acceptance` stores the current accepted baseline per `(note_path, gate_path, model_partition)` and points at completed review-pair evidence
+- current acceptance is exposed directly through `current_gate_acceptances`
 - selector reads current note and gate text from files, but reads accepted baselines from SQLite snapshots
-- `ack` appends an acceptance event instead of rewriting review artifacts
+- `ack` upserts the current acceptance row instead of rewriting review artifacts
 - review execution creates a queued job first, workers write only job-owned output files, and finalization advances acceptance after parsing pair output
 - markdown review files are rendered inspection views, not the canonical store
 
-ADR 031 and ADR 034 refine the concrete schema; the storage boundary and acceptance-event model from this decision remain current.
+ADR 031 and ADR 034 refine the concrete schema, and ADR 036 replaces this ADR's append-only acceptance-history sketch with a current-state acceptance row. The SQLite storage boundary from this decision remains current.
 
 This is a scoped exception to the repo's files-first architecture, not a reversal of it. Notes, gates, instructions, and source material remain file-backed. The database is justified here because the review subsystem stopped being authored library content and became local operational state.
 
@@ -53,9 +53,9 @@ This is a scoped exception to the repo's files-first architecture, not a reversa
 
 ### Easier
 
-- **Current-state lookup becomes direct.** Selector logic reduces to "load latest acceptance for this key and compare SHAs" instead of scanning files and interpreting embedded metadata blocks.
+- **Current-state lookup becomes direct.** Selector logic reduces to "load current acceptance for this key and compare SHAs" instead of scanning files and interpreting embedded metadata blocks.
 - **Ack stops mutating prose artifacts.** Trivial-change acknowledgement becomes a first-class state transition rather than a metadata rewrite inside a review document.
-- **History becomes explicit.** Append-only review and acceptance tables preserve both review bodies and acceptance evolution without overloading one markdown file with both historical and current meaning.
+- **Review evidence becomes explicit.** Review jobs and pairs preserve completed review evidence without overloading one markdown file with both review prose and current acceptance state.
 - **Execution history becomes explicit.** One multi-gate review invocation is queryable as a job rather than inferred later from a pile of per-gate artifacts.
 - **Model partitions are cleaner.** `(note, gate, model)` is a real indexed key instead of an implicit convention reconstructed from directory layout and filename suffixes.
 - **Inspection stays possible.** Human-readable markdown can still be rendered from DB rows when needed, but inspectability is now a derived view rather than the storage contract.
