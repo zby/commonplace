@@ -68,6 +68,8 @@ Three files, distinct roles — do **not** merge into one:
 
 Decision: keep them separate. They have genuinely different jobs (adopt-the-tool vs read-the-knowledge), and `docs_dir: kb` puts the root README outside the docs tree, so a literal single-file homepage would need a `docs_dir` move or symlink hack — cost without benefit. The real failure mode is *identity drift* between the two faces (root led with the new positioning while the homepage lagged on the old one); the fix is a shared flagship lede on both, then divergence by job. The shared lede is three sentences — manual sync is acceptable; a build-time single-source for it would be over-engineering.
 
+Update (2026-07-02): the shared-lede rule is retired. It produced reader-visible duplication — clicking from the README to the site home replayed the same opening block — and that cost outweighed the drift protection. New rule, recorded durably in [documentation-site.md](../../reference/documentation-site.md): share only the tagline; each face opens in its own voice (README tool-first, site home research-first), with identity carried by the tagline and shared terminology rather than synced paragraphs.
+
 Open: `kb/README.md` overlaps with the AGENTS.md/CLAUDE.md collection-routing table — possibly redundant, a separate cleanup question from positioning.
 
 ## Propagation

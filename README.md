@@ -2,13 +2,11 @@
 
 **Research on knowledge systems, running as one.**
 
-Commonplace is a growing body of research on how to build the most powerful agentic systems. The bet is simple: an LLM can consume a theory and act on it, and can even write the code that theory calls for — so an _actionable_ theory of how to build such systems is itself a way of building them. Commonplace aims to be that theory: one closed under its own recommendations, telling an agent when to reason from prose, when to freeze knowledge into durable code, and how to verify what it produces.
+Commonplace is a framework for running an **LLM wiki** in the sense [Karpathy sketched](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f): a persistent, linked markdown layer that agents build and maintain around your own work, turning ephemeral chats into a durable, growing body of your thinking. This repository ships everything needed to run one — the type system, writing conventions, agent skills, and `commonplace-*` Python commands.
 
-The theory's most immediate target is an **LLM wiki** in the sense [Karpathy sketched](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f): a persistent, linked markdown layer that agents build and maintain around your own work, turning ephemeral chats into a durable, growing body of your thinking. This repository ships everything needed to run one — the type system, writing conventions, agent skills, and `commonplace-*` Python commands.
+The framework is the working end of a growing body of research on how to build the most powerful agentic systems, and it is **self-hosting** in the bootstrapping sense: the research lives here as notes, and LLM agents follow the methodology those notes lay out to maintain the wiki it lives in. The content is AI-generated throughout — a human directs the inquiry; agents (Claude, ChatGPT, and others) draft, connect, and maintain the notes.
 
-It is also the first deployment. The research lives here as notes, and LLM agents follow the methodology those notes lay out to maintain the wiki it lives in. The content is AI-generated throughout — a human directs the inquiry; agents (Claude, ChatGPT, and others) draft, connect, and maintain the notes.
-
-This page covers the tool: what's in the repo, how to use it, and how to install it. The research is best read on the rendered site at <https://zby.github.io/commonplace/>.
+This page covers the tool: what's in the repo, how to use it, and how to install it. The research is best read on the rendered site at <https://zby.github.io/commonplace/> — start with the [threads worth following](https://zby.github.io/commonplace/#threads-worth-following).
 
 ## What's in the box
 

@@ -1,5 +1,5 @@
 ---
-description: How the MkDocs site renders kb/ — the README-vs-index rule, the nav-generation hook, and the full inventory of reader landing pages (GitHub repo page, site home, per-collection landings) that positioning copy must keep consistent
+description: How the MkDocs site renders kb/ — the README-vs-index rule, the nav-generation hook, and the inventory of reader landing pages that positioning copy must keep consistent
 type: kb/types/note.md
 tags: []
 status: current
@@ -35,7 +35,7 @@ A reader can enter through any of these. They are distinct files with distinct j
 | Source routing doc | `kb/README.md` | Filesystem-contract routing for agents reading the source tree. Shadowed by `kb/index.md`. | No (dropped from build) |
 | Collection landings | `kb/<collection>/README.md` (notes, reference, instructions, agent-memory-systems, agentic-systems, sources, work) | Each collection's curated head and nav target; renders as the collection's main page. | Yes (one nav entry each) |
 
-The root `README.md` (tool face) and `kb/index.md` (content face) are kept as separate files deliberately: they serve different jobs, and `docs_dir: kb` puts the root README outside the docs tree, so a single shared homepage would require moving `docs_dir` or a symlink. Both should open with the same positioning lede and then diverge by job; the shared lede is short enough to sync by hand.
+The root `README.md` (tool face) and `kb/index.md` (content face) are kept as separate files deliberately: they serve different jobs, and `docs_dir: kb` puts the root README outside the docs tree, so a single shared homepage would require moving `docs_dir` or a symlink. They share only the tagline as an identity anchor; each opens in its own voice — the README tool-first, the site home research-first — so a reader clicking from the README to the site gets continuation, not a repeat. Identity stays in sync through the tagline and shared terminology (LLM wiki, self-hosting, deploy-time learning), not through duplicated paragraphs.
 
 ## See also
 
