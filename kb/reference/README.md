@@ -178,7 +178,6 @@ Look up how the shipped system is put together: its architecture, type system, a
 - [storage-architecture.md](./storage-architecture.md) — markdown as source of truth, derived indexes, and SQLite as a scoped exception for review state
 - [documentation-site.md](./documentation-site.md) — how the MkDocs site renders `kb/`: the README-vs-index rule, the nav-generation hook, and the full inventory of reader landing pages
 - [navigation.md](./navigation.md) — how agents move through the KB using control-plane pointers, `rg`, titles/descriptions, indexes, links, connect reports, and future search layers
-- [mark-semantics.md](./mark-semantics.md) — what the `complete`/`covered_by` marks on tag-READMEs mean for consumers: accelerators over a recoverable query, never load-bearing
 - [control-plane-goals.md](./control-plane-goals.md) — how Commonplace ships KB goals in always-loaded context via `AGENTS.md`
 - [instruction-generation.md](./instruction-generation.md) — build-time instruction generation flow and `commonplace-init`
 - [review-architecture.md](./review-architecture.md) — how the review subsystem is built: package layout, storage schema, canonical-state-vs-derived-output, freshness mechanism, module map, and invariants (the build-side companion to [README-REVIEW-SYSTEM.md](./README-REVIEW-SYSTEM.md))

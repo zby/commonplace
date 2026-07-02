@@ -24,13 +24,24 @@ A tag-README is understood standalone; this spec is **maintenance-path only**. R
 - `complete: true` (optional) — this README links **every** note carrying the tag. Validator-enforced; readers may skip the by-tag `rg` sweep.
 - `covered_by: [child-a, child-b]` (optional) — every note carrying the tag also carries at least one listed child tag. Validator-enforced; readers may trust the typed routing. This list is the only symbolic tag-to-tag relation; "Related Tags" prose stays editorial.
 
+## What a mark is
+
+A **mark** is a frontmatter field that caches a value recomputable from ground truth recorded elsewhere, is validated by code against that ground truth, and is read by an agent to spare it an expensive in-context recompute. `complete` and `covered_by` are the two marks; both cache tag membership, which the scoped `rg` sweep (`kb/reference/navigation.md`) always recovers.
+
+Two properties define a mark, and any future mark must hold both:
+
+- **Recomputable, therefore never load-bearing.** The ground truth lives elsewhere; the mark only copies it. No consumer's correctness may depend on a mark being present — dropping one costs a single recomputation, never correctness.
+- **Code-validated, therefore enforce-or-omit.** A *false* mark (claiming complete/covered while members are missing) tells exhaustive consumers to stop looking while items are still out there — the sharpest form of the failure in `kb/notes/stale-indexes-are-worse-than-no-indexes.md`. The unenforced prose version of a checkable claim ("this list is complete", with no validator behind it) is that catastrophic state with none of the protection, and must never be written.
+
+Marks earn their maintenance cost only because the consumer is an agent, for which the recompute is dear; for code the same field would be premature denormalization. That is the value half (`kb/notes/llm-recompute-cost-inverts-the-store-vs-recompute-default.md`) composed with the safety half (`kb/notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md`). A content-hash anchor is deliberately *not* a mark: it records a non-recomputable past state and is consumed by code, not read by the model, so it fails both properties. ADR 026 is the decision record.
+
 ## The weight contract
 
 Every tag-README is small by type contract: validation warns past **8 KB** and fails past **16 KB** (bytes; entry count is reported as diagnosis). No exemptions. Remedies past threshold: curate harder, split the tag, or narrow it.
 
 ## Maintaining the marks
 
-Both marks are **accelerators, never load-bearing**: scoped `rg` always recovers membership, so no consumer's correctness depends on a mark — it only saves work. The catastrophic state is a *false* mark (claiming complete/covered while members are missing), which is why both are machine-checked. Enforcement is reactive: writing a note does not require touching any README; the validator queues the gap when the marked README is next validated, and its message routes here.
+Enforcement is reactive (the two properties above are why): writing a note does not require touching any README; the validator queues the gap when the marked README is next validated, and its message routes here.
 
 **`complete` lifecycle.** Declare it only while full membership fits under the weight gates. Each new tagged note then queues a README entry (add the link with a context phrase). A complete README crossing the soft warn is the early signal the tag is outgrowing completeness. Exits, in order of preference:
 
