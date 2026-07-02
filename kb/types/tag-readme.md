@@ -11,7 +11,7 @@ schema: kb/types/tag-readme.schema.yaml
 
 A tag-README (`<tag>-README.md`) is the tag's curated head: a short orientation paragraph plus selective editorial picks with context phrases. It mirrors the directory convention — a directory's curated head is `README.md`, a tag's is `<tag>-README.md`.
 
-A tag-README is understood standalone; this spec is **maintenance-path only**. Readers never need it — the field names are self-describing and the body is ordinary curated prose. Load this spec when *maintaining* a tag-README: declaring or dropping a mark, fixing a validator warning, or executing a lifecycle exit.
+A tag-README is understood standalone — the field names are self-describing and the body is ordinary curated prose. This spec is **maintenance-path only**: load it when declaring or dropping a mark, fixing a validator warning, or executing a lifecycle exit.
 
 - Write a short orientation paragraph explaining what the tag covers and how to use the page.
 - Curated entries MUST have context phrases — a bare link list is an address book, not a map.
@@ -24,16 +24,7 @@ A tag-README is understood standalone; this spec is **maintenance-path only**. R
 - `complete: true` (optional) — this README links **every** note carrying the tag. Validator-enforced; readers may skip the by-tag `rg` sweep.
 - `covered_by: [child-a, child-b]` (optional) — every note carrying the tag also carries at least one listed child tag. Validator-enforced; readers may trust the typed routing. This list is the only symbolic tag-to-tag relation; "Related Tags" prose stays editorial.
 
-## What a mark is
-
-A **mark** is a frontmatter field that caches a value recomputable from ground truth recorded elsewhere, is validated by code against that ground truth, and is read by an agent to spare it an expensive in-context recompute. `complete` and `covered_by` are the two marks; both cache tag membership, which the scoped `rg` sweep (`kb/reference/navigation.md`) always recovers.
-
-Two properties define a mark, and any future mark must hold both:
-
-- **Recomputable, therefore never load-bearing.** The ground truth lives elsewhere; the mark only copies it. No consumer's correctness may depend on a mark being present — dropping one costs a single recomputation, never correctness.
-- **Code-validated, therefore enforce-or-omit.** A *false* mark (claiming complete/covered while members are missing) tells exhaustive consumers to stop looking while items are still out there — the sharpest form of the failure in `kb/notes/stale-indexes-are-worse-than-no-indexes.md`. The unenforced prose version of a checkable claim ("this list is complete", with no validator behind it) is that catastrophic state with none of the protection, and must never be written.
-
-Marks earn their maintenance cost only because the consumer is an agent, for which the recompute is dear; for code the same field would be premature denormalization. That is the value half (`kb/notes/llm-recompute-cost-inverts-the-store-vs-recompute-default.md`) composed with the safety half (`kb/notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md`). A content-hash anchor is deliberately *not* a mark: it records a non-recomputable past state and is consumed by code, not read by the model, so it fails both properties. ADR 026 is the decision record.
+Both marks are **validated caches** of tag membership, which the scoped `rg` sweep (`kb/reference/navigation.md`) always recovers. Two properties follow, and any future mark must keep both: **recomputable, therefore never load-bearing** — dropping a mark costs one recomputation, never correctness; and **enforced-or-omitted** — a false mark tells exhaustive consumers to stop looking while members are still out there (`kb/notes/stale-indexes-are-worse-than-no-indexes.md`). ADR 026 is the decision record; the theory is the value half (`kb/notes/llm-recompute-cost-inverts-the-store-vs-recompute-default.md`) composed with the safety half (`kb/notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md`); the PKM grounding is `kb/notes/an-enforced-tag-readme-is-a-moc-with-a-machine-checked-contract.md`.
 
 ## The weight contract
 
