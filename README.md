@@ -4,9 +4,11 @@
 
 Commonplace is a growing body of research on how to build the most powerful agentic systems. The bet is simple: an LLM can consume a theory and act on it, and can even write the code that theory calls for — so an _actionable_ theory of how to build such systems is itself a way of building them. Commonplace aims to be that theory: one closed under its own recommendations, telling an agent when to reason from prose, when to freeze knowledge into durable code, and how to verify what it produces.
 
-The theory's most actionable immediate target is an **LLM wiki** in the sense [Karpathy sketched](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f): a persistent, linked markdown layer that agents build and maintain around your own work, turning ephemeral chats into a durable, growing body of your thinking. This repository ships everything needed to run one — the type system, writing conventions, agent skills, and `commonplace-*` Python commands — and is itself the first deployment: the research lives here as notes, and LLM agents follow the methodology those notes lay out to maintain the very wiki the research lives in. The content is AI-generated through human-AI collaboration — a human directs the inquiry; agents (Claude, ChatGPT, and others) draft, connect, and maintain the notes.
+The theory's most immediate target is an **LLM wiki** in the sense [Karpathy sketched](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f): a persistent, linked markdown layer that agents build and maintain around your own work, turning ephemeral chats into a durable, growing body of your thinking. This repository ships everything needed to run one — the type system, writing conventions, agent skills, and `commonplace-*` Python commands.
 
-This page covers the tool: what is in the repo, how to use it, and how to install it. The research itself is best read on the rendered site at <https://zby.github.io/commonplace/>.
+It is also the first deployment. The research lives here as notes, and LLM agents follow the methodology those notes lay out to maintain the wiki it lives in. The content is AI-generated throughout — a human directs the inquiry; agents (Claude, ChatGPT, and others) draft, connect, and maintain the notes.
+
+This page covers the tool: what's in the repo, how to use it, and how to install it. The research is best read on the rendered site at <https://zby.github.io/commonplace/>.
 
 ## What's in the box
 
@@ -34,7 +36,7 @@ src/commonplace/          Packaged operational engine
 
 ## Key ideas
 
-The design principles the system is built on — distinct from the research claims they rest on, which live in the [notes](https://zby.github.io/commonplace/).
+Five design principles the system is built on. The research claims behind them live in the [notes](https://zby.github.io/commonplace/).
 
 **Title as claim, not topic.** Note titles are assertions that work as prose when linked: "approvals guard against LLM mistakes not active attacks" instead of "approvals system". Following links reads like a chain of reasoning — [why this works](https://github.com/zby/commonplace/blob/main/kb/notes/title-as-claim-enables-traversal-as-reasoning.md).
 
@@ -59,7 +61,7 @@ commonplace-github-snapshot <url>    # snapshot a GitHub issue/PR into kb/source
 commonplace-x-snapshot <url>         # snapshot an X/Twitter thread
 ```
 
-The review system ships as a further family of `commonplace-*` commands for selecting review targets, creating queued jobs, and finalizing worker-written review output; see the [review system overview](https://github.com/zby/commonplace/blob/main/kb/reference/README-REVIEW-SYSTEM.md).
+A further family of commands drives the review system — selecting targets, queuing jobs, finalizing output; see the [review system overview](https://github.com/zby/commonplace/blob/main/kb/reference/README-REVIEW-SYSTEM.md).
 
 **Skills** (`cp-skill-*`) are agent procedures the harness auto-loads from their descriptions: when a task matches a skill, the agent invokes it. `commonplace-init` installs them into a consuming project.
 
@@ -75,7 +77,7 @@ The review system ships as a further family of `commonplace-*` commands for sele
 | `cp-skill-revise-iterative` | Iteratively revise a note without changing its claims |
 | `cp-skill-revise-autoreason` | Revise a note with AutoReason-style incumbent/revision/synthesis judging |
 
-**Instructions** are the same kind of artifact as skills — procedures written in Markdown — but without the description-based auto-loading. They are invoked explicitly — by the user, or by another skill — and live under `kb/instructions/`.
+**Instructions** are procedures written in Markdown, like skills, but without the auto-loading: the user or another skill invokes them explicitly. They live under `kb/instructions/`.
 
 ## Usage
 
@@ -94,7 +96,7 @@ This is the right mode for exploring or contributing to the Commonplace methodol
 
 ### Installing into a project
 
-Commonplace can be installed into any project as a Python package. Your agents get the same type system, conventions, and skills, and accumulate knowledge about your domain instead of this one. See [**INSTALL.md**](https://github.com/zby/commonplace/blob/main/INSTALL.md) for the setup flow.
+Commonplace can be installed into any project as a Python package. Your agents get the same type system, conventions, and skills, and accumulate knowledge about your domain rather than this one. See [**INSTALL.md**](https://github.com/zby/commonplace/blob/main/INSTALL.md) for the setup flow.
 
 ## Prerequisites
 
