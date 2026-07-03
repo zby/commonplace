@@ -73,7 +73,7 @@ MANIFEST = ScaffoldManifest(
         ("AGENTS.md.template", "AGENTS.md.template"),
         (".envrc.template", ".envrc"),
     ),
-    # Skill directories for supported runtimes; promoted skills are symlinked
+    # Skill directories for supported runtimes; promoted skills are copied
     # into each from kb/commonplace/instructions/<name>.
     skills_dirs=(
         Path(".claude/skills"),

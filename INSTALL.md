@@ -138,7 +138,7 @@ This creates:
 - **Commonplace library content** — shipped notes, reference docs, instructions, review gates, and skills under `kb/commonplace/notes/`, `kb/commonplace/reference/`, and `kb/commonplace/instructions/`
 - **Type definitions** — shared types under `kb/types/`, plus source/report type scaffolds
 - **Canonical skills** — `kb/commonplace/instructions/cp-skill-write/`, plus the matching `cp-skill-validate/`, `cp-skill-connect/`, etc. The `cp-skill-` prefix avoids collisions with your project's own skills and with the `commonplace-*` CLI commands.
-- **Known runtime skill projections** — `.agents/skills/cp-skill-*/` and `.claude/skills/cp-skill-*/` links for two common layouts (step 5 covers other runtimes). On Linux/macOS these are relative symlinks; on Windows, where symlinks need admin rights or Developer Mode, init automatically falls back to a directory junction, which needs neither.
+- **Known runtime skill projections** — `.agents/skills/cp-skill-*/` and `.claude/skills/cp-skill-*/` copies of the canonical skill directories for two common layouts (step 5 covers other runtimes). These are regular directories, not symlinks or junctions, so they work the same on every platform — including Windows without admin rights or Developer Mode.
 - **`.envrc`** — project-scoped environment (`PATH`, `UV_CACHE_DIR`) for the optional direnv setup (see the [direnv appendix](#appendix-direnv-linuxmacos)); harmless if you don't use direnv
 - **`AGENTS.md.template`** — control-plane template with the project name filled in
 
@@ -182,15 +182,15 @@ Then review the merged file and fill in the per-project parts. The template's HT
 
 ## 5. Install skills for every agent that will work on the project
 
-**For most agent setups, nothing needs to be done here.** `commonplace-init` already projected the skills into the two common layouts — `.agents/skills/cp-skill-*/` (Codex and others) and `.claude/skills/cp-skill-*/` (Claude Code) — by linking each `cp-skill-*` directory to its source under `kb/commonplace/instructions/`. On Linux/macOS these are relative symlinks; on Windows they are directory junctions when symlinks are unavailable (no admin rights or Developer Mode). If every agent that will work on the project reads one of those two directories, skip to step 6.
+**For most agent setups, nothing needs to be done here.** `commonplace-init` already projected the skills into the two common layouts — `.agents/skills/cp-skill-*/` (Codex and others) and `.claude/skills/cp-skill-*/` (Claude Code) — by copying each `cp-skill-*` directory from its source under `kb/commonplace/instructions/`. The copies are regular directories, so no platform-specific link support is needed. If every agent that will work on the project reads one of those two directories, skip to step 6.
 
-You only need to do something here if an agent uses a **different** skill-discovery convention, or runs on a platform where even the junction fallback was skipped (sandboxed filesystems, network volumes). In that case, expose the same source directories where that runtime expects them:
+You only need to do something here if an agent uses a **different** skill-discovery convention. In that case, expose the same source directories where that runtime expects them:
 
 ```text
 kb/commonplace/instructions/cp-skill-*/
 ```
 
-Inspect your runtime's skill-discovery rules and project every `cp-skill-*` directory into that surface — symlink, junction, copy, plugin registration, or IDE-specific import. Prefer links or runtime registration over copies, so that rerunning `commonplace-init` after an upgrade stays visible.
+Inspect your runtime's skill-discovery rules and project every `cp-skill-*` directory into that surface — copy, plugin registration, or IDE-specific import. The canonical content stays under `kb/commonplace/instructions/`; rerunning `commonplace-init` after an upgrade reports projected copies that drifted from that source without overwriting them.
 
 ## 6. Start the runtime
 
