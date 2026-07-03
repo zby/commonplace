@@ -8,7 +8,7 @@ status: seedling
 
 # An invalidation model with two regimes
 
-When a definition changes — a type-spec, a gate, a schema — artifacts written under the old definition may no longer conform. Commonplace already handles this, but case by case: the validator re-checks schemas, review freshness re-checks gates, and a type-spec's prose guidance is checked by nothing. There is no named model that says, for a given definition change, *which mechanism should carry it* and *what the full set of artifacts and inputs is that the change should invalidate*. This proposal holds a design object: one invalidation model with two regimes, split by whether staleness is cheaply checkable, plus a placement rule that assigns each definition change to a regime and names its contract. The concrete review-freshness widening is the first instance decided against it.
+When a definition changes — a type-spec, a gate, a schema — artifacts written under the old definition may no longer conform. Commonplace already handles this piecemeal: the validator re-checks schemas, review freshness re-checks gates, and nothing re-checks a type-spec's prose guidance. There is no named model that says, for a given definition change, *which mechanism should carry it* and *what the full set of artifacts and inputs is that the change should invalidate*. This proposal holds a design object: one invalidation model with two regimes, split by whether staleness is cheaply checkable, plus a placement rule that assigns each definition change to a regime and names its contract. The concrete review-freshness widening is the first instance decided against it.
 
 ## Current state (as of 2026-07-02)
 
