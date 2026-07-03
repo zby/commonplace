@@ -85,7 +85,10 @@ def test_recurses_subdirectories(tmp_path: Path) -> None:
 def test_skips_symlinks(tmp_path: Path) -> None:
     real = write(tmp_path / "real.md", "[real](./r.md)")
     link = tmp_path / "link.md"
-    link.symlink_to(real)
+    try:
+        link.symlink_to(real)
+    except OSError:
+        pytest.skip("cannot create symlinks on this platform")
 
     found = link_audit.find_links(roots=[tmp_path])
 

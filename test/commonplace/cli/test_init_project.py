@@ -117,9 +117,12 @@ def test_init_project_replaces_legacy_symlink_projection_with_copy(tmp_path: Pat
     source = tmp_path / "kb" / "commonplace" / "instructions" / "cp-skill-write"
     link = tmp_path / ".claude" / "skills" / "cp-skill-write"
     shutil.rmtree(link)
-    link.symlink_to(
-        Path(os.path.relpath(source, link.parent)), target_is_directory=True
-    )
+    try:
+        link.symlink_to(
+            Path(os.path.relpath(source, link.parent)), target_is_directory=True
+        )
+    except OSError:
+        pytest.skip("cannot create the legacy symlink this test simulates")
 
     report = init_project(tmp_path)
 
