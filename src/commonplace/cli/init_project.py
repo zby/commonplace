@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import os
 import shutil
+import stat
 import sys
 from dataclasses import dataclass, field
 from importlib.resources import as_file, files
@@ -18,7 +19,6 @@ class InitReport:
     created: list[Path] = field(default_factory=list)
     preserved_identical: list[Path] = field(default_factory=list)
     preserved_different: list[Path] = field(default_factory=list)
-    skipped: list[tuple[Path, str]] = field(default_factory=list)
 
 
 def _record_existing(
@@ -36,15 +36,13 @@ def _record_existing(
     report.preserved_different.append(rel_path)
 
 
-def _copy_scaffold_tree(
-    scaffold_root: Path,
-    src_rel: str,
+def _copy_tree_files(
+    src_dir: Path,
     dest_root: Path,
-    target_rel: str,
+    target_rel: str | Path,
     report: InitReport,
 ) -> None:
-    """Recursively copy a scaffold subtree, classifying existing files."""
-    src_dir = _resolve_scaffold_source(scaffold_root, src_rel)
+    """Recursively copy a directory tree, classifying existing files."""
     for src_file in sorted(src_dir.rglob("*")):
         if not src_file.is_file():
             continue
@@ -58,6 +56,18 @@ def _copy_scaffold_tree(
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(src_file, target)
         report.created.append(rel_path)
+
+
+def _copy_scaffold_tree(
+    scaffold_root: Path,
+    src_rel: str,
+    dest_root: Path,
+    target_rel: str,
+    report: InitReport,
+) -> None:
+    """Recursively copy a scaffold subtree, classifying existing files."""
+    src_dir = _resolve_scaffold_source(scaffold_root, src_rel)
+    _copy_tree_files(src_dir, dest_root, target_rel, report)
 
 
 def _copy_scaffold_file(
@@ -125,26 +135,30 @@ def _resolve_scaffold_source(scaffold_root: Path, src_rel: str) -> Path:
     raise FileNotFoundError(f"Scaffold source is missing: {src_rel}")
 
 
-def _create_junction(target: Path, link: Path) -> bool:
-    """Create a Windows directory junction at ``link`` pointing to ``target``.
+def _is_filesystem_link(path: Path) -> bool:
+    """True for a symlink or a Windows reparse point (junction).
 
-    Junctions need neither admin rights nor Developer Mode, unlike real symlinks.
-    Uses the stdlib ``_winapi.CreateJunction`` (Windows-only, undocumented but
-    stable). Returns ``True`` on success, ``False`` if the call is unavailable
-    or fails. The target is resolved to an absolute path, as junctions require.
-
-    ``CreateJunction`` creates the ``link`` directory itself (via
-    ``CreateDirectoryW``) and then sets its reparse point, so ``link`` must not
-    already exist — the caller guarantees this by only falling back here after
-    the ``symlink_to`` attempt on an absent path.
+    Earlier versions projected skills as symlinks with a junction fallback;
+    re-init replaces those with real copies. ``Path.is_junction`` only exists
+    on Python 3.12+, so junctions are detected through ``st_file_attributes``
+    (present only on Windows stat results).
     """
+    if path.is_symlink():
+        return True
     try:
-        import _winapi
-
-        _winapi.CreateJunction(str(target.resolve()), str(link))
-    except (OSError, AttributeError, ImportError):
+        attributes = os.lstat(path).st_file_attributes  # type: ignore[attr-defined]
+    except (OSError, AttributeError):
         return False
-    return True
+    return bool(attributes & stat.FILE_ATTRIBUTE_REPARSE_POINT)
+
+
+def _remove_filesystem_link(path: Path) -> None:
+    """Remove a symlink or junction without touching its target's contents."""
+    try:
+        path.unlink()
+    except OSError:
+        # On Windows, directory symlinks and junctions are removed with rmdir.
+        os.rmdir(path)
 
 
 def init_project(root: Path, name: str | None = None) -> InitReport:
@@ -190,9 +204,11 @@ def init_project(root: Path, name: str | None = None) -> InitReport:
             _write_template(src, target, Path(target_rel), replacements, report)
 
     # Promote selected instruction directories into runtime skills directories
-    # via symlinks. The source is the local kb/commonplace/instructions/<name>
+    # by copying. The source is the local kb/commonplace/instructions/<name>
     # directory (scaffolded above from the shipped library), not the scaffold
-    # package itself.
+    # package itself. Copies work on every platform; the symlinks (and Windows
+    # junction fallback) earlier versions used kept breaking on Windows, so a
+    # legacy link found at the destination is replaced with a real copy.
     for skill_name in MANIFEST.promoted_skills:
         skill_src = root / "kb" / "commonplace" / "instructions" / skill_name
         if not skill_src.is_dir():
@@ -200,36 +216,10 @@ def init_project(root: Path, name: str | None = None) -> InitReport:
                 f"Promoted skill source is missing: kb/commonplace/instructions/{skill_name}"
             )
         for skills_dest in MANIFEST.skills_dirs:
-            link = root / skills_dest / skill_name
-            link.parent.mkdir(parents=True, exist_ok=True)
-            # Compute relative path from the link's parent to the source.
-            target = Path(os.path.relpath(skill_src, link.parent))
-            if link.is_symlink():
-                if link.resolve() == skill_src.resolve():
-                    report.preserved_identical.append(skills_dest / skill_name)
-                    continue
-                link.unlink()
-            elif link.exists():
-                # A real directory or file may be an intentional runtime-specific
-                # skill projection on platforms that cannot follow symlinks.
-                report.preserved_different.append(skills_dest / skill_name)
-                continue
-            try:
-                link.symlink_to(target, target_is_directory=True)
-            except OSError as exc:
-                # On Windows, real symlinks need admin rights or Developer Mode.
-                # A directory junction needs neither and is followed transparently
-                # by tools reading the directory, so fall back to one. Junctions
-                # require an absolute target on the same local volume, so they do
-                # not survive a project move the way the relative symlink does.
-                # `_create_junction` returns False off Windows (no `_winapi`), so
-                # this path is a no-op there and the projection stays skipped.
-                if _create_junction(skill_src, link):
-                    report.created.append(skills_dest / skill_name)
-                    continue
-                report.skipped.append((skills_dest / skill_name, str(exc)))
-                continue
-            report.created.append(skills_dest / skill_name)
+            target = root / skills_dest / skill_name
+            if _is_filesystem_link(target):
+                _remove_filesystem_link(target)
+            _copy_tree_files(skill_src, root, skills_dest / skill_name, report)
 
     return report
 
@@ -260,12 +250,6 @@ def direnv_warnings(root: Path) -> list[str]:
         lines.append(
             "PowerShell activation: '.\\.venv\\Scripts\\Activate.ps1'. cmd "
             "activation: '.venv\\Scripts\\activate.bat'."
-        )
-        lines.append(
-            "Skill projection uses a directory junction on Windows (no admin "
-            "rights or Developer Mode needed). If even that is skipped (network "
-            "volume, sandboxed filesystem), install the cp-skill-* directories "
-            "into your agent runtime's skill surface manually."
         )
         lines.append(
             "See INSTALL.md step 2 (Install the library and make the commands "
@@ -342,19 +326,10 @@ def main(argv: list[str] | None = None) -> int:
         print("Preserved existing files differing from current scaffold output:")
         for path in report.preserved_different:
             print(f"- {path.as_posix()}")
-    if report.skipped:
-        print("Skipped optional runtime skill projections:")
-        for path, reason in report.skipped:
-            print(f"- {path.as_posix()}: {reason}")
-        print(
-            "Install the matching kb/commonplace/instructions/cp-skill-* directories "
-            "through your agent runtime's own skill mechanism if needed."
-        )
     if (
         not report.created
         and not report.preserved_identical
         and not report.preserved_different
-        and not report.skipped
     ):
         print("No changes needed.")
 

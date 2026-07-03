@@ -3,6 +3,8 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
+import pytest
+
 
 SRC_ROOT = Path(__file__).resolve().parents[5] / "src"
 if str(SRC_ROOT) not in sys.path:
@@ -71,7 +73,10 @@ def test_list_values_group_by_string_item(tmp_path: Path) -> None:
 def test_skips_symlinks(tmp_path: Path) -> None:
     real = write(tmp_path / "real.md", "---\nstatus: real\n---\n# R\n")
     link = tmp_path / "link.md"
-    link.symlink_to(real)
+    try:
+        link.symlink_to(real)
+    except OSError:
+        pytest.skip("cannot create symlinks on this platform")
 
     result = frontmatter_aggregate.aggregate_field("status", roots=[tmp_path])
 

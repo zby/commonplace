@@ -49,10 +49,11 @@ Interpretation:
 Run:
 
 ```bash
-# Use find -L so it follows symlinked skill directories. The known
-# .claude/.agents projections are usually symlinks into the canonical skill
-# source tree, and plain `find` (without -L) will not descend into them,
-# returning a misleading empty result.
+# Use find -L so it also follows symlinked skill directories. In an installed
+# KB the known .claude/.agents projections are real copied directories, but in
+# the Commonplace source repo (and installs from older versions) they are
+# symlinks into the canonical skill source tree, and plain `find` (without -L)
+# will not descend into those, returning a misleading empty result.
 find -L .claude/skills .agents/skills -maxdepth 2 -name SKILL.md -print 2>/dev/null | sort
 # Derive the expected promoted set from the live skill source tree
 # (kb/commonplace/instructions/ in an installed KB, kb/instructions/ in the

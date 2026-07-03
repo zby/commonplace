@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import os
+import shutil
 import sys
 from pathlib import Path
 
@@ -12,7 +14,6 @@ if str(SRC_ROOT) not in sys.path:
     sys.path.insert(0, str(SRC_ROOT))
 
 from commonplace.cli import init_project as init_project_module  # noqa: E402
-from commonplace.scaffold_manifest import MANIFEST  # noqa: E402
 from commonplace.cli.init_project import (  # noqa: E402
     direnv_warnings,
     init_project,
@@ -89,7 +90,7 @@ def test_init_project_seeds_scaffold_files(tmp_path: Path) -> None:
     assert (tmp_path / "AGENTS.md.template").is_file()
 
 
-def test_init_project_installs_skills_as_symlinks(tmp_path: Path) -> None:
+def test_init_project_installs_skills_as_copies(tmp_path: Path) -> None:
     init_project(tmp_path)
 
     for skills_dir in (
@@ -104,72 +105,41 @@ def test_init_project_installs_skills_as_symlinks(tmp_path: Path) -> None:
             "cp-skill-connect",
             "cp-skill-health-check",
         ):
-            link = skills_dir / skill_name
-            assert link.is_symlink(), f"{link} should be a symlink"
-            assert (link / "SKILL.md").is_file()
-            # Symlink points back into the shipped library.
-            assert link.resolve() == (tmp_path / "kb" / "commonplace" / "instructions" / skill_name).resolve()
+            dest = skills_dir / skill_name
+            assert dest.is_dir()
+            assert not dest.is_symlink(), f"{dest} should be a real directory"
+            source = tmp_path / "kb" / "commonplace" / "instructions" / skill_name
+            assert (dest / "SKILL.md").read_bytes() == (source / "SKILL.md").read_bytes()
 
 
-def test_init_project_skips_skill_projection_when_symlinks_are_unavailable(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
-) -> None:
-    def fail_symlink(
-        self: Path,
-        target: str | Path,
-        target_is_directory: bool = False,
-    ) -> None:
-        raise OSError("symbolic link privilege not held")
-
-    monkeypatch.setattr(Path, "symlink_to", fail_symlink)
-
-    report = init_project(tmp_path)
-
-    assert (tmp_path / "kb" / "commonplace" / "instructions" / "cp-skill-write" / "SKILL.md").is_file()
-    assert not (tmp_path / ".claude" / "skills" / "cp-skill-write").exists()
-    assert len(report.skipped) == (
-        len(MANIFEST.promoted_skills) * len(MANIFEST.skills_dirs)
-    )
-    assert any("symbolic link privilege not held" in reason for _, reason in report.skipped)
-
-
-def test_init_project_falls_back_to_junction_when_symlink_fails(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
-) -> None:
-    def fail_symlink(
-        self: Path,
-        target: str | Path,
-        target_is_directory: bool = False,
-    ) -> None:
-        raise OSError("symbolic link privilege not held")
-
-    created: list[tuple[Path, Path]] = []
-
-    def fake_junction(target: Path, link: Path) -> bool:
-        link.mkdir(parents=True, exist_ok=True)
-        created.append((target, link))
-        return True
-
-    monkeypatch.setattr(Path, "symlink_to", fail_symlink)
-    monkeypatch.setattr(init_project_module, "_create_junction", fake_junction)
+def test_init_project_replaces_legacy_symlink_projection_with_copy(tmp_path: Path) -> None:
+    init_project(tmp_path)
+    source = tmp_path / "kb" / "commonplace" / "instructions" / "cp-skill-write"
+    link = tmp_path / ".claude" / "skills" / "cp-skill-write"
+    shutil.rmtree(link)
+    try:
+        link.symlink_to(
+            Path(os.path.relpath(source, link.parent)), target_is_directory=True
+        )
+    except OSError:
+        pytest.skip("cannot create the legacy symlink this test simulates")
 
     report = init_project(tmp_path)
 
-    assert Path(".claude/skills/cp-skill-write") in report.created
-    assert not report.skipped
-    assert len(created) == len(MANIFEST.promoted_skills) * len(MANIFEST.skills_dirs)
+    assert not link.is_symlink()
+    assert Path(".claude/skills/cp-skill-write/SKILL.md") in report.created
+    assert (link / "SKILL.md").read_bytes() == (source / "SKILL.md").read_bytes()
 
 
 def test_init_project_preserves_existing_real_skill_projection(tmp_path: Path) -> None:
-    link = tmp_path / ".claude" / "skills" / "cp-skill-write"
-    link.mkdir(parents=True)
-    (link / "SKILL.md").write_text("runtime-specific copy", encoding="utf-8")
+    dest = tmp_path / ".claude" / "skills" / "cp-skill-write"
+    dest.mkdir(parents=True)
+    (dest / "SKILL.md").write_text("runtime-specific copy", encoding="utf-8")
 
     report = init_project(tmp_path)
 
-    assert Path(".claude/skills/cp-skill-write") in report.preserved_different
-    assert not link.is_symlink()
-    assert (link / "SKILL.md").read_text(encoding="utf-8") == "runtime-specific copy"
+    assert Path(".claude/skills/cp-skill-write/SKILL.md") in report.preserved_different
+    assert (dest / "SKILL.md").read_text(encoding="utf-8") == "runtime-specific copy"
 
 
 def test_init_project_resolves_templates(tmp_path: Path) -> None:
