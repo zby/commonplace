@@ -1,5 +1,5 @@
 ---
-description: "Proposal: the type spec itself is the gate of a per-note conformance review pair, so type-contract edits invalidate exactly that cohort through existing gate-changed freshness; generalize by factoring each dependency into its own two-input pair rather than widening the input set"
+description: "Proposal: make the type spec the gate of a per-note conformance review pair — type edits invalidate the cohort via existing gate-changed freshness; new dependencies become factored two-input pairs"
 type: kb/types/note.md
 traits: [design-proposal]
 tags: [kb-maintenance, observability]
