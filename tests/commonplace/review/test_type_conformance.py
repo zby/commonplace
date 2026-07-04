@@ -18,7 +18,7 @@ from commonplace.review.type_conformance import (
     note_type_spec_path,
     resolve_type_gate_id,
 )
-from test.commonplace.review.pair_helpers import accept_pair, insert_completed_pair
+from tests.commonplace.review.pair_helpers import accept_pair, insert_completed_pair
 
 from ._run_cli import run_cli
 

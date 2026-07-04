@@ -7,7 +7,7 @@ import pytest
 from commonplace.lib import relocation
 from commonplace.lib.naming import MAX_NOTE_SLUG_LENGTH, slugify_note_filename
 from commonplace.review import review_db, review_target_selector
-from test.commonplace.cli.relocation_review_helpers import (
+from tests.commonplace.cli.relocation_review_helpers import (
     GATE_ID,
     TEST_MODEL,
     make_gate,

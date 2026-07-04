@@ -3,7 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 
 from commonplace.review import review_db
-from test.commonplace.review.pair_helpers import accept_pair, source_gate_path
+from tests.commonplace.review.pair_helpers import accept_pair, source_gate_path
 
 
 MODEL_PARTITION = "test-model"

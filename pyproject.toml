@@ -48,7 +48,7 @@ commonplace-x-snapshot = "commonplace.cli.x_snapshot:main"
 dev = ["pytest", "ruff"]
 
 [tool.ruff]
-include = ["src/**/*.py", "test/**/*.py"]
+include = ["src/**/*.py", "tests/**/*.py"]
 
 [project.optional-dependencies]
 docs = ["mkdocs", "mkdocs-redirects"]
@@ -98,4 +98,4 @@ include = [
 "kb/types" = "commonplace/_data/kb/types"
 
 [tool.pytest.ini_options]
-testpaths = ["test/commonplace"]
+testpaths = ["tests/commonplace"]

@@ -13,7 +13,7 @@ model: sonnet
 **Target: $ARGUMENTS**
 
 Parse immediately:
-- empty → evaluate all scenarios in `test/scenarios/`
+- empty → evaluate all scenarios in `tests/scenarios/`
 - a scenario name → evaluate only that scenario
 - `compare` → evaluate all and compare against a previous run if one exists
 
@@ -22,7 +22,7 @@ This harness measures **operational overhead**: the framework instructions an ag
 ### 1. Discover scenario files
 
 ```bash
-ls test/scenarios/*.md
+ls tests/scenarios/*.md
 ```
 
 Read each scenario. Each has a `## Forks` section with one subsection per fork; each fork has a table of loads: `load | kind | source | hops`, where `kind` is `overhead`, `content`, or `spared`.

@@ -5,7 +5,7 @@ from pathlib import Path
 
 from commonplace.lib import relocation
 from commonplace.review import review_db, review_target_selector
-from test.commonplace.cli.relocation_review_helpers import (
+from tests.commonplace.cli.relocation_review_helpers import (
     GATE_ID,
     TEST_MODEL,
     make_gate,
