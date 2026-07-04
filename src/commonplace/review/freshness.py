@@ -1,4 +1,12 @@
-"""Review freshness helpers for snapshot-backed review inputs."""
+"""Review freshness helpers for snapshot-backed review inputs.
+
+Freshness hashes exactly the two reviewed inputs: note text and gate text.
+The prompt scaffolding around them (protocol/prompt.py) and the assembling
+code itself are deliberately outside the hash — changing them leaves
+acceptances fresh. Keep judgment-bearing review criteria in note/gate files;
+widening beyond two inputs should stay compatible with this boundary (see
+kb/reference/review-architecture.md, freshness mechanism).
+"""
 
 from __future__ import annotations
 

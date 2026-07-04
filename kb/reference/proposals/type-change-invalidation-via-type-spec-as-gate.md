@@ -19,6 +19,7 @@ The check cannot be written as an ordinary review gate. A gate that restates the
 - Gate resolution is catalog-rooted: `resolve_gates.py` lists gates under `kb/instructions/review-gates/` and filters applicability by `requires-type` / `requires_trait` read from gate frontmatter. It reads the note's type *path* for filtering, never type-spec *content*.
 - `requires-type` gates inline their tests. `semantic/explication-quality` (requires `kb/types/definition.md`) carries Carnap's four explication criteria in its own body; it cites "the definition instructions" but the operative test is the gate's own hashed text. The type-contract dependency of existing gates is authoring-time consistency, not a runtime input.
 - No gate reviews semantic conformance to the type contract; the review prompt injects note text and gate text only.
+- The prompt scaffolding around the embedded texts — the runner system prompt and the rendered reading-scope and output-contract sections in `protocol/prompt.py` — is outside the freshness hash for every existing pair. Only the embedded note and gate texts are hashed; editing the scaffolding invalidates nothing.
 - The architecture doc already anticipates freshness widening to an "effective review-contract hash" if the review contract grows beyond a single gate file (see [review architecture](../review-architecture.md), freshness mechanism).
 
 ## The design: the type spec is the gate
@@ -38,6 +39,16 @@ New code is confined to the selection/prompt edge:
 
 Type-as-gate works only if other gates do not *also* depend on unhashed type-contract text. Inspection says they already don't — the operative test is inlined — and this should be promoted from accident to authoring rule: a gate's test must be self-contained; if it needs contract language, it quotes it, converting the dependency into hashed gate text. When the type contract moves and a gate is edited to track it, `gate-changed` fires through the same path — correct invalidation with no extra mechanism. The type-conformance pair owns "does the note satisfy the contract"; type-scoped gates own their sharper, named failure modes; the two must state their boundary in gate text as adjacent gates already do, to avoid double-flagging one defect.
 
+## The freshness boundary: what stays unhashed
+
+Even with the type spec on the gate side, three prose layers shape a conformance judgment and only two are hashed: the note, the type spec, and the wrapper prompt that tells the reviewer how to apply authoring instructions as a gate. The wrapper joins scaffolding that is already outside freshness for every pair today, and beneath all of it sits the symbolic layer — the code assembling the prompts — equally unhashed. The truly thorough model would hash the *effective review contract*: embedded inputs plus scaffolding plus assembler version; the architecture doc names this widening. This proposal accepts the limitation and bounds it instead of closing it:
+
+- **Why it is acceptable.** Scaffolding and assembler are shared by every pair and versioned in git. A change there is a system upgrade that shifts *all* judgments uniformly, so the correct response is a deliberate corpus-wide decision at upgrade time — a re-review sweep or a mass ack — not per-pair hash tracking, which would add cost without changing that decision.
+- **The rule that keeps the bound real.** Judgment-bearing prose lives in hashed inputs; the unhashed layers stay mechanical. The wrapper may say how to emit a verdict, never what a good note of the type looks like — criteria belong in the type spec, where the hash sees them. A criterion that migrates into scaffolding silently exits freshness, reintroducing the false-fresh failure this proposal exists to remove.
+- **The boundary must be visible in the code.** The prompt-assembly and freshness modules carry comments stating that scaffolding edits do not invalidate acceptances and that review criteria must not move into scaffolding, so future changes stay compatible with this direction rather than eroding it edit by edit.
+
+This also settles the wrapper-vs-authored-review-section choice directionally: the moment conformance criteria need sharpening, they go into an authored `## Review` section of the type spec — hashed — not into a richer wrapper.
+
 ## Planning: factor dependencies into pairs, not inputs
 
 The generalized shape behind this is still [make-like staleness detection](../../notes/link-graph-plus-timestamps-enables-make-like-staleness-detection.md) — an accepted review as a build product, its inputs as prerequisites. But type-as-gate reveals the cheaper generalization: before widening one pair's input set to N, factor each dependency into its own two-input pair where the dependency document is the gate side.
@@ -52,7 +63,7 @@ The forces that keep even the factored pairs at planning: cohort blast radius (a
 ## Free choices
 
 - **Gate id scheme.** A virtual `type/{name}` lens keeps the CLI uniform with `{lens}/{name}` ids; using the raw repo path is more literal. Persisted identity should be the type-spec path regardless — acceptance is path-keyed.
-- **Wrapper prompt vs authored review section.** The wrapper needs no type-spec changes but reviews against prose not written as a test; an authored `## Review` section per type spec sharpens the check at the cost of every type spec growing reviewer-facing prose that must itself stay consistent.
+- **Wrapper prompt vs authored review section.** The wrapper needs no type-spec changes but reviews against prose not written as a test; an authored `## Review` section per type spec sharpens the check at the cost of every type spec growing reviewer-facing prose that must itself stay consistent. The freshness boundary weighs in for the section: it is hashed, the wrapper is not.
 - **Universal or opt-in cohort.** Start opt-in with types whose authoring instructions carry real semantic bars (`definition`, `tag-readme`), or derive a pair for every typed note from day one. Opt-in keeps early review cost proportional to value.
 - **Schema participation.** None: structural conformance to `.schema.yaml` is the validator's job; the conformance pair reviews the type-spec `.md` only.
 
