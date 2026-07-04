@@ -23,3 +23,5 @@ Apply Carnap's four explication criteria to the definition:
 4. **Simplicity.** Check that the definition is as simple as the operational purpose allows. Philosophical surveys, historical tours, or taxonomies that outweigh the sharpened meaning violate this test; the definition instructions explicitly prohibit them.
 
 WARN when the explicandum is missing, the boundary is absent, the operational payoff is absent, or the apparatus outweighs the definition. INFO when any criterion is present but thin — plausible but not yet sharp enough to constrain future use.
+
+Boundary: this gate tests explication quality only — the four criteria above are the whole test. Whether the note satisfies the rest of the definition type's contract (required sections, linking, template shape) belongs to the note's type-conformance pair, whose gate is the type spec itself; do not re-flag general contract violations here.

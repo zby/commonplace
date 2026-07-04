@@ -1,11 +1,15 @@
 """Review freshness helpers for snapshot-backed review inputs.
 
 Freshness hashes exactly the two reviewed inputs: note text and gate text.
-The prompt scaffolding around them (protocol/prompt.py) and the assembling
-code itself are deliberately outside the hash — changing them leaves
-acceptances fresh. Keep judgment-bearing review criteria in note/gate files;
-widening beyond two inputs should stay compatible with this boundary (see
-kb/reference/review-architecture.md, freshness mechanism).
+The gate side may be a catalog gate or a type spec (type-conformance pairs);
+either way the same two hashes decide staleness. The prompt scaffolding
+around them (protocol/prompt.py, including the type-conformance wrapper) and
+the assembling code itself are deliberately outside the hash — changing them
+leaves acceptances fresh. Keep judgment-bearing review criteria in note/gate
+files; widening beyond two inputs should stay compatible with this boundary
+(see kb/reference/review-architecture.md, freshness mechanism). The default
+answer to a new review dependency is a new factored (note, dependency) pair
+with the dependency on the gate side, not a wider per-pair input set.
 """
 
 from __future__ import annotations

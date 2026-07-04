@@ -33,6 +33,8 @@ Acceptance is the durable outcome. A current acceptance row pins the exact note 
 
 **Bundle.** A directory of gates sharing a lens. `semantic` means all gate files under `kb/instructions/review-gates/semantic/`.
 
+**Type-conformance pair.** A review of a note against the type spec named by its frontmatter `type:` — the type spec *is* the gate ([ADR 038](./adr/038-type-conformance-reviews-use-the-type-spec-as-the-gate.md)). Request it with the virtual `type` lens: `type` derives one pair per typed note in scope, `type/definition` narrows to one type's cohort. The gate id is `type/{name}`; the persisted gate identity is the type-spec path (for example `kb/types/definition.md`). Because the type spec sits on the gate side, editing it stales exactly the notes of that type as `gate-changed`, and a trivial type edit is acknowledged like any other gate edit. Type-conformance pairs are opt-in: `--all-gates` stays catalog-only. The rendered prompt wraps the type spec in a fixed conformance instruction; if a type spec carries an authored `## Review` section, reviewers treat it as the operative test.
+
 **Review job.** One review invocation: one rendered prompt, one output artifact directory, and one job-level status. A job is `queued` until finalization marks it `completed` or `failed`.
 
 **Review pair.** One requested `(note_path, gate_path)` pair inside a review job. This is the unit of review output and acceptance. A pair's decision is one of `pass`, `warn`, `fail`, `error`.
@@ -100,8 +102,8 @@ Ack fails when there is no completed review for the same `(note_path, gate_path,
 
 **Selector** — `commonplace-review-target-selector`:
 
-- positional gate ids and/or bundle names (e.g. `prose`, `semantic/grounding-alignment`)
-- `--all-gates` selects every applicable gate in place of naming ids/bundles (mutually exclusive with them). Like every selector flag it only *chooses* pairs — the selected `(note, gate)` pairs still run through create-jobs → review → finalize; it is not a one-shot "run all gates" command
+- positional gate ids, bundle names, and/or type-conformance requests (e.g. `prose`, `semantic/grounding-alignment`, `type`, `type/definition`)
+- `--all-gates` selects every applicable catalog gate in place of naming ids/bundles (mutually exclusive with them); type-conformance pairs stay opt-in via explicit `type` requests. Like every selector flag it only *chooses* pairs — the selected `(note, gate)` pairs still run through create-jobs → review → finalize; it is not a one-shot "run all gates" command
 - `--note` to filter to specific note paths or directories
 - `--current` to filter to notes with `status: current`
 - `--model {model-partition}` selects the review model partition to inspect or write; omit it only for model-agnostic missing-review coverage

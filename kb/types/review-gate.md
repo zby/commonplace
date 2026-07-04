@@ -27,6 +27,7 @@ A review gate is one quality check the review system applies to KB artifacts. Ea
 - `## Failure mode` — the failure the reviewer is looking for, stated as the concrete pattern that should not appear.
 - `## Test` — the procedure for deciding PASS, WARN, or INFO. Name exceptions explicitly so the reviewer does not double-flag adjacent gates.
 - Optional `## Example (pass)` and `## Example (fail)` blocks make the test concrete. Most existing gates carry at least one of each — copy their shape rather than reinventing it.
+- **The test must be self-contained.** Review freshness hashes only note text and gate text, so a test that leans on prose living elsewhere (a type spec, a collection convention) carries a dependency that never invalidates acceptances. If the test needs contract language, quote it in the gate body — that converts the dependency into hashed gate text, and editing the gate to track a moved contract fires `gate-changed` through the normal path. Conformance to a type's contract as a whole is not a catalog gate's job: that is the type-conformance pair, whose gate side is the type spec itself (ADR 038). A gate scoped by `requires-type` owns a sharper, named failure mode and should state its boundary with the conformance pair.
 
 ## Template
 

@@ -6,12 +6,16 @@ requested (note, gate) pair.
 
 Freshness boundary: review acceptance hashes only the embedded note and gate
 texts. Everything this module renders around them — the runner system prompt,
-reading scope, output contract, templates — is outside the freshness hash, so
-editing it does NOT invalidate accepted reviews. Keep this layer mechanical
-(how to read inputs and emit a verdict); judgment-bearing review criteria must
-live in gate files, where the hash sees them. A scaffolding change that shifts
-judgments is a system upgrade and needs a deliberate corpus-wide re-review or
-ack decision.
+reading scope, output contract, templates, the type-conformance wrapper — is
+outside the freshness hash, so editing it does NOT invalidate accepted
+reviews. Keep this layer mechanical (how to read inputs and emit a verdict);
+judgment-bearing review criteria must live in gate files, where the hash sees
+them. In particular the type-conformance wrapper may say how to apply a type
+spec as a gate, never what a good note of the type looks like — conformance
+criteria that need sharpening go into the type spec itself (an authored
+`## Review` section), not into a richer wrapper. A scaffolding change that
+shifts judgments is a system upgrade and needs a deliberate corpus-wide
+re-review or ack decision.
 """
 
 from __future__ import annotations
@@ -27,9 +31,25 @@ from commonplace.review.protocol.format import (
     RESERVED_SENTINEL_RE,
     RESULT_LINE_TEMPLATE,
 )
+from commonplace.review.type_conformance import is_type_spec_gate_path
 
 
 OutputMode = Literal["stdout", "file"]
+
+# Wrapper rendered before a type spec embedded as a gate. Mechanical only: it
+# says how to apply authoring instructions as a gate, never what a good note
+# of the type looks like — those criteria belong in the type spec, where the
+# freshness hash sees them.
+TYPE_CONFORMANCE_WRAPPER_LINES = (
+    "This is a type-conformance gate. The gate text below is the note's type spec:",
+    "authoring instructions and a template, not a Failure mode / Test procedure.",
+    "Judge whether the note does what the type spec's authoring instructions ask.",
+    "If the type spec carries a `## Review` section, treat it as the operative test.",
+    "- PASS: the note does what the authoring instructions ask.",
+    "- WARN: the note conforms overall, but specific instructions go unmet; name each unmet instruction as a finding.",
+    "- FAIL: the note does not do what the authoring instructions ask.",
+    "Structural checks (frontmatter fields, schema conformance) are the deterministic validator's job; do not re-check them here.",
+)
 
 # Used as the reviewer system prompt; the task prompt rendered below carries
 # the per-job specifics.
@@ -206,9 +226,12 @@ def render_pairs_prompt(
         ]
     )
     for gate_path in gate_paths:
+        lines.append(f"=== gate: {gate_path} ===")
+        if is_type_spec_gate_path(gate_path):
+            lines.extend(TYPE_CONFORMANCE_WRAPPER_LINES)
+            lines.append("")
         lines.extend(
             [
-                f"=== gate: {gate_path} ===",
                 gate_texts[gate_path].rstrip(),
                 "",
             ]

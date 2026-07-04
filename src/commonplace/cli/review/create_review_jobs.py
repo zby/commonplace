@@ -19,6 +19,7 @@ from commonplace.review.review_db import (
     prepare_review_db,
 )
 from commonplace.review.review_model import normalize_model_partition
+from commonplace.review.type_conformance import is_type_spec_gate_path, note_type_spec_path
 
 
 @dataclass(frozen=True)
@@ -149,15 +150,22 @@ def _filter_applicable_pairs(
         note_abs = repo_root / note_path
         if not note_abs.is_file():
             raise ValueError(f"note not found: {note_path}")
+        catalog_pairs = [pair for pair in note_pairs if not is_type_spec_gate_path(pair.gate_path)]
+        has_type_pairs = len(catalog_pairs) != len(note_pairs)
         applicable_gate_ids = set(
             applicable_gate_ids_for_note(
                 note_abs,
-                [pair.gate_id for pair in note_pairs],
+                [pair.gate_id for pair in catalog_pairs],
                 gates_dir,
             )
         )
+        note_type_path = note_type_spec_path(repo_root, note_abs) if has_type_pairs else None
         for pair in note_pairs:
-            if pair.gate_id in applicable_gate_ids:
+            if is_type_spec_gate_path(pair.gate_path):
+                pair_applies = pair.gate_path == note_type_path
+            else:
+                pair_applies = pair.gate_id in applicable_gate_ids
+            if pair_applies:
                 applicable.append(pair)
             else:
                 skipped.append(
