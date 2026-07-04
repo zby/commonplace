@@ -55,6 +55,8 @@ The DB is the source of truth; human-readable markdown is derived.
 
 The selector computes SHA-256 over the current note and gate text and compares it against the accepted snapshot hashes from `current_gate_acceptances`, reconstructing note diffs from accepted snapshot text. Rows with null accepted snapshots report as `missing-review` with the diff unavailable. There is no separate bundle manifest hash; if bundle-level manifests ever become freshness-relevant, this should widen to an effective review-contract hash rather than a leaf gate-file hash.
 
+The hash boundary is deliberate and narrower than the full review contract: the prompt scaffolding (`protocol/prompt.py` — runner system prompt, reading scope, output contract) and the prompt-assembling code are outside it, so editing them invalidates no acceptances. The compensating rule is that judgment-bearing review criteria live only in hashed note/gate files, and the scaffolding stays mechanical; a scaffolding change that shifts judgments is a system upgrade calling for a deliberate corpus-wide re-review or ack decision. Both modules carry comments marking this boundary.
+
 ## Core modules
 
 ### Selection and gates

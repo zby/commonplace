@@ -3,6 +3,15 @@
 One renderer for every packing shape: the prompt carries N note targets and
 M gate definitions, each embedded once, and requests one output block per
 requested (note, gate) pair.
+
+Freshness boundary: review acceptance hashes only the embedded note and gate
+texts. Everything this module renders around them — the runner system prompt,
+reading scope, output contract, templates — is outside the freshness hash, so
+editing it does NOT invalidate accepted reviews. Keep this layer mechanical
+(how to read inputs and emit a verdict); judgment-bearing review criteria must
+live in gate files, where the hash sees them. A scaffolding change that shifts
+judgments is a system upgrade and needs a deliberate corpus-wide re-review or
+ack decision.
 """
 
 from __future__ import annotations
