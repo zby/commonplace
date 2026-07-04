@@ -1,7 +1,11 @@
 <!-- Draft (2026-07-04): second landing page — content-first framing for agentic-systems
 builders. Sells the KB as a ready-to-use catalogue of problems and solutions; the framework
 is the reveal, not the pitch. Complements the-knowledge-layer-for-ai-agents.md (framework-first,
-for people who want to build their own KB). Same repo, two doors. -->
+for people who want to build their own KB). Same repo, two doors.
+Updated 2026-07-04: usage section reframed as "interactive textbook that lives in your repo"
+(install = clone/submodule + one CLAUDE.md routing line); reading path split out to
+textbook-syllabus.md. Still missing: a published worked example of the point-it-at-your-code
+loop (a transcript of the KB critiquing a real design). -->
 
 # The hard problems of agentic systems, catalogued
 
@@ -18,13 +22,17 @@ The model is the part you don't control and mostly don't need to. What decides w
 
 Coverage today is deepest on the knowledge side of agentic systems: how agents get context, keep memory, learn from deployment, and fail. New areas are being added; the catalogue grows the way it was built — one reviewed claim at a time.
 
-## Three ways to use it
+## An interactive textbook that lives in your repo
 
-**Read it.** Start from a design decision you're facing. Choosing a memory architecture? The comparative review shows that the real fork isn't storage format but [who decides what to remember, and whether memory ever reaches behavior](../../notes/knowledge-storage-does-not-imply-contextual-activation.md). Wondering why your agents don't improve? [Deploy-time learning is the missing middle](../../notes/deploy-time-learning-is-the-missing-middle.md) between retraining and prompting. Betting on in-context learning? [It presupposes context engineering](../../notes/in-context-learning-presupposes-context-engineering.md) — the selection machinery is the actual system.
+A textbook's failure mode is the shelf: the knowledge exists, but it's nowhere near the context window when the design decision gets made. This one installs where the decisions happen. Clone it — or add it as a git submodule — next to your code, and put one routing line in your project's `CLAUDE.md` or `AGENTS.md`: *"for context, memory, or learning design decisions, consult the knowledge base first."* That's the whole integration. Plain markdown in git, written to be navigated by agents — claim-as-title headings, retrieval-oriented descriptions, curated indexes, typed links. No API, no service, no second runtime to trust.
 
-**Give it to your agents.** The knowledge base is plain markdown in git, written to be navigated by agents: claim-as-title headings, retrieval-oriented descriptions, curated indexes, typed links. Clone the repo, point your coding agent at it, and ask your design question — the agent finds the relevant claims, follows the links between them, and answers with citations you can check. No API, no service, no second runtime to trust.
+Then it's interactive in three ways:
 
-**Argue with it.** Every claim is stated to be contestable, carries its grounding, and marks its own confidence — seedling to current. If your production experience contradicts a note, that's not an attack on the catalogue; that's the catalogue working. Open an issue.
+**Ask it.** Start from a design decision you're facing. Choosing a memory architecture? The comparative review shows that the real fork isn't storage format but [who decides what to remember, and whether memory ever reaches behavior](../../notes/knowledge-storage-does-not-imply-contextual-activation.md). Wondering why your agents don't improve? [Deploy-time learning is the missing middle](../../notes/deploy-time-learning-is-the-missing-middle.md) between retraining and prompting. Betting on in-context learning? [It presupposes context engineering](../../notes/in-context-learning-presupposes-context-engineering.md) — the selection machinery is the actual system. New to the field? [Follow the reading path](./textbook-syllabus.md) — a curated spine through the graph, one hour end to end.
+
+**Point it at your code.** This is the move no paper textbook, course, or docs site can make: your agent holds the textbook and your codebase in the same context. "Does our memory design have [the cross-contamination failure the flat-memory note predicts](../../notes/flat-memory-predicts-specific-cross-contamination-failures-that-are.md)?" is now an answerable question about *your* system, with citations on one side and your source files on the other. The textbook reads your homework.
+
+**Argue with it.** Every claim is stated to be contestable, carries its grounding, and marks its own confidence — seedling to current. If your production experience contradicts a note, that's not an attack on the textbook; that's how it gets its next edition. Open an issue.
 
 ## Why trust a catalogue
 
