@@ -107,7 +107,7 @@ def has_only_unwatched_changes(
     current = _note_parts(current_text)
     if previous is None or current is None:
         return False
-    return all(previous[key] == current[key] for key in watches)
+    return all(previous.get(key) == current.get(key) for key in watches)
 
 
 def qualifying_pairs(
