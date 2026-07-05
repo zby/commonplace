@@ -7,7 +7,7 @@ import sqlite3
 import pytest
 
 from commonplace.review import review_db, review_schema
-from test.commonplace.review.pair_helpers import accept_pair, insert_completed_pair
+from tests.commonplace.review.pair_helpers import accept_pair, insert_completed_pair
 
 
 def test_ensure_db_initializes_current_schema(tmp_path: Path) -> None:

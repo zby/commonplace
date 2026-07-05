@@ -55,7 +55,9 @@ The DB is the source of truth; human-readable markdown is derived.
 
 The selector computes SHA-256 over the current note and gate text and compares it against the accepted snapshot hashes from `current_gate_acceptances`, reconstructing note diffs from accepted snapshot text. Rows with null accepted snapshots report as `missing-review` with the diff unavailable. There is no separate bundle manifest hash; if bundle-level manifests ever become freshness-relevant, this should widen to an effective review-contract hash rather than a leaf gate-file hash.
 
-The hash boundary is deliberate and narrower than the full review contract: the prompt scaffolding (`protocol/prompt.py` — runner system prompt, reading scope, output contract) and the prompt-assembling code are outside it, so editing them invalidates no acceptances. The compensating rule is that judgment-bearing review criteria live only in hashed note/gate files, and the scaffolding stays mechanical; a scaffolding change that shifts judgments is a system upgrade calling for a deliberate corpus-wide re-review or ack decision. Both modules carry comments marking this boundary.
+The hash boundary is deliberate and narrower than the full review contract: the prompt scaffolding (`protocol/prompt.py` — runner system prompt, reading scope, output contract, the type-conformance wrapper) and the prompt-assembling code are outside it, so editing them invalidates no acceptances. The compensating rule is that judgment-bearing review criteria live only in hashed note/gate files, and the scaffolding stays mechanical; a scaffolding change that shifts judgments is a system upgrade calling for a deliberate corpus-wide re-review or ack decision. Both modules carry comments marking this boundary. For type-conformance pairs specifically, the wrapper may say how to apply a type spec as a gate, never what a good note of the type looks like — conformance criteria that need sharpening go into an authored `## Review` section of the type spec, where the hash sees them.
+
+The two-input shape is also the growth path: the default answer to a new review dependency is a new factored `(note, dependency)` pair with the dependency document on the gate side — as type-conformance pairs do with type specs — not a wider per-pair input set.
 
 ## Core modules
 
@@ -63,7 +65,8 @@ The hash boundary is deliberate and narrower than the full review contract: the 
 
 - `review_target_selector.py` lists stale or requested applicable `(note, gate)` pairs. Read-only.
 - `resolve_gates.py` expands bundle names into gate ids and filters gates by note type and traits.
-- `paths.py` resolves the active gate catalog and translates between gate ids and repo-relative gate paths.
+- `paths.py` resolves the active gate catalog and translates between gate ids and repo-relative gate paths, including the virtual `type/{name}` lens for type-spec gate paths.
+- `type_conformance.py` owns the second gate source ([ADR 038](./adr/038-type-conformance-reviews-use-the-type-spec-as-the-gate.md)): type-conformance pairs whose gate side is the type spec named by the note's `type:` frontmatter. Pairs derive from note frontmatter, not from catalog listing plus `requires-type` filtering; the persisted gate identity is the type-spec repo path, and everything downstream of pair derivation (snapshots, freshness, acceptance, ack, finalization) is unchanged.
 
 ### Job creation
 

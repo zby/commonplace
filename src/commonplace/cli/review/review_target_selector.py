@@ -15,6 +15,7 @@ from commonplace.review.review_target_selector import (
     select_stale_gates,
 )
 from commonplace.review.review_model import normalize_model_partition
+from commonplace.review.type_conformance import is_type_gate_request
 
 
 def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
@@ -28,9 +29,16 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser.add_argument(
         "gate_or_bundle",
         nargs="*",
-        help="Gate IDs (e.g. prose/source-residue) and/or bundle names (e.g. prose).",
+        help=(
+            "Gate IDs (e.g. prose/source-residue), bundle names (e.g. prose), "
+            "and/or type-conformance requests (type, type/definition)."
+        ),
     )
-    parser.add_argument("--all-gates", action="store_true", help="Check all gates.")
+    parser.add_argument(
+        "--all-gates",
+        action="store_true",
+        help="Check all catalog gates. Type-conformance pairs stay opt-in via explicit type requests.",
+    )
     parser.add_argument("--note", nargs="+", dest="note_paths", help="Filter to specific note paths or directories.")
     parser.add_argument("--current", action="store_true", help="Filter to notes with frontmatter status: current.")
     parser.add_argument("--json", action="store_true", help="JSON output (includes diffs for note-changed).")
@@ -64,10 +72,13 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
         except (FileNotFoundError, ValueError) as exc:
             parser.error(str(exc))
     elif args.gate_or_bundle:
+        type_requests = [arg for arg in args.gate_or_bundle if is_type_gate_request(arg)]
+        catalog_requests = [arg for arg in args.gate_or_bundle if not is_type_gate_request(arg)]
         try:
-            gate_ids = resolve_to_gate_ids(args.gate_or_bundle, gates_dir)
+            gate_ids = resolve_to_gate_ids(catalog_requests, gates_dir) if catalog_requests else []
         except (FileNotFoundError, ValueError) as exc:
             parser.error(str(exc))
+        gate_ids.extend(type_requests)
     else:
         parser.error("provide gate/bundle names or --all-gates")
 

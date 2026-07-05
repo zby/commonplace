@@ -24,6 +24,12 @@ from commonplace.review.review_db import (
     resolve_db_path,
 )
 from commonplace.review.review_model import normalize_model_partition
+from commonplace.review.type_conformance import (
+    TYPE_GATE_LENS,
+    is_type_gate_request,
+    note_type_spec_path,
+    resolve_type_gate_id,
+)
 
 NOTES_ROOT = Path("kb/notes")
 REFERENCE_ROOT = Path("kb/reference")
@@ -139,6 +145,43 @@ def _normalize_requested_gate_ids(
     return gates_dir, gate_path_by_id, requested_gate_ids
 
 
+def _normalize_type_requests(repo_root: Path, requests: list[str]) -> tuple[bool, set[str]]:
+    """Split `type`/`type/{name}` requests into (match-all flag, requested type-spec paths)."""
+    match_all = False
+    requested_paths: set[str] = set()
+    for raw in requests:
+        raw = raw.strip()
+        if raw == TYPE_GATE_LENS:
+            match_all = True
+        else:
+            requested_paths.add(resolve_type_gate_id(repo_root, raw))
+    return match_all, requested_paths
+
+
+def _applicable_type_spec_path(
+    repo_root: Path,
+    note_abs: Path,
+    *,
+    match_all_types: bool,
+    requested_type_paths: set[str],
+) -> str | None:
+    """The note's type-conformance gate path, when type pairs were requested for it."""
+    if not match_all_types and not requested_type_paths:
+        return None
+    type_spec_path = note_type_spec_path(repo_root, note_abs)
+    if type_spec_path is None:
+        return None
+    if match_all_types or type_spec_path in requested_type_paths:
+        return type_spec_path
+    return None
+
+
+def _partition_gate_requests(gate_ids: list[str]) -> tuple[list[str], list[str]]:
+    type_requests = [gate_id for gate_id in gate_ids if is_type_gate_request(gate_id)]
+    catalog_requests = [gate_id for gate_id in gate_ids if not is_type_gate_request(gate_id)]
+    return catalog_requests, type_requests
+
+
 @dataclass(frozen=True)
 class StaleGate:
     note_path: str
@@ -186,7 +229,9 @@ def select_stale_gates(
     include_diff: bool = False,
     db_path: Path | None = None,
 ) -> list[StaleGate]:
-    gates_dir, gate_path_by_id, requested_gate_ids = _normalize_requested_gate_ids(repo_root, gate_ids)
+    catalog_requests, type_requests = _partition_gate_requests(gate_ids)
+    gates_dir, gate_path_by_id, requested_gate_ids = _normalize_requested_gate_ids(repo_root, catalog_requests)
+    match_all_types, requested_type_paths = _normalize_type_requests(repo_root, type_requests)
     model = model.strip() if model is not None else None
     model = normalize_model_partition(model) if model else None
     if db_path is None:
@@ -205,8 +250,16 @@ def select_stale_gates(
     stale: list[StaleGate] = []
     for note_abs, note_path in zip(notes, note_paths):
         applicable_gate_ids = applicable_gate_ids_for_note(note_abs, requested_gate_ids, gates_dir)
-        for gate_id in applicable_gate_ids:
-            gate_path = gate_path_by_id[gate_id]
+        gate_paths_for_note = [gate_path_by_id[gate_id] for gate_id in applicable_gate_ids]
+        type_spec_path = _applicable_type_spec_path(
+            repo_root,
+            note_abs,
+            match_all_types=match_all_types,
+            requested_type_paths=requested_type_paths,
+        )
+        if type_spec_path is not None:
+            gate_paths_for_note.append(type_spec_path)
+        for gate_path in gate_paths_for_note:
             gate_abs = repo_root / gate_path
             if not gate_abs.is_file():
                 raise FileNotFoundError(f"Gate not found: {gate_path}")
@@ -256,15 +309,25 @@ def select_requested_gates(
     note_filter: list[str] | None = None,
     current_only: bool = False,
 ) -> list[StaleGate]:
-    gates_dir, gate_path_by_id, requested_gate_ids = _normalize_requested_gate_ids(repo_root, gate_ids)
+    catalog_requests, type_requests = _partition_gate_requests(gate_ids)
+    gates_dir, gate_path_by_id, requested_gate_ids = _normalize_requested_gate_ids(repo_root, catalog_requests)
+    match_all_types, requested_type_paths = _normalize_type_requests(repo_root, type_requests)
     notes = _select_notes(repo_root, note_filter=note_filter, current_only=current_only)
 
     requested: list[StaleGate] = []
     for note_abs in notes:
         note_path = note_abs.relative_to(repo_root).as_posix()
         applicable_gate_ids = applicable_gate_ids_for_note(note_abs, requested_gate_ids, gates_dir)
-        for gate_id in applicable_gate_ids:
-            gate_path = gate_path_by_id[gate_id]
+        gate_paths_for_note = [gate_path_by_id[gate_id] for gate_id in applicable_gate_ids]
+        type_spec_path = _applicable_type_spec_path(
+            repo_root,
+            note_abs,
+            match_all_types=match_all_types,
+            requested_type_paths=requested_type_paths,
+        )
+        if type_spec_path is not None:
+            gate_paths_for_note.append(type_spec_path)
+        for gate_path in gate_paths_for_note:
             gate_abs = repo_root / gate_path
             if not gate_abs.is_file():
                 raise FileNotFoundError(f"Gate not found: {gate_path}")

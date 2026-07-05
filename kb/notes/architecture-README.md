@@ -27,4 +27,4 @@ For current-state subsystem documentation and ADR navigation, start at [../refer
 - [generate-instructions-at-build-time](./generate-instructions-at-build-time.md) — generate CLAUDE.md and routing tables at build time rather than maintaining them by hand
 - [instruction-generation](../reference/instruction-generation.md) — current-state: the Commonplace `commonplace-init` build step, scaffold trees, and substitution points that implement build-time generation today
 - [scenario-decomposition-drives-architecture](./scenario-decomposition-drives-architecture.md) — concrete use cases decomposed into step-by-step context needs
-- [scenario-architecture](../reference/scenario-architecture.md) — current-state: the two-tree split, the escalation path to `commonplace/kb/`, the `AGENTS.md` fragment contract, and the `test/scenarios/` measurement surface
+- [scenario-architecture](../reference/scenario-architecture.md) — current-state: the two-tree split, the escalation path to `commonplace/kb/`, the `AGENTS.md` fragment contract, and the `tests/scenarios/` measurement surface
