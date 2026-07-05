@@ -3,7 +3,8 @@
 Pure parsing logic for the systems matrix (``kb/agent-memory-systems/systems.csv``).
 Text-in, row-out, so it is unit-testable; the CLI runner
 (``scripts/build_systems_matrix.py``) owns file discovery, the identity join, and
-CSV writing. Stdlib only (ADR-008 — the package carries no runtime deps).
+CSV writing. This module stays stdlib-only so the runner script works without the
+package's dependencies installed.
 
 The matrix is **faithful**: multi-valued axes are one-hot indicator columns
 (``1`` present / ``0`` assessed-absent / ``''`` not assessed or assessed-unknown),

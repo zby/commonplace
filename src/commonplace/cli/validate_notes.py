@@ -14,8 +14,8 @@ from commonplace.lib.project_paths import (
     iter_visible_markdown_files,
     kb_root,
     list_collection_note_paths,
-    list_kb_note_paths,
     list_notes_collection_paths,
+    resolve_note,
 )
 from commonplace.lib.type_resolver import validate_type_specs
 from commonplace.lib.validation import (
@@ -72,19 +72,7 @@ def resolve_targets(arg: str, *, repo_root: Path) -> list[Path]:
             raise ValueError(_TOO_BROAD_MESSAGE)
         return list_collection_note_paths(collection_candidate)
 
-    all_paths = list_kb_note_paths(repo_root)
-    name = arg if arg.endswith(".md") else f"{arg}.md"
-    matches = sorted(path for path in all_paths if path.name == name)
-    if not matches:
-        matches = sorted(path for path in all_paths if path.stem == arg)
-
-    if not matches:
-        raise FileNotFoundError(f"No matching note found for: {arg}")
-    if len(matches) > 1:
-        raise FileNotFoundError(
-            "Multiple matching notes found:\n" + "\n".join(str(path.relative_to(repo_root)) for path in matches)
-        )
-    return matches
+    return [resolve_note(arg, repo_root)]
 
 
 def _display_path(path: Path, *, repo_root: Path) -> str:
@@ -207,7 +195,10 @@ def format_block(path: Path, results: CheckResults) -> str:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("target", help="note path, directory, note name, all, or recent")
+    parser.add_argument(
+        "target",
+        help="collection directory, note path or name, or today/recent (kb/notes modified today)",
+    )
     args = parser.parse_args(argv)
 
     repo_root = Path.cwd().resolve()

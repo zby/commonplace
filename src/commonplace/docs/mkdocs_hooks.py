@@ -113,12 +113,18 @@ def _matches_tag_index(candidate: Path, tag: str) -> bool:
     return note_type in TAG_PAGE_TYPES and index_source == "tag" and index_key == tag
 
 
-def _find_tag_index(tag: str, note_dir: Path) -> str | None:
-    """Find relative path from note_dir to the declared index page for a tag."""
+def _find_tag_index(tag: str, note_dir: Path, boundary: Path | None = None) -> str | None:
+    """Find relative path from note_dir to the declared index page for a tag.
+
+    `boundary` (the docs root) caps the upward walk so shallow layouts never
+    scan directories outside the site tree.
+    """
     search_dir = note_dir.resolve()
     note_dir_resolved = note_dir.resolve()
 
     for _ in range(4):
+        if boundary is not None and boundary != search_dir and boundary not in search_dir.parents:
+            break
         if search_dir.is_dir():
             for candidate in sorted(search_dir.glob("*.md")):
                 if _matches_tag_index(candidate, tag):
@@ -202,9 +208,10 @@ def on_page_markdown(markdown: str, page, config=None, **kwargs) -> str:
 
     if tags:
         note_dir = Path(page.file.abs_src_path).parent
+        boundary = Path(config["docs_dir"]).resolve() if config else None
         tag_links = []
         for tag in tags:
-            relpath = _find_tag_index(tag, note_dir)
+            relpath = _find_tag_index(tag, note_dir, boundary)
             if relpath:
                 tag_links.append(f"[{tag}]({relpath})")
             else:

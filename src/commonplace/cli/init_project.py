@@ -292,24 +292,20 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     root = Path(args.root).resolve()
-    pre_init_warnings: list[str] = []
-    if sys.platform == "win32":
-        pre_init_warnings = direnv_warnings(root)
-        if pre_init_warnings:
-            print("Environment setup:")
-            for line in pre_init_warnings:
-                print(f"- {line}")
-            print()
+    warnings = direnv_warnings(root)
+
+    # On Windows the guidance prints before init so it survives an init failure.
+    if sys.platform == "win32" and warnings:
+        print("Environment setup:")
+        for line in warnings:
+            print(f"- {line}")
+        print()
 
     try:
         report = init_project(root, name=args.name)
     except OSError as exc:
         if sys.platform == "win32":
             print(f"Failed to initialize Commonplace project at {root}: {exc}")
-            if not pre_init_warnings:
-                print("\nEnvironment setup:")
-                for line in direnv_warnings(root):
-                    print(f"- {line}")
             return 1
         raise
 
@@ -333,8 +329,7 @@ def main(argv: list[str] | None = None) -> int:
     ):
         print("No changes needed.")
 
-    warnings = [] if pre_init_warnings else direnv_warnings(root)
-    if warnings:
+    if sys.platform != "win32" and warnings:
         print("\nEnvironment setup:")
         for line in warnings:
             print(f"- {line}")

@@ -195,7 +195,7 @@ Move or rename a KB note: rewrite inbound and outbound links across the repo and
 ### Public API
 
 **`relocate_note(*, root: Path, note_arg: str, new_name: str | None = None, dest_path: str | None = None, apply: bool = False) -> int`**
-Top-level orchestrator. Resolves the source note from a path or unique stem, computes the destination, walks all repo markdown files to plan link rewrites, and either prints a dry-run plan or executes everything (file move, link rewrites, mkdocs update). Returns a process exit code.
+Top-level orchestrator. Resolves the source note from a path or unique stem, computes the destination, walks all repo markdown files to plan link rewrites, and either prints a dry-run plan or executes everything (file move, link rewrites, mkdocs update). The mkdocs step is skipped when the project has no `mkdocs.yml`. Returns a process exit code.
 
 **`resolve_note(arg, *, root)`**
 Find a note by absolute path, repo-relative path, full filename, or unique stem. Searches the entire `kb/` tree, not just `kb/notes/`, so notes can be relocated between collections.
@@ -203,16 +203,16 @@ Find a note by absolute path, repo-relative path, full filename, or unique stem.
 **`resolve_destination_path(source, new_name, dest_path, *, repo_root, kb_root)`**
 Compute the destination path from either a `--to` argument (file or directory) or a positional new title. Enforces the slug length limit.
 
-**`rewrite_links_to_relocated_note(content, source_file, old_path, new_path) -> tuple[str, list[str]]`**
-For each markdown link in `content` whose target resolves to `old_path`, rewrite it to point at `new_path`. Skips links inside fenced or inline code regions. Returns the updated text and a list of human-readable change descriptions.
+**`rewrite_links_to_moved_files(content, source_file, moves) -> tuple[str, list[str]]`**
+For each markdown link in `content` whose target resolves to a key of `moves` (a `{old_resolved_path: new_path}` dict), rewrite it to point at the new location. Skips links inside fenced or inline code regions. Returns the updated text and a list of human-readable change descriptions. Single-note relocation is the one-entry-dict case.
 
-**`rebase_relative_markdown_links(content, old_source_file, new_source_file) -> tuple[str, list[str]]`**
-For the note that's being moved: rewrite each of its outbound relative links so they still resolve from the new location. Self-referential links update to the new filename; existing-target links rebase to the new directory.
+**`rebase_and_rewrite_in_moved_file(content, old_source_file, new_source_file, moves) -> tuple[str, list[str]]`**
+For a file that is itself being moved: rewrite each of its outbound relative links so they still resolve from the new location, mapping targets that are also in `moves` to their new locations.
 
 **`update_mkdocs_config(content, old_docs_path, new_docs_path) -> tuple[str, list[str]]`**
-Update `mkdocs.yml` in place: rewrite any matching `nav` entries and `redirect_maps` targets, and append a new redirect entry from `old_docs_path` to `new_docs_path`. Preserves indentation and quoting style.
+Update `mkdocs.yml` in place: rewrite any matching `nav` entries and `redirect_maps` targets, and append a new redirect entry from `old_docs_path` to `new_docs_path`. Preserves indentation and quoting style. A config without a `redirect_maps:` section still gets its values rewritten; the redirect entry is skipped.
 
 **`move_path(source, destination)`**
 Move a path on disk with `Path.rename`, creating the destination's parent directories first. Git is not involved; it detects the rename on commit.
 
-The smaller helpers (`format_relative_link`, `iter_markdown_tokens`, `split_link_target`, `is_relative_markdown_target`, `resolve_directory`, `rewrite_links_to_moved_files`, `rebase_and_rewrite_in_moved_file`, `add_single_redirect`) are exported but rarely interesting outside the orchestrator.
+The smaller helpers (`format_relative_link`, `split_link_target`, `is_relative_markdown_target`, `resolve_directory`, `add_single_redirect`) are exported but rarely interesting outside the orchestrator.

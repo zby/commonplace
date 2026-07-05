@@ -68,16 +68,6 @@ def format_relative_link(from_file: Path, to_file: Path) -> str:
     return rel if rel.startswith("..") else f"./{rel}"
 
 
-def iter_markdown_tokens(content: str):
-    for match in TOKEN_PATTERN.finditer(content):
-        if match.group(1):
-            continue
-        text = match.group(3)
-        target = match.group(4)
-        if text and target:
-            yield match, text, target
-
-
 def split_link_target(target: str) -> tuple[str, str]:
     if "#" in target:
         bare, anchor = target.rsplit("#", 1)
@@ -94,74 +84,73 @@ def is_relative_markdown_target(target: str) -> bool:
     return bare.endswith(".md")
 
 
-def rewrite_links_to_relocated_note(
-    content: str,
-    source_file: Path,
-    old_path: Path,
-    new_path: Path,
-) -> tuple[str, list[str]]:
-    changes: list[str] = []
-    old_resolved = old_path.resolve()
+class _RedirectMaps:
+    """The parsed `redirect_maps:` section of an mkdocs config.
 
-    def replace_match(match: re.Match[str]) -> str:
-        if match.group(1):
-            return match.group(0)
+    `lines` is the config with the whole section collapsed to its single
+    header line at `header_index`; `render` expands it back with the current
+    `redirects` mapping. `parsed` is False when the config has no section.
+    """
 
-        text = match.group(3)
-        target = match.group(4)
-        if not text or not target or not is_relative_markdown_target(target):
-            return match.group(0)
+    def __init__(self, content: str) -> None:
+        self.redirects: dict[str, str] = {}
+        self.lines: list[str] = []
+        self.parsed = False
+        self._header_index = 0
+        self._header_indent = 0
+        self._entry_indent: int | None = None
+        self._trailing_newline = content.endswith("\n")
 
-        bare_target, anchor = split_link_target(target)
-        resolved = (source_file.parent / bare_target).resolve()
-        if resolved != old_resolved:
-            return match.group(0)
+        source = content.splitlines()
+        index = 0
+        while index < len(source):
+            line = source[index]
+            header_match = REDIRECT_MAP_HEADER.match(line)
+            if not header_match:
+                self.lines.append(line)
+                index += 1
+                continue
 
-        new_target = format_relative_link(source_file, new_path)
-        if anchor:
-            new_target = f"{new_target}{anchor}"
-        changes.append(f"{target} -> {new_target}")
-        return f"[{text}]({new_target})"
+            self.parsed = True
+            self._header_index = len(self.lines)
+            self._header_indent = len(header_match.group(1))
+            self.lines.append(line)
+            index += 1
+            while index < len(source):
+                candidate = source[index]
+                stripped = candidate.strip()
+                indent = len(candidate) - len(candidate.lstrip(" "))
+                if stripped and indent <= self._header_indent:
+                    break
+                if stripped:
+                    entry_match = REDIRECT_ENTRY.match(candidate)
+                    if not entry_match:
+                        raise ValueError(f"Unsupported redirect_maps entry: {candidate}")
+                    self.redirects[entry_match.group(1)] = entry_match.group(2)
+                    self._entry_indent = indent
+                index += 1
 
-    return TOKEN_PATTERN.sub(replace_match, content), changes
+    def add(self, old_docs_path: str, new_docs_path: str, changes: list[str]) -> None:
+        if self.redirects.get(old_docs_path) != new_docs_path:
+            self.redirects[old_docs_path] = new_docs_path
+            changes.append(f"mkdocs redirect: {old_docs_path} -> {new_docs_path}")
 
-
-def rebase_relative_markdown_links(
-    content: str,
-    old_source_file: Path,
-    new_source_file: Path,
-) -> tuple[str, list[str]]:
-    changes: list[str] = []
-    old_source_resolved = old_source_file.resolve()
-    new_source_resolved = new_source_file.resolve()
-
-    def replace_match(match: re.Match[str]) -> str:
-        if match.group(1):
-            return match.group(0)
-
-        text = match.group(3)
-        target = match.group(4)
-        if not text or not target or not is_relative_markdown_target(target):
-            return match.group(0)
-
-        bare_target, anchor = split_link_target(target)
-        resolved = (old_source_file.parent / bare_target).resolve()
-        if resolved == old_source_resolved:
-            destination = new_source_resolved
-        elif resolved.exists():
-            destination = resolved
-        else:
-            return match.group(0)
-
-        new_target = format_relative_link(new_source_file, destination)
-        if anchor:
-            new_target = f"{new_target}{anchor}"
-        if new_target == target:
-            return match.group(0)
-        changes.append(f"{target} -> {new_target}")
-        return f"[{text}]({new_target})"
-
-    return TOKEN_PATTERN.sub(replace_match, content), changes
+    def render(self) -> str:
+        rebuilt = list(self.lines)
+        if self.parsed:
+            indent = (
+                self._entry_indent
+                if self._entry_indent is not None
+                else self._header_indent + 2
+            )
+            redirect_lines = [f'{" " * self._header_indent}redirect_maps:']
+            for key in sorted(self.redirects, key=str.casefold):
+                redirect_lines.append(f"{' ' * indent}'{key}': '{self.redirects[key]}'")
+            rebuilt[self._header_index : self._header_index + 1] = redirect_lines
+        new_content = "\n".join(rebuilt)
+        if self._trailing_newline:
+            new_content += "\n"
+        return new_content
 
 
 def update_mkdocs_config(
@@ -169,72 +158,35 @@ def update_mkdocs_config(
     old_docs_path: str,
     new_docs_path: str,
 ) -> tuple[str, list[str]]:
-    lines = content.splitlines()
-    rebuilt_lines: list[str] = []
+    """Rewrite doc-path values (nav entries etc.) and maintain the redirect map.
+
+    A config without a `redirect_maps:` section still gets its values
+    rewritten; the redirect entry is simply skipped, so projects that use
+    mkdocs without the redirects plugin can relocate notes.
+    """
     changes: list[str] = []
-    redirects: dict[str, str] | None = None
-    header_index: int | None = None
-    header_indent = 0
-    entry_indent: int | None = None
-    index = 0
+    maps = _RedirectMaps(content)
 
-    while index < len(lines):
-        line = lines[index]
-        header_match = REDIRECT_MAP_HEADER.match(line)
-        if header_match:
-            redirects = {}
-            header_index = len(rebuilt_lines)
-            header_indent = len(header_match.group(1))
-            rebuilt_lines.append(line)
-            index += 1
-
-            while index < len(lines):
-                candidate = lines[index]
-                stripped = candidate.strip()
-                indent = len(candidate) - len(candidate.lstrip(" "))
-                if stripped and indent <= header_indent:
-                    break
-                if stripped:
-                    entry_match = REDIRECT_ENTRY.match(candidate)
-                    if not entry_match:
-                        raise ValueError(f"Unsupported redirect_maps entry: {candidate}")
-                    redirects[entry_match.group(1)] = entry_match.group(2)
-                    entry_indent = indent
-                index += 1
-            continue
-
-        updated_line = re.sub(
-            rf"(:\s*)(['\"]?){re.escape(old_docs_path)}\2(\s*(?:#.*)?)$",
+    value_re = re.compile(
+        rf"(:\s*)(['\"]?){re.escape(old_docs_path)}\2(\s*(?:#.*)?)$"
+    )
+    for index, line in enumerate(maps.lines):
+        updated_line = value_re.sub(
             lambda match: f"{match.group(1)}{match.group(2)}{new_docs_path}{match.group(2)}{match.group(3)}",
             line,
         )
         if updated_line != line:
             changes.append(f"mkdocs value: {old_docs_path} -> {new_docs_path}")
-        rebuilt_lines.append(updated_line)
-        index += 1
+            maps.lines[index] = updated_line
 
-    if redirects is None or header_index is None:
-        raise ValueError("No redirect_maps section found in mkdocs config")
+    if maps.parsed:
+        for key, value in list(maps.redirects.items()):
+            if value == old_docs_path and key != old_docs_path:
+                maps.redirects[key] = new_docs_path
+                changes.append(f"mkdocs redirect target: {key} -> {new_docs_path}")
+        maps.add(old_docs_path, new_docs_path, changes)
 
-    for key, value in list(redirects.items()):
-        if value == old_docs_path and key != old_docs_path:
-            redirects[key] = new_docs_path
-            changes.append(f"mkdocs redirect target: {key} -> {new_docs_path}")
-
-    if redirects.get(old_docs_path) != new_docs_path:
-        redirects[old_docs_path] = new_docs_path
-        changes.append(f"mkdocs redirect: {old_docs_path} -> {new_docs_path}")
-
-    indent = entry_indent if entry_indent is not None else header_indent + 2
-    redirect_lines = [f'{" " * header_indent}redirect_maps:']
-    for key in sorted(redirects, key=str.casefold):
-        redirect_lines.append(f'{" " * indent}\'{key}\': \'{redirects[key]}\'')
-    rebuilt_lines[header_index : header_index + 1] = redirect_lines
-
-    new_content = "\n".join(rebuilt_lines)
-    if content.endswith("\n"):
-        new_content += "\n"
-    return new_content, changes
+    return maps.render(), changes
 
 
 def move_path(source: Path, destination: Path) -> None:
@@ -338,58 +290,12 @@ def add_single_redirect(
     new_docs_path: str,
 ) -> tuple[str, list[str]]:
     """Add or update a single redirect entry in mkdocs config."""
-    lines = content.splitlines()
-    rebuilt_lines: list[str] = []
-    changes: list[str] = []
-    redirects: dict[str, str] | None = None
-    header_index: int | None = None
-    header_indent = 0
-    entry_indent: int | None = None
-    index = 0
-
-    while index < len(lines):
-        line = lines[index]
-        header_match = REDIRECT_MAP_HEADER.match(line)
-        if header_match:
-            redirects = {}
-            header_index = len(rebuilt_lines)
-            header_indent = len(header_match.group(1))
-            rebuilt_lines.append(line)
-            index += 1
-            while index < len(lines):
-                candidate = lines[index]
-                stripped = candidate.strip()
-                indent = len(candidate) - len(candidate.lstrip(" "))
-                if stripped and indent <= header_indent:
-                    break
-                if stripped:
-                    entry_match = REDIRECT_ENTRY.match(candidate)
-                    if not entry_match:
-                        raise ValueError(f"Unsupported redirect_maps entry: {candidate}")
-                    redirects[entry_match.group(1)] = entry_match.group(2)
-                    entry_indent = indent
-                index += 1
-            continue
-        rebuilt_lines.append(line)
-        index += 1
-
-    if redirects is None or header_index is None:
+    maps = _RedirectMaps(content)
+    if not maps.parsed:
         raise ValueError("No redirect_maps section found in mkdocs config")
-
-    if redirects.get(old_docs_path) != new_docs_path:
-        redirects[old_docs_path] = new_docs_path
-        changes.append(f"mkdocs redirect: {old_docs_path} -> {new_docs_path}")
-
-    indent = entry_indent if entry_indent is not None else header_indent + 2
-    redirect_lines = [f'{" " * header_indent}redirect_maps:']
-    for key in sorted(redirects, key=str.casefold):
-        redirect_lines.append(f'{" " * indent}\'{key}\': \'{redirects[key]}\'')
-    rebuilt_lines[header_index : header_index + 1] = redirect_lines
-
-    new_content = "\n".join(rebuilt_lines)
-    if content.endswith("\n"):
-        new_content += "\n"
-    return new_content, changes
+    changes: list[str] = []
+    maps.add(old_docs_path, new_docs_path, changes)
+    return maps.render(), changes
 
 
 def relocate_directory(
@@ -522,23 +428,29 @@ def relocate_note(
     old_docs_path = source.relative_to(kb_root).as_posix()
     new_docs_path = destination.relative_to(kb_root).as_posix()
 
+    md_moves = {source: destination}
     markdown_updates: dict[Path, tuple[str, list[str]]] = {}
 
     for md_file in find_repo_markdown_files(repo_root):
         original = md_file.read_text(encoding="utf-8")
         if md_file.resolve() == source:
-            updated, changes = rebase_relative_markdown_links(original, source, destination)
+            updated, changes = rebase_and_rewrite_in_moved_file(
+                original, md_file, destination, md_moves
+            )
         else:
-            updated, changes = rewrite_links_to_relocated_note(original, md_file, source, destination)
+            updated, changes = rewrite_links_to_moved_files(original, md_file, md_moves)
         if changes:
             markdown_updates[md_file] = (updated, changes)
 
-    mkdocs_original = mkdocs_config.read_text(encoding="utf-8")
-    mkdocs_updated, mkdocs_changes = update_mkdocs_config(
-        mkdocs_original,
-        old_docs_path=old_docs_path,
-        new_docs_path=new_docs_path,
-    )
+    # Projects without an mkdocs site have nothing to update here.
+    mkdocs_updated = None
+    mkdocs_changes: list[str] = []
+    if mkdocs_config.is_file():
+        mkdocs_updated, mkdocs_changes = update_mkdocs_config(
+            mkdocs_config.read_text(encoding="utf-8"),
+            old_docs_path=old_docs_path,
+            new_docs_path=new_docs_path,
+        )
 
     mode = "APPLYING" if apply else "DRY RUN"
     print(f"=== {mode} ===\n")
@@ -569,6 +481,7 @@ def relocate_note(
     for path, (updated, _changes) in markdown_updates.items():
         target = destination if path.resolve() == source else path
         target.write_text(updated, encoding="utf-8")
-    mkdocs_config.write_text(mkdocs_updated, encoding="utf-8")
+    if mkdocs_updated is not None:
+        mkdocs_config.write_text(mkdocs_updated, encoding="utf-8")
     print("\nDone.")
     return 0
