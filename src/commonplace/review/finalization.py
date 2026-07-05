@@ -129,7 +129,7 @@ def finalize_review_job_from_owned_output(
     """Finalize one review job from its derived bundle output path."""
     with review_db.connect(db_path) as conn:
         try:
-            plan = review_db.load_review_job_plan(conn, review_job_id=review_job_id, require_paths=True)
+            plan = review_db.load_review_job_plan(conn, review_job_id=review_job_id)
         except ValueError as exc:
             return _precondition_failure(review_job_id, str(exc))
         if plan is None:
@@ -170,7 +170,7 @@ def finalize_review_job_from_owned_output(
                 telemetry_json=execution.telemetry_json,
             )
             conn.commit()
-            refreshed_plan = review_db.load_review_job_plan(conn, review_job_id=review_job_id, require_paths=True)
+            refreshed_plan = review_db.load_review_job_plan(conn, review_job_id=review_job_id)
             if refreshed_plan is not None:
                 plan = refreshed_plan
 
@@ -319,7 +319,7 @@ def write_job_manifest_from_db(
     repo_root: Path,
     review_job_id: int,
 ) -> None:
-    plan = review_db.load_review_job_plan(conn, review_job_id=review_job_id, require_paths=True)
+    plan = review_db.load_review_job_plan(conn, review_job_id=review_job_id)
     if plan is None:
         return
     artifact_dir = bundle_artifact_dir(repo_root, review_job_id)

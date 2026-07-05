@@ -139,7 +139,7 @@ def seed_snapshot_review(repo: Path, db_path: Path, *, note_path: str, gate_path
                 review_db.ReviewPairRequest(
                     note_path=note_path,
                     gate_path=gate_path,
-                    pair_ordinal=0,
+                    pair_ordinal=1,
                     reviewed_note_snapshot_id=note_snapshot.snapshot_id,
                     reviewed_gate_snapshot_id=gate_snapshot.snapshot_id,
                 )
@@ -214,6 +214,9 @@ status: current
         ({"title": "Updated title"}, {"title"}, False),
         ({"description": "Updated description"}, {"title", "description"}, False),
         ({"tags": "[computational-model]"}, {"title", "description"}, True),
+        # Whitespace-only churn alters the hash but no parsed part; it is the
+        # most trivial change of all and must qualify.
+        ({"body": "Body.   \n\n"}, {"body", "title", "description"}, True),
     ],
 )
 def test_has_only_unwatched_changes_respects_gate_watch_fields(

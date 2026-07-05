@@ -98,25 +98,16 @@ def has_only_unwatched_changes(
     *,
     watches: set[str],
 ) -> bool:
+    """True when no watched note part changed between the two texts.
+
+    Callers pass texts whose raw hashes already differ; a purely cosmetic
+    change (whitespace, formatting) alters no parsed part and qualifies.
+    """
     previous = _note_parts(previous_text)
     current = _note_parts(current_text)
     if previous is None or current is None:
         return False
-
-    watched_keys = set(watches)
-    for key in watched_keys:
-        if previous[key] != current[key]:
-            return False
-
-    changed_keys = {
-        key
-        for key in previous
-        if previous[key] != current[key]
-    }
-    if not changed_keys:
-        return False
-
-    return bool(changed_keys - watched_keys)
+    return all(previous.get(key) == current.get(key) for key in watches)
 
 
 def qualifying_pairs(

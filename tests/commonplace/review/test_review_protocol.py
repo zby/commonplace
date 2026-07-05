@@ -216,10 +216,6 @@ No undefined terms found.
     parsed = parse_pair_bundle(bundle, expected_pairs=[("kb/notes/first.md", GATE)])
     canonical = parsed.canonical_texts[("kb/notes/first.md", GATE)]
     assert canonical.rstrip("\n").endswith("## Result: PASS")
-    assert (
-        f"{canonical.rstrip(chr(10))}\n=== PAIR REVIEW END: kb/notes/first.md :: {GATE} ==="
-        in parsed.canonical_markdown
-    )
 
 
 def test_parse_pair_bundle_rejects_result_aliases() -> None:

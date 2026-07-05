@@ -118,7 +118,7 @@ def scan_reviews(
         db_path = prepare_review_db(repo_root)
 
     by_note: dict[str, NoteWarns] = {}
-    selected_by_gate: dict[tuple[str, str], tuple[ReviewPairRow, str]] = {}
+    selected_by_gate: dict[tuple[str, str], tuple[ReviewPairRow, str, list[str]]] = {}
     stale_gates: set[str] = set()
     with connect(db_path) as conn:
         effective_reviews = load_effective_review_pair_map(
@@ -155,12 +155,9 @@ def scan_reviews(
             selected.reviewed_at or "",
             selected.review_pair_id,
         ):
-            selected_by_gate[gate_key] = (review, review_text)
+            selected_by_gate[gate_key] = (review, review_text, warns)
 
-    for (note_path, gate_path), (review, review_text) in sorted(selected_by_gate.items()):
-        if review.decision is None:
-            continue
-        warns = extract_warns(review_text, decision=review.decision)
+    for (note_path, gate_path), (review, review_text, warns) in sorted(selected_by_gate.items()):
         for warn_text in warns:
             if note_path not in by_note:
                 by_note[note_path] = NoteWarns(note_path=note_path)

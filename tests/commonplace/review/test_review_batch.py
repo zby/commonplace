@@ -5,7 +5,11 @@ import sqlite3
 import subprocess
 from pathlib import Path
 
+import pytest
+
 from commonplace.lib import frontmatter
+from commonplace.review import review_db
+from commonplace.review.batch import prepare_grouped_review_job
 
 from ._run_cli import run_cli
 
@@ -167,8 +171,8 @@ def test_create_review_jobs_selector_creates_one_gate_packed_job_and_prompt(tmp_
     manifest = json.loads((repo / manifest_path).read_text(encoding="utf-8"))
     assert manifest["packing"] == "gate"
     assert [pair["result_path"] for pair in manifest["pairs"]] == [
-        f"kb/reports/bundle-reviews/review-job-{review_job_id}/first.md",
-        f"kb/reports/bundle-reviews/review-job-{review_job_id}/second.md",
+        f"kb/reports/bundle-reviews/review-job-{review_job_id}/pair-1-first.md",
+        f"kb/reports/bundle-reviews/review-job-{review_job_id}/pair-2-second.md",
     ]
 
     with sqlite3.connect(db_path) as conn:
@@ -269,8 +273,8 @@ def test_finalize_review_job_finalizes_all_gate_packed_pairs(tmp_path: Path) -> 
     artifact_dir = repo / "kb" / "reports" / "bundle-reviews" / f"review-job-{review_job_id}"
     shared_bundle = (artifact_dir / "bundle-output.md").read_text(encoding="utf-8")
     assert shared_bundle.count("=== PAIR REVIEW START:") == 2
-    first_result = (artifact_dir / "first.md").read_text(encoding="utf-8")
-    second_result = (artifact_dir / "second.md").read_text(encoding="utf-8")
+    first_result = (artifact_dir / "pair-1-first.md").read_text(encoding="utf-8")
+    second_result = (artifact_dir / "pair-2-second.md").read_text(encoding="utf-8")
     assert frontmatter.strip(first_result).strip().endswith("## Result: WARN")
     assert frontmatter.strip(second_result).strip().endswith("## Result: PASS")
     assert frontmatter.parse(first_result).data["runner"] is None
@@ -459,3 +463,37 @@ status: current
     assert job is not None
     assert job["status"] == "failed"
     assert "reserved sentinel" in job["failure_reason"]
+
+
+def test_prepare_note_packed_job_rejects_mixed_notes_and_fails_the_job(tmp_path: Path) -> None:
+    repo = tmp_path / "repo"
+    make_note(repo / "kb" / "notes" / "first.md", "First")
+    make_note(repo / "kb" / "notes" / "second.md", "Second")
+    write(
+        repo / GATE_PATH,
+        """---
+gate_id: accessibility/undefined-terms
+watches: [body]
+---
+
+## Failure mode
+
+Terms are undefined.
+""",
+    )
+    db_path = repo / "kb" / "reports" / "review-store.sqlite"
+    review_db.ensure_db(db_path)
+
+    with pytest.raises(ValueError, match="exactly one note"):
+        prepare_grouped_review_job(
+            repo_root=repo,
+            db_path=db_path,
+            pairs=[("kb/notes/first.md", GATE_PATH), ("kb/notes/second.md", GATE_PATH)],
+            packing="note",
+            runner=None,
+            model_partition="test-model",
+        )
+
+    with review_db.connect(db_path) as conn:
+        jobs = review_db.list_review_job_plans(conn)
+    assert [job.status for job in jobs] == ["failed"]

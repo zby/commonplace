@@ -8,11 +8,13 @@ import re
 DECISION_VALUES = ("pass", "warn", "fail", "error")
 
 _STRICT_RESULT_LINE_RE = re.compile(r"^## Result: (?P<decision>PASS|WARN|FAIL|ERROR)$")
+# Alias branches are case-insensitive via the scoped (?i:...) group; the bare
+# caps-word branch must stay case-sensitive or any single-word prose line
+# ("none", "Approved") would read as a result signal and fail the job.
 _RESULTISH_LINE_RE = re.compile(
-    r"^(?:##\s*(?:Result|Verdict|Outcome)\b|Verdict:|(?:[-*]\s*)?Outcome:|"
-    r"(?:\*\*)?Revised\s+(?:result|verdict|outcome)|"
-    r"(?:\*\*)?(?:PASS|WARN|FAIL|ERROR|[A-Z]{2,})(?:\*\*)?\s*$)",
-    re.IGNORECASE,
+    r"^(?:(?i:##\s*(?:Result|Verdict|Outcome)\b|Verdict:|(?:[-*]\s*)?Outcome:|"
+    r"(?:\*\*)?Revised\s+(?:result|verdict|outcome))|"
+    r"(?:\*\*)?[A-Z]{2,}(?:\*\*)?\s*$)"
 )
 _FLAGGING_DECISION_RE = re.compile(r"\bflagging\s+as\s+[A-Za-z]+\b", re.IGNORECASE)
 

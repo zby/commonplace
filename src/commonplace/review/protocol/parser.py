@@ -28,7 +28,6 @@ class ParsedPairReview:
 
 @dataclass(frozen=True)
 class ParsedPairBundle:
-    canonical_markdown: str
     reviews: dict[PairKey, ParsedPairReview]
     canonical_texts: dict[PairKey, str]
     missing: list[PairKey]
@@ -85,39 +84,6 @@ def extract_pair_reviews(
     return reviews
 
 
-def rewrite_pair_result_footers(
-    bundle_markdown: str,
-    *,
-    canonical_texts: dict[PairKey, str],
-) -> str:
-    rewritten_lines: list[str] = []
-    current_pair: PairKey | None = None
-
-    for raw_line in bundle_markdown.splitlines():
-        start_match = PAIR_START_RE.match(raw_line.strip())
-        if start_match is not None:
-            current_pair = (start_match.group("note_path"), start_match.group("gate_path"))
-            rewritten_lines.append(raw_line)
-            continue
-
-        end_match = PAIR_END_RE.match(raw_line.strip())
-        if end_match is not None:
-            pair = (end_match.group("note_path"), end_match.group("gate_path"))
-            if current_pair == pair and pair in canonical_texts:
-                rewritten_lines.extend(canonical_texts[pair].rstrip("\n").splitlines())
-            rewritten_lines.append(raw_line)
-            current_pair = None
-            continue
-
-        if current_pair is None:
-            rewritten_lines.append(raw_line)
-
-    rewritten = "\n".join(rewritten_lines)
-    if bundle_markdown.endswith("\n"):
-        return rewritten + "\n"
-    return rewritten
-
-
 def parse_pair_bundle(
     bundle_markdown: str,
     *,
@@ -136,10 +102,8 @@ def parse_pair_bundle(
             decision=decision,
         )
 
-    canonical_markdown = rewrite_pair_result_footers(bundle_markdown, canonical_texts=canonical_texts)
     missing = [pair for pair in expected_pairs if pair not in extracted]
     return ParsedPairBundle(
-        canonical_markdown=canonical_markdown,
         reviews=reviews,
         canonical_texts=canonical_texts,
         missing=missing,

@@ -58,6 +58,9 @@ def _targets_for_pairs(
     note_texts: dict[str, str] | None = None,
 ) -> list[NoteReviewTarget]:
     if packing == "note":
+        note_paths = {note_path for note_path, _ in pairs}
+        if len(note_paths) != 1:
+            raise ValueError(f"note-packed job requires exactly one note, got: {sorted(note_paths)}")
         note_path = pairs[0][0]
         return [
             prepare_note_target(
@@ -117,13 +120,6 @@ def prepare_grouped_review_job(
         stored_pairs = load_review_pairs_for_job(conn, review_job_id=review_job_id)
         conn.commit()
 
-    targets = _targets_for_pairs(
-        repo_root=repo_root,
-        review_job_id=review_job_id,
-        packing=packing,
-        pairs=pairs,
-        note_texts=captured_inputs.note_texts,
-    )
     artifact_dir = bundle_artifact_dir(repo_root, review_job_id)
     bundle_output_path = bundle_output_path_rel(review_job_id)
     result_paths = result_paths_by_pair_id(
@@ -131,36 +127,44 @@ def prepare_grouped_review_job(
         packing=packing,
         pairs=stored_pairs,
     )
+    prompt_path = prompt_path_rel(review_job_id)
+    # Prompt rendering and every artifact write must fail the queued job:
+    # a job left queued without its prompt on disk is undispatchable and
+    # nothing else would ever clean it up.
     try:
+        targets = _targets_for_pairs(
+            repo_root=repo_root,
+            review_job_id=review_job_id,
+            packing=packing,
+            pairs=pairs,
+            note_texts=captured_inputs.note_texts,
+        )
         prompt = render_pairs_prompt(
             notes=targets,
             gate_texts=captured_inputs.gate_texts,
             output_mode="file",
             bundle_output_path=bundle_output_path,
         )
-    except ValueError as exc:
+        artifact_dir.mkdir(parents=True, exist_ok=True)
+        (repo_root / prompt_path).write_text(prompt, encoding="utf-8")
+        manifest_path = write_manifest(
+            repo_root=repo_root,
+            artifact_dir=artifact_dir,
+            review_job_id=review_job_id,
+            job_status=status,
+            packing=packing,
+            prompt_path=prompt_path,
+            bundle_output_path=bundle_output_path,
+            pairs=stored_pairs,
+            skipped=skipped,
+        )
+    except (ValueError, OSError) as exc:
         fail_active_review_jobs(
             db_path=db_path,
             review_job_ids=[review_job_id],
             failure_reason=str(exc),
         )
         raise
-
-    artifact_dir.mkdir(parents=True, exist_ok=True)
-    prompt_path = prompt_path_rel(review_job_id)
-    prompt_abs = repo_root / prompt_path
-    prompt_abs.write_text(prompt, encoding="utf-8")
-    manifest_path = write_manifest(
-        repo_root=repo_root,
-        artifact_dir=artifact_dir,
-        review_job_id=review_job_id,
-        job_status=status,
-        packing=packing,
-        prompt_path=prompt_path,
-        bundle_output_path=bundle_output_path,
-        pairs=stored_pairs,
-        skipped=skipped,
-    )
 
     return PreparedBatch(
         review_job_id=review_job_id,

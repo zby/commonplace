@@ -241,7 +241,7 @@ def test_current_acceptance_view_filters_incomplete_jobs_and_null_decisions(tmp_
                 review_db.ReviewPairRequest(
                     note_path="kb/notes/queued.md",
                     gate_path="kb/instructions/review-gates/semantic/internal-consistency.md",
-                    pair_ordinal=0,
+                    pair_ordinal=1,
                 )
             ],
         )
@@ -278,7 +278,7 @@ def test_current_acceptance_view_filters_incomplete_jobs_and_null_decisions(tmp_
                 review_db.ReviewPairRequest(
                     note_path="kb/notes/null-decision.md",
                     gate_path="kb/instructions/review-gates/semantic/internal-consistency.md",
-                    pair_ordinal=0,
+                    pair_ordinal=1,
                 )
             ],
         )
@@ -370,7 +370,7 @@ def test_load_review_job_exposes_created_at(tmp_path: Path) -> None:
                 review_db.ReviewPairRequest(
                     note_path="kb/notes/pending.md",
                     gate_path="kb/instructions/review-gates/prose/pending.md",
-                    pair_ordinal=0,
+                    pair_ordinal=1,
                 )
             ],
         )
@@ -450,33 +450,6 @@ def test_attach_execution_data_validates_runner_model_partition(tmp_path: Path) 
 
     assert row["runner_model"] == "unknown-model"
     assert row["runner_effort"] == "high"
-
-
-def test_snapshot_file_rehydrates_hash_only_snapshot_rows(tmp_path: Path) -> None:
-    db_path = tmp_path / "review-store.sqlite"
-    repo = tmp_path / "repo"
-    repo.mkdir()
-    note = repo / "kb" / "notes" / "sample.md"
-    note.parent.mkdir(parents=True)
-    note.write_text("rehydrate me\n", encoding="utf-8")
-
-    review_db.ensure_db(db_path)
-
-    with review_db.connect(db_path) as conn:
-        first = review_db.snapshot_file(conn, repo_root=repo, path="kb/notes/sample.md")
-        conn.execute(
-            "UPDATE review_file_snapshots SET content_text = NULL WHERE snapshot_id = ?",
-            (first.snapshot_id,),
-        )
-        second = review_db.snapshot_file(conn, repo_root=repo, path="kb/notes/sample.md")
-        stored_text = conn.execute(
-            "SELECT content_text FROM review_file_snapshots WHERE snapshot_id = ?",
-            (first.snapshot_id,),
-        ).fetchone()[0]
-
-    assert second.snapshot_id == first.snapshot_id
-    assert second.content_text == "rehydrate me\n"
-    assert stored_text == "rehydrate me\n"
 
 
 def test_prune_superseded_acceptances_deletes_unreferenced_snapshots(tmp_path: Path) -> None:

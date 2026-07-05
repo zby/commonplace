@@ -15,7 +15,7 @@ from commonplace.review.resolve_gates import applicable_gate_ids_for_note
 from commonplace.review.review_db import (
     ReviewJobPlan,
     connect,
-    list_review_job_plans,
+    load_review_job_plan,
     prepare_review_db,
 )
 from commonplace.review.review_model import normalize_model_partition
@@ -228,6 +228,8 @@ def _pair_payload(pair) -> dict[str, object]:
 
 
 def _job_payload(plan: ReviewJobPlan, *, include_timestamps: bool = False) -> dict[str, object]:
+    ordered_pairs = sorted(plan.pairs, key=lambda item: item.pair_ordinal)
+    pair_items = [_pair_payload(pair) for pair in ordered_pairs]
     payload: dict[str, object] = {
         "review_job_id": plan.review_job_id,
         "status": plan.status,
@@ -239,7 +241,7 @@ def _job_payload(plan: ReviewJobPlan, *, include_timestamps: bool = False) -> di
         "prompt_path": plan.prompt_path,
         "bundle_output_path": plan.bundle_output_path,
         "pair_count": len(plan.pairs),
-        "pairs": [_pair_payload(pair) for pair in sorted(plan.pairs, key=lambda item: item.pair_ordinal)],
+        "pairs": pair_items,
     }
     if include_timestamps:
         payload.update(
@@ -249,8 +251,7 @@ def _job_payload(plan: ReviewJobPlan, *, include_timestamps: bool = False) -> di
                 "failure_reason": plan.failure_reason,
             }
         )
-        for item, pair in zip(payload["pairs"], sorted(plan.pairs, key=lambda p: p.pair_ordinal), strict=True):
-            assert isinstance(item, dict)
+        for item, pair in zip(pair_items, ordered_pairs, strict=True):
             item["reviewed_at"] = pair.reviewed_at
     return payload
 
@@ -338,12 +339,12 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
             created_job_ids.append(prepared.review_job_id)
 
         with connect(db_path) as conn:
-            plans_by_id = {
-                plan.review_job_id: plan
-                for plan in list_review_job_plans(conn)
-                if plan.review_job_id in set(created_job_ids)
-            }
-        plans = [plans_by_id[review_job_id] for review_job_id in sorted(created_job_ids)]
+            plans = []
+            for review_job_id in sorted(created_job_ids):
+                plan = load_review_job_plan(conn, review_job_id=review_job_id)
+                if plan is None:
+                    raise ValueError(f"created review job not found: {review_job_id}")
+                plans.append(plan)
     except (FileNotFoundError, ValueError, OSError) as exc:
         parser.error(str(exc))
 

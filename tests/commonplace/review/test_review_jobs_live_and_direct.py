@@ -197,7 +197,7 @@ def test_create_review_jobs_groups_cross_lens_gates_by_bundle(tmp_path: Path) ->
     manifest = json.loads((repo / first_manifest_path).read_text(encoding="utf-8"))
     assert manifest["packing"] == "note"
     assert [pair["result_path"] for pair in manifest["pairs"]] == [
-        f"kb/reports/bundle-reviews/review-job-{first_review_job_id}/undefined-terms.md",
+        f"kb/reports/bundle-reviews/review-job-{first_review_job_id}/pair-1-undefined-terms.md",
     ]
 
     with sqlite3.connect(db_path) as conn:
@@ -437,8 +437,8 @@ def test_create_review_jobs_selector_gate_grouping_chunks_and_lists(tmp_path: Pa
         }
     ]
     assert [[pair["result_path"].split("/")[-1] for pair in job["pairs"]] for job in payload["jobs"]] == [
-        ["sample.md"],
-        ["other.md"],
+        ["pair-1-sample.md"],
+        ["pair-1-other.md"],
     ]
 
     listed = run_cli(
@@ -601,7 +601,7 @@ def test_finalize_review_job_uses_job_owned_paths_and_writes_provenance_frontmat
         "review_job_id": review_job_id,
         "state_changed": True,
     }
-    result_path = f"kb/reports/bundle-reviews/review-job-{review_job_id}/undefined-terms.md"
+    result_path = f"kb/reports/bundle-reviews/review-job-{review_job_id}/pair-1-undefined-terms.md"
     result_text = (repo / result_path).read_text(encoding="utf-8")
     parsed_frontmatter = frontmatter.parse(result_text)
     assert parsed_frontmatter.ok
@@ -689,7 +689,7 @@ def test_finalize_review_job_result_write_failure_rolls_back_and_preserves_prove
     assert acceptance_count == 0
 
     artifact_dir = repo / "kb" / "reports" / "bundle-reviews" / f"review-job-{review_job_id}"
-    assert not (artifact_dir / "undefined-terms.md").exists()
+    assert not (artifact_dir / "pair-1-undefined-terms.md").exists()
     manifest = json.loads((artifact_dir / "MANIFEST.json").read_text(encoding="utf-8"))
     assert manifest["status"] == "failed"
     assert manifest["pairs"][0]["status"] == "failed"
@@ -718,7 +718,7 @@ def test_finalize_review_job_finalizes_queued_job(tmp_path: Path) -> None:
 
     assert json.loads(result.stdout)["completed"] is True
     artifact_dir = repo / "kb" / "reports" / "bundle-reviews" / f"review-job-{prepared_job['review_job_id']}"
-    assert frontmatter.strip((artifact_dir / "undefined-terms.md").read_text(encoding="utf-8")).strip().endswith("## Result: WARN")
+    assert frontmatter.strip((artifact_dir / "pair-1-undefined-terms.md").read_text(encoding="utf-8")).strip().endswith("## Result: WARN")
     assert not (artifact_dir / "kb__notes__sample.md :: kb__instructions__review-gates__accessibility__undefined-terms.md").exists()
     manifest = json.loads((artifact_dir / "MANIFEST.json").read_text(encoding="utf-8"))
     assert [pair["status"] for pair in manifest["pairs"]] == ["completed"]

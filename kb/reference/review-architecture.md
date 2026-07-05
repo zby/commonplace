@@ -38,7 +38,7 @@ SQLite database, default location `kb/reports/review-store.sqlite`; override wit
 | `review_file_snapshots` | Role-neutral snapshots by `(path, content_sha256)`, storing exact UTF-8 text when it must be reusable for prompt rendering or diffing |
 | `acceptance` | Current accepted baseline per `(note_path, gate_path, model_partition)`; `accepted_review_pair_id` points at review evidence and accepted snapshot IDs pin note/gate text |
 
-Artifact paths — prompt, bundle output, manifest, and per-pair result files — are **derived** from `review_job_id`, packing, and the job's pairs. They are not stored columns.
+Artifact paths — prompt, bundle output, manifest, and per-pair result files — are **derived**, not stored columns. Each per-pair result filename (`pair-{ordinal}-{stem}.md`) is a pure function of that pair's own row (`pair_ordinal` plus the packing-varying path stem), never of sibling pairs, so inline pruning of superseded sibling pairs cannot change a surviving pair's path.
 
 The `current_gate_acceptances` view exposes accepted state per `(note_path, gate_path, model_partition)` key by joining `acceptance` through `review_pairs` and `review_jobs`, after filtering to completed jobs with non-null pair decisions. This filter is the evidence boundary — acceptance rows from non-completed jobs never surface as freshness.
 
