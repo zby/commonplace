@@ -82,7 +82,7 @@ def note_type_spec_path(repo_root: Path, note_abs: Path) -> str | None:
         parsed = frontmatter.parse(note_abs.read_text(encoding="utf-8"))
     except (OSError, UnicodeDecodeError):
         return None
-    if not parsed.ok or "type" not in parsed.data:
+    if not parsed.ok or "type" not in parsed.data or not isinstance(parsed.data["type"], str):
         return None
     try:
         canonical, resolved = validate_type_path(
