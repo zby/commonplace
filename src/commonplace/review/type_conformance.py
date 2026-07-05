@@ -50,9 +50,9 @@ def resolve_type_gate_id(repo_root: Path, gate_id: str) -> str:
     exactly one collection-local `kb/**/types/{name}.md`.
     """
     name = gate_id.strip().removeprefix(f"{TYPE_GATE_LENS}/")
+    name = name.removesuffix(".md")
     if not name or name == TYPE_GATE_LENS or "/" in name or name in {".", ".."}:
         raise ValueError(f"invalid type gate id: {gate_id}")
-    name = name.removesuffix(".md")
     boundary = kb_root(repo_root)
     global_spec = boundary / "types" / f"{name}.md"
     if global_spec.is_file():
