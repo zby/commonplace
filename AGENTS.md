@@ -2,6 +2,8 @@
 
 `CLAUDE.md` is a symlink to this file (`AGENTS.md`). Edit `AGENTS.md` directly.
 
+> **Vendored?** If this repository sits inside another project as a read-only knowledge base (a submodule or gitignored clone — see `INSTALL.md`, "Reader install"), you are a reader here, not an operator: navigate from `kb/notes/tags-README.md`, quote and cite freely, and do not create, edit, or commit anything under this directory. Everything below applies only when Commonplace itself is the working project. To contest a claim, open an issue at <https://github.com/zby/commonplace/issues>.
+
 ## Repository Overview
 
 A framework for building agent-operated knowledge bases. This repo contains the methodology, type definitions, writing conventions, instructions and skills, and the Python commands that get installed into projects.

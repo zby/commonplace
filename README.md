@@ -104,6 +104,8 @@ Commonplace can be installed into any project as a Python package. Your agents g
 
 ## Prerequisites
 
+**Reader mode has none beyond an agent runtime** — no Python, no packages, no skills, not even git: the KB is plain files, so a copy of the repo inside your project works as well as a clone or submodule. The table below applies to the full install:
+
 | Tool | Required | Purpose |
 | --- | --- | --- |
 | Agent runtime | yes | Codex, Claude Code, or another internal LLM/IDE that can load project instructions and expose the `cp-skill-*` skill directories |

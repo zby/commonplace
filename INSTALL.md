@@ -24,6 +24,8 @@ git clone https://github.com/zby/commonplace
 echo '/commonplace/' >> .gitignore
 ```
 
+Git itself is optional — the KB is plain files, so [downloading the repo as an archive](https://github.com/zby/commonplace/archive/refs/heads/main.zip) and extracting it into `commonplace/` works too; you just update by re-downloading.
+
 Then paste a routing block into your project's `CLAUDE.md` or `AGENTS.md` (create the file if the project has none):
 
 ```markdown
