@@ -94,9 +94,13 @@ If you use `direnv`, make sure your shell has the direnv hook installed, then ru
 
 This is the right mode for exploring or contributing to the Commonplace methodology itself, running a standalone knowledge base, or evaluating the system before installing it elsewhere.
 
+### Vendored inside your project (reader mode)
+
+To give your agents the research without running a KB of your own, vendor this repo **inside** your project — a git submodule or a gitignored clone — and add one routing paragraph to your project's `CLAUDE.md`/`AGENTS.md`. Placement inside the project root matters: agent harnesses scope file access to the root, so a subdirectory is readable without permission prompts while a sibling directory is not. Reading needs no Python, no venv, and no skills. See [INSTALL.md → Reader install](https://github.com/zby/commonplace/blob/main/INSTALL.md#reader-install-the-kb-as-a-vendored-reference) for the commands and the paste-ready routing block.
+
 ### Installing into a project
 
-Commonplace can be installed into any project as a Python package. Your agents get the same type system, conventions, and skills, and accumulate knowledge about your domain rather than this one. See [**INSTALL.md**](https://github.com/zby/commonplace/blob/main/INSTALL.md) for the setup flow.
+Commonplace can be installed into any project as a Python package. Your agents get the same type system, conventions, and skills, and accumulate knowledge about your domain rather than this one. See [**INSTALL.md**](https://github.com/zby/commonplace/blob/main/INSTALL.md) for the setup flow. This composes with reader mode: a project can vendor this KB for reading and run its own for writing.
 
 ## Prerequisites
 

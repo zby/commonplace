@@ -5,7 +5,13 @@ for people who want to build their own KB). Same repo, two doors.
 Updated 2026-07-04: usage section reframed as "interactive textbook that lives in your repo"
 (install = clone/submodule + one CLAUDE.md routing line); reading path split out to
 textbook-syllabus.md. Still missing: a published worked example of the point-it-at-your-code
-loop (a transcript of the KB critiquing a real design). -->
+loop (a transcript of the KB critiquing a real design).
+Updated 2026-07-05: integration corrected from "next to your code" to inside-the-repo
+placement (submodule or gitignored clone) — agent harnesses scope file access to the project
+root, so a sibling directory costs a permission grant every session while a subdirectory
+reads free. Routing line made concrete (names the path and entry file). Consumer-install
+changes this implies (root-level reader entry, CLAUDE.md vendored-mode guard) tracked
+separately. -->
 
 # The hard problems of agentic systems, catalogued
 
@@ -24,7 +30,7 @@ Coverage today is deepest on the knowledge side of agentic systems: how agents g
 
 ## An interactive textbook that lives in your repo
 
-A textbook's failure mode is the shelf: the knowledge exists, but it's nowhere near the context window when the design decision gets made. This one installs where the decisions happen. Clone it — or add it as a git submodule — next to your code, and put one routing line in your project's `CLAUDE.md` or `AGENTS.md`: *"for context, memory, or learning design decisions, consult the knowledge base first."* That's the whole integration. Plain markdown in git, written to be navigated by agents — claim-as-title headings, retrieval-oriented descriptions, curated indexes, typed links. No API, no service, no second runtime to trust.
+A textbook's failure mode is the shelf: the knowledge exists, but it's nowhere near the context window when the design decision gets made. This one installs where the decisions happen. Add it **inside** your repo — a git submodule, or a plain clone plus one `.gitignore` line — and put one routing line in your project's `CLAUDE.md` or `AGENTS.md`: *"For design decisions about agent context, memory, or learning, consult the knowledge base in `commonplace/kb/` first — start at `commonplace/kb/notes/tags-README.md`."* That's the whole integration. Inside the repo is load-bearing, not cosmetic: agent harnesses scope file access to the project root, so a sibling directory costs a permission prompt in every session, while a subdirectory is readable with none. Reading requires no tooling — the KB's commands and skills are for maintaining it, not consuming it. Plain markdown in git, written to be navigated by agents — claim-as-title headings, retrieval-oriented descriptions, curated indexes, typed links. No API, no service, no second runtime to trust.
 
 Then it's interactive in three ways:
 

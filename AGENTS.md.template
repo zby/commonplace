@@ -87,6 +87,10 @@ Entry points:
 
 <!-- Add curated tag READMEs here as they emerge. When 5+ related notes accumulate under a tag, create `kb/notes/<tag>-README.md` (type `kb/types/tag-readme.md`): an orientation paragraph plus selective picks with context phrases. It may declare validator-enforced marks — `complete: true` (links every tagged note) or `covered_by: [children]` (every tagged note carries a listed child tag); see `kb/types/tag-readme.md`. -->
 
+<!-- If this project also vendors the full Commonplace research KB as a read-only reference (see Commonplace INSTALL.md, "Reader install"), add its entry point here, e.g.:
+- `commonplace/kb/notes/tags-README.md` — vendored Commonplace research KB (read-only): agent context engineering, memory, deploy-time learning
+-->
+
 ```bash
 # Find notes by description
 rg "^description:" kb/notes/ kb/reference/ kb/instructions/ kb/commonplace/notes/ kb/commonplace/reference/ kb/commonplace/instructions/ --glob "*.md"
