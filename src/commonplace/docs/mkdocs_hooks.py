@@ -79,7 +79,6 @@ def on_files(files, config):
         pages = index_directory.collect_index_pages(
             collection,
             max_depth=COLLECTION_MAX_DEPTH.get(collection.name),
-            ignore_root=root,
         )
         for output_path, content in pages:
             src_uri = output_path.relative_to(docs_dir).as_posix()

@@ -1,12 +1,24 @@
-"""Shared path conventions for a Commonplace project."""
+"""Shared path conventions for a Commonplace project.
+
+Visibility is package-owned: hidden entries (dot-prefixed) and nested git
+repositories are invisible to every markdown walk, and repository-wide walks
+additionally skip common build/vendor artifact trees. Git is never consulted;
+gitignore rules do not affect what the tools see.
+"""
 
 from __future__ import annotations
 
 import os
-import subprocess
 from collections.abc import Iterator
-from functools import lru_cache
 from pathlib import Path
+
+
+# Directory names pruned from repository-wide markdown walks: build and vendor
+# trees that are never knowledge content. Collection walks under kb/ do not
+# apply these; they only matter when sweeping the whole repository.
+REPO_ARTIFACT_DIR_NAMES = frozenset(
+    {"build", "dist", "node_modules", "site", "tmp", "__pycache__"}
+)
 
 
 def kb_root(root: Path) -> Path:
@@ -22,17 +34,14 @@ def collection_dirs(root: Path) -> list[Path]:
     support directories such as kb/reports/ are ignored unless they explicitly
     opt in as collections.
     """
-    boundary = kb_root(root)
+    boundary = kb_root(root).resolve()
     if not boundary.is_dir():
         raise FileNotFoundError(f"KB root does not exist: {boundary}")
     return sorted(
         path.parent
-        for path in iter_unignored_markdown_files(boundary, ignore_root=root)
-        if not any(
-            part.startswith(".") or part == "types"
-            for part in path.relative_to(boundary).parts
-        )
-        and path.name == "COLLECTION.md"
+        for path in iter_visible_markdown_files(boundary)
+        if path.name == "COLLECTION.md"
+        and "types" not in path.relative_to(boundary).parts
     )
 
 
@@ -51,17 +60,6 @@ def collection_for_path(path: Path, root: Path) -> Path:
             return current
         current = current.parent
     raise ValueError(f"Path is not inside a KB collection: {path}")
-
-
-def is_nested_git_repo(path: Path, boundary: Path) -> bool:
-    """Return True when path lives inside a nested git repository under boundary."""
-    resolved_boundary = boundary.resolve()
-    current = path.resolve().parent
-    while current != resolved_boundary and resolved_boundary in current.parents:
-        if (current / ".git").exists():
-            return True
-        current = current.parent
-    return False
 
 
 def is_type_definition_content(path: Path, boundary: Path) -> bool:
@@ -95,19 +93,19 @@ def is_collection_dir(path: Path) -> bool:
 
 
 def list_collection_note_paths(collection: Path) -> list[Path]:
-    """Return markdown note paths under a collection, excluding nested repos,
-    types, and replaced archives."""
+    """Return markdown note paths under a collection, excluding types, replaced
+    archives, and stale generated dir-index pages (build-time-only, ADR 025)."""
     if not collection.is_dir():
         raise FileNotFoundError(f"Collection directory does not exist: {collection}")
     if not is_collection_dir(collection):
         raise ValueError(f"Directory is not a KB collection: {collection}")
     return sorted(
         path
-        for path in iter_unignored_markdown_files(collection)
-        if not is_nested_git_repo(path, collection)
-        and not is_type_definition_content(path, collection)
+        for path in iter_visible_markdown_files(collection)
+        if not is_type_definition_content(path, collection)
         and not is_collection_metadata(path)
         and not is_replaced_archive(path)
+        and path.name != "dir-index.md"
     )
 
 
@@ -140,80 +138,50 @@ def list_notes_collection_paths(root: Path) -> list[Path]:
 
 
 def find_repo_markdown_files(root: Path) -> list[Path]:
-    """Return markdown files under a repository, excluding nested git repositories."""
-    resolved = root.resolve()
+    """Return markdown files under a repository.
+
+    Excludes hidden entries, nested git repositories, and build/vendor
+    artifact trees (`REPO_ARTIFACT_DIR_NAMES`).
+    """
     return sorted(
-        path
-        for path in iter_unignored_markdown_files(resolved, ignore_root=resolved)
-        if not is_nested_git_repo(path, resolved)
+        iter_visible_markdown_files(root, exclude_dir_names=REPO_ARTIFACT_DIR_NAMES)
     )
 
 
-@lru_cache(maxsize=None)
-def is_git_ignored(path: Path, root: Path | None = None) -> bool:
-    """Return True when Git ignore rules exclude `path`.
-
-    Git is the source of truth because .gitignore syntax is richer than the
-    small subset this package should own. Outside a Git worktree, paths are
-    treated as visible so Commonplace can still operate in plain directories.
-    """
-    check_root = (root or path.parent).resolve()
-    try:
-        result = subprocess.run(
-            [
-                "git",
-                "-C",
-                str(check_root),
-                "check-ignore",
-                "--quiet",
-                "--no-index",
-                "--",
-                str(path.resolve()),
-            ],
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
-            check=False,
-        )
-    except (FileNotFoundError, OSError):
-        return False
-    return result.returncode == 0
-
-
-def walk_unignored(
+def walk_visible(
     root: Path,
     *,
-    ignore_root: Path | None = None,
+    exclude_dir_names: frozenset[str] = frozenset(),
 ) -> Iterator[tuple[Path, list[str], list[str]]]:
-    """Yield an os.walk stream with gitignored directories pruned."""
-    resolved_root = root.resolve()
-    resolved_ignore_root = (ignore_root or resolved_root).resolve()
-    if is_git_ignored(resolved_root, resolved_ignore_root):
-        return
+    """Yield an os.walk stream over visible entries.
 
-    for current, dirnames, filenames in os.walk(resolved_root):
+    Prunes hidden directories (dot-prefixed), nested git repositories, and any
+    directory whose name is in `exclude_dir_names`.
+    """
+    for current, dirnames, filenames in os.walk(root.resolve()):
         current_path = Path(current)
         dirnames[:] = sorted(
             dirname
             for dirname in dirnames
-            if not is_git_ignored(current_path / dirname, resolved_ignore_root)
+            if not dirname.startswith(".")
+            and dirname not in exclude_dir_names
+            and not (current_path / dirname / ".git").exists()
         )
         yield current_path, dirnames, sorted(filenames)
 
 
-def iter_unignored_markdown_files(
+def iter_visible_markdown_files(
     root: Path,
     *,
-    ignore_root: Path | None = None,
+    exclude_dir_names: frozenset[str] = frozenset(),
 ) -> Iterator[Path]:
-    """Yield visible markdown files below `root`, pruning gitignored directories."""
-    resolved_ignore_root = (ignore_root or root).resolve()
-    for current, _dirnames, filenames in walk_unignored(
-        root, ignore_root=resolved_ignore_root
+    """Yield visible markdown files below `root` (see `walk_visible`)."""
+    for current, _dirnames, filenames in walk_visible(
+        root, exclude_dir_names=exclude_dir_names
     ):
         for filename in filenames:
-            path = current / filename
-            if path.suffix == ".md" and not is_git_ignored(path, resolved_ignore_root):
-                yield path
+            if filename.endswith(".md") and not filename.startswith("."):
+                yield current / filename
 
 
 def resolve_note(arg: str, root: Path) -> Path:

@@ -63,6 +63,39 @@ def test_list_collection_note_paths_skips_nested_repos_and_type_dirs(tmp_path: P
     assert nested_template not in discovered
 
 
+def test_list_collection_note_paths_skips_hidden_entries_and_stale_dir_indexes(
+    tmp_path: Path,
+) -> None:
+    collection_root = collection(tmp_path / "kb" / "notes")
+    kept = write(collection_root / "kept.md")
+    hidden_dir_note = write(collection_root / ".obsidian" / "workspace.md")
+    hidden_file = write(collection_root / ".draft.md")
+    stale_dir_index = write(collection_root / "dir-index.md")
+
+    discovered = project_paths.list_collection_note_paths(collection_root)
+
+    assert kept in discovered
+    assert hidden_dir_note not in discovered
+    assert hidden_file not in discovered
+    assert stale_dir_index not in discovered
+
+
+def test_find_repo_markdown_files_skips_artifact_trees_and_hidden_dirs(tmp_path: Path) -> None:
+    kept = write(tmp_path / "kb" / "notes" / "note.md")
+    top_level = write(tmp_path / "README.md")
+    venv_doc = write(tmp_path / ".venv" / "lib" / "pkg" / "README.md")
+    site_doc = write(tmp_path / "site" / "notes" / "note.md")
+    tmp_doc = write(tmp_path / "tmp" / "scratch.md")
+
+    discovered = project_paths.find_repo_markdown_files(tmp_path)
+
+    assert kept in discovered
+    assert top_level in discovered
+    assert venv_doc not in discovered
+    assert site_doc not in discovered
+    assert tmp_doc not in discovered
+
+
 def test_list_kb_note_paths_spans_all_content_collections(tmp_path: Path) -> None:
     collection(tmp_path / "kb" / "notes")
     collection(tmp_path / "kb" / "sources")

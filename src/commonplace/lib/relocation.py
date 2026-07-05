@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import os
 import re
-import subprocess
 import sys
 from pathlib import Path
 
@@ -238,29 +237,9 @@ def update_mkdocs_config(
     return new_content, changes
 
 
-def move_path(source: Path, destination: Path, *, repo_root: Path) -> str:
+def move_path(source: Path, destination: Path) -> None:
     destination.parent.mkdir(parents=True, exist_ok=True)
-    try:
-        subprocess.run(
-            [
-                "git",
-                "mv",
-                str(source.relative_to(repo_root)),
-                str(destination.relative_to(repo_root)),
-            ],
-            cwd=repo_root,
-            check=True,
-            capture_output=True,
-            text=True,
-        )
-        return "git mv"
-    except (FileNotFoundError, subprocess.CalledProcessError):
-        source.rename(destination)
-        return "rename"
-
-
-def move_note(source: Path, destination: Path, *, repo_root: Path) -> str:
-    return move_path(source, destination, repo_root=repo_root)
+    source.rename(destination)
 
 
 def resolve_directory(arg: str, *, repo_root: Path, kb_root: Path) -> Path:
@@ -498,25 +477,7 @@ def relocate_directory(
         print("\nThis was a dry run. Pass --apply to execute.")
         return 0
 
-    # Execute: git mv the whole directory
-    try:
-        subprocess.run(
-            [
-                "git",
-                "mv",
-                str(source.relative_to(repo_root)),
-                str(destination.relative_to(repo_root)),
-            ],
-            cwd=repo_root,
-            check=True,
-            capture_output=True,
-            text=True,
-        )
-        strategy = "git mv"
-    except (FileNotFoundError, subprocess.CalledProcessError):
-        destination.parent.mkdir(parents=True, exist_ok=True)
-        source.rename(destination)
-        strategy = "rename"
+    move_path(source, destination)
 
     # Write updated markdown files (targets reflect post-move locations)
     for _, (target, updated, _changes) in markdown_updates.items():
@@ -526,8 +487,7 @@ def relocate_directory(
     if mkdocs_updated is not None:
         mkdocs_config.write_text(mkdocs_updated, encoding="utf-8")
 
-    print(f"\nMove strategy: {strategy}")
-    print("Done.")
+    print("\nDone.")
     return 0
 
 
@@ -605,11 +565,10 @@ def relocate_note(
         print("\nThis was a dry run. Pass --apply to execute.")
         return 0
 
-    strategy = move_note(source, destination, repo_root=repo_root)
+    move_path(source, destination)
     for path, (updated, _changes) in markdown_updates.items():
         target = destination if path.resolve() == source else path
         target.write_text(updated, encoding="utf-8")
     mkdocs_config.write_text(mkdocs_updated, encoding="utf-8")
-    print(f"\nMove strategy: {strategy}")
-    print("Done.")
+    print("\nDone.")
     return 0

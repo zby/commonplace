@@ -10,9 +10,8 @@ from pathlib import Path
 from commonplace.lib.project_paths import (
     collection_for_path,
     is_collection_dir,
-    is_nested_git_repo,
     is_type_definition_content,
-    iter_unignored_markdown_files,
+    iter_visible_markdown_files,
     kb_root,
     list_collection_note_paths,
     list_kb_note_paths,
@@ -161,10 +160,10 @@ def validate_collection_structure(collection: Path, *, repo_root: Path) -> list[
         return []
 
     failures: list[str] = []
-    for path in iter_unignored_markdown_files(collection, ignore_root=repo_root):
+    for path in iter_visible_markdown_files(collection):
         if path.name != "COLLECTION.md" or path.parent == collection:
             continue
-        if is_nested_git_repo(path, collection) or is_type_definition_content(path, collection):
+        if is_type_definition_content(path, collection):
             continue
         failures.append(
             "nested COLLECTION.md: "

@@ -160,10 +160,10 @@ Deterministic validation rules for KB notes. Used by `commonplace-validate`. The
 **`ParsedNote`** — dataclass bundling a note's `path`, `content`, `note_type`, `profile` (`TypeProfile`), and `document` (`ParsedDocument`).
 
 **`list_kb_note_paths(notes_root: Path) -> list[Path]`**
-Return all `.md` files under `notes_root`, skipping nested git repositories and `types/` template directories.
+Return all `.md` files under `notes_root`, skipping hidden entries, nested git repositories, and `types/` template directories. Visibility is package-owned (`project_paths.walk_visible`): hidden (dot-prefixed) entries and nested git repositories are always invisible, repo-wide walks additionally skip build/vendor artifact trees, and gitignore rules have no effect on what the tools see.
 
-**`is_nested_git_repo_content(path: Path, notes_root: Path) -> bool`** / **`is_type_definition_content(path: Path, notes_root: Path) -> bool`**
-Predicates used by `list_kb_note_paths` for the two skip rules.
+**`is_type_definition_content(path: Path, notes_root: Path) -> bool`**
+Predicate used by `list_kb_note_paths` for the `types/` skip rule.
 
 **`parse_note(path: Path, *, repo_root: Path) -> tuple[ParsedNote | None, str | None]`**
 Read a note, parse its frontmatter and body, resolve its type. Returns `(parsed, None)` on success or `(None, error_message)` on parse failure.
@@ -195,7 +195,7 @@ Move or rename a KB note: rewrite inbound and outbound links across the repo and
 ### Public API
 
 **`relocate_note(*, root: Path, note_arg: str, new_name: str | None = None, dest_path: str | None = None, apply: bool = False) -> int`**
-Top-level orchestrator. Resolves the source note from a path or unique stem, computes the destination, walks all repo markdown files to plan link rewrites, and either prints a dry-run plan or executes everything (file move via `git mv` if available, link rewrites, mkdocs update). Returns a process exit code.
+Top-level orchestrator. Resolves the source note from a path or unique stem, computes the destination, walks all repo markdown files to plan link rewrites, and either prints a dry-run plan or executes everything (file move, link rewrites, mkdocs update). Returns a process exit code.
 
 **`resolve_note(arg, *, root)`**
 Find a note by absolute path, repo-relative path, full filename, or unique stem. Searches the entire `kb/` tree, not just `kb/notes/`, so notes can be relocated between collections.
@@ -212,7 +212,7 @@ For the note that's being moved: rewrite each of its outbound relative links so 
 **`update_mkdocs_config(content, old_docs_path, new_docs_path) -> tuple[str, list[str]]`**
 Update `mkdocs.yml` in place: rewrite any matching `nav` entries and `redirect_maps` targets, and append a new redirect entry from `old_docs_path` to `new_docs_path`. Preserves indentation and quoting style.
 
-**`move_path(source, destination, *, repo_root)`** / **`move_note(source, destination, *, repo_root)`**
-Move a path on disk, preferring `git mv` and falling back to `Path.rename` if git isn't available. `move_note` is a thin wrapper kept separate so tests can monkeypatch it.
+**`move_path(source, destination)`**
+Move a path on disk with `Path.rename`, creating the destination's parent directories first. Git is not involved; it detects the rename on commit.
 
-The smaller helpers (`format_relative_link`, `iter_markdown_tokens`, `split_link_target`, `is_relative_markdown_target`, `resolve_directory`, `rewrite_links_to_moved_files`, `rebase_and_rewrite_in_moved_file`, `add_single_redirect`, `is_nested_git_repo_content`) are exported but rarely interesting outside the orchestrator.
+The smaller helpers (`format_relative_link`, `iter_markdown_tokens`, `split_link_target`, `is_relative_markdown_target`, `resolve_directory`, `rewrite_links_to_moved_files`, `rebase_and_rewrite_in_moved_file`, `add_single_redirect`) are exported but rarely interesting outside the orchestrator.

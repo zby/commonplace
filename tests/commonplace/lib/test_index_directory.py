@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import subprocess
 from pathlib import Path
 
 from commonplace.lib.index_directory import collect_index_pages, generate
@@ -10,16 +9,6 @@ def write(path: Path, content: str) -> Path:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(content, encoding="utf-8")
     return path
-
-
-def init_git_repo(path: Path) -> None:
-    subprocess.run(
-        ["git", "init"],
-        cwd=path,
-        check=True,
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL,
-    )
 
 
 def test_generate_directory_index_skips_readme_index_and_types(tmp_path: Path) -> None:
@@ -151,9 +140,7 @@ def test_collect_index_pages_max_depth_skips_nested_indexes(tmp_path: Path) -> N
     assert "- [skill-foo/](./skill-foo/SKILL.md)" in root_index
 
 
-def test_collect_index_pages_prunes_gitignored_directories(tmp_path: Path) -> None:
-    init_git_repo(tmp_path)
-    write(tmp_path / ".gitignore", "kb/reference/generated/\n")
+def test_collect_index_pages_prunes_hidden_dirs_and_nested_repos(tmp_path: Path) -> None:
     collection = tmp_path / "kb" / "reference"
     write(
         collection / "kept.md",
@@ -166,20 +153,25 @@ type: kb/types/note.md
 """,
     )
     write(
-        collection / "generated" / "ignored.md",
+        collection / ".hidden" / "invisible.md",
         """---
-description: Ignored note
+description: Hidden note
 type: kb/types/note.md
 ---
 
-# Ignored
+# Hidden
 """,
     )
-    pages = as_dict(collect_index_pages(collection, ignore_root=tmp_path))
+    write(collection / "vendored" / "cloned.md", "# Cloned\n")
+    (collection / "vendored" / ".git").mkdir()
+    pages = as_dict(collect_index_pages(collection))
 
     root_index = pages[collection / "dir-index.md"]
 
     assert "- [Kept](./kept.md) *(note)* - Kept note" in root_index
-    assert "generated/" not in root_index
-    assert "Ignored note" not in root_index
-    assert collection / "generated" / "dir-index.md" not in pages
+    assert ".hidden/" not in root_index
+    assert "Hidden note" not in root_index
+    assert "vendored/" not in root_index
+    assert "Cloned" not in root_index
+    assert collection / ".hidden" / "dir-index.md" not in pages
+    assert collection / "vendored" / "dir-index.md" not in pages

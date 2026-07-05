@@ -147,7 +147,7 @@ def test_resolve_destination_path_accepts_directory_target(tmp_path: Path) -> No
 
 
 def test_relocate_note_apply_leaves_review_state_rows_unchanged_and_paths_derived(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
 ) -> None:
     repo_root = tmp_path
     kb_root = repo_root / "kb"
@@ -160,13 +160,6 @@ def test_relocate_note_apply_leaves_review_state_rows_unchanged_and_paths_derive
     review_pair_id = seed_accepted_review(repo_root, db_path, note_path="kb/notes/old-note.md")
     with review_db.connect(db_path) as conn:
         rows_before = review_state_rows(conn)
-
-    def fake_move(source: Path, destination: Path, *, repo_root: Path) -> str:
-        destination.parent.mkdir(parents=True, exist_ok=True)
-        source.rename(destination)
-        return "rename"
-
-    monkeypatch.setattr(relocation, "move_note", fake_move)
 
     result = relocation.relocate_note(
         root=repo_root,
@@ -219,7 +212,7 @@ def test_relocate_note_apply_leaves_review_state_rows_unchanged_and_paths_derive
     ]
 
 
-def test_relocate_note_apply_moves_file_with_to_directory(tmp_path: Path, monkeypatch) -> None:
+def test_relocate_note_apply_moves_file_with_to_directory(tmp_path: Path) -> None:
     repo_root = tmp_path
     kb_root = repo_root / "kb"
     notes_root = kb_root / "notes"
@@ -233,13 +226,6 @@ See [concept](./definitions/concept.md)
     )
     write(notes_root / "definitions" / "concept.md", "# Concept\n")
     write(repo_root / "mkdocs.yml", "plugins:\n  - redirects:\n      redirect_maps:\n")
-
-    def fake_move(source: Path, destination: Path, *, repo_root: Path) -> str:
-        destination.parent.mkdir(parents=True, exist_ok=True)
-        source.rename(destination)
-        return "rename"
-
-    monkeypatch.setattr(relocation, "move_note", fake_move)
 
     result = relocation.relocate_note(
         root=repo_root,
@@ -256,9 +242,7 @@ See [concept](./definitions/concept.md)
     assert "[concept](../definitions/concept.md)" in relocated_text
 
 
-def test_relocate_note_apply_moves_note_across_kb_collections(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
-) -> None:
+def test_relocate_note_apply_moves_note_across_kb_collections(tmp_path: Path) -> None:
     repo_root = tmp_path
     kb_root = repo_root / "kb"
     notes_root = kb_root / "notes"
@@ -288,13 +272,6 @@ nav:
   - Doc System: notes/document-classification.md
 """,
     )
-
-    def fake_move(source_path: Path, destination_path: Path, *, repo_root: Path) -> str:
-        destination_path.parent.mkdir(parents=True, exist_ok=True)
-        source_path.rename(destination_path)
-        return "rename"
-
-    monkeypatch.setattr(relocation, "move_note", fake_move)
 
     result = relocation.relocate_note(
         root=repo_root,
