@@ -5,7 +5,11 @@ import sqlite3
 import subprocess
 from pathlib import Path
 
+import pytest
+
 from commonplace.lib import frontmatter
+from commonplace.review import review_db
+from commonplace.review.batch import prepare_grouped_review_job
 
 from ._run_cli import run_cli
 
@@ -462,11 +466,6 @@ status: current
 
 
 def test_prepare_note_packed_job_rejects_mixed_notes_and_fails_the_job(tmp_path: Path) -> None:
-    import pytest
-
-    from commonplace.review import review_db
-    from commonplace.review.batch import prepare_grouped_review_job
-
     repo = tmp_path / "repo"
     make_note(repo / "kb" / "notes" / "first.md", "First")
     make_note(repo / "kb" / "notes" / "second.md", "Second")

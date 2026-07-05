@@ -29,7 +29,7 @@ def _insert_completed_job(
                 gate_path=source_gate_path(gate_id),
                 pair_ordinal=ordinal,
             )
-            for ordinal, gate_id in enumerate(gate_ids)
+            for ordinal, gate_id in enumerate(gate_ids, start=1)
         ],
     )
     review_db.complete_review_pairs(

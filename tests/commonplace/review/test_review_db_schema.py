@@ -241,7 +241,7 @@ def test_current_acceptance_view_filters_incomplete_jobs_and_null_decisions(tmp_
                 review_db.ReviewPairRequest(
                     note_path="kb/notes/queued.md",
                     gate_path="kb/instructions/review-gates/semantic/internal-consistency.md",
-                    pair_ordinal=0,
+                    pair_ordinal=1,
                 )
             ],
         )
@@ -278,7 +278,7 @@ def test_current_acceptance_view_filters_incomplete_jobs_and_null_decisions(tmp_
                 review_db.ReviewPairRequest(
                     note_path="kb/notes/null-decision.md",
                     gate_path="kb/instructions/review-gates/semantic/internal-consistency.md",
-                    pair_ordinal=0,
+                    pair_ordinal=1,
                 )
             ],
         )
@@ -370,7 +370,7 @@ def test_load_review_job_exposes_created_at(tmp_path: Path) -> None:
                 review_db.ReviewPairRequest(
                     note_path="kb/notes/pending.md",
                     gate_path="kb/instructions/review-gates/prose/pending.md",
-                    pair_ordinal=0,
+                    pair_ordinal=1,
                 )
             ],
         )

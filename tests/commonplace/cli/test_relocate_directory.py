@@ -237,8 +237,8 @@ def test_relocate_directory_apply_leaves_review_state_rows_unchanged_and_paths_d
         "kb/reports/bundle-reviews/review-job-2/bundle-output.md",
     ]
     assert [pair.result_path for pair in old_foo_pairs + old_bar_pairs] == [
-        "kb/reports/bundle-reviews/review-job-1/pair-0-source-residue.md",
-        "kb/reports/bundle-reviews/review-job-2/pair-0-source-residue.md",
+        "kb/reports/bundle-reviews/review-job-1/pair-1-source-residue.md",
+        "kb/reports/bundle-reviews/review-job-2/pair-1-source-residue.md",
     ]
 
     stale = review_target_selector.select_stale_gates(
