@@ -100,6 +100,9 @@ def _render_markdown(data: dict) -> str:
     body = str(data.get("body") or "").strip()
     if body:
         lines.append(body[:10000])
+        if len(body) > 10000:
+            lines.append("")
+            lines.append("*(body truncated at 10000 characters; full text in the JSON source)*")
     else:
         lines.append("(no body)")
     lines.append("")

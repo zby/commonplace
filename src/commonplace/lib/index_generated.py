@@ -50,8 +50,8 @@ def collect_notes_by_tag(
         if "types" in rel_parts or ".collection" in rel_parts:
             continue
 
-        tags = fm.get(FIELD_NAME, [])
-        if not tags:
+        tags = fm.get(FIELD_NAME)
+        if not isinstance(tags, list) or not tags:
             continue
 
         title = extract_title(strip_frontmatter(content))

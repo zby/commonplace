@@ -26,13 +26,21 @@ class FrontmatterResult:
         return not self.errors
 
 
-_FM_RE = re.compile(r"^---\n(.*?)\n---(?:\n|$)", re.DOTALL)
+# CRLF-tolerant: a note saved with Windows line endings must parse as
+# frontmatter, not silently fall through to the untyped-text path.
+_FM_RE = re.compile(r"^---\r?\n(.*?)\r?\n---\r?(?:\n|$)", re.DOTALL)
+_FM_OPEN_RE = re.compile(r"^---\r?\n")
+
+
+def opens_frontmatter(content: str) -> bool:
+    """True when content starts with a frontmatter opening delimiter."""
+    return _FM_OPEN_RE.match(content) is not None
 
 
 def parse(content: str) -> FrontmatterResult:
     match = _FM_RE.match(content)
     if match is None:
-        if content.startswith("---\n"):
+        if opens_frontmatter(content):
             return FrontmatterResult(errors=["frontmatter: missing closing delimiter"])
         return FrontmatterResult()
 
