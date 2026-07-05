@@ -6,13 +6,13 @@ from __future__ import annotations
 import os
 import sqlite3
 from dataclasses import dataclass
-from datetime import UTC, datetime
 from hashlib import sha256
 from importlib import resources
 from pathlib import Path
 from typing import Sequence
 
 from commonplace.review.artifacts import bundle_output_path_rel, prompt_path_rel, result_paths_by_pair_id
+from commonplace.review.clock import iso_now
 from commonplace.review.paths import gate_id_from_stored_path
 from commonplace.review.review_model import build_model_partition, normalize_model_partition, normalize_reasoning_effort
 from commonplace.review.review_schema import init_db
@@ -142,6 +142,7 @@ class _ReviewPairPathInput:
     review_pair_id: int
     note_path: str
     gate_path: str
+    pair_ordinal: int
 
 
 @dataclass(frozen=True)
@@ -193,10 +194,6 @@ def prepare_review_db(repo_root: Path, db_override: str | None = None) -> Path:
     return db_path
 
 
-def _now_utc_iso() -> str:
-    return datetime.now(UTC).isoformat()
-
-
 def _placeholders(values: Sequence[object]) -> str:
     return ", ".join("?" for _ in values)
 
@@ -213,7 +210,6 @@ def snapshot_file(conn: sqlite3.Connection, *, repo_root: Path, path: str) -> Re
         raise ValueError(f"snapshot path must be repo-relative: {path}")
     content_text = (repo_root / normalized_path).read_text(encoding="utf-8")
     content_sha256 = sha256(content_text.encode("utf-8")).hexdigest()
-    captured_at = _now_utc_iso()
     conn.execute(
         """
         INSERT OR IGNORE INTO review_file_snapshots (
@@ -223,18 +219,7 @@ def snapshot_file(conn: sqlite3.Connection, *, repo_root: Path, path: str) -> Re
             captured_at
         ) VALUES (?, ?, ?, ?)
         """,
-        (normalized_path, content_sha256, content_text, captured_at),
-    )
-    conn.execute(
-        """
-        UPDATE review_file_snapshots
-        SET content_text = ?,
-            captured_at = ?
-        WHERE path = ?
-          AND content_sha256 = ?
-          AND content_text IS NULL
-        """,
-        (content_text, captured_at, normalized_path, content_sha256),
+        (normalized_path, content_sha256, content_text, iso_now()),
     )
     row = conn.execute(
         """
@@ -298,6 +283,7 @@ def _result_paths_for_review_jobs(conn: sqlite3.Connection, review_job_ids: set[
             rp.review_job_id,
             rp.note_path,
             rp.gate_path,
+            rp.pair_ordinal,
             j.packing
         FROM review_pairs AS rp
         JOIN review_jobs AS j
@@ -318,6 +304,7 @@ def _result_paths_for_review_jobs(conn: sqlite3.Connection, review_job_ids: set[
                 review_pair_id=int(row["review_pair_id"]),
                 note_path=str(row["note_path"]),
                 gate_path=str(row["gate_path"]),
+                pair_ordinal=int(row["pair_ordinal"]),
             )
         )
 
@@ -506,15 +493,7 @@ def load_review_pairs_for_job(conn: sqlite3.Connection, *, review_job_id: int) -
     return _review_pairs_from_rows(conn, rows)
 
 
-def load_completed_review_pairs_for_job(conn: sqlite3.Connection, *, review_job_id: int) -> list[ReviewPairRow]:
-    job = load_review_job(conn, review_job_id=review_job_id)
-    if job is None or job.status != "completed":
-        return []
-    return [pair for pair in load_review_pairs_for_job(conn, review_job_id=review_job_id) if pair.decision is not None]
-
-
-def _job_plan_from_job(conn: sqlite3.Connection, job: ReviewJobRow, *, require_paths: bool) -> ReviewJobPlan:
-    _ = require_paths
+def _job_plan_from_job(conn: sqlite3.Connection, job: ReviewJobRow) -> ReviewJobPlan:
     pairs = tuple(load_review_pairs_for_job(conn, review_job_id=job.review_job_id))
     return ReviewJobPlan(
         review_job_id=job.review_job_id,
@@ -538,12 +517,11 @@ def load_review_job_plan(
     conn: sqlite3.Connection,
     *,
     review_job_id: int,
-    require_paths: bool = False,
 ) -> ReviewJobPlan | None:
     job = load_review_job(conn, review_job_id=review_job_id)
     if job is None:
         return None
-    return _job_plan_from_job(conn, job, require_paths=require_paths)
+    return _job_plan_from_job(conn, job)
 
 
 def list_review_job_plans(
@@ -551,7 +529,6 @@ def list_review_job_plans(
     *,
     status: str | None = None,
     model_partition: str | None = None,
-    require_paths: bool = False,
 ) -> list[ReviewJobPlan]:
     where_clauses: list[str] = []
     params: list[str] = []
@@ -582,10 +559,7 @@ def list_review_job_plans(
         """,
         tuple(params),
     ).fetchall()
-    return [
-        _job_plan_from_job(conn, _review_job_from_row(row), require_paths=require_paths)
-        for row in rows
-    ]
+    return [_job_plan_from_job(conn, _review_job_from_row(row)) for row in rows]
 
 
 def load_current_acceptances(conn: sqlite3.Connection) -> dict[tuple[str, str, str], AcceptanceState]:

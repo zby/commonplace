@@ -12,6 +12,7 @@ from commonplace.review.freshness import (
     GateSnapshot,
     NoteSnapshot,
     classify_staleness,
+    content_sha256_for_text,
     file_content_sha256,
 )
 from commonplace.review.paths import gate_id_for_path, gate_id_from_stored_path, normalize_gate_path, review_gates_dir
@@ -259,6 +260,8 @@ def select_stale_gates(
         )
         if type_spec_path is not None:
             gate_paths_for_note.append(type_spec_path)
+        current_note_text: str | None = None
+        current_note_hash: str | None = None
         for gate_path in gate_paths_for_note:
             gate_abs = repo_root / gate_path
             if not gate_abs.is_file():
@@ -277,7 +280,9 @@ def select_stale_gates(
             if acceptance_snapshot is None:
                 stale.append(StaleGate(note_path, gate_path, "missing-review"))
                 continue
-            current_note_hash = file_content_sha256(note_abs)
+            if current_note_hash is None:
+                current_note_text = note_abs.read_text(encoding="utf-8")
+                current_note_hash = content_sha256_for_text(current_note_text)
             current_gate_hash = file_content_sha256(gate_abs)
             note_snapshot = NoteSnapshot(path=note_path, content_hash=current_note_hash)
             gate_snapshot = GateSnapshot(id=gate_path, content_hash=current_gate_hash)
@@ -288,16 +293,15 @@ def select_stale_gates(
             )
             if staleness is None:
                 continue
-            if staleness.reason == "note-changed":
-                assert acceptance is not None
-                diff = None
-                if include_diff:
-                    if acceptance.accepted_note_text is not None:
-                        current_text = note_abs.read_text(encoding="utf-8")
-                        diff = note_diff_from_text(note_path, acceptance.accepted_note_text, current_text)
-                stale.append(StaleGate(note_path, gate_path, staleness.reason, diff=diff))
-                continue
-            stale.append(StaleGate(note_path, gate_path, staleness.reason))
+            diff = None
+            if (
+                staleness.reason == "note-changed"
+                and include_diff
+                and acceptance.accepted_note_text is not None
+                and current_note_text is not None
+            ):
+                diff = note_diff_from_text(note_path, acceptance.accepted_note_text, current_note_text)
+            stale.append(StaleGate(note_path, gate_path, staleness.reason, diff=diff))
 
     return sorted(stale, key=lambda s: (s.note_path, s.gate_path))
 

@@ -40,3 +40,47 @@ Grounding needs one citation.
 def test_parse_review_decision_rejects_non_strict_live_output(review_text: str, message: str) -> None:
     with pytest.raises(ValueError, match=message):
         decisions.parse_review_decision(review_text)
+
+
+def test_parse_review_decision_tolerates_bare_prose_word_lines() -> None:
+    review_text = """### Summary
+Fine note.
+
+### Findings
+- info: minor thing
+
+### Suggested Revision
+none
+
+## Result: PASS
+"""
+
+    assert decisions.parse_review_decision(review_text) == "pass"
+
+
+@pytest.mark.parametrize("word", ["none", "Approved", "Summary", "ok"])
+def test_parse_review_decision_tolerates_single_word_body_line(word: str) -> None:
+    review_text = f"""### Summary
+{word}
+
+## Result: WARN
+"""
+
+    assert decisions.parse_review_decision(review_text) == "warn"
+
+
+@pytest.mark.parametrize(
+    "line",
+    ["## result: PASS", "verdict: pass", "- outcome: warn", "**revised verdict**", "UNKNOWN"],
+)
+def test_parse_review_decision_rejects_result_aliases_case_insensitively(line: str) -> None:
+    review_text = f"""### Summary
+Done.
+
+{line}
+
+## Result: PASS
+"""
+
+    with pytest.raises(ValueError, match="invalid result signal"):
+        decisions.parse_review_decision(review_text)

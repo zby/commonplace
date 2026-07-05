@@ -65,3 +65,15 @@ Note the note-packing analog: `result_filename` uses the bare gate basename with
 3. Unify clocks on UTC.
 4. Dead-code sweep (mechanical).
 5. Remaining robustness and efficiency items as touched.
+
+## Resolution (same day)
+
+Fixed in the follow-up commit on this branch:
+
+- **B1** — alias branches of `_RESULTISH_LINE_RE` moved into a scoped `(?i:...)` group; the caps-word branch is case-sensitive again. Regression tests cover bare prose words ("none", "Approved") and case-insensitive alias rejection.
+- **B2** — result filenames are now `pair-{ordinal}-{stem}.md`, a pure function of the pair row; `_note_filename`, `all_note_paths`, and the note/gate asymmetry are gone. Regression test pins path stability under sibling pruning. Note: existing local `kb/reports/bundle-reviews/` dirs use the old names, so previously accepted reviews' warn text will not resolve until pairs are re-reviewed or re-finalized (accepted decisions and freshness are unaffected — those live in the DB).
+- **Clocks** — `clock.iso_now()` is UTC and is now the single review-state clock (`review_db._now_utc_iso` removed).
+- **Dead code removed** — `encode_stage_filename`, `write_pair_result_files`, `load_completed_review_pairs_for_job`, `require_paths`, `canonical_markdown` + `rewrite_pair_result_footers`, and `snapshot_file`'s rehydrate-NULL branch (with its self-seeding test). `load_review_pairs_for_note` kept: relocate tests use it as their assertion surface.
+- **Robustness/efficiency** — `prepare_grouped_review_job` fails the queued job on artifact-write `OSError`s too, and note packing rejects mixed-note pair lists; `has_only_unwatched_changes` reduced to "no watched part changed" so whitespace-only churn qualifies for trivial ack; `warn_selector` extracts warns once per review; `create_review_jobs` loads created plans by id instead of scanning all jobs; `select_stale_gates` hashes each note once instead of once per gate.
+
+Still open (deliberately untouched): five-way path-validation duplication, `requires_trait`/`requires-type` key convergence (needs a gate-frontmatter migration), per-run gate-metadata caching in `applicable_gate_ids_for_note`, and the `attach_execution_data` edge cases.

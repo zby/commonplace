@@ -56,7 +56,6 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
             conn,
             status=args.status,
             model_partition=model_partition,
-            require_paths=False,
         )
 
     jobs = [_job_payload(plan, include_timestamps=True) for plan in plans]

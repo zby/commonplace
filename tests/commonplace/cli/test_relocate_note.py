@@ -205,7 +205,7 @@ def test_relocate_note_apply_leaves_review_state_rows_unchanged_and_paths_derive
     assert "result_path" not in rows_after["review_pairs"][0]
     assert plan.prompt_path == "kb/reports/bundle-reviews/review-job-1/prompt.md"
     assert plan.bundle_output_path == "kb/reports/bundle-reviews/review-job-1/bundle-output.md"
-    assert old_pairs[0].result_path == "kb/reports/bundle-reviews/review-job-1/source-residue.md"
+    assert old_pairs[0].result_path == "kb/reports/bundle-reviews/review-job-1/pair-0-source-residue.md"
 
     stale = review_target_selector.select_stale_gates(
         repo_root,

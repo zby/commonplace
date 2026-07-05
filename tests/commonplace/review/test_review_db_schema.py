@@ -452,33 +452,6 @@ def test_attach_execution_data_validates_runner_model_partition(tmp_path: Path) 
     assert row["runner_effort"] == "high"
 
 
-def test_snapshot_file_rehydrates_hash_only_snapshot_rows(tmp_path: Path) -> None:
-    db_path = tmp_path / "review-store.sqlite"
-    repo = tmp_path / "repo"
-    repo.mkdir()
-    note = repo / "kb" / "notes" / "sample.md"
-    note.parent.mkdir(parents=True)
-    note.write_text("rehydrate me\n", encoding="utf-8")
-
-    review_db.ensure_db(db_path)
-
-    with review_db.connect(db_path) as conn:
-        first = review_db.snapshot_file(conn, repo_root=repo, path="kb/notes/sample.md")
-        conn.execute(
-            "UPDATE review_file_snapshots SET content_text = NULL WHERE snapshot_id = ?",
-            (first.snapshot_id,),
-        )
-        second = review_db.snapshot_file(conn, repo_root=repo, path="kb/notes/sample.md")
-        stored_text = conn.execute(
-            "SELECT content_text FROM review_file_snapshots WHERE snapshot_id = ?",
-            (first.snapshot_id,),
-        ).fetchone()[0]
-
-    assert second.snapshot_id == first.snapshot_id
-    assert second.content_text == "rehydrate me\n"
-    assert stored_text == "rehydrate me\n"
-
-
 def test_prune_superseded_acceptances_deletes_unreferenced_snapshots(tmp_path: Path) -> None:
     db_path = tmp_path / "review-store.sqlite"
     repo = tmp_path / "repo"

@@ -13,17 +13,11 @@ MANIFEST_NAME = "MANIFEST.json"
 BUNDLE_ARTIFACTS_ROOT = Path("kb/reports/bundle-reviews")
 
 
-class ReviewPairForManifest(Protocol):
-    review_pair_id: int
-    note_path: str
-    gate_path: str
-    result_path: str | None
-
-
 class ReviewPairForPath(Protocol):
     review_pair_id: int
     note_path: str
     gate_path: str
+    pair_ordinal: int
 
 
 class ReviewJobForResult(Protocol):
@@ -41,8 +35,8 @@ class ReviewPairForResult(Protocol):
     note_path: str
     gate_path: str
     model_partition: str
+    pair_ordinal: int
     decision: str | None
-    result_path: str | None
     reviewed_at: str | None
 
 
@@ -72,30 +66,26 @@ def manifest_path_rel(review_job_id: int) -> str:
     return f"{review_job_artifact_dir_rel(review_job_id)}/{MANIFEST_NAME}"
 
 
-def encode_stage_filename(gate_path: str) -> str:
-    return Path(gate_path).with_suffix("").as_posix().replace("/", "__") + ".md"
-
-
-def _note_filename(note_path: str, all_note_paths: Sequence[str]) -> str:
-    name = Path(note_path).name
-    all_names = [Path(path).name for path in all_note_paths]
-    if all_names.count(name) == 1:
-        return name
-    return note_path.replace("/", "__")
-
-
 def result_filename(
     *,
     packing: str,
     note_path: str,
     gate_path: str,
-    all_note_paths: Sequence[str],
+    pair_ordinal: int,
 ) -> str:
+    """Per-pair result filename, a pure function of the pair row.
+
+    The ordinal guarantees uniqueness inside the job; the stem names the
+    axis that varies within the packing. Deriving from the pair row alone
+    keeps the filename stable when sibling pairs are later pruned.
+    """
     if packing == "note":
-        return Path(gate_path).name
-    if packing == "gate":
-        return _note_filename(note_path, all_note_paths)
-    raise ValueError(f"unsupported review job packing: {packing}")
+        stem = Path(gate_path).stem
+    elif packing == "gate":
+        stem = Path(note_path).stem
+    else:
+        raise ValueError(f"unsupported review job packing: {packing}")
+    return f"pair-{pair_ordinal}-{stem}.md"
 
 
 def result_path(
@@ -104,11 +94,11 @@ def result_path(
     packing: str,
     note_path: str,
     gate_path: str,
-    all_note_paths: Sequence[str],
+    pair_ordinal: int,
 ) -> str:
     return (
         f"{review_job_artifact_dir_rel(review_job_id)}/"
-        f"{result_filename(packing=packing, note_path=note_path, gate_path=gate_path, all_note_paths=all_note_paths)}"
+        f"{result_filename(packing=packing, note_path=note_path, gate_path=gate_path, pair_ordinal=pair_ordinal)}"
     )
 
 
@@ -118,14 +108,13 @@ def result_paths_by_pair_id(
     packing: str,
     pairs: Sequence[ReviewPairForPath],
 ) -> dict[int, str]:
-    all_note_paths = [pair.note_path for pair in pairs]
     return {
         pair.review_pair_id: result_path(
             review_job_id=review_job_id,
             packing=packing,
             note_path=pair.note_path,
             gate_path=pair.gate_path,
-            all_note_paths=all_note_paths,
+            pair_ordinal=pair.pair_ordinal,
         )
         for pair in pairs
     }
@@ -140,31 +129,6 @@ def repo_relative_path(repo_root: Path, relative_path: str, *, label: str) -> Pa
     if not target.is_relative_to(repo_root_resolved):
         raise ValueError(f"{label} escapes repo root: {relative_path}")
     return target
-
-
-def write_pair_result_files(
-    *,
-    artifact_dir: Path,
-    packing: str,
-    pairs: Sequence[tuple[str, str]],
-    canonical_texts: dict[tuple[str, str], str],
-) -> None:
-    all_note_paths = [note_path for note_path, _ in pairs]
-    artifact_dir.mkdir(parents=True, exist_ok=True)
-    for note_path, gate_path in pairs:
-        review_text = canonical_texts.get((note_path, gate_path))
-        if review_text is None:
-            continue
-        filename = result_filename(
-            packing=packing,
-            note_path=note_path,
-            gate_path=gate_path,
-            all_note_paths=all_note_paths,
-        )
-        output_path = (artifact_dir / filename).resolve()
-        if not output_path.is_relative_to(artifact_dir.resolve()):
-            raise ValueError(f"result filename escapes artifact dir: {filename}")
-        output_path.write_text(review_text, encoding="utf-8")
 
 
 def result_frontmatter(
@@ -232,7 +196,7 @@ def write_manifest(
     packing: str,
     prompt_path: str,
     bundle_output_path: str,
-    pairs: Sequence[ReviewPairForManifest],
+    pairs: Sequence[ReviewPairForPath],
     skipped: Sequence[SkippedPairForManifest] | None = None,
     failure_reason: str | None = None,
 ) -> str:
@@ -253,7 +217,7 @@ def write_manifest(
             "note_path": pair.note_path,
             "gate_path": pair.gate_path,
             "status": pair_display_status,
-            "result_path": pair.result_path or result_paths[pair.review_pair_id],
+            "result_path": result_paths[pair.review_pair_id],
         }
         if failure_reason is not None:
             item["failure_reason"] = failure_reason

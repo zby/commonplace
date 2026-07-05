@@ -214,6 +214,9 @@ status: current
         ({"title": "Updated title"}, {"title"}, False),
         ({"description": "Updated description"}, {"title", "description"}, False),
         ({"tags": "[computational-model]"}, {"title", "description"}, True),
+        # Whitespace-only churn alters the hash but no parsed part; it is the
+        # most trivial change of all and must qualify.
+        ({"body": "Body.   \n\n"}, {"body", "title", "description"}, True),
     ],
 )
 def test_has_only_unwatched_changes_respects_gate_watch_fields(
