@@ -2,7 +2,7 @@
 
 Two installs, by what you want from it:
 
-- **Reader install** — vendor the Commonplace knowledge base inside an existing project as a read-only reference: your agents consult the research when they face context, memory, or learning design decisions. Two git commands and one routing paragraph; no Python. See [Reader install](#reader-install-the-kb-as-a-vendored-reference).
+- **Reader install** — vendor the Commonplace knowledge base inside an existing project as a read-only reference: your agents consult the research when they face context, memory, or learning design decisions. A vendored copy (submodule, clone, or plain download) and one routing paragraph; no Python. See [Reader install](#reader-install-the-kb-as-a-vendored-reference).
 - **Full install** — run your own knowledge base with the Commonplace type system, skills, and commands. The numbered steps below: check prerequisites, install the library so `commonplace-*` commands run, create the project with `commonplace-init`, set up the control-plane file, install the skills for every agent that will work on the project, and start the runtime. Most steps end with a check you can run before moving on.
 
 The modes compose: a project can vendor the research KB for reading and run its own KB for writing.
@@ -38,7 +38,7 @@ inside it are relative to `commonplace/`. It is read-only in this project — to
 contest a claim, open an issue at https://github.com/zby/commonplace/issues.
 ```
 
-That's the whole install. Reading needs no Python, no venv, and no skills — the `commonplace-*` commands and `cp-skill-*` skills exist to maintain a KB, not to consume one. The vendored repo's own `AGENTS.md` tells agents that wander into it to treat it as read-only.
+That's the whole install. Reading needs no Python, no venv, and no skills — the `commonplace-*` commands and `cp-skill-*` skills exist to maintain a KB, not to consume one. The one tool the KB's navigation leans on is ripgrep (`rg`), which most agent runtimes bundle. The vendored repo's own `AGENTS.md` tells agents that wander into it to treat it as read-only.
 
 ### Check the reader install
 

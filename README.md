@@ -96,7 +96,7 @@ This is the right mode for exploring or contributing to the Commonplace methodol
 
 ### Vendored inside your project (reader mode)
 
-To give your agents the research without running a KB of your own, vendor this repo **inside** your project — a git submodule or a gitignored clone — and add one routing paragraph to your project's `CLAUDE.md`/`AGENTS.md`. Placement inside the project root matters: agent harnesses scope file access to the root, so a subdirectory is readable without permission prompts while a sibling directory is not. Reading needs no Python, no venv, and no skills. See [INSTALL.md → Reader install](https://github.com/zby/commonplace/blob/main/INSTALL.md#reader-install-the-kb-as-a-vendored-reference) for the commands and the paste-ready routing block.
+To give your agents the research without running a KB of your own, vendor this repo **inside** your project — a git submodule, a gitignored clone, or a plain copy — and add one routing paragraph to your project's `CLAUDE.md`/`AGENTS.md`. Placement inside the project root matters: agent harnesses scope file access to the root, so a subdirectory is readable without permission prompts while a sibling directory is not. Reading needs no Python, no venv, and no skills. See [INSTALL.md → Reader install](https://github.com/zby/commonplace/blob/main/INSTALL.md#reader-install-the-kb-as-a-vendored-reference) for the commands and the paste-ready routing block.
 
 ### Installing into a project
 
@@ -104,7 +104,7 @@ Commonplace can be installed into any project as a Python package. Your agents g
 
 ## Prerequisites
 
-**Reader mode has none beyond an agent runtime** — no Python, no skills: the KB is plain files, so a copy of the repo inside your project works as well as a clone or submodule. The table below applies to the full install:
+**Reader mode needs only an agent runtime and ripgrep (`rg`)** — the KB's navigation leans on `rg` for search, and most agent runtimes bundle it. No Python, no skills: the KB is plain files, so a copy of the repo inside your project works as well as a clone or submodule. The table below applies to the full install:
 
 | Tool | Required | Purpose |
 | --- | --- | --- |
