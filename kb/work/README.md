@@ -15,13 +15,11 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 - [epistack-competition](./epistack-competition/README.md) — framework-side pointer to the sibling `epistack-casebooks` repo (FLF competition entry): what it's for and the `backlog-to-commonplace.md` protocol for moving ideas between the two repos
 - [agent-note-improvement](./agent-note-improvement/README.md) — testing instructions that help agents improve weak existing notes by comparing an older weak revision against a later accepted revision
 - [agent-memory-design](./agent-memory-design/README.md) — continuation workshop for discussing revisions and companion artifacts around `kb/notes/designing-agent-memory-systems.md`
-- [agent-memory-review-rerun](./agent-memory-review-rerun/README.md) — planning and tracking the remaining `systems.csv` agent-memory review reruns after the first six refreshed reviews
-- [ingestion-and-deep-search](./ingestion-and-deep-search/README.md) — revisiting directed reading through `cp-skill-connect`, especially how connect should use installed-KB goals without carrying commonplace-specific assumptions
+- [bulk-operations](./bulk-operations/README.md) — generalizing deep research, review reruns, connect triage, source refresh, validation sweeps, and corpus migrations into a reusable target-selection, sharding, execution, merge-back, and validation pattern
 - [pi-agent-zerostack-comparison](./pi-agent-zerostack-comparison/README.md) — preparing a code-grounded comparison instruction for the two Rust coding-agent CLIs cloned under `related-systems/`
 - [vocabulary-governance](./vocabulary-governance/README.md) — deciding how global, collection-local, and type-specific vocabularies should be declared and used by shipped KBs
 - [aris-full-trial](./aris-full-trial/README.md) — running a private full-ARIS paper-production trial while keeping only framing and lessons learned in the public KB
 - [read-back-symbol-availability](./read-back-symbol-availability/README.md) — folding the symbol-availability bound on push into the agent-memory-system review framework's read-back treatment, and planning a re-characterization pass over existing reviews
-- [research-wiki-integration](./research-wiki-integration/README.md) — evaluating whether ARIS Research Wiki should become a commonplace workshop subsystem, source workflow upgrade, or only a set of borrowed lifecycle patterns
 - [review-bundle-packing](./review-bundle-packing/README.md) — measuring and deciding whether review prompts must stay bundle-local or may pack multiple bundles into one run
 - [validation](./validation/README.md) — making validation a reliable part of the workflow: when, what, and how to validate (hooks, skill upgrades, periodic revalidation)
 - [tool-loop-control](./tool-loop-control/README.md) — rewriting the framework-loop note so it starts from why the standard tool loop exists and where convenience should end
