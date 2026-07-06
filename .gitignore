@@ -76,3 +76,5 @@ kb/work/auditable-llm-editing/experiment-02-full-memory-article/
 
 # Complete generated listings are build-time only (ADR 025)
 dir-index.md
+
+kb/work/agent-memory-review-rerun-comparison/
