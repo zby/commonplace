@@ -1,7 +1,7 @@
 """Render review protocol prompts.
 
 One renderer for every packing shape: the prompt carries N note targets and
-M gate definitions and requests one output block per requested (note, gate)
+M review criteria and requests one output block per requested (note, gate)
 pair. Notes and catalog gates are embedded once; a type spec serving as a
 gate is referenced by repo path instead, and the worker reads it from disk —
 the spec is authoring instructions the reviewer applies as criteria, not
@@ -73,9 +73,9 @@ def _type_conformance_wrapper_lines(gate_path: str) -> tuple[str, ...]:
 # the per-job specifics.
 REVIEW_RUNNER_SYSTEM_PROMPT = (
     "Your goal is to write a series of review artifacts for the requested gates. "
-    "The task prompt provides the exact note, gate definitions, and output contract for the job. "
-    "Stay within the target note, the provided gate definitions, and only the linked neighborhood that the active gates require. "
-    "Do not do broad repository exploration or search for alternate gate definitions. "
+    "The task prompt provides the exact note, review criteria, and output contract for the job. "
+    "Stay within the target note, the provided review criteria, and only the linked neighborhood that the active gates require. "
+    "Do not do broad repository exploration or search for alternate review criteria. "
     "Treat helper scripts as command interfaces; inspect workflow files or script source only if a command fails and you need to debug it."
 )
 
@@ -164,7 +164,7 @@ def render_pairs_prompt(
         "Write gate reviews for the requested (note, gate) pairs listed below.",
         "",
         "Reading scope for this job:",
-        "- All target note contents and gate definitions are included below. Do not read them from disk.",
+        "- All target note contents and review criteria are included below. Do not read them from disk.",
     ]
     if has_type_spec_gate:
         lines.append(
@@ -250,7 +250,7 @@ def render_pairs_prompt(
     lines.extend(
         [
             "",
-            "Requested gate definitions (authoritative for this job):",
+            "Requested review criteria (authoritative for this job):",
         ]
     )
     for gate_path in gate_paths:

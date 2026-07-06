@@ -150,7 +150,7 @@ commonplace-ack-gate-review kb/notes/my-note.md --model claude-opus-4-6 prose/so
 
 ### commonplace-ack-trivial-note-changes
 
-Auto-acknowledge `note-changed` stale pairs when only non-watched note parts changed. Each gate declares what it watches (body, title, description) — changes outside the watched set are acked automatically.
+Auto-acknowledge `note-changed` stale pairs when only non-watched note parts changed. Each gate declares what it watches (body, title, description) — changes outside the watched set are acked automatically. Type-conformance pairs may be selected (`type` requests or `--all-gates`) but never qualify: a type spec declares no watches, so it watches the whole note and no change is trivial against it.
 
 ```bash
 commonplace-ack-trivial-note-changes prose --model claude-opus-4-6 --note kb/notes kb/reference  # all prose gates
@@ -171,7 +171,7 @@ commonplace-resolve-gates prose/source-residue semantic/grounding-alignment  # s
 
 List review target pairs. Default mode lists stale `(note, gate)` pairs by comparing current note/gate text hashes against accepted DB snapshots. `--mode requested` emits the explicitly requested applicable pairs without checking freshness, for piping into `commonplace-create-review-jobs --input -`.
 
-Besides catalog gate ids and bundles, the selector accepts type-conformance requests: `type` derives one pair per typed note in scope with the note's type spec as the gate, `type/{name}` narrows to one type's cohort. These pairs are opt-in — `--all-gates` covers the catalog only.
+Besides catalog gate ids and bundles, the selector accepts type-conformance requests: `type` derives one pair per typed note in scope with the note's type spec as the gate, `type/{name}` narrows to one type's cohort. `--all-gates` selects every applicable review criterion — all catalog gates plus type-conformance pairs — and means the same thing in every review command.
 
 ```bash
 commonplace-review-target-selector prose --model claude-opus-4-6 --note kb/notes kb/reference

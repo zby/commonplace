@@ -66,7 +66,7 @@ The two-input shape is also the growth path: the default answer to a new review 
 ### Selection and gates
 
 - `review_target_selector.py` lists stale or requested applicable `(note, gate)` pairs. Read-only.
-- `resolve_gates.py` expands bundle names into gate ids and filters gates by note type and traits.
+- `resolve_gates.py` expands bundle names into gate ids and filters gates by note type and traits. It owns the single definition of `--all-gates` shared by every review command: all catalog gates plus the virtual `type` request.
 - `paths.py` resolves the active gate catalog and translates between gate ids and repo-relative gate paths, including the virtual `type/{name}` lens for type-spec gate paths.
 - `type_conformance.py` owns the second gate source ([ADR 038](./adr/038-type-conformance-reviews-use-the-type-spec-as-the-gate.md)): type-conformance pairs whose gate side is the type spec named by the note's `type:` frontmatter. Pairs derive from note frontmatter, not from catalog listing plus `requires-type` filtering; the persisted gate identity is the type-spec repo path, and everything downstream of pair derivation (snapshots, freshness, acceptance, ack, finalization) is unchanged.
 

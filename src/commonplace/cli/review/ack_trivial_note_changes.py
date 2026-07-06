@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Bulk-ack stale gate pairs whose watched note parts did not change."""
+"""Bulk-ack stale gate pairs whose watched note parts did not change.
+
+Type-conformance pairs may be selected (via `type` requests or `--all-gates`)
+but never qualify: a type spec declares no `watches:`, which means it watches
+the whole note, so no note change is trivial against it.
+"""
 
 from __future__ import annotations
 
@@ -8,7 +13,7 @@ from pathlib import Path
 
 from commonplace.review.acknowledgement import ack_pairs
 from commonplace.review.ack_trivial_note_changes import qualifying_pairs
-from commonplace.review.resolve_gates import resolve_to_gate_ids
+from commonplace.review.resolve_gates import all_gate_requests, resolve_gate_requests
 from commonplace.review.paths import review_gates_dir
 
 
@@ -16,15 +21,23 @@ def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description=(
             "Acknowledge note-changed stale pairs when the gate's watched note parts "
-            "did not change."
+            "did not change. Type-conformance pairs never qualify: a type spec "
+            "declares no watches, so it watches the whole note."
         )
     )
     parser.add_argument(
         "gate_or_bundle",
         nargs="*",
-        help="Gate IDs (e.g. prose/source-residue) and/or bundle names (e.g. prose).",
+        help=(
+            "Gate IDs (e.g. prose/source-residue), bundle names (e.g. prose), "
+            "and/or type-conformance requests (type, type/definition)."
+        ),
     )
-    parser.add_argument("--all-gates", action="store_true", help="Check all gates.")
+    parser.add_argument(
+        "--all-gates",
+        action="store_true",
+        help="Check every applicable review criterion: all catalog gates plus type-conformance pairs.",
+    )
     parser.add_argument("--note", nargs="+", dest="note_paths", help="Filter to specific note paths or directories.")
     parser.add_argument("--current", action="store_true", help="Filter to notes with frontmatter status: current.")
     parser.add_argument("--model", required=True, help="Review model partition to acknowledge against.")
@@ -45,14 +58,13 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     if args.all_gates:
         if args.gate_or_bundle:
             parser.error("gate/bundle names and --all-gates are mutually exclusive")
-        bundles = sorted(d.name for d in gates_dir.iterdir() if d.is_dir())
         try:
-            gate_ids = resolve_to_gate_ids(bundles, gates_dir)
+            gate_ids = all_gate_requests(gates_dir)
         except (FileNotFoundError, ValueError) as exc:
             parser.error(str(exc))
     elif args.gate_or_bundle:
         try:
-            gate_ids = resolve_to_gate_ids(args.gate_or_bundle, gates_dir)
+            gate_ids = resolve_gate_requests(args.gate_or_bundle, gates_dir)
         except (FileNotFoundError, ValueError) as exc:
             parser.error(str(exc))
     else:

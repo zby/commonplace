@@ -303,6 +303,50 @@ def test_ack_trivial_note_changes_cli_writes_non_null_review_pair_id(tmp_path: P
     assert row[0] is not None
 
 
+def test_all_gates_cli_selects_type_pairs_but_never_acks_them(tmp_path: Path) -> None:
+    repo, db_path = build_fixture(tmp_path)
+    write(
+        repo / "kb" / "types" / "note.md",
+        """---
+type: kb/types/type-spec.md
+name: note
+description: Test type spec for note
+schema: null
+---
+
+# Note
+
+## Authoring Instructions
+
+State one claim per note.
+""",
+    )
+    seed_snapshot_review(
+        repo,
+        db_path,
+        note_path="kb/notes/sample.md",
+        gate_path="kb/types/note.md",
+    )
+    note_path = repo / "kb" / "notes" / "sample.md"
+    make_note(note_path, "\nBody.\n", traits="[title-as-claim]", tags="[computational-model]")
+
+    result = run_cli(
+        "ack_trivial_note_changes",
+        "--all-gates",
+        "--note",
+        "kb/notes",
+        "--model",
+        TEST_MODEL,
+        cwd=repo,
+    )
+
+    # The catalog pair's watched parts did not change, so it acks; the type
+    # pair is selected but never qualifies (type specs declare no watches).
+    assert "acked: kb/notes/sample.md prose/source-residue" in result.stdout
+    assert "type/note" not in result.stdout
+    assert "acked 1 stale pair(s)" in result.stdout
+
+
 def test_qualifying_pairs_uses_snapshot_text_without_git(tmp_path: Path) -> None:
     repo = tmp_path / "repo"
     repo.mkdir()

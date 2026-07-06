@@ -7,7 +7,7 @@ import argparse
 from pathlib import Path
 
 from commonplace.review.paths import review_gates_dir
-from commonplace.review.resolve_gates import resolve_to_gate_ids
+from commonplace.review.resolve_gates import all_gate_requests, resolve_gate_requests
 from commonplace.review.review_target_selector import (
     render_grouped,
     render_json,
@@ -15,7 +15,6 @@ from commonplace.review.review_target_selector import (
     select_stale_gates,
 )
 from commonplace.review.review_model import normalize_model_partition
-from commonplace.review.type_conformance import is_type_gate_request
 
 
 def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
@@ -37,7 +36,7 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser.add_argument(
         "--all-gates",
         action="store_true",
-        help="Check all catalog gates. Type-conformance pairs stay opt-in via explicit type requests.",
+        help="Check every applicable review criterion: all catalog gates plus type-conformance pairs.",
     )
     parser.add_argument("--note", nargs="+", dest="note_paths", help="Filter to specific note paths or directories.")
     parser.add_argument("--current", action="store_true", help="Filter to notes with frontmatter status: current.")
@@ -66,19 +65,15 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     if args.all_gates:
         if args.gate_or_bundle:
             parser.error("gate/bundle names and --all-gates are mutually exclusive")
-        bundles = sorted(d.name for d in gates_dir.iterdir() if d.is_dir())
         try:
-            gate_ids = resolve_to_gate_ids(bundles, gates_dir)
+            gate_ids = all_gate_requests(gates_dir)
         except (FileNotFoundError, ValueError) as exc:
             parser.error(str(exc))
     elif args.gate_or_bundle:
-        type_requests = [arg for arg in args.gate_or_bundle if is_type_gate_request(arg)]
-        catalog_requests = [arg for arg in args.gate_or_bundle if not is_type_gate_request(arg)]
         try:
-            gate_ids = resolve_to_gate_ids(catalog_requests, gates_dir) if catalog_requests else []
+            gate_ids = resolve_gate_requests(args.gate_or_bundle, gates_dir)
         except (FileNotFoundError, ValueError) as exc:
             parser.error(str(exc))
-        gate_ids.extend(type_requests)
     else:
         parser.error("provide gate/bundle names or --all-gates")
 

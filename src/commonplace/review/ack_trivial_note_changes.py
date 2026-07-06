@@ -1,6 +1,11 @@
 """Library functions for ack_trivial_note_changes.
 
 Pure logic lives here; ack_trivial_note_changes.py is the thin CLI wrapper.
+
+A gate without a valid `watches:` declaration is skipped, never acked: no
+declaration means the gate watches the whole note, so no note change is
+trivial against it. Type-conformance pairs rely on this — type specs declare
+no `watches:`, which is what keeps them safe to select here via `--all-gates`.
 """
 
 from __future__ import annotations
@@ -151,6 +156,8 @@ def qualifying_pairs(
             gate_watches_cache[record.gate_path] = _load_gate_watches(repo_root / record.gate_path)
         watches = gate_watches_cache[record.gate_path]
         if watches is None:
+            # No valid watches declaration = the gate watches the whole note;
+            # nothing is trivial against it. Type-spec gates land here.
             continue
 
         previous_text = acceptance.accepted_note_text

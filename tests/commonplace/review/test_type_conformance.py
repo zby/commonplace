@@ -357,7 +357,7 @@ class TestSelectorTypePairs:
             ("kb/notes/plain.md", "type/note", "requested"),
         ]
 
-    def test_catalog_all_gates_cli_does_not_include_type_pairs(self, tmp_path: Path) -> None:
+    def test_all_gates_cli_includes_type_pairs(self, tmp_path: Path) -> None:
         build_fixture(tmp_path)
         gates_dir = tmp_path / "kb" / "instructions" / "review-gates"
         make_gate(gates_dir / "prose" / "source-residue.md", "prose/source-residue", "prose")
@@ -371,7 +371,10 @@ class TestSelectorTypePairs:
             cwd=tmp_path,
         )
         payload = json.loads(result.stdout)
-        assert [item["gate_id"] for item in payload["targets"]] == ["prose/source-residue"]
+        assert sorted(item["gate_id"] for item in payload["targets"]) == [
+            "prose/source-residue",
+            "type/note",
+        ]
 
 
 class TestAckTypePair:

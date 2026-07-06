@@ -6,12 +6,39 @@ from pathlib import Path
 from typing import Any
 
 from commonplace.lib import frontmatter
+from commonplace.review.type_conformance import TYPE_GATE_LENS, is_type_gate_request
 
 
 def _reject_unsafe_gate_arg(arg: str) -> None:
     path = Path(arg)
     if path.is_absolute() or arg.strip() in {"", "."} or ".." in path.parts:
         raise ValueError(f"gate id or bundle must stay inside the review gate catalog: {arg}")
+
+
+def resolve_gate_requests(requests: list[str], gates_dir: Path) -> list[str]:
+    """Resolve mixed gate/bundle/type requests into selector gate ids.
+
+    Catalog gate ids and bundle names expand against the gate catalog; virtual
+    type-conformance requests (`type`, `type/{name}`) pass through for the
+    selector's second gate source.
+    """
+    type_requests = [arg for arg in requests if is_type_gate_request(arg)]
+    catalog_requests = [arg for arg in requests if not is_type_gate_request(arg)]
+    gate_ids = resolve_to_gate_ids(catalog_requests, gates_dir) if catalog_requests else []
+    gate_ids.extend(type_requests)
+    return gate_ids
+
+
+def all_gate_requests(gates_dir: Path) -> list[str]:
+    """Every applicable review criterion: all catalog bundles plus the virtual `type` lens.
+
+    The single definition of `--all-gates` for every review command, so the
+    flag means the same thing everywhere. Commands whose mechanism cannot act
+    on a type pair (auto-ack needs `watches:`, which type specs do not declare)
+    skip those pairs by that same rule, not by a narrower flag meaning.
+    """
+    bundles = sorted(d.name for d in gates_dir.iterdir() if d.is_dir())
+    return resolve_to_gate_ids(bundles, gates_dir) + [TYPE_GATE_LENS]
 
 
 def resolve_to_gate_ids(args: list[str], gates_dir: Path) -> list[str]:

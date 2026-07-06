@@ -15,7 +15,7 @@ Use this procedure for either:
 Inputs:
 
 - `{model-partition}` — review model partition, for example `claude-opus` or `codex`. Derive it from the orchestrator's own model (see below), not a guessed default.
-- which gates to select — `{gate-or-bundle}...` (gate ids or bundle names, for example `semantic/grounding-alignment`, `prose/source-residue`, or `prose`), or `--all-gates` to select every applicable gate. `--all-gates` chooses pairs only; the run still proceeds through the create-jobs → delegate → finalize steps below
+- which gates to select — `{gate-or-bundle}...` (gate ids, bundle names, or type-conformance requests, for example `semantic/grounding-alignment`, `prose/source-residue`, `prose`, or `type`), or `--all-gates` to select every applicable review criterion (all catalog gates plus each typed note's type-conformance pair). `--all-gates` chooses pairs only; the run still proceeds through the create-jobs → delegate → finalize steps below
 - note scope — `--note {note-or-dir}...` or `--current`
 - selector mode — `requested` for explicit execution, or default stale selection
 - grouping — `note` or `gate`
