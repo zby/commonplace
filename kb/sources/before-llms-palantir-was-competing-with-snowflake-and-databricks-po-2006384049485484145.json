@@ -1,0 +1,99 @@
+{
+  "source": "https://x.com/JayaGup10/status/2006384049485484145",
+  "captured": "2026-07-06T18:28:32.161674+00:00",
+  "family": "x-post",
+  "status_id": "2006384049485484145",
+  "conversation_id": "2006384049485484145",
+  "target_post": {
+    "author_id": "1483261620377862147",
+    "conversation_id": "2006384049485484145",
+    "created_at": "2025-12-31T15:16:48.000Z",
+    "edit_history_tweet_ids": [
+      "2006383914835730910",
+      "2006384049485484145"
+    ],
+    "entities": {
+      "urls": [
+        {
+          "display_url": "x.com/JayaGup10/stat\u2026",
+          "end": 303,
+          "expanded_url": "https://twitter.com/JayaGup10/status/2003525933534179480",
+          "start": 280,
+          "url": "https://t.co/phqi3A4IFZ"
+        }
+      ]
+    },
+    "id": "2006384049485484145",
+    "note_tweet": {
+      "entities": {
+        "mentions": [
+          {
+            "end": 2402,
+            "id": "1868097661",
+            "start": 2392,
+            "username": "akoratana"
+          }
+        ]
+      },
+      "text": "Before LLMs, Palantir was competing with Snowflake and Databricks.\n\nPost-LLMs, they do not believe they have any competitors. Why? Snowflake/Databricks optimized for SQL and query throughput: get raw data into tables, run fast analytical reads, ship dashboards and models on top. Palantir made a different bet: an ontology, a world model where data is represented the way humans actually reason about it (objects, relationships, properties; nouns/verbs/adjectives). Back then, that was built for government analysts trying to make sense of messy, interdependent systems.\n\nThen LLMs arrived and the ontology suddenly looked like the perfect interface because models don\u2019t want a trillion rows. They want a structured, language-shaped substrate: named entities, typed relationships, constraints, and \u201cwhat interacts with what\u201d, something you can linearize into a coherent prompt, traverse, and act on. \n\nThe bigger implication for decision traces is that the \u201ccontext graph\u201d problem we wrote about has multiple architectural solutions:\n\nPlatform-first (example: Palantir): prescribe the unified world model upfront. Pay the integration + ontology + embedded-team tax (months of use case discovery / workflow decomposition / \u201cprocess mining\u201d), and in return you get a substrate that can connect data to decisions because everything now lives inside the same model for an extremely absurd price.\n\nWorkflow-first (decision traces): don\u2019t start by rebuilding the world. Instrument the moments where the world changes. Capture decision receipts at commit surfaces: inputs referenced, policy/constraints, exception path, approvals, action taken, outcome. Over time (not day 1), that write-time provenance becomes its own world model, learned from trajectories rather than imposed upfront (there will be many different methods here)\n\nAnd importantly: this is still an ontology approach,  just a different kind. Palantir prescribes the ontology first. Our take is that startups can learn it bottom-up from traces. You start by capturing what people actually do at the decision surface: what evidence is referenced, which approvals happen, what exceptions recur, what actions are taken, what outcomes follow and over time, infer the minimal set of entities + relations that explain those trajectories. \n\nThe missing piece is decision traces: without them, you have state, but not the legible \u201cwhy\u201d!! Cc @akoratana"
+    },
+    "referenced_tweets": [
+      {
+        "id": "2003525933534179480",
+        "type": "quoted"
+      }
+    ],
+    "text": "Before LLMs, Palantir was competing with Snowflake and Databricks.\n\nPost-LLMs, they do not believe they have any competitors. Why? Snowflake/Databricks optimized for SQL and query throughput: get raw data into tables, run fast analytical reads, ship dashboards and models on top. https://t.co/phqi3A4IFZ"
+  },
+  "posts": [
+    {
+      "author_id": "1483261620377862147",
+      "conversation_id": "2006384049485484145",
+      "created_at": "2025-12-31T15:16:48.000Z",
+      "edit_history_tweet_ids": [
+        "2006383914835730910",
+        "2006384049485484145"
+      ],
+      "entities": {
+        "urls": [
+          {
+            "display_url": "x.com/JayaGup10/stat\u2026",
+            "end": 303,
+            "expanded_url": "https://twitter.com/JayaGup10/status/2003525933534179480",
+            "start": 280,
+            "url": "https://t.co/phqi3A4IFZ"
+          }
+        ]
+      },
+      "id": "2006384049485484145",
+      "note_tweet": {
+        "entities": {
+          "mentions": [
+            {
+              "end": 2402,
+              "id": "1868097661",
+              "start": 2392,
+              "username": "akoratana"
+            }
+          ]
+        },
+        "text": "Before LLMs, Palantir was competing with Snowflake and Databricks.\n\nPost-LLMs, they do not believe they have any competitors. Why? Snowflake/Databricks optimized for SQL and query throughput: get raw data into tables, run fast analytical reads, ship dashboards and models on top. Palantir made a different bet: an ontology, a world model where data is represented the way humans actually reason about it (objects, relationships, properties; nouns/verbs/adjectives). Back then, that was built for government analysts trying to make sense of messy, interdependent systems.\n\nThen LLMs arrived and the ontology suddenly looked like the perfect interface because models don\u2019t want a trillion rows. They want a structured, language-shaped substrate: named entities, typed relationships, constraints, and \u201cwhat interacts with what\u201d, something you can linearize into a coherent prompt, traverse, and act on. \n\nThe bigger implication for decision traces is that the \u201ccontext graph\u201d problem we wrote about has multiple architectural solutions:\n\nPlatform-first (example: Palantir): prescribe the unified world model upfront. Pay the integration + ontology + embedded-team tax (months of use case discovery / workflow decomposition / \u201cprocess mining\u201d), and in return you get a substrate that can connect data to decisions because everything now lives inside the same model for an extremely absurd price.\n\nWorkflow-first (decision traces): don\u2019t start by rebuilding the world. Instrument the moments where the world changes. Capture decision receipts at commit surfaces: inputs referenced, policy/constraints, exception path, approvals, action taken, outcome. Over time (not day 1), that write-time provenance becomes its own world model, learned from trajectories rather than imposed upfront (there will be many different methods here)\n\nAnd importantly: this is still an ontology approach,  just a different kind. Palantir prescribes the ontology first. Our take is that startups can learn it bottom-up from traces. You start by capturing what people actually do at the decision surface: what evidence is referenced, which approvals happen, what exceptions recur, what actions are taken, what outcomes follow and over time, infer the minimal set of entities + relations that explain those trajectories. \n\nThe missing piece is decision traces: without them, you have state, but not the legible \u201cwhy\u201d!! Cc @akoratana"
+      },
+      "referenced_tweets": [
+        {
+          "id": "2003525933534179480",
+          "type": "quoted"
+        }
+      ],
+      "text": "Before LLMs, Palantir was competing with Snowflake and Databricks.\n\nPost-LLMs, they do not believe they have any competitors. Why? Snowflake/Databricks optimized for SQL and query throughput: get raw data into tables, run fast analytical reads, ship dashboards and models on top. https://t.co/phqi3A4IFZ"
+    }
+  ],
+  "users": {
+    "1483261620377862147": {
+      "id": "1483261620377862147",
+      "name": "Jaya Gupta",
+      "username": "JayaGup10"
+    }
+  },
+  "thread_fetch_error": null
+}
