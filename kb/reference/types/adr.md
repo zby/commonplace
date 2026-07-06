@@ -11,6 +11,15 @@ schema: ./adr.schema.yaml
 
 Use an ADR for a concrete architectural decision that has been made and implemented — accepted, superseded, or deprecated. A decision still under consideration is not an ADR; it stays in the workshop layer (`kb/work/`) until decided.
 
+## Frontmatter
+
+| Field | Required | Use |
+|---|---:|---|
+| `description` | Yes | Discriminating retrieval description for the decision record. |
+| `type` | Yes | `../types/adr.md` for ADR files under `kb/reference/adr/`. |
+| `tags` | No | Navigation tags, usually empty for ADRs. |
+| `status` | No | Decision lifecycle: `accepted`, `superseded`, or `deprecated`. |
+
 - The title should start with the numeric ADR prefix used in this collection, then a short decision label.
 - `Status` records the decision lifecycle, not the note-writing status.
 - `Date` is the decision date.

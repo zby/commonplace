@@ -1,5 +1,5 @@
 ---
-description: "Curated head for the learning-theory tag — how systems learn, verify, and improve; routes to the covered children: deploy-time-learning, constraining, distillation, discovery, artifact-analysis, agent-memory, llm-interpretation-errors"
+description: "Curated head for the learning-theory tag — how systems learn, verify, and improve; routes to the covered child tags listed in covered_by."
 type: kb/types/tag-readme.md
 index_source: tag
 index_key: learning-theory
