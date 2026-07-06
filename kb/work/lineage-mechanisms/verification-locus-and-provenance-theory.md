@@ -40,6 +40,41 @@ Cache-key design predicts both observed failure modes: a key too coarse invalida
 
 The load-bearing disanalogy with caching: cache entries are recomputable — invalidate and re-derive. Provenance records are not. A record of history is a journal entry, not a cache entry; no invalidation policy recovers one that was never written. Hence the non-retrofittability rule: **state can be re-examined at any time; history can only be recorded at the time.** Recording is the one feature YAGNI cannot defer.
 
+## Evidence radius and carried witnesses
+
+The kernel says review sees state; this section defines what "state" a reviewer can actually afford. The reviewer never searches — it dereferences: the conformance harness already enforces this mechanically (pre-resolved link table, "do not search for alternate targets"). So a contract criterion is **review-decidable** when:
+
+1. its evidence set is *enumerated by the artifact itself* — the note names its witnesses via links, quotes, or provenance fields; and
+2. the gate declares a bounded *evidence radius*: radius 0 = the note text alone; radius 1 = the note plus specifically cited targets.
+
+The formal anchor is the NP-verifier asymmetry: generation is search, review is checking-with-a-witness — cheap only if the artifact carries its own certificate. A note that cites its sources has reified its consultation history into state; "faithful to its *cited* sources" is a bounded radius-1 check whose cost the note author controls. A note that doesn't cite makes the check impossible in principle: "faithful to everything the author read" is history, enforceable only by the skill at production time.
+
+This adds a third test to the type-spec sieve: every semantic criterion gets an explicit radius. Radius-ω criteria (they quantify over the generation context) have two exits — **witness-ify** (rewrite as radius ≤ 1 plus a new state requirement: quote anchors, `source_snapshot:`, citation lists) or **move to the skill**. Example: ingest-report's "base extractable value on connect discovery" is radius-ω by design (the connect report is ephemeral and must not be cited) → skill. "Limitations names what this source omits" is radius-1 through the `source_snapshot` pointer.
+
+### The carried-witness family
+
+Several existing KB mechanisms are the same move — reify something into the artifact's state to lower the radius of a check or reasoning step:
+
+| carried witness | reifies | radius reduced |
+|---|---|---|
+| citation / source list | the enumeration of the evidence set | ω → 1 (check becomes bounded) |
+| quote anchor (ADR 023) | the evidence excerpt | 1 → 0 for the quoted claim |
+| title-as-claim link text | the target's thesis | 1 → 0 for graph reasoning (traversal-as-reasoning *is* radius reduction) |
+| `description:` frontmatter | the relevance decision | 1 → 0 for retrieval routing |
+| provenance field (`source`, `captured`, `produced_by`) | a history fact | undecidable → trusted record |
+
+The family splits into two validity regimes:
+
+- **Checkable witnesses** — ground truth still dereferenceable (link text vs target title, quote anchor vs repo file, description vs body). These are derived copies of recomputable truth: *checked or absent*.
+- **Credence witnesses** — ground truth gone or external (provenance fields, quotes from a decayed source). Unrecomputable by construction; the record is the ground truth now, and validity rests on trusting the recorder.
+
+A witness's regime can change over time: a quote anchor into an external repo is checkable until the source moves, then silently becomes credence — the decay spectrum with a concrete mechanism attached.
+
+### Gaps this exposes (write down, don't build)
+
+- **Radius-1 verdicts have unhashed inputs.** Acceptance pins `(note, gate)`; when a semantic gate judged the note against its link targets, a later edit to a target stales nothing. Currently absorbed as fuzz (strictness follows behavioral authority); the principled escalation is a factored `(note, cited-target)` pair per load-bearing evidence edge.
+- **Link text is a checkable witness that nothing checks.** The validator verifies link *health* (targets resolve) but never compares link display text to the target's current title. When a claim-title is revised, every inline restatement across the KB stays frozen at the old claim, and traversal-as-reasoning degrades silently — agents trust the carried witness at radius 0. Both sides are in the repo; the check is a cheap join. Candidate validator feature; also the cleanest concrete example of one surface (a markdown link) carrying a checkable witness in its text and a health-checked pointer in its path, with only the pointer verified today.
+
 ## The graduated invalidation ladder
 
 Process edits should cost what their retroactive reach actually is — one classification at edit time, not a cohort of trivial-acks:
@@ -87,6 +122,7 @@ Both notes carry `has-external-sources` and cite the anchors above. What is nove
 ## Open questions
 
 - Naming: does "verification locus" survive scrutiny as the axis name? Alternatives: "state/history split", "product vs production contract". Expect rounds.
+- Naming the decidability feature: "review-decidable" (leans on who/when), "witness-carrying" / "self-witnessing" (sharpest mechanism, jargon risk), "evidence-closed", "locally checkable" (collides with collection-local). "Bounded evidence radius" as the underlying measure regardless.
 - Does the ladder's L1 `produced_by` belong in frontmatter (per-artifact) or the event ledger (per-derivation-event)? `model-provenance.md` argues events for canonical notes; one-shot derivatives may differ.
 - Is decay-of-verifiability worth its own treatment (re-fetchable snapshots, moving upstream repos), or a paragraph in the core note?
 - Where does the reviewer's *linked neighborhood* end for "state"? The conformance gate already answers this operationally (pre-resolved links only); the note should state it as a boundary, not rediscover it.
