@@ -81,9 +81,19 @@ A further family of commands drives the review system — selecting targets, que
 
 ## Usage
 
-### Direct use (this repo)
+Two ways to use Commonplace, by what you want from it: **install the system** to run a knowledge base of your own, or **vendor this repo read-only** so your agents can consult the research. The two compose — a project can do both.
 
-Clone the repo and start working — it is a functioning knowledge base out of the box, with skills, types, writing conventions, and methodology all in place. New notes go alongside the existing ones, and the root `AGENTS.md` provides the project routing layer.
+### Installing into a project (full install)
+
+Commonplace can be installed into any project as a Python package. Your agents get the same type system, conventions, and skills, and accumulate knowledge about your domain rather than this one. The package ships the methodology — the research notes, reference docs, instructions, types, skills, and `commonplace-*` commands — but not the external-system reviews (`kb/agent-memory-systems/`, `kb/agentic-systems/`) or the source snapshots in `kb/sources/`: those are research material specific to this repo, left out to keep the package small. Read them on the [rendered site](https://zby.github.io/commonplace/) or vendor the repo alongside the install. See [**INSTALL.md**](https://github.com/zby/commonplace/blob/main/INSTALL.md) for the setup flow.
+
+### Vendored inside your project (reader mode)
+
+To give your agents the full research corpus — external-system reviews and sources included — without running a KB of your own, vendor this repo **inside** your project — a git submodule, a gitignored clone, or a plain copy — and add one routing paragraph to your project's `CLAUDE.md`/`AGENTS.md`. Placement inside the project root matters: agent harnesses scope file access to the root, so a subdirectory is readable without permission prompts while a sibling directory is not. Reading needs no Python, no venv, and no skills. See [INSTALL.md → Reader install](https://github.com/zby/commonplace/blob/main/INSTALL.md#reader-install-the-kb-as-a-vendored-reference) for the commands and the paste-ready routing block.
+
+### Working in this repo (development)
+
+Clone the repo to explore or contribute to the Commonplace methodology itself, or to evaluate the system before installing it elsewhere — it is a functioning knowledge base out of the box, with skills, types, writing conventions, and methodology all in place. New notes go alongside the existing ones, and the root `AGENTS.md` provides the project routing layer.
 
 ```bash
 git clone https://github.com/zby/commonplace.git
@@ -91,16 +101,6 @@ cd commonplace
 ```
 
 If you use `direnv`, make sure your shell has the direnv hook installed, then run `direnv allow` once after entering the repo. The `.envrc` sets `PATH` and `UV_CACHE_DIR` for the project. Start Codex or Claude Code from that direnv-loaded interactive shell so the runtime inherits the project venv; otherwise launch it with `direnv exec . <command>`.
-
-This is the right mode for exploring or contributing to the Commonplace methodology itself, running a standalone knowledge base, or evaluating the system before installing it elsewhere.
-
-### Vendored inside your project (reader mode)
-
-To give your agents the research without running a KB of your own, vendor this repo **inside** your project — a git submodule, a gitignored clone, or a plain copy — and add one routing paragraph to your project's `CLAUDE.md`/`AGENTS.md`. Placement inside the project root matters: agent harnesses scope file access to the root, so a subdirectory is readable without permission prompts while a sibling directory is not. Reading needs no Python, no venv, and no skills. See [INSTALL.md → Reader install](https://github.com/zby/commonplace/blob/main/INSTALL.md#reader-install-the-kb-as-a-vendored-reference) for the commands and the paste-ready routing block.
-
-### Installing into a project
-
-Commonplace can be installed into any project as a Python package. Your agents get the same type system, conventions, and skills, and accumulate knowledge about your domain rather than this one. See [**INSTALL.md**](https://github.com/zby/commonplace/blob/main/INSTALL.md) for the setup flow. This composes with reader mode: a project can vendor this KB for reading and run its own for writing.
 
 ## Prerequisites
 
