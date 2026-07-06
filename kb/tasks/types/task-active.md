@@ -19,6 +19,17 @@ Use this template for work that is currently underway.
 - `Tasks` should reflect the actual next steps, not aspirational backlog.
 - `Current State` should let another agent resume the work without rereading everything.
 
+## Frontmatter
+
+No frontmatter is currently required for active task documents; this type has `schema: null`, and existing task files may be plain Markdown. If a task is explicitly typed for discovery or review, use these fields:
+
+| Field | Required | Use |
+|---|---:|---|
+| `description` | No | Retrieval description of the active work and current resume point. |
+| `type` | No | `kb/tasks/types/task-active.md` when the task is made into an explicitly typed artifact. |
+| `tags` | No | Routing tags for the work area. |
+| `status` | No | KB lifecycle status if needed; do not confuse this with the operational `## Status` section. |
+
 ## Template
 
 ```markdown

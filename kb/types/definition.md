@@ -52,6 +52,15 @@ A good definition note should answer:
 - Use examples only when they sharpen future usage.
 - Keep technique guidance subordinate to term guidance. If a section mainly says when or how to perform an operation, move it to an instruction, ADR, workshop, or ordinary note and link it.
 
+## Frontmatter
+
+| Field | Required | Use |
+|---|---:|---|
+| `description` | Yes | Retrieval description naming the term and the operational meaning this KB assigns it. |
+| `type` | Yes | `kb/types/definition.md`. |
+| `tags` | No | Navigation tags for the concept area the term belongs to. |
+| `status` | No | Lifecycle state such as `seedling`, `current`, `speculative`, or `outdated`. |
+
 ## Template
 
 ```markdown

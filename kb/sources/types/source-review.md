@@ -11,9 +11,19 @@ schema: kb/sources/types/source-review.schema.yaml
 
 Use `source-review` when you want a structured extraction from an external source.
 
+- Choose it over `snapshot` when you are authoring analysis rather than preserving a captured source verbatim; choose it over `ingest-report` when the artifact should stand as a structured review instead of a snapshot-adjacent connection report.
 - `Key Points` should summarize what the source says in neutral terms before adding your judgment.
-- `Relevance to llm-do` should explain what the source changes for the project: what it supports, challenges, or suggests borrowing.
+- `Relevance to the KB` should explain what the source changes for the current knowledge base: what it supports, challenges, or suggests borrowing.
 - `Open Questions` should only contain unresolved follow-up questions. Omit the section if there are none.
+
+## Frontmatter
+
+| Field | Required | Use |
+|---|---:|---|
+| `description` | Yes | Retrieval description for what the source review extracts and why it matters. |
+| `type` | Yes | `kb/sources/types/source-review.md`. |
+| `tags` | No | Navigation tags for the reviewed source or the claims it supports. |
+| `status` | No | Lifecycle state, usually `current` for an accepted source review. |
 
 ## Template
 
@@ -33,9 +43,9 @@ status: current
 
 - {Neutral summary}
 
-## Relevance to llm-do
+## Relevance to the KB
 
-{Project relevance}
+{KB relevance}
 
 ## Open Questions
 

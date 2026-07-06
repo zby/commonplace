@@ -22,6 +22,16 @@ Do not force this scaffold onto arguments it does not fit.
 - Definitional or classification claims often work better as plain `note`s.
 - If the evidence and reasoning are inseparable, splitting them can make the argument harder to follow rather than clearer.
 
+## Frontmatter
+
+| Field | Required | Use |
+|---|---:|---|
+| `description` | Yes | Retrieval description for the claim, naming what the argument establishes. |
+| `type` | Yes | Path to this type spec, usually `./types/structured-claim.md` for notes at the collection root. |
+| `traits` | Yes | Include `title-as-claim`; this is what makes the claim-title promise explicit to review gates. |
+| `tags` | No | Navigation tags that help route the claim through the notes collection. |
+| `status` | No | Lifecycle state such as `seedling`, `current`, `speculative`, or `outdated`. |
+
 ## Template
 
 ```markdown

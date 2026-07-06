@@ -17,6 +17,17 @@ Use this template for ideas that are worth keeping but not yet active work.
 - `Why Not Now` records the current reason it is not active.
 - `Trigger to Activate` should say what new condition would move it into active work.
 
+## Frontmatter
+
+No frontmatter is currently required for backlog task documents; this type has `schema: null`, and existing task files may be plain Markdown. If a task is explicitly typed for discovery or review, use these fields:
+
+| Field | Required | Use |
+|---|---:|---|
+| `description` | No | Retrieval description of the deferred work and the condition that would make it relevant. |
+| `type` | No | `kb/tasks/types/task-backlog.md` when the task is made into an explicitly typed artifact. |
+| `tags` | No | Routing tags for the work area. |
+| `status` | No | KB lifecycle status if needed; the backlog state itself belongs in `## Why Not Now` and `## Trigger to Activate`. |
+
 ## Template
 
 ```markdown
