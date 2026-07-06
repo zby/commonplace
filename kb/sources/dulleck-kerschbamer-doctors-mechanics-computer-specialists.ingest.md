@@ -1,0 +1,47 @@
+---
+description: "Credence-goods microeconomics paper — evidence and refinement for the verification-boundary claim, adding liability as an institutional substitute for verifiability"
+source_snapshot: "dulleck-kerschbamer-doctors-mechanics-computer-specialists.md"
+ingested: "2026-07-06"
+type: kb/sources/types/ingest-report.md
+source_type: scientific-paper
+domains: [verification, information-asymmetry, mechanism-design]
+---
+
+# Ingest: On Doctors, Mechanics and Computer Specialists — Where are the Problems with Credence Goods?
+
+Source: dulleck-kerschbamer-doctors-mechanics-computer-specialists.md
+Captured: 2026-07-06
+From: https://papersecon.univie.ac.at/RePEc/vie/viennp/vie0101.pdf
+
+## Classification
+
+Type: scientific-paper -- game-theoretic economics working paper with a formal model, lemmas, propositions, and proofs; the 2001 University of Vienna working-paper version of the paper later published as Dulleck & Kerschbamer, "On Doctors, Mechanics, and Computer Specialists: The Economics of Credence Goods," *Journal of Economic Literature* 44(1), 2006.
+Domains: verification, information-asymmetry, mechanism-design
+Author: Uwe Dulleck and Rudolf Kerschbamer, academic economists (University of Vienna; Kerschbamer also CEPR). This is the working-paper preprint, not the peer-reviewed JEL version, though the core unifying model is the same. The paper is a widely-cited survey-plus-synthesis in the credence-goods literature.
+
+## Summary
+
+A credence good is one whose consumer cannot judge, even after the fact, whether the quality he received was the quality he needed — a car repair, a medical treatment, a computer spec. Only the expert seller knows, and can exploit that asymmetry by overtreating, undertreating, or overcharging. The literature had produced a confusing spread of contradictory results; this paper collapses them into one simple binary model. Its central result: market institutions eliminate expert fraud at zero cost if and only if three conditions hold — (i) large economies of scope between diagnosis and treatment, (ii) either the treatment type is *verifiable* or a *liability* rule protects the consumer (or both), and (iii) homogeneous consumers. Relaxing any single condition reproduces essentially every known inefficiency in the literature: violate (ii) with neither verifiability nor liability and the market breaks down entirely, a hidden-action Akerlof lemons case. The paper is a canonical microeconomic formalization of the exact variable this KB treats as structural: whether the consumer of an output can verify its quality — and it adds that a liability rule can substitute for verifiability to reach the same efficient outcome.
+
+## Connections Found
+
+Connection discovery found one strong, defensible landing point and deliberately rejected the surrounding cluster to avoid over-linking. The paper lands on [the-boundary-of-automation-is-the-boundary-of-verification](../notes/the-boundary-of-automation-is-the-boundary-of-verification.md), which argues verification cost is the primary structural determinant of automation, converging three domains (oracle theory, labor economics, frontier-lab capability predictions). Dulleck & Kerschbamer supply a fourth, independent tradition — mechanism-design microeconomics — reaching the same structural claim from separate reasoning, which also partially answers that note's own caveat that its three sources share a "rationalist, verification-oriented worldview." Notably, the paper does not merely corroborate: the note's final caveat explicitly names "liability concerns" as a possible non-verification boundary, and this paper shows liability is a *substitute institutional route* to the efficient outcome — a refinement, not just supporting evidence.
+
+Discovery rejected the rest of the oracle cluster (`oracle-strength-spectrum`, `the-augmentation-automation-boundary-is-discrimination-not-accuracy`, `error-correction-works-above-chance-oracles-with-decorrelated-checks`), `document-types-should-be-verifiable`, and the trust notes: those overlaps are shared-intuition or analogy, not articulable support. The synthesis note is the single correct landing point. Discovery also flagged, without acting, a durable coverage gap: the KB has no asymmetric-information / mechanism-design economics coverage (no Akerlof/lemons/moral-hazard/adverse-selection references), so this is the first such source.
+
+## Extractable Value
+
+1. **Verifiability-or-liability as a disjunctive efficiency condition** -- the paper's pivot is that *either* verifiability *or* a liability rule suffices for the efficient outcome. The boundary-of-automation note currently frames verification as the primary structural determinant and treats "liability concerns" only as a possible confound in a caveat. This paper reframes liability as a first-class alternative institutional mechanism reaching the same result — a genuine refinement of the note's central claim, not mere fourth-domain confirmation. [quick-win]
+2. **"Credence good" as retrieval vocabulary for unverifiable-output claims** -- the term names precisely the situation the KB circles around informally (a consumer who cannot verify received quality, only detect gross undertreatment). Adopting it improves discussion and retrieval and connects the KB's verification work to a large, named economics literature. [just-a-reference]
+3. **Independent-tradition evidence strengthens the convergence argument** -- the boundary note's persuasive force rests on multiple domains converging; game-theoretic microeconomics is a genuinely separate lineage from oracle theory, labor economics, and capability forecasting, so it adds real evidential weight rather than a shared-assumption echo. [quick-win]
+4. **Market-breakdown = no-oracle-no-liability maps to KB learning stall** -- Proposition 4 (neither verifiability nor liability yields market collapse) parallels the note's observation that `automating-kb-learning` stalls exactly where no oracle exists. The economics supplies a formal analogue for why the judgment-heavy, unverifiable KB mutations resist automation. [experiment]
+5. **"Credence-good-like knowledge artifacts" synthesis candidate** -- a higher-order claim not yet in the KB: agent-produced knowledge artifacts are credence-good-like, and the KB's own machinery maps onto the paper's efficiency conditions — verifiability ≈ review-by-representational-form and checkable document types; liability ≈ the review-gate system and enforced-or-omitted marks (a validated cache that punishes a false claim); no-verifiability-no-liability breakdown ≈ where KB-learning automation stalls. This is a `kb/notes/` note, and must clear the KB quality bar (the economics is out-of-scope except as a lens on verification design) before authoring. [deep-dive]
+6. **Overtreatment vs. overcharging distinction** -- the paper separates undetectable inefficiency (overtreatment — customer never learns) from detectable fraud (undertreatment) and from charging fraud (overcharging), and shows which institutional condition rules out each. This taxonomy could sharpen how the KB reasons about which failure modes a given oracle or review gate actually catches versus leaves undetectable. [just-a-reference]
+
+## Limitations (our opinion)
+
+This is editorial opinion. The paper is a strong formal result, but three limits bear on its use in this KB. First, its relevance here is entirely as a *lens*: credence-goods microeconomics is out-of-scope for an agent-operated-KB methodology KB on its own terms, and the verifiability/liability structure maps onto KB verification design only by analogy — the paper is about market institutions keeping human sellers honest under price competition, not about an agent verifying a knowledge artifact. The mapping is suggestive, not proven, and should not be over-generalized into claims the economics does not license. Second, the model is deliberately stylized (two problem types, two treatments, observable costs, take-it-or-leave-it prices, perfect diagnosis); the authors themselves flag this. Its "liability substitutes for verifiability" result depends on liability being enforceable, which requires verifiability *of results* — the paper notes liability rules are "far from perfect" where a failed treatment is hard to prove (a toothache proves nothing). So the disjunction is less clean than "either/or": liability quietly reintroduces a verification requirement one level up. Third, this is the 2001 working paper, not the 2006 JEL publication; if a note later cites it as load-bearing evidence, use the canonical JEL citation (DOI: 10.1257/002205106776162717).
+
+## Recommended Next Action
+
+Add an `evidence` edge from [the-boundary-of-automation-is-the-boundary-of-verification](../notes/the-boundary-of-automation-is-the-boundary-of-verification.md) to this snapshot, authored from the note under `kb/notes/` rules, and while doing so tighten the note's final caveat: the paper reframes "liability concerns" from a competing non-verification boundary into a substitute institutional route to the same efficient outcome (one that itself relies on verifiability of results). Defer the larger "agent knowledge artifacts are credence-good-like" synthesis note (Extractable Value #5) as a separate `kb/notes/` candidate that must first clear the quality bar.

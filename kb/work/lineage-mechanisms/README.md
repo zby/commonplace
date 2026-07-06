@@ -48,6 +48,7 @@ Files remain the primary API for authored and readable artifacts. The lineage la
 
 Close this workshop by extracting durable artifacts for these decisions:
 
+- the verification-locus theory notes and the type-spec/skill contract-migration proposal drafted in [verification-locus-and-provenance-theory.md](./verification-locus-and-provenance-theory.md) — the theoretical basis for assigning every derivation edge an invalidation rung (watched / recorded / untracked);
 - a general lineage model for derived artifacts that distinguishes source material, generated reports, durable analysis, compiled views, canonical artifacts, merge-back events, and promoted library artifacts;
 - an explicit storage-weight rule based on the many-to-many/churning-edge predicate;
 - a retention policy for which automatic derivations are committed, gitignored, stored in a state store, summarized into durable artifacts, or discarded after merge-back;
@@ -71,6 +72,7 @@ These cases came from `kb/work/connect-maintenance-observations/`. They are test
 
 ## Working Files
 
+- [verification-locus-and-provenance-theory.md](./verification-locus-and-provenance-theory.md) - theoretical spine: state vs history verification, the two reification bridges, dual invalidation semantics, the graduated invalidation ladder, and the external literature anchors (build systems, PROV, in-toto, credence goods).
 - [current-practices-and-theory.md](./current-practices-and-theory.md) - descriptive inventory of current lineage mechanisms, theory, and unresolved tensions.
 - [automatic-derivation-rules.md](./automatic-derivation-rules.md) - draft policy for git retention, merge-back lineage, derivative refresh, and automation boundaries.
 - [storage-weight-across-cases.md](./storage-weight-across-cases.md) - comparison of derivation cases against the many-to-many/churning-edge storage predicate.
