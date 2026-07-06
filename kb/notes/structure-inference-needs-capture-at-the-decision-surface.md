@@ -1,0 +1,48 @@
+---
+description: "Bottom-up inference of entities and relations from traces is feasible only if capture is decision-shaped at the decision surface, where the 'why' is cheap and unrecoverable from state later"
+type: kb/types/note.md
+traits: [title-as-claim, has-external-sources]
+tags: [agent-memory, context-engineering, learning-theory]
+status: seedling
+---
+
+# Bottom-up structure inference needs capture at the decision surface, not the state
+
+Trace-derived schemas, ontologies, and memory all promise the same thing: instead of prescribing a world model upfront, infer the minimal set of entities and relations from what actually happened. But that inference is not free-floating over "traces" in general. It is gated by *where* in the workflow capture happens. Bottom-up structure inference is feasible only when what is captured is **decision-shaped** — the inputs referenced, the constraints in play, the exception path, the approval, the action taken, the outcome — rather than **state-shaped**: the row that changed, the final value, the resulting record. The reason is a locality property of intent: the "why" behind a change is maximally available at the moment of decision and decays toward unrecoverable in the state that decision produces.
+
+## The "why" is cheap at the decision surface and expensive-to-impossible from state
+
+At the instant a decision is made, the deciding process is holding all the material that explains it: which evidence it looked at, which policy bound it, which exception it hit, who signed off, what it chose, what followed. Recording those "decision receipts" at the commit surface is nearly free — the information is already in hand. The resulting state keeps only the endpoint. A changed field tells you *that* something is now true; it does not tell you which inputs were weighed, which constraint forced the branch, or why the exception fired. Reconstructing that after the fact means re-deriving intent from residue — sometimes expensive, often impossible, because the discriminating information was never written down. This is the same gap [raw accumulation does not create usable memory](./raw-accumulation-does-not-create-usable-memory.md) names as the ingress problem: you can have state, but not the legible "why," and retrieval cannot repair a "why" that capture never preserved.
+
+## Capture position is therefore a precondition on the inference mechanism
+
+The mechanism that turns observed behavior into structure — [spec mining, codification's operational mechanism](./spec-mining-as-codification.md) — reads regularities off a stream of observations and extracts entities, relations, and rules. That mechanism can only recover structure that the stream actually carries. If the stream is state-shaped, the entities and relations it can support are the ones visible in endpoints; the intent-level structure (why decisions branch, which constraints bind, what an exception means) is simply absent from the input and cannot be mined. So the feasibility of bottom-up inference is decided upstream of the inference algorithm, at the capture point. Choosing to instrument decision surfaces rather than data stores is not an optimization on the same design — it changes which world models are learnable at all.
+
+This sharpens the "structure earned, not imposed" idea. The [wikiwiki principle](./wikiwiki-principle-lowest-friction-capture-then-progressive-refinement.md) says lowest-friction capture first, structure refined later in place; it is silent on *what* is cheapest to capture. The locality property adds the missing condition: for structure to be *earnable* from traces later, the low-friction capture has to happen where the why still exists. Deferring structure is safe; deferring capture of the why past the decision surface is not, because the why does not wait.
+
+## Boundary: right capture point is necessary, not sufficient
+
+Positioning capture at the decision surface makes bottom-up structure *possible*; it does not make the captured receipts *true*. A decision receipt is a record of what happened, and [trace-derived memory earns authority per operation, not at capture](./trace-derived-memory-earns-authority-per-operation-not-at-capture.md): the inferred entities and relations remain guesses until verified, and stall out as structure-shaped noise if the store never climbs past capture. So this note and that one name two independent preconditions on trace-derived memory — capture must be *positioned* to hold the why (this note), and the derived structure must be *verified* to hold authority (that note). Missing either sinks the approach, and satisfying one says nothing about the other.
+
+The same split explains why [creating memory directly](./agent-memory-requirements/create-memory-directly.md) while understanding is live is the strongest path when it is available: direct creation captures the why *and* shapes the artifact in one step. The decision-surface argument here is what governs the fallback — the [trace-derived extraction](./agent-memory-requirements/use-trace-derived-extraction.md) path you take when the artifact was not written live. That path is only as good as whether the trace it extracts from was decision-shaped in the first place.
+
+## Open Questions
+
+- How decision-shaped must capture be? There is presumably a spectrum between raw state and a fully structured receipt; the claim only requires enough of the why to be present for the target structure to be inferable, but where that threshold sits is likely task- and ontology-specific.
+- Can partial "why" be reconstructed from rich enough event logs (not just final state)? If so, the dichotomy is really a continuum along how close the capture point sits to the decision, and "state vs decision" is the two ends of it.
+
+---
+
+Relevant Notes:
+
+- [history has one chance to become checkable](./history-has-one-chance-to-become-checkable.md) — exemplifies: this note is a specific instance of that general claim — the decision surface is the production time at which the why, a species of production history, is convertible to checkable form
+- [spec mining is codification's operational mechanism](./spec-mining-as-codification.md) — mechanism: the algorithm that infers structure from observations; its input can only carry the why if capture was decision-shaped
+- [raw accumulation does not create usable memory](./raw-accumulation-does-not-create-usable-memory.md) — grounds: state-without-why is exactly the ingress problem this note localizes to the capture point
+- [the wikiwiki principle: lowest-friction capture, then progressive refinement](./wikiwiki-principle-lowest-friction-capture-then-progressive-refinement.md) — extends: adds the capture-point condition to "structure earned, not imposed" — defer structure, but not capture of the why
+- [memory design adds operational axes to artifact analysis](./memory-design-adds-operational-axes-to-artifact-analysis.md) — extends: that note's capture-policy axis is a menu of triggers (write-everything, heuristic, curator, mining); this note adds a positional precondition to the axis — without decision-shaped capture, intent-level structure is unlearnable regardless of trigger
+- [specification strategy should follow where understanding lives](./specification-strategy-should-follow-where-understanding-lives.md) — extends: sharpens its spec-mining leg — regularities "only visible after enough observation" are minable only if the observed stream was decision-shaped at capture, otherwise the aggregate carries endpoints without the why
+- [trace-derived memory earns authority per operation, not at capture](./trace-derived-memory-earns-authority-per-operation-not-at-capture.md) — contrasts: the orthogonal precondition — right capture point makes structure possible, verification makes it authoritative
+- [create memory directly](./agent-memory-requirements/create-memory-directly.md) — contrasts: direct write captures the why and shapes the artifact in one step; this note governs the deferred fallback
+- [use trace-derived extraction as meta-learning](./agent-memory-requirements/use-trace-derived-extraction.md) — extends: the after-the-fact extraction path presupposes the trace was decision-shaped at capture
+- [lineage](./definitions/lineage.md) — defined-in: decision receipts are write-time provenance, the source-dependency record captured at the commit surface
+- [Palantir ontology vs decision traces](../sources/palantir-ontology-vs-decision-traces.ingest.md) — derived-from: the architectural distinction (prescribed-upfront vs trace-derived world model) and the "state, but not the legible why" framing; per the ingest's fact-check, use the architecture, not the post's Palantir/Snowflake/Databricks market claims
