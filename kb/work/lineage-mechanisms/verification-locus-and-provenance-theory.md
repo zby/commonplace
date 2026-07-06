@@ -64,6 +64,7 @@ This gives existing workshop threads a common frame:
 - Open tension 10 (canonical artifacts with derivative update events) — merge-back events are records (L1) on the update event, not a reclassification of the artifact.
 - Open tension 11/12 (edge-state infrastructure; ranking links by disruption probability) — the ladder *is* the ranking, with storage weight following the rung: watched edges need relational edge-state, recorded edges need an append-only surface, untracked edges need nothing.
 - `general-lineage-refresh-state-design.md` — its input-version model is the L2/L3 machinery generalized.
+- The peer workshop [bulk-operations](../bulk-operations/README.md) owns the execution half: L2/L3 responses (regenerate a cohort, re-review a cohort) are staged bulk operations, and its minimal-run-record question is L1 applied to the bulk run itself — a run record is reified history and cannot be reconstructed after the run. Its integrate-stage laundering worry is the credence problem: a worker output's uncertainty status is a history fact that must ride on the merged artifact as a recorded claim or be lost.
 
 ## Literature anchors
 
