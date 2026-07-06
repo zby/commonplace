@@ -46,7 +46,8 @@ FORM = {"form_prose": "prose", "form_symbolic": "symbolic", "form_parametric": "
 ONEHOT_AXES = {
     "Lineage": {
         "lin_authored": "authored", "lin_imported": "imported",
-        "lin_trace_extracted": "trace-extracted"},
+        "lin_trace_extracted": "trace-extracted",
+        "lin_other_compiled": "other-compiled"},
     "Behavioral authority": {
         "auth_knowledge": "knowledge", "auth_instruction": "instruction",
         "auth_enforcement": "enforcement", "auth_routing": "routing",

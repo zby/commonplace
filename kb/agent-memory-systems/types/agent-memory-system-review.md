@@ -68,14 +68,14 @@ Identify the artifacts that actually shape the agent's later behavior — not ev
 
 - **Storage substrate** — where the retained state persists (files, repo, database, vector/graph store, prompt registry, model-artifact store, service object). Locates access, deletion, versioning, rollback.
 - **Representational form** — prose, symbolic, and/or distributed-parametric. Form sets the default inspection method: read prose, test/check symbolic, probe distributed-parametric. When several forms apply, list each component token; do not use a `mixed` token.
-- **Lineage** — where it came from (authored, imported, or trace-extracted) and its derivation status (source material vs derived view, index, compiled, assembled, learned); what source change invalidates or regenerates it.
+- **Lineage** — whether this specific artifact was created directly or derived by the system from other material. `authored` (created fresh) and `imported` (brought in from an external source, unchanged) are direct. `trace-extracted` and `other-compiled` are both system-derived, differing only in what was transformed: raw execution traces (session logs, transcripts, tool/event traces — see Trace-derived learning) for the former, anything else already retained in the system (an index built from stored entries, a summary compiled from source notes) for the latter. What source change invalidates or regenerates the derived artifact.
 - **Behavioral authority** — consumer, channel, and force: knowledge artifact (evidence / reference / context / advice) vs system-definition artifact (instruction, enforcement, routing, validation, evaluation, ranking, learning).
 
 **Extractable lead tokens.** So the cross-system comparison matrix can be built by parsing rather than hand-classification, open the artifact-analysis findings with backticked controlled-value tokens, written as part of the finding once you have reached it: `**Storage substrate:** \`graph\` — …`, `**Representational form:** \`prose\` \`symbolic\` — …`, `**Lineage:** \`authored\` — …`, and `**Behavioral authority:** \`knowledge\` \`routing\` — …`. Each token line is the lead of its own justifying sentence, so the value and its reasoning cannot drift apart. Vocabularies:
 
 - storage substrate ∈ `files` · `repo` · `sqlite` · `rdbms` · `vector` · `graph` · `kv` · `in-memory` · `prompt-registry` · `model-weights` · `service-object`
 - representational form ∈ `prose` · `symbolic` · `parametric` (list all that apply; legacy `mixed` must be decomposed)
-- lineage ∈ `authored` · `imported` · `trace-extracted`
+- lineage ∈ `authored` · `imported` · `trace-extracted` · `other-compiled`
 - behavioral authority ∈ `knowledge` · `instruction` · `enforcement` · `routing` · `validation` · `ranking` · `learning`
 
 For applicable multi-valued axes where the review truly does not contain enough evidence to classify the value, write the lead token as `not-determinable` with a one-line reason, e.g. `**Read-back signal:** \`not-determinable\` — …`. Do not omit the lead line for an applicable axis; omission means the retrofit is incomplete. Do not mix `not-determinable` with controlled values on the same line.
@@ -206,7 +206,7 @@ last-checked: "YYYY-MM-DD"
 
 - **Storage substrate:** `{files|repo|sqlite|rdbms|vector|graph|kv|in-memory|prompt-registry|model-weights|service-object}` — {justification}
 - **Representational form:** `{prose|symbolic|parametric}` `{...}` — {justification; list all that apply}
-- **Lineage:** `{authored|imported|trace-extracted}` `{...}` — {derivation status}
+- **Lineage:** `{authored|imported|trace-extracted|other-compiled}` `{...}` — {derivation status}
 - **Behavioral authority:** `{knowledge|instruction|enforcement|routing|validation|ranking|learning}` `{...}` — {consumer, channel, force}
 
 ## Comparison with Our System
