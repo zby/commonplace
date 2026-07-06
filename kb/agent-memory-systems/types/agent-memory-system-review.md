@@ -11,21 +11,11 @@ A review of an external agent memory, knowledge, or context-engineering system. 
 
 These reviews serve two readers. For someone **surveying or choosing** a system, the review is a faithful account of what it is and does. For **Commonplace itself**, it surfaces ideas worth borrowing for our own design. The characterization sections (Core Ideas, Artifact analysis, Write side, Read-back) serve the first reader; `Comparison with Our System` and its nested `### Borrowable Ideas` serve the second.
 
-**Two evidence tiers, one type.** The `source-tier` frontmatter field records which: `code-grounded` (the default this spec assumes — findings rest on inspected source; abandoned-but-readable code counts) or `doc-grounded` (no reachable source; findings rest on paper/README/blog, kept claim-level, filed under `lightweight/`). The instructions below are tier-neutral — the evidence-stance, source-metadata, and citation rules phrase for both — so only the Inputs/Workflow, written for the common code-grounded path, need the distinction.
+**Two evidence tiers, one type.** The `source-tier` frontmatter field records which: `code-grounded` (the default this spec assumes — findings rest on inspected source; abandoned-but-readable code counts) or `doc-grounded` (no reachable source; findings rest on paper/README/blog, kept claim-level, filed under `lightweight/`). The section specs, evidence-stance, source-metadata, and citation rules below are tier-neutral; only production, owned by the skill, differs by tier.
 
-This spec is also the **worker contract** for the `write-agent-memory-system-review` skill. The parent skill owns source preparation, archiving, index edits, QA, validation, and reporting. The worker owns only code inspection and drafting from the inputs below.
+Normal production goes through the [`write-agent-memory-system-review`](../../instructions/write-agent-memory-system-review/SKILL.md) skill, which owns source preparation, delegation, QA, validation, and reporting. Conformance here is judged only from the completed review — a writer's process is not something a reviewer can check.
 
 The section specs below distill [designing-agent-memory-systems](../../notes/designing-agent-memory-systems.md) and its requirements inventory into a review-time contract — don't load that note during ordinary review writing.
-
-## Inputs
-
-These Inputs and the Workflow describe the **code-grounded** path (the skill's contract); a `doc-grounded` review skips source preparation (no `source_dir`) and otherwise follows the same tier-neutral section, source-metadata, citation, and evidence-stance rules. The caller provides:
-
-- `source_dir` — local source directory (already prepared; the parent does all cloning/refresh)
-- `note_path` — target path under `kb/agent-memory-systems/reviews/`
-- `reviewed_revision` and any source identity / citation format — caller-supplied context, used for metadata and citations
-
-If any required input is missing, stop and report which. Verify `source_dir` is readable (e.g. `test -d`) and do not mutate it; if it isn't, stop and report. Never update `last-checked` without actually reading `source_dir`.
 
 ## Frontmatter
 
@@ -59,12 +49,6 @@ For GitHub-backed sources the attribution may instead be a commit-pinned blob UR
 The quoted text is the anchor; the attribution pins where it came from. Do not record byte offsets, character spans, or ids — the quote is self-relocating (it can be re-found by search) and the pinned commit is immutable, so nothing else is needed to verify it.
 
 This is **optional and additive** — use it on the claims that carry the review, not on every sentence. It strengthens the "readable without the source" goal above: the evidence now travels inline rather than hiding behind a file path. Resolution (does the quote actually appear in the pinned source?) is a write-time check run against the live checkout — see [verify-review-quote-grounding](../../instructions/verify-review-quote-grounding.md) — not something a later reader or the standing validator can redo, because the source is not retained in the KB. The validator checks only that each quote-anchored citation is well-formed and names a source.
-
-## Workflow
-
-1. **Read for style.** Read 1–2 current reviews in `kb/agent-memory-systems/reviews/` and `kb/agent-memory-systems/README.md` to match local style and depth.
-2. **Read for mechanism.** Ground the review in primary sources — `README.md`, architecture/design docs, `CLAUDE.md`/`AGENTS.md`, package manifests, and the core source files implementing the central claims. Where the implementation clarifies or contradicts the README, report what the code does and note the divergence. Read out the material for **Artifact analysis** (the four fields), Write side, Read-back, retrieval/navigation, any learning/distillation model, any validation/governance model, the integration surface (CLI, MCP, API, editor plugin), and what is genuinely implemented versus only proposed.
-3. **Write the review** from the code outward. The schema checks the required review sections; the template below shows their order.
 
 ## Opening and source metadata
 
@@ -189,11 +173,9 @@ Every review ends with explicit `Relevant Notes:` links into the KB. Link notes 
 
 ## Constraints
 
-- Don't put the source directory under `kb/agent-memory-systems/reviews/`.
 - Don't present `doc-grounded` reported behavior as observed; don't invent four-field or read-back detail the sources don't support.
 - Don't write markdown links from a review into local source paths (`../../../related-systems/...`).
 - Don't treat proposed docs as implemented behavior without checking the code.
-- Don't update `last-checked` without actually re-reading the system.
 
 ## Template
 

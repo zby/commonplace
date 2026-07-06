@@ -98,12 +98,17 @@ If the system has no reachable source code, stop and write a lightweight note in
    The worker has only this ownership:
    - read `kb/agent-memory-systems/COLLECTION.md`
    - read `kb/agent-memory-systems/types/agent-memory-system-review.md`
-   - read 1-2 current reviews for style
-   - inspect `source_dir`
-   - write `note_path`
+   - read 1-2 current reviews in `kb/agent-memory-systems/reviews/` and `kb/agent-memory-systems/README.md` to match local style and depth
+   - ground the review in primary sources in `source_dir` — `README.md`, architecture/design docs, `CLAUDE.md`/`AGENTS.md`, package manifests, and the core source files implementing the central claims; where the implementation clarifies or contradicts the README, report what the code does and note the divergence; read out material for Artifact analysis (the four fields), Write side, Read-back, retrieval/navigation, any learning/distillation model, any validation/governance model, the integration surface (CLI, MCP, API, editor plugin), and what is genuinely implemented versus only proposed
+   - write `note_path` from the code outward
    - decide trace-derived status from implementation evidence and either include both the placement section and `trace-derived` tag, or omit both
 
-   Pass the worker the inputs defined in the type contract's `## Inputs` section — the contract is authoritative; read the list from there (currently `source_dir` and `note_path`).
+   Give the worker these inputs (this list is authoritative — the type contract no longer restates it):
+   - `source_dir` — local source directory (already prepared; the parent does all cloning/refresh)
+   - `note_path` — target path under `kb/agent-memory-systems/reviews/`
+   - `reviewed_revision` and any source identity / citation format — used for metadata and citations
+
+   If any required input is missing, the worker must stop and report which. The worker must verify `source_dir` is readable (e.g. `test -d`) and must not mutate it; if it isn't readable, stop and report. The worker must never update `last-checked` without actually reading `source_dir`.
 
    Also pass this parent-supplied source metadata for the review note:
    - `source_url`
@@ -165,5 +170,6 @@ Report:
 - put checked-out repos under `kb/`
 - overwrite or repurpose an existing checkout whose remote points to a different owner/repo
 - force-pull, delete, or reset a checkout to handle conflicts
+- update `last-checked` without actually re-reading the reviewed system
 - run `codex`, `codex exec`, `claude`, or another agent CLI from the shell to bypass delegation or worker limits
 - leave the review unvalidated
