@@ -63,6 +63,7 @@ kb/reports/bundle-reviews/
 kb/reports/fixes/*.fix-report.md
 kb/reports/review-store.sqlite
 kb/reports/review-store.sqlite.*.bak
+kb/reports/review-store-backups/
 kb/reports/revise-autoreason/
 
 tmp/
