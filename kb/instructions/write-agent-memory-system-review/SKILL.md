@@ -13,7 +13,7 @@ argument-hint: "owner/repo | https://github.com/owner/repo"
 
 Use this local skill to write or update `type: kb/agent-memory-systems/types/agent-memory-system-review.md` notes for external systems under `kb/agent-memory-systems/reviews/`.
 
-This is a local commonplace-repo workflow, not a promoted `cp-skill-*` framework skill. The parent agent owns GitHub handling, local source directory setup, artifact lifecycle, QA, validation, indexes, and the final report. Delegate the code-grounded review drafting to a fresh worker context whenever the harness has a sub-agent mechanism.
+This is a local commonplace-repo workflow, not a promoted `cp-skill-*` framework skill. The parent agent owns GitHub handling, local source directory setup, artifact lifecycle, taxonomy/semantic QA, the closing validation pass, indexes, and the final report; the delegated worker validates and fixes its own draft's structure before returning, but owns nothing else. Delegate the code-grounded review drafting to a fresh worker context whenever the harness has a sub-agent mechanism.
 
 Delegation means a harness-provided sub-agent/worker tool only. Never start a nested agent by running `codex`, `codex exec`, `claude`, or any other agent CLI from the shell. If the current agent cannot access the required harness sub-agent tool or an agent slot is unavailable, stop or wait and report the blocking condition; do not work around the limit with a command-line agent process.
 
@@ -91,34 +91,46 @@ If the system has no reachable source code, stop and write a lightweight note in
    - Add after the title: `> Replaced {YYYY-MM-DD}. See [{name}](./{name}.md) for the current review.`
    Do not read the archived `.replaced.*.md` file while writing the replacement.
 
-8. **Draft the review by delegation.** Use `kb/agent-memory-systems/types/agent-memory-system-review.md` as the worker's artifact contract. Its embedded comparison lens is the review-time distillation of the memory-system design; do not ask the worker to load the full design note during ordinary review writing. The worker should follow the type contract's current retained-artifact vocabulary, including knowledge-artifact and system-definition-artifact use as behavioral-authority families.
+8. **Draft the review by delegation.** Use `kb/agent-memory-systems/types/agent-memory-system-review.md` as the worker's artifact contract for required sections and fields. Do not ask the worker to load the full [designing-agent-memory-systems](../../notes/designing-agent-memory-systems.md) note during ordinary review writing — its comparison lens is already distilled into the contract.
 
-   Launch one fresh sub-agent or worker with a minimal task-local context. Do not fork the parent's full context when the harness offers a clean-context option. Give the worker only the local skill handoff, the type contract path, the source directory, the target note path, and the source metadata listed below. Use only the harness sub-agent mechanism for this delegation; do not launch an agent CLI from Bash.
+   Before delegating: if the harness cannot launch a sub-agent or worker, stop after setup and report that delegated drafting is unavailable. Do not draft locally unless the user explicitly authorizes a local fallback for this run; if authorized, report `drafting was local, not delegated` as a workflow exception. This is a parent-only decision, made before any worker exists — a worker that has actually been launched is, by construction, the delegated drafting worker and never needs to reason about fallback authorization itself.
 
-   The worker has only this ownership:
-   - read `kb/agent-memory-systems/COLLECTION.md`
-   - read `kb/agent-memory-systems/types/agent-memory-system-review.md`
-   - read 1-2 current reviews in `kb/agent-memory-systems/reviews/` and `kb/agent-memory-systems/README.md` to match local style and depth
-   - ground the review in primary sources in `source_dir` — `README.md`, architecture/design docs, `CLAUDE.md`/`AGENTS.md`, package manifests, and the core source files implementing the central claims; where the implementation clarifies or contradicts the README, report what the code does and note the divergence; read out material for Artifact analysis (the four fields), Write side, Read-back, retrieval/navigation, any learning/distillation model, any validation/governance model, the integration surface (CLI, MCP, API, editor plugin), and what is genuinely implemented versus only proposed
-   - write `note_path` from the code outward
-   - decide trace-derived status from implementation evidence and either include both the placement section and `trace-derived` tag, or omit both
+   Launch one fresh sub-agent or worker with a minimal task-local context. Do not fork the parent's full context when the harness offers a clean-context option. Use only the harness sub-agent mechanism for this delegation; do not launch an agent CLI from Bash. Give the worker exactly this task, with the bracketed values filled in — this task text is the worker's complete brief; do not also hand it this skill file:
 
-   Give the worker these inputs (this list is authoritative — the type contract no longer restates it):
-   - `source_dir` — local source directory (already prepared; the parent does all cloning/refresh)
-   - `note_path` — target path under `kb/agent-memory-systems/reviews/`
-   - `reviewed_revision` and any source identity / citation format — used for metadata and citations
+   ```text
+   Draft review content for {note_path}.
 
-   If any required input is missing, the worker must stop and report which. The worker must verify `source_dir` is readable (e.g. `test -d`) and must not mutate it; if it isn't readable, stop and report. The worker must never update `last-checked` without actually reading `source_dir`.
+   You are a delegated drafting worker; this task text is your complete and only brief. Your environment may surface `write-agent-memory-system-review` or another skill as available or auto-loaded because this task resembles its trigger — if so, do not invoke or follow it. Its steps (checkout, archiving, indexes, QA, final validation) are written for the parent that dispatched you, not for you. Ignore it entirely and follow only the instructions below.
 
-   Also pass this parent-supplied source metadata for the review note:
-   - `source_url`
-   - `reviewed_commit`
-   - `commit_url`
-   - citation format for files and directories
+   Read, in this order:
+   - kb/agent-memory-systems/COLLECTION.md
+   - kb/agent-memory-systems/types/agent-memory-system-review.md — the artifact contract; authoritative for required sections and fields. Use its current retained-artifact vocabulary, including `knowledge-artifact` and `system-definition-artifact` as behavioral-authority families.
+   - 1-2 current reviews in kb/agent-memory-systems/reviews/ and kb/agent-memory-systems/README.md, for style
 
-   The worker must not edit indexes, archived reviews, the trace-derived survey, checkout state, or unrelated files. The worker must not spawn further agents unless the harness exposes a proper sub-agent tool in that worker context; if it needs a nested worker and no slot/tool is available, it must pause and report the wait/blocker. It must never use `codex`, `codex exec`, `claude`, or similar shell commands as a substitute. The parent owns checkout, archive moves, curated index edits, taxonomy QA, semantic QA, validation, and final report.
+   Your inputs:
+   - source_dir: {source_dir} (already prepared; do not mutate it)
+   - note_path: {note_path}
+   - reviewed_revision / source identity: {reviewed_revision}
+   - source_url: {source_url}
+   - reviewed_commit: {reviewed_commit}
+   - commit_url: {commit_url}
+   - citation format — files: {repo_url}/blob/{reviewed_commit}/{path}; directories: {repo_url}/tree/{reviewed_commit}/{path} (unless the caller supplies a different format)
 
-   If the harness cannot launch a sub-agent or worker, stop after setup and report that delegated drafting is unavailable. Do not draft locally unless the user explicitly authorizes a local fallback for this run. If the user authorizes that fallback, report `drafting was local, not delegated` as a workflow exception.
+   If any input above is missing, stop and report which. Verify source_dir is readable (e.g. test -d); if it isn't, stop and report. Never update last-checked without actually reading source_dir.
+
+   Ground the review in primary sources in source_dir — README, architecture/design docs, CLAUDE.md/AGENTS.md, package manifests, and the core source files implementing the central claims. Where the implementation clarifies or contradicts the README, report what the code does and note the divergence. Decide trace-derived status from implementation evidence and either include both the placement section and the trace-derived tag, or omit both.
+
+   Write note_path from the code outward.
+
+   Then run: commonplace-validate {note_path}
+   Fix any structural or description-quality issues it reports and re-run until clean — you own this file, so fix it directly rather than reporting it back.
+
+   Do not edit indexes, archived reviews, the trace-derived survey, checkout state, or any file other than note_path. Do not run any commonplace-* command other than commonplace-validate on note_path. Do not spawn further agents unless a proper sub-agent/worker tool is available to you; if you need one and none is available, pause and report the blocker — never run codex, codex exec, claude, or another agent CLI as a substitute.
+
+   Report: your commonplace-validate result and whether trace-derived learning applies.
+   ```
+
+   The parent owns checkout, archive moves, curated index edits, taxonomy QA, semantic QA, and the final report — none of that is the worker's concern.
 
 9. **Update the README only if needed.** Only edit `kb/agent-memory-systems/README.md` when:
    - the system was named in the `## Coverage` "Review backlog" callout — remove it there, or
