@@ -2,10 +2,8 @@
 
 Two installs, by what you want from it:
 
-- **Reader install** — vendor the Commonplace knowledge base inside an existing project as a read-only reference: your agents consult the research when they face context, memory, or learning design decisions. A vendored copy (submodule, clone, or plain download) and one routing paragraph; no Python. See [Reader install](#reader-install-the-kb-as-a-vendored-reference).
-- **Full install** — run your own knowledge base with the Commonplace type system, skills, and commands. The package carries the methodology — notes, reference docs, instructions, types, and skills — but not this repo's external-system reviews (`kb/agent-memory-systems/`, `kb/agentic-systems/`) or source snapshots; add a reader install alongside if your agents should read those. The numbered steps below: check prerequisites, install the library so `commonplace-*` commands run, create the project with `commonplace-init`, set up the control-plane file, install the skills for every agent that will work on the project, and start the runtime. Most steps end with a check you can run before moving on.
-
-The modes compose: a project can vendor the research KB for reading and run its own KB for writing.
+- **Reader install** — vendor the Commonplace knowledge base inside an existing project as a read-only reference: your agents consult the research when they face context, memory, or learning design decisions. A vendored copy (submodule, clone, or plain download) and one routing paragraph; no Python — the KB is plain markdown, so it works in a project written in any language. See [Reader install](#reader-install-the-kb-as-a-vendored-reference).
+- **Full install** — run your own knowledge base with the Commonplace type system, skills, and commands. The package carries the methodology — notes, reference docs, instructions, types, and skills — but not this repo's external-system reviews (`kb/agent-memory-systems/`, `kb/agentic-systems/`) or source snapshots. The numbered steps below: check prerequisites, install the library so `commonplace-*` commands run, create the project with `commonplace-init`, set up the control-plane file, install the skills for every agent that will work on the project, and start the runtime. Most steps end with a check you can run before moving on.
 
 ## Reader install: the KB as a vendored reference
 

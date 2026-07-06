@@ -81,11 +81,11 @@ A further family of commands drives the review system — selecting targets, que
 
 ## Usage
 
-Two ways to use Commonplace, by what you want from it: **install the system** to run a knowledge base of your own, or **vendor this repo read-only** so your agents can consult the research. The two compose — a project can do both.
+Two ways to use Commonplace, by what you want from it: **install the system** to run a knowledge base of your own, or **vendor this repo read-only** so your agents can consult the research. Python is only needed for the full install — the vendored KB is plain markdown, so it drops into a TypeScript, Rust, or any other project with no programming environment attached.
 
 ### Installing into a project (full install)
 
-Commonplace can be installed into any project as a Python package. Your agents get the same type system, conventions, and skills, and accumulate knowledge about your domain rather than this one. The package ships the methodology — the research notes, reference docs, instructions, types, skills, and `commonplace-*` commands — but not the external-system reviews (`kb/agent-memory-systems/`, `kb/agentic-systems/`) or the source snapshots in `kb/sources/`: those are research material specific to this repo, left out to keep the package small. Read them on the [rendered site](https://zby.github.io/commonplace/) or vendor the repo alongside the install. See [**INSTALL.md**](https://github.com/zby/commonplace/blob/main/INSTALL.md) for the setup flow.
+Commonplace can be installed into any project as a Python package. Your agents get the same type system, conventions, and skills, and accumulate knowledge about your domain rather than this one. The package ships the methodology — the research notes, reference docs, instructions, types, skills, and `commonplace-*` commands — but not the external-system reviews (`kb/agent-memory-systems/`, `kb/agentic-systems/`) or the source snapshots in `kb/sources/`: those are research material specific to this repo, left out to keep the package small. Read them on the [rendered site](https://zby.github.io/commonplace/). See [**INSTALL.md**](https://github.com/zby/commonplace/blob/main/INSTALL.md) for the setup flow.
 
 ### Vendored inside your project (reader mode)
 
