@@ -1,0 +1,7 @@
+## Knowledge base (vendored, read-only)
+
+`commonplace/kb/` is a vendored knowledge base on agent context engineering,
+memory, and deploy-time learning. For design decisions in those areas, consult
+it before deciding: start at `commonplace/kb/notes/tags-README.md`. Paths named
+inside it are relative to `commonplace/`. It is read-only in this project — to
+contest a claim, open an issue at https://github.com/zby/commonplace/issues.

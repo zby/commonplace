@@ -24,7 +24,13 @@ echo '/commonplace/' >> .gitignore
 
 Git itself is optional — the KB is plain files, so [downloading the repo as an archive](https://github.com/zby/commonplace/archive/refs/heads/main.zip) and extracting it into `commonplace/` works too; you just update by re-downloading.
 
-Then paste a routing block into your project's `CLAUDE.md` or `AGENTS.md` (create the file if the project has none):
+Then add a routing block to your project's `CLAUDE.md` or `AGENTS.md`. The vendored repo ships it as `AGENTS.md.reader-fragment`, so appending is one command (creates the file if the project has none):
+
+```bash
+cat commonplace/AGENTS.md.reader-fragment >> CLAUDE.md    # or >> AGENTS.md
+```
+
+Or paste it directly:
 
 ```markdown
 ## Knowledge base (vendored, read-only)
@@ -35,6 +41,8 @@ it before deciding: start at `commonplace/kb/notes/tags-README.md`. Paths named
 inside it are relative to `commonplace/`. It is read-only in this project — to
 contest a claim, open an issue at https://github.com/zby/commonplace/issues.
 ```
+
+Either way, if you vendored under a directory name other than `commonplace/`, adjust the paths in the block to match.
 
 That's the whole install. Reading needs no Python, no venv, and no skills — the `commonplace-*` commands and `cp-skill-*` skills exist to maintain a KB, not to consume one. The one tool the KB's navigation leans on is ripgrep (`rg`), which most agent runtimes bundle. The vendored repo's own `AGENTS.md` tells agents that wander into it to treat it as read-only.
 

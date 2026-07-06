@@ -89,7 +89,7 @@ Commonplace can be installed into any project as a Python package. Your agents g
 
 ### Vendored inside your project (reader mode)
 
-To give your agents the full research corpus — external-system reviews and sources included — without running a KB of your own, vendor this repo **inside** your project — a git submodule, a gitignored clone, or a plain copy — and add one routing paragraph to your project's `CLAUDE.md`/`AGENTS.md`. Placement inside the project root matters: agent harnesses scope file access to the root, so a subdirectory is readable without permission prompts while a sibling directory is not. Reading needs no Python, no venv, and no skills. See [INSTALL.md → Reader install](https://github.com/zby/commonplace/blob/main/INSTALL.md#reader-install-the-kb-as-a-vendored-reference) for the commands and the paste-ready routing block.
+To give your agents the full research corpus — external-system reviews and sources included — without running a KB of your own, vendor this repo **inside** your project — a git submodule, a gitignored clone, or a plain copy — and add one routing paragraph to your project's `CLAUDE.md`/`AGENTS.md` (shipped as `AGENTS.md.reader-fragment`, so appending it is a single command). Placement inside the project root matters: agent harnesses scope file access to the root, so a subdirectory is readable without permission prompts while a sibling directory is not. Reading needs no Python, no venv, and no skills. See [INSTALL.md → Reader install](https://github.com/zby/commonplace/blob/main/INSTALL.md#reader-install-the-kb-as-a-vendored-reference) for the commands and the paste-ready routing block.
 
 ### Working in this repo (development)
 
