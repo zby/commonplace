@@ -85,6 +85,8 @@ If the system has no reachable source code, stop and write a lightweight note in
    ```bash
    git mv "{note_path}" "{note_path%.md}.replaced.{YYYY-MM-DD}.md"
    ```
+   If that target path already exists (a same-day rerun already archived one), do not overwrite it: append a numeric suffix starting at `2` and increment until the path is free — `{note_path%.md}.replaced.{YYYY-MM-DD}.2.md`, then `.3.md`, and so on.
+
    Then mark the archived file:
    - Set `status: outdated` in frontmatter.
    - Set `tags: []` (clearing any `trace-derived` tag).
