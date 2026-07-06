@@ -1,8 +1,18 @@
 """Render review protocol prompts.
 
 One renderer for every packing shape: the prompt carries N note targets and
-M gate definitions, each embedded once, and requests one output block per
-requested (note, gate) pair.
+M gate definitions and requests one output block per requested (note, gate)
+pair. Notes and catalog gates are embedded once; a type spec serving as a
+gate is referenced by repo path instead, and the worker reads it from disk —
+the spec is authoring instructions the reviewer applies as criteria, not
+prompt text addressed to it, and the read keeps that distinction evident.
+
+The referenced type spec is still snapshotted at job creation and pinned by
+acceptance, so freshness is unchanged. The disk read opens a window: a type
+spec edited between job creation and the worker's read is judged in its new
+text while acceptance pins the creation-time snapshot. A persistent edit
+self-heals — the acceptance is immediately stale (`gate-changed`) against the
+changed file — so only an edit reverted within the window escapes notice.
 
 Freshness boundary: review acceptance hashes only the embedded note and gate
 texts. Everything this module renders around them — the runner system prompt,
@@ -36,20 +46,28 @@ from commonplace.review.type_conformance import is_type_spec_gate_path
 
 OutputMode = Literal["stdout", "file"]
 
-# Wrapper rendered before a type spec embedded as a gate. Mechanical only: it
-# says how to apply authoring instructions as a gate, never what a good note
-# of the type looks like — those criteria belong in the type spec, where the
-# freshness hash sees them.
-TYPE_CONFORMANCE_WRAPPER_LINES = (
-    "This is a type-conformance gate. The gate text below is the note's type spec:",
-    "authoring instructions and a template, not a Failure mode / Test procedure.",
-    "Judge whether the note does what the type spec's authoring instructions ask.",
-    "If the type spec carries a `## Review` section, treat it as the operative test.",
-    "- PASS: the note does what the authoring instructions ask.",
-    "- WARN: the note conforms overall, but specific instructions go unmet; name each unmet instruction as a finding.",
-    "- FAIL: the note does not do what the authoring instructions ask.",
-    "Structural checks (frontmatter fields, schema conformance) are the deterministic validator's job; do not re-check them here.",
-)
+
+def _type_conformance_wrapper_lines(gate_path: str) -> tuple[str, ...]:
+    """Gate block rendered for a type spec serving as a gate.
+
+    Mechanical only: it says how to apply authoring instructions as a gate,
+    never what a good note of the type looks like — those criteria belong in
+    the type spec, where the freshness hash sees them. The spec itself is not
+    embedded; the worker reads it from the referenced repo path.
+    """
+    return (
+        "This is a type-conformance gate. The gate is the note's type spec:",
+        "authoring instructions and a template, not a Failure mode / Test procedure.",
+        f"The type spec is not embedded in this prompt. Read `{gate_path}` (repo-relative)",
+        "before judging; it is the authoritative gate text for this pair.",
+        "Judge whether the note does what the type spec's authoring instructions ask.",
+        "If the type spec carries a `## Review` section, treat it as the operative test.",
+        "- PASS: the note does what the authoring instructions ask.",
+        "- WARN: the note conforms overall, but specific instructions go unmet; name each unmet instruction as a finding.",
+        "- FAIL: the note does not do what the authoring instructions ask.",
+        "Structural checks (frontmatter fields, schema conformance) are the deterministic validator's job; do not re-check them here.",
+    )
+
 
 # Used as the reviewer system prompt; the task prompt rendered below carries
 # the per-job specifics.
@@ -107,6 +125,9 @@ def _validate_targets(
     for gate_path in sorted(requested_gate_paths):
         if PAIR_KEY_SEPARATOR in gate_path:
             raise ValueError(f"gate_path must not contain {PAIR_KEY_SEPARATOR!r}: {gate_path}")
+        if is_type_spec_gate_path(gate_path):
+            # Referenced by path, not embedded: no text to require or scan.
+            continue
         gate_text = gate_texts.get(gate_path)
         if gate_text is None or not gate_text.strip():
             raise ValueError(f"missing gate text: {gate_path}")
@@ -122,6 +143,7 @@ def render_pairs_prompt(
 ) -> str:
     _validate_targets(notes, gate_texts)
     gate_paths = sorted({gate_path for note in notes for gate_path in note.gate_paths})
+    has_type_spec_gate = any(is_type_spec_gate_path(gate_path) for gate_path in gate_paths)
 
     if output_mode == "file":
         if bundle_output_path is None:
@@ -143,6 +165,12 @@ def render_pairs_prompt(
         "",
         "Reading scope for this job:",
         "- All target note contents and gate definitions are included below. Do not read them from disk.",
+    ]
+    if has_type_spec_gate:
+        lines.append(
+            "- Exception: type-conformance gates reference the note's type spec instead of embedding it; read each referenced type spec from disk as its gate block directs."
+        )
+    lines += [
         "- For semantic grounding or consistency checks, follow only links that appear in a target note.",
         "- When following a markdown link from a target note, use that note's pre-resolved path table below instead of searching for targets by name.",
         "- Ignore review backups, workshop copies, and historical artifacts unless a target note links to them explicitly.",
@@ -228,14 +256,15 @@ def render_pairs_prompt(
     for gate_path in gate_paths:
         lines.append(f"=== gate: {gate_path} ===")
         if is_type_spec_gate_path(gate_path):
-            lines.extend(TYPE_CONFORMANCE_WRAPPER_LINES)
+            lines.extend(_type_conformance_wrapper_lines(gate_path))
             lines.append("")
-        lines.extend(
-            [
-                gate_texts[gate_path].rstrip(),
-                "",
-            ]
-        )
+        else:
+            lines.extend(
+                [
+                    gate_texts[gate_path].rstrip(),
+                    "",
+                ]
+            )
 
     lines.extend(
         [

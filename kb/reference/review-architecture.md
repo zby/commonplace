@@ -57,6 +57,8 @@ The selector computes SHA-256 over the current note and gate text and compares i
 
 The hash boundary is deliberate and narrower than the full review contract: the prompt scaffolding (`protocol/prompt.py` — runner system prompt, reading scope, output contract, the type-conformance wrapper) and the prompt-assembling code are outside it, so editing them invalidates no acceptances. The compensating rule is that judgment-bearing review criteria live only in hashed note/gate files, and the scaffolding stays mechanical; a scaffolding change that shifts judgments is a system upgrade calling for a deliberate corpus-wide re-review or ack decision. Both modules carry comments marking this boundary. For type-conformance pairs specifically, the wrapper may say how to apply a type spec as a gate, never what a good note of the type looks like — conformance criteria that need sharpening go into an authored `## Review` section of the type spec, where the hash sees them.
 
+Type-conformance prompts reference the type spec by repo path instead of embedding it; the worker reads the spec from disk. The spec is criteria the reviewer applies, not prompt text addressed to it, and arriving as a read result keeps that distinction evident. The spec is still snapshotted at job creation and pinned by acceptance, so freshness is unchanged. The disk read opens a window — a spec edited between job creation and the worker's read is judged in its new text while acceptance pins the old snapshot — but a persistent edit self-heals, because the acceptance is immediately `gate-changed` against the changed file; only an edit reverted within the window escapes notice.
+
 The two-input shape is also the growth path: the default answer to a new review dependency is a new factored `(note, dependency)` pair with the dependency document on the gate side — as type-conformance pairs do with type specs — not a wider per-pair input set.
 
 ## Core modules
@@ -78,7 +80,7 @@ The two-input shape is also the growth path: the default answer to a new review 
 ### Protocol and finalization
 
 - `protocol/format.py` defines pair sentinels and render-time reserved-text checks.
-- `protocol/prompt.py` renders canonical review prompts from captured text. In file-output mode, the prompt instructs a worker to write exactly the job's derived `bundle_output_path`.
+- `protocol/prompt.py` renders canonical review prompts from captured text; type-conformance gates are the exception, rendered as a mechanical wrapper referencing the type spec's repo path for the worker to read. In file-output mode, the prompt instructs a worker to write exactly the job's derived `bundle_output_path`.
 - `protocol/parser.py` parses sentinel-bracketed pair output. Structural anomalies, missing expected pairs, duplicates, and malformed result footers fail the whole job.
 - `protocol/decisions.py` strictly accepts exactly one final `## Result: PASS|WARN|FAIL|ERROR` line per pair block.
 - `finalization.py` is the public library operation behind `commonplace-finalize-review-job`. It loads derived job output, validates optional runner/model/effort provenance, parses the bundle, and — only after all parse and coverage preflight passes — writes result files, completes pair rows, upserts acceptance, prunes superseded review rows/snapshots, and marks the job completed. Result-file write failures roll back and fail the job in a separate transaction; artifact-dir cleanup and `MANIFEST.json` refresh run after DB completion, with failures reported as non-fatal warnings.
