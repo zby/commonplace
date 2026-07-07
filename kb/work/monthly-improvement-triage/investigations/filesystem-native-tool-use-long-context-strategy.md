@@ -1,0 +1,46 @@
+# Investigation: filesystem-native tool use as a distinct long-context strategy
+
+## Claim under test
+
+From `kb/log.md` (ABSTRACTION entry, also carried in the current triage README, also flagged `PROMOTE` in the folded-in `log-triage-2026-04-27.md` over two months ago and never written):
+
+> `[context-efficiency-is-the-central-design-concern-in-agent-systems.md, tool-loop-index.md, process-structure-and-output-structure-are-independent-levers.md, kb/agent-memory-systems/agentic-memory-systems-comparative-review.md]` share an unnamed claim that filesystem-native tool use is a high-reach long-context strategy because it externalizes semantic overflow into executable process structure.
+
+Note: `tool-loop-index.md` does not exist as a filename. The only plausible referent is `kb/notes/tool-loop-README.md`, the tag-README (index) for the `tool-loop` tag. Treated as such throughout.
+
+## What I read
+
+- `kb/notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md` (full). Argues context is scarce for two distinct reasons (feasibility, the binding per-window constraint, vs. cost, the aggregate economic one) and that context efficiency should be a design-time concern. It never mentions "filesystem," "tool use," or executing anything outside the model. Its only architectural claim is a pointer to `bounded-context-orchestration-model.md` ("symbolic scheduling over bounded LLM calls") — a scheduling claim, not a filesystem-specific one.
+- `kb/notes/tool-loop-README.md` (full). Indexes the tool-loop argument: frameworks own a request/execute/absorb loop; three forcing cases (different tool surfaces, sub-goals exceeding one window, codified scheduling) push toward exposing that loop so sub-agents and symbolic composition become possible. This is about the *shape of control* around tool calls in general. It never singles out the filesystem, and never argues that writing/reading files is what does the context-saving work — the mechanism it names is loop exposure and symbolic composition, not externalization to disk.
+- `kb/notes/process-structure-and-output-structure-are-independent-levers.md` (full). About a completely different axis: constraining *how an LLM reasons before answering* (process structure, e.g. "state your premises") vs. constraining *what the answer looks like* (output structure, e.g. a JSON schema). It is about generation-time structure, evidenced by code-verification and GSM-DC benchmarks. It contains no mention of filesystems, tools, or long-context/context-window concerns at all.
+- `kb/agent-memory-systems/agentic-memory-systems-comparative-review.md` (full). Synthesizes 141 agent-memory-system reviews. Its first finding is explicitly the *opposite* of "filesystem-native tool use is special": **"Storage predicts little by itself"** — files/repo substrates lead 98/141 systems, mostly because the review roster over-samples file-based systems from a specific community, and "substrate alone says little about whether memory is authored, trace-derived, pushed, pulled, enforced, or behavior-tested. It is an operational floor, not the architectural fork it is usually treated as."
+
+## Search for existing coverage
+
+Grepped `kb/notes/`, `kb/agent-memory-systems/`, `kb/agentic-systems/`, `kb/reference/` for "filesystem" and for "semantic overflow"/"externaliz*". Found the claim already stated, more precisely, in two notes not among the four cited:
+
+- `kb/notes/charting-the-knowledge-access-problem-beyond-rag.md`, line 69: "A filesystem interface can outperform naive RAG not because files are magical, but because it converts one hard global decision into many cheaper local ones: `ls` to orient, `grep` to narrow, `cat` to inspect, then continue." This *is* the mechanism the log item is reaching for — executable, incremental tool calls substituting for a single large context load — stated with more precision (converts one hard global decision into many cheap local ones) than the log item's phrasing.
+- `kb/notes/agent-runtimes-decompose-into-scheduler-context-engine-and-execution.md`, which explicitly separates the filesystem out as **execution substrate** ("durable exact state outside the model"), distinct from the **context engine** (routing/loading/scoping), and warns against exactly the conflation the log item makes: "A filesystem is not a scheduler. Tool calling is not context engineering." On this note's own analysis, filesystem access is not itself a "long-context strategy" — it's substrate that a context engine may or may not exploit well.
+
+So to the extent the claim is true and useful, it is already written, and written more carefully than the four-source synthesis proposes.
+
+## Reach test (`kb/notes/COLLECTION.md`)
+
+- **Do the four sources actually share this mechanism?** No. Two of the four (`context-efficiency...`, `process-structure...`) never mention filesystems, tools, or externalization at all — they are about unrelated axes (feasibility-vs-cost; process-vs-output structure). `tool-loop-README.md` is about loop-exposure and symbolic composition in general, not specifically about the filesystem. The comparative review's actual finding is that storage substrate (files included) predicts little by itself and is "an operational floor, not the architectural fork it is usually treated as" — a direct rebuttal of treating filesystem-native tool use as a distinguished, high-reach strategy.
+- **Fifth example test.** A genuine fifth instance of "filesystem-native tool use as long-context strategy" would have to actually discuss reading/writing files as tool calls that substitute for loading content into context — e.g. `charting-the-knowledge-access-problem-beyond-rag.md`'s `ls`/`grep`/`cat` passage, or the OpenViking review (`kb/agent-memory-systems/reviews/openviking.md`, "filesystem as metaphor, not mechanism" — a filesystem *interface* over a non-filesystem substrate). None of the four cited sources would be picked out by that test; the notes that would are not among the four.
+- **Counter-case.** OpenViking presents a filesystem interface (`ls`/`read`/`find`) but its actual substrate is AGFS plus a vector index — the KB's own README calls this "filesystem as metaphor, not mechanism." That is a real case where filesystem-native *interface* does not deliver the claimed mechanism (executing against real files that externalize overflow), undercutting the idea that "filesystem-native tool use" is a single reach-worthy mechanism rather than something that depends on what is actually behind the interface.
+- **Would a different premise change the conclusion?** No clean test is possible because the sources don't actually vary a shared independent variable — three of the four don't address the topic, and the fourth argues against it.
+
+## Verdict: DISMISS
+
+This is a weaker case than even the two-axis-taxonomy and OOD-convergence items dismissed earlier this session. There the sources at least addressed the same subject and the synthesis was arguably-plausible-but-unproven. Here, two of the four cited sources (`context-efficiency-is-the-central-design-concern-in-agent-systems.md`, `process-structure-and-output-structure-are-independent-levers.md`) do not address filesystems, tool use, or externalization in any form — the "shared claim" is not present in their text under any reasonable reading. The third (`tool-loop-README.md`) addresses tool-loop control structure in general, not filesystem specifics. The fourth (the comparative review) states a finding that cuts against, not for, treating filesystem substrate as a distinguished high-reach mechanism.
+
+Separately, the mechanism the log item gestures at — executable incremental tool calls (`ls`/`grep`/`cat`) substituting for large context loads — already exists in the KB, stated more precisely, in `charting-the-knowledge-access-problem-beyond-rag.md`, and is correctly kept distinct from "the filesystem itself is the strategy" by `agent-runtimes-decompose-into-scheduler-context-engine-and-execution.md`'s scheduler/context-engine/execution-substrate split. Writing a new note under this synthesis would either (a) misattribute a claim to sources that don't make it, or (b) duplicate an existing, better-stated note.
+
+This closes out the "over-two-months-unaddressed" pattern the triage README flagged for this item, alongside the two-axis taxonomy and OOD-convergence items: on inspection, the overdue status reflects noise in the original abstraction/synthesis detection (likely from automated cross-note juxtaposition), not a genuine backlog of validated work.
+
+**Reopening condition:** if a future connect pass finds a source that actually argues filesystem execution (not just filesystem storage) is *categorically* better than other tool-mediated context-management strategies (e.g. structured API calls, database queries) at avoiding semantic overflow — with a mechanism distinguishing it from generic "tool calls avoid dumping content into context" — that would be new ground `charting-the-knowledge-access-problem-beyond-rag.md` and `agent-runtimes-decompose...` don't yet cover.
+
+## Disposition
+
+No note written. No compression-gate review run (out of scope per DISMISS branch, per assignment instructions). This investigation report is the only artifact produced.
