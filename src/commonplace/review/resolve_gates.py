@@ -92,7 +92,7 @@ def applicable_gate_ids_for_note(note_path: Path, gate_ids: list[str], gates_dir
         gate_meta = _load_frontmatter(gate_abs)
         if not _matches_requirement(note_traits, gate_meta.get("requires_trait")):
             continue
-        if not _matches_requirement(note_types, gate_meta.get("requires-type")):
+        if not _matches_requirement(note_types, gate_meta.get("requires_type")):
             continue
         applicable.append(gate_id)
     return applicable

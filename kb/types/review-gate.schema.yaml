@@ -34,11 +34,21 @@ allOf:
             type: string
             minLength: 1
           requires_trait:
-            type: string
-            minLength: 1
-          requires-type:
-            type: string
-            minLength: 1
+            anyOf:
+              - type: string
+                minLength: 1
+              - type: array
+                items:
+                  type: string
+                  minLength: 1
+          requires_type:
+            anyOf:
+              - type: string
+                minLength: 1
+              - type: array
+                items:
+                  type: string
+                  minLength: 1
         additionalProperties: true
       headings:
         type: array

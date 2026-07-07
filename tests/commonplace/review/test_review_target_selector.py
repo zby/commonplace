@@ -62,7 +62,7 @@ def make_gate(
     requires_type: str | None = None,
 ) -> Path:
     requires_trait_line = f"requires_trait: {requires_trait}\n" if requires_trait else ""
-    requires_type_line = f"requires-type: {requires_type}\n" if requires_type else ""
+    requires_type_line = f"requires_type: {requires_type}\n" if requires_type else ""
     return write(
         path,
         f"""---
@@ -1296,7 +1296,7 @@ name: Definitionish
 lens: frontmatter
 watches: [body]
 staleness: changed
-requires-type: [kb/types/definition.md, kb/types/glossary-entry.md]
+requires_type: [kb/types/definition.md, kb/types/glossary-entry.md]
 ---
 
 ## Failure mode

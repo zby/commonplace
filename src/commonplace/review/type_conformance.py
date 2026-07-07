@@ -7,7 +7,7 @@ snapshots, freshness, acceptance, and acknowledgement apply unchanged: editing
 a type spec flips `gate-changed` for exactly the notes of that type.
 
 Pairs are derived from note frontmatter, not from catalog listing plus
-`requires-type` filtering. The human-facing gate id is the virtual
+`requires_type` filtering. The human-facing gate id is the virtual
 `type/{name}` lens; the persisted gate identity is the type-spec repo path.
 """
 

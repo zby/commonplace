@@ -6,7 +6,7 @@ type: kb/types/review-gate.md
 lens: semantic
 watches: [body]
 staleness: changed
-requires-type: kb/types/definition.md
+requires_type: kb/types/definition.md
 ---
 
 ## Failure mode
