@@ -6,6 +6,7 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
+- [monthly-improvement-triage](./monthly-improvement-triage/README.md) — triaging improvement proposals from `kb/log.md` and connect reports from the last month into low-hanging-fruit and big-potential/high-effort buckets
 - [lineage-mechanisms](./lineage-mechanisms/README.md) — revising lineage mechanisms across sources, generated reports, distillation records, report persistence, and source-to-source/source-to-note relation labels
 - [src-architecture-alternatives](./src-architecture-alternatives/README.md) — alternative architectures for `src/commonplace/` from a full code read; active thread is an append-only event log as review-store source of truth with acceptance events that embed their snapshots
 - [review-system-simplification](./review-system-simplification/plan.md) — closeout record for the review-system simplification; active follow-ups are selector/create consolidation, manifest retention, and structured output
