@@ -20,7 +20,7 @@ The target behavior is not generic polishing. A useful instruction should do one
 
 ## Combined instruction
 
-- [run-full-improvement-pass-on-note](./run-full-improvement-pass-on-note.md) — sequences the compression bundle, `critique-note`, the optional production `semantic` bundle, and `cp-skill-connect` over one note, then reconciles their findings into a single editorial packet. Drafted from the interim comparisons below (case 01's table, case 02's `critique-note` vs. prune-weak-expansions split, case 03's compression-bundle-beats-single-gate result). Run end-to-end for the first time in case 04.
+- [run-full-improvement-pass-on-note](./run-full-improvement-pass-on-note.md) — sequences the compression bundle, `critique-note`, `composition-friction-gate` (experimental), the optional production `semantic` bundle, and `cp-skill-connect` over one note, then reconciles their findings into a single editorial packet. Drafted from the interim comparisons below (case 01's table, case 02's `critique-note` vs. prune-weak-expansions split, case 03's compression-bundle-beats-single-gate result). Run end-to-end for the first time in case 04; `composition-friction-gate` added after case 04 and exercised for the first time in case 05.
 
 ## First case
 
@@ -61,6 +61,21 @@ Result: clean end-to-end run, no reconciliation failures.
 
 Takeaway: this is the first case where all four methods' outputs were genuinely complementary rather than overlapping or conflicting — plausibly because this note (dense, many links, single-thesis) sits squarely in compression's and critique-note's separate strike zones rather than needing one to arbitrate the other. A future case should stress-test the reconciliation rules on a note where compression and critique actually disagree about the same passage, which did not happen here.
 
+## Fifth case
+
+Case 05 uses `kb/notes/structure-inference-needs-capture-at-the-decision-surface.md` — the first run of [run-full-improvement-pass-on-note](./run-full-improvement-pass-on-note.md) including the new, experimental `composition-friction-gate` step. Applied directly to a current library note; no frozen baseline/accepted-delta pair.
+
+- Reports: [compression-bundle-review](./full-pass-structure-inference-needs-capture-at-the-decision-surface/compression-bundle-review.md); `critique-note` report at `kb/reports/critique/structure-inference-needs-capture-at-the-decision-surface.critique.md`; `composition-friction-gate` report at `kb/reports/friction/structure-inference-needs-capture-at-the-decision-surface.friction.md`; connect report at `kb/reports/connect/notes/structure-inference-needs-capture-at-the-decision-surface.connect.md` (semantic bundle skipped).
+- Synthesis packet: [full-pass-report](./full-pass-structure-inference-needs-capture-at-the-decision-surface/full-pass-report.md).
+
+Result: the first case with real cross-method corroboration, and the first real test of the friction-gate's "carry unresolved" rule.
+
+- `critique-note` and `composition-friction-gate` independently converged on the same sentence — a categorical overclaim ("changes which world models are learnable at all") — from two different mechanisms: critique-note via an external counterexample (decision/process mining defeats the claim's "only if" at the population level), friction-gate via an internal tension with the note's own Open Questions (a continuum admission undercutting a categorical claim). Independent corroboration across orthogonal methods is exactly the signal [error-correction-works-above-chance-oracles-with-decorrelated-checks](../../notes/error-correction-works-above-chance-oracles-with-decorrelated-checks.md) predicts, and it's what justified turning the finding into an actual edit — a real scope-narrowing (rationale-bearing structure vs. population-level regularity mining), not just a caveat.
+- Friction-gate surfaced four other thinnest-joint findings with no corroboration from any other method. All four went into the packet's "Routed attention" section and were **not** converted into edits, per the instruction's rule — including at least one (the "nearly free" claim) that would have been an easy, tempting fix. The rule held under real pressure, not just on paper.
+- Compression again found real cuts (two paragraphs duplicating footer content) in locations untouched by critique-note or friction-gate — the three report-only methods stayed non-overlapping in what they flagged.
+
+Takeaway: this case exercised the two things case 04 didn't — genuine cross-method corroboration forcing a real (not just additive) edit, and the friction-gate's no-self-grading rule under a live temptation to "just fix" an easy-looking finding. It still didn't produce the originally-flagged test (compression and critique-note disagreeing about the *same* passage); that specific scenario may be rarer than expected, and corroboration-vs-isolation across methods looks like the more informative axis to track going forward.
+
 ## Experiment pattern
 
 For each instruction under test:
@@ -74,7 +89,7 @@ For each instruction under test:
 
 The workshop closes when it produces one of:
 
-- a reusable note-improvement instruction — [run-full-improvement-pass-on-note](./run-full-improvement-pass-on-note.md) is the current candidate; case 04 was a clean run, but promotion should wait for a case where compression and critique-note actually disagree on the same passage;
+- a reusable note-improvement instruction — [run-full-improvement-pass-on-note](./run-full-improvement-pass-on-note.md) is the current candidate. Case 04 was a clean, non-overlapping run; case 05 added `composition-friction-gate`, produced real cross-method corroboration (critique-note + friction-gate on the same sentence), and held the friction-gate's "carry unresolved" rule under real pressure. The originally-flagged bar (compression and critique-note disagreeing about the same passage) still hasn't occurred and may not be the right bar — promotion should wait for at least one case testing the optional `semantic` bundle step and one case where two methods actually conflict (not just corroborate or stay isolated) on the same passage;
 - a critique or review-gate revision that reliably catches weak speculative expansions;
 - a negative result explaining why the tested instruction family does not recover the accepted edits;
 - a methodology note about when agent note-improvement should be subtractive rather than additive.

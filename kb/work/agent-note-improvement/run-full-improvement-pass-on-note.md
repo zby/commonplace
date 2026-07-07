@@ -37,12 +37,12 @@ Steps 1 through 7 below only write reports; none of them edit the note. Steps 8 
    Then delegate, finalize, and verify exactly as that instruction describes. Skip this step for an exploratory or draft pass — it mutates the shared review database, unlike the other steps.
 6. Run `cp-skill-connect` against the note. It writes a report to `kb/reports/connect/<collection>/<note-name>.connect.md` and touches nothing else.
 7. Synthesize the reports (below) into one packet at `{output-path}`. This is the only step among 1–7 that reconciles disagreement; do not just concatenate the reports.
-8. Apply the packet's body edits directly to the note.
+8. Apply the packet's body edits directly to the note. If `composition-friction-gate` ran, reread its report's "For the human" line against the edited text before moving on. This is not a re-run of the gate — just a check that the one thing it pointed to is still accurate, or has actually been addressed, now that the edit has changed the prose around it. If it looks wrong given the edit, note that in the packet's Open items rather than silently re-editing.
 9. Run a final revise pass over the edited note with exactly this prompt: `revise the note for flow, coherence, logic and readability`. Give the sub-agent (or yourself, if editing directly) only the current note text and that prompt — not the packet or the underlying reports. This step is a copyedit pass, not a second chance to re-open the content decisions steps 1–8 already made; it should not reintroduce material step 8 removed or add new claims.
 
 ## Reconciling disagreement
 
-- Default to the compression bundle's bias (compress, fold, delete, or rehome) when it and `critique-note` disagree about a passage. `critique-note`'s natural repair path tends to add qualification; only keep an addition it proposes when the addition is what makes the central claim defensible against the strongest attack, not merely a hedge against a possible objection.
+- Default to the compression bundle's bias (compress, fold, delete, or rehome) when it and `critique-note` disagree about a passage. `critique-note`'s natural repair path tends to add qualification; only keep an addition it proposes when the addition is what makes the central claim defensible against the strongest attack, not merely a hedge against a possible objection. Before calling a finding a hedge, state what the note's claim would need to look like if the objection were fully valid — if that changes the claim's scope, completeness, or a load-bearing precondition, it is not a hedge, no matter how easy the label is to reach for.
 - If the semantic bundle warns on a section the compression bundle passed (or vice versa), keep both findings in the packet rather than picking a winner — they test different properties (truth/grounding vs. context cost) and a note can fail one without failing the other.
 - Treat connect's candidates as additive: they extend the note's outbound links and do not bear on whether body content should be cut, so list them separately from the body-edit recommendations.
 - **Carry `composition-friction-gate`'s findings unresolved.** Do not convert its filter verdict or its ranked joints into a remove/compress/keep action the way the other methods' findings are converted. Put them in the packet's dedicated "Routed attention" section verbatim, out of scope for step 8's automatic application — the same status as the "Open items" section, not a body edit. This is the one deliberate exception to "reconcile, don't concatenate" — reconciling this gate's output the way the others are reconciled would recreate the self-graded verdict its own hard rule forbids. If a thin joint turns out, on the editor's judgment, to need a real fix, that judgment call belongs to whoever reads the packet, not to this instruction.
@@ -88,6 +88,8 @@ Steps 1 through 7 below only write reports; none of them edit the note. Steps 8 
 ```
 
 Omit the "Truth/grounding findings" section entirely when step 5 was skipped — do not write "not run" rows. Never omit "Routed attention" — even a clean SURVIVES with no thin joints below THIN is worth one line, since silently dropping the section would make the friction gate's absence indistinguishable from a clean result.
+
+`kb/reports/critique/*`, `kb/reports/friction/*`, and `kb/reports/connect/*` are gitignored — they exist in the working tree but are not durable, unlike this packet and the note itself. Quote or restate enough of each source report's substance directly into the packet that it stands alone; do not write a pointer-only packet that depends on those files still being present later.
 
 ## Do not
 

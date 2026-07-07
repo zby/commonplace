@@ -23,7 +23,7 @@ Do **not** emit an overall "consistent / not consistent" verdict, and do not pas
 
 1. Enumerate every **load-bearing inferential joint** in the note: explicit connectives (`because`, `therefore`, `so`, `thus`, `hence`, `since`, `obviously`, `clearly`, `it follows`) and the implicit ones, where one sentence is offered as the ground for the next without a connective word.
 2. For each joint, adversarially test whether the stated reason actually supports the conclusion. **Default to `UNSUPPORTED` when uncertain.** The joint must earn its place; do not extend it the benefit of the doubt the way fluent reading does. This skeptical default is the point — it restores the cost that made a human's "because" mean something.
-3. Rank the joints from thinnest support to strongest. Surface the weakest three to five.
+3. Rank the joints from thinnest support to strongest. Surface the weakest three to five. Being among the weakest surfaced does not mean it must rate `UNSUPPORTED` or `THIN` — that is a selection rule, not a verdict quota. If a note has few real joints and even the weakest ones genuinely hold up under the skeptical default, report `HOLDS` for them honestly rather than reaching for a rating the ranking step seems to invite.
 
 ## Output
 
