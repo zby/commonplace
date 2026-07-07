@@ -29,7 +29,7 @@ Sweep `kb/log.md` and `kb/reports/connect/*.connect.md` for improvement proposal
 
 ## Carried forward from connect-maintenance-observations (still open)
 
-- Decide whether `context-engineering-README.md` needs `a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md` added, or whether the `kb-maintenance-README.md` listing is enough.
+- Done: added `a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md` to `context-engineering-README.md`'s "Core Claims" (neither tag-README carries a `complete: true` mark, so this was a curation choice, not a correctness fix — the note is central enough to both tags to warrant listing in both).
 - Done: `adversarial-loop-can-reconstruct-the-writing-is-thinking-filter.md` now has `rationale` edges from `critique-note.md` (previously ungrounded) and `composition-friction-gate.md` (added as a second edge alongside its existing one to the stall note, since it backs a distinct design point — no-verdict, routed-attention). `README-REVIEW-SYSTEM.md` was excluded: it's purely mechanics prose (freshness, acceptance rows, batch workflow) and doesn't argue the why an edge would need to rest on.
 - Decide whether CrewAI / REM / cq / Binder in `symbolic-context-engineering...` should get footer evidence edges or stay inline-only.
 - Decide whether ADR 029 alone suffices for the review-bundling salvage/packing insights, or whether standalone notes are warranted.

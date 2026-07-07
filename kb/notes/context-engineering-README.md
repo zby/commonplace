@@ -16,6 +16,7 @@ Context engineering is the machinery for getting the right knowledge into a boun
 - [Design for the first-time human, except on access cost](./design-for-the-first-time-human-except-on-access-cost.md) - explains why human-facing materializations and agent-facing query paths can share a source of truth while following different access modes
 - [semantic sub-goals that exceed one context window become scheduling problems](./semantic-sub-goals-that-exceed-one-context-window-become-scheduling.md) - explains when context limits force orchestration instead of a single larger prompt
 - [stateful tools recover control by becoming hidden schedulers](./stateful-tools-recover-control-by-becoming-hidden-schedulers.md) - shows how runtime state can relocate context control behind the tool boundary
+- [A derived copy of recomputable truth must be checked or absent](./a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) - names when a recomputable value is safe to inline for context economy: only when a validator can re-derive and check it, otherwise it must stay a live read
 
 ## Adjacent Indexes
 
