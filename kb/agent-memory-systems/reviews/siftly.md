@@ -99,6 +99,10 @@ The read-back surfaces are broad but pull-only: browse/filter uses structured DB
 - Whether the CLI grows AI search and export commands, not only FTS/list/show. That would make Siftly more directly useful as an agent pull-memory service.
 - Whether derived tags/categories gain source-span provenance or review states. That would make AI enrichment safer to reuse as durable knowledge rather than search metadata.
 
+## Related Systems
+
+- [ReframeWeb](./ReframeWeb.md) - compares-with: both run two-stage retrieval — a lexical/structured candidate narrowing (Siftly: FTS5 + category-intent regex + keywords; ReframeWeb: LLM-emitted tag/substring hints + per-domain recency breadth) followed by an LLM rerank/prune — and both carry the identical precision-or-silence failure, where a hard miss in candidate selection prevents the LLM stage from ever seeing a relevant item.
+
 Relevant Notes:
 
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Siftly stores rich bookmark memory but serves it by explicit browse/search/API/CLI/export pulls.

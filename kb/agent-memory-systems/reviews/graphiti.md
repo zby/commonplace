@@ -129,6 +129,10 @@ The consumption authority is advisory unless the host application upgrades it. S
 - Whether community/saga summaries become a default read path; that would shift context efficiency toward hierarchical compaction rather than only top-k retrieval.
 - Whether tool/action traces are ingested as first-class episodes; that would broaden the trace-derived classification beyond conversation/message memory.
 
+## Related Systems
+
+- [ReframeWeb](./ReframeWeb.md) - compares-with: both classify their storage substrate as `graph`, but ReframeWeb's "graph memory" is a shallow root→child tree a relational store would serve identically, while Graphiti actually exploits graph structure — BFS expansion, communities, multi-hop, hybrid BM25+embedding+traversal. Same substrate label, opposite answer to "does the graph earn its keep?"
+
 Relevant Notes:
 
 - [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - places: Graphiti extracts durable temporal graph facts from message/event episodes.

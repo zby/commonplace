@@ -56,7 +56,7 @@ Curation operations and the full authority and signal flag sets are dropped from
 this compact view; they live in [`systems.csv`](./systems.csv).
 
 
-## The systems (142 code-reviewed)
+## The systems (147 code-reviewed)
 
 | System | What it is | Storage | Read-back | Targeting | Learns from traces | Enforces |
 |---|---|---|---|---|---|---|
@@ -76,6 +76,7 @@ this compact view; they live in [`systems.csv`](./systems.csv).
 | [Archie](./reviews/archie.md) | Git-native Arch Linux desktop configuration with Stow deployment, agent briefs, ADRs, and pull-only repo read-back | repo | pull | — | no | yes |
 | [AriGraph](./reviews/AriGraph.md) | in-run knowledge-graph world model with episodic observation memory, Contriever retrieval, LLM extraction/refinement, and prompt pushback | in-memory | both | targeted | yes | — |
 | [Ars Contexta](./reviews/arscontexta.md) | Claude Code plugin deriving file-based agent knowledge systems with generated context, skills, hooks, trace mining, and coarse push read-back | files | both | coarse | yes | yes |
+| [ATLAS](./reviews/atlas.md) | logistics MCP server whose KnowledgeEngine enriches on-disk markdown files from document extractions, never overwriting — read-back only via its internal chat agent, not MCP | files | both | coarse | no | — |
 | [Atomic](./reviews/atomic.md) | SQLite-backed markdown atoms with embeddings, semantic graph, wiki/report synthesis, chat, and MCP memory tools | sqlite | both | targeted | no | — |
 | [Auto-claude-code-research-in-sleep](./reviews/Auto-claude-code-research-in-sleep.md) | Markdown skill harness for autonomous research with project research-wiki memory, review traces, and gated trace-derived skill optimization | files | both | coarse | yes | yes |
 | [auto-harness](./reviews/auto-harness.md) | benchmark-driven coding-agent loop that mines train traces, evolves agent.py, promotes evals, and gates changes | files | both | targeted | yes | yes |
@@ -109,6 +110,7 @@ this compact view; they live in [`systems.csv`](./systems.csv).
 | [Dynamic Cheatsheet](./reviews/dynamic-cheatsheet.md) | trace-derived test-time prompt memory with LLM cheatsheet curation, embedding retrieval, and automatic solver read-back | in-memory | push | targeted | yes | — |
 | [Echel](./reviews/echel.md) | project-owned Markdown product memory, deterministic graph/report generation, evidence gates, and task-scoped agent packets | files | both | targeted | no | yes |
 | [EchoesVault / echoes-vault-opencode](./reviews/echoes-vault-opencode.md) | OpenCode plugin that bootstraps a Markdown/Obsidian vault, slash-command read-back, and agent-mediated trace capture | files | both | coarse | yes | — |
+| [EchoWiki](./reviews/echowiki.md) | Obsidian plugin and CLI that compile raw notes and voice transcripts into file-backed wiki pages via the Vercel AI SDK | files | both | targeted | no | yes |
 | [Eidetic](./reviews/eidetic.md) | Claude Code Markdown memory with hook-pushed context, FTS/vector recall, trace capture, compounding, drift penalties, and vault export | files | both | targeted | yes | — |
 | [Engraph](./reviews/engraph.md) | local Obsidian-vault gateway with hybrid search, MCP/HTTP tools, identity context, and folder-feedback learning | files | pull | — | no | yes |
 | [EQUIPA](./reviews/equipa.md) | SQLite-backed agent orchestrator with trace-derived lessons, episodes, prompt variants, and prompt-time read-back | sqlite | both | targeted | yes | — |
@@ -118,7 +120,7 @@ this compact view; they live in [`systems.csv`](./systems.csv).
 | [G-Memory](./reviews/g-memory.md) | trace-derived multi-agent memory with Chroma task storage, NetworkX task graph, JSON insights, and orchestrator-pushed examples/rules | vector | push | targeted | yes | — |
 | [GBrain](./reviews/gbrain.md) | Postgres/PGLite-backed agent brain with markdown write-through, hybrid retrieval, graph links, hot facts, skills, and dream-cycle maintenance | rdbms | both | targeted | yes | yes |
 | [getsentry/skills](./reviews/getsentry-skills.md) | Sentry's repo-backed skill and subagent marketplace with authored prompts, routed references, scripts, and validation rules | repo | pull | — | no | yes |
-| [Gnosis](./reviews/gnosis.md) | repo-local why-memory CLI with JSONL entries, disposable SQLite FTS search, doctrine-guided agent capture, and pull-only read-back | files | pull | — | no | — |
+| [Gnosis](./reviews/gnosis.md) | repo-local why-memory CLI with JSONL entries, disposable SQLite FTS search, doctrine-guided capture, and pull-only read-back | files | pull | — | no | — |
 | [Graphiti](./reviews/graphiti.md) | temporal graph memory with episode provenance, LLM extraction, fact invalidation, hybrid retrieval, MCP tools, and pull-only activation | graph | pull | — | yes | — |
 | [HALO](./reviews/halo.md) | trace-derived agent-harness optimizer with SQLite desktop trace store, JSONL trace indexes, recursive trace agents, and local analysis runs | sqlite | pull | — | yes | — |
 | [Hindsight](./reviews/hindsight.md) | service-backed agent memory with LLM fact extraction, observations, hybrid recall, integrations, hooks, transfer, and trace-derived learning | rdbms | both | targeted | yes | — |
@@ -131,6 +133,7 @@ this compact view; they live in [`systems.csv`](./systems.csv).
 | [LACP](./reviews/lacp.md) | local control-plane agent harness with trace-derived Obsidian/SMS memory, hook-time context injection, RAG pull, and policy gates | files | both | targeted | yes | yes |
 | [Letta](./reviews/letta.md) | stateful agent server with core memory blocks, archival and recall tools, compaction, sleeptime memory agents, and optional git-backed memory | rdbms | both | targeted | yes | yes |
 | [Link](./reviews/link.md) | local Markdown wiki memory with raw captures, reviewed memory pages, bounded query packets, MCP/CLI skills, validation, and local viewer | files | both | targeted | yes | — |
+| [LLM Wiki (cobusgreyling)](./reviews/cobusgreyling--llm-wiki.md) | file-backed agent-maintained markdown wiki with scaffolded instructions, BM25/qmd search, linting, and pull-only read-back | files | pull | — | no | — |
 | [LLM Wiki (kenhuangus)](./reviews/kenhuangus--llm-wiki.md) | local-first Obsidian/wiki compiler with source monitors, LLM extraction and integration, BM25 search, autonomous maintenance loops, and weak trace-derived prompt-optimization scaffolding | repo | both | targeted | yes | yes |
 | [LLM Wiki (MehmetGoekce)](./reviews/MehmetGoekce--llm-wiki.md) | Claude Code command package for a Logseq/Obsidian wiki with L1 auto-loaded memory, L2 pull queries, schema rules, and lint gates | files | both | coarse | no | yes |
 | [LLM Wiki (nvk)](./reviews/llm-wiki.md) | portable agent plugin that compiles source files into topic wikis, queryable through index-guided reads, audits, linting, and session lessons | files | both | targeted | yes | yes |
@@ -158,6 +161,7 @@ this compact view; they live in [`systems.csv`](./systems.csv).
 | [OpenClerk](./reviews/openclerk.md) | local JSON runner over Markdown vaults with SQLite projections, provenance, synthesis, reports, and optional semantic modules | files | pull | — | no | yes |
 | [OpenSage](./reviews/OpenSage.md) | ADK agent framework with dynamic subagents, Skills, sandbox memory, Neo4j history/memory, plugins, and RL adapters | files | both | targeted | yes | yes |
 | [OpenViking](./reviews/openviking.md) | context database with viking:// files, session-derived memory, hierarchical retrieval, hooks, MCP, and LangGraph injection | files | both | targeted | yes | yes |
+| [OpenWiki](./reviews/openwiki.md) | agent-generated repository wiki with Git-scoped updates, root AGENTS/CLAUDE pointers, and no wiki retrieval index | repo | both | targeted | no | yes |
 | [Operational Ontology Framework](./reviews/operational-ontology-framework.md) | public D+L+A artifact templates for governed AI work, with no implemented memory runtime | repo | pull | — | no | — |
 | [Origin](./reviews/origin.md) | local AI-work memory daemon with sourced pages, hybrid retrieval, review gates, git-backed Markdown, and MCP/Claude Code read-back | sqlite | both | targeted | yes | yes |
 | [OS-Copilot](./reviews/OS-Copilot.md) | FRIDAY promotes judged Python execution traces into Chroma-retrieved reusable tools for later planning and codegen | files | push | targeted | yes | yes |
@@ -168,6 +172,7 @@ this compact view; they live in [`systems.csv`](./systems.csv).
 | [Quicky Wiki](./reviews/quicky-wiki.md) | document-derived SQLite claim graph with confidence events, metabolism, generated wiki files, and MCP pull tools | sqlite | pull | — | no | — |
 | [ReasoningBank](./reviews/reasoning-bank.md) | trace-derived benchmark memories selected by embeddings and injected into WebArena and mini-SWE-agent prompts | files | both | targeted | yes | — |
 | [Reflexion](./reviews/reflexion.md) | benchmark agents turn failed trajectories and test feedback into task-local verbal lessons for later attempts | in-memory | push | targeted | yes | — |
+| [ReframeWeb](./reviews/ReframeWeb.md) | SurrealDB graph memory for a voice agent; LLM-hinted tag/substring + recency-cutoff retrieval, per-turn push, agent-emitted preference memories, no curation | graph | push | targeted | no | — |
 | [REM](./reviews/REM.md) | episodic memory service with trace-derived episodes, vector/graph retrieval, LangChain injection, and partially wired consolidation | rdbms | both | targeted | yes | — |
 | [SAGE](./reviews/sage.md) | consensus-governed local agent memory with MCP turn capture, hooks, hybrid recall, decay, and corroboration | sqlite | both | targeted | yes | yes |
 | [sage-wiki](./reviews/sage-wiki.md) | LLM-compiled wiki memory with SQLite search/vector/ontology state, MCP pull tools, session capture, and trust gates | files | pull | — | yes | — |
