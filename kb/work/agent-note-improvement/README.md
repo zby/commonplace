@@ -16,11 +16,11 @@ The target behavior is not generic polishing. A useful instruction should do one
 
 ## Draft review bundles
 
-- [compression](./compression/README.md) — workshop-local gates for true, defensible material that should still be compressed, folded, deleted, split, or rehomed because it does not earn its context cost.
+- Compression gates — promoted to [`kb/instructions/compression-bundle/`](../../instructions/compression-bundle/README.md) (2026-07-07).
 
 ## Combined instruction
 
-- [run-full-improvement-pass-on-note](./run-full-improvement-pass-on-note.md) — sequences the compression bundle, `critique-note`, `composition-friction-gate` (experimental), the optional production `semantic` bundle, and `cp-skill-connect` over one note, then reconciles their findings into a single editorial packet. Drafted from the interim comparisons below (case 01's table, case 02's `critique-note` vs. prune-weak-expansions split, case 03's compression-bundle-beats-single-gate result). Run end-to-end for the first time in case 04; `composition-friction-gate` added after case 04 and exercised for the first time in case 05.
+**Promoted 2026-07-07** to [`kb/instructions/run-full-improvement-pass-on-note.md`](../../instructions/run-full-improvement-pass-on-note.md), alongside its compression-bundle runner at [`kb/instructions/run-compression-bundle-on-note.md`](../../instructions/run-compression-bundle-on-note.md). Both dropped their `kb/work/`-relative dependencies (the case-comparison pointer, the workshop-local gate paths) as part of the move; see those files for the current procedure. Sequences the compression bundle, `critique-note`, `composition-friction-gate`, and the production `semantic` bundle and `cp-skill-connect` over one note, then reconciles their findings into a single editorial packet. Drafted from the interim comparisons below (case 01's table, case 02's `critique-note` vs. prune-weak-expansions split, case 03's compression-bundle-beats-single-gate result); run end-to-end for the first time in case 04, with `composition-friction-gate` added after case 04 and exercised for the first time in case 05. Promoted on 5 clean runs (cases 04–08, the last three via `kb/log.md`-adjacent library-note passes) with the semantic-bundle bar met but the two-methods-conflict-on-the-same-passage bar still unmet — see "What would close this workshop" below.
 
 ## First case
 
@@ -89,7 +89,7 @@ For each instruction under test:
 
 The workshop closes when it produces one of:
 
-- a reusable note-improvement instruction — [run-full-improvement-pass-on-note](./run-full-improvement-pass-on-note.md) is the current candidate. Case 04 was a clean, non-overlapping run; case 05 added `composition-friction-gate`, produced real cross-method corroboration (critique-note + friction-gate on the same sentence), and held the friction-gate's "carry unresolved" rule under real pressure. The originally-flagged bar (compression and critique-note disagreeing about the same passage) still hasn't occurred and may not be the right bar — promotion should wait for at least one case testing the optional `semantic` bundle step and one case where two methods actually conflict (not just corroborate or stay isolated) on the same passage;
+- a reusable note-improvement instruction — **done, 2026-07-07**: [`kb/instructions/run-full-improvement-pass-on-note.md`](../../instructions/run-full-improvement-pass-on-note.md). Case 04 was a clean, non-overlapping run; case 05 added `composition-friction-gate`, produced real cross-method corroboration (critique-note + friction-gate on the same sentence), and held the friction-gate's "carry unresolved" rule under real pressure. Cases 06–08 (the three-notes pass, `kb/log.md`/commit `6c754cf9`) each ran the full pipeline including the semantic bundle, satisfying that bar. Promoted on that evidence even though the originally-flagged bar — two methods actually conflicting (not just corroborating or staying isolated) on the same passage — still hasn't occurred across any of the 5 documented runs; treat that as an open question for the instruction's own future use, not a blocker met retroactively;
 - a critique or review-gate revision that reliably catches weak speculative expansions;
 - a negative result explaining why the tested instruction family does not recover the accepted edits;
 - a methodology note about when agent note-improvement should be subtractive rather than additive.

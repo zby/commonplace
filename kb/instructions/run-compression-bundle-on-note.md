@@ -1,22 +1,27 @@
-# Run the workshop compression bundle on one note
+---
+description: 'Review one note against the compression gates (edit-strategy: compress, fold, delete, rehome) without writing review-DB state.'
+type: kb/types/instruction.md
+---
 
-Review a specific note against the workshop-local compression gates without using the review database.
+# Run the compression bundle on one note
 
-This is the no-DB analogue of `kb/instructions/run-review-bundle-on-note.md` for draft gates that live under `kb/work/agent-note-improvement/compression/`. Use it when the goal is experiment evidence, not accepted review state.
+Review a specific note against the compression gates without using the review database.
+
+This is a deliberately separate, no-DB analogue of `kb/instructions/run-review-batches.md`: the compression gates live at `kb/instructions/compression-bundle/` rather than under the production `kb/instructions/review-gates/` catalog, so they never get swept into `--all-gates` or write review-DB acceptance state. Use it when the goal is a disposable edit-strategy report, not accepted review state.
 
 Inputs:
 
 - first argument: `{note-path}` — repository-relative note path, for example `kb/notes/linking-theory.md`
-- optional second argument: `{output-path}` — repository-relative Markdown path for the sub-agent's report. If omitted, choose a workshop-local report path near the experiment case.
+- optional second argument: `{output-path}` — repository-relative Markdown path for the sub-agent's report. If omitted, write it next to the target note as `<note-name>-compression-bundle-review.md`.
 
 ## Gate bundle
 
 Use these gate files, in this order:
 
-1. `kb/work/agent-note-improvement/compression/core-claim-obscured.md`
-2. `kb/work/agent-note-improvement/compression/branch-bloat.md`
-3. `kb/work/agent-note-improvement/compression/detail-overhang.md`
-4. `kb/work/agent-note-improvement/compression/marginal-value-redundancy.md`
+1. `kb/instructions/compression-bundle/core-claim-obscured.md`
+2. `kb/instructions/compression-bundle/branch-bloat.md`
+3. `kb/instructions/compression-bundle/detail-overhang.md`
+4. `kb/instructions/compression-bundle/marginal-value-redundancy.md`
 
 Do not resolve gates through `commonplace-create-review-run`. Do not use selectors, review runs, review DB writes, acknowledgement commands, or ingestion commands.
 
@@ -31,7 +36,6 @@ Do not resolve gates through `commonplace-create-review-run`. Do not use selecto
    - the output contract below.
 5. Ask the sub-agent to review the note against every gate independently. It should not edit the note.
 6. Save the returned Markdown report to `{output-path}`.
-7. Record the result in the relevant case README if this is part of an experiment.
 
 ## Output Contract
 
@@ -41,7 +45,7 @@ The sub-agent report should be plain Markdown:
 # Compression Bundle Review: <note title>
 
 **Target:** `<note-path>`
-**Bundle:** `kb/work/agent-note-improvement/compression/`
+**Bundle:** `kb/instructions/compression-bundle/`
 
 ## Overall Result
 
