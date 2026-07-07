@@ -52,6 +52,10 @@ kb/reports/critique/*
 # friction reports (experimental — see kb/instructions/composition-friction-gate.md)
 kb/reports/friction/*
 !kb/reports/friction/README.md
+
+# full-pass reports (see kb/work/agent-note-improvement/run-full-improvement-pass-on-note.md)
+kb/reports/full-pass/*
+!kb/reports/full-pass/README.md
 kb/work/review-db-migration/
 kb/work/review-runs-direct-write/
 
