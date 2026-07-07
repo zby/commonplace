@@ -18,6 +18,8 @@ The articulation test applies to every outbound link:
 
 > `[source] connects to [target] because [specific reason].`
 
+Markdown's title attribute (`[text](url "grounds")`) could technically carry a label inline, but it doesn't solve the actual problem. The label alone isn't the payload — the articulation test requires label *plus* a specific reason, and a reason clause doesn't fit an attribute. And mechanizing the label wouldn't resolve the harder call every author already faces regardless of syntax: whether a relationship is significant enough to name as a formal edge at all, not just what to call it once named.
+
 The [connect skill](../instructions/cp-skill-connect/SKILL.md) operationalizes this model without silently rewriting notes. It reads the source collection's `COLLECTION.md`, searches authorised destinations according to their search guidance, applies the articulation test, and writes a report of candidate links. A maintainer or later editing pass decides which candidates become authored links.
 
 ## Relationship to the control plane
@@ -42,6 +44,8 @@ Organise the outbound-linking section **per destination collection**, not per re
 2. **Authorised labels** — the labels writers in the source collection may use for links to this destination. Give each a one-line reader-need context specific to this *source → destination* pairing.
 
 If a destination isn't listed, it isn't an active link target from this collection. Adding a destination is a collection-author decision; writers cannot unilaterally link to collections outside the authorised set.
+
+**Footer inclusion is a separate decision from label choice.** Each `COLLECTION.md` also states the collection's inline-vs-footer convention (typically: inline for the strongest, argument-bearing commitment; footer for labelled links — `- [title](path) — label: context phrase`). Authorised labels govern what a footer link may be *called*; they don't decide whether a given relationship earns a footer entry at all. That weight call — is this corroboration formal enough to belong in the note's evidence map, or better left as an inline example in the body — has no validator and is left to the note's author, per the collection's own quality goal. A footer is a curated subset of what a note could link, the same selective-by-default shape as a tag-README's curated head: exhaustiveness is never the assumed default, and if a collection ever wants a footer to be a complete listing of a relation, that has to be an explicit, checked claim, not an implicit one.
 
 **Search latitude.** Search guidance should be specific enough to keep results within the agent's effective context, but open enough to surface serendipitous finds. Over-narrow triggers miss adjacent connections the agent might usefully make; over-broad triggers drown the connect skill in noise. When the destination is small or the query sparse, prefer slight over-retrieval — the agent can filter results in context, whereas missed links are harder to recover. Avoid phrasing that rules out whole classes of plausible connection (e.g., "only when X").
 
