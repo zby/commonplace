@@ -30,7 +30,7 @@ This separates judgment-heavy target selection from focused execution and keeps 
 
 Generative bulk operations cannot be sharded, validated, or refreshed without a spec of the structure they produce — a **document-set spec**: membership rule (fixed + corpus-derived members), member types, cross-member obligations, derived views, set-level validation, and lineage to the corpus. A code wiki is the clearest case: "write a wiki" is unboundable until the spec exists; once it does, the membership rule is the target list, the member type is the packet contract, and set-level validation is deterministic.
 
-This may be a separate direction in its own right (a type-system question, with `kb/agent-memory-systems/` as the existing implicit precedent: `systems.csv` registry + review member type + generated matrix), but the dependency runs one way — this workshop consumes the spec as an input contract. Analysis: [Generative bulk operations and document-set specs](./generative-bulk-operations.md).
+"Spec" here names the information that must be fixed somewhere, not a representation: candidate mechanisms range from a standing declarative spec through a generator program (the build-system shape), a per-run plan artifact, an exemplar instance, set-level properties with fix loops, to full regeneration — and they compose. `kb/agent-memory-systems/` is the existing implicit precedent (`systems.csv` registry + review member type + generated matrix). This may be a separate direction in its own right, but the dependency runs one way — this workshop consumes the chosen mechanism as an input contract. Analysis and solution space: [Generative bulk operations and document-set specs](./generative-bulk-operations.md).
 
 ## Case Families
 
@@ -59,7 +59,7 @@ And two aspirational generative cases that stress the frame (detailed in [genera
 - How should a parent agent merge worker outputs without silently laundering uncertain findings into library artifacts?
 - What validation is proportional to each output's behavioral authority?
 - When should a recurring bulk operation become a command, a skill, an instruction, or a review-system feature?
-- What is the minimal document-set spec, and where does it live: a new type kind, an extension of `COLLECTION.md`, or a standalone manifest generalizing `systems.csv`?
+- Where should the structure knowledge for a document set live — declarative spec, generator program, per-run plan, exemplar, set-level properties, or full regeneration — and what pushes a case toward the codified end?
 - In a selection funnel, which tiers are deterministic commands versus cheap agent passes, and how are drop decisions recorded?
 - How are judgments from independent worker contexts made comparable at merge time (rubric in packet, comparative re-ranking pass, or both)?
 - Where does the member-to-sources lineage mapping live so a corpus diff can be turned into a refresh target list mechanically?

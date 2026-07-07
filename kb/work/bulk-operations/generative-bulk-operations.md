@@ -46,6 +46,8 @@ Commonplace's type surface currently specifies single documents. A document-set 
 5. **Set-level validation** — completeness of membership, link resolution across members, index coverage. Deterministic once the spec exists.
 6. **Lineage to the corpus** — the member→sources mapping recorded at generation time, so refresh targets are computable from a corpus diff.
 
+These six parts are requirements on the *information* that must be fixed somewhere, not a commitment to a schema — the solution space below covers representations from declarative specs to generator programs to mere exemplars.
+
 This is a prerequisite for generative bulk operations, not a nice-to-have, because the spec is what each pipeline stage binds to:
 
 | Stage | What the document-set spec supplies |
@@ -67,13 +69,26 @@ The document-set idea is not speculative — the repo already operates one, impl
 - **Collections (`COLLECTION.md`)** fix the authoring contract for a subtree but say nothing about required membership — a collection never *owes* a document. The document-set spec is the missing complement: a collection contract plus a membership rule.
 - **tag-README marks (`complete`, `covered_by`)** are set-level validated claims over a membership rule ("every note carrying this tag is linked here") — an existing precedent for enforcing structure-level properties by code rather than trusting prose.
 
+## Solution space — wider than types
+
+The six-part spec above reads like a schema, which suggests a type-based solution. That is one point in a wider space; at the ideation stage the real question is *where the structure knowledge lives*, and the candidates span the [constraining](../../notes/definitions/constraining.md) spectrum:
+
+- **Standing declarative spec** — a type, manifest, or `COLLECTION.md` extension: membership rule, member types, obligations, all validated by code. Strongest validation and refresh story; highest authoring cost; brittle when the right structure is not yet known.
+- **Generator program** — the structure lives in code that enumerates the corpus and emits packets: the build-system shape. Membership rule = build rules, member→sources lineage = the dependency graph, refresh = incremental rebuild. Build systems solved set-level lineage decades ago; the LLM twist is that the "compiler" for each member is a judgment call, while enumeration and freshness stay deterministic.
+- **Per-run plan artifact** — no standing spec at all: the operating agent derives a committed target list for this run (the relocation move-map and review selector JSON already work this way). The plan *is* the spec instance, consumed at close. Cheapest and most flexible; nothing is reusable and nothing guards the next run.
+- **Exemplar** — fix the structure by one finished instance (a completed wiki for a small repo) and generate by analogy. Cheap to author, natural for agents, weakest to validate; good for one-offs and for discovering what the standing spec should later say.
+- **Property-first** — specify only checkable set-level properties (every module discussed somewhere, every page reachable from the index, no two pages claiming the same scope) with no membership rule. Generation is free-form; validation sweeps plus fix loops converge the set. Corrective rather than constructive — tolerates emergent structure ([wikiwiki: lowest-friction capture, then progressive refinement](../../notes/wikiwiki-principle-lowest-friction-capture-then-progressive-refinement.md)).
+- **Full regeneration** — treat the set as a compiled artifact: rebuild wholesale from the corpus plus retained judgment inputs instead of maintaining members. Freshness stops being a lineage problem and becomes a rebuild trigger; trades incrementality (and stability of member identity) for simplicity.
+
+These compose rather than compete: a generator for enumeration, properties for cross-member obligations, an exemplar for member quality is a plausible stack. And the choice per case likely follows the usual codification trade-off — standing corpora with repeated refresh earn the codified end; one-off generations stay at plan-artifact or exemplar, with the exemplar route doubling as spec discovery.
+
 ## Relation to the workshop
 
-This likely splits into its own direction — "compound artifacts / document-set specs" is a type-system question, not only a bulk-operations question. But the dependency runs one way: generative bulk operations cannot be sharded, validated, or refreshed without a set spec, while the set spec is useful even without bulk execution (a human-authored wiki still benefits from set-level validation). If the direction spins off, this workshop keeps the pipeline/economics questions and consumes the spec as an input contract.
+This likely splits into its own direction — "how to fix structures bigger than a document" is a knowledge-representation question in its own right, not only a bulk-operations question. But the dependency runs one way: generative bulk operations cannot be sharded, validated, or refreshed without *some* answer from the solution space above, while that answer is useful even without bulk execution (a human-authored wiki still benefits from set-level properties). If the direction spins off, this workshop keeps the pipeline/economics questions and consumes the chosen mechanism as an input contract.
 
 ## Open questions
 
-- Minimal spec shape: is a document-set spec a new type kind under `kb/types/`, an extension of `COLLECTION.md`, or a standalone manifest (a `systems.csv` generalization)?
+- Which mechanism from the solution space fits which case family, and what forces a case toward the codified end — refresh frequency, corpus size, number of consumers, or validation stakes?
 - How declarative can the membership rule be? "One page per module" needs a corpus enumerator — code, or agent judgment recorded as a committed target list?
 - For funnels: which prefilter tiers are deterministic commands and which are cheap agent passes, and where is the cut recorded so the recall trade-off is auditable ("candidates dropped at tier 1" is part of the run record)?
 - Calibration at merge: rubric-in-packet vs comparative re-ranking pass vs both — when is each proportional?
