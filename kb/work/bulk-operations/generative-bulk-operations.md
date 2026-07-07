@@ -25,13 +25,17 @@ What makes it hard as a bulk operation:
 - **The lens is parameterized by the query document.** Every worker compares its candidate against the same query. Re-reading the raw query per worker wastes context and invites drift; instead, distill the query once into a comparison brief (the claims, elements, and distinguishing features that matter) and frontload the brief into every packet — the [frontloading](../../notes/frontloading-spares-execution-context.md) pattern applied to a fan-out.
 - **Merge needs calibration.** Similarity scores produced in independent contexts are not comparable; a rubric in the packet helps, and a final comparative re-ranking pass over the per-pair judgments may be needed. Merging is a judgment stage of its own, not concatenation.
 - **The justification is the product.** A bare ranked list reproduces vector search's weakness: adjacency without reasons ("Notes Without Reasons" — links without articulated reasons degrade trust). Each surviving candidate must carry the articulated grounds of similarity: which elements map, which distinguish. The per-pair judgment records are durable artifacts, not intermediate scratch.
+- **A preparation phase — bulk write of a semantic index.** If the corpus will be queried more than once, comparing raw documents per query wastes the same distillation work repeatedly. The alternative is a preparation phase: a bulk write producing one comparison-ready distillate per corpus document (extracted claim elements for patents, holdings and reasoning structure for cases), plus derived views over them. The per-query funnel then runs brief-against-distillate instead of raw-against-raw — cheaper tiers, and precision tiers that read structured representations instead of full documents. Preparation cost amortizes over queries, so a one-off search may not justify it; a standing corpus does. This is the LLM-era version of editorial indexing — legal headnotes and key-number taxonomies, patent classification codes — which were exactly a manual bulk write of comparison-ready structure over a corpus.
 
 ## The shared prerequisite: structure specs bigger than a document
 
 Both cases produce a **document set** — a structured collection of documents with a shape of its own:
 
 - the code wiki's output *is* a document set (pages + index + link structure);
-- the deep search's output is a ranked report over per-pair judgment records — the records are the members, the report is the derived index. Same shape, thinner.
+- the deep search's output is a ranked report over per-pair judgment records — the records are the members, the report is the derived index. Same shape, thinner;
+- the deep search's *preparation phase* output is a full-strength document set: one distillate per corpus document (corpus-derived membership), derived views over them, and lineage for refresh as the corpus grows.
+
+The preparation phase dissolves the read/write dichotomy: the read-direction operation decomposes into a write-direction generative bulk operation (build the semantic index once) plus a per-query funnel over its members. A prepared corpus index and a code wiki are the same kind of object — both are document sets generated from a corpus; they differ only in the consumer (query-time comparison workers vs human/agent readers).
 
 Commonplace's type surface currently specifies single documents. A document-set spec would additionally fix:
 
@@ -74,3 +78,4 @@ This likely splits into its own direction — "compound artifacts / document-set
 - For funnels: which prefilter tiers are deterministic commands and which are cheap agent passes, and where is the cut recorded so the recall trade-off is auditable ("candidates dropped at tier 1" is part of the run record)?
 - Calibration at merge: rubric-in-packet vs comparative re-ranking pass vs both — when is each proportional?
 - Set-level lineage format: where does the member→sources mapping live so a corpus diff can be turned into a refresh target list mechanically?
+- Preparation economics and lens commitment: what query volume justifies building the semantic index, and what does the distillate spec fix — a distillate extracted for one comparison lens (claim overlap) may not serve another (infringement analysis), so the spec must name the lenses the index is built to serve?

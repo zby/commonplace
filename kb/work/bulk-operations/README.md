@@ -48,7 +48,7 @@ Use these existing workflows as witnesses:
 And two aspirational generative cases that stress the frame (detailed in [generative-bulk-operations.md](./generative-bulk-operations.md)):
 
 - **Code wiki** - generate a structured document set (overview, per-module pages, index, cross-links) from a codebase; bulk in the write direction, with corpus-derived membership, cross-member link obligations, and set-level lineage for refresh.
-- **Deep-similarity corpus search** - compare a query document (law case, patent claim) against a large corpus with judgment deeper than embedding adjacency; bulk in the read direction, requiring a tiered selection funnel, a frontloaded comparison brief, calibrated merge, and per-candidate justifications as the durable product.
+- **Deep-similarity corpus search** - compare a query document (law case, patent claim) against a large corpus with judgment deeper than embedding adjacency; bulk in the read direction, requiring a tiered selection funnel, a frontloaded comparison brief, calibrated merge, and per-candidate justifications as the durable product. For a standing corpus this includes a **preparation phase** — itself a generative bulk write producing one comparison-ready distillate per document (a semantic index the funnel then runs over), amortized across queries.
 
 ## Design Questions
 
