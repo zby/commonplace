@@ -64,6 +64,28 @@ def test_parse_requires_frontmatter_to_be_mapping() -> None:
     assert result.errors == ["frontmatter must parse to a mapping"]
 
 
+def test_parse_accepts_crlf_line_endings() -> None:
+    result = frontmatter.parse(
+        "---\r\n"
+        "description: Windows note\r\n"
+        "type: kb/types/note.md\r\n"
+        "---\r\n"
+        "# Title\r\n"
+    )
+
+    assert result.ok
+    assert result.data == {
+        "description": "Windows note",
+        "type": "kb/types/note.md",
+    }
+
+
+def test_strip_removes_crlf_frontmatter_block() -> None:
+    content = "---\r\ntype: kb/types/note.md\r\n---\r\n# Title\r\nBody."
+
+    assert frontmatter.strip(content) == "# Title\r\nBody."
+
+
 def test_strip_removes_frontmatter_block() -> None:
     content = "---\ntype: kb/types/note.md\n---\n# Title\nBody."
 

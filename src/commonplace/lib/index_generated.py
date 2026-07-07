@@ -13,7 +13,7 @@ from commonplace.lib.project_paths import (
     collection_for_path,
     is_replaced_archive,
     is_type_definition_content,
-    iter_unignored_markdown_files,
+    iter_visible_markdown_files,
 )
 
 
@@ -38,7 +38,7 @@ def collect_notes_by_tag(
     """Scan a collection and group notes by tag."""
     by_tag: dict[str, list[tuple[Path, str, str]]] = {}
 
-    for path in sorted(iter_unignored_markdown_files(collection_dir)):
+    for path in sorted(iter_visible_markdown_files(collection_dir)):
         if is_replaced_archive(path):
             continue
         content = path.read_text(encoding="utf-8")
@@ -50,8 +50,8 @@ def collect_notes_by_tag(
         if "types" in rel_parts or ".collection" in rel_parts:
             continue
 
-        tags = fm.get(FIELD_NAME, [])
-        if not tags:
+        tags = fm.get(FIELD_NAME)
+        if not isinstance(tags, list) or not tags:
             continue
 
         title = extract_title(strip_frontmatter(content))
@@ -93,7 +93,7 @@ def collect_tag_index_entries(
 ) -> list[tuple[Path, str, str]]:
     """Return all tag indexes within a collection."""
     entries: list[tuple[Path, str, str]] = []
-    for path in sorted(iter_unignored_markdown_files(collection_dir)):
+    for path in sorted(iter_visible_markdown_files(collection_dir)):
         if is_replaced_archive(path):
             continue
         content = path.read_text(encoding="utf-8")

@@ -94,7 +94,7 @@ def extract_body_dates(body: str) -> tuple[str, ...]:
 
 def parse_document(content: str) -> tuple[ParsedDocument | None, str | None]:
     frontmatter: dict[str, Any] | None = None
-    if content.startswith("---\n"):
+    if fm_mod.opens_frontmatter(content):
         result = fm_mod.parse(content)
         if result.errors:
             return None, "; ".join(result.errors)

@@ -20,7 +20,7 @@ classifiers = [
     "Topic :: Software Development :: Documentation",
     "Topic :: Text Processing :: Markup :: Markdown",
 ]
-dependencies = ["jsonschema>=4.25.0", "PyYAML>=6.0.0"]
+dependencies = ["jsonschema>=4.25.0", "PyYAML>=6.0.0", "referencing>=0.31.0"]
 
 [project.urls]
 Documentation = "https://zby.github.io/commonplace/"
@@ -73,7 +73,7 @@ include = [
     "/kb/sources/types",
     "/kb/types",
     "/src",
-    "/test",
+    "/tests",
 ]
 
 [tool.hatch.build.targets.sdist.force-include]

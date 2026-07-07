@@ -46,7 +46,7 @@ def write_promotion_candidates_report(root: Path) -> PromotionReportResult:
 
         abs_path = path.resolve()
         content = path.read_text(encoding="utf-8")
-        frontmatter = fm_mod.parse(content).data if content.startswith("---\n") else None
+        frontmatter = fm_mod.parse(content).data if fm_mod.opens_frontmatter(content) else None
         body = strip_frontmatter(content)
         title = extract_title(body)
         links = find_markdown_links(body)
@@ -64,21 +64,36 @@ def write_promotion_candidates_report(root: Path) -> PromotionReportResult:
             if resolved and resolved in all_notes:
                 incoming_links[resolved].append(source_path)
 
-    text_with_links = []
-    for path, title in sorted(text_files.items()):
-        sources = incoming_links.get(path, [])
-        real_sources = [s for s in sources if all_notes[s]["rel"].name not in ("index.md", "dir-index.md")]
-        rel = all_notes[path]["rel"].relative_to(notes_dir)
-        text_with_links.append((rel, title, len(real_sources), real_sources))
-    text_with_links.sort(key=lambda x: (-x[2], str(x[0])))
+    def rank(candidates: dict[Path, str]) -> list[tuple[Path, str, int, list[Path]]]:
+        ranked = [
+            (
+                all_notes[path]["rel"].relative_to(notes_dir),
+                title,
+                len(incoming_links.get(path, [])),
+                incoming_links.get(path, []),
+            )
+            for path, title in sorted(candidates.items())
+        ]
+        ranked.sort(key=lambda x: (-x[2], str(x[0])))
+        return ranked
 
-    seedling_ranked = []
-    for path, title in sorted(seedlings.items()):
-        sources = incoming_links.get(path, [])
-        real_sources = [s for s in sources if all_notes[s]["rel"].name not in ("index.md", "dir-index.md")]
-        rel = all_notes[path]["rel"].relative_to(notes_dir)
-        seedling_ranked.append((rel, title, len(real_sources), real_sources))
-    seedling_ranked.sort(key=lambda x: (-x[2], str(x[0])))
+    def render_entries(entries: list[tuple[Path, str, int, list[Path]]]) -> list[str]:
+        lines: list[str] = []
+        for rel, title, count, sources in entries:
+            source_list = ", ".join(
+                f"[{all_notes[s]['title']}](../notes/{all_notes[s]['rel'].relative_to(notes_dir)})"
+                for s in sources[:3]
+            )
+            if len(sources) > 3:
+                source_list += f" +{len(sources) - 3} more"
+            lines.append(f"- [{title}](../notes/{rel}) - **{count} links in**")
+            if source_list:
+                lines.append(f"  Sources: {source_list}")
+            lines.append("")
+        return lines
+
+    text_with_links = rank(text_files)
+    seedling_ranked = rank(seedlings)
 
     lines = [
         f"# Promotion Candidates - {date.today()}",
@@ -89,34 +104,13 @@ def write_promotion_candidates_report(root: Path) -> PromotionReportResult:
 
     lines.extend(["## Text -> Note", ""])
     if text_with_links:
-        for rel, title, count, sources in text_with_links:
-            source_list = ", ".join(
-                f"[{all_notes[s]['title']}](../notes/{all_notes[s]['rel'].relative_to(notes_dir)})"
-                for s in sources[:3]
-            )
-            if len(sources) > 3:
-                source_list += f" +{len(sources) - 3} more"
-            lines.append(f"- [{title}](../notes/{rel}) - **{count} links in**")
-            if source_list:
-                lines.append(f"  Sources: {source_list}")
-            lines.append("")
+        lines.extend(render_entries(text_with_links))
     else:
         lines.extend(["No text files found.", ""])
 
     lines.extend(["## Seedling -> Current (top 20 by incoming links)", ""])
-    top_seedlings = seedling_ranked[:20]
-    if top_seedlings:
-        for rel, title, count, sources in top_seedlings:
-            source_list = ", ".join(
-                f"[{all_notes[s]['title']}](../notes/{all_notes[s]['rel'].relative_to(notes_dir)})"
-                for s in sources[:3]
-            )
-            if len(sources) > 3:
-                source_list += f" +{len(sources) - 3} more"
-            lines.append(f"- [{title}](../notes/{rel}) - **{count} links in**")
-            if source_list:
-                lines.append(f"  Sources: {source_list}")
-            lines.append("")
+    if seedling_ranked:
+        lines.extend(render_entries(seedling_ranked[:20]))
     else:
         lines.extend(["No seedling notes found.", ""])
     lines.append("")

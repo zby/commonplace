@@ -302,14 +302,9 @@ def resolve_type(
         source_file=file_path,
     )
     type_frontmatter = _load_type_frontmatter(type_doc_path, workspace_root)
-    declared_type = type_frontmatter.get("type")
-    if type_doc_rel == TYPE_SPEC_PATH:
-        expected_type = TYPE_SPEC_PATH
-    else:
-        expected_type = TYPE_SPEC_PATH
-    if declared_type != expected_type:
+    if type_frontmatter.get("type") != TYPE_SPEC_PATH:
         raise ValueError(
-            f"{type_doc_rel}: type spec must declare type: {expected_type}"
+            f"{type_doc_rel}: type spec must declare type: {TYPE_SPEC_PATH}"
         )
 
     type_name = type_frontmatter.get("name")

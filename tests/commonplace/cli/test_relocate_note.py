@@ -23,7 +23,7 @@ def write(path: Path, content: str) -> Path:
     return path
 
 
-def test_rewrite_links_to_relocated_note_updates_real_links_only(tmp_path: Path) -> None:
+def test_rewrite_links_to_moved_files_updates_real_links_only(tmp_path: Path) -> None:
     old_note = tmp_path / "kb" / "notes" / "old-note.md"
     new_note = tmp_path / "kb" / "notes" / "new-note.md"
     ref_file = tmp_path / "kb" / "sources" / "source.ingest.md"
@@ -37,11 +37,10 @@ Inline: `[skip](../notes/old-note.md)`
 ```
 """
 
-    updated, changes = relocation.rewrite_links_to_relocated_note(
+    updated, changes = relocation.rewrite_links_to_moved_files(
         content,
         ref_file,
-        old_note,
-        new_note,
+        {old_note.resolve(): new_note},
     )
 
     assert "[old](../notes/new-note.md)" in updated
@@ -55,17 +54,19 @@ Inline: `[skip](../notes/old-note.md)`
     ]
 
 
-def test_rebase_relative_markdown_links_updates_outbound_links_for_moved_note(tmp_path: Path) -> None:
+def test_rebase_and_rewrite_updates_outbound_links_for_moved_note(tmp_path: Path) -> None:
     old_note = tmp_path / "kb" / "notes" / "old-note.md"
+    new_note = tmp_path / "kb" / "notes" / "archive" / "relocated-note.md"
     write(tmp_path / "kb" / "notes" / "definitions" / "concept.md", "# Concept\n")
     content = """Self: [self](./old-note.md)
 Target: [concept](./definitions/concept.md)
 """
 
-    updated, changes = relocation.rebase_relative_markdown_links(
+    updated, changes = relocation.rebase_and_rewrite_in_moved_file(
         content,
         old_note,
-        tmp_path / "kb" / "notes" / "archive" / "relocated-note.md",
+        new_note,
+        {old_note.resolve(): new_note},
     )
 
     assert "[self](./relocated-note.md)" in updated
@@ -98,6 +99,40 @@ nav:
     assert "- Example: notes/archive/new-name.md" in updated
     assert any("mkdocs redirect: notes/old-name.md -> notes/archive/new-name.md" == item for item in changes)
     assert any("mkdocs redirect target: notes/older-name.md -> notes/archive/new-name.md" == item for item in changes)
+
+
+def test_update_mkdocs_config_without_redirect_maps_rewrites_values_only() -> None:
+    content = """site_name: Project
+nav:
+  - Example: notes/old-name.md
+"""
+
+    updated, changes = relocation.update_mkdocs_config(
+        content,
+        old_docs_path="notes/old-name.md",
+        new_docs_path="notes/new-name.md",
+    )
+
+    assert "- Example: notes/new-name.md" in updated
+    assert "redirect" not in updated
+    assert changes == ["mkdocs value: notes/old-name.md -> notes/new-name.md"]
+
+
+def test_relocate_note_apply_works_without_mkdocs_config(tmp_path: Path) -> None:
+    notes_root = tmp_path / "kb" / "notes"
+    write(notes_root / "COLLECTION.md", "# Notes collection\n")
+    old_note = write(notes_root / "old-note.md", "# Old note\n")
+
+    result = relocation.relocate_note(
+        root=tmp_path,
+        note_arg="old-note",
+        new_name="renamed note",
+        apply=True,
+    )
+
+    assert result == 0
+    assert not old_note.exists()
+    assert (notes_root / "renamed-note.md").exists()
 
 
 def test_slugify_rejects_overlong_note_slug() -> None:
@@ -147,7 +182,7 @@ def test_resolve_destination_path_accepts_directory_target(tmp_path: Path) -> No
 
 
 def test_relocate_note_apply_leaves_review_state_rows_unchanged_and_paths_derived(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
 ) -> None:
     repo_root = tmp_path
     kb_root = repo_root / "kb"
@@ -160,13 +195,6 @@ def test_relocate_note_apply_leaves_review_state_rows_unchanged_and_paths_derive
     review_pair_id = seed_accepted_review(repo_root, db_path, note_path="kb/notes/old-note.md")
     with review_db.connect(db_path) as conn:
         rows_before = review_state_rows(conn)
-
-    def fake_move(source: Path, destination: Path, *, repo_root: Path) -> str:
-        destination.parent.mkdir(parents=True, exist_ok=True)
-        source.rename(destination)
-        return "rename"
-
-    monkeypatch.setattr(relocation, "move_note", fake_move)
 
     result = relocation.relocate_note(
         root=repo_root,
@@ -219,7 +247,7 @@ def test_relocate_note_apply_leaves_review_state_rows_unchanged_and_paths_derive
     ]
 
 
-def test_relocate_note_apply_moves_file_with_to_directory(tmp_path: Path, monkeypatch) -> None:
+def test_relocate_note_apply_moves_file_with_to_directory(tmp_path: Path) -> None:
     repo_root = tmp_path
     kb_root = repo_root / "kb"
     notes_root = kb_root / "notes"
@@ -233,13 +261,6 @@ See [concept](./definitions/concept.md)
     )
     write(notes_root / "definitions" / "concept.md", "# Concept\n")
     write(repo_root / "mkdocs.yml", "plugins:\n  - redirects:\n      redirect_maps:\n")
-
-    def fake_move(source: Path, destination: Path, *, repo_root: Path) -> str:
-        destination.parent.mkdir(parents=True, exist_ok=True)
-        source.rename(destination)
-        return "rename"
-
-    monkeypatch.setattr(relocation, "move_note", fake_move)
 
     result = relocation.relocate_note(
         root=repo_root,
@@ -256,9 +277,7 @@ See [concept](./definitions/concept.md)
     assert "[concept](../definitions/concept.md)" in relocated_text
 
 
-def test_relocate_note_apply_moves_note_across_kb_collections(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
-) -> None:
+def test_relocate_note_apply_moves_note_across_kb_collections(tmp_path: Path) -> None:
     repo_root = tmp_path
     kb_root = repo_root / "kb"
     notes_root = kb_root / "notes"
@@ -288,13 +307,6 @@ nav:
   - Doc System: notes/document-classification.md
 """,
     )
-
-    def fake_move(source_path: Path, destination_path: Path, *, repo_root: Path) -> str:
-        destination_path.parent.mkdir(parents=True, exist_ok=True)
-        source_path.rename(destination_path)
-        return "rename"
-
-    monkeypatch.setattr(relocation, "move_note", fake_move)
 
     result = relocation.relocate_note(
         root=repo_root,
