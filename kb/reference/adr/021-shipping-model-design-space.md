@@ -1,6 +1,13 @@
-# Design space for shipped-content namespacing
+---
+description: "ADR 021 appendix enumerating shipped-content namespace options, read-only conventions, path translation, skill-root resolution, and collection scaffolding"
+type: kb/types/note.md
+tags: []
+status: current
+---
 
-Scratch space enumerating the axes of the decision. Not a recommendation — input for one.
+# ADR 021 appendix: shipped-content namespacing design space
+
+Design-space appendix for [ADR 021](./021-ship-library-content-under-kb-commonplace.md). It enumerates the axes that led to shipping Commonplace library content under `kb/commonplace/`.
 
 ## Axis 1: Namespacing shape
 
@@ -13,7 +20,7 @@ Scratch space enumerating the axes of the decision. Not a recommendation — inp
 | E. Single namespace directory | `kb/commonplace/{notes,reference,instructions}/` | One boundary to reason about; natural home for a `.commonplace` marker; scales to future additions | Deeper paths in shipped content |
 | F. Separate vault | `kb-commonplace/` alongside `kb/` | Strongest isolation | Two vault roots; most skill/config rework |
 
-**Decision (2026-04-23): Option E — `kb/commonplace/{notes,reference,instructions,agent-memory-systems}/`.** Reversed from the earlier D lean after the path audit ([path-audit-option-e.md](./path-audit-option-e.md)) showed E has strictly lower translation burden than D: sibling-relative links (`../notes/...`, `../reference/...`) are invariant under E's nested-namespace wrapping, but would all need rewriting to `../cp-notes/...` etc. under D. E preserves more existing links intact and the namespace directory gives a single boundary to reason about for read-only enforcement.
+**Decision (2026-04-23): Option E — `kb/commonplace/{notes,reference,instructions,agent-memory-systems}/`.** Reversed from the earlier D lean after the path audit ([ADR 021 path audit](./021-shipping-model-path-audit-option-e.md)) showed E has strictly lower translation burden than D: sibling-relative links (`../notes/...`, `../reference/...`) are invariant under E's nested-namespace wrapping, but would all need rewriting to `../cp-notes/...` etc. under D. E preserves more existing links intact and the namespace directory gives a single boundary to reason about for read-only enforcement.
 
 ## Axis 2: Read-only convention
 
@@ -144,7 +151,7 @@ Both are defensible. The choice is about what we want the user's first impressio
 
 ### Final disposition: Option E
 
-After the path audit ([path-audit-option-e.md](./path-audit-option-e.md)), the initial lean toward D reversed. Reason: **E has strictly lower translation cost.**
+After the path audit ([ADR 021 path audit](./021-shipping-model-path-audit-option-e.md)), the initial lean toward D reversed. Reason: **E has strictly lower translation cost.**
 
 - Sibling-relative links (`../notes/...`, `../reference/...`, `../agent-memory-systems/...`) are invariant under E's wrapping because `kb/commonplace/{notes,reference,...}` preserves the sibling relationship. Under D, every one of those links would need `../notes/` → `../cp-notes/`.
 - File-relative type pointers (B2b, 28 sites) work invariantly under E with one type-resolver extension.

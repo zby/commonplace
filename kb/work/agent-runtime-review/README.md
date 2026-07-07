@@ -25,7 +25,7 @@ The deeper reason is the KB's own center of gravity. Our core concepts — **con
 The "active control loop" is **not** a gap in our theory — it is partially built and scattered across the workshop layer:
 
 - `kb/work/harness-taxonomy-convergence/` — a component model for what a runtime is made of: **Scheduler / Context engine / Execution substrate**, plus a **governance/maintenance axis** running across them. Reconciles three independent component decompositions (Vtrivedy10, Raschka, Commonplace) and two operational/control vocabularies (Lopopolo, cybernetics).
-- `kb/work/tool-loop-control/` and its promoted note family — the scheduler model: `kb/notes/tool-loop-index.md`, `kb/notes/bounded-context-orchestration-model.md`, `kb/notes/the-practical-scheduler-is-the-host-language.md`, and siblings. This is the active-control vocabulary we already own.
+- The promoted tool-loop note family — the scheduler model: `kb/notes/tool-loop-index.md`, `kb/notes/bounded-context-orchestration-model.md`, `kb/notes/the-practical-scheduler-is-the-host-language.md`, and siblings. This is the active-control vocabulary we already own.
 - `kb/work/harness-fundamentals/harness-boundary.md` — where the runtime boundary sits.
 - `kb/agent-memory-systems/` — 150+ code-grounded reviews whose memory subjects are frequently *runtime subsystems* already (Letta, mem0, cognee, crewai-memory are framework/runtime reviews wearing a memory hat).
 

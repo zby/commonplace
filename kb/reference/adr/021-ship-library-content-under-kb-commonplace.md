@@ -25,7 +25,7 @@ The design question: how to ship library content in a way that isolates it from 
 
 ### Options considered
 
-See [kb/work/shipping-model/design-space.md](../../work/shipping-model/design-space.md) for the full enumeration. Six namespacing shapes were considered, of which two were serious candidates:
+See [the shipped-content namespacing design space](./021-shipping-model-design-space.md) for the full enumeration. Six namespacing shapes were considered, of which two were serious candidates:
 
 - **Option D** — `cp-` directory prefix: `kb/cp-notes/`, `kb/cp-reference/`, `kb/cp-instructions/`.
 - **Option E** — single namespace directory: `kb/commonplace/{notes,reference,instructions,agent-memory-systems}/`.
@@ -34,7 +34,7 @@ Both options isolate the shipped content from user content. The deciding questio
 
 ### Translation-cost finding
 
-A path audit ([kb/work/shipping-model/path-audit-option-e.md](../../work/shipping-model/path-audit-option-e.md)) categorized all 1013 path-bearing sites in shipped content (713 body references + 300 frontmatter `type:` pointers) into six patterns with distinct E-compatibility:
+A path audit ([ADR 021 Option E path audit](./021-shipping-model-path-audit-option-e.md)) categorized all 1013 path-bearing sites in shipped content (713 body references + 300 frontmatter `type:` pointers) into six patterns with distinct E-compatibility:
 
 - **Pattern A** — generic prose references like "`kb/notes/` holds transferable claims" — resolve correctly to the user's own collection in a user's install. ~50% of references. No translation.
 - **Pattern B1** — frontmatter `type:` pointers to shared global types (`kb/types/note.md` etc.). 270 sites. No translation if `kb/types/` stays at top level (not wrapped under `kb/commonplace/`).
@@ -167,4 +167,5 @@ This principle is worth extracting as a library note in its own right (citation 
 Relevant Notes:
 
 - [kb/notes/directory-scoped-types-are-cheaper-than-global-types.md](../../notes/directory-scoped-types-are-cheaper-than-global-types.md) — grounds the B2d rejection
-- [kb/work/shipping-model/](../../work/shipping-model/) — workshop that produced this ADR
+- [ADR 021 shipped-content namespacing design space](./021-shipping-model-design-space.md) — option inventory behind the decision
+- [ADR 021 Option E path audit](./021-shipping-model-path-audit-option-e.md) — path-compatibility audit behind the Option E choice

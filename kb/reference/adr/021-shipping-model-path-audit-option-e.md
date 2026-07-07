@@ -1,6 +1,13 @@
-# Path audit: does Option E work?
+---
+description: "ADR 021 appendix auditing hardcoded kb/ paths in shipped content and showing why the kb/commonplace namespace preserves more links than cp-prefixed collections"
+type: kb/types/note.md
+tags: []
+status: current
+---
 
-A pattern-level audit of every hardcoded `kb/{notes,reference,instructions,types,...}/` path in shipped content, with an Option-E compatibility assessment per pattern. Written to replace the earlier "~85 references" undercount and to answer whether Option E (`kb/commonplace/{notes,reference,instructions}/`) can ship as-is using relative paths, or what exactly needs translation.
+# ADR 021 appendix: Option E path audit
+
+A pattern-level audit for [ADR 021](./021-ship-library-content-under-kb-commonplace.md) of every hardcoded `kb/{notes,reference,instructions,types,...}/` path in shipped content, with an Option-E compatibility assessment per pattern. Written to replace the earlier "~85 references" undercount and to answer whether Option E (`kb/commonplace/{notes,reference,instructions}/`) can ship as-is using relative paths, or what exactly needs translation.
 
 ## Scope
 

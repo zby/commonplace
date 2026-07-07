@@ -10,7 +10,7 @@ status: accepted
 **Status:** accepted
 **Date:** 2026-04-19
 **Supersedes (in part):** [ADR 016 — custom types use template/instruction pairs](./016-custom-types-use-template-instruction-pairs.md). Affects [ADR 002 — inline global types in writing guide](./002-inline-global-types-in-writing-guide.md) at the `note` migration step.
-**Related:** [write-type-resolver workshop](../../work/write-type-resolver/README.md), [ADR 009](./009-link-relationship-semantics.md).
+**Related:** [ADR 009](./009-link-relationship-semantics.md).
 
 ## Context
 
@@ -49,7 +49,7 @@ The validator has a Python resolver (`src/commonplace/lib/type_resolver.py`). Th
 
 ### Considered: a type-resolver CLI
 
-The [write-type-resolver workshop](../../work/write-type-resolver/README.md) first proposed `commonplace-resolve-type --type X [--collection Y] --json`, which would:
+The initial resolver design first proposed `commonplace-resolve-type --type X [--collection Y] --json`, which would:
 
 - Discover the triple for `(type, collection)` at runtime.
 - Return JSON shapes for resolved / ambiguous / not-found cases.
@@ -137,7 +137,7 @@ This deliberately keeps the authoring surface file-native. The software may stil
 
 ### Migration
 
-This decision lands as a whole-KB migration, not an `adr` pilot and not a per-type rollout. See [`plan.md`](../../work/write-type-resolver/plan.md) for concrete steps.
+This decision landed as a whole-KB migration, not an `adr` pilot and not a per-type rollout.
 
 The implementation creates/fuses all type instruction docs, rewrites all explicit frontmatter `type:` values to paths, updates `cp-skill-write`, updates validation, and validates the corpus in one migration bundle. There is no enum-to-path redirect period and no compatibility table. If the migrated state fails, revert the bundle from git instead of carrying two type mechanisms.
 
