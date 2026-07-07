@@ -13,7 +13,7 @@ Lineage records a retained artifact's review-relevant source dependencies and de
 
 Use the term lineage when retained behavior can drift from its sources. Generated directory indexes, prompt summaries, skill bundles, compiled validators, route entries, retrieval indexes, and learned updates all have lineage concerns because their behavioral effect can survive after the apparent source has changed.
 
-Lineage is deliberately narrower than full provenance. It records the dependency information needed for review, invalidation, regeneration, retirement, and rollback.
+Lineage is deliberately narrower than full provenance. It records the dependency information needed for review, invalidation, regeneration, retirement, and rollback. [PROV-Overview](../../sources/prov-overview.md) is the external standard reference for the larger provenance surface this definition trims down from: attribution, access, retrieval, provenance-of-provenance, reproducibility, versioning, procedures, and derivation.
 
 ## Exclusions
 
@@ -31,3 +31,4 @@ Relevant Notes:
 - [retained artifact](./retained-artifact.md) - scope: the state whose dependency obligations are being recorded
 - [storage substrate](./storage-substrate.md) - contrast: a derived artifact can share a substrate with its source
 - [behavioral authority](./behavioral-authority.md) - interaction: stale lineage matters most when a derived artifact has high authority
+- [PROV-Overview](../../sources/prov-overview.md) - evidence: canonical full-provenance reference whose broader scope lineage deliberately narrows

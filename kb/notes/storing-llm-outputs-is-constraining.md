@@ -1,5 +1,5 @@
 ---
-description: Choosing to keep a specific LLM output resolves semantic underspecification to one interpretation and freezes it against execution indeterminism — the same constraining move the parent note describes for code, applied to artifacts
+description: "Keeping a specific LLM output resolves semantic underspecification and freezes one run against execution indeterminism - a constraining move applied to artifacts"
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, constraining]
@@ -59,5 +59,5 @@ Relevant Notes:
 - [deploy-time-learning](./deploy-time-learning-is-the-missing-middle.md) — extends the constraining gradient with a new application: output artifacts, not just code
 - [constraining](./definitions/constraining.md) — foundation: each stored artifact is a step in the continuous learning loop this note describes
 - [Evans: AI Components for a Deterministic System](https://www.domainlanguage.com/articles/ai-components-deterministic-system/) — exemplifies the constraint strategy: Evans' "freeze taxonomy then classify" resolves semantic underspecification for the modeling/classification boundary by committing to one interpretation space
-- [adaptation-agentic-ai-analysis](./research/adaptation-agentic-ai-analysis.md) — provides data-driven triggers (error patterns, repeated tool failures) for when to make the constraining decision this note describes
+- [Adaptation signals choose pressure; artifact analysis chooses the retained surface](./research/adaptation-agentic-ai-analysis.md) — extends: separates the signal that justifies storing an output from the retained surface, authority path, and review evidence the decision creates
 - [oracle-strength-spectrum](./oracle-strength-spectrum.md) — determines where generator/verifier is viable: the pattern requires sufficient oracle strength for the quality gate to discriminate

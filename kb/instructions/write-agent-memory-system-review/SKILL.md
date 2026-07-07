@@ -97,7 +97,9 @@ If the system has no reachable source code, stop and write a lightweight note in
 
    Before delegating: if the harness cannot launch a sub-agent or worker, stop after setup and report that delegated drafting is unavailable. Do not draft locally unless the user explicitly authorizes a local fallback for this run; if authorized, report `drafting was local, not delegated` as a workflow exception. This is a parent-only decision, made before any worker exists — a worker that has actually been launched is, by construction, the delegated drafting worker and never needs to reason about fallback authorization itself.
 
-   Launch one fresh sub-agent or worker with a minimal task-local context. Do not fork the parent's full context when the harness offers a clean-context option. Use only the harness sub-agent mechanism for this delegation; do not launch an agent CLI from Bash. Give the worker exactly this task, with the bracketed values filled in — this task text is the worker's complete brief; do not also hand it this skill file:
+   Launch one fresh sub-agent or worker with a minimal task-local context. Do not fork the parent's full context when the harness offers a clean-context option. Use only the harness sub-agent mechanism for this delegation; do not launch an agent CLI from Bash. Give the worker exactly this task, with the bracketed values filled in — this task text is the worker's complete brief; do not also hand it this skill file.
+
+   The worker warning below is a load-bearing mitigation, not optional explanation; rationale: [skill discovery re-fires in every sub-agent context](../../notes/skill-discovery-re-fires-in-every-sub-agent-context.md).
 
    ```text
    Draft review content for {note_path}.

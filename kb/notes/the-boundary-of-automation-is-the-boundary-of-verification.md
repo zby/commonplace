@@ -1,5 +1,5 @@
 ---
-description: Synthesis — three lines of evidence (oracle theory, labor economics, frontier-lab capability predictions) with distinct reasoning paths converge on verification cost as the primary structural determinant of automation
+description: Synthesis — oracle theory, labor economics, frontier-lab capability predictions, and supply-chain integrity evidence converge on verification cost as the primary structural determinant of automation
 type: kb/types/note.md
 traits: [has-external-sources, title-as-claim]
 tags: [llm-interpretation-errors]
@@ -10,7 +10,7 @@ status: current
 
 Tasks become automatable when verification is cheap and resist automation when verification is expensive — regardless of raw model capability. This is not an observation about current limitations. It's a structural claim: generation without verification produces output, not automation. Where automation stalls, the bottleneck is typically oracle construction, not generation.
 
-Three sources arrive at this claim through different reasoning, from different domains, using different vocabulary. They are not fully independent — the oracle-theory notes already cite Tam et al. and Rabanser et al. — but the reasoning paths are distinct enough that the convergence is informative.
+Four sources arrive at this claim through different reasoning, from different domains, using different vocabulary. They are not fully independent — the oracle-theory notes already cite Tam et al. and Rabanser et al. — but the reasoning paths are distinct enough that the convergence is informative.
 
 ## The evidence
 
@@ -20,11 +20,13 @@ Three sources arrive at this claim through different reasoning, from different d
 
 **Capability-timeline predictions (Amodei).** [Amodei's interview](https://www.dwarkesh.com/p/dario-amodei-2) shows a confidence gradient: strong optimism on coding and math (where progress is measurable against tests and benchmarks) but acknowledged uncertainty on novel writing and scientific discovery (where quality is harder to verify). Amodei doesn't use oracle vocabulary — this is our interpretive frame — but the pattern is consistent: his confidence correlates with verification availability, not raw capability claims.
 
+**Supply-chain integrity (in-toto).** [in-toto](../sources/in-toto-farm-to-table-guarantees.md) makes supply-chain trust decisions automatable by turning an otherwise social/process question ("did the right steps produce this artifact?") into signed, hash-checked metadata over the whole chain. The domain has unusually hard oracles — byte identity, signatures, and declared artifact-flow rules — so it does not solve the KB's judgment-heavy verification problem. It does show the positive case cleanly: once the verifier exists and is cheap enough to run at deployment boundaries, an operational trust decision can move from manual review to automation.
+
 ## Why convergence matters
 
-Any single source is explainable without the framework. Amodei's confidence split could be mere selection bias (he has benchmarks for coding, not for novels). Tam's labor-economics argument could be an investor thesis dressed up as analysis. The oracle-strength spectrum could be an internally consistent theory that happens not to be true.
+Any single source is explainable without the framework. Amodei's confidence split could be mere selection bias (he has benchmarks for coding, not for novels). Tam's labor-economics argument could be an investor thesis dressed up as analysis. The oracle-strength spectrum could be an internally consistent theory that happens not to be true. in-toto could be dismissed as a special property of cryptographic byte workflows.
 
-But three sources — theory, market economics, and supply-side capability predictions — arriving at the same structural claim through different reasoning is harder to explain away than any single source. The convergence makes this a candidate for a general principle rather than a domain-specific observation, though the shared citations between the sources temper the evidential weight.
+But four sources — theory, market economics, supply-side capability predictions, and supply-chain security engineering — arriving at the same structural claim through different reasoning is harder to explain away than any single source. The convergence makes this a candidate for a general principle rather than a domain-specific observation, though the shared citations between the sources temper the evidential weight.
 
 ## The practical implication
 
@@ -53,4 +55,5 @@ Relevant Notes:
 - [fixed artifacts split into exact specs and proxy theories](./fixed-artifacts-split-into-exact-specs-and-proxy-theories.md) — foundation: the binary distinction this note refines — exact-spec artifacts have stronger verification surfaces than proxy theories
 - [Tam et al. — "When code is free"](https://x.com/amytam01/status/2031072399731675269) — evidence: labor-economics argument that engineering automates (hard oracle) while research taste resists (no oracle)
 - [Amodei interview](https://www.dwarkesh.com/p/dario-amodei-2) — evidence: frontier-lab CEO's confidence split tracks oracle strength, not capability
+- [in-toto: Providing farm-to-table guarantees for bits and bytes](../sources/in-toto-farm-to-table-guarantees.md) — evidence: supply-chain trust decisions become automatable when the chain is represented as signed, hash-checkable metadata with cheap final verification
 - [Rabanser et al. reliability study](https://arxiv.org/pdf/2602.16666) — evidence: calibration improves but discrimination trends are mixed across benchmarks, suggesting self-assessment is not reliably scaling

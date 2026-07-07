@@ -1,5 +1,5 @@
 ---
-description: Six operational signals — five early-detection (paraphrase brittleness, isolation-vs-integration gap, process constraints, unspecifiable failure modes, distribution sensitivity) plus composition failure as late-stage confirmation — for shifting confidence about whether a component encodes theory or specification.
+description: "Operational signals for when a component likely encodes a brittle proxy theory rather than an exact specification and should be relaxed instead of codified harder"
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, constraining]
@@ -56,4 +56,4 @@ Relevant Notes:
 - [Rabanser et al. reliability study](https://arxiv.org/pdf/2602.16666) — evidence (interpreted): R_prompt metric shows paraphrase brittleness is the key differentiator among robustness sub-dimensions; we interpret this as support for the paraphrase brittleness signal, though the source doesn't connect to the fixed-artifact distinction
 - [Ma et al. PromptSE framework](https://arxiv.org/pdf/2509.13680) — refines: richer operationalization of paraphrase brittleness via controlled emotion/personality templates at three perturbation distances; non-monotonic scaling (smaller models can be more stable) supports the interpretation that brittleness detects badly-fitting theories, not capacity limitations
 - [Mazur position-bias benchmark](../sources/position-bias.ingest.md) — **evidence**: judge-layer measurement of the brittleness signal; order-swap alone shifts 27 LLMs' pairwise winners on 44.8% of decisive cases, and some models (Mistral Large 3) invert the direction rather than attenuate it — heterogeneity that matters for decorrelation (preprint-tier, sibling-edit surface)
-- [research/adaptation-agentic-ai-analysis](./research/adaptation-agentic-ai-analysis.md) — extends: independently catalogues domain-specific relaxing signals (growing exception lists, special cases, user overrides) in llm-do context
+- [Adaptation signals choose pressure; artifact analysis chooses the retained surface](./research/adaptation-agentic-ai-analysis.md) — extends: treats relaxing as one retained-surface move selected by adaptation evidence, alongside constraining and distilling

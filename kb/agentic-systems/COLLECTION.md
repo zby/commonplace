@@ -29,6 +29,7 @@ Organised per destination; label semantics in [link-vocabulary.md](../reference/
 - **→ `kb/notes/`** — search when an analysis maps a system onto theory. Links usually run inverse (theory links in via `evidence`), so promote a novel transferable claim to `kb/notes/` rather than author theory here. Labels: `rationale`, `see-also`.
 - **→ `kb/agent-memory-systems/`** — when the analysed whole system has a memory, knowledge, or context-engineering subsystem reviewed there. Use `contains` from the whole-system analysis to the subsystem review; use `part-of` only from a subsystem-focused analysis back to the whole system. Labels: `part-of` / `contains`, `compares-with`, `see-also`.
 - **→ `kb/reference/`** — scan when a design element has a direct Commonplace analogue. Labels: `see-also`.
+- **→ `kb/instructions/`** — link a Commonplace procedure when the external system analysis directly maps onto an operating rule or workflow. Labels: `procedure`, `see-also`.
 
 ## Types
 
