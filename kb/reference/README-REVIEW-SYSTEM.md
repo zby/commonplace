@@ -98,6 +98,14 @@ Ack fails when there is no completed review for the same `(note_path, gate_path,
 - it skips findings whose gate changed since acceptance
 - it collapses model partitions to one current entry per `(note_path, gate_path)`, choosing the latest accepted warn review
 
+## Interpreting review output
+
+A `pass` records that the gate's check found nothing to flag; it is not a certification that the note has no problems, only that this particular check didn't detect one. Treat it as an absence-of-detected-problem signal rather than a guarantee — an automated check with real but imperfect discriminative power is still worth having, but only as long as a clean result is never trusted beyond what it actually tested.
+
+The same principle applies once a `warn` finding is delegated to the fix system. When the fix produces a diff, reviewing that diff is the judgment step: it checks the resulting artifact directly, rather than trusting the fixing agent's own report of success. Reading the agent's self-report still matters when no diff results — there is no artifact to substitute for it, so that case still needs the claim read directly.
+
+This is why gates route a bare finding rather than a self-graded verdict — see [composition friction gate](../instructions/composition-friction-gate.md)'s hard rule against emitting a pass/fail verdict, and the broader case in [an adversarial human-agent loop can reconstruct the writing-is-thinking filter](../notes/adversarial-loop-can-reconstruct-the-writing-is-thinking-filter.md).
+
 ## Command reference
 
 **Selector** — `commonplace-review-target-selector`:
