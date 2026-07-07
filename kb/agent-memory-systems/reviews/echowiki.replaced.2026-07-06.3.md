@@ -2,11 +2,14 @@
 description: "EchoWiki review: Obsidian plugin and CLI compile raw notes and voice transcripts into a local LLM-maintained wiki"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-status: current
+status: outdated
+tags: []
 last-checked: "2026-07-06"
 ---
 
 # EchoWiki
+
+> Replaced 2026-07-06. See [echowiki](./echowiki.md) for the current review.
 
 EchoWiki, from `mohammadmaso/echowiki`, is a local-first Obsidian plugin plus optional Node CLI that compiles Markdown/text notes and STT transcripts from `raw/` into an Obsidian-compatible `wiki/` of summaries, concepts, entities, an index, and a log. At the reviewed commit it is a wiki compiler and maintenance loop: it uses the Vercel AI SDK against OpenAI-compatible LLM endpoints, stores retained knowledge as local Markdown/frontmatter files, and does not implement a query/chat layer, vector index, graph database, or retained model artifact ([README.md](https://github.com/mohammadmaso/echowiki/blob/11446997423e88177dba62d6a3d5c1e8b4886c62/README.md), [manifest.json](https://github.com/mohammadmaso/echowiki/blob/11446997423e88177dba62d6a3d5c1e8b4886c62/manifest.json), [src/wiki/compiler.ts](https://github.com/mohammadmaso/echowiki/blob/11446997423e88177dba62d6a3d5c1e8b4886c62/src/wiki/compiler.ts), [src/llm/client.ts](https://github.com/mohammadmaso/echowiki/blob/11446997423e88177dba62d6a3d5c1e8b4886c62/src/llm/client.ts)).
 
