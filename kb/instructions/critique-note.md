@@ -38,3 +38,9 @@ Write to `kb/reports/critique/<note-name>.critique.md`. Mutate nothing else.
 ## Secondary objections (optional)
 - <weaker but real objections worth noting>
 ```
+
+---
+
+Relevant Notes:
+
+- [An adversarial human-agent loop can reconstruct the writing-is-thinking filter](../notes/adversarial-loop-can-reconstruct-the-writing-is-thinking-filter.md) — rationale: this critique's report-only output and fresh-runner requirement are the decorrelation and no-verdict-authority conditions that note's defense depends on

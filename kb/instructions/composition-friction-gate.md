@@ -52,3 +52,4 @@ Write to `kb/reports/friction/<note-name>.friction.md`. Mutate nothing else.
 Relevant Notes:
 
 - [LLM generation relaxes a goal it can't satisfy and hides the constraint a human writer stalls on](../notes/llm-generation-relaxes-goals-where-human-writing-stalls.md) — rationale: the composition stall this gate reconstructs, and why a self-graded verdict cannot substitute for it
+- [An adversarial human-agent loop can reconstruct the writing-is-thinking filter](../notes/adversarial-loop-can-reconstruct-the-writing-is-thinking-filter.md) — rationale: the no-verdict, routed-attention-to-a-human-judge design is this note's condition for the loop reconstructing the filter, applied here as the hard rule against emitting a pass/fail verdict
