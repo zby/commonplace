@@ -110,7 +110,7 @@ Takeaway: the split/rehome frame best matches the desired operation. It avoids t
 
 ### 2026-06-16: semantic review bundle
 
-Instruction path: `kb/instructions/run-review-bundle-on-note.md`.
+Instruction path: `kb/instructions/run-review-batches.md` (the commands below are retired; see note).
 
 Command path:
 
@@ -118,6 +118,8 @@ Command path:
 commonplace-create-review-run --runner codex --model gpt-5-5-high --json --with-prompt kb/work/agent-note-improvement/case-01-llm-generation-relaxes-goals/baseline-e242c975.md semantic
 commonplace-ingest-bundle-output --review-run-id 2303 --input-file kb/reports/bundle-reviews/review-run-2303/bundle-output.md
 ```
+
+Note: `commonplace-create-review-run` and `commonplace-ingest-bundle-output` have since been retired in favor of the selector -> `commonplace-create-review-jobs` -> `commonplace-finalize-review-job` pipeline in `kb/instructions/run-review-batches.md`. Reproducing this step now means the requested-mode, single-note flow documented in `run-full-improvement-pass-on-note.md` step 4.
 
 Review run: `2303`.
 
