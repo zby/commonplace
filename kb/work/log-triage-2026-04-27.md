@@ -17,7 +17,6 @@ Classification legend:
 - `PROMOTE` - indiscriminate context loading as a double failure: false salience from irrelevant material plus non-activation of relevant material. Existing activation and soft-degradation notes are adjacent but do not name the combined failure.
 - `FOLD` - `kb/notes/fixed-artifacts-split-into-exact-specs-and-proxy-theories.md` should move some quantitative grounding from footer links into body prose.
 - `PROMOTE` - well-specified OOD benchmarks stripping shortcuts. SuperARC, EsoLang-Bench, Sudoku, and induction-bias sources converge on a mechanism not owned by one current note.
-- `FOLD` - `kb/notes/reverse-compression-is-when-llm-output-expands-without-adding.md` should add the SuperARC print-statement example. The old log path was renamed.
 - `FOLD` - `kb/notes/first-principles-reasoning-selects-for-explanatory-reach-over.md` should add SuperARC's integer-vs-binary sequence gap.
 - `PROMOTE` - diagnostic richness as an outer-loop search axis. The trace-derived survey now mentions it, but a standalone note could own the axis and Meta-Harness ablation.
 - `FOLD` - `kb/notes/evaluation-automation-is-phase-gated-by-comprehension.md` should account for Meta-Harness-style automated trace comprehension in hard-oracle domains.
@@ -37,3 +36,4 @@ Classification legend:
 - Psychology-to-agent transfer methodology: resolved by `kb/notes/psychology-to-agent-transfer-needs-per-principle-failure-mode-testing.md`.
 - Three-space note missing Youssef psychology frameworks: resolved by the new psychology-transfer note rather than by expanding the Tulving note.
 - Trace-derived policy compilation pipelines across Pi Self-Learning, ClawVault, and Synapptic: resolved by `kb/agent-memory-systems/trace-derived-learning-techniques-in-related-systems.md`.
+- SuperARC print-statement example: folded into `kb/notes/reverse-compression-is-when-llm-output-expands-without-adding.md`.

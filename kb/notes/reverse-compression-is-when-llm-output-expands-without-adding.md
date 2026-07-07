@@ -1,5 +1,5 @@
 ---
-description: LLMs can inflate a compact seed into verbose prose that carries no more extractable structure — the test for whether a KB resists this is whether notes accumulate epiplexity across the network, not just token count
+description: "LLMs can inflate compact seeds into verbose artifacts without adding extractable structure; a KB resists this only when links add epiplexity"
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, distillation]
@@ -26,6 +26,10 @@ In a linked KB, each link can carry the reader to a node with its own epiplexity
 
 But this resistance requires that links are [load-bearing](./linking-theory.md) — the linked notes must actually contribute to the argument. A note full of "see also" links to tangentially related material is still reverse-compressed; the links are decorative, not structural. The test: remove the links — does the argument collapse, or does it read identically?
 
+## The same failure appears in code generation
+
+SuperARC gives a hard-oracle instance outside KB writing. In its recursive-compression benchmark, many LLM-generated "correct" programs reproduce target sequences by directly printing them. The program passes the output check, but it has not compressed the sequence into a generative rule; it expands the target into code that carries no additional algorithmic structure. The ingest reports that print-statement solutions dominate across programming languages and temperature changes, which makes the failure more than a sampling accident. This is reverse-compression in a formal setting: a longer artifact that looks like a solution, satisfies a shallow correctness oracle, and still adds zero extractable structure for the capability actually being tested.
+
 ## Toward a validation gate
 
 A reverse-compression check is semantic, not structural — it can't be grepped. One heuristic worth testing manually before mechanizing into `/validate`:
@@ -40,5 +44,6 @@ Relevant Notes:
 - [information value is observer-relative](./information-value-is-observer-relative.md) — grounds: epiplexity formalizes what "adds information for a bounded observer" means
 - [distillation](./definitions/distillation.md) — contrasts: distillation compresses while preserving essential structure; reverse-compression expands while adding none
 - [Epiplexity paper](https://arxiv.org/html/2601.03220v1) — source: the formal measure of extractable structure for bounded observers
+- [SuperARC AIT benchmark](../sources/superarc-ait-benchmark-llm-compression-abstraction.ingest.md) — evidence: print-statement-only programs formally instantiate reverse-compression in code generation
 - [linking-theory](./linking-theory.md) — enables: the load-bearing vs decorative distinction is a core question for linking theory
 - [skills derive from methodology through distillation](./skills-derive-from-methodology-through-distillation.md) — contrasts: distillation is the productive inverse — compressing while preserving; reverse-compression is the failure mode — expanding while adding nothing
