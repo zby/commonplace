@@ -60,6 +60,15 @@ Both re-checked via investigation — [full reasoning](./investigations/april-ke
 - Control-plane abstractions across repository/prompt/learning-architecture levels — `kb/log.md` line 9 is worded identically to the April item; transfer conditions between levels still unnamed. `KEEP` confirmed — no commit since April touched the underlying notes, and no note or log entry yet states a concrete transfer prediction. Still watch for one.
 - Codification lifecycle (when/what/how to commit) as a unifying note — **upgraded from `KEEP` to dismissed**. Two more existing notes not weighed in April's framing (`codification-and-relaxing-navigate-the-bitter-lesson-boundary.md`, `spec-mining-as-codification.md`) mean the KB now has four cross-linked notes already covering when/what/how/cycle; a unifying note would relabel that existing structure without predicting anything new.
 
+## Carried forward from review-system-audit-2026-07-05 (folded in, then deleted, 2026-07-07)
+
+That workshop's confirmed bugs (result-signal regex, unstable derived result paths), dead code, and clock unification were fixed and committed (`44f14207`); 340 tests pass. Four small, already-diagnosed items were deliberately left untouched and are carried here so they aren't lost:
+
+- **Five-way path-validation duplication** — `review_db.snapshot_file` (inline), `acknowledgement._normalize_note_path`, `artifacts.repo_relative_path`, `paths._reject_unsafe_relative`, `resolve_gates._reject_unsafe_gate_arg` all validate repo-relative paths independently. One shared helper with a `label` argument covers them all.
+- **Gate frontmatter key inconsistency** — `requires_trait` (underscore) vs `requires-type` (hyphen), mirrored in `resolve_gates.applicable_gate_ids_for_note`. Works today, but is an authoring landmine; converging needs a small data migration across existing gate files plus the code change.
+- **Per-run gate-metadata caching** — `select_stale_gates` re-reads every gate's frontmatter for every note (N×G file reads per selector run); a per-run cache removes the redundancy.
+- **`attach_execution_data` edge cases** — effort-without-model raises `ValueError` outside the finalization `try` (CLI guards it; library callers crash with a traceback instead of a failed outcome), and a missing job silently returns in one branch, silently no-ops in the other.
+
 ## Notes for next pass
 
 - Reports with `Maintenance Observations: None` or only future-source-acquisition signals in this window (`mini-exercise-mismanaged-geniuses`, `skillrl-evolving-agents`, `artifacts-as-memory-beyond-agent-boundary`, `abstract-an-experience-only-when-you-can-state-the-boundary`, `verbalizable-representations-global-workspace-llms`, `palantir-ontology-vs-decision-traces`, `claude-obsidian-second-brain-guide`, `towards-automating-scientific-review-google-paper-assistant`, `dulleck-kerschbamer-doctors-mechanics-computer-specialists`, `build-systems-a-la-carte`) were left out of both buckets as not-yet-actionable.
