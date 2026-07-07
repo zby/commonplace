@@ -56,7 +56,7 @@ Terms needed to understand the project's structure and everyday operations, alph
 
 ## Development
 
-- **Use `python3`** for stdlib-only throwaway tooling. Commonplace runtime code lives in the Python package as `commonplace-*` commands.
+- **Use `python3`** for stdlib-only throwaway tooling; if the code is expected to be reused, save it to `scripts/` instead of discarding it (see `scripts/README.md`) — genuinely one-shot code stays a heredoc. Commonplace runtime code lives in the Python package as `commonplace-*` commands.
 - **Package documentation**: [lib-modules.md](./kb/reference/lib-modules.md) — internal API of the `commonplace.lib` modules; [review-architecture.md](./kb/reference/review-architecture.md) — code architecture of the review subsystem.
 - **YAGNI** — don't implement features that aren't needed yet. If you identify a gap, write it down instead of implementing it: a system feature or design gap becomes a design proposal in `kb/reference/proposals/` (see its README for the contract); a transferable insight becomes a note in `kb/notes/`.
 - **No backwards compatibility** — with no external consumers, always prioritize cleaner design over keeping old behavior alive. If backcompat code is ever needed, mark it with `# BACKCOMPAT: <reason> - remove after <condition>`.
