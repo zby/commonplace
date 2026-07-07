@@ -21,7 +21,7 @@ Sweep `kb/log.md` and `kb/reports/connect/*.connect.md` for improvement proposal
 - [x] `kb/notes/artifact-analysis-README.md` — the `complete: true` gap did not reproduce in this checkout (19 tagged notes, no missing links found); fixed the stale inbound-link phrasing in `storing-llm-outputs-is-constraining.md`, `operational-signals-that-a-component-is-a-relaxing-candidate.md`, and `automating-kb-learning-is-an-open-problem.md`.
 - [x] `kb/sources/where-it-lives-retained-adaptation-2026-06-23.ingest.md` — already corrected before this pass: the stale sovereignty follow-up now points at `the-four-field-record-exposes-an-efficiency-security-and-sovereignty.md`.
 - [x] Dismissed: the proposed drift check for two tracked `AGENTS.md.template` copies no longer matches the repository. There is one tracked source template; the package copy is produced by the `pyproject.toml` wheel `force-include` mapping.
-- [ ] `kb/notes/reverse-compression-is-when-llm-output-expands-without-adding.md` — add SuperARC's print-statement example (flagged `FOLD` in the now-folded-in `log-triage-2026-04-27.md`; never landed, note currently has no SuperARC mention at all).
+- [x] `kb/notes/reverse-compression-is-when-llm-output-expands-without-adding.md` — the SuperARC print-statement example was already folded in before this pass (`73920c56`); this line was stale.
 
 ## Deprioritized
 
@@ -40,6 +40,7 @@ Sweep `kb/log.md` and `kb/reports/connect/*.connect.md` for improvement proposal
 ## Big-potential / high-effort
 
 - Done: **Derived-assertions-over-recomputable-ground-truth theory** (`kb/log.md` lines 18, 20) was already promoted before this triage pass — `a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md` (created `0ea5968f`, revised through `e86b1114`/`603de01d`) names the rule and documents four instances (tag-README marks, compiled memory views, hardcoded contract values, `AGENTS.md.template` duplication via ADR 027), plus the unenforced `status:` field as an open question. This pass only added its `context-engineering-README.md` index entry (`56df03f3`). No further action needed.
+
 All seven items below were run through a dedicated sub-agent investigation (thorough source re-read, reach test against `kb/notes/COLLECTION.md`, and a mandate to write a note only if the evidence actually earned it). Six dismissed on close reading — several catching the same failure mode: a synthesis that felt insightful under the log's compressed framing but turned out, once the actual sources were read in full, to be superficial relabeling, already stated elsewhere in the KB, or resting on sources that don't actually agree with each other. One resolved as a design proposal rather than a note. Full reasoning for each is in `kb/work/monthly-improvement-triage/investigations/`.
 
 - Dismissed: **Two-axis agent-memory taxonomy** (`kb/log.md` line 10) — [investigation](./investigations/two-axis-agent-memory-taxonomy.md). Both source notes independently hedge their own claims, and within the Tulving-mapping note content-type and lifecycle-rate move in lockstep rather than varying independently — one latent variable relabeled twice, not two orthogonal axes.
