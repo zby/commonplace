@@ -73,7 +73,7 @@ def make_collection_md(path: Path, name: str, *, conventions: str = "Use claim-s
 
 
 def build_fixture(tmp_path: Path) -> dict[str, Path]:
-    """Two collections with contracts, one note in each, plus a nested-namespace collection."""
+    """Two collections with contracts, one note in each."""
     notes_contract = make_collection_md(tmp_path / "kb" / "notes" / "COLLECTION.md", "kb/notes/")
     reference_contract = make_collection_md(tmp_path / "kb" / "reference" / "COLLECTION.md", "kb/reference/")
     note = make_note(tmp_path / "kb" / "notes" / "plain.md", "Plain note", "\nBody.\n")
@@ -140,7 +140,7 @@ class TestGateIdPlumbing:
             "prose/source-residue"
         )
 
-    def test_nested_namespace_collection_resolves(self, tmp_path: Path) -> None:
+    def test_namespaced_collection_resolves(self, tmp_path: Path) -> None:
         make_collection_md(tmp_path / "kb" / "commonplace" / "notes" / "COLLECTION.md", "kb/commonplace/notes/")
         assert (
             resolve_collection_gate_id(tmp_path, "collection/commonplace/notes")

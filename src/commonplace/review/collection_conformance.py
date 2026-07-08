@@ -53,9 +53,9 @@ def collection_gate_id_for_path(gate_path: str) -> str:
 def resolve_collection_gate_id(repo_root: Path, gate_id: str) -> str:
     """Resolve a `collection/{path}` gate id to the repo-relative COLLECTION.md path.
 
-    `{path}` is the collection directory relative to `kb/`, so nested
-    collections stay unambiguous: `collection/notes` names
-    `kb/notes/COLLECTION.md`, `collection/commonplace/notes` names
+    `{path}` is the collection directory relative to `kb/`, so collections
+    under a non-collection namespace stay unambiguous: `collection/notes`
+    names `kb/notes/COLLECTION.md`, `collection/commonplace/notes` names
     `kb/commonplace/notes/COLLECTION.md`.
     """
     rel = gate_id.strip().removeprefix(f"{COLLECTION_GATE_LENS}/").strip("/")
