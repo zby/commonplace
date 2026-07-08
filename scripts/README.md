@@ -1,6 +1,6 @@
 # scripts/
 
-Ad hoc tooling expected to be reused — committed, but without a `commonplace-*` entry point. The middle tier between a throwaway `python3` heredoc and the installed `commonplace` package. See [ADR-039](../kb/reference/adr/039-scripts-directory-is-the-accumulation-substrate-for-ad-hoc-tooling.md) for the decision and [ADR-014](../kb/reference/adr/014-scripts-as-python-package-one-tree-model.md) for the precedent of a script cluster growing into the package.
+Ad hoc tooling expected to be reused — committed, but without a `commonplace-*` entry point. The middle tier between a throwaway `python3` heredoc and the installed `commonplace` package. See [ADR-040](../kb/reference/adr/040-scripts-directory-is-the-accumulation-substrate-for-ad-hoc-tooling.md) for the decision and [ADR-014](../kb/reference/adr/014-scripts-as-python-package-one-tree-model.md) for the precedent of a script cluster growing into the package.
 
 ## Cleanup norm
 

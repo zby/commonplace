@@ -5,7 +5,7 @@ tags: []
 status: accepted
 ---
 
-# 039-`scripts/` is the accumulation substrate for ad hoc tooling
+# 040-`scripts/` is the accumulation substrate for ad hoc tooling
 
 **Status:** accepted
 **Date:** 2026-07-07

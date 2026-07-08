@@ -5,7 +5,7 @@ tags: []
 status: accepted
 ---
 
-# 040-Collection-conformance reviews use COLLECTION.md as the gate
+# 041-Collection-conformance reviews use COLLECTION.md as the gate
 
 **Status:** accepted
 **Date:** 2026-07-08
