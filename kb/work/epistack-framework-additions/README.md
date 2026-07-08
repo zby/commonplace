@@ -8,10 +8,19 @@ Each candidate now lives in its own document, linked below. **No framework code 
 
 **Source caveat.** The competition pages (`flf.org`, EA Forum, GreaterWrong, Oliver Sourbut's "A Full Epistemic Stack") were unfetchable from the authoring environment (403 via network policy). The framing is assembled from search snippets, the sibling-repo summary in `epistack-competition`, and a pasted [ChatGPT second opinion](./chatgpt-second-opinion.md); verify against the primary sources before relying on specifics.
 
+## Framework-side results (2026-07-08 review session)
+
+A framework-side review of this menu produced library artifacts that change the ground under the Foundation section — read these before the next brainstorming round:
+
+- [A universal knowledge framework demotes content taxonomies to defaults and keeps answerability](../../notes/a-universal-knowledge-framework-demotes-content-taxonomies-to-defaults.md) — the theory: register-style taxonomies are guarded defaults, not universals; what stays universal is the declared collection contract plus answerability. **Consequence for this workshop: the "fourth register" needs no taxonomy amendment — the casebook just writes its `COLLECTION.md` contract** (see the updated [fourth-register](./fourth-register.md)).
+- [Open-ended collection text contracts](../../reference/proposals/open-ended-collection-text-contracts.md) — the proposal instantiating that claim for registers; its adoption criterion is exactly this casework's first worked case.
+- A predicted follow-up gap, now also a proposal: the note type's `status` field fuses lifecycle with first-person endorsement — see [assertion force separate from lifecycle status](../../reference/proposals/assertion-force-separate-from-lifecycle-status.md) and the contradiction flag added to [claim-type](./claim-type.md).
+- The review also flagged: the [second opinion](./chatgpt-second-opinion.md) file is truncated (see its header note), and the "contradictions get silently averaged" mechanism several candidates lean on is untested — added as a third experiment in [suggested-first-experiments](./suggested-first-experiments.md).
+
 ## Foundation
 
 - [The core tension to design around](./core-tension.md) — why casework needs a stance-neutral evidence map, against Commonplace's first-person-committed grain
-- [The biggest single addition: a fourth register](./fourth-register.md) — a dialectical/evidential register; the methodological move everything else hangs off
+- [The biggest single addition: a fourth register](./fourth-register.md) — a dialectical/evidential register; the methodological move everything else hangs off. **Updated 2026-07-08: demoted from taxonomy addition to collection contract — see the file.**
 
 ## Ingestion / provenance layer
 
