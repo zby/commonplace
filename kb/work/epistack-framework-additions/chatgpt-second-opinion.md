@@ -1,6 +1,8 @@
 # ChatGPT second opinion on Epistack framework additions
 
-Pasted verbatim by zby on 2026-07-08 — an independent ChatGPT analysis of what to add to Commonplace for the FLF Epistemic Case Study Competition. Kept as working material for comparison against this workshop's menu; see the "Second opinion" section in [README.md](./README.md) for which candidates survived screening and which were rejected with reasons.
+Pasted verbatim by zby on 2026-07-08 — an independent ChatGPT analysis of what to add to Commonplace for the FLF Epistemic Case Study Competition. Kept as working material for comparison against this workshop's menu; the candidates that survived screening are listed under "Additional candidates" in [README.md](./README.md), and the rejections with reasons in [rejected-candidates](./rejected-candidates.md).
+
+> **TRUNCATED (flagged 2026-07-08).** The file ends mid-sentence at "1. Add a top-level k" — the bulk of the pasted analysis is missing, so the source the candidates were screened against cannot be inspected here. Re-paste the full text if it is still available; otherwise treat the imported candidates as sourced to a document this workshop no longer holds.
 
 ---
 

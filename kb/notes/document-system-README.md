@@ -19,6 +19,7 @@ For the live Commonplace repo's current type inventory and migration summary, se
 - [human-llm-differences-are-load-bearing-for-knowledge-system-design](./human-llm-differences-are-load-bearing-for-knowledge-system-design.md) — knowledge systems produce dual-audience documents (human + LLM), making cognitive differences a first-class design concern for type and convention design
 - [design-for-the-first-time-human-except-on-access-cost](./design-for-the-first-time-human-except-on-access-cost.md) — refines the dual-audience heuristic: design for newcomer-human ergonomics except where agent access mode makes whole-artifact reads expensive
 - [why-directories-despite-their-costs](./why-directories-despite-their-costs.md) — directories buy one-two orders of magnitude of navigable scale but each new directory taxes routing, search config, and cross-directory linking
+- [a-universal-knowledge-framework-demotes-content-taxonomies-to-defaults](./a-universal-knowledge-framework-demotes-content-taxonomies-to-defaults.md) — the type/label/register taxonomies are collection-local defaults with worked-case guards; only the declaration obligation and answerability stay universal
 
 ## Writing Conventions
 
