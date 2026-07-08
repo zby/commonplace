@@ -1,14 +1,14 @@
 ---
-description: "Location is the one axis a filesystem assigns to every artifact unconditionally, while type is opt-in and non-partitioning, so COLLECTION.md and type-spec contracts cannot substitute for each other"
+description: "A filesystem assigns every artifact a location unconditionally, while type is opt-in and non-partitioning, so COLLECTION.md and type-spec contracts cannot substitute for each other"
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [document-system, type-system]
 status: seedling
 ---
 
-# The directory tree is a file-based KB's only total classification axis
+# Directory placement is total, frontmatter classification is partial
 
-In a file-based knowledge base, the substrate places every artifact at exactly one path. Location is therefore *total*: the filesystem assigns each file a value on this axis, the values are mutually exclusive (a file lives in one directory), and there is no opt-out — a file cannot exist without a location. Location is also *spatial*: co-location creates neighborhoods that scoped search, browsing, and curated indexes operate over. The directory tree is the only classification axis a file-based KB has with these properties.
+In a file-based knowledge base, the substrate places every artifact at exactly one path. Location is therefore *total*: the filesystem assigns each file a value on this axis, the values are mutually exclusive (a file lives in one directory), and there is no opt-out — a file cannot exist without a location. Location is also *spatial*: co-location creates neighborhoods that scoped search, browsing, and curated indexes operate over. The substrate enforces these properties for free — no validation, no sync.
 
 Every other axis a KB layers on — type, tags, traits, status — is *partial*. It lives in frontmatter, and frontmatter is optional: a file with no frontmatter is implicit `text`, asserting no type at all. Even when present, a type is a within-document property (this document has these sections) rather than a partition of the corpus: one type appears across many directories, and one directory holds many types, and a type's cohort is scattered — assembled only by query, never by proximity. Type *labels* documents; location *partitions* the space.
 
@@ -29,7 +29,7 @@ The independence of the two axes is not a coincidence of the current design — 
 
 ## An assignment rule, not an identification
 
-Nothing forces the total axis to carry the collection/register semantics. A KB that routes kind-first can spend its directory tree on type — a `decisions/` folder — and it then gets totality for kind while content area becomes a declared, partial axis. The substrate grants exactly one total axis; which classification receives it is a design choice. The rule is: assign the directory tree to the classification that needs its properties —
+Nothing forces the directory tree to carry the collection/register semantics. A KB that routes kind-first can spend its directory tree on type — a `decisions/` folder — and it then gets totality for kind while content area becomes a declared, partial axis. Which classification receives the substrate's free enforcement is a design choice. The rule is: assign the directory tree to the classification that needs its properties —
 
 - **totality**, for clauses that must bind artifacts before or without their cooperation: admission and routing ("what belongs here"), rules that hold for untyped and malformed files;
 - **exclusivity**, for properties that cannot be coherently conjoined: a single quality goal, a single maintenance regime;
@@ -47,7 +47,7 @@ Contract clauses reference each other, and that couples their placement: **a cla
 
 - **Two independent operations.** Moving a file changes which location contract governs it; editing its frontmatter type changes which type contract governs its structure. Because the axes are independent, the two operations never have to happen together.
 - **Register lives at the collection, not the type.** Commonplace assigns the total axis to content area, so the register — a quality goal that must bind every local artifact and cannot be conjoined with a second one — is a property of place. A `note` reads as theoretical in `kb/notes/` and descriptive in `kb/reference/` precisely because the collection, not the type, carries the register.
-- **Only one classification can be total.** Whatever the directory tree is spent on, every other classification is declared and partial. A design that wants a second total axis must simulate it with validation — a checked, mandatory field — and accepts that the substrate no longer enforces it for free.
+- **The tree's totality is spent on one classification.** Whatever receives it, every classification layered in frontmatter is declared and partial. A design that wants another total axis must simulate it with validation — a checked, mandatory field — and accepts that the substrate no longer enforces it for free.
 
 ## Scope
 
