@@ -1,5 +1,5 @@
 ---
-description: Types define structural requirements checked by validation; frontmatter type identifies artifact kind; traits route semantic review gates; type definitions split into prose template and machine-readable schema
+description: Types define structural requirements checked by validation; traits route semantic review gates; the traits-only semantic boundary is amended by ADR-038/041, which make both contracts conformance gates
 type: ../types/adr.md
 tags: []
 status: accepted
@@ -9,6 +9,8 @@ status: accepted
 
 **Status:** accepted
 **Date:** 2026-04-08
+
+The structural core of this ADR remains current: validation is deterministic and structural, frontmatter `type` is authoritative for artifact identity, and traits route trait-scoped review gates. Its boundary claim — that semantic review expectations attach *only* to traits, so "types are structural" full stop — was amended by [ADR-038](./038-type-conformance-reviews-use-the-type-spec-as-the-gate.md) and [ADR-041](./041-collection-conformance-reviews-use-collection-md-as-the-gate.md): a type spec's authoring instructions are now semantically enforced through a type-conformance review pair, and a collection's `COLLECTION.md` contract through a collection-conformance pair. Types carry semantic value alongside structure; traits remain an additional, opt-in semantic axis rather than the only one. Read the boundary test below ("does it change structure? → type; does it change review expectations? → trait") in that light: it still decides where a *new distinction* lives, but no longer implies that types have no reviewed semantics.
 
 ## Context
 
@@ -58,3 +60,5 @@ Relevant Notes:
 
 - [available types](../available-types.md) — extends: adds the type/trait boundary test
 - [type-loading](../type-loading.md) — the shipped loading model that implements the structural side of this decision
+- [ADR-038: type-conformance reviews use the type spec as the gate](./038-type-conformance-reviews-use-the-type-spec-as-the-gate.md) — amended-by: makes the type contract itself semantically reviewable
+- [ADR-041: collection-conformance reviews use COLLECTION.md as the gate](./041-collection-conformance-reviews-use-collection-md-as-the-gate.md) — amended-by: extends the same enforcement to the collection contract surface

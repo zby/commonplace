@@ -31,7 +31,7 @@ The shipped collections:
 | `kb/sources/` | descriptive (ingested external content) | faithful capture |
 | `kb/work/` | catch-all workshop layer | move active work forward; extract durable conclusions |
 
-Each collection's writing conventions live in its own `COLLECTION.md` at the collection root: title conventions, quality discipline, what does and does not belong, and the outbound linking table for that register. [ADR-017](./adr/017-collection-md-is-the-register-convention-boundary.md) is the decision that pinned register conventions to `COLLECTION.md` rather than to the type definitions.
+Each collection's writing conventions live in its own `COLLECTION.md` at the collection root: title conventions, quality discipline, what does and does not belong, and the outbound linking table for that register. [ADR-017](./adr/017-collection-md-is-the-register-convention-boundary.md) is the decision that pinned register conventions to `COLLECTION.md` rather than to the type definitions. The contract is enforceable: each note in a collection has a derivable collection-conformance review pair whose gate is the `COLLECTION.md` itself, so editing a collection contract stales exactly that collection's notes ([ADR-041](./adr/041-collection-conformance-reviews-use-collection-md-as-the-gate.md)).
 
 `kb/types/` sits at the top level under `kb/` but is not a collection in this sense — it is the global type layer. Namespace directories such as installed `kb/commonplace/` are likewise not collections unless they carry their own `COLLECTION.md`; their descendant `COLLECTION.md`-bearing directories are the collections. Some collections, such as `kb/instructions/`, are framework-shipped rather than primarily practitioner-authored, but they still carry authored artifacts and local authoring/routing contracts. See the [collection definition](./definitions/collection.md) for the full boundary.
 
@@ -46,7 +46,7 @@ Two scopes:
 
 Type resolution is lexical: the path stored in `type:` names the type-spec doc directly. The collection does not participate in explicit type resolution; collection scoping shows up only in `COLLECTION.md`'s `## Types` menu when an author is picking a type for a new write. See [type-loading](./type-loading.md) for the full mechanics.
 
-Types describe structure, not semantics. Semantic review expectations live on a separate axis — the `traits` field on `note`-derived types — per [ADR-012](./adr/012-types-for-structure-traits-for-review.md).
+Types carry two contract layers. The structural layer — required frontmatter and body sections, declared in the schema — is checked deterministically by the validator. The semantic layer — the type spec's authoring instructions — is enforced by review: each typed note has a derivable type-conformance pair whose gate is the type spec itself, so editing a type spec stales exactly its cohort ([ADR-038](./adr/038-type-conformance-reviews-use-the-type-spec-as-the-gate.md)). Traits are an additional, opt-in semantic axis: the `traits` field on `note`-derived types routes trait-scoped review gates ([ADR-012](./adr/012-types-for-structure-traits-for-review.md), as amended by ADR-038/041).
 
 ## Cross-collection linking
 
@@ -72,7 +72,7 @@ For an existing artifact, the two axes resolve like this:
 
 1. The artifact's path identifies its collection. The collection's `COLLECTION.md` defines the writing conventions that apply, and its per-destination outbound linking section defines what relationship labels to use when linking outward.
 2. The artifact's `type:` frontmatter names the path of its type-spec doc directly. The validator opens that doc, confirms it is itself a type spec (its own `type:` resolves to `kb/types/type-spec.md`), and loads the schema declared in the doc's `schema:` field — or skips schema validation when `schema:` is `null`. The schema defines what frontmatter is required and what body sections must exist; authoring prose and any template block live in the same doc.
-3. The validator checks structural conformance (type contract). Review gates check semantic conformance (the `traits` axis).
+3. The validator checks structural conformance (the type's schema). Semantic conformance is reviewed on three axes: the type-conformance pair judges the note against its type spec's authoring instructions ([ADR-038](./adr/038-type-conformance-reviews-use-the-type-spec-as-the-gate.md)), the collection-conformance pair judges it against its collection's `COLLECTION.md` contract ([ADR-041](./adr/041-collection-conformance-reviews-use-collection-md-as-the-gate.md)), and trait-scoped review gates check whatever the note's `traits` declare.
 
 When authoring a new artifact, the same two decisions happen in reverse: pick the collection (which register fits the intent?), then pick the type (what shape best carries the content?).
 
@@ -84,6 +84,8 @@ Relevant Notes:
 - [type-loading](./type-loading.md) — part-of: the resolution mechanics for path-valued `type:` pointers and their type-spec docs
 - [definitions/collection](./definitions/collection.md) — defined-in: the precise definition of "collection" with scope, exclusions, and misuse cases
 - [link-vocabulary](./link-vocabulary.md) — part-of: the label catalogue and authoring guidance COLLECTION.md authors consult when writing outbound rules
-- [ADR-012: types for structure, traits for review](./adr/012-types-for-structure-traits-for-review.md) — rationale: the decision to keep structural types and semantic-review traits on separate axes
+- [ADR-012: types for structure, traits for review](./adr/012-types-for-structure-traits-for-review.md) — rationale: the decision that keeps structural validation deterministic and traits as a review-routing axis; its traits-only semantic boundary is amended by ADR-038/041
 - [ADR-017: COLLECTION.md is the register convention boundary](./adr/017-collection-md-is-the-register-convention-boundary.md) — rationale: the decision to host register conventions in `COLLECTION.md` rather than in type definitions
 - [ADR-019: collection-owned link vocabulary](./adr/019-collection-owned-link-vocabulary.md) — rationale: the decision pinning the per-destination outbound structure inside COLLECTION.md and retiring the compiled topology
+- [ADR-038: type-conformance reviews use the type spec as the gate](./adr/038-type-conformance-reviews-use-the-type-spec-as-the-gate.md) — rationale: the decision that makes the type spec's semantic layer enforceable as a review pair
+- [ADR-041: collection-conformance reviews use COLLECTION.md as the gate](./adr/041-collection-conformance-reviews-use-collection-md-as-the-gate.md) — rationale: the decision that makes the collection contract enforceable the same way

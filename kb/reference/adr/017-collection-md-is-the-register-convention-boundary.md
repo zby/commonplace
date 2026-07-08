@@ -64,7 +64,7 @@ This keeps responsibilities separate:
 - Directory placement now has semantic weight. Moving a file between collections can change its expected writing conventions even if its `type:` does not change.
 - Every writable collection needs a good `COLLECTION.md`; a missing or vague one is an operational defect.
 - Mixed-register collections need careful prose rules because the model no longer assumes purity at the directory boundary.
-- Register correctness is not a deterministic validation check. It remains a writing/review concern unless future review gates are added.
+- Register correctness is not a deterministic validation check. It remains a writing/review concern unless future review gates are added. (Amended 2026-07-08: [ADR-041](./041-collection-conformance-reviews-use-collection-md-as-the-gate.md) adds that check — a note is reviewable against its `COLLECTION.md` as a collection-conformance pair; correctness stays a review judgment, not a validator check.)
 - Global searches by register are less direct than a frontmatter field would be; the collection topology, not each note's frontmatter, is the register map.
 
 ---

@@ -4,8 +4,9 @@ Pure logic lives here; ack_trivial_note_changes.py is the thin CLI wrapper.
 
 A gate without a valid `watches:` declaration is skipped, never acked: no
 declaration means the gate watches the whole note, so no note change is
-trivial against it. Type-conformance pairs rely on this — type specs declare
-no `watches:`, which is what keeps them safe to select here via `--all-gates`.
+trivial against it. Conformance pairs rely on this — neither type specs nor
+COLLECTION.md contracts declare `watches:`, which is what keeps them safe to
+select here via `--all-gates`.
 """
 
 from __future__ import annotations

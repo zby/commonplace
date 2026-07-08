@@ -2,30 +2,32 @@
 
 One renderer for every packing shape: the prompt carries N note targets and
 M review criteria and requests one output block per requested (note, gate)
-pair. Notes and catalog gates are embedded once; a type spec serving as a
-gate is referenced by repo path instead, and the worker reads it from disk —
-the spec is authoring instructions the reviewer applies as criteria, not
-prompt text addressed to it, and the read keeps that distinction evident.
+pair. Notes and catalog gates are embedded once; a conformance dependency
+serving as a gate — the note's type spec or its collection's COLLECTION.md —
+is referenced by repo path instead, and the worker reads it from disk. The
+dependency document is authoring instructions the reviewer applies as
+criteria, not prompt text addressed to it, and the read keeps that
+distinction evident.
 
-The referenced type spec is still snapshotted at job creation and pinned by
-acceptance, so freshness is unchanged. The disk read opens a window: a type
-spec edited between job creation and the worker's read is judged in its new
-text while acceptance pins the creation-time snapshot. A persistent edit
+The referenced dependency is still snapshotted at job creation and pinned by
+acceptance, so freshness is unchanged. The disk read opens a window: a
+dependency edited between job creation and the worker's read is judged in its
+new text while acceptance pins the creation-time snapshot. A persistent edit
 self-heals — the acceptance is immediately stale (`gate-changed`) against the
 changed file — so only an edit reverted within the window escapes notice.
 
 Freshness boundary: review acceptance hashes only the embedded note and gate
 texts. Everything this module renders around them — the runner system prompt,
-reading scope, output contract, templates, the type-conformance wrapper — is
+reading scope, output contract, templates, the conformance wrappers — is
 outside the freshness hash, so editing it does NOT invalidate accepted
 reviews. Keep this layer mechanical (how to read inputs and emit a verdict);
 judgment-bearing review criteria must live in gate files, where the hash sees
-them. In particular the type-conformance wrapper may say how to apply a type
-spec as a gate, never what a good note of the type looks like — conformance
-criteria that need sharpening go into the type spec itself (an authored
-`## Review` section), not into a richer wrapper. A scaffolding change that
-shifts judgments is a system upgrade and needs a deliberate corpus-wide
-re-review or ack decision.
+them. In particular a conformance wrapper may say how to apply a type spec or
+COLLECTION.md as a gate, never what a good note of the type or collection
+looks like — conformance criteria that need sharpening go into the dependency
+document itself (an authored `## Review` section), not into a richer wrapper.
+A scaffolding change that shifts judgments is a system upgrade and needs a
+deliberate corpus-wide re-review or ack decision.
 """
 
 from __future__ import annotations
@@ -41,10 +43,16 @@ from commonplace.review.protocol.format import (
     RESERVED_SENTINEL_RE,
     RESULT_LINE_TEMPLATE,
 )
+from commonplace.review.collection_conformance import is_collection_md_gate_path
 from commonplace.review.type_conformance import is_type_spec_gate_path
 
 
 OutputMode = Literal["stdout", "file"]
+
+
+def _is_referenced_gate_path(gate_path: str) -> bool:
+    """Gate paths referenced by repo path in the prompt rather than embedded."""
+    return is_type_spec_gate_path(gate_path) or is_collection_md_gate_path(gate_path)
 
 
 def _type_conformance_wrapper_lines(gate_path: str) -> tuple[str, ...]:
@@ -66,6 +74,32 @@ def _type_conformance_wrapper_lines(gate_path: str) -> tuple[str, ...]:
         "- WARN: the note conforms overall, but specific instructions go unmet; name each unmet instruction as a finding.",
         "- FAIL: the note does not do what the authoring instructions ask.",
         "Structural checks (frontmatter fields, schema conformance) are the deterministic validator's job; do not re-check them here.",
+    )
+
+
+def _collection_conformance_wrapper_lines(gate_path: str) -> tuple[str, ...]:
+    """Gate block rendered for a COLLECTION.md serving as a gate.
+
+    Mechanical only: it says how to apply a collection contract as a gate,
+    never what a good note of the collection looks like — those criteria
+    belong in the COLLECTION.md, where the freshness hash sees them. The
+    contract itself is not embedded; the worker reads it from the referenced
+    repo path.
+    """
+    return (
+        "This is a collection-conformance gate. The gate is the authoring contract",
+        "(COLLECTION.md) of the collection the note lives in: conventions and routing",
+        "rules, not a Failure mode / Test procedure.",
+        f"The contract is not embedded in this prompt. Read `{gate_path}` (repo-relative)",
+        "before judging; it is the authoritative gate text for this pair.",
+        "Judge whether the note follows the collection's authoring conventions:",
+        "placement, title and description conventions, quality goal, and outbound linking rules.",
+        "If the COLLECTION.md carries a `## Review` section, treat it as the operative test.",
+        "- PASS: the note follows the collection's conventions.",
+        "- WARN: the note conforms overall, but specific conventions go unmet; name each unmet convention as a finding.",
+        "- FAIL: the note does not follow the collection's conventions: wrong placement, or its conventions are systematically unmet.",
+        "Structural checks (frontmatter fields, schema conformance) are the deterministic validator's job; do not re-check them here.",
+        "The note's conformance to its type spec is the type-conformance pair's job; judge only what the collection contract asks beyond the type contract.",
     )
 
 
@@ -125,7 +159,7 @@ def _validate_targets(
     for gate_path in sorted(requested_gate_paths):
         if PAIR_KEY_SEPARATOR in gate_path:
             raise ValueError(f"gate_path must not contain {PAIR_KEY_SEPARATOR!r}: {gate_path}")
-        if is_type_spec_gate_path(gate_path):
+        if _is_referenced_gate_path(gate_path):
             # Referenced by path, not embedded: no text to require or scan.
             continue
         gate_text = gate_texts.get(gate_path)
@@ -144,6 +178,7 @@ def render_pairs_prompt(
     _validate_targets(notes, gate_texts)
     gate_paths = sorted({gate_path for note in notes for gate_path in note.gate_paths})
     has_type_spec_gate = any(is_type_spec_gate_path(gate_path) for gate_path in gate_paths)
+    has_collection_md_gate = any(is_collection_md_gate_path(gate_path) for gate_path in gate_paths)
 
     if output_mode == "file":
         if bundle_output_path is None:
@@ -169,6 +204,10 @@ def render_pairs_prompt(
     if has_type_spec_gate:
         lines.append(
             "- Exception: type-conformance gates reference the note's type spec instead of embedding it; read each referenced type spec from disk as its gate block directs."
+        )
+    if has_collection_md_gate:
+        lines.append(
+            "- Exception: collection-conformance gates reference the collection's COLLECTION.md contract instead of embedding it; read each referenced contract from disk as its gate block directs."
         )
     lines += [
         "- For semantic grounding or consistency checks, follow only links that appear in a target note.",
@@ -257,6 +296,9 @@ def render_pairs_prompt(
         lines.append(f"=== gate: {gate_path} ===")
         if is_type_spec_gate_path(gate_path):
             lines.extend(_type_conformance_wrapper_lines(gate_path))
+            lines.append("")
+        elif is_collection_md_gate_path(gate_path):
+            lines.extend(_collection_conformance_wrapper_lines(gate_path))
             lines.append("")
         else:
             lines.extend(
