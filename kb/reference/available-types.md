@@ -19,6 +19,7 @@ The shipped Commonplace scaffold installs global type specs under `kb/types/` an
 | `definition` | `kb/types/definition.md` | Operational vocabulary definitions. |
 | `index` | `kb/types/index.md` | Navigation hubs and generated directory or tag indexes. |
 | `type-spec` | `kb/types/type-spec.md` | Metadata contract for type-spec docs themselves. |
+| `collection` | `kb/types/collection.md` | Authoring contract for `COLLECTION.md` collection contract files. |
 
 `kb/types/text.md` documents the implicit no-frontmatter text case. It is not an explicit type spec and should not be used as a `type:` value.
 
