@@ -30,13 +30,14 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
         nargs="*",
         help=(
             "Gate IDs (e.g. prose/source-residue), bundle names (e.g. prose), "
-            "and/or type-conformance requests (type, type/definition)."
+            "type-conformance requests (type, type/definition), and/or "
+            "collection-conformance requests (collection, collection/notes)."
         ),
     )
     parser.add_argument(
         "--all-gates",
         action="store_true",
-        help="Check every applicable review criterion: all catalog gates plus type-conformance pairs.",
+        help="Check every applicable review criterion: all catalog gates plus type- and collection-conformance pairs.",
     )
     parser.add_argument("--note", nargs="+", dest="note_paths", help="Filter to specific note paths or directories.")
     parser.add_argument("--current", action="store_true", help="Filter to notes with frontmatter status: current.")

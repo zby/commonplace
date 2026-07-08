@@ -4,6 +4,12 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from commonplace.review.collection_conformance import (
+    collection_gate_id_for_path,
+    is_collection_gate_request,
+    is_collection_md_gate_path,
+    resolve_collection_gate_id,
+)
 from commonplace.review.type_conformance import (
     is_type_gate_request,
     is_type_spec_gate_path,
@@ -42,6 +48,8 @@ def gate_path_for_id(repo_root: Path, gate_id: str) -> str:
     _reject_unsafe_relative(normalized, kind="gate id")
     if is_type_gate_request(normalized):
         return resolve_type_gate_id(repo_root, normalized)
+    if is_collection_gate_request(normalized):
+        return resolve_collection_gate_id(repo_root, normalized)
     gates_dir = review_gates_dir(repo_root)
     gate_abs = (gates_dir / f"{normalized}.md").resolve()
     gates_dir_resolved = gates_dir.resolve()
@@ -59,6 +67,10 @@ def gate_id_for_path(repo_root: Path, gate_path: str) -> str:
         if not (repo_root / gate_path).is_file():
             raise FileNotFoundError(f"gate not found: {gate_path}")
         return type_gate_id_for_path(gate_path)
+    if is_collection_md_gate_path(Path(gate_path).as_posix()):
+        if not (repo_root / gate_path).is_file():
+            raise FileNotFoundError(f"gate not found: {gate_path}")
+        return collection_gate_id_for_path(gate_path)
     gate_abs = (repo_root / gate_path).resolve()
     gates_dir = review_gates_dir(repo_root).resolve()
     try:
@@ -72,6 +84,8 @@ def gate_id_from_stored_path(gate_path: str) -> str:
     """Best-effort shorthand for a stored repo-relative gate path."""
     if is_type_spec_gate_path(Path(gate_path).as_posix()):
         return type_gate_id_for_path(gate_path)
+    if is_collection_md_gate_path(Path(gate_path).as_posix()):
+        return collection_gate_id_for_path(gate_path)
     normalized = Path(gate_path).with_suffix("").as_posix()
     prefixes = (
         SOURCE_GATES_ROOT.as_posix() + "/",
@@ -93,7 +107,7 @@ def normalize_gate_path(repo_root: Path, gate: str) -> str:
     if candidate.is_absolute():
         raise ValueError(f"gate path must be repo-relative: {gate}")
     if raw.endswith(".md") or raw.startswith("kb/"):
-        if is_type_spec_gate_path(candidate.as_posix()):
+        if is_type_spec_gate_path(candidate.as_posix()) or is_collection_md_gate_path(candidate.as_posix()):
             gate_abs = (repo_root / candidate).resolve()
             if not gate_abs.is_file():
                 raise FileNotFoundError(f"gate not found: {gate}")

@@ -150,7 +150,7 @@ commonplace-ack-gate-review kb/notes/my-note.md --model claude-opus-4-6 prose/so
 
 ### commonplace-ack-trivial-note-changes
 
-Auto-acknowledge `note-changed` stale pairs when only non-watched note parts changed. Each gate declares what it watches (body, title, description) — changes outside the watched set are acked automatically. Type-conformance pairs may be selected (`type` requests or `--all-gates`) but never qualify: a type spec declares no watches, so it watches the whole note and no change is trivial against it.
+Auto-acknowledge `note-changed` stale pairs when only non-watched note parts changed. Each gate declares what it watches (body, title, description) — changes outside the watched set are acked automatically. Conformance pairs may be selected (`type`/`collection` requests or `--all-gates`) but never qualify: neither a type spec nor a COLLECTION.md declares watches, so each watches the whole note and no change is trivial against it.
 
 ```bash
 commonplace-ack-trivial-note-changes prose --model claude-opus-4-6 --note kb/notes kb/reference  # all prose gates
@@ -171,7 +171,7 @@ commonplace-resolve-gates prose/source-residue semantic/grounding-alignment  # s
 
 List review target pairs. Default mode lists stale `(note, gate)` pairs by comparing current note/gate text hashes against accepted DB snapshots. `--mode requested` emits the explicitly requested applicable pairs without checking freshness, for piping into `commonplace-create-review-jobs --input -`.
 
-Besides catalog gate ids and bundles, the selector accepts type-conformance requests: `type` derives one pair per typed note in scope with the note's type spec as the gate, `type/{name}` narrows to one type's cohort. `--all-gates` selects every applicable review criterion — all catalog gates plus type-conformance pairs — and means the same thing in every review command.
+Besides catalog gate ids and bundles, the selector accepts conformance requests. Type-conformance: `type` derives one pair per typed note in scope with the note's type spec as the gate, `type/{name}` narrows to one type's cohort. Collection-conformance: `collection` derives one pair per in-collection note with the collection's COLLECTION.md as the gate, `collection/{path}` narrows to one collection's cohort (path relative to `kb/`, e.g. `collection/notes`). `--all-gates` selects every applicable review criterion — all catalog gates plus both conformance pairs — and means the same thing in every review command.
 
 ```bash
 commonplace-review-target-selector prose --model claude-opus-4-6 --note kb/notes kb/reference
@@ -180,6 +180,7 @@ commonplace-review-target-selector prose --model claude-opus-4-6 --note kb/notes
 commonplace-review-target-selector prose --note kb/notes kb/reference --reason missing-review     # pairs missing under every model partition
 commonplace-review-target-selector --mode requested prose --model claude-opus-4-6 --note kb/notes/my-note.md --json
 commonplace-review-target-selector type/definition --model claude-opus-4-6 --current       # type-conformance pairs for one type's cohort
+commonplace-review-target-selector collection/notes --model claude-opus-4-6 --current      # collection-conformance pairs for one collection's cohort
 ```
 
 ### commonplace-warn-selector
