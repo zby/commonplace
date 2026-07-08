@@ -1,3 +1,8 @@
+---
+type: kb/types/collection.md
+description: "Authoring contract for kb/instructions/ — prescriptive register: procedures and operational rules held to executability and precision"
+---
+
 # Writing conventions for kb/instructions/ (prescriptive register)
 
 ## Register and precision

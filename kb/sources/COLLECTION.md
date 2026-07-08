@@ -1,3 +1,8 @@
+---
+type: kb/types/collection.md
+description: "Authoring contract for kb/sources/ — descriptive register: faithful capture of external sources and their ingest analyses"
+---
+
 # Writing conventions for kb/sources/ (descriptive register)
 
 ## Register and fidelity

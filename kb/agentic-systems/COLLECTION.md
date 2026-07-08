@@ -1,3 +1,8 @@
+---
+type: kb/types/collection.md
+description: "Authoring contract for kb/agentic-systems/ — descriptive register: analyses of external agentic systems and harnesses as whole systems"
+---
+
 # Writing conventions for kb/agentic-systems/
 
 ## Register

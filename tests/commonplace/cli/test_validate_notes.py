@@ -998,3 +998,80 @@ def test_validate_collection_structure_allows_namespace_collections(tmp_path: Pa
     failures = validate_notes.validate_collection_structure(collection, repo_root=tmp_path)
 
     assert failures == []
+
+
+def test_resolve_targets_includes_collection_contract(tmp_path: Path) -> None:
+    notes_root = configure_temp_repo(tmp_path)
+    write(
+        notes_root / "some-note.md",
+        """---
+description: A note that is long enough to satisfy the description length warning bands
+type: kb/types/note.md
+tags: []
+status: current
+---
+
+# Some note
+
+Body.
+""",
+    )
+
+    paths = validate_notes.resolve_targets("notes", repo_root=tmp_path)
+
+    assert paths[0] == (notes_root / "COLLECTION.md").resolve()
+    assert (notes_root / "some-note.md").resolve() in paths
+
+
+def test_typed_collection_contract_validates_against_collection_schema(tmp_path: Path) -> None:
+    notes_root = configure_temp_repo(tmp_path)
+    write_type_spec(
+        tmp_path,
+        "kb/types/collection.md",
+        name="collection",
+        schema="kb/types/collection.schema.yaml",
+    )
+    write(
+        tmp_path / "kb" / "types" / "collection.schema.yaml",
+        """$schema: "https://json-schema.org/draft/2020-12/schema"
+type: object
+required:
+  - frontmatter
+properties:
+  frontmatter:
+    type: object
+    required:
+      - type
+      - description
+    properties:
+      type:
+        const: kb/types/collection.md
+      description:
+        type: string
+        minLength: 1
+""",
+    )
+    write(
+        notes_root / "COLLECTION.md",
+        """---
+type: kb/types/collection.md
+description: "Authoring contract for kb/notes/ in this fixture repository"
+---
+
+# Writing conventions for kb/notes/
+""",
+    )
+
+    results = validation.validate_note(notes_root / "COLLECTION.md", repo_root=tmp_path)
+
+    assert results.note_type == "collection"
+    assert results.fails == []
+
+
+def test_untyped_collection_contract_still_validates_as_text(tmp_path: Path) -> None:
+    notes_root = configure_temp_repo(tmp_path)
+
+    results = validation.validate_note(notes_root / "COLLECTION.md", repo_root=tmp_path)
+
+    assert results.note_type == "text"
+    assert results.fails == []

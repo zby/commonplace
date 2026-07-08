@@ -1,3 +1,8 @@
+---
+type: kb/types/collection.md
+description: "Authoring contract for kb/agent-memory-systems/ — descriptive register: code-grounded reviews of external agent memory and context-engineering systems"
+---
+
 # Writing conventions for kb/agent-memory-systems/
 
 ## Register

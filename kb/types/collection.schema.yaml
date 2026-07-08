@@ -1,0 +1,45 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+type: object
+required:
+  - frontmatter
+  - body
+  - headings
+  - links
+  - body_dates
+properties:
+  frontmatter:
+    type: object
+    required:
+      - type
+      - description
+    properties:
+      type:
+        const: kb/types/collection.md
+      description:
+        type: string
+        minLength: 1
+        pattern: '\S'
+        allOf:
+          - minLength: 50
+            severity: warn
+            description: description should be at least 50 characters
+          - maxLength: 200
+            severity: warn
+            description: description should be at most 200 characters
+    additionalProperties: true
+  body:
+    type: string
+  headings:
+    type: array
+    items:
+      type: string
+  links:
+    type: array
+    items:
+      type: string
+  body_dates:
+    type: array
+    items:
+      type: string
+      format: date
+additionalProperties: false

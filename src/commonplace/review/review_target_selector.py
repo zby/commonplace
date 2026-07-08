@@ -63,6 +63,16 @@ def _is_type_definition_content(path: Path, repo_root: Path) -> bool:
     return "types" in rel_path.parent.parts
 
 
+def _is_collection_contract(path: Path) -> bool:
+    """Gate documents are excluded from note enumeration, like type specs.
+
+    COLLECTION.md files carry frontmatter (typed contracts, ADR 042), so the
+    frontmatter check no longer excludes them implicitly. Explicit single-file
+    selection still works and derives the contract's own type-conformance pair.
+    """
+    return path.name == "COLLECTION.md"
+
+
 def _expand_note_filter(repo_root: Path, raw: str) -> list[Path]:
     path = Path(raw) if Path(raw).is_absolute() else repo_root / raw
     path = path.resolve()
@@ -71,7 +81,7 @@ def _expand_note_filter(repo_root: Path, raw: str) -> list[Path]:
     if path.is_dir():
         notes: list[Path] = []
         for child in sorted(path.glob("*.md")):
-            if _is_index(child) or _is_type_definition_content(child, repo_root):
+            if _is_index(child) or _is_type_definition_content(child, repo_root) or _is_collection_contract(child):
                 continue
             if not _has_frontmatter(child):
                 continue
@@ -99,7 +109,7 @@ def list_reviewable_notes(repo_root: Path) -> list[Path]:
         if not root.is_dir():
             continue
         for path in root.glob("*.md"):
-            if _is_index(path) or not _has_frontmatter(path):
+            if _is_index(path) or _is_collection_contract(path) or not _has_frontmatter(path):
                 continue
             found.append(path)
     return sorted(found)

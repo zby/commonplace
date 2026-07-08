@@ -1,3 +1,8 @@
+---
+type: kb/types/collection.md
+description: "Authoring contract for kb/reference/ — descriptive register: the shipped Commonplace system described with fidelity and economy"
+---
+
 # Writing conventions for kb/reference/ (descriptive register)
 
 ## Register and fidelity

@@ -390,6 +390,64 @@ class TestMissingReview:
                 note_filter=["kb/notes/types"],
             )
 
+    def test_directory_filter_skips_collection_contracts(self, tmp_path: Path) -> None:
+        notes_dir = tmp_path / "kb" / "notes"
+        gates_dir = tmp_path / "kb" / "instructions" / "review-gates"
+
+        write(
+            notes_dir / "COLLECTION.md",
+            "---\ntype: kb/types/collection.md\ndescription: Contract\n---\n\n# Conventions\n",
+        )
+        make_note(notes_dir / "one.md", "One", "\nBody.\n", status="current")
+        make_gate(gates_dir / "prose" / "source-residue.md", "prose/source-residue", "prose")
+
+        stale = review_target_selector.select_stale_gates(
+            tmp_path,
+            model=TEST_MODEL,
+            gate_ids=["prose/source-residue"],
+            note_filter=["kb/notes"],
+        )
+
+        assert [record.note_path for record in stale] == [
+            "kb/notes/one.md",
+        ]
+
+    def test_current_sweep_skips_collection_contracts(self, tmp_path: Path) -> None:
+        notes_dir = tmp_path / "kb" / "notes"
+
+        write(
+            notes_dir / "COLLECTION.md",
+            "---\ntype: kb/types/collection.md\ndescription: Contract\n---\n\n# Conventions\n",
+        )
+        make_note(notes_dir / "one.md", "One", "\nBody.\n", status="current")
+
+        notes = review_target_selector.list_reviewable_notes(tmp_path)
+
+        assert [path.name for path in notes] == ["one.md"]
+
+    def test_explicit_collection_contract_selection_derives_type_pair(self, tmp_path: Path) -> None:
+        notes_dir = tmp_path / "kb" / "notes"
+
+        write(
+            tmp_path / "kb" / "types" / "collection.md",
+            "---\ntype: kb/types/type-spec.md\nname: collection\ndescription: Contract type\nschema: null\n---\n\n# Collection\n",
+        )
+        write(
+            notes_dir / "COLLECTION.md",
+            "---\ntype: kb/types/collection.md\ndescription: Contract\n---\n\n# Conventions\n",
+        )
+
+        stale = review_target_selector.select_stale_gates(
+            tmp_path,
+            model=TEST_MODEL,
+            gate_ids=["type"],
+            note_filter=["kb/notes/COLLECTION.md"],
+        )
+
+        assert [(record.note_path, record.gate_path) for record in stale] == [
+            ("kb/notes/COLLECTION.md", "kb/types/collection.md"),
+        ]
+
     def test_directory_filter_deduplicates_overlapping_operands(self, tmp_path: Path) -> None:
         notes_dir = tmp_path / "kb" / "notes"
         gates_dir = tmp_path / "kb" / "instructions" / "review-gates"

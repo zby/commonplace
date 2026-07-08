@@ -1,3 +1,8 @@
+---
+type: kb/types/collection.md
+description: "Authoring contract for kb/notes/ — theoretical register: transferable claims, mechanisms, and definitions with reach as the quality goal"
+---
+
 # Writing conventions for kb/notes/ (theoretical register)
 
 ## Register and reach

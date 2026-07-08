@@ -1,3 +1,8 @@
+---
+type: kb/types/collection.md
+description: "Authoring contract for kb/reference/ — declare this project's reference-writing register, quality goal, and conventions"
+---
+
 # Writing conventions for kb/reference/
 
 <!--

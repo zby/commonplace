@@ -10,6 +10,7 @@ from pathlib import Path
 from commonplace.lib.project_paths import (
     collection_for_path,
     is_collection_dir,
+    is_collection_metadata,
     is_type_definition_content,
     iter_visible_markdown_files,
     kb_root,
@@ -33,11 +34,18 @@ _TOO_BROAD_MESSAGE = (
 )
 
 
+def _collection_validation_paths(collection: Path) -> list[Path]:
+    """Notes plus the collection's own contract: validating a collection
+    validates its COLLECTION.md (a typed artifact since ADR 042)."""
+    notes = list_collection_note_paths(collection)
+    return [(collection / "COLLECTION.md").resolve(), *notes]
+
+
 def resolve_targets(arg: str, *, repo_root: Path) -> list[Path]:
     if arg == "all":
         raise ValueError(_TOO_BROAD_MESSAGE)
     if arg == "notes":
-        return list_notes_collection_paths(repo_root)
+        return _collection_validation_paths(kb_root(repo_root) / "notes")
 
     if arg in {"recent", "today"}:
         today = datetime.now().date()
@@ -56,7 +64,7 @@ def resolve_targets(arg: str, *, repo_root: Path) -> list[Path]:
         resolved = candidate.resolve()
         if resolved == kb:
             raise ValueError(_TOO_BROAD_MESSAGE)
-        return list_collection_note_paths(resolved)
+        return _collection_validation_paths(resolved)
 
     repo_candidate = (repo_root / arg).resolve()
     if repo_candidate.is_file():
@@ -64,13 +72,13 @@ def resolve_targets(arg: str, *, repo_root: Path) -> list[Path]:
     if repo_candidate.is_dir():
         if repo_candidate == kb:
             raise ValueError(_TOO_BROAD_MESSAGE)
-        return list_collection_note_paths(repo_candidate)
+        return _collection_validation_paths(repo_candidate)
 
     collection_candidate = (kb_root(repo_root) / arg).resolve()
     if collection_candidate.is_dir():
         if collection_candidate == kb:
             raise ValueError(_TOO_BROAD_MESSAGE)
-        return list_collection_note_paths(collection_candidate)
+        return _collection_validation_paths(collection_candidate)
 
     return [resolve_note(arg, repo_root)]
 
@@ -228,7 +236,13 @@ def main(argv: list[str] | None = None) -> int:
         results = validate_note(path, repo_root=repo_root)
         if results.note_type == "text":
             text_count += 1
-        if scope is not None and path in inbound and not inbound[path] and results.note_type != "text":
+        if (
+            scope is not None
+            and path in inbound
+            and not inbound[path]
+            and results.note_type != "text"
+            and not is_collection_metadata(path)
+        ):
             results.infos.append(f"orphan check: no inbound links found in {scope}")
         print(format_block(path, results))
         if results.warns:

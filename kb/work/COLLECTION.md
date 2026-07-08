@@ -1,3 +1,8 @@
+---
+type: kb/types/collection.md
+description: "Authoring contract for kb/work/ — the workshop layer: in-flight work that moves toward durable library artifacts and then closes"
+---
+
 # Writing conventions for kb/work/ (workshop layer)
 
 ## Workshop layer, not a register
