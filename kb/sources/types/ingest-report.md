@@ -41,7 +41,7 @@ Choose one `source_type`:
 
 - `Classification` identifies the source type, domain tags, and author signal.
 - `Summary` is one paragraph for someone deciding whether to read the full source.
-- `Connections Found` summarizes the connection discovery findings and explains how the source fits the current KB. The generated connect report is working context only; do not cite it, link to it, or name its path in the ingest report.
+- `Connections Found` summarizes the connection discovery findings and explains how the source fits the current KB, as compact prose naming the source's role (for example: anchor, technical basis, counterpoint, legal disposition, public statement, limitation) rather than a transcribed candidate list. Drop weak, speculative, or duplicate edges; keep only settled, durable judgments. If no casebook notes exist yet, say so plainly instead of substituting a full map of relationships to other already-captured sources, or framing the section as prospective connections for notes that do not exist yet. The generated connect report is working context only; do not cite it, link to it, or name its path in the ingest report.
 - `Extractable Value` lists three to seven items, ordered by reach and novelty relative to the installed KB's goals and existing KB connections.
 - `Limitations (our opinion)` states where the source should not be trusted or over-generalized.
 - `Recommended Next Action` chooses one specific advisory next action. The ingest report recommends; it does not perform promotion.

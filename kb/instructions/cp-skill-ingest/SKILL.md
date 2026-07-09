@@ -60,6 +60,21 @@ wins.
    link to it, or name its path in the durable ingest report. Summarize its
    findings and link only durable KB artifacts or source snapshots.
 
+   Distill, do not transcribe: connect casts a wide candidate net by design.
+   Drop weak, speculative, or duplicate edges and keep only settled, durable
+   judgments about this source's role. Write `Connections Found` as compact
+   prose naming that role (for example: anchor, technical basis, counterpoint,
+   legal disposition, public statement, limitation) rather than an inventory of
+   every candidate connect surfaced.
+
+   If no casebook notes exist yet for the target collection, say so plainly and
+   stop there. Do not substitute a full map of this source's relationships to
+   other already-captured sources, and do not frame the section as prospective
+   connections for notes that do not exist yet — that framing goes stale the
+   moment notes are written, and re-deriving those relationships is connect's
+   job to do then, not the ingest's job to pre-write now. A single relationship
+   that bears on this source's likely role is enough.
+
 4. **Draft the ingest report.**
    Write the analysis as an `ingest-report`, using the source snapshot and the
    connection context. The report must classify the source, summarize it,
