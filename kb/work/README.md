@@ -6,6 +6,7 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
+- [extensible-controlled-vocabularies](./extensible-controlled-vocabularies/README.md) — designing how a code-enforced closed enum (ingest-report's `source_type`) becomes open-ended per installed KB while staying validator-checkable
 - [lineage-mechanisms](./lineage-mechanisms/README.md) — revising lineage mechanisms across sources, generated reports, distillation records, report persistence, and source-to-source/source-to-note relation labels
 - [src-architecture-alternatives](./src-architecture-alternatives/README.md) — alternative architectures for `src/commonplace/` from a full code read; active thread is an append-only event log as review-store source of truth with acceptance events that embed their snapshots
 - [relocation-move-map-engine](./relocation-move-map-engine/README.md) — collapsing note and directory relocation around one move-map engine for link rewriting, file moves, redirects, and removal of review-store rekeying
