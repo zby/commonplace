@@ -17,6 +17,15 @@ The base note type defines `status` as a **commitment level** (`seedling`, `curr
 - The system already solved the mirror-image problem on the other side: [behavioral authority](../../notes/definitions/behavioral-authority.md) exists because "is this artifact active?" was ambiguous for system-definition artifacts, and the fix was to name consumer/channel/force explicitly. Knowledge artifacts have no analogous concept for who asserts the content and with what force.
 - The pressure case is live: the epistack casework (see the `kb/work/epistack-framework-additions/` workshop) plans a stance-neutral collection of *attributed* claims the KB explicitly does not endorse, where the fused field is ambiguous on every artifact. Its `claim` type sketch has already tripped over this once (a `contested`/`settled`/`open` status enum colliding with its own no-stance-fields rule).
 - This is the predicted fourth instance of the taxonomy demotion pattern — rationale: [a universal knowledge framework demotes content taxonomies to defaults and keeps answerability](../../notes/a-universal-knowledge-framework-demotes-content-taxonomies-to-defaults.md) names the status/endorsement fusion as "one answerability relation hardwired one level too high."
+- I checked the sibling repo directly (2026-07-09): all five casebook notes are still `status: seedling`. The trigger condition below exists — a non-endorsed collection is live — but hasn't fired: nobody has needed to mark a casebook note `current` yet, so the ambiguity is latent rather than forcing.
+
+## Update 2026-07-09: status may be more than two axes
+
+A sharper diagnosis, developed in the [extensible-controlled-vocabularies workshop](../../work/extensible-controlled-vocabularies/README.md) while designing an unrelated open-enum mechanism (`source_type`), complicates Design point 1 below. That analysis reads `status` as a hand-picked diagonal through at least three bundled axes — **maturity** (has it been through review), **currency** (live vs. superseded), and **endorsement/assertion-force** — plus a promotion/durability flavor smeared into `seedling`. If that's right, "lifecycle" is not the single clean residual axis Design point 1 assumes once force is pulled out; it's still at least two axes wearing one enum, which is why a cell like "reviewed but deliberately conjectural and still being drafted" has nowhere to go.
+
+The sharper version of the casebook case is also not just "endorsement gets a different value here" but **endorsement is inapplicable, not re-valued** — a casebook note asserts nothing in its own voice, so there's no belief to commit or withhold in the first place. That's a harder requirement than Design point 2's mechanism can express: redefining what `current` *means* per collection (a fixed four-value enum, reinterpreted by contract prose) can say "current now means the attribution is still accurate," but it can't say "the endorsement axis does not apply to artifacts in this collection" — meaning-redefinition of a label isn't the same operation as dropping the axis that label belongs to.
+
+This doesn't change the proposal's adoption criteria or lock in a replacement mechanism — **axis decomposition with per-collection axis selection** (small named axes; a collection's contract declares which apply and what their values mean) is the candidate the workshop analysis points toward, but it isn't designed yet, the same way this proposal's own mechanism wasn't designed before the casework existed. Recorded here so a future adopter reads Design point 1 as contested rather than settled, and doesn't lock in "meaning-redefinition of a fixed enum" as the mechanism without checking whether the workshop's axis-decomposition line has matured by then.
 
 ## The design
 
@@ -42,6 +51,8 @@ The base note type defines `status` as a **commitment level** (`seedling`, `curr
 
 Adopt when the first non-endorsed collection ships and its contract has to answer "what does `current` mean here" — the epistack casebook's collection is the expected trigger. Adopt whichever mechanism its worked case actually used; if the casework never needs the distinction, retire this proposal as YAGNI.
 
+The 2026-07-09 update sharpens what "needs the distinction" should mean before locking in this proposal's mechanism specifically: if the worked case only ever needs `current` to mean something different per collection, meaning-redefinition (Design point 2) suffices. If it needs an axis to be genuinely absent for some artifacts — not just re-valued — that's evidence for axis decomposition instead, and this proposal's Design section should be rewritten rather than adopted as-is.
+
 ---
 
 Relevant Notes:
@@ -50,3 +61,5 @@ Relevant Notes:
 - [Behavioral authority](../../notes/definitions/behavioral-authority.md) — rationale: the precedent — force belongs to the consumption path and contract, not to bytes; this proposal is its knowledge-artifact mirror
 - [ADR-017: COLLECTION.md is the register convention boundary](../adr/017-collection-md-is-the-register-convention-boundary.md) — part-of: the contract surface and the placement-carries-semantics trade-off this proposal reuses
 - [ADR 042: register becomes a default profile under open-ended text contracts](../adr/042-register-becomes-a-default-profile-under-open-ended-text-contracts.md) — see-also: implemented companion decision; both demote a fused global commitment to a contract-declared feature
+- [Extensible controlled vocabularies workshop](../../work/extensible-controlled-vocabularies/README.md) — contradicts: the 2026-07-09 cube analysis that complicates this proposal's Design point 1 and 2, developed there while designing an unrelated mechanism
+- [First principles are inherited constraints, not design choices](../../notes/first-principles-are-inherited-constraints-not-design-choices.md) — grounds: names status/lifecycle enum values as a demoting choice, not an inherited constraint, the premise the cube analysis builds on
