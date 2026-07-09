@@ -31,6 +31,9 @@ allOf:
               - github-issue
               - conversation-thread
               - code-repository
+              - court-opinion
+              - news-article
+              - official-statement
           domains:
             type: array
             minItems: 2
