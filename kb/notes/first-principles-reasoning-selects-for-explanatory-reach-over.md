@@ -55,6 +55,7 @@ Relevant Notes:
 - [information value is observer-relative because extraction requires computation](./information-value-is-observer-relative.md) — complements: reach means the explanation makes structure accessible to observers in multiple contexts, not just the original one
 - [raw accumulation does not create usable memory](./raw-accumulation-does-not-create-usable-memory.md) — extends: reach affects the value of accumulated knowledge, but ingress still has to preserve how future agents should find, combine, and rely on it
 - [SuperARC AIT benchmark](../sources/superarc-ait-benchmark-llm-compression-abstraction.ingest.md) — exemplifies: integer-vs-binary sequence performance separates training-distribution fit from recursive-compression reach
+- [First principles are inherited constraints, not design choices](./first-principles-are-inherited-constraints-not-design-choices.md) — contrasts: anchors "first principle" on a different axis — a structural test for which framework rules are undemotable because inherited, where this note gives the epistemic filter selecting explanations for reach
 
 Distilled into:
 
