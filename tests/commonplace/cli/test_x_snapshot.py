@@ -12,6 +12,8 @@ SRC_ROOT = Path(__file__).resolve().parents[4] / "src"
 if str(SRC_ROOT) not in sys.path:
     sys.path.insert(0, str(SRC_ROOT))
 
+pytest.importorskip("xdk")
+
 from commonplace.cli import x_snapshot  # noqa: E402
 
 
