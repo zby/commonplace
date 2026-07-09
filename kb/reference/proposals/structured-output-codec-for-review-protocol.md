@@ -29,7 +29,7 @@ A codec is the pair (render the output contract into the prompt, decode raw outp
 
 ## Free choices
 
-- **Where codec selection lives.** A flag on prepare/ingest commands chosen by the orchestrator (it knows whether its harness supports schemas), a per-runner-adapter property, or a project-level default. The orchestrator-chooses option matches the medium-pluggability direction of ADR 030.
+- **Where codec selection lives.** A flag on prepare/ingest commands chosen by the orchestrator (it knows whether its harness supports schemas), a per-runner-adapter property, or a project-level default. The orchestrator-chooses option matches the medium-pluggability direction carried from ADR 030 through [ADR 035](../adr/035-review-jobs-finalize-all-or-nothing-with-derived-artifacts.md): the parent agent or harness owns dispatch and fan-out, Commonplace owns state and parsing.
 - **Schema shape for findings.** Mirror the current markdown sections one-to-one (summary/findings/revision) or take the opportunity to constrain severity to an enum and findings to a list — more validation power, but historical rationale text and the new format diverge in expressiveness.
 - **Canonical retained form.** Keep the markdown result file as the single retained review-body representation (structured output rendered to markdown on ingest), or add a new structured artifact alongside it. The first keeps one read path; the second preserves machine-readable findings for the gate-statistics ambitions in [gate learning from accepted edits](./gate-learning-from-accepted-edits.md).
 - **Whether the markdown codec ever retires.** Free-text markdown is the lowest common denominator every harness supports; retiring it would couple the review system to schema-capable harnesses.
@@ -50,5 +50,5 @@ Relevant Notes:
 
 - [Claude Code dynamic workflows](../../agentic-systems/claude-code-dynamic-workflows.md) — derived-from: the schema-validated `agent()` option whose generalization is this proposal's trigger
 - [029-review execution unified on (note, gate) pairs](../adr/029-review-execution-unified-on-note-gate-pairs.md) — see-also: established the single grammar and `ParsedPairBundle` boundary a second codec would plug into
-- [030-harness-facing seams: batch endpoints and runner adapters](../adr/030-harness-facing-seams-batch-endpoints-and-runner-adapters.md) — see-also: the medium-pluggability seams codec selection would ride on
+- [035-review jobs finalize all-or-nothing with derived artifacts](../adr/035-review-jobs-finalize-all-or-nothing-with-derived-artifacts.md) — see-also: current decision carrying forward the medium-pluggability seams (parent-owned dispatch, superseding [ADR 030](../adr/030-harness-facing-seams-batch-endpoints-and-runner-adapters.md) via [ADR 034](../adr/034-queued-review-jobs-and-execution-provenance.md)) codec selection would ride on
 - [gate learning from accepted edits](./gate-learning-from-accepted-edits.md) — see-also: per-gate statistics would benefit from machine-readable findings, one of the free choices here
