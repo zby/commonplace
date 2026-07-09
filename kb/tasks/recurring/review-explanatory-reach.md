@@ -11,7 +11,7 @@ This file is a stable runbook. Do not edit it per run; only change it when scope
 
 ## Run Procedure
 
-For each note in scope, apply the three-part test:
+For each note in scope, apply the four-part test:
 
 1. **Can you vary the explanation?** If you changed one premise, could you predict what changes in the conclusion? If yes, the note captures causal structure. If no, it may be recording correlation or pattern without mechanism.
 
@@ -19,11 +19,13 @@ For each note in scope, apply the three-part test:
 
 3. **Can it be criticized?** Is there a specific way the explanation could be wrong, not just incomplete? Notes that are purely definitional or taxonomic will fail this — that's fine, flag them as a different kind (framework note, not explanatory note) rather than as deficient.
 
+4. **Does observed fit discipline the explanation?** Can the note account for where the pattern actually works, fails, or costs too much to maintain? An explanation that never touches observed fit has verbal reach without operational grip.
+
 ## Classification
 
 For each note, assign one of:
 
-- **explanatory** — passes the three tests; captures mechanism with reach
+- **explanatory** — passes the four tests; captures mechanism with reach
 - **adaptive** — records a pattern that works without explaining why; candidate for deepening
 - **framework** — definitional, taxonomic, or structural; not expected to be explanatory (indexes, type definitions, methodology)
 - **mixed** — has explanatory sections and adaptive sections; flag which parts could be deepened

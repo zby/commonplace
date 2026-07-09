@@ -1,5 +1,5 @@
 ---
-description: Deutsch's adaptive-vs-explanatory distinction — explanatory knowledge has "reach" (transfers to new contexts) because it captures why, not just what works; grounds the KB's first-principles filter as selecting for reach over fit
+description: Adapts Deutsch's adaptive-vs-explanatory distinction to KB design — first-principles reasoning selects explanations with reach, accountable to observed fit and rival-practice tests
 type: kb/types/note.md
 traits: [has-external-sources]
 tags: [learning-theory, discovery]
@@ -8,57 +8,57 @@ status: seedling
 
 # First-principles reasoning selects for explanatory reach over adaptive fit
 
-David Deutsch distinguishes two kinds of knowledge that mainstream usage conflates:
+Commonplace's first-principles methodology is valuable because it selects for explanations with **reach**: claims that keep working outside the case that produced them because they capture why a pattern works, not just that it worked. This note adapts David Deutsch's adaptive-vs-explanatory distinction for KB design, treating adaptive fit and explanatory reach as a polarity rather than a hard binary.
 
-**Adaptive information** — structures that help a system cope with the world. A genome encodes successful adaptations. A neural network's weights encode useful patterns. An animal's instincts encode strategies that work. These are useful, but they don't explain *why* they work, can't be deliberately varied, and don't transfer beyond their training distribution.
+**Adaptive information** helps a system cope with the world. A genome, a neural network's weights, or a local rule of thumb can encode something useful without explaining why it works or where it stops working.
 
-**Explanatory knowledge** — says *why* the world works a certain way, can be deliberately varied and criticized, and supports transfer to new contexts because it captures deeper structure rather than successful habit. A gene "knows" how to build an eye but contains no theory of optics. Newton's optics is explanatory — it reaches contexts no eye ever encountered.
+**Explanatory knowledge** gives a criticizable account of why the pattern works. It can be deliberately varied: change a load-bearing premise, and the explanation should constrain what changes in the conclusion. That variation is what gives an explanation reach.
 
-The distinguishing property is **reach**: explanatory knowledge applies beyond its original context because the explanation captures structure that isn't context-dependent.
+Partial cases sit between the poles. A rule can transfer across a narrow family of cases because it captures shared structure, while still falling short of a full generative model. The point is not to demote every local observation; local fit is the evidence a later explanation must organize, predict, and improve.
 
 ## Why this matters for the KB
 
-The KB's [first-principles methodology](./programming-patterns-get-a-fast-pass-but-other-borrowed-ideas-must.md) is, in Deutsch's terms, a filter that selects for explanatory reach over adaptive fit. When a note derives a design pattern from constraints (finite context, no scoping mechanism, text-in/text-out), the derivation is explanatory — it says *why* the pattern works, which means it predicts where the pattern will fail (change the constraint, change the conclusion). When a note records "X works in practice," that's adaptive — useful but brittle to context change.
+When a note derives a design pattern from inherited constraints — finite context, no scoping mechanism, text-in/text-out interpretation — the derivation can be explanatory: it says why the pattern works and predicts where it will fail. Change the constraint, and the conclusion should change with it.
 
-The [computational-model](./computational-model-README.md) area exemplifies reach. Programming-language concepts (scoping, partial evaluation, scheduling) were developed for compilers, but they *reach* into KB design because they capture structure that isn't programming-specific — they describe what happens when bounded processors compose text under constraints. [LLM context is composed without scoping](./llm-context-is-composed-without-scoping.md) doesn't just analogize to dynamic scoping — it identifies the same mechanism producing the same pathologies, and predicts the same remedies (lexically scoped sub-frames).
+That "can be" matters. First-principles stories become post-hoc rationalization when broad premises can justify several rival practices equally well. A useful derivation should rule out at least one plausible alternative, name the constraint that does the ruling out, or predict a failure that later use can confirm.
 
-SuperARC gives an empirical version of the same test for algorithmic compression. The source reports that LLMs perform much better on integer sequences, where familiar mathematical patterns may match training-distribution cues, but score near zero on binary sequences that require genuine recursive compression. That gap is adaptive fit without explanatory reach: the behavior transfers while the surface remains familiar, then collapses when the benchmark strips the cues and asks for the underlying generative structure.
+The [computational-model](./computational-model-README.md) area is a reach bet under audit. Programming-language concepts such as scoping, partial evaluation, and scheduling were developed for compilers, but they reach into KB design when the shared invariant is explicit: bounded processors compose text under constraints, and unscoped composition lets distant bindings interfere. [LLM context is composed without scoping](./llm-context-is-composed-without-scoping.md) therefore works only if the dynamic-scoping comparison predicts real context failures and useful remedies, not merely because the analogy is elegant.
 
 ## The negative test
 
-Deutsch's distinction provides a quality check orthogonal to the KB's type system. A well-formed note can pass every structural check (good title, description, links, area) while being merely adaptive — recording a pattern without explaining the mechanism. The test:
+This adapted distinction provides a quality check orthogonal to the KB's type system. A well-formed note can pass every structural check while still recording a pattern without explaining the mechanism. The test:
 
-1. **Can you vary the explanation?** If you changed one premise, could you predict what changes in the conclusion? If yes, the note captures causal structure. If no, it may be recording correlation.
-2. **Does it reach?** Would this insight apply in a domain you haven't considered? If yes, the mechanism is deeper than the specific case. If no, the note may be context-fitted.
+1. **Can you vary a load-bearing premise?** If changing one premise lets you predict a constrained change in the conclusion, the note is exposing causal structure. If any premise can move while the conclusion stays rhetorically intact, the derivation may be decorative.
+2. **Does it reach?** Would the insight apply in a domain you have not considered, and can you say which invariant carries it there? If yes, the mechanism is deeper than the original case. If no, the note may be context-fitted.
 3. **Can it be criticized?** Is there a specific way the explanation could be wrong, not just incomplete? The [falsifier blocks](./mechanistic-constraints-make-popperian-kb-recommendations-actionable.md) practice operationalizes this.
+4. **Does observed fit discipline the explanation?** Local success is not second-class residue; it is evidence. If the explanation cannot account for where the pattern actually works, fails, or costs too much to maintain, it has verbal reach without operational grip.
 
-These map to the three depths in [discovery](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md): shared feature (adaptive), shared structure (partially explanatory), generative model (fully explanatory with reach).
+The first three tests map to the three depths in [discovery](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md): shared feature (adaptive), shared structure (partially explanatory), generative model (fully explanatory with reach). The fourth is not a depth — it holds an explanation at any depth accountable to the observed fit it must organize.
 
-## The programming fast-pass as a reach bet
+## Scope
 
-The [design methodology](./programming-patterns-get-a-fast-pass-but-other-borrowed-ideas-must.md) gives programming patterns a "fast pass." In Deutsch's terms, this is a reach bet — we expect programming patterns to transfer because agents interpreting prompts are structurally similar to interpreters interpreting programming languages, not because of surface analogy. The full argument and evidence (including [Thalo's](../agent-memory-systems/reviews/thalo.md) convergent evolution) are in the methodology note.
+Reach is the quality goal for theoretical notes, not the only kind of KB value. Descriptions need economy, instructions need precision, and logs may preserve local observations before the mechanism is understood. The reach filter says when an observation is ready to become a transferable claim; it does not replace the capture layer that supplies the observations.
 
 ## Open Questions
 
 - Where in the KB are notes that are well-formed but merely adaptive? Those are candidates for deepening.
-- The [discovery note's](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) hierarchy (feature -> structure -> generative model) parallels Deutsch's hierarchy (adaptive -> partially explanatory -> fully explanatory). Are these the same axis?
-- Should "has explanatory reach" become a trait or quality signal, or is it better as an informal check during writing? (See also the [reach brainstorming note's](./brainstorming-how-reach-informs-kb-design.md) parallel question on surfacing reach explicitly.)
+- Which first-principles derivations currently rule out a rival practice, and which only explain an already-preferred practice after the fact?
+- Should this note keep a direct Deutsch source, or is the adapted distinction enough if the KB-specific test stands on its own?
 
 ---
 
 Relevant Notes:
 
-- [design methodology — borrow widely, filter by first principles](./programming-patterns-get-a-fast-pass-but-other-borrowed-ideas-must.md) — grounds: first-principles filtering IS selecting for explanatory reach; this note explains why that filter works
+- [design methodology — borrow widely, filter by first principles](./programming-patterns-get-a-fast-pass-but-other-borrowed-ideas-must.md) — grounds: first-principles filtering selects for explanatory reach when the borrowed pattern is tied back to inherited constraints
+- [learning is not only about generality](./learning-is-not-only-about-generality.md) — grounds: the Scope boundary — reach is one property of accumulated knowledge, not the only learning value
 - [discovery is seeing the particular as an instance of the general](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) — parallels: the generative model depth maps to explanatory knowledge with reach
-- [mechanistic constraints make Popperian KB recommendations actionable](./mechanistic-constraints-make-popperian-kb-recommendations-actionable.md) — extends: Deutsch and Popper are allied — explanatory knowledge is the kind criticism can test; falsifier blocks operationalize one of the three tests
-- [computational-model](./computational-model-README.md) — exemplifies: Programming-language concepts reaching into KB design is explanatory reach in action
-- [information value is observer-relative because extraction requires computation](./information-value-is-observer-relative.md) — complements: reach means the explanation makes structure accessible to observers in multiple contexts, not just the original one
-- [raw accumulation does not create usable memory](./raw-accumulation-does-not-create-usable-memory.md) — extends: reach affects the value of accumulated knowledge, but ingress still has to preserve how future agents should find, combine, and rely on it
-- [SuperARC AIT benchmark](../sources/superarc-ait-benchmark-llm-compression-abstraction.ingest.md) — exemplifies: integer-vs-binary sequence performance separates training-distribution fit from recursive-compression reach
-- [First principles are inherited constraints, not design choices](./first-principles-are-inherited-constraints-not-design-choices.md) — contrasts: anchors "first principle" on a different axis — a structural test for which framework rules are undemotable because inherited, where this note gives the epistemic filter selecting explanations for reach
+- [mechanistic constraints make Popperian KB recommendations actionable](./mechanistic-constraints-make-popperian-kb-recommendations-actionable.md) — extends: criticism becomes operational through falsifier blocks
+- [computational-model](./computational-model-README.md) — exemplifies: programming-language concepts reaching into KB design is a reach bet under audit
+- [systematic prompt variation serves verification and diagnosis, not explanatory-reach testing](./systematic-prompt-variation-serves-verification-and-diagnosis-not.md) — contrasts: reach testing varies an explanation's premises, not an LLM prompt surface
+- [SuperARC AIT benchmark](../sources/superarc-ait-benchmark-llm-compression-abstraction.ingest.md) — evidence: integer-vs-binary sequence performance is suggestive for cue sensitivity and algorithmic-compression reach, but not load-bearing here
+- [First principles are inherited constraints, not design choices](./first-principles-are-inherited-constraints-not-design-choices.md) — contrasts: defines which constraints count as first principles; this note explains what first-principles filtering is for
 
 Distilled into:
 
-- [review-explanatory-reach](../tasks/recurring/review-explanatory-reach.md) — the three-part negative test (vary / reach / criticize)
-- [COLLECTION.md](./COLLECTION.md) — lightweight reach check (item 5 in the pre-save checklist)
-- [ingest SKILL.md](../instructions/cp-skill-ingest/SKILL.md) — reach assessment in extractable value and hard-to-vary test in curiosity gate
+- [review-explanatory-reach](../tasks/recurring/review-explanatory-reach.md) — the four-part negative test (vary / reach / criticize / fit)
+- [COLLECTION.md](./COLLECTION.md) — the "Tests for reach" block in the register section

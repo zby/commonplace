@@ -10,6 +10,7 @@ Tests for reach:
 - Change one premise — can you predict the change in the conclusion?
 - Would the insight apply in a different domain?
 - Could someone say exactly how it's wrong, not just that it's incomplete?
+- Does it account for where the pattern actually works and fails, not just why it should?
 
 Notes that only record "X works" are adaptive — useful but brittle. Explaining *why* X works gives reach. Reach is a direction, not a gate.
 

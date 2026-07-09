@@ -51,7 +51,7 @@ The `/connect` skill's synthesis opportunity detection watches for "a pattern ac
 
 Relevant notes:
 
-- [First-principles reasoning selects for explanatory reach over adaptive fit](./first-principles-reasoning-selects-for-explanatory-reach-over.md) — **extends**: that note defines reach as a quality criterion; this note adds the maintenance counterweight — reach is also a fragility signal. Both share the open question of whether to surface reach explicitly.
+- [First-principles reasoning selects for explanatory reach over adaptive fit](./first-principles-reasoning-selects-for-explanatory-reach-over.md) — **extends**: that note defines reach as a quality criterion; this note adds the maintenance counterweight — reach is also a fragility signal.
 - [Learning is not only about generality](./learning-is-not-only-about-generality.md) — **grounds**: the reach spectrum (high/medium/low) instantiates the generality axis defined there (facts vs theories). This note adds that maintenance cost is asymmetric by reach level.
 - [Raw accumulation does not create usable memory](./raw-accumulation-does-not-create-usable-memory.md) — **extends**: that note discusses reach in the context of accumulation; this note adds a dimension its trustworthiness property needs — high-reach changes silently invalidate downstream reasoning.
 - [Link-graph plus timestamps enables make-like staleness detection](./link-graph-plus-timestamps-enables-make-like-staleness-detection.md) — **contradicts/qualifies**: high-reach changes are precisely the case where pairwise timestamp comparison fails — the defeat condition that note already anticipates.
