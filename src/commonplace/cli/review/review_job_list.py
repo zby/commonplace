@@ -36,19 +36,19 @@ def _print_table(jobs: list[dict[str, object]]) -> None:
 
 
 def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
-    parser = argparse.ArgumentParser(description="List queued, completed, or failed review jobs.")
+    parser = argparse.ArgumentParser(description="List queued, completed, or failed review jobs.", allow_abbrev=False)
     parser.add_argument("--status", choices=sorted(JOB_STATUS_VALUES), help="Filter by job status.")
-    parser.add_argument("--model", help="Filter by review model partition.")
+    parser.add_argument("--model-partition", help="Filter by review model partition.")
     parser.add_argument("--json", action="store_true", help="Print JSON.")
     parser.add_argument("--db", help="Override COMMONPLACE_REVIEW_DB.")
     args = parser.parse_args(argv)
 
     repo_root = cwd if cwd is not None else Path.cwd()
     model_partition = None
-    if args.model is not None:
-        if not args.model.strip():
-            parser.error("--model must not be empty")
-        model_partition = normalize_model_partition(args.model)
+    if args.model_partition is not None:
+        if not args.model_partition.strip():
+            parser.error("--model-partition must not be empty")
+        model_partition = normalize_model_partition(args.model_partition)
 
     db_path = prepare_review_db(repo_root, args.db)
     with connect(db_path) as conn:

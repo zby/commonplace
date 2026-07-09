@@ -76,7 +76,7 @@ def _selector_pairs(
     if raw_model is None:
         raw_model = fallback_model
     if not isinstance(raw_model, str) or not raw_model.strip():
-        raise ValueError("selector JSON model_partition is required unless --model is provided")
+        raise ValueError("selector JSON model_partition is required unless --model-partition is provided")
     model_partition = normalize_model_partition(raw_model)
     raw_targets = payload.get("targets")
     if not isinstance(raw_targets, list):
@@ -298,9 +298,13 @@ def _validate_args(args: argparse.Namespace, parser: argparse.ArgumentParser) ->
 def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser = argparse.ArgumentParser(
         description="Create queued review jobs from selector JSON.",
+        allow_abbrev=False,
     )
     parser.add_argument("--input", required=True, help="Selector JSON path, or '-' for stdin.")
-    parser.add_argument("--model", help="Review model partition. Required for direct input; validation-only for selector input.")
+    parser.add_argument(
+        "--model-partition",
+        help="Review model partition (a partition name, not a concrete model). Required for direct input; validation-only for selector input.",
+    )
     parser.add_argument("--grouping", required=True, choices=["note", "gate"], help="Job grouping axis.")
     parser.add_argument("--batch-size", type=int, help="Note targets per gate-packed job. Defaults to 5.")
     parser.add_argument("--db", help="Override COMMONPLACE_REVIEW_DB.")
@@ -316,16 +320,16 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
         model_partition, requested_pairs = _selector_pairs(
             repo_root=repo_root,
             raw_json=_read_input(repo_root, args.input),
-            fallback_model=args.model,
+            fallback_model=args.model_partition,
         )
-        if args.model is not None:
-            requested_model = args.model.strip()
+        if args.model_partition is not None:
+            requested_model = args.model_partition.strip()
             if not requested_model:
-                parser.error("--model must not be empty")
+                parser.error("--model-partition must not be empty")
             requested_model = normalize_model_partition(requested_model)
             if requested_model != model_partition:
                 parser.error(
-                    f"--model {requested_model!r} does not match selector model_partition {model_partition!r}"
+                    f"--model-partition {requested_model!r} does not match selector model_partition {model_partition!r}"
                 )
 
         unique_pairs, skipped_duplicates = _drop_duplicate_pairs(requested_pairs)

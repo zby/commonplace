@@ -14,16 +14,17 @@ def build_parser() -> argparse.ArgumentParser:
         description=(
             "Advance the accepted baseline for one note and one or more gates "
             "without rewriting the review body."
-        )
+        ),
+        allow_abbrev=False,
     )
     parser.add_argument(
         "note_path",
         help="Repository-relative note path, for example kb/notes/backlinks.md.",
     )
     parser.add_argument(
-        "--model",
+        "--model-partition",
         required=True,
-        help="Review model partition to acknowledge against.",
+        help="Review model partition to acknowledge against (a partition name, not a concrete model).",
     )
     parser.add_argument(
         "gate_ids",
@@ -36,9 +37,9 @@ def build_parser() -> argparse.ArgumentParser:
 def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
-    model = args.model.strip()
+    model = args.model_partition.strip()
     if not model:
-        parser.error("--model must not be empty")
+        parser.error("--model-partition must not be empty")
     pairs = [f"{args.note_path}:{gate_id}" for gate_id in args.gate_ids]
     repo_root = cwd if cwd is not None else Path.cwd()
     try:

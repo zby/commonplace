@@ -43,7 +43,7 @@ Acceptance is the durable outcome. A current acceptance row pins the exact note 
 
 **Acceptance row.** The current record that a `(note_path, gate_path, model_partition)` key was reviewed against specific note and gate text. Acceptance is what makes a pair "fresh."
 
-**Model partition.** Reviews are partitioned by model. A review or acceptance under one model does not satisfy freshness for another.
+**Model partition.** Reviews are partitioned by model. A review or acceptance under one model does not satisfy freshness for another. A partition is a named bucket (`claude-opus`, `claude-opus-4.8`, `codex`) that groups concrete model IDs judged equivalent for review freshness — it is the review-identity key, not the literal model that ran. Concrete model IDs map into partitions through `MODEL_PARTITION_REGISTRY` in `src/commonplace/review/review_model.py` (`build_model_partition`). The CLI flag names carry the distinction: every partition-valued flag is `--model-partition`; the only `--model` flag in the review CLI is `commonplace-finalize-review-job`'s, which records the concrete worker model and is validated to map into the job's partition.
 
 Human-readable review output — the per-pair result files and each job's `MANIFEST.json` — is for inspection only. The SQLite decision and job-status columns are canonical; see [review architecture](./review-architecture.md) for the storage details.
 
@@ -86,7 +86,7 @@ For a `note-changed` pair, inspect the selector diff (see [Reading freshness](#r
 `commonplace-ack-gate-review` advances the accepted baseline when a note changed but not in a way that matters for the gate. It carries the existing review forward: it records the current note and gate text as newly accepted, pointing at the completed review pair being reused. It does not rewrite any file or review prose.
 
 ```
-commonplace-ack-gate-review --model {model-partition} {note_path} {gate_id}...
+commonplace-ack-gate-review --model-partition {model-partition} {note_path} {gate_id}...
 ```
 
 Ack fails when there is no completed review for the same `(note_path, gate_path, model_partition)` — there must be existing review evidence to carry forward. Output lines have the form `acked: <note_path> <gate_id>`.
@@ -116,17 +116,17 @@ This is why gates route a bare finding rather than a self-graded verdict — see
 - `--all-gates` selects every applicable review criterion in place of naming ids/bundles (mutually exclusive with them): all catalog gates plus each note's type-conformance and collection-conformance pairs. The flag means the same thing in every review command. Like every selector flag it only *chooses* pairs — the selected `(note, gate)` pairs still run through create-jobs → review → finalize; it is not a one-shot "run all gates" command
 - `--note` to filter to specific note paths or directories
 - `--current` to filter to notes with `status: current`
-- `--model {model-partition}` selects the review model partition to inspect or write; omit it only for model-agnostic missing-review coverage
+- `--model-partition {model-partition}` selects the review model partition to inspect or write; omit it only for model-agnostic missing-review coverage
 - `--json`
 - `--reason {missing-review,gate-changed,note-changed}`
 
-With `--model` omitted, the selector reports only model-agnostic missing-review coverage: a pair is `missing-review` only when there is no acceptance under any model partition. It does not classify `gate-changed` or `note-changed` in that mode, because those need a chosen baseline.
+With `--model-partition` omitted, the selector reports only model-agnostic missing-review coverage: a pair is `missing-review` only when there is no acceptance under any model partition. It does not classify `gate-changed` or `note-changed` in that mode, because those need a chosen baseline.
 
 **Create jobs** — `commonplace-create-review-jobs --input - --grouping {note|gate}`. Consumes selector JSON.
 
 **Finalize** — `commonplace-finalize-review-job --review-job-id {id} [--runner {worker}] [--model {model} [--effort {effort}]] [--telemetry-json {json}]`.
 
-**Ack** — `commonplace-ack-gate-review --model {model-partition} {note_path} {gate_id}...`.
+**Ack** — `commonplace-ack-gate-review --model-partition {model-partition} {note_path} {gate_id}...`.
 
 **Warn queue** — `commonplace-warn-selector`.
 

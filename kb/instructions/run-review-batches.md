@@ -20,7 +20,9 @@ Inputs:
 - selector mode — `requested` for explicit execution, or default stale selection
 - grouping — `note` or `gate`
 
-The partition is fixed at selection, before any worker runs, so the orchestrator must choose it up front. Sub-agents inherit the orchestrator's model unless explicitly overridden, so read the orchestrator's own exact model ID from its environment context and pick the partition that `build_model_partition` maps it to. Use that partition for the selector `--model`. The worker still reports the model it actually ran, and the orchestrator finalizes with that exact reported model; if the reported model maps to a different partition than the job's, the inheritance assumption broke — re-run under the correct partition rather than forcing the finalize.
+The partition is fixed at selection, before any worker runs, so the orchestrator must choose it up front. Sub-agents inherit the orchestrator's model unless explicitly overridden, so read the orchestrator's own exact model ID from its environment context and pick the partition that `build_model_partition` maps it to (the registry is `MODEL_PARTITION_REGISTRY` in `src/commonplace/review/review_model.py`). Use that partition for the selector `--model-partition`. The worker still reports the model it actually ran, and the orchestrator finalizes with that exact reported model; if the reported model maps to a different partition than the job's, the inheritance assumption broke — re-run under the correct partition rather than forcing the finalize.
+
+Two model flags, two meanings: every partition-valued flag in the review CLI is named `--model-partition` and takes a partition name (`claude-opus`, `claude-opus-4.8`, `codex`). The one exception is `commonplace-finalize-review-job --model`, which takes the *concrete* model the worker reported (for example `claude-fable-5`) — finalization derives its partition and validates it against the job's. Never pass a partition name to finalize's `--model`, and never pass a concrete model where a `--model-partition` flag expects a partition (aliases normalize, but the JSON output and DB then record the canonical partition, not what you typed).
 
 Always create jobs from selector JSON. The job creator has no direct note or pair mode.
 
@@ -33,14 +35,14 @@ If the harness cannot launch sub-agents or workers, stop and report that review-
 Use requested mode when the user has provided the exact gates or bundles to run and freshness should not skip already-reviewed pairs.
 
 ```bash
-commonplace-review-target-selector --mode requested --model {model-partition} {gate-or-bundle}... --note {note-path} --json \
+commonplace-review-target-selector --mode requested --model-partition {model-partition} {gate-or-bundle}... --note {note-path} --json \
   | commonplace-create-review-jobs --input - --grouping {note|gate} [--batch-size {n}]
 ```
 
 For a current-status sweep over explicit gates:
 
 ```bash
-commonplace-review-target-selector --mode requested --model {model-partition} {gate-or-bundle}... --current --json \
+commonplace-review-target-selector --mode requested --model-partition {model-partition} {gate-or-bundle}... --current --json \
   | commonplace-create-review-jobs --input - --grouping {note|gate} [--batch-size {n}]
 ```
 
@@ -49,14 +51,14 @@ commonplace-review-target-selector --mode requested --model {model-partition} {g
 Use default stale mode when the review store should decide which applicable pairs need review.
 
 ```bash
-commonplace-review-target-selector --model {model-partition} {gate-or-bundle}... --note {note-or-dir}... --json \
+commonplace-review-target-selector --model-partition {model-partition} {gate-or-bundle}... --note {note-or-dir}... --json \
   | commonplace-create-review-jobs --input - --grouping {note|gate} [--batch-size {n}]
 ```
 
 For all gates over current notes:
 
 ```bash
-commonplace-review-target-selector --model {model-partition} --all-gates --current --json \
+commonplace-review-target-selector --model-partition {model-partition} --all-gates --current --json \
   | commonplace-create-review-jobs --input - --grouping {note|gate} [--batch-size {n}]
 ```
 
@@ -119,7 +121,7 @@ After all jobs finalize, verify that the intended pairs are no longer stale unde
 For requested-mode runs, rerun the same gate and note scope without `--mode requested`:
 
 ```bash
-commonplace-review-target-selector --model {model-partition} {gate-or-bundle}... --note {note-or-dir}... --json
+commonplace-review-target-selector --model-partition {model-partition} {gate-or-bundle}... --note {note-or-dir}... --json
 ```
 
 For stale-mode runs, rerun the same selector command used for selection. An output object with `"targets": []` means the selected pairs are fresh for that model partition.

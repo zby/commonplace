@@ -104,14 +104,16 @@ commonplace-x-snapshot https://x.com/user/status/123456789
 
 The review system executes LLM-based quality reviews against notes using defined review gates. For the full review workflow, read [README-REVIEW-SYSTEM.md](./README-REVIEW-SYSTEM.md). For the code architecture, see [review-architecture.md](./review-architecture.md).
 
+Model flags: every partition-valued flag below is `--model-partition` and takes a partition name such as `claude-opus` or `codex` (the review-freshness key; registry in `src/commonplace/review/review_model.py`). The only `--model` flag is `commonplace-finalize-review-job`'s, which takes the concrete model the worker reported (for example `claude-fable-5`) and validates that it maps into the job's partition.
+
 ### commonplace-create-review-jobs
 
 Create one or more queued review job records in the review database and write their canonical prompts and `MANIFEST.json` files for live-agent review. Artifact paths are derived from the job id and pair set. Creation is runner-agnostic: `runner`, `runner_model`, and `runner_effort` stay null until execution.
 
 ```bash
-commonplace-review-target-selector --mode requested --json --model claude-opus-4-6 accessibility prose semantic --note kb/notes/my-note.md \
+commonplace-review-target-selector --mode requested --json --model-partition claude-opus accessibility prose semantic --note kb/notes/my-note.md \
   | commonplace-create-review-jobs --input - --grouping note
-commonplace-review-target-selector --json --model claude-opus-4-6 prose --note kb/notes/my-note.md \
+commonplace-review-target-selector --json --model-partition claude-opus prose --note kb/notes/my-note.md \
   | commonplace-create-review-jobs --input - --grouping note
 ```
 
@@ -123,7 +125,7 @@ List review jobs and their pair rows.
 
 ```bash
 commonplace-review-job-list --status queued --json
-commonplace-review-job-list --model claude-opus-4-6
+commonplace-review-job-list --model-partition claude-opus
 ```
 
 ### commonplace-finalize-review-job
@@ -145,7 +147,7 @@ The command accepts `queued` jobs, rejects `completed` and `failed`, reads the j
 Advance acceptance baseline for specific gates without re-running the review.
 
 ```bash
-commonplace-ack-gate-review kb/notes/my-note.md --model claude-opus-4-6 prose/source-residue semantic/grounding-alignment
+commonplace-ack-gate-review kb/notes/my-note.md --model-partition claude-opus prose/source-residue semantic/grounding-alignment
 ```
 
 ### commonplace-ack-trivial-note-changes
@@ -153,9 +155,9 @@ commonplace-ack-gate-review kb/notes/my-note.md --model claude-opus-4-6 prose/so
 Auto-acknowledge `note-changed` stale pairs when only non-watched note parts changed. Each gate declares what it watches (body, title, description) — changes outside the watched set are acked automatically. Conformance pairs may be selected (`type`/`collection` requests or `--all-gates`) but never qualify: neither a type spec nor a COLLECTION.md declares watches, so each watches the whole note and no change is trivial against it.
 
 ```bash
-commonplace-ack-trivial-note-changes prose --model claude-opus-4-6 --note kb/notes kb/reference  # all prose gates
-commonplace-ack-trivial-note-changes prose --model claude-opus-4-6 --current              # current-status notes only
-commonplace-ack-trivial-note-changes prose --model claude-opus-4-6 --note kb/notes kb/reference --dry-run  # preview what would ack
+commonplace-ack-trivial-note-changes prose --model-partition claude-opus --note kb/notes kb/reference  # all prose gates
+commonplace-ack-trivial-note-changes prose --model-partition claude-opus --current              # current-status notes only
+commonplace-ack-trivial-note-changes prose --model-partition claude-opus --note kb/notes kb/reference --dry-run  # preview what would ack
 ```
 
 ### commonplace-resolve-gates
@@ -174,13 +176,13 @@ List review target pairs. Default mode lists stale `(note, gate)` pairs by compa
 Besides catalog gate ids and bundles, the selector accepts conformance requests. Type-conformance: `type` derives one pair per typed note in scope with the note's type spec as the gate, `type/{name}` narrows to one type's cohort. Collection-conformance: `collection` derives one pair per in-collection note with the collection's COLLECTION.md as the gate, `collection/{path}` narrows to one collection's cohort (path relative to `kb/`, e.g. `collection/notes`). `--all-gates` selects every applicable review criterion — all catalog gates plus both conformance pairs — and means the same thing in every review command.
 
 ```bash
-commonplace-review-target-selector prose --model claude-opus-4-6 --note kb/notes kb/reference
-commonplace-review-target-selector prose --model claude-opus-4-6 --current --json          # JSON output
-commonplace-review-target-selector prose --model claude-opus-4-6 --note kb/notes kb/reference --reason note-changed     # filter by staleness reason
+commonplace-review-target-selector prose --model-partition claude-opus --note kb/notes kb/reference
+commonplace-review-target-selector prose --model-partition claude-opus --current --json          # JSON output
+commonplace-review-target-selector prose --model-partition claude-opus --note kb/notes kb/reference --reason note-changed     # filter by staleness reason
 commonplace-review-target-selector prose --note kb/notes kb/reference --reason missing-review     # pairs missing under every model partition
-commonplace-review-target-selector --mode requested prose --model claude-opus-4-6 --note kb/notes/my-note.md --json
-commonplace-review-target-selector type/definition --model claude-opus-4-6 --current       # type-conformance pairs for one type's cohort
-commonplace-review-target-selector collection/notes --model claude-opus-4-6 --current      # collection-conformance pairs for one collection's cohort
+commonplace-review-target-selector --mode requested prose --model-partition claude-opus --note kb/notes/my-note.md --json
+commonplace-review-target-selector type/definition --model-partition claude-opus --current       # type-conformance pairs for one type's cohort
+commonplace-review-target-selector collection/notes --model-partition claude-opus --current      # collection-conformance pairs for one collection's cohort
 ```
 
 ### commonplace-warn-selector

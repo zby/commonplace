@@ -284,7 +284,7 @@ def test_ack_trivial_note_changes_cli_writes_non_null_review_pair_id(tmp_path: P
         "prose/source-residue",
         "--note",
         "kb/notes",
-        "--model",
+        "--model-partition",
         TEST_MODEL,
         cwd=repo,
     )
@@ -335,7 +335,7 @@ State one claim per note.
         "--all-gates",
         "--note",
         "kb/notes",
-        "--model",
+        "--model-partition",
         TEST_MODEL,
         cwd=repo,
     )

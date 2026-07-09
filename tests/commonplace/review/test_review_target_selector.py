@@ -1037,7 +1037,7 @@ class TestJsonOutput:
             "review_target_selector",
             "--mode",
             "requested",
-            "--model",
+            "--model-partition",
             TEST_MODEL,
             "prose",
             "semantic/grounding-alignment",
@@ -1061,7 +1061,7 @@ class TestJsonOutput:
             "review_target_selector",
             "--mode",
             "requested",
-            "--model",
+            "--model-partition",
             TEST_MODEL,
             "prose",
             "semantic/grounding-alignment",
@@ -1120,7 +1120,7 @@ class TestModelOptional:
         )
 
         assert result.returncode == 2
-        assert "--model is required unless selecting missing-review coverage" in result.stderr
+        assert "--model-partition is required unless selecting missing-review coverage" in result.stderr
 
     def test_cli_rejects_removed_ack_option(self, tmp_path: Path) -> None:
         build_fixture(tmp_path)
@@ -1152,7 +1152,7 @@ class TestModelOptional:
         )
 
         assert result.returncode == 2
-        assert "--model is required with --mode requested" in result.stderr
+        assert "--model-partition is required with --mode requested" in result.stderr
 
     def test_ack_gate_review_cli_writes_non_null_review_pair_id(self, tmp_path: Path) -> None:
         fixture = build_fixture(tmp_path)
@@ -1161,7 +1161,7 @@ class TestModelOptional:
         result = run_cli(
             "ack_gate_review",
             "kb/notes/stable.md",
-            "--model",
+            "--model-partition",
             TEST_MODEL,
             "prose/source-residue",
             cwd=tmp_path,

@@ -36,7 +36,7 @@ Steps 1 through 7 below only write reports; none of them edit the note. Steps 8 
 5. Run the production `semantic` bundle through the requested-mode, single-note flow in `kb/instructions/run-review-batches.md`:
 
    ```bash
-   commonplace-review-target-selector --mode requested --model {model-partition} semantic --note {note-path} --json \
+   commonplace-review-target-selector --mode requested --model-partition {model-partition} semantic --note {note-path} --json \
      | commonplace-create-review-jobs --input - --grouping note
    ```
 

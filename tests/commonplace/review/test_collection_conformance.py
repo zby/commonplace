@@ -468,7 +468,7 @@ class TestCreateJobsForCollectionPairs:
             "review_target_selector",
             "--mode",
             "requested",
-            "--model",
+            "--model-partition",
             TEST_MODEL,
             "collection",
             "--note",

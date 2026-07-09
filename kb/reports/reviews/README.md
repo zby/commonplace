@@ -22,16 +22,16 @@ Legacy rendered review artifacts and archived review outputs. The live review sy
 
 ```bash
 # List all stale (note, gate) pairs
-commonplace-review-target-selector --model gpt-5-4-xhigh --all-gates
+commonplace-review-target-selector --model-partition codex --all-gates
 
 # List stale pairs for one bundle
-commonplace-review-target-selector --model gpt-5-4-xhigh prose
+commonplace-review-target-selector --model-partition codex prose
 
 # JSON output with diffs
-commonplace-review-target-selector --model gpt-5-4-xhigh --all-gates --json
+commonplace-review-target-selector --model-partition codex --all-gates --json
 
 # Ack a review (note change was insignificant for this gate)
-commonplace-ack-gate-review --model gpt-5-4-xhigh kb/notes/backlinks.md prose/source-residue
+commonplace-ack-gate-review --model-partition codex kb/notes/backlinks.md prose/source-residue
 ```
 
 ## Status

@@ -17,7 +17,7 @@ Inputs:
 ### 1. Get note-changed pairs
 
 ```bash
-commonplace-review-target-selector --model {model-id} {bundle-or-all} --note {note-scope} --json --reason note-changed
+commonplace-review-target-selector --model-partition {model-partition} {bundle-or-all} --note {note-scope} --json --reason note-changed
 ```
 
 If the output object has `"targets": []`, stop — nothing to triage.
@@ -40,7 +40,7 @@ When in doubt, don't ack — let the review handle it.
 Ack all insignificant pairs in one command:
 
 ```bash
-commonplace-ack-gate-review --model {model-id} {note-path} {gate-id} [{gate-id} ...]
+commonplace-ack-gate-review --model-partition {model-partition} {note-path} {gate-id} [{gate-id} ...]
 ```
 
 This appends a new acceptance event to the review DB so the accepted baseline matches the current note revision. It does not rely on `touch` or filesystem timestamps.

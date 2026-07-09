@@ -18,7 +18,7 @@ from commonplace.review.review_model import normalize_model_partition
 
 
 def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
-    parser = argparse.ArgumentParser(description="List review target (note, gate) pairs.")
+    parser = argparse.ArgumentParser(description="List review target (note, gate) pairs.", allow_abbrev=False)
     parser.add_argument(
         "--mode",
         choices=["stale", "requested"],
@@ -43,9 +43,10 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser.add_argument("--current", action="store_true", help="Filter to notes with frontmatter status: current.")
     parser.add_argument("--json", action="store_true", help="JSON output (includes diffs for note-changed).")
     parser.add_argument(
-        "--model",
+        "--model-partition",
         help=(
-            "Review model partition to query or acknowledge. "
+            "Review model partition to query or acknowledge (a partition name such as "
+            "'claude-opus-4.8', not the concrete model that will run). "
             "Omit only for model-agnostic missing-review coverage."
         ),
     )
@@ -57,9 +58,9 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     args = parser.parse_args(argv)
 
     repo_root = cwd if cwd is not None else Path.cwd()
-    model = args.model.strip() if args.model is not None else None
-    if args.model is not None and not model:
-        parser.error("--model must not be empty")
+    model = args.model_partition.strip() if args.model_partition is not None else None
+    if args.model_partition is not None and not model:
+        parser.error("--model-partition must not be empty")
 
     gates_dir = review_gates_dir(repo_root)
 
@@ -81,9 +82,9 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     if args.mode == "requested" and args.reason is not None:
         parser.error("--reason is only valid with --mode stale")
     if args.mode == "requested" and model is None:
-        parser.error("--model is required with --mode requested")
+        parser.error("--model-partition is required with --mode requested")
     if args.mode == "stale" and model is None and args.reason not in (None, "missing-review"):
-        parser.error("--model is required unless selecting missing-review coverage")
+        parser.error("--model-partition is required unless selecting missing-review coverage")
 
     try:
         if args.mode == "requested":

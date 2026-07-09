@@ -23,7 +23,8 @@ def build_parser() -> argparse.ArgumentParser:
             "Acknowledge note-changed stale pairs when the gate's watched note parts "
             "did not change. Type-conformance pairs never qualify: a type spec "
             "declares no watches, so it watches the whole note."
-        )
+        ),
+        allow_abbrev=False,
     )
     parser.add_argument(
         "gate_or_bundle",
@@ -40,7 +41,11 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument("--note", nargs="+", dest="note_paths", help="Filter to specific note paths or directories.")
     parser.add_argument("--current", action="store_true", help="Filter to notes with frontmatter status: current.")
-    parser.add_argument("--model", required=True, help="Review model partition to acknowledge against.")
+    parser.add_argument(
+        "--model-partition",
+        required=True,
+        help="Review model partition to acknowledge against (a partition name, not a concrete model).",
+    )
     parser.add_argument("--dry-run", action="store_true", help="Print qualifying pairs without acknowledging them.")
     return parser
 
@@ -51,9 +56,9 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
 
     repo_root = cwd if cwd is not None else Path.cwd()
     gates_dir = review_gates_dir(repo_root)
-    model = args.model.strip()
+    model = args.model_partition.strip()
     if not model:
-        parser.error("--model must not be empty")
+        parser.error("--model-partition must not be empty")
 
     if args.all_gates:
         if args.gate_or_bundle:
