@@ -36,7 +36,7 @@ Only what derives from the consumer or from the second-order layer itself, not f
 
 ## Evidence
 
-Three instances of the same demotion, two shipped and one proposed, each keeping machinery while opening the set: types became path references, so the type set is open and collection-local (ADR 018); link vocabulary became collection-owned selections from a shared catalogue, replacing one universal set (ADR 019); the three [registers](./definitions/register.md) are proposed to become default text-contract profiles (open-ended-collection-text-contracts proposal). Status/lifecycle semantics are a predicted fourth instance: the note type's status field currently fuses structural lifecycle with first-person endorsement, which is one answerability relation hardwired one level too high.
+Three instances of the same demotion, two shipped and one proposed, each keeping machinery while opening the set: types became path references, so the type set is open and collection-local (ADR 018); link vocabulary became collection-owned selections from a shared catalogue, replacing one universal set (ADR 019); the three [registers](./definitions/text-contract.md) are proposed to become default text-contract profiles (open-ended-collection-text-contracts proposal). Status/lifecycle semantics are a predicted fourth instance: the note type's status field currently fuses structural lifecycle with first-person endorsement, which is one answerability relation hardwired one level too high.
 
 ## Caveats
 
@@ -51,7 +51,7 @@ Relevant Notes:
 - [Context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — grounds: why bounded-context economy is consumer-derived and therefore stays universal
 - [KB goals in always-loaded context guide inclusion decisions](./kb-goals-in-always-loaded-context-guide-inclusion-decisions.md) — contrasts: the same universal/per-installation split seen from the operator side — purpose, scope, and quality bar need human input, while the demoted taxonomies arrive as framework-shipped defaults
 - [017-collection-md-is-the-register-convention-boundary](../reference/adr/017-collection-md-is-the-register-convention-boundary.md) — evidence: shipped instance of the declaration obligation — COLLECTION.md is the mandatory per-collection contract surface, and a missing or vague one is "an operational defect"
-- [Register](./definitions/register.md) — defined-in: register
+- [Register](./definitions/text-contract.md) — defined-in: register
 - [Knowledge artifact](./definitions/knowledge-artifact.md) — defined-in: the answerability boundary that separates knowledge artifacts from arbitrary text
 - [018-Types are path references to instruction docs](../reference/adr/018-types-are-path-references-to-instruction-docs.md) — evidence: shipped instance of the demotion — an open, collection-local type set
 - [019-Collection-owned link vocabulary with per-destination outbound rules](../reference/adr/019-collection-owned-link-vocabulary.md) — evidence: shipped instance — collection-owned vocabulary selecting from a shared catalogue

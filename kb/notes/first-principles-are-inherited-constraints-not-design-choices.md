@@ -38,7 +38,7 @@ Each is named with the boundary it inherits from. The list is what passes today,
 
 The membership test earns its keep by *excluding* rules that feel foundational but are positions the framework chose and could re-choose. Each of these demotes to a guarded default per the complement note:
 
-- The **three [registers](./definitions/register.md)** (theoretical / descriptive / prescriptive) — a proven bundle, but a new kind of KB can need a fourth; they demote to default text-contract profiles.
+- The **three [registers](./definitions/text-contract.md)** (theoretical / descriptive / prescriptive) — a proven bundle, but a new kind of KB can need a fourth; they demote to default text-contract profiles.
 - **Link-label sets** — `extends`, `grounds`, `contradicts`, and the rest are a collection-owned selection from a shared catalogue, not a universal vocabulary.
 - **Type sets** — open and collection-local; the framework fixes that types *exist* and are path-valued (machinery), not *which* types there are (choice).
 - **Spending the directory tree on content-area** rather than on kind — a routing decision a given KB makes, reversible without touching the framework.

@@ -1,8 +1,8 @@
-# Writing conventions for kb/instructions/ (prescriptive register)
+# Writing conventions for kb/instructions/ (prescriptive profile)
 
-## Register and precision
+## Text contract and precision
 
-Prescriptive [register](../notes/definitions/register.md): procedures, conventions, skill bodies, and operational rules. Directs what to do — optimised for an agent (or human) executing on first reading, without prior context.
+Prescriptive [profile](../notes/definitions/text-contract.md): procedures, conventions, skill bodies, and operational rules. Directs what to do — optimised for an agent (or human) executing on first reading, without prior context.
 
 Quality goal is **executability + precision** — every step actionable, every decision point explicit, ambiguity eliminated. A vague prescription wastes bounded context on interpretation rather than action.
 

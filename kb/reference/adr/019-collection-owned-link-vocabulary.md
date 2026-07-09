@@ -94,5 +94,5 @@ Audit outcomes applied to the library drafts:
 - [ADR-017: COLLECTION.md is the register convention boundary](./017-collection-md-is-the-register-convention-boundary.md) — foundation: the convention boundary this ADR specifies the internal structure of
 - [ADR-020: theoretical-default additions — contrasts and mechanism](./020-theoretical-default-contrasts-mechanism.md) — extends ADR 009 within the theoretical default template this ADR scopes
 - [Links encode conditional possibilities, not obligations](../../notes/links-encode-conditional-possibilities-not-obligations.md) — grounds: the reader-need theory the label discipline rests on
-- [Register](../../notes/definitions/register.md) — defined-in: content-mode groupings used to organise the catalogue
+- [Register](../../notes/definitions/text-contract.md) — defined-in: content-mode groupings used to organise the catalogue
 - [link-vocabulary.md](../link-vocabulary.md) — the catalogue that COLLECTION.md authors consult

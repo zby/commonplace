@@ -1,8 +1,8 @@
 # Writing conventions for kb/agent-memory-systems/
 
-## Register
+## Text contract
 
-This collection operates in the **descriptive [register](../notes/definitions/register.md)** (one of three content modes — theoretical, descriptive, prescriptive — determining quality goal, title conventions, and linking rules). It documents external agent memory, knowledge, and context-engineering systems — what each is built from and does, grounded in the code. Broad cross-system comparison lives in the root-level analyses.
+This collection operates under the **descriptive [profile](../notes/definitions/text-contract.md)** (one of Commonplace's default text-contract profiles — theoretical, descriptive, prescriptive — determining quality goal, title conventions, and linking rules). It documents external agent memory, knowledge, and context-engineering systems — what each is built from and does, grounded in the code. Broad cross-system comparison lives in the root-level analyses.
 
 The quality goal is **fidelity + economy**: faithful to what the code actually does, in minimum tokens. A review that misrepresents the reviewed system is worse than none — it pollutes the landscape.
 

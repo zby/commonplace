@@ -1,8 +1,8 @@
-# Writing conventions for kb/sources/ (descriptive register)
+# Writing conventions for kb/sources/ (descriptive profile)
 
-## Register and fidelity
+## Text contract and fidelity
 
-Descriptive [register](../notes/definitions/register.md): captured external sources (papers, articles, GitHub issues, tweets, READMEs) and their ingest analyses. Sources are stamped, not authored — the quality goal is **faithful capture** plus **clear ingest analysis**.
+Descriptive [profile](../notes/definitions/text-contract.md): captured external sources (papers, articles, GitHub issues, tweets, READMEs) and their ingest analyses. Sources are stamped, not authored — the quality goal is **faithful capture** plus **clear ingest analysis**.
 
 Two roles, two shapes — don't blur capture and analysis in the same file:
 

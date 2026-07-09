@@ -1,8 +1,8 @@
 # Writing conventions for kb/agentic-systems/
 
-## Register
+## Text contract
 
-This collection operates in the **descriptive [register](../notes/definitions/register.md)**. It covers external **agentic systems and harnesses as whole systems** — execution loops, orchestration APIs, sub-agent surfaces, scheduling, permissioning, control — what each is built from and does.
+This collection operates under the **descriptive [profile](../notes/definitions/text-contract.md)**. It covers external **agentic systems and harnesses as whole systems** — execution loops, orchestration APIs, sub-agent surfaces, scheduling, permissioning, control — what each is built from and does.
 
 The quality goal is **fidelity + economy**: faithful to what the system actually does, in minimum tokens. An analysis that misrepresents the analysed system is worse than none.
 

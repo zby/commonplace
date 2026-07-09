@@ -1,8 +1,8 @@
-# Writing conventions for kb/notes/ (theoretical register)
+# Writing conventions for kb/notes/ (theoretical profile)
 
-## Register and reach
+## Text contract and reach
 
-Theoretical [register](./definitions/register.md): transferable claims about what is true — mechanisms, principles, arguments that should hold across systems.
+Theoretical [profile](./definitions/text-contract.md): transferable claims about what is true — mechanisms, principles, arguments that should hold across systems.
 
 Quality goal is **reach** — the most general formulation the argument supports, with boundaries mapped. A note with reach compresses many situations into one explanation.
 

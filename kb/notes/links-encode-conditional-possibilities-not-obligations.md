@@ -88,7 +88,7 @@ If the host argument doesn't survive without the linked content, don't link — 
 
 1. **Every label must name a reader-need.** Test: "A reader who would follow this label is one who [wants to / might / needs to] ___."
 2. **Prefer labels that name epistemic or task states** (wants to verify, wants to understand how, wants to execute) over labels that name static document relations (is-a-part-of, cross-references).
-3. **Cross-[register](./definitions/register.md) labels name boundary-crossing needs.** (Register: one of three content modes — theoretical, descriptive, prescriptive — determining quality goal, title conventions, and linking rules.) A reader moving from theory to description has a different unmet need (evidence, instance) than one moving from description to theory (rationale). The cross-register vocabulary grows from these boundary-specific needs.
+3. **Cross-[register](./definitions/text-contract.md) labels name boundary-crossing needs.** (Register: one of three content modes — theoretical, descriptive, prescriptive — determining quality goal, title conventions, and linking rules.) A reader moving from theory to description has a different unmet need (evidence, instance) than one moving from description to theory (rationale). The cross-register vocabulary grows from these boundary-specific needs.
 4. **If a label's reader-need is almost-always-already-met** in the target reader class, cut the label. It's a link that doesn't pay off.
 5. **Weak catch-alls should be rare.** `see-also` is an explicit "I can't name what this reader needs, but something's here" — useful as an escape hatch, not as a default.
 
@@ -101,7 +101,7 @@ If the host argument doesn't survive without the linked content, don't link — 
 
 Relevant Notes:
 
-- [Register](./definitions/register.md) — defined-in: the three content modes (theoretical, descriptive, prescriptive) the cross-register vocabulary organises around
+- [Register](./definitions/text-contract.md) — defined-in: the three content modes (theoretical, descriptive, prescriptive) the cross-register vocabulary organises around
 - [ADR 019 — collection-owned link vocabulary](../reference/adr/019-collection-owned-link-vocabulary.md) — extends: the architecture that enforces the reader-need discipline per destination
 - [ADR 020 — theoretical-default additions (contrasts, mechanism)](../reference/adr/020-theoretical-default-contrasts-mechanism.md) — extends: applies the reader-need test to label proposals
 - [Linking theory](./linking-theory.md) — grounds: the decision-cost model this note instantiates

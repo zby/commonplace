@@ -1,12 +1,14 @@
 ---
-description: "Proposal: demote register from closed taxonomy to default profiles — the binding requirement is that each collection's COLLECTION.md declare its text contract, and the contract set is open-ended"
+description: "Superseded by ADR 042: demoted register from closed taxonomy to default text-contract profiles — each collection's COLLECTION.md declares its text contract, and the profile set is open-ended"
 type: kb/types/note.md
 traits: [design-proposal]
 tags: [document-system]
-status: seedling
+status: outdated
 ---
 
 # Open-ended collection text contracts
+
+**Superseded by:** [ADR 042 — register becomes a default profile under open-ended text contracts](../adr/042-register-becomes-a-default-profile-under-open-ended-text-contracts.md). All four locked decisions below shipped: the definition note renamed to [text contract](../../notes/definitions/text-contract.md), the [profile catalogue](../text-contract-profiles.md) added, the [foundation note](../../notes/a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md) revised in place, and `AGENTS.md`'s vocabulary entry and routing table updated. Kept as the historical design record — the Context, Decisions, and Forces below are not maintained further.
 
 Commonplace currently grounds its writing conventions in a **closed taxonomy**: three registers (theoretical, descriptive, prescriptive), claimed exhaustive — "if you try to state a fourth register, it collapses into one of the three." This proposal demotes the taxonomy. The binding requirement was never the tripartition; it is that **each writable collection declares its text features** — quality goal, title convention, attribution requirements, maintenance semantics, link grammar — in its `COLLECTION.md`. The three registers become named **default profiles** in an open-ended library: proven bundles of text features a new collection adopts, extends, or replaces, not a partition every artifact must fit.
 
@@ -16,7 +18,7 @@ The trigger is concrete: casework on stance-neutral evidence maps (the `kb/work/
 
 Where register is load-bearing today, ordered by how much this proposal would change it:
 
-- **Theory layer** — [register](../../notes/definitions/register.md) (definition) and [a knowledge base holds theories, descriptions, and prescriptions with asymmetric linking](../../notes/a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md) (foundation note) both state the three registers are *exhaustive*, argued from query shapes ("why/what/how") and the classical epistemology/ontology/praxeology tripartition.
+- **Theory layer** — [register](../../notes/definitions/text-contract.md) (definition) and [a knowledge base holds theories, descriptions, and prescriptions with asymmetric linking](../../notes/a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md) (foundation note) both state the three registers are *exhaustive*, argued from query shapes ("why/what/how") and the classical epistemology/ontology/praxeology tripartition.
 - **AGENTS.md** — the vocabulary entry defines register as "one of three content modes"; the collection routing table names each collection's register.
 - **Convention machinery** — [ADR 017](../adr/017-collection-md-is-the-register-convention-boundary.md) already made `COLLECTION.md` the convention boundary and explicitly notes that register-per-collection is a design choice, with mixed-register collections allowed. [ADR 019](../adr/019-collection-owned-link-vocabulary.md) already made the collection, not the register, the anchor for link vocabulary ("Collection, not register, is the anchor"), with register surviving as the grouping scheme for default templates in the [link-vocabulary catalogue](../link-vocabulary.md) (e.g. ADR 020's "theoretical-register default template").
 - **Enforcement machinery** — [ADR 038](../adr/038-type-conformance-reviews-use-the-type-spec-as-the-gate.md) and [ADR 041](../adr/041-collection-conformance-reviews-use-collection-md-as-the-gate.md) made both contract surfaces semantically enforced: every note carries derivable conformance pairs against its type spec and its collection's `COLLECTION.md`, so a text contract is a review gate rather than advisory prose, and a contract edit stales exactly its cohort. ([ADR 012](../adr/012-types-for-structure-traits-for-review.md)'s traits-only semantic-review boundary is amended accordingly.) The binding requirement this proposal rests on is therefore mechanically checkable.
@@ -71,13 +73,13 @@ These were free choices when this proposal was drafted. They are now decided, fo
 
 It did **not** fold cleanly into the descriptive profile plus an evidentiality clause: descriptive's quality bar is accuracy to a known referent (the shipped system); the dialectical contract's bar is stance-neutral, non-adjudicated mapping between competing parties — a different epistemic stance, not descriptive-plus-a-clause. So the **strong form applies**: convert to an ADR with the full profile-library split (Decisions 1-4 above), not the weaker taxonomy-demotion-only fallback.
 
-**Ready for implementation.** All four free choices are now decided (see Decisions above). Implementing this proposal means: write the ADR instantiating Decisions 1-4; rename the definition note and its references; add the `kb/reference/` profile catalogue; revise the foundation note in place; update AGENTS.md's vocabulary entry and the collection-routing table; and supersede this proposal once the ADR ships. The worked-case evidence trail lives in the sibling `epistack-casebooks` repo, outside this repo: `kb/lhc/notes/COLLECTION.md`, its five casebook notes, `backlog-to-commonplace.md`'s 2026-07-09 entries, and a note there generalizing the citation-granularity result.
+**Implemented.** [ADR 042](../adr/042-register-becomes-a-default-profile-under-open-ended-text-contracts.md) instantiated Decisions 1-4: the definition note is renamed and revised, the `kb/reference/` profile catalogue is added, the foundation note is revised in place, and `AGENTS.md`'s vocabulary entry and collection-routing table are updated. The worked-case evidence trail lives in the sibling `epistack-casebooks` repo, outside this repo: `kb/lhc/notes/COLLECTION.md`, its five casebook notes, `backlog-to-commonplace.md`'s 2026-07-09 entries, and a note there generalizing the citation-granularity result.
 
 ---
 
 Relevant Notes:
 
-- [Register](../../notes/definitions/register.md) — operates-on: the definition this proposal would redefine or supersede
+- [Register](../../notes/definitions/text-contract.md) — operates-on: the definition this proposal would redefine or supersede
 - [A knowledge base holds theories, descriptions, and prescriptions with asymmetric linking](../../notes/a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md) — operates-on: the foundation note whose exhaustiveness claim this proposal weakens to an attractor claim
 - [ADR-017: COLLECTION.md is the register convention boundary](../adr/017-collection-md-is-the-register-convention-boundary.md) — part-of: the convention-boundary decision this proposal completes; its mechanism is unchanged
 - [ADR-019: collection-owned link vocabulary](../adr/019-collection-owned-link-vocabulary.md) — part-of: precedent for the anchor move (collection over register) and for the worked-case guard on vocabulary growth

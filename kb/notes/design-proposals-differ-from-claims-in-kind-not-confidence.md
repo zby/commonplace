@@ -30,7 +30,7 @@ The taxonomy's other arm requires no machinery: hypotheses are ordinary claims a
 
 Relevant Notes:
 
-- [register](./definitions/register.md) — defined-in: the theoretical/descriptive/prescriptive register model this taxonomy operates over
+- [register](./definitions/text-contract.md) — defined-in: the theoretical/descriptive/prescriptive register model this taxonomy operates over
 - [trace-derived memory earns authority per operation, not at capture](./trace-derived-memory-earns-authority-per-operation-not-at-capture.md) — see-also: the executed precedent of the recast — claim title carries the truth-apt part, a witness section carries the construction with free choices marked
 - [Alexander patterns and knowledge system design](./alexander-patterns-and-knowledge-system-design.md) — extends: Alexander's Context/Problem/Forces/Solution form is prior art for the design-quality test that replaces contestability
 - [Backlink surfacing](../reference/proposals/backlink-surfacing.md) — see-also: a residue-side instance — requirements extracted to a claim note and cited, option space held descriptively

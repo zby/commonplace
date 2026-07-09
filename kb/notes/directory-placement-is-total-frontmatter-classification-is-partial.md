@@ -16,7 +16,7 @@ Every other axis a KB layers on — type, tags, traits, status — is *partial*.
 
 Because location is total and type is partial, the two contracts keyed to them cannot substitute for each other.
 
-The **location contract** is the [collection](../reference/definitions/collection.md)'s `COLLECTION.md` — it governs by position. Because position is the one thing every artifact in a subtree shares unconditionally, a location contract can bind the whole subtree, including files that carry no type. This is why the [register](./definitions/register.md) (the theoretical, descriptive, or prescriptive quality goal), the linking policy, and the scope attach to a collection — a directory — and not to a type: they must hold for every artifact in the region whether or not it opted into a type.
+The **location contract** is the [collection](../reference/definitions/collection.md)'s `COLLECTION.md` — it governs by position. Because position is the one thing every artifact in a subtree shares unconditionally, a location contract can bind the whole subtree, including files that carry no type. This is why the [register](./definitions/text-contract.md) (the theoretical, descriptive, or prescriptive quality goal), the linking policy, and the scope attach to a collection — a directory — and not to a type: they must hold for every artifact in the region whether or not it opted into a type.
 
 The **type contract** is the type-spec — it governs by structure: schema, required sections, frontmatter fields. It binds only the documents that declare that type, and says nothing about where they live. A `structured-claim` has the same shape in `kb/notes/` or `kb/reference/`.
 

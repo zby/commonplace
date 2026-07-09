@@ -49,9 +49,9 @@ Terms needed to understand the project's structure and everyday operations, alph
 - **Distillation** — extracting a use-shaped artifact from a larger body of material for a particular consumer (notes from sources, instructions from notes). Distinct from ML knowledge distillation. See `kb/notes/definitions/distillation.md`.
 - **Frontloading** — pre-computing parts of an instruction whose inputs are already known (at build, install, or session start) and inserting the result, so the consuming call's context carries the answer instead of the work. See `kb/notes/frontloading-spares-execution-context.md`.
 - **Mark** — a frontmatter field that caches a value recomputable from ground truth recorded elsewhere, validated by code, and read by agents to spare an expensive in-context recompute (`complete`/`covered_by` on tag-READMEs). Recomputable, so never load-bearing; enforced-or-omitted, because a stale trusted cache is a trap. See `kb/types/tag-readme.md`.
-- **Register** — one of three content modes (theoretical, descriptive, prescriptive) that determines a collection's quality goal, title conventions, and linking rules. See `kb/notes/definitions/register.md`.
 - **Representational form** — how retained content is encoded and consumed: prose, symbolic (code, schemas, grammars), distributed-parametric (model weights), or mixed. Codification is the prose→symbolic crossing on this axis, and form sets the default review method: read prose, test symbolic artifacts, probe parametric ones. See `kb/notes/definitions/representational-form.md`.
 - **System-definition artifact** — a retained artifact the system consumes with binding force: instruction, enforcement, routing, validation, or configuration (skills, schemas, COLLECTION.md files, validators). Contrast a knowledge artifact, consumed as evidence or advice that informs without binding. See `kb/notes/definitions/system-definition-artifact.md`.
+- **Text contract** — the binding requirement a collection's `COLLECTION.md` declares: quality goal, title/description conventions, attribution requirements, maintenance semantics, and link grammar. A **profile** is a named, proven bundle of these features a collection may adopt, extend, or replace — theoretical, descriptive, and prescriptive are the shipped defaults; the set is open, guarded by worked-case-first promotion. See `kb/notes/definitions/text-contract.md` and the [profile catalogue](./kb/reference/text-contract-profiles.md).
 - **Workshop** — a named workspace for work-in-flight documents, under `kb/work/<workshop-name>/`. Value is consumed rather than accumulated: a finished workshop produces library artifacts (notes, ADRs) and is deleted. See `kb/notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md`.
 
 ## Development
@@ -81,9 +81,9 @@ Read the target collection's `COLLECTION.md` before writing or connecting artifa
 
 | Path | Role | Use when |
 |---|---|---|
-| `kb/notes/` | theoretical register | Writing transferable claims, mechanisms, definitions, synthesis, and KB methodology theory. |
-| `kb/reference/` | descriptive register | Describing the shipped Commonplace system, architecture, type system, commands, and ADRs. |
-| `kb/instructions/` | prescriptive register | Writing procedures, skills, review gates, operational rules, and how-to guidance. |
+| `kb/notes/` | theoretical profile | Writing transferable claims, mechanisms, definitions, synthesis, and KB methodology theory. |
+| `kb/reference/` | descriptive profile | Describing the shipped Commonplace system, architecture, type system, commands, and ADRs. |
+| `kb/instructions/` | prescriptive profile | Writing procedures, skills, review gates, operational rules, and how-to guidance. |
 | `kb/agent-memory-systems/` | descriptive external-system coverage | Reviewing and comparing external agent memory, knowledge, and context-engineering systems. |
 | `kb/agentic-systems/` | descriptive external-system coverage | Analysing external agentic systems and harnesses as whole systems — execution loops, orchestration APIs, control surfaces. |
 | `kb/sources/` | captured source material | Storing external snapshots, ingests, and source reviews. |

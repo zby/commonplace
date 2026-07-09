@@ -36,7 +36,7 @@ Collection authors use this page when defining or revising outbound-linking rule
 
 The architecture is deliberately loose because the link theory is still developing. Invent intra-collection labels your work needs, propose additions to the catalogue, and diverge from suggestions where it makes sense.
 
-("Register" means one of three content modes — theoretical, descriptive, prescriptive — that determines a collection's quality goal, title conventions, and linking rules. See [`register`](../notes/definitions/register.md).)
+("Register" means one of three content modes — theoretical, descriptive, prescriptive — that determines a collection's quality goal, title conventions, and linking rules. See [`register`](../notes/definitions/text-contract.md).)
 
 Organise the outbound-linking section **per destination collection**, not per register. For each collection your source links to, declare:
 
@@ -140,4 +140,4 @@ Relevant Notes:
 - [ADR 009 — link relationship semantics](./adr/009-link-relationship-semantics.md) — rationale: the original theoretical vocabulary whose core labels seed this catalogue
 - [ADR 020 — theoretical-default additions (contrasts, mechanism)](./adr/020-theoretical-default-contrasts-mechanism.md) — rationale: the audit outcomes adding `mechanism` and `contrasts` and stating directional asymmetry
 - [Links encode conditional possibilities, not obligations](../notes/links-encode-conditional-possibilities-not-obligations.md) — rationale: the reader-need theory behind the label test
-- [Register](../notes/definitions/register.md) — defined-in: content-mode groupings used to organise the catalogue
+- [Register](../notes/definitions/text-contract.md) — defined-in: content-mode groupings used to organise the catalogue
