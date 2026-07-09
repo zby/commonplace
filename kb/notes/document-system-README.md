@@ -20,6 +20,7 @@ For the live Commonplace repo's current type inventory and migration summary, se
 - [design-for-the-first-time-human-except-on-access-cost](./design-for-the-first-time-human-except-on-access-cost.md) — refines the dual-audience heuristic: design for newcomer-human ergonomics except where agent access mode makes whole-artifact reads expensive
 - [why-directories-despite-their-costs](./why-directories-despite-their-costs.md) — directories buy one-two orders of magnitude of navigable scale but each new directory taxes routing, search config, and cross-directory linking
 - [a-universal-knowledge-framework-demotes-content-taxonomies-to-defaults](./a-universal-knowledge-framework-demotes-content-taxonomies-to-defaults.md) — the type/label/register taxonomies are collection-local defaults with worked-case guards; only the declaration obligation and answerability stay universal
+- [first-principles-are-inherited-constraints-not-design-choices](./first-principles-are-inherited-constraints-not-design-choices.md) — the complement: a rule is a first principle iff it arrives in the constraint packet of a boundary commitment (consumer, substrate, domain, machinery); packets cannot be cherry-picked, so these cannot demote
 
 ## Writing Conventions
 
