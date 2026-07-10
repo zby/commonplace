@@ -2,9 +2,9 @@
 
 ## Purpose
 
-Work the operation-semantics slice of the derived-artifacts problem into something non-tautological, through worked cases against shipped machinery.
+Build an MVP of the unified version-anchored operations machinery, and use it to work the operation-semantics slice of the derived-artifacts problem into something non-tautological. The MVP — a calibrated one-cycle closing review on the full pass, carry records with rationale, an observation log with a variance control arm — is assembled from shipped machinery wherever possible; its use in real passes supplies the evidence that locates constraints.
 
-The [version-anchored operations proposal](../../reference/proposals/version-anchored-artifact-operations-and-transformation-closure.md) fixed semantic invariants — operations bind exact states, evidence kinds stay distinct, transformations stale prior assessments, process history can't be acknowledged onto new bytes. Stated abstractly these verge on tautology ("judgments about old bytes don't bind new bytes"). The suspected real content sits in the exceptions and the protocol, not the invariants:
+The investigation starts from candidate semantic invariants — operations bind exact states, evidence kinds stay distinct, transformations stale prior assessments, process history can't be acknowledged onto new bytes. Stated abstractly these verge on tautology ("judgments about old bytes don't bind new bytes"). The suspected real content sits in the exceptions and the protocol, not the invariants:
 
 - under what conditions evidence may be **carried** across an edit (acknowledged) rather than recomputed, and who may carry it;
 - what independence carrying requires, so the transformer doesn't certify its own transformation;
@@ -15,7 +15,7 @@ If worked cases show the invariants are purely definitional, the honest close is
 
 ## Working stance
 
-Brainstorm on the solution side; harden on the constraint side. Solution sketches (trust dials, footprint declarations, audit sampling, typed transformations) accumulate and compete here — none is a decision, and nothing in this workshop commits the system. The deliverable that must be right is the constraint list: which constraints on *any* solution are real — each located by a concrete observation or worked case that exhibits it — and which are assumed or tautological. Decisions stay on the proposal → ADR path, taken only against located constraints.
+Brainstorm on the solution side; harden on the constraint side; keep design decisions open for as long as keeping them open doesn't make the system too cumbersome to work with. The MVP decides only what building it forces, in the lightest reversible representation available (existing ack machinery, plain log files) — cumbersomeness in daily use, not architectural tidiness, is the trigger for closing a decision. Solution sketches (trust dials, footprint declarations, audit sampling, typed transformations) accumulate and compete here — none is a commitment. The deliverable that must be right is the constraint list: which constraints on *any* solution are real — each located by a concrete observation from MVP use — and which are assumed or tautological. Decisions that harden go the proposal → ADR path, taken only against located constraints.
 
 ## Boundary with lineage-mechanisms
 
@@ -35,16 +35,16 @@ Starting points from the review that opened this workshop; the live work decides
 
 ## What closes this workshop
 
-- Each candidate constraint (in [carry-heuristics.md](./carry-heuristics.md) and later files) is either located — pinned to a concrete case or observation that exhibits it — or discharged as assumed or tautological.
+- The MVP exists and has been used on real passes: closing review in the full-pass procedure, carry records with rationale, observation log with variance control.
+- Each candidate constraint (in [carry-heuristics.md](./carry-heuristics.md) and later files) is either located — pinned to a concrete observation from MVP use — or discharged as assumed or tautological.
 - The solution space is mapped against the located constraints, with sketches recorded as options, not choices.
 - The tautology question is answered: extracted notes that meet the quality bar (they change how someone builds a KB), or an explicit conclusion that the invariants are definitional and stay inline in the proposal.
-- The proposal is revised to fix the located constraints and carry the surviving sketches as free choices, and states its boundary with lineage-mechanisms; decisions then proceed on the proposal → ADR path.
+- The located constraints and surviving sketches are distilled into the appropriate durable artifacts; decisions then proceed on the proposal → ADR path where machinery is warranted.
 
 ---
 
 Relevant material:
 
-- [Version-anchored artifact operations and transformation closure](../../reference/proposals/version-anchored-artifact-operations-and-transformation-closure.md) — tests: the proposal whose constrained core this workshop de-tautologizes or confirms
 - [Run a full improvement pass on one note](../../instructions/run-full-improvement-pass-on-note.md) — tests: the one real composite workflow; first closure trial target
 - [Factored dependency pairs for review freshness](../../reference/proposals/factored-dependency-pairs-for-review-freshness.md) — draws-on: the keep-it-small default a human-attestation pair would extend
 - [History has one chance to become checkable](../../notes/history-has-one-chance-to-become-checkable.md) — grounds: the state-judgment vs. process-fact split the claim-kinds taxonomy rests on
