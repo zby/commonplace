@@ -25,6 +25,10 @@ Starting points from the review that opened this workshop; the live work decides
 2. **Human review anchoring.** Can human attestation be one more factored `(note, contract)` pair in the existing review store (the ADR 038/041 pattern, human actor/partition), and what exactly does such an acceptance certify? Cheapest representation decides; see [factored dependency pairs](../../reference/proposals/factored-dependency-pairs-for-review-freshness.md).
 3. **Negative case: routed reports.** Test the claim that giving critique/friction reports freshness state re-creates certification semantics through the back door. Expected output is a documented do-not-anchor rule, not machinery.
 
+## Working files
+
+- [carry-heuristics.md](./carry-heuristics.md) — the optimization layer over always-sound rerun: per (edit-kind, check-kind) safety with signs, baseline-anchored (never incremental) diff judging, ex-ante typed transformation footprints, convergence by structure, and learning the compatibility matrix from rerun flip logs before designing heuristics
+
 ## What closes this workshop
 
 - The full-pass instruction performs explicit post-transformation closure (shipped edit), or a recorded reason why it shouldn't.
