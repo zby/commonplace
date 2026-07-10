@@ -25,13 +25,13 @@ Brainstorm on the solution side; harden on the constraint side. Solution sketche
 
 Starting points from the review that opened this workshop; the live work decides order and may replace them. These are constraint-locating probes, not adoption trials — a probe may incidentally improve an instruction, but its purpose is evidence.
 
-1. **Full-pass closure.** The semantic-bundle acceptance written at step 5 of [run-full-improvement-pass-on-note.md](../../instructions/run-full-improvement-pass-on-note.md) is staled by the step 8–9 edits, and the review DB already detects that. The missing piece is only a closure step in the instruction: re-run (or ack) against the final text. Trial it on a real pass; observe whether re-run vs. diff-based ack ever differ in practice and what that says about the carry-forward conditions.
+1. **Full-pass closure.** The semantic-bundle acceptance written at step 5 of [run-full-improvement-pass-on-note.md](../../instructions/run-full-improvement-pass-on-note.md) is staled by the step 8–9 edits, and the review DB already detects that. The missing piece is only a closure step in the instruction: re-run (or ack) against the final text. This is the MVP — a calibrated, one-cycle closing review plus evidence collection (including a variance control arm), before any machinery is designed.
 2. **Human review anchoring.** Can human attestation be one more factored `(note, contract)` pair in the existing review store (the ADR 038/041 pattern, human actor/partition), and what exactly does such an acceptance certify? Cheapest representation decides; see [factored dependency pairs](../../reference/proposals/factored-dependency-pairs-for-review-freshness.md).
 3. **Negative case: routed reports.** Test the claim that giving critique/friction reports freshness state re-creates certification semantics through the back door. Expected output is a documented do-not-anchor rule, not machinery.
 
 ## Working files
 
-- [carry-heuristics.md](./carry-heuristics.md) — carry judgments live in the agent, the system trusts but checks: per (edit-kind, check-kind) safety with signs as planning guidance, system-owned baseline diffs, anchored carry records, sampled audits with a flip-rate trust dial (starting at 100% = always-rerun), and fail-toward-rerun wherever the audit surface is missing
+- [carry-heuristics.md](./carry-heuristics.md) — carry judgments live in the agent, the system trusts but checks: per (edit-kind, check-kind) safety hypotheses as planning guidance, system-owned baseline diffs, anchored carry records, sampled audits with a variance-calibrated flip-rate trust dial (starting at 100% = always-rerun), and fail-toward-rerun wherever the audit surface is missing
 
 ## What closes this workshop
 
