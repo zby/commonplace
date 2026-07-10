@@ -108,9 +108,9 @@ This theory directly applies to skills, instructions, and reference artifacts di
 
 `agent-memory-requirements/keep-compiled-views-aligned.md` says generated cues, prompt files, indexes, and assistant-specific views need provenance, source version or hash, generation time, owner, and regeneration rules when they can shape behavior.
 
-### Report staleness can be fuzzy
+### Advisory report staleness can be fuzzy
 
-`kb/work/derivative-report-uniformity/README.md` already decided that derivative report staleness should record exact facts but decide loosely. The key principle is: strictness follows behavioral authority. Reports can be fuzzy when they are advisory; canonical review state needs stronger tracking.
+Strictness follows behavioral authority. Cheap, regenerable reports such as connect and critique outputs are advisory, so stale detection can remain a heuristic trigger rather than a correctness invariant. Canonical review acceptance is different: it uses exact note and gate snapshots, while deliberately excluding mechanical prompt scaffolding from the freshness hash. A scaffolding change that alters judgments requires an explicit corpus-wide re-review or acknowledgement decision rather than silently widening every review key; the boundary is documented in [review architecture](../../reference/review-architecture.md#freshness-mechanism).
 
 ### Churning many-to-many edge state needs relational structure
 
