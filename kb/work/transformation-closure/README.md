@@ -27,7 +27,7 @@ Starting points from the review that opened this workshop; the live work decides
 
 ## Working files
 
-- [carry-heuristics.md](./carry-heuristics.md) — the optimization layer over always-sound rerun: per (edit-kind, check-kind) safety with signs, baseline-anchored (never incremental) diff judging, ex-ante typed transformation footprints, convergence by structure, and learning the compatibility matrix from rerun flip logs before designing heuristics
+- [carry-heuristics.md](./carry-heuristics.md) — carry judgments live in the agent, the system trusts but checks: per (edit-kind, check-kind) safety with signs as planning guidance, system-owned baseline diffs, anchored carry records, sampled audits with a flip-rate trust dial (starting at 100% = always-rerun), and fail-toward-rerun wherever the audit surface is missing
 
 ## What closes this workshop
 
