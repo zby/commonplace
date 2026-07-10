@@ -10,14 +10,14 @@ The current review freshness key is:
 note_path x gate_path x model_partition
 ```
 
-The storage-driving relation is still `note_path x gate_path`: a note is reviewed against many gate notes, a gate note applies to many notes, and the review state belongs to their edge. `model_partition` partitions that edge state. It is not a property of either endpoint file, and it is not necessarily the literal observed model. The note file does not say which model reviewed it. The gate file does not say which model applied it. The model-side partition lives in review lineage state:
+The storage-driving relation is still `note_path x gate_path`: a note is reviewed against many gate documents, a gate document applies to many notes, and the review state belongs to their edge. `model_partition` partitions that edge state. It is not a property of either endpoint file, and it is not necessarily the literal observed model. The model-side partition lives in review lineage state:
 
-- `review_runs.model_partition` records the declared model-side partition for a prompt invocation;
-- `review_pairs.model_partition` keys each reviewed `(note, gate)` pair to that model partition;
-- `acceptance_events.model_partition` makes current acceptance specific to that model;
-- selectors compare current note/gate content hashes against the latest accepted baseline for `(note_path, gate_path, model_partition)`.
+- `review_jobs.model_partition` records the declared partition for one review invocation;
+- `review_pairs` inherit that partition from their parent job;
+- `acceptance.model_partition` makes current acceptance specific to the partition;
+- selectors compare current note/gate content hashes against the accepted baseline for `(note_path, gate_path, model_partition)`.
 
-The migration should rename the physical DB columns to `model_partition` at the same time as the architectural concept changes. `model_partition` is a declared partition that may be exact, coarse, or parameter-bearing. Post-run telemetry can carry the literal observed model as evidence, but it must not re-key accepted review state.
+`model_partition` is now an implemented, normalized identity dimension. Optional finalization-time `runner_model` and `runner_effort` must map back to the job's declared partition; runner identity and opaque telemetry remain provenance rather than freshness identity. Per-pair result frontmatter carries both the partition and any available runner/model/effort fields for inspection without making the Markdown file canonical state.
 
 That is why review freshness is operationally keyed by `note_path x gate_path x model_partition`, even though only the reviewed note and gate note are durable markdown endpoints. In the current implementation, the model dimension is derivation-state metadata stored in the DB. That does not settle whether rendered review artifacts should also carry literal producer-model provenance in frontmatter for inspection, export, or future file-backed lineage.
 
@@ -77,7 +77,7 @@ For current manual or agent-assisted edits, commit messages may be enough. For g
 
 ## Open Questions
 
-- Where should a derivative use a declared `model_partition`, and where should it record a literal `generated_by_model` observed after execution?
+- Outside review, which derivatives need a declared model partition as identity, and which need only the literal observed producer model as provenance?
 - Should generated reports and durable source analyses have a shared frontmatter provenance block that records model, runner, prompt/gate version, source versions, and generation time?
 - When a retained derivative is revised by another model, does it keep a history of producer models or only the latest generation event?
 - Should model provenance be required only for generated artifacts with durable authority, or also for gitignored reports used as merge-back inputs?

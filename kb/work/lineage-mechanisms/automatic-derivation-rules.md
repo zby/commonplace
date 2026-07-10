@@ -121,7 +121,7 @@ Automatic derivation should expand where verification exists:
 
 - deterministic validators for recomputable views;
 - source hashes, revisions, and timestamps for stale selectors;
-- review gates and acceptance ledgers for prose quality;
+- review gates and current accepted baselines for prose quality;
 - quote anchors and pinned citations for source-grounded reviews;
 - human or agent review for low-oracle synthesis and merge-back decisions.
 

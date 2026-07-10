@@ -23,7 +23,7 @@ Much of what the [storage case](../src-architecture-alternatives/review-lineage-
 | composite key `(note_path, gate_path)` | the edge identity of a many-to-many relation; the gate note path identifies the gate |
 | bidirectional staleness (`note-changed` OR `gate-changed`) | either endpoint invalidates the edge |
 | model partitioning | an implementation dimension layered onto the edge |
-| partial run success | one run touches a subset of edges |
+| all-or-nothing job finalization | one transaction advances a complete requested subset of edges or none |
 | swept keyed current-state selector | traversing the relation both ways (gate→notes, note→gates) |
 
 So the keyed selector I flagged earlier is the *symptom*; the *cause* is churning state on a many-to-many edge. Readable prose, run provenance, and append-only events are all satisfiable in files. The hard part is **edge-state with no node-owner, mutated often, queried from both sides**. A directory of edge files can represent that relation, but it is already a filesystem-backed relational store; the real question is when that handmade store loses to SQLite.
@@ -48,16 +48,16 @@ Each case scored on the two things that matter: the **lineage structure** (tree 
 | Critique / friction report | tree (one note → one report) | disposable | gitignored candidate | none (disposable) |
 | Generated index | tree (frontmatter → listing) | recomputable | build output / curated head | validator-checked, no state |
 | Ad-hoc distillation | star (many inputs → one packet) | static | workshop / prompt file | frontmatter on promotion |
-| Merge-back event | star (many inputs → one owned event) | append-once | the canonical artifact | shared append-only ledger |
+| Merge-back event | star (many inputs → one owned event) | append-once | commit + canonical artifact | commit history now; shared ledger only if queried |
 | `compares-with` among sources | many-to-many mesh | **static** | authored links | links (no store) |
 
 The shape is stark. **Review is the only current row in the operational-DB tier**, and the table shows why: it is the only current case that is *both* a many-to-many mesh *and* has churning edge state intense enough to need fast current-state lookup. The same table should guide further investigations; it is not evidence that review will remain unique. Three patterns cover the present non-review cases:
 
-- **Trees and stars stay in files.** Ingests, source reviews, connect/critique reports, ad-hoc distillations, and merge-back all have a natural owner artifact for each fact — the derived file, or the event's target. Frontmatter pointers (or one shared ledger for the owned merge-back event) express them directly. No edge is orphaned.
+- **Trees and stars stay in files.** Ingests, source reviews, connect/critique reports, ad-hoc distillations, and merge-back all have a natural owner artifact for each fact — the derived file, or the event's target. Frontmatter pointers and intentional commits express them directly at current volume. No edge is orphaned.
 - **Churn without a mesh → regenerate, don't store.** Connect reports and generated indexes change constantly, but each is a tree rebuilt from current inputs; nothing queries per-edge state. Generated indexes get a deterministic validator instead ([`a-derived-copy-of-recomputable-truth-must-be-checked-or-absent`](../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md)).
 - **Mesh without churn → links.** `compares-with` is genuinely many-to-many, but its edge state is static, so authored links carry it. It never needs a store.
 
-The one cross-cutting case is **merge-back**: when an automatic report drives an edit to a canonical artifact, the update event needs to be auditable across *all* artifact classes ([automatic-derivation-rules.md](./automatic-derivation-rules.md) §Merge-Back). It has no keyed selector and low churn, so it does not want a database — but it does want one durable, append-only, queryable-enough surface shared by every class. That is the heaviest thing the non-review world needs, and it is much lighter than SQLite.
+The one cross-cutting case is **merge-back**: when an automatic report drives an edit to a canonical artifact, the update event may need to be auditable across artifact classes ([automatic-derivation-rules.md](./automatic-derivation-rules.md) §Merge-Back). It has no keyed selector and low churn, so it does not want a database. At current volume, an intentional commit is the durable event surface. A shared ledger is earned only when agents need to query merge-back history independently of Git and the artifact.
 
 ## The layered mechanism: one vocabulary, three weights
 
@@ -77,10 +77,10 @@ The universal part is **not** a universal store. It is a single lineage-event vo
 | weight | carrier | when | cases |
 |---|---|---|---|
 | **1. In-artifact** (default) | frontmatter pointers + prose | lineage is low-churn and read on demand | snapshots, ingests, source reviews, ad-hoc distillations, promoted notes |
-| **2. Shared ledger** | one git-tracked append-only `JSONL`/event file | events must be auditable across classes but have no keyed selector | merge-back / promotion / retirement events |
+| **2. Shared event surface** | structured commit convention first; append-only `JSONL`/ledger only when queried | events must be auditable across classes independently of the artifact file | future high-volume merge-back / promotion / retirement events |
 | **3. Operational store** | edge-file directory, SQLite, or generated index over a ledger | a keyed selector runs repeatedly over high-churn mutable current-state on many-to-many edges | review now; future swept cue/source, compiled-view/source, or dependency-maintenance meshes |
 
-**Escalation rule:** start at weight 1. Add weight 2 only for events that must survive and be audited independently of the artifact's own file. Escalate to weight 3 when an artifact class develops **churning state on a many-to-many edge** — when lineage state stops having a natural owner file and starts living on the relationship, mutating often, queried from both sides (the [ADR 010](../../reference/adr/) transition). Weight 3 can begin as edge files or a generated index; a real DB wins when transactionality, lookup, and churn make the filesystem version awkward. Tree/star structures and static meshes do not earn a store by structure alone; complex automatic dependency maintenance often will, because its job is usually to maintain fresh edge state across a mesh.
+**Escalation rule:** start at weight 1. Add weight 2 only for events that must survive and be audited independently of the artifact's own file and ordinary commit history. Escalate to weight 3 when an artifact class develops **churning state on a many-to-many edge** — when lineage state stops having a natural owner file and starts living on the relationship, mutating often, queried from both sides (the [ADR 010](../../reference/adr/010-review-state-should-move-to-sqlite-once-reviews-leave-git-and.md) transition). Weight 3 can begin as edge files or a generated index; a real DB wins when transactionality, lookup, and churn make the filesystem version awkward. Tree/star structures and static meshes do not earn a store by structure alone; complex automatic dependency maintenance often will, because its job is usually to maintain fresh edge state across a mesh.
 
 The first class to watch is **compiled views / cues**. A cue compiled from many notes, where each note feeds many cues, is a many-to-many mesh — and if cue freshness becomes automatic and swept (per `(cue, source-note)` edge), its edge state would start churning. That is the next case that could earn weight 3. Until cue generation is automatic and swept, its lineage is still a star (one compiled view, recorded source hashes) and stays at weight 1.
 
@@ -92,7 +92,7 @@ Other likely investigations:
 - **cue activation / retirement** if triggers, sources, targets, and observed outcomes form a changing mesh.
 - **authored link maintenance** because every link is a latent dependency edge; rank link and edge types by disruption probability, then decide which are checked on demand and which deserve automatic stale-edge maintenance.
 
-This is the "not too heavy" answer concretely: **we do not build an artifact-lineage database before a second mesh earns it, but we should expect complex automatic dependency maintenance to need relational structure.** We define the event vocabulary once, let frontmatter carry it by default, add at most one shared append-only ledger for merge-back audit, and leave review's SQLite as the current specialization that earned the real-DB version of the edge-state store. The same vocabulary flows through all three weights, so a class that later grows a selector can be promoted from frontmatter → ledger → edge store without redefining what a lineage event *is*.
+This is the "not too heavy" answer concretely: **we do not build an artifact-lineage database before a second mesh earns it, but we should expect complex automatic dependency maintenance to need relational structure.** We define the vocabulary once, let frontmatter and ordinary commits carry it by default, add a shared event ledger only after a real cross-class query appears, and leave review's SQLite as the current specialization that earned the real-DB version of the edge-state store. The same vocabulary flows through all three weights, so a class that later grows a selector can be promoted from artifact/commit → ledger → edge store without redefining what a lineage event *is*.
 
 ## Why this beats both extremes
 

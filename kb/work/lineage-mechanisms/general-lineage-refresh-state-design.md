@@ -1,11 +1,13 @@
-# General lineage refresh state design
+# Deferred general lineage refresh state design
 
-This design takes the review system's storage lesson as the starting point: keep SQLite for lineage state, keep markdown files as the primary artifact API, and keep refresh execution outside the lineage subsystem.
+This is the weight-3 contingency design for a future second lineage mesh. It is **not** the current implementation plan. Review keeps its purpose-built SQLite store; every other present case remains at artifact-local metadata, stable source handles, report contracts, or commit history until it develops churning many-to-many edge state plus a real selector or audit query.
 
-The result is a hybrid system. It is less clean than "everything is files," but it gives Commonplace the two properties it needs for experimentation:
+If that trigger appears, the design takes the review system's storage lesson as the starting point: keep SQLite for operational lineage state, keep Markdown files as the primary artifact API, and keep refresh execution outside the lineage subsystem. The resulting hybrid would preserve two properties:
 
 - agents and maintainers still read and edit ordinary markdown artifacts;
-- automation gets a real indexed state store for dependency freshness, current baselines, append-only events, and model-aware derivations.
+- automation gets an indexed state store for dependency freshness, current baselines, auditable events, and model-aware derivations.
+
+Until then, this file is a schema and boundary sketch to test the general vocabulary. It must not be cited as evidence that a generic lineage database has been approved or earned.
 
 ## Core Boundary
 
@@ -25,7 +27,7 @@ In scope for the lineage layer:
 
 - stable identities for lineage targets;
 - accepted baselines for target dependencies;
-- append-only lineage events;
+- auditable lineage events when a cross-class history is required;
 - current-state views;
 - stale/missing/retired selectors;
 - dependency resolvers that can observe current versions;
@@ -78,7 +80,7 @@ The target key should be stable enough for lookup, but not pretend every target 
 
 ## Event Model
 
-Lineage should be append-only at the event layer.
+If a cross-class event surface is built, lineage history should be append-only at that event layer. This is a proposed audit model, not a description of current review storage: review acceptance is now a current-state upsert with inline pruning of superseded evidence.
 
 Core event fields:
 
@@ -94,7 +96,7 @@ Core event fields:
 | `accepted_at` | when this event became the accepted baseline |
 | `inputs` | accepted dependency versions used for freshness checks |
 
-The current baseline is the latest accepted event for a target according to the target kind's ordering rule. Review already uses this pattern through `acceptance_events` and `current_gate_acceptances`.
+The generic current baseline would be derived from accepted events according to the target kind's ordering rule. Current review reaches a similar selector result through the `acceptance` current-state table and guarded `current_gate_acceptances` view, not through an append-only acceptance-event log.
 
 ## Input Version Model
 
@@ -152,15 +154,17 @@ The current review subsystem can be mapped into the general model without forcin
 | current review concept | general lineage concept |
 |---|---|
 | `(note_path, gate_path, model_partition)` | lineage target of kind `review-pair` |
-| `review_pairs` | review-specific output/provenance rows |
-| `acceptance_events` | lineage events for review-pair targets |
-| `current_gate_acceptances` | current baseline view for review-pair targets |
+| `review_jobs` | review-specific invocation, packing, status, and optional execution provenance |
+| `review_pairs` | review-specific requested pair, decision, and completed evidence row |
+| `acceptance` | current baseline for review-pair targets; successful writes upsert by the full key |
+| `current_gate_acceptances` | guarded current baseline view, restricted to completed jobs with decisions |
 | accepted note snapshot hash | input version with role `source` |
 | accepted gate snapshot hash | input version with role `gate` |
-| `model_partition` | target partition; literal model telemetry is producer evidence |
-| `review_runs` | execution provenance, not the identity of freshness |
+| `review_jobs.model_partition` / `acceptance.model_partition` | target partition; literal runner model and telemetry are producer evidence |
 
-The important migration is conceptual first: review batch tables and review freshness tables should not be treated as one inseparable subsystem. `review_runs` may remain review-specific execution provenance. The lineage part is the accepted baseline and stale selector over `(note_path, gate_path, model_partition)`. That is the first implementation of the general target/event/input pattern, specialized to two KB file inputs.
+This is a conceptual mapping, not a migration plan. Review already separates execution concerns from freshness APIs while keeping both in one purpose-built store. Its accepted baseline and stale selector over `(note_path, gate_path, model_partition)` remain the first implementation witness for the general target/input vocabulary.
+
+Recent conformance work also limits how much generic input machinery review needs. Type specs and `COLLECTION.md` contracts become the gate document in separate factored `(note, dependency)` pairs. The default answer to another review dependency is another pair with that dependency on the gate side, not a wider N-input target. A generic lineage input set is for derivations that cannot honestly factor into independent pairs.
 
 ## Batch Isolation
 
@@ -172,15 +176,15 @@ A future review flow might:
 2. group targets by gate, note, token budget, model, or external executor constraints;
 3. run any number of batches;
 4. parse outputs into review-specific result rows and markdown artifacts;
-5. append accepted lineage events for the targets that actually completed.
+5. record accepted baselines for the completed targets using that subsystem's chosen semantics.
 
 The lineage store only needs steps 1 and 5. Everything between them can change as the system learns better packing, routing, model choice, or delegation.
 
-This same shape also fits connect reports, source comparisons, generated indexes, and merge-back edits.
+This boundary may fit connect reports, source comparisons, generated indexes, and merge-back edits if any of them later earns swept freshness state. Their current forms do not.
 
 ## SQLite Shape
 
-The generic layer can start with a small table set beside or beneath the review DB:
+Once a second churning mesh meets the escalation trigger, a generic layer could start with a small table set separate from the review schema:
 
 ```text
 lineage_targets
@@ -226,7 +230,7 @@ current_lineage_baselines
   view: latest accepted event per target
 ```
 
-This is not a full implementation proposal yet. The design constraint is more important than the exact table names: generic lineage tables should represent targets, events, and accepted dependency versions; type-specific systems should own their report bodies, parsing, prompts, and execution provenance.
+This is not a full implementation proposal. The design constraint is more important than the exact table names: any future generic lineage tables should represent targets, events, and accepted dependency versions; type-specific systems should own their report bodies, parsing, prompts, and execution provenance. Do not fold review into these tables merely to make the abstraction look uniform.
 
 ## Markdown Integration
 
@@ -249,9 +253,9 @@ For canonical authored notes, do not write "last model" frontmatter. If a note i
 
 The note remains the canonical artifact. The derivative fact lives at the update-event layer.
 
-## Storage Policy
+## Storage Policy If Escalated
 
-The SQLite lineage store should be the canonical freshness index. Markdown artifacts remain the canonical human-readable outputs when the artifact itself is retained.
+If built, the SQLite lineage store would be the canonical freshness index for the target kinds explicitly registered in it. Markdown artifacts would remain the canonical human-readable outputs when the artifact itself is retained. Unregistered artifact classes would continue to use their lighter existing carriers.
 
 Default policy:
 
@@ -260,11 +264,11 @@ Default policy:
 - keep cheap, bulky, or transient run artifacts out of git unless their type contract says otherwise;
 - keep lineage DB local operational state by default, with export/import or migration tools if a future workflow needs shared lineage state.
 
-This keeps the experiment surface open: Commonplace can add new derived artifact classes without immediately deciding that every intermediate report is either a library artifact or disposable scratch.
+This keeps the experiment surface open without pre-registering every derived artifact class in a database.
 
-## Refresh Lifecycle
+## Refresh Lifecycle If Escalated
 
-The generic lifecycle:
+The candidate generic lifecycle:
 
 1. Discover targets from file contracts, type contracts, or explicit registration.
 2. Resolve current input versions.
@@ -275,13 +279,13 @@ The generic lifecycle:
 7. Optional: write or update retained markdown artifacts.
 8. Optional: export audit reports from the lineage DB.
 
-This makes refresh automation more bitter-lesson-compatible without binding the lineage system to any particular batch processor.
+This would make refresh automation more bitter-lesson-compatible without binding the lineage system to any particular batch processor.
 
 ## Open Questions
 
-- Should the general lineage DB be the same SQLite file as review state, or a new `kb/reports/lineage-store.sqlite` with review-specific tables gradually folded in?
+- What concrete second churning mesh and selector would be sufficient to activate this design?
+- If activated, should the generic lineage DB be separate from the purpose-built review store?
 - Which target kinds need model as part of the target partition, and which only need model as event provenance?
 - Which generated markdown types should carry lineage pointers in frontmatter?
-- How much of the current review table shape should be retained after the snapshot migration, given that legacy SHA/commit fields are copied and dropped rather than preserved through compatibility views?
 - How should local lineage DB state be backed up or shared when multiple agents operate on the same repo?
-- Which selectors should be built first after review: connect report staleness, generated index freshness, or merge-back provenance?
+- Is ordinary commit history sufficient for merge-back provenance, and what query would justify a shared append-only event surface?

@@ -13,7 +13,7 @@ This workshop now owns the **general derived-artifact lineage model**, not the c
 In scope:
 
 - a shared vocabulary for derivation events, inputs, producer/model provenance, freshness, merge-back, retirement, and promotion;
-- storage-weight rules for lineage state: frontmatter/prose, shared append-only ledger, edge files, generated indexes, or database;
+- storage-weight rules for lineage state: frontmatter/prose, commit history or a shared event surface, edge files, generated indexes, or database;
 - git-retention rules for sources, report contracts, cheap generated reports, durable analyses, deterministic views, high-churn state, and merge-back provenance;
 - model-provenance policy for one-shot derivatives, generated reports, reviews, durable source analyses, and canonical notes revised through many events;
 - ad-hoc distillation and source-preservation rules;
@@ -21,7 +21,7 @@ In scope:
 
 Out of scope:
 
-- current review Git decoupling, DB snapshots, selector-vs-runner boundary, and `model_partition` decision — accepted in [ADR 032](../../reference/adr/032-review-freshness-uses-db-snapshots-not-git.md) and described in [REVIEW-SYSTEM](../../reference/REVIEW-SYSTEM.md);
+- current review Git decoupling, DB snapshots, selector-vs-runner boundary, current-state acceptance, and `model_partition` decision — accepted in [ADR 032](../../reference/adr/032-review-freshness-uses-db-snapshots-not-git.md), refined through [ADR 035](../../reference/adr/035-review-jobs-finalize-all-or-nothing-with-derived-artifacts.md), and described in the [review system](../../reference/README-REVIEW-SYSTEM.md);
 - review store source-of-truth alternatives, append-only review logs, and pure file review stores — owned by [src-architecture-alternatives](../src-architecture-alternatives/README.md);
 - local connect-report cleanup queues — owned by [connect-maintenance-observations](../connect-maintenance-observations/README.md);
 - generic code architecture cleanup outside lineage.
@@ -44,11 +44,15 @@ The likely architecture is **one lineage vocabulary, multiple storage weights**:
 
 Files remain the primary API for authored and readable artifacts. The lineage layer should be a freshness and provenance substrate, not a batch processor: it records accepted dependency baselines, resolves current versions, and emits refresh targets. Review sweeps, connect jobs, source processors, and agents decide how to perform refreshes.
 
+The current implementation posture is deliberately lighter than the earlier generic-DB sketch. Review keeps its purpose-built SQLite store because it has already earned the operational tier. No second lineage mesh currently justifies generic tables, so non-review lineage stays in artifact-local metadata, source pins, report contracts, and commit history until a concrete selector or audit query demands more. [general-lineage-refresh-state-design.md](./general-lineage-refresh-state-design.md) is therefore a deferred escalation design, not an implementation plan.
+
+Recent review work also narrowed the generalization boundary. Type and collection dependencies now fit the existing two-input review relation by placing the type spec or `COLLECTION.md` on the gate side. The default for another review dependency is another factored `(note, dependency)` pair, not a generic N-input lineage target; the broader lineage model is reserved for derivations that cannot honestly factor that way.
+
 ## Open Work
 
 Close this workshop by extracting durable artifacts for these decisions:
 
-- the verification-locus theory notes and the type-spec/skill contract-migration proposal drafted in [verification-locus-and-provenance-theory.md](./verification-locus-and-provenance-theory.md) — the theoretical basis for assigning every derivation edge an invalidation rung (watched / recorded / untracked);
+- finish the two drafted verification-locus seedlings and write the still-missing type-spec/skill contract-migration proposal described in [verification-locus-and-provenance-theory.md](./verification-locus-and-provenance-theory.md) — the theoretical basis for assigning every derivation edge an invalidation rung (watched / recorded / untracked);
 - a general lineage model for derived artifacts that distinguishes source material, generated reports, durable analysis, compiled views, canonical artifacts, merge-back events, and promoted library artifacts;
 - an explicit storage-weight rule based on the many-to-many/churning-edge predicate;
 - a retention policy for which automatic derivations are committed, gitignored, stored in a state store, summarized into durable artifacts, or discarded after merge-back;
@@ -77,7 +81,7 @@ These cases came from `kb/work/connect-maintenance-observations/`. They are test
 - [automatic-derivation-rules.md](./automatic-derivation-rules.md) - draft policy for git retention, merge-back lineage, derivative refresh, and automation boundaries.
 - [storage-weight-across-cases.md](./storage-weight-across-cases.md) - comparison of derivation cases against the many-to-many/churning-edge storage predicate.
 - [model-provenance.md](./model-provenance.md) - model metadata rule for derivation events, one-shot derivatives, reviews, canonical note merge-back, and deterministic generated views.
-- [general-lineage-refresh-state-design.md](./general-lineage-refresh-state-design.md) - SQLite-backed lineage freshness design that stays isolated from batch refresh execution.
+- [general-lineage-refresh-state-design.md](./general-lineage-refresh-state-design.md) - deferred weight-3 design for a generic SQLite-backed freshness store, to revisit only when a second churning lineage mesh earns it.
 
 Moved out of this workshop:
 
