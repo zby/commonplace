@@ -2,9 +2,11 @@
 
 The optimization problem behind closure: rerunning every assessment after every transformation is always sound but expensive, and rerun-and-fix loops may not converge at all (fixing coherence adds connective tissue, which breaks compression, which cuts, which breaks coherence). Carrying evidence forward (ack) is cheap but is itself a judgment that can be wrong.
 
-The heuristic deciding when carrying is safe does not need to be system machinery: it lives in the agent, which plans the pass — ordering, which transformations to run, which assessments to carry versus rerun. The system's job is to trust but check (see the division of labor below). The facts that follow are planning guidance the agent should respect, not a matrix to encode.
+The heuristic deciding when carrying is safe does not need to be system machinery: it lives in the agent, which plans the pass — ordering, which transformations to run, which assessments to carry versus rerun. The system's job is to trust but check (see the sketch below).
 
-## Structural facts the agent's planning must respect
+Everything in this file is in one of two registers. **Candidate constraints** bind any solution, but each must first be *located* — pinned to a concrete case or observation that exhibits it — before a design may lean on it. **Solution sketches** are brainstorm: they decide nothing and compete with alternatives not yet written down.
+
+## Candidate constraints (to locate, not assume)
 
 **1. Safety is per (edit-kind, check-kind) pair, with signs.** No edit kind is universally safe:
 
@@ -25,9 +27,11 @@ The organizing predictor: each check penalizes excess or deficit of some quantit
 - **footprint-empty last transformation** — the final pass is constrained to a class that cannot break the checks being closed, so closure after it is cheap by contract;
 - **stopping rule** — at most one closure cycle; residual findings route to the packet's open items rather than triggering another transformation round. Non-convergence is handled by refusing to loop, not by hoping the loop settles.
 
-## Division of labor: heuristics in the agent, invariants in the system
+What locating looks like, per constraint: fact 1 is located when a rerun log shows check flips tracking edit *direction* rather than edit size; fact 2 when a real pass shows accumulated individually-acked edits flipping a coherence check; fact 3's premise when a declared "flow-only" pass is caught changing a claim; fact 4 when an unstructured rerun-and-fix loop actually fails to settle. Until then each is plausible, not real.
 
-The agent owns the plan and the carry judgments. The system owns the four things an agent cannot be trusted to self-supply:
+## Solution sketch: heuristics in the agent, trust-but-check in the system
+
+One sketch among possible others (system-enforced footprints, always-rerun-forever, human-gated carries) — recorded to be argued against, not adopted. The agent owns the plan and the carry judgments. The system owns the four things an agent cannot be trusted to self-supply:
 
 1. **The baseline.** The system computes the cumulative diff against the accepted snapshot and hands it to the agent. Fact 2 is enforced mechanically, not left to agent discipline — the agent never gets to judge an incremental diff by mistake.
 2. **The record.** Every carry is a version-anchored record carrying the agent's declared rationale and footprint, written when the decision happens — process history has one chance to become checkable.

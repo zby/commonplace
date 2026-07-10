@@ -13,13 +13,17 @@ The [version-anchored operations proposal](../../reference/proposals/version-anc
 
 If worked cases show the invariants are purely definitional, the honest close is *no* extracted notes — the proposal keeps them as inline rationale and this workshop records why.
 
+## Working stance
+
+Brainstorm on the solution side; harden on the constraint side. Solution sketches (trust dials, footprint declarations, audit sampling, typed transformations) accumulate and compete here — none is a decision, and nothing in this workshop commits the system. The deliverable that must be right is the constraint list: which constraints on *any* solution are real — each located by a concrete observation or worked case that exhibits it — and which are assumed or tautological. Decisions stay on the proposal → ADR path, taken only against located constraints.
+
 ## Boundary with lineage-mechanisms
 
 [lineage-mechanisms](../lineage-mechanisms/README.md) owns the general derived-artifact lineage vocabulary and its storage weights (in-artifact, event surface, operational store). This workshop owns what kinds of claims operations make — verdict, routed evidence, attestation, successor state, process fact — and what closure a transforming workflow owes its assessments. Storage-escalation questions route there; claim-semantics and closure-protocol questions route here. Neither workshop should restate the other's conclusions.
 
 ## Candidate worked cases
 
-Starting points from the review that opened this workshop; the live work decides order and may replace them.
+Starting points from the review that opened this workshop; the live work decides order and may replace them. These are constraint-locating probes, not adoption trials — a probe may incidentally improve an instruction, but its purpose is evidence.
 
 1. **Full-pass closure.** The semantic-bundle acceptance written at step 5 of [run-full-improvement-pass-on-note.md](../../instructions/run-full-improvement-pass-on-note.md) is staled by the step 8–9 edits, and the review DB already detects that. The missing piece is only a closure step in the instruction: re-run (or ack) against the final text. Trial it on a real pass; observe whether re-run vs. diff-based ack ever differ in practice and what that says about the carry-forward conditions.
 2. **Human review anchoring.** Can human attestation be one more factored `(note, contract)` pair in the existing review store (the ADR 038/041 pattern, human actor/partition), and what exactly does such an acceptance certify? Cheapest representation decides; see [factored dependency pairs](../../reference/proposals/factored-dependency-pairs-for-review-freshness.md).
@@ -31,10 +35,10 @@ Starting points from the review that opened this workshop; the live work decides
 
 ## What closes this workshop
 
-- The full-pass instruction performs explicit post-transformation closure (shipped edit), or a recorded reason why it shouldn't.
-- Human review anchoring has a decided cheapest representation — trialed, or rejected with rationale.
+- Each candidate constraint (in [carry-heuristics.md](./carry-heuristics.md) and later files) is either located — pinned to a concrete case or observation that exhibits it — or discharged as assumed or tautological.
+- The solution space is mapped against the located constraints, with sketches recorded as options, not choices.
 - The tautology question is answered: extracted notes that meet the quality bar (they change how someone builds a KB), or an explicit conclusion that the invariants are definitional and stay inline in the proposal.
-- The proposal is slimmed to what the cases didn't settle and states its boundary with lineage-mechanisms.
+- The proposal is revised to fix the located constraints and carry the surviving sketches as free choices, and states its boundary with lineage-mechanisms; decisions then proceed on the proposal → ADR path.
 
 ---
 
