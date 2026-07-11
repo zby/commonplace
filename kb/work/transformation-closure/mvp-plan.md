@@ -31,6 +31,7 @@ During the MVP, audit sampling is 100%: every ack is *also* re-run, so initially
 A plain log file in this workshop (no DB, no schema): one line per closing-cycle event — note, assay, ack-or-rerun, rationale/edit-kind, and for re-runs whether the outcome flipped against the prior record.
 
 - **Control arm:** occasional re-runs on *unchanged* bytes to measure the base flip rate from model variance. Without it no flip is attributable to an edit.
+- **Audit unit differs by class:** for detection assays a flip is a verdict change; for attention assays every re-run differs textually, so log instead whether the fresh sample materially diverges from the carried report (would it have changed steps 8–9?). Don't pre-formalize "materially" — record the judgment and let the log show whether it stabilizes.
 - The log calibrates the trust dial and locates the workshop's candidate constraints; it is not training data for a system-side heuristic.
 
 ## Explicitly not built
