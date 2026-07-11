@@ -1,5 +1,5 @@
 ---
-description: "Review jobs use derived artifact paths, finalization-time provenance, strict result parsing, and all-or-nothing acceptance"
+description: "Review jobs use derived artifact paths, finalization-time provenance, strict per-kind result parsing, and all-or-nothing acceptance"
 type: ../types/adr.md
 tags: []
 status: accepted
@@ -31,7 +31,7 @@ Review jobs now have exactly three statuses: `queued`, `completed`, and `failed`
 
 Artifact paths are derived, not persisted. The job directory is `kb/reports/bundle-reviews/review-job-{review_job_id}/`; prompt, bundle output, manifest, and per-pair result paths are pure functions of the job id, packing, and complete pair set.
 
-Finalization is all-or-nothing. The finalizer validates parse coverage before mutating acceptance state, and result-file write failures roll back the DB completion. Missing, duplicate, unexpected, malformed, or result-less pair blocks fail the whole job. Failed jobs leave pair decisions null and write no acceptance rows.
+Finalization is all-or-nothing. The finalizer validates parse coverage before mutating acceptance state, and result-file write failures roll back the DB completion. Missing, duplicate, unexpected, malformed, or result-less pair blocks fail the whole job. Failed jobs reset pair completion state (`decision` and `reviewed_at` remain null) and write no acceptance rows.
 
 Live parsing is strict: each pair block must end with exactly one final result line:
 
@@ -40,17 +40,24 @@ Live parsing is strict: each pair block must end with exactly one final result l
 ## Result: WARN
 ## Result: FAIL
 ## Result: ERROR
+## Result: REPORT
 ```
 
-Aliases and inferred decisions are invalid in live finalization.
+Aliases and inferred decisions are invalid in live finalization. Since the schema-v5 amendment below, parsing is against the pair's persisted `result_kind`: verdict pairs accept only `PASS`, `WARN`, `FAIL`, or `ERROR`; report pairs accept only `REPORT`, which is a completion marker rather than a decision.
 
-Acceptance evidence is guarded at the SQL boundary. `current_gate_acceptances` joins `acceptance` through `review_pairs` and `review_jobs`, and only exposes rows whose parent job is `completed` and whose pair has a non-null decision. This makes the freshness selector robust even if an accidental acceptance row is inserted.
+Acceptance evidence is guarded at the SQL boundary. `current_gate_acceptances` joins `acceptance` through `review_pairs` and `review_jobs`, and only exposes rows whose parent job is `completed` and whose pair satisfies per-kind completion: `reviewed_at` plus a decision for verdict pairs, or `reviewed_at` plus a null decision for report pairs. This makes the freshness selector robust even if an accidental acceptance row is inserted.
 
 Result files are evidence and remain fatal: a result-file write failure prevents DB completion and then marks the job failed in a separate failure transaction. `MANIFEST.json` is display/debug output, so a manifest refresh failure after DB completion does not fail the job; finalization reports it as a warning.
 
 ADR 036 later changed successful acceptance from append-only events to a current-state upsert and moved superseded-review pruning inline with that success transaction.
 
-The review store remains schema-current only. Incompatible stores must be recreated rather than migrated. The one-shot model-partition repair command was removed with the old migration surface.
+Schema migration remains exceptional rather than a general compatibility promise. Stores whose historical evidence cannot be represented by the current schema must be recreated. The schema-v5 amendment below adds one recorded exception for populated v4 stores whose verdict evidence can be preserved exactly.
+
+### Amendment: result kinds and the v4→v5 migration (2026-07-11)
+
+Review pairs persist `result_kind = verdict | report`, separating protocol completion from a decision. Jobs are result-kind homogeneous, finalization parses against the persisted kind, and `REPORT` completes a report pair with `reviewed_at` while leaving `decision` null. This extends the all-or-nothing rule without weakening it: every expected pair must still complete under its own contract before the job advances acceptance.
+
+Because populated v4 stores contain paid-for verdict evidence already representable in v5, `scripts/migrate-review-db-v4-to-v5.py` upgrades them in place while preserving review-pair IDs and acceptance references. Other version mismatches remain refused. This is a narrow evidence-preservation migration, not restoration of the general migration substrate removed by this ADR.
 
 Deferred:
 

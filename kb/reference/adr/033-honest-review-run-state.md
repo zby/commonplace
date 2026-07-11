@@ -1,5 +1,5 @@
 ---
-description: "Superseded historical decision: honest queued/running review state and an in-place migration substrate were later reduced to schema-current queued/completed/failed jobs"
+description: "Superseded historical decision: honest queued/running review state and a general migration substrate were reduced to queued/completed/failed jobs; a later release added one narrow v4→v5 migration"
 type: ../types/adr.md
 tags: []
 status: superseded
@@ -25,20 +25,20 @@ This ADR introduced two ideas:
 
 The queued state survived, but `running` did not. The current state machine from ADR 035 is `queued`, `completed`, and `failed`; parent dispatch progress is no longer persisted in the review DB.
 
-The migration substrate did not survive the simplification. The current review store is schema-current only: a missing DB is created from the packaged schema; a mismatched review store is rejected and must be recreated.
+The general migration substrate did not survive the simplification. At the time ADR 035 superseded this decision, a missing DB was created from the packaged schema and every mismatched store was rejected. A later schema-v5 amendment added one recorded v4→v5 migration to preserve existing verdict evidence; it did not restore a general migration framework.
 
 ## Consequences
 
 Kept:
 
 - Prepared prompts are represented honestly as `queued`.
-- Schema-current review-store setup survived: incompatible stores are rejected and recreated rather than transformed in place.
+- Schema-version gating survived: unsupported stores are rejected rather than transformed implicitly. The later v4→v5 script is an explicit, version-specific exception.
 
 Removed:
 
-- In-place review-store migrations.
-- Historical table-shape transforms.
-- Any promise that old local operational review stores can be opened by the current package.
+- A general in-place migration framework.
+- Implicit historical table-shape transforms.
+- Any promise that arbitrary old local operational review stores can be opened by the current package.
 - `running` state and `started_at`.
 
 ---

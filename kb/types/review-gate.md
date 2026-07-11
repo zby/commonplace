@@ -9,7 +9,7 @@ schema: kb/types/review-gate.schema.yaml
 
 ## Authoring Instructions
 
-A review gate is a bounded, verdict-kind quality assay. Each gate is one markdown criterion telling a reviewer what failure to seek and how to choose the final decision: PASS, WARN, FAIL, or ERROR. INFO may label a finding in the prose but is not a final decision. Report-kind assays are instructions, not `review-gate` artifacts. The catalog discovers gates at `kb/instructions/review-gates/{lens}/{name}.md`.
+A review gate is a closed-ended, verdict-kind quality assay. Each gate is one markdown criterion telling a reviewer what failure to seek and how to choose the final decision: PASS, WARN, FAIL, or ERROR. INFO may label a finding in the prose but is not a final decision. Report-kind assays are instructions, not `review-gate` artifacts. The catalog discovers gates at `kb/instructions/review-gates/{lens}/{name}.md`.
 
 ## Frontmatter
 

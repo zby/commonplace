@@ -5,7 +5,7 @@ type: kb/types/instruction.md
 
 # Review triage
 
-Inspect `note-changed` stale pairs and acknowledge those where the diff does not invalidate the existing evidence for that criterion. This reduces the assay queue before launching workers. For verdict pairs, ack carries the bounded decision forward; for report pairs, it only reuses the report as fresh evidence and does not imply that its findings were handled.
+Inspect `note-changed` stale pairs and acknowledge those where the diff does not invalidate the existing evidence for that criterion. This reduces the assay queue before launching workers. For closed-ended verdict pairs, ack carries the decision forward; for open-ended report pairs, it only reuses the report as fresh evidence and does not imply that its findings were handled.
 
 Inputs:
 

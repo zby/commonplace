@@ -12,7 +12,7 @@ The review protocol's output side is one encoding: sentinel-delimited markdown b
 
 ## Current state (as of 2026-07-01)
 
-- One encoding: `=== PAIR REVIEW START: {note} :: {gate} ===` blocks ([ADR 029](../adr/029-review-execution-unified-on-note-gate-pairs.md)). `protocol/parser.py` extracts blocks into `ParsedPairBundle`; `protocol/decisions.py` requires exactly one final `## Result: PASS|WARN|FAIL|ERROR` line and canonicalizes result footers.
+- One encoding: `=== PAIR REVIEW START: {note} :: {gate} ===` blocks ([ADR 029](../adr/029-review-execution-unified-on-note-gate-pairs.md)). `protocol/parser.py` extracts blocks into `ParsedPairBundle`; `protocol/decisions.py` requires exactly one final marker allowed by the pair's persisted result kind: `PASS|WARN|FAIL|ERROR` for verdict pairs or `REPORT` for report pairs.
 - The codec is contained in `protocol/` plus finalization/artifact rendering.
 - Consumers downstream of parsing are mostly encoding-independent already: `review_pairs.decision` stores the parsed enum, a derived result artifact path points to the retained markdown review body, and `warn_selector` extracts findings from a `### Findings` section convention in that artifact.
 - External executors receive the contract through rendered prompts created from selector JSON (`commonplace-create-review-jobs --input ... --grouping {note,gate}`), write job-owned output files, and return control to finalization.

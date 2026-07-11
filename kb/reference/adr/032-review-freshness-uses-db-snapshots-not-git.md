@@ -73,7 +73,7 @@ Harder / accepted costs:
 - The review database stores duplicated note and gate text for accepted baselines, so it grows with review history. This is accepted because review state already crossed the SQLite boundary, and the stored text is what makes Git independence possible.
 - Exact historical diffs are available only when the accepted snapshot text is retained. If old snapshot bodies are garbage-collected, freshness can still compare hashes but diff text may be unavailable.
 - `model_partition` is less precise than `model_id` by name. That imprecision is deliberate: the value is a freshness partition, not necessarily a literal observed model.
-- The current implementation is schema-current only. Old stores whose accepted baselines cannot be represented as DB-owned snapshots must be recreated; they do not provide valid freshness baselines.
+- Schema migrations remain exceptional. Old stores whose accepted baselines cannot be represented as DB-owned snapshots must be recreated because they do not provide valid freshness baselines. Populated schema-v4 stores already have valid snapshot-backed verdict evidence and may use the recorded v4→v5 migration added on 2026-07-11.
 - Review remains a scoped SQLite exception while authored notes, gates, instructions, and source material remain markdown files. The database stores operational review state and accepted baselines, not primary KB content.
 
 ---

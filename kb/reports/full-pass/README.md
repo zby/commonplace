@@ -1,5 +1,13 @@
 # Full-pass reports
 
-Output of `kb/instructions/run-full-improvement-pass-on-note.md`: per-note subdirectories holding the compression-bundle review and the reconciled synthesis packet from a full improvement pass.
+Output of `kb/instructions/run-full-improvement-pass-on-note.md`. Each invocation writes a pass-scoped directory:
 
-Reports here are **gitignored** — they are regenerable working artifacts, read once and acted on (applied to the note in the same pass), like critique, friction, and connect reports. Only this README is tracked, to keep the directory in git.
+```text
+<note-name>/<pass-id>/
+  initial/    # reports over the pre-edit note
+  closing/    # one closing cycle over the final note
+  controls/   # duplicate runs used to measure model variance
+  full-pass-report.md
+```
+
+Reports here are **gitignored**, but a transformation-closure experiment may retain initial, closing, and control reports through workshop closure because its committed observation records refer to their exact bytes by path and SHA-256. After the workshop extracts its durable conclusions, these pass directories may be deleted. Only this README is tracked.

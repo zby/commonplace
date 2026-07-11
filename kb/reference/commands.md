@@ -102,7 +102,7 @@ commonplace-x-snapshot https://x.com/user/status/123456789
 
 ## Review system
 
-The review system executes snapshot-anchored LLM assays against notes. Bounded review gates produce verdicts; report-shaped assays such as critique record completion without a decision. The persisted criterion field remains named `gate_path`. For the vocabulary and full workflow, read [README-REVIEW-SYSTEM.md](./README-REVIEW-SYSTEM.md). For the code architecture, see [review-architecture.md](./review-architecture.md).
+The review system executes snapshot-anchored LLM assays against notes. Closed-ended review gates produce verdicts; open-ended assays such as critique record reports without a decision. The persisted criterion field remains named `gate_path`. For the vocabulary and full workflow, read [README-REVIEW-SYSTEM.md](./README-REVIEW-SYSTEM.md). For the code architecture, see [review-architecture.md](./review-architecture.md).
 
 Model flags: every partition-valued flag below is `--model-partition` and takes a partition name such as `claude-opus` or `codex` (the review-freshness key; registry in `src/commonplace/review/review_model.py`). The only `--model` flag is `commonplace-finalize-review-job`'s, which takes the concrete model the worker reported (for example `claude-fable-5`) and validates that it maps into the job's partition.
 

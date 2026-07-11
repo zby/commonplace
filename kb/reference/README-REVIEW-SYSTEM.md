@@ -25,13 +25,13 @@ A full review runs as a short pipeline, from a stale-pair query to a durable acc
 3. **Review** — a worker (typically a sub-agent) reads a job's prompt and writes a single sentinel-delimited `bundle-output.md`.
 4. **Finalize** — the parent parses that output against each pair's persisted result contract and, only if every expected pair is present and well-formed, records completion and upserts accepted baselines.
 
-Acceptance is the durable freshness baseline. A current acceptance row pins the exact note and criterion text that was reviewed, so the selector can later tell whether either side has drifted. It is not a universal endorsement: a verdict acceptance records a bounded gate outcome, while a report acceptance records that the retained report matches the pinned inputs. When a change does not invalidate that evidence, an acceptance can be carried forward without a fresh run (*ack*).
+Acceptance is the durable freshness baseline. A current acceptance row pins the exact note and criterion text that was reviewed, so the selector can later tell whether either side has drifted. It is not a universal endorsement: a verdict acceptance records a closed-ended gate outcome, while a report acceptance records that the retained report matches the pinned inputs. When a change does not invalidate that evidence, an acceptance can be carried forward without a fresh run (*ack*).
 
 ## Concepts
 
-**Assay.** Any snapshot-anchored LLM evaluation executed through selector → job → worker → finalizer. An assay is classified by its result kind. Verdict-kind assays are bounded checks; report-kind assays produce reusable analysis without deciding the note.
+**Assay.** Any snapshot-anchored LLM evaluation executed through selector → job → worker → finalizer. Question shape and result kind are separate axes: a closed-ended assay asks a fixed question, while an open-ended assay samples a space of possible findings; independently, the persisted result contract is `verdict` or `report`. Shipped gates are closed-ended and verdict-kind. Critique is open-ended and report-kind.
 
-**Gate.** A bounded, verdict-kind assay criterion. Catalog gates are markdown files at `kb/instructions/review-gates/{lens}/{name}.md` in a source checkout, or under the installed framework gate catalog in generated projects. The `{lens}/{name}` shorthand is the gate id used at the CLI boundary (for example `prose/source-residue`). Type- and collection-conformance pairs are virtual gates whose criterion files are the type spec and `COLLECTION.md`.
+**Gate.** A closed-ended, verdict-kind assay criterion. Catalog gates are markdown files at `kb/instructions/review-gates/{lens}/{name}.md` in a source checkout, or under the installed framework gate catalog in generated projects. The `{lens}/{name}` shorthand is the gate id used at the CLI boundary (for example `prose/source-residue`). Type- and collection-conformance pairs are virtual gates whose criterion files are the type spec and `COLLECTION.md`.
 
 **Criterion.** The instruction text applied to the note. It occupies the persisted `gate_path` side of every pair, including report assays. “Gate” remains in schema and CLI identifiers because the pair mechanism was built for gates; prose uses “criterion” when the statement includes non-gate assays.
 
@@ -59,7 +59,8 @@ Human-readable review output — the per-pair result files and each job's `MANIF
 
 | Do not conflate | Distinction |
 |---|---|
-| assay and gate | An assay is any snapshot-anchored evaluation; a gate is the bounded verdict-kind subset. |
+| assay and gate | An assay is any snapshot-anchored evaluation; a gate is the closed-ended, verdict-kind subset. |
+| question shape and result kind | Closed-ended/open-ended describes what is asked; `verdict`/`report` describes the persisted completion protocol. |
 | criterion and `gate_path` | Criterion is the concept; `gate_path` is the historical schema field that stores its identity. |
 | completion and decision | Both result kinds complete; only verdict pairs carry a decision. |
 | acceptance and endorsement | Acceptance pins current evidence to snapshots. It does not approve a note or resolve report findings. |
@@ -100,7 +101,7 @@ The full procedure is in [run review batches](../instructions/run-review-batches
 
 ## Acknowledging trivial changes
 
-For a `note-changed` pair, inspect the selector diff first. If the change does not invalidate the existing evidence, acknowledge it instead of rerunning. For a verdict pair this carries a bounded decision; for a report pair it only reuses the report as current evidence and endorses nothing.
+For a `note-changed` pair, inspect the selector diff first. If the change does not invalidate the existing evidence, acknowledge it instead of rerunning. For a closed-ended verdict pair this carries a decision; for an open-ended report pair it only reuses the report as current evidence and endorses nothing.
 
 `commonplace-ack-gate-review` advances the accepted baseline when a note changed but not in a way that matters for the criterion. It carries the existing evidence forward: it records the current note and criterion text as newly accepted, pointing at the completed review pair being reused. It does not rewrite any file or assay prose. The command name and arguments retain gate vocabulary.
 
@@ -121,11 +122,11 @@ Ack fails when there is no completed review for the same `(note_path, gate_path,
 
 ## Interpreting review output
 
-A `pass` records that a bounded gate found nothing to flag. It is not certification that the note has no problems. `REPORT` is not a fifth decision: it says the report protocol completed. A fresh critique means the critique matches the current inputs, not “critiqued and handled.”
+A `pass` records that a closed-ended gate found nothing to flag. It is not certification that the note has no problems. `REPORT` is not a fifth decision: it says the report protocol completed. A fresh critique means the critique matches the current inputs, not “critiqued and handled.”
 
 The same principle applies once a `warn` finding is delegated to the fix system. When the fix produces a diff, reviewing that diff is the judgment step: it checks the resulting artifact directly, rather than trusting the fixing agent's own report of success. Reading the agent's self-report still matters when no diff results — there is no artifact to substitute for it, so that case still needs the claim read directly.
 
-Unbounded methods therefore remain report-shaped rather than being forced into gate decisions. The anchored critique uses report-kind completion; the unanchored [composition friction gate](../instructions/composition-friction-gate.md) routes attention without entering the acceptance store.
+Open-ended methods therefore remain report-shaped rather than being forced into gate decisions. The anchored critique uses report-kind completion; the unanchored [composition friction gate](../instructions/composition-friction-gate.md) routes attention without entering the acceptance store.
 
 ## Command reference
 

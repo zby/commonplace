@@ -38,7 +38,7 @@ That split removes Commonplace-owned subprocess dispatch and keeps the review pa
 
 Only load-bearing artifact paths become state: `review_jobs.prompt_path`, `review_jobs.bundle_output_path`, and `review_pairs.result_path`. `MANIFEST.json` remains a written human/debug artifact beside the prompt and output files. No pipeline command reads it as state.
 
-The schema is current-only. A missing review DB is created from the packaged schema; a DB with a mismatched review shape is rejected and must be recreated rather than transformed in place.
+At the time of this decision, the schema was current-only: a missing review DB was created from the packaged schema, while a mismatched review shape was rejected rather than transformed implicitly. ADR 035's 2026-07-11 amendment later added one explicit v4→v5 migration to preserve representable verdict evidence; unsupported versions remain rejected.
 
 ### Create jobs only from selector JSON
 

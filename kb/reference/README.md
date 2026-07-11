@@ -136,7 +136,7 @@ For the full read path and scaling direction, see [navigation.md](./navigation.m
 
 ### Review notes
 
-*What it's for.* Run semantic-quality gates against notes and either accept or fix what the gates flag.
+*What it's for.* Run snapshot-anchored assays against notes: closed-ended gates return decisions, while open-ended assays such as critique retain current reports.
 
 *How to ask.*
 
@@ -144,9 +144,9 @@ For the full read path and scaling direction, see [navigation.md](./navigation.m
 - "Run the semantic review sweep over anything I've changed recently."
 - "Ack the trivial changes in the review queue."
 
-*What happens.* The review system stores state in SQLite, selects target `(note, gate)` pairs, creates queued review jobs, delegates each prompt to a worker, and advances acceptance only after all pairs in the job finalize successfully.
+*What happens.* The review system stores state in SQLite, selects target `(note, criterion)` pairs, creates result-kind-homogeneous queued jobs, delegates each prompt to a worker, and advances the freshness baseline only after all pairs in the job finalize successfully.
 
-*What you get.* Per-gate `PASS` / `WARN` / `FAIL` decisions with rationale text, plus current freshness state.
+*What you get.* Per-gate `PASS` / `WARN` / `FAIL` / `ERROR` decisions or open-ended reports, plus current freshness state pinned to the note and criterion bytes.
 
 *Limitations.* The review UX is still agent-driven. Gate selection depends on note traits, worker delegation is owned by the current harness, and the selector/create/finalize command sequence is more operator-facing than a finished end-user CLI.
 
