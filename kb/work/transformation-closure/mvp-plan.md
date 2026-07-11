@@ -4,7 +4,7 @@ Concrete build list for the workshop's MVP, given the design in [unified-diff-an
 
 ## 1. Class-bearing acceptance kind (review DB)
 
-Let report-only assays (compression bundle, critique-note, composition-friction-gate, connect) register acceptance rows without a pass/warn/fail/error decision, and record each assay's declared class — **detection** or **attention** — on the acceptance surface. The license a fresh record carries derives from the class (see the failure-mode split in [unified-diff-and-ack.md](./unified-diff-and-ack.md)), never from where the assay runs or whether a result line exists.
+Let report-only assays (compression bundle, critique-note, composition-friction-gate, connect) register acceptance rows without a pass/warn/fail/error decision, and record each assay's declared class — **bounded** or **unbounded** — on the acceptance surface. The license a fresh record carries derives from the class (see the question-boundedness split in [unified-diff-and-ack.md](./unified-diff-and-ack.md)), never from where the assay runs or whether a result line exists.
 
 - Relax the `decision` CHECK constraint in `review-schema.sql` to admit a verdict-free kind (or accept NULL-decision pairs into acceptance).
 - Adjust the `current_gate_acceptances` view's `rp.decision IS NOT NULL` filter so verdict-free rows count as acceptances for freshness while staying out of the warn queue (warn-selector filters on `decision = 'warn'`, so it needs no change).
@@ -21,7 +21,7 @@ Add a step 10 to `kb/instructions/run-full-improvement-pass-on-note.md`: after t
 
 - For each assay anchored during the pass, read the selector's cumulative diff (accepted snapshot → final bytes).
 - Either **ack** with rationale + edit-kind tag, or **re-run** the assay against the final text.
-- Keep the license distinction sharp in the prompt: only detection-assay acceptances ever carry skip semantics; an ack on an attention-assay record reuses evidence and endorses nothing; the friction gate's "For the human" line is never satisfied by an ack.
+- Keep the license distinction sharp in the prompt: only bounded-assay acceptances ever carry skip semantics; an ack on an unbounded-assay record reuses evidence and endorses nothing; the friction gate's "For the human" line is never satisfied by an ack.
 - Stopping rule: at most this one cycle. Findings from closing re-runs route to the packet's Open items; they do not trigger another transformation round.
 
 During the MVP, audit sampling is 100%: every ack is *also* re-run, so initially the ack decision costs nothing to check. The dial only decays later, against evidence.
@@ -31,7 +31,7 @@ During the MVP, audit sampling is 100%: every ack is *also* re-run, so initially
 A plain log file in this workshop (no DB, no schema): one line per closing-cycle event — note, assay, ack-or-rerun, rationale/edit-kind, and for re-runs whether the outcome flipped against the prior record.
 
 - **Control arm:** occasional re-runs on *unchanged* bytes to measure the base flip rate from model variance. Without it no flip is attributable to an edit.
-- **Audit unit differs by class:** for detection assays a flip is a verdict change; for attention assays every re-run differs textually, so log instead whether the fresh sample materially diverges from the carried report (would it have changed steps 8–9?). Don't pre-formalize "materially" — record the judgment and let the log show whether it stabilizes.
+- **Audit unit differs by class:** for bounded assays a flip is a verdict change; for unbounded assays every re-run differs textually, so log instead whether the fresh sample materially diverges from the carried report (would it have changed steps 8–9?). Don't pre-formalize "materially" — record the judgment and let the log show whether it stabilizes.
 - The log calibrates the trust dial and locates the workshop's candidate constraints; it is not training data for a system-side heuristic.
 
 ## Explicitly not built
