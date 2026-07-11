@@ -67,20 +67,19 @@ Critique-note becomes the first report-kind assay executed through the batch pip
 Add a step 10 to `kb/instructions/run-full-improvement-pass-on-note.md`: after the step-9 flow pass, the orchestrator runs one closing cycle over **all five methods** —
 
 - Anchored assays (semantic bundle, critique): read the selector's cumulative diff (accepted snapshot → final bytes), record a **counterfactual judgment** — `would_ack` or `would_rerun`, with rationale and rough edit kinds — then **re-run regardless** (100% counterfactual sampling) and record the outcome against the judgment.
+- **Step-10 semantic reruns are single-pair jobs** — `--grouping gate --batch-size 1` against the one target note — unlike step 5's whole-bundle note-grouped job. This is what makes controls possible: a single-gate persisted prompt can be duplicated verbatim apart from its output destination, whereas replaying the bundle prompt would rerun every gate including the linked-input ones excluded from the control rotation (the alternative — duplicate the bundle prompt and snapshot every linked input — was rejected as heavier).
 - Unanchored methods (compression bundle, friction, connect): re-run directly against the final text and compare initial → closing reports. Compression compares at bundle level with per-gate detail nested in the outcome.
 - Audit unit differs by result kind: verdict-kind reruns record `flip`; report-kind reruns record `material_divergence` — would the fresh report have changed steps 8–9? Don't pre-formalize "materially"; record the judgment and let the record show whether it stabilizes.
 - License distinction in the prompt: only bounded-assay acceptances ever carry skip semantics; a carried unbounded record is reused evidence, endorsing nothing; the friction gate's "For the human" line is never satisfied by a carry.
 - Stopping rule: at most this one cycle. Step 10 appends a "Closing cycle" section to `full-pass-report.md` — `pass_id` plus a per-assay table of judgment and outcome — and residual findings route to the packet's Open items; they do not trigger another transformation round.
 
-**Observation record** — one JSONL line per (assay, closing event) in `observations/<pass_id>.jsonl`, hand-written, capturing exactly:
+**Observation record** — one JSONL line per (assay, closing event) in `observations/<pass_id>.jsonl`, hand-written against an unambiguous template. Common fields on every line: `pass_id`, note path, assay id, initial and final note hashes, runner/model/effort. The rest is discriminated by `record_kind`, because the three closing cases record different comparisons:
 
-- `pass_id`, note path, assay id, initial and final note hashes;
-- initial and closing report paths + hashes;
-- `would_ack` vs `would_rerun`, with rationale and rough edit kinds;
-- verdict flip or material divergence;
-- runner/model/effort, and whether the run was a control.
+- `carry_audit` (anchored semantic/critique — the rerun tests a counterfactual carry): `would_ack` vs `would_rerun` with rationale and rough edit kinds, initial and closing report refs, verdict `flip` or `material_divergence`;
+- `closing_comparison` (unanchored compression/friction/connect — no carry judgment exists): initial and closing report refs, divergence outcome only;
+- `control_comparison` (a duplicate of a closing run, *not* an initial-vs-closing comparison): source and control report refs, gate/instruction snapshot hash, source and control prompt hashes, `flip` or divergence.
 
-**Manual controls.** The variance control arm runs by hand during the MVP: duplicate a run from its retained job prompt (copy the persisted prompt, redirect only the output destination to `controls/`), execute in a fresh sub-agent, record the line with the control flag plus the gate-snapshot hash and both prompt hashes so the only intentional difference stays checkable. Controls are never finalized — no acceptance change, no pruning of the duplicated run. Schedule: each closing cycle duplicates one verdict-kind run and one report-kind run (critique) on the identical final bytes. The verdict-kind rotation is fixed to the four self-contained semantic gates — `internal-consistency`, `load-bearing-qualifiers`, `explanatory-reach`, `explication-quality` — because `grounding-alignment` follows up to 5 links and `completeness-boundary-cases` may read a cited source, so identical note+gate bytes do not guarantee identical inputs for them.
+**Manual controls.** The variance control arm runs by hand during the MVP: duplicate a closing run from its retained single-pair job prompt (copy the persisted prompt, redirect only the output destination to `controls/`), execute in a fresh sub-agent, record a `control_comparison` line with the gate-snapshot hash and both prompt hashes so the only intentional difference stays checkable. Controls are never finalized — no acceptance change, no pruning of the duplicated run. Schedule: each closing cycle duplicates one verdict-kind run and one report-kind run (critique) on the identical final bytes. The verdict-kind rotation is fixed to the four self-contained semantic gates — `internal-consistency`, `load-bearing-qualifiers`, `explanatory-reach`, `explication-quality` — because `grounding-alignment` follows up to 5 links and `completeness-boundary-cases` may read a cited source, so identical note+gate bytes do not guarantee identical inputs for them.
 
 Deliverable: the instruction closes over its own edits with full method coverage, and every closing cycle leaves observation lines and retained reports.
 
@@ -114,6 +113,8 @@ Design constraints that survive regardless of representation:
 - **Explicit byte confirmation over after-the-fact echo:** `commonplace-attest {note} --reviewed-hash {sha}`, hash obtained from a separate show step, failing on mismatch.
 - This is the anchored alternative to the `reviewed: true` boolean the README's purpose asks about — friction with it in use is direct evidence on why systems default to unanchored booleans.
 
+Adoption criterion, observable only once a kind exists (which is why it lives here and not in part 3): does the single force-free kind get stretched — the user wanting to record something weaker or stronger, or wanting a fresh attestation to actually license something? Each stretch is a located requirement for the kinds/forces design.
+
 ## Explicitly not built (in the MVP)
 
 - Everything in part 4 until its gate says yes — event commands, ack integration, automated control validation, archival generalization, trust-dial operation.
@@ -131,6 +132,8 @@ Design constraints that survive regardless of representation:
 - warn queue never contains a report-kind pair
 - a job creation request mixing result kinds is rejected (packing prevents it; the test asserts the invariant anyway)
 - the rendered critique prompt embeds the gate-snapshot instruction text: editing `critique-note.md` after job creation does not change the job's prompt
+- a completed report pair writes its result artifact despite `decision = NULL`
+- `load_latest_completed_review_pair` and the ack lookup recognize completed report-kind evidence (an ack can carry a report-kind acceptance forward)
 - existing verdict-gate flows are behavior-identical (regression: same selector output, same finalization results on a fixture store)
 - the migration script upgrades a populated v4 fixture store **including acceptance rows referencing pairs**: `user_version` becomes 5, every pre-existing pair reads `result_kind='verdict'` with its `review_pair_id` preserved, acceptance rows still join to their pairs and freshness classifications are unchanged, `PRAGMA foreign_key_check` is clean, and re-running the script on a v5 store is a refused no-op
 
@@ -145,5 +148,6 @@ Ties to the location criteria in [carry-heuristics.md](./carry-heuristics.md):
 - Constraint 3's premise: is a declared flow-only step 9 ever caught changing a claim in the cumulative diff?
 - Constraint 4: does the one-cycle stopping rule ever leave residual findings that genuinely needed a second round, or does routing to Open items suffice?
 - Case 3 flip: does a current-critique signal ever get read downstream as "critiqued and handled"? That observation, if it occurs, relocates the do-not-anchor rule as a real constraint.
-- Case 2 (human attestation): does the single force-free kind get stretched — the user wanting to record something weaker or stronger, or wanting a fresh attestation to actually license something? Each stretch is a located requirement for the kinds/forces design.
 - **Part 4's gate:** the `would_ack` confirmation rate (against the control arm's base rate) and the measured rerun cost — together, whether real carrying would pay.
+
+(The case 2 attestation observation lives under part 5's adoption criterion — nothing attestation-shaped exists to observe during the closure runs.)
