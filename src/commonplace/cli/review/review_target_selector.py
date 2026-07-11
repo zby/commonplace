@@ -18,7 +18,10 @@ from commonplace.review.review_model import normalize_model_partition
 
 
 def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
-    parser = argparse.ArgumentParser(description="List review target (note, gate) pairs.", allow_abbrev=False)
+    parser = argparse.ArgumentParser(
+        description="List assay target (note, criterion) pairs (schema fields retain gate names).",
+        allow_abbrev=False,
+    )
     parser.add_argument(
         "--mode",
         choices=["stale", "requested"],

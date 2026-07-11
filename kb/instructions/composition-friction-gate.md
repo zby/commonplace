@@ -1,11 +1,11 @@
 ---
-description: Experimental, run-by-hand, report-only gate that reconstructs from outside the filter and signal that frictionless generation strips from a note — does the central claim survive concretization, and which inferential joints are least supported. Run in a fresh adversarial sub-agent. Surfaces weak joints for a human; emits no pass verdict.
+description: Experimental run-by-hand report method that tests whether a note's central claim survives concretization and locates its least-supported inferential joints
 type: kb/types/instruction.md
 ---
 
 # Reconstruct a note's composition friction
 
-Experimental, run by hand. When an LLM denoises a rough idea into fluent prose, it returns the most plausible artifact it can and never marks whether that artifact is a full solution or the best it could manage with one constraint quietly dropped. The human writer's stall is that missing mark, and it does two jobs: the **filter** (a claim with no consistent single form has no witness, and dies at the keyboard) and the **signal** (the stall locates where understanding is thinnest). This gate reconstructs both from outside the text. It is **not a review gate** — it writes no acceptance or freshness state and is not wired into the review system. Write the report; do not touch the note.
+Experimental, run by hand. When an LLM denoises a rough idea into fluent prose, it returns the most plausible artifact it can and never marks whether that artifact is a full solution or the best it could manage with one constraint quietly dropped. The human writer's stall is that missing mark, and it does two jobs: the **filter** (a claim with no consistent single form has no witness, and dies at the keyboard) and the **signal** (the stall locates where understanding is thinnest). This method reconstructs both from outside the text. “Gate” is its historical method name; it is **not a review-system gate or snapshot-anchored assay** — it writes no acceptance or freshness state and is not wired into the review system. Write the report; do not touch the note.
 
 Run it in a **fresh sub-agent**, a different runner than wrote the note, so the checker has no sympathy for the note's framing. Separation is what gives the check teeth: the same generator that wrote smoothly over a gap will read smoothly over it too.
 

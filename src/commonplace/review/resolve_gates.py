@@ -1,4 +1,4 @@
-"""Library helpers for resolving gate IDs and bundle names."""
+"""Library helpers for resolving criterion requests into selector identities."""
 
 from __future__ import annotations
 
@@ -18,11 +18,12 @@ def _reject_unsafe_gate_arg(arg: str) -> None:
 
 
 def resolve_gate_requests(requests: list[str], gates_dir: Path) -> list[str]:
-    """Resolve mixed gate/bundle/conformance requests into selector gate ids.
+    """Resolve mixed criterion requests into selector gate ids.
 
     Catalog gate ids and bundle names expand against the gate catalog; virtual
     conformance requests (`type`, `type/{name}`, `collection`,
-    `collection/{path}`) pass through for the selector's derived gate sources.
+    `collection/{path}`) and the report-kind `critique` assay pass through for
+    the selector's derived criterion sources.
     """
     passthrough_requests = [
         arg

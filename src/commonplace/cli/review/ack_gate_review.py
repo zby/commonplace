@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Acknowledge trivial gate-review changes without rewriting review prose."""
+"""Carry assay evidence across a note change without rewriting its prose."""
 
 from __future__ import annotations
 
@@ -12,8 +12,8 @@ from commonplace.review.acknowledgement import ack_pairs
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description=(
-            "Advance the accepted baseline for one note and one or more gates "
-            "without rewriting the review body."
+            "Advance the freshness baseline for one note and one or more criteria "
+            "without rewriting the assay body (the command retains gate vocabulary)."
         ),
         allow_abbrev=False,
     )
@@ -29,7 +29,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "gate_ids",
         nargs="+",
-        help="One or more gate ids, for example prose/source-residue.",
+        help="One or more criterion ids, for example prose/source-residue or critique.",
     )
     return parser
 

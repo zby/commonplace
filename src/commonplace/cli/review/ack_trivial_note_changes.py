@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Bulk-ack stale gate pairs whose watched note parts did not change.
+"""Bulk-ack stale verdict pairs whose watched note parts did not change.
 
-Type-conformance pairs may be selected (via `type` requests or `--all-gates`)
-but never qualify: a type spec declares no `watches:`, which means it watches
-the whole note, so no note change is trivial against it.
+Conformance pairs may be selected (via explicit requests or `--all-gates`) but
+never qualify: their criterion documents declare no `watches:`, which means
+they watch the whole note, so no note change is trivial against them.
 """
 
 from __future__ import annotations
@@ -20,9 +20,9 @@ from commonplace.review.paths import review_gates_dir
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description=(
-            "Acknowledge note-changed stale pairs when the gate's watched note parts "
-            "did not change. Type-conformance pairs never qualify: a type spec "
-            "declares no watches, so it watches the whole note."
+            "Acknowledge note-changed stale verdict pairs when the criterion's watched "
+            "note parts did not change. Conformance pairs never qualify because their "
+            "criterion documents declare no watches."
         ),
         allow_abbrev=False,
     )
@@ -31,13 +31,13 @@ def build_parser() -> argparse.ArgumentParser:
         nargs="*",
         help=(
             "Gate IDs (e.g. prose/source-residue), bundle names (e.g. prose), "
-            "and/or type-conformance requests (type, type/definition)."
+            "and/or conformance requests (type/type-name, collection/path)."
         ),
     )
     parser.add_argument(
         "--all-gates",
         action="store_true",
-        help="Check every applicable review criterion: all catalog gates plus type-conformance pairs.",
+        help="Check all verdict criteria: catalog gates plus type- and collection-conformance pairs.",
     )
     parser.add_argument("--note", nargs="+", dest="note_paths", help="Filter to specific note paths or directories.")
     parser.add_argument("--current", action="store_true", help="Filter to notes with frontmatter status: current.")

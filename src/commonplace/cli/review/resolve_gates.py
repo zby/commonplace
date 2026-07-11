@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""Resolve gate IDs and bundle names to concatenated gate text.
+"""Resolve criterion requests to concatenated instruction text.
 
 Usage:
     commonplace-resolve-gates prose/source-residue semantic/grounding-alignment
     commonplace-resolve-gates prose                # all prose gates
     commonplace-resolve-gates prose semantic       # all prose + all semantic gates
+    commonplace-resolve-gates critique             # report-kind critique criterion
 
 For each resolved gate, prints:
 
@@ -25,12 +26,12 @@ from commonplace.review.resolve_gates import resolve_gate_requests
 
 def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser = argparse.ArgumentParser(
-        description="Resolve gate IDs and bundle names to concatenated gate text.",
+        description="Resolve gate, bundle, concrete conformance, or critique criterion requests.",
     )
     parser.add_argument(
         "gates",
         nargs="+",
-        help="Gate IDs (e.g. prose/source-residue) or bundle names (e.g. prose).",
+        help="Criterion requests: gate IDs/bundles, concrete type/name or collection/path, or critique.",
     )
     args = parser.parse_args(argv)
 

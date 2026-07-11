@@ -11,7 +11,7 @@ The review system runs snapshot-anchored assays over KB notes and records their 
 
 Two properties shape everything else:
 
-- **Freshness is independent of Git.** Review creation, full-review acceptance, and trivial acknowledgement each store DB-owned snapshots of the exact note and gate text that form the accepted baseline. Staleness is decided by comparing current file text against those snapshots, not by inspecting Git history.
+- **Freshness is independent of Git.** Assay creation, finalization, and acknowledgement store DB-owned snapshots of the exact note and criterion text that form the accepted baseline. Staleness is decided by comparing current file text against those snapshots, not by inspecting Git history.
 - **It is experimental and opt-in.** Reviewing is not part of the default note-writing flow, and reviews are not always-on checks. You invoke the system deliberately when you want a note judged.
 
 Storing review state in SQLite is a scoped exception to the repo's file-first design; [ADR-010](./adr/010-review-state-should-move-to-sqlite-once-reviews-leave-git-and.md) records why. This document covers how to operate the system; for how it is built, see [review architecture](./review-architecture.md).
@@ -20,16 +20,20 @@ Storing review state in SQLite is a scoped exception to the repo's file-first de
 
 A full review runs as a short pipeline, from a stale-pair query to a durable acceptance:
 
-1. **Select** — the selector lists `(note, gate)` pairs that are stale or unreviewed for a given model partition, and says why.
+1. **Select** — the selector lists `(note, criterion)` pairs that are stale or unreviewed for a given model partition, and says why. Persisted and JSON identities remain `(note_path, gate_path)`.
 2. **Create jobs** — selected pairs are packed into one or more queued *review jobs*, each with its own rendered prompt.
 3. **Review** — a worker (typically a sub-agent) reads a job's prompt and writes a single sentinel-delimited `bundle-output.md`.
-4. **Finalize** — the parent parses that output and, only if every expected pair is present and well-formed, records the decisions and upserts accepted baselines.
+4. **Finalize** — the parent parses that output against each pair's persisted result contract and, only if every expected pair is present and well-formed, records completion and upserts accepted baselines.
 
-Acceptance is the durable outcome. A current acceptance row pins the exact note and gate text that was reviewed, so the selector can later tell whether either side has drifted. When a note changes only trivially, an existing acceptance can be carried forward without a fresh review (*ack*).
+Acceptance is the durable freshness baseline. A current acceptance row pins the exact note and criterion text that was reviewed, so the selector can later tell whether either side has drifted. It is not a universal endorsement: a verdict acceptance records a bounded gate outcome, while a report acceptance records that the retained report matches the pinned inputs. When a change does not invalidate that evidence, an acceptance can be carried forward without a fresh run (*ack*).
 
 ## Concepts
 
-**Gate.** A markdown file at `kb/instructions/review-gates/{lens}/{name}.md` in a source checkout, or under the installed framework gate catalog in generated projects. The `{lens}/{name}` shorthand is the gate id used at the CLI boundary (for example `prose/source-residue`).
+**Assay.** Any snapshot-anchored LLM evaluation executed through selector → job → worker → finalizer. An assay is classified by its result kind. Verdict-kind assays are bounded checks; report-kind assays produce reusable analysis without deciding the note.
+
+**Gate.** A bounded, verdict-kind assay criterion. Catalog gates are markdown files at `kb/instructions/review-gates/{lens}/{name}.md` in a source checkout, or under the installed framework gate catalog in generated projects. The `{lens}/{name}` shorthand is the gate id used at the CLI boundary (for example `prose/source-residue`). Type- and collection-conformance pairs are virtual gates whose criterion files are the type spec and `COLLECTION.md`.
+
+**Criterion.** The instruction text applied to the note. It occupies the persisted `gate_path` side of every pair, including report assays. “Gate” remains in schema and CLI identifiers because the pair mechanism was built for gates; prose uses “criterion” when the statement includes non-gate assays.
 
 **Bundle.** A directory of gates sharing a lens. `semantic` means all gate files under `kb/instructions/review-gates/semantic/`.
 
@@ -41,17 +45,30 @@ Acceptance is the durable outcome. A current acceptance row pins the exact note 
 
 **Review pair.** One requested `(note_path, gate_path)` pair inside a review job. This is the unit of output and acceptance. Its persisted `result_kind` is `verdict` or `report`; report pairs complete with `decision = NULL`.
 
+**Result kind.** The persisted output contract fixed when the pair is created. A `verdict` pair completes with `reviewed_at` plus one decision (`pass`, `warn`, `fail`, `error`). A `report` pair completes with `reviewed_at`, a null decision, and `## Result: REPORT`. Completion and decision are separate facts.
+
 **Critique pair.** Request the virtual `critique` lens for one report-kind pair per explicitly targeted note. Its persisted gate identity is `kb/instructions/critique-note.md` (or the installed framework equivalent), so editing that instruction yields `gate-changed`. It is intentionally excluded from `--all-gates`.
 
-**Acceptance row.** The current record that a `(note_path, gate_path, model_partition)` key was reviewed against specific note and gate text. Acceptance is what makes a pair "fresh."
+**Acceptance row.** The current record that a `(note_path, gate_path, model_partition)` key completed against specific note and criterion text. Acceptance makes the evidence fresh; it does not imply that report findings were handled or that the note is globally approved.
 
 **Model partition.** Reviews are partitioned by model. A review or acceptance under one model does not satisfy freshness for another. A partition is a named bucket (`claude-opus`, `claude-opus-4.8`, `codex`) that groups concrete model IDs judged equivalent for review freshness — it is the review-identity key, not the literal model that ran. Concrete model IDs map into partitions through `MODEL_PARTITION_REGISTRY` in `src/commonplace/review/review_model.py` (`build_model_partition`). The CLI flag names carry the distinction: every partition-valued flag is `--model-partition`; the only `--model` flag in the review CLI is `commonplace-finalize-review-job`'s, which records the concrete worker model and is validated to map into the job's partition.
 
-Human-readable review output — the per-pair result files and each job's `MANIFEST.json` — is for inspection only. The SQLite decision and job-status columns are canonical; see [review architecture](./review-architecture.md) for the storage details.
+Human-readable review output — the per-pair result files and each job's `MANIFEST.json` — is for inspection. SQLite `result_kind`, `decision`, `reviewed_at`, acceptance, and job status are canonical state; see [review architecture](./review-architecture.md) for storage details.
+
+### Semantic boundaries
+
+| Do not conflate | Distinction |
+|---|---|
+| assay and gate | An assay is any snapshot-anchored evaluation; a gate is the bounded verdict-kind subset. |
+| criterion and `gate_path` | Criterion is the concept; `gate_path` is the historical schema field that stores its identity. |
+| completion and decision | Both result kinds complete; only verdict pairs carry a decision. |
+| acceptance and endorsement | Acceptance pins current evidence to snapshots. It does not approve a note or resolve report findings. |
+| freshness and handling | Fresh means the evidence matches current inputs. Handling findings is a separate downstream action. |
+| `REPORT` and a verdict | `REPORT` is a protocol completion marker, not a fifth decision. |
 
 ## Reading freshness
 
-The selector reports each requested `(note, gate)` pair as fresh or, if not, why it is stale. It compares three things: the current note file, the current gate file, and the current acceptance for that `(note_path, gate_path, model_partition)` key.
+The selector reports each requested `(note, criterion)` pair as fresh or, if not, why it is stale. The JSON and schema retain `gate_*` field names. Selection compares the current note file, current criterion file, and current acceptance for the persisted key.
 
 - no acceptance for the pair → `missing-review`
 - accepted note or gate snapshot is missing → `missing-review`
@@ -59,7 +76,7 @@ The selector reports each requested `(note, gate)` pair as fresh or, if not, why
 - accepted note text differs from the current note → `note-changed`
 - otherwise the pair is fresh
 
-For `note-changed` pairs, the selector can show the diff against the accepted note text, so you can judge whether the change is significant for that gate.
+For `note-changed` pairs, the selector can show the diff against the accepted note text, so you can judge whether the change invalidates that assay's evidence.
 
 ## Running a review batch
 
@@ -71,21 +88,21 @@ The full procedure is in [run review batches](../instructions/run-review-batches
    commonplace-review-target-selector ... --json | commonplace-create-review-jobs --input - --grouping {note|gate}
    ```
 
-   `--grouping note` packs all gates for one note into a shared prompt; `--grouping gate` packs one gate across notes. Choose according to the prompt shape you want.
+   `--grouping note` packs one note's pairs by bundle; `--grouping gate` packs one shared criterion across notes. The option name is historical schema vocabulary. Jobs are always result-kind homogeneous.
 
 2. For each job, launch a sub-agent that reads the job's `prompt_path` and writes its review to the job's `bundle_output_path`.
 
 3. Finalize each completed output with `commonplace-finalize-review-job` (signature under [Command reference](#command-reference)).
 
-**Finalization is all-or-nothing.** If any expected pair is missing, duplicated, unexpected, malformed, or lacks a valid result line, the job fails and writes no acceptance rows — a failed job accepts nothing. On success, every pair is recorded and the current acceptance row for each pair is upserted.
+**Finalization is all-or-nothing.** If any expected pair is missing, duplicated, unexpected, malformed, or lacks a valid result line, the job fails and writes no acceptance rows — a failed job accepts nothing. On success, every pair records per-kind completion and the current acceptance row for each pair is upserted.
 
 **Finalization-time provenance is optional.** When supplied, `--model` (with optional `--effort`) is validated against the job's model partition before any state changes, and the runner/model/effort are recorded. `--effort` requires `--model`. `--telemetry-json` stores opaque harness telemetry without making it review identity.
 
 ## Acknowledging trivial changes
 
-For a `note-changed` pair, inspect the selector diff (see [Reading freshness](#reading-freshness)) first. If the change is insignificant for the gate, acknowledge it instead of running a fresh review.
+For a `note-changed` pair, inspect the selector diff first. If the change does not invalidate the existing evidence, acknowledge it instead of rerunning. For a verdict pair this carries a bounded decision; for a report pair it only reuses the report as current evidence and endorses nothing.
 
-`commonplace-ack-gate-review` advances the accepted baseline when a note changed but not in a way that matters for the gate. It carries the existing review forward: it records the current note and gate text as newly accepted, pointing at the completed review pair being reused. It does not rewrite any file or review prose.
+`commonplace-ack-gate-review` advances the accepted baseline when a note changed but not in a way that matters for the criterion. It carries the existing evidence forward: it records the current note and criterion text as newly accepted, pointing at the completed review pair being reused. It does not rewrite any file or assay prose. The command name and arguments retain gate vocabulary.
 
 ```
 commonplace-ack-gate-review --model-partition {model-partition} {note_path} {gate_id}...
@@ -104,18 +121,18 @@ Ack fails when there is no completed review for the same `(note_path, gate_path,
 
 ## Interpreting review output
 
-A `pass` records that the gate's check found nothing to flag; it is not a certification that the note has no problems, only that this particular check didn't detect one. Treat it as an absence-of-detected-problem signal rather than a guarantee — an automated check with real but imperfect discriminative power is still worth having, but only as long as a clean result is never trusted beyond what it actually tested.
+A `pass` records that a bounded gate found nothing to flag. It is not certification that the note has no problems. `REPORT` is not a fifth decision: it says the report protocol completed. A fresh critique means the critique matches the current inputs, not “critiqued and handled.”
 
 The same principle applies once a `warn` finding is delegated to the fix system. When the fix produces a diff, reviewing that diff is the judgment step: it checks the resulting artifact directly, rather than trusting the fixing agent's own report of success. Reading the agent's self-report still matters when no diff results — there is no artifact to substitute for it, so that case still needs the claim read directly.
 
-This is why gates route a bare finding rather than a self-graded verdict — see [composition friction gate](../instructions/composition-friction-gate.md)'s hard rule against emitting a pass/fail verdict, and the broader case in [an adversarial human-agent loop can reconstruct the writing-is-thinking filter](../notes/adversarial-loop-can-reconstruct-the-writing-is-thinking-filter.md).
+Unbounded methods therefore remain report-shaped rather than being forced into gate decisions. The anchored critique uses report-kind completion; the unanchored [composition friction gate](../instructions/composition-friction-gate.md) routes attention without entering the acceptance store.
 
 ## Command reference
 
 **Selector** — `commonplace-review-target-selector`:
 
 - positional gate ids, bundle names, conformance requests, and/or `critique` (e.g. `prose`, `semantic/grounding-alignment`, `type`, `collection/notes`, `critique`)
-- `--all-gates` selects every applicable review criterion in place of naming ids/bundles (mutually exclusive with them): all catalog gates plus each note's type-conformance and collection-conformance pairs. The flag means the same thing in every review command. Like every selector flag it only *chooses* pairs — the selected `(note, gate)` pairs still run through create-jobs → review → finalize; it is not a one-shot "run all gates" command
+- `--all-gates` selects every applicable verdict criterion in place of naming ids/bundles (mutually exclusive with them): all catalog gates plus each note's type-conformance and collection-conformance pairs. It intentionally excludes report assays. Like every selector flag it only *chooses* pairs — the selected pairs still run through create-jobs → worker → finalize; it is not a one-shot "run all gates" command
 - `--note` to filter to specific note paths or directories
 - `--current` to filter to notes with `status: current`
 - `--model-partition {model-partition}` selects the review model partition to inspect or write; omit it only for model-agnostic missing-review coverage
@@ -134,7 +151,7 @@ With `--model-partition` omitted, the selector reports only model-agnostic missi
 
 ## The reviewer output contract
 
-A worker writes one sentinel-delimited `bundle-output.md` covering every pair in the class-homogeneous job. Verdict blocks end in a decision marker; report blocks end in `REPORT`:
+A worker writes one sentinel-delimited `bundle-output.md` covering every pair in the result-kind-homogeneous job. Verdict blocks end in a decision marker; report blocks end in `REPORT`:
 
 ```text
 ## Result: PASS
@@ -144,7 +161,7 @@ A worker writes one sentinel-delimited `bundle-output.md` covering every pair in
 ## Result: REPORT
 ```
 
-Aliases such as `Verdict`, `Outcome`, `INFO`, `OK`, and `UNKNOWN` are invalid — finalization rejects them. The worker writes only the bundle output file; it does not touch notes, gates, indexes, or the review database.
+`REPORT` is a completion marker, not a decision. `INFO` may label a non-actionable finding inside verdict prose but is not a valid final decision. Aliases such as `Verdict`, `Outcome`, `OK`, and `UNKNOWN` are invalid. The worker writes only the bundle output file; it does not touch notes, criteria, indexes, or the review database.
 
 ## Authoring a gate
 

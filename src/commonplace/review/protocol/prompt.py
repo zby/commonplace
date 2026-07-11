@@ -1,9 +1,9 @@
 """Render review protocol prompts.
 
 One renderer for every packing shape: the prompt carries N note targets and
-M review criteria and requests one output block per requested (note, gate)
-pair. Notes and catalog gates are embedded once; a conformance dependency
-serving as a gate — the note's type spec or its collection's COLLECTION.md —
+M assay criteria and requests one output block per persisted (note, gate_path)
+pair. Notes and catalog criteria are embedded once; a conformance dependency
+serving as a criterion — the note's type spec or its collection's COLLECTION.md —
 is referenced by repo path instead, and the worker reads it from disk. The
 dependency document is authoring instructions the reviewer applies as
 criteria, not prompt text addressed to it, and the read keeps that
@@ -16,12 +16,12 @@ new text while acceptance pins the creation-time snapshot. A persistent edit
 self-heals — the acceptance is immediately stale (`gate-changed`) against the
 changed file — so only an edit reverted within the window escapes notice.
 
-Freshness boundary: review acceptance hashes only the embedded note and gate
+Freshness boundary: acceptance hashes only the note and criterion
 texts. Everything this module renders around them — the runner system prompt,
 reading scope, output contract, templates, the conformance wrappers — is
 outside the freshness hash, so editing it does NOT invalidate accepted
-reviews. Keep this layer mechanical (how to read inputs and emit a verdict);
-judgment-bearing review criteria must live in gate files, where the hash sees
+assays. Keep this layer mechanical (how to read inputs and emit a result);
+judgment-bearing criteria must live in criterion files, where the hash sees
 them. In particular a conformance wrapper may say how to apply a type spec or
 COLLECTION.md as a gate, never what a good note of the type or collection
 looks like — conformance criteria that need sharpening go into the dependency
@@ -107,9 +107,9 @@ def _collection_conformance_wrapper_lines(gate_path: str) -> tuple[str, ...]:
 # Used as the reviewer system prompt; the task prompt rendered below carries
 # the per-job specifics.
 REVIEW_RUNNER_SYSTEM_PROMPT = (
-    "Your goal is to write a series of review artifacts for the requested gates. "
-    "The task prompt provides the exact note, review criteria, and output contract for the job. "
-    "Stay within the target note, the provided review criteria, and only the linked neighborhood that the active gates require. "
+    "Your goal is to write review artifacts for the requested assays. "
+    "The task prompt provides the exact notes, criteria, result contract, and output destination. "
+    "Stay within the target note, provided criteria, and only the linked neighborhood that an active criterion requires. "
     "Do not do broad repository exploration or search for alternate review criteria. "
     "Treat helper scripts as command interfaces; inspect workflow files or script source only if a command fails and you need to debug it."
 )
@@ -206,9 +206,9 @@ def render_pairs_prompt(
     )
     result_template = RESULT_LINE_TEMPLATE if result_kind == "verdict" else REPORT_LINE_TEMPLATE
     task_line = (
-        "Write gate reviews for the requested (note, gate) pairs listed below."
+        "Write verdicts for the requested (note, criterion) pairs listed below."
         if result_kind == "verdict"
-        else "Write the requested report for each (note, assay) pair listed below. Emit each critique as that pair's block."
+        else "Write the requested report for each (note, criterion) pair listed below. Emit each critique as that pair's block."
     )
 
     lines = [
@@ -240,7 +240,7 @@ def render_pairs_prompt(
             "",
             "Output contract for this job:",
             *destination_lines,
-            "- Use exactly one block per requested (note, gate) pair.",
+            "- Use exactly one block per requested (note, criterion) pair.",
             "- Use these exact sentinels for every block:",
             "  === PAIR REVIEW START: <note-path> :: <gate-path> ===",
             "  === PAIR REVIEW END: <note-path> :: <gate-path> ===",

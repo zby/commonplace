@@ -9,7 +9,7 @@ schema: kb/types/review-gate.schema.yaml
 
 ## Authoring Instructions
 
-A review gate is one quality check the review system applies to KB artifacts. Each gate is a single markdown file telling a reviewer what failure to look for and how to decide PASS, WARN, or INFO. The review system discovers gates by filesystem location (`kb/instructions/review-gates/{lens}/{name}.md`); this type contract enforces the shape every gate must carry. See `kb/reference/README-REVIEW-SYSTEM.md` for runtime concepts (bundles, freshness, acceptance) and `kb/reference/review-architecture.md` for the code architecture.
+A review gate is a bounded, verdict-kind quality assay. Each gate is one markdown criterion telling a reviewer what failure to seek and how to choose the final decision: PASS, WARN, FAIL, or ERROR. INFO may label a finding in the prose but is not a final decision. Report-kind assays are instructions, not `review-gate` artifacts. The catalog discovers gates at `kb/instructions/review-gates/{lens}/{name}.md`.
 
 ## Frontmatter
 
@@ -25,7 +25,7 @@ A review gate is one quality check the review system applies to KB artifacts. Ea
 ## Body
 
 - `## Failure mode` — the failure the reviewer is looking for, stated as the concrete pattern that should not appear.
-- `## Test` — the procedure for deciding PASS, WARN, or INFO. Name exceptions explicitly so the reviewer does not double-flag adjacent gates.
+- `## Test` — the procedure for choosing PASS, WARN, FAIL, or ERROR. It may route INFO findings without changing a clean final decision. Name exceptions explicitly so the reviewer does not double-flag adjacent gates.
 - Optional `## Example (pass)` and `## Example (fail)` blocks make the test concrete. Most existing gates carry at least one of each — copy their shape rather than reinventing it.
 - **The test must be self-contained.** Review freshness hashes only note text and gate text, so a test that leans on prose living elsewhere (a type spec, a collection convention) carries a dependency that never invalidates acceptances. If the test needs contract language, quote it in the gate body — that converts the dependency into hashed gate text, and editing the gate to track a moved contract fires `gate-changed` through the normal path. Conformance to a type's contract as a whole is not a catalog gate's job: that is the type-conformance pair, whose gate side is the type spec itself (ADR 038). A gate scoped by `requires_type` owns a sharper, named failure mode and should state its boundary with the conformance pair.
 
@@ -48,7 +48,7 @@ staleness: changed
 
 ## Test
 
-{Procedure for deciding PASS, WARN, or INFO. Name exceptions explicitly.}
+{Procedure for choosing PASS, WARN, FAIL, or ERROR. INFO may appear only as a finding label. Name exceptions explicitly.}
 
 ## Example (fail)
 

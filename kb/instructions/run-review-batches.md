@@ -1,21 +1,21 @@
 ---
-description: Run review gates by selecting target pairs, creating grouped review jobs, delegating each job, and finalizing results
+description: Run snapshot-anchored verdict or report assays by selecting pairs, creating homogeneous jobs, delegating each job, and finalizing results
 type: kb/types/instruction.md
 ---
 
 # Run review batches
 
-Review selected `(note, gate)` pairs from inside the current agent harness. The parent agent coordinates selection, job creation, worker scheduling, finalization, verification, and reporting. Sub-agents perform review judgment.
+Run selected `(note, criterion)` pairs from inside the current agent harness. The schema and CLI retain `(note_path, gate_path)` names. The parent coordinates selection, job creation, worker scheduling, finalization, verification, and reporting; sub-agents perform the assay.
 
 Use this procedure for either:
 
-- explicit review of requested gates, even if they are already fresh
-- stale review selected from accepted review state
+- explicit execution of requested gates or report assays, even if already fresh
+- stale execution selected from accepted review state
 
 Inputs:
 
 - `{model-partition}` — review model partition, for example `claude-opus` or `codex`. Derive it from the orchestrator's own model (see below), not a guessed default.
-- which gates to select — `{gate-or-bundle}...` (gate ids, bundle names, or type-conformance requests, for example `semantic/grounding-alignment`, `prose/source-residue`, `prose`, or `type`), or `--all-gates` to select every applicable review criterion (all catalog gates plus each typed note's type-conformance pair). `--all-gates` chooses pairs only; the run still proceeds through the create-jobs → delegate → finalize steps below
+- which criteria to select — gate ids, bundle names, conformance requests, or `critique`. `--all-gates` selects the applicable verdict-kind catalog and conformance gates; report assays remain explicit opt-ins
 - note scope — `--note {note-or-dir}...` or `--current`
 - selector mode — `requested` for explicit execution, or default stale selection
 - grouping — `note` or `gate`
@@ -25,6 +25,8 @@ The partition is fixed at selection, before any worker runs, so the orchestrator
 Two model flags, two meanings: every partition-valued flag in the review CLI is named `--model-partition` and takes a partition name (`claude-opus`, `claude-opus-4.8`, `codex`). The one exception is `commonplace-finalize-review-job --model`, which takes the *concrete* model the worker reported (for example `claude-fable-5`) — finalization derives its partition and validates it against the job's. Never pass a partition name to finalize's `--model`, and never pass a concrete model where a `--model-partition` flag expects a partition (aliases normalize, but the JSON output and DB then record the canonical partition, not what you typed).
 
 Always create jobs from selector JSON. The job creator has no direct note or pair mode.
+
+Selector JSON carries `result_kind`. Packing never mixes result kinds: verdict pairs and report pairs always become separate jobs. Do not infer a result contract from live criterion text at finalization time.
 
 If the harness cannot launch sub-agents or workers, stop and report that review-batch delegation is unavailable. Do not review the batches locally unless the user explicitly authorizes a local fallback for this run.
 
@@ -66,11 +68,11 @@ Add `--reason {missing-review|gate-changed|note-changed}` to the selector only w
 
 ### Choose grouping
 
-- Use `--grouping note` for note-centric review. Jobs are grouped by note and bundle/lens; use this for one note with several gates, or when each worker should focus on one note.
-- Use `--grouping gate` for gate-centric review. Jobs are grouped by gate and chunked by `--batch-size`; use this when many notes need the same gate reviewed.
+- Use `--grouping note` for note-centric work. Jobs are grouped by note and bundle/lens.
+- Use `--grouping gate` for criterion-centric work. The historical option name means shared `gate_path`; jobs are grouped by criterion and chunked by `--batch-size`.
 - `--batch-size` is valid only with `--grouping gate`.
 
-The selector emits applicable `(note, gate)` pairs. The creator consumes that JSON, creates queued review jobs, writes canonical prompts, and returns a JSON object with `jobs`. Creation is runner-agnostic; runner provenance stays null until finalization records it. Capture each job object, especially:
+The selector emits applicable pairs with their persisted result kinds. The creator consumes that JSON, creates queued homogeneous jobs, writes canonical prompts, and returns `jobs`. Capture especially:
 
 - `review_job_id`
 - derived `prompt_path`
@@ -93,10 +95,10 @@ Review job {review_job_id}.
 Read {prompt_path} and follow it exactly. It is the authoritative reviewer instruction for this job.
 Write the complete sentinel-bracketed review output to {bundle_output_path}.
 
-Do not edit the reviewed note, review gates, manifests, indexes, or any library artifact.
+Do not edit the reviewed note, assay criteria, manifests, indexes, or any library artifact.
 Do not run commonplace-* commands.
 Do not finalize the output.
-Return the gates reviewed and their PASS/WARN/FAIL/ERROR decisions.
+Return each pair and its final result marker: PASS/WARN/FAIL/ERROR for verdict pairs, or REPORT for report pairs.
 Also return your exact model ID and reasoning effort, copied verbatim from the explicit model-ID line in your environment context. Do not guess or infer them.
 ```
 
@@ -110,7 +112,7 @@ commonplace-finalize-review-job --review-job-id {review-job-id} --runner {worker
 
 Pass the model the worker reported to `--model`; finalization validates `build_model_partition(--model, --effort)` against the job's `model_partition` before mutating state. If the worker reported an explicit reasoning effort, also pass `--effort {low|medium|high|xhigh}`. Pass only `--runner` when the worker could not report a concrete model. If the harness exposes opaque execution telemetry, pass it with `--telemetry-json`.
 
-Run finalization once per completed sub-agent output. This reads the job-owned derived `bundle_output_path`, strictly parses the sentinel-bracketed pair bundle, records provenance and per-pair decisions, writes result files, appends acceptance events, and finalizes the review job. Finalization is all-or-nothing: a missing or malformed pair block fails the whole job and records no pair decisions or acceptance events.
+Run finalization once per completed sub-agent output. It reads job-owned output, parses each block against the pair's persisted result kind, records provenance and per-kind completion, writes result files, upserts current acceptance, prunes superseded evidence, and marks the job completed. Finalization is all-or-nothing: malformed or incomplete output fails the job and writes no acceptance.
 
 After finalization, `MANIFEST.json` in the job artifact directory is refreshed for inspection with job-derived pair display status and derived `result_path` files. Treat the returned job payload and derived job paths as pipeline state; do not read `MANIFEST.json` to decide what to finalize.
 
@@ -131,6 +133,6 @@ For stale-mode runs, rerun the same selector command used for selection. An outp
 - Do not bypass selector JSON when creating jobs.
 - Do not let the parent agent perform the review judgment when sub-agent delegation is available.
 - Do not invoke retired manual review-writing or ingest commands; use `commonplace-finalize-review-job`.
-- Do not skip a requested gate block in the bundle output.
+- Do not skip a requested pair block in bundle output.
 - Do not ask sub-agents to run finalization or any other bookkeeping command.
 - Do not combine multiple jobs into one output file.

@@ -1,11 +1,12 @@
-"""Review freshness helpers for snapshot-backed review inputs.
+"""Freshness helpers for snapshot-backed assay inputs.
 
-Freshness hashes exactly the two reviewed inputs: note text and gate text.
-The gate side may be a catalog gate or a type spec (type-conformance pairs);
-either way the same two hashes decide staleness. The prompt scaffolding
-around them (protocol/prompt.py, including the type-conformance wrapper) and
+Freshness hashes exactly the two evaluated inputs: note text and criterion
+text. The persisted `gate_path` side may be a catalog gate, a type spec, a
+COLLECTION.md contract, or the critique instruction; the same two hashes
+decide staleness. The prompt scaffolding around them (protocol/prompt.py,
+including the conformance wrappers) and
 the assembling code itself are deliberately outside the hash — changing them
-leaves acceptances fresh. Keep judgment-bearing review criteria in note/gate
+leaves acceptances fresh. Keep judgment-bearing review criteria in note/criterion
 files; widening beyond two inputs should stay compatible with this boundary
 (see kb/reference/review-architecture.md, freshness mechanism). The default
 answer to a new review dependency is a new factored (note, dependency) pair
@@ -83,7 +84,7 @@ def capture_review_inputs(
     repo_root: Path,
     pairs: Sequence[tuple[str, str, str]],
 ) -> CapturedReviewInputs:
-    """Snapshot note/gate files and build review-pair requests from those snapshots."""
+    """Snapshot note/criterion files and build assay-pair requests from them."""
     note_paths = sorted({note_path for note_path, _, _ in pairs})
     gate_paths = sorted({gate_path for _, gate_path, _ in pairs})
 

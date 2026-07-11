@@ -2,8 +2,9 @@
 --
 -- `review_jobs` records one review invocation: one prompt/job directory.
 -- `review_pairs` records each requested (note_path, gate_path) pair inside
--- that invocation. Freshness and selector state remain acceptance-driven and
--- gate-local.
+-- that invocation. `gate_path` is the retained schema name for the criterion
+-- side, including report assays. Freshness remains acceptance-driven and
+-- criterion-local; pair completion depends on result_kind, not decision alone.
 
 PRAGMA foreign_keys = ON;
 

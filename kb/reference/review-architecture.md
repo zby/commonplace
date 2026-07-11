@@ -7,7 +7,7 @@ status: current
 
 # Review system architecture (`commonplace.review` + `commonplace.cli.review`)
 
-The review subsystem stores review state in SQLite, renders canonical prompt artifacts for `(note, gate)` pairs, and finalizes worker-written review output. It does not launch reviewer models itself: the parent agent or harness owns worker dispatch, while Commonplace owns deterministic selection, job creation, finalization, freshness, and maintenance.
+The review subsystem stores assay state in SQLite, renders canonical prompt artifacts for `(note, criterion)` pairs, and finalizes worker-written output. The persisted criterion field remains named `gate_path`. It does not launch reviewer models itself: the parent agent or harness owns worker dispatch, while Commonplace owns deterministic selection, job creation, finalization, freshness, and maintenance.
 
 This document describes how the subsystem is built. For how to operate it, see [review system](./README-REVIEW-SYSTEM.md) and [run review batches](../instructions/run-review-batches.md).
 
@@ -22,10 +22,10 @@ This document describes how the subsystem is built. For how to operate it, see [
 review_target_selector  -> selector JSON
 create_review_jobs      -> queued review_jobs + review_pairs + prompt artifacts
 worker/sub-agent        -> writes derived bundle_output_path
-finalize_review_job     -> validate provenance, parse output, write result artifacts, upsert acceptance
+finalize_review_job     -> validate provenance, parse output, record completion, upsert acceptance
 ```
 
-The persisted unit is a `review_pairs` row inside one `review_jobs` row. A job's `packing` is either `note` or `gate`; packing controls only which pairs share one prompt and how per-pair result files are named. It is not a separate review protocol.
+The persisted unit is a `review_pairs` row inside one `review_jobs` row. A job's `packing` is either `note` or `gate`; `gate` here means the shared `gate_path`/criterion axis. Packing controls only prompt sharing and result filenames. Every job is result-kind homogeneous.
 
 ## Data model
 
@@ -36,7 +36,7 @@ SQLite database, default location `kb/reports/review-store.sqlite`; override wit
 | `review_jobs` | One review invocation: model partition, nullable runner/model/effort provenance, status, packing (`note`/`gate`), `created_at`, nullable `completed_at`, telemetry, failure context |
 | `review_pairs` | One requested `(note_path, gate_path)` pair inside a job: persisted `result_kind` (`verdict`/`report`), nullable decision, and reviewed note/gate snapshot IDs; derives `model_partition` from its parent job |
 | `review_file_snapshots` | Role-neutral snapshots by `(path, content_sha256)`, storing exact UTF-8 text when it must be reusable for prompt rendering or diffing |
-| `acceptance` | Current accepted baseline per `(note_path, gate_path, model_partition)`; `accepted_review_pair_id` points at review evidence and accepted snapshot IDs pin note/gate text |
+| `acceptance` | Current freshness baseline per `(note_path, gate_path, model_partition)`; `accepted_review_pair_id` points at completed evidence and accepted snapshot IDs pin note/criterion text |
 
 Artifact paths — prompt, bundle output, manifest, and per-pair result files — are **derived**, not stored columns. Each per-pair result filename (`pair-{ordinal}-{stem}.md`) is a pure function of that pair's own row (`pair_ordinal` plus the packing-varying path stem), never of sibling pairs, so inline pruning of superseded sibling pairs cannot change a surviving pair's path.
 
@@ -48,14 +48,14 @@ The DB is the source of truth; human-readable markdown is derived.
 
 - `review_pairs.result_kind` is `verdict` or `report`. Verdict decisions use the lowercase enum `pass`, `warn`, `fail`, `error`; report pairs keep `decision` null. `review_jobs.status` is `queued`, `completed`, or `failed`.
 - `created_at` is when the job row and prompt inputs were prepared. Runner provenance is optional and recorded during finalization.
-- The review **body** is not in the DB. The finalizer writes it to the per-pair result file (at the derived result path) from the parsed `bundle-output.md`; the DB stores only the pair `decision`. `MANIFEST.json` is reconstructed from DB rows and holds no prose. Only the manifest is reproducible from the DB alone.
+- The review **body** is not in the DB. The finalizer writes it to the derived per-pair result file from parsed `bundle-output.md`. The DB stores protocol state (`result_kind`, nullable `decision`, `reviewed_at`), not prose. `MANIFEST.json` is reconstructed from DB rows and holds no review body.
 - Verdict output ends with one parseable `## Result: PASS|WARN|FAIL|ERROR`; report output ends with `## Result: REPORT`. Finalization parses against the pair's persisted kind and rejects the other class's marker.
 
 ### Freshness mechanism
 
-The selector computes SHA-256 over the current note and gate text and compares it against the accepted snapshot hashes from `current_gate_acceptances`, reconstructing note diffs from accepted snapshot text. Rows with null accepted snapshots report as `missing-review` with the diff unavailable. There is no separate bundle manifest hash; if bundle-level manifests ever become freshness-relevant, this should widen to an effective review-contract hash rather than a leaf gate-file hash.
+The selector computes SHA-256 over the current note and criterion text and compares it against the accepted snapshot hashes from `current_gate_acceptances`, reconstructing note diffs from accepted snapshot text. Rows with null accepted snapshots report as `missing-review` with the diff unavailable. There is no separate bundle manifest hash; if bundle-level manifests ever become freshness-relevant, this should widen to an effective review-contract hash rather than a leaf criterion-file hash.
 
-The hash boundary is deliberate and narrower than the full review contract: the prompt scaffolding (`protocol/prompt.py` — runner system prompt, reading scope, output contract, the conformance wrappers) and the prompt-assembling code are outside it, so editing them invalidates no acceptances. The compensating rule is that judgment-bearing review criteria live only in hashed note/gate files, and the scaffolding stays mechanical; a scaffolding change that shifts judgments is a system upgrade calling for a deliberate corpus-wide re-review or ack decision. Both modules carry comments marking this boundary. For conformance pairs specifically, a wrapper may say how to apply a type spec or COLLECTION.md as a gate, never what a good note of the type or collection looks like — conformance criteria that need sharpening go into an authored `## Review` section of the dependency document, where the hash sees them.
+The hash boundary is deliberate and narrower than the full assay contract: the prompt scaffolding (`protocol/prompt.py` — runner system prompt, reading scope, output contract, the conformance wrappers) and the prompt-assembling code are outside it, so editing them invalidates no acceptances. The compensating rule is that judgment-bearing criteria live only in hashed note/criterion files, and the scaffolding stays mechanical; a scaffolding change that shifts judgments is a system upgrade calling for a deliberate corpus-wide re-review or ack decision. Both modules carry comments marking this boundary. For conformance pairs specifically, a wrapper may say how to apply a type spec or COLLECTION.md as a criterion, never what a good note of the type or collection looks like — conformance criteria that need sharpening go into an authored `## Review` section of the dependency document, where the hash sees them.
 
 Conformance prompts reference the dependency document — the type spec or the collection's COLLECTION.md — by repo path instead of embedding it; the worker reads it from disk. The document is criteria the reviewer applies, not prompt text addressed to it, and arriving as a read result keeps that distinction evident. The document is still snapshotted at job creation and pinned by acceptance, so freshness is unchanged. The disk read opens a window — a document edited between job creation and the worker's read is judged in its new text while acceptance pins the old snapshot — but a persistent edit self-heals, because the acceptance is immediately `gate-changed` against the changed file; only an edit reverted within the window escapes notice.
 
@@ -65,7 +65,7 @@ The two-input shape is also the growth path: the default answer to a new review 
 
 ### Selection and gates
 
-- `review_target_selector.py` lists stale or requested applicable `(note, gate)` pairs. Read-only.
+- `review_target_selector.py` lists stale or requested applicable `(note, criterion)` pairs. Read-only; its public records retain `gate_*` names.
 - `resolve_gates.py` expands bundle names into gate ids and filters gates by note type and traits. It owns the single definition of `--all-gates`: all catalog gates plus virtual `type` and `collection`; the heavyweight report-kind `critique` assay remains opt-in.
 - `paths.py` resolves the active gate catalog and translates between gate ids and repo-relative gate paths, including virtual type, collection, and critique identities.
 - `type_conformance.py` owns the second gate source ([ADR 038](./adr/038-type-conformance-reviews-use-the-type-spec-as-the-gate.md)): type-conformance pairs whose gate side is the type spec named by the note's `type:` frontmatter. Pairs derive from note frontmatter, not from catalog listing plus `requires_type` filtering; the persisted gate identity is the type-spec repo path, and everything downstream of pair derivation (snapshots, freshness, acceptance, ack, finalization) is unchanged.
@@ -74,7 +74,7 @@ The two-input shape is also the growth path: the default answer to a new review 
 ### Job creation
 
 - `batch.py` creates queued jobs from normalized pair lists. It snapshots note/gate files, inserts job and pair rows, renders prompts, writes `MANIFEST.json`, and returns derived prompt/output/result paths.
-- `freshness.py` captures snapshot-backed review inputs for prompt generation.
+- `freshness.py` captures snapshot-backed assay inputs for prompt generation.
 - `job_prompt.py` prepares `NoteReviewTarget` objects, including resolved and unresolved local markdown links.
 - `artifacts.py` owns artifact directory selection, result-file naming, result frontmatter, per-pair result writes, and manifest writing.
 
@@ -115,11 +115,11 @@ State and inspection:
 ## Invariants
 
 - Job creation always consumes selector JSON. There is no direct note/pair creation mode.
-- Worker agents write only the job-owned bundle output file; they do not mutate notes, gates, indexes, manifests, or review DB state.
+- Worker agents write only the job-owned bundle output file; they do not mutate notes, criteria, indexes, manifests, or review DB state.
 - `MANIFEST.json` is inspectable output, not pipeline state.
 - Finalization accepts only `queued` jobs and moves them atomically to `completed` or `failed`.
-- Failed jobs write no acceptance rows and leave pair decisions null.
-- `current_gate_acceptances` filters acceptance evidence to completed jobs with non-null pair decisions.
+- Failed jobs write no acceptance rows and reset pair completion state (`decision` and `reviewed_at` null).
+- `current_gate_acceptances` requires a completed parent job and per-kind pair completion: decision-bearing verdict or decisionless report.
 - A successful acceptance supersedes the prior row for the same `(note_path, gate_path, model_partition)` key and prunes obsolete review evidence inline.
-- Acceptance state is path-keyed; relocating notes or gates requires fresh review under the new path.
+- Acceptance state is path-keyed; relocating notes or criteria requires a fresh assay under the new path.
 - Missing telemetry is normal. Review identity is `(note_path, gate_path, model_partition)`, not worker-provided execution metadata.
