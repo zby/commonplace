@@ -1,74 +1,89 @@
 # MVP build plan: closing review on the full pass over a unified diff-and-ack surface
 
-Phased build plan for the workshop's MVP, given the design in [unified-diff-and-ack.md](./unified-diff-and-ack.md). The MVP is a calibrated one-cycle closing review on `run-full-improvement-pass-on-note.md`, with carry judgments recorded as rationale-bearing acks, a minimal force-free human attestation, and an observation log with a variance control arm. Each phase is self-contained: it delivers testable value on its own and later phases build on it without reaching back. Everything below is the lightest reversible representation available; nothing here closes a design decision beyond what building forces.
+Phased build plan for the workshop's MVP, given the design in [unified-diff-and-ack.md](./unified-diff-and-ack.md). The MVP is a calibrated one-cycle closing review with full method coverage, carry judgments recorded as append-only events with required rationale, and an observation log with a variance control arm. Each phase is self-contained: it delivers testable value on its own and later phases build on it without reaching back. Everything below is the lightest reversible representation available; nothing here closes a design decision beyond what building forces.
+
+Two structural distinctions, located at design time against shipped code (a codex review of an earlier draft of this plan), shape the whole build:
+
+- **Current state vs. history.** Acceptance is deliberately current-state storage with inline pruning ([ADR 036](../../reference/adr/036-review-acceptance-is-current-state-not-append-only-history.md)): a superseding rerun deletes the prior pair, its job, and its artifacts in the same transaction. A carry judgment is *history* — so it cannot live (only) on acceptance, or the audit rerun destroys the attribution substrate exactly when the audit result arrives.
+- **Verdict vs. completion.** A decision (pass/warn/fail/error) and a protocol completion marker are different facts. Unbounded assays complete without deciding, so the pair needs a persisted `result_kind`, not merely a relaxed decision constraint.
 
 Ordering note: an evidence-first alternative (closing review on the already-anchored semantic pairs before any machinery, zero code) was considered and set aside — a semantic-only closing cycle would put partial-coverage observations in the log that read as full-pass closure. Machinery first, then one log whose coverage is honest.
 
-## Phase 1: critique into the review system
+## Phase 1: persisted result kinds + critique execution
 
-Critique-note becomes the first unbounded assay executed through the batch pipeline: `commonplace-review-target-selector critique --note {path}` → create-jobs → sub-agent → finalize, producing acceptance rows and staleness classification exactly like semantic gates. Phase deliverable: that flow works end-to-end and the selector reports critique freshness (`missing-review` / `note-changed` / `gate-changed`) for real notes.
+Critique-note becomes the first unbounded assay executed through the batch pipeline: `commonplace-review-target-selector --model-partition {mp} critique --note {path} --json | commonplace-create-review-jobs --input - --grouping note` → sub-agent → finalize, producing acceptance rows and staleness classification exactly like semantic gates. Phase deliverable: that flow works end-to-end and the selector reports critique freshness (`missing-review` / `note-changed` / `gate-changed`) for real notes.
 
-- Registration surface: **through the batch mechanism**, not after-the-fact recording. The pipeline pins snapshots itself as part of executing the assay, so the anchor is enforced by construction; a standalone `commonplace-record-assay` command would accept the orchestrator's claim that report matches bytes — a self-reported anchor with a time-of-check gap. Naming stays layered: "gate" remains the operational term; the batch mechanism gains an assay class, not a rename.
-- **Class-homogeneous jobs via a separate bundle — already given by shipped packing.** Critique is its own one-assay bundle; `--grouping note` already keys jobs by `(note, bundle)` (`_note_groups`, `src/commonplace/cli/review/create_review_jobs.py`) and `--grouping gate` packs per-gate, so no job ever mixes result-kind classes and no new guard is needed. Each job carries exactly one output contract.
-- **The difficult part is the parser.** Finalization currently requires `## Result: PASS|WARN|FAIL|ERROR` per pair; the expected result kind must instead be resolved from the job's bundle. Three design choices live here:
-  - *Class declaration.* Something must declare "critique is unbounded" for the parser to depend on. Cleanest precedent is the virtual-lens pattern (ADR 038/041): `critique` as a virtual lens whose gate identity is `kb/instructions/critique-note.md`, one derived pair per note — avoids duplicating the instruction into a catalog file. Alternative: a `class:` frontmatter field on a gate-shaped catalog file.
-  - *Verdict-free result marker.* All-or-nothing finalization still needs a parseable per-pair completion line (e.g. `## Result: REPORT`) — a truncated critique must be distinguishable from a complete one.
-  - *Report routing.* The full pass reads `kb/reports/critique/<note>.critique.md`; batch writes pair result files in the job artifact dir. Either the pair result file becomes the report (step 7 reads from job artifacts) or finalize copies it out.
-- Schema: relax the `decision` CHECK constraint in `review-schema.sql` to admit the verdict-free kind, record the assay's declared class — **bounded** or **unbounded** — on the acceptance surface, and adjust the `current_gate_acceptances` view's `rp.decision IS NOT NULL` filter so verdict-free rows count for freshness while staying out of the warn queue (warn-selector filters on `decision = 'warn'`, so it needs no change). The license a fresh record carries derives from the class, never from where the assay runs or whether a result line exists.
-- Assay identity is the instruction file path, so editing `critique-note.md` stales its records as `gate-changed` — the ADR 038/041 pattern, no new mechanism.
+- Registration surface: **through the batch mechanism**, not after-the-fact recording. The pipeline pins snapshots itself as part of executing the assay, so the anchor is enforced by construction; a standalone recording command would accept the orchestrator's claim that report matches bytes — a self-reported anchor with a time-of-check gap. Naming stays layered: "gate" remains the operational term; the batch mechanism gains an assay class, not a rename.
+- **Class-homogeneous jobs via a separate bundle — already given by shipped packing.** Critique is its own one-assay bundle; `--grouping note` already keys jobs by `(note, bundle)` (`_note_groups`, `src/commonplace/cli/review/create_review_jobs.py`) and `--grouping gate` packs per-gate, so no job ever mixes result-kind classes.
+- **Persist the result kind on the pair.** `review_pairs.result_kind = verdict | report`, written at pair creation from the bundle's declared class; `decision` stays `pass|warn|fail|error|NULL`. `## Result: REPORT` is a completion marker, not a decision. Finalization parses against the *persisted* contract — `review_jobs` stores only `packing`, and reading gate frontmatter at finalize time would reintroduce a time-of-check gap, so the expectation must be snapshotted when the pair is created.
+- Code touchpoints beyond the schema: `upsert_acceptance` rejects null-decision pairs (`src/commonplace/review/review_db.py:763`) and must instead require *completion* (a decision for verdict-kind pairs, completed report for report-kind); the `current_gate_acceptances` view's `rp.decision IS NOT NULL` predicate becomes result-kind-aware. Report-kind rows stay out of the warn queue (warn-selector filters on `decision = 'warn'`, unchanged).
+- **Class declaration: virtual lens, decided.** `critique` is a virtual lens (the ADR 038/041 pattern): gate identity is `kb/instructions/critique-note.md`, one derived pair per note, the lens declares `result_kind = report`. The catalog-file alternative (a gate-shaped file with class frontmatter) is rejected — it duplicates the instruction and materially changes resolver work. Editing `critique-note.md` stales its records as `gate-changed`, no new mechanism.
+- Report routing: either the pair result file becomes the report (full-pass step 7 reads from job artifacts) or finalize copies it to `kb/reports/critique/<note>.critique.md`. Decide by whichever keeps the full-pass instruction's read path simpler.
 - Consequence for the instruction: step 3 of the full pass becomes a selector/create-jobs/finalize flow structurally identical to step 5.
-- Scope: **critique-note only.** Friction follows the same pattern later if it proves cheap (its output contract is already verdict-free by design); the compression bundle (own multi-gate runner) and connect (skill machinery) stay un-anchored — log what that leaves uncovered rather than silently treating the pass as fully anchored.
+- Scope: **critique-note only.** Friction, compression, and connect are not anchored in the MVP — full-pass closure coverage comes from phase 3 re-running them directly instead.
 
-## Phase 2: rationale on ack
+## Phase 2: durable carry-event recording
 
-Add a rationale field (and a rough edit-kind tag) to `commonplace-ack-gate-review` and the `acceptance` table, recorded at ack time. The ack is the MVP's carry record; without the why-at-decision-time, audit flips have no attribution substrate. See the residual-requirement section of [unified-diff-and-ack.md](./unified-diff-and-ack.md). Phase deliverable: acks carry rationale for both bounded and unbounded acceptances; independent of phase 1 except that unbounded acks exercise the new acceptance kind.
+The carry judgment is history, so it gets an append-only record independent of acceptance. Lightest representation: a command-owned JSONL log in this workshop; a `carry_events` table only if the JSONL proves load-bearing beyond the MVP.
 
-## Phase 3: closing-review step and observation log
+- **Event written at judgment time**, capturing the prior evidence *before* finalization's pruning can remove it (ADR 036 deletes superseded pairs and artifacts inline).
+- **JSONL event schema, fixed now** (one object per line):
+  `ts`, `note_path`, `assay_id`, `event` (`would_ack | ack | rerun | control_rerun`), `baseline_note_hash`, `current_note_hash`, `rationale` (required for `would_ack`/`ack`), `edit_kinds` (free-text list), `prior` ({`result_kind`, `decision` or `report_ref`, `note_hash`}), `outcome` (for reruns: {`flip`: bool} for verdict-kind, {`material_divergence`: bool, `note`} for report-kind).
+- **Rationale is required on carry**, not merely a field. The ack command gains a required `--rationale`; acceptance may cache the latest rationale for convenience, but the event log is the authoritative history.
+- **At 100% sampling, record `would_ack` and re-run** — do not transiently advance acceptance only for the rerun to supersede it. The counterfactual judgment plus the rerun outcome is the observation; acceptance moves once, on the rerun.
 
-Add a step 10 to `kb/instructions/run-full-improvement-pass-on-note.md`: after the step-9 flow pass, the orchestrator runs one closing cycle —
+Phase deliverable: every carry judgment (real or counterfactual) leaves a durable event that survives acceptance pruning.
 
-- For each assay anchored during the pass, read the selector's cumulative diff (accepted snapshot → final bytes).
-- Either **ack** with rationale + edit-kind tag, or **re-run** the assay against the final text.
-- Keep the license distinction sharp in the prompt: only bounded-assay acceptances ever carry skip semantics; an ack on an unbounded-assay record reuses evidence and endorses nothing; the friction gate's "For the human" line is never satisfied by an ack.
+## Phase 3: closing-review step in the full-pass instruction
+
+Add a step 10 to `kb/instructions/run-full-improvement-pass-on-note.md`: after the step-9 flow pass, the orchestrator runs one closing cycle over **all five methods**, not just the anchored ones —
+
+- For the anchored assays (semantic bundle, critique): read the selector's cumulative diff (accepted snapshot → final bytes), then `would_ack`/ack-or-rerun per the phase 2 contract.
+- For the unanchored methods (compression bundle, friction, connect): **re-run them directly** against the final text. They need no DB anchoring to participate in a 100%-rerun experiment, and this makes the closure honestly full-pass instead of two-of-five. Their rerun outcomes go into the same event log (`prior.report_ref` pointing at the pass's report files).
+- Keep the license distinction sharp in the prompt: only bounded-assay acceptances ever carry skip semantics; a carried unbounded record is reused evidence, endorsing nothing; the friction gate's "For the human" line is never satisfied by a carry.
 - Stopping rule: at most this one cycle. Findings from closing re-runs route to the packet's Open items; they do not trigger another transformation round.
+- Control arm: occasional re-runs on *unchanged* bytes (logged as `control_rerun`) to measure the base flip rate from model variance. Without it no flip is attributable to an edit.
+- Audit unit differs by result kind: verdict-kind reruns log `flip`; report-kind reruns log `material_divergence` — would the fresh report have changed steps 8–9? Don't pre-formalize "materially"; record the judgment and let the log show whether it stabilizes.
 
-The observation log lands in the same phase — a plain file in this workshop (no DB, no schema): one line per closing-cycle event — note, assay, ack-or-rerun, rationale/edit-kind, and for re-runs whether the outcome flipped against the prior record.
+Phase deliverable: the instruction closes over its own edits with full method coverage, and every closing cycle leaves event-log lines.
 
-- **Control arm:** occasional re-runs on *unchanged* bytes to measure the base flip rate from model variance. Without it no flip is attributable to an edit.
-- **Audit unit differs by class:** for bounded assays a flip is a verdict change; for unbounded assays every re-run differs textually, so log instead whether the fresh sample materially diverges from the carried report (would it have changed steps 8–9?). Don't pre-formalize "materially" — record the judgment and let the log show whether it stabilizes.
-- The log calibrates the trust dial and locates the workshop's candidate constraints; it is not training data for a system-side heuristic.
+## Phase 4: real runs at 100% counterfactual-ack sampling
 
-Phase deliverable: the instruction closes over its own edits, and every closing cycle leaves a log line.
+Use the MVP on real full passes. Every carry judgment is recorded as `would_ack` and then re-run, so initially the carry decision costs nothing to trust; the sampling rate only decays later, against evidence from the log. This phase produces observations, not code — it is where constraints get located (see below).
 
-## Phase 4: minimal human attestation
+## Phase 5: human-attestation probe
 
-The simplest slice of workshop case 2: a way for the user to ack the current state of a note as reviewed, version-anchored like everything else. The space of review kinds with different forces (skimmed / approved / claims-verified / editorial sign-off, each licensing different things) is large — the MVP deliberately implements one kind with **no force** and observes what else is needed.
+The simplest slice of workshop case 2, deliberately last — informed by what the event model taught. This is a separate architectural probe, **not** a cheap reuse of the phase 1 mechanism: an acceptance requires a completed review pair, so `commonplace-attest` cannot just pin snapshots and write an acceptance row. Three candidate representations, chosen against phases 1–4 experience:
 
-- **One kind, force-free.** A single attestation, `reviewed`, whose contract is a short file (e.g. `kb/instructions/human-review.md`) stating deliberately little — "the user read this exact version and accepts it." The contract file is the gate-side identity, so editing what `reviewed` means stales every human attestation as `gate-changed` — the ADR 038/041 pattern again. Force-free means no machinery consumes a fresh attestation as a license: it is an anchored, queryable fact, nothing skips or suppresses because of it.
-- **Representation:** one more factored `(note, contract)` acceptance in the existing store under a human partition (single `human` partition for the MVP; per-actor partitions only if observation demands them) — the [factored dependency pairs](../../reference/proposals/factored-dependency-pairs-for-review-freshness.md) pattern with a human actor. Freshness falls out: a `note-changed` human attestation means the user hasn't seen the current bytes.
-- **Surface:** a small command (`commonplace-attest`-shaped: note path, optional comment) that pins current snapshots and writes the acceptance. It should echo what it pinned (short hash or one-line diff summary against the previously attested state) so the user can catch attesting to bytes they didn't just read.
+- a synthetic completed review job/pair under a human partition;
+- generalizing acceptance away from review-pair evidence;
+- attestations as their own fact/event type — the current-state-vs-history lesson applies with force here, since attestation history is plausibly the point.
+
+Design constraints that survive regardless of representation:
+
+- **One kind, force-free.** A single attestation whose contract file states exactly: *the user recorded that they reviewed these bytes* — no "accepts", no approval semantics; "accepts it" is already endorsement-shaped. Force-free means no machinery consumes a fresh attestation as a license.
+- The contract file is the gate-side identity, so editing what the attestation means stales every attestation as `gate-changed`.
+- Single `human` partition for the MVP; per-actor partitions only if observation demands them.
+- The command echoes what it pinned (short hash or one-line diff summary against the previously attested state) so the user can catch attesting to bytes they didn't just read.
 - This is the anchored alternative to the `reviewed: true` boolean the README's purpose asks about — friction with it in use is direct evidence on why systems default to unanchored booleans.
 
-Phase deliverable: the user can attest a note, the selector reports human-attestation freshness, and nothing else changes behavior.
-
-## Phase 5: run and observe
-
-Use the MVP on real full passes. Audit sampling starts at 100% — every ack is *also* re-run, so initially the ack decision costs nothing to check; the dial only decays later, against evidence. This phase is where constraints get located (see below); it produces observations, not code.
+Phase deliverable: the user can attest a note, the selector (or a sibling query) reports attestation freshness, and nothing else changes behavior.
 
 ## Explicitly not built
 
 - Footprint enforcement machinery — declared footprints stay stated intent the cumulative diff verifies.
-- Any edit-kind taxonomy in the system — the tag on acks is free-text observation vocabulary.
+- Any edit-kind taxonomy in the system — `edit_kinds` in the event log is free-text observation vocabulary.
 - Trust-dial automation — sampling rate changes are manual judgments against the log.
-- A review-kind taxonomy or attestation forces — the MVP ships exactly one force-free `reviewed` kind; kinds and forces wait for observed need (see phase 4).
+- A review-kind taxonomy or attestation forces — the MVP ships exactly one force-free attestation kind; kinds and forces wait for observed need (see phase 5).
+- Anchoring for compression, friction, and connect — phase 3 re-runs them directly; DB anchoring for them waits until the critique pattern has proven itself.
 
-## What phase 5 should observe (constraint location)
+## What phases 4–5 should observe (constraint location)
 
 Ties to the location criteria in [carry-heuristics.md](./carry-heuristics.md):
 
 - Constraint 1 (direction over size): do flips in the log track edit *direction* rather than diff size?
-- Constraint 2 (non-compositionality): does an accumulated series of individually-acked edits ever flip a coherence check? (Baseline anchoring should surface this as a growing cumulative diff.)
+- Constraint 2 (non-compositionality): does an accumulated series of individually-carried edits ever flip a coherence check? (Baseline anchoring should surface this as a growing cumulative diff.)
 - Constraint 3's premise: is a declared flow-only step 9 ever caught changing a claim in the cumulative diff?
 - Constraint 4: does the one-cycle stopping rule ever leave residual findings that genuinely needed a second round, or does routing to Open items suffice?
 - Case 3 flip: does a current-critique signal ever get read downstream as "critiqued and handled"? That observation, if it occurs, relocates the do-not-anchor rule as a real constraint.
-- Case 2 (human attestation): does the single force-free `reviewed` kind get stretched — the user wanting to record something weaker or stronger, or wanting a fresh attestation to actually license something? Each stretch is a located requirement for the kinds/forces design.
+- Case 2 (human attestation): does the single force-free kind get stretched — the user wanting to record something weaker or stronger, or wanting a fresh attestation to actually license something? Each stretch is a located requirement for the kinds/forces design.
