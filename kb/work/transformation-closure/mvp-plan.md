@@ -2,14 +2,14 @@
 
 Concrete build list for the workshop's MVP, given the design in [unified-diff-and-ack.md](./unified-diff-and-ack.md). The MVP is a calibrated one-cycle closing review on `run-full-improvement-pass-on-note.md`, with carry judgments recorded as rationale-bearing acks and an observation log with a variance control arm. Everything below is the lightest reversible representation available; nothing here closes a design decision beyond what building forces.
 
-## 1. Verdict-free acceptance kind (review DB)
+## 1. Class-bearing acceptance kind (review DB)
 
-Let report-only checks (compression bundle, critique-note, composition-friction-gate, connect) register acceptance rows without a pass/warn/fail/error decision.
+Let report-only assays (compression bundle, critique-note, composition-friction-gate, connect) register acceptance rows without a pass/warn/fail/error decision, and record each assay's declared class — **detection** or **attention** — on the acceptance surface. The license a fresh record carries derives from the class (see the failure-mode split in [unified-diff-and-ack.md](./unified-diff-and-ack.md)), never from where the assay runs or whether a result line exists.
 
 - Relax the `decision` CHECK constraint in `review-schema.sql` to admit a verdict-free kind (or accept NULL-decision pairs into acceptance).
 - Adjust the `current_gate_acceptances` view's `rp.decision IS NOT NULL` filter so verdict-free rows count as acceptances for freshness while staying out of the warn queue (warn-selector filters on `decision = 'warn'`, so it needs no change).
-- Registration surface: either a small `commonplace-record-check`-shaped command (note path, check id, report path → snapshots + acceptance row) or a finalization mode that accepts a verdict-free result line. Whichever is less code; the command is likely simpler than teaching the bundle-output parser a new result kind.
-- Gate identity for these rows is the check's instruction file path (`kb/instructions/critique-note.md`, etc.), so editing a check instruction stales its records as `gate-changed` — the ADR 038/041 pattern, no new mechanism.
+- Registration surface: either a small `commonplace-record-assay`-shaped command (note path, assay id + class, report path → snapshots + acceptance row) or a finalization mode that accepts a verdict-free result line. Whichever is less code; the command is likely simpler than teaching the bundle-output parser a new result kind.
+- Gate identity for these rows is the assay's instruction file path (`kb/instructions/critique-note.md`, etc.), so editing an assay instruction stales its records as `gate-changed` — the ADR 038/041 pattern, no new mechanism.
 
 ## 2. Rationale on ack
 
@@ -19,16 +19,16 @@ Add a rationale field (and a rough edit-kind tag) to `commonplace-ack-gate-revie
 
 Add a step 10 to `kb/instructions/run-full-improvement-pass-on-note.md`: after the step-9 flow pass, the orchestrator runs one closing cycle —
 
-- For each check anchored during the pass, read the selector's cumulative diff (accepted snapshot → final bytes).
-- Either **ack** with rationale + edit-kind tag, or **re-run** the check against the final text.
-- Keep the license distinction sharp in the prompt: an ack on a verdict-free record reuses evidence, it endorses nothing; the friction gate's "For the human" line is never satisfied by an ack.
+- For each assay anchored during the pass, read the selector's cumulative diff (accepted snapshot → final bytes).
+- Either **ack** with rationale + edit-kind tag, or **re-run** the assay against the final text.
+- Keep the license distinction sharp in the prompt: only detection-assay acceptances ever carry skip semantics; an ack on an attention-assay record reuses evidence and endorses nothing; the friction gate's "For the human" line is never satisfied by an ack.
 - Stopping rule: at most this one cycle. Findings from closing re-runs route to the packet's Open items; they do not trigger another transformation round.
 
 During the MVP, audit sampling is 100%: every ack is *also* re-run, so initially the ack decision costs nothing to check. The dial only decays later, against evidence.
 
 ## 4. Observation log with control arm
 
-A plain log file in this workshop (no DB, no schema): one line per closing-cycle event — note, check, ack-or-rerun, rationale/edit-kind, and for re-runs whether the outcome flipped against the prior record.
+A plain log file in this workshop (no DB, no schema): one line per closing-cycle event — note, assay, ack-or-rerun, rationale/edit-kind, and for re-runs whether the outcome flipped against the prior record.
 
 - **Control arm:** occasional re-runs on *unchanged* bytes to measure the base flip rate from model variance. Without it no flip is attributable to an edit.
 - The log calibrates the trust dial and locates the workshop's candidate constraints; it is not training data for a system-side heuristic.

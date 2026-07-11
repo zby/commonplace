@@ -1,6 +1,6 @@
-# Unified diff and ack: one freshness surface for all checks
+# Unified diff and ack: one freshness surface for all note assays
 
-The minimal unification the MVP commits to: every check in the full pass — verdict-bearing (semantic gates) or not (compression bundle, critique-note, composition-friction-gate, connect) — gets the same version-anchored diff-and-ack treatment the review DB already gives gate reviews. An acceptance row pins the exact note and check text the evidence was computed against; the selector classifies fresh / note-changed / gate-changed by snapshot comparison; a stale record is either re-run or acked against the current bytes.
+The minimal unification the MVP commits to: every note assay in the full pass — verdict-bearing (semantic gates) or not (compression bundle, critique-note, composition-friction-gate, connect) — gets the same version-anchored diff-and-ack treatment the review DB already gives gate reviews. An acceptance row pins the exact note and check text the evidence was computed against; the selector classifies fresh / note-changed / gate-changed by snapshot comparison; a stale record is either re-run or acked against the current bytes.
 
 This is a build decision in the working-stance sense — the lightest representation that lets the MVP run — not a closed architecture question. What it deliberately does *not* decide: footprint machinery, edit-kind taxonomies in the system, trust-dial automation.
 
@@ -8,7 +8,7 @@ This is a build decision in the working-stance sense — the lightest representa
 
 The staleness layer is already verdict-agnostic. Freshness classification compares snapshot hashes only (`src/commonplace/review/review-schema.sql`, selector query pattern at the bottom of the file); the decision column is consulted in exactly two consumer-side places — the `current_gate_acceptances` view's `rp.decision IS NOT NULL` filter and the warn-selector's fix queue. Admitting a verdict-free acceptance kind therefore touches the `decision` CHECK constraint and that one view filter; everything else falls out:
 
-- **Gate-side staleness for free.** Each report-only check's instruction file plays the gate role, exactly as type specs and COLLECTION.md contracts already do (ADR 038/041 pattern). Editing `critique-note.md` stales every anchored critique as `gate-changed`.
+- **Gate-side staleness for free.** Each report-only assay's instruction file plays the gate role, exactly as type specs and COLLECTION.md contracts already do (ADR 038/041 pattern). Editing `critique-note.md` stales every anchored critique as `gate-changed`.
 - **Warn queue untouched.** Verdict-free rows never enter the fix queue, which is the right behavior unprompted — routed reports are not findings to auto-fix.
 - **Cumulative baseline by construction.** The accepted snapshot gives the S0→current diff, never the incremental one. Candidate constraint 2 in [carry-heuristics](./carry-heuristics.md) (preservation is not compositional; judge the cumulative diff) is enforced mechanically rather than left to agent discipline.
 
@@ -19,12 +19,23 @@ With every check anchored to content, transformations write nothing: any edit st
 - **No carry records on the transformation side.** Sketch item 2 ("every carry is a version-anchored record") collapses into the ack itself — the ack *is* the carry record. See the residual requirement below.
 - **Footprints soften to stated intent.** The step-9 flow pass's "flow/coherence only" contract needs no enforcement machinery: if the copyedit leaks a claim change, the cumulative diff shows it to the closing review. Declared footprints become planning guidance the diff verifies — the softening carry-heuristics already anticipated, now with the verifying surface identified.
 
+## Note assays: the category and its failure-mode split
+
+Vocabulary adopted for this workshop: a **note assay** is any read-only procedure run against exact note bytes that produces anchored evidence about the note — the genus covering review gates, critique-note, composition-friction-gate, the compression bundle's gates, and connect. Distinct from deterministic validation (code checking recomputable facts): an assay is a judgment-valued measurement of a sample, and may be qualitative or quantitative. Two species, split by failure mode:
+
+- A **detection assay** produces a bounded detection result over a named pattern. A clean result is exhaustive *over that pattern* — "no source-residue detected" covers everything the assay is for — so its acceptance can soundly carry a **skip license**: fresh means no need to re-look.
+- An **attention assay** produces routed attention over an unbounded space. Its output is a sample of attention, never exhaustive, so "current" can never mean "nothing else to find" — its acceptance carries only an **evidence-currency license**: fresh means this report still describes these bytes.
+
+The verdict difference is downstream of the failure-mode difference. A detection assay can emit pass/warn/fail because its question is closed; an attention assay's verdictlessness is forced by its open question — bolting a verdict onto critique would not close the space it samples, it would only manufacture false confidence (the exact failure the friction gate's hard rule exists to prevent).
+
+The axis cuts across the current DB boundary. Compression-bundle gates detect named patterns (branch-bloat, detail-overhang, marginal-value-redundancy) — detection assays that happen to run outside the DB today, so in principle their acceptances could carry skip semantics. Connect prospects an unbounded link space — attention-shaped. So the acceptance kind must record the assay's *declared class*, and the license derives from the class — never from where the assay currently runs or whether a result line happens to exist.
+
 ## The license distinction
 
-What a fresh record *licenses* differs by check kind, and the orchestrator prompt must keep this sharp:
+What a fresh record *licenses* differs by assay class, and the orchestrator prompt must keep this sharp:
 
-- A fresh **gate acceptance** licenses skipping the review (the existing semantics).
-- A fresh **verdict-free record** licenses only reusing the report's content as current evidence — "this critique still describes these bytes." It is never an endorsement of the note, and in particular the friction gate's "For the human" routing is never satisfied or silenced by an ack.
+- A fresh **detection-assay acceptance** licenses skipping the re-run (the existing gate semantics).
+- A fresh **attention-assay acceptance** licenses only reusing the report's content as current evidence — "this critique still describes these bytes." It is never an endorsement of the note, and in particular the friction gate's "For the human" routing is never satisfied or silenced by an ack.
 
 This distinction is why anchoring routed reports need not re-create certification semantics through the back door — but that is now a hypothesis the MVP observes rather than a rule it presumes. The workshop's case 3 flips accordingly: from "expected output is a documented do-not-anchor rule" to *anchor and watch* — does a current-critique signal in practice get read as "critiqued and handled"? If MVP use exhibits that failure, the do-not-anchor rule comes back located instead of assumed.
 
@@ -34,7 +45,7 @@ This distinction is why anchoring routed reports need not re-create certificatio
 
 ## Why one closing cycle suffices
 
-The full pass has exactly two transformations — step 8 (apply the reconciled packet) and step 9 (flow-only copyedit) — already ordered content-before-form. Divergence danger is structurally low: form fixes can't reopen content decisions, and if step 9 leaks anyway the cumulative diff catches it by content, not by trusting the flow-only declaration. So the closing review is one cycle with the stopping rule from carry-heuristics constraint 4: for each anchored check, the orchestrator reads the cumulative diff and either acks (with rationale) or re-runs; residual findings route to the packet's open items; no second transformation round.
+The full pass has exactly two transformations — step 8 (apply the reconciled packet) and step 9 (flow-only copyedit) — already ordered content-before-form. Divergence danger is structurally low: form fixes can't reopen content decisions, and if step 9 leaks anyway the cumulative diff catches it by content, not by trusting the flow-only declaration. So the closing review is one cycle with the stopping rule from carry-heuristics constraint 4: for each anchored assay, the orchestrator reads the cumulative diff and either acks (with rationale) or re-runs; residual findings route to the packet's open items; no second transformation round.
 
 ---
 
