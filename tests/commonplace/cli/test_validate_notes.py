@@ -637,6 +637,36 @@ status: current
     ) in results.fails
 
 
+def test_connect_report_derived_slug_is_exempt_from_note_limit(tmp_path: Path) -> None:
+    configure_temp_repo(tmp_path)
+    write_type_spec(
+        tmp_path,
+        "kb/reports/types/connect-report.md",
+        name="connect-report",
+        schema="kb/types/note.schema.yaml",
+    )
+    source_slug = "a" * MAX_NOTE_SLUG_LENGTH
+    report = write(
+        tmp_path / "kb" / "reports" / "connect" / "notes" / f"{source_slug}.connect.md",
+        """---
+description: Derived connection report whose filename preserves a valid source artifact slug
+type: kb/reports/types/connect-report.md
+---
+
+# Connection report
+""",
+    )
+
+    results = validation.validate_note(report, repo_root=tmp_path)
+
+    derived_slug_length = MAX_NOTE_SLUG_LENGTH + len(".connect")
+    assert results.fails == []
+    assert (
+        f"filename slug: {derived_slug_length} chars "
+        "(derived connect-report name; authored-artifact limit not applied)"
+    ) in results.passes
+
+
 def test_list_kb_note_paths_skips_nested_git_repos(tmp_path: Path) -> None:
     notes_root = tmp_path / "kb" / "notes"
     write(notes_root / "COLLECTION.md", "# Notes collection\n")

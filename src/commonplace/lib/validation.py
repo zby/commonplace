@@ -27,6 +27,13 @@ TAG_README_MAX_FANOUT = 7
 # is self-routing (ADR 026).
 _TAG_README_FIX_HINT = "see kb/instructions/maintain-curated-indexes.md"
 
+# Generated connect reports preserve the complete source-artifact stem and add
+# `.connect` for a stable, reversible mapping. Exempting that derived filename
+# assumes these reports remain disposable and gitignored; applying a special
+# validator rule is design debt, not a good general naming scheme. The next
+# report-filename redesign should budget for suffixes and remove this exception.
+_NOTE_SLUG_LIMIT_EXEMPT_TYPES = frozenset({"connect-report"})
+
 
 # A schema violation fails by default — the schema is the contract, so breaking a
 # constraint blocks unless its author explicitly opts down. A subschema lowers its
@@ -101,7 +108,13 @@ def parse_note(path: Path, *, repo_root: Path) -> tuple[ParsedNote | None, str |
     ), None
 
 
-def validate_title_and_slug(results: CheckResults, path: Path, document: ParsedDocument) -> None:
+def validate_title_and_slug(
+    results: CheckResults,
+    path: Path,
+    document: ParsedDocument,
+    *,
+    note_type: str,
+) -> None:
     title = document.title.strip()
     title_length = len(title)
     slug_length = len(path.stem)
@@ -115,7 +128,12 @@ def validate_title_and_slug(results: CheckResults, path: Path, document: ParsedD
             f"title: {title_length} chars (within {MAX_NOTE_TITLE_LENGTH}-char limit)"
         )
 
-    if slug_length > MAX_NOTE_SLUG_LENGTH:
+    if note_type in _NOTE_SLUG_LIMIT_EXEMPT_TYPES:
+        results.passes.append(
+            f"filename slug: {slug_length} chars "
+            f"(derived {note_type} name; authored-artifact limit not applied)"
+        )
+    elif slug_length > MAX_NOTE_SLUG_LENGTH:
         results.fails.append(
             f"filename slug: {slug_length} chars exceeds limit of {MAX_NOTE_SLUG_LENGTH}"
         )
@@ -338,7 +356,12 @@ def validate_note(path: Path, *, repo_root: Path) -> CheckResults:
 
     results = CheckResults(note_type=parsed.note_type)
     results.passes.append("frontmatter: valid delimiters, well-formed YAML")
-    validate_title_and_slug(results, parsed.path, parsed.document)
+    validate_title_and_slug(
+        results,
+        parsed.path,
+        parsed.document,
+        note_type=parsed.note_type,
+    )
     validate_links_from_document(results, parsed.path, parsed.document.links)
     for rule in _TYPE_RULES.get(parsed.note_type, []):
         rule(results, parsed, repo_root=repo_root)
