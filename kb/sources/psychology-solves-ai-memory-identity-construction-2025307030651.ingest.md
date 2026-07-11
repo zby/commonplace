@@ -36,7 +36,7 @@ Youssef argues that psychology has already solved the problems AI memory systems
 
 **Memory-as-construction cluster:**
 - [knowledge-storage-does-not-imply-contextual-activation](../notes/knowledge-storage-does-not-imply-contextual-activation.md) — **grounds**: Conway's "working self" that filters memory accessibility based on current goals provides a psychological account of what the KB note calls "cue match" and "priority arbitration."
-- [claw-learning-is-broader-than-retrieval](../notes/claw-learning-is-broader-than-retrieval.md) — **grounds**: Both converge on "memory as construction/action" vs "memory as storage/retrieval" from independent directions (psychology vs knowledge system design).
+- [claw-learning-loops-must-improve-action-capacity-not-just-retrieval](../notes/claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) — **grounds**: Both converge on "memory as construction/action" vs "memory as storage/retrieval" from independent directions (psychology vs knowledge system design).
 
 **Framework connections:**
 - [information-value-is-observer-relative](../notes/information-value-is-observer-relative.md) — **exemplifies**: Goal-relevant filtering is a concrete psychological mechanism for observer-relative value.
