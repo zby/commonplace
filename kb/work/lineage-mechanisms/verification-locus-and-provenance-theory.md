@@ -33,8 +33,8 @@ Process-defined types (snapshots are the exemplar) are handled by reification: t
 
 ## Corollary 2: the two contract halves have different invalidation semantics
 
-- Editing a **state contract** (criteria) invalidates **verdicts** — the artifact stands; re-judge it. This is review freshness (ADR 032/038): the acceptance table is a cache of judgments keyed on `(note_hash, gate_hash, model)`, formally a "verifying trace" in the Build Systems à la Carte sense.
-- Editing a **history contract** (process) invalidates **artifacts** — the verdicts stand; the artifacts may be worth regenerating. Re-review is the wrong response: the conformance pair would PASS again while the actual deficiency (content produced by a worse method) stays invisible to the unchanged criteria.
+- Editing a **state contract** (criteria) invalidates **assay evidence** — the artifact stands; rerun the criterion. For a closed-ended gate that means a verdict; for open-ended critique it means a report. This is review freshness (ADR 032/038 plus the schema-v5 result-kind amendment): acceptance caches completed evidence keyed on `(note_hash, criterion_hash, model)`, formally a "verifying trace" in the Build Systems à la Carte sense.
+- Editing a **history contract** (process) invalidates **artifacts** — existing assay results may stand, but the artifacts may be worth regenerating. Re-review is the wrong response when the changed process is not itself observable in the artifact: the conformance pair can PASS again while the actual deficiency (content produced by a worse method) stays invisible to unchanged criteria.
 
 Cache-key design predicts both observed failure modes: a key too coarse invalidates spuriously (process text in the hashed gate → every wording tweak stales a cohort); a key too fine misses dependencies (the pre-ADR-038 bug — type spec invisible to the hash, acceptances falsely fresh).
 
@@ -72,7 +72,7 @@ A witness's regime can change over time: a quote anchor into an external repo is
 
 ### Gaps this exposes (write down, don't build)
 
-- **Radius-1 verdicts have unhashed inputs.** Acceptance pins `(note, gate)`; when a semantic gate judged the note against its link targets, a later edit to a target stales nothing. Currently absorbed as fuzz (strictness follows behavioral authority); the principled escalation is a factored `(note, cited-target)` pair per load-bearing evidence edge.
+- **Radius-1 assay results have unhashed inputs.** Acceptance pins `(note, criterion)`; when a semantic gate judged the note against its link targets, a later edit to a target stales nothing. Currently absorbed as fuzz (strictness follows behavioral authority); the principled escalation is a factored `(note, cited-target)` pair per load-bearing evidence edge.
 - **Link text is a checkable witness that nothing checks.** The validator verifies link *health* (targets resolve) but never compares link display text to the target's current title. When a claim-title is revised, every inline restatement across the KB stays frozen at the old claim, and traversal-as-reasoning degrades silently — agents trust the carried witness at radius 0. Both sides are in the repo; the check is a cheap join. Candidate validator feature; also the cleanest concrete example of one surface (a markdown link) carrying a checkable witness in its text and a health-checked pointer in its path, with only the pointer verified today.
 
 ## The graduated invalidation ladder

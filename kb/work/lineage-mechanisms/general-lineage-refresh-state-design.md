@@ -1,6 +1,6 @@
 # Deferred general lineage refresh state design
 
-This is the weight-3 contingency design for a future second lineage mesh. It is **not** the current implementation plan. Review keeps its purpose-built SQLite store; every other present case remains at artifact-local metadata, stable source handles, report contracts, or commit history until it develops churning many-to-many edge state plus a real selector or audit query.
+This is the weight-3 contingency design for a future second lineage mesh. It is **not** the current implementation plan. Review keeps its purpose-built SQLite store; the report-kind critique assay now reuses that same mesh. Transformation closure has a hand-written, committed JSONL observation surface, but it is pass-local experimental history rather than a second current-state mesh. Every other present case remains at artifact-local metadata, stable source handles, report contracts, workshop evidence, or commit history until it develops churning many-to-many edge state plus a real selector or audit query.
 
 If that trigger appears, the design takes the review system's storage lesson as the starting point: keep SQLite for operational lineage state, keep Markdown files as the primary artifact API, and keep refresh execution outside the lineage subsystem. The resulting hybrid would preserve two properties:
 
@@ -69,14 +69,14 @@ Examples:
 
 | target kind | logical key | why it needs lineage |
 |---|---|---|
-| review pair | `note_path`, `gate_path`, `model_partition` | accepted review freshness depends on note path, gate note path, and model partition |
+| review pair | `note_path`, `criterion_path`, `model_partition` | accepted assay freshness depends on note path, criterion path, and model partition; `result_kind` fixes completion protocol but is not part of the key |
 | connect report | source artifact path, report contract, optional model | report depends on source artifact and current KB context |
 | agent-memory-system review | review file path, external repo URL, reviewed revision, optional model | source is an external git repository, not a KB snapshot |
 | generated index | index path, index contract | deterministic copy of library state should be checked or rebuilt |
 | merge-back event | canonical artifact path, source report/event ids | canonical artifact was revised from previous version plus generated evidence |
 | ad-hoc distillation | retained packet path or id, source set, prompt/spec | retained one-off source shaping may later need promotion or refresh |
 
-The target key should be stable enough for lookup, but not pretend every target has the same shape. Store target keys as structured data, not concatenated strings. Review's `(note_path, gate_path, model_partition)` key is the first path-keyed target-kind schema, not the universal schema. `gate_path` is the gate note's repo-relative path; shorthands such as `prose/source-residue` are display or CLI conveniences, not the persisted identity.
+The target key should be stable enough for lookup, but not pretend every target has the same shape. Store target keys as structured data, not concatenated strings. Review's `(note_path, criterion_path, model_partition)` key is the first path-keyed target-kind schema, not the universal schema. `criterion_path` is the criterion document's repo-relative path; shorthands such as `prose/source-residue` are display or CLI conveniences, not the persisted identity.
 
 ## Event Model
 
@@ -96,7 +96,7 @@ Core event fields:
 | `accepted_at` | when this event became the accepted baseline |
 | `inputs` | accepted dependency versions used for freshness checks |
 
-The generic current baseline would be derived from accepted events according to the target kind's ordering rule. Current review reaches a similar selector result through the `acceptance` current-state table and guarded `current_gate_acceptances` view, not through an append-only acceptance-event log.
+The generic current baseline would be derived from accepted events according to the target kind's ordering rule. Current review reaches a similar selector result through the `acceptance` current-state table and guarded `current_criterion_acceptances` view, not through an append-only acceptance-event log.
 
 ## Input Version Model
 
@@ -153,18 +153,18 @@ The current review subsystem can be mapped into the general model without forcin
 
 | current review concept | general lineage concept |
 |---|---|
-| `(note_path, gate_path, model_partition)` | lineage target of kind `review-pair` |
+| `(note_path, criterion_path, model_partition)` | lineage target of kind `review-pair` |
 | `review_jobs` | review-specific invocation, packing, status, and optional execution provenance |
-| `review_pairs` | review-specific requested pair, decision, and completed evidence row |
+| `review_pairs` | review-specific requested pair with persisted `result_kind`, nullable decision, `reviewed_at`, and snapshot-backed evidence |
 | `acceptance` | current baseline for review-pair targets; successful writes upsert by the full key |
-| `current_gate_acceptances` | guarded current baseline view, restricted to completed jobs with decisions |
+| `current_criterion_acceptances` | guarded current baseline view, restricted to completed jobs and per-kind pair completion |
 | accepted note snapshot hash | input version with role `source` |
-| accepted gate snapshot hash | input version with role `gate` |
+| accepted criterion snapshot hash | input version with role `criterion` |
 | `review_jobs.model_partition` / `acceptance.model_partition` | target partition; literal runner model and telemetry are producer evidence |
 
-This is a conceptual mapping, not a migration plan. Review already separates execution concerns from freshness APIs while keeping both in one purpose-built store. Its accepted baseline and stale selector over `(note_path, gate_path, model_partition)` remain the first implementation witness for the general target/input vocabulary.
+This is a conceptual mapping, not a migration plan. Review already separates execution concerns from freshness APIs while keeping both in one purpose-built store. Its accepted baseline and stale selector over `(note_path, criterion_path, model_partition)` remain the first implementation witness for the general target/input vocabulary.
 
-Recent conformance work also limits how much generic input machinery review needs. Type specs and `COLLECTION.md` contracts become the gate document in separate factored `(note, dependency)` pairs. The default answer to another review dependency is another pair with that dependency on the gate side, not a wider N-input target. A generic lineage input set is for derivations that cannot honestly factor into independent pairs.
+Recent conformance and critique work also limits how much generic input machinery review needs. Type specs, `COLLECTION.md` contracts, and `critique-note.md` become the criterion document in separate factored `(note, dependency)` pairs. The default answer to another independently executable criterion is another pair with that dependency on the criterion side, not a wider N-input target. A generic lineage input set is for derivations that cannot honestly factor into independent pairs.
 
 ## Batch Isolation
 

@@ -6,7 +6,7 @@ This document asks the next question: which future automatic dependency-maintena
 
 ## The root driver: churning state on a many-to-many edge
 
-Review forces relational edge-state because its lineage state lives on the **edges of a many-to-many relation**. In the simplified witness, notes × gates is enough: a note is reviewed against many gates, a gate applies to many notes, and the acceptance/freshness state belongs to the pair rather than either file. The current implementation also partitions that edge state by model.
+Review forces relational edge-state because its lineage state lives on the **edges of a many-to-many relation**. In the simplified witness, notes × criteria is enough: a note is assayed against many criteria, a criterion applies to many notes, and the acceptance/freshness state belongs to the pair rather than either file. Schema v6 persists this directly as `criterion_path`; verdict gates, conformance dependencies, and report-kind critique all occupy that axis. The current implementation also partitions edge state by model and persists each pair's `result_kind`.
 
 The model dimension is important, but it is not what proves the file/database boundary. It adds a partition to the current review relation. It is not saved in the note or gate files; it is part of review lineage state. That is the right placement for review freshness because a model-conditioned review judgment belongs to the derivation edge. The same principle does not imply "never put model in frontmatter": retained one-shot derivatives may need producer-model metadata directly in their typed frontmatter, while canonical notes revised many times should record model involvement on edit events, not as stable note metadata. See [model-provenance.md](./model-provenance.md).
 
@@ -20,8 +20,8 @@ Much of what the [storage case](../src-architecture-alternatives/review-lineage-
 
 | review requirement | really just… |
 |---|---|
-| composite key `(note_path, gate_path)` | the edge identity of a many-to-many relation; the gate note path identifies the gate |
-| bidirectional staleness (`note-changed` OR `gate-changed`) | either endpoint invalidates the edge |
+| composite key `(note_path, criterion_path)` | the edge identity of a many-to-many relation; the criterion path identifies the assay contract |
+| bidirectional staleness (`note-changed` OR `criterion-changed`) | either endpoint invalidates the edge |
 | model partitioning | an implementation dimension layered onto the edge |
 | all-or-nothing job finalization | one transaction advances a complete requested subset of edges or none |
 | swept keyed current-state selector | traversing the relation both ways (gate→notes, note→gates) |
@@ -40,20 +40,21 @@ Each case scored on the two things that matter: the **lineage structure** (tree 
 
 | case | lineage structure | edge state | where content lives | required weight |
 |---|---|---|---|---|
-| **Review** | many-to-many mesh `note × gate`, partitioned by model | **churning** | markdown report files | **operational DB today** |
+| **Review assays, including critique** | many-to-many mesh `note × criterion`, partitioned by model | **churning** | markdown verdict/report files | **operational DB today** |
 | Source snapshot | leaf (no derivation yet) | — | the file (immutable) | frontmatter / none |
 | Ingest report | tree (one snapshot → one ingest) | static | the `.ingest.md` file | frontmatter pointer |
 | Agent-memory-system review | tree (one repo → one review) | static, on-demand check | the review note | frontmatter + on-demand check |
 | Connect report | tree (one artifact → one report) | disposable | gitignored candidate | none (disposable) |
-| Critique / friction report | tree (one note → one report) | disposable | gitignored candidate | none (disposable) |
+| Friction / connect report | tree (one note → one report) | disposable | gitignored candidate | none (disposable) |
+| Full-pass observation record | star (one pass → many compared reports and judgments) | append-once during experiment | committed workshop JSONL + temporarily retained ignored reports | shared event surface, experimental |
 | Generated index | tree (frontmatter → listing) | recomputable | build output / curated head | validator-checked, no state |
 | Ad-hoc distillation | star (many inputs → one packet) | static | workshop / prompt file | frontmatter on promotion |
 | Merge-back event | star (many inputs → one owned event) | append-once | commit + canonical artifact | commit history now; shared ledger only if queried |
 | `compares-with` among sources | many-to-many mesh | **static** | authored links | links (no store) |
 
-The shape is stark. **Review is the only current row in the operational-DB tier**, and the table shows why: it is the only current case that is *both* a many-to-many mesh *and* has churning edge state intense enough to need fast current-state lookup. The same table should guide further investigations; it is not evidence that review will remain unique. Three patterns cover the present non-review cases:
+The shape is stark. **Review is still the only current row in the operational-DB tier**, even after critique joined it, because critique reused the existing note/criterion mesh rather than creating a second one. Transformation closure now exercises the shared-event tier, but only as committed workshop evidence with manual writes and closure-time deletion—not as general infrastructure. The same table should guide further investigations; it is not evidence that review will remain unique. Three patterns cover the present non-review cases:
 
-- **Trees and stars stay in files.** Ingests, source reviews, connect/critique reports, ad-hoc distillations, and merge-back all have a natural owner artifact for each fact — the derived file, or the event's target. Frontmatter pointers and intentional commits express them directly at current volume. No edge is orphaned.
+- **Trees and stars stay in files.** Ingests, source reviews, connect/friction reports, ad-hoc distillations, pass observation records, and merge-back all have a natural owner artifact for each fact — the derived file, pass, or event target. Frontmatter pointers, JSONL, and intentional commits express them directly at current volume. No edge is orphaned.
 - **Churn without a mesh → regenerate, don't store.** Connect reports and generated indexes change constantly, but each is a tree rebuilt from current inputs; nothing queries per-edge state. Generated indexes get a deterministic validator instead ([`a-derived-copy-of-recomputable-truth-must-be-checked-or-absent`](../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md)).
 - **Mesh without churn → links.** `compares-with` is genuinely many-to-many, but its edge state is static, so authored links carry it. It never needs a store.
 

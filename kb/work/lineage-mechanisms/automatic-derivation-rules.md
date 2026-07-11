@@ -48,7 +48,7 @@ The rule for this workshop:
 
 - retained one-shot derivatives should record the model/runner/prompt or generator metadata that produced them;
 - generated reports that remain inspectable should carry model provenance in frontmatter, run manifests, or DB rows, with frontmatter especially plausible for typed standalone derivatives;
-- review freshness is keyed by `(note_path, gate_path, model_partition)` because the gate note path identifies the review contract and a model's review acceptance does not transfer to another model;
+- review freshness is keyed by `(note_path, criterion_path, model_partition)` because `criterion_path` identifies the assay contract and one model partition's accepted evidence does not transfer to another;
 - canonical notes revised from generated reports should not grow a "last edited by model" field; if model provenance matters, record it in the commit message, merge-back event, or lineage ledger;
 - deterministic generated views should record the generator/tool version rather than model metadata.
 
@@ -61,7 +61,8 @@ This keeps model provenance where it is useful. A report's model is part of the 
 | Source snapshots | Yes, when the source is unstable, not versioned elsewhere, or needed as evidence. | Future derivations need the source material, not only a summary. |
 | External git-backed source repos | No, unless there is a special archival reason. | The source is already versioned elsewhere and may be huge; retain reviewed revision, URL, citation format, and quote anchors instead. |
 | Report producers and type contracts | Yes. | They define the repeatable derivation process. |
-| Cheap candidate reports | Usually no. | Connect reports and many critique/friction reports are working context; rerun beats preserving churn. |
+| Cheap candidate reports | Usually no. | Connect and friction reports are working context; rerun beats preserving churn. Anchored critique result artifacts are also generated, but their acceptance belongs to the review DB and workflows may copy their bytes for temporary audit retention. |
+| Experimental process evidence | Yes while the investigation needs it. | Transformation-closure observation JSONL records non-regenerable judgments; compared gitignored reports are retained through workshop closure, then conclusions are promoted and temporary evidence can disappear. |
 | Durable source analyses | Yes. | Ingest reports and agent-memory-system reviews are derived, but they are independently useful durable analysis. |
 | Model provenance for retained derivatives | Yes, in the derivative artifact or run manifest. | One-shot generated artifacts need producer provenance; canonical notes need event provenance instead. |
 | Deterministic generated views | No, unless a runtime needs the file and a validator checks it. | Rebuildable truth should be checked or absent. |
@@ -108,7 +109,7 @@ Derivative content needs an update mechanism before automation scales:
 | Cheap report instance | Regenerate from current inputs; old instance can disappear. |
 | Durable analysis derived from source | Re-run or re-distill when source revision, snapshot, or relevant KB context changes; preserve old analysis only if it remains historically useful. |
 | Canonical artifact changed by merge-back | Detect stale source/report dependencies, regenerate candidates, apply a new merge-back edit, validate, and record the update event. |
-| Review freshness state | Compare current note/gate/model inputs to accepted DB lineage; rerun or acknowledge. |
+| Review freshness state | Compare current note/criterion/model inputs to accepted DB lineage; rerun or acknowledge. Verdict pairs carry decisions; report pairs carry current evidence without endorsement. |
 | Deterministic generated view | Rebuild and validate; do not hand-edit. |
 | Behavior-facing compiled view | Regenerate from authoritative sources or mark stale; direct edits must either flow back to source or stay candidate-stage. |
 | Ad-hoc distillation | If reused, promote into a typed report, instruction, skill, or workshop artifact with lineage; otherwise discard. |

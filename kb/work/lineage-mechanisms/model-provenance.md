@@ -7,21 +7,21 @@ Every LLM-produced derivation is produced by a particular model, runner, prompt 
 The current review freshness key is:
 
 ```text
-note_path x gate_path x model_partition
+note_path x criterion_path x model_partition
 ```
 
-The storage-driving relation is still `note_path x gate_path`: a note is reviewed against many gate documents, a gate document applies to many notes, and the review state belongs to their edge. `model_partition` partitions that edge state. It is not a property of either endpoint file, and it is not necessarily the literal observed model. The model-side partition lives in review lineage state:
+The storage-driving relation is `note_path x criterion_path`: a note is assayed against many criteria, criteria apply to many notes, and the review state belongs to their edge. Criteria include verdict gates, type/collection conformance documents, and the open-ended critique instruction. `model_partition` partitions that edge state. It is not a property of either endpoint file, and it is not necessarily the literal observed model. The model-side partition lives in review lineage state:
 
 - `review_jobs.model_partition` records the declared partition for one review invocation;
 - `review_pairs` inherit that partition from their parent job;
 - `acceptance.model_partition` makes current acceptance specific to the partition;
-- selectors compare current note/gate content hashes against the accepted baseline for `(note_path, gate_path, model_partition)`.
+- selectors compare current note/criterion content hashes against the accepted baseline for `(note_path, criterion_path, model_partition)`.
 
 `model_partition` is now an implemented, normalized identity dimension. Optional finalization-time `runner_model` and `runner_effort` must map back to the job's declared partition; runner identity and opaque telemetry remain provenance rather than freshness identity. Per-pair result frontmatter carries both the partition and any available runner/model/effort fields for inspection without making the Markdown file canonical state.
 
-That is why review freshness is operationally keyed by `note_path x gate_path x model_partition`, even though only the reviewed note and gate note are durable markdown endpoints. In the current implementation, the model dimension is derivation-state metadata stored in the DB. That does not settle whether rendered review artifacts should also carry literal producer-model provenance in frontmatter for inspection, export, or future file-backed lineage.
+That is why review freshness is operationally keyed by `note_path x criterion_path x model_partition`, even though the reviewed note and criterion are durable markdown endpoints. `review_pairs.result_kind` separately fixes whether completion produces a verdict or a decisionless report; it is protocol state, not another freshness-key dimension. In the current implementation, the model dimension is derivation-state metadata stored in the DB. Rendered result artifacts also carry the available partition/runner/model/effort provenance for inspection without becoming canonical state.
 
-This is also why one model's review cannot satisfy another model's freshness. A review result is a model-conditioned judgment. The same note and gate reviewed by a different model is a different edge-state partition.
+This is also why one model's assay cannot satisfy another model's freshness. A verdict or open-ended report is model-conditioned evidence. The same note and criterion run under a different partition is different edge state.
 
 ## General Rule
 
@@ -31,7 +31,7 @@ Model provenance belongs on the derivation event or generated derivative, not au
 |---|---|
 | One-shot retained derivative | Strong candidate for model/runner/prompt metadata in frontmatter, because the artifact is the derivation. |
 | Generated report that remains inspectable | Record model in report frontmatter, run manifest, or DB row; frontmatter may be preferable for typed standalone reports. |
-| Review freshness state | Declared model partition is part of the freshness key: `(note_path, gate_path, model_partition)`. |
+| Review freshness state | Declared model partition is part of the freshness key: `(note_path, criterion_path, model_partition)`. |
 | Canonical note edited from reports | Do not store "last edited by model" in note frontmatter. Record model in commit message, merge-back event, or lineage ledger if needed. |
 | Durable source analysis generated once | Strong candidate for a frontmatter model field, because the artifact is the derivation. |
 | Deterministic generated view | Record generator/tool version rather than model. |
