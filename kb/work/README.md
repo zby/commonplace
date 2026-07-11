@@ -16,6 +16,7 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 - [agent-note-improvement](./agent-note-improvement/README.md) — testing instructions that help agents improve weak existing notes by comparing an older weak revision against a later accepted revision
 - [agent-memory-design](./agent-memory-design/README.md) — continuation workshop for discussing revisions and companion artifacts around `kb/notes/designing-agent-memory-systems.md`
 - [bulk-operations](./bulk-operations/README.md) — generalizing deep research, review reruns, connect triage, source refresh, validation sweeps, and corpus migrations into a reusable target-selection, sharding, execution, merge-back, and validation pattern
+- [runner-execution-profiles](./runner-execution-profiles/README.md) — cataloguing model, effort, runner, isolation, and escalation policy across skills and delegated roles, then defining configurable Codex/Claude execution profiles for faster and cheaper workflows
 - [pi-agent-zerostack-comparison](./pi-agent-zerostack-comparison/README.md) — preparing a code-grounded comparison instruction for the two Rust coding-agent CLIs cloned under `related-systems/`
 - [vocabulary-governance](./vocabulary-governance/README.md) — deciding how global, collection-local, and type-specific vocabularies should be declared and used by shipped KBs
 - [aris-full-trial](./aris-full-trial/README.md) — running a private full-ARIS paper-production trial while keeping only framing and lessons learned in the public KB
