@@ -79,6 +79,7 @@ When authoring a new artifact, the same two decisions happen in reverse: pick th
 
 Relevant Notes:
 
+- [Collections never own frontmatter semantics](./collections-never-own-frontmatter-semantics.md) — contains: the asymmetry in the split above — a type spec fully owns frontmatter semantics, a collection owns only text-level features
 - [available-types](./available-types.md) — part-of: the catalog of shipped global and collection-scoped types
 - [type-loading](./type-loading.md) — part-of: the resolution mechanics for path-valued `type:` pointers and their type-spec docs
 - [definitions/collection](./definitions/collection.md) — defined-in: the precise definition of "collection" with scope, exclusions, and misuse cases
