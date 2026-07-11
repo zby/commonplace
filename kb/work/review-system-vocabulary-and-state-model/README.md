@@ -19,6 +19,12 @@ The remaining candidate refactors are recorded in [inventory.md](./inventory.md)
 
 The lexical changes may be mechanically simple, but they should land with the semantic changes only after the target schema is fixed.
 
+The semantic choices are now fixed in the
+[adopted state model](./state-model.md). The next design step is to translate
+that model into one target schema and v5 preservation mapping, after fixing the
+implementation sequence relative to the neighboring review-store
+source-of-truth decision.
+
 ## Scope
 
 In scope:
