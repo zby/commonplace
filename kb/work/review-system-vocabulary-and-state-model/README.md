@@ -89,6 +89,17 @@ Do not require an intermediate store merely because the repository passed throug
 - Treat tests as part of the renamed public surface and as evidence for the new
   semantics. Update fixtures and assertions, but also add transition and
   negative tests that would fail if the old state model remained operative.
+- Preserve behavioral coverage, not test-file continuity. Audit each affected
+  old test by the target invariant it protects: retain it if the invariant
+  survives, rewrite or replace it if only the interface survives, and delete it
+  if the behavior no longer exists. Do not mechanically rename assertions into
+  tests that merely restate fixtures, mirror implementation details, or can no
+  longer fail for a meaningful semantic regression.
+- Remove cruft aggressively. Delete superseded helpers, fixtures, constants,
+  schema objects, artifact paths, compatibility branches, comments, and
+  documentation instead of leaving aliases or dead scaffolding. Historical
+  migrations and source-schema fixtures survive only when the v5 preservation
+  route executes or tests them directly.
 
 ## Expected outputs
 
@@ -99,6 +110,8 @@ Do not require an intermediate store merely because the repository passed throug
 - one implementation checklist spanning code, commands, artifacts, tests, and docs;
 - a test matrix covering the adopted state transitions, integrity failures,
   acknowledgement semantics, and evidence-preserving migration;
+- a disposition audit for affected legacy tests (`retain`, `rewrite`,
+  `replace`, or `delete`) tied to target invariants rather than filenames;
 - a final cleanup ledger listing the retired-term searches and any intentional
   historical exceptions;
 - a durable ADR or amendment describing the adopted model;
@@ -119,15 +132,23 @@ Close this workshop when:
    baselines raise integrity errors; and v5 migration preserves identifiers,
    outcomes, snapshots, and row relationships. A synthetic v5 `ERROR` row is
    rejected rather than silently reclassified as completed evidence.
-6. A repository-wide residual scan covers every retired active identifier and
+6. Every affected legacy test has been checked for continued value. Tests of
+   removed behavior and redundant implementation-shaped tests are deleted;
+   retained or rewritten tests state a surviving invariant and fail when that
+   invariant is violated. Shared helpers and fixtures have no consumers or
+   branches that exist solely for deleted tests.
+7. A repository-wide residual scan covers every retired active identifier and
    old semantic phrase. Any surviving occurrence is either an authored catalog
    `bundle` or a clearly identified historical ADR, migration script, or
    source-schema fixture; there are no accidental active leftovers.
-7. The full test suite, deterministic KB validation, schema integrity checks,
+8. No obsolete compatibility layer, alias, schema object, artifact tree,
+   helper, fixture, comment, or current-documentation explanation remains after
+   its consumers are removed.
+9. The full test suite, deterministic KB validation, schema integrity checks,
    and a copied-store migration rehearsal pass.
-8. The durable decision is promoted to `kb/reference/adr/` or an accepted ADR amendment.
-9. Any follow-up work outside scope is routed to a proposal or neighboring workshop.
-10. This directory and its entry in `kb/work/README.md` are deleted.
+10. The durable decision is promoted to `kb/reference/adr/` or an accepted ADR amendment.
+11. Any follow-up work outside scope is routed to a proposal or neighboring workshop.
+12. This directory and its entry in `kb/work/README.md` are deleted.
 
 ## Grounding
 
