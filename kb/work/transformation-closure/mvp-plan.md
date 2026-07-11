@@ -4,12 +4,13 @@ Concrete build list for the workshop's MVP, given the design in [unified-diff-an
 
 ## 1. Class-bearing acceptance kind (review DB)
 
-Let report-only assays (compression bundle, critique-note, composition-friction-gate, connect) register acceptance rows without a pass/warn/fail/error decision, and record each assay's declared class — **bounded** or **unbounded** — on the acceptance surface. The license a fresh record carries derives from the class (see the question-boundedness split in [unified-diff-and-ack.md](./unified-diff-and-ack.md)), never from where the assay runs or whether a result line exists.
+Let unbounded assays register acceptance rows without a pass/warn/fail/error decision, and record each assay's declared class — **bounded** or **unbounded** — on the acceptance surface. The license a fresh record carries derives from the class (see the question-boundedness split in [unified-diff-and-ack.md](./unified-diff-and-ack.md)), never from where the assay runs or whether a result line exists.
 
-- Relax the `decision` CHECK constraint in `review-schema.sql` to admit a verdict-free kind (or accept NULL-decision pairs into acceptance).
+- Registration surface: run unbounded assays **through the existing batch mechanism** (select → create-jobs → sub-agent → finalize) rather than recording reports after the fact. The pipeline pins snapshots itself as part of executing the assay, so the anchor is enforced by construction; a standalone `commonplace-record-assay` command would accept the orchestrator's claim that report matches bytes — a self-reported anchor with a time-of-check gap. Naming stays layered: "gate" remains the operational term; the batch mechanism gains an assay class, not a rename.
+- Teach the reviewer output contract a verdict-free result kind for unbounded pairs (the result-line parser and the `decision` column are the only verdict-dependent spots in the pipeline), and relax the `decision` CHECK constraint in `review-schema.sql` accordingly.
 - Adjust the `current_gate_acceptances` view's `rp.decision IS NOT NULL` filter so verdict-free rows count as acceptances for freshness while staying out of the warn queue (warn-selector filters on `decision = 'warn'`, so it needs no change).
-- Registration surface: either a small `commonplace-record-assay`-shaped command (note path, assay id + class, report path → snapshots + acceptance row) or a finalization mode that accepts a verdict-free result line. Whichever is less code; the command is likely simpler than teaching the bundle-output parser a new result kind.
-- Gate identity for these rows is the assay's instruction file path (`kb/instructions/critique-note.md`, etc.), so editing an assay instruction stales its records as `gate-changed` — the ADR 038/041 pattern, no new mechanism.
+- Assay identity for these rows is the assay's instruction file path (`kb/instructions/critique-note.md`, etc.), so editing an assay instruction stales its records as `gate-changed` — the ADR 038/041 pattern, no new mechanism.
+- MVP scope: **critique-note first**, friction if it proves cheap (its output contract is already verdict-free by design). The compression bundle (own multi-gate runner) and connect (skill machinery) stay un-anchored initially — log what that leaves uncovered rather than silently treating the pass as fully anchored.
 
 ## 2. Rationale on ack
 

@@ -32,6 +32,10 @@ The verdict difference is downstream of the question difference. A closed questi
 
 The axis cuts across the current DB boundary. Compression-bundle gates ask closed questions over named patterns (branch-bloat, detail-overhang, marginal-value-redundancy) — bounded assays that happen to run outside the DB today, so in principle their acceptances could carry skip semantics. Connect prospects an open link space — unbounded. So the acceptance kind must record the assay's *declared class*, and the license derives from the class — never from where the assay currently runs or whether a result line happens to exist.
 
+**"Gate" keeps its name.** The assay vocabulary classifies; it does not rename. "Review gate" stays the operational term for the shipped unit — a catalog file executed through the batch mechanism (select → create-jobs → sub-agent → finalize) with verdict semantics — and it is load-bearing in CLI names, the schema's `gate_path`, and the ADRs. The layered statement: gates are the shipped bounded assays that run through the batch mechanism.
+
+**The batch mechanism generalizes to unbounded assays.** Nothing in select / create-jobs / sub-agent execution / finalize depends on the verdict except the result-line parser and the `decision` column. Running critique through the pipeline as the first unbounded assay is therefore cheap — and it is also the *sound* registration surface. A record-after-the-fact command would accept the orchestrator's claim that a report was computed against these bytes: a self-reported anchor with a time-of-check gap (the note can change between assay run and recording). The pipeline pins snapshots itself as part of executing the assay, so the anchor is enforced by construction — the same enforced-or-omitted logic as marks. Batch execution also matches critique's own contract (fresh adversarial sub-agent) and gives unbounded assays model partitions for free.
+
 ## The license distinction
 
 What a fresh record *licenses* differs by assay class, and the orchestrator prompt must keep this sharp:
