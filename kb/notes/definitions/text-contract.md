@@ -2,7 +2,6 @@
 description: "Definition — a text contract is the binding requirement a collection's COLLECTION.md declares; a profile is a named, proven bundle of contract features a collection may adopt, extend, or replace"
 type: kb/types/definition.md
 tags: [document-system]
-status: current
 ---
 
 # Text contract

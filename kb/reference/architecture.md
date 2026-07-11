@@ -3,7 +3,6 @@ description: Shipped Commonplace architecture — installed project layout, pack
 type: kb/types/note.md
 traits: []
 tags: []
-status: current
 ---
 
 # Commonplace architecture

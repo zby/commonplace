@@ -3,7 +3,6 @@ description: Practitioner runtime taxonomies converge on three separable compone
 type: kb/types/note.md
 traits: [has-external-sources]
 tags: [computational-model, architecture]
-status: seedling
 ---
 
 # Agent runtimes decompose into scheduler context engine and execution substrate

@@ -3,7 +3,6 @@ description: Pre-computing known instruction inputs and inserting their results 
 type: kb/types/note.md
 traits: [has-external-sources]
 tags: [computational-model]
-status: seedling
 ---
 
 # Frontloading spares execution context

@@ -3,7 +3,6 @@ description: Distillation is transformation into a new shape, not lossy selectio
 type: kb/types/note.md
 traits: [title-as-claim, has-comparison]
 tags: []
-status: current
 ---
 
 # Distillation is transformation, not selection

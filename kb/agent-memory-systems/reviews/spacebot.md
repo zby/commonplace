@@ -3,7 +3,6 @@ description: "Spacebot review: Rust team-agent harness with SQLite graph memory,
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-derived]
-status: current
 last-checked: "2026-06-05"
 ---
 

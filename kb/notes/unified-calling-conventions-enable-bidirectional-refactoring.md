@@ -3,7 +3,6 @@ description: When agents and tools share a calling convention, components can mo
 type: kb/types/note.md
 traits: [has-external-sources, title-as-claim]
 tags: [learning-theory, computational-model, constraining]
-status: current
 ---
 
 # Unified calling conventions enable bidirectional refactoring between neural and symbolic

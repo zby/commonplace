@@ -3,7 +3,6 @@ description: "The KB already learns through manual improvement; automating judgm
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: []
-status: speculative
 ---
 
 # Automating KB learning is an open problem

@@ -2,7 +2,6 @@
 description: "Exocomp review: Go multi-agent coding workbench with YAML roles, .exocomp ledgers, sandboxed tools, skills, and recovery"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-status: current
 last-checked: "2026-06-04"
 ---
 

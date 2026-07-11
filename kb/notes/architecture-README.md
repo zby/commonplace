@@ -3,7 +3,6 @@ description: How Commonplace is structured and installed — repo layout, two-tr
 type: kb/types/tag-readme.md
 index_source: tag
 index_key: architecture
-status: current
 ---
 
 # Architecture

@@ -3,7 +3,6 @@ description: Separated Evidence and Reasoning sections let human reviewers check
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [type-system]
-status: seedling
 ---
 
 # Structured output is easier for humans to review

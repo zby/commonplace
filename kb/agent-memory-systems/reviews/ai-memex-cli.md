@@ -2,7 +2,6 @@
 description: "ai-memex-cli review: Git-backed Markdown vault, agent skill workflows, trace distillation, lint/watch loops, and context bootstrap"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-status: current
 last-checked: "2026-06-04"
 tags: [trace-derived]
 ---

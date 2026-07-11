@@ -3,7 +3,6 @@ description: Files beat a database early on — a schema commits to access patte
 type: kb/types/note.md
 traits: []
 tags: [architecture]
-status: current
 ---
 
 # Files beat a database for agent-operated knowledge bases

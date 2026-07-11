@@ -2,7 +2,6 @@
 description: "LLM Wiki review: file-backed agent-maintained markdown wiki with scaffolded instructions, BM25/qmd search, linting, and pull-only read-back"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-status: current
 last-checked: "2026-07-06"
 ---
 

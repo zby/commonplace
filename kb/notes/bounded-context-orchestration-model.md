@@ -3,7 +3,6 @@ description: Formalises agent orchestration as a symbolic scheduler driving boun
 type: kb/types/note.md
 traits: [has-external-sources]
 tags: [computational-model]
-status: seedling
 ---
 
 # Bounded-context orchestration model

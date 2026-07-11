@@ -3,7 +3,6 @@ description: Three tiers — skills (autonomous-ready), instructions (reusable-b
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: []
-status: current
 ---
 
 # Capability placement should follow autonomy readiness

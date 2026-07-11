@@ -2,7 +2,6 @@
 description: "Sparks review: Go runtime for Karpathy-style LLM wikis with deterministic ingest, manifest, lint, collection, query, brief, and MCP plumbing"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-status: current
 last-checked: "2026-06-05"
 ---
 

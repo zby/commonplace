@@ -3,7 +3,6 @@ description: "Memory systems need lifecycle operations for redaction, decay, sup
 type: kb/types/note.md
 traits: [has-external-sources]
 tags: [agent-memory, context-engineering]
-status: current
 ---
 
 # Retire, Redact, Supersede, And Relax Memory

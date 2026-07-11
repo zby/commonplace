@@ -3,7 +3,6 @@ description: In-context learning only works when the right knowledge reaches the
 type: kb/types/note.md
 traits: [has-external-sources]
 tags: [learning-theory, deploy-time-learning]
-status: seedling
 ---
 
 # In-context learning presupposes context engineering

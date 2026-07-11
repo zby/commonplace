@@ -3,7 +3,6 @@ description: "Outer-loop learning depends on inspectable failure evidence, not o
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, deploy-time-learning]
-status: current
 ---
 
 # Diagnostic richness constrains outer-loop learning quality

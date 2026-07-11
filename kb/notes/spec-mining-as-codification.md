@@ -3,7 +3,6 @@ description: "Operationalizes codification by extracting deterministic verifiers
 type: kb/types/note.md
 traits: [has-external-sources, title-as-claim]
 tags: [learning-theory, constraining]
-status: current
 ---
 
 # Spec mining is codification's operational mechanism

@@ -2,7 +2,6 @@
 description: "Thalo review: structured plain-text knowledge language with schemas, validation, git-aware synthesis actualization, LSP tooling, and PR automation"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-status: current
 last-checked: "2026-06-05"
 ---
 

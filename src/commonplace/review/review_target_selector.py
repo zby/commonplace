@@ -8,17 +8,12 @@ from pathlib import Path
 
 from commonplace.lib import frontmatter
 from commonplace.review.freshness import (
-    FreshnessBaselineSnapshot,
-    CriterionSnapshot,
-    NoteSnapshot,
-    classify_staleness,
     content_sha256_for_text,
     file_content_sha256,
 )
 from commonplace.review.paths import criterion_id_for_path, criterion_id_from_stored_path, normalize_criterion_path, review_gates_dir
 from commonplace.review.resolve_criteria import applicable_criterion_ids_for_note
 from commonplace.review.review_db import (
-    FreshnessBaseline,
     connect,
     ensure_db,
     load_current_freshness_baselines,
@@ -87,13 +82,13 @@ def _expand_note_filter(repo_root: Path, raw: str) -> list[Path]:
     raise ValueError(f"Note not found: {raw}")
 
 
-def _frontmatter_status(path: Path) -> str | None:
+def _is_user_verified(path: Path) -> bool:
     try:
         text = path.read_text(encoding="utf-8")
     except (OSError, UnicodeDecodeError):
-        return None
+        return False
     result = frontmatter.parse(text)
-    return result.data.get("status") if result.ok else None
+    return result.ok and result.data.get("user-verified") is True
 
 
 def list_reviewable_notes(repo_root: Path) -> list[Path]:
@@ -110,11 +105,11 @@ def list_reviewable_notes(repo_root: Path) -> list[Path]:
     return sorted(found)
 
 
-def list_current_notes(repo_root: Path) -> list[Path]:
+def list_user_verified_notes(repo_root: Path) -> list[Path]:
     return [
         path
         for path in list_reviewable_notes(repo_root)
-        if _frontmatter_status(path) == "current"
+        if _is_user_verified(path)
     ]
 
 
@@ -122,10 +117,10 @@ def _select_notes(
     repo_root: Path,
     *,
     note_filter: list[str] | None,
-    current_only: bool,
+    user_verified_only: bool,
 ) -> list[Path]:
-    if note_filter and current_only:
-        raise ValueError("--note and --current are mutually exclusive")
+    if note_filter and user_verified_only:
+        raise ValueError("--note and --user-verified are mutually exclusive")
 
     if note_filter:
         notes: list[Path] = []
@@ -137,9 +132,9 @@ def _select_notes(
                 seen.add(path)
                 notes.append(path)
         return notes
-    if current_only:
-        return list_current_notes(repo_root)
-    raise ValueError("provide note paths/directories or --current")
+    if user_verified_only:
+        return list_user_verified_notes(repo_root)
+    raise ValueError("provide note paths/directories or --user-verified")
 
 
 def _normalize_requested_criterion_ids(
@@ -247,13 +242,6 @@ class StaleCriterion:
         return criterion_id_from_stored_path(self.criterion_path)
 
 
-def _freshness_baseline_snapshot(freshness_baseline: FreshnessBaseline) -> FreshnessBaselineSnapshot:
-    return FreshnessBaselineSnapshot(
-        baseline_note_hash=freshness_baseline.baseline_note_hash,
-        baseline_criterion_hash=freshness_baseline.baseline_criterion_hash,
-    )
-
-
 def note_diff_from_text(note_path: str, previous_text: str, current_text: str) -> str | None:
     import difflib
 
@@ -274,7 +262,7 @@ def select_stale_criteria(
     model: str | None,
     criterion_ids: list[str],
     note_filter: list[str] | None = None,
-    current_only: bool = False,
+    user_verified_only: bool = False,
     include_diff: bool = False,
     db_path: Path | None = None,
 ) -> list[StaleCriterion]:
@@ -287,7 +275,7 @@ def select_stale_criteria(
     if db_path is None:
         db_path = resolve_db_path(repo_root)
 
-    notes = _select_notes(repo_root, note_filter=note_filter, current_only=current_only)
+    notes = _select_notes(repo_root, note_filter=note_filter, user_verified_only=user_verified_only)
     note_paths = [note_abs.relative_to(repo_root).as_posix() for note_abs in notes]
     ensure_db(db_path)
     with connect(db_path) as conn:
@@ -349,33 +337,19 @@ def select_stale_criteria(
                     )
                 )
                 continue
-            freshness_baseline_snapshot = _freshness_baseline_snapshot(freshness_baseline)
-            if freshness_baseline_snapshot is None:
-                stale.append(
-                    StaleCriterion(
-                        note_path,
-                        criterion_path,
-                        "missing-baseline",
-                        result_kind=result_kind_for_criterion_path(criterion_path),
-                    )
-                )
-                continue
             if current_note_hash is None:
                 current_note_text = note_abs.read_text(encoding="utf-8")
                 current_note_hash = content_sha256_for_text(current_note_text)
             current_criterion_hash = file_content_sha256(criterion_abs)
-            note_snapshot = NoteSnapshot(path=note_path, content_hash=current_note_hash)
-            criterion_snapshot = CriterionSnapshot(id=criterion_path, content_hash=current_criterion_hash)
-            staleness = classify_staleness(
-                note_snapshot,
-                criterion_snapshot,
-                freshness_baseline_snapshot,
-            )
-            if staleness is None:
+            if freshness_baseline.baseline_criterion_hash != current_criterion_hash:
+                reason = "criterion-changed"
+            elif freshness_baseline.baseline_note_hash != current_note_hash:
+                reason = "note-changed"
+            else:
                 continue
             diff = None
             if (
-                staleness.reason == "note-changed"
+                reason == "note-changed"
                 and include_diff
                 and current_note_text is not None
             ):
@@ -384,7 +358,7 @@ def select_stale_criteria(
                 StaleCriterion(
                     note_path,
                     criterion_path,
-                    staleness.reason,
+                    reason,
                     diff=diff,
                     result_kind=result_kind_for_criterion_path(criterion_path),
                 )
@@ -398,13 +372,13 @@ def select_requested_criteria(
     *,
     criterion_ids: list[str],
     note_filter: list[str] | None = None,
-    current_only: bool = False,
+    user_verified_only: bool = False,
 ) -> list[StaleCriterion]:
     catalog_requests, type_requests, collection_requests, critique_requested = _partition_criterion_requests(criterion_ids)
     gates_dir, criterion_path_by_id, requested_criterion_ids = _normalize_requested_criterion_ids(repo_root, catalog_requests)
     match_all_types, requested_type_paths = _normalize_type_requests(repo_root, type_requests)
     match_all_collections, requested_collection_paths = _normalize_collection_requests(repo_root, collection_requests)
-    notes = _select_notes(repo_root, note_filter=note_filter, current_only=current_only)
+    notes = _select_notes(repo_root, note_filter=note_filter, user_verified_only=user_verified_only)
 
     requested: list[StaleCriterion] = []
     for note_abs in notes:

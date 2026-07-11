@@ -2,7 +2,6 @@
 description: "Quicky Wiki review: document-derived SQLite claim graph with confidence events, metabolism, generated wiki files, and MCP pull tools"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-status: current
 last-checked: "2026-06-04"
 ---
 

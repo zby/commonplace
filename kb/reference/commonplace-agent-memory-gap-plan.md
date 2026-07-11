@@ -2,7 +2,6 @@
 description: "Plan for closing Commonplace's current agent-memory gaps: session traces, candidates, cue activation, behavioral evaluation, lifecycle, source alignment, import, ranking, and authority"
 type: kb/types/note.md
 tags: []
-status: current
 ---
 
 # Commonplace agent memory gap plan

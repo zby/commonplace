@@ -3,7 +3,6 @@ description: Link-following is local with rich context; search is long-range wit
 type: kb/types/note.md
 traits: []
 tags: [links]
-status: current
 ---
 
 # Link-following and search impose different metadata requirements

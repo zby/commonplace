@@ -3,7 +3,6 @@ description: In code, indirection (variables, config, abstraction layers) is nea
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [computational-model]
-status: seedling
 ---
 
 # Indirection is costly in LLM instructions

@@ -3,7 +3,6 @@ description: Methodology for testing prompt framings — uses controlled variati
 type: kb/types/note.md
 traits: []
 tags: [evaluation]
-status: seedling
 ---
 
 # Prompt ablation converts human insight into deployable agent framing

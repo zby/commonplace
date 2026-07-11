@@ -3,7 +3,6 @@ description: "Letta review: stateful agent server with core memory blocks, archi
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-derived]
-status: current
 last-checked: "2026-06-04"
 ---
 

@@ -26,6 +26,8 @@ properties:
             description: description should be at most 200 characters
       type:
         type: string
+      user-verified:
+        const: true
     additionalProperties: true
   body:
     type: string

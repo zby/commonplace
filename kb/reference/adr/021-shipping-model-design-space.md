@@ -2,7 +2,6 @@
 description: "ADR 021 appendix enumerating shipped-content namespace options, read-only conventions, path translation, skill-root resolution, and collection scaffolding"
 type: kb/types/note.md
 tags: []
-status: current
 ---
 
 # ADR 021 appendix: shipped-content namespacing design space

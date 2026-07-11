@@ -2,7 +2,6 @@
 description: "LLM-Wiki-v3 review: Markdown+git wiki with schema validation, provenance-checked ingest, pending review, and hybrid pull retrieval"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-status: current
 last-checked: "2026-06-18"
 ---
 

@@ -3,7 +3,6 @@ description: Reframes "minimum viable ontology" as an optimization problem — t
 type: kb/types/note.md
 traits: [has-external-sources, title-as-claim]
 tags: [learning-theory, distillation, discovery]
-status: seedling
 ---
 
 # Minimum viable vocabulary is the naming set that most reduces extraction cost for a bounded observer

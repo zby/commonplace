@@ -3,7 +3,6 @@ description: Conversation preserves the execution trace; prompt refinement compr
 type: kb/types/note.md
 traits: []
 tags: [computational-model]
-status: seedling
 ---
 
 # Conversation vs prompt refinement in agent-to-agent coordination

@@ -2,7 +2,6 @@
 description: "Agent-S review: GUI agent framework with S1/S2 JSON experience memory, embedding retrieval, S3 reflection, and BBON trace evaluation"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-status: current
 last-checked: "2026-06-04"
 tags: [trace-derived]
 ---

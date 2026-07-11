@@ -2,7 +2,6 @@
 description: "Synthadoc review: local LLM wiki compiler with Markdown pages, provenance, lifecycle audit, query agents, routing, SSE UI, and context packs"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-status: current
 last-checked: "2026-06-05"
 ---
 

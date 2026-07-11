@@ -3,7 +3,6 @@ description: Framework-owned tool loops package the common model/tool/retry patt
 type: kb/types/note.md
 traits: []
 tags: [computational-model, tool-loop]
-status: seedling
 ---
 
 # LLM frameworks should keep the tool loop optional

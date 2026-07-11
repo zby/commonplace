@@ -3,7 +3,6 @@ description: When framework-owned tool loops recover from broken tools via agent
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [computational-model, kb-maintenance, learning-theory, observability, tool-loop, deploy-time-learning]
-status: seedling
 ---
 
 # Apparent success is an unreliable health signal in framework-owned tool loops

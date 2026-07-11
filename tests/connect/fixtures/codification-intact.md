@@ -3,7 +3,6 @@ description: Definition — codification is constraining that crosses a medium b
 type: kb/types/note.md
 traits: []
 tags: [learning-theory]
-status: current
 ---
 
 # Codification

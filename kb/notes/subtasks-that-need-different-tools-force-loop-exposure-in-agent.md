@@ -3,7 +3,6 @@ description: When decomposition creates child tasks with different tool surfaces
 type: kb/types/note.md
 traits: []
 tags: [computational-model, context-engineering, tool-loop]
-status: seedling
 ---
 
 # Subtasks that need different tools force loop exposure in agent frameworks

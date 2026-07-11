@@ -3,7 +3,6 @@ description: The partial-evaluation framing for LLM frontloading is structurally
 type: kb/types/note.md
 traits: []
 tags: []
-status: seedling
 ---
 
 # Frontloading is partial evaluation, not divide-and-conquer

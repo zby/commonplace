@@ -3,7 +3,6 @@ description: "Memory should be evaluated by downstream effects on tasks, artifac
 type: kb/types/note.md
 traits: [has-external-sources]
 tags: [agent-memory, context-engineering, learning-theory]
-status: current
 ---
 
 # Evaluate Memory By Effects, Not By Existence

@@ -3,7 +3,6 @@ description: Template generation pays the flexibility cost once at setup; runtim
 type: kb/types/note.md
 traits: []
 tags: [architecture]
-status: seedling
 ---
 
 # Generate KB skills at build time, don't parameterise them

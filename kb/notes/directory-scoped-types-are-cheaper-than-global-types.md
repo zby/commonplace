@@ -2,7 +2,6 @@
 description: Global types tax every session's context; directory-scoped types load only when working in that directory — most structural affordances are directory-local, so the type system should match that economy
 type: kb/types/note.md
 traits: [title-as-claim]
-status: seedling
 tags: [type-system]
 ---
 

@@ -3,7 +3,6 @@ description: Positioning direction (2026-06-12) — lead with self-hosting; the 
 type: kb/types/note.md
 traits: []
 tags: []
-status: seedling
 ---
 
 # Self-hosting as the flagship claim

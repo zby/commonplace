@@ -3,7 +3,6 @@ description: Three sources of deviation between intended and actual LLM output â
 type: kb/types/tag-readme.md
 index_source: tag
 index_key: llm-interpretation-errors
-status: current
 ---
 
 # LLM interpretation errors

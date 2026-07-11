@@ -3,7 +3,6 @@ description: "CrewAI Memory review: unified vector memory with LLM extraction, s
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-derived]
-status: current
 last-checked: "2026-06-04"
 ---
 

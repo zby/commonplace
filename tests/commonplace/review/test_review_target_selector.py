@@ -34,17 +34,18 @@ def make_note(
     title: str,
     body: str,
     *,
-    status: str = "current",
+    user_verified: bool = False,
     traits: str = "[]",
     note_type: str = "kb/types/note.md",
 ) -> Path:
+    verification = "user-verified: true\n" if user_verified else ""
     return write(
         path,
         f"""---
 description: Test note
 type: {note_type}
 traits: {traits}
-status: {status}
+{verification}\
 ---
 
 # {title}
@@ -297,60 +298,60 @@ class TestMissingReview:
         assert "prose/source-residue" in criterion_ids
         assert "semantic/grounding-alignment" in criterion_ids
 
-    def test_current_filter_limits_selection_to_current_notes(self, tmp_path: Path) -> None:
+    def test_user_verified_filter_limits_selection(self, tmp_path: Path) -> None:
         notes_dir = tmp_path / "kb" / "notes"
         gates_dir = tmp_path / "kb" / "instructions" / "review-gates"
 
-        make_note(notes_dir / "current-top.md", "Current top", "\nBody.\n", status="current")
-        make_note(notes_dir / "archived.md", "Archived", "\nBody.\n", status="archived")
+        make_note(notes_dir / "verified.md", "Verified", "\nBody.\n", user_verified=True)
+        make_note(notes_dir / "unverified.md", "Unverified", "\nBody.\n")
         make_gate(gates_dir / "prose" / "source-residue.md", "prose/source-residue", "prose")
 
         stale = review_target_selector.select_stale_criteria(
             tmp_path,
             model=TEST_MODEL,
             criterion_ids=["prose/source-residue"],
-            current_only=True,
+            user_verified_only=True,
         )
 
         assert [record.note_path for record in stale] == [
-            "kb/notes/current-top.md",
+            "kb/notes/verified.md",
         ]
 
     def test_automatic_discovery_ignores_nested_notes(self, tmp_path: Path) -> None:
         notes_dir = tmp_path / "kb" / "notes"
         gates_dir = tmp_path / "kb" / "instructions" / "review-gates"
 
-        make_note(notes_dir / "definitions" / "term.md", "Current term", "\nBody.\n", status="current")
+        make_note(notes_dir / "definitions" / "term.md", "Current term", "\nBody.\n")
         make_gate(gates_dir / "prose" / "source-residue.md", "prose/source-residue", "prose")
 
         stale = review_target_selector.select_stale_criteria(
             tmp_path,
             model=TEST_MODEL,
             criterion_ids=["prose/source-residue"],
-            current_only=True,
+            user_verified_only=True,
         )
 
         assert stale == []
 
-    def test_current_filter_includes_reference_top_level_notes(self, tmp_path: Path) -> None:
+    def test_user_verified_filter_includes_reference_top_level_notes(self, tmp_path: Path) -> None:
         notes_dir = tmp_path / "kb" / "notes"
         reference_dir = tmp_path / "kb" / "reference"
         gates_dir = tmp_path / "kb" / "instructions" / "review-gates"
 
-        make_note(notes_dir / "note-current.md", "Note", "\nBody.\n", status="current")
-        make_note(reference_dir / "architecture.md", "Architecture", "\nBody.\n", status="current")
-        make_note(reference_dir / "adr" / "001-nested.md", "Nested ADR", "\nBody.\n", status="current")
+        make_note(notes_dir / "note-verified.md", "Note", "\nBody.\n", user_verified=True)
+        make_note(reference_dir / "architecture.md", "Architecture", "\nBody.\n", user_verified=True)
+        make_note(reference_dir / "adr" / "001-nested.md", "Nested ADR", "\nBody.\n", user_verified=True)
         make_gate(gates_dir / "prose" / "source-residue.md", "prose/source-residue", "prose")
 
         stale = review_target_selector.select_stale_criteria(
             tmp_path,
             model=TEST_MODEL,
             criterion_ids=["prose/source-residue"],
-            current_only=True,
+            user_verified_only=True,
         )
 
         assert [record.note_path for record in stale] == [
-            "kb/notes/note-current.md",
+            "kb/notes/note-verified.md",
             "kb/reference/architecture.md",
         ]
 
@@ -358,11 +359,11 @@ class TestMissingReview:
         definitions_dir = tmp_path / "kb" / "notes" / "definitions"
         gates_dir = tmp_path / "kb" / "instructions" / "review-gates"
 
-        make_note(definitions_dir / "term.md", "Current term", "\nBody.\n", status="current")
-        make_note(definitions_dir / "index.md", "Definitions index", "\nBody.\n", status="current")
+        make_note(definitions_dir / "term.md", "Current term", "\nBody.\n")
+        make_note(definitions_dir / "index.md", "Definitions index", "\nBody.\n")
         write(definitions_dir / "plain.txt", "not markdown\n")
         write(definitions_dir / "no-frontmatter.md", "# No frontmatter\n")
-        make_note(definitions_dir / "nested" / "too-deep.md", "Nested", "\nBody.\n", status="current")
+        make_note(definitions_dir / "nested" / "too-deep.md", "Nested", "\nBody.\n")
         make_gate(gates_dir / "prose" / "source-residue.md", "prose/source-residue", "prose")
 
         stale = review_target_selector.select_stale_criteria(
@@ -380,7 +381,7 @@ class TestMissingReview:
         types_dir = tmp_path / "kb" / "notes" / "types"
         gates_dir = tmp_path / "kb" / "instructions" / "review-gates"
 
-        make_note(types_dir / "definition.template.md", "Definition template", "\nBody.\n", status="current")
+        make_note(types_dir / "definition.template.md", "Definition template", "\nBody.\n")
         make_gate(gates_dir / "prose" / "source-residue.md", "prose/source-residue", "prose")
 
         with pytest.raises(ValueError, match="No reviewable notes found in directory: kb/notes/types"):
@@ -395,7 +396,7 @@ class TestMissingReview:
         notes_dir = tmp_path / "kb" / "notes"
         gates_dir = tmp_path / "kb" / "instructions" / "review-gates"
 
-        make_note(notes_dir / "one.md", "One", "\nBody.\n", status="current")
+        make_note(notes_dir / "one.md", "One", "\nBody.\n")
         make_gate(gates_dir / "prose" / "source-residue.md", "prose/source-residue", "prose")
 
         stale = review_target_selector.select_stale_criteria(
@@ -409,14 +410,14 @@ class TestMissingReview:
             "kb/notes/one.md",
         ]
 
-    def test_selector_requires_explicit_scope_without_current(self, tmp_path: Path) -> None:
+    def test_selector_requires_explicit_scope_without_user_verified(self, tmp_path: Path) -> None:
         notes_dir = tmp_path / "kb" / "notes"
         gates_dir = tmp_path / "kb" / "instructions" / "review-gates"
 
-        make_note(notes_dir / "current-top.md", "Current top", "\nBody.\n", status="current")
+        make_note(notes_dir / "verified.md", "Verified", "\nBody.\n", user_verified=True)
         make_gate(gates_dir / "prose" / "source-residue.md", "prose/source-residue", "prose")
 
-        with pytest.raises(ValueError, match="provide note paths/directories or --current"):
+        with pytest.raises(ValueError, match="provide note paths/directories or --user-verified"):
             review_target_selector.select_stale_criteria(
                 tmp_path,
                 model=TEST_MODEL,

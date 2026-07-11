@@ -3,7 +3,6 @@ description: "Proposal: run review sweeps through harness sub-agent orchestratio
 type: kb/types/note.md
 traits: [design-proposal]
 tags: [kb-maintenance]
-status: seedling
 ---
 
 # Harness-orchestrated review sweeps

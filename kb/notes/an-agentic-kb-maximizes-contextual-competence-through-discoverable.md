@@ -3,7 +3,6 @@ description: "Retired note kept as a backlink target; its general memory-quality
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, foundations, deploy-time-learning]
-status: outdated
 ---
 
 # An agentic KB maximizes contextual competence through discoverable, composable, trusted knowledge

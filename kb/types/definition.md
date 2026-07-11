@@ -59,7 +59,7 @@ A good definition note should answer:
 | `description` | Yes | Retrieval description naming the term and the operational meaning this KB assigns it. |
 | `type` | Yes | `kb/types/definition.md`. |
 | `tags` | No | Navigation tags for the concept area the term belongs to. |
-| `status` | No | Lifecycle state such as `seedling`, `current`, `speculative`, or `outdated`. |
+| `user-verified` | No | Optional explicit human attestation; may only be `true` and must be removed after substantive edits. |
 
 ## Template
 
@@ -68,7 +68,6 @@ A good definition note should answer:
 description: Definition -- {term} means {operational meaning and why it matters}
 type: kb/types/definition.md
 tags: []
-status: seedling
 ---
 
 # {Term}

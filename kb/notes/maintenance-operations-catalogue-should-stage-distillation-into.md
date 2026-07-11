@@ -3,7 +3,6 @@ description: Catalogue of periodic KB maintenance operations and distillation st
 type: kb/types/note.md
 traits: [has-implementation, title-as-claim]
 tags: [kb-maintenance]
-status: current
 ---
 
 # Maintenance operations catalogue should stage distillation into instructions

@@ -3,7 +3,6 @@ description: "GBrain review: Postgres/PGLite-backed agent brain with markdown wr
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-derived]
-status: current
 last-checked: "2026-06-04"
 ---
 

@@ -3,7 +3,6 @@ description: "Decomposition sits on a width-loss-reliability frontier: exact sho
 type: kb/types/note.md
 traits: []
 tags: [computational-model, context-engineering, llm-interpretation-errors]
-status: seedling
 ---
 
 # Few calls require width and long chains require verification

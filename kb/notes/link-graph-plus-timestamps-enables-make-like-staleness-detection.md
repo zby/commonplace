@@ -3,7 +3,6 @@ description: Existing links already encode dependency information; comparing not
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [kb-maintenance, observability]
-status: seedling
 ---
 
 # Link graph plus timestamps enables make-like staleness detection

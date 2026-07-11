@@ -3,7 +3,6 @@ description: Brainstorming a methodology for evaluating cognitive-science-to-age
 type: kb/types/note.md
 traits: [has-external-sources, title-as-claim]
 tags: [learning-theory, deploy-time-learning]
-status: seedling
 ---
 
 # Psychology-to-agent transfer needs per-principle failure-mode testing

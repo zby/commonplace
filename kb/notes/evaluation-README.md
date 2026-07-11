@@ -3,7 +3,6 @@ description: What works, what doesn't, what needs testing — empirical observat
 type: kb/types/tag-readme.md
 index_source: tag
 index_key: evaluation
-status: current
 ---
 
 # Evaluation

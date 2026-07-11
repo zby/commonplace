@@ -16,7 +16,7 @@ Inputs:
 
 - `{model-partition}` — review model partition, for example `claude-opus` or `codex`. Derive it from the orchestrator's own model (see below), not a guessed default.
 - which criteria to select — gate ids, bundle names, conformance requests, or `critique`. `--all-gates` selects the applicable verdict-kind catalog and conformance gates; report assays remain explicit opt-ins
-- note scope — `--note {note-or-dir}...` or `--current`
+- note scope — `--note {note-or-dir}...` or `--user-verified`
 - selector mode — `requested` for explicit execution, or default stale selection
 - grouping — `note` or `criterion`
 
@@ -41,10 +41,10 @@ commonplace-review-target-selector --mode requested --model-partition {model-par
   | commonplace-create-review-jobs --input - --grouping {note|criterion} [--batch-size {n}]
 ```
 
-For a current-status sweep over explicit gates:
+For a user-verified sweep over explicit gates:
 
 ```bash
-commonplace-review-target-selector --mode requested --model-partition {model-partition} {gate-or-bundle}... --current --json \
+commonplace-review-target-selector --mode requested --model-partition {model-partition} {gate-or-bundle}... --user-verified --json \
   | commonplace-create-review-jobs --input - --grouping {note|criterion} [--batch-size {n}]
 ```
 
@@ -57,10 +57,10 @@ commonplace-review-target-selector --model-partition {model-partition} {gate-or-
   | commonplace-create-review-jobs --input - --grouping {note|criterion} [--batch-size {n}]
 ```
 
-For all gates over current notes:
+For all gates over user-verified notes:
 
 ```bash
-commonplace-review-target-selector --model-partition {model-partition} --all-gates --current --json \
+commonplace-review-target-selector --model-partition {model-partition} --all-gates --user-verified --json \
   | commonplace-create-review-jobs --input - --grouping {note|criterion} [--batch-size {n}]
 ```
 

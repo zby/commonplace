@@ -3,7 +3,6 @@ description: Legal drafting parallels context engineering because both write amb
 type: kb/types/note.md
 traits: [has-external-sources]
 tags: [learning-theory, constraining]
-status: seedling
 ---
 
 # Legal drafting solves the same problem as context engineering

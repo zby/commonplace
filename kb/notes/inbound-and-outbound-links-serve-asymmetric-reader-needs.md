@@ -3,7 +3,6 @@ description: "A note's outbound links show what it rests on; its inbound links s
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [links]
-status: seedling
 ---
 
 # Inbound and outbound links serve asymmetric reader needs

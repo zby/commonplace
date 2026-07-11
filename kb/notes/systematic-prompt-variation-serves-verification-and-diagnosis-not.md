@@ -3,7 +3,6 @@ description: Controlled prompt variation either decorrelates checks or measures 
 type: kb/types/note.md
 traits: [has-external-sources]
 tags: [evaluation, llm-interpretation-errors, learning-theory]
-status: seedling
 ---
 
 # Systematic prompt variation serves verification and diagnosis, not explanatory-reach testing

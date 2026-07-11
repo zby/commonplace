@@ -3,10 +3,11 @@ description: "Proposal: split status semantics — lifecycle stays a structural 
 type: kb/types/note.md
 traits: [design-proposal]
 tags: [document-system]
-status: seedling
 ---
 
 # Assertion force separate from lifecycle status
+
+> Retired by [ADR 044](../adr/044-user-verification-replaces-global-note-status.md). The implemented decision removes global note status instead of preserving a residual lifecycle enum; this document remains as design history.
 
 The base note type defines `status` as a **commitment level** (`seedling`, `current`, `speculative`, `outdated`). That one field fuses two axes: **lifecycle** (how far along the artifact is — structural, genuinely global) and **assertion force** (what the KB's relation to the content is — first-person endorsement, today, everywhere). The fusion is invisible while every collection is first-person-committed, and breaks the moment one isn't: for an attributed claim ("Rootclaim asserts X"), `status: current` is ambiguous between "I still endorse X" and "this still accurately records what Rootclaim asserts" — different maintenance questions with different falsifiers. This proposal separates the axes: the enum stays structural in the type, and what commitment `current` expresses becomes a feature each collection's `COLLECTION.md` declares.
 

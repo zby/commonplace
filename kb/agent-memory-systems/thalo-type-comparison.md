@@ -2,7 +2,6 @@
 description: Reference for borrowing recurring note shapes from Thalo — their entity types (opinion, reference, lore, journal, synthesis) map onto our types with concrete gaps still open (supersedes links, source status tracking)
 type: kb/types/note.md
 traits: [has-comparison]
-status: seedling
 ---
 
 # Thalo entity types compared to commonplace document types
@@ -15,8 +14,8 @@ Both systems define types with structural expectations. Thalo commits to types u
 |-----------|-------|------|
 | Type declaration | `define-entity` in grammar | `type:` in YAML frontmatter |
 | Sections | Required/optional per entity, grammar-enforced | Implied by templates, not validated |
-| Metadata fields | Typed (`string`, `link`, `datetime`, unions), grammar-checked | Convention-based (`description`, `areas`, `status`) |
-| Status tracking | Per-field (`status?: "unread" \| "read" \| "processed"`) | Orthogonal axis (`seedling`, `current`, `speculative`, `outdated`) |
+| Metadata fields | Typed (`string`, `link`, `datetime`, unions), grammar-checked | Schema-checked (`description`, `type`, optional tags/traits and type-local fields) |
+| Status tracking | Per-field (`status?: "unread" \| "read" \| "processed"`) | No global note lifecycle; coherent processing state may be type-local |
 | Traits | Not separated — baked into entity definitions | Independent checkable properties (`has-comparison`, `has-external-sources`, `has-implementation`) |
 | Evolution | `alter-entity` directive | Edit templates, update conventions |
 
@@ -83,9 +82,9 @@ Self-reference entity. Not applicable to our project-focused KB.
 
 3. **Our trait system has no equivalent in Thalo.** They bake everything into entity definitions. Our traits (independently checkable properties orthogonal to type) are more flexible — a `structured-claim` can carry `traits: [has-comparison, has-external-sources]`. This is an advantage, not a gap.
 
-4. **Our status axis is richer.** Their status is per-entity-type (`unread/read/processed` for references only). Our status (`seedling/current/speculative/outdated`) applies universally and tracks commitment, not processing stage. These are complementary — we could have both.
+4. **Type-local status is the cleaner boundary.** Thalo's `unread/read/processed` values describe one coherent reference-processing workflow. Commonplace deliberately has no global note status, but a source type may adopt an equivalent local field when the workflow needs persisted processing state.
 
-5. **Supersedes links are valuable.** Explicitly tracking when one note replaces another is better than our current approach of marking notes `outdated` without linking to the replacement.
+5. **Supersedes links are valuable.** Explicitly tracking when one note replaces another is better than a global currency label because the link identifies the replacement.
 
 ## Validation rules compared
 
@@ -96,7 +95,7 @@ Thalo has 32 deterministic validation rules. Our `/validate` skill has 14 checks
 | Thalo rule | Our equivalent | Implementation |
 |-----------|---------------|----------------|
 | missing-required-field | Description exists | LLM (skill) |
-| invalid-field-type (enums) | Type/traits/status valid | LLM (skill) |
+| invalid-field-type (enums) | Type/traits and type-local enums valid | LLM (skill) |
 | unresolved-link | Link health | LLM (skill) |
 | missing-required-section | Type-specific structure | LLM (skill) |
 | duplicate-metadata-key | Frontmatter valid | LLM (skill) |
@@ -104,7 +103,7 @@ Thalo has 32 deterministic validation rules. Our `/validate` skill has 14 checks
 
 ### Rules we could adopt
 
-- **Unknown field warning** — flag frontmatter fields not in our known set (`description`, `type`, `traits`, `areas`, `status`, `last-checked`). Catches typos like `descrption:`. Deterministic, cheap.
+- **Unknown field warning** — flag frontmatter fields not declared by the resolved type. Catches typos like `descrption:`. Deterministic, cheap.
 - **Unknown section warning** — flag unexpected H2 headings per type. Only useful once we define expected sections per type.
 - **Empty section warning** — heading with no content beneath it. Catches incomplete notes. Deterministic.
 
@@ -118,7 +117,7 @@ Schema evolution rules (alter-entity, define ordering), type expression matching
 - **Composability** — title works as inline prose (LLM-judged)
 - **Areas-Topics consistency** — frontmatter/footer sync
 - **Orphan detection** — notes with no inbound links (batch)
-- **Accumulation signals** — seedling count, text file count (batch INFO)
+- **Accumulation signals** — unstructured text count and orphan signals (batch INFO)
 
 ### The architectural insight
 
@@ -132,7 +131,7 @@ The split would be:
 |-------|----------------|-----------|
 | Frontmatter valid | Hard | Script |
 | Description exists + non-empty | Hard | Script |
-| Type/traits/status enum | Hard | Script |
+| Type/traits/type-local enums | Hard | Script |
 | Link targets resolve | Hard | Script |
 | Areas-Topics sync | Hard | Historical script (`sync_topic_links.py`, removed with Topics) |
 | Unknown frontmatter fields | Hard | Script |

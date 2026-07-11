@@ -116,6 +116,9 @@ properties:
         type: array
         items:
           type: string
+      user-verified:
+        const: true
+      status: false
     additionalProperties: true
 """,
     )
@@ -280,7 +283,6 @@ def test_link_validation_skips_code_and_external_urls(tmp_path: Path) -> None:
 description: A note with one real missing link and links that should be ignored by deterministic validation
 type: kb/types/note.md
 traits: []
-status: current
 ---
 
 # Link validation note
@@ -315,7 +317,6 @@ def test_link_validation_checks_all_relative_targets(tmp_path: Path) -> None:
 description: A note with local links to files and directories so link health checks all relative targets
 type: kb/types/note.md
 traits: []
-status: current
 ---
 
 # Link validation note
@@ -351,7 +352,6 @@ def test_structured_claim_requires_evidence_and_reasoning(tmp_path: Path) -> Non
 description: Structured claim missing one required section so the validator should fail deterministically
 type: kb/notes/types/structured-claim.md
 traits: []
-status: current
 ---
 
 # Claims need support
@@ -375,7 +375,6 @@ def test_bare_enum_frontmatter_type_fails_validation(tmp_path: Path) -> None:
         """---
 description: Legacy enum-typed note should be rejected after path-valued type migration
 type: spec
-status: current
 ---
 
 # Legacy note
@@ -407,7 +406,6 @@ def test_agent_memory_review_fails_when_last_checked_missing(tmp_path: Path) -> 
         """---
 description: Related system note missing the review freshness field so the structural validator should flag it
 type: kb/agent-memory-systems/types/agent-memory-system-review.md
-status: current
 ---
 
 # System
@@ -514,6 +512,56 @@ def test_quote_citation_shape_warns_when_no_quote_above_attribution() -> None:
     assert any("no quoted text above" in item for item in results.warns)
 
 
+@pytest.mark.parametrize(
+    ("extra_frontmatter", "should_pass"),
+    [
+        ("", True),
+        ("user-verified: true\n", True),
+        ("user-verified: false\n", False),
+        ("status: current\n", False),
+    ],
+)
+def test_note_user_verification_schema_boundary(
+    tmp_path: Path, extra_frontmatter: str, should_pass: bool
+) -> None:
+    notes_root = configure_temp_repo(tmp_path)
+    note = write(
+        notes_root / "verification.md",
+        f"""---
+description: Note exercising the committed user verification schema boundary
+type: kb/types/note.md
+{extra_frontmatter}---
+
+# Verification boundary
+""",
+    )
+
+    results = validation.validate_note(note, repo_root=tmp_path)
+
+    assert (results.fails == []) is should_pass
+
+
+def test_tag_readme_rejects_global_status(tmp_path: Path) -> None:
+    notes_root = configure_tag_readme_repo(tmp_path)
+    readme = write(
+        notes_root / "topic-README.md",
+        """---
+description: Curated head exercising the direct note-base descendant boundary
+type: kb/types/tag-readme.md
+index_source: tag
+index_key: topic
+status: current
+---
+
+# Topic
+""",
+    )
+
+    results = validation.validate_note(readme, repo_root=tmp_path)
+
+    assert any("False schema does not allow 'current'" in failure for failure in results.fails)
+
+
 def test_adr_status_uses_type_specific_enum_from_note_base(tmp_path: Path) -> None:
     notes_root = tmp_path / "kb" / "notes"
     install_schema_tree(tmp_path, "adr")
@@ -601,7 +649,6 @@ def test_title_length_over_limit_fails_validation(tmp_path: Path) -> None:
 description: Note with an overly long title so the validator should fail deterministically on title length
 type: kb/types/note.md
 traits: []
-status: current
 ---
 
 # {title}
@@ -622,7 +669,6 @@ def test_filename_slug_length_over_limit_fails_validation(tmp_path: Path) -> Non
 description: Note with an overly long slug so the validator should fail deterministically on filename length
 type: kb/types/note.md
 traits: []
-status: current
 ---
 
 # Short title
@@ -676,7 +722,6 @@ def test_list_kb_note_paths_skips_nested_git_repos(tmp_path: Path) -> None:
 description: Kept note with enough description text to satisfy structural validation
 type: kb/types/note.md
 traits: []
-status: current
 ---
 
 # Kept note
@@ -691,7 +736,6 @@ status: current
 description: This note lives under a cloned repo and should be skipped by batch validation path discovery
 type: kb/types/note.md
 traits: []
-status: current
 ---
 
 # Ignored note
@@ -713,7 +757,6 @@ def test_list_kb_note_paths_skips_type_definitions(tmp_path: Path) -> None:
 description: Real note that should be picked up by batch validation
 type: kb/types/note.md
 traits: []
-status: current
 ---
 
 # Real note
@@ -793,7 +836,6 @@ def test_recent_target_uses_mtime_and_target_lookup(tmp_path: Path) -> None:
 description: Note modified today so recent target resolution should find it deterministically
 type: kb/types/note.md
 traits: []
-status: current
 ---
 
 # Today note
@@ -805,7 +847,6 @@ status: current
 description: Older note that should not be picked up by recent target resolution in deterministic validation
 type: kb/types/note.md
 traits: []
-status: current
 ---
 
 # Old note
@@ -830,7 +871,6 @@ def test_notes_target_scans_only_notes_collection(tmp_path: Path) -> None:
 description: Note in the notes collection
 type: kb/types/note.md
 traits: []
-status: current
 ---
 
 # Note
@@ -842,7 +882,6 @@ status: current
 description: Report outside the notes collection
 type: kb/types/note.md
 traits: []
-status: current
 ---
 
 # Report
@@ -867,7 +906,6 @@ def test_note_target_also_validates_marked_tag_readmes(
 description: "Tagged note with enough metadata to validate cleanly by itself"
 type: kb/types/note.md
 tags: [kb-design, unmarked]
-status: current
 ---
 
 # Tagged note
@@ -881,7 +919,6 @@ type: kb/types/tag-readme.md
 index_source: tag
 index_key: kb-design
 complete: true
-status: current
 ---
 
 # kb-design
@@ -896,7 +933,6 @@ description: "Selective curated head for the unmarked tag"
 type: kb/types/tag-readme.md
 index_source: tag
 index_key: unmarked
-status: current
 ---
 
 # unmarked
@@ -934,7 +970,6 @@ def test_collection_directory_targets_scan_that_collection(tmp_path: Path) -> No
 description: Agent memory systems index note
 type: kb/types/note.md
 traits: []
-status: current
 ---
 
 # Agent Memory Systems
@@ -946,7 +981,6 @@ status: current
 description: Agent R review note
 type: kb/types/note.md
 traits: []
-status: current
 ---
 
 # Agent R
@@ -968,7 +1002,6 @@ type: kb/types/note.md
 description: Report outside the target collection
 type: kb/types/note.md
 traits: []
-status: current
 ---
 
 # Report
@@ -994,7 +1027,6 @@ def test_directory_without_collection_file_is_not_a_validation_scope(tmp_path: P
 description: Report in a support directory without collection conventions
 type: kb/types/note.md
 traits: []
-status: current
 ---
 
 # Report

@@ -3,7 +3,6 @@ description: Real LLMs produce outputs that no valid interpretation of the spec 
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [llm-interpretation-errors]
-status: seedling
 ---
 
 # Interpretation errors are failures of the interpreter

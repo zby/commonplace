@@ -3,7 +3,6 @@ description: Skills are programs whose I/O boundary is tool calls — mocking th
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [document-system]
-status: seedling
 ---
 
 # Unit testing LLM instructions requires mocking the tool boundary

@@ -41,7 +41,6 @@ def make_note(
     title: str,
     body: str,
     *,
-    status: str = "current",
     note_type: str = "kb/types/note.md",
 ) -> Path:
     return write(
@@ -50,7 +49,7 @@ def make_note(
 description: Test note
 type: {note_type}
 traits: []
-status: {status}
+user-verified: true
 ---
 
 # {title}
@@ -255,7 +254,7 @@ class TestSelectorTypePairs:
             tmp_path,
             model=TEST_MODEL,
             criterion_ids=["type/definition"],
-            current_only=True,
+            user_verified_only=True,
         )
         assert [(s.note_path, s.criterion_id) for s in stale] == [
             ("kb/notes/definition.md", "type/definition"),
@@ -296,7 +295,7 @@ class TestSelectorTypePairs:
             tmp_path,
             model=TEST_MODEL,
             criterion_ids=["type"],
-            current_only=True,
+            user_verified_only=True,
         )
         assert [(s.note_path, s.criterion_id, s.reason) for s in stale] == [
             ("kb/notes/definition.md", "type/definition", "criterion-changed"),
@@ -350,7 +349,7 @@ class TestSelectorTypePairs:
         requested = review_target_selector.select_requested_criteria(
             tmp_path,
             criterion_ids=["type"],
-            current_only=True,
+            user_verified_only=True,
         )
         assert [(s.note_path, s.criterion_id, s.reason) for s in requested] == [
             ("kb/notes/definition.md", "type/definition", "requested"),
@@ -410,7 +409,7 @@ class TestAckTypePair:
 
 
 class TestPromptWrapper:
-    def test_type_spec_gate_is_referenced_not_embedded(self) -> None:
+    def test_type_spec_gate_embeds_captured_text(self) -> None:
         prompt = render_pairs_prompt(
             notes=[
                 NoteReviewTarget(
@@ -425,24 +424,7 @@ class TestPromptWrapper:
         )
         assert "=== criterion: kb/types/definition.md ===" in prompt
         assert "This is a type-conformance gate." in prompt
-        assert "Read `kb/types/definition.md` (repo-relative)" in prompt
-        assert "Sharpen the term." not in prompt
-        assert "- Exception: type-conformance gates reference the note's type spec" in prompt
-
-    def test_type_spec_gate_needs_no_criterion_text(self) -> None:
-        prompt = render_pairs_prompt(
-            notes=[
-                NoteReviewTarget(
-                    note_path="kb/notes/definition.md",
-                    review_job_id=1,
-                    criterion_paths=("kb/types/definition.md",),
-                    note_text="# Definition note\n\nBody.",
-                )
-            ],
-            criterion_texts={},
-            result_kind="verdict",
-        )
-        assert "Read `kb/types/definition.md` (repo-relative)" in prompt
+        assert "Sharpen the term." in prompt
 
     def test_catalog_gate_has_no_conformance_wrapper(self) -> None:
         prompt = render_pairs_prompt(
@@ -458,7 +440,6 @@ class TestPromptWrapper:
             result_kind="verdict",
         )
         assert "This is a type-conformance gate." not in prompt
-        assert "- Exception: type-conformance gates reference the note's type spec" not in prompt
 
 
 class TestCreateJobsForTypePairs:
@@ -500,8 +481,7 @@ class TestCreateJobsForTypePairs:
         prompt = prompt_path.read_text(encoding="utf-8")
         assert "=== criterion: kb/types/definition.md ===" in prompt
         assert "This is a type-conformance gate." in prompt
-        assert "Read `kb/types/definition.md` (repo-relative)" in prompt
-        assert "State one claim per note." not in prompt
+        assert "State one claim per note." in prompt
 
     def test_type_pair_for_wrong_type_is_skipped_as_not_applicable(self, tmp_path: Path) -> None:
         build_fixture(tmp_path)

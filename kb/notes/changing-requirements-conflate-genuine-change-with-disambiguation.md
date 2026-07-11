@@ -3,7 +3,6 @@ description: "Agile's 'changing requirements' hide two distinct phenomena — ge
 type: kb/types/note.md
 traits: []
 tags: [learning-theory, deploy-time-learning]
-status: seedling
 ---
 
 # Changing requirements conflate genuine change with disambiguation failure

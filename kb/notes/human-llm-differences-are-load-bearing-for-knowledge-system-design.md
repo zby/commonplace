@@ -3,7 +3,6 @@ description: Knowledge systems both inherit human-oriented materials and produce
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [document-system]
-status: seedling
 ---
 
 # Human-LLM differences are load-bearing for knowledge system design

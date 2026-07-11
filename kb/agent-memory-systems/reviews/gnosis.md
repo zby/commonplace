@@ -2,7 +2,6 @@
 description: "Gnosis review: repo-local why-memory CLI with JSONL entries, disposable SQLite FTS search, doctrine-guided capture, and pull-only read-back"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-status: current
 last-checked: "2026-07-06"
 ---
 

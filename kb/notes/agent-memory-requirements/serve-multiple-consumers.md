@@ -3,7 +3,6 @@ description: "Memory systems need multiple surfaces because acting, scheduling, 
 type: kb/types/note.md
 traits: [has-external-sources]
 tags: [agent-memory, context-engineering]
-status: current
 ---
 
 # Serve Multiple Consumers, Not One Retrieval Interface

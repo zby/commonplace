@@ -25,7 +25,7 @@ Read `CLAUDE.md`, `kb/notes/COLLECTION.md`, and `kb/instructions/COLLECTION.md` 
 
 Interview the operator with 5–7 conversational questions covering: role and day-to-day work, what they're optimising for this year, real working style (tools they actually use, not aspirational), growth edges and recurring feedback, and what they care about outside work.
 
-Write the result to `kb/notes/me.md` as a `structured-claim` or `text` note (whichever fits — `me.md` is descriptive about a person, so a plain note with no claim title is fine; mark with the standard frontmatter and seedling status).
+Write the result to `kb/notes/me.md` as a `structured-claim` or `text` note (whichever fits — `me.md` is descriptive about a person, so a plain note with no claim title is fine; use standard frontmatter and leave `user-verified` absent).
 
 Run `/cp-skill-connect kb/notes/me.md` to surface candidate links. Apply the ones that hold.
 

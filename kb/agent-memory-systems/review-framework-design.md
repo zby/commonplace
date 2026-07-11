@@ -2,7 +2,6 @@
 description: "Design rationale for the agent-memory-systems review framework and comparison matrix: extractable lead tokens, one-hot columns, and write/read lifecycle split."
 type: kb/types/note.md
 tags: [agent-memory]
-status: current
 ---
 
 # Review framework and comparison matrix: design and decisions

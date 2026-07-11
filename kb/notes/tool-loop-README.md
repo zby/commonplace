@@ -4,7 +4,6 @@ type: kb/types/tag-readme.md
 index_source: tag
 index_key: tool-loop
 tags: [computational-model, context-engineering, tool-loop]
-status: current
 ---
 
 # Tool loop

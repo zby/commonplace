@@ -2,7 +2,6 @@
 description: "sift-kg review: CLI document-to-knowledge-graph pipeline with LLM extraction, human-reviewed entity resolution, graph queries, and agent skill guidance"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-status: current
 last-checked: "2026-06-05"
 ---
 

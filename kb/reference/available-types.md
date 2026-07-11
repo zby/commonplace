@@ -2,7 +2,6 @@
 description: Catalog of the types shipped by Commonplace — global base and utility types plus directory-scoped specialised types delivered with the framework scaffold
 type: kb/types/note.md
 tags: []
-status: current
 ---
 
 # Available types

@@ -3,7 +3,6 @@ description: "Agent memory systems need import paths when authoritative project 
 type: kb/types/note.md
 traits: [has-external-sources]
 tags: [agent-memory, context-engineering]
-status: current
 ---
 
 # Import External Knowledge Into Internal Form

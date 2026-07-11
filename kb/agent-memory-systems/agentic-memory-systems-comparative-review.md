@@ -3,7 +3,6 @@ description: "141 code-grounded reviews: files/repo storage leads; trace-derived
 type: kb/types/note.md
 traits: [has-comparison]
 tags: [agent-memory]
-status: current
 ---
 
 # What the matrix shows across 141 agent memory systems

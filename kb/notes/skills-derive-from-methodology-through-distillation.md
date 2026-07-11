@@ -3,7 +3,6 @@ description: The methodology→skill relationship is distillation (extracting op
 type: ./types/structured-claim.md
 traits: [has-comparison, title-as-claim]
 tags: []
-status: seedling
 ---
 
 # Skills derive from methodology through distillation

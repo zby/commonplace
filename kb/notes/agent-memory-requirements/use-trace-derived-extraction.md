@@ -3,7 +3,6 @@ description: "Trace-derived extraction is an after-the-fact learning path that m
 type: kb/types/note.md
 traits: [has-external-sources]
 tags: [agent-memory, context-engineering, learning-theory]
-status: current
 ---
 
 # Use Trace-Derived Extraction As Meta-Learning

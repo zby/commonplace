@@ -2,7 +2,6 @@
 description: "Binder review: local-first typed SQLite graph with Markdown sync, transaction history, CLI/MCP access, LSP validation, and explicit agent reads"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-status: current
 last-checked: "2026-06-04"
 ---
 

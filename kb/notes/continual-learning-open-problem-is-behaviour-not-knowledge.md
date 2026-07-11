@@ -3,7 +3,6 @@ description: Continual learning's hard part is behaviour change; knowledge accum
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, deploy-time-learning]
-status: current
 ---
 
 # Continual learning's open problem is behaviour, not knowledge

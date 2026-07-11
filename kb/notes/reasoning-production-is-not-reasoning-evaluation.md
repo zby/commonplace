@@ -3,7 +3,6 @@ description: "Review and critique systems need independent process-validity chec
 type: kb/types/note.md
 traits: [title-as-claim, has-external-sources]
 tags: [evaluation, llm-interpretation-errors]
-status: seedling
 ---
 
 # Reasoning production is not reasoning evaluation

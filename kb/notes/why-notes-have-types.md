@@ -2,7 +2,6 @@
 description: Seven roles of the type system — navigation hints, metadata enforcement, verifiable structure, local extensibility, content-layer identification, output quality through structured writing discipline, and maturation through constraining
 type: kb/types/note.md
 tags: [type-system]
-status: seedling
 ---
 
 # Why notes have types

@@ -1,7 +1,6 @@
 ---
 description: "How agents navigate a Commonplace KB using control-plane pointers, rg, titles/descriptions, indexes, links, connect reports, and possible future search layers"
 type: kb/types/note.md
-status: current
 ---
 
 # Navigation
@@ -69,7 +68,7 @@ These are complementary. A small curated core keeps reasoning and routing cheap.
 
 ## Possible Future Layers
 
-Near-term search improvement should probably be ranked lexical search: BM25 over titles, descriptions, paths, and bodies, with filters for collection, type, status, and path. This keeps the behavior inspectable and cheap while improving result ordering.
+Near-term search improvement should probably be ranked lexical search: BM25 over titles, descriptions, paths, and bodies, with filters for collection, type, user verification, and path. This keeps the behavior inspectable and cheap while improving result ordering.
 
 Semantic search is useful for vocabulary mismatch: cases where the agent asks with different words than the artifact uses. It should return candidates with titles, descriptions, paths, and matched passages rather than opaque answers, so the agent can still decide what to open.
 

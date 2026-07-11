@@ -3,7 +3,6 @@ description: "CORAL review: filesystem multi-agent coding hub with shared notes,
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-derived]
-status: current
 last-checked: "2026-06-04"
 ---
 

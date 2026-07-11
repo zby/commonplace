@@ -2,7 +2,6 @@
 description: "Tolaria review: files-first Markdown vault desktop app with Git, type conventions, MCP tools, and active-note AI context push"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-status: current
 last-checked: "2026-06-05"
 ---
 

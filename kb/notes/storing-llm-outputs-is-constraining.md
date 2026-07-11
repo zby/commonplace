@@ -3,10 +3,11 @@ description: "Keeping a specific LLM output resolves semantic underspecification
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, constraining]
-status: speculative
 ---
 
 # Storing LLM outputs is constraining
+
+*Working hypothesis. The analogy predicts testing consequences below; it is not yet an empirical generalization.*
 
 A natural language prompt admits a space of valid interpretations — "write a summary" doesn't pick out a unique text. On top of that, execution indeterminism means the same interpretation may render differently across runs. When you choose to keep a specific output, you're doing two things at once: **resolving semantic underspecification** (committing to one interpretation from the space the prompt admits) and **freezing against indeterminism** (locking in this particular run's rendering). The semantic commitment is the deeper operation — it's the same constraining move described in [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) for code, but applied to the artifact rather than the implementation.
 

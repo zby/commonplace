@@ -3,7 +3,6 @@ description: Design tradeoffs for progressive disclosure pointers — context-sp
 type: kb/types/note.md
 traits: []
 tags: [links, computational-model]
-status: seedling
 ---
 
 # Pointer design tradeoffs in progressive disclosure

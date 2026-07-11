@@ -3,7 +3,6 @@ description: The related-systems reviews are a concrete demonstration of the KB'
 type: kb/types/note.md
 traits: []
 tags: []
-status: seedling
 ---
 
 # The related-systems reviews are the best proof the knowledge layer works

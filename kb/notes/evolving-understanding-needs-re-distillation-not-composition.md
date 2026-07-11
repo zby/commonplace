@@ -3,7 +3,6 @@ description: When understanding evolves, reconciling fragments into a coherent p
 type: kb/types/note.md
 traits: [has-external-sources, title-as-claim]
 tags: [learning-theory, context-engineering, distillation]
-status: seedling
 ---
 
 # Evolving understanding needs re-distillation, not composition

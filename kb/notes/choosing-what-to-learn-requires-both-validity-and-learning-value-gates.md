@@ -3,7 +3,6 @@ description: "Separates two promotion checks for learning loops: whether a candi
 type: kb/types/note.md
 traits: [title-as-claim, has-external-sources]
 tags: [learning-theory, deploy-time-learning]
-status: current
 ---
 
 # Choosing what to learn requires both validity and learning-value gates

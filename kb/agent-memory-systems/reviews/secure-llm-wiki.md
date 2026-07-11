@@ -2,7 +2,6 @@
 description: "Secure LLM-Wiki review: hardened claim-wiki pipeline with nonce-delimited extraction, trust tiers, adversarial review, write gates, quarantine, and coarse read-back"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-status: current
 last-checked: "2026-06-05"
 ---
 

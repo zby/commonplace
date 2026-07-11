@@ -3,7 +3,6 @@ description: "Claude Context Guard review: Claude Code slash-command memory usin
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-derived]
-status: current
 last-checked: "2026-06-04"
 ---
 

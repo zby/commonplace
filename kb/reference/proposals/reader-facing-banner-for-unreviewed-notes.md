@@ -3,10 +3,11 @@ description: "Proposal: warn readers of unreviewed notes with a standardized top
 type: kb/types/note.md
 traits: [design-proposal]
 tags: [kb-maintenance]
-status: seedling
 ---
 
 # A reader-facing banner for unreviewed notes
+
+> Retired by [ADR 044](../adr/044-user-verification-replaces-global-note-status.md). Committed `user-verified: true` now supplies the portable presentation signal, while review state remains local and criterion-specific.
 
 The KB's bet is that quality comes from a human judging in the loop — *the work is reviewing.* But unreviewed notes get published anyway (the maintainer routinely promotes seedlings without a review pass), and the only "treat with caution" signal is the `status` frontmatter field. That field is invisible to a human reading rendered markdown and easy for an agent to skim past in the body. So the KB ships unjudged content with no signal at the point of reading — which makes the review discipline invisible and silently asks every reader to trust content the loop never checked. This proposal holds a design for the missing signal: a standardized **trust banner** at the top of a note, derived from its review-state, that warns the reader when the loop has not judged it — and a validator check that keeps the banner honest.
 

@@ -3,7 +3,6 @@ description: "xMemory review: trace-derived hierarchical agent memory with JSONL
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-derived]
-status: current
 last-checked: "2026-06-05"
 ---
 

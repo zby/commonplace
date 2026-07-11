@@ -3,7 +3,6 @@ description: "Proposal: make review output a pluggable codec, with sentinel mark
 type: kb/types/note.md
 traits: [design-proposal]
 tags: [kb-maintenance]
-status: seedling
 ---
 
 # Structured-output codec for the review protocol

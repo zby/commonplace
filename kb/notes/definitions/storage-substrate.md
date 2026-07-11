@@ -2,7 +2,6 @@
 description: Definition - storage substrate records where retained state persists, as an operational field distinct from form, lineage, and authority
 type: kb/types/definition.md
 tags: [learning-theory, artifact-analysis]
-status: current
 ---
 
 # Storage substrate

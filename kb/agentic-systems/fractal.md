@@ -3,7 +3,6 @@ description: "Fractal as a code-grounded RLM harness: PredictRLM workspace turns
 type: kb/types/note.md
 traits: [has-external-sources]
 tags: [computational-model, tool-loop]
-status: seedling
 ---
 
 # Fractal

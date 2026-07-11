@@ -3,7 +3,6 @@ description: "Tag-READMEs inherit the Zettelkasten/LYT Map-of-Content tradition;
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [kb-maintenance, document-system]
-status: seedling
 ---
 
 # An enforced tag-README is a MOC with a machine-checked contract

@@ -59,6 +59,8 @@ Set traits only when clearly warranted. The available traits and their meanings 
 
 Preserve existing frontmatter and links during edits unless the requested change requires changing them.
 
+Before saving a substantive edit, remove `user-verified` if present. Verification attests to the prior substantive contents and must be granted again explicitly by a human. Preserve it only when the user has explicitly authorized a mechanical trivial-change workflow.
+
 ### Step 6 - Validate
 
 Validate the note you wrote or edited:
@@ -75,7 +77,7 @@ Then suggest `cp-skill-connect` as the next step. Step 4 commits only links the 
 
 These apply to all typed artifacts regardless of collection.
 
-**Frontmatter** makes notes queryable. No frontmatter means implicit `text`; any file with frontmatter must include a path-valued `type:`. Most library notes also need `description` (double-quoted, 50-200 chars), plus optional `traits`, `tags`, and `status`.
+**Frontmatter** makes notes queryable. No frontmatter means implicit `text`; any file with frontmatter must include a path-valued `type:`. Most library notes also need `description` (double-quoted, 50-200 chars), plus optional `traits`, `tags`, and `user-verified`. Never grant user verification implicitly.
 
 **Descriptions** are retrieval filters, not summaries. The test: if an agent searched for this note's concept and got 5 results, would this description help pick this one? Paraphrasing the title adds zero retrieval value.
 

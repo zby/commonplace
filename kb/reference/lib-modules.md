@@ -2,7 +2,6 @@
 description: Internal API reference for commonplace.lib - frontmatter, naming, note_parser, type_resolver, validation, and relocation modules used by CLI commands and the review system
 type: kb/types/note.md
 tags: []
-status: current
 ---
 
 # Commonplace library (`commonplace.lib`)

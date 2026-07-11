@@ -3,7 +3,6 @@ description: "Curated head for the constraining tag — narrowing the interpreta
 type: kb/types/tag-readme.md
 index_source: tag
 index_key: constraining
-status: current
 ---
 
 # constraining

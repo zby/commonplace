@@ -3,7 +3,6 @@ description: "How GBrain works as a whole agentic system — host-agent adoption
 type: kb/types/note.md
 traits: []
 tags: [computational-model, tool-loop]
-status: seedling
 ---
 
 # GBrain as an agentic system

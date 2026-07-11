@@ -3,7 +3,6 @@ description: Storing execution history and loading it into the next agent call a
 type: kb/types/note.md
 traits: [has-external-sources, title-as-claim]
 tags: [computational-model, tool-loop]
-status: seedling
 ---
 
 # Session history should not be the default next context

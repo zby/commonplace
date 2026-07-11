@@ -3,7 +3,6 @@ description: "When one agent in an orchestration reads untrusted content, the de
 type: kb/types/note.md
 traits: [title-as-claim, has-external-sources]
 tags: [computational-model, tool-loop]
-status: seedling
 ---
 
 # Agent orchestration needs a privilege quarantine, not just a permission scope

@@ -3,7 +3,6 @@ description: Survey of always-loaded context mechanisms across agent harnesses â
 type: kb/types/note.md
 traits: []
 tags: [computational-model, architecture]
-status: seedling
 ---
 
 # Always-loaded context mechanisms in agent harnesses

@@ -3,7 +3,6 @@ description: "When an artifact carries a copy of information recomputable from a
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [context-engineering, kb-maintenance]
-status: seedling
 ---
 
 # A derived copy of recomputable truth must be checked or absent

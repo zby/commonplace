@@ -2,7 +2,6 @@
 description: "G-Memory review: trace-derived multi-agent memory with Chroma task storage, NetworkX task graph, JSON insights, and orchestrator-pushed examples/rules"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-status: current
 last-checked: "2026-06-04"
 tags: [trace-derived]
 ---

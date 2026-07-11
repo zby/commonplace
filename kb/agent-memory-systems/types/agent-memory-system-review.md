@@ -22,7 +22,7 @@ The section specs below distill [designing-agent-memory-systems](../../notes/des
 - `description` — discriminating retrieval filter (50–200 chars, double-quoted)
 - `type: ../types/agent-memory-system-review.md`
 - `source-tier` — `code-grounded` (findings rest on inspected source; abandoned-but-readable code counts) or `doc-grounded` (no reachable source; findings rest on docs/papers, kept claim-level, filed under `lightweight/`, excluded from the matrix). Required — the **only** authority difference between reviews. Promote a `doc-grounded` review by flipping to `code-grounded` once source is read.
-- `status: current` unless clearly stale
+- Do not add `user-verified`; creation and review generation cannot grant human attestation.
 - `last-checked: "{today}"`
 - `tags` — add `trace-derived` only when trace-learning applies (per the Write side rule below); otherwise omit `tags`. Collection membership comes from location, not a tag.
 
@@ -184,7 +184,6 @@ Every review ends with explicit `Relevant Notes:` links into the KB. Link notes 
 description: Template for related-system reviews — external system comparisons with fixed sections, borrowable ideas, and review freshness metadata
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-status: current
 last-checked: "YYYY-MM-DD"
 ---
 

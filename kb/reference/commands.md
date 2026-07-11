@@ -2,7 +2,6 @@
 description: Reference for the commonplace-* CLI commands shipped by llm-commonplace - project setup, validation, indexing, snapshots, note operations, and the review system
 type: kb/types/note.md
 tags: []
-status: current
 ---
 
 # Commonplace CLI commands
@@ -26,7 +25,7 @@ commonplace-init --root /path/to/project
 
 ### commonplace-validate
 
-Deterministic validator for KB notes. Checks frontmatter validity, enum values, link health, structural description presence, description length warnings, required sections, and batch signals (orphan detection, seedling counts). Description discrimination quality is handled by review gates, not deterministic validation.
+Deterministic validator for KB notes. Checks frontmatter validity, schema constraints, link health, structural description presence, description length warnings, required sections, and batch signals such as orphan detection. Description discrimination quality is handled by review gates, not deterministic validation.
 
 ```bash
 commonplace-validate notes               # validate one collection by name
@@ -73,7 +72,7 @@ Without `--apply`, previews changes without writing. `--redirect` takes `OLD:NEW
 
 ### commonplace-promotion-candidates
 
-List text files and seedling notes that may be ready for promotion to higher status.
+List unstructured text files ranked by incoming links so operators can decide which captures are worth structuring.
 
 ```bash
 commonplace-promotion-candidates
@@ -154,9 +153,11 @@ commonplace-ack-review kb/notes/my-note.md --model-partition claude-opus prose/s
 
 Auto-acknowledge `note-changed` stale pairs when only non-watched note parts changed. Each gate declares what it watches (body, title, description) — changes outside the watched set are acked automatically. Conformance pairs may be selected (`type`/`collection` requests or `--all-gates`) but never qualify: neither a type spec nor a COLLECTION.md declares watches, so each watches the whole note and no change is trivial against it.
 
+Running this command is the explicit human-authorized trivial-change workflow under which an existing `user-verified: true` may be preserved. It advances review freshness only; it never adds or computes user verification.
+
 ```bash
 commonplace-ack-trivial-note-changes prose --model-partition claude-opus --note kb/notes kb/reference  # all prose gates
-commonplace-ack-trivial-note-changes prose --model-partition claude-opus --current              # current-status notes only
+commonplace-ack-trivial-note-changes prose --model-partition claude-opus --user-verified        # committed user-verified notes only
 commonplace-ack-trivial-note-changes prose --model-partition claude-opus --note kb/notes kb/reference --dry-run  # preview what would ack
 ```
 
@@ -178,12 +179,12 @@ Besides catalog gate ids and bundles, the selector accepts conformance requests 
 
 ```bash
 commonplace-review-target-selector prose --model-partition claude-opus --note kb/notes kb/reference
-commonplace-review-target-selector prose --model-partition claude-opus --current --json          # JSON output
+commonplace-review-target-selector prose --model-partition claude-opus --user-verified --json    # JSON output
 commonplace-review-target-selector prose --model-partition claude-opus --note kb/notes kb/reference --reason note-changed     # filter by staleness reason
 commonplace-review-target-selector prose --note kb/notes kb/reference --reason missing-baseline     # pairs missing under every model partition
 commonplace-review-target-selector --mode requested prose --model-partition claude-opus --note kb/notes/my-note.md --json
-commonplace-review-target-selector type/definition --model-partition claude-opus --current       # type-conformance pairs for one type's cohort
-commonplace-review-target-selector collection/notes --model-partition claude-opus --current      # collection-conformance pairs for one collection's cohort
+commonplace-review-target-selector type/definition --model-partition claude-opus --user-verified  # type-conformance pairs for one type's verified cohort
+commonplace-review-target-selector collection/notes --model-partition claude-opus --user-verified # collection-conformance pairs for one collection's verified cohort
 commonplace-review-target-selector critique --model-partition claude-opus --note kb/notes/my-note.md  # report-kind critique pair
 ```
 

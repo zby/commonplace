@@ -3,7 +3,6 @@ description: The same prompt can produce different outputs across runs due to to
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [llm-interpretation-errors]
-status: seedling
 ---
 
 # Execution indeterminism is a property of the sampling process

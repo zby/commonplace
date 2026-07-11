@@ -3,7 +3,6 @@ description: Artifact analysis records retained behavior-shaping artifacts by st
 type: kb/types/note.md
 traits: [has-comparison]
 tags: [learning-theory, artifact-analysis]
-status: current
 ---
 
 # Axes of artifact analysis

@@ -3,7 +3,6 @@ description: Chat history persists because appending messages preserves informat
 type: kb/types/note.md
 traits: [has-comparison]
 tags: [computational-model, tool-loop]
-status: seedling
 ---
 
 # The chat-history model trades context efficiency for implementation simplicity

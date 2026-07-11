@@ -3,7 +3,6 @@ description: Compiling a coordination strategy preserves the primitive action al
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [computational-model, tool-loop]
-status: seedling
 ---
 
 # Compiling a coordination strategy preserves primitive authority but expands aggregate authority

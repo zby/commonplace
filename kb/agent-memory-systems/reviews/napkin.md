@@ -2,7 +2,6 @@
 description: "Napkin review: local Markdown/Obsidian vault CLI and SDK with progressive overview, BM25 search, read, templates, and file writes"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-status: current
 last-checked: "2026-06-04"
 ---
 

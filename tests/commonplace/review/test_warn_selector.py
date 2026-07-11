@@ -23,7 +23,6 @@ def make_note(path: Path) -> Path:
 description: Test note
 type: kb/types/note.md
 traits: []
-status: current
 ---
 
 # Test note

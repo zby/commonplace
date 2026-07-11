@@ -3,7 +3,6 @@ description: Index for context-engineering notes about selecting, scoping, and m
 type: kb/types/tag-readme.md
 index_source: tag
 index_key: context-engineering
-status: current
 ---
 
 # Context engineering

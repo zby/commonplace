@@ -3,7 +3,6 @@ description: Separates knowledge that exists, knowledge loaded into context (rea
 type: kb/types/note.md
 traits: [has-external-sources]
 tags: [llm-interpretation-errors, failure-modes, evaluation]
-status: seedling
 ---
 
 # Knowledge storage does not imply contextual activation

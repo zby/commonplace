@@ -3,7 +3,6 @@ description: "ExpeL review: trace-derived benchmark agent that distills task tra
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-derived]
-status: current
 last-checked: "2026-06-04"
 ---
 

@@ -3,7 +3,6 @@ description: "An adversarial human-agent loop can reconstruct the writing-is-thi
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [foundations]
-status: seedling
 ---
 
 # An adversarial human-agent loop can reconstruct the writing-is-thinking filter

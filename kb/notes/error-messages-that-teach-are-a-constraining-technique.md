@@ -3,7 +3,6 @@ description: In agent systems the error channel is an instruction channel — ma
 type: kb/types/note.md
 traits: [has-external-sources, title-as-claim]
 tags: [learning-theory, constraining]
-status: seedling
 ---
 
 # Error messages that teach are a constraining technique

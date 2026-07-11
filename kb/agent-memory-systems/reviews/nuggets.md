@@ -3,7 +3,6 @@ description: "Nuggets review: TypeScript HRR fact memory, Pi prompt injection, t
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-derived]
-status: current
 last-checked: "2026-06-04"
 ---
 

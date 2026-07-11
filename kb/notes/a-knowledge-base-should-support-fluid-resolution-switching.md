@@ -3,7 +3,6 @@ description: Good thinking requires moving between abstraction levels — broad 
 type: kb/types/note.md
 traits: [has-external-sources, title-as-claim]
 tags: [foundations]
-status: seedling
 ---
 
 # A knowledge base should support fluid resolution-switching

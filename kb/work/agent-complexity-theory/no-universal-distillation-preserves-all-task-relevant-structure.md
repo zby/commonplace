@@ -3,7 +3,6 @@ description: Counting lower bound on summary-based memory — exact universal an
 type: kb/notes/types/structured-claim.md
 traits: []
 tags: [computational-model, context-engineering, learning-theory]
-status: seedling
 ---
 
 # No universal distillation preserves all task-relevant structure

@@ -35,8 +35,8 @@ properties:
         type: array
         items:
           type: string
-      status:
-        type: string
+      user-verified:
+        const: true
     additionalProperties: true
   body:
     type: string

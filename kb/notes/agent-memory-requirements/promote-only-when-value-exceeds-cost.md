@@ -2,7 +2,6 @@
 description: "Candidate memory should become durable only when future retrieval or activation value exceeds review and maintenance cost"
 type: kb/types/note.md
 tags: [agent-memory, context-engineering]
-status: current
 ---
 
 # Promote Only When Future Value Exceeds Maintenance Cost

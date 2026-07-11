@@ -19,7 +19,7 @@ Ask whether someone informed could reasonably argue the opposite. If not, the cl
 
 The fix is usually to sharpen the title to the non-obvious point the note actually establishes, or to switch to a topical title when the note is not making a contestable claim.
 
-Topical titles remain valid for multi-claim specs, frameworks, definitional notes, indexes, and exploratory seedlings.
+Topical titles remain valid for multi-claim specs, frameworks, definitional notes, indexes, and exploratory drafts.
 
 ## Example (fail)
 

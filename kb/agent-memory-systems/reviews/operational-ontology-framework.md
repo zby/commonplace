@@ -2,7 +2,6 @@
 description: "Operational Ontology Framework review: public D+L+A artifact templates for governed AI work, with no implemented memory runtime"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-status: current
 last-checked: "2026-06-04"
 ---
 

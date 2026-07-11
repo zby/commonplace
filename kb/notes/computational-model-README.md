@@ -3,7 +3,6 @@ description: Tag README — PL concepts (scoping, homoiconicity, partial evaluat
 type: kb/types/tag-readme.md
 index_source: tag
 index_key: computational-model
-status: current
 ---
 
 # Computational model

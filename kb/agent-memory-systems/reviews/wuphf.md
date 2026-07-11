@@ -2,7 +2,6 @@
 description: "WUPHF review: local multi-agent office with git-backed markdown wiki, per-agent notebooks, fact extraction, learning logs, lint, and cited lookup"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-status: current
 last-checked: "2026-06-05"
 tags: [trace-derived]
 ---

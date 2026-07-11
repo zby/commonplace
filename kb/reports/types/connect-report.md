@@ -33,7 +33,7 @@ A connect report records evidence for future KB authoring; it is not itself a du
 - If a candidate passes the articulation test but no authorised label fits, route it to `Off-authorisation Candidates` — do not invent a label or downgrade to `see-also` to make it fit.
 - Reject candidates that are merely "related", keyword-only matches, too obvious to help traversal, or likely to confuse an agent following the link.
 - Keep a candidate only if an agent, or another intended KB consumer named by the collection contract, gains something concrete by following the link.
-- If a target artifact has `status: seedling` or `status: speculative`, flag load-bearing labels such as `grounds`, `mechanism`, or `derived-from`. Additive labels such as `extends`, `exemplifies`, and `enables` are fine.
+- Judge whether a target can carry a load-bearing label from its actual claim, evidence, caveats, and collection/type contract. Do not infer quality from `user-verified`: verification is human attestation to the artifact as written, not a universal evidence score.
 
 ## Sections
 

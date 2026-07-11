@@ -2,7 +2,6 @@
 description: Scenario-derived shipped architecture — single KB root with a library/user split under kb/commonplace/, package-provided commands, promoted skills, and a measurable scenario decomposition
 type: kb/types/note.md
 tags: []
-status: current
 ---
 
 # Scenario architecture

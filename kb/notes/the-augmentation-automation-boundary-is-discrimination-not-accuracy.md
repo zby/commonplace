@@ -3,7 +3,6 @@ description: Crossing from augmentation to automation requires per-instance disc
 type: kb/types/note.md
 traits: [has-external-sources, title-as-claim]
 tags: [llm-interpretation-errors]
-status: seedling
 ---
 
 # The augmentation-automation boundary is discrimination not accuracy

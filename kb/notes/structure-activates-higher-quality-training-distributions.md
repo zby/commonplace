@@ -3,7 +3,6 @@ description: Structured templates like Evidence/Reasoning sections steer autoreg
 type: kb/types/note.md
 traits: [has-external-sources]
 tags: [type-system]
-status: seedling
 ---
 
 # Structure activates higher-quality training distributions

@@ -3,7 +3,6 @@ description: Bounded context and underspecification don't just permit conjecture
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [foundations]
-status: seedling
 ---
 
 # Mechanistic constraints make Popperian KB recommendations actionable

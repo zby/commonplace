@@ -44,7 +44,11 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
         help="Check every applicable review criterion: all catalog gates plus type- and collection-conformance pairs.",
     )
     parser.add_argument("--note", nargs="+", dest="note_paths", help="Filter to specific note paths or directories.")
-    parser.add_argument("--current", action="store_true", help="Filter to notes with frontmatter status: current.")
+    parser.add_argument(
+        "--user-verified",
+        action="store_true",
+        help="Filter to notes with frontmatter user-verified: true.",
+    )
     parser.add_argument("--json", action="store_true", help="JSON output (includes diffs for note-changed).")
     parser.add_argument(
         "--model-partition",
@@ -96,7 +100,7 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
                 repo_root,
                 criterion_ids=criterion_ids,
                 note_filter=args.note_paths,
-                current_only=args.current,
+                user_verified_only=args.user_verified,
             )
         else:
             records = select_stale_criteria(
@@ -104,7 +108,7 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
                 model=model,
                 criterion_ids=criterion_ids,
                 note_filter=args.note_paths,
-                current_only=args.current,
+                user_verified_only=args.user_verified,
                 include_diff=args.json,
             )
     except (FileNotFoundError, ValueError) as exc:

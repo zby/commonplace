@@ -3,7 +3,6 @@ description: The four reliability dimensions from Rabanser et al. (consistency, 
 type: kb/types/note.md
 traits: [has-external-sources]
 tags: [llm-interpretation-errors]
-status: seedling
 ---
 
 # Reliability dimensions map to oracle-hardening stages

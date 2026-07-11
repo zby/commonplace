@@ -3,7 +3,6 @@ description: "Canonical paths cover every file before validation and supply loca
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [document-system, type-system]
-status: seedling
 ---
 
 # Directory placement is total, frontmatter classification is partial

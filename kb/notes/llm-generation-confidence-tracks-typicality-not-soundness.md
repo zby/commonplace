@@ -3,7 +3,6 @@ description: "An LLM's next-token confidence measures how typical a continuation
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, failure-modes, llm-interpretation-errors]
-status: speculative
 ---
 
 # An LLM's generation confidence tracks typicality, not soundness

@@ -4,7 +4,6 @@ type: kb/types/tag-readme.md
 index_source: tag
 index_key: distillation
 complete: true
-status: current
 ---
 
 # distillation

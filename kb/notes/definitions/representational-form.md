@@ -2,7 +2,6 @@
 description: "Definition - representational form classifies how an operative part is encoded and consumed: prose, symbolic, distributed-parametric, or mixed"
 type: kb/types/definition.md
 tags: [learning-theory, artifact-analysis]
-status: current
 ---
 
 # Representational form

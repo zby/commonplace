@@ -2,7 +2,6 @@
 description: Definition - lineage records the source dependencies needed to invalidate, regenerate, retire, or review retained behavior-shaping artifacts
 type: kb/types/definition.md
 tags: [learning-theory, artifact-analysis]
-status: current
 ---
 
 # Lineage

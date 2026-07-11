@@ -2,7 +2,6 @@
 description: "Agentic Harness Engineering review: trace-driven outer loop that distills coding-agent rollouts into debugger reports and durable harness edits"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-status: current
 last-checked: "2026-06-05"
 tags: [trace-derived]
 ---

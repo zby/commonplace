@@ -2,7 +2,6 @@
 description: "Memwiki review: npm CLI protocol scaffold for AGENTS/hook files, hot-cache wiki memory, agent-maintained trace updates, and coarse push read-back"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-status: current
 last-checked: "2026-06-18"
 tags: [trace-derived]
 ---

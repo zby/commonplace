@@ -27,6 +27,23 @@ index_key: {tag}
     )
 
 
+def test_on_page_markdown_renders_user_verification_and_specialized_status(tmp_path: Path) -> None:
+    note = write(tmp_path / "kb" / "reference" / "adr" / "044-example.md", "# Example\n")
+    page = SimpleNamespace(
+        meta={
+            "type": "kb/reference/types/adr.md",
+            "status": "accepted",
+            "user-verified": True,
+        },
+        file=SimpleNamespace(abs_src_path=str(note)),
+    )
+
+    result = mkdocs_hooks.on_page_markdown("# Example\n\nBody\n", page)
+
+    assert "**Status:** accepted" in result
+    assert "**User verified:** yes" in result
+
+
 def test_on_page_markdown_links_every_tag_with_declared_index(tmp_path: Path) -> None:
     notes = tmp_path / "kb" / "notes"
     for tag in ("agent-memory", "context-engineering", "learning-theory"):

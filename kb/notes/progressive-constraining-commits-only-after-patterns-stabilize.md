@@ -3,7 +3,6 @@ description: Constraining via LLM code generation freezes a single projection of
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, computational-model, constraining]
-status: seedling
 ---
 
 # Progressive constraining commits only after patterns stabilize

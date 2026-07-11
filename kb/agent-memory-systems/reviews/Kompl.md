@@ -3,7 +3,6 @@ description: "Kompl review: SQLite-backed knowledge compiler that ingests source
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-derived]
-status: current
 last-checked: "2026-06-04"
 ---
 

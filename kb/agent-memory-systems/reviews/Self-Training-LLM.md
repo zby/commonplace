@@ -2,7 +2,6 @@
 description: "Self-Training-LLM review: offline synthetic Wikipedia QA generation, uncertainty-filtered SFT/DPO datasets, and model-weight learning rather than contextual memory"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-status: current
 last-checked: "2026-06-04"
 tags: [trace-derived]
 ---

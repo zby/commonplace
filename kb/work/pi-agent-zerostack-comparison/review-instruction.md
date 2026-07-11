@@ -251,7 +251,6 @@ description: "Code-grounded comparison of pi_agent_rust and zerostack as Rust co
 type: kb/types/note.md
 traits: [has-comparison, has-implementation]
 tags: []
-status: seedling
 ---
 
 # {Claim-shaped title}

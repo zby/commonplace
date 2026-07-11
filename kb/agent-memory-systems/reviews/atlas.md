@@ -2,7 +2,6 @@
 description: "ATLAS review: logistics MCP server whose KnowledgeEngine enriches on-disk markdown files from document extractions, never overwriting — read-back only via its internal chat agent, not MCP"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-status: current
 last-checked: "2026-07-05"
 ---
 

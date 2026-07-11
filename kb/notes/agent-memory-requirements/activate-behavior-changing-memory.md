@@ -3,7 +3,6 @@ description: "Behavior-changing memory must activate before relevant actions rat
 type: kb/types/note.md
 traits: [has-external-sources]
 tags: [agent-memory, context-engineering, learning-theory]
-status: current
 ---
 
 # Activate Behavior-Changing Memory Before The Mistake

@@ -3,7 +3,6 @@ description: Loading writing methodology into an already-committed context windo
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [kb-maintenance]
-status: seedling
 ---
 
 # Traversal improvements should be deferred via logging to avoid mid-task context switching

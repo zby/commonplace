@@ -3,7 +3,6 @@ description: "Distinguishes backcast and reinvention benchmarks from autonomous 
 type: kb/types/note.md
 traits: [title-as-claim, has-external-sources]
 tags: [learning-theory, discovery]
-status: current
 ---
 
 # Known-target discovery benchmarks show reachability, not discovery closure

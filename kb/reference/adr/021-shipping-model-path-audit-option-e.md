@@ -2,7 +2,6 @@
 description: "ADR 021 appendix auditing hardcoded kb/ paths in shipped content and showing why the kb/commonplace namespace preserves more links than cp-prefixed collections"
 type: kb/types/note.md
 tags: []
-status: current
 ---
 
 # ADR 021 appendix: Option E path audit

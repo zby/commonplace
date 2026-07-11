@@ -3,7 +3,6 @@ description: LLM context is flat concatenation — no scoping, everything global
 type: kb/types/note.md
 traits: [has-external-sources, title-as-claim]
 tags: [computational-model]
-status: seedling
 ---
 
 # LLM context is composed without scoping

@@ -26,7 +26,7 @@ Apply reach to claim formulation:
 
 **Existential recast for designs.** A design idea is not a weak claim — its free parameters make it evaluable by usefulness, not truth (rationale: [design proposals differ from claims in kind, not confidence](./design-proposals-differ-from-claims-in-kind-not-confidence.md)). It may stay here only recast as an existential claim: the title carries the truth-apt part, and the construction appears as a witness with its free choices explicitly marked. The requirements must be substantive enough that exhibiting any witness is informative; otherwise the design belongs in `kb/reference/proposals/` (ADR 028).
 
-**Hypotheses need no extra machinery.** A hypothesis is an ordinary claim at reduced commitment: claim title plus `status: speculative`. There is no separate epistemic-status field — revisit only if hypotheses start being confused with supported claims.
+**Hypotheses stay recognizable in prose.** State the conjectural force in the title, description, opening, or a clearly named hypotheses/open-questions section. `user-verified: true` may attest that a note responsibly presents a conjecture; it does not turn the conjecture into established fact.
 
 ## Title and body composability
 
@@ -41,7 +41,7 @@ Add the `title-as-claim` trait when using one, so review gates check the promise
 
 Exception: notes with the `synthesis` trait weave multiple cited claims into a single argument and are cited as a unit. Component claims that need to stand as citable premises should be extracted into their own notes.
 
-Exceptions to claim titles: multi-claim specs, definitions, indexes, seedlings not ready to assert.
+Exceptions to claim titles: multi-claim specs, definitions, indexes, and exploratory drafts not ready to assert.
 
 ## Outbound links
 

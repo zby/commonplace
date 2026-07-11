@@ -30,7 +30,6 @@ def make_note(
     description: str = "Test note",
     traits: str = "[]",
     tags: str = "[]",
-    status: str = "current",
 ) -> Path:
     return write(
         path,
@@ -39,7 +38,6 @@ description: {description}
 type: kb/types/note.md
 traits: {traits}
 tags: {tags}
-status: {status}
 ---
 
 # {title}
@@ -194,7 +192,6 @@ description: {description}
 type: kb/types/note.md
 traits: {traits}
 tags: {tags}
-status: current
 ---
 
 # {title}

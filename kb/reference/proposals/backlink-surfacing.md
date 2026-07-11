@@ -3,7 +3,6 @@ description: "Proposal: how Commonplace could surface inbound links — build-ti
 type: kb/types/note.md
 traits: [design-proposal]
 tags: [links]
-status: seedling
 ---
 
 # Backlink surfacing

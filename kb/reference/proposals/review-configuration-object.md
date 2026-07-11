@@ -3,7 +3,6 @@ description: "Proposal: a ReviewConfig object owned by commonplace.review, conso
 type: kb/types/note.md
 traits: [design-proposal]
 tags: [kb-maintenance]
-status: seedling
 ---
 
 # Review configuration object

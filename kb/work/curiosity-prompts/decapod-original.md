@@ -1,7 +1,6 @@
 ---
 description: Daemonless control plane for AI coding agents that forces intent specification, boundary enforcement, and proof-gated completion before work can land — production exemplar of oracle-as-infrastructure
 type: kb/types/note.md
-status: current
 last-checked: 2026-03-10
 ---
 

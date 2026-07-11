@@ -3,7 +3,6 @@ description: "Frames discoverable, composable, trusted remembered knowledge as t
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [agent-memory, context-engineering, learning-theory]
-status: seedling
 ---
 
 # Agent memory needs discoverable, composable, trusted knowledge under bounded context

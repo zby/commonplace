@@ -2,7 +2,6 @@
 description: Constraining narrows interpretation and distillation extracts focused artifacts; both can trade generality for reliability/speed/cost when task fit is good
 type: kb/types/note.md
 traits: []
-status: current
 tags: [learning-theory, constraining, distillation]
 ---
 

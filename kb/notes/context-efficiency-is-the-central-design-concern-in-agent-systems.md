@@ -3,7 +3,6 @@ description: Context is the single scarce resource in agent systems, and it is s
 type: kb/types/note.md
 traits: [has-external-sources, title-as-claim]
 tags: [computational-model, foundations]
-status: current
 ---
 
 # Context efficiency is the central design concern in agent systems

@@ -3,7 +3,6 @@ description: "How Claude Code's dynamic-workflows API works — a model-authored
 type: kb/types/note.md
 traits: [has-external-sources]
 tags: [computational-model, tool-loop]
-status: seedling
 ---
 
 # Claude Code dynamic workflows

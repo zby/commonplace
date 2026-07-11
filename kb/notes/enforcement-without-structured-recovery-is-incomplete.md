@@ -3,7 +3,6 @@ description: The enforcement gradient covers detection and blocking but has no r
 type: kb/types/note.md
 traits: [has-external-sources, title-as-claim]
 tags: [learning-theory, constraining]
-status: seedling
 ---
 
 # Enforcement without structured recovery is incomplete

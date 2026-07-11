@@ -3,7 +3,6 @@ description: "Curated head for the deploy-time-learning tag — the framework of
 type: kb/types/tag-readme.md
 index_source: tag
 index_key: deploy-time-learning
-status: current
 ---
 
 # deploy-time-learning

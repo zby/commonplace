@@ -3,7 +3,6 @@ description: Kirsch's barriers all mark cases where software carries decisions t
 type: kb/types/note.md
 traits: [has-external-sources, title-as-claim]
 tags: [learning-theory, artifact-analysis]
-status: seedling
 ---
 
 # Ephemerality is safe where embedded operational knowledge has low reach

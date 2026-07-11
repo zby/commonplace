@@ -3,7 +3,6 @@ description: Links encode conditional possibilities, not obligations — every l
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, links, deploy-time-learning]
-status: current
 ---
 
 # Links encode conditional possibilities, not obligations

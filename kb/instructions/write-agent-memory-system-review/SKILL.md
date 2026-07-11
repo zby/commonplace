@@ -88,9 +88,9 @@ If the system has no reachable source code, stop and write a lightweight note in
    If that target path already exists (a same-day rerun already archived one), do not overwrite it: append a numeric suffix starting at `2` and increment until the path is free — `{note_path%.md}.replaced.{YYYY-MM-DD}.2.md`, then `.3.md`, and so on.
 
    Then mark the archived file:
-   - Set `status: outdated` in frontmatter.
    - Set `tags: []` (clearing any `trace-derived` tag).
    - Add after the title: `> Replaced {YYYY-MM-DD}. See [{name}](./{name}.md) for the current review.`
+   - Remove `user-verified` if present; archiving is a substantive lifecycle edit and the replacement banner carries the supersession fact.
    Do not read the archived `.replaced.*.md` file while writing the replacement.
 
 8. **Draft the review by delegation.** Use `kb/agent-memory-systems/types/agent-memory-system-review.md` as the worker's artifact contract for required sections and fields. Do not ask the worker to load the full [designing-agent-memory-systems](../../notes/designing-agent-memory-systems.md) note during ordinary review writing — its comparison lens is already distilled into the contract.
@@ -123,6 +123,8 @@ If the system has no reachable source code, stop and write a lightweight note in
    If any input above is missing, stop and report which. Verify source_dir is readable (e.g. test -d); if it isn't, stop and report. Never update last-checked without actually reading source_dir.
 
    Ground the review in primary sources in source_dir — README, architecture/design docs, CLAUDE.md/AGENTS.md, package manifests, and the core source files implementing the central claims. Where the implementation clarifies or contradicts the README, report what the code does and note the divergence. Decide trace-derived status from implementation evidence and either include both the placement section and the trace-derived tag, or omit both.
+
+   Do not add `user-verified`; drafting and semantic review cannot grant human attestation.
 
    Write note_path from the code outward.
 

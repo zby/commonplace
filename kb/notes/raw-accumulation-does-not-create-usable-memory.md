@@ -3,7 +3,6 @@ description: "Accumulation preserves material, but usable agent memory requires 
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [agent-memory, context-engineering, learning-theory]
-status: seedling
 ---
 
 # Raw accumulation does not create usable memory

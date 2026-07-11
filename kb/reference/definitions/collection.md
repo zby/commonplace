@@ -2,7 +2,6 @@
 description: COLLECTION.md-bearing subtree under kb/ whose local authoring contract governs artifacts in that subtree
 type: kb/types/definition.md
 tags: []
-status: seedling
 ---
 
 # Collection

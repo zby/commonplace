@@ -3,7 +3,6 @@ description: "Proposal: compare blinded output-only and trajectory-aware judges 
 type: kb/types/note.md
 traits: [design-proposal, has-external-sources]
 tags: [evaluation, agent-runtime]
-status: seedling
 ---
 
 # Trajectory-aware evaluation of transforming agent workflows

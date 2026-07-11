@@ -3,7 +3,6 @@ description: "Amazon SAGE review: AppWorld rollouts become reusable Python skill
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-derived]
-status: current
 last-checked: "2026-06-04"
 ---
 

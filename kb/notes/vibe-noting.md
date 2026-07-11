@@ -3,7 +3,6 @@ description: Vibe coding works because code is inspectable, not just verifiable 
 type: kb/types/note.md
 traits: []
 tags: []
-status: seedling
 ---
 
 # Vibe-noting

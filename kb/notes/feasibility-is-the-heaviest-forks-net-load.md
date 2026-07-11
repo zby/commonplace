@@ -3,7 +3,6 @@ description: Once work is split across sub-agents, the per-window feasibility ce
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [computational-model, foundations]
-status: seedling
 ---
 
 # Under sub-agent decomposition, feasibility is the heaviest fork's net load

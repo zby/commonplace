@@ -3,7 +3,6 @@ description: "ai-modules review: deployable multi-vendor skill/plugin bundle wit
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-derived]
-status: current
 last-checked: "2026-06-04"
 ---
 

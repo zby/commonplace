@@ -2,7 +2,6 @@
 description: "EchoWiki review: Obsidian plugin and CLI that compile raw notes and voice transcripts into file-backed wiki pages via the Vercel AI SDK"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-status: current
 last-checked: "2026-07-06"
 ---
 

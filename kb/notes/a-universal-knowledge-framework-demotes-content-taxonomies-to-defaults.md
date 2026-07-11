@@ -3,7 +3,6 @@ description: "Universal frameworks should keep closed first-order content taxono
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [document-system, foundations]
-status: seedling
 ---
 
 # A universal knowledge framework demotes content taxonomies to defaults and keeps answerability

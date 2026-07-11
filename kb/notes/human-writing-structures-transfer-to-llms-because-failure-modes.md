@@ -3,7 +3,6 @@ description: Writing genres evolved to prevent reasoning failures; the same stru
 type: kb/types/note.md
 traits: [has-external-sources]
 tags: [type-system]
-status: current
 ---
 
 # Human writing structures transfer to LLMs because failure modes overlap

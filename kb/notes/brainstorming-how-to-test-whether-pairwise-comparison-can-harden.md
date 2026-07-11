@@ -3,7 +3,6 @@ description: Staged test plan for whether pairwise comparison improves soft-orac
 type: kb/types/note.md
 traits: [has-external-sources]
 tags: [evaluation, llm-interpretation-errors, context-engineering]
-status: seedling
 ---
 
 # Brainstorming: how to test whether pairwise comparison can harden soft oracles

@@ -3,7 +3,6 @@ description: ELI5 explanation of epiplexity through encrypted messages, shuffled
 type: kb/types/note.md
 traits: [has-external-sources]
 tags: [learning-theory]
-status: current
 ---
 
 # Epiplexity by example: what entropy and complexity miss

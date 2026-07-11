@@ -2,7 +2,6 @@
 description: Not all links are equal — inline premise links ("since [X]") carry more weight than footer "related" links. Position and prose encode commitment level, creating a weighted graph that affects traversal, scoring, and quality signals.
 type: kb/types/note.md
 traits: [title-as-claim]
-status: seedling
 tags: [links]
 ---
 

@@ -3,7 +3,6 @@ description: Index of notes about document types, writing conventions, validatio
 type: kb/types/tag-readme.md
 index_source: tag
 index_key: document-system
-status: seedling
 ---
 
 # Document system

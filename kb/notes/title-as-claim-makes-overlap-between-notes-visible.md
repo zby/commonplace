@@ -3,7 +3,6 @@ description: When note titles are claims, overlap between notes is visible at th
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [kb-maintenance]
-status: seedling
 ---
 
 # Title as claim makes overlap between notes visible

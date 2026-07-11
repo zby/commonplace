@@ -41,7 +41,6 @@ def make_note(
     title: str,
     body: str,
     *,
-    status: str = "current",
     note_type: str = "kb/types/note.md",
 ) -> Path:
     return write(
@@ -50,7 +49,7 @@ def make_note(
 description: Test note
 type: {note_type}
 traits: []
-status: {status}
+user-verified: true
 ---
 
 # {title}
@@ -206,7 +205,7 @@ class TestSelectorCollectionPairs:
             tmp_path,
             model=TEST_MODEL,
             criterion_ids=["collection/reference"],
-            current_only=True,
+            user_verified_only=True,
         )
         assert [(s.note_path, s.criterion_id) for s in stale] == [
             ("kb/reference/doc.md", "collection/reference"),
@@ -237,7 +236,7 @@ class TestSelectorCollectionPairs:
             tmp_path,
             model=TEST_MODEL,
             criterion_ids=["collection"],
-            current_only=True,
+            user_verified_only=True,
         )
         assert [(s.note_path, s.criterion_id, s.reason) for s in stale] == [
             ("kb/notes/plain.md", "collection/notes", "criterion-changed"),
@@ -305,7 +304,7 @@ State one claim per note.
         requested = review_target_selector.select_requested_criteria(
             tmp_path,
             criterion_ids=["collection"],
-            current_only=True,
+            user_verified_only=True,
         )
         assert [(s.note_path, s.criterion_id, s.reason) for s in requested] == [
             ("kb/notes/plain.md", "collection/notes", "requested"),
@@ -399,7 +398,7 @@ class TestAckCollectionPair:
 
 
 class TestPromptWrapper:
-    def test_collection_md_gate_is_referenced_not_embedded(self) -> None:
+    def test_collection_md_gate_embeds_captured_text(self) -> None:
         prompt = render_pairs_prompt(
             notes=[
                 NoteReviewTarget(
@@ -414,24 +413,7 @@ class TestPromptWrapper:
         )
         assert "=== criterion: kb/notes/COLLECTION.md ===" in prompt
         assert "This is a collection-conformance gate." in prompt
-        assert "Read `kb/notes/COLLECTION.md` (repo-relative)" in prompt
-        assert "Use claim titles." not in prompt
-        assert "- Exception: collection-conformance gates reference the collection's COLLECTION.md" in prompt
-
-    def test_collection_md_gate_needs_no_criterion_text(self) -> None:
-        prompt = render_pairs_prompt(
-            notes=[
-                NoteReviewTarget(
-                    note_path="kb/notes/plain.md",
-                    review_job_id=1,
-                    criterion_paths=("kb/notes/COLLECTION.md",),
-                    note_text="# Plain note\n\nBody.",
-                )
-            ],
-            criterion_texts={},
-            result_kind="verdict",
-        )
-        assert "Read `kb/notes/COLLECTION.md` (repo-relative)" in prompt
+        assert "Use claim titles." in prompt
 
     def test_catalog_gate_has_no_collection_wrapper(self) -> None:
         prompt = render_pairs_prompt(
@@ -447,7 +429,6 @@ class TestPromptWrapper:
             result_kind="verdict",
         )
         assert "This is a collection-conformance gate." not in prompt
-        assert "- Exception: collection-conformance gates reference" not in prompt
 
     def test_wrapper_states_type_conformance_boundary(self) -> None:
         prompt = render_pairs_prompt(
@@ -459,7 +440,7 @@ class TestPromptWrapper:
                     note_text="# Plain note\n\nBody.",
                 )
             ],
-            criterion_texts={},
+            criterion_texts={"kb/notes/COLLECTION.md": "# Writing conventions"},
             result_kind="verdict",
         )
         assert "type-conformance pair's job" in prompt
@@ -504,8 +485,7 @@ class TestCreateJobsForCollectionPairs:
         prompt = prompt_path.read_text(encoding="utf-8")
         assert "=== criterion: kb/notes/COLLECTION.md ===" in prompt
         assert "This is a collection-conformance gate." in prompt
-        assert "Read `kb/notes/COLLECTION.md` (repo-relative)" in prompt
-        assert "Use claim-shaped titles." not in prompt
+        assert "Use claim-shaped titles." in prompt
 
     def test_collection_pair_for_wrong_collection_is_skipped_as_not_applicable(self, tmp_path: Path) -> None:
         build_fixture(tmp_path)

@@ -1,6 +1,6 @@
 ---
 name: cp-skill-convert
-description: Convert notes between types. Currently supports text to note by adding frontmatter with status seedling, renaming the file to match the title, and fixing backlinks. Use with a note path or note name.
+description: Convert notes between types. Currently supports text to note by adding unverified structured frontmatter, renaming the file to match the title, and fixing backlinks. Use with a note path or note name.
 type: kb/types/instruction.md
 user-invocable: true
 allowed-tools: Read, Edit, Grep, Glob, Bash
@@ -46,12 +46,11 @@ description: [50-200 chars, adds mechanism/scope/implication beyond the title]
 type: kb/types/note.md
 traits: []
 tags: []
-status: seedling
 ---
 ```
 
 **Rules:**
-- `status` is always `seedling` — conversion structures the note but does not endorse it. Human review flips to `current`.
+- Do not add `user-verified` — conversion structures the note but cannot grant human attestation.
 - `description` must add information beyond the title. See [note base type](../../types/note.md) for quality criteria.
 - `traits` is always `[]` — trait assignment is semantic work, done later by the `cp-skill-validate` skill or human review.
 - `tags` is always `[]` — tag assignment is semantic work, done later by the `cp-skill-connect` skill or human review.
@@ -88,7 +87,7 @@ The filename should match the title — whether the title itself is good is a se
 ```
 === CONVERTED: filename.md ===
 
-text → note (status: seedling)
+text → note (unverified)
 
 renamed: old-filename.md → new-filename.md  [or "filename unchanged" if no rename]
 backlinks updated: 3 files  [or "none" if no backlinks]
@@ -99,7 +98,7 @@ tags: []
 Next steps:
 - Run the `cp-skill-connect` skill on `new-filename.md` — find connections
 - Run the `cp-skill-validate` skill on `new-filename.md` — check quality
-- Review and set status: current when endorsed
+- Optionally ask the user to verify the artifact after review; only the human may add `user-verified: true`
 ===
 ```
 
@@ -116,7 +115,7 @@ These are documented as directions, not working features. If a user requests one
 ## Critical Constraints
 
 **Never:**
-- Set `status: current` — that requires human review
+- Add `user-verified` — that requires explicit human attestation after review
 - Modify body content — only add/change frontmatter
 - Convert a text file that already has frontmatter (it's not a text file)
 - Write a description that merely restates the title
@@ -124,7 +123,7 @@ These are documented as directions, not working features. If a user requests one
 - Install software — if a required tool is missing, bail with an error
 
 **Always:**
-- Set `status: seedling` for text → note conversions
+- Leave `user-verified` absent for text → note conversions
 - Write a description that adds mechanism, scope, or implication
 - Rename the file to match the `# Title` heading (unless it already does)
 - Fix all backlinks when renaming

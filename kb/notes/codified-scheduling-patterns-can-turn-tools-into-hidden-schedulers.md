@@ -3,7 +3,6 @@ description: As agent behavior matures, deterministic next-step policies need ex
 type: kb/types/note.md
 traits: []
 tags: [computational-model, context-engineering, tool-loop]
-status: seedling
 ---
 
 # Codified scheduling patterns can turn tools into hidden schedulers

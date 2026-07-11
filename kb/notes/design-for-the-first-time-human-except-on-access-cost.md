@@ -3,7 +3,6 @@ description: "Design heuristic for agent-consumed systems: treat agents like com
 type: kb/types/note.md
 traits: [title-as-claim, has-comparison]
 tags: [document-system, context-engineering]
-status: seedling
 ---
 
 # Design for the first-time human, except on access cost

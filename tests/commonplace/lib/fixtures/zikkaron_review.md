@@ -3,7 +3,6 @@ description: "Zikkaron review: local Claude Code memory engine with SQLite/vecto
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-derived]
-status: current
 last-checked: "2026-06-02"
 ---
 

@@ -30,7 +30,7 @@ Do not force this scaffold onto arguments it does not fit.
 | `type` | Yes | Path to this type spec, usually `./types/structured-claim.md` for notes at the collection root. |
 | `traits` | Yes | Include `title-as-claim`; this is what makes the claim-title promise explicit to review gates. |
 | `tags` | No | Navigation tags that help route the claim through the notes collection. |
-| `status` | No | Lifecycle state such as `seedling`, `current`, `speculative`, or `outdated`. |
+| `user-verified` | No | Optional explicit human attestation; may only be `true` and must be removed after substantive edits. |
 
 ## Template
 
@@ -40,7 +40,6 @@ description: Template for developed arguments — claim-titled notes with explic
 type: ./types/structured-claim.md
 traits: [title-as-claim]
 tags: []
-status: seedling
 ---
 
 # {Claim as title — an assertion, not a topic label}

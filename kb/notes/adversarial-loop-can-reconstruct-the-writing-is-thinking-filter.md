@@ -3,7 +3,6 @@ description: "The writing-is-thinking filter is the loop's, not the pen's — an
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [foundations]
-status: seedling
 ---
 
 # An adversarial human-agent loop can reconstruct the writing-is-thinking filter

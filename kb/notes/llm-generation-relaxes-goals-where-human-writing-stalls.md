@@ -3,10 +3,11 @@ description: "A human writer stalls at the constraint they can't satisfy; an LLM
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, llm-interpretation-errors]
-status: speculative
 ---
 
 # LLM generation relaxes a goal it can't satisfy and hides the constraint a human writer stalls on
+
+*Mechanistic hypothesis. The observed human/LLM contrast motivates this account, but the proposed plausibility-driven relaxation mechanism remains conjectural.*
 
 A vague goal is a conjunction of constraints. Fernando Borretti's example, "a language as fast as C and as dynamic as Lisp," wants C-speed and Lisp-dynamism and all the unstated rest at once. As a *direction* — climb toward fast and dynamic — the goal is perfectly meaningful; you really can make a language faster and more dynamic. The trouble is only the **reachability assumption**: that the conjunction names a point you can land on, not merely a gradient you can ascend. Concretization tests that assumption: writing the design down is a bounded search for a **witness** — one concrete artifact that satisfies every conjunct at once.
 

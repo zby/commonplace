@@ -2,7 +2,6 @@
 description: Descriptions don't appear spontaneously — they exist because the note base type requires them; without enforcement, metadata degrades and navigation collapses to opening every document
 type: kb/types/note.md
 tags: [type-system]
-status: seedling
 ---
 
 # Type system enforces metadata that navigation depends on

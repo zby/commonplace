@@ -3,7 +3,6 @@ description: "Trace-derived memory arrives as a record, not knowledge — author
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [agent-memory, learning-theory, context-engineering]
-status: seedling
 ---
 
 # Trace-derived memory earns authority per operation, not at capture

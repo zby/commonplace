@@ -3,7 +3,6 @@ description: "Agent Workflow Memory review: web-agent workflow files induced fro
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-derived]
-status: current
 last-checked: "2026-06-04"
 ---
 

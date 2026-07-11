@@ -3,7 +3,6 @@ description: When an agent silently resolves unacknowledged material ambiguity i
 type: kb/types/note.md
 traits: [has-external-sources, title-as-claim]
 tags: [learning-theory, computational-model, observability, llm-interpretation-errors]
-status: seedling
 ---
 
 # Silent disambiguation is the semantic analogue of tool fallback

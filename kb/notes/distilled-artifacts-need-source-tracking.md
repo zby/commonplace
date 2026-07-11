@@ -3,7 +3,6 @@ description: "Distillation strips lineage from the artifact by design, so the de
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [links]
-status: seedling
 ---
 
 # Distilled artifacts need source tracking

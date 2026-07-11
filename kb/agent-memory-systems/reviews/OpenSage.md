@@ -3,7 +3,6 @@ description: "OpenSage review: ADK agent framework with dynamic subagents, Skill
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-derived]
-status: current
 last-checked: "2026-06-04"
 ---
 

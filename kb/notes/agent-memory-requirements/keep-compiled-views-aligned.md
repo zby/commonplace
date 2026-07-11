@@ -3,7 +3,6 @@ description: "Generated cues, prompt files, indexes, and assistant-specific view
 type: kb/types/note.md
 traits: [has-external-sources]
 tags: [agent-memory, context-engineering]
-status: current
 ---
 
 # Keep Lineage And Compiled Views From Drifting

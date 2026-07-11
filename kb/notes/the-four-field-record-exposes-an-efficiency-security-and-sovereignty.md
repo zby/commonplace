@@ -3,7 +3,6 @@ description: The four artifact-analysis fields exist to surface three architectu
 type: kb/types/note.md
 traits: [title-as-claim, has-external-sources]
 tags: [learning-theory, artifact-analysis]
-status: current
 ---
 
 # The four-field record exposes an efficiency, security, and sovereignty risk triad

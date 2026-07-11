@@ -1,6 +1,6 @@
 # Convert still requires semantic description
 
-The `/convert` skill was redesigned to be purely structural — add frontmatter with fixed values (`type: note`, `status: seedling`, `traits: []`, `areas: []`) and align the filename to the title.
+The `/convert` skill was redesigned to be purely structural — add frontmatter with fixed structural values (`type: note`, `traits: []`, `tags: []`), leave `user-verified` absent, and align the filename to the title.
 
 But `description` breaks this pattern. Writing a good description requires reading and understanding the content — it's a semantic judgment. We kept it because frontmatter without a description is structurally complete but practically useless (description enables progressive disclosure — agents decide whether to load a note based on title + description).
 

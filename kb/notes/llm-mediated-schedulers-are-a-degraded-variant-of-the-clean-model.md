@@ -3,7 +3,6 @@ description: When the agent scheduler lives inside an LLM conversation it become
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [computational-model]
-status: seedling
 ---
 
 # LLM-mediated schedulers are a degraded variant of the clean model

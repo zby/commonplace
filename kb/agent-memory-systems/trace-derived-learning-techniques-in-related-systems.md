@@ -3,7 +3,6 @@ description: Trace-derived learning systems compared on ingestion pattern, repre
 type: kb/types/note.md
 traits: [has-comparison, has-implementation]
 tags: [learning-theory, observability]
-status: seedling
 ---
 
 # Trace-derived learning techniques in related systems

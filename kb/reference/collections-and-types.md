@@ -2,7 +2,6 @@
 description: How collections and types compose in Commonplace - collections own register conventions and per-destination outbound linking rules, types own structural contracts declared in type-spec docs, and the two meet through path-valued type pointers listed in COLLECTION.md; covers the COLLECTION.md surface and the live per-destination model the write and connect skills consume
 type: kb/types/note.md
 tags: []
-status: current
 ---
 
 # Collections and types

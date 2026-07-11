@@ -2,7 +2,6 @@
 description: Types and descriptions let agents make routing decisions without loading full documents — the type says what operations a document affords, the description filters among instances of that type
 type: kb/types/note.md
 tags: [type-system]
-status: seedling
 ---
 
 # Types give agents structural hints before opening documents

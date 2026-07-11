@@ -2,7 +2,6 @@
 description: "MemPalace review: local-first ChromaDB/SQLite memory palace with transcript mining, MCP tools, hooks, and explicit wake-up/search read-back"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-status: current
 last-checked: "2026-06-04"
 tags: [trace-derived]
 ---

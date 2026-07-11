@@ -2,7 +2,6 @@
 description: "ACE review: trace-derived playbook evolution, reflector-scored bullets, curator additions, optional deduplication, and coarse prompt read-back"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-status: current
 last-checked: "2026-06-04"
 tags: [trace-derived]
 ---

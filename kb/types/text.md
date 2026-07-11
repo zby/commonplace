@@ -14,9 +14,9 @@ Always valid. No checks apply.
 
 ## Semantics
 
-- Implicit `status: seedling` — text files are provisional by nature
-- When a text file gains frontmatter (promotion to [note](./note.md)), its status should be set explicitly
-- A text file that persists without promotion is a candidate for pruning
+- Text has no implied maturity or verification state.
+- When a text file gains frontmatter, conversion never adds `user-verified`; verification requires a later explicit human attestation.
+- A text file that persists without structuring is a candidate for pruning.
 
 ## Promotion
 

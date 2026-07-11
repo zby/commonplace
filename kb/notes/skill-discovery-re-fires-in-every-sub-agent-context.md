@@ -3,7 +3,6 @@ description: Skill discovery is per-context and autonomous — every installed s
 type: ./types/structured-claim.md
 traits: [title-as-claim]
 tags: [computational-model, architecture]
-status: seedling
 ---
 
 # Skill discovery re-fires in every sub-agent context, not just the top-level invocation

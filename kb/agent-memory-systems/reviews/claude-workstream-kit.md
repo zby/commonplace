@@ -3,7 +3,6 @@ description: "Claude Workstream Kit review: repo-local active-work memory for Cl
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-derived]
-status: current
 last-checked: "2026-06-12"
 ---
 

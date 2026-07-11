@@ -3,7 +3,6 @@ description: A lightweight technical convention — an agent is a tool loop (pro
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [computational-model, tool-loop]
-status: seedling
 ---
 
 # "Agent" is a useful technical convention, not a definition

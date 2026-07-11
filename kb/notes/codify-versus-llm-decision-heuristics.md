@@ -3,7 +3,6 @@ description: Four lenses on the codify-vs-LLM decision — spec completeness, or
 type: kb/types/note.md
 traits: []
 tags: [learning-theory, constraining]
-status: current
 ---
 
 # Codify-versus-LLM decision heuristics

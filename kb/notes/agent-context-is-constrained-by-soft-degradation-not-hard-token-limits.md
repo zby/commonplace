@@ -3,7 +3,6 @@ description: Agent context is bounded by silent reliability degradation across v
 type: kb/types/note.md
 traits: [has-external-sources, title-as-claim]
 tags: [learning-theory, foundations, deploy-time-learning]
-status: current
 ---
 
 # Agent context is constrained by soft degradation, not hard token limits

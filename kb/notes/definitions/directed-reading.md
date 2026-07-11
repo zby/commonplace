@@ -2,7 +2,6 @@
 description: "Definition - directed reading is reading selected material through an explicit task lens to produce a lens-shaped artifact or judgment"
 type: kb/types/definition.md
 tags: [computational-model]
-status: seedling
 ---
 
 # Directed reading

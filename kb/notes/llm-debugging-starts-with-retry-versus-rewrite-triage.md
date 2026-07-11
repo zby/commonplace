@@ -3,7 +3,6 @@ description: The two-phenomena model makes the first LLM debugging question diag
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, computational-model, llm-interpretation-errors]
-status: seedling
 ---
 
 # LLM debugging starts with retry-versus-rewrite triage

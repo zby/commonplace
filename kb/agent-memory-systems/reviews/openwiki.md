@@ -2,7 +2,6 @@
 description: "OpenWiki review: agent-generated repository wiki with Git-scoped updates, root AGENTS/CLAUDE pointers, and no wiki retrieval index"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-status: current
 last-checked: "2026-07-06"
 ---
 

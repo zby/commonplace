@@ -3,7 +3,6 @@ description: "Code resolves a name to its value everywhere; LLM-read prose has n
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, artifact-analysis, computational-model]
-status: seedling
 ---
 
 # Prose has no reliable dereference, so a declared fact must be reinforced where it applies

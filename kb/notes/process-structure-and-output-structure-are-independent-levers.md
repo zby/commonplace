@@ -3,7 +3,6 @@ description: Constraining what reasoning steps must occur (process structure) is
 type: kb/types/note.md
 traits: [has-external-sources, title-as-claim]
 tags: [type-system]
-status: seedling
 ---
 
 # Process structure and output structure are independent levers

@@ -3,7 +3,6 @@ description: Document types should assert verifiable structural properties, not 
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [type-system]
-status: seedling
 ---
 
 # Document types should be verifiable

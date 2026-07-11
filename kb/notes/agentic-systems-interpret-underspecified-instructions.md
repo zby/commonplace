@@ -3,7 +3,6 @@ description: "Separates semantic underspecification from execution indeterminism
 type: kb/types/note.md
 traits: [has-external-sources]
 tags: [learning-theory, computational-model, constraining]
-status: current
 ---
 
 # Agentic systems interpret underspecified instructions

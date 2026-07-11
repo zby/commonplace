@@ -3,7 +3,6 @@ description: "Bottom-up inference of entities and relations from traces needs de
 type: kb/types/note.md
 traits: [title-as-claim, has-external-sources]
 tags: [agent-memory, context-engineering, learning-theory]
-status: seedling
 ---
 
 # Bottom-up structure inference needs capture at the decision surface, not the state

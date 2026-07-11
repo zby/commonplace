@@ -3,7 +3,6 @@ description: LLM context windows are homoiconic — instructions and data share 
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [computational-model]
-status: seedling
 ---
 
 # LLM context is a homoiconic medium

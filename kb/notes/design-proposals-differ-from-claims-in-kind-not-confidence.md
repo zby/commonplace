@@ -3,7 +3,6 @@ description: "A hypothesis is a claim at reduced commitment; a design proposal i
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [artifact-analysis, document-system]
-status: seedling
 ---
 
 # Design proposals differ from claims in kind, not confidence

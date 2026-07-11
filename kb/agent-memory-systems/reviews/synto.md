@@ -3,7 +3,6 @@ description: "Synto review: local LLM vault compiler that turns raw notes into r
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-derived]
-status: current
 last-checked: "2026-06-18"
 ---
 

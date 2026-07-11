@@ -3,7 +3,6 @@ description: Brainstorming note that decomposes the "how should an agent find wh
 type: kb/types/note.md
 traits: []
 tags: [foundations]
-status: seedling
 ---
 
 # Charting the knowledge-access problem beyond RAG

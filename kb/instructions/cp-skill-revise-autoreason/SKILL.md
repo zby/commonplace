@@ -43,6 +43,8 @@ cp "$source_file" "$run_dir/original.md"
 cp "$source_file" "$run_dir/current_a.md"
 ```
 
+The workflow makes substantive editorial changes. Remove `user-verified: true` from `$run_dir/current_a.md` if present and require every candidate to keep it absent. Applying a winning candidate therefore revokes the prior attestation; only a later explicit human action may restore it.
+
 Set:
 
 ```text
@@ -99,7 +101,7 @@ Goal:
 
 Constraints:
 - Do not invent evidence or citations.
-- Do not change tags, type, status, or traits frontmatter fields unless the plan explicitly says a metadata follow-up is needed.
+- Do not change tags, type, or traits frontmatter fields unless the plan explicitly says a metadata follow-up is needed.
 - Preserve link targets unless the reason file identifies a target that must change.
 - If writing a complete revised note, include full frontmatter and the complete body.
 - If writing a plan, list the exact claim/evidence/source decisions needed and the passages they affect.
@@ -162,7 +164,7 @@ Hard constraints:
 - Preserve the note's overall argumentative structure unless a local reorder improves flow without changing the argument.
 - Do not add new claims, examples, evidence, citations, or sources.
 - Do not remove citations or source references.
-- Do not change tags, type, status, or traits frontmatter fields.
+- Do not change tags, type, or traits frontmatter fields.
 - You may improve only the # heading and description frontmatter field if there is a clear improvement.
 - Output the complete note, including frontmatter.
 - Write only to $pass_dir/author_b/version_b.md. Do not create or modify files outside $pass_dir.
@@ -176,7 +178,7 @@ Verify that `$pass_dir/author_b/version_b.md` exists and is non-empty. If it is 
 
 Before running the synthesizer, perform a parent-side hard-constraint check of B against `$pass_dir/candidates/version_a.md`. Reject B before synthesis if it:
 
-- Changes `tags`, `type`, `status`, or `traits` frontmatter fields.
+- Changes `tags`, `type`, or `traits` frontmatter fields, or adds `user-verified`.
 - Removes citations, source references, or link targets.
 - Fails to output the complete note including frontmatter.
 - Obviously adds or drops substantive claims, evidence, caveats, qualifiers, or sections.
@@ -203,7 +205,7 @@ Hard constraints:
 - Preserve all semantic content, claims, evidence, caveats, qualifiers, and link targets from the incumbent A.
 - Do not add new claims, examples, evidence, citations, or sources.
 - Do not remove citations or source references.
-- Do not change tags, type, status, or traits frontmatter fields.
+- Do not change tags, type, or traits frontmatter fields.
 - You may improve only the # heading and description frontmatter field if there is a clear improvement.
 - Output the complete note, including frontmatter.
 - Write only to $pass_dir/synthesizer/version_ab.md. Do not create or modify files outside $pass_dir.
@@ -234,7 +236,7 @@ You are the post-candidate auditor in an AutoReason-style note revision loop. Yo
 You now have more evidence than the initial critic: the incumbent A, the critic's concerns, the B revision, and the AB synthesis. Decide whether the tournament should proceed to blind judging.
 
 Check for:
-- Hard-constraint violations in B or AB: changed tags/type/status/traits, missing frontmatter, removed citations or link targets, added or dropped substantive claims, flattened caveats or qualifiers, changed evidence, or damaged section structure.
+- Hard-constraint violations in B or AB: changed tags/type/traits, missing frontmatter, removed citations or link targets, added or dropped substantive claims, flattened caveats or qualifiers, changed evidence, or damaged section structure.
 - Evidence that prose-preserving revision is the wrong task because the note appears to need claim, evidence, caveat, qualifier, source, or argument correction.
 
 Write exactly one decision line:
@@ -363,7 +365,7 @@ Reject the winner and stop if it:
 - Drops or adds substantive content
 - Alters evidence, caveats, qualifiers, or link targets in a meaning-changing way
 - Removes sections or merges distinct points in a damaging way
-- Changes tags, type, status, or traits frontmatter fields
+- Changes tags, type, or traits frontmatter fields
 
 If rejected:
 
@@ -411,7 +413,7 @@ The best version is `last_good`.
 - Let more than 5 passes run.
 - Accept a candidate that introduces semantic errors.
 - Force a claim-level correction through the prose-preserving tournament path.
-- Change tags, type, status, or traits frontmatter fields.
+- Change tags, type, or traits frontmatter fields.
 - Let judge preference replace the outer semantic fidelity check.
 - Expose A/B/AB provenance to judges.
 

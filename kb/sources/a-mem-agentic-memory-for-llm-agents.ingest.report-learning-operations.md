@@ -3,7 +3,6 @@ description: Dissects A-MEM's four fully-automatic operations (construct, link, 
 type: kb/types/note.md
 traits: [has-external-sources]
 tags: [learning-theory]
-status: current
 ---
 
 # A-MEM: Learning Operations Analysis

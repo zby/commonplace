@@ -3,7 +3,6 @@ description: Text artifacts can be tested with the same pyramid as software — 
 type: kb/types/note.md
 traits: []
 tags: [document-system]
-status: current
 ---
 
 # Automated tests for text

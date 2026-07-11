@@ -28,6 +28,7 @@ allOf:
             items:
               type: string
               minLength: 1
+          status: false
         additionalProperties: true
   - if:
       properties:

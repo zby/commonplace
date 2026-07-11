@@ -2,7 +2,6 @@
 description: "Voiden review: offline Git-native API workspace with .void Markdown/request files, linked blocks, request history, extension skills, and local execution"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-status: current
 last-checked: "2026-06-05"
 ---
 

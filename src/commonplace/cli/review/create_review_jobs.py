@@ -361,7 +361,6 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
                 repo_root=repo_root,
                 db_path=db_path,
                 pairs=[(pair.note_path, pair.criterion_path, pair.result_kind) for pair in group],
-                skipped=[],
                 grouping=args.grouping,
                 runner=None,
                 model_partition=model_partition,

@@ -3,7 +3,6 @@ description: Coordination channels say how bounded contexts interact, but the mi
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [computational-model]
-status: seedling
 ---
 
 # Agent orchestration needs coordination guarantees, not just coordination channels

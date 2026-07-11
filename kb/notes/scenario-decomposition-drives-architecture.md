@@ -3,7 +3,6 @@ description: Deriving architectural requirements by decomposing concrete user st
 type: kb/types/note.md
 traits: []
 tags: []
-status: seedling
 ---
 
 # Scenario decomposition drives architecture

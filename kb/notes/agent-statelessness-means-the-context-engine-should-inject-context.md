@@ -3,10 +3,11 @@ description: Since agents can't carry vocabulary or decisions between reads, the
 type: ./types/structured-claim.md
 traits: [title-as-claim]
 tags: []
-status: speculative
 ---
 
 # Agent statelessness means the context engine should inject context automatically
+
+*Design hypothesis. The need for injection is argued here; the trigger mechanism remains open.*
 
 Since [agents are stateless](./agent-statelessness-makes-routing-architectural-not-learned.md), they can't carry definitions, decisions, or vocabulary between reads. An agent that reads a note linking to [codification](./definitions/codification.md) doesn't know the definition unless it follows the link — at the cost of a tool call, context space, and a decision. The knowledge is in the KB but not in the context window.
 

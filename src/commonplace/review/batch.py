@@ -32,18 +32,10 @@ from commonplace.review.critique import result_kind_for_criterion_path
 
 
 @dataclass(frozen=True)
-class SkippedPair:
-    note_path: str
-    criterion_path: str
-    reason: str
-
-
-@dataclass(frozen=True)
 class PreparedBatch:
     review_job_id: int
     targets: list[NoteReviewTarget]
     pairs: list[ReviewPairRow]
-    skipped: list[SkippedPair]
     result_paths: dict[int, str]
     prompt_path: str
     job_output_path: str
@@ -89,7 +81,6 @@ def prepare_grouped_review_job(
     repo_root: Path,
     db_path: Path,
     pairs: list[tuple[str, str, str]],
-    skipped: list[SkippedPair] | None = None,
     grouping: str,
     runner: str | None,
     model_partition: str,
@@ -168,7 +159,6 @@ def prepare_grouped_review_job(
             prompt_path=prompt_path,
             job_output_path=job_output_path,
             pairs=stored_pairs,
-            skipped=skipped,
         )
     except (ValueError, OSError) as exc:
         fail_active_review_jobs(
@@ -182,7 +172,6 @@ def prepare_grouped_review_job(
         review_job_id=review_job_id,
         targets=targets,
         pairs=stored_pairs,
-        skipped=skipped or [],
         result_paths=result_paths,
         prompt_path=prompt_path,
         job_output_path=job_output_path,

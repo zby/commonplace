@@ -3,7 +3,6 @@ description: Pre-computing static parts of LLM instructions and inserting result
 type: kb/types/note.md
 traits: [has-external-sources]
 tags: []
-status: seedling
 ---
 
 # Frontloading spares execution context

@@ -3,7 +3,6 @@ description: The five empirically observed context-file writing styles (descript
 type: kb/types/note.md
 traits: [has-external-sources, title-as-claim]
 tags: [computational-model]
-status: seedling
 ---
 
 # Writing styles are strategies for managing underspecification

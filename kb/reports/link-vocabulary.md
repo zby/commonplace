@@ -1,7 +1,6 @@
 ---
 description: "Frozen audit snapshot of link-relationship labels used across KB footer annotations. Generator script retired; kept as the corpus evidence behind ADR 020 (theoretical-default additions: contrasts, mechanism)."
 type: kb/types/note.md
-status: current
 ---
 
 # Link vocabulary audit

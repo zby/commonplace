@@ -3,7 +3,6 @@ description: Agents never develop navigation intuition — every session is day 
 type: kb/types/note.md
 traits: [has-comparison, title-as-claim]
 tags: []
-status: current
 ---
 
 # Agent statelessness makes routing architectural, not learned

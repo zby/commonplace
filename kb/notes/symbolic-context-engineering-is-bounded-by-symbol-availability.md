@@ -3,7 +3,6 @@ description: "Symbolic context selection — matching on type, path, tag, tool, 
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [context-engineering, agent-memory]
-status: current
 ---
 
 # Symbolic context engineering is bounded by symbol availability

@@ -2,7 +2,6 @@
 description: Outcome and process verification are two verify-rung oracles — an outcome check licenses replaying an instance, not distilling a rule, since only a process check inspects the generalizing mechanism
 type: kb/types/note.md
 traits: [title-as-claim]
-status: seedling
 tags: [learning-theory, agent-memory]
 ---
 

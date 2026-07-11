@@ -3,7 +3,6 @@ description: Worst-case lower bound for opaque retrieval — without a pre-built
 type: kb/notes/types/structured-claim.md
 traits: []
 tags: [computational-model, context-engineering]
-status: seedling
 ---
 
 # Exact retrieval over semantically opaque items requires linear inspection

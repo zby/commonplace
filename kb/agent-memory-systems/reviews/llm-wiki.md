@@ -3,7 +3,6 @@ description: "LLM Wiki review: portable agent plugin that compiles source files 
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-derived]
-status: current
 last-checked: "2026-06-04"
 ---
 

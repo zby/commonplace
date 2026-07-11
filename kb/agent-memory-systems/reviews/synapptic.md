@@ -3,7 +3,6 @@ description: "Synapptic review: trace-derived user-model builder that mines Clau
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-derived]
-status: current
 last-checked: "2026-06-05"
 ---
 

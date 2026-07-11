@@ -2,7 +2,6 @@
 description: "o-o review: polyglot HTML/bash living documents with embedded update contracts, source caches, changelogs, sync shell, and Claude CLI dispatch"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-status: current
 last-checked: "2026-06-04"
 ---
 

@@ -3,7 +3,6 @@ description: Theory for deciding what belongs in AGENTS.md using loading frequen
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [architecture]
-status: current
 ---
 
 # AGENTS.md should be organized as a control plane

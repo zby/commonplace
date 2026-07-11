@@ -3,7 +3,6 @@ description: Exploratory framework — proposes oracle strength (how cheaply you
 type: kb/types/note.md
 traits: []
 tags: [llm-interpretation-errors]
-status: seedling
 ---
 
 # Oracle strength spectrum

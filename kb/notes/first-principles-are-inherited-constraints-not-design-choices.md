@@ -3,7 +3,6 @@ description: "A rule is a first principle iff it arrives in the constraint packe
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [document-system, foundations]
-status: seedling
 ---
 
 # First principles are inherited constraints, not design choices

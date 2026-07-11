@@ -3,7 +3,6 @@ description: The value of information depends on the observer — prior knowledg
 type: kb/types/note.md
 traits: [has-external-sources, title-as-claim]
 tags: [learning-theory, distillation, discovery]
-status: seedling
 ---
 
 # Information value is observer-relative

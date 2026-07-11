@@ -3,7 +3,6 @@ description: Memory decomposes into storage (solved), retrieval/activation (cont
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, computational-model, agent-memory]
-status: seedling
 ---
 
 # Agent memory is a crosscutting concern, not a separable niche

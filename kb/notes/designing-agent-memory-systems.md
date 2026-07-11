@@ -3,7 +3,6 @@ description: "Derives agent-memory design pressures and links to a requirements 
 type: kb/types/note.md
 traits: [synthesis, has-external-sources]
 tags: [agent-memory, context-engineering, learning-theory]
-status: current
 ---
 
 # Designing a Memory System for LLM-Based Agents

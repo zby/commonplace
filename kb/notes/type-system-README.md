@@ -4,7 +4,6 @@ type: kb/types/tag-readme.md
 index_source: tag
 index_key: type-system
 tags: [document-system]
-status: seedling
 ---
 
 # Type system

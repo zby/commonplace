@@ -3,7 +3,6 @@ description: Proposes that discovery has a dual structure — positing a new gen
 type: kb/types/note.md
 traits: [has-external-sources, title-as-claim]
 tags: [learning-theory, discovery]
-status: seedling
 ---
 
 # Discovery is seeing the particular as an instance of the general

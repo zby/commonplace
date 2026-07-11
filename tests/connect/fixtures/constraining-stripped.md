@@ -3,7 +3,6 @@ description: Definition — constraining constrains the space of valid interpret
 type: kb/types/note.md
 traits: []
 tags: [learning-theory]
-status: current
 ---
 
 # Constraining

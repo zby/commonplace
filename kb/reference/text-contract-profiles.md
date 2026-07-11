@@ -2,7 +2,6 @@
 description: "Catalogue of Commonplace's text-contract profiles — proven, named bundles of quality goal, title conventions, attribution, and link grammar a COLLECTION.md may adopt, extend, or start from"
 type: ../types/note.md
 tags: []
-status: current
 ---
 
 # Text contract profiles

@@ -3,7 +3,6 @@ description: Hub for all tag READMEs — browse the KB by conceptual domain rath
 type: kb/types/tag-readme.md
 index_source: tag-indexes
 complete: true
-status: current
 ---
 
 # Tags

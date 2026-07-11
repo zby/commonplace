@@ -1,5 +1,7 @@
 # Extensible controlled vocabularies
 
+**Note-status disposition (2026-07-11).** [ADR 044](../../reference/adr/044-user-verification-replaces-global-note-status.md) removed the global note `status` field rather than making it collection-expandable. This workshop now concerns only genuinely coherent controlled vocabularies such as `source_type`; the status analysis below is retained as the investigation that ruled note status out of this mechanism.
+
 Workshop for designing how a **code-enforced, closed enum field** becomes open-ended per installed KB while staying validator-checkable.
 
 ## Trigger

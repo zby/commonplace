@@ -2,7 +2,6 @@
 description: "llmwiki-marimo review: local Marimo LLM Wiki with generated Markdown pages, SQLite FTS/citation graph, pull chat tools, and repairable wiki memory"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-status: current
 last-checked: "2026-06-18"
 ---
 

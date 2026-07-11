@@ -3,7 +3,6 @@ description: "MentisDB review: append-only hash-chained agent memory with MCP/RE
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-derived]
-status: current
 last-checked: "2026-06-04"
 ---
 

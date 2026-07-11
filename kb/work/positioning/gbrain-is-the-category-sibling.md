@@ -3,7 +3,6 @@ description: GBrain is Commonplace's closest category sibling — same component
 type: kb/types/note.md
 traits: []
 tags: []
-status: seedling
 ---
 
 # GBrain is the category sibling, not just a reviewed memory system

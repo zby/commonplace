@@ -3,7 +3,6 @@ description: Areas are defined by operations that require reading notes together
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: []
-status: seedling
 ---
 
 # Areas exist because useful operations require reading notes together
@@ -24,7 +23,7 @@ Concrete outputs of comparative reading:
 - **Contradiction** — two notes asserting incompatible claims. Either one is wrong, or they apply in different scopes that should be made explicit.
 - **Tension** — two notes that don't contradict but pull in different directions. The tension is often more interesting than either note alone.
 - **Complementarity** — notes that are independent arguments for the same conclusion (like the [three output-quality arguments](./type-system-README.md)). Worth linking explicitly.
-- **Merge candidates** — notes that are halves of one argument, or overlapping seedlings that haven't differentiated.
+- **Merge candidates** — notes that are halves of one argument, or overlapping early drafts that haven't differentiated.
 - **Missing connections** — notes that should reference each other but don't.
 - **Gaps** — a claim that needs support, a category that has no instances, an argument with no counterargument.
 
@@ -40,7 +39,7 @@ Both operations impose the same two constraints on the note set:
 
 Relatedness is a continuum, not a binary. Surprising cross-domain connections exist — a scheduling insight might illuminate a type system design. But the expected yield drops off steeply with decreasing relatedness. Running either operation on the full KB is infeasible — context limits prevent it — and inefficient, since most notes don't contribute. Cross-domain connections are rare enough to justify a different operation ([/connect](./brainstorming-how-to-enrich-web-search.md) with corpus expansion) rather than routine loading within a single area.
 
-**Yield also depends on maturity.** Two seedlings are more likely to be redundant than two current notes that have already been through comparative passes. This means comparative reading isn't one-shot — it should be re-run as notes evolve — but the area boundary remains the right unit for scoping each pass.
+**Yield also depends on prior comparative work.** Two newly structured drafts are more likely to be redundant than two notes that have already been through comparative passes. This means comparative reading isn't one-shot — it should be re-run as notes evolve — but the area boundary remains the right unit for scoping each pass.
 
 ## Areas are the mechanism
 

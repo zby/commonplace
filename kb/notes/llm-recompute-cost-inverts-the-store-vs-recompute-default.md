@@ -3,7 +3,6 @@ description: "For an LLM consumer, in-context recompute is the expensive step, s
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [computational-model, context-engineering]
-status: seedling
 ---
 
 # LLM recompute cost inverts the store-vs-recompute default

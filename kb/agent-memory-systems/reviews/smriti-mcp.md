@@ -2,7 +2,6 @@
 description: "Smriti-MCP review: MCP markdown memory server with file-backed notes, lexical recall, traces, salience, wikilinks, and agent-mediated consolidation"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-status: current
 last-checked: "2026-06-18"
 tags: [trace-derived]
 ---

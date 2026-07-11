@@ -3,7 +3,6 @@ description: MCP forces stateless tool operations through a persistent server pr
 type: kb/types/note.md
 traits: []
 tags: []
-status: seedling
 ---
 
 # MCP bundles stateless tools with a stateful runtime

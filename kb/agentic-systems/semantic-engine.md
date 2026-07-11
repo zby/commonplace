@@ -3,7 +3,6 @@ description: "Semantic Engine as code-grounded ingest infrastructure: local SQLi
 type: kb/types/note.md
 traits: [has-external-sources]
 tags: []
-status: seedling
 ---
 
 # Semantic Engine as ingest infrastructure

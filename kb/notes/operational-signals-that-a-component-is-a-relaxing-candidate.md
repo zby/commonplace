@@ -3,7 +3,6 @@ description: "Operational signals for when a component likely encodes a brittle 
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, constraining]
-status: seedling
 ---
 
 # Operational signals that a component is a relaxing candidate

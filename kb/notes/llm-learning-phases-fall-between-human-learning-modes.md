@@ -3,7 +3,6 @@ description: Pre-training acquires both structural priors (evolution's role in h
 type: kb/types/note.md
 traits: [has-external-sources]
 tags: [learning-theory, deploy-time-learning]
-status: seedling
 ---
 
 # LLM learning phases fall between human learning modes rather than mapping onto them

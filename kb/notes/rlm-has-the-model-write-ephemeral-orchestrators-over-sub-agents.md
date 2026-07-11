@@ -3,7 +3,6 @@ description: RLM packs orchestration over sub-agents into the tool-loop model by
 type: kb/types/note.md
 traits: []
 tags: [computational-model]
-status: seedling
 ---
 
 # RLM has the model write ephemeral orchestrators over sub-agents

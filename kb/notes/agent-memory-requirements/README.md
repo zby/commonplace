@@ -3,7 +3,6 @@ description: "Navigation hub for concrete agent-memory requirements extracted fr
 type: kb/types/note.md
 traits: [synthesis]
 tags: [agent-memory, context-engineering]
-status: current
 ---
 
 # Agent Memory Requirements

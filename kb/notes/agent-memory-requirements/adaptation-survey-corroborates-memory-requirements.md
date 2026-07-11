@@ -3,7 +3,6 @@ description: "The agentic-adaptation survey supports the memory requirements map
 type: kb/types/note.md
 traits: [title-as-claim, has-external-sources]
 tags: [agent-memory, learning-theory, context-engineering]
-status: seedling
 ---
 
 # The adaptation survey corroborates memory requirements but misses artifact governance

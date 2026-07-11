@@ -3,7 +3,6 @@ description: Core theory the rest of the KB builds on — contextual competence,
 type: kb/types/tag-readme.md
 index_source: tag
 index_key: foundations
-status: current
 ---
 
 # Foundations

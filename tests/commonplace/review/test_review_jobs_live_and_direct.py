@@ -31,7 +31,6 @@ def make_note(path: Path) -> Path:
 description: Test note
 type: kb/types/note.md
 traits: []
-status: current
 ---
 
 # Test note
@@ -776,7 +775,7 @@ def test_failed_rereview_preserves_previous_freshness_baseline_and_artifacts(tmp
             (first_job_id,),
         ).fetchone()["review_pair_id"]
 
-    write(repo / "kb" / "notes" / "sample.md", "---\ndescription: Test note\ntype: kb/types/note.md\ntraits: []\nstatus: current\n---\n\n# Test note\n\nChanged body.\n")
+    write(repo / "kb" / "notes" / "sample.md", "---\ndescription: Test note\ntype: kb/types/note.md\ntraits: []\n---\n\n# Test note\n\nChanged body.\n")
     second_job = create_single_review_job(repo, db_path)
     second_job_id = int(second_job["review_job_id"])
     write(repo / str(second_job["job_output_path"]), "not a valid bundle\n")
@@ -837,7 +836,7 @@ def test_successful_rereview_prunes_superseded_job_and_artifacts(tmp_path: Path)
             (first_job_id,),
         ).fetchone()["review_pair_id"]
 
-    write(repo / "kb" / "notes" / "sample.md", "---\ndescription: Test note\ntype: kb/types/note.md\ntraits: []\nstatus: current\n---\n\n# Test note\n\nChanged body.\n")
+    write(repo / "kb" / "notes" / "sample.md", "---\ndescription: Test note\ntype: kb/types/note.md\ntraits: []\n---\n\n# Test note\n\nChanged body.\n")
     second_job = create_single_review_job(repo, db_path)
     second_job_id = int(second_job["review_job_id"])
     write(repo / str(second_job["job_output_path"]), single_pair_job_output())

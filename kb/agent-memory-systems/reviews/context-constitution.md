@@ -2,7 +2,6 @@
 description: "Context Constitution review: authored Letta agent context-management doctrine with documented MemFS, system-prompt learning, progressive disclosure, compaction, and reflection affordances but no local harness implementation"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-status: current
 last-checked: "2026-06-04"
 ---
 

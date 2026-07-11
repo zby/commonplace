@@ -3,7 +3,6 @@ description: "Proposal: mechanically verify verbatim-marked citations against th
 type: kb/types/note.md
 traits: [design-proposal]
 tags: [document-system]
-status: seedling
 ---
 
 # Verifiable quotes

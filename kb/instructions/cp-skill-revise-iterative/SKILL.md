@@ -26,6 +26,8 @@ source_file=<resolved path>
 
 Copy the original to `${source_file}.0` — this is the baseline for the first revision pass.
 
+The workflow makes substantive editorial changes. Remove `user-verified: true` from `${source_file}.0` if present, and keep it absent from every generated revision. Do not remove it from the original until the user accepts a revision; applying an accepted revision revokes the prior attestation automatically.
+
 ### Step 2: Revision loop
 
 Run the following loop. **Max iterations: 5** (hard cap to prevent runaway).
@@ -33,7 +35,7 @@ Run the following loop. **Max iterations: 5** (hard cap to prevent runaway).
 #### 2a. Run non-interactive revision
 
 ```bash
-claude -p "Revise $(basename ${source_file}).$i for flow, readability, and cohesion. Preserve all semantic content, claims, and structure. You MAY improve the title (# heading) and description frontmatter field if you see a clear improvement — but do not change tags, type, status, or traits. Focus on: sentence-level clarity, paragraph transitions, removing filler, tightening prose." \
+claude -p "Revise $(basename ${source_file}).$i for flow, readability, and cohesion. Preserve all semantic content, claims, and structure. You MAY improve the title (# heading) and description frontmatter field if you see a clear improvement — but do not change tags, type, or traits. Focus on: sentence-level clarity, paragraph transitions, removing filler, tightening prose." \
   --allowedTools "Read,Edit,Write" \
   --max-turns 10
 ```
@@ -52,7 +54,7 @@ Check for:
 
 1. **Semantic errors** — Did the revision change the meaning of any claim? Did it drop or add substantive content? Did it alter evidence, caveats, or qualifiers in ways that change the argument?
 2. **Structural damage** — Did it remove sections, reorder arguments in ways that break logical flow, or merge distinct points?
-3. **Frontmatter integrity** — Are tags, type, status, and traits unchanged? (Title and description MAY change — see 2e.)
+3. **Frontmatter integrity** — Are tags, type, and traits unchanged? (Title and description MAY change — see 2e.)
 
 If ANY semantic error or structural damage is found:
 - Report exactly what went wrong (quote the before/after for the problematic passage)
@@ -97,7 +99,7 @@ The best version is the last file that passed the semantic fidelity check.
 - Modify the original file until the user explicitly approves
 - Let more than 5 iterations run
 - Accept a revision that introduces semantic errors — always prefer the previous version
-- Change tags, type, status, or traits frontmatter fields
+- Change tags, type, or traits frontmatter fields
 - Skip the semantic fidelity check
 
 **Always:**

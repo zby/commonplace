@@ -3,7 +3,6 @@ description: "byterover-cli review: local context-tree memory with HTML topic cu
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-derived]
-status: current
 last-checked: "2026-06-04"
 ---
 

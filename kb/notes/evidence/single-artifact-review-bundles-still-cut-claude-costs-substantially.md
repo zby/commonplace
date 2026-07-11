@@ -3,7 +3,6 @@ description: April 2-4, 2026 review telemetry reweighted with Anthropic Opus 4.6
 type: kb/types/note.md
 traits: [has-external-sources]
 tags: [evaluation, kb-maintenance, observability]
-status: current
 ---
 
 # Single-artifact review bundles still cut Claude costs substantially after cache-aware weighting

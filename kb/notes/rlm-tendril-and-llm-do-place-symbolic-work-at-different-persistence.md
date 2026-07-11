@@ -3,7 +3,6 @@ description: "Compares RLM variants, Tendril, and llm-do as placements for symbo
 type: kb/types/note.md
 traits: [title-as-claim, has-comparison, has-external-sources]
 tags: [computational-model, learning-theory, artifact-analysis]
-status: seedling
 ---
 
 # RLM, Tendril, and llm-do place symbolic work at different persistence boundaries

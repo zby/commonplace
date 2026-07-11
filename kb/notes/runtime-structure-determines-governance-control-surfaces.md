@@ -3,7 +3,6 @@ description: Runtime structure and runtime governance are separable, but the run
 type: kb/types/note.md
 traits: []
 tags: [architecture, computational-model]
-status: seedling
 ---
 
 # Runtime structure determines the control surfaces available to governance

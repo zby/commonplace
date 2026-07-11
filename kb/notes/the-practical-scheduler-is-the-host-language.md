@@ -3,7 +3,6 @@ description: The simplest practical orchestration library demotes the tool loop 
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [computational-model, context-engineering, tool-loop]
-status: seedling
 ---
 
 # The practical scheduler is the host language, not a reified select

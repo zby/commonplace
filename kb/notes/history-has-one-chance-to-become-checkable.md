@@ -3,7 +3,6 @@ description: "An artifact's production history is convertible to later-checkable
 type: kb/types/note.md
 traits: [title-as-claim, has-external-sources]
 tags: [context-engineering]
-status: seedling
 ---
 
 # History has one chance to become checkable

@@ -3,7 +3,6 @@ description: "Design exploration for enriching web search by reusing /connect's 
 type: kb/types/note.md
 traits: [has-comparison]
 tags: []
-status: seedling
 ---
 
 # Brainstorming how to enrich web search

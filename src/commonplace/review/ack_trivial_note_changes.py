@@ -122,7 +122,7 @@ def qualifying_pairs(
     model: str,
     criterion_ids: list[str],
     note_filter: list[str] | None = None,
-    current_only: bool = False,
+    user_verified_only: bool = False,
     db_path: Path | None = None,
 ) -> list[str]:
     model = normalize_model_partition(model)
@@ -135,7 +135,7 @@ def qualifying_pairs(
             model=model,
             criterion_ids=criterion_ids,
             note_filter=note_filter,
-            current_only=current_only,
+            user_verified_only=user_verified_only,
             include_diff=False,
             db_path=db_path,
         )

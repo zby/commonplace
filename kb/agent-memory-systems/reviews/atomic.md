@@ -2,7 +2,6 @@
 description: "Atomic review: SQLite-backed markdown atoms with embeddings, semantic graph, wiki/report synthesis, chat, and MCP memory tools"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-status: current
 last-checked: "2026-06-04"
 ---
 

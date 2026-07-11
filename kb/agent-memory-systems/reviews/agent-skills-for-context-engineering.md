@@ -2,7 +2,6 @@
 description: "Agent Skills for Context Engineering review: authored context-engineering skills plus a file-based researcher OS and trace-to-skill example tooling"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-status: current
 last-checked: "2026-06-04"
 tags: [trace-derived]
 ---

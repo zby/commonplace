@@ -2,7 +2,6 @@
 description: "Code architecture of the Commonplace review subsystem: package layout, storage schema, canonical state vs derived output, freshness mechanism, module map, and finalization invariants"
 type: kb/types/note.md
 tags: []
-status: current
 ---
 
 # Review system architecture (`commonplace.review` + `commonplace.cli.review`)
@@ -57,7 +56,7 @@ The selector computes SHA-256 over the current note and criterion text and compa
 
 The hash boundary is deliberate and narrower than the full assay contract: the prompt scaffolding (`protocol/prompt.py` — runner system prompt, reading scope, output contract, the conformance wrappers) and the prompt-assembling code are outside it, so editing them invalidates no freshness baselines. The compensating rule is that judgment-bearing criteria live only in hashed note/criterion files, and the scaffolding stays mechanical; a scaffolding change that shifts judgments is a system upgrade calling for a deliberate corpus-wide re-review or ack outcome. Both modules carry comments marking this boundary. For conformance pairs specifically, a wrapper may say how to apply a type spec or COLLECTION.md as a criterion, never what a good note of the type or collection looks like — conformance criteria that need sharpening go into an authored `## Review` section of the dependency document, where the hash sees them.
 
-Conformance prompts reference the dependency document — the type spec or the collection's COLLECTION.md — by repo path instead of embedding it; the worker reads it from disk. The document is criteria the reviewer applies, not prompt text addressed to it, and arriving as a read result keeps that distinction evident. The document is still snapshotted at job creation and pinned by freshness baseline, so freshness is unchanged. The disk read opens a window — a document edited between job creation and the worker's read is judged in its new text while freshness baseline pins the old snapshot — but a persistent edit self-heals, because the freshness baseline is immediately `criterion-changed` against the changed file; only an edit reverted within the window escapes notice.
+Conformance prompts embed the dependency document snapshot — the type spec or the collection's COLLECTION.md — captured at job creation. A short mechanical wrapper distinguishes the document as criteria the reviewer applies rather than prompt text addressed to it. The evaluated text and the snapshot pinned by the freshness baseline are therefore identical.
 
 The two-input shape is also the growth path: the default answer to a new review dependency is a new factored `(note, dependency)` pair with the dependency document on the criterion side — as type-conformance pairs do with type specs ([ADR 038](./adr/038-type-conformance-reviews-use-the-type-spec-as-the-gate.md)) and collection-conformance pairs do with COLLECTION.md contracts ([ADR 041](./adr/041-collection-conformance-reviews-use-collection-md-as-the-gate.md)) — not a wider per-pair input set.
 
@@ -81,7 +80,7 @@ The two-input shape is also the growth path: the default answer to a new review 
 ### Protocol and finalization
 
 - `protocol/format.py` defines pair sentinels and render-time reserved-text checks.
-- `protocol/prompt.py` renders canonical review prompts from captured text; conformance gates (type spec, COLLECTION.md) are the exception, rendered as a mechanical wrapper referencing the dependency document's repo path for the worker to read. In file-output mode, the prompt instructs a worker to write exactly the job's derived `job_output_path`.
+- `protocol/prompt.py` renders canonical review prompts from captured text; conformance gates add a mechanical wrapper explaining how to apply the embedded type spec or COLLECTION.md snapshot. In file-output mode, the prompt instructs a worker to write exactly the job's derived `job_output_path`.
 - `protocol/parser.py` parses sentinel-bracketed pair output. Structural anomalies, missing expected pairs, duplicates, and malformed result footers fail the whole job.
 - `protocol/outcomes.py` strictly accepts the one final result marker allowed by the persisted pair kind: a verdict outcome or `REPORT`; `ERROR` raises a job-failing parse error.
 - `finalization.py` is the public library operation behind `commonplace-finalize-review-job`. It loads derived job output, validates optional runner/model/effort provenance, parses the job output, and — only after all parse and coverage preflight passes — writes result files, completes pair rows, creates or replaces freshness baselines, prunes superseded review rows/snapshots, and marks the job completed. Result-file write failures roll back and fail the job in a separate transaction; artifact-dir cleanup and `MANIFEST.json` refresh run after DB completion, with failures reported as non-fatal warnings.

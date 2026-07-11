@@ -1,7 +1,7 @@
 ---
 type: kb/types/type-spec.md
 name: note
-description: Base structured document type for transferable KB notes with description, status, traits, and tags
+description: Base structured document type for transferable KB notes with optional committed human verification
 schema: kb/types/note.schema.yaml
 ---
 
@@ -17,22 +17,17 @@ Use `note` for transferable KB claims, observations, and theory that are worth p
 | `description` | Yes | Discriminating retrieval filter, not a summary. |
 | `traits` | No | Independently checkable review expectations. |
 | `tags` | No | Navigation tags used by indexes. |
-| `status` | No | Commitment level: `seedling`, `current`, `speculative`, or `outdated`. |
+| `user-verified` | No | May only be `true`; records explicit human attestation to the current substantive contents. |
 
 ## Description
 
 The description should answer "why this document?" for a future retrieval decision. It should distinguish the note from nearby notes and usually fit in one sentence.
 
-## Status
+## User verification
 
-Status tracks commitment, not structure.
+`user-verified: true` means a human user explicitly attests that the artifact's current substantive contents have been verified. Absence means only that there is no current user attestation; it says nothing about truth, maturity, currency, or review history.
 
-| Status | Meaning |
-|---|---|
-| `seedling` | Provisional; may be pruned or rewritten. |
-| `current` | Reviewed and accepted into the KB. |
-| `speculative` | Deliberately retained conjecture. |
-| `outdated` | Superseded but kept for reference. |
+Never add the field during creation, conversion, deterministic validation, or semantic review. A substantive edit must remove it. Preserve it only for a mechanical change covered by an explicit human-approved trivial-change workflow.
 
 ## Traits
 
@@ -63,7 +58,6 @@ description: ""
 type: kb/types/note.md
 traits: []
 tags: []
-status: current
 ---
 
 # {prose-as-title — a proposition, not a topic label}

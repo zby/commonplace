@@ -6,10 +6,5 @@ allOf:
       frontmatter:
         type: object
         properties:
-          status:
-            enum:
-              - seedling
-              - current
-              - speculative
-              - outdated
+          status: false
         additionalProperties: true

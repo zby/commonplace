@@ -3,7 +3,6 @@ description: Synthesis — oracle theory, labor economics, frontier-lab capabili
 type: kb/types/note.md
 traits: [has-external-sources, title-as-claim]
 tags: [llm-interpretation-errors]
-status: current
 ---
 
 # The boundary of automation is the boundary of verification

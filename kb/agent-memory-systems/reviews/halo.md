@@ -3,7 +3,6 @@ description: "HALO review: trace-derived agent-harness optimizer with SQLite des
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-derived]
-status: current
 last-checked: "2026-06-04"
 ---
 

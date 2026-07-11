@@ -3,7 +3,6 @@ description: "Proposal: learn review gates from accepted note edits, with candid
 type: kb/types/note.md
 traits: [design-proposal]
 tags: [kb-maintenance]
-status: seedling
 ---
 
 # Gate learning from accepted edits

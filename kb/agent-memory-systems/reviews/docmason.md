@@ -3,7 +3,6 @@ description: "DocMason review: repo-native private-document KB with provenance, 
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-derived]
-status: current
 last-checked: "2026-06-04"
 ---
 

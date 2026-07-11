@@ -3,7 +3,6 @@ description: The clearest structural trigger for a files-first KB to adopt a rel
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [architecture]
-status: current
 ---
 
 # Churning state on a many-to-many edge is where files yield to a database

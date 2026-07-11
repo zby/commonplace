@@ -3,7 +3,6 @@ description: Working heuristics for symbolic scheduling over bounded LLM calls â
 type: kb/types/note.md
 traits: [has-external-sources]
 tags: [computational-model]
-status: seedling
 ---
 
 # Decomposition heuristics for bounded-context scheduling

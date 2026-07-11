@@ -3,7 +3,6 @@ description: "Dense-Mem review: self-hosted MCP memory server with Neo4j evidenc
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-derived]
-status: current
 last-checked: "2026-06-04"
 ---
 

@@ -2,7 +2,6 @@
 description: "A-mem review: Python memory library with MemoryNote objects, Chroma retrieval, LLM metadata generation, and automatic neighbor evolution"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-status: current
 last-checked: "2026-06-04"
 ---
 

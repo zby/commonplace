@@ -3,7 +3,6 @@ description: Inside a host-language scheduler, run-state K is task-specific so i
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [computational-model, learning-theory, tool-loop, artifact-analysis]
-status: seedling
 ---
 
 # Orchestration strategies and run-state have opposite persistence economics

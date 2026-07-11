@@ -3,7 +3,6 @@ description: At each LLM↔code transition both semantic underspecification and 
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, computational-model, constraining]
-status: seedling
 ---
 
 # LLM↔code boundaries are natural checkpoints

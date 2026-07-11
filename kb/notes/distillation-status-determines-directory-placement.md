@@ -3,7 +3,6 @@ description: Hunch that procedural artifacts distilled for execution belong in k
 type: kb/types/note.md
 traits: []
 tags: []
-status: seedling
 ---
 
 # Distillation status determines directory placement

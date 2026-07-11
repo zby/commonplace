@@ -4,7 +4,6 @@ type: ../types/agent-memory-system-review.md
 source-tier: doc-grounded
 traits: [has-comparison, has-external-sources]
 tags: [trace-derived]
-status: current
 last-checked: "2026-06-02"
 ---
 

@@ -3,7 +3,6 @@ description: When note titles are claims rather than topics, following links bet
 type: kb/types/note.md
 traits: [has-external-sources, title-as-claim]
 tags: [document-system, links]
-status: seedling
 ---
 
 # Title as claim enables traversal as reasoning

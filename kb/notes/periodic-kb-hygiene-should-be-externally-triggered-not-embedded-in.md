@@ -3,7 +3,6 @@ description: Routing instructions serve the current task; periodic hygiene is tr
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [kb-maintenance]
-status: current
 ---
 
 # Periodic KB hygiene should be externally triggered, not embedded in routing

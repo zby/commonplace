@@ -3,7 +3,6 @@ description: "OS-Copilot review: FRIDAY promotes judged Python execution traces 
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-derived]
-status: current
 last-checked: "2026-06-04"
 ---
 

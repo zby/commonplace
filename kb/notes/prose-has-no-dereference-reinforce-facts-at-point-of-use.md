@@ -3,14 +3,13 @@ description: "Code resolves a name to its value everywhere; LLM-read prose has n
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, artifact-analysis, computational-model]
-status: seedling
 ---
 
 # Prose has no reliable dereference, so a declared fact must be reinforced where it applies
 
-In a formal system a name dereferences: write `status = SEEDLING` once and the value is carried, exactly, into every context that reads it. The reference resolves the same way regardless of distance, surrounding content, or how non-obvious the application is. This is what makes **single-source-of-truth** safe — declare a fact once, reference it everywhere, and the reference does the propagation.
+In a formal system a name dereferences: write `user_verified = true` once and the value is carried, exactly, into every context that reads it. The reference resolves the same way regardless of distance, surrounding content, or how non-obvious the application is. This is what makes **single-source-of-truth** safe — declare a fact once, reference it everywhere, and the reference does the propagation.
 
-Prose read by an LLM has no such operation. A fact stated in the frontmatter — `status: seedling` — governs a passage three sections down only if the model *infers* that it does: that the label applies here, and that its consequences (hedge the claim, distrust the inference, don't cite it as settled) hold in this case. That inference is not a dereference but an interpretation — [underspecified, and unpredictable even when the model is deterministic](./agentic-systems-interpret-underspecified-instructions.md) — sensitive to content, position, and how obvious the application is. So a single declaration's reach decays with indirection: the further and less obvious the application, the lower the chance the fact is in force where it matters.
+Prose read by an LLM has no such operation. A fact stated in frontmatter — `user-verified: true` — affects a passage three sections down only if the model *infers* that the attestation applies to the artifact as written and remembers that fact at the point of use. That inference is not a dereference but an interpretation — [underspecified, and unpredictable even when the model is deterministic](./agentic-systems-interpret-underspecified-instructions.md) — sensitive to content, position, and how obvious the application is. So a single declaration's reach decays with indirection: the further and less obvious the application, the lower the chance the fact is in force where it matters.
 
 The consequence is that single-source-of-truth, correct for code, is unsafe for prose. To make a fact reliably govern a context you often have to **restate it there** — denormalize: repeat the fact, or the specific consequence it implies, at the point of use. The redundancy a formal system would call a smell is, in prose, what buys reliable propagation.
 
@@ -21,7 +20,7 @@ Denormalization has a cost — the copies can drift from the canonical fact — 
 Reinforcement is not free, and the cost rises with how *conditional* the fact is.
 
 - **Bulk.** Every restatement adds text. An artifact that reinforces several facts — or one fact across many points of use — grows, and length is itself a context cost for the next call that loads it.
-- **Conditional applicability pushes branching somewhere.** A restatement is keyed to one value of the fact — a `seedling` warning fits a seedling note but not a `current` one. Reusing one template across statuses means branching it on the status, conditional logic written in prose (the thing prose is worst at); the alternative is to constrain the workflow so the template is only ever used in that one case — always start a note as `seedling`, say. The branching does not vanish, it just moves from template to process. Denormalization stays cheap only for a fact that holds unconditionally wherever it is restated; a value- or context-dependent fact pays a branching cost somewhere.
+- **Conditional applicability pushes branching somewhere.** A restatement is keyed to presence of the fact — a User verified label fits an attested artifact but not an unverified one. Reusing one template means branching on the field; the alternative is constraining the renderer so it emits the label only when the exact committed value is present. The branching does not vanish, it just moves from template to process. Denormalization stays cheap only for a fact that holds unconditionally wherever it is restated; a value- or context-dependent fact pays a branching cost somewhere.
 - **The guard is real work.** The external check that keeps copies honest has to be built and run; it is what makes denormalization safe, but it is not free.
 
 ## Scope
@@ -30,7 +29,7 @@ The reliability of single-source scales with **representational form**. At the c
 
 ## Testing it (the weak point)
 
-The claim is currently intuition. Its falsifiable form: an agent's adherence to a declared fact — does it actually hedge a `seedling` claim, distrust it, refrain from citing it as settled — should rise when the fact is restated at the point of use versus declared only in frontmatter, and the gap should widen with distance and non-obviousness. Ablation: present the same note with the fact (a) only in frontmatter and (b) also restated at the point of use, and measure the downstream behavior. If a single declaration already propagates reliably — if behavior is the same — the claim is wrong, and single-source-of-truth carries into prose after all.
+The claim is currently intuition. Its falsifiable form: an agent's use of a declared fact — does it distinguish human attestation from review state when discussing a later passage — should improve when the fact is restated at the point of use versus declared only in frontmatter, and the gap should widen with distance and non-obviousness. Ablation: present the same note with the fact (a) only in frontmatter and (b) also restated at the point of use, and measure the downstream behavior. If a single declaration already propagates reliably — if behavior is the same — the claim is wrong, and single-source-of-truth carries into prose after all.
 
 ---
 
@@ -40,6 +39,6 @@ Relevant Notes:
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — grounds: that applying a declared fact is an interpretive, unpredictable act — even a deterministic model picks an interpretation you can't read off the spec — is the premise behind "no reliable dereference"
 - [codification](./definitions/codification.md) — contrasts: at the codified (symbolic) end a declaration dereferences and single-source-of-truth holds; this is the prose end where it fails
 - [frontloading spares execution context](./frontloading-spares-execution-context.md) — contrasts: both move information to the point of use, but frontloading precomputes an instruction's input to spare context, while this restates a fact because runtime propagation is unreliable
-- [a derived copy of recomputable truth must be checked or absent](./a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — exemplifies: this is that rule in the prose regime — the banner is a derived copy of `status`, and because "absent" costs reach, it must take the *checked* branch (denormalize the copy, normalize the check)
+- [a derived copy of recomputable truth must be checked or absent](./a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — exemplifies: this is that rule in the prose regime — the MkDocs label is a derived copy of `user-verified`, and because "absent" costs reach, it must take the *checked* branch (denormalize the copy, normalize the check)
 - [links encode conditional possibilities, not obligations](./links-encode-conditional-possibilities-not-obligations.md) — extends: the same no-dereference logic applied to links — a link is a reference a reader may not follow, so content required for all readers is inlined, not linked
 - [LLM context is composed without scoping](./llm-context-is-composed-without-scoping.md) — contrasts: dual facets of underspecification — no boundaries lets content over-reach (spooky action at a distance), no dereference lets a declared fact under-reach (decay). Not independent, though: the flat, unscoped context also *compounds* the decay — with no boundaries the declared fact must win attention against the whole global stream, so the further the point of use, the more its reach is diluted

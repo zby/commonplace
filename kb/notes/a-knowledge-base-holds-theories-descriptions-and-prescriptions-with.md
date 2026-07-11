@@ -3,7 +3,6 @@ description: "Theory, description, prescription are recurring attractors, not a 
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [document-system, foundations]
-status: current
 ---
 
 # A knowledge base holds theories, descriptions, and prescriptions with asymmetric linking

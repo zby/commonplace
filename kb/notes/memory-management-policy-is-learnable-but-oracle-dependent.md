@@ -3,7 +3,6 @@ description: AgeMem stores facts in memory but learns the governing policy in di
 type: kb/types/note.md
 traits: [has-external-sources, title-as-claim]
 tags: [learning-theory, agent-memory]
-status: current
 ---
 
 # Memory management policy is learnable but oracle-dependent

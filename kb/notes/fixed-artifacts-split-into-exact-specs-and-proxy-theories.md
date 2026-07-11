@@ -3,7 +3,6 @@ description: Fixed artifacts are safe when their spec fully captures the problem
 type: kb/types/note.md
 traits: []
 tags: [learning-theory, constraining]
-status: current
 ---
 
 # Fixed artifacts split into exact specs and proxy theories

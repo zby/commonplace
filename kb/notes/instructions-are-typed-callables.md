@@ -3,7 +3,6 @@ description: Skills and tasks are typed callables — they accept document types
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: []
-status: seedling
 ---
 
 # Instructions are typed callables with document type signatures

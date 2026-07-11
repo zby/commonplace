@@ -2,7 +2,6 @@
 description: Definition — constraining narrows the space of valid interpretations a text or symbolic artifact admits, from partial semantic focusing to full commitment in a symbolic artifact with formal semantics
 type: kb/types/definition.md
 tags: [learning-theory, constraining]
-status: current
 ---
 
 # Constraining

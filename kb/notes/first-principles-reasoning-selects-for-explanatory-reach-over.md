@@ -3,7 +3,6 @@ description: Adapts Deutsch's adaptive-vs-explanatory distinction to KB design â
 type: kb/types/note.md
 traits: [has-external-sources]
 tags: [learning-theory, discovery]
-status: seedling
 ---
 
 # First-principles reasoning selects for explanatory reach over adaptive fit

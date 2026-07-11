@@ -3,7 +3,6 @@ description: "Proposal: admit new review dependencies as factored (note, depende
 type: kb/types/note.md
 traits: [design-proposal]
 tags: [kb-maintenance, observability]
-status: seedling
 ---
 
 # Factored dependency pairs for review freshness

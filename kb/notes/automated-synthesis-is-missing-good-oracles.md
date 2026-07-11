@@ -3,10 +3,11 @@ description: Generating synthesis candidates (cross-note connections, novel comb
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, discovery]
-status: speculative
 ---
 
 # Automated synthesis is missing good oracles
+
+*Working diagnosis. Existing attempts support the oracle-gap framing, but the claim remains open to a cheaper counterexample.*
 
 LLMs can combine existing notes and produce plausible-sounding connections with minimal prompting. Experiments with this KB confirm that automated synthesis readily surfaces interesting candidates — combinations that a human reviewer recognizes as genuinely insightful. The problem is not generating synthesis; it's knowing which candidates are good.
 

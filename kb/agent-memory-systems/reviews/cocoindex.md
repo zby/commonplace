@@ -2,7 +2,6 @@
 description: "CocoIndex review: incremental AI data-pipeline framework that maintains fresh vector, graph, file, and database indexes for downstream agent retrieval"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-status: current
 last-checked: "2026-06-04"
 ---
 

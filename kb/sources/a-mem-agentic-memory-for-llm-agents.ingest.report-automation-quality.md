@@ -3,7 +3,6 @@ description: Triangulates A-MEM, Notes Without Reasons, and the open-problem not
 type: kb/types/note.md
 traits: [has-external-sources]
 tags: [learning-theory]
-status: current
 ---
 
 # Automated linking improves retrieval but may degrade navigability

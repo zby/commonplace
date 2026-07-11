@@ -3,7 +3,6 @@ description: "Editing an artifact's quality criteria invalidates verdicts (re-ju
 type: kb/types/note.md
 traits: [title-as-claim, has-external-sources]
 tags: [kb-maintenance]
-status: seedling
 ---
 
 # Criteria edits invalidate verdicts; process edits invalidate artifacts

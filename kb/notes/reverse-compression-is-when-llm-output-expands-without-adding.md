@@ -3,7 +3,6 @@ description: "LLMs can inflate compact seeds into verbose artifacts without addi
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, distillation]
-status: seedling
 ---
 
 # Reverse compression is when LLM output expands without adding information

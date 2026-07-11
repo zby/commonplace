@@ -3,7 +3,6 @@ description: Synthesis propagates errors by merging all agent outputs; voting co
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [llm-interpretation-errors]
-status: seedling
 ---
 
 # Synthesis is not error correction

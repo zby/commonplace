@@ -3,7 +3,6 @@ description: "Among durable artifacts, spec-first, bidirectional spec, and spec 
 type: kb/types/note.md
 traits: [has-external-sources, title-as-claim]
 tags: [learning-theory, constraining]
-status: seedling
 ---
 
 # Specification strategy should follow where understanding lives

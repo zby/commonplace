@@ -3,7 +3,6 @@ description: In agent-maintained systems, cleanup throughput must match generati
 type: kb/types/note.md
 traits: [has-external-sources]
 tags: [kb-maintenance]
-status: seedling
 ---
 
 # Entropy management must scale with generation throughput

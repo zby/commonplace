@@ -2,7 +2,6 @@
 description: "SkillWeaver review: web-agent trajectories distilled into Playwright API skills with LLM relevance push and verification metadata"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-status: current
 last-checked: "2026-06-05"
 tags: [trace-derived]
 ---

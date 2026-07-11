@@ -3,7 +3,6 @@ description: "Signet AI review: local-first daemon memory with SQLite, FTS/vecto
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-derived]
-status: current
 last-checked: "2026-06-05"
 ---
 

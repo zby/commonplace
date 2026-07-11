@@ -3,7 +3,6 @@ description: "Generated indexes guarantee completeness but not orientation — c
 type: ./types/structured-claim.md
 traits: [title-as-claim]
 tags: [kb-maintenance]
-status: seedling
 ---
 
 # Index curation adds orientation that generation cannot produce

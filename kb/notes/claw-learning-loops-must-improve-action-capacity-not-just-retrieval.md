@@ -3,7 +3,6 @@ description: A Claw learning loop must target contextual competence (execution, 
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: []
-status: seedling
 ---
 
 # Claw learning loops must improve action capacity, not just retrieval

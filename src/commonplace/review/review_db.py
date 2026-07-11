@@ -11,7 +11,7 @@ from importlib import resources
 from pathlib import Path
 from typing import Sequence
 
-from commonplace.review.artifacts import job_output_path_rel, prompt_path_rel, result_paths_by_pair_id
+from commonplace.review.artifacts import job_output_path_rel, prompt_path_rel, result_path
 from commonplace.review.clock import iso_now
 from commonplace.review.paths import criterion_id_from_stored_path
 from commonplace.review.review_model import build_model_partition, normalize_model_partition, normalize_reasoning_effort
@@ -142,14 +142,6 @@ class ReviewPairCompletion:
 
 
 @dataclass(frozen=True)
-class _ReviewPairPathInput:
-    review_pair_id: int
-    note_path: str
-    criterion_path: str
-    pair_ordinal: int
-
-
-@dataclass(frozen=True)
 class ReviewJobPlan:
     review_job_id: int
     model_partition: str
@@ -260,7 +252,7 @@ def _review_job_from_row(row: sqlite3.Row) -> ReviewJobRow:
     )
 
 
-def _review_pair_from_row(row: sqlite3.Row, *, result_path: str | None) -> ReviewPairRow:
+def _review_pair_from_row(row: sqlite3.Row) -> ReviewPairRow:
     return ReviewPairRow(
         review_pair_id=row["review_pair_id"],
         review_job_id=row["review_job_id"],
@@ -270,73 +262,21 @@ def _review_pair_from_row(row: sqlite3.Row, *, result_path: str | None) -> Revie
         pair_ordinal=row["pair_ordinal"],
         result_kind=row["result_kind"],
         outcome=row["outcome"],
-        result_path=result_path,
+        result_path=result_path(
+            review_job_id=row["review_job_id"],
+            grouping=row["grouping"],
+            note_path=row["note_path"],
+            criterion_path=row["criterion_path"],
+            pair_ordinal=row["pair_ordinal"],
+        ),
         reviewed_note_snapshot_id=row["reviewed_note_snapshot_id"],
         reviewed_criterion_snapshot_id=row["reviewed_criterion_snapshot_id"],
         completed_at=row["completed_at"],
     )
 
 
-def _result_paths_for_review_jobs(conn: sqlite3.Connection, review_job_ids: set[int]) -> dict[int, str]:
-    if not review_job_ids:
-        return {}
-    placeholders = ", ".join("?" for _ in review_job_ids)
-    rows = conn.execute(
-        f"""
-        SELECT
-            rp.review_pair_id,
-            rp.review_job_id,
-            rp.note_path,
-            rp.criterion_path,
-            rp.pair_ordinal,
-            j.grouping
-        FROM review_pairs AS rp
-        JOIN review_jobs AS j
-          ON j.review_job_id = rp.review_job_id
-        WHERE rp.review_job_id IN ({placeholders})
-        ORDER BY rp.review_job_id, rp.pair_ordinal, rp.note_path, rp.criterion_path
-        """,
-        tuple(sorted(review_job_ids)),
-    ).fetchall()
-    grouped: dict[int, tuple[str, list[_ReviewPairPathInput]]] = {}
-    for row in rows:
-        review_job_id = int(row["review_job_id"])
-        grouping = str(row["grouping"])
-        if review_job_id not in grouped:
-            grouped[review_job_id] = (grouping, [])
-        grouped[review_job_id][1].append(
-            _ReviewPairPathInput(
-                review_pair_id=int(row["review_pair_id"]),
-                note_path=str(row["note_path"]),
-                criterion_path=str(row["criterion_path"]),
-                pair_ordinal=int(row["pair_ordinal"]),
-            )
-        )
-
-    result: dict[int, str] = {}
-    for review_job_id, (grouping, pairs) in grouped.items():
-        result.update(
-            result_paths_by_pair_id(
-                review_job_id=review_job_id,
-                grouping=grouping,
-                pairs=pairs,
-            )
-        )
-    return result
-
-
-def _review_pairs_from_rows(conn: sqlite3.Connection, rows: Sequence[sqlite3.Row]) -> list[ReviewPairRow]:
-    result_paths = _result_paths_for_review_jobs(
-        conn,
-        {int(row["review_job_id"]) for row in rows},
-    )
-    return [
-        _review_pair_from_row(
-            row,
-            result_path=result_paths.get(int(row["review_pair_id"])),
-        )
-        for row in rows
-    ]
+def _review_pairs_from_rows(rows: Sequence[sqlite3.Row]) -> list[ReviewPairRow]:
+    return [_review_pair_from_row(row) for row in rows]
 
 
 def create_job(
@@ -490,6 +430,7 @@ def load_review_pairs_for_job(conn: sqlite3.Connection, *, review_job_id: int) -
             rp.note_path,
             rp.criterion_path,
             j.model_partition AS model_partition,
+            j.grouping AS grouping,
             rp.pair_ordinal,
             rp.result_kind,
             rp.outcome,
@@ -504,7 +445,7 @@ def load_review_pairs_for_job(conn: sqlite3.Connection, *, review_job_id: int) -
         """,
         (review_job_id,),
     ).fetchall()
-    return _review_pairs_from_rows(conn, rows)
+    return _review_pairs_from_rows(rows)
 
 
 def _job_plan_from_job(conn: sqlite3.Connection, job: ReviewJobRow) -> ReviewJobPlan:
@@ -1012,6 +953,7 @@ def load_review_pairs_for_note(
             rp.note_path,
             rp.criterion_path,
             j.model_partition AS model_partition,
+            j.grouping AS grouping,
             rp.pair_ordinal,
             rp.result_kind,
             rp.outcome,
@@ -1026,7 +968,7 @@ def load_review_pairs_for_note(
         """,
         (note_path, model_partition),
     ).fetchall()
-    return _review_pairs_from_rows(conn, rows)
+    return _review_pairs_from_rows(rows)
 
 
 def load_latest_completed_review_pair(
@@ -1044,6 +986,7 @@ def load_latest_completed_review_pair(
             rp.note_path,
             rp.criterion_path,
             j.model_partition AS model_partition,
+            j.grouping AS grouping,
             rp.pair_ordinal,
             rp.result_kind,
             rp.outcome,
@@ -1066,7 +1009,7 @@ def load_latest_completed_review_pair(
     ).fetchone()
     if row is None:
         return None
-    pairs = _review_pairs_from_rows(conn, [row])
+    pairs = _review_pairs_from_rows([row])
     return pairs[0]
 
 
@@ -1095,6 +1038,7 @@ def load_effective_review_pair_map(
             rp.note_path,
             rp.criterion_path,
             j.model_partition AS model_partition,
+            j.grouping AS grouping,
             rp.pair_ordinal,
             rp.result_kind,
             rp.outcome,
@@ -1112,7 +1056,7 @@ def load_effective_review_pair_map(
         tuple(params),
     ).fetchall()
     result: dict[tuple[str, str, str], ReviewPairRow] = {}
-    for pair in _review_pairs_from_rows(conn, rows):
+    for pair in _review_pairs_from_rows(rows):
         key = (pair.note_path, pair.criterion_path, pair.model_partition)
         result[key] = pair
     return result

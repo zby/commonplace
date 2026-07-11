@@ -3,7 +3,6 @@ description: Skills add structured discovery, user-facing invocation, and declar
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: []
-status: seedling
 ---
 
 # Skills are instructions plus routing and execution policy

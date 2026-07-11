@@ -2,7 +2,6 @@
 description: "Stash review: MCP-served Postgres/pgvector memory with episodes, consolidated facts, graph-like relations, goals, failures, hypotheses, and decay"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-status: current
 last-checked: "2026-06-05"
 ---
 

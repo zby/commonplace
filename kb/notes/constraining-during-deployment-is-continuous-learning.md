@@ -3,7 +3,6 @@ description: Continuous learning can happen outside of weights; constraining is 
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, constraining]
-status: current
 ---
 
 # Constraining during deployment is continuous learning

@@ -3,7 +3,6 @@ description: Some semantic subgoals exceed one context window, so they must be p
 type: kb/types/note.md
 traits: []
 tags: [computational-model, context-engineering, tool-loop]
-status: seedling
 ---
 
 # Semantic sub-goals that exceed one context window become scheduling problems

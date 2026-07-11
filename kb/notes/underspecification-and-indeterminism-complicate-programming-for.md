@@ -3,10 +3,11 @@ description: Indeterminism doubles test runs (statistical testing over distribut
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, computational-model, constraining]
-status: speculative
 ---
 
 # Underspecification and indeterminism complicate programming for prompts in distinct ways
+
+*Provisional decomposition. The distinction is useful operationally but has not been tested as an exhaustive account.*
 
 Much of what we do in llm-do and this knowledge base is applying established programming practices to prompts, documents, and LLM workflows. The transfers are practical and actionable. Two properties of LLM-based systems — [semantic underspecification and execution indeterminism](./agentic-systems-interpret-underspecified-instructions.md) — make some practices harder than their traditional-programming originals, but in distinct ways.
 

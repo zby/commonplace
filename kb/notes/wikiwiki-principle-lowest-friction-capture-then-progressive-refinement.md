@@ -3,7 +3,6 @@ description: Ward Cunningham's wiki design principle — minimize capture fricti
 type: kb/types/note.md
 traits: [has-external-sources]
 tags: [type-system]
-status: seedling
 ---
 
 # The wikiwiki principle: lowest-friction capture, then progressive refinement in place
@@ -21,7 +20,7 @@ The KB type hierarchy is a codification ladder for thoughts. Its design principl
 
    Each step adds structure only when the thought has earned it. The file never moves or gets copied — it grows structure in place.
 
-3. **The status axis reinforces it.** `seedling` → `current` is orthogonal to the type ladder but serves the same principle: a structurally complete `structured-claim` can still be a seedling (not yet reviewed). Structure and commitment are independent — you can refine shape without committing to content.
+3. **Verification stays orthogonal.** A structurally complete `structured-claim` may still lack `user-verified`; shaping, semantic review, and explicit human attestation are distinct operations. Structure can be refined without manufacturing a commitment signal.
 
 ## Reasoning
 
@@ -33,7 +32,7 @@ This connects to [codification](./definitions/codification.md): codification is 
 
 ## Caveats
 
-- **Wikis have a decay problem.** The original WikiWikiWeb suffered from stale pages nobody maintained. Our `status: outdated` and seedling review process address this, but the risk remains — low capture friction means high volume, and curation must keep up.
+- **Wikis have a decay problem.** The original WikiWikiWeb suffered from stale pages nobody maintained. Explicit replacement links, retired-note prose, and review freshness expose some decay, but the risk remains — low capture friction means high volume, and curation must keep up.
 - **"In place" has limits.** A `text` file that grows into a 500-line `structured-claim` might be better split. The principle is "refine in place when possible," not "never split."
 - **The ladder is a library pattern.** Refinement-in-place assumes documents move toward permanence — accumulating structure, becoming more connected, staying in the KB. [Workshop documents](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) (tasks, decision threads, experiments) follow the opposite trajectory: they consume value over time and end by being archived or discarded. The wikiwiki principle applies to knowledge capture, not work-in-motion.
 

@@ -3,10 +3,11 @@ description: Catalogues graph-topology, content-proxy, and LLM-hybrid signals th
 type: kb/types/note.md
 traits: []
 tags: [kb-maintenance, observability]
-status: speculative
 ---
 
 # Quality signals for KB evaluation
+
+*Exploratory question set, not an established scoring model.*
 
 Brainstorming: what signals — structural, semantic, or hybrid — could serve as soft oracles for KB quality? No single signal is reliable, but many weak signals combined might provide enough guidance to drive a learning loop without waiting for usage data.
 

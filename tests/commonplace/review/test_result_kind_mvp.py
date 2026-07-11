@@ -30,7 +30,6 @@ def make_repo(root: Path) -> Path:
         """---
 description: Test note
 type: kb/types/note.md
-status: current
 ---
 
 # Sample

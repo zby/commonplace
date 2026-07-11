@@ -1,3 +1,10 @@
 $schema: "https://json-schema.org/draft/2020-12/schema"
 allOf:
   - $ref: "./note-base.schema.yaml"
+  - type: object
+    properties:
+      frontmatter:
+        type: object
+        properties:
+          status: false
+        additionalProperties: true

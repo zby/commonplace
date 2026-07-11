@@ -3,7 +3,6 @@ description: Scholarly-review automation should decompose reviewer work into sep
 type: kb/types/note.md
 traits: [title-as-claim, has-external-sources, synthesis]
 tags: [evaluation, llm-interpretation-errors]
-status: seedling
 ---
 
 # Review automation should target verifiable subroles before reviewer identity

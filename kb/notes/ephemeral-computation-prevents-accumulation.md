@@ -3,7 +3,6 @@ description: Ephemeral computation — discarding generated artifacts after use 
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, artifact-analysis]
-status: current
 ---
 
 # Ephemeral computation prevents accumulation

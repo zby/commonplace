@@ -22,7 +22,9 @@ def build_parser() -> argparse.ArgumentParser:
         description=(
             "Acknowledge note-changed stale verdict pairs when the criterion's watched "
             "note parts did not change. Conformance pairs never qualify because their "
-            "criterion documents declare no watches."
+            "criterion documents declare no watches. Invoking this command is explicit "
+            "human authorization to preserve any committed user verification across the "
+            "qualifying trivial change."
         ),
         allow_abbrev=False,
     )
@@ -40,7 +42,11 @@ def build_parser() -> argparse.ArgumentParser:
         help="Check all verdict criteria: catalog gates plus type- and collection-conformance pairs.",
     )
     parser.add_argument("--note", nargs="+", dest="note_paths", help="Filter to specific note paths or directories.")
-    parser.add_argument("--current", action="store_true", help="Filter to notes with frontmatter status: current.")
+    parser.add_argument(
+        "--user-verified",
+        action="store_true",
+        help="Filter to notes with frontmatter user-verified: true.",
+    )
     parser.add_argument(
         "--model-partition",
         required=True,
@@ -75,15 +81,15 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     else:
         parser.error("provide criterion/bundle names or --all-gates")
 
-    if args.note_paths and args.current:
-        parser.error("--note and --current are mutually exclusive")
+    if args.note_paths and args.user_verified:
+        parser.error("--note and --user-verified are mutually exclusive")
 
     pairs = qualifying_pairs(
         repo_root,
         model=model,
         criterion_ids=criterion_ids,
         note_filter=args.note_paths,
-        current_only=args.current,
+        user_verified_only=args.user_verified,
     )
 
     if not pairs:

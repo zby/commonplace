@@ -3,7 +3,6 @@ description: An agent trusts an index as exhaustive — a missing entry doesn't 
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [kb-maintenance]
-status: current
 ---
 
 # Stale indexes are worse than no indexes

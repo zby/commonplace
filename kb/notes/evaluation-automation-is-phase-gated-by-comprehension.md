@@ -3,7 +3,6 @@ description: Optimization loops require manual error analysis and judge calibrat
 type: kb/types/note.md
 traits: [has-external-sources, title-as-claim]
 tags: [learning-theory, llm-interpretation-errors, evaluation, deploy-time-learning]
-status: seedling
 ---
 
 # Evaluation automation is phase-gated by comprehension

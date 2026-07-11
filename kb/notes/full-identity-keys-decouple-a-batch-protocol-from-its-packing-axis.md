@@ -3,7 +3,6 @@ description: "A batched LLM-call protocol keyed by each unit's full composite id
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [computational-model]
-status: seedling
 ---
 
 # Full-identity keys decouple a batch protocol from its packing axis

@@ -3,7 +3,6 @@ description: Instructions, skills, hooks, and scripts form a constraining gradie
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, constraining]
-status: seedling
 ---
 
 # Methodology enforcement is constraining

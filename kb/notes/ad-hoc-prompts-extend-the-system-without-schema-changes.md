@@ -3,7 +3,6 @@ description: Any system with an LLM agent layer can absorb new requirements thro
 type: kb/types/note.md
 traits: []
 tags: [learning-theory, constraining]
-status: seedling
 ---
 
 # Ad hoc prompts extend the system without schema changes

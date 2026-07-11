@@ -195,9 +195,10 @@ def on_page_markdown(markdown: str, page, config=None, **kwargs) -> str:
     markdown = _append_full_listing_link(markdown, page)
 
     status = meta.get("status")
+    user_verified = meta.get("user-verified") is True
     note_type = meta.get("type")
     tags = meta.get("tags", [])
-    if not status and not note_type and not tags:
+    if not status and not user_verified and not note_type and not tags:
         return markdown
 
     parts = []
@@ -205,6 +206,8 @@ def on_page_markdown(markdown: str, page, config=None, **kwargs) -> str:
         parts.append(f"**Type:** {note_type}")
     if status:
         parts.append(f"**Status:** {status}")
+    if user_verified:
+        parts.append("**User verified:** yes")
 
     if tags:
         note_dir = Path(page.file.abs_src_path).parent

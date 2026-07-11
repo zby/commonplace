@@ -3,7 +3,6 @@ description: "Proposal: introduce a model partition registry for review validati
 type: kb/types/note.md
 traits: [design-proposal]
 tags: [kb-maintenance]
-status: seedling
 ---
 
 # Model partition registry

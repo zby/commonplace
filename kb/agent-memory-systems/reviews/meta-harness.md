@@ -2,7 +2,6 @@
 description: "Meta-Harness review: trace-derived harness search that uses logs, evaluations, proposer skills, and generated code to evolve memory and agent scaffolds"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-status: current
 last-checked: "2026-06-04"
 tags: [trace-derived]
 ---

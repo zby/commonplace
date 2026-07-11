@@ -3,7 +3,6 @@ description: "Proposal: build the automated note-refinement loop on a source bun
 type: kb/types/note.md
 traits: [design-proposal]
 tags: [kb-maintenance]
-status: seedling
 ---
 
 # Automated note refinement as a search over a fixed source bundle

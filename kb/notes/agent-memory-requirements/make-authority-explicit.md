@@ -3,7 +3,6 @@ description: "Memory architecture must state who can read, write, promote, activ
 type: kb/types/note.md
 traits: [has-external-sources]
 tags: [agent-memory, context-engineering]
-status: current
 ---
 
 # Make Authority Explicit

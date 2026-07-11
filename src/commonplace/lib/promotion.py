@@ -16,7 +16,6 @@ from commonplace.lib.project_paths import list_collection_note_paths
 class PromotionReportResult:
     output: Path
     text_count: int
-    seedling_count: int
 
 
 def resolve_link(source: Path, target: str) -> Path | None:
@@ -37,7 +36,6 @@ def write_promotion_candidates_report(root: Path) -> PromotionReportResult:
         raise FileNotFoundError(f"Not a directory: {notes_dir}")
 
     text_files: dict[Path, str] = {}
-    seedlings: dict[Path, str] = {}
     all_notes: dict[Path, dict] = {}
 
     for path in list_collection_note_paths(notes_dir):
@@ -54,8 +52,6 @@ def write_promotion_candidates_report(root: Path) -> PromotionReportResult:
 
         if frontmatter is None:
             text_files[abs_path] = title
-        elif frontmatter.get("status") == "seedling":
-            seedlings[abs_path] = title
 
     incoming_links: dict[Path, list[Path]] = defaultdict(list)
     for source_path, info in all_notes.items():
@@ -93,12 +89,10 @@ def write_promotion_candidates_report(root: Path) -> PromotionReportResult:
         return lines
 
     text_with_links = rank(text_files)
-    seedling_ranked = rank(seedlings)
-
     lines = [
-        f"# Promotion Candidates - {date.today()}",
+        f"# Unstructured Text Candidates - {date.today()}",
         "",
-        f"Text files: {len(text_files)} | Seedlings: {len(seedlings)}",
+        f"Unstructured text files: {len(text_files)}",
         "",
     ]
 
@@ -108,21 +102,7 @@ def write_promotion_candidates_report(root: Path) -> PromotionReportResult:
     else:
         lines.extend(["No text files found.", ""])
 
-    lines.extend(["## Seedling -> Current (top 20 by incoming links)", ""])
-    if seedling_ranked:
-        lines.extend(render_entries(seedling_ranked[:20]))
-    else:
-        lines.extend(["No seedling notes found.", ""])
-    lines.append("")
-
-    orphan_seedlings = [item for item in seedling_ranked if item[2] == 0]
-    if orphan_seedlings:
-        lines.extend([f"## Orphan Seedlings ({len(orphan_seedlings)} with zero incoming links)", ""])
-        for rel, title, _, _ in orphan_seedlings:
-            lines.append(f"- [{title}](../notes/{rel})")
-        lines.append("")
-
     output = reports_dir / "promotion-candidates.md"
     reports_dir.mkdir(parents=True, exist_ok=True)
     output.write_text("\n".join(lines), encoding="utf-8")
-    return PromotionReportResult(output, len(text_files), len(seedlings))
+    return PromotionReportResult(output, len(text_files))

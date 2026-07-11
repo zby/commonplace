@@ -3,7 +3,6 @@ description: "Clude review: cognitive memory SDK and MCP server with SQLite/Supa
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-derived]
-status: current
 last-checked: "2026-06-04"
 ---
 

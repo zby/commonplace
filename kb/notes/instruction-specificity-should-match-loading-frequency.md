@@ -3,7 +3,6 @@ description: The loading hierarchy (CLAUDE.md → skill descriptions → skill b
 type: kb/types/note.md
 traits: [has-external-sources, title-as-claim]
 tags: [architecture]
-status: current
 ---
 
 # Instruction specificity should match loading frequency

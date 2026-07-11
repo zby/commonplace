@@ -3,7 +3,6 @@ description: "Human acceptance of an edit is a strong oracle for 'this change wa
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, distillation]
-status: seedling
 ---
 
 # An accepted edit verifies the change, not the rule

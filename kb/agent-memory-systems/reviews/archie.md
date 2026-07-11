@@ -2,7 +2,6 @@
 description: "Archie review: Git-native Arch Linux desktop configuration with Stow deployment, agent briefs, ADRs, and pull-only repo read-back"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-status: current
 last-checked: "2026-06-05"
 ---
 

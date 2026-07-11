@@ -6,7 +6,6 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
-- [Global note user verification](./global-note-user-verification/plan.md) — plan to remove the fused global note status and add committed `user-verified: true` for repository-visible human attestation
 - [extensible-controlled-vocabularies](./extensible-controlled-vocabularies/README.md) — designing how a code-enforced closed enum (ingest-report's `source_type`) becomes open-ended per installed KB while staying validator-checkable
 - [lineage-mechanisms](./lineage-mechanisms/README.md) — designing one derived-artifact lineage vocabulary across multiple storage weights; review keeps its purpose-built DB while generic lineage state stays deferred until a second churning mesh earns it
 - [src-architecture-alternatives](./src-architecture-alternatives/README.md) — alternative architectures for `src/commonplace/` from a full code read; active thread is an append-only event log as review-store source of truth with acceptance events that embed their snapshots

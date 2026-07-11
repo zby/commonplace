@@ -17,9 +17,7 @@ def main() -> int:
         print(exc, file=sys.stderr)
         return 1
 
-    print(
-        f"Wrote {result.output} ({result.text_count} text, {result.seedling_count} seedlings)"
-    )
+    print(f"Wrote {result.output} ({result.text_count} unstructured text files)")
     return 0
 
 

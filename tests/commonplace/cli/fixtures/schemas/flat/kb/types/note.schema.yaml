@@ -26,12 +26,9 @@ properties:
             description: description should be at most 200 characters
       type:
         type: string
-      status:
-        enum:
-          - seedling
-          - current
-          - speculative
-          - outdated
+      status: false
+      user-verified:
+        const: true
       traits:
         type: array
         items:

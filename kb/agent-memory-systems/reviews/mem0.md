@@ -3,7 +3,6 @@ description: "Mem0 review: memory SDK/server/platform with additive trace extrac
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-derived]
-status: current
 last-checked: "2026-06-04"
 ---
 

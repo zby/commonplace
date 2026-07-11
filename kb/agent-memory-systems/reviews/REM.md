@@ -3,7 +3,6 @@ description: "REM review: episodic memory service with trace-derived episodes, v
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-derived]
-status: current
 last-checked: "2026-06-04"
 ---
 

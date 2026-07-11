@@ -3,7 +3,6 @@ description: Exact orchestration over step-dependent discovery and dense cross-i
 type: kb/types/note.md
 traits: []
 tags: [computational-model, context-engineering]
-status: seedling
 ---
 
 # Adaptive dependencies force width, reopening, or sequential rounds

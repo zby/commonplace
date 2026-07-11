@@ -2,7 +2,6 @@
 description: "Semiont review: event-sourced W3C annotation KB with human/AI peer workflows, graph/vector projections, context gathering, and pull-based agent access"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-status: current
 last-checked: "2026-06-05"
 ---
 

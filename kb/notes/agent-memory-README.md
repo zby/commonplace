@@ -3,7 +3,6 @@ description: "Curated head for agent-memory notes — memory as crosscutting arc
 type: kb/types/tag-readme.md
 index_source: tag
 index_key: agent-memory
-status: current
 ---
 
 # Agent memory

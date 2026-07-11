@@ -3,7 +3,6 @@ description: Programmers trained on traditional software expect broken infrastru
 type: kb/types/note.md
 traits: []
 tags: [computational-model, kb-maintenance, observability]
-status: seedling
 ---
 
 # Traditional debugging intuitions break when tool loops can recover semantically

@@ -3,7 +3,6 @@ description: Any artifact authored before execution — instruction, plan, spec,
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: []
-status: seedling
 ---
 
 # An author should fix what the executor can't determine, not what it will

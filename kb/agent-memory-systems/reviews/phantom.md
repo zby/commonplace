@@ -2,7 +2,6 @@
 description: "Phantom review: VM co-worker with Qdrant memory, heuristic session extraction, and queued self-evolution over config files"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-status: current
 last-checked: "2026-06-04"
 tags: [trace-derived]
 ---

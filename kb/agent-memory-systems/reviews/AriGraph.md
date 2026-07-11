@@ -2,7 +2,6 @@
 description: "AriGraph review: in-run knowledge-graph world model with episodic observation memory, Contriever retrieval, LLM extraction/refinement, and prompt pushback"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-status: current
 last-checked: "2026-06-04"
 tags: [trace-derived]
 ---

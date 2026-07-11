@@ -41,12 +41,6 @@ class ReviewPairForResult(Protocol):
     completed_at: str | None
 
 
-class SkippedPairForManifest(Protocol):
-    note_path: str
-    criterion_path: str
-    reason: str
-
-
 def review_job_artifact_dir(repo_root: Path, review_job_id: int) -> Path:
     return repo_root / review_job_artifact_dir_rel(review_job_id)
 
@@ -61,10 +55,6 @@ def prompt_path_rel(review_job_id: int) -> str:
 
 def job_output_path_rel(review_job_id: int) -> str:
     return f"{review_job_artifact_dir_rel(review_job_id)}/job-output.md"
-
-
-def manifest_path_rel(review_job_id: int) -> str:
-    return f"{review_job_artifact_dir_rel(review_job_id)}/{MANIFEST_NAME}"
 
 
 def result_filename(
@@ -199,7 +189,6 @@ def write_manifest(
     prompt_path: str,
     job_output_path: str,
     pairs: Sequence[ReviewPairForPath],
-    skipped: Sequence[SkippedPairForManifest] | None = None,
     failure_reason: str | None = None,
 ) -> str:
     result_paths = result_paths_by_pair_id(
@@ -234,10 +223,6 @@ def write_manifest(
         "prompt_path": prompt_path,
         "job_output_path": job_output_path,
         "pairs": payload_pairs,
-        "skipped_pairs": [
-            {"note_path": pair.note_path, "criterion_path": pair.criterion_path, "reason": pair.reason}
-            for pair in (skipped or [])
-        ],
     }
     manifest_path = artifact_dir / MANIFEST_NAME
     artifact_dir.mkdir(parents=True, exist_ok=True)

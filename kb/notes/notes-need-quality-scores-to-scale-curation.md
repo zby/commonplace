@@ -1,8 +1,7 @@
 ---
-description: As the KB grows, /connect will retrieve too many candidates — note quality scores (status, type, inbound links, recency, link strength) filter candidates and prioritise what's worth connecting
+description: As the KB grows, /connect will retrieve too many candidates — evidence, type, inbound links, recency, and link strength can rank what is worth evaluating
 type: kb/types/note.md
 traits: []
-status: seedling
 tags: [kb-maintenance, observability]
 ---
 
@@ -14,14 +13,7 @@ The fix is a quality score per note that lets /connect filter and rank candidate
 
 ## Scoring dimensions
 
-**Status** is the strongest signal. A `current` note has been reviewed and endorsed — it's worth linking to. A `seedling` hasn't been vetted; linking to it couples your note to something that might be pruned. An `outdated` note should rarely be a link target.
-
-| Status | Score weight | Rationale |
-|---|---|---|
-| current | highest | reviewed, endorsed, stable |
-| speculative | medium | deliberately exploratory but acknowledged |
-| seedling | low | unvetted, may be pruned |
-| outdated | lowest | superseded, kept for reference only |
+**No global scalar supplies quality.** `user-verified: true` records human attestation to an artifact as written, not evidence strength, currency, usefulness, or review coverage. It may be a presentation filter when a user explicitly wants only attested artifacts, but it must not dominate connection ranking. Candidate quality has to be assembled from use-shaped signals instead.
 
 **Type** reflects structural maturity. A `structured-claim` with Evidence/Reasoning sections is a more valuable link target than a `text` with no frontmatter — it's a developed argument you can reason with.
 
@@ -48,7 +40,7 @@ The fix is a quality score per note that lets /connect filter and rank candidate
 
 At our current scale, none of this needs implementation. When it does, there's a spectrum:
 
-- **Cheapest:** /connect filters by status (`rg '^status: current'`) and ignores seedlings. No scoring, just a hard filter. Probably enough for 200-500 notes.
+- **Cheapest:** /connect ranks by type and strong inbound links, then lets the agent inspect evidence and caveats. No persisted scalar is required.
 - **Medium:** A script computes scores from frontmatter + inbound link count, writes them to a derived index. /connect reads the index for candidate ranking.
 - **Full:** The SQLite index from the retrieval scoring layer proposal, with composite scores, recency decay, and per-note overrides.
 

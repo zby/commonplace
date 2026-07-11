@@ -3,7 +3,6 @@ description: Four elicitation strategies ordered by user expertise required, com
 type: kb/types/note.md
 traits: [has-external-sources, title-as-claim]
 tags: [llm-interpretation-errors, failure-modes, evaluation]
-status: seedling
 ---
 
 # Elicitation requires maintained question-generation systems

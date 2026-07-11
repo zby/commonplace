@@ -4,7 +4,6 @@ type: kb/types/tag-readme.md
 index_source: tag
 index_key: artifact-analysis
 complete: true
-status: current
 ---
 
 # artifact-analysis

@@ -2,7 +2,6 @@
 description: "Voyager review: Minecraft lifelong-learning agent with trace-derived executable skill libraries, Chroma retrieval, curriculum QA cache, and prompt pushback"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-status: current
 last-checked: "2026-06-05"
 tags: [trace-derived]
 ---

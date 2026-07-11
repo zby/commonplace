@@ -3,7 +3,6 @@ description: "Generated comparison table for code-reviewed agent memory systems:
 type: kb/types/note.md
 traits: [has-comparison]
 tags: [agent-memory]
-status: current
 ---
 
 # Agent memory systems comparison table

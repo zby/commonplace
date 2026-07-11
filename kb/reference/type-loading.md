@@ -2,7 +2,6 @@
 description: How Commonplace resolves a note's type contract at authoring and validation time - collection-scoped lookup, collection conventions, and skill-driven on-demand loading
 type: kb/types/note.md
 tags: []
-status: current
 ---
 
 # Type loading

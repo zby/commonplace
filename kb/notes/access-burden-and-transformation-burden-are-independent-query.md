@@ -3,7 +3,6 @@ description: Queries have two independent difficulty axes — finding inputs (ac
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [foundations, computational-model]
-status: seedling
 ---
 
 # Access burden and transformation burden are independent query dimensions

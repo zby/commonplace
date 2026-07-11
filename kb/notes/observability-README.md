@@ -3,7 +3,6 @@ description: Index of notes about making hidden state, hidden failure, and quali
 type: kb/types/tag-readme.md
 index_source: tag
 index_key: observability
-status: current
 ---
 
 # Observability

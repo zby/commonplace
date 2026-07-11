@@ -2,7 +2,6 @@
 description: "nao review: analytics-agent context builder with file-backed project context, SQL guardrails, stories, and pushed trace-derived user memory"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-status: current
 last-checked: "2026-06-04"
 tags: [trace-derived]
 ---

@@ -3,7 +3,6 @@ description: Index of notes about linking — how links work as decision points,
 type: kb/types/tag-readme.md
 index_source: tag
 index_key: links
-status: current
 ---
 
 # Links

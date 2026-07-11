@@ -3,7 +3,6 @@ description: "Continuity review: local-first desktop AI workspace with shared SQ
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-derived]
-status: current
 last-checked: "2026-06-04"
 ---
 

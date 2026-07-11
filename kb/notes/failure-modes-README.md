@@ -3,7 +3,6 @@ description: Index for failure-modes notes about characteristic ways knowledge c
 type: kb/types/tag-readme.md
 index_source: tag
 index_key: failure-modes
-status: current
 ---
 
 # Failure modes

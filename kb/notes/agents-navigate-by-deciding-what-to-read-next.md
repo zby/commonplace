@@ -3,7 +3,6 @@ description: Context surrounding a pointer determines how cheaply an agent judge
 type: kb/types/note.md
 traits: []
 tags: [links]
-status: current
 ---
 
 # Agents navigate by deciding what to read next

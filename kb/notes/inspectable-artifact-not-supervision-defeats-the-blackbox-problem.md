@@ -3,7 +3,6 @@ description: Chollet frames agentic coding as ML producing blackbox codebases â€
 type: kb/types/note.md
 traits: [has-external-sources]
 tags: [learning-theory, observability, constraining]
-status: current
 ---
 
 # Inspectable artifact, not supervision, defeats the blackbox problem

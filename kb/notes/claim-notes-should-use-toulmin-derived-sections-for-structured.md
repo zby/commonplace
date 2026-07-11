@@ -3,7 +3,6 @@ description: Three independent threads converged on Toulmin's argument structure
 type: ./types/structured-claim.md
 traits: [has-comparison, has-external-sources, title-as-claim]
 tags: [type-system]
-status: seedling
 ---
 
 # Claim notes should use Toulmin-derived sections for structured argument

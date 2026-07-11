@@ -3,7 +3,6 @@ description: Closure under its own recommendations — an agent extends a method
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [foundations, constraining]
-status: seedling
 ---
 
 # A methodology is agent-extensible only where it is closed under its own recommendations

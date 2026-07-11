@@ -3,7 +3,6 @@ description: "Maps agentic-adaptation signals onto artifact-analysis axes so KB 
 type: kb/types/note.md
 traits: [title-as-claim, has-comparison, has-external-sources]
 tags: [learning-theory, artifact-analysis, agent-memory, context-engineering]
-status: seedling
 ---
 
 # Adaptation signals choose pressure; artifact analysis chooses the retained surface

@@ -2,7 +2,6 @@
 description: "Pal review: Agno AgentOS personal knowledge team with PostgreSQL/pgvector routing, context files, compiled wiki, SQL, schedules, and Agno memory read-back"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-status: current
 last-checked: "2026-06-04"
 ---
 

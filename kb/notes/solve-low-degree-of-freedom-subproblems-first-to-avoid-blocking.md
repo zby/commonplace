@@ -3,7 +3,6 @@ description: "Ordering heuristic for decomposition: commit first to decisions wi
 type: kb/types/note.md
 traits: []
 tags: [computational-model]
-status: seedling
 ---
 
 # Solve low-degree-of-freedom subproblems first to avoid blocking better designs

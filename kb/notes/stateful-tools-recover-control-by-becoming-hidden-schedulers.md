@@ -3,7 +3,6 @@ description: Granting the strongest stateful-tool escape hatch shows that recove
 type: kb/types/note.md
 traits: []
 tags: [computational-model, context-engineering, tool-loop]
-status: seedling
 ---
 
 # Stateful tools recover control by becoming hidden schedulers

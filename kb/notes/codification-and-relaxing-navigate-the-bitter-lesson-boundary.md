@@ -3,7 +3,6 @@ description: Since you can't identify which side of the bitter lesson boundary y
 type: kb/types/note.md
 traits: [has-external-sources]
 tags: [learning-theory, constraining]
-status: current
 ---
 
 # Codification and relaxing navigate the bitter lesson boundary

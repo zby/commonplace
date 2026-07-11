@@ -27,29 +27,6 @@ from commonplace.review.review_db import ReviewPairRequest, snapshot_file
 
 
 @dataclass(frozen=True)
-class NoteSnapshot:
-    path: str
-    content_hash: str
-
-
-@dataclass(frozen=True)
-class CriterionSnapshot:
-    id: str
-    content_hash: str
-
-
-@dataclass(frozen=True)
-class FreshnessBaselineSnapshot:
-    baseline_note_hash: str
-    baseline_criterion_hash: str
-
-
-@dataclass(frozen=True)
-class Staleness:
-    reason: str
-
-
-@dataclass(frozen=True)
 class CapturedReviewInputs:
     pair_requests: list[ReviewPairRequest]
     note_texts: dict[str, str]
@@ -62,20 +39,6 @@ def content_sha256_for_text(text: str) -> str:
 
 def file_content_sha256(path: Path) -> str:
     return content_sha256_for_text(path.read_text(encoding="utf-8"))
-
-
-def classify_staleness(
-    note: NoteSnapshot,
-    criterion: CriterionSnapshot,
-    freshness_baseline: FreshnessBaselineSnapshot | None,
-) -> Staleness | None:
-    if freshness_baseline is None:
-        return Staleness("missing-baseline")
-    if freshness_baseline.baseline_criterion_hash != criterion.content_hash:
-        return Staleness("criterion-changed")
-    if freshness_baseline.baseline_note_hash != note.content_hash:
-        return Staleness("note-changed")
-    return None
 
 
 def capture_review_inputs(

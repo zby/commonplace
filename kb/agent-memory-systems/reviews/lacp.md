@@ -2,7 +2,6 @@
 description: "LACP review: local control-plane agent harness with trace-derived Obsidian/SMS memory, hook-time context injection, RAG pull, and policy gates"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-status: current
 last-checked: "2026-06-04"
 tags: [trace-derived]
 ---

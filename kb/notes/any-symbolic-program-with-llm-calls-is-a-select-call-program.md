@@ -3,7 +3,6 @@ description: Any program whose non-LLM steps are symbolic computation over expli
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [computational-model]
-status: seedling
 ---
 
 # Any symbolic program with LLM calls is a select/call program

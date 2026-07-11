@@ -23,7 +23,7 @@ Use `source-review` when you want a structured extraction from an external sourc
 | `description` | Yes | Retrieval description for what the source review extracts and why it matters. |
 | `type` | Yes | `kb/sources/types/source-review.md`. |
 | `tags` | No | Navigation tags for the reviewed source or the claims it supports. |
-| `status` | No | Lifecycle state, usually `current` for an accepted source review. |
+| `user-verified` | No | Optional explicit human attestation; creation and source review do not add it automatically. |
 
 ## Template
 
@@ -32,7 +32,6 @@ Use `source-review` when you want a structured extraction from an external sourc
 description: ""
 type: kb/sources/types/source-review.md
 tags: []
-status: current
 ---
 
 # {source title or key claim}

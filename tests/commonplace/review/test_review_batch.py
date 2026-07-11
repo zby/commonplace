@@ -32,7 +32,6 @@ def make_note(path: Path, title: str) -> Path:
 description: Test note
 type: kb/types/note.md
 traits: []
-status: current
 ---
 
 # {title}
@@ -475,7 +474,6 @@ def test_create_review_jobs_selector_marks_queued_job_failed_when_prompt_renderi
 description: Test note
 type: kb/types/note.md
 traits: []
-status: current
 ---
 
 # First

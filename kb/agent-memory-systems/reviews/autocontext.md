@@ -2,7 +2,6 @@
 description: "Autocontext review: iterative evaluation harness with trace-derived playbooks, hints, skills, tools, validators, runtime traces, and optional model distillation"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-status: current
 last-checked: "2026-06-04"
 tags: [trace-derived]
 ---

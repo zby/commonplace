@@ -3,7 +3,6 @@ description: "Memory design needs operational policy axes (capture, derivation, 
 type: kb/types/note.md
 traits: [has-comparison, has-external-sources, title-as-claim]
 tags: [agent-memory, context-engineering, learning-theory, artifact-analysis]
-status: seedling
 ---
 
 # Memory design adds operational axes to artifact analysis

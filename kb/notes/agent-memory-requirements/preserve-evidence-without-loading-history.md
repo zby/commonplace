@@ -3,7 +3,6 @@ description: "Trace retention should preserve evidence for audit and extraction 
 type: kb/types/note.md
 traits: [has-external-sources]
 tags: [agent-memory, context-engineering]
-status: current
 ---
 
 # Preserve Evidence Without Making History The Next Context

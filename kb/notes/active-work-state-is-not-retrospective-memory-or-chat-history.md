@@ -3,7 +3,6 @@ description: "Active work state needs current pointers, evidence gates, and clos
 type: kb/types/note.md
 traits: [title-as-claim, synthesis, has-external-sources]
 tags: [agent-memory, context-engineering]
-status: seedling
 ---
 
 # Active work state is not retrospective memory or chat history

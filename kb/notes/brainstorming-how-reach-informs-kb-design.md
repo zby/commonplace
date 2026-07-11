@@ -3,7 +3,6 @@ description: Brainstorming on Deutsch's "reach" concept applied to KB notes — 
 type: kb/types/note.md
 traits: []
 tags: [learning-theory, kb-maintenance, discovery]
-status: seedling
 ---
 
 # Brainstorming: how reach informs KB design

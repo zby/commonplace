@@ -3,7 +3,6 @@ description: Agent orchestration is not ordered along a single ladder — schedu
 type: kb/types/note.md
 traits: [has-external-sources, title-as-claim]
 tags: [computational-model]
-status: seedling
 ---
 
 # Agent orchestration occupies a multi-dimensional design space

@@ -4,7 +4,6 @@ type: kb/types/tag-readme.md
 index_source: tag
 index_key: learning-theory
 covered_by: [deploy-time-learning, constraining, distillation, discovery, artifact-analysis, agent-memory, llm-interpretation-errors]
-status: current
 ---
 
 # Learning theory

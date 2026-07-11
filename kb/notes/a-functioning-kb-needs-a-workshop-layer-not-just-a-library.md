@@ -3,7 +3,6 @@ description: The current type system models permanent knowledge (library) but no
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: []
-status: seedling
 ---
 
 # A functioning knowledge base needs a workshop layer, not just a library

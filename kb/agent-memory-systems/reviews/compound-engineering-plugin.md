@@ -3,7 +3,6 @@ description: "Compound Engineering review: repo-file workflow memory with genera
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-derived]
-status: current
 last-checked: "2026-06-04"
 ---
 
