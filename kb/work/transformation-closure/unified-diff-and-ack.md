@@ -45,6 +45,8 @@ What a fresh record *licenses* differs by assay class, and the orchestrator prom
 - A fresh **bounded-assay acceptance** licenses skipping the re-run (the existing gate semantics).
 - A fresh **unbounded-assay acceptance** licenses only reusing the report's content as current evidence — "this critique still describes these bytes." It is never an endorsement of the note, and in particular the friction gate's "For the human" routing is never satisfied or silenced by an ack.
 
+A third record kind sits outside the assay genus: a **human attestation** (MVP phase 4) is not an assay at all — no procedure ran; a person read the bytes and said so. In the MVP it carries **no license**: an anchored, queryable fact that nothing consumes as permission to skip or suppress. Its force is the deliberately open part of workshop case 2 — decided by observed need, not up front.
+
 This distinction is why anchoring routed reports need not re-create certification semantics through the back door — but that is now a hypothesis the MVP observes rather than a rule it presumes. The workshop's case 3 flips accordingly: from "expected output is a documented do-not-anchor rule" to *anchor and watch* — does a current-critique signal in practice get read as "critiqued and handled"? If MVP use exhibits that failure, the do-not-anchor rule comes back located instead of assumed.
 
 ## Residual requirement: rationale on ack

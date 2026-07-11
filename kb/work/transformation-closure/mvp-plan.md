@@ -1,6 +1,6 @@
 # MVP build plan: closing review on the full pass over a unified diff-and-ack surface
 
-Phased build plan for the workshop's MVP, given the design in [unified-diff-and-ack.md](./unified-diff-and-ack.md). The MVP is a calibrated one-cycle closing review on `run-full-improvement-pass-on-note.md`, with carry judgments recorded as rationale-bearing acks and an observation log with a variance control arm. Each phase is self-contained: it delivers testable value on its own and later phases build on it without reaching back. Everything below is the lightest reversible representation available; nothing here closes a design decision beyond what building forces.
+Phased build plan for the workshop's MVP, given the design in [unified-diff-and-ack.md](./unified-diff-and-ack.md). The MVP is a calibrated one-cycle closing review on `run-full-improvement-pass-on-note.md`, with carry judgments recorded as rationale-bearing acks, a minimal force-free human attestation, and an observation log with a variance control arm. Each phase is self-contained: it delivers testable value on its own and later phases build on it without reaching back. Everything below is the lightest reversible representation available; nothing here closes a design decision beyond what building forces.
 
 Ordering note: an evidence-first alternative (closing review on the already-anchored semantic pairs before any machinery, zero code) was considered and set aside — a semantic-only closing cycle would put partial-coverage observations in the log that read as full-pass closure. Machinery first, then one log whose coverage is honest.
 
@@ -40,7 +40,18 @@ The observation log lands in the same phase — a plain file in this workshop (n
 
 Phase deliverable: the instruction closes over its own edits, and every closing cycle leaves a log line.
 
-## Phase 4: run and observe
+## Phase 4: minimal human attestation
+
+The simplest slice of workshop case 2: a way for the user to ack the current state of a note as reviewed, version-anchored like everything else. The space of review kinds with different forces (skimmed / approved / claims-verified / editorial sign-off, each licensing different things) is large — the MVP deliberately implements one kind with **no force** and observes what else is needed.
+
+- **One kind, force-free.** A single attestation, `reviewed`, whose contract is a short file (e.g. `kb/instructions/human-review.md`) stating deliberately little — "the user read this exact version and accepts it." The contract file is the gate-side identity, so editing what `reviewed` means stales every human attestation as `gate-changed` — the ADR 038/041 pattern again. Force-free means no machinery consumes a fresh attestation as a license: it is an anchored, queryable fact, nothing skips or suppresses because of it.
+- **Representation:** one more factored `(note, contract)` acceptance in the existing store under a human partition (single `human` partition for the MVP; per-actor partitions only if observation demands them) — the [factored dependency pairs](../../reference/proposals/factored-dependency-pairs-for-review-freshness.md) pattern with a human actor. Freshness falls out: a `note-changed` human attestation means the user hasn't seen the current bytes.
+- **Surface:** a small command (`commonplace-attest`-shaped: note path, optional comment) that pins current snapshots and writes the acceptance. It should echo what it pinned (short hash or one-line diff summary against the previously attested state) so the user can catch attesting to bytes they didn't just read.
+- This is the anchored alternative to the `reviewed: true` boolean the README's purpose asks about — friction with it in use is direct evidence on why systems default to unanchored booleans.
+
+Phase deliverable: the user can attest a note, the selector reports human-attestation freshness, and nothing else changes behavior.
+
+## Phase 5: run and observe
 
 Use the MVP on real full passes. Audit sampling starts at 100% — every ack is *also* re-run, so initially the ack decision costs nothing to check; the dial only decays later, against evidence. This phase is where constraints get located (see below); it produces observations, not code.
 
@@ -49,9 +60,9 @@ Use the MVP on real full passes. Audit sampling starts at 100% — every ack is 
 - Footprint enforcement machinery — declared footprints stay stated intent the cumulative diff verifies.
 - Any edit-kind taxonomy in the system — the tag on acks is free-text observation vocabulary.
 - Trust-dial automation — sampling rate changes are manual judgments against the log.
-- Human-attestation pairs (workshop case 2) — untouched until the MVP has run.
+- A review-kind taxonomy or attestation forces — the MVP ships exactly one force-free `reviewed` kind; kinds and forces wait for observed need (see phase 4).
 
-## What phase 4 should observe (constraint location)
+## What phase 5 should observe (constraint location)
 
 Ties to the location criteria in [carry-heuristics.md](./carry-heuristics.md):
 
@@ -60,3 +71,4 @@ Ties to the location criteria in [carry-heuristics.md](./carry-heuristics.md):
 - Constraint 3's premise: is a declared flow-only step 9 ever caught changing a claim in the cumulative diff?
 - Constraint 4: does the one-cycle stopping rule ever leave residual findings that genuinely needed a second round, or does routing to Open items suffice?
 - Case 3 flip: does a current-critique signal ever get read downstream as "critiqued and handled"? That observation, if it occurs, relocates the do-not-anchor rule as a real constraint.
+- Case 2 (human attestation): does the single force-free `reviewed` kind get stretched — the user wanting to record something weaker or stronger, or wanting a fresh attestation to actually license something? Each stretch is a located requirement for the kinds/forces design.
