@@ -11,14 +11,14 @@ from commonplace.review.critique import is_critique_request
 from commonplace.review.type_conformance import TYPE_GATE_LENS, is_type_gate_request
 
 
-def _reject_unsafe_gate_arg(arg: str) -> None:
+def _reject_unsafe_criterion_arg(arg: str) -> None:
     path = Path(arg)
     if path.is_absolute() or arg.strip() in {"", "."} or ".." in path.parts:
-        raise ValueError(f"gate id or bundle must stay inside the review gate catalog: {arg}")
+        raise ValueError(f"criterion id or bundle must stay inside the review gate catalog: {arg}")
 
 
-def resolve_gate_requests(requests: list[str], gates_dir: Path) -> list[str]:
-    """Resolve mixed criterion requests into selector gate ids.
+def resolve_criterion_requests(requests: list[str], gates_dir: Path) -> list[str]:
+    """Resolve mixed criterion requests into selector criterion ids.
 
     Catalog gate ids and bundle names expand against the gate catalog; virtual
     conformance requests (`type`, `type/{name}`, `collection`,
@@ -37,9 +37,9 @@ def resolve_gate_requests(requests: list[str], gates_dir: Path) -> list[str]:
         and not is_collection_gate_request(arg)
         and not is_critique_request(arg)
     ]
-    gate_ids = resolve_to_gate_ids(catalog_requests, gates_dir) if catalog_requests else []
-    gate_ids.extend(passthrough_requests)
-    return gate_ids
+    criterion_ids = resolve_to_criterion_ids(catalog_requests, gates_dir) if catalog_requests else []
+    criterion_ids.extend(passthrough_requests)
+    return criterion_ids
 
 
 def all_gate_requests(gates_dir: Path) -> list[str]:
@@ -54,24 +54,24 @@ def all_gate_requests(gates_dir: Path) -> list[str]:
     """
     bundles = sorted(d.name for d in gates_dir.iterdir() if d.is_dir())
     # The heavyweight report-kind critique assay is intentionally opt-in.
-    return resolve_to_gate_ids(bundles, gates_dir) + [TYPE_GATE_LENS, COLLECTION_GATE_LENS]
+    return resolve_to_criterion_ids(bundles, gates_dir) + [TYPE_GATE_LENS, COLLECTION_GATE_LENS]
 
 
-def resolve_to_gate_ids(args: list[str], gates_dir: Path) -> list[str]:
-    gate_ids: list[str] = []
+def resolve_to_criterion_ids(args: list[str], gates_dir: Path) -> list[str]:
+    criterion_ids: list[str] = []
     for arg in args:
         arg = arg.strip()
-        _reject_unsafe_gate_arg(arg)
+        _reject_unsafe_criterion_arg(arg)
         bundle_dir = gates_dir / arg
         if bundle_dir.is_dir():
             for gate_file in sorted(bundle_dir.glob("*.md")):
-                gate_ids.append(f"{arg}/{gate_file.stem}")
+                criterion_ids.append(f"{arg}/{gate_file.stem}")
         else:
             gate_file = gates_dir / f"{arg}.md"
             if not gate_file.is_file():
                 raise FileNotFoundError(f"gate not found: {arg}")
-            gate_ids.append(arg)
-    return gate_ids
+            criterion_ids.append(arg)
+    return criterion_ids
 
 
 def _load_frontmatter(path: Path) -> dict[str, Any]:
@@ -95,7 +95,7 @@ def _matches_requirement(actual_values: set[str], required: Any) -> bool:
     return False
 
 
-def applicable_gate_ids_for_note(note_path: Path, gate_ids: list[str], gates_dir: Path) -> list[str]:
+def applicable_criterion_ids_for_note(note_path: Path, criterion_ids: list[str], gates_dir: Path) -> list[str]:
     note_meta = _load_frontmatter(note_path)
     note_type_raw = note_meta.get("type")
     note_types = {note_type_raw} if isinstance(note_type_raw, str) else set()
@@ -103,12 +103,12 @@ def applicable_gate_ids_for_note(note_path: Path, gate_ids: list[str], gates_dir
     note_traits = set(note_traits_raw) if isinstance(note_traits_raw, list) else set()
 
     applicable: list[str] = []
-    for gate_id in gate_ids:
-        gate_abs = gates_dir / f"{gate_id}.md"
+    for criterion_id in criterion_ids:
+        gate_abs = gates_dir / f"{criterion_id}.md"
         gate_meta = _load_frontmatter(gate_abs)
         if not _matches_requirement(note_traits, gate_meta.get("requires_trait")):
             continue
         if not _matches_requirement(note_types, gate_meta.get("requires_type")):
             continue
-        applicable.append(gate_id)
+        applicable.append(criterion_id)
     return applicable

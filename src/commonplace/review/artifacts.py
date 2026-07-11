@@ -16,7 +16,7 @@ BUNDLE_ARTIFACTS_ROOT = Path("kb/reports/bundle-reviews")
 class ReviewPairForPath(Protocol):
     review_pair_id: int
     note_path: str
-    gate_path: str
+    criterion_path: str
     pair_ordinal: int
 
 
@@ -33,7 +33,7 @@ class ReviewPairForResult(Protocol):
     review_pair_id: int
     review_job_id: int
     note_path: str
-    gate_path: str
+    criterion_path: str
     model_partition: str
     pair_ordinal: int
     result_kind: str
@@ -43,7 +43,7 @@ class ReviewPairForResult(Protocol):
 
 class SkippedPairForManifest(Protocol):
     note_path: str
-    gate_path: str
+    criterion_path: str
     reason: str
 
 
@@ -71,7 +71,7 @@ def result_filename(
     *,
     packing: str,
     note_path: str,
-    gate_path: str,
+    criterion_path: str,
     pair_ordinal: int,
 ) -> str:
     """Per-pair result filename, a pure function of the pair row.
@@ -81,8 +81,8 @@ def result_filename(
     keeps the filename stable when sibling pairs are later pruned.
     """
     if packing == "note":
-        stem = Path(gate_path).stem
-    elif packing == "gate":
+        stem = Path(criterion_path).stem
+    elif packing == "criterion":
         stem = Path(note_path).stem
     else:
         raise ValueError(f"unsupported review job packing: {packing}")
@@ -94,12 +94,12 @@ def result_path(
     review_job_id: int,
     packing: str,
     note_path: str,
-    gate_path: str,
+    criterion_path: str,
     pair_ordinal: int,
 ) -> str:
     return (
         f"{review_job_artifact_dir_rel(review_job_id)}/"
-        f"{result_filename(packing=packing, note_path=note_path, gate_path=gate_path, pair_ordinal=pair_ordinal)}"
+        f"{result_filename(packing=packing, note_path=note_path, criterion_path=criterion_path, pair_ordinal=pair_ordinal)}"
     )
 
 
@@ -114,7 +114,7 @@ def result_paths_by_pair_id(
             review_job_id=review_job_id,
             packing=packing,
             note_path=pair.note_path,
-            gate_path=pair.gate_path,
+            criterion_path=pair.criterion_path,
             pair_ordinal=pair.pair_ordinal,
         )
         for pair in pairs
@@ -141,7 +141,7 @@ def result_frontmatter(
         "review_job_id": job.review_job_id,
         "review_pair_id": pair.review_pair_id,
         "note_path": pair.note_path,
-        "gate_path": pair.gate_path,
+        "criterion_path": pair.criterion_path,
         "model_partition": job.model_partition,
         "runner": job.runner,
         "runner_model": job.runner_model,
@@ -169,7 +169,7 @@ def write_pair_result_files_to_derived_paths(
     for pair in pairs:
         if pair.reviewed_at is None:
             continue
-        review_text = canonical_texts.get((pair.note_path, pair.gate_path))
+        review_text = canonical_texts.get((pair.note_path, pair.criterion_path))
         if review_text is None:
             continue
         output_path = repo_relative_path(
@@ -217,7 +217,7 @@ def write_manifest(
         item: dict[str, object] = {
             "review_pair_id": pair.review_pair_id,
             "note_path": pair.note_path,
-            "gate_path": pair.gate_path,
+            "criterion_path": pair.criterion_path,
             "result_kind": getattr(pair, "result_kind", "verdict"),
             "status": pair_display_status,
             "result_path": result_paths[pair.review_pair_id],
@@ -235,7 +235,7 @@ def write_manifest(
         "bundle_output_path": bundle_output_path,
         "pairs": payload_pairs,
         "skipped_pairs": [
-            {"note_path": pair.note_path, "gate_path": pair.gate_path, "reason": pair.reason}
+            {"note_path": pair.note_path, "criterion_path": pair.criterion_path, "reason": pair.reason}
             for pair in (skipped or [])
         ],
     }

@@ -19,7 +19,7 @@ def test_ensure_db_initializes_current_schema(tmp_path: Path) -> None:
         review_pair_id = insert_completed_pair(
             conn,
             note_path="kb/notes/fresh.md",
-            gate_id="semantic/internal-consistency",
+            criterion_id="semantic/internal-consistency",
             model_partition="opus-4-6",
             decision="pass",
             reviewed_at="2026-04-10T10:01:00+02:00",
@@ -28,7 +28,7 @@ def test_ensure_db_initializes_current_schema(tmp_path: Path) -> None:
             conn,
             review_pair_id=review_pair_id,
             note_path="kb/notes/fresh.md",
-            gate_id="semantic/internal-consistency",
+            criterion_id="semantic/internal-consistency",
             model_partition="opus-4-6",
             accepted_at="2026-04-10T10:02:00+02:00",
         )
@@ -37,10 +37,10 @@ def test_ensure_db_initializes_current_schema(tmp_path: Path) -> None:
             SELECT
                 accepted_review_pair_id,
                 accepted_note_snapshot_id,
-                accepted_gate_snapshot_id,
+                accepted_criterion_snapshot_id,
                 accepted_note_hash,
-                accepted_gate_hash
-            FROM current_gate_acceptances
+                accepted_criterion_hash
+            FROM current_criterion_acceptances
             WHERE note_path = 'kb/notes/fresh.md'
             """
         ).fetchone()
@@ -67,9 +67,9 @@ def test_ensure_db_initializes_current_schema(tmp_path: Path) -> None:
     assert view_row is not None
     assert view_row["accepted_review_pair_id"] == review_pair_id
     assert view_row["accepted_note_snapshot_id"] is None
-    assert view_row["accepted_gate_snapshot_id"] is None
+    assert view_row["accepted_criterion_snapshot_id"] is None
     assert view_row["accepted_note_hash"] is None
-    assert view_row["accepted_gate_hash"] is None
+    assert view_row["accepted_criterion_hash"] is None
     assert user_version == review_schema.REVIEW_SCHEMA_VERSION
     assert "created_at" in job_columns
     assert "started_at" not in job_columns
@@ -83,9 +83,9 @@ def test_ensure_db_initializes_current_schema(tmp_path: Path) -> None:
     assert "result_path" not in pair_columns
     assert "acceptance_event_id" not in acceptance_columns
     assert acceptance_columns["accepted_review_pair_id"]["notnull"] == 1
-    assert "idx_review_pairs_note_gate" in index_names
-    assert "idx_review_pairs_note_gate_model_partition" not in index_names
-    assert "idx_acceptance_note_gate_model_partition" in index_names
+    assert "idx_review_pairs_note_criterion" in index_names
+    assert "idx_review_pairs_note_criterion_model_partition" not in index_names
+    assert "idx_acceptance_note_criterion_model_partition" in index_names
     assert "idx_acceptance_events_latest_by_key" not in index_names
     assert table_names == {
         "acceptance",
@@ -116,7 +116,7 @@ def test_upsert_acceptance_requires_review_pair(tmp_path: Path) -> None:
             review_db.upsert_acceptance(
                 conn,
                 note_path="kb/notes/current.md",
-                gate_path="kb/instructions/review-gates/prose/current.md",
+                criterion_path="kb/instructions/review-gates/prose/current.md",
                 model_partition="opus-4-6",
                 accepted_review_pair_id=invalid_pair_id,
                 accepted_at="2026-04-10T10:02:00+02:00",
@@ -166,7 +166,7 @@ def test_db_checks_remain_final_enum_backstop(tmp_path: Path) -> None:
                 INSERT INTO review_pairs (
                     review_job_id,
                     note_path,
-                    gate_path,
+                    criterion_path,
                     pair_ordinal,
                     decision
                 ) VALUES (?, ?, ?, ?, ?)
@@ -189,7 +189,7 @@ def test_model_partition_writes_are_canonicalized(tmp_path: Path) -> None:
         review_pair_id = insert_completed_pair(
             conn,
             note_path="kb/notes/fresh.md",
-            gate_id="semantic/internal-consistency",
+            criterion_id="semantic/internal-consistency",
             model_partition="opus-4-6",
             decision="pass",
             reviewed_at="2026-04-10T10:01:00+02:00",
@@ -198,7 +198,7 @@ def test_model_partition_writes_are_canonicalized(tmp_path: Path) -> None:
             conn,
             review_pair_id=review_pair_id,
             note_path="kb/notes/fresh.md",
-            gate_id="semantic/internal-consistency",
+            criterion_id="semantic/internal-consistency",
             model_partition="opus-4-6",
             accepted_at="2026-04-10T10:02:00+02:00",
         )
@@ -217,7 +217,7 @@ def test_current_acceptance_view_filters_incomplete_jobs_and_null_decisions(tmp_
         current_pair_id = insert_completed_pair(
             conn,
             note_path="kb/notes/fresh.md",
-            gate_id="semantic/internal-consistency",
+            criterion_id="semantic/internal-consistency",
             model_partition="opus-4-6",
             decision="pass",
             reviewed_at="2026-04-10T10:01:00+02:00",
@@ -226,7 +226,7 @@ def test_current_acceptance_view_filters_incomplete_jobs_and_null_decisions(tmp_
             conn,
             review_pair_id=current_pair_id,
             note_path="kb/notes/fresh.md",
-            gate_id="semantic/internal-consistency",
+            criterion_id="semantic/internal-consistency",
             model_partition="opus-4-6",
             accepted_at="2026-04-10T10:02:00+02:00",
         )
@@ -240,7 +240,7 @@ def test_current_acceptance_view_filters_incomplete_jobs_and_null_decisions(tmp_
             pairs=[
                 review_db.ReviewPairRequest(
                     note_path="kb/notes/queued.md",
-                    gate_path="kb/instructions/review-gates/semantic/internal-consistency.md",
+                    criterion_path="kb/instructions/review-gates/semantic/internal-consistency.md",
                     pair_ordinal=1,
                     result_kind="verdict",
                 )
@@ -252,7 +252,7 @@ def test_current_acceptance_view_filters_incomplete_jobs_and_null_decisions(tmp_
             review_pairs=[
                 review_db.ReviewPairCompletion(
                     note_path="kb/notes/queued.md",
-                    gate_path="kb/instructions/review-gates/semantic/internal-consistency.md",
+                    criterion_path="kb/instructions/review-gates/semantic/internal-consistency.md",
                     decision="warn",
                     reviewed_at="2026-04-10T10:03:30+02:00",
                 )
@@ -264,7 +264,7 @@ def test_current_acceptance_view_filters_incomplete_jobs_and_null_decisions(tmp_
             conn,
             review_pair_id=queued_pair_id,
             note_path="kb/notes/queued.md",
-            gate_id="semantic/internal-consistency",
+            criterion_id="semantic/internal-consistency",
             model_partition="opus-4-6",
             accepted_at="2026-04-10T10:04:00+02:00",
         )
@@ -278,7 +278,7 @@ def test_current_acceptance_view_filters_incomplete_jobs_and_null_decisions(tmp_
             pairs=[
                 review_db.ReviewPairRequest(
                     note_path="kb/notes/null-decision.md",
-                    gate_path="kb/instructions/review-gates/semantic/internal-consistency.md",
+                    criterion_path="kb/instructions/review-gates/semantic/internal-consistency.md",
                     pair_ordinal=1,
                     result_kind="verdict",
                 )
@@ -292,7 +292,7 @@ def test_current_acceptance_view_filters_incomplete_jobs_and_null_decisions(tmp_
             """
             INSERT INTO acceptance (
                 note_path,
-                gate_path,
+                criterion_path,
                 model_partition,
                 accepted_review_pair_id,
                 accepted_at
@@ -310,14 +310,14 @@ def test_current_acceptance_view_filters_incomplete_jobs_and_null_decisions(tmp_
         view_row = conn.execute(
             """
             SELECT accepted_review_pair_id
-            FROM current_gate_acceptances
+            FROM current_criterion_acceptances
             WHERE note_path = 'kb/notes/fresh.md'
             """
         ).fetchone()
         hidden_rows = conn.execute(
             """
             SELECT note_path
-            FROM current_gate_acceptances
+            FROM current_criterion_acceptances
             WHERE note_path IN ('kb/notes/queued.md', 'kb/notes/null-decision.md')
             """
         ).fetchall()
@@ -342,7 +342,7 @@ def test_snapshot_file_deduplicates_per_path_and_hashes_exact_utf8(tmp_path: Pat
     with review_db.connect(db_path) as conn:
         first = review_db.snapshot_file(conn, repo_root=repo, path="kb/notes/sample.md")
         second = review_db.snapshot_file(conn, repo_root=repo, path="kb/notes/sample.md")
-        gate_snapshot = review_db.snapshot_file(
+        criterion_snapshot = review_db.snapshot_file(
             conn,
             repo_root=repo,
             path="kb/instructions/review-gates/prose/sample.md",
@@ -352,8 +352,8 @@ def test_snapshot_file_deduplicates_per_path_and_hashes_exact_utf8(tmp_path: Pat
     assert first.path == "kb/notes/sample.md"
     assert first.content_text == "title\n\ncafe\u0301\n"
     assert first.content_sha256 == sha256("title\n\ncafe\u0301\n".encode("utf-8")).hexdigest()
-    assert gate_snapshot.snapshot_id != first.snapshot_id
-    assert gate_snapshot.content_sha256 == first.content_sha256
+    assert criterion_snapshot.snapshot_id != first.snapshot_id
+    assert criterion_snapshot.content_sha256 == first.content_sha256
 
 
 def test_load_review_job_exposes_created_at(tmp_path: Path) -> None:
@@ -371,7 +371,7 @@ def test_load_review_job_exposes_created_at(tmp_path: Path) -> None:
             pairs=[
                 review_db.ReviewPairRequest(
                     note_path="kb/notes/pending.md",
-                    gate_path="kb/instructions/review-gates/prose/pending.md",
+                    criterion_path="kb/instructions/review-gates/prose/pending.md",
                     pair_ordinal=1,
                     result_kind="verdict",
                 )
@@ -480,22 +480,22 @@ def test_prune_superseded_acceptances_deletes_unreferenced_snapshots(tmp_path: P
         old_pair_id = insert_completed_pair(
             conn,
             note_path="kb/notes/sample.md",
-            gate_id="prose/sample",
+            criterion_id="prose/sample",
             model_partition="opus-4-6",
             decision="pass",
             reviewed_at="2026-04-10T10:01:00+02:00",
             reviewed_note_snapshot_id=old_note.snapshot_id,
-            reviewed_gate_snapshot_id=old_gate.snapshot_id,
+            reviewed_criterion_snapshot_id=old_gate.snapshot_id,
         )
         accept_pair(
             conn,
             review_pair_id=old_pair_id,
             note_path="kb/notes/sample.md",
-            gate_id="prose/sample",
+            criterion_id="prose/sample",
             model_partition="opus-4-6",
             accepted_at="2026-04-10T10:02:00+02:00",
             accepted_note_snapshot_id=old_note.snapshot_id,
-            accepted_gate_snapshot_id=old_gate.snapshot_id,
+            accepted_criterion_snapshot_id=old_gate.snapshot_id,
         )
 
         (repo / "kb/notes/sample.md").write_text("current note\n", encoding="utf-8")
@@ -509,12 +509,12 @@ def test_prune_superseded_acceptances_deletes_unreferenced_snapshots(tmp_path: P
         current_pair_id = insert_completed_pair(
             conn,
             note_path="kb/notes/sample.md",
-            gate_id="prose/sample",
+            criterion_id="prose/sample",
             model_partition="opus-4-6",
             decision="pass",
             reviewed_at="2026-04-10T10:03:00+02:00",
             reviewed_note_snapshot_id=current_note.snapshot_id,
-            reviewed_gate_snapshot_id=current_gate.snapshot_id,
+            reviewed_criterion_snapshot_id=current_gate.snapshot_id,
         )
         old_job_id = conn.execute(
             "SELECT review_job_id FROM review_pairs WHERE review_pair_id = ?",
@@ -524,11 +524,11 @@ def test_prune_superseded_acceptances_deletes_unreferenced_snapshots(tmp_path: P
             conn,
             review_pair_id=current_pair_id,
             note_path="kb/notes/sample.md",
-            gate_id="prose/sample",
+            criterion_id="prose/sample",
             model_partition="opus-4-6",
             accepted_at="2026-04-10T10:04:00+02:00",
             accepted_note_snapshot_id=current_note.snapshot_id,
-            accepted_gate_snapshot_id=current_gate.snapshot_id,
+            accepted_criterion_snapshot_id=current_gate.snapshot_id,
         )
         deleted_job_ids = review_db.prune_superseded_acceptances(conn, [superseded])
         remaining_snapshot_ids = {
@@ -568,7 +568,7 @@ def test_current_acceptance_view_exposes_snapshot_hashes(tmp_path: Path) -> None
 
     with review_db.connect(db_path) as conn:
         note_snapshot = review_db.snapshot_file(conn, repo_root=repo, path="kb/notes/sample.md")
-        gate_snapshot = review_db.snapshot_file(
+        criterion_snapshot = review_db.snapshot_file(
             conn,
             repo_root=repo,
             path="kb/instructions/review-gates/prose/sample.md",
@@ -576,39 +576,39 @@ def test_current_acceptance_view_exposes_snapshot_hashes(tmp_path: Path) -> None
         review_pair_id = insert_completed_pair(
             conn,
             note_path="kb/notes/sample.md",
-            gate_id="prose/sample",
+            criterion_id="prose/sample",
             model_partition="opus-4-6",
             decision="pass",
             reviewed_at="2026-04-10T10:01:00+02:00",
             reviewed_note_snapshot_id=note_snapshot.snapshot_id,
-            reviewed_gate_snapshot_id=gate_snapshot.snapshot_id,
+            reviewed_criterion_snapshot_id=criterion_snapshot.snapshot_id,
         )
         accept_pair(
             conn,
             review_pair_id=review_pair_id,
             note_path="kb/notes/sample.md",
-            gate_id="prose/sample",
+            criterion_id="prose/sample",
             model_partition="opus-4-6",
             accepted_at="2026-04-10T10:02:00+02:00",
             accepted_note_snapshot_id=note_snapshot.snapshot_id,
-            accepted_gate_snapshot_id=gate_snapshot.snapshot_id,
+            accepted_criterion_snapshot_id=criterion_snapshot.snapshot_id,
         )
         view_row = conn.execute(
             """
             SELECT
                 accepted_note_snapshot_id,
-                accepted_gate_snapshot_id,
+                accepted_criterion_snapshot_id,
                 accepted_note_hash,
-                accepted_gate_hash
-            FROM current_gate_acceptances
+                accepted_criterion_hash
+            FROM current_criterion_acceptances
             WHERE note_path = 'kb/notes/sample.md'
             """
         ).fetchone()
 
     assert view_row["accepted_note_snapshot_id"] == note_snapshot.snapshot_id
-    assert view_row["accepted_gate_snapshot_id"] == gate_snapshot.snapshot_id
+    assert view_row["accepted_criterion_snapshot_id"] == criterion_snapshot.snapshot_id
     assert view_row["accepted_note_hash"] == note_snapshot.content_sha256
-    assert view_row["accepted_gate_hash"] == gate_snapshot.content_sha256
+    assert view_row["accepted_criterion_hash"] == criterion_snapshot.content_sha256
 
 
 def test_snapshot_file_rejects_non_repo_relative_paths(tmp_path: Path) -> None:

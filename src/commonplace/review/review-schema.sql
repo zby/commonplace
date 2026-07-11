@@ -1,9 +1,9 @@
 -- SQLite schema for canonical review storage.
 --
 -- `review_jobs` records one review invocation: one prompt/job directory.
--- `review_pairs` records each requested (note_path, gate_path) pair inside
--- that invocation. `gate_path` is the retained schema name for the criterion
--- side, including report assays. Freshness remains acceptance-driven and
+-- `review_pairs` records each requested (note_path, criterion_path) pair inside
+-- that invocation. `criterion_path` names the criterion side, including
+-- report assays. Freshness remains acceptance-driven and
 -- criterion-local; pair completion depends on result_kind, not decision alone.
 
 PRAGMA foreign_keys = ON;
@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS review_jobs (
     failure_reason TEXT,
     telemetry_json TEXT,
     packing TEXT NOT NULL CHECK (
-        packing IN ('note', 'gate')
+        packing IN ('note', 'criterion')
     )
 );
 
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS review_pairs (
     review_pair_id INTEGER PRIMARY KEY,
     review_job_id INTEGER NOT NULL REFERENCES review_jobs(review_job_id) ON DELETE CASCADE,
     note_path TEXT NOT NULL,
-    gate_path TEXT NOT NULL,
+    criterion_path TEXT NOT NULL,
     pair_ordinal INTEGER NOT NULL,
     result_kind TEXT NOT NULL CHECK (
         result_kind IN ('verdict', 'report')
@@ -56,44 +56,44 @@ CREATE TABLE IF NOT EXISTS review_pairs (
         decision IN ('pass', 'warn', 'fail', 'error')
     ),
     reviewed_note_snapshot_id INTEGER REFERENCES review_file_snapshots(snapshot_id),
-    reviewed_gate_snapshot_id INTEGER REFERENCES review_file_snapshots(snapshot_id),
+    reviewed_criterion_snapshot_id INTEGER REFERENCES review_file_snapshots(snapshot_id),
     reviewed_at TEXT,
     CHECK (result_kind = 'verdict' OR decision IS NULL),
-    UNIQUE (review_job_id, note_path, gate_path),
+    UNIQUE (review_job_id, note_path, criterion_path),
     UNIQUE (review_job_id, pair_ordinal)
 );
 
-CREATE INDEX IF NOT EXISTS idx_review_pairs_note_gate
-ON review_pairs(note_path, gate_path);
+CREATE INDEX IF NOT EXISTS idx_review_pairs_note_criterion
+ON review_pairs(note_path, criterion_path);
 
 CREATE INDEX IF NOT EXISTS idx_review_pairs_review_job_id
 ON review_pairs(review_job_id);
 
 CREATE TABLE IF NOT EXISTS acceptance (
     note_path TEXT NOT NULL,
-    gate_path TEXT NOT NULL,
+    criterion_path TEXT NOT NULL,
     model_partition TEXT NOT NULL,
     accepted_review_pair_id INTEGER NOT NULL REFERENCES review_pairs(review_pair_id),
     accepted_note_snapshot_id INTEGER REFERENCES review_file_snapshots(snapshot_id),
-    accepted_gate_snapshot_id INTEGER REFERENCES review_file_snapshots(snapshot_id),
+    accepted_criterion_snapshot_id INTEGER REFERENCES review_file_snapshots(snapshot_id),
     accepted_at TEXT NOT NULL
 );
 
-CREATE UNIQUE INDEX IF NOT EXISTS idx_acceptance_note_gate_model_partition
-ON acceptance(note_path, gate_path, model_partition);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_acceptance_note_criterion_model_partition
+ON acceptance(note_path, criterion_path, model_partition);
 
-CREATE VIEW IF NOT EXISTS current_gate_acceptances AS
+CREATE VIEW IF NOT EXISTS current_criterion_acceptances AS
 SELECT
     e.note_path,
-    e.gate_path,
+    e.criterion_path,
     e.model_partition,
     e.accepted_review_pair_id,
     e.accepted_note_snapshot_id,
-    e.accepted_gate_snapshot_id,
+    e.accepted_criterion_snapshot_id,
     note_snapshot.content_sha256 AS accepted_note_hash,
-    gate_snapshot.content_sha256 AS accepted_gate_hash,
+    criterion_snapshot.content_sha256 AS accepted_criterion_hash,
     note_snapshot.content_text AS accepted_note_text,
-    gate_snapshot.content_text AS accepted_gate_text,
+    criterion_snapshot.content_text AS accepted_criterion_text,
     e.accepted_at,
     rp.result_kind,
     rp.decision
@@ -101,14 +101,14 @@ FROM acceptance AS e
 JOIN review_pairs AS rp
   ON rp.review_pair_id = e.accepted_review_pair_id
  AND rp.note_path = e.note_path
- AND rp.gate_path = e.gate_path
+ AND rp.criterion_path = e.criterion_path
 JOIN review_jobs AS j
   ON j.review_job_id = rp.review_job_id
  AND j.model_partition = e.model_partition
 LEFT JOIN review_file_snapshots AS note_snapshot
   ON e.accepted_note_snapshot_id = note_snapshot.snapshot_id
-LEFT JOIN review_file_snapshots AS gate_snapshot
-  ON e.accepted_gate_snapshot_id = gate_snapshot.snapshot_id
+LEFT JOIN review_file_snapshots AS criterion_snapshot
+  ON e.accepted_criterion_snapshot_id = criterion_snapshot.snapshot_id
 WHERE j.status = 'completed'
   AND rp.reviewed_at IS NOT NULL
   AND (rp.result_kind = 'report' OR rp.decision IS NOT NULL);
@@ -116,11 +116,11 @@ WHERE j.status = 'completed'
 -- Query pattern expected for selector:
 --
 -- 1. resolve current note SHA-256 from candidate note files
--- 2. resolve current gate SHA-256 from gate files
--- 3. LEFT JOIN current_gate_acceptances view on (note_path, gate_path, model_partition)
+-- 2. resolve current criterion SHA-256 from criterion files
+-- 3. LEFT JOIN current_criterion_acceptances view on (note_path, criterion_path, model_partition)
 -- 4. classify:
 --      no row                  -> missing-review
 --      accepted snapshots null -> missing-review
---      accepted_gate_hash != ? -> gate-changed
+--      accepted_criterion_hash != ? -> criterion-changed
 --      accepted_note_hash != ? -> note-changed
 --      else fresh

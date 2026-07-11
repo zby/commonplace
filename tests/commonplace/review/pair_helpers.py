@@ -5,7 +5,7 @@ import sqlite3
 from commonplace.review import review_db
 
 
-def source_gate_path(gate: str) -> str:
+def source_criterion_path(gate: str) -> str:
     normalized = gate.strip().removesuffix(".md")
     if normalized.startswith("kb/"):
         return gate.strip()
@@ -16,15 +16,15 @@ def insert_completed_pair(
     conn: sqlite3.Connection,
     *,
     note_path: str,
-    gate_id: str,
+    criterion_id: str,
     model_partition: str,
     decision: str,
     reviewed_at: str,
     runner: str = "test-runner",
     reviewed_note_snapshot_id: int | None = None,
-    reviewed_gate_snapshot_id: int | None = None,
+    reviewed_criterion_snapshot_id: int | None = None,
 ) -> int:
-    gate_path = source_gate_path(gate_id)
+    criterion_path = source_criterion_path(criterion_id)
     review_job_id = review_db.create_job_with_pairs(
         conn,
         model_partition=model_partition,
@@ -35,17 +35,17 @@ def insert_completed_pair(
         pairs=[
             review_db.ReviewPairRequest(
                 note_path=note_path,
-                gate_path=gate_path,
+                criterion_path=criterion_path,
                 pair_ordinal=1,
                 result_kind="verdict",
                 reviewed_note_snapshot_id=reviewed_note_snapshot_id,
-                reviewed_gate_snapshot_id=reviewed_gate_snapshot_id,
+                reviewed_criterion_snapshot_id=reviewed_criterion_snapshot_id,
             )
         ],
     )
     pair = review_db.ReviewPairCompletion(
         note_path=note_path,
-        gate_path=gate_path,
+        criterion_path=criterion_path,
         decision=decision,
         reviewed_at=reviewed_at,
     )
@@ -60,19 +60,19 @@ def accept_pair(
     *,
     review_pair_id: int,
     note_path: str,
-    gate_id: str,
+    criterion_id: str,
     model_partition: str,
     accepted_at: str,
     accepted_note_snapshot_id: int | None = None,
-    accepted_gate_snapshot_id: int | None = None,
+    accepted_criterion_snapshot_id: int | None = None,
 ) -> review_db.SupersededAcceptance | None:
     return review_db.upsert_acceptance(
         conn,
         note_path=note_path,
-        gate_path=source_gate_path(gate_id),
+        criterion_path=source_criterion_path(criterion_id),
         model_partition=model_partition,
         accepted_review_pair_id=review_pair_id,
         accepted_note_snapshot_id=accepted_note_snapshot_id,
-        accepted_gate_snapshot_id=accepted_gate_snapshot_id,
+        accepted_criterion_snapshot_id=accepted_criterion_snapshot_id,
         accepted_at=accepted_at,
     )

@@ -13,7 +13,7 @@ from pathlib import Path
 
 from commonplace.review.acknowledgement import ack_pairs
 from commonplace.review.ack_trivial_note_changes import qualifying_pairs
-from commonplace.review.resolve_gates import all_gate_requests, resolve_gate_requests
+from commonplace.review.resolve_criteria import all_gate_requests, resolve_criterion_requests
 from commonplace.review.paths import review_gates_dir
 
 
@@ -27,7 +27,7 @@ def build_parser() -> argparse.ArgumentParser:
         allow_abbrev=False,
     )
     parser.add_argument(
-        "gate_or_bundle",
+        "criterion_or_bundle",
         nargs="*",
         help=(
             "Gate IDs (e.g. prose/source-residue), bundle names (e.g. prose), "
@@ -61,19 +61,19 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
         parser.error("--model-partition must not be empty")
 
     if args.all_gates:
-        if args.gate_or_bundle:
-            parser.error("gate/bundle names and --all-gates are mutually exclusive")
+        if args.criterion_or_bundle:
+            parser.error("criterion/bundle names and --all-gates are mutually exclusive")
         try:
-            gate_ids = all_gate_requests(gates_dir)
+            criterion_ids = all_gate_requests(gates_dir)
         except (FileNotFoundError, ValueError) as exc:
             parser.error(str(exc))
-    elif args.gate_or_bundle:
+    elif args.criterion_or_bundle:
         try:
-            gate_ids = resolve_gate_requests(args.gate_or_bundle, gates_dir)
+            criterion_ids = resolve_criterion_requests(args.criterion_or_bundle, gates_dir)
         except (FileNotFoundError, ValueError) as exc:
             parser.error(str(exc))
     else:
-        parser.error("provide gate/bundle names or --all-gates")
+        parser.error("provide criterion/bundle names or --all-gates")
 
     if args.note_paths and args.current:
         parser.error("--note and --current are mutually exclusive")
@@ -81,7 +81,7 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     pairs = qualifying_pairs(
         repo_root,
         model=model,
-        gate_ids=gate_ids,
+        criterion_ids=criterion_ids,
         note_filter=args.note_paths,
         current_only=args.current,
     )
@@ -100,8 +100,8 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
         acked = ack_pairs(repo_root, pairs, model)
     except (FileNotFoundError, ValueError) as exc:
         parser.error(str(exc))
-    for note_path, gate_id in acked:
-        print(f"acked: {note_path} {gate_id}")
+    for note_path, criterion_id in acked:
+        print(f"acked: {note_path} {criterion_id}")
     print(f"acked {len(pairs)} stale pair(s)")
     return 0
 

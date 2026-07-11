@@ -1,7 +1,7 @@
 """Render review protocol prompts.
 
 One renderer for every packing shape: the prompt carries N note targets and
-M assay criteria and requests one output block per persisted (note, gate_path)
+M assay criteria and requests one output block per persisted (note, criterion_path)
 pair. Notes and catalog criteria are embedded once; a conformance dependency
 serving as a criterion — the note's type spec or its collection's COLLECTION.md —
 is referenced by repo path instead, and the worker reads it from disk. The
@@ -13,7 +13,7 @@ The referenced dependency is still snapshotted at job creation and pinned by
 acceptance, so freshness is unchanged. The disk read opens a window: a
 dependency edited between job creation and the worker's read is judged in its
 new text while acceptance pins the creation-time snapshot. A persistent edit
-self-heals — the acceptance is immediately stale (`gate-changed`) against the
+self-heals — the acceptance is immediately stale (`criterion-changed`) against the
 changed file — so only an edit reverted within the window escapes notice.
 
 Freshness boundary: acceptance hashes only the note and criterion
@@ -44,19 +44,19 @@ from commonplace.review.protocol.format import (
     REPORT_LINE_TEMPLATE,
     RESULT_LINE_TEMPLATE,
 )
-from commonplace.review.collection_conformance import is_collection_md_gate_path
-from commonplace.review.type_conformance import is_type_spec_gate_path
+from commonplace.review.collection_conformance import is_collection_md_criterion_path
+from commonplace.review.type_conformance import is_type_spec_criterion_path
 
 
 OutputMode = Literal["stdout", "file"]
 
 
-def _is_referenced_gate_path(gate_path: str) -> bool:
+def _is_referenced_criterion_path(criterion_path: str) -> bool:
     """Gate paths referenced by repo path in the prompt rather than embedded."""
-    return is_type_spec_gate_path(gate_path) or is_collection_md_gate_path(gate_path)
+    return is_type_spec_criterion_path(criterion_path) or is_collection_md_criterion_path(criterion_path)
 
 
-def _type_conformance_wrapper_lines(gate_path: str) -> tuple[str, ...]:
+def _type_conformance_wrapper_lines(criterion_path: str) -> tuple[str, ...]:
     """Gate block rendered for a type spec serving as a gate.
 
     Mechanical only: it says how to apply authoring instructions as a gate,
@@ -67,7 +67,7 @@ def _type_conformance_wrapper_lines(gate_path: str) -> tuple[str, ...]:
     return (
         "This is a type-conformance gate. The gate is the note's type spec:",
         "authoring instructions and a template, not a Failure mode / Test procedure.",
-        f"The type spec is not embedded in this prompt. Read `{gate_path}` (repo-relative)",
+        f"The type spec is not embedded in this prompt. Read `{criterion_path}` (repo-relative)",
         "before judging; it is the authoritative gate text for this pair.",
         "Judge whether the note does what the type spec's authoring instructions ask.",
         "If the type spec carries a `## Review` section, treat it as the operative test.",
@@ -78,7 +78,7 @@ def _type_conformance_wrapper_lines(gate_path: str) -> tuple[str, ...]:
     )
 
 
-def _collection_conformance_wrapper_lines(gate_path: str) -> tuple[str, ...]:
+def _collection_conformance_wrapper_lines(criterion_path: str) -> tuple[str, ...]:
     """Gate block rendered for a COLLECTION.md serving as a gate.
 
     Mechanical only: it says how to apply a collection contract as a gate,
@@ -91,7 +91,7 @@ def _collection_conformance_wrapper_lines(gate_path: str) -> tuple[str, ...]:
         "This is a collection-conformance gate. The gate is the authoring contract",
         "(COLLECTION.md) of the collection the note lives in: conventions and routing",
         "rules, not a Failure mode / Test procedure.",
-        f"The contract is not embedded in this prompt. Read `{gate_path}` (repo-relative)",
+        f"The contract is not embedded in this prompt. Read `{criterion_path}` (repo-relative)",
         "before judging; it is the authoritative gate text for this pair.",
         "Judge whether the note follows the collection's authoring conventions:",
         "placement, title and description conventions, quality goal, and outbound linking rules.",
@@ -119,7 +119,7 @@ REVIEW_RUNNER_SYSTEM_PROMPT = (
 class NoteReviewTarget:
     note_path: str
     review_job_id: int
-    gate_paths: tuple[str, ...]
+    criterion_paths: tuple[str, ...]
     note_text: str
     resolved_links: Sequence[tuple[str, str, str]] = ()
     unresolved_links: Sequence[tuple[str, str]] = ()
@@ -133,7 +133,7 @@ def _validate_embedded_text(label: str, text: str) -> None:
 
 def _validate_targets(
     notes: Sequence[NoteReviewTarget],
-    gate_texts: dict[str, str],
+    criterion_texts: dict[str, str],
 ) -> None:
     if not notes:
         raise ValueError("at least one note is required")
@@ -147,40 +147,40 @@ def _validate_targets(
             raise ValueError(f"note_path must not contain {PAIR_KEY_SEPARATOR!r}: {note_path}")
         if note_path in seen_notes:
             raise ValueError(f"duplicate note in review target list: {note_path}")
-        if not note.gate_paths:
-            raise ValueError(f"note has no requested gates: {note_path}")
-        if len(set(note.gate_paths)) != len(note.gate_paths):
-            raise ValueError(f"duplicate gate requested for note: {note_path}")
+        if not note.criterion_paths:
+            raise ValueError(f"note has no requested criteria: {note_path}")
+        if len(set(note.criterion_paths)) != len(note.criterion_paths):
+            raise ValueError(f"duplicate criterion requested for note: {note_path}")
         if not note.note_text.strip():
             raise ValueError(f"note_text must not be empty: {note_path}")
         _validate_embedded_text(note_path, note.note_text)
         seen_notes.add(note_path)
 
-    requested_gate_paths = {gate_path for note in notes for gate_path in note.gate_paths}
-    for gate_path in sorted(requested_gate_paths):
-        if PAIR_KEY_SEPARATOR in gate_path:
-            raise ValueError(f"gate_path must not contain {PAIR_KEY_SEPARATOR!r}: {gate_path}")
-        if _is_referenced_gate_path(gate_path):
+    requested_criterion_paths = {criterion_path for note in notes for criterion_path in note.criterion_paths}
+    for criterion_path in sorted(requested_criterion_paths):
+        if PAIR_KEY_SEPARATOR in criterion_path:
+            raise ValueError(f"criterion_path must not contain {PAIR_KEY_SEPARATOR!r}: {criterion_path}")
+        if _is_referenced_criterion_path(criterion_path):
             # Referenced by path, not embedded: no text to require or scan.
             continue
-        gate_text = gate_texts.get(gate_path)
-        if gate_text is None or not gate_text.strip():
-            raise ValueError(f"missing gate text: {gate_path}")
-        _validate_embedded_text(f"gate {gate_path}", gate_text)
+        criterion_text = criterion_texts.get(criterion_path)
+        if criterion_text is None or not criterion_text.strip():
+            raise ValueError(f"missing criterion text: {criterion_path}")
+        _validate_embedded_text(f"criterion {criterion_path}", criterion_text)
 
 
 def render_pairs_prompt(
     *,
     notes: Sequence[NoteReviewTarget],
-    gate_texts: dict[str, str],
+    criterion_texts: dict[str, str],
     result_kind: str,
     output_mode: OutputMode = "stdout",
     bundle_output_path: str | None = None,
 ) -> str:
-    _validate_targets(notes, gate_texts)
-    gate_paths = sorted({gate_path for note in notes for gate_path in note.gate_paths})
-    has_type_spec_gate = any(is_type_spec_gate_path(gate_path) for gate_path in gate_paths)
-    has_collection_md_gate = any(is_collection_md_gate_path(gate_path) for gate_path in gate_paths)
+    _validate_targets(notes, criterion_texts)
+    criterion_paths = sorted({criterion_path for note in notes for criterion_path in note.criterion_paths})
+    has_type_spec_gate = any(is_type_spec_criterion_path(criterion_path) for criterion_path in criterion_paths)
+    has_collection_md_gate = any(is_collection_md_criterion_path(criterion_path) for criterion_path in criterion_paths)
 
     if output_mode == "file":
         if bundle_output_path is None:
@@ -242,8 +242,8 @@ def render_pairs_prompt(
             *destination_lines,
             "- Use exactly one block per requested (note, criterion) pair.",
             "- Use these exact sentinels for every block:",
-            "  === PAIR REVIEW START: <note-path> :: <gate-path> ===",
-            "  === PAIR REVIEW END: <note-path> :: <gate-path> ===",
+            "  === PAIR REVIEW START: <note-path> :: <criterion-path> ===",
+            "  === PAIR REVIEW END: <note-path> :: <criterion-path> ===",
             result_instruction,
             "- Make the result line the last non-empty line inside each block.",
             "- End output after the final block.",
@@ -252,8 +252,8 @@ def render_pairs_prompt(
         ]
     )
     for note in notes:
-        for gate_path in note.gate_paths:
-            lines.append(f"- {note.note_path} :: {gate_path} (review job id: {note.review_job_id})")
+        for criterion_path in note.criterion_paths:
+            lines.append(f"- {note.note_path} :: {criterion_path} (review job id: {note.review_job_id})")
 
     lines.extend(
         [
@@ -308,18 +308,18 @@ def render_pairs_prompt(
             "Requested review criteria (authoritative for this job):",
         ]
     )
-    for gate_path in gate_paths:
-        lines.append(f"=== gate: {gate_path} ===")
-        if is_type_spec_gate_path(gate_path):
-            lines.extend(_type_conformance_wrapper_lines(gate_path))
+    for criterion_path in criterion_paths:
+        lines.append(f"=== criterion: {criterion_path} ===")
+        if is_type_spec_criterion_path(criterion_path):
+            lines.extend(_type_conformance_wrapper_lines(criterion_path))
             lines.append("")
-        elif is_collection_md_gate_path(gate_path):
-            lines.extend(_collection_conformance_wrapper_lines(gate_path))
+        elif is_collection_md_criterion_path(criterion_path):
+            lines.extend(_collection_conformance_wrapper_lines(criterion_path))
             lines.append("")
         else:
             lines.extend(
                 [
-                    gate_texts[gate_path].rstrip(),
+                    criterion_texts[criterion_path].rstrip(),
                     "",
                 ]
             )
@@ -331,8 +331,8 @@ def render_pairs_prompt(
         ]
     )
     for note in notes:
-        for gate_path in note.gate_paths:
-            block = [PAIR_START_TEMPLATE.format(note_path=note.note_path, gate_path=gate_path)]
+        for criterion_path in note.criterion_paths:
+            block = [PAIR_START_TEMPLATE.format(note_path=note.note_path, criterion_path=criterion_path)]
             if result_kind == "verdict":
                 block.extend(
                     [
@@ -352,7 +352,7 @@ def render_pairs_prompt(
                 [
                     "",
                     result_template,
-                    PAIR_END_TEMPLATE.format(note_path=note.note_path, gate_path=gate_path),
+                    PAIR_END_TEMPLATE.format(note_path=note.note_path, criterion_path=criterion_path),
                     "",
                 ]
             )

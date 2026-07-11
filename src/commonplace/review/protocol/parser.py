@@ -1,6 +1,6 @@
 """Parse and canonicalize review protocol output.
 
-Output blocks are keyed by (note_path, gate_path). Structural anomalies —
+Output blocks are keyed by (note_path, criterion_path). Structural anomalies —
 nested or mismatched sentinels, unexpected or duplicate pairs, empty bodies —
 raise, because the rest of the stream cannot be trusted. Missing expected
 pairs are reported on the parsed bundle; live finalization treats them as a
@@ -26,7 +26,7 @@ PairKey = tuple[str, str]
 @dataclass(frozen=True)
 class ParsedPairReview:
     note_path: str
-    gate_path: str
+    criterion_path: str
     decision: str | None
     result_kind: str
 
@@ -53,7 +53,7 @@ def extract_pair_reviews(
         if start_match is not None:
             if current_pair is not None:
                 raise ValueError(f"nested pair review start before closing {current_pair[0]} :: {current_pair[1]}")
-            pair = (start_match.group("note_path"), start_match.group("gate_path"))
+            pair = (start_match.group("note_path"), start_match.group("criterion_path"))
             if pair not in expected:
                 raise ValueError(f"unexpected pair in review output: {pair[0]} :: {pair[1]}")
             if pair in reviews:
@@ -64,7 +64,7 @@ def extract_pair_reviews(
 
         end_match = PAIR_END_RE.match(raw_line.strip())
         if end_match is not None:
-            pair = (end_match.group("note_path"), end_match.group("gate_path"))
+            pair = (end_match.group("note_path"), end_match.group("criterion_path"))
             if current_pair is None:
                 raise ValueError(f"pair review end without start: {pair[0]} :: {pair[1]}")
             if pair != current_pair:
@@ -103,12 +103,12 @@ def parse_pair_bundle(
         unexpected = contracted - expected
         if missing:
             details.append(
-                "missing " + ", ".join(f"{note} :: {gate}" for note, gate in sorted(missing))
+                "missing " + ", ".join(f"{note} :: {criterion}" for note, criterion in sorted(missing))
             )
         if unexpected:
             details.append(
                 "unexpected "
-                + ", ".join(f"{note} :: {gate}" for note, gate in sorted(unexpected))
+                + ", ".join(f"{note} :: {criterion}" for note, criterion in sorted(unexpected))
             )
         raise ValueError(f"result-kind contract mismatch: {'; '.join(details)}")
 
@@ -128,7 +128,7 @@ def parse_pair_bundle(
         canonical_texts[pair] = canonical_text
         reviews[pair] = ParsedPairReview(
             note_path=pair[0],
-            gate_path=pair[1],
+            criterion_path=pair[1],
             decision=decision,
             result_kind=result_kind,
         )

@@ -14,7 +14,7 @@ def is_critique_request(value: str) -> bool:
     return value.strip() == CRITIQUE_LENS
 
 
-def critique_gate_path(repo_root: Path) -> str:
+def critique_criterion_path(repo_root: Path) -> str:
     installed = repo_root / INSTALLED_CRITIQUE_PATH
     source = repo_root / SOURCE_CRITIQUE_PATH
     path = installed if installed.is_file() else source
@@ -23,7 +23,7 @@ def critique_gate_path(repo_root: Path) -> str:
     return path.relative_to(repo_root).as_posix()
 
 
-def is_critique_gate_path(path: str) -> bool:
+def is_critique_criterion_path(path: str) -> bool:
     normalized = Path(path).as_posix()
     return normalized in {
         SOURCE_CRITIQUE_PATH.as_posix(),
@@ -31,5 +31,5 @@ def is_critique_gate_path(path: str) -> bool:
     }
 
 
-def result_kind_for_gate_path(path: str) -> str:
-    return "report" if is_critique_gate_path(path) else "verdict"
+def result_kind_for_criterion_path(path: str) -> str:
+    return "report" if is_critique_criterion_path(path) else "verdict"

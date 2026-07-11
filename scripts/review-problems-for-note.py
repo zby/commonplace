@@ -133,7 +133,7 @@ def load_effective_problem_reviews(
             SELECT
                 rp.*,
                 ROW_NUMBER() OVER (
-                    PARTITION BY rp.note_path, rp.gate_path, rp.model_partition
+                    PARTITION BY rp.note_path, rp.criterion_path, rp.model_partition
                     ORDER BY rp.reviewed_at DESC, rp.review_pair_id DESC
                 ) AS rn
             FROM review_pairs AS rp
@@ -143,21 +143,21 @@ def load_effective_problem_reviews(
             COALESCE(accepted.review_pair_id, latest.review_pair_id) AS review_pair_id,
             COALESCE(accepted.review_job_id, latest.review_job_id) AS review_job_id,
             COALESCE(accepted.note_path, latest.note_path) AS note_path,
-            COALESCE(accepted.gate_path, latest.gate_path) AS gate_path,
+            COALESCE(accepted.criterion_path, latest.criterion_path) AS criterion_path,
             COALESCE(accepted.model_partition, latest.model_partition) AS model_partition,
             COALESCE(accepted.decision, latest.decision) AS decision,
             COALESCE(accepted.result_path, latest.result_path) AS result_path,
             COALESCE(accepted.reviewed_at, latest.reviewed_at) AS reviewed_at
-        FROM current_gate_acceptances AS a
+        FROM current_criterion_acceptances AS a
         LEFT JOIN review_pairs AS accepted
           ON accepted.review_pair_id = a.accepted_review_pair_id
         LEFT JOIN latest_review_pairs AS latest
           ON latest.note_path = a.note_path
-         AND latest.gate_path = a.gate_path
+         AND latest.criterion_path = a.criterion_path
          AND latest.model_partition = a.model_partition
          AND latest.rn = 1
         WHERE {" AND ".join(where)}
-        ORDER BY note_path, gate_path, model_partition
+        ORDER BY note_path, criterion_path, model_partition
         """,
         params,
     ).fetchall()
@@ -176,7 +176,7 @@ def load_effective_problem_reviews(
         reviews.append(
             {
                 "note_path": row["note_path"],
-                "gate_path": row["gate_path"],
+                "criterion_path": row["criterion_path"],
                 "decision": row["decision"],
                 "model_partition": row["model_partition"],
                 "review_pair_id": row["review_pair_id"],
@@ -206,7 +206,7 @@ def render_grouped(reviews: list[dict[str, object]], *, include_full: bool) -> s
             current_note = note_path
 
         lines.append(
-            f"- {review['gate_path']} [{str(review['decision']).upper()}] "
+            f"- {review['criterion_path']} [{str(review['decision']).upper()}] "
             f"model={review['model_partition']} job={review['review_job_id']} pair={review['review_pair_id']}"
         )
         findings = review["findings"]

@@ -25,7 +25,7 @@ If the output object has `"targets": []`, stop — nothing to triage.
 
 ### 2. For each note-changed pair, judge the diff
 
-For each entry in `targets`, read the `diff`, `gate_id`, and `result_kind`. Ask: does this diff invalidate what the criterion's existing result says?
+For each entry in `targets`, read the `diff`, `criterion_id`, and `result_kind`. Ask: does this diff invalidate what the criterion's existing result says?
 
 Guidelines:
 
@@ -41,7 +41,7 @@ When in doubt, do not ack — rerun the assay.
 Ack all insignificant pairs in one command:
 
 ```bash
-commonplace-ack-gate-review --model-partition {model-partition} {note-path} {gate-id} [{gate-id} ...]
+commonplace-ack-review --model-partition {model-partition} {note-path} {gate-id} [{gate-id} ...]
 ```
 
 This upserts the one current acceptance row so its snapshot baseline matches the current note and criterion while retaining the completed review pair as evidence. It produces no new judgment and does not rely on `touch` or filesystem timestamps.

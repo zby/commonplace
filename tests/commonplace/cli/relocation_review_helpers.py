@@ -63,7 +63,7 @@ def review_state_rows(conn: sqlite3.Connection) -> dict[str, list[dict[str, obje
     return {
         "review_jobs": table_rows(conn, "review_jobs", "review_job_id"),
         "review_pairs": table_rows(conn, "review_pairs", "review_pair_id"),
-        "acceptance": table_rows(conn, "acceptance", "note_path, gate_path, model_partition"),
+        "acceptance": table_rows(conn, "acceptance", "note_path, criterion_path, model_partition"),
     }
 
 
@@ -71,7 +71,7 @@ def seed_accepted_review(repo_root: Path, db_path: Path, *, note_path: str) -> i
     review_db.ensure_db(db_path)
     with review_db.connect(db_path) as conn:
         note_snapshot = review_db.snapshot_file(conn, repo_root=repo_root, path=note_path)
-        gate_snapshot = review_db.snapshot_file(conn, repo_root=repo_root, path=GATE_PATH)
+        criterion_snapshot = review_db.snapshot_file(conn, repo_root=repo_root, path=GATE_PATH)
         review_job_id = review_db.create_job_with_pairs(
             conn,
             model_partition=TEST_MODEL,
@@ -84,11 +84,11 @@ def seed_accepted_review(repo_root: Path, db_path: Path, *, note_path: str) -> i
             pairs=[
                 review_db.ReviewPairRequest(
                     note_path=note_path,
-                    gate_path=GATE_PATH,
+                    criterion_path=GATE_PATH,
                     pair_ordinal=1,
                     result_kind="verdict",
                     reviewed_note_snapshot_id=note_snapshot.snapshot_id,
-                    reviewed_gate_snapshot_id=gate_snapshot.snapshot_id,
+                    reviewed_criterion_snapshot_id=criterion_snapshot.snapshot_id,
                 )
             ],
         )
@@ -98,7 +98,7 @@ def seed_accepted_review(repo_root: Path, db_path: Path, *, note_path: str) -> i
             review_pairs=[
                 review_db.ReviewPairCompletion(
                     note_path=note_path,
-                    gate_path=GATE_PATH,
+                    criterion_path=GATE_PATH,
                     decision="pass",
                     reviewed_at=REVIEWED_AT,
                 )
@@ -110,11 +110,11 @@ def seed_accepted_review(repo_root: Path, db_path: Path, *, note_path: str) -> i
         review_db.upsert_acceptance(
             conn,
             note_path=note_path,
-            gate_path=GATE_PATH,
+            criterion_path=GATE_PATH,
             model_partition=TEST_MODEL,
             accepted_review_pair_id=review_pair.review_pair_id,
             accepted_note_snapshot_id=note_snapshot.snapshot_id,
-            accepted_gate_snapshot_id=gate_snapshot.snapshot_id,
+            accepted_criterion_snapshot_id=criterion_snapshot.snapshot_id,
             accepted_at=ACCEPTED_AT,
         )
         conn.commit()

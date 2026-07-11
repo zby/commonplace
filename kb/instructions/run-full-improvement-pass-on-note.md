@@ -75,7 +75,7 @@ Before rerunning, record `would_ack` or `would_rerun`, a rationale, and rough fr
 
 ```bash
 commonplace-review-target-selector --mode requested --model-partition {model-partition} {semantic-gate} --note {note-path} --json \
-  | commonplace-create-review-jobs --input - --grouping gate --batch-size 1
+  | commonplace-create-review-jobs --input - --grouping criterion --batch-size 1
 ```
 
 Rerun critique through the step-3 flow. Immediately copy finalized results into `closing/semantic/<gate>.md` and `closing/critique.md`. For verdict pairs record whether the verdict flipped; for critique record whether the new report materially diverged enough that it would have changed steps 8–9. A carried report would only be reused evidence: it endorses nothing and has no skip semantics.

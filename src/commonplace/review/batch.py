@@ -1,7 +1,7 @@
 """Batch-granular review job preparation for parent-dispatched execution.
 
 These are the deterministic ends of a review batch. Preparation creates one
-queued review job for a note-packed or gate-packed set of pairs and renders the
+queued review job for a note-packed or criterion-packed set of pairs and renders the
 canonical prompt for a parent-dispatched worker.
 """
 
@@ -28,13 +28,13 @@ from commonplace.review.review_db import (
     load_review_pairs_for_job,
 )
 from commonplace.review.clock import iso_now
-from commonplace.review.critique import result_kind_for_gate_path
+from commonplace.review.critique import result_kind_for_criterion_path
 
 
 @dataclass(frozen=True)
 class SkippedPair:
     note_path: str
-    gate_path: str
+    criterion_path: str
     reason: str
 
 
@@ -68,7 +68,7 @@ def _targets_for_pairs(
                 repo_root=repo_root,
                 note_path=note_path,
                 review_job_id=review_job_id,
-                gate_paths=tuple(gate_path for _, gate_path, _ in pairs),
+                criterion_paths=tuple(criterion_path for _, criterion_path, _ in pairs),
                 note_text=note_texts.get(note_path) if note_texts else None,
             )
         ]
@@ -77,10 +77,10 @@ def _targets_for_pairs(
             repo_root=repo_root,
             note_path=note_path,
             review_job_id=review_job_id,
-            gate_paths=(gate_path,),
+            criterion_paths=(criterion_path,),
             note_text=note_texts.get(note_path) if note_texts else None,
         )
-        for note_path, gate_path, _ in pairs
+        for note_path, criterion_path, _ in pairs
     ]
 
 
@@ -100,12 +100,12 @@ def prepare_grouped_review_job(
     """Create one review job for already-normalized, applicable pairs."""
     if not pairs:
         raise ValueError("no pairs to prepare")
-    for _, gate_path, result_kind in pairs:
-        expected_result_kind = result_kind_for_gate_path(gate_path)
+    for _, criterion_path, result_kind in pairs:
+        expected_result_kind = result_kind_for_criterion_path(criterion_path)
         if result_kind != expected_result_kind:
             raise ValueError(
-                f"result kind {result_kind!r} does not match gate contract "
-                f"{expected_result_kind!r}: {gate_path}"
+                f"result kind {result_kind!r} does not match criterion contract "
+                f"{expected_result_kind!r}: {criterion_path}"
             )
     result_kinds = {result_kind for _, _, result_kind in pairs}
     if len(result_kinds) != 1:
@@ -152,7 +152,7 @@ def prepare_grouped_review_job(
         )
         prompt = render_pairs_prompt(
             notes=targets,
-            gate_texts=captured_inputs.gate_texts,
+            criterion_texts=captured_inputs.criterion_texts,
             result_kind=next(iter(result_kinds)),
             output_mode="file",
             bundle_output_path=bundle_output_path,

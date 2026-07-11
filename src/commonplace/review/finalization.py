@@ -32,7 +32,7 @@ class ExecutionMetadata:
     stores these fields uninterpreted — ``telemetry_json`` in particular is an
     opaque blob the review system never parses. Harnesses that cannot produce
     provenance leave the fields ``None``; provenance is never required for a
-    review's identity, which is ``(note_path, gate_path, model_partition)``.
+    review's identity, which is ``(note_path, criterion_path, model_partition)``.
     """
 
     runner: str | None = None
@@ -175,8 +175,8 @@ def finalize_review_job_from_owned_output(
                 plan = refreshed_plan
 
         bundle_markdown = bundle_output_path.read_text(encoding="utf-8")
-        expected_pairs = tuple((pair.note_path, pair.gate_path) for pair in plan.pairs)
-        result_kinds = {(pair.note_path, pair.gate_path): pair.result_kind for pair in plan.pairs}
+        expected_pairs = tuple((pair.note_path, pair.criterion_path) for pair in plan.pairs)
+        result_kinds = {(pair.note_path, pair.criterion_path): pair.result_kind for pair in plan.pairs}
         try:
             parsed = parse_pair_bundle(
                 bundle_markdown,
@@ -265,11 +265,11 @@ def record_and_finalize_job(
             review_db.upsert_acceptance(
                 conn,
                 note_path=pair.note_path,
-                gate_path=pair.gate_path,
+                criterion_path=pair.criterion_path,
                 model_partition=review_job.model_partition,
                 accepted_review_pair_id=pair.review_pair_id,
                 accepted_note_snapshot_id=pair.reviewed_note_snapshot_id,
-                accepted_gate_snapshot_id=pair.reviewed_gate_snapshot_id,
+                accepted_criterion_snapshot_id=pair.reviewed_criterion_snapshot_id,
                 accepted_at=finished_at,
             )
         )
@@ -352,15 +352,15 @@ def _review_pair_completions(
     if not expected_pairs:
         raise ValueError("review job has no pairs")
     if parsed.missing:
-        missing = ", ".join(f"{note_path} :: {gate_path}" for note_path, gate_path in sorted(parsed.missing))
+        missing = ", ".join(f"{note_path} :: {criterion_path}" for note_path, criterion_path in sorted(parsed.missing))
         raise ValueError(f"missing pairs: {missing}")
     return tuple(
         ReviewPairCompletion(
             note_path=note_path,
-            gate_path=gate_path,
-            decision=parsed.reviews[(note_path, gate_path)].decision,
+            criterion_path=criterion_path,
+            decision=parsed.reviews[(note_path, criterion_path)].decision,
         )
-        for note_path, gate_path in expected_pairs
+        for note_path, criterion_path in expected_pairs
     )
 
 

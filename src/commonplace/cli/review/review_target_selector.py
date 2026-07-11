@@ -7,19 +7,19 @@ import argparse
 from pathlib import Path
 
 from commonplace.review.paths import review_gates_dir
-from commonplace.review.resolve_gates import all_gate_requests, resolve_gate_requests
+from commonplace.review.resolve_criteria import all_gate_requests, resolve_criterion_requests
 from commonplace.review.review_target_selector import (
     render_grouped,
     render_json,
-    select_requested_gates,
-    select_stale_gates,
+    select_requested_criteria,
+    select_stale_criteria,
 )
 from commonplace.review.review_model import normalize_model_partition
 
 
 def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser = argparse.ArgumentParser(
-        description="List assay target (note, criterion) pairs (schema fields retain gate names).",
+        description="List assay target (note, criterion) pairs (schema fields use criterion names).",
         allow_abbrev=False,
     )
     parser.add_argument(
@@ -29,7 +29,7 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
         help="Select stale pairs or emit the explicitly requested applicable pairs.",
     )
     parser.add_argument(
-        "gate_or_bundle",
+        "criterion_or_bundle",
         nargs="*",
         help=(
             "Gate IDs (e.g. prose/source-residue), bundle names (e.g. prose), "
@@ -56,7 +56,7 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     )
     parser.add_argument(
         "--reason",
-        choices=["missing-review", "gate-changed", "note-changed"],
+        choices=["missing-review", "criterion-changed", "note-changed"],
         help="Filter output to a single staleness reason.",
     )
     args = parser.parse_args(argv)
@@ -69,19 +69,19 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     gates_dir = review_gates_dir(repo_root)
 
     if args.all_gates:
-        if args.gate_or_bundle:
-            parser.error("gate/bundle names and --all-gates are mutually exclusive")
+        if args.criterion_or_bundle:
+            parser.error("criterion/bundle names and --all-gates are mutually exclusive")
         try:
-            gate_ids = all_gate_requests(gates_dir)
+            criterion_ids = all_gate_requests(gates_dir)
         except (FileNotFoundError, ValueError) as exc:
             parser.error(str(exc))
-    elif args.gate_or_bundle:
+    elif args.criterion_or_bundle:
         try:
-            gate_ids = resolve_gate_requests(args.gate_or_bundle, gates_dir)
+            criterion_ids = resolve_criterion_requests(args.criterion_or_bundle, gates_dir)
         except (FileNotFoundError, ValueError) as exc:
             parser.error(str(exc))
     else:
-        parser.error("provide gate/bundle names or --all-gates")
+        parser.error("provide criterion/bundle names or --all-gates")
 
     if args.mode == "requested" and args.reason is not None:
         parser.error("--reason is only valid with --mode stale")
@@ -92,17 +92,17 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
 
     try:
         if args.mode == "requested":
-            records = select_requested_gates(
+            records = select_requested_criteria(
                 repo_root,
-                gate_ids=gate_ids,
+                criterion_ids=criterion_ids,
                 note_filter=args.note_paths,
                 current_only=args.current,
             )
         else:
-            records = select_stale_gates(
+            records = select_stale_criteria(
                 repo_root,
                 model=model,
-                gate_ids=gate_ids,
+                criterion_ids=criterion_ids,
                 note_filter=args.note_paths,
                 current_only=args.current,
                 include_diff=args.json,

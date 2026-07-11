@@ -8,14 +8,14 @@ status: seedling
 
 # Factored dependency pairs for review freshness
 
-An accepted review is a build product and its inputs are prerequisites — [make-like staleness detection](../../notes/link-graph-plus-timestamps-enables-make-like-staleness-detection.md). Review freshness realizes this for exactly two inputs per pair: note text and gate text. Type-conformance pairs ([ADR 038](../adr/038-type-conformance-reviews-use-the-type-spec-as-the-gate.md)) showed the cheap way to admit a new dependency: do not widen one pair's input set to N — factor each dependency into its own two-input pair where the dependency document is the gate side. This proposal holds the not-yet-adopted remainder of that direction.
+An accepted review is a build product and its inputs are prerequisites — [make-like staleness detection](../../notes/link-graph-plus-timestamps-enables-make-like-staleness-detection.md). Review freshness realizes this for exactly two inputs per pair: note text and criterion text. Type-conformance pairs ([ADR 038](../adr/038-type-conformance-reviews-use-the-type-spec-as-the-gate.md)) showed the cheap way to admit a new dependency: do not widen one pair's input set to N — factor each dependency into its own two-input pair where the dependency document is the gate side. This proposal holds the not-yet-adopted remainder of that direction.
 
 ## Current state (as of 2026-07-08)
 
-- Type-conformance pairs are shipped ([ADR 038](../adr/038-type-conformance-reviews-use-the-type-spec-as-the-gate.md)): the selector derives `(note, type_spec)` pairs from note frontmatter, the type spec is the gate snapshot, and a type edit stales its cohort via the existing `gate-changed` reason.
+- Type-conformance pairs are shipped ([ADR 038](../adr/038-type-conformance-reviews-use-the-type-spec-as-the-gate.md)): the selector derives `(note, type_spec)` pairs from note frontmatter, the type spec is the gate snapshot, and a type edit stales its cohort via the existing `criterion-changed` reason.
 - `COLLECTION.md`-as-gate is shipped ([ADR 041](../adr/041-collection-conformance-reviews-use-collection-md-as-the-gate.md)): the selector derives `(note, collection_md)` pairs from note location under the `collection`/`collection/{path}` lens, again with no storage change. The factoring pattern is proven twice; this proposal now holds only the remainder — source-as-gate, the cohort-scoped ack, and the N-ary fallback.
-- Freshness compares two hashes per pair against `accepted_note_hash` / `accepted_gate_hash` ([ADR 032](../adr/032-review-freshness-uses-db-snapshots-not-git.md)). The snapshot table is role-neutral — keyed by path and content hash — so any repo document can sit on the gate side.
-- Acknowledgement (`commonplace-ack-gate-review`) re-pins the current note and gate snapshots while carrying forward completed review evidence. It is per-note: acking a cohort of N notes after one shared-gate edit takes N invocations (one per note, batching only across gates).
+- Freshness compares two hashes per pair against `accepted_note_hash` / `accepted_criterion_hash` ([ADR 032](../adr/032-review-freshness-uses-db-snapshots-not-git.md)). The snapshot table is role-neutral — keyed by path and content hash — so any repo document can sit on the criterion side.
+- Acknowledgement (`commonplace-ack-review`) re-pins the current note and gate snapshots while carrying forward completed review evidence. It is per-note: acking a cohort of N notes after one shared-gate edit takes N invocations (one per note, batching only across gates).
 - The selector emits JSON consumed by job creation; there is no cohort-scoped ack surface fed from selector output.
 - No judgment has been identified that irreducibly reads three or more texts in one prompt; no N-ary input-set table exists.
 - A fuller design for a general lineage model — lineage targets, append-only events, per-event input versions, typed resolvers — is in flight in the workshop layer at `kb/work/lineage-mechanisms/general-lineage-refresh-state-design.md` (cited by path, not linked, per the no-workshop-links convention); factoring-into-pairs narrows how much of it review freshness will ever need.
@@ -24,7 +24,7 @@ An accepted review is a build product and its inputs are prerequisites — [make
 
 Each new review dependency becomes its own `(note_path, dependency_path)` pair with the dependency document as the gate:
 
-- **`COLLECTION.md`-as-gate** — *adopted by [ADR 041](../adr/041-collection-conformance-reviews-use-collection-md-as-the-gate.md)*: a note's conformance to its collection's register and conventions. One pair per note, gate side the collection's `COLLECTION.md`.
+- **`COLLECTION.md`-as-gate** — *adopted by [ADR 041](../adr/041-collection-conformance-reviews-use-collection-md-as-the-gate.md)*: a note's conformance to its collection's register and conventions. One pair per note, criterion side the collection's `COLLECTION.md`.
 - **Source-as-gate** — a derived note's consistency with the source snapshot it distills. This is the multi-source invalidation case: one pair per `(note, source)` edge, so each source invalidates independently with its own diff.
 
 Each factored pair reuses the entire freshness/ack/warn stack unchanged, exactly as type-conformance pairs do. Like the type spec, neither `COLLECTION.md` nor a source snapshot is written as a Failure mode / Test procedure, so each needs a mechanical wrapper (or an authored review section in the dependency document, which the hash then sees).
@@ -60,4 +60,4 @@ Relevant Notes:
 - [038-type-conformance reviews use the type spec as the gate](../adr/038-type-conformance-reviews-use-the-type-spec-as-the-gate.md) — rationale: the shipped first instance of the factoring pattern this proposal generalizes
 - [a derived copy of recomputable truth must be checked or absent](../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — rationale: why each dependency document must be the gate rather than be restated in one
 - [review system](../README-REVIEW-SYSTEM.md) — part-of: the freshness, acceptance, and ack concepts every factored pair reuses unchanged
-- [032-review freshness uses DB snapshots, not Git](../adr/032-review-freshness-uses-db-snapshots-not-git.md) — see-also: the role-neutral snapshot substrate that lets any repo document sit on the gate side
+- [032-review freshness uses DB snapshots, not Git](../adr/032-review-freshness-uses-db-snapshots-not-git.md) — see-also: the role-neutral snapshot substrate that lets any repo document sit on the criterion side

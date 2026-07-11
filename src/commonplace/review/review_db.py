@@ -13,7 +13,7 @@ from typing import Sequence
 
 from commonplace.review.artifacts import bundle_output_path_rel, prompt_path_rel, result_paths_by_pair_id
 from commonplace.review.clock import iso_now
-from commonplace.review.paths import gate_id_from_stored_path
+from commonplace.review.paths import criterion_id_from_stored_path
 from commonplace.review.review_model import build_model_partition, normalize_model_partition, normalize_reasoning_effort
 from commonplace.review.review_schema import init_db
 
@@ -60,32 +60,32 @@ class ReviewFileSnapshot:
 @dataclass(frozen=True)
 class AcceptanceState:
     note_path: str
-    gate_path: str
+    criterion_path: str
     model_partition: str
     accepted_review_pair_id: int
     accepted_note_snapshot_id: int | None
-    accepted_gate_snapshot_id: int | None
+    accepted_criterion_snapshot_id: int | None
     accepted_note_hash: str | None
-    accepted_gate_hash: str | None
+    accepted_criterion_hash: str | None
     accepted_note_text: str | None
-    accepted_gate_text: str | None
+    accepted_criterion_text: str | None
     accepted_at: str
     result_kind: str
     decision: str | None
 
     @property
-    def gate_id(self) -> str:
-        return gate_id_from_stored_path(self.gate_path)
+    def criterion_id(self) -> str:
+        return criterion_id_from_stored_path(self.criterion_path)
 
 
 @dataclass(frozen=True)
 class SupersededAcceptance:
     note_path: str
-    gate_path: str
+    criterion_path: str
     model_partition: str
     accepted_review_pair_id: int
     accepted_note_snapshot_id: int | None
-    accepted_gate_snapshot_id: int | None
+    accepted_criterion_snapshot_id: int | None
 
 
 @dataclass(frozen=True)
@@ -108,35 +108,35 @@ class ReviewPairRow:
     review_pair_id: int
     review_job_id: int
     note_path: str
-    gate_path: str
+    criterion_path: str
     model_partition: str
     pair_ordinal: int
     result_kind: str
     decision: str | None
     result_path: str | None
     reviewed_note_snapshot_id: int | None
-    reviewed_gate_snapshot_id: int | None
+    reviewed_criterion_snapshot_id: int | None
     reviewed_at: str | None
 
     @property
-    def gate_id(self) -> str:
-        return gate_id_from_stored_path(self.gate_path)
+    def criterion_id(self) -> str:
+        return criterion_id_from_stored_path(self.criterion_path)
 
 
 @dataclass(frozen=True)
 class ReviewPairRequest:
     note_path: str
-    gate_path: str
+    criterion_path: str
     pair_ordinal: int
     result_kind: str
     reviewed_note_snapshot_id: int | None = None
-    reviewed_gate_snapshot_id: int | None = None
+    reviewed_criterion_snapshot_id: int | None = None
 
 
 @dataclass(frozen=True)
 class ReviewPairCompletion:
     note_path: str
-    gate_path: str
+    criterion_path: str
     decision: str | None
     reviewed_at: str | None = None
 
@@ -145,7 +145,7 @@ class ReviewPairCompletion:
 class _ReviewPairPathInput:
     review_pair_id: int
     note_path: str
-    gate_path: str
+    criterion_path: str
     pair_ordinal: int
 
 
@@ -265,14 +265,14 @@ def _review_pair_from_row(row: sqlite3.Row, *, result_path: str | None) -> Revie
         review_pair_id=row["review_pair_id"],
         review_job_id=row["review_job_id"],
         note_path=row["note_path"],
-        gate_path=row["gate_path"],
+        criterion_path=row["criterion_path"],
         model_partition=row["model_partition"],
         pair_ordinal=row["pair_ordinal"],
         result_kind=row["result_kind"],
         decision=row["decision"],
         result_path=result_path,
         reviewed_note_snapshot_id=row["reviewed_note_snapshot_id"],
-        reviewed_gate_snapshot_id=row["reviewed_gate_snapshot_id"],
+        reviewed_criterion_snapshot_id=row["reviewed_criterion_snapshot_id"],
         reviewed_at=row["reviewed_at"],
     )
 
@@ -287,14 +287,14 @@ def _result_paths_for_review_jobs(conn: sqlite3.Connection, review_job_ids: set[
             rp.review_pair_id,
             rp.review_job_id,
             rp.note_path,
-            rp.gate_path,
+            rp.criterion_path,
             rp.pair_ordinal,
             j.packing
         FROM review_pairs AS rp
         JOIN review_jobs AS j
           ON j.review_job_id = rp.review_job_id
         WHERE rp.review_job_id IN ({placeholders})
-        ORDER BY rp.review_job_id, rp.pair_ordinal, rp.note_path, rp.gate_path
+        ORDER BY rp.review_job_id, rp.pair_ordinal, rp.note_path, rp.criterion_path
         """,
         tuple(sorted(review_job_ids)),
     ).fetchall()
@@ -308,7 +308,7 @@ def _result_paths_for_review_jobs(conn: sqlite3.Connection, review_job_ids: set[
             _ReviewPairPathInput(
                 review_pair_id=int(row["review_pair_id"]),
                 note_path=str(row["note_path"]),
-                gate_path=str(row["gate_path"]),
+                criterion_path=str(row["criterion_path"]),
                 pair_ordinal=int(row["pair_ordinal"]),
             )
         )
@@ -409,21 +409,21 @@ def create_review_pairs(
             INSERT INTO review_pairs (
                 review_job_id,
                 note_path,
-                gate_path,
+                criterion_path,
                 pair_ordinal,
                 result_kind,
                 reviewed_note_snapshot_id,
-                reviewed_gate_snapshot_id
+                reviewed_criterion_snapshot_id
             ) VALUES (?, ?, ?, ?, ?, ?, ?)
             """,
             (
                 review_job_id,
                 pair.note_path,
-                pair.gate_path,
+                pair.criterion_path,
                 pair.pair_ordinal,
                 pair.result_kind,
                 pair.reviewed_note_snapshot_id,
-                pair.reviewed_gate_snapshot_id,
+                pair.reviewed_criterion_snapshot_id,
             ),
         )
         review_pair_ids.append(int(cursor.lastrowid))
@@ -488,19 +488,19 @@ def load_review_pairs_for_job(conn: sqlite3.Connection, *, review_job_id: int) -
             rp.review_pair_id,
             rp.review_job_id,
             rp.note_path,
-            rp.gate_path,
+            rp.criterion_path,
             j.model_partition AS model_partition,
             rp.pair_ordinal,
             rp.result_kind,
             rp.decision,
             rp.reviewed_note_snapshot_id,
-            rp.reviewed_gate_snapshot_id,
+            rp.reviewed_criterion_snapshot_id,
             rp.reviewed_at
         FROM review_pairs AS rp
         JOIN review_jobs AS j
           ON j.review_job_id = rp.review_job_id
         WHERE rp.review_job_id = ?
-        ORDER BY rp.pair_ordinal, rp.note_path, rp.gate_path
+        ORDER BY rp.pair_ordinal, rp.note_path, rp.criterion_path
         """,
         (review_job_id,),
     ).fetchall()
@@ -581,33 +581,33 @@ def load_current_acceptances(conn: sqlite3.Connection) -> dict[tuple[str, str, s
         """
         SELECT
             note_path,
-            gate_path,
+            criterion_path,
             model_partition,
             accepted_review_pair_id,
             accepted_note_snapshot_id,
-            accepted_gate_snapshot_id,
+            accepted_criterion_snapshot_id,
             accepted_note_hash,
-            accepted_gate_hash,
+            accepted_criterion_hash,
             accepted_note_text,
-            accepted_gate_text,
+            accepted_criterion_text,
             accepted_at,
             result_kind,
             decision
-        FROM current_gate_acceptances
+        FROM current_criterion_acceptances
         """
     ).fetchall()
     return {
-        (row["note_path"], row["gate_path"], row["model_partition"]): AcceptanceState(
+        (row["note_path"], row["criterion_path"], row["model_partition"]): AcceptanceState(
             note_path=row["note_path"],
-            gate_path=row["gate_path"],
+            criterion_path=row["criterion_path"],
             model_partition=row["model_partition"],
             accepted_review_pair_id=row["accepted_review_pair_id"],
             accepted_note_snapshot_id=row["accepted_note_snapshot_id"],
-            accepted_gate_snapshot_id=row["accepted_gate_snapshot_id"],
+            accepted_criterion_snapshot_id=row["accepted_criterion_snapshot_id"],
             accepted_note_hash=row["accepted_note_hash"],
-            accepted_gate_hash=row["accepted_gate_hash"],
+            accepted_criterion_hash=row["accepted_criterion_hash"],
             accepted_note_text=row["accepted_note_text"],
-            accepted_gate_text=row["accepted_gate_text"],
+            accepted_criterion_text=row["accepted_criterion_text"],
             accepted_at=row["accepted_at"],
             result_kind=row["result_kind"],
             decision=row["decision"],
@@ -716,25 +716,25 @@ def complete_review_pairs(
     reviewed_at: str,
 ) -> list[int]:
     requested = {
-        (pair.note_path, pair.gate_path): pair
+        (pair.note_path, pair.criterion_path): pair
         for pair in load_review_pairs_for_job(conn, review_job_id=review_job_id)
     }
     completed_pair_ids: list[int] = []
     seen: set[tuple[str, str]] = set()
     for review_pair in review_pairs:
-        key = (review_pair.note_path, review_pair.gate_path)
+        key = (review_pair.note_path, review_pair.criterion_path)
         if key in seen:
-            raise ValueError(f"duplicate completed pair: {review_pair.note_path} :: {review_pair.gate_path}")
+            raise ValueError(f"duplicate completed pair: {review_pair.note_path} :: {review_pair.criterion_path}")
         seen.add(key)
         requested_pair = requested.get(key)
         if requested_pair is None:
             raise ValueError(
-                f"pair {review_pair.note_path} :: {review_pair.gate_path} is not part of review job {review_job_id}"
+                f"pair {review_pair.note_path} :: {review_pair.criterion_path} is not part of review job {review_job_id}"
             )
         if requested_pair.result_kind == "verdict" and review_pair.decision is None:
-            raise ValueError(f"verdict pair requires a decision: {review_pair.note_path} :: {review_pair.gate_path}")
+            raise ValueError(f"verdict pair requires a decision: {review_pair.note_path} :: {review_pair.criterion_path}")
         if requested_pair.result_kind == "report" and review_pair.decision is not None:
-            raise ValueError(f"report pair cannot have a decision: {review_pair.note_path} :: {review_pair.gate_path}")
+            raise ValueError(f"report pair cannot have a decision: {review_pair.note_path} :: {review_pair.criterion_path}")
         conn.execute(
             """
             UPDATE review_pairs
@@ -756,11 +756,11 @@ def upsert_acceptance(
     conn: sqlite3.Connection,
     *,
     note_path: str,
-    gate_path: str,
+    criterion_path: str,
     model_partition: str,
     accepted_review_pair_id: int,
     accepted_note_snapshot_id: int | None = None,
-    accepted_gate_snapshot_id: int | None = None,
+    accepted_criterion_snapshot_id: int | None = None,
     accepted_at: str,
 ) -> SupersededAcceptance | None:
     if accepted_review_pair_id is None:
@@ -770,7 +770,7 @@ def upsert_acceptance(
         """
         SELECT
             rp.note_path,
-            rp.gate_path,
+            rp.criterion_path,
             rp.result_kind,
             rp.decision,
             rp.reviewed_at,
@@ -791,7 +791,7 @@ def upsert_acceptance(
         raise ValueError(f"accepted review pair is incomplete: {accepted_review_pair_id}")
     if (
         row["note_path"] != note_path
-        or row["gate_path"] != gate_path
+        or row["criterion_path"] != criterion_path
         or row["model_partition"] != model_partition
     ):
         raise ValueError(f"accepted review pair does not match acceptance key: {accepted_review_pair_id}")
@@ -799,43 +799,43 @@ def upsert_acceptance(
         """
         SELECT
             note_path,
-            gate_path,
+            criterion_path,
             model_partition,
             accepted_review_pair_id,
             accepted_note_snapshot_id,
-            accepted_gate_snapshot_id
+            accepted_criterion_snapshot_id
         FROM acceptance
         WHERE note_path = ?
-          AND gate_path = ?
+          AND criterion_path = ?
           AND model_partition = ?
         """,
-        (note_path, gate_path, model_partition),
+        (note_path, criterion_path, model_partition),
     ).fetchone()
     conn.execute(
         """
         INSERT INTO acceptance (
             note_path,
-            gate_path,
+            criterion_path,
             model_partition,
             accepted_review_pair_id,
             accepted_note_snapshot_id,
-            accepted_gate_snapshot_id,
+            accepted_criterion_snapshot_id,
             accepted_at
         ) VALUES (?, ?, ?, ?, ?, ?, ?)
-        ON CONFLICT(note_path, gate_path, model_partition)
+        ON CONFLICT(note_path, criterion_path, model_partition)
         DO UPDATE SET
             accepted_review_pair_id = excluded.accepted_review_pair_id,
             accepted_note_snapshot_id = excluded.accepted_note_snapshot_id,
-            accepted_gate_snapshot_id = excluded.accepted_gate_snapshot_id,
+            accepted_criterion_snapshot_id = excluded.accepted_criterion_snapshot_id,
             accepted_at = excluded.accepted_at
         """,
         (
             note_path,
-            gate_path,
+            criterion_path,
             model_partition,
             accepted_review_pair_id,
             accepted_note_snapshot_id,
-            accepted_gate_snapshot_id,
+            accepted_criterion_snapshot_id,
             accepted_at,
         ),
     )
@@ -843,11 +843,11 @@ def upsert_acceptance(
         return None
     return SupersededAcceptance(
         note_path=previous["note_path"],
-        gate_path=previous["gate_path"],
+        criterion_path=previous["criterion_path"],
         model_partition=previous["model_partition"],
         accepted_review_pair_id=previous["accepted_review_pair_id"],
         accepted_note_snapshot_id=previous["accepted_note_snapshot_id"],
-        accepted_gate_snapshot_id=previous["accepted_gate_snapshot_id"],
+        accepted_criterion_snapshot_id=previous["accepted_criterion_snapshot_id"],
     )
 
 
@@ -863,7 +863,7 @@ def prune_superseded_acceptances(
     candidate_snapshot_ids: set[int] = {
         snapshot_id
         for row in superseded_rows
-        for snapshot_id in (row.accepted_note_snapshot_id, row.accepted_gate_snapshot_id)
+        for snapshot_id in (row.accepted_note_snapshot_id, row.accepted_criterion_snapshot_id)
         if snapshot_id is not None
     }
     candidate_pair_ids = tuple(sorted({row.accepted_review_pair_id for row in superseded_rows}))
@@ -875,7 +875,7 @@ def prune_superseded_acceptances(
                 review_pair_id,
                 review_job_id,
                 reviewed_note_snapshot_id,
-                reviewed_gate_snapshot_id
+                reviewed_criterion_snapshot_id
             FROM review_pairs AS rp
             WHERE review_pair_id IN ({_placeholders(candidate_pair_ids)})
               AND NOT EXISTS (
@@ -891,7 +891,7 @@ def prune_superseded_acceptances(
     obsolete_pair_ids = tuple(int(row["review_pair_id"]) for row in obsolete_pair_rows)
     candidate_job_ids = tuple(sorted({int(row["review_job_id"]) for row in obsolete_pair_rows}))
     for row in obsolete_pair_rows:
-        for snapshot_id in (row["reviewed_note_snapshot_id"], row["reviewed_gate_snapshot_id"]):
+        for snapshot_id in (row["reviewed_note_snapshot_id"], row["reviewed_criterion_snapshot_id"]):
             if snapshot_id is not None:
                 candidate_snapshot_ids.add(int(snapshot_id))
 
@@ -940,13 +940,13 @@ def prune_superseded_acceptances(
                   SELECT 1
                   FROM acceptance AS a
                   WHERE a.accepted_note_snapshot_id = review_file_snapshots.snapshot_id
-                     OR a.accepted_gate_snapshot_id = review_file_snapshots.snapshot_id
+                     OR a.accepted_criterion_snapshot_id = review_file_snapshots.snapshot_id
               )
               AND NOT EXISTS (
                   SELECT 1
                   FROM review_pairs AS rp
                   WHERE rp.reviewed_note_snapshot_id = review_file_snapshots.snapshot_id
-                     OR rp.reviewed_gate_snapshot_id = review_file_snapshots.snapshot_id
+                     OR rp.reviewed_criterion_snapshot_id = review_file_snapshots.snapshot_id
               )
             """,
             candidate_snapshot_id_tuple,
@@ -966,19 +966,19 @@ def load_review_pairs_for_note(
             rp.review_pair_id,
             rp.review_job_id,
             rp.note_path,
-            rp.gate_path,
+            rp.criterion_path,
             j.model_partition AS model_partition,
             rp.pair_ordinal,
             rp.result_kind,
             rp.decision,
             rp.reviewed_note_snapshot_id,
-            rp.reviewed_gate_snapshot_id,
+            rp.reviewed_criterion_snapshot_id,
             rp.reviewed_at
         FROM review_pairs AS rp
         JOIN review_jobs AS j
           ON j.review_job_id = rp.review_job_id
         WHERE rp.note_path = ? AND j.model_partition = ?
-        ORDER BY rp.gate_path, rp.reviewed_at, rp.review_pair_id
+        ORDER BY rp.criterion_path, rp.reviewed_at, rp.review_pair_id
         """,
         (note_path, model_partition),
     ).fetchall()
@@ -989,7 +989,7 @@ def load_latest_completed_review_pair(
     conn: sqlite3.Connection,
     *,
     note_path: str,
-    gate_path: str,
+    criterion_path: str,
     model_partition: str,
 ) -> ReviewPairRow | None:
     row = conn.execute(
@@ -998,19 +998,19 @@ def load_latest_completed_review_pair(
             rp.review_pair_id,
             rp.review_job_id,
             rp.note_path,
-            rp.gate_path,
+            rp.criterion_path,
             j.model_partition AS model_partition,
             rp.pair_ordinal,
             rp.result_kind,
             rp.decision,
             rp.reviewed_note_snapshot_id,
-            rp.reviewed_gate_snapshot_id,
+            rp.reviewed_criterion_snapshot_id,
             rp.reviewed_at
         FROM review_pairs AS rp
         JOIN review_jobs AS j
           ON j.review_job_id = rp.review_job_id
         WHERE rp.note_path = ?
-          AND rp.gate_path = ?
+          AND rp.criterion_path = ?
           AND j.model_partition = ?
           AND j.status = 'completed'
           AND rp.reviewed_at IS NOT NULL
@@ -1018,7 +1018,7 @@ def load_latest_completed_review_pair(
         ORDER BY rp.reviewed_at DESC, rp.review_pair_id DESC
         LIMIT 1
         """,
-        (note_path, gate_path, model_partition),
+        (note_path, criterion_path, model_partition),
     ).fetchone()
     if row is None:
         return None
@@ -1049,15 +1049,15 @@ def load_effective_review_pair_map(
             rp.review_pair_id,
             rp.review_job_id,
             rp.note_path,
-            rp.gate_path,
+            rp.criterion_path,
             j.model_partition AS model_partition,
             rp.pair_ordinal,
             rp.result_kind,
             rp.decision,
             rp.reviewed_note_snapshot_id,
-            rp.reviewed_gate_snapshot_id,
+            rp.reviewed_criterion_snapshot_id,
             rp.reviewed_at
-        FROM current_gate_acceptances AS a
+        FROM current_criterion_acceptances AS a
         JOIN review_pairs AS rp
           ON rp.review_pair_id = a.accepted_review_pair_id
         JOIN review_jobs AS j
@@ -1069,6 +1069,6 @@ def load_effective_review_pair_map(
     ).fetchall()
     result: dict[tuple[str, str, str], ReviewPairRow] = {}
     for pair in _review_pairs_from_rows(conn, rows):
-        key = (pair.note_path, pair.gate_path, pair.model_partition)
+        key = (pair.note_path, pair.criterion_path, pair.model_partition)
         result[key] = pair
     return result

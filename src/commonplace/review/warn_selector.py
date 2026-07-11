@@ -44,7 +44,7 @@ ACTIONABLE_FINDING_RE = re.compile(
 @dataclass
 class WarnEntry:
     note_path: str
-    gate_path: str
+    criterion_path: str
     review_pair_id: int
     review_job_id: int
     result_path: str | None
@@ -93,10 +93,10 @@ def extract_warns(review_text: str, *, decision: str) -> list[str]:
     return []
 
 
-def _current_gate_content_hash(gate_path: Path) -> str | None:
-    if not gate_path.is_file():
+def _current_gate_content_hash(criterion_path: Path) -> str | None:
+    if not criterion_path.is_file():
         return None
-    return file_content_sha256(gate_path)
+    return file_content_sha256(criterion_path)
 
 
 def _load_review_text(repo_root: Path, review: ReviewPairRow) -> str | None:
@@ -128,16 +128,16 @@ def scan_reviews(
         )
         acceptances = load_current_acceptances(conn)
 
-    for (note_path, gate_path, model_partition), review in sorted(effective_reviews.items()):
+    for (note_path, criterion_path, model_partition), review in sorted(effective_reviews.items()):
         if note_filter and note_path not in note_filter:
             continue
-        acceptance = acceptances.get((note_path, gate_path, model_partition))
-        if acceptance is None or acceptance.accepted_gate_hash is None:
-            stale_gates.add(gate_path)
+        acceptance = acceptances.get((note_path, criterion_path, model_partition))
+        if acceptance is None or acceptance.accepted_criterion_hash is None:
+            stale_gates.add(criterion_path)
             continue
-        current_gate_hash = _current_gate_content_hash(repo_root / gate_path)
-        if current_gate_hash is None or current_gate_hash != acceptance.accepted_gate_hash:
-            stale_gates.add(gate_path)
+        current_criterion_hash = _current_gate_content_hash(repo_root / criterion_path)
+        if current_criterion_hash is None or current_criterion_hash != acceptance.accepted_criterion_hash:
+            stale_gates.add(criterion_path)
             continue
         if review.decision is None:
             continue
@@ -148,7 +148,7 @@ def scan_reviews(
         if not warns:
             continue
 
-        gate_key = (note_path, gate_path)
+        gate_key = (note_path, criterion_path)
         selected_tuple = selected_by_gate.get(gate_key)
         selected = selected_tuple[0] if selected_tuple is not None else None
         if selected is None or (review.reviewed_at or "", review.review_pair_id) > (
@@ -157,14 +157,14 @@ def scan_reviews(
         ):
             selected_by_gate[gate_key] = (review, review_text, warns)
 
-    for (note_path, gate_path), (review, review_text, warns) in sorted(selected_by_gate.items()):
+    for (note_path, criterion_path), (review, review_text, warns) in sorted(selected_by_gate.items()):
         for warn_text in warns:
             if note_path not in by_note:
                 by_note[note_path] = NoteWarns(note_path=note_path)
             by_note[note_path].warns.append(
                 WarnEntry(
                     note_path=note_path,
-                    gate_path=gate_path,
+                    criterion_path=criterion_path,
                     review_pair_id=review.review_pair_id,
                     review_job_id=review.review_job_id,
                     result_path=review.result_path,
@@ -186,7 +186,7 @@ def render_json(notes: list[NoteWarns], stale_gates: list[str]) -> str:
                 "warn_count": nw.count,
                 "warns": [
                     {
-                        "gate_path": w.gate_path,
+                        "criterion_path": w.criterion_path,
                         "review_pair_id": w.review_pair_id,
                         "review_job_id": w.review_job_id,
                         "result_path": w.result_path,
@@ -213,5 +213,5 @@ def render_grouped(notes: list[NoteWarns], stale_gates: list[str]) -> str:
         lines.append(f"{nw.note_path} ({nw.count} warn findings)")
         for w in nw.warns:
             first_line = w.warn_text.split("\n")[0][:100]
-            lines.append(f"  - {w.gate_path}: {first_line}")
+            lines.append(f"  - {w.criterion_path}: {first_line}")
     return "\n".join(lines)

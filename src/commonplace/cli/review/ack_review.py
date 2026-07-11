@@ -13,7 +13,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description=(
             "Advance the freshness baseline for one note and one or more criteria "
-            "without rewriting the assay body (the command retains gate vocabulary)."
+            "without rewriting the assay body (the command uses criterion vocabulary)."
         ),
         allow_abbrev=False,
     )
@@ -27,7 +27,7 @@ def build_parser() -> argparse.ArgumentParser:
         help="Review model partition to acknowledge against (a partition name, not a concrete model).",
     )
     parser.add_argument(
-        "gate_ids",
+        "criterion_ids",
         nargs="+",
         help="One or more criterion ids, for example prose/source-residue or critique.",
     )
@@ -40,14 +40,14 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     model = args.model_partition.strip()
     if not model:
         parser.error("--model-partition must not be empty")
-    pairs = [f"{args.note_path}:{gate_id}" for gate_id in args.gate_ids]
+    pairs = [f"{args.note_path}:{criterion_id}" for criterion_id in args.criterion_ids]
     repo_root = cwd if cwd is not None else Path.cwd()
     try:
         acked = ack_pairs(repo_root, pairs, model)
     except (FileNotFoundError, ValueError) as exc:
         parser.error(str(exc))
-    for note_path, gate_id in acked:
-        print(f"acked: {note_path} {gate_id}")
+    for note_path, criterion_id in acked:
+        print(f"acked: {note_path} {criterion_id}")
     return 0
 
 

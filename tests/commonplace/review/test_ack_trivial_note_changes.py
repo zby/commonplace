@@ -48,11 +48,11 @@ status: {status}
     )
 
 
-def make_gate(path: Path, gate_id: str, *, lens: str = "prose", watches: str = "[body]") -> Path:
+def make_gate(path: Path, criterion_id: str, *, lens: str = "prose", watches: str = "[body]") -> Path:
     return write(
         path,
         f"""---
-gate_id: {gate_id}
+gate_id: {criterion_id}
 name: {path.stem}
 lens: {lens}
 watches: {watches}
@@ -73,7 +73,7 @@ Fixture test.
 def build_fixture(
     tmp_path: Path,
     *,
-    gate_id: str = "prose/source-residue",
+    criterion_id: str = "prose/source-residue",
     lens: str = "prose",
     watches: str = "[body]",
 ) -> tuple[Path, Path]:
@@ -83,8 +83,8 @@ def build_fixture(
 
     make_note(repo / "kb" / "notes" / "sample.md", "\nBody.\n")
     make_gate(
-        repo / "kb" / "instructions" / "review-gates" / lens / f"{gate_id.split('/', 1)[1]}.md",
-        gate_id,
+        repo / "kb" / "instructions" / "review-gates" / lens / f"{criterion_id.split('/', 1)[1]}.md",
+        criterion_id,
         lens=lens,
         watches=watches,
     )
@@ -93,29 +93,29 @@ def build_fixture(
     review_db.ensure_db(db_path)
     with review_db.connect(db_path) as conn:
         note_snapshot = review_db.snapshot_file(conn, repo_root=repo, path="kb/notes/sample.md")
-        gate_snapshot = review_db.snapshot_file(
+        criterion_snapshot = review_db.snapshot_file(
             conn,
             repo_root=repo,
-            path=f"kb/instructions/review-gates/{lens}/{gate_id.split('/', 1)[1]}.md",
+            path=f"kb/instructions/review-gates/{lens}/{criterion_id.split('/', 1)[1]}.md",
         )
         review_pair_id = insert_completed_pair(
             conn,
             note_path="kb/notes/sample.md",
-            gate_id=gate_id,
+            criterion_id=criterion_id,
             model_partition=TEST_MODEL,
             decision="pass",
             reviewed_note_snapshot_id=note_snapshot.snapshot_id,
-            reviewed_gate_snapshot_id=gate_snapshot.snapshot_id,
+            reviewed_criterion_snapshot_id=criterion_snapshot.snapshot_id,
             reviewed_at="2026-04-01T00:00:00+00:00",
         )
         accept_pair(
             conn,
             review_pair_id=review_pair_id,
             note_path="kb/notes/sample.md",
-            gate_id=gate_id,
+            criterion_id=criterion_id,
             model_partition=TEST_MODEL,
             accepted_note_snapshot_id=note_snapshot.snapshot_id,
-            accepted_gate_snapshot_id=gate_snapshot.snapshot_id,
+            accepted_criterion_snapshot_id=criterion_snapshot.snapshot_id,
             accepted_at="2026-04-01T00:00:00+00:00",
         )
         conn.commit()
@@ -123,11 +123,11 @@ def build_fixture(
     return repo, db_path
 
 
-def seed_snapshot_review(repo: Path, db_path: Path, *, note_path: str, gate_path: str) -> None:
+def seed_snapshot_review(repo: Path, db_path: Path, *, note_path: str, criterion_path: str) -> None:
     review_db.ensure_db(db_path)
     with review_db.connect(db_path) as conn:
         note_snapshot = review_db.snapshot_file(conn, repo_root=repo, path=note_path)
-        gate_snapshot = review_db.snapshot_file(conn, repo_root=repo, path=gate_path)
+        criterion_snapshot = review_db.snapshot_file(conn, repo_root=repo, path=criterion_path)
         review_job_id = review_db.create_job_with_pairs(
             conn,
             model_partition=TEST_MODEL,
@@ -138,11 +138,11 @@ def seed_snapshot_review(repo: Path, db_path: Path, *, note_path: str, gate_path
             pairs=[
                 review_db.ReviewPairRequest(
                     note_path=note_path,
-                    gate_path=gate_path,
+                    criterion_path=criterion_path,
                     pair_ordinal=1,
                     result_kind="verdict",
                     reviewed_note_snapshot_id=note_snapshot.snapshot_id,
-                    reviewed_gate_snapshot_id=gate_snapshot.snapshot_id,
+                    reviewed_criterion_snapshot_id=criterion_snapshot.snapshot_id,
                 )
             ],
         )
@@ -152,7 +152,7 @@ def seed_snapshot_review(repo: Path, db_path: Path, *, note_path: str, gate_path
             review_pairs=[
                 review_db.ReviewPairCompletion(
                     note_path=note_path,
-                    gate_path=gate_path,
+                    criterion_path=criterion_path,
                     decision="pass",
                     reviewed_at="2026-04-01T00:00:00+00:00",
                 )
@@ -168,11 +168,11 @@ def seed_snapshot_review(repo: Path, db_path: Path, *, note_path: str, gate_path
         review_db.upsert_acceptance(
             conn,
             note_path=note_path,
-            gate_path=gate_path,
+            criterion_path=criterion_path,
             model_partition=TEST_MODEL,
             accepted_review_pair_id=review_pair.review_pair_id,
             accepted_note_snapshot_id=note_snapshot.snapshot_id,
-            accepted_gate_snapshot_id=gate_snapshot.snapshot_id,
+            accepted_criterion_snapshot_id=criterion_snapshot.snapshot_id,
             accepted_at="2026-04-01T00:00:00+00:00",
         )
         conn.commit()
@@ -245,7 +245,7 @@ def test_qualifying_pairs_finds_note_with_only_unwatched_changes_and_ack_records
     pairs = qualifying_pairs(
         repo,
         model=TEST_MODEL,
-        gate_ids=["kb/instructions/review-gates/prose/source-residue.md"],
+        criterion_ids=["kb/instructions/review-gates/prose/source-residue.md"],
         note_filter=["kb/notes"],
         db_path=db_path,
     )
@@ -259,11 +259,11 @@ def test_qualifying_pairs_finds_note_with_only_unwatched_changes_and_ack_records
             SELECT
                 accepted_review_pair_id,
                 accepted_note_snapshot_id,
-                accepted_gate_snapshot_id,
+                accepted_criterion_snapshot_id,
                 accepted_note_hash,
-                accepted_gate_hash
-            FROM current_gate_acceptances
-            WHERE note_path = ? AND gate_path = ? AND model_partition = ?
+                accepted_criterion_hash
+            FROM current_criterion_acceptances
+            WHERE note_path = ? AND criterion_path = ? AND model_partition = ?
             """,
             ("kb/notes/sample.md", "kb/instructions/review-gates/prose/source-residue.md", TEST_MODEL),
         ).fetchone()
@@ -295,8 +295,8 @@ def test_ack_trivial_note_changes_cli_writes_non_null_review_pair_id(tmp_path: P
         row = conn.execute(
             """
             SELECT accepted_review_pair_id
-            FROM current_gate_acceptances
-            WHERE note_path = ? AND gate_path = ? AND model_partition = ?
+            FROM current_criterion_acceptances
+            WHERE note_path = ? AND criterion_path = ? AND model_partition = ?
             """,
             ("kb/notes/sample.md", "kb/instructions/review-gates/prose/source-residue.md", TEST_MODEL),
         ).fetchone()
@@ -326,7 +326,7 @@ State one claim per note.
         repo,
         db_path,
         note_path="kb/notes/sample.md",
-        gate_path="kb/types/note.md",
+        criterion_path="kb/types/note.md",
     )
     note_path = repo / "kb" / "notes" / "sample.md"
     make_note(note_path, "\nBody.\n", traits="[title-as-claim]", tags="[computational-model]")
@@ -361,14 +361,14 @@ def test_qualifying_pairs_uses_snapshot_text_without_git(tmp_path: Path) -> None
         repo,
         db_path,
         note_path="kb/notes/sample.md",
-        gate_path="kb/instructions/review-gates/prose/source-residue.md",
+        criterion_path="kb/instructions/review-gates/prose/source-residue.md",
     )
     make_note(note, "\nBody.\n", traits="[title-as-claim]", tags="[computational-model]")
 
     pairs = qualifying_pairs(
         repo,
         model=TEST_MODEL,
-        gate_ids=["kb/instructions/review-gates/prose/source-residue.md"],
+        criterion_ids=["kb/instructions/review-gates/prose/source-residue.md"],
         note_filter=["kb/notes"],
         db_path=db_path,
     )
@@ -379,7 +379,7 @@ def test_qualifying_pairs_uses_snapshot_text_without_git(tmp_path: Path) -> None
 def test_qualifying_pairs_excludes_notes_where_watched_parts_changed(tmp_path: Path) -> None:
     repo, db_path = build_fixture(
         tmp_path,
-        gate_id="frontmatter/title-body-alignment",
+        criterion_id="frontmatter/title-body-alignment",
         lens="frontmatter",
         watches="[title, body]",
     )
@@ -389,7 +389,7 @@ def test_qualifying_pairs_excludes_notes_where_watched_parts_changed(tmp_path: P
     pairs = qualifying_pairs(
         repo,
         model=TEST_MODEL,
-        gate_ids=["kb/instructions/review-gates/frontmatter/title-body-alignment.md"],
+        criterion_ids=["kb/instructions/review-gates/frontmatter/title-body-alignment.md"],
         note_filter=["kb/notes"],
         db_path=db_path,
     )
@@ -410,7 +410,7 @@ def test_qualifying_pairs_skips_rows_without_snapshot_text(tmp_path: Path) -> No
     review_db.ensure_db(db_path)
     with review_db.connect(db_path) as conn:
         note_snapshot = review_db.snapshot_file(conn, repo_root=repo, path="kb/notes/sample.md")
-        gate_snapshot = review_db.snapshot_file(
+        criterion_snapshot = review_db.snapshot_file(
             conn,
             repo_root=repo,
             path="kb/instructions/review-gates/prose/source-residue.md",
@@ -422,21 +422,21 @@ def test_qualifying_pairs_skips_rows_without_snapshot_text(tmp_path: Path) -> No
         review_pair_id = insert_completed_pair(
             conn,
             note_path="kb/notes/sample.md",
-            gate_id="prose/source-residue",
+            criterion_id="prose/source-residue",
             model_partition=TEST_MODEL,
             decision="pass",
             reviewed_note_snapshot_id=note_snapshot.snapshot_id,
-            reviewed_gate_snapshot_id=gate_snapshot.snapshot_id,
+            reviewed_criterion_snapshot_id=criterion_snapshot.snapshot_id,
             reviewed_at="2026-04-04T08:35:54+02:00",
         )
         accept_pair(
             conn,
             review_pair_id=review_pair_id,
             note_path="kb/notes/sample.md",
-            gate_id="prose/source-residue",
+            criterion_id="prose/source-residue",
             model_partition=TEST_MODEL,
             accepted_note_snapshot_id=note_snapshot.snapshot_id,
-            accepted_gate_snapshot_id=gate_snapshot.snapshot_id,
+            accepted_criterion_snapshot_id=criterion_snapshot.snapshot_id,
             accepted_at="2026-04-04T08:36:13+02:00",
         )
         conn.commit()
@@ -446,7 +446,7 @@ def test_qualifying_pairs_skips_rows_without_snapshot_text(tmp_path: Path) -> No
     pairs = qualifying_pairs(
         repo,
         model=TEST_MODEL,
-        gate_ids=["kb/instructions/review-gates/prose/source-residue.md"],
+        criterion_ids=["kb/instructions/review-gates/prose/source-residue.md"],
         note_filter=["kb/notes"],
         db_path=db_path,
     )

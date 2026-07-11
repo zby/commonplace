@@ -235,14 +235,14 @@ def test_relocate_note_apply_leaves_review_state_rows_unchanged_and_paths_derive
     assert plan.bundle_output_path == "kb/reports/bundle-reviews/review-job-1/bundle-output.md"
     assert old_pairs[0].result_path == "kb/reports/bundle-reviews/review-job-1/pair-1-source-residue.md"
 
-    stale = review_target_selector.select_stale_gates(
+    stale = review_target_selector.select_stale_criteria(
         repo_root,
         model=TEST_MODEL,
-        gate_ids=[GATE_ID],
+        criterion_ids=[GATE_ID],
         note_filter=["kb/notes/archive/new-note-title.md"],
         db_path=db_path,
     )
-    assert [(record.note_path, record.gate_id, record.reason) for record in stale] == [
+    assert [(record.note_path, record.criterion_id, record.reason) for record in stale] == [
         ("kb/notes/archive/new-note-title.md", GATE_ID, "missing-review")
     ]
 

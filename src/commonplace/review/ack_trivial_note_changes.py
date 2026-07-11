@@ -22,7 +22,7 @@ from commonplace.review.review_db import (
     prepare_review_db,
 )
 from commonplace.review.review_model import normalize_model_partition
-from commonplace.review.review_target_selector import select_stale_gates
+from commonplace.review.review_target_selector import select_stale_criteria
 
 
 _TITLE_RE = re.compile(r"^#\s+(.+)$", re.MULTILINE)
@@ -78,9 +78,9 @@ def _note_parts(content: str) -> dict[str, Any] | None:
     }
 
 
-def _load_gate_watches(gate_path: Path) -> set[str] | None:
+def _load_gate_watches(criterion_path: Path) -> set[str] | None:
     try:
-        parsed = frontmatter.parse(gate_path.read_text(encoding="utf-8"))
+        parsed = frontmatter.parse(criterion_path.read_text(encoding="utf-8"))
     except (OSError, UnicodeDecodeError):
         return None
     if not parsed.ok:
@@ -120,7 +120,7 @@ def qualifying_pairs(
     repo_root: Path,
     *,
     model: str,
-    gate_ids: list[str],
+    criterion_ids: list[str],
     note_filter: list[str] | None = None,
     current_only: bool = False,
     db_path: Path | None = None,
@@ -130,10 +130,10 @@ def qualifying_pairs(
         db_path = prepare_review_db(repo_root)
     stale_records = [
         record
-        for record in select_stale_gates(
+        for record in select_stale_criteria(
             repo_root,
             model=model,
-            gate_ids=gate_ids,
+            criterion_ids=criterion_ids,
             note_filter=note_filter,
             current_only=current_only,
             include_diff=False,
@@ -149,13 +149,13 @@ def qualifying_pairs(
     gate_watches_cache: dict[str, set[str] | None] = {}
     pairs: list[str] = []
     for record in stale_records:
-        acceptance = acceptances.get((record.note_path, record.gate_path, model))
+        acceptance = acceptances.get((record.note_path, record.criterion_path, model))
         if acceptance is None:
             continue
 
-        if record.gate_path not in gate_watches_cache:
-            gate_watches_cache[record.gate_path] = _load_gate_watches(repo_root / record.gate_path)
-        watches = gate_watches_cache[record.gate_path]
+        if record.criterion_path not in gate_watches_cache:
+            gate_watches_cache[record.criterion_path] = _load_gate_watches(repo_root / record.criterion_path)
+        watches = gate_watches_cache[record.criterion_path]
         if watches is None:
             # No valid watches declaration = the gate watches the whole note;
             # nothing is trivial against it. Type-spec gates land here.
@@ -174,6 +174,6 @@ def qualifying_pairs(
             current_text,
             watches=watches,
         ):
-            pairs.append(f"{record.note_path}:{record.gate_path}")
+            pairs.append(f"{record.note_path}:{record.criterion_path}")
 
     return sorted(set(pairs))

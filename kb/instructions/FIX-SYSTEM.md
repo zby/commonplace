@@ -32,7 +32,7 @@ Reviews are never modified by fixes. The review system owns the assessment; the 
 - Selects findings from reviews whose canonical decision is `warn`
 - Extracts actionable items from `### Findings` sections (lines starting with `- warn:`)
 - When a warn review has no `- warn:` items, falls back in order to the `### Summary` section, then the whole `### Findings` block, then the result-stripped review body
-- Collapses model partitions to one current entry per `(note_path, gate_id)`, choosing the latest accepted warn review
+- Collapses model partitions to one current entry per `(note_path, criterion_id)`, choosing the latest accepted warn review
 
 CLI:
 

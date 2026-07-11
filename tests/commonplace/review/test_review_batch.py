@@ -42,12 +42,12 @@ Body of {title}.
     )
 
 
-def make_gate(path: Path, gate_id: str, lens: str, *, requires_trait: str | None = None) -> Path:
+def make_gate(path: Path, criterion_id: str, lens: str, *, requires_trait: str | None = None) -> Path:
     requires_trait_line = f"requires_trait: {requires_trait}\n" if requires_trait else ""
     return write(
         path,
         f"""---
-gate_id: {gate_id}
+gate_id: {criterion_id}
 name: {path.stem.replace("-", " ").title()}
 lens: {lens}
 watches: [body]
@@ -91,11 +91,11 @@ def build_repo_fixture(tmp_path: Path) -> tuple[Path, Path]:
     return repo, db_path
 
 
-def target(note_path: str, gate_path: str, gate_id: str, reason: str = "requested") -> dict[str, str]:
+def target(note_path: str, criterion_path: str, criterion_id: str, reason: str = "requested") -> dict[str, str]:
     return {
         "note_path": note_path,
-        "gate_path": gate_path,
-        "gate_id": gate_id,
+        "criterion_path": criterion_path,
+        "criterion_id": criterion_id,
         "reason": reason,
     }
 
@@ -111,23 +111,23 @@ def create_gate_jobs(repo: Path, db_path: Path, targets: list[dict[str, str]]):
         "--input",
         "targets.json",
         "--grouping",
-        "gate",
+        "criterion",
         cwd=repo,
         db_path=db_path,
         check=False,
     )
 
 
-def pair_block(note_path: str, gate_id: str, body: str, decision: str) -> str:
+def pair_block(note_path: str, criterion_id: str, body: str, decision: str) -> str:
     return (
-        f"=== PAIR REVIEW START: {note_path} :: {gate_id} ===\n"
+        f"=== PAIR REVIEW START: {note_path} :: {criterion_id} ===\n"
         f"{body}\n\n"
         f"## Result: {decision}\n"
-        f"=== PAIR REVIEW END: {note_path} :: {gate_id} ===\n"
+        f"=== PAIR REVIEW END: {note_path} :: {criterion_id} ===\n"
     )
 
 
-def test_create_review_jobs_selector_creates_one_gate_packed_job_and_prompt(tmp_path: Path) -> None:
+def test_create_review_jobs_selector_creates_one_criterion_packed_job_and_prompt(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
 
     result = create_gate_jobs(
@@ -145,15 +145,15 @@ def test_create_review_jobs_selector_creates_one_gate_packed_job_and_prompt(tmp_
     assert payload["created_count"] == 1
     job = payload["jobs"][0]
     review_job_id = job["review_job_id"]
-    assert [(pair["note_path"], pair["gate_path"]) for pair in job["pairs"]] == [
+    assert [(pair["note_path"], pair["criterion_path"]) for pair in job["pairs"]] == [
         ("kb/notes/first.md", GATE_PATH),
         ("kb/notes/second.md", GATE_PATH),
     ]
     assert payload["skipped_pairs"] == [
         {
             "note_path": "kb/notes/first.md",
-            "gate_path": CLAIM_GATE_PATH,
-            "gate_id": "frontmatter/claim-strength",
+            "criterion_path": CLAIM_GATE_PATH,
+            "criterion_id": "frontmatter/claim-strength",
             "reason": "not applicable",
         }
     ]
@@ -165,11 +165,11 @@ def test_create_review_jobs_selector_creates_one_gate_packed_job_and_prompt(tmp_
     assert f"Write exactly one markdown document to `{job['bundle_output_path']}`." in prompt_text
     assert f"=== PAIR REVIEW START: kb/notes/first.md :: {GATE_PATH} ===" in prompt_text
     assert f"=== PAIR REVIEW START: kb/notes/second.md :: {GATE_PATH} ===" in prompt_text
-    assert prompt_text.count(f"=== gate: {GATE_PATH} ===") == 1
+    assert prompt_text.count(f"=== criterion: {GATE_PATH} ===") == 1
 
     manifest_path = f"kb/reports/bundle-reviews/review-job-{review_job_id}/MANIFEST.json"
     manifest = json.loads((repo / manifest_path).read_text(encoding="utf-8"))
-    assert manifest["packing"] == "gate"
+    assert manifest["packing"] == "criterion"
     assert [pair["result_path"] for pair in manifest["pairs"]] == [
         f"kb/reports/bundle-reviews/review-job-{review_job_id}/pair-1-first.md",
         f"kb/reports/bundle-reviews/review-job-{review_job_id}/pair-2-second.md",
@@ -184,26 +184,26 @@ def test_create_review_jobs_selector_creates_one_gate_packed_job_and_prompt(tmp_
             """
         ).fetchall()
         assert [(row["review_job_id"], row["status"], row["runner"], row["packing"]) for row in job_rows] == [
-            (review_job_id, "queued", None, "gate")
+            (review_job_id, "queued", None, "criterion")
         ]
         assert job_rows[0]["created_at"] is not None
         pair_rows = conn.execute(
             """
             SELECT
                 note_path,
-                gate_path,
+                criterion_path,
                 reviewed_note_snapshot_id,
-                reviewed_gate_snapshot_id
+                reviewed_criterion_snapshot_id
             FROM review_pairs
             ORDER BY pair_ordinal
             """
         ).fetchall()
-        assert [(row["note_path"], row["gate_path"]) for row in pair_rows] == [
+        assert [(row["note_path"], row["criterion_path"]) for row in pair_rows] == [
             ("kb/notes/first.md", GATE_PATH),
             ("kb/notes/second.md", GATE_PATH),
         ]
         assert all(row["reviewed_note_snapshot_id"] is not None for row in pair_rows)
-        assert all(row["reviewed_gate_snapshot_id"] is not None for row in pair_rows)
+        assert all(row["reviewed_criterion_snapshot_id"] is not None for row in pair_rows)
         job_columns = {row["name"] for row in conn.execute("PRAGMA table_info(review_jobs)").fetchall()}
         pair_columns = {row["name"] for row in conn.execute("PRAGMA table_info(review_pairs)").fetchall()}
         assert "started_at" not in job_columns
@@ -212,7 +212,7 @@ def test_create_review_jobs_selector_creates_one_gate_packed_job_and_prompt(tmp_
         assert "result_path" not in pair_columns
 
 
-def test_finalize_review_job_finalizes_all_gate_packed_pairs(tmp_path: Path) -> None:
+def test_finalize_review_job_finalizes_all_criterion_packed_pairs(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
     prepared = json.loads(
         create_gate_jobs(

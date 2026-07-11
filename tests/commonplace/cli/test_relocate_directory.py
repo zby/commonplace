@@ -241,17 +241,17 @@ def test_relocate_directory_apply_leaves_review_state_rows_unchanged_and_paths_d
         "kb/reports/bundle-reviews/review-job-2/pair-1-source-residue.md",
     ]
 
-    stale = review_target_selector.select_stale_gates(
+    stale = review_target_selector.select_stale_criteria(
         tmp_path,
         model=TEST_MODEL,
-        gate_ids=[GATE_ID],
+        criterion_ids=[GATE_ID],
         note_filter=[
             "kb/agent-memory-systems/bar.md",
             "kb/agent-memory-systems/foo.md",
         ],
         db_path=db_path,
     )
-    assert [(record.note_path, record.gate_id, record.reason) for record in stale] == [
+    assert [(record.note_path, record.criterion_id, record.reason) for record in stale] == [
         ("kb/agent-memory-systems/bar.md", GATE_ID, "missing-review"),
         ("kb/agent-memory-systems/foo.md", GATE_ID, "missing-review"),
     ]

@@ -5,7 +5,7 @@ type: kb/types/instruction.md
 
 # Run review batches
 
-Run selected `(note, criterion)` pairs from inside the current agent harness. The schema and CLI retain `(note_path, gate_path)` names. The parent coordinates selection, job creation, worker scheduling, finalization, verification, and reporting; sub-agents perform the assay.
+Run selected `(note, criterion)` pairs from inside the current agent harness. The schema and CLI use `(note_path, criterion_path)` names. The parent coordinates selection, job creation, worker scheduling, finalization, verification, and reporting; sub-agents perform the assay.
 
 Use this procedure for either:
 
@@ -18,7 +18,7 @@ Inputs:
 - which criteria to select — gate ids, bundle names, conformance requests, or `critique`. `--all-gates` selects the applicable verdict-kind catalog and conformance gates; report assays remain explicit opt-ins
 - note scope — `--note {note-or-dir}...` or `--current`
 - selector mode — `requested` for explicit execution, or default stale selection
-- grouping — `note` or `gate`
+- grouping — `note` or `criterion`
 
 The partition is fixed at selection, before any worker runs, so the orchestrator must choose it up front. Sub-agents inherit the orchestrator's model unless explicitly overridden, so read the orchestrator's own exact model ID from its environment context and pick the partition that `build_model_partition` maps it to (the registry is `MODEL_PARTITION_REGISTRY` in `src/commonplace/review/review_model.py`). Use that partition for the selector `--model-partition`. The worker still reports the model it actually ran, and the orchestrator finalizes with that exact reported model; if the reported model maps to a different partition than the job's, the inheritance assumption broke — re-run under the correct partition rather than forcing the finalize.
 
@@ -38,14 +38,14 @@ Use requested mode when the user has provided the exact gates or bundles to run 
 
 ```bash
 commonplace-review-target-selector --mode requested --model-partition {model-partition} {gate-or-bundle}... --note {note-path} --json \
-  | commonplace-create-review-jobs --input - --grouping {note|gate} [--batch-size {n}]
+  | commonplace-create-review-jobs --input - --grouping {note|criterion} [--batch-size {n}]
 ```
 
 For a current-status sweep over explicit gates:
 
 ```bash
 commonplace-review-target-selector --mode requested --model-partition {model-partition} {gate-or-bundle}... --current --json \
-  | commonplace-create-review-jobs --input - --grouping {note|gate} [--batch-size {n}]
+  | commonplace-create-review-jobs --input - --grouping {note|criterion} [--batch-size {n}]
 ```
 
 ### Stale review
@@ -54,30 +54,30 @@ Use default stale mode when the review store should decide which applicable pair
 
 ```bash
 commonplace-review-target-selector --model-partition {model-partition} {gate-or-bundle}... --note {note-or-dir}... --json \
-  | commonplace-create-review-jobs --input - --grouping {note|gate} [--batch-size {n}]
+  | commonplace-create-review-jobs --input - --grouping {note|criterion} [--batch-size {n}]
 ```
 
 For all gates over current notes:
 
 ```bash
 commonplace-review-target-selector --model-partition {model-partition} --all-gates --current --json \
-  | commonplace-create-review-jobs --input - --grouping {note|gate} [--batch-size {n}]
+  | commonplace-create-review-jobs --input - --grouping {note|criterion} [--batch-size {n}]
 ```
 
-Add `--reason {missing-review|gate-changed|note-changed}` to the selector only when the user asks for that stale subset.
+Add `--reason {missing-review|criterion-changed|note-changed}` to the selector only when the user asks for that stale subset.
 
 ### Choose grouping
 
 - Use `--grouping note` for note-centric work. Jobs are grouped by note and bundle/lens.
-- Use `--grouping gate` for criterion-centric work. The historical option name means shared `gate_path`; jobs are grouped by criterion and chunked by `--batch-size`.
-- `--batch-size` is valid only with `--grouping gate`.
+- Use `--grouping criterion` for criterion-centric work. Jobs are grouped by criterion and chunked by `--batch-size`.
+- `--batch-size` is valid only with `--grouping criterion`.
 
 The selector emits applicable pairs with their persisted result kinds. The creator consumes that JSON, creates queued homogeneous jobs, writes canonical prompts, and returns `jobs`. Capture especially:
 
 - `review_job_id`
 - derived `prompt_path`
 - derived `bundle_output_path`
-- each pair's `gate_id` and `gate_path`
+- each pair's `criterion_id` and `criterion_path`
 
 Each returned job is one review batch for this procedure. Do not invent, merge, split, or reorder jobs. Use exactly the job grouping and pair list the creator returns.
 

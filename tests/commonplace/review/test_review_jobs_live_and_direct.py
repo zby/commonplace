@@ -41,11 +41,11 @@ Term Alpha appears before its definition.
     )
 
 
-def make_gate(path: Path, gate_id: str, lens: str) -> Path:
+def make_gate(path: Path, criterion_id: str, lens: str) -> Path:
     return write(
         path,
         f"""---
-gate_id: {gate_id}
+gate_id: {criterion_id}
 name: {path.stem.replace("-", " ").title()}
 lens: {lens}
 watches: [body]
@@ -97,12 +97,12 @@ def build_repo_fixture(
     return repo, repo / "kb" / "reports" / "review-store.sqlite"
 
 
-def pair_block(note_path: str, gate_id: str, body: str, decision: str) -> str:
+def pair_block(note_path: str, criterion_id: str, body: str, decision: str) -> str:
     return (
-        f"=== PAIR REVIEW START: {note_path} :: {gate_id} ===\n"
+        f"=== PAIR REVIEW START: {note_path} :: {criterion_id} ===\n"
         f"{body}\n\n"
         f"## Result: {decision}\n"
-        f"=== PAIR REVIEW END: {note_path} :: {gate_id} ===\n"
+        f"=== PAIR REVIEW END: {note_path} :: {criterion_id} ===\n"
     )
 
 
@@ -149,11 +149,11 @@ def create_jobs_from_targets(
     return run_cli("create_review_jobs", *args, cwd=repo, db_path=db_path)
 
 
-def target(note_path: str, gate_path: str, gate_id: str, reason: str = "requested") -> dict[str, str]:
+def target(note_path: str, criterion_path: str, criterion_id: str, reason: str = "requested") -> dict[str, str]:
     return {
         "note_path": note_path,
-        "gate_path": gate_path,
-        "gate_id": gate_id,
+        "criterion_path": criterion_path,
+        "criterion_id": criterion_id,
         "reason": reason,
     }
 
@@ -178,7 +178,7 @@ def test_create_review_jobs_groups_cross_lens_gates_by_bundle(tmp_path: Path) ->
     assert payload["grouping"] == "note"
     assert payload["created_count"] == 2
     assert payload["skipped_pairs"] == []
-    assert [[pair["gate_path"] for pair in job["pairs"]] for job in jobs] == [[GATE_ONE_PATH], [GATE_TWO_PATH]]
+    assert [[pair["criterion_path"] for pair in job["pairs"]] for job in jobs] == [[GATE_ONE_PATH], [GATE_TWO_PATH]]
 
     first_job = jobs[0]
     second_job = jobs[1]
@@ -217,27 +217,27 @@ def test_create_review_jobs_groups_cross_lens_gates_by_bundle(tmp_path: Path) ->
         pair_rows = conn.execute(
             """
             SELECT
-                rp.gate_path,
+                rp.criterion_path,
                 rp.reviewed_note_snapshot_id,
-                rp.reviewed_gate_snapshot_id,
+                rp.reviewed_criterion_snapshot_id,
                 note_snapshot.content_text AS note_text,
-                gate_snapshot.content_text AS gate_text
+                criterion_snapshot.content_text AS criterion_text
             FROM review_pairs AS rp
             JOIN review_file_snapshots AS note_snapshot
               ON rp.reviewed_note_snapshot_id = note_snapshot.snapshot_id
-            JOIN review_file_snapshots AS gate_snapshot
-              ON rp.reviewed_gate_snapshot_id = gate_snapshot.snapshot_id
+            JOIN review_file_snapshots AS criterion_snapshot
+              ON rp.reviewed_criterion_snapshot_id = criterion_snapshot.snapshot_id
             ORDER BY rp.review_job_id, rp.pair_ordinal
             """
         ).fetchall()
-        assert [row["gate_path"] for row in pair_rows] == [
+        assert [row["criterion_path"] for row in pair_rows] == [
             GATE_ONE_PATH,
             GATE_TWO_PATH,
         ]
         assert {row["reviewed_note_snapshot_id"] for row in pair_rows} != {None}
-        assert all(row["reviewed_gate_snapshot_id"] is not None for row in pair_rows)
+        assert all(row["reviewed_criterion_snapshot_id"] is not None for row in pair_rows)
         assert all("Term Alpha appears before its definition." in row["note_text"] for row in pair_rows)
-        assert all("Fixture gate." in row["gate_text"] for row in pair_rows)
+        assert all("Fixture gate." in row["criterion_text"] for row in pair_rows)
         job_columns = {row["name"] for row in conn.execute("PRAGMA table_info(review_jobs)").fetchall()}
         pair_columns = {row["name"] for row in conn.execute("PRAGMA table_info(review_pairs)").fetchall()}
         assert "note_path" not in job_columns
@@ -248,9 +248,9 @@ def test_create_review_jobs_groups_cross_lens_gates_by_bundle(tmp_path: Path) ->
         assert "result_path" not in pair_columns
 
 
-def test_create_review_jobs_snapshots_dirty_gate_text(tmp_path: Path) -> None:
+def test_create_review_jobs_snapshots_dirty_criterion_text(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
-    dirty_gate_text = """---
+    dirty_criterion_text = """---
 gate_id: accessibility/undefined-terms
 name: Undefined Terms
 lens: accessibility
@@ -262,7 +262,7 @@ staleness: changed
 
 Dirty gate marker.
 """
-    (repo / GATE_ONE_PATH).write_text(dirty_gate_text, encoding="utf-8")
+    (repo / GATE_ONE_PATH).write_text(dirty_criterion_text, encoding="utf-8")
 
     result = create_jobs_from_targets(
         repo,
@@ -280,8 +280,8 @@ Dirty gate marker.
             SELECT snapshot.content_text
             FROM review_pairs AS rp
             JOIN review_file_snapshots AS snapshot
-              ON rp.reviewed_gate_snapshot_id = snapshot.snapshot_id
-            WHERE rp.gate_path = ?
+              ON rp.reviewed_criterion_snapshot_id = snapshot.snapshot_id
+            WHERE rp.criterion_path = ?
             """,
             (GATE_ONE_PATH,),
         ).fetchone()
@@ -302,7 +302,7 @@ def test_create_review_jobs_resolves_installed_commonplace_gates(tmp_path: Path)
     )
 
     payload = json.loads(result.stdout)
-    assert [pair["gate_path"] for pair in payload["jobs"][0]["pairs"]] == [INSTALLED_GATE_ONE_PATH]
+    assert [pair["criterion_path"] for pair in payload["jobs"][0]["pairs"]] == [INSTALLED_GATE_ONE_PATH]
 
 
 def test_create_review_jobs_accepts_selector_json_file_and_validates_model(tmp_path: Path) -> None:
@@ -315,8 +315,8 @@ def test_create_review_jobs_accepts_selector_json_file_and_validates_model(tmp_p
                 "targets": [
                     {
                         "note_path": "kb/notes/sample.md",
-                        "gate_path": GATE_ONE_PATH,
-                        "gate_id": GATE_ONE,
+                        "criterion_path": GATE_ONE_PATH,
+                        "criterion_id": GATE_ONE,
                         "reason": "missing-review",
                     }
                 ],
@@ -340,7 +340,7 @@ def test_create_review_jobs_accepts_selector_json_file_and_validates_model(tmp_p
     payload = json.loads(result.stdout)
     assert payload["input_mode"] == "selector"
     assert payload["created_count"] == 1
-    assert payload["jobs"][0]["pairs"][0]["gate_id"] == GATE_ONE
+    assert payload["jobs"][0]["pairs"][0]["criterion_id"] == GATE_ONE
 
     mismatch = run_cli(
         "create_review_jobs",
@@ -368,7 +368,7 @@ def test_create_review_jobs_selector_noop_and_model_agnostic_input(tmp_path: Pat
         "--input",
         "empty-targets.json",
         "--grouping",
-        "gate",
+        "criterion",
         cwd=repo,
         db_path=db_path,
     )
@@ -409,7 +409,7 @@ def test_create_review_jobs_selector_noop_and_model_agnostic_input(tmp_path: Pat
     assert "model_partition is required" in rejected.stderr
 
 
-def test_create_review_jobs_selector_gate_grouping_chunks_and_lists(tmp_path: Path) -> None:
+def test_create_review_jobs_selector_criterion_grouping_chunks_and_lists(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
     make_note(repo / "kb" / "notes" / "other.md")
 
@@ -421,7 +421,7 @@ def test_create_review_jobs_selector_gate_grouping_chunks_and_lists(tmp_path: Pa
             target("kb/notes/other.md", GATE_ONE_PATH, GATE_ONE),
             target("kb/notes/sample.md", GATE_ONE_PATH, GATE_ONE),
         ],
-        grouping="gate",
+        grouping="criterion",
         batch_size=1,
     )
 
@@ -431,8 +431,8 @@ def test_create_review_jobs_selector_gate_grouping_chunks_and_lists(tmp_path: Pa
     assert payload["skipped_pairs"] == [
         {
             "note_path": "kb/notes/sample.md",
-            "gate_path": GATE_ONE_PATH,
-            "gate_id": GATE_ONE,
+            "criterion_path": GATE_ONE_PATH,
+            "criterion_id": GATE_ONE,
             "reason": "duplicate",
         }
     ]
@@ -484,7 +484,7 @@ def test_create_review_jobs_rejects_batch_size_with_note_grouping(tmp_path: Path
     )
 
     assert result.returncode == 2
-    assert "--batch-size is only valid with --grouping gate" in result.stderr
+    assert "--batch-size is only valid with --grouping criterion" in result.stderr
 
 
 def test_public_review_entry_points_replace_ingest_surfaces() -> None:
@@ -607,7 +607,7 @@ def test_finalize_review_job_uses_job_owned_paths_and_writes_provenance_frontmat
     assert parsed_frontmatter.ok
     assert parsed_frontmatter.data["review_job_id"] == review_job_id
     assert parsed_frontmatter.data["note_path"] == "kb/notes/sample.md"
-    assert parsed_frontmatter.data["gate_path"] == GATE_ONE_PATH
+    assert parsed_frontmatter.data["criterion_path"] == GATE_ONE_PATH
     assert parsed_frontmatter.data["model_partition"] == "test-model"
     assert parsed_frontmatter.data["runner"] == "live-agent"
     assert parsed_frontmatter.data["runner_model"] == "test-model"
@@ -726,17 +726,17 @@ def test_finalize_review_job_finalizes_queued_job(tmp_path: Path) -> None:
         conn.row_factory = sqlite3.Row
         job = conn.execute("SELECT status FROM review_jobs").fetchone()
         assert job["status"] == "completed"
-        pairs = conn.execute("SELECT gate_path, decision FROM review_pairs ORDER BY pair_ordinal").fetchall()
-        assert [(row["gate_path"], row["decision"]) for row in pairs] == [
+        pairs = conn.execute("SELECT criterion_path, decision FROM review_pairs ORDER BY pair_ordinal").fetchall()
+        assert [(row["criterion_path"], row["decision"]) for row in pairs] == [
             (GATE_ONE_PATH, "warn"),
         ]
         snapshot_rows = conn.execute(
             """
             SELECT
                 rp.reviewed_note_snapshot_id,
-                rp.reviewed_gate_snapshot_id,
+                rp.reviewed_criterion_snapshot_id,
                 ae.accepted_note_snapshot_id,
-                ae.accepted_gate_snapshot_id
+                ae.accepted_criterion_snapshot_id
             FROM review_pairs AS rp
             JOIN acceptance AS ae
               ON ae.accepted_review_pair_id = rp.review_pair_id
@@ -746,7 +746,7 @@ def test_finalize_review_job_finalizes_queued_job(tmp_path: Path) -> None:
         assert [
             (
                 row["accepted_note_snapshot_id"] == row["reviewed_note_snapshot_id"],
-                row["accepted_gate_snapshot_id"] == row["reviewed_gate_snapshot_id"],
+                row["accepted_criterion_snapshot_id"] == row["reviewed_criterion_snapshot_id"],
             )
             for row in snapshot_rows
         ] == [(True, True)]
@@ -796,8 +796,8 @@ def test_failed_rereview_preserves_previous_acceptance_and_artifacts(tmp_path: P
         current_acceptance = conn.execute(
             """
             SELECT accepted_review_pair_id
-            FROM current_gate_acceptances
-            WHERE note_path = ? AND gate_path = ? AND model_partition = ?
+            FROM current_criterion_acceptances
+            WHERE note_path = ? AND criterion_path = ? AND model_partition = ?
             """,
             ("kb/notes/sample.md", GATE_ONE_PATH, "test-model"),
         ).fetchone()
@@ -857,8 +857,8 @@ def test_successful_rereview_prunes_superseded_job_and_artifacts(tmp_path: Path)
         current_acceptance = conn.execute(
             """
             SELECT accepted_review_pair_id
-            FROM current_gate_acceptances
-            WHERE note_path = ? AND gate_path = ? AND model_partition = ?
+            FROM current_criterion_acceptances
+            WHERE note_path = ? AND criterion_path = ? AND model_partition = ?
             """,
             ("kb/notes/sample.md", GATE_ONE_PATH, "test-model"),
         ).fetchone()

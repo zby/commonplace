@@ -8,7 +8,7 @@ status: seedling
 
 # Model partition registry
 
-Commonplace review identity is `(note_path, gate_path, model_partition)`. `model_partition` should stay the opaque freshness partition that ADR 032 defines; the registry proposed here would only move alias, validation, and runner-default metadata out of Python code and into review configuration/state.
+Commonplace review identity is `(note_path, criterion_path, model_partition)`. `model_partition` should stay the opaque freshness partition that ADR 032 defines; the registry proposed here would only move alias, validation, and runner-default metadata out of Python code and into review configuration/state.
 
 This is a later simplification, not a requirement for the queued-job pipeline. Jobs can store both `model_partition` and nullable `runner_model` without a partition table.
 

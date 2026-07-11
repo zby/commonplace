@@ -57,7 +57,13 @@ Schema migration remains exceptional rather than a general compatibility promise
 
 Review pairs persist `result_kind = verdict | report`, separating protocol completion from a decision. Jobs are result-kind homogeneous, finalization parses against the persisted kind, and `REPORT` completes a report pair with `reviewed_at` while leaving `decision` null. This extends the all-or-nothing rule without weakening it: every expected pair must still complete under its own contract before the job advances acceptance.
 
-Because populated v4 stores contain paid-for verdict evidence already representable in v5, `scripts/migrate-review-db-v4-to-v5.py` upgrades them in place while preserving review-pair IDs and acceptance references. Other version mismatches remain refused. This is a narrow evidence-preservation migration, not restoration of the general migration substrate removed by this ADR.
+Because populated v4 stores contained paid-for verdict evidence already representable in v5, the v4→v5 migration upgraded them in place while preserving review-pair IDs and acceptance references. This was a narrow evidence-preservation migration, not restoration of the general migration substrate removed by this ADR.
+
+### Amendment: criterion-axis naming and schema v6 (2026-07-11)
+
+The generic assay axis now uses `criterion` throughout the schema, Python API, JSON and artifact fields, protocol labels, stale reason, and CLI: `criterion_path`, `criterion_id`, `current_criterion_acceptances`, `criterion-changed`, `--grouping criterion`, `commonplace-ack-review`, and `commonplace-resolve-criteria`. `Gate` remains only for the closed-ended, verdict-kind criterion type, its authored `gate_id`, its catalog, and `--all-gates`.
+
+This is schema v6. Existing stores are rejected and must be recreated. The narrow v4→v5 migration script remains available for one final evidence-preservation use, but normal initialization does not migrate old stores and v5 is not accepted as a v6 store. Commonplace has no external consumers that justify a general compatibility layer, and the cleaner invariant is that the concept and every generic identifier share one name.
 
 Deferred:
 

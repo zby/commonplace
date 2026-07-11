@@ -56,7 +56,7 @@ def seed_warn_review(repo: Path, db_path: Path) -> None:
     review_db.ensure_db(db_path)
     with review_db.connect(db_path) as conn:
         note_snapshot = review_db.snapshot_file(conn, repo_root=repo, path="kb/notes/sample.md")
-        gate_snapshot = review_db.snapshot_file(conn, repo_root=repo, path=GATE_PATH)
+        criterion_snapshot = review_db.snapshot_file(conn, repo_root=repo, path=GATE_PATH)
         review_job_id = review_db.create_job_with_pairs(
             conn,
             model_partition=TEST_MODEL,
@@ -67,11 +67,11 @@ def seed_warn_review(repo: Path, db_path: Path) -> None:
             pairs=[
                 review_db.ReviewPairRequest(
                     note_path="kb/notes/sample.md",
-                    gate_path=GATE_PATH,
+                    criterion_path=GATE_PATH,
                     pair_ordinal=1,
                     result_kind="verdict",
                     reviewed_note_snapshot_id=note_snapshot.snapshot_id,
-                    reviewed_gate_snapshot_id=gate_snapshot.snapshot_id,
+                    reviewed_criterion_snapshot_id=criterion_snapshot.snapshot_id,
                 )
             ],
         )
@@ -81,7 +81,7 @@ def seed_warn_review(repo: Path, db_path: Path) -> None:
             review_pairs=[
                 review_db.ReviewPairCompletion(
                     note_path="kb/notes/sample.md",
-                    gate_path=GATE_PATH,
+                    criterion_path=GATE_PATH,
                     decision="warn",
                     reviewed_at=REVIEWED_AT,
                 )
@@ -95,17 +95,17 @@ def seed_warn_review(repo: Path, db_path: Path) -> None:
         review_db.upsert_acceptance(
             conn,
             note_path="kb/notes/sample.md",
-            gate_path=GATE_PATH,
+            criterion_path=GATE_PATH,
             model_partition=TEST_MODEL,
             accepted_review_pair_id=review_pair.review_pair_id,
             accepted_note_snapshot_id=note_snapshot.snapshot_id,
-            accepted_gate_snapshot_id=gate_snapshot.snapshot_id,
+            accepted_criterion_snapshot_id=criterion_snapshot.snapshot_id,
             accepted_at=REVIEWED_AT,
         )
         conn.commit()
 
 
-def test_warn_selector_uses_gate_snapshot_hash_without_git(tmp_path: Path) -> None:
+def test_warn_selector_uses_criterion_snapshot_hash_without_git(tmp_path: Path) -> None:
     repo = tmp_path / "repo"
     repo.mkdir()
     make_note(repo / "kb" / "notes" / "sample.md")

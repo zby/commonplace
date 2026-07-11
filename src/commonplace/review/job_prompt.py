@@ -59,7 +59,7 @@ def prepare_note_target(
     repo_root: Path,
     note_path: str,
     review_job_id: int,
-    gate_paths: tuple[str, ...],
+    criterion_paths: tuple[str, ...],
     note_text: str | None = None,
 ) -> NoteReviewTarget:
     note_abs = repo_root / note_path
@@ -74,7 +74,7 @@ def prepare_note_target(
     return NoteReviewTarget(
         note_path=note_path,
         review_job_id=review_job_id,
-        gate_paths=gate_paths,
+        criterion_paths=criterion_paths,
         note_text=note_text,
         resolved_links=resolved_links,
         unresolved_links=unresolved_links,

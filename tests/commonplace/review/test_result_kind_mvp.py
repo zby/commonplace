@@ -88,21 +88,21 @@ def test_result_kind_parser_enforces_pair_contract() -> None:
 def test_critique_report_flow_is_snapshot_anchored_and_writes_artifact(tmp_path: Path) -> None:
     repo = tmp_path / "repo"
     db_path = make_repo(repo)
-    missing = review_target_selector.select_stale_gates(
+    missing = review_target_selector.select_stale_criteria(
         repo,
         model=MODEL,
-        gate_ids=["critique"],
+        criterion_ids=["critique"],
         note_filter=[NOTE_PATH],
     )
     assert [(record.reason, record.result_kind) for record in missing] == [
         ("missing-review", "report")
     ]
-    records = review_target_selector.select_requested_gates(
+    records = review_target_selector.select_requested_criteria(
         repo,
-        gate_ids=["critique"],
+        criterion_ids=["critique"],
         note_filter=[NOTE_PATH],
     )
-    assert [(record.gate_path, record.result_kind) for record in records] == [
+    assert [(record.criterion_path, record.result_kind) for record in records] == [
         (CRITIQUE_PATH, "report")
     ]
 
@@ -144,7 +144,7 @@ def test_critique_report_flow_is_snapshot_anchored_and_writes_artifact(tmp_path:
         latest = review_db.load_latest_completed_review_pair(
             conn,
             note_path=NOTE_PATH,
-            gate_path=CRITIQUE_PATH,
+            criterion_path=CRITIQUE_PATH,
             model_partition=MODEL,
         )
         assert latest is not None and latest.review_pair_id == pair.review_pair_id
@@ -153,20 +153,20 @@ def test_critique_report_flow_is_snapshot_anchored_and_writes_artifact(tmp_path:
     assert "result_kind: report" in result_text
     assert result_text.rstrip().endswith("## Result: REPORT")
 
-    stale = review_target_selector.select_stale_gates(
+    stale = review_target_selector.select_stale_criteria(
         repo,
         model=MODEL,
-        gate_ids=["critique"],
+        criterion_ids=["critique"],
         note_filter=[NOTE_PATH],
     )
-    assert [record.reason for record in stale] == ["gate-changed"]
+    assert [record.reason for record in stale] == ["criterion-changed"]
 
     write(repo / CRITIQUE_PATH, original_instruction)
     write(repo / NOTE_PATH, (repo / NOTE_PATH).read_text(encoding="utf-8") + "\nFinal edit.\n")
-    stale = review_target_selector.select_stale_gates(
+    stale = review_target_selector.select_stale_criteria(
         repo,
         model=MODEL,
-        gate_ids=["critique"],
+        criterion_ids=["critique"],
         note_filter=[NOTE_PATH],
     )
     assert [record.reason for record in stale] == ["note-changed"]
@@ -208,7 +208,7 @@ def test_report_pair_completion_and_job_homogeneity_invariants(tmp_path: Path) -
             review_db.upsert_acceptance(
                 conn,
                 note_path=NOTE_PATH,
-                gate_path=CRITIQUE_PATH,
+                criterion_path=CRITIQUE_PATH,
                 model_partition=MODEL,
                 accepted_review_pair_id=pair.review_pair_id,
                 accepted_at=NOW,
