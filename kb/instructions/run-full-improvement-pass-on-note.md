@@ -13,13 +13,13 @@ Inputs:
 
 - first and only argument: `{note-path}` — repository-relative note path.
 
-Derive `<note-name>` from `{note-path}` as the filename without its extension (`kb/notes/linking-theory.md` → `linking-theory`). At the start of every invocation mint a unique `<pass-id>` (a UTC timestamp plus a short random suffix is sufficient). Retain reports under `kb/reports/full-pass/<note-name>/<pass-id>/{initial,closing,controls}/`; never reuse a pass ID or overwrite an initial report.
+Derive `<note-name>` from `{note-path}` as the filename without its extension (`kb/notes/linking-theory.md` → `linking-theory`). At the start of every invocation mint a unique `<pass-id>` (a UTC timestamp plus a short random suffix is sufficient). Retain reports under `kb/reports/full-pass/<note-name>/<pass-id>/{initial,closing}/`; never reuse a pass ID or overwrite an initial report.
 
 Steps 1 through 7 below only write reports; none of them edit the note. Steps 8 and 9 do — applying the packet and then a final flow pass. Step 10 closes review over those edits without starting another transformation round.
 
 ## Execution roles and isolation
 
-The parent agent running this instruction is the **orchestrator**. It alone creates jobs, dispatches workers, schedules around the harness concurrency limit, finalizes review output, copies retained artifacts, edits the note, and writes the observation record. A dispatched worker performs the one review or copyedit task it receives; it does not recursively start another sub-agent merely because the invoked method requires a fresh reviewer. After verifying the worker-owned output, the orchestrator closes, terminates, or releases that worker with the harness lifecycle operation before scheduling more work. Every worker in this pass is single-use.
+The parent agent running this instruction is the **orchestrator**. It alone creates jobs, dispatches workers, schedules around the harness concurrency limit, finalizes review output, copies retained artifacts, and edits the note. A dispatched worker performs the one review or copyedit task it receives; it does not recursively start another sub-agent merely because the invoked method requires a fresh reviewer. After verifying the worker-owned output, the orchestrator closes, terminates, or releases that worker with the harness lifecycle operation before scheduling more work. Every worker in this pass is single-use.
 
 Here, **fresh sub-agent** means a newly isolated execution context that has not participated in an earlier method or edit in this pass. A follow-up turn to an earlier worker is not fresh. When capacity is exhausted, queue work until a slot opens rather than nesting delegation or reusing a worker. Step 9 has the strictest isolation: its worker must be new to the pass and receive only the current note text and the exact copyedit prompt.
 
@@ -35,7 +35,7 @@ Here, **fresh sub-agent** means a newly isolated execution context that has not 
 
 ## Procedure
 
-1. Mint `<pass-id>`, create its `initial/`, `closing/`, and `controls/` directories, record the initial note SHA-256, then read the target note fully.
+1. Mint `<pass-id>`, create its `initial/` and `closing/` directories, record the initial note SHA-256, then read the target note fully.
 2. Run the compression bundle per `run-compression-bundle-on-note.md` (`kb/instructions/run-compression-bundle-on-note.md`), passing `kb/reports/full-pass/<note-name>/<pass-id>/initial/compression-bundle-review.md` as its `{output-path}` argument. No DB writes.
 3. Run `critique-note` through the requested-mode review pipeline in a fresh sub-agent:
 
@@ -63,62 +63,18 @@ Here, **fresh sub-agent** means a newly isolated execution context that has not 
 
 ## Closing cycle
 
-Record the final note SHA-256 before any closing run. Retain every closing report under `closing/` and leave `initial/` byte-identical.
-
-For each anchored semantic pair and critique, first run the stale selector with `--json` and inspect its cumulative accepted-snapshot-to-final-text `diff`:
-
-```bash
-commonplace-review-target-selector --model-partition {model-partition} {assay} --note {note-path} --json
-```
-
-Before rerunning, record `would_ack` or `would_rerun`, a rationale, and rough free-text edit kinds. Then rerun regardless: this MVP uses 100% counterfactual sampling and performs no real ack. Run each semantic gate as its own job:
+Record the final note SHA-256 before any closing run. Retain every closing report under `closing/` and leave `initial/` byte-identical. Run each semantic gate as its own requested-mode job against the final note:
 
 ```bash
 commonplace-review-target-selector --mode requested --model-partition {model-partition} {semantic-gate} --note {note-path} --json \
   | commonplace-create-review-jobs --input - --grouping criterion --batch-size 1
 ```
 
-Rerun critique through the step-3 flow. Immediately copy finalized results into `closing/semantic/<gate>.md` and `closing/critique.md`. For verdict pairs record whether the verdict flipped; for critique record whether the new report materially diverged enough that it would have changed steps 8–9. A carried report would only be reused evidence: it endorses nothing and has no skip semantics.
+Rerun critique through the step-3 flow. Immediately copy finalized results into `closing/semantic/<gate>.md` and `closing/critique.md`.
 
-Rerun the compression bundle, composition-friction-gate, and connect directly against the final text. Retain them under `closing/`, compare initial to closing (compression at bundle level with per-gate detail nested), and record divergence. Copy connect's canonical report into `closing/connect.md` immediately after the skill returns; this closing run overwrites the canonical report used in step 6 but never the retained `initial/connect.md`. The friction report's "For the human" line is never satisfied by a carry judgment.
+Rerun the compression bundle, composition-friction-gate, and connect directly against the final text. Retain them under `closing/`. Copy connect's canonical report into `closing/connect.md` immediately after the skill returns; this closing run overwrites the canonical report used in step 6 but never the retained `initial/connect.md`.
 
-Write the observation record directly; the MVP has no owning event command. Append one JSON object per event to `kb/work/transformation-closure/observations/<pass-id>.jsonl`, at this granularity:
-
-- one `carry_audit` for each anchored pair — critique and every selected semantic gate each get their own line;
-- one `closing_comparison` for each unanchored method family — compression bundle, composition-friction-gate, and connect;
-- one `control_comparison` for each control run.
-
-Every new line uses `schema_version: 2` and has `record_kind`, `pass_id`, `note_path`, `assay_id`, `initial_note_sha256`, `final_note_sha256`, and `adjudicator`. `adjudicator` records the agent that made the counterfactual or comparison judgment. Every report reference records the execution provenance of the run that produced that report; a single event-level runner cannot represent two independent executions. Existing schema-less observation files are legacy v1 evidence; do not rewrite them after the fact.
-
-Use an execution object of `{"runner":"...","model":null,"effort":null}`. Record a concrete value only when the harness or worker explicitly supplied it; use JSON `null` when unavailable, never the string `"unknown"`. A report reference is `{"path":"...","sha256":"...","execution":{...}}`.
-
-The record-kind fields are:
-
-- `carry_audit`: `judgment` (`would_ack` or `would_rerun`), `rationale`, `edit_kinds`, `initial_report`, `closing_report`, and either `flip` (verdict) or `material_divergence` (report).
-- `closing_comparison`: `initial_report`, `closing_report`, and the applicable divergence outcome; there is no carry judgment.
-- `control_comparison`: `source_report`, `control_report`, `gate_snapshot_sha256`, `source_prompt_sha256`, `control_prompt_sha256`, and either `flip` or `material_divergence`.
-
-Use these shapes literally; `edit_kinds` is an array of free-text strings:
-
-```json
-{"schema_version":2,"record_kind":"carry_audit","pass_id":"...","note_path":"...","assay_id":"...","initial_note_sha256":"...","final_note_sha256":"...","adjudicator":{"runner":"codex","model":null,"effort":null},"judgment":"would_ack","rationale":"...","edit_kinds":["flow-only"],"initial_report":{"path":"...","sha256":"...","execution":{"runner":"codex-subagent","model":null,"effort":null}},"closing_report":{"path":"...","sha256":"...","execution":{"runner":"codex-subagent","model":null,"effort":null}},"flip":false}
-{"schema_version":2,"record_kind":"closing_comparison","pass_id":"...","note_path":"...","assay_id":"...","initial_note_sha256":"...","final_note_sha256":"...","adjudicator":{"runner":"codex","model":null,"effort":null},"initial_report":{"path":"...","sha256":"...","execution":{"runner":"codex-subagent","model":null,"effort":null}},"closing_report":{"path":"...","sha256":"...","execution":{"runner":"codex-subagent","model":null,"effort":null}},"material_divergence":false}
-{"schema_version":2,"record_kind":"control_comparison","pass_id":"...","note_path":"...","assay_id":"...","initial_note_sha256":"...","final_note_sha256":"...","adjudicator":{"runner":"codex","model":null,"effort":null},"source_report":{"path":"...-source-output.md","sha256":"...","execution":{"runner":"codex-subagent","model":null,"effort":null}},"control_report":{"path":"...-control-output.md","sha256":"...","execution":{"runner":"codex-subagent","model":null,"effort":null}},"gate_snapshot_sha256":"...","source_prompt_sha256":"...","control_prompt_sha256":"...","flip":false}
-```
-
-Manually run two controls in fresh sub-agents: critique and one verdict gate, rotating the verdict gate across `semantic/internal-consistency`, `semantic/load-bearing-qualifiers`, `semantic/explanatory-reach`, and `semantic/explication-quality`. For each control:
-
-1. Copy the closing single-pair job's `prompt.md` and raw sentinel-bracketed `bundle-output.md` into `controls/` as `<assay>-source-prompt.md` and `<assay>-source-output.md`. These retained copies are the control's source artifacts.
-2. Duplicate `<assay>-source-prompt.md` as `<assay>-control-prompt.md`, changing only its output destination to `<assay>-control-output.md`.
-3. Run the control prompt in a newly isolated sub-agent. Do not finalize it.
-4. Compare the two raw sentinel-bracketed outputs. Record the retained source output as `source_report` and the control output as `control_report`; do not compare a finalized pair result with a raw control bundle.
-5. Read `gate_snapshot_sha256` from the completed source pair's reviewed gate snapshot, not from the live criterion file. Given its `review_pair_id`, query the active review DB:
-
-   ```bash
-   sqlite3 "${COMMONPLACE_REVIEW_DB:-kb/reports/review-store.sqlite}" "SELECT s.content_sha256 FROM review_pairs p JOIN review_file_snapshots s ON s.snapshot_id = p.reviewed_gate_snapshot_id WHERE p.review_pair_id = <source-review-pair-id>;"
-   ```
-
-6. Hash both retained prompts and outputs, record the `control_comparison`, and verify that the original source job output hash and review DB state remain unchanged.
+Read every closing report against the edited note. Add any remaining actionable finding to the packet's Open items; do not start another edit-and-review round. The friction report's "For the human" line remains routed attention and must not be collapsed into an automatic verdict.
 
 Append this section to the packet:
 
@@ -126,9 +82,9 @@ Append this section to the packet:
 ## Closing cycle
 **Pass ID:** <pass-id>
 
-| Assay | Counterfactual judgment | Closing outcome |
+| Assay | Closing result | Residual routed to Open items |
 |---|---|---|
-| ... | would_ack/would_rerun/not applicable | flip/material divergence/unchanged |
+| ... | pass/warn/fail/report summary | yes/no |
 ```
 
 ## Reconciling disagreement
@@ -180,7 +136,7 @@ Append this section to the packet:
 
 Never omit "Routed attention" — even a clean SURVIVES with no thin joints below THIN is worth one line, since silently dropping the section would make the friction gate's absence indistinguishable from a clean result.
 
-`kb/reports/full-pass/*`, `kb/reports/critique/*`, `kb/reports/friction/*`, and `kb/reports/connect/*` are gitignored, but reports used by this experiment are retained through workshop closure: a hash verifies bytes but does not preserve them. The observation JSONL is committed workshop evidence because judgments are not regenerable. Quote or restate enough of each source report's substance directly into the packet that it stands alone.
+`kb/reports/full-pass/*`, `kb/reports/critique/*`, `kb/reports/friction/*`, and `kb/reports/connect/*` are gitignored inspection artifacts. Quote or restate enough of each source report's substance directly into the packet that it stands alone. Retain the pass directory while its packet or residual findings are still in use; delete it after those outputs have been consumed.
 
 ## Do not
 

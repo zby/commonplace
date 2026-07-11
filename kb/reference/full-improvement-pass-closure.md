@@ -46,6 +46,7 @@ These observations justify the closing cycle for this workflow's substantive edi
 - Preserve residual findings as Open items instead of reopening transformation.
 - Do not build carry-event commands, trust-dial automation, reduced audit sampling, or general edit-preservation heuristics from this calibration.
 - Do not infer that every transforming workflow needs this exact assay set. The evidence is local to the shipped full-improvement pass.
+- Human review attestation remains deferred. The closure calibration neither selected a representation nor gave an attestation any freshness or skip semantics.
 
 The review system's distinction between freshness and endorsement remains intact: a current review says its evidence matches the current inputs. The closing-cycle rule adds a workflow-level obligation to obtain that current evidence after the workflow changes its target.
 

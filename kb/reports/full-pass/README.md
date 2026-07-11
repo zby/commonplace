@@ -6,8 +6,7 @@ Output of `kb/instructions/run-full-improvement-pass-on-note.md`. Each invocatio
 <note-name>/<pass-id>/
   initial/    # reports over the pre-edit note
   closing/    # one closing cycle over the final note
-  controls/   # duplicate runs used to measure model variance
   full-pass-report.md
 ```
 
-Reports here are **gitignored**, but a transformation-closure experiment may retain initial, closing, and control reports through workshop closure because its committed observation records refer to their exact bytes by path and SHA-256. After the workshop extracts its durable conclusions, these pass directories may be deleted. Only this README is tracked.
+Reports here are **gitignored** inspection artifacts. Retain a pass directory while its packet or residual findings are still in use; delete it when those outputs have been consumed. Review freshness and acceptance live in the review store, not in these directories. Only this README is tracked.

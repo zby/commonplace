@@ -15,7 +15,7 @@ This proposal defines a controlled comparison before Commonplace adds trajectory
 ## Current state (as of 2026-07-11)
 
 - `run-full-improvement-pass-on-note.md` is a transforming workflow with explicit method order, fresh-worker requirements, final-byte reassessment, retained reports, and a one-cycle stopping rule.
-- Five transformation-closure runs retained initial and closing reports, control outputs, observation records, and enough pass history to identify candidate runs. Complete chronological model/tool traces are harness-owned rather than canonical Commonplace artifacts, so trace completeness must be checked before a run enters the comparison.
+- Five calibration runs established the shipped closing behavior summarized in [full improvement pass closure](../full-improvement-pass-closure.md), but they did not retain complete chronological model/tool traces as canonical Commonplace artifacts. The comparison therefore requires prospectively captured complete traces rather than depending on the retired experiment files.
 - An earlier manual trace audit found orchestration confusion, including worker-lifecycle ambiguity, and led to clearer fresh-worker instructions. It was useful diagnosis, not an evaluation result: the reviewer knew the trajectory and there was no output-only arm.
 - Commonplace review gates and critique assess note content. They do not evaluate whether the orchestrator followed the workflow that produced the note. This proposal is protocol meta-evaluation, not another note assay and not another review `result_kind`.
 - The review system has no trajectory store, judge runner, trajectory rubric, or acceptance semantics for workflow-level judgments.
@@ -24,7 +24,7 @@ The system distinction rests on [reasoning production is not reasoning evaluatio
 
 ## Proposed comparison
 
-Build a small paired benchmark from complete full-improvement-pass histories. Each case has one frozen workflow request, its final artifacts, and—only for the trajectory arm—the chronological execution record. Run two independent judges against the same rubric:
+Build a small paired benchmark from prospectively captured, complete full-improvement-pass histories. Each case has one frozen workflow request, its final artifacts, and—only for the trajectory arm—the chronological execution record. Run two independent judges against the same rubric:
 
 1. **Output-only judge.** Receives the original request, operative workflow contract, final note, final pass report, and declared completion evidence. It cannot inspect intermediate prompts, worker identities, tool results, or temporal ordering.
 2. **Trajectory-aware judge.** Receives the same material plus read-only tools for locating and inspecting the frozen chronological trace and retained intermediate artifacts. It chooses what evidence to inspect and must cite the exact event or artifact supporting each finding.
@@ -63,7 +63,7 @@ Final-artifact quality is not the gold label for process compliance. A good outp
 
 ## Option space and free choices
 
-- **Corpus source:** retrospective retained passes, prospectively instrumented passes, controlled mutations, or a mix. Retrospective cases are cheap but may have incomplete traces; prospective cases improve capture while risking observer effects; mutations supply known contrasts but weaken prevalence claims.
+- **Corpus source:** prospectively instrumented natural passes, controlled mutations, or a mix. Prospective cases preserve the required trace boundary while risking observer effects; mutations supply known contrasts but weaken prevalence claims.
 - **Trajectory representation:** raw harness transcript, normalized chronological events, or both. Raw traces preserve evidence but couple the benchmark to one harness; normalized events improve portability but may erase the failure being tested.
 - **Judge tools:** direct full-trace context, indexed read-only search, or staged disclosure. Full context is simplest and most vulnerable to overload; search makes the judge genuinely agentic but adds tool-policy variance.
 - **Adjudication:** one human with documented evidence, independent humans followed by consensus, or a third blinded agent plus human escalation. Stronger consensus costs more and is most important for ambiguous natural failures.
