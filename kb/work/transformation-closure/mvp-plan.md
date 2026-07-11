@@ -2,6 +2,8 @@
 
 The MVP is a minimal vertical slice: exercise the new `result_kind` schema end-to-end on one open-ended assay (critique), and test closure on the actual five-method full-pass workflow at 100% counterfactual sampling, with a simple pass-local observation record and manually run controls. Production instrumentation — event commands, ack integration, automated validation — is deliberately deferred to an observation-gated decision (part 4).
 
+**Status, 2026-07-11:** parts 1–3 are complete. The MVP shipped, the full suite passes (377 passed, 1 skipped), and five real passes produced 53 observation events. Part 4's gate is **no for now**: all 28 counterfactual decisions were `would_rerun`, no carry opportunity was exercised, and rerun cost was not measured. See [mvp-results.md](./mvp-results.md) for the evidence and constraint classification. Part 5 remains independent and unrun.
+
 Scope discipline note: an earlier draft of this plan accreted production event machinery through successive implementation-readiness reviews; a codex review restored the boundary with one observation — **at 100% counterfactual sampling no real ack ever occurs** (acceptance always advances through the rerun), so ack-integrated event recording solves a problem the MVP does not encounter. The machinery's design survives, recorded under part 4 so it isn't re-derived, but nothing in it blocks the first real runs.
 
 Two structural distinctions, located at design time against shipped code, shape the build:
@@ -83,13 +85,15 @@ Add a step 10 to `kb/instructions/run-full-improvement-pass-on-note.md`: after t
 
 Deliverable: the instruction closes over its own edits with full method coverage, and every closing cycle leaves observation lines and retained reports.
 
-## Part 3: run and observe
+## Part 3: run and observe — complete
 
-Several real full passes at 100% counterfactual sampling. **No real ack occurs in this part** — acceptance always advances through the rerun; the carry decision is being measured, not trusted. This part produces observations, not code — it is where constraints get located (see below) and where part 4's gate is decided.
+Five real full passes ran at 100% counterfactual sampling. **No real ack occurred** — acceptance always advanced through the rerun; the carry decision was measured, not trusted. The observations support keeping the closing rerun for this substantive workflow, but they did not locate the proposed general carry heuristics; see [mvp-results.md](./mvp-results.md).
 
-## Part 4: instrumentation decision (post-MVP, observation-gated)
+## Part 4: instrumentation decision — no for now
 
 Build durable carry infrastructure **only if part 3 shows real carrying is worth having** — roughly: `would_ack` judgments are usually confirmed by their reruns *and* the rerun cost is material enough that skipping some would pay. If carrying isn't useful, this part is a documented no.
+
+The gate did not open. There were zero `would_ack` judgments, so the confirmation rate is undefined rather than high, and the record contains no usable cost measurement. Do not build the machinery below from the current evidence. Reconsider only with a deliberately different probe that produces plausible carry candidates and measures rerun cost.
 
 The machinery below was designed and reviewed during planning; it is recorded here so a yes-decision doesn't re-derive it:
 
@@ -139,15 +143,15 @@ Adoption criterion, observable only once a kind exists (which is why it lives he
 
 Part 2 is instruction + procedure, checked by hand per pass: closing reports land under `closing/` with `initial/` byte-identical, the packet gains its "Closing cycle" section, the observation file covers every assay, and controls leave the review DB and the source run's output untouched.
 
-## What part 3 should observe (constraint location, and part 4's gate)
+## What part 3 was intended to observe
 
 Ties to the location criteria in [carry-heuristics.md](./carry-heuristics.md):
 
-- Constraint 1 (direction over size): do flips in the record track edit *direction* rather than diff size?
-- Constraint 2 (non-compositionality): does an accumulated series of individually-judged edits ever flip a coherence check? (Baseline anchoring should surface this as a growing cumulative diff.)
-- Constraint 3's premise: is a declared flow-only step 9 ever caught changing a claim in the cumulative diff?
-- Constraint 4: does the one-cycle stopping rule ever leave residual findings that genuinely needed a second round, or does routing to Open items suffice?
-- Case 3 flip: does a current-critique signal ever get read downstream as "critiqued and handled"? That observation, if it occurs, relocates the do-not-anchor rule as a real constraint.
-- **Part 4's gate:** the `would_ack` confirmation rate (against the control arm's base rate) and the measured rerun cost — together, whether real carrying would pay.
+- Constraint 1 (direction over size): do flips in the record track edit *direction* rather than diff size? **Unidentified:** the record lacks matched directions and diff-size measurements.
+- Constraint 2 (non-compositionality): does an accumulated series of individually-judged edits ever flip a coherence check? **Untested:** no individually accepted sequence existed; all decisions were `would_rerun`.
+- Constraint 3's premise: is a declared flow-only step 9 ever caught changing a claim? **Untested:** the cumulative baseline combines steps 8 and 9, so it cannot attribute leakage to step 9.
+- Constraint 4: does the one-cycle stopping rule ever leave residual findings that genuinely needed a second round, or does routing to Open items suffice? **Locally answered as policy:** every pass retained residuals and still terminated by routing them; no convergence comparison was run.
+- Case 3 flip: does a current-critique signal ever get read downstream as "critiqued and handled"? **Untested:** no downstream misuse protocol was instrumented.
+- **Part 4's gate:** the `would_ack` confirmation rate and measured rerun cost. **Did not open:** zero `would_ack` decisions and no usable cost record.
 
 (The case 2 attestation observation lives under part 5's adoption criterion — nothing attestation-shaped exists to observe during the closure runs.)

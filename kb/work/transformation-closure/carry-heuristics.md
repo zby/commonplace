@@ -6,6 +6,12 @@ The heuristic deciding when carrying is safe does not need to be system machiner
 
 Everything in this file is in one of two registers. **Candidate constraints** bind any solution, but each must first be *located* — pinned to a concrete case or observation that exhibits it — before a design may lean on it. **Solution sketches** are brainstorm: they decide nothing and compete with alternatives not yet written down.
 
+## Status after the MVP
+
+Five full passes did not locate any carry heuristic. All 28 counterfactual decisions were `would_rerun`, so the experiment never exercised a plausible carry; the edits were substantive and multidimensional; no sequence of individually accepted edits existed; and the record did not isolate the step-9 copyedit from the step-8 body edit. Constraints 1–3 therefore remain unidentified, not confirmed or discharged. Constraint 4 received only workflow-local support: every pass retained residual findings, and the one-cycle rule terminated by routing them, but no unstructured loop was run for comparison.
+
+Part 4's instrumentation gate is **no for now**. The trust-dial system below remains a design sketch, not the next build. More substantive full passes of the same shape cannot calibrate carrying because they predictably produce `would_rerun`; a future carry experiment would need deliberately small edits, pre-registered rivals, separate step snapshots, cost measurement, and independent materiality judgment. See [mvp-results.md](./mvp-results.md).
+
 ## Candidate constraints (to locate, not assume)
 
 **1. Safety is per (edit-kind, check-kind) pair, with signs.** No edit kind is universally safe. Hypothesized instances — the probes exist to test these, none is established:
@@ -44,7 +50,7 @@ Two facts above soften under this division. The declared footprints of fact 3 st
 
 ## Consequences for the workshop's cases
 
-- Case 1 (full-pass closure) is the MVP: add a calibrated, one-cycle closing review to the full-pass procedure and collect evidence before designing any machinery. The agent plans reruns and carries at the end of the pass and records rationale; the audit starts at 100% sampling, so initially every carry is also rerun. Every changed verdict or finding is logged as an *observation* tagged with a rough edit-kind classification of the S0→S2 diff — not counted as a demonstrated false carry, since flips also arise from model variance; a control arm of reruns on unchanged text supplies the base rate that makes attribution possible. That log calibrates the trust dial — it is not training data for a system-side heuristic.
+- Case 1 (full-pass closure) shipped and ran five times. It supports the closing rerun for substantive improvement passes, but it did not calibrate a trust dial: every decision was `would_rerun`, and one of five same-byte verdict controls flipped. The log is evidence about this workflow's closure behavior, not evidence for reduced audit sampling.
 - The typed-footprint idea suggests a fourth candidate case: have the step-9 flow pass declare its footprint and audit the declaration over a few real runs — the first test of stated-intent-plus-audit as the cheaper alternative to diff-judging.
 - The direction/monotonicity predictor (fact 1) is the strongest candidate for an eventually extractable note — as agent planning guidance, not system design — but only after the flip log confirms or corrects it.
 - The sampled-audit-for-judgment-caches idea (trust dial over a cached judgment, versus total mechanical checking for deterministic caches) is a second extraction candidate: it extends [a derived copy of recomputable truth must be checked or absent](../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) to a class of caches that note doesn't cover.
