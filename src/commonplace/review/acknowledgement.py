@@ -35,7 +35,6 @@ def _normalize_note_path(repo_root: Path, raw: str) -> str:
     if (
         Path(normalized).is_absolute()
         or normalized == "."
-        or normalized.startswith("../")
         or ".." in path_parts
     ):
         raise ValueError(f"note path must be repo-relative: {raw}")

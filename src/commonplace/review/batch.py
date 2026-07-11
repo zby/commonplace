@@ -145,7 +145,6 @@ def prepare_grouped_review_job(
             notes=targets,
             criterion_texts=captured_inputs.criterion_texts,
             result_kind=next(iter(result_kinds)),
-            output_mode="file",
             job_output_path=job_output_path,
         )
         artifact_dir.mkdir(parents=True, exist_ok=True)

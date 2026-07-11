@@ -80,7 +80,7 @@ The two-input shape is also the growth path: the default answer to a new review 
 ### Protocol and finalization
 
 - `protocol/format.py` defines pair sentinels and render-time reserved-text checks.
-- `protocol/prompt.py` renders canonical review prompts from captured text; conformance gates add a mechanical wrapper explaining how to apply the embedded type spec or COLLECTION.md snapshot. In file-output mode, the prompt instructs a worker to write exactly the job's derived `job_output_path`.
+- `protocol/prompt.py` renders canonical review prompts from captured text; conformance gates add a mechanical wrapper explaining how to apply the embedded type spec or COLLECTION.md snapshot. The prompt instructs a worker to write exactly the job's derived `job_output_path`.
 - `protocol/parser.py` parses sentinel-bracketed pair output. Structural anomalies, missing expected pairs, duplicates, and malformed result footers fail the whole job.
 - `protocol/outcomes.py` strictly accepts the one final result marker allowed by the persisted pair kind: a verdict outcome or `REPORT`; `ERROR` raises a job-failing parse error.
 - `finalization.py` is the public library operation behind `commonplace-finalize-review-job`. It loads derived job output, validates optional runner/model/effort provenance, parses the job output, and — only after all parse and coverage preflight passes — writes result files, completes pair rows, creates or replaces freshness baselines, prunes superseded review rows/snapshots, and marks the job completed. Result-file write failures roll back and fail the job in a separate transaction; artifact-dir cleanup and `MANIFEST.json` refresh run after DB completion, with failures reported as non-fatal warnings.

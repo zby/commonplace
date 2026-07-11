@@ -126,8 +126,9 @@ def qualifying_pairs(
     db_path: Path | None = None,
 ) -> list[str]:
     model = normalize_model_partition(model)
-    if db_path is None:
-        db_path = prepare_review_db(repo_root)
+    db_path = prepare_review_db(repo_root, str(db_path) if db_path is not None else None)
+    with connect(db_path) as conn:
+        freshness_baselines = load_current_freshness_baselines(conn)
     stale_records = [
         record
         for record in select_stale_criteria(
@@ -138,12 +139,10 @@ def qualifying_pairs(
             user_verified_only=user_verified_only,
             include_diff=False,
             db_path=db_path,
+            freshness_baselines=freshness_baselines,
         )
         if record.reason == "note-changed"
     ]
-
-    with connect(db_path) as conn:
-        freshness_baselines = load_current_freshness_baselines(conn)
 
     current_text_cache: dict[str, str] = {}
     gate_watches_cache: dict[str, set[str] | None] = {}

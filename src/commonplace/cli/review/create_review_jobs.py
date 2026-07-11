@@ -305,13 +305,6 @@ def _read_input(repo_root: Path, path: str | None) -> str:
     return input_path.read_text(encoding="utf-8")
 
 
-def _validate_args(args: argparse.Namespace, parser: argparse.ArgumentParser) -> None:
-    if args.grouping == "note" and args.batch_size is not None:
-        parser.error("--batch-size is only valid with --grouping criterion")
-    if args.input is None:
-        parser.error("--input is required; pass selector JSON path or '-' for stdin")
-
-
 def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser = argparse.ArgumentParser(
         description="Create queued review jobs from selector JSON.",
@@ -327,11 +320,12 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser.add_argument("--db", help="Override COMMONPLACE_REVIEW_DB.")
     args = parser.parse_args(argv)
 
+    if args.grouping == "note" and args.batch_size is not None:
+        parser.error("--batch-size is only valid with --grouping criterion")
     if args.batch_size is not None and args.batch_size < 1:
         parser.error("--batch-size must be a positive integer")
     batch_size = args.batch_size or 5
     repo_root = cwd if cwd is not None else Path.cwd()
-    _validate_args(args, parser)
 
     try:
         model_partition, requested_pairs = _selector_pairs(

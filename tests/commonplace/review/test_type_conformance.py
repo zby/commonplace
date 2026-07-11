@@ -421,6 +421,7 @@ class TestPromptWrapper:
             ],
             criterion_texts={"kb/types/definition.md": "# Definition\n\n## Authoring Instructions\n\nSharpen the term."},
             result_kind="verdict",
+            job_output_path="job-output.md",
         )
         assert "=== criterion: kb/types/definition.md ===" in prompt
         assert "This is a type-conformance gate." in prompt
@@ -438,6 +439,7 @@ class TestPromptWrapper:
             ],
             criterion_texts={"kb/instructions/review-gates/prose/source-residue.md": "## Failure mode\n\nFixture."},
             result_kind="verdict",
+            job_output_path="job-output.md",
         )
         assert "This is a type-conformance gate." not in prompt
 

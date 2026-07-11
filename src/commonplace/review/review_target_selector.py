@@ -14,6 +14,7 @@ from commonplace.review.freshness import (
 from commonplace.review.paths import criterion_id_for_path, criterion_id_from_stored_path, normalize_criterion_path, review_gates_dir
 from commonplace.review.resolve_criteria import applicable_criterion_ids_for_note
 from commonplace.review.review_db import (
+    FreshnessBaseline,
     connect,
     ensure_db,
     load_current_freshness_baselines,
@@ -242,6 +243,45 @@ class StaleCriterion:
         return criterion_id_from_stored_path(self.criterion_path)
 
 
+def _criterion_paths_for_notes(
+    repo_root: Path,
+    criterion_ids: list[str],
+    notes: list[Path],
+) -> list[tuple[Path, str, list[str]]]:
+    catalog_requests, type_requests, collection_requests, critique_requested = _partition_criterion_requests(criterion_ids)
+    gates_dir, criterion_path_by_id, requested_criterion_ids = _normalize_requested_criterion_ids(repo_root, catalog_requests)
+    match_all_types, requested_type_paths = _normalize_type_requests(repo_root, type_requests)
+    match_all_collections, requested_collection_paths = _normalize_collection_requests(repo_root, collection_requests)
+    selected: list[tuple[Path, str, list[str]]] = []
+    for note_abs in notes:
+        note_path = note_abs.relative_to(repo_root).as_posix()
+        applicable_ids = applicable_criterion_ids_for_note(note_abs, requested_criterion_ids, gates_dir)
+        paths = [criterion_path_by_id[criterion_id] for criterion_id in applicable_ids]
+        type_spec_path = _applicable_type_spec_path(
+            repo_root,
+            note_abs,
+            match_all_types=match_all_types,
+            requested_type_paths=requested_type_paths,
+        )
+        if type_spec_path is not None:
+            paths.append(type_spec_path)
+        collection_md_path = _applicable_collection_md_path(
+            repo_root,
+            note_abs,
+            match_all_collections=match_all_collections,
+            requested_collection_paths=requested_collection_paths,
+        )
+        if collection_md_path is not None:
+            paths.append(collection_md_path)
+        if critique_requested:
+            paths.append(critique_criterion_path(repo_root))
+        for criterion_path in paths:
+            if not (repo_root / criterion_path).is_file():
+                raise FileNotFoundError(f"Gate not found: {criterion_path}")
+        selected.append((note_abs, note_path, paths))
+    return selected
+
+
 def note_diff_from_text(note_path: str, previous_text: str, current_text: str) -> str | None:
     import difflib
 
@@ -265,55 +305,30 @@ def select_stale_criteria(
     user_verified_only: bool = False,
     include_diff: bool = False,
     db_path: Path | None = None,
+    freshness_baselines: dict[tuple[str, str, str], FreshnessBaseline] | None = None,
 ) -> list[StaleCriterion]:
-    catalog_requests, type_requests, collection_requests, critique_requested = _partition_criterion_requests(criterion_ids)
-    gates_dir, criterion_path_by_id, requested_criterion_ids = _normalize_requested_criterion_ids(repo_root, catalog_requests)
-    match_all_types, requested_type_paths = _normalize_type_requests(repo_root, type_requests)
-    match_all_collections, requested_collection_paths = _normalize_collection_requests(repo_root, collection_requests)
     model = model.strip() if model is not None else None
     model = normalize_model_partition(model) if model else None
     if db_path is None:
         db_path = resolve_db_path(repo_root)
 
     notes = _select_notes(repo_root, note_filter=note_filter, user_verified_only=user_verified_only)
-    note_paths = [note_abs.relative_to(repo_root).as_posix() for note_abs in notes]
-    ensure_db(db_path)
-    with connect(db_path) as conn:
-        freshness_baselines = load_current_freshness_baselines(conn)
+    selected = _criterion_paths_for_notes(repo_root, criterion_ids, notes)
+    if freshness_baselines is None:
+        ensure_db(db_path)
+        with connect(db_path) as conn:
+            freshness_baselines = load_current_freshness_baselines(conn)
     baseline_pairs = {
         (baseline_note_path, baseline_criterion_path)
         for baseline_note_path, baseline_criterion_path, _model_partition in freshness_baselines
     }
 
     stale: list[StaleCriterion] = []
-    for note_abs, note_path in zip(notes, note_paths):
-        applicable_criterion_ids = applicable_criterion_ids_for_note(note_abs, requested_criterion_ids, gates_dir)
-        criterion_paths_for_note = [criterion_path_by_id[criterion_id] for criterion_id in applicable_criterion_ids]
-        type_spec_path = _applicable_type_spec_path(
-            repo_root,
-            note_abs,
-            match_all_types=match_all_types,
-            requested_type_paths=requested_type_paths,
-        )
-        if type_spec_path is not None:
-            criterion_paths_for_note.append(type_spec_path)
-        collection_md_path = _applicable_collection_md_path(
-            repo_root,
-            note_abs,
-            match_all_collections=match_all_collections,
-            requested_collection_paths=requested_collection_paths,
-        )
-        if collection_md_path is not None:
-            criterion_paths_for_note.append(collection_md_path)
-        if critique_requested:
-            criterion_paths_for_note.append(critique_criterion_path(repo_root))
+    for note_abs, note_path, criterion_paths_for_note in selected:
         current_note_text: str | None = None
         current_note_hash: str | None = None
         for criterion_path in criterion_paths_for_note:
             criterion_abs = repo_root / criterion_path
-            if not criterion_abs.is_file():
-                raise FileNotFoundError(f"Gate not found: {criterion_path}")
-
             if model is None:
                 if (note_path, criterion_path) not in baseline_pairs:
                     stale.append(
@@ -374,39 +389,11 @@ def select_requested_criteria(
     note_filter: list[str] | None = None,
     user_verified_only: bool = False,
 ) -> list[StaleCriterion]:
-    catalog_requests, type_requests, collection_requests, critique_requested = _partition_criterion_requests(criterion_ids)
-    gates_dir, criterion_path_by_id, requested_criterion_ids = _normalize_requested_criterion_ids(repo_root, catalog_requests)
-    match_all_types, requested_type_paths = _normalize_type_requests(repo_root, type_requests)
-    match_all_collections, requested_collection_paths = _normalize_collection_requests(repo_root, collection_requests)
     notes = _select_notes(repo_root, note_filter=note_filter, user_verified_only=user_verified_only)
 
     requested: list[StaleCriterion] = []
-    for note_abs in notes:
-        note_path = note_abs.relative_to(repo_root).as_posix()
-        applicable_criterion_ids = applicable_criterion_ids_for_note(note_abs, requested_criterion_ids, gates_dir)
-        criterion_paths_for_note = [criterion_path_by_id[criterion_id] for criterion_id in applicable_criterion_ids]
-        type_spec_path = _applicable_type_spec_path(
-            repo_root,
-            note_abs,
-            match_all_types=match_all_types,
-            requested_type_paths=requested_type_paths,
-        )
-        if type_spec_path is not None:
-            criterion_paths_for_note.append(type_spec_path)
-        collection_md_path = _applicable_collection_md_path(
-            repo_root,
-            note_abs,
-            match_all_collections=match_all_collections,
-            requested_collection_paths=requested_collection_paths,
-        )
-        if collection_md_path is not None:
-            criterion_paths_for_note.append(collection_md_path)
-        if critique_requested:
-            criterion_paths_for_note.append(critique_criterion_path(repo_root))
+    for _note_abs, note_path, criterion_paths_for_note in _criterion_paths_for_notes(repo_root, criterion_ids, notes):
         for criterion_path in criterion_paths_for_note:
-            criterion_abs = repo_root / criterion_path
-            if not criterion_abs.is_file():
-                raise FileNotFoundError(f"Gate not found: {criterion_path}")
             requested.append(
                 StaleCriterion(
                     note_path,

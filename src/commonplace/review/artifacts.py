@@ -34,7 +34,6 @@ class ReviewPairForResult(Protocol):
     review_job_id: int
     note_path: str
     criterion_path: str
-    model_partition: str
     pair_ordinal: int
     result_kind: str
     outcome: str | None

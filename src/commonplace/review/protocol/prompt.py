@@ -23,7 +23,7 @@ deliberate corpus-wide re-review or ack outcome.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Literal, Sequence
+from typing import Sequence
 
 from commonplace.review.protocol.format import (
     OUTCOME_LINE_INSTRUCTION,
@@ -36,9 +36,6 @@ from commonplace.review.protocol.format import (
 )
 from commonplace.review.collection_conformance import is_collection_md_criterion_path
 from commonplace.review.type_conformance import is_type_spec_criterion_path
-
-
-OutputMode = Literal["stdout", "file"]
 
 
 def _type_conformance_wrapper_lines() -> tuple[str, ...]:
@@ -151,25 +148,14 @@ def render_pairs_prompt(
     notes: Sequence[NoteReviewTarget],
     criterion_texts: dict[str, str],
     result_kind: str,
-    output_mode: OutputMode = "stdout",
-    job_output_path: str | None = None,
+    job_output_path: str,
 ) -> str:
     _validate_targets(notes, criterion_texts)
     criterion_paths = sorted({criterion_path for note in notes for criterion_path in note.criterion_paths})
-    if output_mode == "file":
-        if job_output_path is None:
-            raise ValueError("job_output_path is required for file output mode")
-        destination_lines = [
-            f"- Write exactly one markdown document to `{job_output_path}`.",
-            "- Do not invoke review helper scripts while writing the job output.",
-        ]
-    elif output_mode == "stdout":
-        destination_lines = [
-            "- Do not write files or invoke review helper scripts.",
-            "- Return exactly one markdown document in this process's stdout.",
-        ]
-    else:
-        raise ValueError(f"unknown output mode: {output_mode}")
+    destination_lines = [
+        f"- Write exactly one markdown document to `{job_output_path}`.",
+        "- Do not invoke review helper scripts while writing the job output.",
+    ]
 
     if result_kind not in {"verdict", "report"}:
         raise ValueError(f"invalid result kind: {result_kind}")

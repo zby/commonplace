@@ -410,6 +410,7 @@ class TestPromptWrapper:
             ],
             criterion_texts={"kb/notes/COLLECTION.md": "# Writing conventions\n\nUse claim titles."},
             result_kind="verdict",
+            job_output_path="job-output.md",
         )
         assert "=== criterion: kb/notes/COLLECTION.md ===" in prompt
         assert "This is a collection-conformance gate." in prompt
@@ -427,6 +428,7 @@ class TestPromptWrapper:
             ],
             criterion_texts={"kb/instructions/review-gates/prose/source-residue.md": "## Failure mode\n\nFixture."},
             result_kind="verdict",
+            job_output_path="job-output.md",
         )
         assert "This is a collection-conformance gate." not in prompt
 
@@ -442,6 +444,7 @@ class TestPromptWrapper:
             ],
             criterion_texts={"kb/notes/COLLECTION.md": "# Writing conventions"},
             result_kind="verdict",
+            job_output_path="job-output.md",
         )
         assert "type-conformance pair's job" in prompt
 

@@ -15,7 +15,7 @@ from commonplace.review.artifacts import job_output_path_rel, prompt_path_rel, r
 from commonplace.review.clock import iso_now
 from commonplace.review.paths import criterion_id_from_stored_path
 from commonplace.review.review_model import build_model_partition, normalize_model_partition, normalize_reasoning_effort
-from commonplace.review.review_schema import assert_review_store_integrity, init_db
+from commonplace.review.review_schema import init_db
 
 DEFAULT_DB_PATH = Path("kb/reports/review-store.sqlite")
 SCHEMA_PATH = "review-schema.sql"
@@ -200,7 +200,6 @@ def snapshot_file(conn: sqlite3.Connection, *, repo_root: Path, path: str) -> Re
     if (
         Path(normalized_path).is_absolute()
         or normalized_path == "."
-        or normalized_path.startswith("../")
         or ".." in path_parts
     ):
         raise ValueError(f"snapshot path must be repo-relative: {path}")
@@ -250,6 +249,22 @@ def _review_job_from_row(row: sqlite3.Row) -> ReviewJobRow:
         telemetry_json=row["telemetry_json"],
         grouping=row["grouping"],
     )
+
+
+_PAIR_SELECT = """
+    rp.review_pair_id,
+    rp.review_job_id,
+    rp.note_path,
+    rp.criterion_path,
+    j.model_partition AS model_partition,
+    j.grouping AS grouping,
+    rp.pair_ordinal,
+    rp.result_kind,
+    rp.outcome,
+    rp.reviewed_note_snapshot_id,
+    rp.reviewed_criterion_snapshot_id,
+    rp.completed_at
+"""
 
 
 def _review_pair_from_row(row: sqlite3.Row) -> ReviewPairRow:
@@ -423,20 +438,8 @@ def load_review_job(conn: sqlite3.Connection, *, review_job_id: int) -> ReviewJo
 
 def load_review_pairs_for_job(conn: sqlite3.Connection, *, review_job_id: int) -> list[ReviewPairRow]:
     rows = conn.execute(
-        """
-        SELECT
-            rp.review_pair_id,
-            rp.review_job_id,
-            rp.note_path,
-            rp.criterion_path,
-            j.model_partition AS model_partition,
-            j.grouping AS grouping,
-            rp.pair_ordinal,
-            rp.result_kind,
-            rp.outcome,
-            rp.reviewed_note_snapshot_id,
-            rp.reviewed_criterion_snapshot_id,
-            rp.completed_at
+        f"""
+        SELECT {_PAIR_SELECT}
         FROM review_pairs AS rp
         JOIN review_jobs AS j
           ON j.review_job_id = rp.review_job_id
@@ -518,7 +521,6 @@ def list_review_job_plans(
 
 
 def load_current_freshness_baselines(conn: sqlite3.Connection) -> dict[tuple[str, str, str], FreshnessBaseline]:
-    assert_review_store_integrity(conn)
     rows = conn.execute(
         """
         SELECT
@@ -946,20 +948,8 @@ def load_review_pairs_for_note(
     model_partition: str,
 ) -> list[ReviewPairRow]:
     rows = conn.execute(
-        """
-        SELECT
-            rp.review_pair_id,
-            rp.review_job_id,
-            rp.note_path,
-            rp.criterion_path,
-            j.model_partition AS model_partition,
-            j.grouping AS grouping,
-            rp.pair_ordinal,
-            rp.result_kind,
-            rp.outcome,
-            rp.reviewed_note_snapshot_id,
-            rp.reviewed_criterion_snapshot_id,
-            rp.completed_at
+        f"""
+        SELECT {_PAIR_SELECT}
         FROM review_pairs AS rp
         JOIN review_jobs AS j
           ON j.review_job_id = rp.review_job_id
@@ -979,20 +969,8 @@ def load_latest_completed_review_pair(
     model_partition: str,
 ) -> ReviewPairRow | None:
     row = conn.execute(
-        """
-        SELECT
-            rp.review_pair_id,
-            rp.review_job_id,
-            rp.note_path,
-            rp.criterion_path,
-            j.model_partition AS model_partition,
-            j.grouping AS grouping,
-            rp.pair_ordinal,
-            rp.result_kind,
-            rp.outcome,
-            rp.reviewed_note_snapshot_id,
-            rp.reviewed_criterion_snapshot_id,
-            rp.completed_at
+        f"""
+        SELECT {_PAIR_SELECT}
         FROM review_pairs AS rp
         JOIN review_jobs AS j
           ON j.review_job_id = rp.review_job_id
@@ -1032,19 +1010,7 @@ def load_effective_review_pair_map(
         where_sql = "WHERE " + " AND ".join(where_clauses)
     rows = conn.execute(
         f"""
-        SELECT
-            rp.review_pair_id,
-            rp.review_job_id,
-            rp.note_path,
-            rp.criterion_path,
-            j.model_partition AS model_partition,
-            j.grouping AS grouping,
-            rp.pair_ordinal,
-            rp.result_kind,
-            rp.outcome,
-            rp.reviewed_note_snapshot_id,
-            rp.reviewed_criterion_snapshot_id,
-            rp.completed_at
+        SELECT {_PAIR_SELECT}
         FROM current_freshness_baselines AS a
         JOIN review_pairs AS rp
           ON rp.review_pair_id = a.evidence_review_pair_id

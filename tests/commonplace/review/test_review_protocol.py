@@ -34,6 +34,7 @@ def test_render_pairs_prompt_multi_note_shares_gate_and_lists_pairs() -> None:
         ],
         criterion_texts={GATE: GATE_TEXT},
         result_kind="verdict",
+        job_output_path="job-output.md",
     )
 
     assert "Evaluate each note independently." in prompt
@@ -58,6 +59,7 @@ def test_render_pairs_prompt_single_note_shares_note_across_gates() -> None:
         notes=[make_target("kb/notes/only.md", 7, criterion_paths=("lens/alpha", "lens/beta"))],
         criterion_texts={"lens/alpha": "Alpha gate.", "lens/beta": "Beta gate."},
         result_kind="verdict",
+        job_output_path="job-output.md",
     )
 
     assert "Evaluate each note independently." not in prompt
@@ -66,16 +68,14 @@ def test_render_pairs_prompt_single_note_shares_note_across_gates() -> None:
     assert "=== PAIR REVIEW START: kb/notes/only.md :: lens/beta ===" in prompt
 
 
-def test_render_pairs_prompt_file_output_mode_names_destination() -> None:
+def test_render_pairs_prompt_names_destination() -> None:
     prompt = render_pairs_prompt(
         notes=[make_target("kb/notes/only.md", 7)],
         criterion_texts={GATE: GATE_TEXT},
         result_kind="verdict",
-        output_mode="file",
         job_output_path="kb/reports/review-jobs/review-job-7/job-output.md",
     )
     assert "Write exactly one markdown document to `kb/reports/review-jobs/review-job-7/job-output.md`." in prompt
-    assert "Return exactly one markdown document in this process's stdout." not in prompt
 
 
 def test_render_pairs_prompt_rejects_sentinel_in_note_text() -> None:
@@ -90,6 +90,7 @@ def test_render_pairs_prompt_rejects_sentinel_in_note_text() -> None:
             ],
             criterion_texts={GATE: GATE_TEXT},
             result_kind="verdict",
+            job_output_path="job-output.md",
         )
 
 
@@ -99,6 +100,7 @@ def test_render_pairs_prompt_rejects_pair_separator_in_ids() -> None:
             notes=[make_target("kb/notes/a :: b.md", 1)],
             criterion_texts={GATE: GATE_TEXT},
             result_kind="verdict",
+            job_output_path="job-output.md",
         )
 
 
@@ -108,6 +110,7 @@ def test_render_pairs_prompt_rejects_missing_criterion_text() -> None:
             notes=[make_target("kb/notes/only.md", 1, criterion_paths=("lens/unknown",))],
             criterion_texts={},
             result_kind="verdict",
+            job_output_path="job-output.md",
         )
 
 
