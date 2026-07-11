@@ -12,7 +12,11 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Sequence
 
-from commonplace.review.protocol.decisions import parse_review_decision, rewrite_review_result_footer
+from commonplace.review.protocol.decisions import (
+    canonicalize_report_completion,
+    parse_review_decision,
+    rewrite_review_result_footer,
+)
 from commonplace.review.protocol.format import PAIR_END_RE, PAIR_START_RE
 
 
@@ -23,7 +27,8 @@ PairKey = tuple[str, str]
 class ParsedPairReview:
     note_path: str
     gate_path: str
-    decision: str
+    decision: str | None
+    result_kind: str
 
 
 @dataclass(frozen=True)
@@ -88,18 +93,27 @@ def parse_pair_bundle(
     bundle_markdown: str,
     *,
     expected_pairs: Sequence[PairKey],
+    result_kinds: dict[PairKey, str] | None = None,
 ) -> ParsedPairBundle:
     extracted = extract_pair_reviews(bundle_markdown, expected_pairs=expected_pairs)
     canonical_texts: dict[PairKey, str] = {}
     reviews: dict[PairKey, ParsedPairReview] = {}
     for pair, review_text in extracted.items():
-        decision = parse_review_decision(review_text)
-        canonical_text = rewrite_review_result_footer(review_text, decision=decision)
+        result_kind = (result_kinds or {}).get(pair, "verdict")
+        if result_kind == "verdict":
+            decision = parse_review_decision(review_text)
+            canonical_text = rewrite_review_result_footer(review_text, decision=decision)
+        elif result_kind == "report":
+            decision = None
+            canonical_text = canonicalize_report_completion(review_text)
+        else:
+            raise ValueError(f"invalid result kind for pair: {pair[0]} :: {pair[1]}: {result_kind}")
         canonical_texts[pair] = canonical_text
         reviews[pair] = ParsedPairReview(
             note_path=pair[0],
             gate_path=pair[1],
             decision=decision,
+            result_kind=result_kind,
         )
 
     missing = [pair for pair in expected_pairs if pair not in extracted]

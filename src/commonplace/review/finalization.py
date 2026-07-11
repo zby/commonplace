@@ -176,8 +176,13 @@ def finalize_review_job_from_owned_output(
 
         bundle_markdown = bundle_output_path.read_text(encoding="utf-8")
         expected_pairs = tuple((pair.note_path, pair.gate_path) for pair in plan.pairs)
+        result_kinds = {(pair.note_path, pair.gate_path): pair.result_kind for pair in plan.pairs}
         try:
-            parsed = parse_pair_bundle(bundle_markdown, expected_pairs=expected_pairs)
+            parsed = parse_pair_bundle(
+                bundle_markdown,
+                expected_pairs=expected_pairs,
+                result_kinds=result_kinds,
+            )
             review_pairs = _review_pair_completions(expected_pairs=expected_pairs, parsed=parsed)
             finalized = record_and_finalize_job(
                 conn,

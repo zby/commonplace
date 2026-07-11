@@ -20,6 +20,7 @@ from commonplace.review.review_db import (
 )
 from commonplace.review.review_model import normalize_model_partition
 from commonplace.review.collection_conformance import is_collection_md_gate_path, note_collection_md_path
+from commonplace.review.critique import is_critique_gate_path, result_kind_for_gate_path
 from commonplace.review.type_conformance import is_type_spec_gate_path, note_type_spec_path
 
 
@@ -29,6 +30,7 @@ class RequestedPair:
     gate_path: str
     gate_id: str
     reason: str
+    result_kind: str
 
 
 @dataclass(frozen=True)
@@ -90,6 +92,7 @@ def _selector_pairs(
         gate_raw = target.get("gate_path")
         gate_id_raw = target.get("gate_id")
         reason_raw = target.get("reason", "stale")
+        result_kind_raw = target.get("result_kind", "verdict")
         if not isinstance(note_raw, str) or not note_raw.strip():
             raise ValueError(f"selector target {index} missing note_path")
         if not isinstance(gate_raw, str) or not gate_raw.strip():
@@ -98,11 +101,19 @@ def _selector_pairs(
             raise ValueError(f"selector target {index} missing gate_id")
         if not isinstance(reason_raw, str) or not reason_raw.strip():
             reason_raw = "stale"
+        if result_kind_raw not in {"verdict", "report"}:
+            raise ValueError(f"selector target {index} has invalid result_kind: {result_kind_raw!r}")
         note_path = _normalize_note_path(repo_root, note_raw)
         gate_path, gate_id = _normalize_gate(repo_root, gate_raw)
         if gate_id != gate_id_raw.strip():
             raise ValueError(
                 f"selector target {index} gate_id {gate_id_raw!r} does not match gate_path {gate_path!r}"
+            )
+        expected_result_kind = result_kind_for_gate_path(gate_path)
+        if result_kind_raw != expected_result_kind:
+            raise ValueError(
+                f"selector target {index} result_kind {result_kind_raw!r} does not match "
+                f"gate contract {expected_result_kind!r}"
             )
         pairs.append(
             RequestedPair(
@@ -110,6 +121,7 @@ def _selector_pairs(
                 gate_path=gate_path,
                 gate_id=gate_id,
                 reason=reason_raw.strip(),
+                result_kind=result_kind_raw,
             )
         )
     return model_partition, pairs
@@ -154,7 +166,9 @@ def _filter_applicable_pairs(
         catalog_pairs = [
             pair
             for pair in note_pairs
-            if not is_type_spec_gate_path(pair.gate_path) and not is_collection_md_gate_path(pair.gate_path)
+            if not is_type_spec_gate_path(pair.gate_path)
+            and not is_collection_md_gate_path(pair.gate_path)
+            and not is_critique_gate_path(pair.gate_path)
         ]
         has_type_pairs = any(is_type_spec_gate_path(pair.gate_path) for pair in note_pairs)
         has_collection_pairs = any(is_collection_md_gate_path(pair.gate_path) for pair in note_pairs)
@@ -172,6 +186,8 @@ def _filter_applicable_pairs(
                 pair_applies = pair.gate_path == note_type_path
             elif is_collection_md_gate_path(pair.gate_path):
                 pair_applies = pair.gate_path == note_collection_path
+            elif is_critique_gate_path(pair.gate_path):
+                pair_applies = True
             else:
                 pair_applies = pair.gate_id in applicable_gate_ids
             if pair_applies:
@@ -231,6 +247,7 @@ def _pair_payload(pair) -> dict[str, object]:
         "gate_path": pair.gate_path,
         "gate_id": pair.gate_id,
         "pair_ordinal": pair.pair_ordinal,
+        "result_kind": pair.result_kind,
         "decision": pair.decision,
         "result_path": pair.result_path,
     }
@@ -343,7 +360,7 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
             prepared = prepare_grouped_review_job(
                 repo_root=repo_root,
                 db_path=db_path,
-                pairs=[(pair.note_path, pair.gate_path) for pair in group],
+                pairs=[(pair.note_path, pair.gate_path, pair.result_kind) for pair in group],
                 skipped=[],
                 packing=args.grouping,
                 runner=None,

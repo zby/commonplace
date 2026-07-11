@@ -28,6 +28,7 @@ from commonplace.review.review_db import (
     load_review_pairs_for_job,
 )
 from commonplace.review.clock import iso_now
+from commonplace.review.critique import result_kind_for_gate_path
 
 
 @dataclass(frozen=True)
@@ -54,11 +55,11 @@ def _targets_for_pairs(
     repo_root: Path,
     review_job_id: int,
     packing: str,
-    pairs: list[tuple[str, str]],
+    pairs: list[tuple[str, str, str]],
     note_texts: dict[str, str] | None = None,
 ) -> list[NoteReviewTarget]:
     if packing == "note":
-        note_paths = {note_path for note_path, _ in pairs}
+        note_paths = {note_path for note_path, _, _ in pairs}
         if len(note_paths) != 1:
             raise ValueError(f"note-packed job requires exactly one note, got: {sorted(note_paths)}")
         note_path = pairs[0][0]
@@ -67,7 +68,7 @@ def _targets_for_pairs(
                 repo_root=repo_root,
                 note_path=note_path,
                 review_job_id=review_job_id,
-                gate_paths=tuple(gate_path for _, gate_path in pairs),
+                gate_paths=tuple(gate_path for _, gate_path, _ in pairs),
                 note_text=note_texts.get(note_path) if note_texts else None,
             )
         ]
@@ -79,7 +80,7 @@ def _targets_for_pairs(
             gate_paths=(gate_path,),
             note_text=note_texts.get(note_path) if note_texts else None,
         )
-        for note_path, gate_path in pairs
+        for note_path, gate_path, _ in pairs
     ]
 
 
@@ -87,7 +88,7 @@ def prepare_grouped_review_job(
     *,
     repo_root: Path,
     db_path: Path,
-    pairs: list[tuple[str, str]],
+    pairs: list[tuple[str, str] | tuple[str, str, str]],
     skipped: list[SkippedPair] | None = None,
     packing: str,
     runner: str | None,
@@ -99,12 +100,26 @@ def prepare_grouped_review_job(
     """Create one review job for already-normalized, applicable pairs."""
     if not pairs:
         raise ValueError("no pairs to prepare")
+    normalized_pairs = [
+        (pair[0], pair[1], pair[2] if len(pair) == 3 else "verdict")
+        for pair in pairs
+    ]
+    for _, gate_path, result_kind in normalized_pairs:
+        expected_result_kind = result_kind_for_gate_path(gate_path)
+        if result_kind != expected_result_kind:
+            raise ValueError(
+                f"result kind {result_kind!r} does not match gate contract "
+                f"{expected_result_kind!r}: {gate_path}"
+            )
+    result_kinds = {result_kind for _, _, result_kind in normalized_pairs}
+    if len(result_kinds) != 1:
+        raise ValueError("review job cannot mix result kinds")
     created_at = iso_now()
     with connect(db_path) as conn:
         captured_inputs = capture_review_inputs(
             conn,
             repo_root=repo_root,
-            pairs=pairs,
+            pairs=normalized_pairs,
         )
         review_job_id = create_job_with_pairs(
             conn,
@@ -136,12 +151,13 @@ def prepare_grouped_review_job(
             repo_root=repo_root,
             review_job_id=review_job_id,
             packing=packing,
-            pairs=pairs,
+            pairs=normalized_pairs,
             note_texts=captured_inputs.note_texts,
         )
         prompt = render_pairs_prompt(
             notes=targets,
             gate_texts=captured_inputs.gate_texts,
+            result_kind=next(iter(result_kinds)),
             output_mode="file",
             bundle_output_path=bundle_output_path,
         )

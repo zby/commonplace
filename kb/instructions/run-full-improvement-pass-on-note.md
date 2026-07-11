@@ -13,9 +13,9 @@ Inputs:
 
 - first and only argument: `{note-path}` — repository-relative note path.
 
-Derive `<note-name>` from `{note-path}` as the filename without its extension (`kb/notes/linking-theory.md` → `linking-theory`). Every report and the synthesis packet this pass produces goes under `kb/reports/full-pass/<note-name>/` — see the per-step paths below and the Output Contract.
+Derive `<note-name>` from `{note-path}` as the filename without its extension (`kb/notes/linking-theory.md` → `linking-theory`). At the start of every invocation mint a unique `<pass-id>` (a UTC timestamp plus a short random suffix is sufficient). Retain reports under `kb/reports/full-pass/<note-name>/<pass-id>/{initial,closing,controls}/`; never reuse a pass ID or overwrite an initial report.
 
-Steps 1 through 7 below only write reports; none of them edit the note. Steps 8 and 9 do — applying the packet and then a final flow pass.
+Steps 1 through 7 below only write reports; none of them edit the note. Steps 8 and 9 do — applying the packet and then a final flow pass. Step 10 closes review over those edits without starting another transformation round.
 
 ## Why this order
 
@@ -29,10 +29,17 @@ Steps 1 through 7 below only write reports; none of them edit the note. Steps 8 
 
 ## Procedure
 
-1. Read the target note fully.
-2. Run the compression bundle per `run-compression-bundle-on-note.md` (`kb/instructions/run-compression-bundle-on-note.md`), passing `kb/reports/full-pass/<note-name>/compression-bundle-review.md` as its `{output-path}` argument. No DB writes.
-3. Run `critique-note` (`kb/instructions/critique-note.md`) in a fresh sub-agent against the same note. It writes to `kb/reports/critique/<note-name>.critique.md`.
-4. Run `composition-friction-gate` (`kb/instructions/composition-friction-gate.md`) in a fresh sub-agent against the same note. It writes to `kb/reports/friction/<note-name>.friction.md`. It will not, and must not, emit a PASS/WARN/FAIL verdict — only a filter result (SURVIVES/DISSOLVES) and a ranked list of the thinnest inferential joints.
+1. Mint `<pass-id>`, create its `initial/`, `closing/`, and `controls/` directories, record the initial note SHA-256, then read the target note fully.
+2. Run the compression bundle per `run-compression-bundle-on-note.md` (`kb/instructions/run-compression-bundle-on-note.md`), passing `kb/reports/full-pass/<note-name>/<pass-id>/initial/compression-bundle-review.md` as its `{output-path}` argument. No DB writes.
+3. Run `critique-note` through the requested-mode review pipeline in a fresh sub-agent:
+
+   ```bash
+   commonplace-review-target-selector --mode requested --model-partition {model-partition} critique --note {note-path} --json \
+     | commonplace-create-review-jobs --input - --grouping note
+   ```
+
+   Delegate and finalize as in `run-review-batches.md`, then immediately copy the finalized pair result to `kb/reports/full-pass/<note-name>/<pass-id>/initial/critique.md`. Do this before any later finalization can prune its job artifacts.
+4. Run `composition-friction-gate` (`kb/instructions/composition-friction-gate.md`) in a fresh sub-agent against the same note. Copy its report to `kb/reports/full-pass/<note-name>/<pass-id>/initial/friction.md`. It will not, and must not, emit a PASS/WARN/FAIL verdict — only a filter result (SURVIVES/DISSOLVES) and a ranked list of the thinnest inferential joints.
 5. Run the production `semantic` bundle through the requested-mode, single-note flow in `kb/instructions/run-review-batches.md`:
 
    ```bash
@@ -41,10 +48,60 @@ Steps 1 through 7 below only write reports; none of them edit the note. Steps 8 
    ```
 
    Then delegate, finalize, and verify exactly as that instruction describes.
-6. Run `cp-skill-connect` against the note. It writes a report to `kb/reports/connect/<collection>/<note-name>.connect.md` and touches nothing else.
-7. Synthesize the reports (below) into one packet at `kb/reports/full-pass/<note-name>/full-pass-report.md`. This is the only step among 1–7 that reconciles disagreement; do not just concatenate the reports.
+   Immediately copy every finalized semantic pair result to `kb/reports/full-pass/<note-name>/<pass-id>/initial/semantic/`, preserving one file per gate.
+6. Run `cp-skill-connect` against the note and copy its report to `kb/reports/full-pass/<note-name>/<pass-id>/initial/connect.md`.
+7. Synthesize the retained reports (below) into one packet at `kb/reports/full-pass/<note-name>/<pass-id>/full-pass-report.md`. This is the only step among 1–7 that reconciles disagreement; do not just concatenate the reports.
 8. Apply the packet's body edits directly to the note. If `composition-friction-gate` ran, reread its report's "For the human" line against the edited text before moving on. This is not a re-run of the gate — just a check that the one thing it pointed to is still accurate, or has actually been addressed, now that the edit has changed the prose around it. If it looks wrong given the edit, note that in the packet's Open items rather than silently re-editing.
 9. Run a final revise pass over the edited note with exactly this prompt: `revise the note for flow, coherence, logic and readability`. Give the sub-agent (or yourself, if editing directly) only the current note text and that prompt — not the packet or the underlying reports. This step is a copyedit pass, not a second chance to re-open the content decisions steps 1–8 already made; it should not reintroduce material step 8 removed or add new claims.
+10. Run one closing cycle over all five methods, as specified in "Closing cycle" below. Append its summary to `full-pass-report.md`; route residual findings to Open items and stop after this one cycle.
+
+## Closing cycle
+
+Record the final note SHA-256 before any closing run. Retain every closing report under `closing/` and leave `initial/` byte-identical.
+
+For each anchored semantic pair and critique, first run the stale selector with `--json` and inspect its cumulative accepted-snapshot-to-final-text `diff`:
+
+```bash
+commonplace-review-target-selector --model-partition {model-partition} {assay} --note {note-path} --json
+```
+
+Before rerunning, record `would_ack` or `would_rerun`, a rationale, and rough free-text edit kinds. Then rerun regardless: this MVP uses 100% counterfactual sampling and performs no real ack. Run each semantic gate as its own job:
+
+```bash
+commonplace-review-target-selector --mode requested --model-partition {model-partition} {semantic-gate} --note {note-path} --json \
+  | commonplace-create-review-jobs --input - --grouping gate --batch-size 1
+```
+
+Rerun critique through the step-3 flow. Immediately copy finalized results into `closing/semantic/<gate>.md` and `closing/critique.md`. For verdict pairs record whether the verdict flipped; for critique record whether the new report materially diverged enough that it would have changed steps 8–9. A carried report would only be reused evidence: it endorses nothing and has no skip semantics.
+
+Rerun the compression bundle, composition-friction-gate, and connect directly against the final text. Retain them under `closing/`, compare initial to closing (compression at bundle level with per-gate detail nested), and record divergence. The friction report's "For the human" line is never satisfied by a carry judgment.
+
+Write the observation record directly; the MVP has no owning event command. Append one JSON object per assay event to `kb/work/transformation-closure/observations/<pass-id>.jsonl`. Every object has `record_kind`, `pass_id`, `note_path`, `assay_id`, `initial_note_sha256`, `final_note_sha256`, `runner`, `model`, and `effort`, plus the fields for exactly one record kind:
+
+- `carry_audit`: `judgment` (`would_ack` or `would_rerun`), `rationale`, `edit_kinds`, `initial_report` and `closing_report` objects containing `path` and `sha256`, and either `flip` (verdict) or `material_divergence` (report).
+- `closing_comparison`: initial and closing report refs plus the applicable divergence outcome; there is no carry judgment.
+- `control_comparison`: `source_report`, `control_report`, `gate_snapshot_sha256`, `source_prompt_sha256`, `control_prompt_sha256`, and either `flip` or `material_divergence`.
+
+Use these shapes literally; each report ref is `{"path":"...","sha256":"..."}` and `edit_kinds` is an array of free-text strings:
+
+```json
+{"record_kind":"carry_audit","pass_id":"...","note_path":"...","assay_id":"...","initial_note_sha256":"...","final_note_sha256":"...","runner":"...","model":"...","effort":"...","judgment":"would_ack","rationale":"...","edit_kinds":["flow-only"],"initial_report":{"path":"...","sha256":"..."},"closing_report":{"path":"...","sha256":"..."},"flip":false}
+{"record_kind":"closing_comparison","pass_id":"...","note_path":"...","assay_id":"...","initial_note_sha256":"...","final_note_sha256":"...","runner":"...","model":"...","effort":"...","initial_report":{"path":"...","sha256":"..."},"closing_report":{"path":"...","sha256":"..."},"material_divergence":false}
+{"record_kind":"control_comparison","pass_id":"...","note_path":"...","assay_id":"...","initial_note_sha256":"...","final_note_sha256":"...","runner":"...","model":"...","effort":"...","source_report":{"path":"...","sha256":"..."},"control_report":{"path":"...","sha256":"..."},"gate_snapshot_sha256":"...","source_prompt_sha256":"...","control_prompt_sha256":"...","flip":false}
+```
+
+Manually run two controls in fresh sub-agents: critique and one verdict gate, rotating the verdict gate across `semantic/internal-consistency`, `semantic/load-bearing-qualifiers`, `semantic/explanatory-reach`, and `semantic/explication-quality`. Duplicate the retained single-pair closing prompt verbatim except for redirecting its output destination into `controls/`. Do not finalize controls. Hash both prompts and record a `control_comparison`; verify the source job output and review DB remain untouched.
+
+Append this section to the packet:
+
+```markdown
+## Closing cycle
+**Pass ID:** <pass-id>
+
+| Assay | Counterfactual judgment | Closing outcome |
+|---|---|---|
+| ... | would_ack/would_rerun/not applicable | flip/material divergence/unchanged |
+```
 
 ## Reconciling disagreement
 
@@ -95,7 +152,7 @@ Steps 1 through 7 below only write reports; none of them edit the note. Steps 8 
 
 Never omit "Routed attention" — even a clean SURVIVES with no thin joints below THIN is worth one line, since silently dropping the section would make the friction gate's absence indistinguishable from a clean result.
 
-`kb/reports/full-pass/*`, `kb/reports/critique/*`, `kb/reports/friction/*`, and `kb/reports/connect/*` are gitignored — regenerable working artifacts, not durable state. The note itself, edited in steps 8–9, is the only durable output of this pass. Quote or restate enough of each source report's substance directly into the packet at step 7 that the packet stands alone for steps 8–9, even though the packet does not persist afterward.
+`kb/reports/full-pass/*`, `kb/reports/critique/*`, `kb/reports/friction/*`, and `kb/reports/connect/*` are gitignored, but reports used by this experiment are retained through workshop closure: a hash verifies bytes but does not preserve them. The observation JSONL is committed workshop evidence because judgments are not regenerable. Quote or restate enough of each source report's substance directly into the packet that it stands alone.
 
 ## Do not
 

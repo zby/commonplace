@@ -7,7 +7,7 @@ status: current
 
 # Review system
 
-The review system runs gate-based quality reviews of KB notes and records their outcomes. A single review checks one note against one *gate* — a review lens such as `prose/source-residue` — and produces a decision (`pass`, `warn`, `fail`, or `error`) together with a written rationale. The notes and gates being reviewed stay as markdown files in the repo; the review state produced about them lives in a local SQLite database.
+The review system runs snapshot-anchored assays over KB notes and records their outcomes. Most pairs are verdict-kind gate reviews producing `pass`, `warn`, `fail`, or `error`; the opt-in critique assay is report-kind and completes without a decision. Notes and assay criteria stay as markdown files in the repo; review state lives in a local SQLite database.
 
 Two properties shape everything else:
 
@@ -39,7 +39,9 @@ Acceptance is the durable outcome. A current acceptance row pins the exact note 
 
 **Review job.** One review invocation: one rendered prompt, one output artifact directory, and one job-level status. A job is `queued` until finalization marks it `completed` or `failed`.
 
-**Review pair.** One requested `(note_path, gate_path)` pair inside a review job. This is the unit of review output and acceptance. A pair's decision is one of `pass`, `warn`, `fail`, `error`.
+**Review pair.** One requested `(note_path, gate_path)` pair inside a review job. This is the unit of output and acceptance. Its persisted `result_kind` is `verdict` or `report`; report pairs complete with `decision = NULL`.
+
+**Critique pair.** Request the virtual `critique` lens for one report-kind pair per explicitly targeted note. Its persisted gate identity is `kb/instructions/critique-note.md` (or the installed framework equivalent), so editing that instruction yields `gate-changed`. It is intentionally excluded from `--all-gates`.
 
 **Acceptance row.** The current record that a `(note_path, gate_path, model_partition)` key was reviewed against specific note and gate text. Acceptance is what makes a pair "fresh."
 
@@ -112,7 +114,7 @@ This is why gates route a bare finding rather than a self-graded verdict — see
 
 **Selector** — `commonplace-review-target-selector`:
 
-- positional gate ids, bundle names, and/or conformance requests (e.g. `prose`, `semantic/grounding-alignment`, `type`, `type/definition`, `collection`, `collection/notes`)
+- positional gate ids, bundle names, conformance requests, and/or `critique` (e.g. `prose`, `semantic/grounding-alignment`, `type`, `collection/notes`, `critique`)
 - `--all-gates` selects every applicable review criterion in place of naming ids/bundles (mutually exclusive with them): all catalog gates plus each note's type-conformance and collection-conformance pairs. The flag means the same thing in every review command. Like every selector flag it only *chooses* pairs — the selected `(note, gate)` pairs still run through create-jobs → review → finalize; it is not a one-shot "run all gates" command
 - `--note` to filter to specific note paths or directories
 - `--current` to filter to notes with `status: current`
@@ -132,13 +134,14 @@ With `--model-partition` omitted, the selector reports only model-agnostic missi
 
 ## The reviewer output contract
 
-A worker reviewing a job writes one sentinel-delimited `bundle-output.md` covering every pair in the job. Each pair block ends with exactly one parseable result line:
+A worker writes one sentinel-delimited `bundle-output.md` covering every pair in the class-homogeneous job. Verdict blocks end in a decision marker; report blocks end in `REPORT`:
 
 ```text
 ## Result: PASS
 ## Result: WARN
 ## Result: FAIL
 ## Result: ERROR
+## Result: REPORT
 ```
 
 Aliases such as `Verdict`, `Outcome`, `INFO`, `OK`, and `UNKNOWN` are invalid — finalization rejects them. The worker writes only the bundle output file; it does not touch notes, gates, indexes, or the review database.

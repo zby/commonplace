@@ -8,140 +8,93 @@ status: current
 
 # A knowledge base holds theories, descriptions, and prescriptions with asymmetric linking
 
-Every knowledge base writes in three registers, each with its own quality criteria:
+Many knowledge bases repeatedly need three default text-contract profiles, each with a different quality priority:
 
-| Register | What it does | Quality goal | Context-efficiency strategy | Example query |
+| Default profile | What it does | Quality priority | Context-efficiency strategy | Example query |
 |---|---|---|---|---|
 | **Theory** | Makes transferable claims about what is true | [Reach](./first-principles-reasoning-selects-for-explanatory-reach-over.md) | One claim covers many situations — compress *across* contexts | "Why is X a good idea?" |
 | **Description** | Accounts for what exists in a particular system | Fidelity + economy | One account covers the system in minimum tokens — compress *within* a single context | "How does X work here?" |
 | **Prescription** | Directs what to do or not do | Executability + precision | One instruction says exactly what to do — compress to what's *actionable* | "How do I do X?" |
 
-The three registers are strong recurring attractors, not a provable partition. They correspond to three fundamental orientations toward knowledge — understanding why (theory), representing what exists (description), and directing action (prescription) — and most questions a KB consumer asks do reduce to one of three forms: "Why is X a good idea?", "How does X work here?", or "How do I do X?" The classical philosophical tradition converged on the same tripartition independently — epistemology, ontology, and praxeology (see below) — which is evidence the attractor is real, not proof that it is exhaustive. Plenty of apparent fourth registers do collapse into one of the three: evaluations and reports are descriptions (they account for what was found); sources are pre-register raw material awaiting processing; proscriptions ("don't do X") are prescriptions with negative polarity. But at least one does not collapse: a stance-neutral, dialectical/evidential mode — mapping a live disagreement between attributed parties, quality bar "does this faithfully represent the contestation," not "is this true" — was written out and exercised as its own [profile](./definitions/text-contract.md) (five casebook notes over eight sources, in the sibling `epistack-casebooks` repo) without folding into theory, description, or prescription. [ADR 042](../reference/adr/042-register-becomes-a-default-profile-under-open-ended-text-contracts.md) accordingly demotes "register" to a guarded, open library of default **text-contract profiles** — kept because the three here are proven and cover most collections, not because a fourth is impossible.
+These are recurring defaults, not a partition of all knowledge. A stance-neutral dialectical/evidential collection, for example, needs a different quality bar: faithful attribution of a live disagreement rather than the collection's own claim about what is true. [ADR 042](../reference/adr/042-register-becomes-a-default-profile-under-open-ended-text-contracts.md) therefore makes the [profile](./definitions/text-contract.md) library open and worked-case-gated. A default earns its place when adopting the bundle saves repeated contract decisions and improves writing or review. A collection whose needs do not fit should write its own contract.
 
-The split recurs because the registers serve different queries and age differently. A personal research KB has theories (learned principles), descriptions (systems the person works with), and prescriptions (personal rules). An engineering-team KB has the same three — principles, codebase docs, runbooks.
+All profiles face bounded-attention pressure. In LLM-operated KBs, [context is the single scarce resource](./context-efficiency-is-the-central-design-concern-in-agent-systems.md), so excess or ambiguous text directly competes with the next action. Reach, fidelity, economy, executability, and precision are not exclusive properties—every artifact benefits from several—but each profile identifies the failure its writers and reviewers should treat as decisive.
 
-All three registers face context budget pressure but respond differently. Any reader with bounded attention — a person scanning under time pressure, a team triaging documentation — benefits when descriptions are economical and prescriptions are precise. But the constraint is soft for humans: they skim, they tolerate redundancy, they fill gaps from memory. For LLM-operated KBs the constraint is hard: [context is the single scarce resource](./context-efficiency-is-the-central-design-concern-in-agent-systems.md), and every token competes for the same window. A bloated description or vague prescription directly degrades the agent's next action. This KB is designed for that harder case, where economy for descriptions and precision for prescriptions are what reach is for theories: the discipline that makes bounded context work.
+## Why the profiles are useful
 
-## What makes the registers real
+**Formulation discipline.** Commonplace's theoretical profile requires a claim to stand without reference to any particular system. Descriptions may supply evidence, but removing any one described system should not collapse the claim. This constraint enables transfer across contexts. It is a deliberate convention of this profile, not a claim that system-specific causal explanations are never theories in ordinary language.
 
-Two properties distinguish the registers from mere labels.
+**Distinct review priorities.** A theoretical artifact fails when it merely records local fit without a transferable explanation. A descriptive artifact fails when it misstates its referent or spends context without improving fidelity. A prescriptive artifact fails when a first-time executor cannot determine what to do. The profiles are useful to the extent that these bundled priorities recur together.
 
-**Formulation constraint.** Descriptions are observations, so theories legitimately cite them as evidence. But a theory must be statable in general terms — its claim should stand without referencing any particular system. A theory can link to descriptions as evidence ("we observed X in system Y, which led us to theorize Z"), but its claim — title and opening argument — must hold independently. If you can't state it without saying "in Commonplace, ..." it's still a description, not yet a theory.
+## Maintenance follows dependency and authority edges
 
-**Maintenance asymmetry.** When a description changes (the system is redesigned), the theory's evidence base shifts — re-evaluate, but the theory may still hold from other evidence. A theory with one supporting observation is fragile; one with several is robust. When a theory changes, all downstream artifacts — descriptions citing it as rationale, prescriptions derived from it — may need revision. The theory is upstream; impact flows down.
+Profile membership does not itself determine change impact. The primary record is the authored dependency: what cites what, under which relationship, plus the operational authority of the consuming path. Profiles supply useful defaults for which dependencies are common, but explicit edges override the default.
 
-| From → To | Typical relationship | Maintenance direction |
+| Authored dependency | Meaning | Revision trigger |
 |---|---|---|
-| Theory → Theory | since / because / contradicts / extends | Mutual — both may need revision |
-| Theory → Description | evidence / derived-from / exemplifies | Theory may survive description changing |
-| Description → Theory | rationale — "shaped this way because [theory]" | Description needs revision if theory changes |
-| Description → Description | cross-reference between subsystems | Local impact |
-| Prescription → Theory | justification — "this rule exists because [theory]" | Prescription needs revision if theory changes |
-| Prescription → Description | reference — "this procedure acts on [system X]" | Prescription needs revision if system changes |
-| Prescription → Prescription | composition — "after [step A], follow [step B]" | Local impact |
+| Theory cites description as `evidence` | The observation supports the claim | If the description or its referent changes, reassess the theory; other evidence may let it survive |
+| Prescription cites theory as `rationale` | The procedure is justified by the claim | If the theory changes, reassess the procedure |
+| Description cites theory as `rationale` | The system was shaped by the claim | If the theory changes, check the rationale; the description still follows the implemented referent |
+| Prescription cites description as `operates-on` | The procedure acts on the described system | If the system changes, revise the procedure |
 
-Without the formulation constraint, theories and descriptions blur — a "theory" that can only be stated in terms of one specific system is really a description with ambitions.
+The asymmetry is therefore characteristic rather than absolute. Theoretical artifacts often accumulate descriptive evidence and provide the rationale for prescriptions; descriptions track changing referents; prescriptions track both their rationale and the systems they operate on. But a schema-first description can be upstream of implementation, and a theory that rests on one volatile observation can be downstream of that evidence. Maintenance should follow the recorded dependency, not an inference from genre.
 
-## The registers connect through distillation
+## One common path connects the profiles
 
-[Distillation](./definitions/distillation.md) (directed context compression) and implementation connect the registers. The primary path runs through prescription:
+[Distillation](./definitions/distillation.md) and implementation often connect the profiles in a deliberately designed system:
 
 ```
 theory  →  prescription  →  implementation  →  description
 (claim)    (procedure)      (working system)    (account of what exists)
 ```
 
-- **Theory → prescription** is the direct distillation step. WRITING.md conventions distill theory notes about title-as-claim, reach, and linking semantics into rules an agent can follow. The theory explains *why*; the prescription says *what to do*.
-- **Prescription → implementation** is where the system gets built. Following prescriptions produces a working system, but implementations always deviate through edge cases, pragmatic compromises, and technical constraints.
-- **Implementation → description** is where we account for what was actually built. A note like [why-notes-have-types](./why-notes-have-types.md) describes how *this* system's type system works — faithful to the implementation, not to the theory it descended from.
+Theory explains why. A prescription distills that reasoning into executable guidance. Implementation encounters constraints the theory did not settle, and description records what was actually built. The description must remain faithful even when implementation deviates from the originating rationale.
 
-Descriptions are therefore not direct distillations of theory — they are accounts of systems built by following prescriptions derived from theory. This matters because descriptions can *contradict* their originating theory: the implementation may discover that the theory was wrong in some case, and the description faithfully records that reality.
+This is one common path, not an origin law for descriptions. Existing systems are often described before anyone writes a theory about them; observations can revise theory; schema-first descriptions can direct implementation; and procedures can arise from local necessity without a general principle. These feedback and independent-origin paths are why the dependency edges, rather than the diagram, control maintenance.
 
-This chain reinforces the maintenance asymmetry: changes flow down from theory through prescriptions and implementations into descriptions. When theory changes, its downstream chain may need revision — but the same theory might be implemented differently in a different system, so the theory's formulation should stay general.
+## Content profiles and operational roles are independent
 
-## Registers and operational roles are orthogonal
+Profiles classify what an artifact *says*—its linguistic content. Artifacts also have operational roles: what they *do* in the KB.
 
-Registers classify what an artifact *says* — its linguistic content. But artifacts also have operational roles — what they *do* in the KB:
-
-| Operational role | What the artifact does | Example |
+| Operational role | What the artifact does |
 |---|---|---|
-| Evidence | Supports or challenges a claim | A related-system review cited by a theory note |
-| Executable instruction | Directs agent behavior at runtime | WRITING.md, a skill template |
-| Generated report | Records the output of an operation | A review bundle, a connect report |
-| Index / routing surface | Helps agents find other artifacts | tags-README.md, a curated tag README |
-| Workshop state | Tracks in-flight work | A task, a decision thread |
+| Evidence | Supports or challenges a claim |
+| Executable instruction | Directs behavior at runtime |
+| Generated report | Records the output of an operation |
+| Routing surface | Helps consumers find other artifacts |
 
-These roles cross-cut registers. A review report is generated by an operation but its content is descriptive — it accounts for what was checked and what was found. An index is an operational routing surface but its content is descriptive — it describes what exists in a collection. Workshop artifacts may contain prescriptive steps or descriptive state, but their operational role (lifecycle, expiration) is orthogonal to their register.
-
-The interesting dual case is **instructions**. In a traditional system, the distillation chain has four distinct steps: theory → prescription → implementation → description. But in an agent-operated KB, markdown instructions are executed directly by the agent interpreter. WRITING.md is prescriptive by content ("use claim titles, check reach") and part of the working system by role — changing it changes agent behavior immediately. The prescription/implementation boundary collapses because natural-language instructions are part of the runtime:
-
-```
-theory  →  instruction/prescription
-                    |
-                    v
-           working system behavior
-```
-
-This is not a fourth register. It is an orthogonal axis: what the artifact says (register) vs. what it does in the system (operational role). Instructions remain prescriptive text — they direct action, they optimize for executability and precision, they need revision when theory changes. But they are also executable, which means the maintenance asymmetry has immediate operational consequences: changing a theory note may require revising an instruction, and revising the instruction changes the running system.
+These roles cross-cut content. A generated review report is descriptive; an index is a routing surface whose text describes what exists. An agent instruction illustrates the important dual case: it is prescriptive by content and executable by operational role. Its immediate maintenance consequence comes from that authority path—changing loaded instruction text changes system behavior—not from prescriptive wording alone. The content profile tells a writer how to formulate the artifact; operational roles and dependency edges tell a maintainer what the artifact can affect.
 
 ## Evidence from this KB
 
-Commonplace's existing collections instantiate this pattern:
+Commonplace's existing collections instantiate the three defaults:
 
 - `kb/notes/` → theoretical register (transferable claims, [title-as-claim](./title-as-claim-enables-traversal-as-reasoning.md), optimized for reach)
 - `kb/reference/` → descriptive register (how the shipped system works, topical titles, optimized for fidelity)
 - `kb/instructions/` → prescriptive register (procedures and conventions, imperative titles, optimized for executability)
-- `kb/agent-memory-systems/` → a second descriptive collection (external landscape), promoted out of `kb/notes/` into its own top-level collection
+- `kb/agent-memory-systems/` → another descriptive collection for an external landscape
 
-The separation was not designed from the three-register theory — it emerged from practical pressure. `kb/reference/` was created because system documentation didn't fit the theory-optimized conventions of `kb/notes/`. The theory names what practice already discovered.
-
-The maintenance asymmetry is already visible in the link graph. A link audit found substantial inbound linking from theory notes into `kb/agent-memory-systems/` — theories citing related systems as evidence and illustrations. The theories are stated in general terms; the related-system descriptions serve as supporting observations.
-
-The [title-as-claim](./title-as-claim-enables-traversal-as-reasoning.md) convention already carves out multi-claim specs and definitional notes from claim-title requirements — exactly the documents written in the descriptive register. That carve-out recognizes that descriptions play a different role in traversal than theories.
-
-Some notes currently in `kb/notes/` are better understood as descriptions. [Why notes have types](./why-notes-have-types.md) describes how this system's type system works — a description of our implementation, not a transferable theory. If the framework helps you see that a note belongs in a different collection, it's doing useful work. **TODO:** Once collection moves are complete, replace these examples with the new locations or remove them.
-
-## The three registers echo classical sub-disciplines
-
-The registers map onto classical philosophical sub-disciplines, each reshaped by LLM-operated KB constraints. The mapping is corroborating evidence that the three are a durable attractor — independently rediscovered by a different tradition — not a derivation that they exhaust the space; see the weakened claim above and [ADR 042](../reference/adr/042-register-becomes-a-default-profile-under-open-ended-text-contracts.md):
-
-- **Theory → epistemology** — what can be known, what justifies a claim, what transfers across contexts. Reshaped: knowledge not loaded into context is functionally absent; reach measures how many future contexts one compressed claim serves.
-- **Description → ontology** — what exists, what categories carve up a system. Reshaped: what exists is what can be named and retrieved; identity is maintained by the referencing graph, not by internal continuity.
-- **Prescription → praxeology** — what counts as effective action, what patterns of work succeed. Reshaped: the agent reads the rule every time without internalization; instructions must survive first-reading execution. (Kotarbiński's general theory of efficient action is the stronger precedent here than Mises's economic framing.)
-
-LLM constraints (no persistent memory, no direct perception, no habit formation) strip away human fallbacks, making the structural core of knowledge management visible. But the resulting claims vary in reach — many transfer to any reader with bounded attention, some are genuinely LLM-specific. Scope should be mapped per claim, not blanket-decided.
+This separation emerged from practical pressure: `kb/reference/` was created because shipped-system documentation did not fit theory-oriented conventions. This worked example shows that the bundles can organize one KB, but it does not establish how often they recur elsewhere.
 
 ## Practical consequences
 
-1. **Per-register writing conventions** are justified — each register has a different quality goal, so a single set of conventions undersells two of the three. Theory conventions enforce reach; description conventions enforce economy; prescription conventions enforce precision. Whether those conventions are keyed to directories, types, or traits is an implementation choice — see #2.
-
-2. **The register mechanism is a design choice.** Several options exist:
-   - **Directories** — each collection maps to a register (`kb/notes/` = theoretical, `kb/reference/` = descriptive, `kb/instructions/` = prescriptive). Simple, visible, enforceable by path. Types can be shared across registers — a `note` in a descriptive collection is descriptive; the same type in a theoretical collection is theoretical.
-   - **Types** — each document type implies a register (`structured-claim` = theoretical, `spec` = descriptive, `instruction` = prescriptive). Documents of different registers can coexist in one directory. Requires the type system to encode register, adding a responsibility beyond structural contracts.
-   - **Traits or metadata** — an explicit `register: theoretical | descriptive | prescriptive` field in frontmatter. Most flexible — any document anywhere can declare its register. But requires discipline and doesn't provide the physical separation that makes conventions enforceable by path.
-   - **Convention only** — no formal mechanism; the author picks the right conventions based on what the document does. Lightest-weight, but invisible to tooling and hard to validate.
-
-   Commonplace currently uses directories. The choice should match how the KB is operated — directories work well when collections are already separated; types work well when registers are mixed within directories.
-
-3. **Convention docs are [deploy-time learning](./deploy-time-learning-is-the-missing-middle.md) artifacts** — instructions to agents, early on the [verifiability gradient](./verifiability-gradient.md). They should be iterated from use, not designed to completion upfront.
+1. **Declare the actual contract.** Adopt a default profile when its orientation, quality priority, maintenance semantics, and link grammar travel together. Extend or replace it when they do not.
+2. **Choose an encoding that matches operation.** A KB may attach profiles to directories, types, metadata, or conventions. Commonplace uses directories because collection-wide rules must cover every artifact in a subtree. This choice is an implementation detail, not part of the content taxonomy.
+3. **Review dependencies explicitly.** Use profile defaults to guide prospecting, but use authored relationship labels and operational authority to decide what a change can invalidate.
 
 ## Open questions
 
-- How many notes currently in `kb/notes/` are actually descriptive or prescriptive and belong elsewhere? A systematic audit would test the framework and clean up the collection.
-- Is the distillation chain (theory → prescription → implementation → description) the only path, or do some descriptions arise independently — system descriptions written before any theory, or operator procedures that don't derive from a principle?
+- Across independently designed KBs, do orientation, quality goal, title convention, and maintenance semantics covary strongly enough for these three bundles to remain useful defaults?
+- After explicit dependency kinds and operational authority are known, what additional maintenance or review decision does profile membership predict?
 - How robust must a theory's evidence base be? A theory with one supporting observation is fragile. Is there a practical threshold (two systems? three?) or is this a judgment call?
-- Does the instruction duality (prescription by content, implementation by role) create maintenance patterns not captured by the current asymmetry table? When an instruction changes, the effect is immediate — unlike changing a description, which merely updates an account.
 
 ---
 
 Relevant Notes:
 
-- [Reach informs KB design](./brainstorming-how-reach-informs-kb-design.md) — qualifies: reach is the quality axis for the theoretical register specifically, not a universal goal; descriptions optimize for economy and prescriptions for precision
 - [First-principles reasoning selects for explanatory reach](./first-principles-reasoning-selects-for-explanatory-reach-over.md) — foundation: the reach concept that serves as the quality criterion for the theoretical register
 - [Why directories despite their costs](./why-directories-despite-their-costs.md) — extends: the three-register split provides a principled reason for directory-level separation beyond topic grouping
 - [Skills derive from methodology through distillation](./skills-derive-from-methodology-through-distillation.md) — exemplifies: methodology → skill is an instance of the theory → prescription distillation path
-- [Agent memory needs discoverable, composable, trusted knowledge under bounded context](./agent-memory-needs-discoverable-composable-trusted-knowledge-under.md) — grounds: the three properties apply differently per register; reach is the quality criterion for the theoretical register, economy and precision serve the other two
-- [A functioning KB needs a workshop layer](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — extends: the library/workshop distinction adds a temporal dimension orthogonal to registers — library documents (all three registers) accumulate value, while workshop documents consume it through lifecycle progression
 - [Instructions are typed callables](./instructions-are-typed-callables.md) — extends: the instruction duality (prescriptive content, executable authority) is a specific case of treating documents as typed callables; the callable framing captures the operational-authority axis
 - [Text contract](./definitions/text-contract.md) — defined-in: the requirement and profile vocabulary that replaces "register" as the taxonomy name
 - [ADR 042: register becomes a default profile under open-ended text contracts](../reference/adr/042-register-becomes-a-default-profile-under-open-ended-text-contracts.md) — rationale: the decision that weakens this note's exhaustiveness claim to an attractor claim and opens the profile set

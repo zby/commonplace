@@ -70,6 +70,8 @@ class AcceptanceState:
     accepted_note_text: str | None
     accepted_gate_text: str | None
     accepted_at: str
+    result_kind: str
+    decision: str | None
 
     @property
     def gate_id(self) -> str:
@@ -109,6 +111,7 @@ class ReviewPairRow:
     gate_path: str
     model_partition: str
     pair_ordinal: int
+    result_kind: str
     decision: str | None
     result_path: str | None
     reviewed_note_snapshot_id: int | None
@@ -125,6 +128,7 @@ class ReviewPairRequest:
     note_path: str
     gate_path: str
     pair_ordinal: int
+    result_kind: str = "verdict"
     reviewed_note_snapshot_id: int | None = None
     reviewed_gate_snapshot_id: int | None = None
 
@@ -133,7 +137,7 @@ class ReviewPairRequest:
 class ReviewPairCompletion:
     note_path: str
     gate_path: str
-    decision: str
+    decision: str | None
     reviewed_at: str | None = None
 
 
@@ -264,6 +268,7 @@ def _review_pair_from_row(row: sqlite3.Row, *, result_path: str | None) -> Revie
         gate_path=row["gate_path"],
         model_partition=row["model_partition"],
         pair_ordinal=row["pair_ordinal"],
+        result_kind=row["result_kind"],
         decision=row["decision"],
         result_path=result_path,
         reviewed_note_snapshot_id=row["reviewed_note_snapshot_id"],
@@ -391,6 +396,12 @@ def create_review_pairs(
     review_job_id: int,
     pairs: Sequence[ReviewPairRequest],
 ) -> list[int]:
+    result_kinds = {pair.result_kind for pair in pairs}
+    invalid_result_kinds = result_kinds - {"verdict", "report"}
+    if invalid_result_kinds:
+        raise ValueError(f"invalid result kind: {sorted(invalid_result_kinds)}")
+    if len(result_kinds) > 1:
+        raise ValueError("review job cannot mix result kinds")
     review_pair_ids: list[int] = []
     for pair in pairs:
         cursor = conn.execute(
@@ -400,15 +411,17 @@ def create_review_pairs(
                 note_path,
                 gate_path,
                 pair_ordinal,
+                result_kind,
                 reviewed_note_snapshot_id,
                 reviewed_gate_snapshot_id
-            ) VALUES (?, ?, ?, ?, ?, ?)
+            ) VALUES (?, ?, ?, ?, ?, ?, ?)
             """,
             (
                 review_job_id,
                 pair.note_path,
                 pair.gate_path,
                 pair.pair_ordinal,
+                pair.result_kind,
                 pair.reviewed_note_snapshot_id,
                 pair.reviewed_gate_snapshot_id,
             ),
@@ -478,6 +491,7 @@ def load_review_pairs_for_job(conn: sqlite3.Connection, *, review_job_id: int) -
             rp.gate_path,
             j.model_partition AS model_partition,
             rp.pair_ordinal,
+            rp.result_kind,
             rp.decision,
             rp.reviewed_note_snapshot_id,
             rp.reviewed_gate_snapshot_id,
@@ -576,7 +590,9 @@ def load_current_acceptances(conn: sqlite3.Connection) -> dict[tuple[str, str, s
             accepted_gate_hash,
             accepted_note_text,
             accepted_gate_text,
-            accepted_at
+            accepted_at,
+            result_kind,
+            decision
         FROM current_gate_acceptances
         """
     ).fetchall()
@@ -593,6 +609,8 @@ def load_current_acceptances(conn: sqlite3.Connection) -> dict[tuple[str, str, s
             accepted_note_text=row["accepted_note_text"],
             accepted_gate_text=row["accepted_gate_text"],
             accepted_at=row["accepted_at"],
+            result_kind=row["result_kind"],
+            decision=row["decision"],
         )
         for row in rows
     }
@@ -713,6 +731,10 @@ def complete_review_pairs(
             raise ValueError(
                 f"pair {review_pair.note_path} :: {review_pair.gate_path} is not part of review job {review_job_id}"
             )
+        if requested_pair.result_kind == "verdict" and review_pair.decision is None:
+            raise ValueError(f"verdict pair requires a decision: {review_pair.note_path} :: {review_pair.gate_path}")
+        if requested_pair.result_kind == "report" and review_pair.decision is not None:
+            raise ValueError(f"report pair cannot have a decision: {review_pair.note_path} :: {review_pair.gate_path}")
         conn.execute(
             """
             UPDATE review_pairs
@@ -749,7 +771,9 @@ def upsert_acceptance(
         SELECT
             rp.note_path,
             rp.gate_path,
+            rp.result_kind,
             rp.decision,
+            rp.reviewed_at,
             j.model_partition
         FROM review_pairs AS rp
         JOIN review_jobs AS j
@@ -760,8 +784,11 @@ def upsert_acceptance(
     ).fetchone()
     if row is None:
         raise ValueError(f"accepted review pair not found: {accepted_review_pair_id}")
-    if row["decision"] is None:
-        raise ValueError(f"accepted review pair has no decision: {accepted_review_pair_id}")
+    completed = row["reviewed_at"] is not None and (
+        row["result_kind"] == "report" or row["decision"] is not None
+    )
+    if not completed:
+        raise ValueError(f"accepted review pair is incomplete: {accepted_review_pair_id}")
     if (
         row["note_path"] != note_path
         or row["gate_path"] != gate_path
@@ -942,6 +969,7 @@ def load_review_pairs_for_note(
             rp.gate_path,
             j.model_partition AS model_partition,
             rp.pair_ordinal,
+            rp.result_kind,
             rp.decision,
             rp.reviewed_note_snapshot_id,
             rp.reviewed_gate_snapshot_id,
@@ -973,6 +1001,7 @@ def load_latest_completed_review_pair(
             rp.gate_path,
             j.model_partition AS model_partition,
             rp.pair_ordinal,
+            rp.result_kind,
             rp.decision,
             rp.reviewed_note_snapshot_id,
             rp.reviewed_gate_snapshot_id,
@@ -984,7 +1013,8 @@ def load_latest_completed_review_pair(
           AND rp.gate_path = ?
           AND j.model_partition = ?
           AND j.status = 'completed'
-          AND rp.decision IS NOT NULL
+          AND rp.reviewed_at IS NOT NULL
+          AND (rp.result_kind = 'report' OR rp.decision IS NOT NULL)
         ORDER BY rp.reviewed_at DESC, rp.review_pair_id DESC
         LIMIT 1
         """,
@@ -1022,6 +1052,7 @@ def load_effective_review_pair_map(
             rp.gate_path,
             j.model_partition AS model_partition,
             rp.pair_ordinal,
+            rp.result_kind,
             rp.decision,
             rp.reviewed_note_snapshot_id,
             rp.reviewed_gate_snapshot_id,

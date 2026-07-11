@@ -31,6 +31,11 @@ from commonplace.review.collection_conformance import (
     note_collection_md_path,
     resolve_collection_gate_id,
 )
+from commonplace.review.critique import (
+    critique_gate_path,
+    is_critique_request,
+    result_kind_for_gate_path,
+)
 from commonplace.review.type_conformance import (
     TYPE_GATE_LENS,
     is_type_gate_request,
@@ -214,15 +219,19 @@ def _applicable_collection_md_path(
     return None
 
 
-def _partition_gate_requests(gate_ids: list[str]) -> tuple[list[str], list[str], list[str]]:
+def _partition_gate_requests(gate_ids: list[str]) -> tuple[list[str], list[str], list[str], bool]:
     type_requests = [gate_id for gate_id in gate_ids if is_type_gate_request(gate_id)]
     collection_requests = [gate_id for gate_id in gate_ids if is_collection_gate_request(gate_id)]
     catalog_requests = [
         gate_id
         for gate_id in gate_ids
-        if not is_type_gate_request(gate_id) and not is_collection_gate_request(gate_id)
+        if not is_type_gate_request(gate_id)
+        and not is_collection_gate_request(gate_id)
+        and not is_critique_request(gate_id)
     ]
-    return catalog_requests, type_requests, collection_requests
+    return catalog_requests, type_requests, collection_requests, any(
+        is_critique_request(gate_id) for gate_id in gate_ids
+    )
 
 
 @dataclass(frozen=True)
@@ -231,6 +240,7 @@ class StaleGate:
     gate_path: str
     reason: str
     diff: str | None = None
+    result_kind: str = "verdict"
 
     @property
     def gate_id(self) -> str:
@@ -272,7 +282,7 @@ def select_stale_gates(
     include_diff: bool = False,
     db_path: Path | None = None,
 ) -> list[StaleGate]:
-    catalog_requests, type_requests, collection_requests = _partition_gate_requests(gate_ids)
+    catalog_requests, type_requests, collection_requests, critique_requested = _partition_gate_requests(gate_ids)
     gates_dir, gate_path_by_id, requested_gate_ids = _normalize_requested_gate_ids(repo_root, catalog_requests)
     match_all_types, requested_type_paths = _normalize_type_requests(repo_root, type_requests)
     match_all_collections, requested_collection_paths = _normalize_collection_requests(repo_root, collection_requests)
@@ -311,6 +321,8 @@ def select_stale_gates(
         )
         if collection_md_path is not None:
             gate_paths_for_note.append(collection_md_path)
+        if critique_requested:
+            gate_paths_for_note.append(critique_gate_path(repo_root))
         current_note_text: str | None = None
         current_note_hash: str | None = None
         for gate_path in gate_paths_for_note:
@@ -320,16 +332,37 @@ def select_stale_gates(
 
             if model is None:
                 if (note_path, gate_path) not in accepted_pairs:
-                    stale.append(StaleGate(note_path, gate_path, "missing-review"))
+                    stale.append(
+                        StaleGate(
+                            note_path,
+                            gate_path,
+                            "missing-review",
+                            result_kind=result_kind_for_gate_path(gate_path),
+                        )
+                    )
                 continue
 
             acceptance = acceptances.get((note_path, gate_path, model))
             if acceptance is None:
-                stale.append(StaleGate(note_path, gate_path, "missing-review"))
+                stale.append(
+                    StaleGate(
+                        note_path,
+                        gate_path,
+                        "missing-review",
+                        result_kind=result_kind_for_gate_path(gate_path),
+                    )
+                )
                 continue
             acceptance_snapshot = _acceptance_snapshot(acceptance)
             if acceptance_snapshot is None:
-                stale.append(StaleGate(note_path, gate_path, "missing-review"))
+                stale.append(
+                    StaleGate(
+                        note_path,
+                        gate_path,
+                        "missing-review",
+                        result_kind=result_kind_for_gate_path(gate_path),
+                    )
+                )
                 continue
             if current_note_hash is None:
                 current_note_text = note_abs.read_text(encoding="utf-8")
@@ -352,7 +385,15 @@ def select_stale_gates(
                 and current_note_text is not None
             ):
                 diff = note_diff_from_text(note_path, acceptance.accepted_note_text, current_note_text)
-            stale.append(StaleGate(note_path, gate_path, staleness.reason, diff=diff))
+            stale.append(
+                StaleGate(
+                    note_path,
+                    gate_path,
+                    staleness.reason,
+                    diff=diff,
+                    result_kind=result_kind_for_gate_path(gate_path),
+                )
+            )
 
     return sorted(stale, key=lambda s: (s.note_path, s.gate_path))
 
@@ -364,7 +405,7 @@ def select_requested_gates(
     note_filter: list[str] | None = None,
     current_only: bool = False,
 ) -> list[StaleGate]:
-    catalog_requests, type_requests, collection_requests = _partition_gate_requests(gate_ids)
+    catalog_requests, type_requests, collection_requests, critique_requested = _partition_gate_requests(gate_ids)
     gates_dir, gate_path_by_id, requested_gate_ids = _normalize_requested_gate_ids(repo_root, catalog_requests)
     match_all_types, requested_type_paths = _normalize_type_requests(repo_root, type_requests)
     match_all_collections, requested_collection_paths = _normalize_collection_requests(repo_root, collection_requests)
@@ -391,11 +432,20 @@ def select_requested_gates(
         )
         if collection_md_path is not None:
             gate_paths_for_note.append(collection_md_path)
+        if critique_requested:
+            gate_paths_for_note.append(critique_gate_path(repo_root))
         for gate_path in gate_paths_for_note:
             gate_abs = repo_root / gate_path
             if not gate_abs.is_file():
                 raise FileNotFoundError(f"Gate not found: {gate_path}")
-            requested.append(StaleGate(note_path, gate_path, "requested"))
+            requested.append(
+                StaleGate(
+                    note_path,
+                    gate_path,
+                    "requested",
+                    result_kind=result_kind_for_gate_path(gate_path),
+                )
+            )
 
     return sorted(requested, key=lambda s: (s.note_path, s.gate_path))
 
@@ -408,6 +458,7 @@ def render_json(records: list[StaleGate], *, model_partition: str | None = None)
             "gate_path": record.gate_path,
             "gate_id": record.gate_id,
             "reason": record.reason,
+            "result_kind": record.result_kind,
         }
         if record.diff is not None:
             entry["diff"] = record.diff

@@ -6,7 +6,7 @@ from __future__ import annotations
 import sqlite3
 from pathlib import Path
 
-REVIEW_SCHEMA_VERSION = 4
+REVIEW_SCHEMA_VERSION = 5
 EXPECTED_REVIEW_TABLES = frozenset(
     {
         "review_jobs",
@@ -48,7 +48,7 @@ def init_db(db_path: Path, schema_path: Path) -> None:
         if current_version != REVIEW_SCHEMA_VERSION:
             raise RuntimeError(
                 f"review DB schema version {current_version} does not match current "
-                f"version {REVIEW_SCHEMA_VERSION}; recreate the review store"
+                f"version {REVIEW_SCHEMA_VERSION}; run scripts/migrate-review-db-v4-to-v5.py"
             )
         _assert_review_store_integrity(conn)
         conn.commit()

@@ -36,6 +36,7 @@ class ReviewPairForResult(Protocol):
     gate_path: str
     model_partition: str
     pair_ordinal: int
+    result_kind: str
     decision: str | None
     reviewed_at: str | None
 
@@ -145,6 +146,7 @@ def result_frontmatter(
         "runner": job.runner,
         "runner_model": job.runner_model,
         "runner_effort": job.runner_effort,
+        "result_kind": pair.result_kind,
         "decision": pair.decision,
         "reviewed_at": pair.reviewed_at,
     }
@@ -165,7 +167,7 @@ def write_pair_result_files_to_derived_paths(
         pairs=pairs,
     )
     for pair in pairs:
-        if pair.decision is None:
+        if pair.reviewed_at is None:
             continue
         review_text = canonical_texts.get((pair.note_path, pair.gate_path))
         if review_text is None:
@@ -216,6 +218,7 @@ def write_manifest(
             "review_pair_id": pair.review_pair_id,
             "note_path": pair.note_path,
             "gate_path": pair.gate_path,
+            "result_kind": getattr(pair, "result_kind", "verdict"),
             "status": pair_display_status,
             "result_path": result_paths[pair.review_pair_id],
         }
@@ -224,7 +227,7 @@ def write_manifest(
         payload_pairs.append(item)
 
     payload: dict[str, object] = {
-        "artifact_schema": "review-job-prompt-v1",
+        "artifact_schema": "review-job-prompt-v2",
         "review_job_id": review_job_id,
         "status": job_status,
         "packing": packing,

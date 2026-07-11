@@ -8,6 +8,7 @@ import re
 DECISION_VALUES = ("pass", "warn", "fail", "error")
 
 _STRICT_RESULT_LINE_RE = re.compile(r"^## Result: (?P<decision>PASS|WARN|FAIL|ERROR)$")
+_STRICT_REPORT_LINE_RE = re.compile(r"^## Result: REPORT$")
 # Alias branches are case-insensitive via the scoped (?i:...) group; the bare
 # caps-word branch must stay case-sensitive or any single-word prose line
 # ("none", "Approved") would read as a result signal and fail the job.
@@ -71,6 +72,34 @@ def parse_review_decision(review_text: str) -> str:
     if invalid:
         raise ValueError(f"invalid result signal: {invalid[0]}")
     return decision
+
+
+def parse_report_completion(review_text: str) -> None:
+    """Require REPORT as the sole final result signal."""
+    lines = review_text.splitlines()
+    report_indexes = [
+        index for index, line in enumerate(lines) if _STRICT_REPORT_LINE_RE.match(line.strip())
+    ]
+    if not report_indexes:
+        if _strict_result_lines(review_text):
+            raise ValueError("verdict result is invalid for report pair")
+        raise ValueError("missing report result line")
+    if len(report_indexes) > 1:
+        raise ValueError("duplicate result lines")
+    non_empty = [index for index, line in enumerate(lines) if line.strip()]
+    if report_indexes[0] != non_empty[-1]:
+        raise ValueError("result line must be the last non-empty line")
+    invalid = _invalid_resultish_lines(review_text, strict_line="## Result: REPORT")
+    if invalid:
+        raise ValueError(f"invalid result signal: {invalid[0]}")
+
+
+def canonicalize_report_completion(review_text: str) -> str:
+    parse_report_completion(review_text)
+    body = "\n".join(
+        line for line in review_text.splitlines() if not _STRICT_REPORT_LINE_RE.match(line.strip())
+    ).strip()
+    return f"{body}\n\n## Result: REPORT\n" if body else "## Result: REPORT\n"
 
 
 def strip_explicit_review_result_lines(review_text: str) -> str:

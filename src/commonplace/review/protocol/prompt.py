@@ -41,6 +41,7 @@ from commonplace.review.protocol.format import (
     PAIR_KEY_SEPARATOR,
     PAIR_START_TEMPLATE,
     RESERVED_SENTINEL_RE,
+    REPORT_LINE_TEMPLATE,
     RESULT_LINE_TEMPLATE,
 )
 from commonplace.review.collection_conformance import is_collection_md_gate_path
@@ -174,6 +175,7 @@ def render_pairs_prompt(
     gate_texts: dict[str, str],
     output_mode: OutputMode = "stdout",
     bundle_output_path: str | None = None,
+    result_kind: str = "verdict",
 ) -> str:
     _validate_targets(notes, gate_texts)
     gate_paths = sorted({gate_path for note in notes for gate_path in note.gate_paths})
@@ -195,8 +197,22 @@ def render_pairs_prompt(
     else:
         raise ValueError(f"unknown output mode: {output_mode}")
 
+    if result_kind not in {"verdict", "report"}:
+        raise ValueError(f"invalid result kind: {result_kind}")
+    result_instruction = (
+        DECISION_LINE_INSTRUCTION
+        if result_kind == "verdict"
+        else "- Inside each block, include exactly one completion line: `## Result: REPORT`. Do not emit PASS, WARN, FAIL, or ERROR."
+    )
+    result_template = RESULT_LINE_TEMPLATE if result_kind == "verdict" else REPORT_LINE_TEMPLATE
+    task_line = (
+        "Write gate reviews for the requested (note, gate) pairs listed below."
+        if result_kind == "verdict"
+        else "Write the requested report for each (note, assay) pair listed below. Emit each critique as that pair's block."
+    )
+
     lines = [
-        "Write gate reviews for the requested (note, gate) pairs listed below.",
+        task_line,
         "",
         "Reading scope for this job:",
         "- All target note contents and review criteria are included below. Do not read them from disk.",
@@ -228,8 +244,8 @@ def render_pairs_prompt(
             "- Use these exact sentinels for every block:",
             "  === PAIR REVIEW START: <note-path> :: <gate-path> ===",
             "  === PAIR REVIEW END: <note-path> :: <gate-path> ===",
-            DECISION_LINE_INSTRUCTION,
-            "- Make the decision line the last non-empty line inside each block.",
+            result_instruction,
+            "- Make the result line the last non-empty line inside each block.",
             "- End output after the final block.",
             "",
             "Requested pairs for this job:",
@@ -316,22 +332,30 @@ def render_pairs_prompt(
     )
     for note in notes:
         for gate_path in note.gate_paths:
-            lines.extend(
+            block = [PAIR_START_TEMPLATE.format(note_path=note.note_path, gate_path=gate_path)]
+            if result_kind == "verdict":
+                block.extend(
+                    [
+                        "### Summary",
+                        "<short paragraph>",
+                        "",
+                        "### Findings",
+                        "- <severity>: <finding>",
+                        "",
+                        "### Suggested Revision",
+                        "<optional; omit if not needed>",
+                    ]
+                )
+            else:
+                block.append("<the complete report shape required by the assay criterion>")
+            block.extend(
                 [
-                    PAIR_START_TEMPLATE.format(note_path=note.note_path, gate_path=gate_path),
-                    "### Summary",
-                    "<short paragraph>",
                     "",
-                    "### Findings",
-                    "- <severity>: <finding>",
-                    "",
-                    "### Suggested Revision",
-                    "<optional; omit if not needed>",
-                    "",
-                    RESULT_LINE_TEMPLATE,
+                    result_template,
                     PAIR_END_TEMPLATE.format(note_path=note.note_path, gate_path=gate_path),
                     "",
                 ]
             )
+            lines.extend(block)
 
     return "\n".join(lines)

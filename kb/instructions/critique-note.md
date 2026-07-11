@@ -1,11 +1,11 @@
 ---
-description: On-demand constructive critique of a note — build the strongest case that its central commitment is wrong, then check whether the note already answers it. Experimental, run by hand, report-only.
+description: Build the strongest case that a note's central commitment is wrong, then check whether the note already answers it; use when a caller needs a report-only adversarial assay.
 type: kb/types/instruction.md
 ---
 
 # Critique a note
 
-Experimental, run by hand. Build the strongest case that a note's central commitment is wrong, then check whether the note already answers it. This is **not a review gate** — it writes no acceptance or freshness state. Write the report; do not touch the note.
+Build the strongest case that a note's central commitment is wrong, then check whether the note already answers it. This is a report-kind assay: it completes with a critique, not a PASS/WARN/FAIL/ERROR verdict. Write the report; do not touch the note.
 
 Run it in a **fresh sub-agent** (or a different runner than wrote the note) so the critic has no sympathy for the note's framing.
 
@@ -15,9 +15,9 @@ Attack the note's central commitment in the mode its register calls for — stee
 
 Make the attack **maximally strong**: the version an informed opponent would actually make, named to a concrete stance — not a balanced "some might disagree." If the author could dismiss it in one sentence, it is not strong enough yet.
 
-## Output
+## Report shape
 
-Write to `kb/reports/critique/<note-name>.critique.md`. Mutate nothing else.
+The caller supplies the output destination and owns any surrounding protocol markers. When run through a review job, write only the caller's `bundle-output.md`; when run by hand, name a report path explicitly before dispatch. Mutate nothing else.
 
 ```markdown
 # Critique: <note title>

@@ -81,11 +81,11 @@ def capture_review_inputs(
     conn: sqlite3.Connection,
     *,
     repo_root: Path,
-    pairs: Sequence[tuple[str, str]],
+    pairs: Sequence[tuple[str, str, str]],
 ) -> CapturedReviewInputs:
     """Snapshot note/gate files and build review-pair requests from those snapshots."""
-    note_paths = sorted({note_path for note_path, _ in pairs})
-    gate_paths = sorted({gate_path for _, gate_path in pairs})
+    note_paths = sorted({note_path for note_path, _, _ in pairs})
+    gate_paths = sorted({gate_path for _, gate_path, _ in pairs})
 
     note_snapshots = {
         note_path: snapshot_file(conn, repo_root=repo_root, path=note_path)
@@ -102,10 +102,11 @@ def capture_review_inputs(
                 note_path=note_path,
                 gate_path=gate_path,
                 pair_ordinal=ordinal,
+                result_kind=result_kind,
                 reviewed_note_snapshot_id=note_snapshots[note_path].snapshot_id,
                 reviewed_gate_snapshot_id=gate_snapshots[gate_path].snapshot_id,
             )
-            for ordinal, (note_path, gate_path) in enumerate(pairs, start=1)
+            for ordinal, (note_path, gate_path, result_kind) in enumerate(pairs, start=1)
         ],
         note_texts={
             note_path: snapshot.content_text

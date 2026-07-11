@@ -31,7 +31,8 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
         help=(
             "Gate IDs (e.g. prose/source-residue), bundle names (e.g. prose), "
             "type-conformance requests (type, type/definition), and/or "
-            "collection-conformance requests (collection, collection/notes)."
+            "collection-conformance requests (collection, collection/notes), and/or "
+            "the opt-in report-kind critique assay."
         ),
     )
     parser.add_argument(

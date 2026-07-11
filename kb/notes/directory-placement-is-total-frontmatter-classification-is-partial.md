@@ -1,5 +1,5 @@
 ---
-description: "A filesystem assigns every artifact a location unconditionally, while type is opt-in and non-partitioning, so COLLECTION.md and type-spec contracts cannot substitute for each other"
+description: "Canonical paths cover every file before validation and supply locality; opt-in types supply portability. Validation can encode similar policy on either surface, but native guarantees differ."
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [document-system, type-system]
@@ -8,50 +8,42 @@ status: seedling
 
 # Directory placement is total, frontmatter classification is partial
 
-In a file-based knowledge base, the substrate places every artifact at exactly one path. Location is therefore *total*: the filesystem assigns each file a value on this axis, the values are mutually exclusive (a file lives in one directory), and there is no opt-out — a file cannot exist without a location. Location is also *spatial*: co-location creates neighborhoods that scoped search, browsing, and curated indexes operate over. The substrate enforces these properties for free — no validation, no sync.
+In a file-based knowledge base, every file has a canonical path before any parser or validator accepts it. Location is therefore *physically total*: the filesystem assigns every file a value on this axis, with no opt-out. At a chosen routing level, that location is exclusive, even though the path also lies within ancestor scopes. Location is also *spatial*: co-location creates neighborhoods for scoped search, browsing, and curated indexes. The filesystem supplies the address and neighborhood without metadata synchronization, but it does not enforce the semantic clauses attached to them.
 
-Every other axis a KB layers on — type, tags, traits, status — is *partial*. It lives in frontmatter, and frontmatter is optional: a file with no frontmatter is implicit `text`, asserting no type at all. Even when present, a type is a within-document property (this document has these sections) rather than a partition of the corpus: one type appears across many directories, and one directory holds many types, and a type's cohort is scattered — assembled only by query, never by proximity. Type *labels* documents; location *partitions* the space.
+Declared classifications, by contrast, can be optional or mandatory. In Commonplace, frontmatter is optional: the validator treats a file without it as implicit `text`, but the file declares no `type:` value. Type is therefore *partial over the physical files before validation*. A validator can require every admitted artifact to have a type, making classification total over that valid subset. But this is an additional enforcement rule, not a property of the file substrate. Even when present, a type describes a document's structure rather than its canonical neighborhood: one type can appear across many directories, one directory can hold many types, and queries assemble the type's cohort. In this configuration, type *labels* documents while location *partitions* the physical space.
 
 ## Why the asymmetry matters
 
-Because location is total and type is partial, the two contracts keyed to them cannot substitute for each other.
+These surfaces have different native guarantees, not different expressive powers. A policy can be encoded in a directory contract, a required field, a type, or a convention. Moving it between surfaces, however, changes when it applies, how failure appears, and what neighborhood it creates.
 
-The **location contract** is the [collection](../reference/definitions/collection.md)'s `COLLECTION.md` — it governs by position. Because position is the one thing every artifact in a subtree shares unconditionally, a location contract can bind the whole subtree, including files that carry no type. This is why the [register](./definitions/text-contract.md) (the theoretical, descriptive, or prescriptive quality goal), the linking policy, and the scope attach to a collection — a directory — and not to a type: they must hold for every artifact in the region whether or not it opted into a type.
+The **location contract** is the [collection](../reference/definitions/collection.md)'s `COLLECTION.md`; position selects it. The path identifies the applicable contract before the document cooperates, including for files with missing or malformed frontmatter. Agents, reviews, or validators must still enforce the contract's semantic clauses. Commonplace places the [text contract](./definitions/text-contract.md)—quality goal, linking policy, and scope—on this surface because those clauses are intended to cover every file in the region.
 
-The **type contract** is the type-spec — it governs by structure: schema, required sections, frontmatter fields. It binds only the documents that declare that type, and says nothing about where they live. A `structured-claim` has the same shape in `kb/notes/` or `kb/reference/`.
+The **type contract** is the type-spec; a declaration selects it. It governs structure: schema, required sections, and frontmatter fields. In an opt-in system, it applies only to documents that declare the type. The declaration is portable, however: the same global type can retain its shape when the document moves between collections.
 
-Neither can be expressed as the other:
+Translating a clause between the surfaces does not preserve their native guarantees:
 
-- You cannot encode "everything here is theoretical register" as a type. Types do not partition the corpus, and untyped files would escape the rule entirely; only a location contract reaches every file in the subtree.
-- You cannot encode "this document has Evidence and Reasoning sections" as a location. Many structures coexist in one directory and the same structure recurs across directories; only a type contract travels with the document.
+- A mandatory type can encode "every valid artifact is theoretical," but a missing or malformed declaration escapes the rule until validation. The resulting cohort also has no canonical neighborhood unless another mechanism builds one.
+- A dedicated directory can encode "everything routed here has Evidence and Reasoning sections," but doing so spends that directory level on shape, prevents other shapes from sharing the same immediate neighborhood, and changes the structural obligation when the document moves.
 
-The independence of the two axes is not a coincidence of the current design — it follows from location being total and type being partial. That asymmetry is the mechanism behind the older observation that types and directories are orthogonal.
+In Commonplace's opt-in type model, `COLLECTION.md` and a type-spec are therefore not interchangeable without changes to the enforcement and routing model. This asymmetry explains the older observation that types and directories are orthogonal.
 
 ## An assignment rule, not an identification
 
-Nothing forces the directory tree to carry the collection/register semantics. A KB that routes kind-first can spend its directory tree on type — a `decisions/` folder — and it then gets totality for kind while content area becomes a declared, partial axis. Which classification receives the substrate's free enforcement is a design choice. The rule is: assign the directory tree to the classification that needs its properties —
+Nothing forces the directory tree to carry collection or text-contract semantics. A KB that routes kind-first can spend its directory tree on type—a `decisions/` folder—and gain pre-validation coverage and neighborhood for kind while declaring content area elsewhere. Choosing which classification receives the substrate's native properties is a design decision. Assign the directory tree to the classification that needs:
 
-- **totality**, for clauses that must bind artifacts before or without their cooperation: admission and routing ("what belongs here"), rules that hold for untyped and malformed files;
-- **exclusivity**, for properties that cannot be coherently conjoined: a single quality goal, a single maintenance regime;
+- **pre-validation coverage**, for admission and routing rules that must select a contract even for untyped or malformed files;
+- **canonical exclusivity**, when one primary classification is needed at a particular routing level, while allowing contracts on ancestor scopes to compose;
 - **neighborhood**, for clauses about relations among artifacts: link vocabulary, duplicate policy, browse order, index membership.
 
-Classifications that need portability instead — obligations that should travel with an artifact wherever it lives — go on declared axes, whatever the assignment.
+Classifications that instead need portability—obligations that should travel with an artifact wherever it lives—fit declared axes. Validation can make such an axis mandatory and total over admitted artifacts, but it adds an enforcement dependency. It also does not select a value for malformed files before the check runs.
 
-The two assignments compose within one tree. In Commonplace, `kb/reference/adr/` is a type-shaped subdirectory inside a collection: the ADR type-spec carries the portable shape contract, but ADRs also need a neighborhood — a numbered, browsable decision log — so the type claims directory real estate at the level where it needs spatial properties, while admission to `kb/reference/` remains the collection's clause. Both axes take directories, each for the property it lacks elsewhere.
+The assignments can compose within one tree: Commonplace gives ADRs a browsable subdirectory neighborhood inside `kb/reference/`, while their type-spec carries the structural contract and the surrounding collection retains its text contract.
 
-## Co-placement: guarantee containment
-
-Contract clauses reference each other, and that couples their placement: **a clause that consumes another clause's guarantee must have its scope contained in the guarantor's.** A link grammar promising that `since [title](./x.md)` reads as prose consumes a guarantee about link targets' titles; the grammar quantifies over the whole collection (any artifact may cite any other), so the title convention must quantify over at least the same set — stated at the collection level with typed exceptions declared where the grammar can see them, not scattered across type specs. The failure signature is a location-wide mechanism silently depending on a kind-scoped guarantee: sound for today's artifacts, broken by the first artifact of another type.
-
-## Consequences
-
-- **Two independent operations.** Moving a file changes which location contract governs it; editing its frontmatter type changes which type contract governs its structure. Because the axes are independent, the two operations never have to happen together.
-- **Register lives at the collection, not the type.** Commonplace assigns the total axis to content area, so the register — a quality goal that must bind every local artifact and cannot be conjoined with a second one — is a property of place. A `note` reads as theoretical in `kb/notes/` and descriptive in `kb/reference/` precisely because the collection, not the type, carries the register.
-- **The tree's totality is spent on one classification.** Whatever receives it, every classification layered in frontmatter is declared and partial. A design that wants another total axis must simulate it with validation — a checked, mandatory field — and accepts that the substrate no longer enforces it for free.
+Moving a file and changing its declared type remain distinct edits, though admission or cross-contract constraints can require both in one valid transition.
 
 ## Scope
 
-The claim is about file-based KBs, where the substrate forces a unique path per artifact. In a database-backed store the total axis need not be a tree: a primary key is total but flat, and several total partitions can coexist (any NOT NULL column). The directory tree's specialness is a property of the file substrate, not of knowledge bases in general. Overlay mechanisms — symlinks, hardlinks, generated views — deliberately weaken exclusivity; where a KB uses them, the totality claims apply to the canonical location, and the overlay is a derived copy.
+The claim concerns canonical placement in a file-based corpus before validation. A database can make several classification fields mandatory without giving any of them tree locality; filesystem overlays require the KB to designate one canonical location. The claim does not imply that directory contracts enforce their own semantics or that declared metadata cannot be mandatory. It means only that those guarantees come from additional machinery rather than physical placement.
 
 ---
 
@@ -61,4 +53,4 @@ Relevant Notes:
 - [why notes have types](./why-notes-have-types.md) — grounds: establishes that type is opt-in and free-form, the premise that makes type partial rather than total
 - [a knowledge base holds theories, descriptions, and prescriptions](./a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md) — extends: the content-layer role that collection and type jointly identify, here explained by register attaching to the total axis
 - [a universal knowledge framework demotes content taxonomies to defaults and keeps answerability](./a-universal-knowledge-framework-demotes-content-taxonomies-to-defaults.md) — grounds: what stays universal is what derives from the consumer or substrate, which licenses treating file-substrate properties as framework-level claims
-- [042-Register becomes a default profile under open-ended text contracts](../reference/adr/042-register-becomes-a-default-profile-under-open-ended-text-contracts.md) — derived-from: the decision whose contract-decomposition rule (placement by quantifier across surfaces) this claim generalizes
+- [042-Register becomes a default profile under open-ended text contracts](../reference/adr/042-register-becomes-a-default-profile-under-open-ended-text-contracts.md) — derived-from: the originating Commonplace application of placement by quantifier, not independent evidence for this substrate claim

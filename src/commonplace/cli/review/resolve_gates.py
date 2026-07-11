@@ -19,8 +19,8 @@ import sys
 from pathlib import Path
 
 from commonplace.lib import frontmatter
-from commonplace.review.paths import review_gates_dir
-from commonplace.review.resolve_gates import resolve_to_gate_ids
+from commonplace.review.paths import gate_path_for_id, review_gates_dir
+from commonplace.review.resolve_gates import resolve_gate_requests
 
 
 def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
@@ -37,7 +37,7 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     repo_root = cwd if cwd is not None else Path.cwd()
     gates_dir = review_gates_dir(repo_root)
     try:
-        gate_ids = resolve_to_gate_ids(args.gates, gates_dir)
+        gate_ids = resolve_gate_requests(args.gates, gates_dir)
     except (FileNotFoundError, ValueError) as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 1
@@ -47,7 +47,7 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
         return 1
 
     for gate_id in gate_ids:
-        gate_file = gates_dir / f"{gate_id}.md"
+        gate_file = repo_root / gate_path_for_id(repo_root, gate_id)
         gate_text = frontmatter.strip(gate_file.read_text(encoding="utf-8")).lstrip("\n")
         print(f"=== gate: {gate_id} ===")
         print(gate_text)

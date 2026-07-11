@@ -48,12 +48,16 @@ CREATE TABLE IF NOT EXISTS review_pairs (
     note_path TEXT NOT NULL,
     gate_path TEXT NOT NULL,
     pair_ordinal INTEGER NOT NULL,
+    result_kind TEXT NOT NULL CHECK (
+        result_kind IN ('verdict', 'report')
+    ),
     decision TEXT CHECK (
         decision IN ('pass', 'warn', 'fail', 'error')
     ),
     reviewed_note_snapshot_id INTEGER REFERENCES review_file_snapshots(snapshot_id),
     reviewed_gate_snapshot_id INTEGER REFERENCES review_file_snapshots(snapshot_id),
     reviewed_at TEXT,
+    CHECK (result_kind = 'verdict' OR decision IS NULL),
     UNIQUE (review_job_id, note_path, gate_path),
     UNIQUE (review_job_id, pair_ordinal)
 );
@@ -89,7 +93,9 @@ SELECT
     gate_snapshot.content_sha256 AS accepted_gate_hash,
     note_snapshot.content_text AS accepted_note_text,
     gate_snapshot.content_text AS accepted_gate_text,
-    e.accepted_at
+    e.accepted_at,
+    rp.result_kind,
+    rp.decision
 FROM acceptance AS e
 JOIN review_pairs AS rp
   ON rp.review_pair_id = e.accepted_review_pair_id
@@ -103,7 +109,8 @@ LEFT JOIN review_file_snapshots AS note_snapshot
 LEFT JOIN review_file_snapshots AS gate_snapshot
   ON e.accepted_gate_snapshot_id = gate_snapshot.snapshot_id
 WHERE j.status = 'completed'
-  AND rp.decision IS NOT NULL;
+  AND rp.reviewed_at IS NOT NULL
+  AND (rp.result_kind = 'report' OR rp.decision IS NOT NULL);
 
 -- Query pattern expected for selector:
 --

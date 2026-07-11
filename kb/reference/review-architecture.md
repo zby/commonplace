@@ -29,27 +29,27 @@ The persisted unit is a `review_pairs` row inside one `review_jobs` row. A job's
 
 ## Data model
 
-SQLite database, default location `kb/reports/review-store.sqlite`; override with `COMMONPLACE_REVIEW_DB` or a command-specific `--db`. `review_schema.py` owns current-schema setup and integrity checks; the store is schema-current and recreated rather than migrated in place.
+SQLite database, default location `kb/reports/review-store.sqlite`; override with `COMMONPLACE_REVIEW_DB` or a command-specific `--db`. `review_schema.py` owns current-schema setup and integrity checks. Schema v4 stores are upgraded in place by `scripts/migrate-review-db-v4-to-v5.py`; other version mismatches are refused.
 
 | Table | Contents |
 |---|---|
 | `review_jobs` | One review invocation: model partition, nullable runner/model/effort provenance, status, packing (`note`/`gate`), `created_at`, nullable `completed_at`, telemetry, failure context |
-| `review_pairs` | One requested `(note_path, gate_path)` pair inside a job: decision and reviewed note/gate snapshot IDs; derives `model_partition` from its parent job |
+| `review_pairs` | One requested `(note_path, gate_path)` pair inside a job: persisted `result_kind` (`verdict`/`report`), nullable decision, and reviewed note/gate snapshot IDs; derives `model_partition` from its parent job |
 | `review_file_snapshots` | Role-neutral snapshots by `(path, content_sha256)`, storing exact UTF-8 text when it must be reusable for prompt rendering or diffing |
 | `acceptance` | Current accepted baseline per `(note_path, gate_path, model_partition)`; `accepted_review_pair_id` points at review evidence and accepted snapshot IDs pin note/gate text |
 
 Artifact paths — prompt, bundle output, manifest, and per-pair result files — are **derived**, not stored columns. Each per-pair result filename (`pair-{ordinal}-{stem}.md`) is a pure function of that pair's own row (`pair_ordinal` plus the packing-varying path stem), never of sibling pairs, so inline pruning of superseded sibling pairs cannot change a surviving pair's path.
 
-The `current_gate_acceptances` view exposes accepted state per `(note_path, gate_path, model_partition)` key by joining `acceptance` through `review_pairs` and `review_jobs`, after filtering to completed jobs with non-null pair decisions. This filter is the evidence boundary — acceptance rows from non-completed jobs never surface as freshness.
+The `current_gate_acceptances` view exposes accepted state per `(note_path, gate_path, model_partition)` key by joining `acceptance` through `review_pairs` and `review_jobs`. It requires a completed job and per-kind pair completion: a verdict pair has `reviewed_at` plus a decision; a report pair has `reviewed_at` and a null decision. This filter is the evidence boundary — acceptance rows from non-completed jobs never surface as freshness.
 
 ### Canonical state vs derived output
 
 The DB is the source of truth; human-readable markdown is derived.
 
-- `review_pairs.decision` is a lowercase enum: `pass`, `warn`, `fail`, `error`. `review_jobs.status` is a lowercase enum: `queued`, `completed`, `failed`. The Python layer assigns both.
+- `review_pairs.result_kind` is `verdict` or `report`. Verdict decisions use the lowercase enum `pass`, `warn`, `fail`, `error`; report pairs keep `decision` null. `review_jobs.status` is `queued`, `completed`, or `failed`.
 - `created_at` is when the job row and prompt inputs were prepared. Runner provenance is optional and recorded during finalization.
 - The review **body** is not in the DB. The finalizer writes it to the per-pair result file (at the derived result path) from the parsed `bundle-output.md`; the DB stores only the pair `decision`. `MANIFEST.json` is reconstructed from DB rows and holds no prose. Only the manifest is reproducible from the DB alone.
-- Stored gate review prose ends each pair block with exactly one parseable `## Result: PASS|WARN|FAIL|ERROR` line. Aliases such as `Verdict`, `Outcome`, `INFO`, `OK`, and `UNKNOWN` are invalid in live finalization output.
+- Verdict output ends with one parseable `## Result: PASS|WARN|FAIL|ERROR`; report output ends with `## Result: REPORT`. Finalization parses against the pair's persisted kind and rejects the other class's marker.
 
 ### Freshness mechanism
 
@@ -66,8 +66,8 @@ The two-input shape is also the growth path: the default answer to a new review 
 ### Selection and gates
 
 - `review_target_selector.py` lists stale or requested applicable `(note, gate)` pairs. Read-only.
-- `resolve_gates.py` expands bundle names into gate ids and filters gates by note type and traits. It owns the single definition of `--all-gates` shared by every review command: all catalog gates plus the virtual `type` and `collection` requests.
-- `paths.py` resolves the active gate catalog and translates between gate ids and repo-relative gate paths, including the virtual `type/{name}` lens for type-spec gate paths and the `collection/{path}` lens for COLLECTION.md gate paths.
+- `resolve_gates.py` expands bundle names into gate ids and filters gates by note type and traits. It owns the single definition of `--all-gates`: all catalog gates plus virtual `type` and `collection`; the heavyweight report-kind `critique` assay remains opt-in.
+- `paths.py` resolves the active gate catalog and translates between gate ids and repo-relative gate paths, including virtual type, collection, and critique identities.
 - `type_conformance.py` owns the second gate source ([ADR 038](./adr/038-type-conformance-reviews-use-the-type-spec-as-the-gate.md)): type-conformance pairs whose gate side is the type spec named by the note's `type:` frontmatter. Pairs derive from note frontmatter, not from catalog listing plus `requires_type` filtering; the persisted gate identity is the type-spec repo path, and everything downstream of pair derivation (snapshots, freshness, acceptance, ack, finalization) is unchanged.
 - `collection_conformance.py` owns the third gate source ([ADR 041](./adr/041-collection-conformance-reviews-use-collection-md-as-the-gate.md)): collection-conformance pairs whose gate side is the `COLLECTION.md` of the nearest collection containing the note. Pairs derive from note location; the persisted gate identity is the COLLECTION.md repo path, and everything downstream is the same unchanged machinery.
 
@@ -83,7 +83,7 @@ The two-input shape is also the growth path: the default answer to a new review 
 - `protocol/format.py` defines pair sentinels and render-time reserved-text checks.
 - `protocol/prompt.py` renders canonical review prompts from captured text; conformance gates (type spec, COLLECTION.md) are the exception, rendered as a mechanical wrapper referencing the dependency document's repo path for the worker to read. In file-output mode, the prompt instructs a worker to write exactly the job's derived `bundle_output_path`.
 - `protocol/parser.py` parses sentinel-bracketed pair output. Structural anomalies, missing expected pairs, duplicates, and malformed result footers fail the whole job.
-- `protocol/decisions.py` strictly accepts exactly one final `## Result: PASS|WARN|FAIL|ERROR` line per pair block.
+- `protocol/decisions.py` strictly accepts the one final result marker allowed by the persisted pair kind: a verdict enum or `REPORT`.
 - `finalization.py` is the public library operation behind `commonplace-finalize-review-job`. It loads derived job output, validates optional runner/model/effort provenance, parses the bundle, and — only after all parse and coverage preflight passes — writes result files, completes pair rows, upserts acceptance, prunes superseded review rows/snapshots, and marks the job completed. Result-file write failures roll back and fail the job in a separate transaction; artifact-dir cleanup and `MANIFEST.json` refresh run after DB completion, with failures reported as non-fatal warnings.
 
 ### State and maintenance
