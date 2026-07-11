@@ -9,6 +9,8 @@ Experimental, run by hand. When an LLM denoises a rough idea into fluent prose, 
 
 Run it in a **fresh sub-agent**, a different runner than wrote the note, so the checker has no sympathy for the note's framing. Separation is what gives the check teeth: the same generator that wrote smoothly over a gap will read smoothly over it too.
 
+The caller owns reviewer lifecycle. After the report has been written and verified, close, terminate, or release the checker with the harness lifecycle operation. The checker is a single-use context and must not receive follow-up work.
+
 ## The hard rule
 
 Do **not** emit an overall "consistent / not consistent" verdict, and do not pass or accept the note. A fluent self-grade is exactly the false signal this gate exists to replace — a green check that means nothing is worse than none. The only product is **routed attention**: the surviving contradiction (if any) and a ranked list of the thinnest joints, for a human to judge.

@@ -29,7 +29,7 @@ For each note in the queue, launch a sub-agent with a prompt to:
 
 > Run `kb/instructions/fix-warnings/fix-review-warnings.md` on `{note-path}`
 
-Multiple sub-agents can run in parallel since each note's fixes are independent.
+Multiple sub-agents can run in parallel since each note's fixes are independent. After each worker returns, verify its note changes and report, then close, terminate, or release that worker before dispatching more work. Workers are single-use; do not send follow-up tasks.
 
 ### 3. Report
 

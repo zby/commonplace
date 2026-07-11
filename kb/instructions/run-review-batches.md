@@ -83,7 +83,7 @@ Each returned job is one review batch for this procedure. Do not invent, merge, 
 
 ## Delegate jobs
 
-Launch one sub-agent per returned job, subject to the harness's concurrency limit. If there are more jobs than available workers, queue the remaining jobs and launch them as workers finish.
+Launch one sub-agent per returned job, subject to the harness's concurrency limit. If there are more jobs than available workers, queue the remaining jobs and launch them as workers finish and are closed.
 
 Launch workers on the inherited orchestrator model (do not override it), so the model actually run matches the partition chosen at selection. The parent cannot observe which concrete model a sub-agent ran, so it must not record provenance from its own inference: require each worker to report its own exact model ID and reasoning effort when the environment states them, and finalize the job with the reported values. `build_model_partition(reported_model, reported_effort)` must equal the job's `model_partition`; a mismatch means inheritance did not hold. The worker only reports these; it never runs finalization or any other bookkeeping command. If a worker cannot report a concrete model, mark the model as unknown for that job and finalize with only `--runner`.
 
@@ -103,6 +103,8 @@ Also return your exact model ID and reasoning effort, copied verbatim from the e
 ```
 
 The sub-agent owns only its `bundle_output_path`. The parent owns job creation, dispatch bookkeeping, worker scheduling, finalization, verification, and reporting.
+
+After a worker returns, verify that its `bundle_output_path` exists and is non-empty, then close, terminate, or release that worker with the harness's lifecycle operation before scheduling another worker. If the harness exposes stop/interrupt rather than close, use it after the output is safely on disk. Workers are single-use contexts: do not send follow-up tasks or retain them for later jobs.
 
 ## Finalize completed jobs
 

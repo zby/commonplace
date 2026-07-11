@@ -81,7 +81,7 @@ A specialized sub-procedure for description-field warnings from `commonplace-val
 Instruction: `kb/instructions/fix-warnings/fix-review-warnings-sweep.md`
 
 1. `commonplace-warn-selector --json` — build priority queue (sorted by finding count descending)
-2. Delegate per-note fixes to sub-agents (can run in parallel)
+2. Delegate per-note fixes to single-use sub-agents (can run in parallel); after verifying each worker's edits and report, close, terminate, or release it before dispatching more work
 3. Report: fixed by strategy, deferred items, new patterns
 4. If new patterns recur (3+ instances), propose adding to the taxonomy
 

@@ -5,9 +5,11 @@ type: kb/types/instruction.md
 
 # Critique a note
 
-Build the strongest case that a note's central commitment is wrong, then check whether the note already answers it. This is a report-kind assay: it completes with a critique, not a PASS/WARN/FAIL/ERROR verdict. Write the report; do not touch the note.
+Build the strongest case that a note's central commitment is wrong, then check whether the note already answers it. This is an open-ended, report-kind assay: it completes with a critique, not a PASS/WARN/FAIL/ERROR verdict. Write the report; do not touch the note.
 
 Run it in a **fresh sub-agent** (or a different runner than wrote the note) so the critic has no sympathy for the note's framing.
+
+The caller owns reviewer lifecycle. After the report has been written and verified, close, terminate, or release the critic with the harness lifecycle operation. The critic is a single-use context and must not receive follow-up work.
 
 ## The critique
 

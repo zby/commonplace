@@ -134,7 +134,7 @@ If the system has no reachable source code, stop and write a lightweight note in
    Report: your commonplace-validate result and whether trace-derived learning applies.
    ```
 
-   The parent owns checkout, archive moves, curated index edits, taxonomy QA, semantic QA, and the final report — none of that is the worker's concern.
+   The parent owns checkout, archive moves, curated index edits, taxonomy QA, semantic QA, and the final report — none of that is the worker's concern. After verifying the worker-owned draft and validation result, close, terminate, or release the drafting worker; do not retain it for semantic QA or any follow-up task.
 
 9. **Update the README only if needed.** Only edit `kb/agent-memory-systems/README.md` when:
    - the system was named in the `## Coverage` "Review backlog" callout — remove it there, or

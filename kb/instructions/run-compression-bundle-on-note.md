@@ -25,17 +25,22 @@ Use these criterion files, in this order:
 
 Do not route these criteria through selectors or review jobs. Do not write review DB state or invoke acknowledgement or ingestion commands.
 
+## Roles
+
+The **orchestrator** prepares the reviewer packet, dispatches one fresh reviewer, and verifies the report. The **reviewer** applies the packet and writes the report. Only the orchestrator dispatches: if a caller has already handed you the target text, criterion packet, output path, and output contract as a review task, you are the fresh reviewer. Perform the review directly and do not start another sub-agent.
+
 ## Procedure
 
 1. Read the target note.
 2. Read the four criterion files above.
 3. Concatenate the criterion definitions into a reviewer packet. Preserve each file's `gate_id`, name, failure mode, test, and examples; `gate_id` is part of this bundle's report vocabulary, not a persisted review identity.
-4. Start a fresh sub-agent and give it:
+4. As the orchestrator, start one fresh sub-agent and give it:
    - the target note path and full note text;
    - the concatenated gate packet;
+   - `{output-path}`;
    - the output contract below.
-5. Ask the sub-agent to apply every criterion independently. It should not edit the note.
-6. Save the returned Markdown report to `{output-path}`.
+5. As the dispatched reviewer, apply every criterion independently and write only `{output-path}`. Do not edit the note or delegate the review again.
+6. As the orchestrator, verify that `{output-path}` exists and follows the output contract, then close, terminate, or release the reviewer with the harness's lifecycle operation. Do not retain it for a follow-up task.
 
 ## Output Contract
 

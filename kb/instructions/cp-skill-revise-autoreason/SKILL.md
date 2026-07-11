@@ -71,7 +71,7 @@ For each actor prompt below:
 - In each actor prompt, keep the requested file path explicit. If the actor cannot write that path in the parent workspace, it must return the complete artifact content instead of a summary.
 - After each actor returns, use this handoff rule before verification: if the requested file exists and is non-empty in the parent workspace, continue; if it is missing but the actor returned the complete artifact, write that exact content to the requested path; if it is missing and the actor returned only a path or summary, rerun that actor once with the same prompt plus `Do not write a file; return the complete artifact content in your final response.`
 - Wait for dependent actors in order: critic, B author, synthesizer, post-candidate auditor. Run parent-side hard-constraint checks before spawning downstream actors that depend on a generated candidate. Run the three judges in parallel when the harness supports it.
-- Close finished sub-agents when the harness requires explicit cleanup.
+- After each actor returns and its handoff is verified, close, terminate, or release that sub-agent with the harness lifecycle operation. Actors are single-use: never retain one for another role, pass, rerun, or follow-up. Close all three judges after collecting their outputs and before aggregation.
 
 ### Claim-Revision Sidecar
 
