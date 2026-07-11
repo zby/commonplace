@@ -488,7 +488,10 @@ Terms are undefined.
         prepare_grouped_review_job(
             repo_root=repo,
             db_path=db_path,
-            pairs=[("kb/notes/first.md", GATE_PATH), ("kb/notes/second.md", GATE_PATH)],
+            pairs=[
+                ("kb/notes/first.md", GATE_PATH, "verdict"),
+                ("kb/notes/second.md", GATE_PATH, "verdict"),
+            ],
             packing="note",
             runner=None,
             model_partition="test-model",

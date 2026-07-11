@@ -37,6 +37,7 @@ def insert_completed_pair(
                 note_path=note_path,
                 gate_path=gate_path,
                 pair_ordinal=1,
+                result_kind="verdict",
                 reviewed_note_snapshot_id=reviewed_note_snapshot_id,
                 reviewed_gate_snapshot_id=reviewed_gate_snapshot_id,
             )

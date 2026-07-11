@@ -239,8 +239,8 @@ class StaleGate:
     note_path: str
     gate_path: str
     reason: str
+    result_kind: str
     diff: str | None = None
-    result_kind: str = "verdict"
 
     @property
     def gate_id(self) -> str:

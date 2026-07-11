@@ -75,8 +75,8 @@ def test_result_kind_parser_enforces_pair_contract() -> None:
     assert parsed.reviews[pair].result_kind == "report"
     assert parsed.canonical_texts[pair].endswith("## Result: REPORT\n")
 
-    with pytest.raises(ValueError, match="invalid result signal"):
-        parse_pair_bundle(report_bundle(), expected_pairs=[pair])
+    with pytest.raises(ValueError, match="result-kind contract mismatch"):
+        parse_pair_bundle(report_bundle(), expected_pairs=[pair], result_kinds={})
     with pytest.raises(ValueError, match="verdict result is invalid"):
         parse_pair_bundle(
             report_bundle().replace("REPORT", "PASS"),

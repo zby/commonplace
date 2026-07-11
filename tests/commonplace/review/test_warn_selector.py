@@ -69,6 +69,7 @@ def seed_warn_review(repo: Path, db_path: Path) -> None:
                     note_path="kb/notes/sample.md",
                     gate_path=GATE_PATH,
                     pair_ordinal=1,
+                    result_kind="verdict",
                     reviewed_note_snapshot_id=note_snapshot.snapshot_id,
                     reviewed_gate_snapshot_id=gate_snapshot.snapshot_id,
                 )

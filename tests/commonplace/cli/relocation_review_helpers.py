@@ -86,6 +86,7 @@ def seed_accepted_review(repo_root: Path, db_path: Path, *, note_path: str) -> i
                     note_path=note_path,
                     gate_path=GATE_PATH,
                     pair_ordinal=1,
+                    result_kind="verdict",
                     reviewed_note_snapshot_id=note_snapshot.snapshot_id,
                     reviewed_gate_snapshot_id=gate_snapshot.snapshot_id,
                 )

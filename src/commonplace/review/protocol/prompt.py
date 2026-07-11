@@ -173,9 +173,9 @@ def render_pairs_prompt(
     *,
     notes: Sequence[NoteReviewTarget],
     gate_texts: dict[str, str],
+    result_kind: str,
     output_mode: OutputMode = "stdout",
     bundle_output_path: str | None = None,
-    result_kind: str = "verdict",
 ) -> str:
     _validate_targets(notes, gate_texts)
     gate_paths = sorted({gate_path for note in notes for gate_path in note.gate_paths})

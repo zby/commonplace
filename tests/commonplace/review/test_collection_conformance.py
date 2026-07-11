@@ -410,6 +410,7 @@ class TestPromptWrapper:
                 )
             ],
             gate_texts={"kb/notes/COLLECTION.md": "# Writing conventions\n\nUse claim titles."},
+            result_kind="verdict",
         )
         assert "=== gate: kb/notes/COLLECTION.md ===" in prompt
         assert "This is a collection-conformance gate." in prompt
@@ -428,6 +429,7 @@ class TestPromptWrapper:
                 )
             ],
             gate_texts={},
+            result_kind="verdict",
         )
         assert "Read `kb/notes/COLLECTION.md` (repo-relative)" in prompt
 
@@ -442,6 +444,7 @@ class TestPromptWrapper:
                 )
             ],
             gate_texts={"kb/instructions/review-gates/prose/source-residue.md": "## Failure mode\n\nFixture."},
+            result_kind="verdict",
         )
         assert "This is a collection-conformance gate." not in prompt
         assert "- Exception: collection-conformance gates reference" not in prompt
@@ -457,6 +460,7 @@ class TestPromptWrapper:
                 )
             ],
             gate_texts={},
+            result_kind="verdict",
         )
         assert "type-conformance pair's job" in prompt
 

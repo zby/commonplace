@@ -93,13 +93,30 @@ def parse_pair_bundle(
     bundle_markdown: str,
     *,
     expected_pairs: Sequence[PairKey],
-    result_kinds: dict[PairKey, str] | None = None,
+    result_kinds: dict[PairKey, str],
 ) -> ParsedPairBundle:
+    expected = set(expected_pairs)
+    contracted = set(result_kinds)
+    if contracted != expected:
+        details: list[str] = []
+        missing = expected - contracted
+        unexpected = contracted - expected
+        if missing:
+            details.append(
+                "missing " + ", ".join(f"{note} :: {gate}" for note, gate in sorted(missing))
+            )
+        if unexpected:
+            details.append(
+                "unexpected "
+                + ", ".join(f"{note} :: {gate}" for note, gate in sorted(unexpected))
+            )
+        raise ValueError(f"result-kind contract mismatch: {'; '.join(details)}")
+
     extracted = extract_pair_reviews(bundle_markdown, expected_pairs=expected_pairs)
     canonical_texts: dict[PairKey, str] = {}
     reviews: dict[PairKey, ParsedPairReview] = {}
     for pair, review_text in extracted.items():
-        result_kind = (result_kinds or {}).get(pair, "verdict")
+        result_kind = result_kinds[pair]
         if result_kind == "verdict":
             decision = parse_review_decision(review_text)
             canonical_text = rewrite_review_result_footer(review_text, decision=decision)

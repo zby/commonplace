@@ -33,6 +33,7 @@ def test_render_pairs_prompt_multi_note_shares_gate_and_lists_pairs() -> None:
             make_target("kb/notes/second.md", 102, note_text="# Second note\n\nAnother note with no links."),
         ],
         gate_texts={GATE: GATE_TEXT},
+        result_kind="verdict",
     )
 
     assert "Evaluate each note independently." in prompt
@@ -56,6 +57,7 @@ def test_render_pairs_prompt_single_note_shares_note_across_gates() -> None:
     prompt = render_pairs_prompt(
         notes=[make_target("kb/notes/only.md", 7, gate_paths=("lens/alpha", "lens/beta"))],
         gate_texts={"lens/alpha": "Alpha gate.", "lens/beta": "Beta gate."},
+        result_kind="verdict",
     )
 
     assert "Evaluate each note independently." not in prompt
@@ -68,6 +70,7 @@ def test_render_pairs_prompt_file_output_mode_names_destination() -> None:
     prompt = render_pairs_prompt(
         notes=[make_target("kb/notes/only.md", 7)],
         gate_texts={GATE: GATE_TEXT},
+        result_kind="verdict",
         output_mode="file",
         bundle_output_path="kb/reports/bundle-reviews/review-job-7/bundle-output.md",
     )
@@ -86,6 +89,7 @@ def test_render_pairs_prompt_rejects_sentinel_in_note_text() -> None:
                 )
             ],
             gate_texts={GATE: GATE_TEXT},
+            result_kind="verdict",
         )
 
 
@@ -94,6 +98,7 @@ def test_render_pairs_prompt_rejects_pair_separator_in_ids() -> None:
         render_pairs_prompt(
             notes=[make_target("kb/notes/a :: b.md", 1)],
             gate_texts={GATE: GATE_TEXT},
+            result_kind="verdict",
         )
 
 
@@ -102,6 +107,7 @@ def test_render_pairs_prompt_rejects_missing_gate_text() -> None:
         render_pairs_prompt(
             notes=[make_target("kb/notes/only.md", 1, gate_paths=("lens/unknown",))],
             gate_texts={},
+            result_kind="verdict",
         )
 
 
@@ -200,6 +206,11 @@ def test_parse_pair_bundle_parses_decisions_and_reports_missing() -> None:
             ("kb/notes/second.md", GATE),
             ("kb/notes/third.md", GATE),
         ],
+        result_kinds={
+            ("kb/notes/first.md", GATE): "verdict",
+            ("kb/notes/second.md", GATE): "verdict",
+            ("kb/notes/third.md", GATE): "verdict",
+        },
     )
     assert parsed.reviews[("kb/notes/first.md", GATE)].decision == "warn"
     assert parsed.reviews[("kb/notes/second.md", GATE)].decision == "pass"
@@ -213,7 +224,8 @@ No undefined terms found.
 ## Result: PASS
 === PAIR REVIEW END: kb/notes/first.md :: {GATE} ===
 """
-    parsed = parse_pair_bundle(bundle, expected_pairs=[("kb/notes/first.md", GATE)])
+    pair = ("kb/notes/first.md", GATE)
+    parsed = parse_pair_bundle(bundle, expected_pairs=[pair], result_kinds={pair: "verdict"})
     canonical = parsed.canonical_texts[("kb/notes/first.md", GATE)]
     assert canonical.rstrip("\n").endswith("## Result: PASS")
 
@@ -226,4 +238,5 @@ Verdict: PASS
 === PAIR REVIEW END: kb/notes/first.md :: {GATE} ===
 """
     with pytest.raises(ValueError, match="invalid result signal"):
-        parse_pair_bundle(bundle, expected_pairs=[("kb/notes/first.md", GATE)])
+        pair = ("kb/notes/first.md", GATE)
+        parse_pair_bundle(bundle, expected_pairs=[pair], result_kinds={pair: "verdict"})

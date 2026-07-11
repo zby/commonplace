@@ -145,6 +145,7 @@ def seed_snapshot_acceptance(
                     note_path=note_path,
                     gate_path=gate_path,
                     pair_ordinal=1,
+                    result_kind="verdict",
                     reviewed_note_snapshot_id=note_snapshot.snapshot_id,
                     reviewed_gate_snapshot_id=gate_snapshot.snapshot_id,
                 )

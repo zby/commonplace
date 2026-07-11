@@ -28,6 +28,7 @@ def _insert_completed_job(
                 note_path=note_path,
                 gate_path=source_gate_path(gate_id),
                 pair_ordinal=ordinal,
+                result_kind="verdict",
             )
             for ordinal, gate_id in enumerate(gate_ids, start=1)
         ],
@@ -161,6 +162,7 @@ def _insert_completed_gate_packed_job(
                 note_path=note_path,
                 gate_path=gate_path,
                 pair_ordinal=ordinal,
+                result_kind="verdict",
             )
             for ordinal, note_path in enumerate(note_paths, start=1)
         ],

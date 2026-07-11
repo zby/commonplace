@@ -128,7 +128,7 @@ class ReviewPairRequest:
     note_path: str
     gate_path: str
     pair_ordinal: int
-    result_kind: str = "verdict"
+    result_kind: str
     reviewed_note_snapshot_id: int | None = None
     reviewed_gate_snapshot_id: int | None = None
 
