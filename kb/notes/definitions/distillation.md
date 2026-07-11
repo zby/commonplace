@@ -41,7 +41,7 @@ Distillation changes shape. Content may be selected, reorganized, reframed, comp
 
 Targeting usually loses information, so a distillate does not replace its source for every purpose. A skill may preserve the steps needed to run a workflow while omitting the rationale, alternatives, and failed approaches needed to adapt that workflow to a novel situation.
 
-A distillate can also look adequate while quietly losing behavioral influence: compressed experience is often less active than the raw traces it replaced ([Faithful Self-Evolvers](../../sources/large-language-model-agents-are-not-always-faithful-self-evolvers.md)).
+A distillate can also look adequate while quietly losing behavioral influence: compressed experience is often less active than the raw traces it replaced ([Faithful Self-Evolvers](../../sources/llm-agents-are-not-always-faithful-self-evolvers.md)).
 
 ## Exclusions
 
@@ -95,4 +95,4 @@ Relevant Notes:
 - [conversation vs prompt refinement in agent-to-agent coordination](../conversation-vs-prompt-refinement-in-agent-to-agent-coordination.md) — exemplifies: prompt refinement is distillation of the caller's knowledge for a sub-agent's task
 - [Epiplexity (Finzi et al., 2026)](https://arxiv.org/html/2601.03220v1) — grounds: epiplexity measures theoretically what distillation does operationally — quantifies extractable structure for a given observer under computational bounds
 - [getsentry/skills](../../agent-memory-systems/reviews/getsentry-skills.md) — production evidence: the skill-writer meta-skill shows that distillation quality depends primarily on source collection breadth ("keep collecting until retrieval passes no longer add new guidance"), not compression technique — a dimension this note underemphasizes
-- [Ingest: Large Language Model Agents Are Not Always Faithful Self-Evolvers](../../sources/large-language-model-agents-are-not-always-faithful-self-evolvers.ingest.md) — evidence: warning case that compressed experience can remain semantically plausible yet lose behavioral influence relative to the raw traces it distills
+- [Ingest: Large Language Model Agents Are Not Always Faithful Self-Evolvers](../../sources/llm-agents-are-not-always-faithful-self-evolvers.ingest.md) — evidence: warning case that compressed experience can remain semantically plausible yet lose behavioral influence relative to the raw traces it distills

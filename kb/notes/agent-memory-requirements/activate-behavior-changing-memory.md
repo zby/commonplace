@@ -24,7 +24,7 @@ Typed cue indexes provide the on-situation loading form of this family. A cue ca
 
 ## Behavioral Faithfulness
 
-A cue that fires and enters context has not succeeded unless it changes downstream action in the intended direction. High-authority behavior-shaping material needs evidence that it earns its context budget: WITH/WITHOUT comparisons, perturbation tests, post-action trace audits, or other checks against behavior. [Large Language Model Agents are not Always Faithful Self-Evolvers](../../sources/large-language-model-agents-are-not-always-faithful-self-evolvers.md) is the cautionary example: written or compressed memories can improve measured behavior without being used in the way their designers assume.
+A cue that fires and enters context has not succeeded unless it changes downstream action in the intended direction. High-authority behavior-shaping material needs evidence that it earns its context budget: WITH/WITHOUT comparisons, perturbation tests, post-action trace audits, or other checks against behavior. [Large Language Model Agents are not Always Faithful Self-Evolvers](../../sources/llm-agents-are-not-always-faithful-self-evolvers.md) is the cautionary example: written or compressed memories can improve measured behavior without being used in the way their designers assume.
 
 [Synapptic](../../agent-memory-systems/reviews/synapptic.md) is the clearest reviewed system that treats activation as something to test rather than assume. It extracts behavioral guards from Claude Code sessions, runs WITH/WITHOUT ablations with an LLM judge, records per-model verdicts, and excludes guards marked redundant or harmful before compiling them into assistant-facing memory surfaces.
 
@@ -41,4 +41,4 @@ Relevant Notes:
 
 - [Continual learning's open problem is behaviour, not knowledge](../continual-learning-open-problem-is-behaviour-not-knowledge.md) - grounds the behavior-change test
 - [Knowledge storage does not imply contextual activation](../knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes storage from effective activation
-- [Large Language Model Agents are not Always Faithful Self-Evolvers](../../sources/large-language-model-agents-are-not-always-faithful-self-evolvers.md) - evidence: causal-intervention warning that visible memory can fail to drive behavior
+- [Large Language Model Agents are not Always Faithful Self-Evolvers](../../sources/llm-agents-are-not-always-faithful-self-evolvers.md) - evidence: causal-intervention warning that visible memory can fail to drive behavior

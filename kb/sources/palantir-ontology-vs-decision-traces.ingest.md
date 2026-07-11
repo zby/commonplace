@@ -1,6 +1,6 @@
 ---
 description: "Jaya Gupta frames Palantir-style top-down ontology and workflow-first decision traces as two ways to build LLM-facing world models"
-source_snapshot: "before-llms-palantir-was-competing-with-snowflake-and-databricks-po-2006384049485484145.md"
+source_snapshot: "palantir-competed-with-snowflake-before-llms.md"
 ingested: "2026-07-06"
 type: kb/sources/types/ingest-report.md
 source_type: conceptual-essay
@@ -9,7 +9,7 @@ domains: [agent-memory, trace-derived-learning, ontology, context-engineering]
 
 # Ingest: Palantir Ontology vs Decision Traces
 
-Source: [before-llms-palantir-was-competing-with-snowflake-and-databricks-po-2006384049485484145.md](before-llms-palantir-was-competing-with-snowflake-and-databricks-po-2006384049485484145.md)
+Source: [palantir-competed-with-snowflake-before-llms.md](./palantir-competed-with-snowflake-before-llms.md)
 Captured: 2026-07-06T18:28:32.161674+00:00
 From: https://x.com/JayaGup10/status/2006384049485484145
 

@@ -6,6 +6,7 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
+- [Global note user verification](./global-note-user-verification/plan.md) — plan to remove the fused global note status and add committed `user-verified: true` for repository-visible human attestation
 - [extensible-controlled-vocabularies](./extensible-controlled-vocabularies/README.md) — designing how a code-enforced closed enum (ingest-report's `source_type`) becomes open-ended per installed KB while staying validator-checkable
 - [lineage-mechanisms](./lineage-mechanisms/README.md) — designing one derived-artifact lineage vocabulary across multiple storage weights; review keeps its purpose-built DB while generic lineage state stays deferred until a second churning mesh earns it
 - [src-architecture-alternatives](./src-architecture-alternatives/README.md) — alternative architectures for `src/commonplace/` from a full code read; active thread is an append-only event log as review-store source of truth with acceptance events that embed their snapshots
@@ -33,4 +34,3 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 - [lifecycle-management](./lifecycle-management/README.md) — mapping the full artifact life-cycle (intake, promotion, maturation, retirement); the `agent-memory-design` test case landed as a `note + synthesis` trait in `kb/notes/designing-agent-memory-systems.md`
 - [scaffolding-relaxation](./scaffolding-relaxation/README.md) — preserving the unresolved theory question from the Fable/workstream and vertical-agent ingests: which scaffolding recedes with stronger models, and which persists because it supplies state, authority, verification, lifecycle, or context economy
 - [condensation-faithfulness-experiment](./condensation-faithfulness-experiment/README.md) — designing an experiment to test whether our condensation methodology (write conventions + gate suite) produces more behaviorally faithful memory than naive auto-summary, using the Faithful Self-Evolvers perturbation protocol
-- [review-system-vocabulary-and-state-model](./review-system-vocabulary-and-state-model/README.md) — aligning review job, output, completion, result/error, and freshness-baseline terminology before one target-schema implementation sweep

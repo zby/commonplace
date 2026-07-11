@@ -37,7 +37,7 @@ The `/connect` discovery found 9 KB notes across three clusters, plus 2 source-t
 
 **Cross-contamination:** [flat-memory-predicts-specific-cross-contamination-failures-that-are-empirically-testable](../notes/flat-memory-predicts-specific-cross-contamination-failures-that-are.md) predicts the multi-agent scenario failures deepfates describes.
 
-**Source-to-source:** The Letta paper ([continual-learning-in-token-space](./continual-learning-in-token-space.md)) makes the opposite bet — continual learning in token space, not weights. The [unfaithful self-evolvers](./large-language-model-agents-are-not-always-faithful-self-evolvers.md) paper provides evidence that raw trajectories (what deepfates advocates crawling) are more useful than condensed memory.
+**Source-to-source:** The Letta paper ([continual-learning-in-token-space](./continual-learning-in-token-space.md)) makes the opposite bet — continual learning in token space, not weights. The [unfaithful self-evolvers](./llm-agents-are-not-always-faithful-self-evolvers.md) paper provides evidence that raw trajectories (what deepfates advocates crawling) are more useful than condensed memory.
 
 **Synthesis opportunity flagged:** Indiscriminate context loading produces a double failure — irrelevant knowledge creates false salience (deepfates' Chekov's gun) while relevant knowledge fails to activate (the expert-witness problem from the KB) — and both failures are invisible due to soft degradation. No single KB note names this double failure yet.
 

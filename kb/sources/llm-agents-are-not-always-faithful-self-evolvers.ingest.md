@@ -1,6 +1,6 @@
 ---
 description: Causal-intervention paper (v3, 13 backbones) showing self-evolving agents faithfully use raw trajectories but largely ignore condensed experience, making behavioral faithfulness the missing evaluation criterion for distilled memory
-source_snapshot: large-language-model-agents-are-not-always-faithful-self-evolvers.md
+source_snapshot: llm-agents-are-not-always-faithful-self-evolvers.md
 ingested: "2026-06-15"
 type: kb/sources/types/ingest-report.md
 source_type: scientific-paper
@@ -9,7 +9,7 @@ domains: [agent-memory, distillation, verification, llm-agents]
 
 # Ingest: Large Language Model Agents Are Not Always Faithful Self-Evolvers
 
-Source: large-language-model-agents-are-not-always-faithful-self-evolvers.md
+Source: llm-agents-are-not-always-faithful-self-evolvers.md
 Captured: 2026-06-15
 From: https://arxiv.org/html/2601.22436v3
 

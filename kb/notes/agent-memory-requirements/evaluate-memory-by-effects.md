@@ -48,5 +48,5 @@ These dimensions are separable. QA-style retrieval tests can pass while activati
 
 Relevant Notes:
 
-- [Large Language Model Agents are not Always Faithful Self-Evolvers](../../sources/large-language-model-agents-are-not-always-faithful-self-evolvers.md) - evidence: shows why written memory must be evaluated for behavioral influence rather than assumed effective
+- [Large Language Model Agents are not Always Faithful Self-Evolvers](../../sources/llm-agents-are-not-always-faithful-self-evolvers.md) - evidence: shows why written memory must be evaluated for behavioral influence rather than assumed effective
 - [Designing a Memory System for LLM-Based Agents](../designing-agent-memory-systems.md) - derives evaluation as the closure condition for all memory requirements

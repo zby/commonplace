@@ -1,6 +1,6 @@
 # Condensation-faithfulness experiment
 
-Exploring **how we could run an experiment** to test whether Commonplace's condensation methodology produces memory that is more *behaviorally faithful* than naive auto-summarization — using the perturbation protocol from [Faithful Self-Evolvers](../../sources/large-language-model-agents-are-not-always-faithful-self-evolvers.md).
+Exploring **how we could run an experiment** to test whether Commonplace's condensation methodology produces memory that is more *behaviorally faithful* than naive auto-summarization — using the perturbation protocol from [Faithful Self-Evolvers](../../sources/llm-agents-are-not-always-faithful-self-evolvers.md).
 
 This workshop designs the experiment. It does not run it, and does not (yet) build any review gate.
 
@@ -53,7 +53,7 @@ Honest caveats to preserve (from the ingest report's "Limitations"):
 
 ## Related
 
-- [Faithful Self-Evolvers — snapshot](../../sources/large-language-model-agents-are-not-always-faithful-self-evolvers.md) and [ingest report](../../sources/large-language-model-agents-are-not-always-faithful-self-evolvers.ingest.md) — the source and our scoped reading.
+- [Faithful Self-Evolvers — snapshot](../../sources/llm-agents-are-not-always-faithful-self-evolvers.md) and [ingest report](../../sources/llm-agents-are-not-always-faithful-self-evolvers.ingest.md) — the source and our scoped reading.
 - [distillation](../../notes/definitions/distillation.md), [constraining](../../notes/definitions/constraining.md) — the two-axis model.
 - [evaluate memory by effects](../../notes/agent-memory-requirements/evaluate-memory-by-effects.md), [activate behavior-changing memory](../../notes/agent-memory-requirements/activate-behavior-changing-memory.md), [knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) — the faithfulness/activation cluster.
 - Sibling llm-wiki (inquiringlines.com) ingested this paper's thesis unscoped — a live example of recall without a scoping gate; relevant if the design wants a contrast baseline for "condensate quality."
