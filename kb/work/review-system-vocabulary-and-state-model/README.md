@@ -81,6 +81,14 @@ Do not require an intermediate store merely because the repository passed throug
 - Do not mutate the real review store while exploring schema alternatives; use copies and synthetic fixtures.
 - Keep historical ADR wording historical. Promote the final decision as a new ADR or a clearly scoped amendment, then update current reference and instruction surfaces.
 - Keep unrelated architecture improvements out even when the refactor exposes them; record them as follow-up proposals rather than expanding this implementation.
+- End the implementation with a cleanup sweep for every retired identifier and
+  semantic assumption across code, SQL, scripts, tests, fixtures, artifacts,
+  commands, and current documentation. Classify each surviving match as an
+  intentional historical/migration reference or remove it; leave no
+  unexplained leftovers.
+- Treat tests as part of the renamed public surface and as evidence for the new
+  semantics. Update fixtures and assertions, but also add transition and
+  negative tests that would fail if the old state model remained operative.
 
 ## Expected outputs
 
@@ -89,6 +97,10 @@ Do not require an intermediate store merely because the repository passed throug
 - a target SQL schema and explicit old→new field/table mapping;
 - a v5→target preservation plan for the retained store;
 - one implementation checklist spanning code, commands, artifacts, tests, and docs;
+- a test matrix covering the adopted state transitions, integrity failures,
+  acknowledgement semantics, and evidence-preserving migration;
+- a final cleanup ledger listing the retired-term searches and any intentional
+  historical exceptions;
 - a durable ADR or amendment describing the adopted model;
 - updated review-system reference and operating instructions.
 
@@ -100,10 +112,22 @@ Close this workshop when:
 2. Every decision in [inventory.md](./inventory.md) is adopted or explicitly dropped with a reason.
 3. One final target schema and migration/evidence-preservation route are fixed.
 4. Code, SQL, Python APIs, JSON, manifests, protocol text, commands, tests, and current documentation implement the same model.
-5. The full test suite, deterministic KB validation, schema integrity checks, and a copied-store migration rehearsal pass.
-6. The durable decision is promoted to `kb/reference/adr/` or an accepted ADR amendment.
-7. Any follow-up work outside scope is routed to a proposal or neighboring workshop.
-8. This directory and its entry in `kb/work/README.md` are deleted.
+5. Targeted tests prove at least: verdict/report completion invariants; `ERROR`
+   fails the whole job without completing pairs or advancing baselines; ack
+   requires and advances an existing baseline while preserving its evidence
+   pair; missing baselines remain ordinary stale state while malformed
+   baselines raise integrity errors; and v5 migration preserves identifiers,
+   outcomes, snapshots, and row relationships. A synthetic v5 `ERROR` row is
+   rejected rather than silently reclassified as completed evidence.
+6. A repository-wide residual scan covers every retired active identifier and
+   old semantic phrase. Any surviving occurrence is either an authored catalog
+   `bundle` or a clearly identified historical ADR, migration script, or
+   source-schema fixture; there are no accidental active leftovers.
+7. The full test suite, deterministic KB validation, schema integrity checks,
+   and a copied-store migration rehearsal pass.
+8. The durable decision is promoted to `kb/reference/adr/` or an accepted ADR amendment.
+9. Any follow-up work outside scope is routed to a proposal or neighboring workshop.
+10. This directory and its entry in `kb/work/README.md` are deleted.
 
 ## Grounding
 
