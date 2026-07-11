@@ -1,49 +1,51 @@
 # MVP build plan: closing review on the full pass over a unified diff-and-ack surface
 
-Implementation-ready phased plan for the workshop's MVP, given the design in [unified-diff-and-ack.md](./unified-diff-and-ack.md). The MVP is a calibrated one-cycle closing review with full method coverage, carry judgments recorded as append-only events with required rationale, and an observation log with a variance control arm. Each phase is self-contained: it delivers testable value on its own and later phases build on it without reaching back.
+The MVP is a minimal vertical slice: exercise the new `result_kind` schema end-to-end on one unbounded assay (critique), and test closure on the actual five-method full-pass workflow at 100% counterfactual sampling, with a simple pass-local observation record and manually run controls. Production instrumentation — event commands, ack integration, automated validation — is deliberately deferred to an observation-gated decision (part 4).
 
-Two structural distinctions, located at design time against shipped code (a codex review of an earlier draft of this plan), shape the whole build:
+Scope discipline note: an earlier draft of this plan accreted production event machinery through successive implementation-readiness reviews; a codex review restored the boundary with one observation — **at 100% counterfactual sampling no real ack ever occurs** (acceptance always advances through the rerun), so ack-integrated event recording solves a problem the MVP does not encounter. The machinery's design survives, recorded under part 4 so it isn't re-derived, but nothing in it blocks the first real runs.
 
-- **Current state vs. history.** Acceptance is deliberately current-state storage with inline pruning ([ADR 036](../../reference/adr/036-review-acceptance-is-current-state-not-append-only-history.md)): a superseding rerun deletes the prior pair, its job, and its artifacts in the same transaction. A carry judgment is *history* — so it cannot live (only) on acceptance, or the audit rerun destroys the attribution substrate exactly when the audit result arrives.
+Two structural distinctions, located at design time against shipped code, shape the build:
+
+- **Current state vs. history.** Acceptance is deliberately current-state storage with inline pruning ([ADR 036](../../reference/adr/036-review-acceptance-is-current-state-not-append-only-history.md)): a superseding rerun deletes the prior pair, its job, and its artifacts in the same transaction. A carry judgment is *history* — so it lives in the observation record (and, if instrumentation is built, in append-only events), never only on acceptance.
 - **Verdict vs. completion.** A decision (pass/warn/fail/error) and a protocol completion marker are different facts. Unbounded assays complete without deciding, so the pair needs a persisted `result_kind`, not merely a relaxed decision constraint.
 
-Ordering note: an evidence-first alternative (closing review on the already-anchored semantic pairs before any machinery, zero code) was considered and set aside — a semantic-only closing cycle would put partial-coverage observations in the log that read as full-pass closure. Machinery first, then one log whose coverage is honest.
+Ordering note: an evidence-first alternative (closing review on the already-anchored semantic pairs before any machinery, zero code) was considered and set aside — a semantic-only closing cycle would put partial-coverage observations in the log that read as full-pass closure. The `result_kind` slice is the minimum machinery that makes the log's coverage honest.
 
-## Report layout and retention (cross-phase)
+## Report layout, retention, and the observation record (cross-part)
 
-The key lifetime risk: decision history is auditable only if enough of the *compared reports* survives — event rows alone are insufficient, and DB job artifacts are prunable under ADR 036. Rules:
+The key lifetime risk: judgments are auditable only if enough of the *compared reports* survives — and DB job artifacts are prunable under ADR 036. Rules:
 
-- Each full-pass invocation mints a **`pass_id`** at step 1; it doubles as the `closing_cycle_id` in events (one closing cycle per pass). Reports live under genuinely pass-scoped paths:
+- Each full-pass invocation mints a **`pass_id`** at step 1. Reports live under pass-scoped paths:
 
   ```text
   kb/reports/full-pass/<note-name>/<pass_id>/
     initial/    # step 1–6 runs
     closing/    # step 10 reruns
-    controls/   # duplicate control runs
+    controls/   # manually duplicated control runs
   ```
 
   A closing rerun can never overwrite an initial report, and successive passes never overwrite each other.
-- Any report a judgment, audit, or comparison uses is copied out of the job artifact directory into the pass directory by the orchestrator immediately after finalization, *before* a later superseding finalization can prune it.
-- Events reference reports as `{path, sha256}`. **A hash verifies content; it does not preserve it** — so compared reports are retained on disk through workshop closure (no cleanup of `kb/reports/full-pass/` while the workshop is open), and the hash exists to detect tampering or accidental rewrite, not to substitute for retention.
+- Any report a judgment or comparison uses is copied out of the job artifact directory into the pass directory by the orchestrator immediately after finalization, *before* a later superseding finalization can prune it.
+- Reports are referenced by `{path, sha256}`. **A hash verifies content; it does not preserve it** — compared reports are retained on disk through workshop closure (no cleanup of `kb/reports/full-pass/` while the workshop is open).
+- **The observation record is committed workshop evidence, not a gitignored report**: one JSONL file per pass at `kb/work/transformation-closure/observations/<pass_id>.jsonl`, written by the orchestrator by hand — no owning command in the MVP. Judgments and outcomes are not regenerable, so they live where the workshop lives.
 
-## Phase 1: persisted result kinds + critique execution
+## Part 1: core MVP build — result kinds, migration, critique lens
 
-Critique-note becomes the first unbounded assay executed through the batch pipeline: `commonplace-review-target-selector --model-partition {mp} critique --note {path} --json | commonplace-create-review-jobs --input - --grouping note` → sub-agent → finalize, producing acceptance rows and staleness classification exactly like semantic gates. Phase deliverable: that flow works end-to-end and the selector reports critique freshness for real notes.
+Critique-note becomes the first report-kind assay executed through the batch pipeline: `commonplace-review-target-selector --model-partition {mp} critique --note {path} --json | commonplace-create-review-jobs --input - --grouping note` → sub-agent → finalize, producing acceptance rows and staleness classification exactly like semantic gates. Deliverable: that flow works end-to-end and the selector reports critique freshness for real notes.
 
 - Registration surface: **through the batch mechanism**, not after-the-fact recording. The pipeline pins snapshots itself as part of executing the assay, so the anchor is enforced by construction; a standalone recording command would accept the orchestrator's claim that report matches bytes — a self-reported anchor with a time-of-check gap. Naming stays layered: "gate" remains the operational term; the batch mechanism gains an assay class, not a rename.
 - **Class-homogeneous jobs via a separate bundle — already given by shipped packing.** Critique is its own one-assay bundle; `--grouping note` keys jobs by `(note, bundle)` (`_note_groups`, `src/commonplace/cli/review/create_review_jobs.py`) and `--grouping gate` packs per-gate, so no job ever mixes result-kind classes.
-- **Persist the result kind on the pair.** `review_pairs.result_kind = verdict | report`, written at pair creation from the bundle's declared class. `## Result: REPORT` is a completion marker, not a decision. Finalization parses against the *persisted* contract — `review_jobs` stores only `packing`, and reading gate frontmatter at finalize time would reintroduce a time-of-check gap.
+- **Persist the result kind on the pair, and carry it through the stack.** `review_pairs.result_kind = verdict | report`, written at pair creation from the bundle's declared class, and threaded through pair models, SQL reads/writes, manifests, and CLI payloads. `## Result: REPORT` is a completion marker, not a decision. Finalization parses against the *persisted* contract — `review_jobs` stores only `packing`, and reading gate frontmatter at finalize time would reintroduce a time-of-check gap.
 - **Executable `result_kind` invariants:**
-  - queued verdict pair: `decision NULL`, `reviewed_at NULL`
+  - queued pair (either kind): `decision NULL`, `reviewed_at NULL`
   - completed verdict pair: `decision NOT NULL`, `reviewed_at NOT NULL`
-  - queued report pair: `decision NULL`, `reviewed_at NULL`
   - completed report pair: `decision NULL`, `reviewed_at NOT NULL`
-  - column and table constraints, exactly: `result_kind TEXT NOT NULL CHECK (result_kind IN ('verdict','report'))` and `CHECK (result_kind = 'verdict' OR decision IS NULL)` — a report pair can never acquire a decision
-  - **pair completion is per-kind** — `reviewed_at` alone is insufficient for a verdict pair: a verdict pair is complete when `decision IS NOT NULL AND reviewed_at IS NOT NULL`; a report pair when `reviewed_at IS NOT NULL`
+  - column and table constraints, exactly: `result_kind TEXT NOT NULL CHECK (result_kind IN ('verdict','report'))` and `CHECK (result_kind = 'verdict' OR decision IS NULL)`
+  - **pair completion is per-kind** — `reviewed_at` alone is insufficient for a verdict pair
   - **validation split, matching shipped finalization order** (pairs complete → acceptance upserts → pruning → job marked completed): `upsert_acceptance` validates *pair* completion per-kind, replacing its null-decision rejection (`src/commonplace/review/review_db.py:763`); the `current_gate_acceptances` view separately requires the completed parent job (it already joins on `j.status = 'completed'`) plus per-kind pair completion, and exposes `result_kind` and `decision`
   - warn queue untouched: warn-selector filters `decision = 'warn'`, which never matches a report pair
 - Schema scope: the `result_kind` column with its CHECK, the view predicate change, `REVIEW_SCHEMA_VERSION` 4 → 5. `acceptance` gains no column (class derives through the accepted-pair join).
-- **Migration script, recorded in the repo.** Populated review stores exist on more than one machine, and every acceptance row is paid-for review evidence — recreate-and-re-earn is not acceptable. Phase 1 ships `scripts/migrate-review-db-v4-to-v5.py` (stdlib-only) **in the same commit as the schema bump** (a store migrated ahead of the code bump would be rejected by `init_db`, and vice versa). The table rebuild is FK-sensitive — `acceptance.accepted_review_pair_id` references `review_pairs` — so the sequence is exact:
+- **Migration script, recorded in the repo.** Populated review stores exist on more than one machine, and every acceptance row is paid-for review evidence — recreate-and-re-earn is not acceptable. Part 1 ships `scripts/migrate-review-db-v4-to-v5.py` (stdlib-only) **in the same commit as the schema bump** (a store migrated ahead of the code bump would be rejected by `init_db`, and vice versa). The table rebuild is FK-sensitive — `acceptance.accepted_review_pair_id` references `review_pairs` — so the sequence is exact:
   1. `PRAGMA foreign_keys = OFF` — issued on the fresh connection, **before** any transaction (the pragma is a no-op inside one);
   2. `BEGIN IMMEDIATE`;
   3. create `review_pairs_new` with the full v5 shape (both CHECKs), `INSERT ... SELECT` from `review_pairs` with `'verdict'` backfilled and **`review_pair_id` values preserved verbatim** — this is why `acceptance` needs no rebuild;
@@ -52,119 +54,96 @@ Critique-note becomes the first unbounded assay executed through the batch pipel
   6. `PRAGMA user_version = 5`; `COMMIT`; `PRAGMA foreign_keys = ON`.
 
   `init_db`'s version gate stays; its mismatch error message should point at the script.
-- **Critique virtual lens, fully specified:** request form `critique` derives one pair per explicitly targeted note (`--note` paths/directories); persisted gate identity is `kb/instructions/critique-note.md` in a source checkout, resolving through the same installed-framework path mechanism as catalog gates in generated projects; resolver work is a `critique` branch beside the type/collection lens derivations in the selector and `resolve_gates.py`, declaring `result_kind = report`. **Excluded from `--all-gates` during the MVP**, for three reasons: sweeps would pay for a heavyweight per-note adversarial run whose output nothing in the sweep path consumes (report-kind rows never reach the warn queue or the fix system); a sweep would put "critique: fresh" on the whole KB — the "critiqued and handled" certification illusion case 3 exists to test — before the experiment has run; and sweep-created acceptance state would sit outside the MVP protocol (no closing cycle, no carry events), contaminating phase 4's log. Exclusion is the reversible default. At promotion time the real question is whether `--all-gates` should distinguish assay classes at all (bounded by default, unbounded opt-in) — "all applicable criteria" was defined when every criterion carried a verdict. Editing `critique-note.md` stales its records as `gate-changed`, no new mechanism.
+- **Critique virtual lens, fully specified:** request form `critique` derives one pair per explicitly targeted note (`--note` paths/directories); persisted gate identity is `kb/instructions/critique-note.md` in a source checkout, resolving through the same installed-framework path mechanism as catalog gates in generated projects; resolver work is a `critique` branch beside the type/collection lens derivations in the selector and `resolve_gates.py`, declaring `result_kind = report`. **Excluded from `--all-gates` during the MVP**, for three reasons: sweeps would pay for a heavyweight per-note adversarial run whose output nothing in the sweep path consumes (report-kind rows never reach the warn queue or the fix system); a sweep would put "critique: fresh" on the whole KB — the "critiqued and handled" certification illusion case 3 exists to test — before the experiment has run; and sweep-created acceptance state would sit outside the MVP protocol, contaminating the observations. Exclusion is the reversible default. At promotion time the real question is whether `--all-gates` should distinguish assay classes at all (bounded by default, unbounded opt-in). Editing `critique-note.md` stales its records as `gate-changed`, no new mechanism.
 - **Prompt conflict and instruction TOCTOU resolved together, pre-release.** Two changes, both free now because no critique acceptance state exists yet:
   - Revise `critique-note.md` so the judgment method and report shape are separate from its hand-run output destination (routing becomes caller-supplied) — the instruction stops mandating a path that conflicts with the worker contract (write only `bundle-output.md`).
   - The rendered job prompt **embeds the instruction text captured in the job's gate snapshot** — the worker never reads the live file, so it cannot judge by different criteria than the snapshot acceptance pins. This deliberately diverges from the ADR 038 read-from-disk pattern, which carries the same theoretical gap for type/collection pairs; embedding costs prompt tokens but buys input integrity, which is the point of a version-anchoring experiment. Reconciling the two patterns is a promotion-time question. Report-specific language (emit the critique as this pair's block, end with `## Result: REPORT`) lives in the renderer.
-- Report routing: after finalize, the orchestrator copies the pair's report block to `kb/reports/full-pass/<note-name>/<pass_id>/{initial|closing}/critique.md` per the retention rules above and records its hash in the event log.
+- Report routing: after finalize, the orchestrator copies the pair's report block to `kb/reports/full-pass/<note-name>/<pass_id>/{initial|closing}/critique.md` per the retention rules above.
 - Consequence for the instruction: step 3 of the full pass becomes a selector/create-jobs/finalize flow structurally identical to step 5.
-- Scope: **critique-note only.** Friction, compression, and connect are not anchored in the MVP — full-pass closure coverage comes from phase 3 re-running them directly.
+- Scope: **critique-note only.** Friction, compression, and connect are not anchored in the MVP — full-pass closure coverage comes from part 2 re-running them directly.
 
-## Phase 2: durable carry-event recording
+## Part 2: MVP workflow — step 10, observation record, manual controls
 
-The carry judgment is history, so it gets an append-only record independent of acceptance.
+Add a step 10 to `kb/instructions/run-full-improvement-pass-on-note.md`: after the step-9 flow pass, the orchestrator runs one closing cycle over **all five methods** —
 
-- **Path and owner:** `kb/work/transformation-closure/observations/carry-events.jsonl`, written only through a new `commonplace-carry-event` command that validates an event against the schema below and appends one line (`O_APPEND`, one `write()` per line, no rewrites). **Failure semantics: no event, no carry** — if the append fails, the orchestrator must rerun instead of carrying (enforced-or-omitted, fail toward rerun).
-- **Events are immutable and correlated.** Common fields: `event_id` (UUID), `ts`, `closing_cycle_id` (= the pass's `pass_id`), `note_path`, `assay_id`, `runner`, `model`, `effort`, `baseline_note_hash`, `current_note_hash`. Kinds, each its own immutable event:
-  - `carry_judgment` — `judgment: would_ack | ack`, `rationale` (**required**), `edit_kinds` (free-text list), `prior: {result_kind, decision | report_ref: {path, sha256}, note_hash}` — the prior evidence captured *before* pruning can remove it;
-  - `ack_outcome` — `carry_event_id`, `succeeded: bool` — the DB result of a real ack (see ordering below);
-  - `audit_result` — `audits_event_id` (the `carry_judgment` it audits — **reserved for reruns that test a real or counterfactual carry**), `outcome: {flip: bool}` for verdict-kind or `{material_divergence: bool, note}` for report-kind, `report_refs` for the compared reports;
-  - `comparison_result` — `initial_report_ref`, `closing_report_ref`, `outcome` (same per-kind shape) — for the unanchored always-rerun methods, whose initial-to-closing comparisons audit no carry judgment;
-  - `control_result` — references the first-run event/report it duplicates, same outcome shape, plus the complete control identity the validator compares: `gate_snapshot_sha256` (the instruction/gate text both runs judged by), `source_prompt_sha256` (the persisted job prompt), and `control_prompt_sha256` (the mechanically rewritten control prompt — see phase 3).
-  Corrections are new events referencing the corrected `event_id`, never edits.
-- **Ack ordering across the two stores is event-first, stated explicitly.** JSONL and SQLite cannot commit atomically. A `carry_judgment` is a judgment record, appended *before* the DB transaction — if the append fails, the ack aborts before touching the DB ("no event, no carry"). After the DB transaction, the ack command appends `ack_outcome`. A judgment event whose DB update subsequently failed is valid history — the judgment happened — with no state effect; a judgment with no `ack_outcome` (crash window) is resolved by checking current acceptance against the judgment's hashes.
-- **CLI workflow:** `would_ack` events are appended explicitly by the orchestrator via `commonplace-carry-event` (no DB state changes, hence no outcome event). Real acks go through `commonplace-ack-gate-review`, which gains a **required `--rationale`** and owns the event-first sequence above, one `carry_judgment` per acked pair — real carries are recorded without relying on orchestrator discipline. A shared rationale across several gates of one note is allowed at the CLI and fans out to per-pair events. Audit and comparison outcomes are appended by the orchestrator after comparing reruns against `prior`/report refs.
-- At 100% sampling: record `would_ack` and re-run — acceptance moves once, on the rerun, never transiently.
-
-Phase deliverable: every carry judgment (real or counterfactual) leaves a durable, correlated event that survives acceptance pruning.
-
-## Phase 3: closing-review step in the full-pass instruction
-
-Add a step 10 to `kb/instructions/run-full-improvement-pass-on-note.md`: after the step-9 flow pass, the orchestrator runs one closing cycle (minting a `closing_cycle_id`) over **all five methods** —
-
-- Anchored assays (semantic bundle, critique): read the selector's cumulative diff (accepted snapshot → final bytes), then `would_ack`/ack-or-rerun per the phase 2 contract.
-- Unanchored methods (compression bundle, friction, connect): **re-run directly** against the final text — no DB anchoring needed to join a 100%-rerun experiment. Their initial-to-closing comparisons audit no carry judgment, so they log `comparison_result` events (`initial_report_ref` → `closing_report_ref`), never `audit_result`.
-- **Audit granularity:** semantic per gate (one judgment/audit per gate pair); critique, friction, and connect per report; compression at bundle level — one rerun, one report — with per-gate comparisons nested inside the `comparison_result` outcome (compression is unanchored, so its comparisons never use `audit_result`).
-- **Control arm, deterministic schedule (initial):** every closing cycle duplicate-runs two assays on the *identical* final bytes — one verdict-kind (round-robin over the semantic gates across cycles) and one report-kind (critique) — recorded as `control_result`. A control is valid only if bytes, instruction snapshot, runner, model, and effort are identical to the run it duplicates, all recorded in the event.
-- **Controls never touch acceptance, and reuse the prompt through a mechanical adapter.** The persisted job prompt names the job-owned `bundle_output_path`, so re-executing it verbatim would overwrite the source run's output. The control adapter takes the persisted prompt and rewrites *exactly one thing* — the output destination, to the pass's `controls/` path — leaving every other byte identical; the `control_result` event records both `source_prompt_sha256` and `control_prompt_sha256` so the only intentional difference is checkable. The control runs in a fresh sub-agent, its output is parsed with the same parser, and it is **never finalized** — no acceptance upsert, no pruning of the run it duplicates. No new finalization mode is needed; controls simply have no DB path.
-- **Control input identity is complete only for self-contained gates, and the initial rotation is fixed here:** `semantic/internal-consistency`, `semantic/load-bearing-qualifiers`, `semantic/explanatory-reach`, `semantic/explication-quality` — each judges only the note's own text. Excluded: `semantic/grounding-alignment` (its procedure follows up to 5 links) and `semantic/completeness-boundary-cases` (may read a cited source) — for these, identical note+gate bytes do not guarantee identical inputs. Linked-input snapshotting is a later extension if the four-gate rotation proves too narrow. The schedule is revisited once the base flip/divergence rate stabilizes.
+- Anchored assays (semantic bundle, critique): read the selector's cumulative diff (accepted snapshot → final bytes), record a **counterfactual judgment** — `would_ack` or `would_rerun`, with rationale and rough edit kinds — then **re-run regardless** (100% counterfactual sampling) and record the outcome against the judgment.
+- Unanchored methods (compression bundle, friction, connect): re-run directly against the final text and compare initial → closing reports. Compression compares at bundle level with per-gate detail nested in the outcome.
+- Audit unit differs by result kind: verdict-kind reruns record `flip`; report-kind reruns record `material_divergence` — would the fresh report have changed steps 8–9? Don't pre-formalize "materially"; record the judgment and let the record show whether it stabilizes.
 - License distinction in the prompt: only bounded-assay acceptances ever carry skip semantics; a carried unbounded record is reused evidence, endorsing nothing; the friction gate's "For the human" line is never satisfied by a carry.
-- Stopping rule: at most this one cycle. **Packet update:** step 10 appends a "Closing cycle" section to `full-pass-report.md` — cycle id plus a per-assay table of judgment and outcome — and residual findings route to the packet's Open items; they do not trigger another transformation round.
-- Audit unit differs by result kind: verdict-kind reruns log `flip`; report-kind reruns log `material_divergence` — would the fresh report have changed steps 8–9? Don't pre-formalize "materially"; record the judgment and let the log show whether it stabilizes.
+- Stopping rule: at most this one cycle. Step 10 appends a "Closing cycle" section to `full-pass-report.md` — `pass_id` plus a per-assay table of judgment and outcome — and residual findings route to the packet's Open items; they do not trigger another transformation round.
 
-Phase deliverable: the instruction closes over its own edits with full method coverage, and every closing cycle leaves correlated event-log lines and retained reports.
+**Observation record** — one JSONL line per (assay, closing event) in `observations/<pass_id>.jsonl`, hand-written, capturing exactly:
 
-## Phase 4: real runs at 100% counterfactual-ack sampling
+- `pass_id`, note path, assay id, initial and final note hashes;
+- initial and closing report paths + hashes;
+- `would_ack` vs `would_rerun`, with rationale and rough edit kinds;
+- verdict flip or material divergence;
+- runner/model/effort, and whether the run was a control.
 
-Use the MVP on real full passes. Every carry judgment is recorded as `would_ack` and then re-run, so initially the carry decision costs nothing to trust; the sampling rate only decays later, against evidence from the log. This phase produces observations, not code — it is where constraints get located (see below).
+**Manual controls.** The variance control arm runs by hand during the MVP: duplicate a run from its retained job prompt (copy the persisted prompt, redirect only the output destination to `controls/`), execute in a fresh sub-agent, record the line with the control flag plus the gate-snapshot hash and both prompt hashes so the only intentional difference stays checkable. Controls are never finalized — no acceptance change, no pruning of the duplicated run. Schedule: each closing cycle duplicates one verdict-kind run and one report-kind run (critique) on the identical final bytes. The verdict-kind rotation is fixed to the four self-contained semantic gates — `internal-consistency`, `load-bearing-qualifiers`, `explanatory-reach`, `explication-quality` — because `grounding-alignment` follows up to 5 links and `completeness-boundary-cases` may read a cited source, so identical note+gate bytes do not guarantee identical inputs for them.
 
-## Phase 5: human-attestation design selection
+Deliverable: the instruction closes over its own edits with full method coverage, and every closing cycle leaves observation lines and retained reports.
 
-A **design-selection phase, not a build phase**: its deliverable is a chosen representation, written as a proposal in `kb/reference/proposals/`, informed by what phases 1–4 taught about the event model. Implementation happens only after selection. The candidates (an acceptance requires completed review-pair evidence, so this is not a cheap reuse of the phase 1 mechanism):
+## Part 3: run and observe
 
-- a synthetic completed review job/pair under a human partition;
-- generalizing acceptance away from review-pair evidence;
-- attestations as their own fact/event type — the current-state-vs-history lesson applies with force here, since attestation history is plausibly the point.
+Several real full passes at 100% counterfactual sampling. **No real ack occurs in this part** — acceptance always advances through the rerun; the carry decision is being measured, not trusted. This part produces observations, not code — it is where constraints get located (see below) and where part 4's gate is decided.
+
+## Part 4: instrumentation decision (post-MVP, observation-gated)
+
+Build durable carry infrastructure **only if part 3 shows real carrying is worth having** — roughly: `would_ack` judgments are usually confirmed by their reruns *and* the rerun cost is material enough that skipping some would pay. If carrying isn't useful, this part is a documented no.
+
+The machinery below was designed and reviewed during planning; it is recorded here so a yes-decision doesn't re-derive it:
+
+- `commonplace-carry-event`: append-only JSONL writer (`O_APPEND`, one write per line), "no event, no carry" failure semantics;
+- correlated immutable event kinds — `carry_judgment` (rationale required), `ack_outcome`, `audit_result` (reserved for reruns testing a carry, `audits_event_id`), `comparison_result` (unconditional initial↔closing comparisons), `control_result` (with `gate_snapshot_sha256`, `source_prompt_sha256`, `control_prompt_sha256`) — plus `event_id` / `closing_cycle_id` correlation and corrections-as-new-events;
+- **event-first cross-store ordering**: JSONL and SQLite cannot commit atomically, so the `carry_judgment` is appended before the DB transaction and `ack_outcome` after; an orphaned judgment is valid history with no state effect;
+- ack integration: `commonplace-ack-gate-review` gains a required `--rationale` and owns the event sequence, one judgment per pair, shared rationale fanning out;
+- automated control identity validation and a mechanical control-prompt adapter;
+- generalized durable report archival;
+- reduced audit sampling, trust-dial operation, and real rationale-bearing carries.
+
+## Part 5: human-attestation design probe (independent)
+
+Outside the MVP and outside its completion criteria — it uses what the closure experiment teaches about state, history, and evidence, but must not delay the first runs. A design-selection probe whose deliverable is a chosen representation written as a proposal in `kb/reference/proposals/`. The candidates (an acceptance requires completed review-pair evidence, so this is not a cheap reuse of the part 1 mechanism): a synthetic completed review job/pair under a human partition; generalizing acceptance away from review-pair evidence; attestations as their own fact/event type — the current-state-vs-history lesson applies with force here, since attestation history is plausibly the point.
 
 Design constraints that survive regardless of representation:
 
 - **One kind, force-free.** The contract file states exactly: *the user recorded that they reviewed these bytes* — no "accepts", no approval semantics; "accepts it" is already endorsement-shaped. Force-free means no machinery consumes a fresh attestation as a license.
 - The contract file is the gate-side identity, so editing what the attestation means stales every attestation as `gate-changed`.
 - Single `human` partition; per-actor partitions only if observation demands them.
-- **Explicit byte confirmation over after-the-fact echo:** the command requires the user to pass what they reviewed — `commonplace-attest {note} --reviewed-hash {sha}`, with the hash obtained from a separate show step — and fails on mismatch, rather than pinning current bytes and merely echoing the hash afterwards.
+- **Explicit byte confirmation over after-the-fact echo:** `commonplace-attest {note} --reviewed-hash {sha}`, hash obtained from a separate show step, failing on mismatch.
 - This is the anchored alternative to the `reviewed: true` boolean the README's purpose asks about — friction with it in use is direct evidence on why systems default to unanchored booleans.
 
-## Explicitly not built
+## Explicitly not built (in the MVP)
 
+- Everything in part 4 until its gate says yes — event commands, ack integration, automated control validation, archival generalization, trust-dial operation.
 - Footprint enforcement machinery — declared footprints stay stated intent the cumulative diff verifies.
-- Any edit-kind taxonomy in the system — `edit_kinds` in the event log is free-text observation vocabulary.
-- Trust-dial automation — sampling rate changes are manual judgments against the log.
-- Attestation machinery — phase 5 selects a representation; building it is a post-selection decision. Kinds and forces wait for observed need.
-- Anchoring for compression, friction, and connect — phase 3 re-runs them directly; DB anchoring for them waits until the critique pattern has proven itself.
+- Any edit-kind taxonomy in the system — edit kinds in the observation record are free-text vocabulary.
+- Attestation machinery — part 5 selects a representation; building is post-selection.
+- Anchoring for compression, friction, and connect — part 2 re-runs them directly; DB anchoring for them waits until the critique pattern has proven itself.
 
-## Test matrix (per phase)
-
-Phase 1:
+## Test matrix (part 1 — the only code the MVP ships)
 
 - parser accepts `## Result: REPORT` only for report-kind pairs and rejects it for verdict-kind; rejects `PASS/WARN/FAIL/ERROR` on report-kind pairs
 - queued/completed invariants hold for both kinds, including the `result_kind = 'verdict' OR decision IS NULL` CHECK
+- `upsert_acceptance` accepts a completed report pair and a completed verdict pair, rejects an incomplete pair of either kind (verdict with `reviewed_at` but NULL decision included)
 - freshness classification for critique pairs: `missing-review`, `note-changed`, `gate-changed` (on editing `critique-note.md`)
 - warn queue never contains a report-kind pair
 - a job creation request mixing result kinds is rejected (packing prevents it; the test asserts the invariant anyway)
 - the rendered critique prompt embeds the gate-snapshot instruction text: editing `critique-note.md` after job creation does not change the job's prompt
-- `upsert_acceptance` accepts a completed report pair and a completed verdict pair, rejects an incomplete pair of either kind (verdict with `reviewed_at` but NULL decision included)
 - existing verdict-gate flows are behavior-identical (regression: same selector output, same finalization results on a fixture store)
-- the migration script upgrades a populated v4 fixture store **including acceptance rows referencing pairs** (pair backfill alone is not enough): `user_version` becomes 5, every pre-existing pair reads `result_kind='verdict'` with its `review_pair_id` preserved, acceptance rows still join to their pairs and freshness classifications are unchanged, `PRAGMA foreign_key_check` is clean, and re-running the script on a v5 store is a refused no-op
+- the migration script upgrades a populated v4 fixture store **including acceptance rows referencing pairs**: `user_version` becomes 5, every pre-existing pair reads `result_kind='verdict'` with its `review_pair_id` preserved, acceptance rows still join to their pairs and freshness classifications are unchanged, `PRAGMA foreign_key_check` is clean, and re-running the script on a v5 store is a refused no-op
 
-Phase 2:
+Part 2 is instruction + procedure, checked by hand per pass: closing reports land under `closing/` with `initial/` byte-identical, the packet gains its "Closing cycle" section, the observation file covers every assay, and controls leave the review DB and the source run's output untouched.
 
-- an appended event and its copied report remain readable after a superseding finalization prunes the original pair/job/artifacts
-- concurrent appends do not interleave lines
-- a failed append blocks the carry (the ack command refuses to touch the DB if its `carry_judgment` write fails)
-- a DB failure after a successful judgment append leaves the judgment event, an `ack_outcome` with `succeeded: false`, and unchanged acceptance
-- `commonplace-ack-gate-review` without `--rationale` fails
-
-Phase 3:
-
-- a closing rerun writes under `closing/` and leaves `initial/` byte-identical; two passes over the same note write under distinct `pass_id` directories
-- a `control_result` is rejected unless note bytes, `gate_snapshot_sha256`, runner, model, and effort match the duplicated run
-- the control adapter's rewritten prompt differs from the source prompt only in the output destination (assert by diff, with both hashes recorded in the event)
-- a control run leaves the source run's `bundle_output_path` untouched
-- a control run leaves the review DB byte-identical (no acceptance change, no pruning of the duplicated run)
-- unanchored-method comparisons emit `comparison_result`, never `audit_result`
-- the packet gains a "Closing cycle" section and residual findings land in Open items
-
-Phase 5 (post-selection, if built):
-
-- `commonplace-attest` fails on a stale `--reviewed-hash`
-
-## What phases 4–5 should observe (constraint location)
+## What part 3 should observe (constraint location, and part 4's gate)
 
 Ties to the location criteria in [carry-heuristics.md](./carry-heuristics.md):
 
-- Constraint 1 (direction over size): do flips in the log track edit *direction* rather than diff size?
-- Constraint 2 (non-compositionality): does an accumulated series of individually-carried edits ever flip a coherence check? (Baseline anchoring should surface this as a growing cumulative diff.)
+- Constraint 1 (direction over size): do flips in the record track edit *direction* rather than diff size?
+- Constraint 2 (non-compositionality): does an accumulated series of individually-judged edits ever flip a coherence check? (Baseline anchoring should surface this as a growing cumulative diff.)
 - Constraint 3's premise: is a declared flow-only step 9 ever caught changing a claim in the cumulative diff?
 - Constraint 4: does the one-cycle stopping rule ever leave residual findings that genuinely needed a second round, or does routing to Open items suffice?
 - Case 3 flip: does a current-critique signal ever get read downstream as "critiqued and handled"? That observation, if it occurs, relocates the do-not-anchor rule as a real constraint.
 - Case 2 (human attestation): does the single force-free kind get stretched — the user wanting to record something weaker or stronger, or wanting a fresh attestation to actually license something? Each stretch is a located requirement for the kinds/forces design.
+- **Part 4's gate:** the `would_ack` confirmation rate (against the control arm's base rate) and the measured rerun cost — together, whether real carrying would pay.
