@@ -7,7 +7,7 @@ type: kb/types/instruction.md
 
 Review a specific note against the compression criteria without using the review database.
 
-This is deliberately separate from the snapshot-anchored assay pipeline in `kb/instructions/run-review-batches.md`. Its files retain `gate_id` and “compression gate” as local historical names, but they are unanchored edit-strategy criteria, not review-system gates: they never enter `--all-gates`, acquire a persisted result kind, or write acceptance state. Use them when the goal is a disposable report rather than fresh review evidence.
+This is deliberately separate from the snapshot-anchored assay pipeline in `kb/instructions/run-review-batches.md`. Its files retain `gate_id` and “compression gate” as local historical names, but they are unanchored edit-strategy criteria, not review-system gates: they never enter `--all-gates`, acquire a persisted result kind, or write freshness-baseline state. Use them when the goal is a disposable report rather than fresh review evidence.
 
 Inputs:
 

@@ -3,7 +3,7 @@
 A type-conformance pair reviews one note against the type spec named by its
 frontmatter `type:`. The pair is ordinary review state — its gate path just
 lives under a kb `types/` directory instead of the review-gate catalog — so
-snapshots, freshness, acceptance, and acknowledgement apply unchanged: editing
+snapshots, freshness baselines, and acknowledgement apply unchanged: editing
 a type spec flips `criterion-changed` for exactly the notes of that type.
 
 Pairs are derived from note frontmatter, not from catalog listing plus
@@ -19,13 +19,13 @@ from commonplace.lib import frontmatter
 from commonplace.lib.project_paths import kb_root
 from commonplace.lib.type_resolver import validate_type_path
 
-TYPE_GATE_LENS = "type"
+TYPE_CONFORMANCE_LENS = "type"
 
 
-def is_type_gate_request(arg: str) -> bool:
+def is_type_conformance_request(arg: str) -> bool:
     """True when a requested gate id names the virtual type-conformance lens."""
     arg = arg.strip()
-    return arg == TYPE_GATE_LENS or arg.startswith(f"{TYPE_GATE_LENS}/")
+    return arg == TYPE_CONFORMANCE_LENS or arg.startswith(f"{TYPE_CONFORMANCE_LENS}/")
 
 
 def is_type_spec_criterion_path(criterion_path: str) -> bool:
@@ -40,7 +40,7 @@ def is_type_spec_criterion_path(criterion_path: str) -> bool:
 
 def type_criterion_id_for_path(criterion_path: str) -> str:
     """Virtual `type/{name}` shorthand for a type-spec gate path."""
-    return f"{TYPE_GATE_LENS}/{PurePosixPath(criterion_path).stem}"
+    return f"{TYPE_CONFORMANCE_LENS}/{PurePosixPath(criterion_path).stem}"
 
 
 def resolve_type_criterion_id(repo_root: Path, criterion_id: str) -> str:
@@ -49,9 +49,9 @@ def resolve_type_criterion_id(repo_root: Path, criterion_id: str) -> str:
     Prefers the global `kb/types/{name}.md`; otherwise the name must match
     exactly one collection-local `kb/**/types/{name}.md`.
     """
-    name = criterion_id.strip().removeprefix(f"{TYPE_GATE_LENS}/")
+    name = criterion_id.strip().removeprefix(f"{TYPE_CONFORMANCE_LENS}/")
     name = name.removesuffix(".md")
-    if not name or name == TYPE_GATE_LENS or "/" in name or name in {".", ".."}:
+    if not name or name == TYPE_CONFORMANCE_LENS or "/" in name or name in {".", ".."}:
         raise ValueError(f"invalid type gate id: {criterion_id}")
     boundary = kb_root(repo_root)
     global_spec = boundary / "types" / f"{name}.md"

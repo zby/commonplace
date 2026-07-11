@@ -11,8 +11,8 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from commonplace.review.artifacts import (
-    bundle_artifact_dir,
-    bundle_output_path_rel,
+    review_job_artifact_dir,
+    job_output_path_rel,
     prompt_path_rel,
     result_paths_by_pair_id,
     write_manifest,
@@ -46,7 +46,7 @@ class PreparedBatch:
     skipped: list[SkippedPair]
     result_paths: dict[int, str]
     prompt_path: str
-    bundle_output_path: str
+    job_output_path: str
     manifest_path: str
 
 
@@ -54,11 +54,11 @@ def _targets_for_pairs(
     *,
     repo_root: Path,
     review_job_id: int,
-    packing: str,
+    grouping: str,
     pairs: list[tuple[str, str, str]],
     note_texts: dict[str, str] | None = None,
 ) -> list[NoteReviewTarget]:
-    if packing == "note":
+    if grouping == "note":
         note_paths = {note_path for note_path, _, _ in pairs}
         if len(note_paths) != 1:
             raise ValueError(f"note-packed job requires exactly one note, got: {sorted(note_paths)}")
@@ -90,7 +90,7 @@ def prepare_grouped_review_job(
     db_path: Path,
     pairs: list[tuple[str, str, str]],
     skipped: list[SkippedPair] | None = None,
-    packing: str,
+    grouping: str,
     runner: str | None,
     model_partition: str,
     runner_model: str | None = None,
@@ -125,17 +125,17 @@ def prepare_grouped_review_job(
             runner_effort=runner_effort,
             created_at=created_at,
             status=status,
-            packing=packing,
+            grouping=grouping,
             pairs=captured_inputs.pair_requests,
         )
         stored_pairs = load_review_pairs_for_job(conn, review_job_id=review_job_id)
         conn.commit()
 
-    artifact_dir = bundle_artifact_dir(repo_root, review_job_id)
-    bundle_output_path = bundle_output_path_rel(review_job_id)
+    artifact_dir = review_job_artifact_dir(repo_root, review_job_id)
+    job_output_path = job_output_path_rel(review_job_id)
     result_paths = result_paths_by_pair_id(
         review_job_id=review_job_id,
-        packing=packing,
+        grouping=grouping,
         pairs=stored_pairs,
     )
     prompt_path = prompt_path_rel(review_job_id)
@@ -146,7 +146,7 @@ def prepare_grouped_review_job(
         targets = _targets_for_pairs(
             repo_root=repo_root,
             review_job_id=review_job_id,
-            packing=packing,
+            grouping=grouping,
             pairs=pairs,
             note_texts=captured_inputs.note_texts,
         )
@@ -155,7 +155,7 @@ def prepare_grouped_review_job(
             criterion_texts=captured_inputs.criterion_texts,
             result_kind=next(iter(result_kinds)),
             output_mode="file",
-            bundle_output_path=bundle_output_path,
+            job_output_path=job_output_path,
         )
         artifact_dir.mkdir(parents=True, exist_ok=True)
         (repo_root / prompt_path).write_text(prompt, encoding="utf-8")
@@ -164,9 +164,9 @@ def prepare_grouped_review_job(
             artifact_dir=artifact_dir,
             review_job_id=review_job_id,
             job_status=status,
-            packing=packing,
+            grouping=grouping,
             prompt_path=prompt_path,
-            bundle_output_path=bundle_output_path,
+            job_output_path=job_output_path,
             pairs=stored_pairs,
             skipped=skipped,
         )
@@ -185,6 +185,6 @@ def prepare_grouped_review_job(
         skipped=skipped or [],
         result_paths=result_paths,
         prompt_path=prompt_path,
-        bundle_output_path=bundle_output_path,
+        job_output_path=job_output_path,
         manifest_path=manifest_path,
     )

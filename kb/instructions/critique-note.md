@@ -5,7 +5,7 @@ type: kb/types/instruction.md
 
 # Critique a note
 
-Build the strongest case that a note's central commitment is wrong, then check whether the note already answers it. This is an open-ended, report-kind assay: it completes with a critique, not a PASS/WARN/FAIL/ERROR verdict. Write the report; do not touch the note.
+Build the strongest case that a note's central commitment is wrong, then check whether the note already answers it. This is an open-ended, report-kind assay: it completes with a critique, not a PASS/WARN/FAIL verdict. `ERROR` reports inability to complete the assay and fails the job. Write the report; do not touch the note.
 
 Run it in a **fresh sub-agent** (or a different runner than wrote the note) so the critic has no sympathy for the note's framing.
 
@@ -19,7 +19,7 @@ Make the attack **maximally strong**: the version an informed opponent would act
 
 ## Report shape
 
-The caller supplies the output destination and owns any surrounding protocol markers. When run through a review job, write only the caller's `bundle-output.md`; when run by hand, name a report path explicitly before dispatch. Mutate nothing else.
+The caller supplies the output destination and owns any surrounding protocol markers. When run through a review job, write only the caller's `job-output.md`; when run by hand, name a report path explicitly before dispatch. Mutate nothing else.
 
 ```markdown
 # Critique: <note title>

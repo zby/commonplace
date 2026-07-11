@@ -1,6 +1,6 @@
 """Render review protocol prompts.
 
-One renderer for every packing shape: the prompt carries N note targets and
+One renderer for every grouping shape: the prompt carries N note targets and
 M assay criteria and requests one output block per persisted (note, criterion_path)
 pair. Notes and catalog criteria are embedded once; a conformance dependency
 serving as a criterion — the note's type spec or its collection's COLLECTION.md —
@@ -10,16 +10,16 @@ criteria, not prompt text addressed to it, and the read keeps that
 distinction evident.
 
 The referenced dependency is still snapshotted at job creation and pinned by
-acceptance, so freshness is unchanged. The disk read opens a window: a
+freshness baseline, so freshness is unchanged. The disk read opens a window: a
 dependency edited between job creation and the worker's read is judged in its
-new text while acceptance pins the creation-time snapshot. A persistent edit
-self-heals — the acceptance is immediately stale (`criterion-changed`) against the
+new text while the freshness baseline pins the creation-time snapshot. A persistent edit
+self-heals — the freshness baseline is immediately stale (`criterion-changed`) against the
 changed file — so only an edit reverted within the window escapes notice.
 
-Freshness boundary: acceptance hashes only the note and criterion
+Freshness boundary: the freshness baseline hashes only the note and criterion
 texts. Everything this module renders around them — the runner system prompt,
 reading scope, output contract, templates, the conformance wrappers — is
-outside the freshness hash, so editing it does NOT invalidate accepted
+outside the freshness hash, so editing it does NOT invalidate baseline
 assays. Keep this layer mechanical (how to read inputs and emit a result);
 judgment-bearing criteria must live in criterion files, where the hash sees
 them. In particular a conformance wrapper may say how to apply a type spec or
@@ -27,7 +27,7 @@ COLLECTION.md as a gate, never what a good note of the type or collection
 looks like — conformance criteria that need sharpening go into the dependency
 document itself (an authored `## Review` section), not into a richer wrapper.
 A scaffolding change that shifts judgments is a system upgrade and needs a
-deliberate corpus-wide re-review or ack decision.
+deliberate corpus-wide re-review or ack outcome.
 """
 
 from __future__ import annotations
@@ -36,7 +36,7 @@ from dataclasses import dataclass
 from typing import Literal, Sequence
 
 from commonplace.review.protocol.format import (
-    DECISION_LINE_INSTRUCTION,
+    OUTCOME_LINE_INSTRUCTION,
     PAIR_END_TEMPLATE,
     PAIR_KEY_SEPARATOR,
     PAIR_START_TEMPLATE,
@@ -175,7 +175,7 @@ def render_pairs_prompt(
     criterion_texts: dict[str, str],
     result_kind: str,
     output_mode: OutputMode = "stdout",
-    bundle_output_path: str | None = None,
+    job_output_path: str | None = None,
 ) -> str:
     _validate_targets(notes, criterion_texts)
     criterion_paths = sorted({criterion_path for note in notes for criterion_path in note.criterion_paths})
@@ -183,11 +183,11 @@ def render_pairs_prompt(
     has_collection_md_gate = any(is_collection_md_criterion_path(criterion_path) for criterion_path in criterion_paths)
 
     if output_mode == "file":
-        if bundle_output_path is None:
-            raise ValueError("bundle_output_path is required for file output mode")
+        if job_output_path is None:
+            raise ValueError("job_output_path is required for file output mode")
         destination_lines = [
-            f"- Write exactly one markdown document to `{bundle_output_path}`.",
-            "- Do not invoke review helper scripts while writing the review bundle.",
+            f"- Write exactly one markdown document to `{job_output_path}`.",
+            "- Do not invoke review helper scripts while writing the job output.",
         ]
     elif output_mode == "stdout":
         destination_lines = [
@@ -200,7 +200,7 @@ def render_pairs_prompt(
     if result_kind not in {"verdict", "report"}:
         raise ValueError(f"invalid result kind: {result_kind}")
     result_instruction = (
-        DECISION_LINE_INSTRUCTION
+        OUTCOME_LINE_INSTRUCTION
         if result_kind == "verdict"
         else "- Inside each block, include exactly one completion line: `## Result: REPORT`. Do not emit PASS, WARN, FAIL, or ERROR."
     )

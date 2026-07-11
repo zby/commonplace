@@ -58,8 +58,8 @@ Job creation may use `model_partition_runner_models` to choose a default runner 
 
 ## Non-goals
 
-- Do not derive acceptance identity from telemetry.
-- Do not re-key existing jobs, job items, or acceptance rows when registry defaults change.
+- Do not derive freshness baseline identity from telemetry.
+- Do not re-key existing jobs, job items, or freshness baseline rows when registry defaults change.
 - Do not require this table for the queued-job refactor.
 - Do not make `runner_model` part of freshness identity.
 
@@ -68,7 +68,7 @@ Job creation may use `model_partition_runner_models` to choose a default runner 
 - Should unknown partitions be rejected, auto-inserted, or accepted with a warning?
 - Are per-runner default models required configuration, advisory suggestions, or only a CLI convenience?
 - Should registry changes be managed by review DB migrations, a dedicated CLI, or a project config file that syncs into SQLite?
-- Should aliases be immutable once used by an acceptance row?
+- Should aliases be immutable once used by an freshness baseline row?
 
 ## Adoption criteria
 

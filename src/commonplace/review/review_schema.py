@@ -6,13 +6,13 @@ from __future__ import annotations
 import sqlite3
 from pathlib import Path
 
-REVIEW_SCHEMA_VERSION = 6
+REVIEW_SCHEMA_VERSION = 7
 EXPECTED_REVIEW_TABLES = frozenset(
     {
         "review_jobs",
         "review_file_snapshots",
         "review_pairs",
-        "acceptance",
+        "freshness_baselines",
     }
 )
 EXPECTED_REVIEW_INDEXES = frozenset(
@@ -21,10 +21,10 @@ EXPECTED_REVIEW_INDEXES = frozenset(
         "idx_review_jobs_status",
         "idx_review_pairs_note_criterion",
         "idx_review_pairs_review_job_id",
-        "idx_acceptance_note_criterion_model_partition",
+        "idx_freshness_baselines_note_criterion_model_partition",
     }
 )
-EXPECTED_REVIEW_VIEWS = frozenset({"current_criterion_acceptances"})
+EXPECTED_REVIEW_VIEWS = frozenset({"current_freshness_baselines"})
 
 
 def init_db(db_path: Path, schema_path: Path) -> None:
@@ -35,12 +35,12 @@ def init_db(db_path: Path, schema_path: Path) -> None:
         review_tables = {
             table_name
             for table_name in existing_tables
-            if table_name.startswith("review_") or table_name == "acceptance"
+            if table_name.startswith("review_") or table_name == "freshness_baselines"
         }
         if not review_tables:
             apply_schema(conn, schema_path)
             _set_user_version(conn, REVIEW_SCHEMA_VERSION)
-            _assert_review_store_integrity(conn)
+            assert_review_store_integrity(conn)
             conn.commit()
             return
 
@@ -50,7 +50,7 @@ def init_db(db_path: Path, schema_path: Path) -> None:
                 f"review DB schema version {current_version} does not match current "
                 f"version {REVIEW_SCHEMA_VERSION}; recreate the review store"
             )
-        _assert_review_store_integrity(conn)
+        assert_review_store_integrity(conn)
         conn.commit()
     finally:
         conn.close()
@@ -93,7 +93,7 @@ def _assert_expected_schema_objects(conn: sqlite3.Connection) -> None:
     review_tables = {
         table_name
         for table_name in tables
-        if table_name.startswith("review_") or table_name == "acceptance"
+        if table_name.startswith("review_") or table_name == "freshness_baselines"
     }
     unexpected_tables = review_tables - EXPECTED_REVIEW_TABLES
     missing_tables = EXPECTED_REVIEW_TABLES - tables
@@ -122,6 +122,45 @@ def _assert_foreign_key_integrity(conn: sqlite3.Connection) -> None:
         raise RuntimeError(f"foreign key check failed: {'; '.join(details)}")
 
 
-def _assert_review_store_integrity(conn: sqlite3.Connection) -> None:
+def _assert_baseline_integrity(conn: sqlite3.Connection) -> None:
+    row = conn.execute(
+        """
+        SELECT b.note_path, b.criterion_path, b.model_partition
+        FROM freshness_baselines AS b
+        LEFT JOIN review_pairs AS rp
+          ON rp.review_pair_id = b.evidence_review_pair_id
+        LEFT JOIN review_jobs AS j
+          ON j.review_job_id = rp.review_job_id
+        LEFT JOIN review_file_snapshots AS note_snapshot
+          ON note_snapshot.snapshot_id = b.baseline_note_snapshot_id
+        LEFT JOIN review_file_snapshots AS criterion_snapshot
+          ON criterion_snapshot.snapshot_id = b.baseline_criterion_snapshot_id
+        WHERE rp.review_pair_id IS NULL
+           OR rp.note_path != b.note_path
+           OR rp.criterion_path != b.criterion_path
+           OR rp.completed_at IS NULL
+           OR (rp.result_kind = 'verdict' AND rp.outcome IS NULL)
+           OR (rp.result_kind = 'report' AND rp.outcome IS NOT NULL)
+           OR j.review_job_id IS NULL
+           OR j.status != 'completed'
+           OR j.model_partition != b.model_partition
+           OR note_snapshot.snapshot_id IS NULL
+           OR note_snapshot.path != b.note_path
+           OR note_snapshot.content_text IS NULL
+           OR criterion_snapshot.snapshot_id IS NULL
+           OR criterion_snapshot.path != b.criterion_path
+           OR criterion_snapshot.content_text IS NULL
+        LIMIT 1
+        """
+    ).fetchone()
+    if row is not None:
+        raise RuntimeError(
+            "malformed freshness baseline: "
+            f"{row['note_path']} :: {row['criterion_path']} :: {row['model_partition']}"
+        )
+
+
+def assert_review_store_integrity(conn: sqlite3.Connection) -> None:
     _assert_expected_schema_objects(conn)
     _assert_foreign_key_integrity(conn)
+    _assert_baseline_integrity(conn)

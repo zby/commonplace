@@ -49,11 +49,11 @@ Review state is the one subsystem that is not file-backed. The review database s
 
 | Table | Contents |
 |---|---|
-| `review_jobs` | One row per review invocation/prompt, with freshness `model_partition`, nullable finalization-time runner provenance, `queued`/`completed`/`failed` status, created/completed timing, and packing |
-| `review_pairs` | One row per requested `(note_path, criterion_path)` pair inside a job, with persisted `result_kind`, nullable decision, `reviewed_at`, and reviewed snapshot IDs; model partition is derived through the parent job |
-| `acceptance` | Current snapshot-pinned freshness baseline per `(note_path, criterion_path, model_partition)` |
+| `review_jobs` | One row per review invocation/prompt, with freshness `model_partition`, nullable finalization-time runner provenance, `queued`/`completed`/`failed` status, created/completed timing, and grouping |
+| `review_pairs` | One row per requested `(note_path, criterion_path)` pair inside a job, with persisted `result_kind`, nullable outcome, `completed_at`, and reviewed snapshot IDs; model partition is derived through the parent job |
+| `freshness_baselines` | Current snapshot-pinned freshness baseline per `(note_path, criterion_path, model_partition)` |
 
-Prompt, bundle-output, manifest, and per-pair result paths are derived from the review job id, packing, and pair set. Acceptance is keyed by `(note_path, criterion_path, model_partition)` and stored as one current row per key; it means the evidence is fresh, not that the note is globally approved. `current_criterion_acceptances` exposes only rows whose parent job is completed and whose pair has per-kind completion: `reviewed_at` plus a decision for verdict pairs, or `reviewed_at` plus a null decision for report pairs. Selector logic reads current note and criterion content from files and compares their hashes against accepted DB-owned snapshots. Successful supersede prunes obsolete review rows, unreferenced snapshots, and whole obsolete job artifact directories inline; there is no separate prune command.
+Prompt, job-output, manifest, and per-pair result paths are derived from the review job id, grouping, and pair set. A freshness baseline is keyed by `(note_path, criterion_path, model_partition)` and stored as one current row per key; it means the evidence is fresh, not that the note is globally approved. `current_freshness_baselines` enriches those rows with evidence-pair results and baseline snapshot content. Selector logic compares current note and criterion hashes against those snapshots; malformed baselines raise integrity errors. Successful supersede prunes obsolete review rows, unreferenced snapshots, and whole obsolete job artifact directories inline; there is no separate prune command.
 
 Notes, criteria, instructions, and source material remain file-backed. The operational schema and commands name the generic assay axis `criterion`; `gate` names only closed-ended, verdict-kind criteria and their catalog. See [ADR-010](./adr/010-review-state-should-move-to-sqlite-once-reviews-leave-git-and.md), [ADR-032](./adr/032-review-freshness-uses-db-snapshots-not-git.md), [ADR-033](./adr/033-honest-review-run-state.md), [ADR-034](./adr/034-queued-review-jobs-and-execution-provenance.md), [ADR-035](./adr/035-review-jobs-finalize-all-or-nothing-with-derived-artifacts.md), and [ADR-036](./adr/036-review-acceptance-is-current-state-not-append-only-history.md) for the rationale.
 
@@ -61,5 +61,5 @@ Notes, criteria, instructions, and source material remain file-backed. The opera
 
 - [documentation-site.md](./documentation-site.md) — how the MkDocs site renders these files, the README-vs-index rule, and the reader landing-page inventory
 - [architecture.md](./architecture.md) — installed project layout and surface-by-role
-- [ADR-010](./adr/010-review-state-should-move-to-sqlite-once-reviews-leave-git-and.md) — decision: SQLite for review state
-- [ADR-007](./adr/007-reports-directory-for-generated-snapshots.md) — decision: `kb/reports/` for generated operational artifacts
+- [ADR-010](./adr/010-review-state-should-move-to-sqlite-once-reviews-leave-git-and.md) — outcome: SQLite for review state
+- [ADR-007](./adr/007-reports-directory-for-generated-snapshots.md) — outcome: `kb/reports/` for generated operational artifacts

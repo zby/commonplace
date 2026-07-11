@@ -248,7 +248,7 @@ def _pair_payload(pair) -> dict[str, object]:
         "criterion_id": pair.criterion_id,
         "pair_ordinal": pair.pair_ordinal,
         "result_kind": pair.result_kind,
-        "decision": pair.decision,
+        "outcome": pair.outcome,
         "result_path": pair.result_path,
     }
 
@@ -263,9 +263,9 @@ def _job_payload(plan: ReviewJobPlan, *, include_timestamps: bool = False) -> di
         "runner": plan.runner,
         "runner_model": plan.runner_model,
         "runner_effort": plan.runner_effort,
-        "packing": plan.packing,
+        "grouping": plan.grouping,
         "prompt_path": plan.prompt_path,
-        "bundle_output_path": plan.bundle_output_path,
+        "job_output_path": plan.job_output_path,
         "pair_count": len(plan.pairs),
         "pairs": pair_items,
     }
@@ -278,7 +278,7 @@ def _job_payload(plan: ReviewJobPlan, *, include_timestamps: bool = False) -> di
             }
         )
         for item, pair in zip(pair_items, ordered_pairs, strict=True):
-            item["reviewed_at"] = pair.reviewed_at
+            item["completed_at"] = pair.completed_at
     return payload
 
 
@@ -362,7 +362,7 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
                 db_path=db_path,
                 pairs=[(pair.note_path, pair.criterion_path, pair.result_kind) for pair in group],
                 skipped=[],
-                packing=args.grouping,
+                grouping=args.grouping,
                 runner=None,
                 model_partition=model_partition,
             )

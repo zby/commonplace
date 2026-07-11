@@ -11,11 +11,11 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from commonplace.review.freshness import file_content_sha256
-from commonplace.review.protocol.decisions import strip_explicit_review_result_lines
+from commonplace.review.protocol.outcomes import strip_explicit_review_result_lines
 from commonplace.review.review_db import (
     ReviewPairRow,
     connect,
-    load_current_acceptances,
+    load_current_freshness_baselines,
     load_effective_review_pair_map,
     prepare_review_db,
 )
@@ -70,14 +70,14 @@ def _extract_section(text: str, pattern: re.Pattern[str]) -> str | None:
     return body or None
 
 
-def extract_warns(review_text: str, *, decision: str) -> list[str]:
+def extract_warns(review_text: str, *, outcome: str) -> list[str]:
     findings = _extract_section(review_text, FINDINGS_SECTION_RE)
     if findings:
         actionable = [match.group("body").strip() for match in ACTIONABLE_FINDING_RE.finditer(findings)]
         if actionable:
             return actionable
 
-    if decision != "warn":
+    if outcome != "warn":
         return []
 
     summary = _extract_section(review_text, SUMMARY_SECTION_RE)
@@ -126,33 +126,33 @@ def scan_reviews(
             note_path=next(iter(note_filter)) if note_filter and len(note_filter) == 1 else None,
             model_partition=None,
         )
-        acceptances = load_current_acceptances(conn)
+        freshness_baselines = load_current_freshness_baselines(conn)
 
     for (note_path, criterion_path, model_partition), review in sorted(effective_reviews.items()):
         if note_filter and note_path not in note_filter:
             continue
-        acceptance = acceptances.get((note_path, criterion_path, model_partition))
-        if acceptance is None or acceptance.accepted_criterion_hash is None:
+        freshness_baseline = freshness_baselines.get((note_path, criterion_path, model_partition))
+        if freshness_baseline is None:
             stale_gates.add(criterion_path)
             continue
         current_criterion_hash = _current_gate_content_hash(repo_root / criterion_path)
-        if current_criterion_hash is None or current_criterion_hash != acceptance.accepted_criterion_hash:
+        if current_criterion_hash is None or current_criterion_hash != freshness_baseline.baseline_criterion_hash:
             stale_gates.add(criterion_path)
             continue
-        if review.decision is None:
+        if review.outcome is None:
             continue
         review_text = _load_review_text(repo_root, review)
         if review_text is None:
             continue
-        warns = extract_warns(review_text, decision=review.decision)
+        warns = extract_warns(review_text, outcome=review.outcome)
         if not warns:
             continue
 
         gate_key = (note_path, criterion_path)
         selected_tuple = selected_by_gate.get(gate_key)
         selected = selected_tuple[0] if selected_tuple is not None else None
-        if selected is None or (review.reviewed_at or "", review.review_pair_id) > (
-            selected.reviewed_at or "",
+        if selected is None or (review.completed_at or "", review.review_pair_id) > (
+            selected.completed_at or "",
             selected.review_pair_id,
         ):
             selected_by_gate[gate_key] = (review, review_text, warns)

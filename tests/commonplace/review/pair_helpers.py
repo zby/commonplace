@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import sqlite3
+from hashlib import sha256
 
 from commonplace.review import review_db
 
@@ -18,8 +19,8 @@ def insert_completed_pair(
     note_path: str,
     criterion_id: str,
     model_partition: str,
-    decision: str,
-    reviewed_at: str,
+    outcome: str,
+    completed_at: str,
     runner: str = "test-runner",
     reviewed_note_snapshot_id: int | None = None,
     reviewed_criterion_snapshot_id: int | None = None,
@@ -29,9 +30,9 @@ def insert_completed_pair(
         conn,
         model_partition=model_partition,
         runner=runner,
-        created_at=reviewed_at,
+        created_at=completed_at,
         status="queued",
-        packing="note",
+        grouping="note",
         pairs=[
             review_db.ReviewPairRequest(
                 note_path=note_path,
@@ -46,11 +47,11 @@ def insert_completed_pair(
     pair = review_db.ReviewPairCompletion(
         note_path=note_path,
         criterion_path=criterion_path,
-        decision=decision,
-        reviewed_at=reviewed_at,
+        outcome=outcome,
+        completed_at=completed_at,
     )
-    review_db.complete_review_pairs(conn, review_job_id=review_job_id, review_pairs=[pair], reviewed_at=reviewed_at)
-    review_db.complete_review_job(conn, review_job_id=review_job_id, completed_at=reviewed_at)
+    review_db.complete_review_pairs(conn, review_job_id=review_job_id, review_pairs=[pair], completed_at=completed_at)
+    review_db.complete_review_job(conn, review_job_id=review_job_id, completed_at=completed_at)
     review_pair = review_db.load_review_pairs_for_job(conn, review_job_id=review_job_id)[0]
     return review_pair.review_pair_id
 
@@ -62,17 +63,52 @@ def accept_pair(
     note_path: str,
     criterion_id: str,
     model_partition: str,
-    accepted_at: str,
-    accepted_note_snapshot_id: int | None = None,
-    accepted_criterion_snapshot_id: int | None = None,
-) -> review_db.SupersededAcceptance | None:
-    return review_db.upsert_acceptance(
+    baseline_updated_at: str,
+    baseline_note_snapshot_id: int | None = None,
+    baseline_criterion_snapshot_id: int | None = None,
+) -> review_db.SupersededFreshnessBaseline | None:
+    criterion_path = source_criterion_path(criterion_id)
+    if baseline_note_snapshot_id is None:
+        baseline_note_snapshot_id = _synthetic_snapshot(
+            conn,
+            path=note_path,
+            captured_at=baseline_updated_at,
+        )
+    if baseline_criterion_snapshot_id is None:
+        baseline_criterion_snapshot_id = _synthetic_snapshot(
+            conn,
+            path=criterion_path,
+            captured_at=baseline_updated_at,
+        )
+    return review_db.upsert_freshness_baseline(
         conn,
         note_path=note_path,
-        criterion_path=source_criterion_path(criterion_id),
+        criterion_path=criterion_path,
         model_partition=model_partition,
-        accepted_review_pair_id=review_pair_id,
-        accepted_note_snapshot_id=accepted_note_snapshot_id,
-        accepted_criterion_snapshot_id=accepted_criterion_snapshot_id,
-        accepted_at=accepted_at,
+        evidence_review_pair_id=review_pair_id,
+        baseline_note_snapshot_id=baseline_note_snapshot_id,
+        baseline_criterion_snapshot_id=baseline_criterion_snapshot_id,
+        baseline_updated_at=baseline_updated_at,
     )
+
+
+def _synthetic_snapshot(conn: sqlite3.Connection, *, path: str, captured_at: str) -> int:
+    content_text = f"synthetic snapshot for {path}\n"
+    content_hash = sha256(content_text.encode("utf-8")).hexdigest()
+    conn.execute(
+        """
+        INSERT OR IGNORE INTO review_file_snapshots (
+            path, content_sha256, content_text, captured_at
+        ) VALUES (?, ?, ?, ?)
+        """,
+        (path, content_hash, content_text, captured_at),
+    )
+    row = conn.execute(
+        """
+        SELECT snapshot_id FROM review_file_snapshots
+        WHERE path = ? AND content_sha256 = ?
+        """,
+        (path, content_hash),
+    ).fetchone()
+    assert row is not None
+    return int(row["snapshot_id"])

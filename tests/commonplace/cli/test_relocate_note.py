@@ -229,11 +229,11 @@ def test_relocate_note_apply_leaves_review_state_rows_unchanged_and_paths_derive
     assert old_pairs[0].review_pair_id == review_pair_id
     assert new_pairs == []
     assert "prompt_path" not in rows_after["review_jobs"][0]
-    assert "bundle_output_path" not in rows_after["review_jobs"][0]
+    assert "job_output_path" not in rows_after["review_jobs"][0]
     assert "result_path" not in rows_after["review_pairs"][0]
-    assert plan.prompt_path == "kb/reports/bundle-reviews/review-job-1/prompt.md"
-    assert plan.bundle_output_path == "kb/reports/bundle-reviews/review-job-1/bundle-output.md"
-    assert old_pairs[0].result_path == "kb/reports/bundle-reviews/review-job-1/pair-1-source-residue.md"
+    assert plan.prompt_path == "kb/reports/review-jobs/review-job-1/prompt.md"
+    assert plan.job_output_path == "kb/reports/review-jobs/review-job-1/job-output.md"
+    assert old_pairs[0].result_path == "kb/reports/review-jobs/review-job-1/pair-1-source-residue.md"
 
     stale = review_target_selector.select_stale_criteria(
         repo_root,
@@ -243,7 +243,7 @@ def test_relocate_note_apply_leaves_review_state_rows_unchanged_and_paths_derive
         db_path=db_path,
     )
     assert [(record.note_path, record.criterion_id, record.reason) for record in stale] == [
-        ("kb/notes/archive/new-note-title.md", GATE_ID, "missing-review")
+        ("kb/notes/archive/new-note-title.md", GATE_ID, "missing-baseline")
     ]
 
 

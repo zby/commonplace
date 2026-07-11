@@ -51,12 +51,12 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
         help=(
             "Review model partition to query or acknowledge (a partition name such as "
             "'claude-opus-4.8', not the concrete model that will run). "
-            "Omit only for model-agnostic missing-review coverage."
+            "Omit only for model-agnostic missing-baseline coverage."
         ),
     )
     parser.add_argument(
         "--reason",
-        choices=["missing-review", "criterion-changed", "note-changed"],
+        choices=["missing-baseline", "criterion-changed", "note-changed"],
         help="Filter output to a single staleness reason.",
     )
     args = parser.parse_args(argv)
@@ -87,8 +87,8 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
         parser.error("--reason is only valid with --mode stale")
     if args.mode == "requested" and model is None:
         parser.error("--model-partition is required with --mode requested")
-    if args.mode == "stale" and model is None and args.reason not in (None, "missing-review"):
-        parser.error("--model-partition is required unless selecting missing-review coverage")
+    if args.mode == "stale" and model is None and args.reason not in (None, "missing-baseline"):
+        parser.error("--model-partition is required unless selecting missing-baseline coverage")
 
     try:
         if args.mode == "requested":

@@ -10,7 +10,7 @@ Run selected `(note, criterion)` pairs from inside the current agent harness. Th
 Use this procedure for either:
 
 - explicit execution of requested gates or report assays, even if already fresh
-- stale execution selected from accepted review state
+- stale execution selected from freshness-baseline state
 
 Inputs:
 
@@ -26,7 +26,7 @@ Two model flags, two meanings: every partition-valued flag in the review CLI is 
 
 Always create jobs from selector JSON. The job creator has no direct note or pair mode.
 
-Selector JSON carries `result_kind`. Packing never mixes result kinds: verdict pairs and report pairs always become separate jobs. Do not infer a result contract from live criterion text at finalization time.
+Selector JSON carries `result_kind`. Grouping never mixes result kinds: verdict pairs and report pairs always become separate jobs. Do not infer a result contract from live criterion text at finalization time.
 
 If the harness cannot launch sub-agents or workers, stop and report that review-batch delegation is unavailable. Do not review the batches locally unless the user explicitly authorizes a local fallback for this run.
 
@@ -64,7 +64,7 @@ commonplace-review-target-selector --model-partition {model-partition} --all-gat
   | commonplace-create-review-jobs --input - --grouping {note|criterion} [--batch-size {n}]
 ```
 
-Add `--reason {missing-review|criterion-changed|note-changed}` to the selector only when the user asks for that stale subset.
+Add `--reason {missing-baseline|criterion-changed|note-changed}` to the selector only when the user asks for that stale subset.
 
 ### Choose grouping
 
@@ -76,7 +76,7 @@ The selector emits applicable pairs with their persisted result kinds. The creat
 
 - `review_job_id`
 - derived `prompt_path`
-- derived `bundle_output_path`
+- derived `job_output_path`
 - each pair's `criterion_id` and `criterion_path`
 
 Each returned job is one review batch for this procedure. Do not invent, merge, split, or reorder jobs. Use exactly the job grouping and pair list the creator returns.
@@ -93,7 +93,7 @@ Give each sub-agent exactly one job object and this task:
 Review job {review_job_id}.
 
 Read {prompt_path} and follow it exactly. It is the authoritative reviewer instruction for this job.
-Write the complete sentinel-bracketed review output to {bundle_output_path}.
+Write the complete sentinel-bracketed review output to {job_output_path}.
 
 Do not edit the reviewed note, assay criteria, manifests, indexes, or any library artifact.
 Do not run commonplace-* commands.
@@ -102,9 +102,9 @@ Return each pair and its final result marker: PASS/WARN/FAIL/ERROR for verdict p
 Also return your exact model ID and reasoning effort, copied verbatim from the explicit model-ID line in your environment context. Do not guess or infer them.
 ```
 
-The sub-agent owns only its `bundle_output_path`. The parent owns job creation, dispatch bookkeeping, worker scheduling, finalization, verification, and reporting.
+The sub-agent owns only its `job_output_path`. The parent owns job creation, dispatch bookkeeping, worker scheduling, finalization, verification, and reporting.
 
-After a worker returns, verify that its `bundle_output_path` exists and is non-empty, then close, terminate, or release that worker with the harness's lifecycle operation before scheduling another worker. If the harness exposes stop/interrupt rather than close, use it after the output is safely on disk. Workers are single-use contexts: do not send follow-up tasks or retain them for later jobs.
+After a worker returns, verify that its `job_output_path` exists and is non-empty, then close, terminate, or release that worker with the harness's lifecycle operation before scheduling another worker. If the harness exposes stop/interrupt rather than close, use it after the output is safely on disk. Workers are single-use contexts: do not send follow-up tasks or retain them for later jobs.
 
 ## Finalize completed jobs
 
@@ -114,7 +114,9 @@ commonplace-finalize-review-job --review-job-id {review-job-id} --runner {worker
 
 Pass the model the worker reported to `--model`; finalization validates `build_model_partition(--model, --effort)` against the job's `model_partition` before mutating state. If the worker reported an explicit reasoning effort, also pass `--effort {low|medium|high|xhigh}`. Pass only `--runner` when the worker could not report a concrete model. If the harness exposes opaque execution telemetry, pass it with `--telemetry-json`.
 
-Run finalization once per completed sub-agent output. It reads job-owned output, parses each block against the pair's persisted result kind, records provenance and per-kind completion, writes result files, upserts current acceptance, prunes superseded evidence, and marks the job completed. Finalization is all-or-nothing: malformed or incomplete output fails the job and writes no acceptance.
+Run finalization once per completed sub-agent output. It reads job-owned output, parses each block against the pair's persisted result kind, records provenance and per-kind completion, writes result files, creates or replaces current freshness baselines, prunes superseded evidence, and marks the job completed. Finalization is all-or-nothing: malformed or incomplete output fails the job and writes no freshness baseline.
+
+`ERROR` means the worker could not produce a contracted result. It follows the same all-or-nothing failure path: no pair completes and no freshness baseline advances.
 
 After finalization, `MANIFEST.json` in the job artifact directory is refreshed for inspection with job-derived pair display status and derived `result_path` files. Treat the returned job payload and derived job paths as pipeline state; do not read `MANIFEST.json` to decide what to finalize.
 
@@ -135,6 +137,6 @@ For stale-mode runs, rerun the same selector command used for selection. An outp
 - Do not bypass selector JSON when creating jobs.
 - Do not let the parent agent perform the review judgment when sub-agent delegation is available.
 - Do not invoke retired manual review-writing or ingest commands; use `commonplace-finalize-review-job`.
-- Do not skip a requested pair block in bundle output.
+- Do not skip a requested pair block in job output.
 - Do not ask sub-agents to run finalization or any other bookkeeping command.
 - Do not combine multiple jobs into one output file.

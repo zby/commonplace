@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Finalize a review job from its derived bundle output path."""
+"""Finalize a review job from its derived job output path."""
 
 from __future__ import annotations
 
@@ -17,7 +17,7 @@ def _print_json(payload: dict[str, object]) -> None:
 
 
 def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Finalize a review job from its job-owned bundle output.")
+    parser = argparse.ArgumentParser(description="Finalize a review job from its job-owned output.")
     parser.add_argument("--review-job-id", type=int, required=True, help="Review job id to finalize.")
     parser.add_argument("--runner", help="Worker or execution medium that produced the output.")
     parser.add_argument("--model", help="Concrete worker model that produced the output.")

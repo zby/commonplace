@@ -150,6 +150,59 @@ Close this workshop when:
 11. Any follow-up work outside scope is routed to a proposal or neighboring workshop.
 12. This directory and its entry in `kb/work/README.md` are deleted.
 
+## Implementation status (2026-07-11)
+
+The target is implemented as schema v7 and promoted in
+[ADR 043](../../reference/adr/043-review-state-separates-completion-outcomes-and-freshness-baselines.md).
+The direct v5→v7 script preserved the retained store's 32 jobs, 44 pairs, 15
+snapshots, and 44 freshness baselines after a copied-store rehearsal. The
+byte-identical v5 backup remains at
+`kb/reports/review-store.v5.backup.sqlite` with SHA-256
+`927d6dccdbdcd364f3919c3da633cae956995b94a91e6bac50cb97d70f7906a8`.
+
+Implementation and verification complete:
+
+- schema, Python records/APIs, CLI JSON/text, manifests, artifact paths,
+  protocol parsing, selectors, acknowledgement, pruning, and current docs use
+  the adopted vocabulary;
+- `ERROR`, verdict/report completion, baseline integrity, acknowledgement
+  identity preservation, and direct migration have negative/transition tests;
+- the full Python suite passes (`381 passed, 1 skipped`), as do Ruff,
+  `git diff --check`, real-store SQLite integrity/foreign-key checks, all 44
+  baseline relationship checks, and deterministic validation of every edited
+  KB artifact;
+- the retired-term scan is clean in active surfaces. Remaining matches are the
+  authored `sentence/clause-packing` gate, historical ADRs, the v5 migration
+  script/fixture, and generic non-review uses of “decision” or “acceptance.”
+
+Legacy-test disposition by invariant:
+
+- **retain/rename:** grouping, job-path derivation, all-or-nothing
+  finalization, result-kind homogeneity, pruning, relocation, selectors, and
+  warn extraction still protect surviving behavior under the new surface;
+- **rewrite:** nullable/hidden baseline tests now require complete snapshots
+  and prove malformed rows raise; ack tests now require an existing baseline
+  and prove its evidence-pair identity survives;
+- **replace:** the old v4→v5-only migration assertion is replaced by direct
+  v5→v7 identity/count/relationship preservation plus synthetic-v5-`ERROR`
+  rejection; protocol and finalization tests now prove `ERROR` fails rather
+  than completes;
+- **delete:** the unreferenced, already schema-stale
+  `scripts/review-problems-for-note.py` helper is removed. No test remains for
+  manufacturing a baseline from an arbitrary historical pair or treating a
+  malformed baseline as ordinary stale state.
+
+The workshop is not deleted yet because the collection-wide deterministic
+validation sweep still reports two unrelated, pre-existing filename-length
+failures under `kb/sources/`:
+
+- `before-llms-palantir-was-competing-with-snowflake-and-databricks-po-2006384049485484145.md`
+- `large-language-model-agents-are-not-always-faithful-self-evolvers.ingest.md`
+
+Those source relocations are outside this workshop's scope. Once the repository
+validation baseline is clean (or closure explicitly accepts pre-existing
+failures), remove this directory and its `kb/work/README.md` entry.
+
 ## Grounding
 
 - [Review system](../../reference/README-REVIEW-SYSTEM.md) — current concepts and operator surface.

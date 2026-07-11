@@ -63,7 +63,7 @@ def seed_warn_review(repo: Path, db_path: Path) -> None:
             runner="test-runner",
             created_at=REVIEWED_AT,
             status="queued",
-            packing="note",
+            grouping="note",
             pairs=[
                 review_db.ReviewPairRequest(
                     note_path="kb/notes/sample.md",
@@ -82,25 +82,25 @@ def seed_warn_review(repo: Path, db_path: Path) -> None:
                 review_db.ReviewPairCompletion(
                     note_path="kb/notes/sample.md",
                     criterion_path=GATE_PATH,
-                    decision="warn",
-                    reviewed_at=REVIEWED_AT,
+                    outcome="warn",
+                    completed_at=REVIEWED_AT,
                 )
             ],
-            reviewed_at=REVIEWED_AT,
+            completed_at=REVIEWED_AT,
         )
         review_db.complete_review_job(conn, review_job_id=review_job_id, completed_at=REVIEWED_AT)
         review_pair = review_db.load_review_pairs_for_job(conn, review_job_id=review_job_id)[0]
         assert review_pair.result_path is not None
         write(repo / review_pair.result_path, "### Findings\n- WARN: actionable finding\n\n## Result: WARN\n")
-        review_db.upsert_acceptance(
+        review_db.upsert_freshness_baseline(
             conn,
             note_path="kb/notes/sample.md",
             criterion_path=GATE_PATH,
             model_partition=TEST_MODEL,
-            accepted_review_pair_id=review_pair.review_pair_id,
-            accepted_note_snapshot_id=note_snapshot.snapshot_id,
-            accepted_criterion_snapshot_id=criterion_snapshot.snapshot_id,
-            accepted_at=REVIEWED_AT,
+            evidence_review_pair_id=review_pair.review_pair_id,
+            baseline_note_snapshot_id=note_snapshot.snapshot_id,
+            baseline_criterion_snapshot_id=criterion_snapshot.snapshot_id,
+            baseline_updated_at=REVIEWED_AT,
         )
         conn.commit()
 

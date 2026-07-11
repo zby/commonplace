@@ -6,7 +6,7 @@ from pathlib import Path
 
 from commonplace.review.collection_conformance import (
     collection_criterion_id_for_path,
-    is_collection_gate_request,
+    is_collection_conformance_request,
     is_collection_md_criterion_path,
     resolve_collection_criterion_id,
 )
@@ -17,7 +17,7 @@ from commonplace.review.critique import (
     is_critique_request,
 )
 from commonplace.review.type_conformance import (
-    is_type_gate_request,
+    is_type_conformance_request,
     is_type_spec_criterion_path,
     resolve_type_criterion_id,
     type_criterion_id_for_path,
@@ -52,9 +52,9 @@ def criterion_path_for_id(repo_root: Path, criterion_id: str) -> str:
     """Resolve a criterion shorthand to its repo-relative markdown path."""
     normalized = criterion_id.strip().removesuffix(".md")
     _reject_unsafe_relative(normalized, kind="criterion id")
-    if is_type_gate_request(normalized):
+    if is_type_conformance_request(normalized):
         return resolve_type_criterion_id(repo_root, normalized)
-    if is_collection_gate_request(normalized):
+    if is_collection_conformance_request(normalized):
         return resolve_collection_criterion_id(repo_root, normalized)
     if is_critique_request(normalized):
         return critique_criterion_path(repo_root)

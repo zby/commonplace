@@ -1,13 +1,14 @@
-"""Strict review decision parsing and footer rewriting."""
+"""Strict review outcome parsing and footer rewriting."""
 
 from __future__ import annotations
 
 import re
 
 
-DECISION_VALUES = ("pass", "warn", "fail", "error")
+OUTCOME_VALUES = ("pass", "warn", "fail")
 
-_STRICT_RESULT_LINE_RE = re.compile(r"^## Result: (?P<decision>PASS|WARN|FAIL|ERROR)$")
+_STRICT_RESULT_LINE_RE = re.compile(r"^## Result: (?P<outcome>PASS|WARN|FAIL)$")
+_ERROR_RESULT_LINE_RE = re.compile(r"^## Result: ERROR$")
 _STRICT_REPORT_LINE_RE = re.compile(r"^## Result: REPORT$")
 # Alias branches are case-insensitive via the scoped (?i:...) group; the bare
 # caps-word branch must stay case-sensitive or any single-word prose line
@@ -17,13 +18,13 @@ _RESULTISH_LINE_RE = re.compile(
     r"(?:\*\*)?Revised\s+(?:result|verdict|outcome))|"
     r"(?:\*\*)?[A-Z]{2,}(?:\*\*)?\s*$)"
 )
-_FLAGGING_DECISION_RE = re.compile(r"\bflagging\s+as\s+[A-Za-z]+\b", re.IGNORECASE)
+_FLAGGING_OUTCOME_RE = re.compile(r"\bflagging\s+as\s+[A-Za-z]+\b", re.IGNORECASE)
 
 
-def normalize_review_decision(raw: str) -> str | None:
-    decision = raw.strip().lower()
-    if decision in DECISION_VALUES:
-        return decision
+def normalize_review_outcome(raw: str) -> str | None:
+    outcome = raw.strip().lower()
+    if outcome in OUTCOME_VALUES:
+        return outcome
     return None
 
 
@@ -33,7 +34,7 @@ def _strict_result_lines(review_text: str) -> list[tuple[int, str, str]]:
         stripped = line.strip()
         match = _STRICT_RESULT_LINE_RE.match(stripped)
         if match is not None:
-            result_lines.append((index, stripped, match.group("decision").lower()))
+            result_lines.append((index, stripped, match.group("outcome").lower()))
     return result_lines
 
 
@@ -43,13 +44,15 @@ def _invalid_resultish_lines(review_text: str, strict_line: str | None) -> list[
         stripped = line.strip()
         if not stripped or stripped == strict_line:
             continue
-        if _RESULTISH_LINE_RE.match(stripped) or _FLAGGING_DECISION_RE.search(stripped):
+        if _RESULTISH_LINE_RE.match(stripped) or _FLAGGING_OUTCOME_RE.search(stripped):
             invalid.append(stripped)
     return invalid
 
 
-def parse_review_decision(review_text: str) -> str:
-    """Return the single strict result decision or raise on non-live output."""
+def parse_review_outcome(review_text: str) -> str:
+    """Return the single strict result outcome or raise on non-live output."""
+    if any(_ERROR_RESULT_LINE_RE.match(line.strip()) for line in review_text.splitlines()):
+        raise ValueError("worker reported ERROR")
     result_lines = _strict_result_lines(review_text)
     if not result_lines:
         invalid = _invalid_resultish_lines(review_text, strict_line=None)
@@ -59,7 +62,7 @@ def parse_review_decision(review_text: str) -> str:
     if len(result_lines) > 1:
         raise ValueError("duplicate result lines")
 
-    index, strict_line, decision = result_lines[0]
+    index, strict_line, outcome = result_lines[0]
     non_empty_line_indexes = [
         line_index
         for line_index, line in enumerate(review_text.splitlines())
@@ -71,11 +74,13 @@ def parse_review_decision(review_text: str) -> str:
     invalid = _invalid_resultish_lines(review_text, strict_line=strict_line)
     if invalid:
         raise ValueError(f"invalid result signal: {invalid[0]}")
-    return decision
+    return outcome
 
 
 def parse_report_completion(review_text: str) -> None:
     """Require REPORT as the sole final result signal."""
+    if any(_ERROR_RESULT_LINE_RE.match(line.strip()) for line in review_text.splitlines()):
+        raise ValueError("worker reported ERROR")
     lines = review_text.splitlines()
     report_indexes = [
         index for index, line in enumerate(lines) if _STRICT_REPORT_LINE_RE.match(line.strip())
@@ -111,12 +116,12 @@ def strip_explicit_review_result_lines(review_text: str) -> str:
     return re.sub(r"\n{3,}", "\n\n", "\n".join(kept).strip())
 
 
-def rewrite_review_result_footer(review_text: str, *, decision: str | None = None) -> str:
-    normalized_decision = normalize_review_decision(decision) if decision else parse_review_decision(review_text)
-    if normalized_decision is None:
-        raise ValueError(f"invalid review decision: {decision}")
+def rewrite_review_result_footer(review_text: str, *, outcome: str | None = None) -> str:
+    normalized_outcome = normalize_review_outcome(outcome) if outcome else parse_review_outcome(review_text)
+    if normalized_outcome is None:
+        raise ValueError(f"invalid review outcome: {outcome}")
     body = strip_explicit_review_result_lines(review_text)
-    footer = f"## Result: {normalized_decision.upper()}"
+    footer = f"## Result: {normalized_outcome.upper()}"
     if body:
         return f"{body}\n\n{footer}\n"
     return f"{footer}\n"

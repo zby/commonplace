@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import pytest
 
-from commonplace.review.protocol.parser import extract_pair_reviews, parse_pair_bundle
+from commonplace.review.protocol.parser import extract_pair_results, parse_job_output
 from commonplace.review.protocol.prompt import NoteReviewTarget, render_pairs_prompt
 
 
@@ -72,9 +72,9 @@ def test_render_pairs_prompt_file_output_mode_names_destination() -> None:
         criterion_texts={GATE: GATE_TEXT},
         result_kind="verdict",
         output_mode="file",
-        bundle_output_path="kb/reports/bundle-reviews/review-job-7/bundle-output.md",
+        job_output_path="kb/reports/review-jobs/review-job-7/job-output.md",
     )
-    assert "Write exactly one markdown document to `kb/reports/bundle-reviews/review-job-7/bundle-output.md`." in prompt
+    assert "Write exactly one markdown document to `kb/reports/review-jobs/review-job-7/job-output.md`." in prompt
     assert "Return exactly one markdown document in this process's stdout." not in prompt
 
 
@@ -128,8 +128,8 @@ No undefined terms found.
 """
 
 
-def test_extract_pair_reviews_parses_blocks_keyed_by_pair() -> None:
-    parsed = extract_pair_reviews(
+def test_extract_pair_results_parses_blocks_keyed_by_pair() -> None:
+    parsed = extract_pair_results(
         bundle_two_pairs(),
         expected_pairs=[("kb/notes/first.md", GATE), ("kb/notes/second.md", GATE)],
     )
@@ -139,7 +139,7 @@ def test_extract_pair_reviews_parses_blocks_keyed_by_pair() -> None:
     }
 
 
-def test_extract_pair_reviews_ignores_text_outside_blocks() -> None:
+def test_extract_pair_results_ignores_text_outside_blocks() -> None:
     bundle = f"""Preamble scratch text.
 
 === PAIR REVIEW START: kb/notes/first.md :: {GATE} ===
@@ -150,56 +150,56 @@ Undefined acronym in the opening sentence.
 
 Trailing scratch text.
 """
-    parsed = extract_pair_reviews(bundle, expected_pairs=[("kb/notes/first.md", GATE)])
+    parsed = extract_pair_results(bundle, expected_pairs=[("kb/notes/first.md", GATE)])
     assert parsed[("kb/notes/first.md", GATE)] == "Undefined acronym in the opening sentence.\n\n## Result: WARN\n"
 
 
-def test_extract_pair_reviews_salvages_when_expected_pair_is_missing() -> None:
+def test_extract_pair_results_salvages_when_expected_pair_is_missing() -> None:
     bundle = f"""=== PAIR REVIEW START: kb/notes/first.md :: {GATE} ===
 Looks good.
 
 ## Result: PASS
 === PAIR REVIEW END: kb/notes/first.md :: {GATE} ===
 """
-    parsed = extract_pair_reviews(
+    parsed = extract_pair_results(
         bundle,
         expected_pairs=[("kb/notes/first.md", GATE), ("kb/notes/second.md", GATE)],
     )
     assert set(parsed) == {("kb/notes/first.md", GATE)}
 
 
-def test_extract_pair_reviews_rejects_unexpected_pair() -> None:
+def test_extract_pair_results_rejects_unexpected_pair() -> None:
     with pytest.raises(ValueError, match="unexpected pair"):
-        extract_pair_reviews(bundle_two_pairs(), expected_pairs=[("kb/notes/first.md", GATE)])
+        extract_pair_results(bundle_two_pairs(), expected_pairs=[("kb/notes/first.md", GATE)])
 
 
-def test_extract_pair_reviews_rejects_duplicate_pair() -> None:
+def test_extract_pair_results_rejects_duplicate_pair() -> None:
     bundle = bundle_two_pairs().replace("kb/notes/second.md", "kb/notes/first.md")
     with pytest.raises(ValueError, match="duplicate pair"):
-        extract_pair_reviews(bundle, expected_pairs=[("kb/notes/first.md", GATE)])
+        extract_pair_results(bundle, expected_pairs=[("kb/notes/first.md", GATE)])
 
 
-def test_extract_pair_reviews_rejects_unterminated_block() -> None:
+def test_extract_pair_results_rejects_unterminated_block() -> None:
     bundle = f"=== PAIR REVIEW START: kb/notes/first.md :: {GATE} ===\nNo end sentinel.\n"
     with pytest.raises(ValueError, match="unterminated pair review block"):
-        extract_pair_reviews(bundle, expected_pairs=[("kb/notes/first.md", GATE)])
+        extract_pair_results(bundle, expected_pairs=[("kb/notes/first.md", GATE)])
 
 
-def test_extract_pair_reviews_rejects_end_mismatch() -> None:
+def test_extract_pair_results_rejects_end_mismatch() -> None:
     bundle = (
         f"=== PAIR REVIEW START: kb/notes/first.md :: {GATE} ===\n"
         "Body.\n"
         f"=== PAIR REVIEW END: kb/notes/other.md :: {GATE} ===\n"
     )
     with pytest.raises(ValueError, match="pair review end mismatch"):
-        extract_pair_reviews(
+        extract_pair_results(
             bundle,
             expected_pairs=[("kb/notes/first.md", GATE), ("kb/notes/other.md", GATE)],
         )
 
 
-def test_parse_pair_bundle_parses_decisions_and_reports_missing() -> None:
-    parsed = parse_pair_bundle(
+def test_parse_job_output_parses_outcomes_and_reports_missing() -> None:
+    parsed = parse_job_output(
         bundle_two_pairs(),
         expected_pairs=[
             ("kb/notes/first.md", GATE),
@@ -212,12 +212,12 @@ def test_parse_pair_bundle_parses_decisions_and_reports_missing() -> None:
             ("kb/notes/third.md", GATE): "verdict",
         },
     )
-    assert parsed.reviews[("kb/notes/first.md", GATE)].decision == "warn"
-    assert parsed.reviews[("kb/notes/second.md", GATE)].decision == "pass"
+    assert parsed.reviews[("kb/notes/first.md", GATE)].outcome == "warn"
+    assert parsed.reviews[("kb/notes/second.md", GATE)].outcome == "pass"
     assert parsed.missing == [("kb/notes/third.md", GATE)]
 
 
-def test_parse_pair_bundle_canonicalizes_result_footers() -> None:
+def test_parse_job_output_canonicalizes_result_footers() -> None:
     bundle = f"""=== PAIR REVIEW START: kb/notes/first.md :: {GATE} ===
 No undefined terms found.
 
@@ -225,12 +225,12 @@ No undefined terms found.
 === PAIR REVIEW END: kb/notes/first.md :: {GATE} ===
 """
     pair = ("kb/notes/first.md", GATE)
-    parsed = parse_pair_bundle(bundle, expected_pairs=[pair], result_kinds={pair: "verdict"})
+    parsed = parse_job_output(bundle, expected_pairs=[pair], result_kinds={pair: "verdict"})
     canonical = parsed.canonical_texts[("kb/notes/first.md", GATE)]
     assert canonical.rstrip("\n").endswith("## Result: PASS")
 
 
-def test_parse_pair_bundle_rejects_result_aliases() -> None:
+def test_parse_job_output_rejects_result_aliases() -> None:
     bundle = f"""=== PAIR REVIEW START: kb/notes/first.md :: {GATE} ===
 No undefined terms found.
 
@@ -239,4 +239,4 @@ Verdict: PASS
 """
     with pytest.raises(ValueError, match="invalid result signal"):
         pair = ("kb/notes/first.md", GATE)
-        parse_pair_bundle(bundle, expected_pairs=[pair], result_kinds={pair: "verdict"})
+        parse_job_output(bundle, expected_pairs=[pair], result_kinds={pair: "verdict"})

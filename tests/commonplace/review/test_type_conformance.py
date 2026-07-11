@@ -100,7 +100,7 @@ Fixture test.
     )
 
 
-def seed_acceptance(
+def seed_freshness_baseline(
     repo_root: Path,
     *,
     note_path: str,
@@ -116,10 +116,10 @@ def seed_acceptance(
             note_path=note_path,
             criterion_id=criterion_path,
             model_partition=model_partition,
-            decision="pass",
+            outcome="pass",
             reviewed_note_snapshot_id=note_snapshot.snapshot_id,
             reviewed_criterion_snapshot_id=criterion_snapshot.snapshot_id,
-            reviewed_at=REVIEWED_AT,
+            completed_at=REVIEWED_AT,
         )
         accept_pair(
             conn,
@@ -127,9 +127,9 @@ def seed_acceptance(
             note_path=note_path,
             criterion_id=criterion_path,
             model_partition=model_partition,
-            accepted_note_snapshot_id=note_snapshot.snapshot_id,
-            accepted_criterion_snapshot_id=criterion_snapshot.snapshot_id,
-            accepted_at=REVIEWED_AT,
+            baseline_note_snapshot_id=note_snapshot.snapshot_id,
+            baseline_criterion_snapshot_id=criterion_snapshot.snapshot_id,
+            baseline_updated_at=REVIEWED_AT,
         )
         conn.commit()
 
@@ -246,7 +246,7 @@ class TestSelectorTypePairs:
             note_filter=["kb/notes/plain.md"],
         )
         assert [(s.note_path, s.criterion_path, s.criterion_id, s.reason) for s in stale] == [
-            ("kb/notes/plain.md", "kb/types/note.md", "type/note", "missing-review"),
+            ("kb/notes/plain.md", "kb/types/note.md", "type/note", "missing-baseline"),
         ]
 
     def test_type_name_request_filters_to_cohort(self, tmp_path: Path) -> None:
@@ -269,11 +269,11 @@ class TestSelectorTypePairs:
             criterion_ids=["type/definition"],
             note_filter=["kb/notes/definition.md"],
         )
-        assert [(s.criterion_id, s.reason) for s in stale] == [("type/definition", "missing-review")]
+        assert [(s.criterion_id, s.reason) for s in stale] == [("type/definition", "missing-baseline")]
 
     def test_fresh_type_pair_is_not_selected(self, tmp_path: Path) -> None:
         build_fixture(tmp_path)
-        seed_acceptance(tmp_path, note_path="kb/notes/definition.md", criterion_path="kb/types/definition.md")
+        seed_freshness_baseline(tmp_path, note_path="kb/notes/definition.md", criterion_path="kb/types/definition.md")
         stale = review_target_selector.select_stale_criteria(
             tmp_path,
             model=TEST_MODEL,
@@ -284,8 +284,8 @@ class TestSelectorTypePairs:
 
     def test_type_spec_edit_marks_cohort_gate_changed(self, tmp_path: Path) -> None:
         fixture = build_fixture(tmp_path)
-        seed_acceptance(tmp_path, note_path="kb/notes/definition.md", criterion_path="kb/types/definition.md")
-        seed_acceptance(tmp_path, note_path="kb/notes/plain.md", criterion_path="kb/types/note.md")
+        seed_freshness_baseline(tmp_path, note_path="kb/notes/definition.md", criterion_path="kb/types/definition.md")
+        seed_freshness_baseline(tmp_path, note_path="kb/notes/plain.md", criterion_path="kb/types/note.md")
 
         fixture["definition_spec"].write_text(
             fixture["definition_spec"].read_text(encoding="utf-8") + "\nRaised authoring bar.\n",
@@ -304,7 +304,7 @@ class TestSelectorTypePairs:
 
     def test_note_edit_marks_type_pair_note_changed_with_diff(self, tmp_path: Path) -> None:
         fixture = build_fixture(tmp_path)
-        seed_acceptance(tmp_path, note_path="kb/notes/definition.md", criterion_path="kb/types/definition.md")
+        seed_freshness_baseline(tmp_path, note_path="kb/notes/definition.md", criterion_path="kb/types/definition.md")
         make_note(fixture["definition"], "Definition note", "\nUpdated body.\n", note_type="kb/types/definition.md")
 
         stale = review_target_selector.select_stale_criteria(
@@ -341,8 +341,8 @@ class TestSelectorTypePairs:
             note_filter=["kb/notes/plain.md"],
         )
         assert [(s.criterion_id, s.reason) for s in stale] == [
-            ("prose/source-residue", "missing-review"),
-            ("type/note", "missing-review"),
+            ("prose/source-residue", "missing-baseline"),
+            ("type/note", "missing-baseline"),
         ]
 
     def test_requested_mode_emits_type_pairs(self, tmp_path: Path) -> None:
@@ -380,7 +380,7 @@ class TestSelectorTypePairs:
 class TestAckTypePair:
     def test_ack_after_type_spec_edit_repins_current_spec(self, tmp_path: Path) -> None:
         fixture = build_fixture(tmp_path)
-        seed_acceptance(tmp_path, note_path="kb/notes/definition.md", criterion_path="kb/types/definition.md")
+        seed_freshness_baseline(tmp_path, note_path="kb/notes/definition.md", criterion_path="kb/types/definition.md")
         fixture["definition_spec"].write_text(
             fixture["definition_spec"].read_text(encoding="utf-8") + "\nTrivial wording tweak.\n",
             encoding="utf-8",

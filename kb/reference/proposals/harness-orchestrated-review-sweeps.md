@@ -24,7 +24,7 @@ Five roles, with the harness owning exactly one:
 1. **Work-list** — `commonplace-review-target-selector --json` emits stale pairs (deterministic, Python).
 2. **Packing** — group pairs into batches (share-note or share-gate); trivial in any language, owned by the orchestrator.
 3. **Prepare** — `commonplace-create-review-jobs --input ... --grouping {note,gate}` per selector payload or batch group: job creation, canonical prompt, and pending pair rows (deterministic, Python).
-4. **Fan-out** — the harness feature: one reviewer agent per batch, in parallel. Reviewers are hermetic: they read the batch's `prompt.md`, write its `bundle-output.md`, and are forbidden from running `commonplace-*` commands — judgment only, no bookkeeping.
+4. **Fan-out** — the harness feature: one reviewer agent per batch, in parallel. Reviewers are hermetic: they read the batch's `prompt.md`, write its `job-output.md`, and are forbidden from running `commonplace-*` commands — judgment only, no bookkeeping.
 5. **Finalize** — `commonplace-finalize-review-job --review-job-id ...` per job: strictly parse, persist all pair results, upsert accepted baselines, and refresh inspection artifacts (deterministic, Python). Missing or malformed pair output fails the whole job.
 
 The interface between the worlds is files and JSON, never calls: creation/listing JSON feeds the script as data; agents and Python meet at the artifact directory; finalization reads job-owned files. The Python endpoints are the fixed point across execution media — a review recorded this way is indistinguishable in the ledger from one recorded by the subprocess runner.

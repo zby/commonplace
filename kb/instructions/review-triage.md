@@ -5,7 +5,7 @@ type: kb/types/instruction.md
 
 # Review triage
 
-Inspect `note-changed` stale pairs and acknowledge those where the diff does not invalidate the existing evidence for that criterion. This reduces the assay queue before launching workers. For closed-ended verdict pairs, ack carries the decision forward; for open-ended report pairs, it only reuses the report as fresh evidence and does not imply that its findings were handled.
+Inspect `note-changed` stale pairs and acknowledge those where the diff does not invalidate the existing evidence for that criterion. This reduces the assay queue before launching workers. For closed-ended verdict pairs, ack carries the outcome forward; for open-ended report pairs, it only reuses the report as fresh evidence and does not imply that its findings were handled.
 
 Inputs:
 
@@ -44,7 +44,7 @@ Ack all insignificant pairs in one command:
 commonplace-ack-review --model-partition {model-partition} {note-path} {gate-id} [{gate-id} ...]
 ```
 
-This upserts the one current acceptance row so its snapshot baseline matches the current note and criterion while retaining the completed review pair as evidence. It produces no new judgment and does not rely on `touch` or filesystem timestamps.
+This advances the existing freshness baseline to the current note and criterion snapshots while preserving its evidence review pair. It produces no new judgment and does not rely on `touch` or filesystem timestamps.
 
 ### 4. Report
 

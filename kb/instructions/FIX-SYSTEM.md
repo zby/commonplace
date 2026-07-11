@@ -6,7 +6,7 @@ This system is experimental and opt-in, like the review system it depends on.
 
 ## Concepts
 
-**Warn finding.** An actionable finding extracted from a review pair whose canonical decision is `warn`. The `commonplace-warn-selector` command parses these from the `### Findings` or `### Summary` sections of stored review prose.
+**Warn finding.** An actionable finding extracted from a review pair whose canonical outcome is `warn`. The `commonplace-warn-selector` command parses these from the `### Findings` or `### Summary` sections of stored review prose.
 
 **Fix strategy.** A named pattern of review warning + appropriate fix, catalogued in `kb/instructions/fix-warnings/fix-strategy-taxonomy.md`. Agents classify each fix by strategy name to make fixes auditable and to grow the taxonomy over time.
 
@@ -28,11 +28,11 @@ Reviews are never modified by fixes. The review system owns the assessment; the 
 
 `commonplace-warn-selector` builds the fix queue from the review DB.
 
-- Reads current accepted reviews across all models
-- Selects findings from reviews whose canonical decision is `warn`
+- Reads current baseline-backed reviews across all models
+- Selects findings from reviews whose canonical outcome is `warn`
 - Extracts actionable items from `### Findings` sections (lines starting with `- warn:`)
 - When a warn review has no `- warn:` items, falls back in order to the `### Summary` section, then the whole `### Findings` block, then the result-stripped review body
-- Collapses model partitions to one current entry per `(note_path, criterion_id)`, choosing the latest accepted warn review
+- Collapses model partitions to one current entry per `(note_path, criterion_id)`, choosing the latest baseline-backed warn review
 
 CLI:
 

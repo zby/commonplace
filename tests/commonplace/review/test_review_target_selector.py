@@ -84,7 +84,7 @@ Fixture test.
     )
 
 
-def seed_acceptance(
+def seed_freshness_baseline(
     repo_root: Path,
     *,
     note_path: str,
@@ -94,7 +94,7 @@ def seed_acceptance(
     model_partition: str = TEST_MODEL,
     commit: str = PLACEHOLDER_COMMIT,
 ) -> None:
-    """Insert a completed review pair + acceptance as if a full review passed."""
+    """Insert a completed review pair plus freshness baseline as if a full review passed."""
     review_db.ensure_db(db_path_for(repo_root))
     criterion_path = gate_abs.relative_to(repo_root).as_posix()
     with review_db.connect(db_path_for(repo_root)) as conn:
@@ -105,10 +105,10 @@ def seed_acceptance(
             note_path=note_path,
             criterion_id=criterion_id,
             model_partition=model_partition,
-            decision="pass",
+            outcome="pass",
             reviewed_note_snapshot_id=note_snapshot.snapshot_id,
             reviewed_criterion_snapshot_id=criterion_snapshot.snapshot_id,
-            reviewed_at=REVIEWED_AT,
+            completed_at=REVIEWED_AT,
         )
         accept_pair(
             conn,
@@ -116,14 +116,14 @@ def seed_acceptance(
             note_path=note_path,
             criterion_id=criterion_id,
             model_partition=model_partition,
-            accepted_note_snapshot_id=note_snapshot.snapshot_id,
-            accepted_criterion_snapshot_id=criterion_snapshot.snapshot_id,
-            accepted_at=REVIEWED_AT,
+            baseline_note_snapshot_id=note_snapshot.snapshot_id,
+            baseline_criterion_snapshot_id=criterion_snapshot.snapshot_id,
+            baseline_updated_at=REVIEWED_AT,
         )
         conn.commit()
 
 
-def seed_snapshot_acceptance(
+def seed_snapshot_freshness_baseline(
     repo_root: Path,
     *,
     note_path: str,
@@ -139,7 +139,7 @@ def seed_snapshot_acceptance(
             runner="test-runner",
             created_at=REVIEWED_AT,
             status="queued",
-            packing="note",
+            grouping="note",
             pairs=[
                 review_db.ReviewPairRequest(
                     note_path=note_path,
@@ -158,29 +158,29 @@ def seed_snapshot_acceptance(
                 review_db.ReviewPairCompletion(
                     note_path=note_path,
                     criterion_path=criterion_path,
-                    decision="pass",
-                    reviewed_at=REVIEWED_AT,
+                    outcome="pass",
+                    completed_at=REVIEWED_AT,
                 )
             ],
-            reviewed_at=REVIEWED_AT,
+            completed_at=REVIEWED_AT,
         )
         review_db.complete_review_job(conn, review_job_id=review_job_id, completed_at=REVIEWED_AT)
         review_pair = review_db.load_review_pairs_for_job(conn, review_job_id=review_job_id)[0]
-        review_db.upsert_acceptance(
+        review_db.upsert_freshness_baseline(
             conn,
             note_path=note_path,
             criterion_path=criterion_path,
             model_partition=TEST_MODEL,
-            accepted_review_pair_id=review_pair.review_pair_id,
-            accepted_note_snapshot_id=note_snapshot.snapshot_id,
-            accepted_criterion_snapshot_id=criterion_snapshot.snapshot_id,
-            accepted_at=REVIEWED_AT,
+            evidence_review_pair_id=review_pair.review_pair_id,
+            baseline_note_snapshot_id=note_snapshot.snapshot_id,
+            baseline_criterion_snapshot_id=criterion_snapshot.snapshot_id,
+            baseline_updated_at=REVIEWED_AT,
         )
         conn.commit()
 
 
 def build_fixture(tmp_path: Path) -> dict[str, Path]:
-    """2 notes + 3 gates; `stable` has 3 accepted reviews, `unreviewed` has none."""
+    """2 notes + 3 gates; `stable` has 3 baseline-backed reviews, `unreviewed` has none."""
     notes_dir = tmp_path / "kb" / "notes"
     gates_dir = tmp_path / "kb" / "instructions" / "review-gates"
 
@@ -204,7 +204,7 @@ def build_fixture(tmp_path: Path) -> dict[str, Path]:
         ("prose/confidence-miscalibration", g2),
         ("semantic/grounding-alignment", g3),
     ]:
-        seed_acceptance(
+        seed_freshness_baseline(
             tmp_path,
             note_path="kb/notes/stable.md",
             note_abs=stable,
@@ -231,8 +231,8 @@ class TestMissingReview:
             note_filter=["kb/notes/unreviewed.md"],
         )
         assert [(s.criterion_id, s.reason) for s in stale] == [
-            ("prose/confidence-miscalibration", "missing-review"),
-            ("prose/source-residue", "missing-review"),
+            ("prose/confidence-miscalibration", "missing-baseline"),
+            ("prose/source-residue", "missing-baseline"),
         ]
 
     def test_missing_review_without_model_partition_uses_any_partition_coverage(self, tmp_path: Path) -> None:
@@ -253,13 +253,13 @@ class TestMissingReview:
 
         assert stable == []
         assert [(s.criterion_id, s.reason) for s in unreviewed] == [
-            ("prose/confidence-miscalibration", "missing-review"),
-            ("prose/source-residue", "missing-review"),
+            ("prose/confidence-miscalibration", "missing-baseline"),
+            ("prose/source-residue", "missing-baseline"),
         ]
 
     def test_claude_opus_alias_queries_canonical_partition(self, tmp_path: Path) -> None:
         fixture = build_fixture(tmp_path)
-        seed_acceptance(
+        seed_freshness_baseline(
             tmp_path,
             note_path="kb/notes/stable.md",
             note_abs=fixture["stable"],
@@ -267,7 +267,7 @@ class TestMissingReview:
             criterion_id="prose/source-residue",
             model_partition="claude-opus",
         )
-        seed_acceptance(
+        seed_freshness_baseline(
             tmp_path,
             note_path="kb/notes/stable.md",
             note_abs=fixture["stable"],
@@ -514,12 +514,12 @@ class TestFreshReview:
         )
         assert stale == []
 
-    def test_snapshot_acceptance_selects_without_git(self, tmp_path: Path) -> None:
+    def test_snapshot_freshness_baseline_selects_without_git(self, tmp_path: Path) -> None:
         notes_dir = tmp_path / "kb" / "notes"
         gates_dir = tmp_path / "kb" / "instructions" / "review-gates"
         make_note(notes_dir / "stable.md", "Stable title", "\nLine 1.\n")
         make_gate(gates_dir / "prose" / "source-residue.md", "prose/source-residue", "prose")
-        seed_snapshot_acceptance(
+        seed_snapshot_freshness_baseline(
             tmp_path,
             note_path="kb/notes/stable.md",
             criterion_path="kb/instructions/review-gates/prose/source-residue.md",
@@ -570,12 +570,12 @@ class TestNoteChanged:
             ("prose/source-residue", "note-changed"),
         ]
 
-    def test_snapshot_acceptance_diff_does_not_need_git(self, tmp_path: Path) -> None:
+    def test_snapshot_freshness_baseline_diff_does_not_need_git(self, tmp_path: Path) -> None:
         notes_dir = tmp_path / "kb" / "notes"
         gates_dir = tmp_path / "kb" / "instructions" / "review-gates"
         note = make_note(notes_dir / "stable.md", "Stable title", "\nOriginal line.\n")
         make_gate(gates_dir / "prose" / "source-residue.md", "prose/source-residue", "prose")
-        seed_snapshot_acceptance(
+        seed_snapshot_freshness_baseline(
             tmp_path,
             note_path="kb/notes/stable.md",
             criterion_path="kb/instructions/review-gates/prose/source-residue.md",
@@ -598,7 +598,7 @@ class TestNoteChanged:
 
 
 class TestAckMetadata:
-    def test_ack_upserts_acceptance_without_creating_new_review_pairs(self, tmp_path: Path) -> None:
+    def test_ack_upserts_freshness_baseline_without_creating_new_review_pairs(self, tmp_path: Path) -> None:
         fixture = build_fixture(tmp_path)
         make_note(fixture["stable"], "Stable title", "\nUpdated line.\n")
 
@@ -652,16 +652,16 @@ class TestAckMetadata:
             review_pair_count_after = conn.execute("SELECT count(*) FROM review_pairs").fetchone()[0]
             row = conn.execute(
                 """
-                SELECT accepted_review_pair_id, accepted_note_hash
-                FROM current_criterion_acceptances
+                SELECT evidence_review_pair_id, baseline_note_hash
+                FROM current_freshness_baselines
                 WHERE note_path = ? AND criterion_path = ? AND model_partition = ?
                 """,
                 ("kb/notes/stable.md", "kb/instructions/review-gates/prose/source-residue.md", TEST_MODEL),
             ).fetchone()
         assert row is not None
         assert review_pair_count_after == review_pair_count_before
-        assert row["accepted_review_pair_id"] == source_review_pair["review_pair_id"]
-        assert row["accepted_note_hash"] is not None
+        assert row["evidence_review_pair_id"] == source_review_pair["review_pair_id"]
+        assert row["baseline_note_hash"] is not None
 
     def test_ack_allows_dirty_note_and_records_snapshot_baseline(self, tmp_path: Path) -> None:
         fixture = build_fixture(tmp_path)
@@ -675,15 +675,15 @@ class TestAckMetadata:
             conn.row_factory = sqlite3.Row
             row = conn.execute(
                 """
-                SELECT accepted_note_snapshot_id, accepted_note_hash
-                FROM current_criterion_acceptances
+                SELECT baseline_note_snapshot_id, baseline_note_hash
+                FROM current_freshness_baselines
                 WHERE note_path = ? AND criterion_path = ? AND model_partition = ?
                 """,
                 ("kb/notes/stable.md", "kb/instructions/review-gates/prose/source-residue.md", TEST_MODEL),
             ).fetchone()
         assert row is not None
-        assert row["accepted_note_snapshot_id"] is not None
-        assert row["accepted_note_hash"] is not None
+        assert row["baseline_note_snapshot_id"] is not None
+        assert row["baseline_note_hash"] is not None
 
     def test_ack_after_gate_change_carries_forward_review_pair_and_records_criterion_snapshot(
         self, tmp_path: Path
@@ -701,7 +701,7 @@ staleness: changed
 
 ## Failure mode
 
-Fixture gate with accepted wording update.
+Fixture gate with baseline wording update.
 
 ## Test
 
@@ -734,16 +734,16 @@ Fixture test.
             conn.row_factory = sqlite3.Row
             row = conn.execute(
                 """
-                SELECT accepted_review_pair_id, accepted_criterion_snapshot_id, accepted_criterion_hash
-                FROM current_criterion_acceptances
+                SELECT evidence_review_pair_id, baseline_criterion_snapshot_id, baseline_criterion_hash
+                FROM current_freshness_baselines
                 WHERE note_path = ? AND criterion_path = ? AND model_partition = ?
                 """,
                 ("kb/notes/stable.md", "kb/instructions/review-gates/prose/source-residue.md", TEST_MODEL),
             ).fetchone()
         assert row is not None
-        assert row["accepted_review_pair_id"] == source_review_pair["review_pair_id"]
-        assert row["accepted_criterion_snapshot_id"] is not None
-        assert row["accepted_criterion_hash"] is not None
+        assert row["evidence_review_pair_id"] == source_review_pair["review_pair_id"]
+        assert row["baseline_criterion_snapshot_id"] is not None
+        assert row["baseline_criterion_hash"] is not None
 
     def test_repeated_ack_prunes_prior_ack_snapshot_but_keeps_reviewed_snapshot(self, tmp_path: Path) -> None:
         fixture = build_fixture(tmp_path)
@@ -753,12 +753,12 @@ Fixture test.
             conn.row_factory = sqlite3.Row
             original_snapshot_id = conn.execute(
                 """
-                SELECT accepted_note_snapshot_id
-                FROM current_criterion_acceptances
+                SELECT baseline_note_snapshot_id
+                FROM current_freshness_baselines
                 WHERE note_path = ? AND criterion_path = ? AND model_partition = ?
                 """,
                 ("kb/notes/stable.md", criterion_path, TEST_MODEL),
-            ).fetchone()["accepted_note_snapshot_id"]
+            ).fetchone()["baseline_note_snapshot_id"]
 
         make_note(fixture["stable"], "Stable title", "\nFirst ack update.\n")
         ack_pairs(tmp_path, ["kb/notes/stable.md:prose/source-residue"], TEST_MODEL)
@@ -766,12 +766,12 @@ Fixture test.
             conn.row_factory = sqlite3.Row
             first_ack_snapshot_id = conn.execute(
                 """
-                SELECT accepted_note_snapshot_id
-                FROM current_criterion_acceptances
+                SELECT baseline_note_snapshot_id
+                FROM current_freshness_baselines
                 WHERE note_path = ? AND criterion_path = ? AND model_partition = ?
                 """,
                 ("kb/notes/stable.md", criterion_path, TEST_MODEL),
-            ).fetchone()["accepted_note_snapshot_id"]
+            ).fetchone()["baseline_note_snapshot_id"]
 
         make_note(fixture["stable"], "Stable title", "\nSecond ack update.\n")
         ack_pairs(tmp_path, ["kb/notes/stable.md:prose/source-residue"], TEST_MODEL)
@@ -779,12 +779,12 @@ Fixture test.
             conn.row_factory = sqlite3.Row
             second_ack_snapshot_id = conn.execute(
                 """
-                SELECT accepted_note_snapshot_id
-                FROM current_criterion_acceptances
+                SELECT baseline_note_snapshot_id
+                FROM current_freshness_baselines
                 WHERE note_path = ? AND criterion_path = ? AND model_partition = ?
                 """,
                 ("kb/notes/stable.md", criterion_path, TEST_MODEL),
-            ).fetchone()["accepted_note_snapshot_id"]
+            ).fetchone()["baseline_note_snapshot_id"]
             remaining_snapshot_ids = {
                 int(row["snapshot_id"])
                 for row in conn.execute("SELECT snapshot_id FROM review_file_snapshots").fetchall()
@@ -817,8 +817,8 @@ Fixture test.
                 note_path="kb/notes/stable.md",
                 criterion_id="prose/source-residue",
                 model_partition="other-model",
-                decision="pass",
-                reviewed_at="2026-04-02T00:00:00+00:00",
+                outcome="pass",
+                completed_at="2026-04-02T00:00:00+00:00",
             )
             conn.commit()
 
@@ -832,15 +832,15 @@ Fixture test.
             conn.row_factory = sqlite3.Row
             row = conn.execute(
                 """
-                SELECT accepted_review_pair_id
-                FROM current_criterion_acceptances
+                SELECT evidence_review_pair_id
+                FROM current_freshness_baselines
                 WHERE note_path = ? AND criterion_path = ? AND model_partition = ?
                 """,
                 ("kb/notes/stable.md", "kb/instructions/review-gates/prose/source-residue.md", TEST_MODEL),
             ).fetchone()
         assert row is not None
-        assert row["accepted_review_pair_id"] == expected_pair["review_pair_id"]
-        assert row["accepted_review_pair_id"] != other_pair_id
+        assert row["evidence_review_pair_id"] == expected_pair["review_pair_id"]
+        assert row["evidence_review_pair_id"] != other_pair_id
 
     def test_ack_rejects_invalid_pair_without_exiting(self, tmp_path: Path) -> None:
         build_fixture(tmp_path)
@@ -862,10 +862,10 @@ Fixture test.
         )
         assert len(stale_before) == 2
         with sqlite3.connect(db_path_for(tmp_path)) as conn:
-            acceptance_count_before = conn.execute("SELECT count(*) FROM acceptance").fetchone()[0]
+            freshness_baseline_count_before = conn.execute("SELECT count(*) FROM freshness_baselines").fetchone()[0]
             snapshot_count_before = conn.execute("SELECT count(*) FROM review_file_snapshots").fetchone()[0]
 
-        with pytest.raises(ValueError, match="no completed review pair"):
+        with pytest.raises(ValueError, match="no freshness baseline"):
             ack_pairs(
                 tmp_path,
                 [
@@ -884,9 +884,9 @@ Fixture test.
         assert len(stale_after) == 2
 
         with sqlite3.connect(db_path_for(tmp_path)) as conn:
-            acceptance_count_after = conn.execute("SELECT count(*) FROM acceptance").fetchone()[0]
+            freshness_baseline_count_after = conn.execute("SELECT count(*) FROM freshness_baselines").fetchone()[0]
             snapshot_count_after = conn.execute("SELECT count(*) FROM review_file_snapshots").fetchone()[0]
-        assert acceptance_count_after == acceptance_count_before
+        assert freshness_baseline_count_after == freshness_baseline_count_before
         assert snapshot_count_after == snapshot_count_before
 
     def test_ack_multi_pair_preflight_is_all_or_nothing(self, tmp_path: Path) -> None:
@@ -894,10 +894,10 @@ Fixture test.
         make_note(fixture["stable"], "Stable title", "\nUpdated line.\n")
 
         with sqlite3.connect(db_path_for(tmp_path)) as conn:
-            acceptance_count_before = conn.execute("SELECT count(*) FROM acceptance").fetchone()[0]
+            freshness_baseline_count_before = conn.execute("SELECT count(*) FROM freshness_baselines").fetchone()[0]
             snapshot_count_before = conn.execute("SELECT count(*) FROM review_file_snapshots").fetchone()[0]
 
-        with pytest.raises(ValueError, match="no completed review pair"):
+        with pytest.raises(ValueError, match="no freshness baseline"):
             ack_pairs(
                 tmp_path,
                 [
@@ -915,21 +915,21 @@ Fixture test.
         )
         assert len(stale_after) == 1
         with sqlite3.connect(db_path_for(tmp_path)) as conn:
-            acceptance_count_after = conn.execute("SELECT count(*) FROM acceptance").fetchone()[0]
+            freshness_baseline_count_after = conn.execute("SELECT count(*) FROM freshness_baselines").fetchone()[0]
             snapshot_count_after = conn.execute("SELECT count(*) FROM review_file_snapshots").fetchone()[0]
-        assert acceptance_count_after == acceptance_count_before
+        assert freshness_baseline_count_after == freshness_baseline_count_before
         assert snapshot_count_after == snapshot_count_before
 
-    def test_ack_dedupes_requested_pairs_before_upserting_acceptance(self, tmp_path: Path) -> None:
+    def test_ack_dedupes_requested_pairs_before_advancing_freshness_baseline(self, tmp_path: Path) -> None:
         fixture = build_fixture(tmp_path)
         make_note(fixture["stable"], "Stable title", "\nUpdated line.\n")
         criterion_path = "kb/instructions/review-gates/prose/source-residue.md"
 
         with sqlite3.connect(db_path_for(tmp_path)) as conn:
-            acceptance_count_before = conn.execute(
+            freshness_baseline_count_before = conn.execute(
                 """
                 SELECT count(*)
-                FROM acceptance
+                FROM freshness_baselines
                 WHERE note_path = ? AND criterion_path = ? AND model_partition = ?
                 """,
                 ("kb/notes/stable.md", criterion_path, TEST_MODEL),
@@ -945,16 +945,16 @@ Fixture test.
         )
 
         with sqlite3.connect(db_path_for(tmp_path)) as conn:
-            acceptance_count_after = conn.execute(
+            freshness_baseline_count_after = conn.execute(
                 """
                 SELECT count(*)
-                FROM acceptance
+                FROM freshness_baselines
                 WHERE note_path = ? AND criterion_path = ? AND model_partition = ?
                 """,
                 ("kb/notes/stable.md", criterion_path, TEST_MODEL),
             ).fetchone()[0]
         assert acked == [("kb/notes/stable.md", "prose/source-residue")]
-        assert acceptance_count_after == acceptance_count_before
+        assert freshness_baseline_count_after == freshness_baseline_count_before
 
 
 class TestDiffGeneration:
@@ -976,7 +976,7 @@ class TestDiffGeneration:
             ["git", "rev-parse", "HEAD"], cwd=tmp_path, check=True, capture_output=True, text=True
         ).stdout.strip()
 
-        seed_acceptance(
+        seed_freshness_baseline(
             tmp_path,
             note_path="kb/notes/target.md",
             note_abs=note_path,
@@ -1104,7 +1104,7 @@ class TestModelOptional:
         )
 
         assert "kb/notes/unreviewed.md" in result.stdout
-        assert "missing-review" in result.stdout
+        assert "missing-baseline" in result.stdout
 
     def test_cli_requires_model_for_non_missing_reason(self, tmp_path: Path) -> None:
         build_fixture(tmp_path)
@@ -1121,7 +1121,7 @@ class TestModelOptional:
         )
 
         assert result.returncode == 2
-        assert "--model-partition is required unless selecting missing-review coverage" in result.stderr
+        assert "--model-partition is required unless selecting missing-baseline coverage" in result.stderr
 
     def test_cli_rejects_removed_ack_option(self, tmp_path: Path) -> None:
         build_fixture(tmp_path)
@@ -1172,8 +1172,8 @@ class TestModelOptional:
         with sqlite3.connect(db_path_for(tmp_path)) as conn:
             row = conn.execute(
                 """
-                SELECT accepted_review_pair_id
-                FROM current_criterion_acceptances
+                SELECT evidence_review_pair_id
+                FROM current_freshness_baselines
                 WHERE note_path = ? AND criterion_path = ? AND model_partition = ?
                 """,
                 ("kb/notes/stable.md", "kb/instructions/review-gates/prose/source-residue.md", TEST_MODEL),

@@ -1,4 +1,4 @@
-"""Finalize review jobs from job-owned output and advance acceptance state."""
+"""Finalize review jobs from job-owned output and advance freshness baselines."""
 
 from __future__ import annotations
 
@@ -9,14 +9,14 @@ from pathlib import Path
 from typing import Sequence
 
 from commonplace.review.artifacts import (
-    bundle_artifact_dir,
+    review_job_artifact_dir,
     repo_relative_path,
     write_manifest,
     write_pair_result_files_to_derived_paths,
 )
 from commonplace.review import review_db
 from commonplace.review.clock import iso_now
-from commonplace.review.protocol.parser import ParsedPairBundle, parse_pair_bundle
+from commonplace.review.protocol.parser import ParsedJobOutput, parse_job_output
 from commonplace.review.review_db import ReviewPairCompletion, ReviewPairRow
 from commonplace.review.review_model import build_model_partition
 
@@ -126,7 +126,7 @@ def finalize_review_job_from_owned_output(
     review_job_id: int,
     execution: ExecutionMetadata = ExecutionMetadata(),
 ) -> FinalizeReviewJobOutcome:
-    """Finalize one review job from its derived bundle output path."""
+    """Finalize one review job from its derived job output path."""
     with review_db.connect(db_path) as conn:
         try:
             plan = review_db.load_review_job_plan(conn, review_job_id=review_job_id)
@@ -144,17 +144,17 @@ def finalize_review_job_from_owned_output(
                     f"review job model_partition {plan.model_partition!r} does not match supplied partition {model_partition!r}",
                 )
         try:
-            bundle_output_path = repo_relative_path(
+            job_output_path = repo_relative_path(
                 repo_root,
-                plan.bundle_output_path,
-                label="bundle output path",
+                plan.job_output_path,
+                label="job output path",
             )
         except ValueError as exc:
             return _precondition_failure(review_job_id, str(exc))
-        if not bundle_output_path.is_file():
+        if not job_output_path.is_file():
             return _precondition_failure(
                 review_job_id,
-                f"bundle output file not found: {plan.bundle_output_path}",
+                f"job output file not found: {plan.job_output_path}",
             )
 
         # Record execution provenance once, up front. It is attached to the job row
@@ -174,12 +174,12 @@ def finalize_review_job_from_owned_output(
             if refreshed_plan is not None:
                 plan = refreshed_plan
 
-        bundle_markdown = bundle_output_path.read_text(encoding="utf-8")
+        job_output_markdown = job_output_path.read_text(encoding="utf-8")
         expected_pairs = tuple((pair.note_path, pair.criterion_path) for pair in plan.pairs)
         result_kinds = {(pair.note_path, pair.criterion_path): pair.result_kind for pair in plan.pairs}
         try:
-            parsed = parse_pair_bundle(
-                bundle_markdown,
+            parsed = parse_job_output(
+                job_output_markdown,
                 expected_pairs=expected_pairs,
                 result_kinds=result_kinds,
             )
@@ -228,7 +228,7 @@ def finalize_review_job_from_owned_output(
         )
 
 
-# DB completion and acceptance.
+# DB completion and freshness baselines.
 
 
 def record_and_finalize_job(
@@ -241,7 +241,7 @@ def record_and_finalize_job(
     """Record trusted completions for a job and return refreshed pair rows.
 
     The caller owns pair coverage validation before this function runs. This
-    function keeps DB-local validation and acceptance writes together, but does
+    function keeps DB-local validation and freshness-baseline writes together, but does
     not re-derive whether the completion set exactly matches the requested job.
     """
     review_job = review_db.load_review_job(conn, review_job_id=review_job_id)
@@ -255,27 +255,27 @@ def record_and_finalize_job(
         conn,
         review_job_id=review_job_id,
         review_pairs=review_pairs or (),
-        reviewed_at=finished_at,
+        completed_at=finished_at,
     )
 
     finalized_pairs = review_db.load_review_pairs_for_job(conn, review_job_id=review_job_id)
-    superseded_acceptances: list[review_db.SupersededAcceptance | None] = []
+    review_db.complete_review_job(conn, review_job_id=review_job_id, completed_at=finished_at)
+    superseded_freshness_baselines: list[review_db.SupersededFreshnessBaseline | None] = []
     for pair in finalized_pairs:
-        superseded_acceptances.append(
-            review_db.upsert_acceptance(
+        superseded_freshness_baselines.append(
+            review_db.upsert_freshness_baseline(
                 conn,
                 note_path=pair.note_path,
                 criterion_path=pair.criterion_path,
                 model_partition=review_job.model_partition,
-                accepted_review_pair_id=pair.review_pair_id,
-                accepted_note_snapshot_id=pair.reviewed_note_snapshot_id,
-                accepted_criterion_snapshot_id=pair.reviewed_criterion_snapshot_id,
-                accepted_at=finished_at,
+                evidence_review_pair_id=pair.review_pair_id,
+                baseline_note_snapshot_id=pair.reviewed_note_snapshot_id,
+                baseline_criterion_snapshot_id=pair.reviewed_criterion_snapshot_id,
+                baseline_updated_at=finished_at,
             )
         )
-    pruned_review_job_ids = review_db.prune_superseded_acceptances(conn, superseded_acceptances)
+    pruned_review_job_ids = review_db.prune_superseded_freshness_baselines(conn, superseded_freshness_baselines)
 
-    review_db.complete_review_job(conn, review_job_id=review_job_id, completed_at=finished_at)
     return FinalizedReviewJob(
         pairs=finalized_pairs,
         pruned_review_job_ids=frozenset(pruned_review_job_ids),
@@ -327,15 +327,15 @@ def write_job_manifest_from_db(
     plan = review_db.load_review_job_plan(conn, review_job_id=review_job_id)
     if plan is None:
         return
-    artifact_dir = bundle_artifact_dir(repo_root, review_job_id)
+    artifact_dir = review_job_artifact_dir(repo_root, review_job_id)
     write_manifest(
         repo_root=repo_root,
         artifact_dir=artifact_dir,
         review_job_id=review_job_id,
         job_status=plan.status,
-        packing=plan.packing,
+        grouping=plan.grouping,
         prompt_path=plan.prompt_path,
-        bundle_output_path=plan.bundle_output_path,
+        job_output_path=plan.job_output_path,
         pairs=plan.pairs,
         failure_reason=plan.failure_reason,
     )
@@ -347,7 +347,7 @@ def write_job_manifest_from_db(
 def _review_pair_completions(
     *,
     expected_pairs: tuple[tuple[str, str], ...],
-    parsed: ParsedPairBundle,
+    parsed: ParsedJobOutput,
 ) -> tuple[ReviewPairCompletion, ...]:
     if not expected_pairs:
         raise ValueError("review job has no pairs")
@@ -358,7 +358,7 @@ def _review_pair_completions(
         ReviewPairCompletion(
             note_path=note_path,
             criterion_path=criterion_path,
-            decision=parsed.reviews[(note_path, criterion_path)].decision,
+            outcome=parsed.reviews[(note_path, criterion_path)].outcome,
         )
         for note_path, criterion_path in expected_pairs
     )
@@ -380,7 +380,7 @@ def _refresh_manifest_warning(
 def _remove_pruned_job_artifact_dirs(repo_root: Path, review_job_ids: frozenset[int]) -> tuple[str, ...]:
     warnings: list[str] = []
     for review_job_id in sorted(review_job_ids):
-        artifact_dir = bundle_artifact_dir(repo_root, review_job_id)
+        artifact_dir = review_job_artifact_dir(repo_root, review_job_id)
         if not artifact_dir.exists():
             continue
         try:

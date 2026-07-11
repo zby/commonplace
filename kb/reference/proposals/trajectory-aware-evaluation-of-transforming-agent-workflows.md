@@ -18,7 +18,7 @@ This proposal defines a controlled comparison before Commonplace adds trajectory
 - Five calibration runs established the shipped closing behavior summarized in [full improvement pass closure](../full-improvement-pass-closure.md), but they did not retain complete chronological model/tool traces as canonical Commonplace artifacts. The comparison therefore requires prospectively captured complete traces rather than depending on the retired experiment files.
 - An earlier manual trace audit found orchestration confusion, including worker-lifecycle ambiguity, and led to clearer fresh-worker instructions. It was useful diagnosis, not an evaluation result: the reviewer knew the trajectory and there was no output-only arm.
 - Commonplace review gates and critique assess note content. They do not evaluate whether the orchestrator followed the workflow that produced the note. This proposal is protocol meta-evaluation, not another note assay and not another review `result_kind`.
-- The review system has no trajectory store, judge runner, trajectory rubric, or acceptance semantics for workflow-level judgments.
+- The review system has no trajectory store, judge runner, trajectory rubric, or freshness baseline semantics for workflow-level judgments.
 
 The system distinction rests on [reasoning production is not reasoning evaluation](../../notes/reasoning-production-is-not-reasoning-evaluation.md): reconstructing a plausible successful route from a good output is not checking the route that actually ran. The harness survey independently places trajectory and intermediate-state evaluation inside the harness evaluation interface rather than after final-output generation.
 

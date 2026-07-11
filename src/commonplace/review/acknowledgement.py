@@ -1,22 +1,20 @@
-"""Acknowledge review pairs by advancing their accepted snapshot baseline."""
+"""Acknowledge review pairs by advancing an existing freshness baseline."""
 
 from __future__ import annotations
 
-import shutil
 from dataclasses import dataclass
 from pathlib import Path
 
-from commonplace.review.artifacts import bundle_artifact_dir
 from commonplace.review.clock import iso_now
 from commonplace.review.paths import criterion_id_from_stored_path, normalize_criterion_path
 from commonplace.review.review_db import (
     connect,
     ensure_db,
-    load_latest_completed_review_pair,
-    prune_superseded_acceptances,
+    load_current_freshness_baselines,
+    prune_superseded_freshness_baselines,
     resolve_db_path,
     snapshot_file,
-    upsert_acceptance,
+    upsert_freshness_baseline,
 )
 from commonplace.review.review_model import normalize_model_partition
 
@@ -25,7 +23,7 @@ from commonplace.review.review_model import normalize_model_partition
 class AckPair:
     note_path: str
     criterion_path: str
-    accepted_review_pair_id: int
+    evidence_review_pair_id: int
 
 
 def _normalize_note_path(repo_root: Path, raw: str) -> str:
@@ -80,50 +78,41 @@ def ack_pairs(
     ensure_db(db_path)
     acked: list[tuple[str, str]] = []
     normalized_pairs = _normalize_requested_pairs(repo_root, pairs)
-    pruned_review_job_ids: set[int] = set()
     with connect(db_path) as conn:
+        baselines = load_current_freshness_baselines(conn)
         ack_pairs_to_write: list[AckPair] = []
         for note_path, criterion_path in normalized_pairs:
-            review_pair = load_latest_completed_review_pair(
-                conn,
-                note_path=note_path,
-                criterion_path=criterion_path,
-                model_partition=model,
-            )
-            if review_pair is None:
+            baseline = baselines.get((note_path, criterion_path, model))
+            if baseline is None:
                 raise ValueError(
-                    "no completed review pair to acknowledge: "
+                    "no freshness baseline to acknowledge: "
                     f"{note_path}:{criterion_id_from_stored_path(criterion_path)} for {model}"
                 )
             ack_pairs_to_write.append(
                 AckPair(
                     note_path=note_path,
                     criterion_path=criterion_path,
-                    accepted_review_pair_id=review_pair.review_pair_id,
+                    evidence_review_pair_id=baseline.evidence_review_pair_id,
                 )
             )
 
-        superseded_acceptances = []
+        superseded_baselines = []
         for pair in ack_pairs_to_write:
             note_snapshot = snapshot_file(conn, repo_root=repo_root, path=pair.note_path)
             criterion_snapshot = snapshot_file(conn, repo_root=repo_root, path=pair.criterion_path)
-            superseded_acceptances.append(
-                upsert_acceptance(
+            superseded_baselines.append(
+                upsert_freshness_baseline(
                     conn,
                     note_path=pair.note_path,
                     criterion_path=pair.criterion_path,
                     model_partition=model,
-                    accepted_review_pair_id=pair.accepted_review_pair_id,
-                    accepted_note_snapshot_id=note_snapshot.snapshot_id,
-                    accepted_criterion_snapshot_id=criterion_snapshot.snapshot_id,
-                    accepted_at=iso_now(),
+                    evidence_review_pair_id=pair.evidence_review_pair_id,
+                    baseline_note_snapshot_id=note_snapshot.snapshot_id,
+                    baseline_criterion_snapshot_id=criterion_snapshot.snapshot_id,
+                    baseline_updated_at=iso_now(),
                 )
             )
             acked.append((pair.note_path, criterion_id_from_stored_path(pair.criterion_path)))
-        pruned_review_job_ids = prune_superseded_acceptances(conn, superseded_acceptances)
+        prune_superseded_freshness_baselines(conn, superseded_baselines)
         conn.commit()
-    for review_job_id in sorted(pruned_review_job_ids):
-        artifact_dir = bundle_artifact_dir(repo_root, review_job_id)
-        if artifact_dir.exists():
-            shutil.rmtree(artifact_dir, ignore_errors=True)
     return acked

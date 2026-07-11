@@ -10,7 +10,7 @@ import yaml
 
 
 MANIFEST_NAME = "MANIFEST.json"
-BUNDLE_ARTIFACTS_ROOT = Path("kb/reports/bundle-reviews")
+REVIEW_JOBS_ROOT = Path("kb/reports/review-jobs")
 
 
 class ReviewPairForPath(Protocol):
@@ -26,7 +26,7 @@ class ReviewJobForResult(Protocol):
     runner: str | None
     runner_model: str | None
     runner_effort: str | None
-    packing: str
+    grouping: str
 
 
 class ReviewPairForResult(Protocol):
@@ -37,8 +37,8 @@ class ReviewPairForResult(Protocol):
     model_partition: str
     pair_ordinal: int
     result_kind: str
-    decision: str | None
-    reviewed_at: str | None
+    outcome: str | None
+    completed_at: str | None
 
 
 class SkippedPairForManifest(Protocol):
@@ -47,20 +47,20 @@ class SkippedPairForManifest(Protocol):
     reason: str
 
 
-def bundle_artifact_dir(repo_root: Path, review_job_id: int) -> Path:
+def review_job_artifact_dir(repo_root: Path, review_job_id: int) -> Path:
     return repo_root / review_job_artifact_dir_rel(review_job_id)
 
 
 def review_job_artifact_dir_rel(review_job_id: int) -> str:
-    return (BUNDLE_ARTIFACTS_ROOT / f"review-job-{review_job_id}").as_posix()
+    return (REVIEW_JOBS_ROOT / f"review-job-{review_job_id}").as_posix()
 
 
 def prompt_path_rel(review_job_id: int) -> str:
     return f"{review_job_artifact_dir_rel(review_job_id)}/prompt.md"
 
 
-def bundle_output_path_rel(review_job_id: int) -> str:
-    return f"{review_job_artifact_dir_rel(review_job_id)}/bundle-output.md"
+def job_output_path_rel(review_job_id: int) -> str:
+    return f"{review_job_artifact_dir_rel(review_job_id)}/job-output.md"
 
 
 def manifest_path_rel(review_job_id: int) -> str:
@@ -69,7 +69,7 @@ def manifest_path_rel(review_job_id: int) -> str:
 
 def result_filename(
     *,
-    packing: str,
+    grouping: str,
     note_path: str,
     criterion_path: str,
     pair_ordinal: int,
@@ -77,42 +77,42 @@ def result_filename(
     """Per-pair result filename, a pure function of the pair row.
 
     The ordinal guarantees uniqueness inside the job; the stem names the
-    axis that varies within the packing. Deriving from the pair row alone
+    axis that varies within the grouping. Deriving from the pair row alone
     keeps the filename stable when sibling pairs are later pruned.
     """
-    if packing == "note":
+    if grouping == "note":
         stem = Path(criterion_path).stem
-    elif packing == "criterion":
+    elif grouping == "criterion":
         stem = Path(note_path).stem
     else:
-        raise ValueError(f"unsupported review job packing: {packing}")
+        raise ValueError(f"unsupported review job grouping: {grouping}")
     return f"pair-{pair_ordinal}-{stem}.md"
 
 
 def result_path(
     *,
     review_job_id: int,
-    packing: str,
+    grouping: str,
     note_path: str,
     criterion_path: str,
     pair_ordinal: int,
 ) -> str:
     return (
         f"{review_job_artifact_dir_rel(review_job_id)}/"
-        f"{result_filename(packing=packing, note_path=note_path, criterion_path=criterion_path, pair_ordinal=pair_ordinal)}"
+        f"{result_filename(grouping=grouping, note_path=note_path, criterion_path=criterion_path, pair_ordinal=pair_ordinal)}"
     )
 
 
 def result_paths_by_pair_id(
     *,
     review_job_id: int,
-    packing: str,
+    grouping: str,
     pairs: Sequence[ReviewPairForPath],
 ) -> dict[int, str]:
     return {
         pair.review_pair_id: result_path(
             review_job_id=review_job_id,
-            packing=packing,
+            grouping=grouping,
             note_path=pair.note_path,
             criterion_path=pair.criterion_path,
             pair_ordinal=pair.pair_ordinal,
@@ -147,8 +147,8 @@ def result_frontmatter(
         "runner_model": job.runner_model,
         "runner_effort": job.runner_effort,
         "result_kind": pair.result_kind,
-        "decision": pair.decision,
-        "reviewed_at": pair.reviewed_at,
+        "outcome": pair.outcome,
+        "completed_at": pair.completed_at,
     }
     return "---\n" + yaml.safe_dump(payload, allow_unicode=False, sort_keys=False) + "---\n"
 
@@ -163,11 +163,11 @@ def write_pair_result_files_to_derived_paths(
     pending_writes: list[tuple[Path, str]] = []
     result_paths = result_paths_by_pair_id(
         review_job_id=job.review_job_id,
-        packing=job.packing,
+        grouping=job.grouping,
         pairs=pairs,
     )
     for pair in pairs:
-        if pair.reviewed_at is None:
+        if pair.completed_at is None:
             continue
         review_text = canonical_texts.get((pair.note_path, pair.criterion_path))
         if review_text is None:
@@ -195,16 +195,16 @@ def write_manifest(
     artifact_dir: Path,
     review_job_id: int,
     job_status: str,
-    packing: str,
+    grouping: str,
     prompt_path: str,
-    bundle_output_path: str,
+    job_output_path: str,
     pairs: Sequence[ReviewPairForPath],
     skipped: Sequence[SkippedPairForManifest] | None = None,
     failure_reason: str | None = None,
 ) -> str:
     result_paths = result_paths_by_pair_id(
         review_job_id=review_job_id,
-        packing=packing,
+        grouping=grouping,
         pairs=pairs,
     )
     payload_pairs: list[dict[str, object]] = []
@@ -227,12 +227,12 @@ def write_manifest(
         payload_pairs.append(item)
 
     payload: dict[str, object] = {
-        "artifact_schema": "review-job-prompt-v2",
+        "artifact_schema": "review-job-prompt-v3",
         "review_job_id": review_job_id,
         "status": job_status,
-        "packing": packing,
+        "grouping": grouping,
         "prompt_path": prompt_path,
-        "bundle_output_path": bundle_output_path,
+        "job_output_path": job_output_path,
         "pairs": payload_pairs,
         "skipped_pairs": [
             {"note_path": pair.note_path, "criterion_path": pair.criterion_path, "reason": pair.reason}

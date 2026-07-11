@@ -77,7 +77,7 @@ def build_fixture(
     lens: str = "prose",
     watches: str = "[body]",
 ) -> tuple[Path, Path]:
-    """Create one note + one gate; seed DB with a full-review acceptance for that pair."""
+    """Create one note + one gate; seed DB with a full-review freshness baseline for that pair."""
     repo = tmp_path / "repo"
     repo.mkdir()
 
@@ -103,10 +103,10 @@ def build_fixture(
             note_path="kb/notes/sample.md",
             criterion_id=criterion_id,
             model_partition=TEST_MODEL,
-            decision="pass",
+            outcome="pass",
             reviewed_note_snapshot_id=note_snapshot.snapshot_id,
             reviewed_criterion_snapshot_id=criterion_snapshot.snapshot_id,
-            reviewed_at="2026-04-01T00:00:00+00:00",
+            completed_at="2026-04-01T00:00:00+00:00",
         )
         accept_pair(
             conn,
@@ -114,9 +114,9 @@ def build_fixture(
             note_path="kb/notes/sample.md",
             criterion_id=criterion_id,
             model_partition=TEST_MODEL,
-            accepted_note_snapshot_id=note_snapshot.snapshot_id,
-            accepted_criterion_snapshot_id=criterion_snapshot.snapshot_id,
-            accepted_at="2026-04-01T00:00:00+00:00",
+            baseline_note_snapshot_id=note_snapshot.snapshot_id,
+            baseline_criterion_snapshot_id=criterion_snapshot.snapshot_id,
+            baseline_updated_at="2026-04-01T00:00:00+00:00",
         )
         conn.commit()
 
@@ -134,7 +134,7 @@ def seed_snapshot_review(repo: Path, db_path: Path, *, note_path: str, criterion
             runner="test-runner",
             created_at="2026-04-01T00:00:00+00:00",
             status="queued",
-            packing="note",
+            grouping="note",
             pairs=[
                 review_db.ReviewPairRequest(
                     note_path=note_path,
@@ -153,11 +153,11 @@ def seed_snapshot_review(repo: Path, db_path: Path, *, note_path: str, criterion
                 review_db.ReviewPairCompletion(
                     note_path=note_path,
                     criterion_path=criterion_path,
-                    decision="pass",
-                    reviewed_at="2026-04-01T00:00:00+00:00",
+                    outcome="pass",
+                    completed_at="2026-04-01T00:00:00+00:00",
                 )
             ],
-            reviewed_at="2026-04-01T00:00:00+00:00",
+            completed_at="2026-04-01T00:00:00+00:00",
         )
         review_db.complete_review_job(
             conn,
@@ -165,15 +165,15 @@ def seed_snapshot_review(repo: Path, db_path: Path, *, note_path: str, criterion
             completed_at="2026-04-01T00:00:00+00:00",
         )
         review_pair = review_db.load_review_pairs_for_job(conn, review_job_id=review_job_id)[0]
-        review_db.upsert_acceptance(
+        review_db.upsert_freshness_baseline(
             conn,
             note_path=note_path,
             criterion_path=criterion_path,
             model_partition=TEST_MODEL,
-            accepted_review_pair_id=review_pair.review_pair_id,
-            accepted_note_snapshot_id=note_snapshot.snapshot_id,
-            accepted_criterion_snapshot_id=criterion_snapshot.snapshot_id,
-            accepted_at="2026-04-01T00:00:00+00:00",
+            evidence_review_pair_id=review_pair.review_pair_id,
+            baseline_note_snapshot_id=note_snapshot.snapshot_id,
+            baseline_criterion_snapshot_id=criterion_snapshot.snapshot_id,
+            baseline_updated_at="2026-04-01T00:00:00+00:00",
         )
         conn.commit()
 
@@ -257,12 +257,12 @@ def test_qualifying_pairs_finds_note_with_only_unwatched_changes_and_ack_records
         row = conn.execute(
             """
             SELECT
-                accepted_review_pair_id,
-                accepted_note_snapshot_id,
-                accepted_criterion_snapshot_id,
-                accepted_note_hash,
-                accepted_criterion_hash
-            FROM current_criterion_acceptances
+                evidence_review_pair_id,
+                baseline_note_snapshot_id,
+                baseline_criterion_snapshot_id,
+                baseline_note_hash,
+                baseline_criterion_hash
+            FROM current_freshness_baselines
             WHERE note_path = ? AND criterion_path = ? AND model_partition = ?
             """,
             ("kb/notes/sample.md", "kb/instructions/review-gates/prose/source-residue.md", TEST_MODEL),
@@ -294,8 +294,8 @@ def test_ack_trivial_note_changes_cli_writes_non_null_review_pair_id(tmp_path: P
     with sqlite3.connect(db_path) as conn:
         row = conn.execute(
             """
-            SELECT accepted_review_pair_id
-            FROM current_criterion_acceptances
+            SELECT evidence_review_pair_id
+            FROM current_freshness_baselines
             WHERE note_path = ? AND criterion_path = ? AND model_partition = ?
             """,
             ("kb/notes/sample.md", "kb/instructions/review-gates/prose/source-residue.md", TEST_MODEL),
@@ -396,7 +396,7 @@ def test_qualifying_pairs_excludes_notes_where_watched_parts_changed(tmp_path: P
     assert pairs == []
 
 
-def test_qualifying_pairs_skips_rows_without_snapshot_text(tmp_path: Path) -> None:
+def test_qualifying_pairs_rejects_baseline_without_snapshot_text(tmp_path: Path) -> None:
     repo = tmp_path / "repo"
     repo.mkdir()
 
@@ -415,19 +415,15 @@ def test_qualifying_pairs_skips_rows_without_snapshot_text(tmp_path: Path) -> No
             repo_root=repo,
             path="kb/instructions/review-gates/prose/source-residue.md",
         )
-        conn.execute(
-            "UPDATE review_file_snapshots SET content_text = NULL WHERE snapshot_id = ?",
-            (note_snapshot.snapshot_id,),
-        )
         review_pair_id = insert_completed_pair(
             conn,
             note_path="kb/notes/sample.md",
             criterion_id="prose/source-residue",
             model_partition=TEST_MODEL,
-            decision="pass",
+            outcome="pass",
             reviewed_note_snapshot_id=note_snapshot.snapshot_id,
             reviewed_criterion_snapshot_id=criterion_snapshot.snapshot_id,
-            reviewed_at="2026-04-04T08:35:54+02:00",
+            completed_at="2026-04-04T08:35:54+02:00",
         )
         accept_pair(
             conn,
@@ -435,19 +431,23 @@ def test_qualifying_pairs_skips_rows_without_snapshot_text(tmp_path: Path) -> No
             note_path="kb/notes/sample.md",
             criterion_id="prose/source-residue",
             model_partition=TEST_MODEL,
-            accepted_note_snapshot_id=note_snapshot.snapshot_id,
-            accepted_criterion_snapshot_id=criterion_snapshot.snapshot_id,
-            accepted_at="2026-04-04T08:36:13+02:00",
+            baseline_note_snapshot_id=note_snapshot.snapshot_id,
+            baseline_criterion_snapshot_id=criterion_snapshot.snapshot_id,
+            baseline_updated_at="2026-04-04T08:36:13+02:00",
+        )
+        conn.execute(
+            "UPDATE review_file_snapshots SET content_text = NULL WHERE snapshot_id = ?",
+            (note_snapshot.snapshot_id,),
         )
         conn.commit()
 
     make_note(note, "\nBody.\n", traits="[title-as-claim]")
 
-    pairs = qualifying_pairs(
-        repo,
-        model=TEST_MODEL,
-        criterion_ids=["kb/instructions/review-gates/prose/source-residue.md"],
-        note_filter=["kb/notes"],
-        db_path=db_path,
-    )
-    assert pairs == []
+    with pytest.raises(RuntimeError, match="malformed freshness baseline"):
+        qualifying_pairs(
+            repo,
+            model=TEST_MODEL,
+            criterion_ids=["kb/instructions/review-gates/prose/source-residue.md"],
+            note_filter=["kb/notes"],
+            db_path=db_path,
+        )

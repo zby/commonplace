@@ -63,7 +63,7 @@ def review_state_rows(conn: sqlite3.Connection) -> dict[str, list[dict[str, obje
     return {
         "review_jobs": table_rows(conn, "review_jobs", "review_job_id"),
         "review_pairs": table_rows(conn, "review_pairs", "review_pair_id"),
-        "acceptance": table_rows(conn, "acceptance", "note_path, criterion_path, model_partition"),
+        "freshness_baselines": table_rows(conn, "freshness_baselines", "note_path, criterion_path, model_partition"),
     }
 
 
@@ -80,7 +80,7 @@ def seed_accepted_review(repo_root: Path, db_path: Path, *, note_path: str) -> i
             runner_effort="high",
             created_at=REVIEWED_AT,
             status="queued",
-            packing="note",
+            grouping="note",
             pairs=[
                 review_db.ReviewPairRequest(
                     note_path=note_path,
@@ -99,23 +99,23 @@ def seed_accepted_review(repo_root: Path, db_path: Path, *, note_path: str) -> i
                 review_db.ReviewPairCompletion(
                     note_path=note_path,
                     criterion_path=GATE_PATH,
-                    decision="pass",
-                    reviewed_at=REVIEWED_AT,
+                    outcome="pass",
+                    completed_at=REVIEWED_AT,
                 )
             ],
-            reviewed_at=REVIEWED_AT,
+            completed_at=REVIEWED_AT,
         )
         review_pair = review_db.load_review_pairs_for_job(conn, review_job_id=review_job_id)[0]
         review_db.complete_review_job(conn, review_job_id=review_job_id, completed_at=REVIEWED_AT)
-        review_db.upsert_acceptance(
+        review_db.upsert_freshness_baseline(
             conn,
             note_path=note_path,
             criterion_path=GATE_PATH,
             model_partition=TEST_MODEL,
-            accepted_review_pair_id=review_pair.review_pair_id,
-            accepted_note_snapshot_id=note_snapshot.snapshot_id,
-            accepted_criterion_snapshot_id=criterion_snapshot.snapshot_id,
-            accepted_at=ACCEPTED_AT,
+            evidence_review_pair_id=review_pair.review_pair_id,
+            baseline_note_snapshot_id=note_snapshot.snapshot_id,
+            baseline_criterion_snapshot_id=criterion_snapshot.snapshot_id,
+            baseline_updated_at=ACCEPTED_AT,
         )
         conn.commit()
         return review_pair.review_pair_id

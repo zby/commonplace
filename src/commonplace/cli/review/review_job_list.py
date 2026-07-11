@@ -14,9 +14,9 @@ from commonplace.review.review_model import normalize_model_partition
 
 def _print_table(jobs: list[dict[str, object]]) -> None:
     if not jobs:
-        print("review_job_id\tstatus\tmodel_partition\tpacking\trunner\tpairs\tprompt_path\tbundle_output_path\tfailure_reason")
+        print("review_job_id\tstatus\tmodel_partition\tgrouping\trunner\tpairs\tprompt_path\tjob_output_path\tfailure_reason")
         return
-    print("review_job_id\tstatus\tmodel_partition\tpacking\trunner\tpairs\tprompt_path\tbundle_output_path\tfailure_reason")
+    print("review_job_id\tstatus\tmodel_partition\tgrouping\trunner\tpairs\tprompt_path\tjob_output_path\tfailure_reason")
     for job in jobs:
         print(
             "\t".join(
@@ -24,11 +24,11 @@ def _print_table(jobs: list[dict[str, object]]) -> None:
                     str(job["review_job_id"]),
                     str(job["status"]),
                     str(job["model_partition"]),
-                    str(job["packing"]),
+                    str(job["grouping"]),
                     str(job["runner"] or ""),
                     str(job["pair_count"]),
                     str(job["prompt_path"] or ""),
-                    str(job["bundle_output_path"] or ""),
+                    str(job["job_output_path"] or ""),
                     str(job.get("failure_reason") or ""),
                 ]
             )

@@ -18,7 +18,7 @@ from typing import Any
 from commonplace.lib import frontmatter
 from commonplace.review.review_db import (
     connect,
-    load_current_acceptances,
+    load_current_freshness_baselines,
     prepare_review_db,
 )
 from commonplace.review.review_model import normalize_model_partition
@@ -143,14 +143,14 @@ def qualifying_pairs(
     ]
 
     with connect(db_path) as conn:
-        acceptances = load_current_acceptances(conn)
+        freshness_baselines = load_current_freshness_baselines(conn)
 
     current_text_cache: dict[str, str] = {}
     gate_watches_cache: dict[str, set[str] | None] = {}
     pairs: list[str] = []
     for record in stale_records:
-        acceptance = acceptances.get((record.note_path, record.criterion_path, model))
-        if acceptance is None:
+        freshness_baseline = freshness_baselines.get((record.note_path, record.criterion_path, model))
+        if freshness_baseline is None:
             continue
 
         if record.criterion_path not in gate_watches_cache:
@@ -161,7 +161,7 @@ def qualifying_pairs(
             # nothing is trivial against it. Type-spec gates land here.
             continue
 
-        previous_text = acceptance.accepted_note_text
+        previous_text = freshness_baseline.baseline_note_text
         if previous_text is None:
             continue
 

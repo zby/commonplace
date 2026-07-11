@@ -8,7 +8,7 @@ from pathlib import Path
 
 from commonplace.lib import frontmatter
 from commonplace.review.freshness import (
-    AcceptanceSnapshot,
+    FreshnessBaselineSnapshot,
     CriterionSnapshot,
     NoteSnapshot,
     classify_staleness,
@@ -18,16 +18,16 @@ from commonplace.review.freshness import (
 from commonplace.review.paths import criterion_id_for_path, criterion_id_from_stored_path, normalize_criterion_path, review_gates_dir
 from commonplace.review.resolve_criteria import applicable_criterion_ids_for_note
 from commonplace.review.review_db import (
-    AcceptanceState,
+    FreshnessBaseline,
     connect,
     ensure_db,
-    load_current_acceptances,
+    load_current_freshness_baselines,
     resolve_db_path,
 )
 from commonplace.review.review_model import normalize_model_partition
 from commonplace.review.collection_conformance import (
-    COLLECTION_GATE_LENS,
-    is_collection_gate_request,
+    COLLECTION_CONFORMANCE_LENS,
+    is_collection_conformance_request,
     note_collection_md_path,
     resolve_collection_criterion_id,
 )
@@ -37,8 +37,8 @@ from commonplace.review.critique import (
     result_kind_for_criterion_path,
 )
 from commonplace.review.type_conformance import (
-    TYPE_GATE_LENS,
-    is_type_gate_request,
+    TYPE_CONFORMANCE_LENS,
+    is_type_conformance_request,
     note_type_spec_path,
     resolve_type_criterion_id,
 )
@@ -163,7 +163,7 @@ def _normalize_type_requests(repo_root: Path, requests: list[str]) -> tuple[bool
     requested_paths: set[str] = set()
     for raw in requests:
         raw = raw.strip()
-        if raw == TYPE_GATE_LENS:
+        if raw == TYPE_CONFORMANCE_LENS:
             match_all = True
         else:
             requested_paths.add(resolve_type_criterion_id(repo_root, raw))
@@ -194,7 +194,7 @@ def _normalize_collection_requests(repo_root: Path, requests: list[str]) -> tupl
     requested_paths: set[str] = set()
     for raw in requests:
         raw = raw.strip()
-        if raw == COLLECTION_GATE_LENS:
+        if raw == COLLECTION_CONFORMANCE_LENS:
             match_all = True
         else:
             requested_paths.add(resolve_collection_criterion_id(repo_root, raw))
@@ -220,13 +220,13 @@ def _applicable_collection_md_path(
 
 
 def _partition_criterion_requests(criterion_ids: list[str]) -> tuple[list[str], list[str], list[str], bool]:
-    type_requests = [criterion_id for criterion_id in criterion_ids if is_type_gate_request(criterion_id)]
-    collection_requests = [criterion_id for criterion_id in criterion_ids if is_collection_gate_request(criterion_id)]
+    type_requests = [criterion_id for criterion_id in criterion_ids if is_type_conformance_request(criterion_id)]
+    collection_requests = [criterion_id for criterion_id in criterion_ids if is_collection_conformance_request(criterion_id)]
     catalog_requests = [
         criterion_id
         for criterion_id in criterion_ids
-        if not is_type_gate_request(criterion_id)
-        and not is_collection_gate_request(criterion_id)
+        if not is_type_conformance_request(criterion_id)
+        and not is_collection_conformance_request(criterion_id)
         and not is_critique_request(criterion_id)
     ]
     return catalog_requests, type_requests, collection_requests, any(
@@ -235,7 +235,7 @@ def _partition_criterion_requests(criterion_ids: list[str]) -> tuple[list[str], 
 
 
 @dataclass(frozen=True)
-class StaleGate:
+class StaleCriterion:
     note_path: str
     criterion_path: str
     reason: str
@@ -247,15 +247,11 @@ class StaleGate:
         return criterion_id_from_stored_path(self.criterion_path)
 
 
-def _acceptance_snapshot(acceptance: AcceptanceState | None) -> AcceptanceSnapshot | None:
-    if acceptance is None:
-        return None
-    if acceptance.accepted_note_hash is not None and acceptance.accepted_criterion_hash is not None:
-        return AcceptanceSnapshot(
-            accepted_note_hash=acceptance.accepted_note_hash,
-            accepted_criterion_hash=acceptance.accepted_criterion_hash,
-        )
-    return None
+def _freshness_baseline_snapshot(freshness_baseline: FreshnessBaseline) -> FreshnessBaselineSnapshot:
+    return FreshnessBaselineSnapshot(
+        baseline_note_hash=freshness_baseline.baseline_note_hash,
+        baseline_criterion_hash=freshness_baseline.baseline_criterion_hash,
+    )
 
 
 def note_diff_from_text(note_path: str, previous_text: str, current_text: str) -> str | None:
@@ -281,7 +277,7 @@ def select_stale_criteria(
     current_only: bool = False,
     include_diff: bool = False,
     db_path: Path | None = None,
-) -> list[StaleGate]:
+) -> list[StaleCriterion]:
     catalog_requests, type_requests, collection_requests, critique_requested = _partition_criterion_requests(criterion_ids)
     gates_dir, criterion_path_by_id, requested_criterion_ids = _normalize_requested_criterion_ids(repo_root, catalog_requests)
     match_all_types, requested_type_paths = _normalize_type_requests(repo_root, type_requests)
@@ -295,13 +291,13 @@ def select_stale_criteria(
     note_paths = [note_abs.relative_to(repo_root).as_posix() for note_abs in notes]
     ensure_db(db_path)
     with connect(db_path) as conn:
-        acceptances = load_current_acceptances(conn)
-    accepted_pairs = {
-        (accepted_note_path, accepted_criterion_path)
-        for accepted_note_path, accepted_criterion_path, _model_partition in acceptances
+        freshness_baselines = load_current_freshness_baselines(conn)
+    baseline_pairs = {
+        (baseline_note_path, baseline_criterion_path)
+        for baseline_note_path, baseline_criterion_path, _model_partition in freshness_baselines
     }
 
-    stale: list[StaleGate] = []
+    stale: list[StaleCriterion] = []
     for note_abs, note_path in zip(notes, note_paths):
         applicable_criterion_ids = applicable_criterion_ids_for_note(note_abs, requested_criterion_ids, gates_dir)
         criterion_paths_for_note = [criterion_path_by_id[criterion_id] for criterion_id in applicable_criterion_ids]
@@ -331,35 +327,35 @@ def select_stale_criteria(
                 raise FileNotFoundError(f"Gate not found: {criterion_path}")
 
             if model is None:
-                if (note_path, criterion_path) not in accepted_pairs:
+                if (note_path, criterion_path) not in baseline_pairs:
                     stale.append(
-                        StaleGate(
+                        StaleCriterion(
                             note_path,
                             criterion_path,
-                            "missing-review",
+                            "missing-baseline",
                             result_kind=result_kind_for_criterion_path(criterion_path),
                         )
                     )
                 continue
 
-            acceptance = acceptances.get((note_path, criterion_path, model))
-            if acceptance is None:
+            freshness_baseline = freshness_baselines.get((note_path, criterion_path, model))
+            if freshness_baseline is None:
                 stale.append(
-                    StaleGate(
+                    StaleCriterion(
                         note_path,
                         criterion_path,
-                        "missing-review",
+                        "missing-baseline",
                         result_kind=result_kind_for_criterion_path(criterion_path),
                     )
                 )
                 continue
-            acceptance_snapshot = _acceptance_snapshot(acceptance)
-            if acceptance_snapshot is None:
+            freshness_baseline_snapshot = _freshness_baseline_snapshot(freshness_baseline)
+            if freshness_baseline_snapshot is None:
                 stale.append(
-                    StaleGate(
+                    StaleCriterion(
                         note_path,
                         criterion_path,
-                        "missing-review",
+                        "missing-baseline",
                         result_kind=result_kind_for_criterion_path(criterion_path),
                     )
                 )
@@ -373,7 +369,7 @@ def select_stale_criteria(
             staleness = classify_staleness(
                 note_snapshot,
                 criterion_snapshot,
-                acceptance_snapshot,
+                freshness_baseline_snapshot,
             )
             if staleness is None:
                 continue
@@ -381,12 +377,11 @@ def select_stale_criteria(
             if (
                 staleness.reason == "note-changed"
                 and include_diff
-                and acceptance.accepted_note_text is not None
                 and current_note_text is not None
             ):
-                diff = note_diff_from_text(note_path, acceptance.accepted_note_text, current_note_text)
+                diff = note_diff_from_text(note_path, freshness_baseline.baseline_note_text, current_note_text)
             stale.append(
-                StaleGate(
+                StaleCriterion(
                     note_path,
                     criterion_path,
                     staleness.reason,
@@ -404,14 +399,14 @@ def select_requested_criteria(
     criterion_ids: list[str],
     note_filter: list[str] | None = None,
     current_only: bool = False,
-) -> list[StaleGate]:
+) -> list[StaleCriterion]:
     catalog_requests, type_requests, collection_requests, critique_requested = _partition_criterion_requests(criterion_ids)
     gates_dir, criterion_path_by_id, requested_criterion_ids = _normalize_requested_criterion_ids(repo_root, catalog_requests)
     match_all_types, requested_type_paths = _normalize_type_requests(repo_root, type_requests)
     match_all_collections, requested_collection_paths = _normalize_collection_requests(repo_root, collection_requests)
     notes = _select_notes(repo_root, note_filter=note_filter, current_only=current_only)
 
-    requested: list[StaleGate] = []
+    requested: list[StaleCriterion] = []
     for note_abs in notes:
         note_path = note_abs.relative_to(repo_root).as_posix()
         applicable_criterion_ids = applicable_criterion_ids_for_note(note_abs, requested_criterion_ids, gates_dir)
@@ -439,7 +434,7 @@ def select_requested_criteria(
             if not criterion_abs.is_file():
                 raise FileNotFoundError(f"Gate not found: {criterion_path}")
             requested.append(
-                StaleGate(
+                StaleCriterion(
                     note_path,
                     criterion_path,
                     "requested",
@@ -450,7 +445,7 @@ def select_requested_criteria(
     return sorted(requested, key=lambda s: (s.note_path, s.criterion_path))
 
 
-def render_json(records: list[StaleGate], *, model_partition: str | None = None) -> str:
+def render_json(records: list[StaleCriterion], *, model_partition: str | None = None) -> str:
     items = []
     for record in records:
         entry: dict[str, str] = {
@@ -472,8 +467,8 @@ def render_json(records: list[StaleGate], *, model_partition: str | None = None)
     )
 
 
-def render_grouped(records: list[StaleGate]) -> str:
-    grouped: dict[str, list[StaleGate]] = {}
+def render_grouped(records: list[StaleCriterion]) -> str:
+    grouped: dict[str, list[StaleCriterion]] = {}
     for record in records:
         grouped.setdefault(record.note_path, []).append(record)
     lines: list[str] = []

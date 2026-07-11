@@ -102,7 +102,7 @@ commonplace-x-snapshot https://x.com/user/status/123456789
 
 ## Review system
 
-The review system executes snapshot-anchored LLM assays against notes. Closed-ended review gates produce verdicts; open-ended assays such as critique record reports without a decision. The persisted criterion field remains named `criterion_path`. For the vocabulary and full workflow, read [README-REVIEW-SYSTEM.md](./README-REVIEW-SYSTEM.md). For the code architecture, see [review-architecture.md](./review-architecture.md).
+The review system executes snapshot-anchored LLM assays against notes. Closed-ended review gates produce verdicts; open-ended assays such as critique record reports without an outcome. The persisted criterion field remains named `criterion_path`. For the vocabulary and full workflow, read [README-REVIEW-SYSTEM.md](./README-REVIEW-SYSTEM.md). For the code architecture, see [review-architecture.md](./review-architecture.md).
 
 Model flags: every partition-valued flag below is `--model-partition` and takes a partition name such as `claude-opus` or `codex` (the review-freshness key; registry in `src/commonplace/review/review_model.py`). The only `--model` flag is `commonplace-finalize-review-job`'s, which takes the concrete model the worker reported (for example `claude-fable-5`) and validates that it maps into the job's partition.
 
@@ -117,7 +117,7 @@ commonplace-review-target-selector --json --model-partition claude-opus prose --
   | commonplace-create-review-jobs --input - --grouping note
 ```
 
-The canonical path is selector JSON piped into `--input -`. The command prints a JSON payload with `input_mode`, `model_partition`, `grouping`, `jobs`, and `skipped_pairs`. Each result-kind-homogeneous job includes `review_job_id`, `status`, nullable runner provenance, `packing`, derived `prompt_path`, derived `bundle_output_path`, and pair rows with `criterion_id`, `result_kind`, nullable `decision`, nullable `reviewed_at`, and derived `result_path`. `MANIFEST.json` is display/debug output written beside the artifacts, not a returned JSON field; pipeline commands use derived job paths as state. Note-packed jobs use criterion-leaf filenames such as `source-residue.md`; criterion-packed jobs use note filenames such as `my-note.md`.
+The canonical path is selector JSON piped into `--input -`. The command prints a JSON payload with `input_mode`, `model_partition`, `grouping`, `jobs`, and `skipped_pairs`. Each result-kind-homogeneous job includes `review_job_id`, `status`, nullable runner provenance, `grouping`, derived `prompt_path`, derived `job_output_path`, and pair rows with `criterion_id`, `result_kind`, nullable `outcome`, nullable `completed_at`, and derived `result_path`. `MANIFEST.json` is display/debug output written beside the artifacts, not a returned JSON field; pipeline commands use derived job paths as state. Note-grouped jobs use criterion-leaf filenames such as `source-residue.md`; criterion-grouped jobs use note filenames such as `my-note.md`.
 
 ### commonplace-review-job-list
 
@@ -130,7 +130,7 @@ commonplace-review-job-list --model-partition claude-opus
 
 ### commonplace-finalize-review-job
 
-Finalize a queued review job from its derived bundle output path. The command strictly parses all expected pair blocks, writes per-pair result files, records completion under each pair's persisted result kind, upserts accepted freshness baselines, prunes superseded review evidence, and moves the job to `completed` in one successful finalization. Verdict pairs record a decision; report pairs retain a null decision and complete via `reviewed_at`. Missing, duplicate, unexpected, malformed, or result-less pair blocks fail the whole job and write no acceptance rows. Exit 1 if the job failed or if a precondition fails before state changes.
+Finalize a queued review job from its derived job output path. The command strictly parses all expected pair blocks, writes per-pair result files, records completion under each pair's persisted result kind, creates or replaces freshness baselines, prunes superseded review evidence, and moves the job to `completed` in one successful finalization. Verdict pairs record an outcome; report pairs retain a null outcome and complete via `completed_at`. `ERROR`, missing, duplicate, unexpected, malformed, or result-less pair blocks fail the whole job and write no freshness baseline rows. Exit 1 if the job failed or if a precondition fails before state changes.
 
 ```bash
 commonplace-finalize-review-job --review-job-id 42
@@ -140,11 +140,11 @@ commonplace-finalize-review-job --review-job-id 42 --runner codex --model gpt-5 
 
 Optional provenance flags are recorded at finalization time. `--runner` may be supplied alone. `--model` may be supplied without `--runner`; it validates `build_model_partition(--model, --effort)` against the job's `model_partition` before state changes. `--effort` requires `--model`. `--telemetry-json` records an opaque harness-provided telemetry blob without interpreting it.
 
-The command accepts `queued` jobs, rejects `completed` and `failed`, reads the job-owned `bundle-output.md`, writes per-pair result files to derived result paths with provenance frontmatter, refreshes `MANIFEST.json` for inspection, and prints JSON for success, mutated failure, and precondition failure. Result-file write failures are fatal evidence failures. Manifest refresh failures after DB completion do not fail the job; they are returned in an optional top-level `warnings` array.
+The command accepts `queued` jobs, rejects `completed` and `failed`, reads the job-owned `job-output.md`, writes per-pair result files to derived result paths with provenance frontmatter, refreshes `MANIFEST.json` for inspection, and prints JSON for success, mutated failure, and precondition failure. Result-file write failures are fatal evidence failures. Manifest refresh failures after DB completion do not fail the job; they are returned in an optional top-level `warnings` array.
 
 ### commonplace-ack-review
 
-Advance the accepted freshness baseline for specific criteria without re-running the assay. For report pairs this reuses current evidence; it does not endorse or resolve the report.
+Advance an existing freshness baseline for specific criteria without re-running the assay. For report pairs this reuses current evidence; it does not endorse or resolve the report.
 
 ```bash
 commonplace-ack-review kb/notes/my-note.md --model-partition claude-opus prose/source-residue semantic/grounding-alignment
@@ -172,7 +172,7 @@ commonplace-resolve-criteria critique                                 # report-k
 
 ### commonplace-review-target-selector
 
-List assay target pairs. Default mode lists stale `(note, criterion)` pairs by comparing current note/criterion text hashes against accepted DB snapshots. JSON and schema fields use `criterion_*` names. `--mode requested` emits the explicitly requested applicable pairs without checking freshness, for piping into `commonplace-create-review-jobs --input -`.
+List assay target pairs. Default mode lists stale `(note, criterion)` pairs by comparing current note/criterion text hashes against baseline DB snapshots. JSON and schema fields use `criterion_*` names. `--mode requested` emits the explicitly requested applicable pairs without checking freshness, for piping into `commonplace-create-review-jobs --input -`.
 
 Besides catalog gate ids and bundles, the selector accepts conformance requests and the report-kind `critique` assay. Type-conformance: `type` derives one pair per typed note in scope with the note's type spec as the criterion, `type/{name}` narrows to one type's cohort. Collection-conformance: `collection` derives one pair per in-collection note with the collection's COLLECTION.md as the criterion, `collection/{path}` narrows to one collection's cohort (path relative to `kb/`, e.g. `collection/notes`). `--all-gates` selects all applicable verdict criteria — catalog gates plus both conformance pairs — and intentionally excludes heavyweight report assays. Jobs created from selector output are result-kind homogeneous.
 
@@ -180,7 +180,7 @@ Besides catalog gate ids and bundles, the selector accepts conformance requests 
 commonplace-review-target-selector prose --model-partition claude-opus --note kb/notes kb/reference
 commonplace-review-target-selector prose --model-partition claude-opus --current --json          # JSON output
 commonplace-review-target-selector prose --model-partition claude-opus --note kb/notes kb/reference --reason note-changed     # filter by staleness reason
-commonplace-review-target-selector prose --note kb/notes kb/reference --reason missing-review     # pairs missing under every model partition
+commonplace-review-target-selector prose --note kb/notes kb/reference --reason missing-baseline     # pairs missing under every model partition
 commonplace-review-target-selector --mode requested prose --model-partition claude-opus --note kb/notes/my-note.md --json
 commonplace-review-target-selector type/definition --model-partition claude-opus --current       # type-conformance pairs for one type's cohort
 commonplace-review-target-selector collection/notes --model-partition claude-opus --current      # collection-conformance pairs for one collection's cohort

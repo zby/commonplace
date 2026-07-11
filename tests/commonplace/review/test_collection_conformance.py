@@ -86,7 +86,7 @@ def build_fixture(tmp_path: Path) -> dict[str, Path]:
     }
 
 
-def seed_acceptance(
+def seed_freshness_baseline(
     repo_root: Path,
     *,
     note_path: str,
@@ -102,10 +102,10 @@ def seed_acceptance(
             note_path=note_path,
             criterion_id=criterion_path,
             model_partition=model_partition,
-            decision="pass",
+            outcome="pass",
             reviewed_note_snapshot_id=note_snapshot.snapshot_id,
             reviewed_criterion_snapshot_id=criterion_snapshot.snapshot_id,
-            reviewed_at=REVIEWED_AT,
+            completed_at=REVIEWED_AT,
         )
         accept_pair(
             conn,
@@ -113,9 +113,9 @@ def seed_acceptance(
             note_path=note_path,
             criterion_id=criterion_path,
             model_partition=model_partition,
-            accepted_note_snapshot_id=note_snapshot.snapshot_id,
-            accepted_criterion_snapshot_id=criterion_snapshot.snapshot_id,
-            accepted_at=REVIEWED_AT,
+            baseline_note_snapshot_id=note_snapshot.snapshot_id,
+            baseline_criterion_snapshot_id=criterion_snapshot.snapshot_id,
+            baseline_updated_at=REVIEWED_AT,
         )
         conn.commit()
 
@@ -197,7 +197,7 @@ class TestSelectorCollectionPairs:
             note_filter=["kb/notes/plain.md"],
         )
         assert [(s.note_path, s.criterion_path, s.criterion_id, s.reason) for s in stale] == [
-            ("kb/notes/plain.md", "kb/notes/COLLECTION.md", "collection/notes", "missing-review"),
+            ("kb/notes/plain.md", "kb/notes/COLLECTION.md", "collection/notes", "missing-baseline"),
         ]
 
     def test_collection_path_request_filters_to_cohort(self, tmp_path: Path) -> None:
@@ -214,7 +214,7 @@ class TestSelectorCollectionPairs:
 
     def test_fresh_collection_pair_is_not_selected(self, tmp_path: Path) -> None:
         build_fixture(tmp_path)
-        seed_acceptance(tmp_path, note_path="kb/notes/plain.md", criterion_path="kb/notes/COLLECTION.md")
+        seed_freshness_baseline(tmp_path, note_path="kb/notes/plain.md", criterion_path="kb/notes/COLLECTION.md")
         stale = review_target_selector.select_stale_criteria(
             tmp_path,
             model=TEST_MODEL,
@@ -225,8 +225,8 @@ class TestSelectorCollectionPairs:
 
     def test_collection_md_edit_marks_cohort_gate_changed(self, tmp_path: Path) -> None:
         fixture = build_fixture(tmp_path)
-        seed_acceptance(tmp_path, note_path="kb/notes/plain.md", criterion_path="kb/notes/COLLECTION.md")
-        seed_acceptance(tmp_path, note_path="kb/reference/doc.md", criterion_path="kb/reference/COLLECTION.md")
+        seed_freshness_baseline(tmp_path, note_path="kb/notes/plain.md", criterion_path="kb/notes/COLLECTION.md")
+        seed_freshness_baseline(tmp_path, note_path="kb/reference/doc.md", criterion_path="kb/reference/COLLECTION.md")
 
         fixture["notes_contract"].write_text(
             fixture["notes_contract"].read_text(encoding="utf-8") + "\nRaised conventions bar.\n",
@@ -245,7 +245,7 @@ class TestSelectorCollectionPairs:
 
     def test_note_edit_marks_collection_pair_note_changed_with_diff(self, tmp_path: Path) -> None:
         fixture = build_fixture(tmp_path)
-        seed_acceptance(tmp_path, note_path="kb/notes/plain.md", criterion_path="kb/notes/COLLECTION.md")
+        seed_freshness_baseline(tmp_path, note_path="kb/notes/plain.md", criterion_path="kb/notes/COLLECTION.md")
         make_note(fixture["note"], "Plain note", "\nUpdated body.\n")
 
         stale = review_target_selector.select_stale_criteria(
@@ -296,8 +296,8 @@ State one claim per note.
             note_filter=["kb/notes/plain.md"],
         )
         assert [(s.criterion_id, s.reason) for s in stale] == [
-            ("collection/notes", "missing-review"),
-            ("type/note", "missing-review"),
+            ("collection/notes", "missing-baseline"),
+            ("type/note", "missing-baseline"),
         ]
 
     def test_requested_mode_emits_collection_pairs(self, tmp_path: Path) -> None:
@@ -369,7 +369,7 @@ State one claim per note.
 class TestAckCollectionPair:
     def test_ack_after_collection_md_edit_repins_current_contract(self, tmp_path: Path) -> None:
         fixture = build_fixture(tmp_path)
-        seed_acceptance(tmp_path, note_path="kb/notes/plain.md", criterion_path="kb/notes/COLLECTION.md")
+        seed_freshness_baseline(tmp_path, note_path="kb/notes/plain.md", criterion_path="kb/notes/COLLECTION.md")
         fixture["notes_contract"].write_text(
             fixture["notes_contract"].read_text(encoding="utf-8") + "\nTrivial wording tweak.\n",
             encoding="utf-8",

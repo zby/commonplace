@@ -29,7 +29,7 @@ Each new review dependency becomes its own `(note_path, dependency_path)` pair w
 
 Each factored pair reuses the entire freshness/ack/warn stack unchanged, exactly as type-conformance pairs do. Like the type spec, neither `COLLECTION.md` nor a source snapshot is written as a Failure mode / Test procedure, so each needs a mechanical wrapper (or an authored review section in the dependency document, which the hash then sees).
 
-The N-ary input-set design — acceptance pinning a variable set of `(input_key, role, resolver, accepted_version)` records — remains the fallback for a judgment that irreducibly reads three or more texts in one prompt. No such judgment is identified yet, which is exactly why the input-set table stays unbuilt.
+The N-ary input-set design — freshness baseline pinning a variable set of `(input_key, role, resolver, accepted_version)` records — remains the fallback for a judgment that irreducibly reads three or more texts in one prompt. No such judgment is identified yet, which is exactly why the input-set table stays unbuilt.
 
 ## Cohort-scoped ack
 
@@ -59,5 +59,5 @@ Relevant Notes:
 - [link graph plus timestamps enables make-like staleness detection](../../notes/link-graph-plus-timestamps-enables-make-like-staleness-detection.md) — rationale: the build-product/prerequisite model; factored two-input pairs are its cheapest review-side realization
 - [038-type-conformance reviews use the type spec as the gate](../adr/038-type-conformance-reviews-use-the-type-spec-as-the-gate.md) — rationale: the shipped first instance of the factoring pattern this proposal generalizes
 - [a derived copy of recomputable truth must be checked or absent](../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — rationale: why each dependency document must be the gate rather than be restated in one
-- [review system](../README-REVIEW-SYSTEM.md) — part-of: the freshness, acceptance, and ack concepts every factored pair reuses unchanged
+- [review system](../README-REVIEW-SYSTEM.md) — part-of: the freshness, freshness baseline, and ack concepts every factored pair reuses unchanged
 - [032-review freshness uses DB snapshots, not Git](../adr/032-review-freshness-uses-db-snapshots-not-git.md) — see-also: the role-neutral snapshot substrate that lets any repo document sit on the criterion side

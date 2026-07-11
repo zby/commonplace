@@ -6,9 +6,9 @@ from pathlib import Path
 from typing import Any
 
 from commonplace.lib import frontmatter
-from commonplace.review.collection_conformance import COLLECTION_GATE_LENS, is_collection_gate_request
+from commonplace.review.collection_conformance import COLLECTION_CONFORMANCE_LENS, is_collection_conformance_request
 from commonplace.review.critique import is_critique_request
-from commonplace.review.type_conformance import TYPE_GATE_LENS, is_type_gate_request
+from commonplace.review.type_conformance import TYPE_CONFORMANCE_LENS, is_type_conformance_request
 
 
 def _reject_unsafe_criterion_arg(arg: str) -> None:
@@ -28,13 +28,13 @@ def resolve_criterion_requests(requests: list[str], gates_dir: Path) -> list[str
     passthrough_requests = [
         arg
         for arg in requests
-        if is_type_gate_request(arg) or is_collection_gate_request(arg) or is_critique_request(arg)
+        if is_type_conformance_request(arg) or is_collection_conformance_request(arg) or is_critique_request(arg)
     ]
     catalog_requests = [
         arg
         for arg in requests
-        if not is_type_gate_request(arg)
-        and not is_collection_gate_request(arg)
+        if not is_type_conformance_request(arg)
+        and not is_collection_conformance_request(arg)
         and not is_critique_request(arg)
     ]
     criterion_ids = resolve_to_criterion_ids(catalog_requests, gates_dir) if catalog_requests else []
@@ -54,7 +54,7 @@ def all_gate_requests(gates_dir: Path) -> list[str]:
     """
     bundles = sorted(d.name for d in gates_dir.iterdir() if d.is_dir())
     # The heavyweight report-kind critique assay is intentionally opt-in.
-    return resolve_to_criterion_ids(bundles, gates_dir) + [TYPE_GATE_LENS, COLLECTION_GATE_LENS]
+    return resolve_to_criterion_ids(bundles, gates_dir) + [TYPE_CONFORMANCE_LENS, COLLECTION_CONFORMANCE_LENS]
 
 
 def resolve_to_criterion_ids(args: list[str], gates_dir: Path) -> list[str]:

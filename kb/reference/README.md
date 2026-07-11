@@ -214,8 +214,8 @@ Imperative how-to procedures live in [kb/instructions/](../instructions/) rather
 - [ADR-017: COLLECTION.md is the register convention boundary](./adr/017-collection-md-is-the-register-convention-boundary.md) — why collection files own register conventions while types stay structural
 - [ADR-019: collection-owned link vocabulary with per-destination outbound rules](./adr/019-collection-owned-link-vocabulary.md) — why each `COLLECTION.md` owns outbound rules per destination collection, and why the connect/write skills read it directly instead of a compiled topology
 - [ADR-020: theoretical-default link vocabulary additions](./adr/020-theoretical-default-contrasts-mechanism.md) — the `contrasts` and `mechanism` labels and the directional-asymmetry principle for the theoretical register
-- [ADR-035: review jobs finalize all-or-nothing with derived artifacts](./adr/035-review-jobs-finalize-all-or-nothing-with-derived-artifacts.md) — current review-job state model, strict parsing, derived artifact paths, and finalization-time provenance
-- [ADR-036: review acceptance is current state, not append-only history](./adr/036-review-acceptance-is-current-state-not-append-only-history.md) — current acceptance rows and inline superseded-review pruning
+- [ADR-035: review jobs finalize all-or-nothing with derived artifacts](./adr/035-review-jobs-finalize-all-or-nothing-with-derived-artifacts.md) — established all-or-nothing finalization and derived artifact paths
+- [ADR-043: review state separates completion, outcomes, and freshness baselines](./adr/043-review-state-separates-completion-outcomes-and-freshness-baselines.md) — current review vocabulary, schema-v7 state model, and v5 preservation decision
 
 ## Collection boundary
 

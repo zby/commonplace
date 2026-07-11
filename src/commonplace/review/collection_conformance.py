@@ -3,7 +3,7 @@
 A collection-conformance pair reviews one note against the authoring contract
 of the collection it lives in — the nearest `COLLECTION.md` above it. The
 pair is ordinary review state — its gate path is a collection contract file
-instead of a review-gate catalog entry — so snapshots, freshness, acceptance,
+instead of a review-gate catalog entry — so snapshots, freshness baselines,
 and acknowledgement apply unchanged: editing a COLLECTION.md flips
 `criterion-changed` for exactly the notes in that collection.
 
@@ -19,13 +19,13 @@ from pathlib import Path, PurePosixPath
 
 from commonplace.lib.project_paths import collection_for_path, kb_root
 
-COLLECTION_GATE_LENS = "collection"
+COLLECTION_CONFORMANCE_LENS = "collection"
 
 
-def is_collection_gate_request(arg: str) -> bool:
+def is_collection_conformance_request(arg: str) -> bool:
     """True when a requested gate id names the virtual collection-conformance lens."""
     arg = arg.strip()
-    return arg == COLLECTION_GATE_LENS or arg.startswith(f"{COLLECTION_GATE_LENS}/")
+    return arg == COLLECTION_CONFORMANCE_LENS or arg.startswith(f"{COLLECTION_CONFORMANCE_LENS}/")
 
 
 def is_collection_md_criterion_path(criterion_path: str) -> bool:
@@ -47,7 +47,7 @@ def collection_criterion_id_for_path(criterion_path: str) -> str:
     """Virtual `collection/{path}` shorthand for a COLLECTION.md gate path."""
     parent = PurePosixPath(criterion_path).parent
     rel = PurePosixPath(*parent.parts[1:]).as_posix()
-    return f"{COLLECTION_GATE_LENS}/{rel}"
+    return f"{COLLECTION_CONFORMANCE_LENS}/{rel}"
 
 
 def resolve_collection_criterion_id(repo_root: Path, criterion_id: str) -> str:
@@ -58,11 +58,11 @@ def resolve_collection_criterion_id(repo_root: Path, criterion_id: str) -> str:
     names `kb/notes/COLLECTION.md`, `collection/commonplace/notes` names
     `kb/commonplace/notes/COLLECTION.md`.
     """
-    rel = criterion_id.strip().removeprefix(f"{COLLECTION_GATE_LENS}/").strip("/")
+    rel = criterion_id.strip().removeprefix(f"{COLLECTION_CONFORMANCE_LENS}/").strip("/")
     parts = PurePosixPath(rel).parts
     if (
         not rel
-        or rel == COLLECTION_GATE_LENS
+        or rel == COLLECTION_CONFORMANCE_LENS
         or PurePosixPath(rel).is_absolute()
         or any(part in {".", ".."} for part in parts)
     ):

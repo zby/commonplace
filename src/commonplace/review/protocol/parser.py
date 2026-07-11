@@ -12,9 +12,9 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Sequence
 
-from commonplace.review.protocol.decisions import (
+from commonplace.review.protocol.outcomes import (
     canonicalize_report_completion,
-    parse_review_decision,
+    parse_review_outcome,
     rewrite_review_result_footer,
 )
 from commonplace.review.protocol.format import PAIR_END_RE, PAIR_START_RE
@@ -24,22 +24,22 @@ PairKey = tuple[str, str]
 
 
 @dataclass(frozen=True)
-class ParsedPairReview:
+class ParsedPairResult:
     note_path: str
     criterion_path: str
-    decision: str | None
+    outcome: str | None
     result_kind: str
 
 
 @dataclass(frozen=True)
-class ParsedPairBundle:
-    reviews: dict[PairKey, ParsedPairReview]
+class ParsedJobOutput:
+    reviews: dict[PairKey, ParsedPairResult]
     canonical_texts: dict[PairKey, str]
     missing: list[PairKey]
 
 
-def extract_pair_reviews(
-    bundle_markdown: str,
+def extract_pair_results(
+    job_output_markdown: str,
     *,
     expected_pairs: Sequence[PairKey],
 ) -> dict[PairKey, str]:
@@ -48,7 +48,7 @@ def extract_pair_reviews(
     current_pair: PairKey | None = None
     current_lines: list[str] = []
 
-    for raw_line in bundle_markdown.splitlines():
+    for raw_line in job_output_markdown.splitlines():
         start_match = PAIR_START_RE.match(raw_line.strip())
         if start_match is not None:
             if current_pair is not None:
@@ -89,12 +89,12 @@ def extract_pair_reviews(
     return reviews
 
 
-def parse_pair_bundle(
-    bundle_markdown: str,
+def parse_job_output(
+    job_output_markdown: str,
     *,
     expected_pairs: Sequence[PairKey],
     result_kinds: dict[PairKey, str],
-) -> ParsedPairBundle:
+) -> ParsedJobOutput:
     expected = set(expected_pairs)
     contracted = set(result_kinds)
     if contracted != expected:
@@ -112,29 +112,29 @@ def parse_pair_bundle(
             )
         raise ValueError(f"result-kind contract mismatch: {'; '.join(details)}")
 
-    extracted = extract_pair_reviews(bundle_markdown, expected_pairs=expected_pairs)
+    extracted = extract_pair_results(job_output_markdown, expected_pairs=expected_pairs)
     canonical_texts: dict[PairKey, str] = {}
-    reviews: dict[PairKey, ParsedPairReview] = {}
+    reviews: dict[PairKey, ParsedPairResult] = {}
     for pair, review_text in extracted.items():
         result_kind = result_kinds[pair]
         if result_kind == "verdict":
-            decision = parse_review_decision(review_text)
-            canonical_text = rewrite_review_result_footer(review_text, decision=decision)
+            outcome = parse_review_outcome(review_text)
+            canonical_text = rewrite_review_result_footer(review_text, outcome=outcome)
         elif result_kind == "report":
-            decision = None
+            outcome = None
             canonical_text = canonicalize_report_completion(review_text)
         else:
             raise ValueError(f"invalid result kind for pair: {pair[0]} :: {pair[1]}: {result_kind}")
         canonical_texts[pair] = canonical_text
-        reviews[pair] = ParsedPairReview(
+        reviews[pair] = ParsedPairResult(
             note_path=pair[0],
             criterion_path=pair[1],
-            decision=decision,
+            outcome=outcome,
             result_kind=result_kind,
         )
 
     missing = [pair for pair in expected_pairs if pair not in extracted]
-    return ParsedPairBundle(
+    return ParsedJobOutput(
         reviews=reviews,
         canonical_texts=canonical_texts,
         missing=missing,

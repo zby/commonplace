@@ -15,7 +15,7 @@ The review system could learn new gates from human-accepted edits instead of acc
 Shipped — proposed alongside this loop and since adopted:
 
 - Atomic gates as single files with a type contract: `kb/instructions/review-gates/{lens}/{name}.md`, type `review-gate`.
-- Per-gate provenance, acceptance, and staleness: `gate_sha`, per-gate acceptance rows and current-acceptance views in the review SQLite store.
+- Per-gate provenance, freshness baseline, and staleness: `gate_sha`, per-gate freshness baseline rows and current-baseline views in the review SQLite store.
 - Selector machinery: `resolve_criteria`, `review_target_selector`, `warn_selector`. [ADR 031](../adr/031-review-state-uses-run-owned-review-pairs.md) records the move from monolithic review bundles to gate-native, run-owned review pairs.
 
 Not shipped:
@@ -53,7 +53,7 @@ The hybrid is plausible: keep a small always-on base set, load registry gates un
 
 ## Risks
 
-- Attribution ambiguity in coupled edits (a structural rewrite also fixes clarity — which gate earned the acceptance?).
+- Attribution ambiguity in coupled edits (a structural rewrite also fixes clarity — which gate earned the freshness baseline?).
 - Candidate gates overfitting one author's style or one note family.
 - Revisions that satisfy a gate while worsening the note elsewhere.
 - Observed in the seed experiments: review batteries missed structural changes and once induced a factual error — rollback is load-bearing, not optional.

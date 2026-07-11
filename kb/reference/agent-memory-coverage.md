@@ -23,7 +23,7 @@ The requirements come from [Designing a Memory System for LLM-Based Agents](../n
 | Trace-derived extraction | `kb/log.md` can serve as a manual observation inbox between raw traces and durable artifacts. The current system is strongest once an agent or maintainer already understands what should be written. | Automated session-trace extraction is not implemented. |
 | Discoverability | Titles, descriptions, tags, directory indexes, generated indexes, key-index pointers, `rg`, file paths, and skill metadata provide progressive routing surfaces. | Ranking and quality scoring remain underdeveloped. |
 | Composability | Link prose, collection-owned link labels, claim titles, definitions, and indexes preserve relationships among artifacts. | Automated connection discovery is report-based, not continuously maintained. |
-| Trust | Script validation checks frontmatter, links, enum values, required sections, and template headings. Review gates add semantic checks with stored acceptance state. See [review system architecture](./review-architecture.md). | Behavioral faithfulness and activation effects are not measured as first-class metrics. |
+| Trust | Script validation checks frontmatter, links, enum values, required sections, and template headings. Review gates add semantic checks with stored freshness-baseline state. See [review system architecture](./review-architecture.md). | Behavioral faithfulness and activation effects are not measured as first-class metrics. |
 | Multiple consumer surfaces | Notes, reference docs, instructions, sources, reports, workshops, commands, skills, and control-plane files serve different agent, maintainer, reviewer, and workflow needs. | Retrospective episodes and typed cue indexes remain underdeveloped. |
 | Storage roles | Authored markdown is the source of truth; generated indexes are rebuildable; reports are operational artifacts; review state lives in SQLite. See [storage](./storage-architecture.md). | Compiled behavior-facing views need stronger source-of-truth and regeneration rules. |
 | Activation | Always-loaded `AGENTS.md`, on-demand file reads, and on-invoke skills load relevant memory into agent work. | Situation-triggered activation and behavioral faithfulness tests for activated memory remain future work. |
@@ -47,7 +47,7 @@ It is weaker as an autonomous learning system. Automated session-trace extractio
 - [Control-plane goals](./control-plane-goals.md) — contains: always-loaded KB goals and routing context in `AGENTS.md`
 - [Collections and types](./collections-and-types.md) — implements: collection contracts plus type contracts
 - [Type loading](./type-loading.md) — implements: path-valued type pointers and authoring-time contract loading
-- [Review system architecture](./review-architecture.md) — implements: semantic review, provenance, acceptance, and stale-pair detection
+- [Review system architecture](./review-architecture.md) — implements: semantic review, provenance, freshness baselines, and stale-pair detection
 - [Instruction generation](./instruction-generation.md) — implements: scaffold generation and multi-harness skill installation
 
 ---

@@ -6,7 +6,7 @@ COLLECTION.md contract, or the critique instruction; the same two hashes
 decide staleness. The prompt scaffolding around them (protocol/prompt.py,
 including the conformance wrappers) and
 the assembling code itself are deliberately outside the hash — changing them
-leaves acceptances fresh. Keep judgment-bearing review criteria in note/criterion
+leaves freshness_baselines fresh. Keep judgment-bearing review criteria in note/criterion
 files; widening beyond two inputs should stay compatible with this boundary
 (see kb/reference/review-architecture.md, freshness mechanism). The default
 answer to a new review dependency is a new factored (note, dependency) pair
@@ -39,9 +39,9 @@ class CriterionSnapshot:
 
 
 @dataclass(frozen=True)
-class AcceptanceSnapshot:
-    accepted_note_hash: str
-    accepted_criterion_hash: str
+class FreshnessBaselineSnapshot:
+    baseline_note_hash: str
+    baseline_criterion_hash: str
 
 
 @dataclass(frozen=True)
@@ -67,13 +67,13 @@ def file_content_sha256(path: Path) -> str:
 def classify_staleness(
     note: NoteSnapshot,
     criterion: CriterionSnapshot,
-    acceptance: AcceptanceSnapshot | None,
+    freshness_baseline: FreshnessBaselineSnapshot | None,
 ) -> Staleness | None:
-    if acceptance is None:
-        return Staleness("missing-review")
-    if acceptance.accepted_criterion_hash != criterion.content_hash:
+    if freshness_baseline is None:
+        return Staleness("missing-baseline")
+    if freshness_baseline.baseline_criterion_hash != criterion.content_hash:
         return Staleness("criterion-changed")
-    if acceptance.accepted_note_hash != note.content_hash:
+    if freshness_baseline.baseline_note_hash != note.content_hash:
         return Staleness("note-changed")
     return None
 

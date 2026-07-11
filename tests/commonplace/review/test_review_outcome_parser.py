@@ -2,17 +2,22 @@ from __future__ import annotations
 
 import pytest
 
-from commonplace.review.protocol import decisions
+from commonplace.review.protocol import outcomes
 
 
-def test_parse_review_decision_accepts_single_final_result_line() -> None:
+def test_parse_review_outcome_accepts_single_final_result_line() -> None:
     review_text = """### Summary
 Grounding is aligned.
 
 ## Result: PASS
 """
 
-    assert decisions.parse_review_decision(review_text) == "pass"
+    assert outcomes.parse_review_outcome(review_text) == "pass"
+
+
+def test_parse_review_outcome_treats_error_as_execution_failure() -> None:
+    with pytest.raises(ValueError, match="worker reported ERROR"):
+        outcomes.parse_review_outcome("Unable to judge.\n\n## Result: ERROR\n")
 
 
 def test_rewrite_review_result_footer_moves_result_to_end() -> None:
@@ -21,7 +26,7 @@ def test_rewrite_review_result_footer_moves_result_to_end() -> None:
 Grounding needs one citation.
 """
 
-    assert decisions.rewrite_review_result_footer(review_text, decision="warn") == (
+    assert outcomes.rewrite_review_result_footer(review_text, outcome="warn") == (
         "Grounding needs one citation.\n\n## Result: WARN\n"
     )
 
@@ -37,12 +42,12 @@ Grounding needs one citation.
         ("### Summary\nFlagging as WARN.\n\n## Result: PASS\n", "invalid result signal"),
     ],
 )
-def test_parse_review_decision_rejects_non_strict_live_output(review_text: str, message: str) -> None:
+def test_parse_review_outcome_rejects_non_strict_live_output(review_text: str, message: str) -> None:
     with pytest.raises(ValueError, match=message):
-        decisions.parse_review_decision(review_text)
+        outcomes.parse_review_outcome(review_text)
 
 
-def test_parse_review_decision_tolerates_bare_prose_word_lines() -> None:
+def test_parse_review_outcome_tolerates_bare_prose_word_lines() -> None:
     review_text = """### Summary
 Fine note.
 
@@ -55,25 +60,25 @@ none
 ## Result: PASS
 """
 
-    assert decisions.parse_review_decision(review_text) == "pass"
+    assert outcomes.parse_review_outcome(review_text) == "pass"
 
 
 @pytest.mark.parametrize("word", ["none", "Approved", "Summary", "ok"])
-def test_parse_review_decision_tolerates_single_word_body_line(word: str) -> None:
+def test_parse_review_outcome_tolerates_single_word_body_line(word: str) -> None:
     review_text = f"""### Summary
 {word}
 
 ## Result: WARN
 """
 
-    assert decisions.parse_review_decision(review_text) == "warn"
+    assert outcomes.parse_review_outcome(review_text) == "warn"
 
 
 @pytest.mark.parametrize(
     "line",
     ["## result: PASS", "verdict: pass", "- outcome: warn", "**revised verdict**", "UNKNOWN"],
 )
-def test_parse_review_decision_rejects_result_aliases_case_insensitively(line: str) -> None:
+def test_parse_review_outcome_rejects_result_aliases_case_insensitively(line: str) -> None:
     review_text = f"""### Summary
 Done.
 
@@ -83,4 +88,4 @@ Done.
 """
 
     with pytest.raises(ValueError, match="invalid result signal"):
-        decisions.parse_review_decision(review_text)
+        outcomes.parse_review_outcome(review_text)

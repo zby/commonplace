@@ -1,6 +1,6 @@
 # Compression bundle
 
-A no-DB, report-only review bundle for note-improvement passes, run via `kb/instructions/run-compression-bundle-on-note.md`. Deliberately kept outside the `kb/instructions/review-gates/` catalog so it never gets swept into `--all-gates` or writes review-DB acceptance state.
+A no-DB, report-only review bundle for note-improvement passes, run via `kb/instructions/run-compression-bundle-on-note.md`. Deliberately kept outside the `kb/instructions/review-gates/` catalog so it never gets swept into `--all-gates` or writes review-DB freshness-baseline state.
 
 Purpose: catch material that is true, coherent, or locally defensible but should still be compressed, folded, deleted, split, or rehomed because it does not earn its context cost.
 

@@ -10,7 +10,7 @@ import pytest
 from commonplace.review import review_db, review_target_selector, warn_selector
 from commonplace.review.batch import prepare_grouped_review_job
 from commonplace.review.finalization import finalize_review_job_from_owned_output
-from commonplace.review.protocol.parser import parse_pair_bundle
+from commonplace.review.protocol.parser import parse_job_output
 
 
 NOTE_PATH = "kb/notes/sample.md"
@@ -66,19 +66,19 @@ def report_bundle(body: str = "A strong critique.") -> str:
 
 def test_result_kind_parser_enforces_pair_contract() -> None:
     pair = (NOTE_PATH, CRITIQUE_PATH)
-    parsed = parse_pair_bundle(
+    parsed = parse_job_output(
         report_bundle(),
         expected_pairs=[pair],
         result_kinds={pair: "report"},
     )
-    assert parsed.reviews[pair].decision is None
+    assert parsed.reviews[pair].outcome is None
     assert parsed.reviews[pair].result_kind == "report"
     assert parsed.canonical_texts[pair].endswith("## Result: REPORT\n")
 
     with pytest.raises(ValueError, match="result-kind contract mismatch"):
-        parse_pair_bundle(report_bundle(), expected_pairs=[pair], result_kinds={})
+        parse_job_output(report_bundle(), expected_pairs=[pair], result_kinds={})
     with pytest.raises(ValueError, match="verdict result is invalid"):
-        parse_pair_bundle(
+        parse_job_output(
             report_bundle().replace("REPORT", "PASS"),
             expected_pairs=[pair],
             result_kinds={pair: "report"},
@@ -95,7 +95,7 @@ def test_critique_report_flow_is_snapshot_anchored_and_writes_artifact(tmp_path:
         note_filter=[NOTE_PATH],
     )
     assert [(record.reason, record.result_kind) for record in missing] == [
-        ("missing-review", "report")
+        ("missing-baseline", "report")
     ]
     records = review_target_selector.select_requested_criteria(
         repo,
@@ -110,7 +110,7 @@ def test_critique_report_flow_is_snapshot_anchored_and_writes_artifact(tmp_path:
         repo_root=repo,
         db_path=db_path,
         pairs=[(NOTE_PATH, CRITIQUE_PATH, "report")],
-        packing="note",
+        grouping="note",
         runner=None,
         model_partition=MODEL,
     )
@@ -122,7 +122,7 @@ def test_critique_report_flow_is_snapshot_anchored_and_writes_artifact(tmp_path:
 
     write(repo / CRITIQUE_PATH, (repo / CRITIQUE_PATH).read_text() + "\nChanged live instruction.\n")
     assert (repo / prepared.prompt_path).read_text(encoding="utf-8") == original_prompt
-    write(repo / prepared.bundle_output_path, report_bundle())
+    write(repo / prepared.job_output_path, report_bundle())
     outcome = finalize_review_job_from_owned_output(
         repo_root=repo,
         db_path=db_path,
@@ -135,12 +135,12 @@ def test_critique_report_flow_is_snapshot_anchored_and_writes_artifact(tmp_path:
             conn, review_job_id=prepared.review_job_id
         )[0]
         assert pair.result_kind == "report"
-        assert pair.decision is None
-        assert pair.reviewed_at is not None
+        assert pair.outcome is None
+        assert pair.completed_at is not None
         assert pair.result_path is not None
-        acceptance = review_db.load_current_acceptances(conn)[(NOTE_PATH, CRITIQUE_PATH, "test-model")]
-        assert acceptance.result_kind == "report"
-        assert acceptance.decision is None
+        freshness_baseline = review_db.load_current_freshness_baselines(conn)[(NOTE_PATH, CRITIQUE_PATH, "test-model")]
+        assert freshness_baseline.result_kind == "report"
+        assert freshness_baseline.outcome is None
         latest = review_db.load_latest_completed_review_pair(
             conn,
             note_path=NOTE_PATH,
@@ -188,7 +188,7 @@ def test_report_pair_completion_and_job_homogeneity_invariants(tmp_path: Path) -
                 (NOTE_PATH, CRITIQUE_PATH, "report"),
                 (NOTE_PATH, "kb/instructions/review-gates/semantic/test.md", "verdict"),
             ],
-            packing="note",
+            grouping="note",
             runner=None,
             model_partition=MODEL,
         )
@@ -200,27 +200,29 @@ def test_report_pair_completion_and_job_homogeneity_invariants(tmp_path: Path) -
             runner=None,
             created_at=NOW,
             status="queued",
-            packing="note",
+            grouping="note",
             pairs=[review_db.ReviewPairRequest(NOTE_PATH, CRITIQUE_PATH, 1, "report")],
         )
         pair = review_db.load_review_pairs_for_job(conn, review_job_id=job_id)[0]
         with pytest.raises(ValueError, match="incomplete"):
-            review_db.upsert_acceptance(
+            review_db.upsert_freshness_baseline(
                 conn,
                 note_path=NOTE_PATH,
                 criterion_path=CRITIQUE_PATH,
                 model_partition=MODEL,
-                accepted_review_pair_id=pair.review_pair_id,
-                accepted_at=NOW,
+                evidence_review_pair_id=pair.review_pair_id,
+                baseline_note_snapshot_id=1,
+                baseline_criterion_snapshot_id=2,
+                baseline_updated_at=NOW,
             )
         with pytest.raises(sqlite3.IntegrityError):
             conn.execute(
-                "UPDATE review_pairs SET decision = 'pass' WHERE review_pair_id = ?",
+                "UPDATE review_pairs SET outcome = 'pass' WHERE review_pair_id = ?",
                 (pair.review_pair_id,),
             )
 
 
-V4_SCHEMA = """
+V5_SCHEMA = """
 PRAGMA foreign_keys = ON;
 CREATE TABLE review_jobs (
     review_job_id INTEGER PRIMARY KEY,
@@ -249,6 +251,7 @@ CREATE TABLE review_pairs (
     note_path TEXT NOT NULL,
     gate_path TEXT NOT NULL,
     pair_ordinal INTEGER NOT NULL,
+    result_kind TEXT NOT NULL,
     decision TEXT,
     reviewed_note_snapshot_id INTEGER REFERENCES review_file_snapshots(snapshot_id),
     reviewed_gate_snapshot_id INTEGER REFERENCES review_file_snapshots(snapshot_id),
@@ -267,32 +270,47 @@ CREATE TABLE acceptance (
     accepted_gate_snapshot_id INTEGER REFERENCES review_file_snapshots(snapshot_id),
     accepted_at TEXT NOT NULL
 );
+CREATE INDEX idx_review_jobs_model_partition_created ON review_jobs(model_partition, created_at DESC);
+CREATE INDEX idx_review_jobs_status ON review_jobs(status);
 CREATE UNIQUE INDEX idx_acceptance_note_gate_model_partition
 ON acceptance(note_path, gate_path, model_partition);
 CREATE VIEW current_gate_acceptances AS SELECT * FROM acceptance;
-PRAGMA user_version = 4;
+PRAGMA user_version = 5;
 """
 
 
-def test_migration_preserves_accepted_pair_identity_and_refuses_v5_rerun(tmp_path: Path) -> None:
-    db_path = tmp_path / "review.sqlite"
+def _write_v5_store(db_path: Path, *, outcome: str = "warn") -> None:
+    note_hash = "a" * 64
+    criterion_hash = "b" * 64
     with sqlite3.connect(db_path) as conn:
-        conn.executescript(V4_SCHEMA)
+        conn.executescript(V5_SCHEMA)
+        conn.execute(
+            "INSERT INTO review_file_snapshots VALUES (1, ?, ?, 'note text', ?)",
+            (NOTE_PATH, note_hash, NOW),
+        )
+        conn.execute(
+            "INSERT INTO review_file_snapshots VALUES (2, ?, ?, 'criterion text', ?)",
+            (CRITIQUE_PATH, criterion_hash, NOW),
+        )
         conn.execute(
             "INSERT INTO review_jobs VALUES (7, 'test-model', NULL, NULL, NULL, ?, ?, 'completed', NULL, NULL, 'note')",
             (NOW, NOW),
         )
         conn.execute(
-            "INSERT INTO review_pairs VALUES (42, 7, ?, ?, 1, 'warn', NULL, NULL, ?)",
-            (NOTE_PATH, CRITIQUE_PATH, NOW),
+            "INSERT INTO review_pairs VALUES (42, 7, ?, ?, 1, 'verdict', ?, 1, 2, ?)",
+            (NOTE_PATH, CRITIQUE_PATH, outcome, NOW),
         )
         conn.execute(
-            "INSERT INTO acceptance VALUES (?, ?, 'test-model', 42, NULL, NULL, ?)",
+            "INSERT INTO acceptance VALUES (?, ?, 'test-model', 42, 1, 2, ?)",
             (NOTE_PATH, CRITIQUE_PATH, NOW),
         )
         conn.commit()
 
-    script = Path(__file__).parents[3] / "scripts/migrate-review-db-v4-to-v5.py"
+
+def test_v5_to_v7_migration_preserves_evidence_and_refuses_rerun(tmp_path: Path) -> None:
+    db_path = tmp_path / "review.sqlite"
+    _write_v5_store(db_path)
+    script = Path(__file__).parents[3] / "scripts/migrate-review-db-v5-to-v7.py"
     first = subprocess.run(
         [sys.executable, str(script), str(db_path)],
         text=True,
@@ -304,17 +322,22 @@ def test_migration_preserves_accepted_pair_identity_and_refuses_v5_rerun(tmp_pat
         conn.row_factory = sqlite3.Row
         row = conn.execute(
             """
-            SELECT rp.review_pair_id, rp.result_kind, a.accepted_review_pair_id
-            FROM acceptance AS a
-            JOIN review_pairs AS rp ON rp.review_pair_id = a.accepted_review_pair_id
+            SELECT rp.review_pair_id, rp.result_kind, rp.outcome,
+                   b.evidence_review_pair_id,
+                   b.baseline_note_snapshot_id, b.baseline_criterion_snapshot_id
+            FROM freshness_baselines AS b
+            JOIN review_pairs AS rp ON rp.review_pair_id = b.evidence_review_pair_id
             """
         ).fetchone()
         assert dict(row) == {
             "review_pair_id": 42,
             "result_kind": "verdict",
-            "accepted_review_pair_id": 42,
+            "outcome": "warn",
+            "evidence_review_pair_id": 42,
+            "baseline_note_snapshot_id": 1,
+            "baseline_criterion_snapshot_id": 2,
         }
-        assert conn.execute("PRAGMA user_version").fetchone()[0] == 5
+        assert conn.execute("PRAGMA user_version").fetchone()[0] == 7
         assert conn.execute("PRAGMA foreign_key_check").fetchall() == []
 
     second = subprocess.run(
@@ -324,4 +347,22 @@ def test_migration_preserves_accepted_pair_identity_and_refuses_v5_rerun(tmp_pat
         check=False,
     )
     assert second.returncode != 0
-    assert "expected review schema version 4, found 5" in second.stderr
+    assert "expected review schema version 5, found 7" in second.stderr
+
+
+def test_v5_to_v7_migration_rejects_error_as_completed_evidence(tmp_path: Path) -> None:
+    db_path = tmp_path / "review.sqlite"
+    _write_v5_store(db_path, outcome="error")
+    script = Path(__file__).parents[3] / "scripts/migrate-review-db-v5-to-v7.py"
+
+    result = subprocess.run(
+        [sys.executable, str(script), str(db_path)],
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+
+    assert result.returncode != 0
+    assert "ERROR pair(s); migration refused" in result.stderr
+    with sqlite3.connect(db_path) as conn:
+        assert conn.execute("PRAGMA user_version").fetchone()[0] == 5
