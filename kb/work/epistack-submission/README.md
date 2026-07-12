@@ -6,28 +6,48 @@ The two existing epistack workshops are inputs, not competitors to this one: [ep
 
 ## The thesis we are entering on
 
-**Flatten the provenance, not the argument.**
+**Bespoke structure is invisible from the inside. That — not representation — is why knowledge artifacts don't compound. We have a discipline that makes the boundary legible, and a rig that tests it.**
 
-Schematize only what is decidable — does this quoted span occur in that snapshot, does this link resolve, is this note stale with respect to the source version it cites — and machine-check it. Leave what is not decidable — what supports what, how much, whose reading is right — in constrained prose under a declared `COLLECTION.md` contract, reviewed by snapshot-anchored LLM gates. Interoperability comes from sharing the contract and the provenance layer; nuance survives because the argument was never forced into a schema too small to hold it.
+A wiki gives you unlimited structural freedom and no signal about what any given structure *is*. So three very different things come out of a working session looking identical on disk:
 
-This makes the entry the brief's **protocol** shape ("enabling interoperability and compounding without flattening the underlying material… how to maintain them as sources, users, and AI capabilities change"), not its prototype-tool shape.
+- **Forced by the world** — you cannot cite more precisely than you captured. No design choice escapes it.
+- **Forced by this problem** — the COVID case needs a split institutional layer because three official bodies contradict each other; the LHC case does not, because it has one safety review.
+- **Freely chosen** — whether the grounding-layer marker is a prose word or a frontmatter field.
+
+All three arrive as links and headings. From inside one project they cannot be told apart. Knowledge artifacts fail to travel not because they *can't*, but because nobody can tell which parts would survive the trip. The brief names this as a symptom — "single-user artifacts tuned to one investigator's context, not the kind that travel, combine, or survive scrutiny" — and this thesis names the mechanism under it.
+
+Commonplace's actual practice is a discipline for keeping the three apart, giving each a **different home and a different promotion rule**: proposals carry literal `## Forces` and `## Free choices` sections; problem-local structure lives collection-local; transferable structure must *earn* promotion by surviving a second, differently-shaped case (build-local-first, upstream-what-survives, worked-case-first). The framework has already run this on itself — [ADR 042](../../reference/adr/042-register-becomes-a-default-profile-under-open-ended-text-contracts.md) demoted registers from universals to *default profiles*, keeping only the declared contract and answerability as universal ([the demotion note](../../notes/a-universal-knowledge-framework-demotes-content-taxonomies-to-defaults.md)).
+
+This is the brief's **protocol** shape — "interoperability and compounding without flattening the underlying material… how to maintain them as sources, users, and AI capabilities change" — and it answers the brief's own top criterion (*does it compound, with multiple people building on each other's work?*) with a mechanism rather than a hope. It also cashes out at the case level, which is what the brief actually demands: a casebook that marks which of its structures are load-bearing on the world and which are the author's choices is precisely what lets a second investigator "usefully pick up where another left off."
+
+### The three cases are an instrument, not a demo
+
+They are differently shaped **on purpose**: LHC is one load-bearing dependency chain, COVID is two parallel evidential structures plus a split institutional layer, eggs is dueling syntheses over a single relationship. A structure that survives all three unamended is, by construction, not bespoke. One that needs amendment tells you exactly which limb was local. That is a transfer test rig, and it is the thing no six-week entrant can assemble.
+
+It also gives us the critique the brief explicitly invites as an entry shape. Entrants building argument graphs are asserting a universal structure — claims, support/attack edges, weights — for all epistemic disputes. That is a design choice presented as a necessity, and *from inside one case you cannot tell the difference*. Our rig is the apparatus that would reveal it.
+
+### Subordinate result: flatten the provenance, not the argument
+
+Schematize only what is decidable — does this quoted span occur in that snapshot, does this link resolve, is this note stale with respect to the source version it cites — and machine-check it. Leave what is not decidable — what supports what, how much, whose reading is right — in constrained prose under a declared `COLLECTION.md` contract, reviewed by snapshot-anchored LLM gates.
+
+This is a **result of the discipline, not the thesis**, and it demonstrates it. We assumed a structured source-span locator type was needed; we built local-first, ran a worked case, and found the binding constraint was capture fidelity — an external limitation — while the locator type was a free choice we had nearly mistaken for a necessity.
 
 ### Why not enter on the structure layer
 
-The casebooks' visible content *is* structure — position maps, contested joints, dependency chains. But structure is the layer where entrants with purpose-built argument graphs (Toulmin, IBIS, Bayesian nets, Rootclaim-style decomposition) will be strongest and most legible, and against those, prose notes with a link grammar read as *less* structured rather than more. Entering there invites the one comparison we lose.
+The casebooks' visible content *is* structure — position maps, contested joints, dependency chains. But structure is where entrants with purpose-built argument graphs will be strongest and most legible, and against those, prose notes with a link grammar read as *less* structured rather than more. Entering there invites the one comparison we lose — and it concedes in advance the very assumption the thesis above attacks.
 
-Two of our own results already argue for the thesis above instead. The source-span experiment concluded a structured locator type was **not** needed — capture fidelity, not notation, is the binding constraint. The silently-averaged experiment found the real failure mode is prose contamination, not structural ambiguity. We have empirical grounds for the position, not just a preference.
+### The evidence
 
-Both results are written up as notes in the *sibling* repo (`epistack-casebooks`, `kb/notes/citation-granularity-is-capped-by-capture-fidelity.md` and `kb/notes/a-verdict-in-context-produces-register-drift-not-verdict-copying.md`) and reach this repo only through the backlog, so they are not linkable from here. If the submission leans on them as framework-level claims — and the thesis does — one of them may need promoting into `kb/notes/` here. Open question, not a decision.
+All of it already exists; the entry's job is to assemble and narrate it, not to invent it. Each item is an instance of the discipline, not just a feature.
 
-### The four pieces of evidence
+1. **The contract transferred across three differently-shaped cases without amendment** — the rig's first positive result (sibling backlog, 2026-07-09). What generalized was the *contract*, not the code.
+2. **The `source_type` gap recurred three times before promotion** — the rig's other mode: a structure proving it was not bespoke by recurring across cases, and only then earning a place upstream ([ADR 045](../../reference/adr/045-source-genre-is-a-single-open-field-on-the-snapshot.md)).
+3. **The source-span locator was *not* built** — the negative result, and the more valuable one: the discipline stopped a structure that felt necessary and wasn't.
+4. **Deterministic provenance verification found real defects in our own corpus** — `scripts/verify_quotes.py` over the 14 casebook notes: 88 candidates, 58 match, **24 mismatch**, 6 unresolved, no false mismatches on manual audit ([verifiable-quotes proposal](../../reference/proposals/verifiable-quotes.md)). The crispest single demo we have. Note also that the proposal *admits in writing* it "did not originate from a felt friction case" — the discipline catching its own violation on the page, before the prototype went and supplied the missing evidence. Do not tidy this away; it is the strongest honesty signal in the entry.
+5. **The register-drift experiment** — an assumption ("contradictions get silently averaged") tested and found wrong in an instructive way, with a blind judge, a declared confound, and an n=2 caveat.
+6. **Freshness baselines and snapshot pinning** — the literal answer to "how do you maintain them as sources change." Others' compounding stories will be aspirational; ours is running code that predates the competition.
 
-All four already exist; the entry's job is to assemble and narrate them, not to invent them.
-
-1. **The contract transferred across three differently-shaped cases without amendment** — logged in the sibling repo's backlog (2026-07-09). The thing that generalized is the *contract*, not the code, which is a stronger generalization result than "we ran our pipeline three times."
-2. **Deterministic provenance verification that found real defects in our own corpus** — `scripts/verify_quotes.py` over the 14 casebook notes: 88 candidates, 58 match, **24 mismatch**, 6 unresolved, no false mismatches on manual audit ([verifiable-quotes proposal](../../reference/proposals/verifiable-quotes.md)). The crispest single demo we have.
-3. **The register-drift experiment** — a controlled 2×2 with a blind judge, clean separation, *and* a declared confound and n=2 caveat. The brief lists "a critique with counterexamples" as a valid entry shape on its own; the caveats are the credential with this audience.
-4. **Freshness baselines and snapshot pinning** — the literal answer to "how do you maintain them as sources change." Other entrants' compounding stories will be aspirational; ours is running code that predates the competition.
+Items 3 and 5 are written up as notes in the *sibling* repo (`epistack-casebooks`, `kb/notes/citation-granularity-is-capped-by-capture-fidelity.md` and `kb/notes/a-verdict-in-context-produces-register-drift-not-verdict-copying.md`), reaching this repo only through the backlog, so they are not linkable from here. The submission leans on both as framework-level claims, so at least one likely needs promoting into `kb/notes/` here. Open question, not a decision.
 
 ## Evaluation boundary
 
@@ -44,19 +64,23 @@ Ranked by judge-visible value per day. The plan below commits to the first two a
 
 The prototype exists and has run. What is open is **where it lives**: promoting it from `scripts/` into `commonplace-validate` would make it prominent and make every consuming KB inherit the check, which is the maintainer's stated preference. The [proposal](../../reference/proposals/verifiable-quotes.md) notes the tension — it is a Level A deterministic check, but a cross-file body-text comparison, which does not fit the validator's frontmatter/structure schema machinery; it sits closer to link-health. Decide that, then run it clean across all three cases and report before/after numbers. The 24 mismatches each need a fix or a re-mark.
 
-### An independence / correlated-evidence instrument (committed)
+### An independence / correlated-evidence instrument — run as a live transfer test (committed)
 
-The one Assessment-layer item in the brief we can actually reach in the time ("flag correlated evidence being treated as independent"), and every case already contains a textbook instance that is identified but unmapped:
+The one Assessment-layer item in the brief we can reach in the time ("flag correlated evidence being treated as independent"), and every case already contains a textbook instance that is identified but unmapped. Crucially, correlated evidence takes a **different form in each case**:
 
-- **COVID** — the Andersen/Worobey/Pekar author overlap, *and* multiple analyses reusing the same Huanan-market metagenomic dataset. The case contract already flags this hazard; no note maps it. This is also the highest-value COVID depth work outstanding, so the two tasks are one.
-- **LHC** — the whole safety case funnels through the cosmic-ray argument as a single load-bearing dependency, and Ord–Hillerbrand–Sandberg is literally an out-of-model-error critique of exactly that.
-- **Eggs** — industry funding (Barnard 2019) as the correlation story.
+- **COVID** — Andersen/Worobey/Pekar author overlap, *plus* multiple analyses reusing the same Huanan-market metagenomic dataset. The case contract already flags this hazard; no note maps it. This is also the outstanding COVID depth work, so the two tasks are one.
+- **LHC** — the whole safety case funnels through the cosmic-ray argument as a single load-bearing dependency; Ord–Hillerbrand–Sandberg is literally an out-of-model-error critique of exactly that.
+- **Eggs** — industry funding (Barnard 2019).
 
-Scope: a link-grammar addition plus one worked note per case plus a review gate. **Not** a general algorithm — cross-case coverage is what the brief rewards, generality is not reachable here.
+Because the forms differ, this is not just a feature build — **it is the rig running live, inside the entry**. Invent the structure on one case, then try it on the other two. If one structure covers all three, it has earned promotion and we say so. If it doesn't, we report precisely which limb was local and which was universal. **Both outcomes are publishable results**, and either one demonstrates the thesis. Write it up as a transfer test, not as a feature announcement.
 
-### Author-authority ranking (rejected for this deadline)
+Scope: a link-grammar addition plus one worked note per case plus a review gate. **Not** a general algorithm — generality is not reachable here, and claiming it would be the exact error the thesis indicts.
 
-The [authority-ranking workshop](../authority-ranking/README.md) says the order shape itself is unknown — possibly partial, possibly domain-conditional, non-additive under independence. Six days will not settle that, and a half-built scalar rank hands a judge the exact "flattening" critique this entry's thesis is built to refuse. Park it, and **name it in the submission as a documented open problem** — the brief explicitly asks entrants to make clear where design choices are uncertain.
+### Author-authority ranking (rejected — and the rejection is entry material)
+
+The [authority-ranking workshop](../authority-ranking/README.md) says the order shape itself is unknown: possibly partial, possibly domain-conditional, non-additive under independence. Six days will not settle that.
+
+The rejection is not merely "no time" — it is **the discipline in the negative**, and it belongs in the submission as such: we decline to build a structure whose shape we have not established, which is exactly the restraint we are indicting other approaches for lacking. A half-built scalar rank would hand a judge the precise flattening critique this entry exists to make. Name it in the submission as a documented open problem; the brief explicitly asks entrants to make clear where design choices are uncertain.
 
 ## Plan
 
@@ -72,7 +96,7 @@ The document needs two full days and does not exist yet. If the schedule slips, 
 
 ## Entry material we already have and should not hide
 
-The brief rewards transparency about uncertainty and a visible compounding record. The sibling repo's `backlog-to-commonplace.md` (with its append-only Outcome lines), this repo's open workshops, and [rejected-candidates](../epistack-framework-additions/rejected-candidates.md) are *evidence for the protocol*, not embarrassments to tidy away. Plan to cite them as an appendix.
+Under this thesis, the repo's own working record *is the primary evidence*, because the discipline is the claim. The sibling repo's `backlog-to-commonplace.md` (append-only, with its Outcome lines showing what earned promotion and what did not), this repo's open workshops, the `## Forces` / `## Free choices` sections in proposals, and [rejected-candidates](../epistack-framework-additions/rejected-candidates.md) are not embarrassments to tidy away before submitting — they are the audit trail that shows the boundary between forced and chosen being drawn in real time, by people who did not know the answer yet. Cite them, and cite them prominently rather than as an appendix.
 
 ## What closes it
 
