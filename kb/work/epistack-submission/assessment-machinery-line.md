@@ -1,8 +1,10 @@
-# The assessment-machinery line — a supporting case
+# The assessment-machinery line — an optional supporting demonstration
 
-**Role: supporting case, not the lead.** The submission leads on the [transfer thesis](./README.md); this earns its place by being that thesis applied to *us*. We built an assessment pipeline that works, and we cannot tell from inside it which parts are forced and which are ours. The build finds out.
+**Role: a supporting Assessment-layer demonstration for the [Structure-layer protocol and reference implementation](./README.md).** The provenance matrix and computed correlated-evidence clusters address one requirement the brief names explicitly, but they are not the entry's spine. Build the smallest usable version only if it does not displace the protocol specification, three-case conformance demonstration, or submission writing.
 
-Leading with this would have been wrong twice over: the pipeline is n=1, and reading a general capability off a single bespoke instance is the precise error the thesis indicts.
+If the retarget happens, it does double duty: retargeting the parser from software-repo reviews to epistemic sources **is** a transfer test on our own tooling, so preregistering the code split costs a diff. That secondary evidence is worth retaining, but it does not justify expanding the build.
+
+What it does **not** do is prove we have a general assessment facility. The pipeline is n=1, and reading a general capability off a single bespoke instance is the precise error this document was written to catch.
 
 ## The overclaim we nearly made
 
@@ -118,14 +120,12 @@ That lands on the brief's reachable Assessment bullets (*"flag correlated eviden
 4. **Score the split against the sealed prediction, and write down what a generic layer would need.** A requirement, filed to [bulk-operations](../bulk-operations/README.md) — **not** an implementation. This is the honest stopping point.
 5. *(Stretch, only if 1–4 land early)* **Multi-method comparison** — two rival assessment specs over the same subquestions, divergence localized. Entry shape #4, and where the brief's hook cashes out: **six independent Bayesian analyses of the same COVID evidence spanned 23 orders of magnitude** — a bespoke-structure failure, where each analyst's decomposition looked forced from inside. Steps 1–4 stand alone without this.
 
-## How it unifies with the transfer thesis
+## How it carries the generalization section
 
-One idea, demonstrated at three layers:
+The entry's [generalization section](./README.md#does-it-generalize--the-transfer-discipline) needs to say how we tell forced structure from chosen structure. **Convergence is that test**, and it can be applied at three layers:
 
-**Convergence is the test of forced-versus-chosen.**
+- **Structure** — do independent builders converge on the same casebook structure? ([the rebuild](./replication-plan.md) — designed, preregistered, **not run**)
+- **Assessment** — do independent methodologies converge on the same verdict, and where do they diverge? (the multi-method comparison — stretch item 5 below)
+- **Tooling** — does our own pipeline code survive a second domain, or was it bespoke all along? (**the preregistered code split — the one that actually runs**)
 
-- **Structure** — do independent builders converge on the same casebook structure? ([the rebuild](./replication-plan.md))
-- **Assessment** — do independent methodologies converge on the same verdict, and where do they diverge? (the multi-method matrix)
-- **Tooling** — does our own pipeline code survive a second domain, or was it bespoke all along? (the preregistered code split)
-
-The third is new, and it is the one that makes the entry honest: we run the test on ourselves, and we did not know the answer when we wrote it down.
+Only the third is eligible for the six-day scope, and only if the supporting matrix is built. If it runs, report it as one measured instance; if it is cut, leave the preregistered prediction unscored rather than implying a result. The protocol submission does not depend on this measurement.

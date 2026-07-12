@@ -1,10 +1,10 @@
-# Plan: rebuild the three cases from scratch, as the test of the main submission line
+# Protocol: rebuild the three cases from scratch, to test what transfers
 
-The submission claims that **bespoke structure is invisible from the inside**, and that Commonplace supplies a discipline making the forced/chosen boundary legible plus a rig that tests it. The three existing casebooks are the evidence. They are also a mess — built while the contract was still being invented, across a framework upgrade, with nearest-fit source types, stale lifecycle fields, and migration churn.
+> **Status: designed, preregistered, and not run.** This is future evaluation for the [Structure-layer protocol and reference implementation](./README.md), not the entry's spine and not evidence. It answers only "does it generalize," and only indirectly. Six days did not buy a clean-room run. Everything below was written before any data was seen, and it is published with its predictions sealed and its result blank. **Do not narrate a result from it.**
 
-So the rebuild is not housekeeping. **The rebuild is the experiment**, and it is the only version of the experiment that can actually test the claim.
+The transfer claim is that **bespoke structure is invisible from the inside**, and that Commonplace supplies a discipline making the forced/chosen boundary legible plus a rig that could test it. The three existing casebooks are consistent with the claim but cannot test it. They are also a mess — built while the contract was still being invented, across a framework upgrade, with nearest-fit source types, stale lifecycle fields, and migration churn.
 
-Written before the run and meant to be fixed before any data is seen. Protocol conventions inherited from the sibling repo's `silently-averaged-experiment`: preregistered outcome classes, blinded judging, caveats declared up front, and this document kept out of builder context until unblinding.
+Protocol conventions inherited from the sibling repo's `silently-averaged-experiment`: preregistered outcome classes, blinded judging, caveats declared up front, and this document kept out of builder context until unblinding.
 
 ## Why the first build cannot test the thesis, and a rebuild can
 
@@ -77,24 +77,24 @@ Prediction 1 versus 2 **is** H3. Scoring them is the experiment.
 - **Steering log** — every operator intervention.
 - **Old-vs-new delta** — what the clean build drops, keeps, or adds relative to the messy one. Secondary, and reported as such.
 
-## Scope, against six days
+## Scope, if it is ever run
 
-This is now the workshop's most expensive item and its most important. Tiered so it can be cut without becoming worthless:
+Tiered so it can be run cheaply without becoming worthless:
 
 - **Minimum viable (do this or nothing): one case, two independent builders, different model families, fixed contract.** Scores H1, H2, H3. Use **COVID** — prediction 6 says it is where divergence should be largest, so it is the case with the most power to falsify, and it is the case the first build left thinnest.
-- **+2 cases** (LHC, eggs) if budget allows, giving the cross-case transfer claim its evidence and testing prediction 6.
-- **+1 minimal-contract arm** to separate material-forced from contract-induced convergence. If cut, say so plainly in the submission rather than letting the ambiguity ride.
-- **Cut first:** additional builders per arm. n=2 is thin and we will say so, exactly as the drift experiment did.
+- **+2 cases** (LHC, eggs), giving the cross-case transfer claim its evidence and testing prediction 6.
+- **+1 minimal-contract arm** to separate material-forced from contract-induced convergence. If cut, say so plainly rather than letting the ambiguity ride.
+- **Cut first:** additional builders per arm. n=2 is thin and we would say so, exactly as the drift experiment did.
 
-If the schedule forces a choice between running this and polishing the write-up, **run this**.
+If the optional provenance-matrix retarget runs, its [preregistered code split](./assessment-machinery-line.md#preregister-the-split) applies a cheap partial version of the same convergence instrument to our own tooling. If that build is cut, the prediction remains unscored. Either way, it does not substitute for this protocol.
 
-## What we report either way
+## What would be reported either way
 
-- **Convergence matches prediction** → the discipline discriminates forced from chosen, with the contract fixed in advance and builders blind to each other. That is the submission, with evidence.
-- **Convergence does not match prediction** → we falsified our own headline claim, on our own rig, and say so. The brief names "a critique with counterexamples of an otherwise promising approach" as an entry shape in its own right, and an entrant who reports this is more credible than one who never looked.
+- **Convergence matches prediction** → the discipline discriminates forced from chosen, with the contract fixed in advance and builders blind to each other.
+- **Convergence does not match prediction** → the headline transfer claim is falsified on its own rig, and that gets said. The brief names "a critique with counterexamples of an otherwise promising approach" as an entry shape in its own right, and an entrant who reports this is more credible than one who never looked.
 
-The failure mode to guard against is neither. It is **running the experiment and then narrating around the result** — precisely the drift our own contamination finding says we would be blind to. Hence the sealed predictions, the blind judge, and this document staying out of builder context.
+The failure mode to guard against is neither. It is **running the experiment and then narrating around the result** — precisely the drift our own contamination finding says we would be blind to. Hence the sealed predictions, the blind judge, and this document staying out of builder context. The same discipline is why an unrun protocol is published as unrun.
 
 ## What closes it
 
-Predictions sealed, contract frozen, builders run clean-room, judge unblinded, H1–H3 scored against the sealed list, result written into the submission whichever way it fell. Then the durable finding promotes to `kb/notes/` and this file dies with the workshop.
+Published in the submission as a designed, preregistered, **unrun** protocol, with its predictions sealed and stated. If it is ever run — post-submission, or under the funded follow-on work the brief mentions — it closes by scoring H1–H3 against the sealed list, promoting the durable finding to `kb/notes/`, and dying with the workshop.
