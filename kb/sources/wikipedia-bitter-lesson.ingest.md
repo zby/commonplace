@@ -3,7 +3,6 @@ description: Wikipedia-contextualized capture of Sutton's Bitter Lesson, useful 
 source_snapshot: wikipedia-bitter-lesson.md
 ingested: "2026-04-20"
 type: kb/sources/types/ingest-report.md
-source_type: conceptual-essay
 domains: [ai-philosophy, scaling, learning-theory, system-design]
 ---
 

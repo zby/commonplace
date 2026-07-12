@@ -2,8 +2,8 @@
 source: https://x.com/deepfates/status/2036857868914483592
 captured: 2026-03-25T18:29:38.213238+00:00
 capture: xdk
+genre: conversation-thread
 type: kb/sources/types/snapshot.md
-tags: [x-post]
 status_id: 2036857868914483592
 conversation_id: 2036857868914483592
 post_count: 1

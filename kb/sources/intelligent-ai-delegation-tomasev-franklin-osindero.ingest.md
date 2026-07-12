@@ -3,7 +3,6 @@ description: Google DeepMind delegation framework centers verifiability, liabili
 source_snapshot: intelligent-ai-delegation-tomasev-franklin-osindero.md
 ingested: "2026-03-16"
 type: kb/sources/types/ingest-report.md
-source_type: scientific-paper
 domains: [agent-orchestration, delegation, verification, multi-agent-coordination]
 ---
 

@@ -2,8 +2,8 @@
 source: https://x.com/LechMazur/status/2046661738339430489
 captured: 2026-04-23T16:14:07.941709+00:00
 capture: xdk
+genre: tool-announcement
 type: kb/sources/types/snapshot.md
-tags: [x-thread]
 status_id: 2046661738339430489
 conversation_id: 2046661738339430489
 post_count: 13

@@ -3,8 +3,8 @@ source: https://arxiv.org/abs/2604.08756
 description: "RL paper formalizing environmental artifacts as externalized memory that can reduce agent history capacity."
 captured: 2026-06-30
 capture: pdf-read
+genre: scientific-paper
 type: kb/sources/types/snapshot.md
-tags: [academic-paper]
 ---
 
 # Artifacts as Memory Beyond the Agent Boundary

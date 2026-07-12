@@ -3,7 +3,6 @@ description: Essay distinguishing vibe coding from true software ephemerality, a
 source_snapshot: the-flawed-ephemeral-software-hypothesis.md
 ingested: "2026-03-19"
 type: kb/sources/types/ingest-report.md
-source_type: conceptual-essay
 domains: [software-engineering, agent-systems, verification, artifact-durability]
 ---
 

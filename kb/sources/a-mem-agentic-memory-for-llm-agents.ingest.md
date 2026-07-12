@@ -3,7 +3,6 @@ description: Zettelkasten-inspired flat agent memory with embedding linking and 
 source_snapshot: a-mem-agentic-memory-for-llm-agents.md
 ingested: "2026-03-09"
 type: kb/sources/types/ingest-report.md
-source_type: scientific-paper
 domains: [agent-memory, knowledge-management, llm-agents, zettelkasten]
 ---
 

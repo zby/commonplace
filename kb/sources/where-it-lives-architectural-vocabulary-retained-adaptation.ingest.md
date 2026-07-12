@@ -3,7 +3,6 @@ description: "Position paper distilled from this KB's notes, publishing the four
 source_snapshot: "where-it-lives-architectural-vocabulary-retained-adaptation.md"
 ingested: "2026-05-28"
 type: kb/sources/types/ingest-report.md
-source_type: scientific-paper
 domains: [artifact-analysis, context-engineering, software-architecture]
 ---
 

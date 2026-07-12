@@ -3,8 +3,8 @@ source: https://mezha.ua/articles/shi-agenti-chotiri-navichki-yaki-vazhlivishi-z
 description: "English translation of Mezha article applying Anthropic's AI Fluency framework to agent use: delegation, description, discernment, and diligence as operator skills beyond prompting."
 captured: 2026-06-22
 capture: translation-from-snapshot
+genre: conceptual-essay
 type: kb/sources/types/snapshot.md
-tags: [news-article]
 original_snapshot: kb/sources/shi-agenti-chotiri-navichki-vazhlivishi-za-dobriy-prompt.md
 original_language: uk
 language: en

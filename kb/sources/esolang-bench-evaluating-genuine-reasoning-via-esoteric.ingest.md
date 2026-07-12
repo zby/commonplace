@@ -3,7 +3,6 @@ description: Esoteric-language code benchmark arguing standard coding scores mos
 source_snapshot: esolang-bench-evaluating-genuine-reasoning-via-esoteric-programming.md
 ingested: "2026-03-19"
 type: kb/sources/types/ingest-report.md
-source_type: scientific-paper
 domains: [benchmarking, out-of-distribution-generalization, agentic-scaffolding, code-generation]
 ---
 

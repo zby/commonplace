@@ -14,7 +14,7 @@ properties:
       - captured
       - capture
       - type
-      - tags
+      - genre
     properties:
       source:
         type: string
@@ -31,9 +31,22 @@ properties:
         minLength: 1
       type:
         const: kb/sources/types/snapshot.md
+      genre:
+        severity: warn
+        enum:
+          - scientific-paper
+          - practitioner-report
+          - conceptual-essay
+          - design-proposal
+          - tool-announcement
+          - github-issue
+          - conversation-thread
+          - code-repository
+          - court-opinion
+          - news-article
+          - official-statement
       tags:
         type: array
-        minItems: 1
         uniqueItems: true
         items:
           type: string

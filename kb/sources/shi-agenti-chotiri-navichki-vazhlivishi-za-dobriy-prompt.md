@@ -3,8 +3,8 @@ source: https://mezha.ua/articles/shi-agenti-chotiri-navichki-yaki-vazhlivishi-z
 description: "Mezha article applying Anthropic's AI Fluency framework to agent use: delegation, description, discernment, and diligence as operator skills beyond prompting."
 captured: 2026-06-22
 capture: web-fetch
+genre: news-article
 type: kb/sources/types/snapshot.md
-tags: [news-article]
 ---
 
 # ШІ-агенти: чотири навички, які важливіші за добрий промпт

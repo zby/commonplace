@@ -3,7 +3,6 @@ description: Benchmark paper claiming coding agents beat RAG and context scaling
 source_snapshot: coding-agents-are-effective-long-context-processors.md
 ingested: "2026-03-31"
 type: kb/sources/types/ingest-report.md
-source_type: scientific-paper
 domains: [context-engineering, long-context, tool-loop, evaluation]
 ---
 

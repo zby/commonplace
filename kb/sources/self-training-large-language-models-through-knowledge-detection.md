@@ -3,8 +3,8 @@ source: https://aclanthology.org/2024.findings-emnlp.883.pdf
 description: EMNLP 2024 paper on self-training LLMs by filtering DPO preference data to unknown samples using reference-free contradiction scores
 captured: 2026-04-20
 capture: pdf-read
+genre: scientific-paper
 type: kb/sources/types/snapshot.md
-tags: [academic-paper]
 ---
 
 # Self-training Large Language Models through Knowledge Detection

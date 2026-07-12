@@ -3,8 +3,8 @@ source: https://arxiv.org/pdf/2409.05513
 description: Toby Ord's hyperpolation proposal - a third generalisation mode for reasoning outside the data subspace, linked to creativity and AI limits
 captured: 2026-05-19
 capture: pdf-read
+genre: scientific-paper
 type: kb/sources/types/snapshot.md
-tags: [academic-paper]
 ---
 
 # Interpolation, Extrapolation, Hyperpolation: Generalising into new dimensions

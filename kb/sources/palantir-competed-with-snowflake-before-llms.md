@@ -2,8 +2,8 @@
 source: https://x.com/JayaGup10/status/2006384049485484145
 captured: 2026-07-06T18:28:32.161674+00:00
 capture: xdk
+genre: conceptual-essay
 type: kb/sources/types/snapshot.md
-tags: [x-post]
 status_id: 2006384049485484145
 conversation_id: 2006384049485484145
 post_count: 1

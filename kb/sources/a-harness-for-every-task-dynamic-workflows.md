@@ -2,8 +2,8 @@
 source: https://x.com/trq212/status/2061907337154367865
 captured: 2026-06-03T06:56:27.332770+00:00
 capture: xdk
+genre: practitioner-report
 type: kb/sources/types/snapshot.md
-tags: [x-article]
 status_id: 2061907337154367865
 conversation_id: 2061907337154367865
 post_count: 7

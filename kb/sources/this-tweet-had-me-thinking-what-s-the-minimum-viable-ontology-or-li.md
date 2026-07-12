@@ -2,8 +2,8 @@
 source: https://x.com/melodyskim/status/2029332670115614799
 captured: 2026-03-05T15:38:32.676423+00:00
 capture: xdk
+genre: conversation-thread
 type: kb/sources/types/snapshot.md
-tags: [x-thread]
 status_id: 2029332670115614799
 conversation_id: 2029332670115614799
 post_count: 10

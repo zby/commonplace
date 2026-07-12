@@ -3,8 +3,8 @@ source: file:///home/zby/txt/paper/submissions/asisas-2026/paper.md
 description: Position paper proposing a four-field architectural vocabulary (storage substrate, representational form, lineage, behavioral authority) for classifying retained behavior-shaping artifacts in agentic systems, beyond storage-first labels.
 captured: 2026-05-28
 capture: local-file
+genre: scientific-paper
 type: kb/sources/types/snapshot.md
-tags: [academic-paper]
 ---
 
 # Where It Lives Is Not What It Is: Vocabulary for Retained Adaptation in Agentic Systems

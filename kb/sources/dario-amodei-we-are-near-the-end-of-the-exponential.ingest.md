@@ -3,7 +3,6 @@ description: Anthropic CEO's capability-timeline predictions implicitly confirm 
 source_snapshot: dario-amodei-we-are-near-the-end-of-the-exponential.md
 ingested: "2026-03-12"
 type: kb/sources/types/ingest-report.md
-source_type: conversation-thread
 domains: [ai-scaling, automation-boundary, oracle-theory, deploy-time-learning]
 ---
 

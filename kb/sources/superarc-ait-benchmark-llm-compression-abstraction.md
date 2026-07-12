@@ -3,8 +3,8 @@ source: https://arxiv.org/html/2503.16743v5
 description: Introduces SuperARC, an AIT-grounded benchmark showing frontier LLMs score near zero on recursive compression tasks and newer versions often regress, while neuro-symbolic CTM/BDM methods achieve perfect scores — evidence that statistical pattern matching differs fundamentally from algorithmic abstraction.
 captured: 2026-03-26
 capture: web-fetch
+genre: scientific-paper
 type: kb/sources/types/snapshot.md
-tags: [academic-paper]
 ---
 
 # SuperARC: Recursive Compression Benchmark

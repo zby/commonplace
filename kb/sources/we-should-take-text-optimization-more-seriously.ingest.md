@@ -3,7 +3,6 @@ description: "Manifesto arguing text optimization is a legitimate, sample-effici
 source_snapshot: "we-should-take-text-optimization-more-seriously-2064027464926716154.md"
 ingested: "2026-06-09"
 type: kb/sources/types/ingest-report.md
-source_type: conceptual-essay
 domains: [continual-learning, context-engineering, text-optimization]
 ---
 

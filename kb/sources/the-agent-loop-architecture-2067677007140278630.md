@@ -2,8 +2,8 @@
 source: https://x.com/djfarrelly/status/2067677007140278630
 captured: 2026-06-19T06:32:44.632033+00:00
 capture: xdk
+genre: practitioner-report
 type: kb/sources/types/snapshot.md
-tags: [x-article]
 status_id: 2067677007140278630
 conversation_id: 2067677007140278630
 post_count: 1

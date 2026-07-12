@@ -3,8 +3,8 @@ source: https://openreview.net/pdf?id=T0EiEuhOOL
 description: "ICLR 2026 Huxley-Gödel Machine paper proposing clade-metaproductivity as a better search signal for self-improving coding agents than immediate benchmark score"
 captured: 2026-04-24
 capture: pdf-read
+genre: scientific-paper
 type: kb/sources/types/snapshot.md
-tags: [academic-paper]
 ---
 
 # Huxley-Gödel Machine

@@ -3,8 +3,8 @@ source: https://www.w3.org/TR/prov-overview/
 description: W3C roadmap document to the PROV family of specifications for representing and interchanging provenance information on the web.
 captured: 2026-07-06
 capture: web-fetch
+genre: design-proposal
 type: ./types/snapshot.md
-tags: [documentation]
 ---
 
 # PROV-Overview: An Overview of the PROV Family of Documents

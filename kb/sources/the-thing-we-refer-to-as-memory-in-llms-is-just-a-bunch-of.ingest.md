@@ -3,7 +3,6 @@ description: Deepfates argues LLM "memory" is just context-stuffing that creates
 source_snapshot: the-thing-we-refer-to-as-memory-in-llms-is-just-a-bunch-of-superfici.md
 ingested: "2026-03-25"
 type: kb/sources/types/ingest-report.md
-source_type: conversation-thread
 domains: [context-engineering, memory-architecture, learning-theory]
 ---
 

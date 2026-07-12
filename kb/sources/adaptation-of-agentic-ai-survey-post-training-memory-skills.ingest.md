@@ -3,7 +3,6 @@ description: "Survey mapping agentic adaptation across A1/A2 agent training, T1/
 source_snapshot: "adaptation-of-agentic-ai-survey-post-training-memory-skills.md"
 ingested: "2026-06-09"
 type: kb/sources/types/ingest-report.md
-source_type: scientific-paper
 domains: [agentic-adaptation, learning-theory, agent-memory, evaluation-methodology]
 ---
 

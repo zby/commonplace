@@ -3,8 +3,8 @@ source: https://transformer-circuits.pub/2026/workspace/index.html
 description: Anthropic interpretability paper arguing that verbalizable J-space representations act as a limited global workspace for LLM reasoning, auditing, and training interventions
 captured: 2026-07-06
 capture: web-fetch
+genre: scientific-paper
 type: kb/sources/types/snapshot.md
-tags: [academic-paper]
 ---
 
 # Verbalizable Representations Form a Global Workspace in Language Models

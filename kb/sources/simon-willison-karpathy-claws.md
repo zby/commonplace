@@ -2,8 +2,8 @@
 source: https://simonwillison.net/2026/Feb/21/claws/
 captured: 2026-02-22
 capture: fetch
+genre: conceptual-essay
 type: kb/sources/types/snapshot.md
-tags: [blog-post]
 ---
 
 # Andrej Karpathy talks about "Claws"

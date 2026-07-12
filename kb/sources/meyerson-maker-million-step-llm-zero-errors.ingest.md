@@ -3,7 +3,6 @@ description: MAKER achieves zero errors over one million LLM steps via maximal d
 source_snapshot: meyerson-maker-million-step-llm-zero-errors.md
 ingested: "2026-03-09"
 type: kb/sources/types/ingest-report.md
-source_type: scientific-paper
 domains: [multi-agent-systems, error-correction, scaling-laws, reliability-engineering]
 ---
 

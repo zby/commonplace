@@ -3,7 +3,6 @@ description: "Practitioner report on a PM skill that forces solution ideas back 
 source_snapshot: "kb/sources/problem-first-skill-inverts-solution-jumps-2063186118409929161.md"
 ingested: "2026-06-17"
 type: kb/sources/types/ingest-report.md
-source_type: practitioner-report
 domains: [skills, process-structure, product-management]
 ---
 

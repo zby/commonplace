@@ -3,7 +3,6 @@ description: "Cryptographic whole-chain supply-chain verification (in-toto) as a
 source_snapshot: "in-toto-farm-to-table-guarantees.md"
 ingested: "2026-07-06"
 type: kb/sources/types/ingest-report.md
-source_type: scientific-paper
 domains: [supply-chain-security, provenance, verification, lineage]
 ---
 

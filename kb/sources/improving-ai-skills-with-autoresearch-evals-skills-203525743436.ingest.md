@@ -3,7 +3,6 @@ description: Three-take Auto Research field report where optimization only worke
 source_snapshot: improving-ai-skills-with-autoresearch-evals-skills-2035257434365976671.md
 ingested: "2026-03-21"
 type: kb/sources/types/ingest-report.md
-source_type: practitioner-report
 domains: [evals, verification, skill-optimization]
 ---
 

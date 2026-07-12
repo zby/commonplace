@@ -3,8 +3,8 @@ source: https://arxiv.org/html/2507.13874v2
 description: Proposes a plug-in latent-conditioning framework that traverses semantic manifolds to expand LLM generation diversity without fine-tuning, with empirical gains on NoveltyBench and the Alternative Uses Test.
 captured: 2026-04-23
 capture: web-fetch
+genre: scientific-paper
 type: kb/sources/types/snapshot.md
-tags: [academic-paper]
 ---
 
 # Geometry of Knowledge Allows Extending Diversity Boundaries of Large Language Models

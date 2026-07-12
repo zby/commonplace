@@ -3,7 +3,6 @@ description: "ICLR 2026 HGM paper arguing immediate benchmark score is a weak pa
 source_snapshot: huxley-godel-machine-human-level-coding-agent-development.md
 ingested: "2026-04-24"
 type: kb/sources/types/ingest-report.md
-source_type: scientific-paper
 domains: [deploy-time-learning, harness-engineering, evaluation, self-improvement]
 ---
 

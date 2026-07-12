@@ -3,7 +3,6 @@ description: "LongCoT-mini RLM case study where trace-derived prompt tips, guard
 source_snapshot: "mini-exercise-mismanaged-geniuses-longcot-rlm.md"
 ingested: "2026-06-25"
 type: kb/sources/types/ingest-report.md
-source_type: practitioner-report
 domains: [orchestration, rlm, decomposition-policy, trajectory-analysis]
 ---
 

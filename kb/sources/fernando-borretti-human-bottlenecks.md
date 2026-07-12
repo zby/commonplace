@@ -3,8 +3,8 @@ source: https://borretti.me/article/human-bottlenecks
 description: Fernando Borretti's argument that AI's transformative potential is capped by internal human bottlenecks — executive function, intelligence, and foundational knowledge — that software cannot substitute for.
 captured: 2026-06-15
 capture: web-fetch
+genre: conceptual-essay
 type: kb/sources/types/snapshot.md
-tags: [blog-post]
 ---
 
 # Human Bottlenecks

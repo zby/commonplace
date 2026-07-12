@@ -3,7 +3,6 @@ description: "Jaya Gupta frames Palantir-style top-down ontology and workflow-fi
 source_snapshot: "palantir-competed-with-snowflake-before-llms.md"
 ingested: "2026-07-06"
 type: kb/sources/types/ingest-report.md
-source_type: conceptual-essay
 domains: [agent-memory, trace-derived-learning, ontology, context-engineering]
 ---
 

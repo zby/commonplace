@@ -3,7 +3,6 @@ description: Willison and Karpathy framing "Claw" as a term of art for local per
 source_snapshot: simon-willison-karpathy-claws.md
 ingested: "2026-04-20"
 type: kb/sources/types/ingest-report.md
-source_type: conceptual-essay
 domains: [ai-agents, terminology, agent-architecture, personal-computing]
 ---
 

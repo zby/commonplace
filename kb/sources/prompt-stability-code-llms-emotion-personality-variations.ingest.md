@@ -3,7 +3,6 @@ description: Empirical study measuring code LLM stability under emotion/personal
 source_snapshot: prompt-stability-code-llms-emotion-personality-variations.md
 ingested: "2026-03-12"
 type: kb/sources/types/ingest-report.md
-source_type: scientific-paper
 domains: [prompt-sensitivity, llm-evaluation, code-generation, reliability]
 ---
 

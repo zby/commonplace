@@ -3,7 +3,6 @@ description: Position paper arguing current AI externalizes learning into human-
 source_snapshot: why-ai-systems-dont-learn-and-what-to-do-about-it.md
 ingested: "2026-03-18"
 type: kb/sources/types/ingest-report.md
-source_type: conceptual-essay
 domains: [autonomous-learning, continuous-learning, cognitive-architecture, meta-control]
 ---
 

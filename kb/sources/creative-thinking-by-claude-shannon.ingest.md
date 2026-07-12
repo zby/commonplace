@@ -3,7 +3,6 @@ description: Shannon's 1952 lecture cataloguing six explicit problem-solving ope
 source_snapshot: creative-thinking-by-claude-shannon.md
 ingested: "2026-03-09"
 type: kb/sources/types/ingest-report.md
-source_type: conceptual-essay
 domains: [creativity, problem-solving, research-methods, agent-orchestration]
 ---
 

@@ -3,7 +3,6 @@ description: RL-trained unified LTM/STM memory policy for LLM agents — confirm
 source_snapshot: agentic-memory-learning-unified-long-term-and-short-term-memory.md
 ingested: "2026-03-09"
 type: kb/sources/types/ingest-report.md
-source_type: scientific-paper
 domains: [agent-memory, reinforcement-learning, context-management, llm-agents]
 ---
 

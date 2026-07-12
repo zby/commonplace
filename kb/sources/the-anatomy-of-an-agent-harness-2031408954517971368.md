@@ -2,8 +2,8 @@
 source: https://x.com/Vtrivedy10/status/2031408954517971368
 captured: 2026-03-10T18:10:51.011045+00:00
 capture: xdk
+genre: conceptual-essay
 type: kb/sources/types/snapshot.md
-tags: [x-article]
 status_id: 2031408954517971368
 conversation_id: 2031408954517971368
 post_count: 2

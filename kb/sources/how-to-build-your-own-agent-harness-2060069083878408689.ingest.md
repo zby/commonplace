@@ -3,7 +3,6 @@ description: "iii ships a production agent harness as independently-versioned wo
 source_snapshot: "how-to-build-your-own-agent-harness-2060069083878408689.md"
 ingested: "2026-05-29"
 type: kb/sources/types/ingest-report.md
-source_type: practitioner-report
 domains: [agent-harness, orchestration, composability, calling-conventions]
 ---
 

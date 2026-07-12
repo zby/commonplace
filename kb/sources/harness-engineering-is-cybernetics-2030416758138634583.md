@@ -2,8 +2,8 @@
 source: https://x.com/odysseus0z/status/2030416758138634583
 captured: 2026-03-09T06:54:13.921167+00:00
 capture: xdk
+genre: conceptual-essay
 type: kb/sources/types/snapshot.md
-tags: [x-article]
 status_id: 2030416758138634583
 conversation_id: 2030416758138634583
 post_count: 14

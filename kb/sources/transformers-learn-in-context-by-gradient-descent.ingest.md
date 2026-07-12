@@ -3,7 +3,6 @@ description: Mechanistic ICML paper showing in-context regression can be impleme
 source_snapshot: transformers-learn-in-context-by-gradient-descent.md
 ingested: "2026-04-20"
 type: kb/sources/types/ingest-report.md
-source_type: scientific-paper
 domains: [in-context-learning, meta-learning, transformer-mechanisms, learning-theory]
 ---
 

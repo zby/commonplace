@@ -1,11 +1,13 @@
 ---
-description: "Proposal: record source genre once as an open-vocabulary source_type field on the snapshot, drop the ingest-report enum and genre-carrying tags, and unify two divergent vocabularies"
+description: "Proposal (adopted): record source genre once as an open-vocabulary field on the snapshot, drop the ingest-report enum and genre-carrying tags, and unify two divergent vocabularies"
 type: kb/types/note.md
 traits: [design-proposal]
 tags: [document-system]
 ---
 
 # Source genre is one open-vocabulary field on the snapshot
+
+> Adopted by [ADR 045](../adr/045-source-genre-is-a-single-open-field-on-the-snapshot.md) (2026-07-12): field named `genre`, required on the snapshot, known values as a severity-warn enum; the report's `source_type` removed and rejected. This document remains as design history; the free choices it left open were resolved as recorded in the ADR.
 
 Source genre — is this a scientific paper, a practitioner report, a court opinion — is currently recorded twice in `kb/sources/`, in two vocabularies that neither agree nor defer to each other, and neither is authoritative. Snapshot `tags` carry a mixed genre/platform label; the ingest-report carries a closed `source_type` enum. The same genre appears under different names on the two sides (`academic-paper` on snapshots, `scientific-paper` in reports), so a retrieval query keyed to either vocabulary misses roughly half the corpus, and the one distinction the ingest lens machinery actually consumes — practitioner-report versus conceptual-essay — is invisible at the snapshot level, where both collapse to `blog-post` or `x-article`.
 

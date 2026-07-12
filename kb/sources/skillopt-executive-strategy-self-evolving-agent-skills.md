@@ -3,8 +3,8 @@ source: https://arxiv.org/html/2605.23904v2
 description: "SkillOpt paper treating agent skill documents as trainable external state with bounded text edits, validation gates, rejected-edit buffers, and slow/meta updates"
 captured: 2026-05-28
 capture: web-fetch
+genre: scientific-paper
 type: kb/sources/types/snapshot.md
-tags: [academic-paper]
 ---
 
 # SkillOpt: Executive Strategy for Self-Evolving Agent Skills

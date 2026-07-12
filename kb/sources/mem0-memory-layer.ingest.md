@@ -3,7 +3,6 @@ description: Mem0's two-phase add pipeline (extract facts + LLM-judged CRUD reco
 source_snapshot: mem0-memory-layer.md
 ingested: "2026-03-09"
 type: kb/sources/types/ingest-report.md
-source_type: tool-announcement
 domains: [agent-memory, vector-retrieval, LLM-mediated-curation, personalization]
 ---
 

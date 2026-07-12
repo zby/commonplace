@@ -3,7 +3,6 @@ description: "Updated self-authored ASISAS position paper adding 141-system corp
 source_snapshot: "where-it-lives-retained-adaptation-2026-06-23.md"
 ingested: "2026-06-23"
 type: kb/sources/types/ingest-report.md
-source_type: scientific-paper
 domains: [artifact-analysis, agent-memory, software-architecture]
 ---
 

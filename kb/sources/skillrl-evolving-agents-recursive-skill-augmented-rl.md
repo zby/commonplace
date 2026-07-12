@@ -3,8 +3,8 @@ source: https://arxiv.org/abs/2602.08234
 description: SkillRL paper on distilling successful and failed agent trajectories into a hierarchical skill bank co-evolved with GRPO policy training
 captured: 2026-06-30
 capture: pdf-read
+genre: scientific-paper
 type: kb/sources/types/snapshot.md
-tags: [academic-paper]
 ---
 
 # SkillRL: Evolving Agents via Recursive Skill-Augmented Reinforcement Learning

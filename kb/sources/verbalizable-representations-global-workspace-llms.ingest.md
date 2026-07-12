@@ -3,7 +3,6 @@ description: "Anthropic J-space paper as evidence for probeable parametric state
 source_snapshot: "verbalizable-representations-global-workspace-llms.md"
 ingested: "2026-07-06"
 type: kb/sources/types/ingest-report.md
-source_type: scientific-paper
 domains: [interpretability, activation, learning-theory, observability]
 ---
 

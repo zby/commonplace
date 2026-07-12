@@ -3,7 +3,6 @@ description: Hypothesis that current frontier LMs are bottlenecked by learned de
 source_snapshot: the-mismanaged-geniuses-hypothesis-2042588627260018751.md
 ingested: "2026-04-10"
 type: kb/sources/types/ingest-report.md
-source_type: conceptual-essay
 domains: [agent-architecture, orchestration, test-time-scaling, model-harness-coevolution]
 ---
 

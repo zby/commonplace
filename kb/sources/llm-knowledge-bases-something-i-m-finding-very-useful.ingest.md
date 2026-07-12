@@ -3,7 +3,6 @@ description: Karpathy on agent-maintained research wikis in Obsidian — index f
 source_snapshot: llm-knowledge-bases-something-i-m-finding-very-useful-recently-using.md
 ingested: "2026-04-03"
 type: kb/sources/types/ingest-report.md
-source_type: practitioner-report
 domains: [knowledge-management, context-engineering, file-based-systems, agentic-workflows]
 ---
 

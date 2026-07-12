@@ -3,7 +3,6 @@ description: "RL paper formalizing environment-side artifacts as externalized me
 source_snapshot: "artifacts-as-memory-beyond-agent-boundary.md"
 ingested: "2026-06-30"
 type: kb/sources/types/ingest-report.md
-source_type: scientific-paper
 domains: [agent-memory, learning-theory, situated-cognition, reinforcement-learning]
 ---
 

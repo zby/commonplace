@@ -3,7 +3,6 @@ description: "Gentle-Coding argues that low-stakes prompt framing and explicit f
 source_snapshot: "gentle-coding.md"
 ingested: "2026-06-05"
 type: kb/sources/types/ingest-report.md
-source_type: code-repository
 domains: [ai-coding, prompt-framing, context-engineering, llm-evaluation]
 ---
 

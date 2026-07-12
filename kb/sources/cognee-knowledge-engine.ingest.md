@@ -3,7 +3,6 @@ description: Pipeline-first knowledge engine with custom Pydantic schemas for LL
 source_snapshot: cognee-knowledge-engine.md
 ingested: "2026-03-09"
 type: kb/sources/types/ingest-report.md
-source_type: tool-announcement
 domains: [agent-memory, knowledge-graphs, pipeline-architecture, LLM-extraction]
 ---
 

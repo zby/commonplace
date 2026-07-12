@@ -3,7 +3,6 @@ description: "Borretti polemic 'writing is thinking' — corroborating field evi
 source_snapshot: "borretti-human-routers-of-machine-words.md"
 ingested: "2026-06-14"
 type: kb/sources/types/ingest-report.md
-source_type: conceptual-essay
 domains: [writing-is-thinking, reverse-compression, vibe-noting, constraining]
 ---
 

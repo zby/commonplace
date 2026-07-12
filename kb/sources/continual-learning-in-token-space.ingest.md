@@ -3,7 +3,6 @@ description: Letta reframes continual learning as optimizing learned context rat
 source_snapshot: continual-learning-in-token-space.md
 ingested: "2026-03-23"
 type: kb/sources/types/ingest-report.md
-source_type: conceptual-essay
 domains: [continuous-learning, agent-memory, context-engineering, learning-theory]
 ---
 

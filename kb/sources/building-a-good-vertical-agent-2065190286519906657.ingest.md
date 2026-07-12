@@ -3,7 +3,6 @@ description: "BrainsAndTennis on vertical-agent quality as task-distribution-awa
 source_snapshot: "building-a-good-vertical-agent-2065190286519906657.md"
 ingested: "2026-06-12"
 type: kb/sources/types/ingest-report.md
-source_type: practitioner-report
 domains: [agent-architecture, context-engineering, vertical-agents, tool-design]
 ---
 

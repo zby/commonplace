@@ -3,8 +3,8 @@ source: https://xinmingtu.cn/blog/2026/hierarchical-mas-theory/
 description: Unified theoretical framework explaining how three structural mechanisms (topology compression, scope isolation, verification) enable hierarchical multi-agent systems to bypass exponential error accumulation in test-time scaling.
 captured: 2026-03-25
 capture: web-fetch
+genre: conceptual-essay
 type: kb/sources/types/snapshot.md
-tags: [academic-paper]
 ---
 
 # Structured Test-Time Scaling: From Multi-Agent Systems to General Inference Architectures

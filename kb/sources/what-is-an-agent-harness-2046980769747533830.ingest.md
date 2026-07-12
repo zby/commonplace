@@ -3,7 +3,6 @@ description: "Arize practitioner taxonomy of nine harness components and an expl
 source_snapshot: what-is-an-agent-harness-2046980769747533830.md
 ingested: "2026-04-23"
 type: kb/sources/types/ingest-report.md
-source_type: conceptual-essay
 domains: [agent-systems, harness-engineering, permission-and-safety, framework-vs-harness]
 ---
 

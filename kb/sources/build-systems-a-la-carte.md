@@ -3,8 +3,8 @@ source: https://www.microsoft.com/en-us/research/wp-content/uploads/2018/03/buil
 description: Framework unifying Make, Excel, Shake, Bazel, Buck, and Nix as scheduler+rebuilder combinations, formalizing minimality, dynamic dependencies, and early cutoff.
 captured: 2026-07-06
 capture: pdf-read
+genre: scientific-paper
 type: ./types/snapshot.md
-tags: [academic-paper]
 ---
 
 # Build Systems à la Carte

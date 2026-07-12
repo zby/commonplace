@@ -3,8 +3,8 @@ source: https://alexzhang13.github.io/blog/2026/longcot-rlm/
 description: Alex Zhang and Omar Khattab's LongCoT-mini RLM prompt-tuning case study, where guardrails and graph-aware decomposition raise GPT-5.2 RLM performance from 50.6% to 65.6%
 captured: 2026-06-25
 capture: web-fetch
+genre: practitioner-report
 type: kb/sources/types/snapshot.md
-tags: [blog-post]
 ---
 
 # A Mini Exercise on the Mismanaged Geniuses Hypothesis (RLMs on LongCoT)

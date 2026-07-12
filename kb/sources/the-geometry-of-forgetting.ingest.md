@@ -3,7 +3,6 @@ description: Embedding-memory paper arguing that interference and low effective 
 source_snapshot: the-geometry-of-forgetting.md
 ingested: "2026-04-09"
 type: kb/sources/types/ingest-report.md
-source_type: scientific-paper
 domains: [agent-memory, retrieval-architecture, forgetting, learning-theory]
 ---
 

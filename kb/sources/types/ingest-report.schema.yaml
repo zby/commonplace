@@ -10,7 +10,6 @@ allOf:
           - source_snapshot
           - ingested
           - type
-          - source_type
           - domains
         properties:
           type:
@@ -21,19 +20,7 @@ allOf:
           ingested:
             type: string
             format: date
-          source_type:
-            enum:
-              - scientific-paper
-              - practitioner-report
-              - conceptual-essay
-              - design-proposal
-              - tool-announcement
-              - github-issue
-              - conversation-thread
-              - code-repository
-              - court-opinion
-              - news-article
-              - official-statement
+          source_type: false
           domains:
             type: array
             minItems: 2

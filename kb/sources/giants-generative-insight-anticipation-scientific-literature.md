@@ -3,8 +3,8 @@ source: https://giants-insights.github.io/
 description: GIANTS benchmark and 4B model for predicting downstream scientific insights from two cited parent-paper summaries
 captured: 2026-04-24
 capture: web-fetch
+genre: scientific-paper
 type: kb/sources/types/snapshot.md
-tags: [academic-paper]
 ---
 
 # GIANTS: Generative Insight Anticipation from Scientific Literature

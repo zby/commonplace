@@ -3,7 +3,6 @@ description: Computer-architecture analogy for multi-agent memory — shared/dis
 source_snapshot: multi-agent-memory-computer-architecture-perspective.md
 ingested: "2026-03-13"
 type: kb/sources/types/ingest-report.md
-source_type: scientific-paper
 domains: [multi-agent-systems, memory-architecture, context-engineering, agent-coordination]
 ---
 

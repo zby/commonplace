@@ -3,7 +3,6 @@ description: "Toby Ord's hyperpolation paper gives a geometric vocabulary for of
 source_snapshot: "interpolation-extrapolation-hyperpolation.md"
 ingested: "2026-05-19"
 type: kb/sources/types/ingest-report.md
-source_type: scientific-paper
 domains: [creativity, generalisation, oracle-theory, ai-limits]
 ---
 

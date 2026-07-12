@@ -3,8 +3,8 @@ source: https://hbr.org/2026/03/researchers-asked-llms-for-strategic-advice-they
 description: "HBR article naming strategy trendslop: LLMs favor fashionable management options even when prompts and business context change."
 captured: 2026-04-21
 capture: web-fetch
+genre: conceptual-essay
 type: kb/sources/types/snapshot.md
-tags: [news-article]
 ---
 
 # Researchers Asked LLMs for Strategic Advice. They Got “Trendslop” in Return.

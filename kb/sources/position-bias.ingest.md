@@ -3,7 +3,6 @@ description: Swapped-order pairwise-judging benchmark showing that across 27 LLM
 source_snapshot: kb/sources/position-bias/
 ingested: "2026-04-23"
 type: kb/sources/types/ingest-report.md
-source_type: code-repository
 domains: [evaluation, judge-reliability, position-bias, llm-as-judge]
 ---
 

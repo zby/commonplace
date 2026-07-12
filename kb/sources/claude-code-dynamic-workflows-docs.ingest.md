@@ -3,7 +3,6 @@ description: "Claude Code dynamic-workflows docs — the saveable, script-author
 source_snapshot: "claude-code-dynamic-workflows-docs.md"
 ingested: "2026-06-03"
 type: kb/sources/types/ingest-report.md
-source_type: tool-announcement
 domains: [orchestration, sub-agents, persistence, context-engineering]
 ---
 

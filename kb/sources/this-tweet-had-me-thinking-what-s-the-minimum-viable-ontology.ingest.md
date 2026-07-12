@@ -3,7 +3,6 @@ description: Tweet thread proposing "minimum viable ontology" — the smallest t
 source_snapshot: this-tweet-had-me-thinking-what-s-the-minimum-viable-ontology-or-li.md
 ingested: "2026-03-09"
 type: kb/sources/types/ingest-report.md
-source_type: conversation-thread
 domains: [domain-onboarding, vocabulary-bootstrapping, learning-theory, prompt-engineering]
 ---
 

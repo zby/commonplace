@@ -3,7 +3,6 @@ description: "AI Fluency explainer mapping operator competence beyond prompts on
 source_snapshot: "shi-agenti-chotiri-navichki-vazhlivishi-za-dobriy-prompt.en.md"
 ingested: "2026-06-22"
 type: kb/sources/types/ingest-report.md
-source_type: conceptual-essay
 domains: [ai-fluency, context-engineering, orchestration, verification]
 ---
 

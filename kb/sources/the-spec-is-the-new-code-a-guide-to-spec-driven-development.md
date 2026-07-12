@@ -2,8 +2,8 @@
 source: https://x.com/juliandeangeIis/status/2033303156340240481
 captured: 2026-03-16T09:36:38.343417+00:00
 capture: xdk
+genre: practitioner-report
 type: kb/sources/types/snapshot.md
-tags: [x-article]
 status_id: 2033303156340240481
 conversation_id: 2033303156340240481
 post_count: 8

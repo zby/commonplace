@@ -3,7 +3,6 @@ description: Semi-formal reasoning templates (explicit premises, execution trace
 source_snapshot: agentic-code-reasoning.md
 ingested: "2026-03-09"
 type: kb/sources/types/ingest-report.md
-source_type: scientific-paper
 domains: [execution-free-verification, structured-reasoning, agentic-code-analysis, oracle-approximation]
 ---
 

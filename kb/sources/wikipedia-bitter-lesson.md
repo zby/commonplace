@@ -2,8 +2,8 @@
 source: https://en.wikipedia.org/wiki/Bitter_lesson
 captured: 2026-02-23
 capture: fetch
+genre: conceptual-essay
 type: kb/sources/types/snapshot.md
-tags: [encyclopedia-article]
 ---
 
 # The Bitter Lesson

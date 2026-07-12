@@ -3,8 +3,8 @@ source: https://www.mindfiretechnology.com/blog/archive/the-no-free-lunch-theore
 description: Bruce Nielson's No Free Lunch explainer connecting inductive bias, optimization, neural-network smoothness assumptions, and Popperian fallibility
 captured: 2026-05-19
 capture: web-fetch
+genre: conceptual-essay
 type: kb/sources/types/snapshot.md
-tags: [blog-post]
 ---
 
 # The No Free Lunch Theorem: Why No Learning Algorithm Is Universally Best

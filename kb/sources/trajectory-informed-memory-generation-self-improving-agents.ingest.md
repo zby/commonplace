@@ -3,7 +3,6 @@ description: IBM pipeline extracts strategy/recovery/optimization tips from agen
 source_snapshot: trajectory-informed-memory-generation-self-improving-agents.md
 ingested: "2026-03-13"
 type: kb/sources/types/ingest-report.md
-source_type: scientific-paper
 domains: [agent-memory, deploy-time-learning, trajectory-analysis, distillation]
 ---
 

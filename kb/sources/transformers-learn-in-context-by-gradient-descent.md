@@ -3,8 +3,8 @@ source: https://arxiv.org/pdf/2212.07677
 description: Mechanistic ICML paper showing linear self-attention can implement gradient descent for in-context regression and trained Transformers can recover that construction
 captured: 2026-04-20
 capture: pdf-read
+genre: scientific-paper
 type: kb/sources/types/snapshot.md
-tags: [academic-paper]
 ---
 
 # Transformers Learn In-Context by Gradient Descent

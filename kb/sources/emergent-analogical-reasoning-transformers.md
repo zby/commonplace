@@ -3,8 +3,8 @@ source: https://arxiv.org/html/2602.01992v4
 description: "Transformer analogy paper that treats analogical reasoning as relational-structure alignment plus functor-like vector transformation"
 captured: 2026-05-26
 capture: web-fetch
+genre: scientific-paper
 type: kb/sources/types/snapshot.md
-tags: [academic-paper]
 ---
 
 # Emergent Analogical Reasoning in Transformers

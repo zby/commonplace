@@ -3,7 +3,6 @@ description: Autoreason paper showing self-refinement improves only when candida
 source_snapshot: autoreason-self-refinement-that-knows-when-to-stop.md
 ingested: "2026-04-13"
 type: kb/sources/types/ingest-report.md
-source_type: scientific-paper
 domains: [evaluation, self-refinement, oracle-theory, agent-orchestration]
 ---
 

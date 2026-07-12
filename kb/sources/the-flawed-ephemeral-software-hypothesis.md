@@ -3,8 +3,8 @@ source: https://www.blackhc.net/essays/future_of_software/
 description: Essay arguing AI makes software more malleable, not ephemeral, because validation, state, interface stability, and auditability remain the load-bearing bottlenecks.
 captured: 2026-03-19
 capture: web-fetch
+genre: conceptual-essay
 type: kb/sources/types/snapshot.md
-tags: [blog-post]
 ---
 
 # The Flawed Ephemeral Software Hypothesis

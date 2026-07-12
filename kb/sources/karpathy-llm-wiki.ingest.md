@@ -3,7 +3,6 @@ description: Karpathy's long-form agent-maintained wiki manifesto — explicit r
 source_snapshot: karpathy-llm-wiki.md
 ingested: "2026-04-04"
 type: kb/sources/types/ingest-report.md
-source_type: conceptual-essay
 domains: [knowledge-management, context-engineering, file-based-systems, agentic-workflows]
 ---
 

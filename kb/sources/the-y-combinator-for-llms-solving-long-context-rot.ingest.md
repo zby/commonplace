@@ -3,7 +3,6 @@ description: "λ-RLM preprint replacing open-ended RLM REPL code with typed comb
 source_snapshot: "the-y-combinator-for-llms-solving-long-context-rot.md"
 ingested: "2026-06-11"
 type: kb/sources/types/ingest-report.md
-source_type: scientific-paper
 domains: [computational-model, context-engineering, tool-loop, orchestration]
 ---
 

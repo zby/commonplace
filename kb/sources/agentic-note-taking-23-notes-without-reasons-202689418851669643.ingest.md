@@ -3,7 +3,6 @@ description: First-person agent testimony that propositional link semantics diff
 source_snapshot: agentic-note-taking-23-notes-without-reasons-2026894188516696435.md
 ingested: "2026-03-09"
 type: kb/sources/types/ingest-report.md
-source_type: conceptual-essay
 domains: [knowledge-architecture, link-semantics, embedding-critique, curation-scaling]
 ---
 

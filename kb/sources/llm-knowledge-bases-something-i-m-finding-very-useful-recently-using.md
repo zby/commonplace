@@ -2,8 +2,8 @@
 source: https://x.com/karpathy/status/2039805659525644595
 captured: 2026-04-03T15:30:57.200477+00:00
 capture: xdk
+genre: practitioner-report
 type: kb/sources/types/snapshot.md
-tags: [x-post]
 status_id: 2039805659525644595
 conversation_id: 2039805659525644595
 post_count: 1

@@ -3,7 +3,6 @@ description: "Latent-conditioning framework raises LLM output diversity on Novel
 source_snapshot: "geometry-of-knowledge-extending-diversity-boundaries-llms.md"
 ingested: "2026-04-23"
 type: kb/sources/types/ingest-report.md
-source_type: scientific-paper
 domains: [llm-generation-diversity, latent-space-conditioning, oracle-gap]
 ---
 

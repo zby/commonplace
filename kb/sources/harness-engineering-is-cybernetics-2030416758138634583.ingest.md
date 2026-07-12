@@ -3,7 +3,6 @@ description: "Conceptual thread framing harness engineering as cybernetic feedba
 source_snapshot: harness-engineering-is-cybernetics-2030416758138634583.md
 ingested: "2026-04-20"
 type: kb/sources/types/ingest-report.md
-source_type: conceptual-essay
 domains: [agent-systems, harness-engineering, cybernetics, verification]
 ---
 

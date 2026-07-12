@@ -3,8 +3,8 @@ source: https://papersecon.univie.ac.at/RePEc/vie/viennp/vie0101.pdf
 description: Unifying game-theoretic model of credence goods showing that most conflicting results in the literature (Darby-Karni, Pitchik-Schotter, Wolinsky, Emons, Taylor) reduce to relaxing one of three conditions (homogeneous consumers, verifiability-or-liability, commitment) that otherwise yield a costless efficient market.
 captured: 2026-07-06
 capture: pdf-read
+genre: scientific-paper
 type: ./types/snapshot.md
-tags: [academic-paper]
 ---
 
 # On Doctors, Mechanics and Computer Specialists Or Where are the Problems with Credence Goods?

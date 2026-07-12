@@ -2,8 +2,8 @@
 source: https://x.com/shivsakhuja/status/2047124337191444844
 captured: 2026-04-23T07:19:24.259560+00:00
 capture: xdk
+genre: practitioner-report
 type: kb/sources/types/snapshot.md
-tags: [x-article]
 status_id: 2047124337191444844
 conversation_id: 2047124337191444844
 post_count: 1

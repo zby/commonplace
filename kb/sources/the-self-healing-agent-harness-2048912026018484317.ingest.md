@@ -3,7 +3,6 @@ description: "Practitioner report where live agent-response graders feed tickets
 source_snapshot: "the-self-healing-agent-harness-2048912026018484317.md"
 ingested: "2026-04-29"
 type: kb/sources/types/ingest-report.md
-source_type: practitioner-report
 domains: [agent-evaluation, harness-engineering, deployment-reliability, oracle-theory]
 ---
 

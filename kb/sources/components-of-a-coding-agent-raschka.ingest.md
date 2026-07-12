@@ -3,7 +3,6 @@ description: Practitioner decomposition of coding agent harnesses into six named
 source_snapshot: components-of-a-coding-agent-raschka.md
 ingested: "2026-04-05"
 type: kb/sources/types/ingest-report.md
-source_type: practitioner-report
 domains: [agent-architecture, context-engineering, coding-agents]
 ---
 

@@ -3,7 +3,6 @@ description: Empirical study (N=112) finding experienced developers control AI a
 source_snapshot: professional-software-developers-dont-vibe-they-control.md
 ingested: "2026-03-09"
 type: kb/sources/types/ingest-report.md
-source_type: scientific-paper
 domains: [agentic-coding, developer-practices, task-suitability, human-ai-collaboration]
 ---
 

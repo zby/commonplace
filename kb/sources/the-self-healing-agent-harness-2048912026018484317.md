@@ -2,8 +2,8 @@
 source: https://x.com/intuitiveml/status/2048912026018484317
 captured: 2026-04-29T17:21:59.182403+00:00
 capture: xdk
+genre: practitioner-report
 type: kb/sources/types/snapshot.md
-tags: [x-article]
 status_id: 2048912026018484317
 conversation_id: 2048912026018484317
 post_count: 7

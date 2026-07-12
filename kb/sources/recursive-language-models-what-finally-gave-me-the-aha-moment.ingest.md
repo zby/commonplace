@@ -3,7 +3,6 @@ description: Detailed practitioner walkthrough of RLM architecture via five-arch
 source_snapshot: recursive-language-models-what-finally-gave-me-the-aha-moment.md
 ingested: "2026-03-22"
 type: kb/sources/types/ingest-report.md
-source_type: practitioner-report
 domains: [agent-architecture, context-engineering, orchestration]
 ---
 

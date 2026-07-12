@@ -3,7 +3,6 @@ description: "Google PAT paper as evidence for verifiable-subrole review automat
 source_snapshot: "towards-automating-scientific-review-google-paper-assistant.md"
 ingested: "2026-07-01"
 type: kb/sources/types/ingest-report.md
-source_type: scientific-paper
 domains: [peer-review, agent-orchestration, oracle-theory, agent-reliability]
 ---
 

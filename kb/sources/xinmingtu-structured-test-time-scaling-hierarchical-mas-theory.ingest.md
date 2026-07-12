@@ -3,7 +3,6 @@ description: Formal proof that topology compression, scope isolation, and verifi
 source_snapshot: xinmingtu-structured-test-time-scaling-hierarchical-mas-theory.md
 ingested: "2026-03-25"
 type: kb/sources/types/ingest-report.md
-source_type: conceptual-essay
 domains: [multi-agent-systems, error-correction, test-time-scaling, agent-orchestration]
 ---
 

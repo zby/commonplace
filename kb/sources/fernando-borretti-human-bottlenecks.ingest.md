@@ -3,7 +3,6 @@ description: "Borretti argues AI value has a human-side competence floor — kno
 source_snapshot: "fernando-borretti-human-bottlenecks.md"
 ingested: "2026-06-15"
 type: kb/sources/types/ingest-report.md
-source_type: conceptual-essay
 domains: [human-llm-differences, augmentation-automation, distillation]
 ---
 

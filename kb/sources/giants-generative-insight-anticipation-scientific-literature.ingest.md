@@ -3,7 +3,6 @@ description: GIANTS backcasts scientific discovery into a two-parent insight pre
 source_snapshot: giants-generative-insight-anticipation-scientific-literature.md
 ingested: "2026-04-24"
 type: kb/sources/types/ingest-report.md
-source_type: scientific-paper
 domains: [learning-theory, oracle-theory, scientific-discovery, evaluation]
 ---
 

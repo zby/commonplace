@@ -3,8 +3,8 @@ source: https://arxiv.org/abs/2606.01462
 description: "Paper introducing VAIR, a benchmark showing large reasoning models can produce correct answers while failing to evaluate invalid reasoning that reaches those answers"
 captured: 2026-06-17
 capture: web-fetch
+genre: scientific-paper
 type: kb/sources/types/snapshot.md
-tags: [academic-paper]
 ---
 
 # An Enigma of Artificial Reason

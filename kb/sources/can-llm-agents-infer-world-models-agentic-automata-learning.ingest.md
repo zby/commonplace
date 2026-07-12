@@ -3,7 +3,6 @@ description: "Agentic automata-learning paper showing that hard-oracle interacti
 source_snapshot: "can-llm-agents-infer-world-models-agentic-automata-learning.md"
 ingested: "2026-06-22"
 type: kb/sources/types/ingest-report.md
-source_type: scientific-paper
 domains: [agent-evaluation, oracle-theory, contextual-activation, agent-benchmarks]
 ---
 

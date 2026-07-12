@@ -3,8 +3,8 @@ source: https://arxiv.org/html/2512.16301v3
 description: Survey taxonomy of agentic AI adaptation across post-training, memory, skills, and agent/tool optimization paradigms
 captured: 2026-04-27
 capture: web-fetch
+genre: scientific-paper
 type: kb/sources/types/snapshot.md
-tags: [academic-paper]
 ---
 
 # Adaptation of Agentic AI: A Survey of Post-Training, Memory, and Skills

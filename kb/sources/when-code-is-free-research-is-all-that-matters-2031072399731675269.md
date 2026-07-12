@@ -2,8 +2,8 @@
 source: https://x.com/amytam01/status/2031072399731675269
 captured: 2026-03-10T13:19:25.932591+00:00
 capture: xdk
+genre: conceptual-essay
 type: kb/sources/types/snapshot.md
-tags: [x-article]
 status_id: 2031072399731675269
 conversation_id: 2031072399731675269
 post_count: 1

@@ -3,8 +3,8 @@ source: https://people.idsia.ch/~juergen/fki198-94.pdf
 description: "Schmidhuber's 1995 technical report introducing incremental self-improvement through reward-gated self-modification of learning strategies"
 captured: 2026-04-29
 capture: pdf-read
+genre: scientific-paper
 type: kb/sources/types/snapshot.md
-tags: [academic-paper]
 ---
 
 # On Learning How to Learn Learning Strategies

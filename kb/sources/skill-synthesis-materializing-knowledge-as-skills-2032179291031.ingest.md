@@ -3,7 +3,6 @@ description: "Sentry co-founder's practitioner report on synthesizing Claude Cod
 source_snapshot: skill-synthesis-materializing-knowledge-as-skills-2032179291031806408.md
 ingested: "2026-03-13"
 type: kb/sources/types/ingest-report.md
-source_type: practitioner-report
 domains: [skill-synthesis, security-automation, deploy-time-learning, context-engineering]
 ---
 

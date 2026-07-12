@@ -2,8 +2,8 @@
 source: https://arxiv.org/pdf/2510.21413
 captured: 2026-03-02
 capture: pdf-read
+genre: scientific-paper
 type: kb/sources/types/snapshot.md
-tags: [academic-paper]
 ---
 
 # Context Engineering for AI Agents in Open-Source Software

@@ -3,7 +3,6 @@ description: Benchmark proving LLM compositional reasoning collapses with depth 
 source_snapshot: convexbench-can-llms-recognize-convex-functions.md
 ingested: "2026-03-09"
 type: kb/sources/types/ingest-report.md
-source_type: scientific-paper
 domains: [compositional-reasoning, agentic-scaffolding, context-management, benchmarking]
 ---
 

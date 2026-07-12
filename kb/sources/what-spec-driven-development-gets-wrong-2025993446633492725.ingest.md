@@ -3,7 +3,6 @@ description: Augment's argument that spec-driven development fails unless agents
 source_snapshot: what-spec-driven-development-gets-wrong-2025993446633492725.md
 ingested: "2026-03-10"
 type: kb/sources/types/ingest-report.md
-source_type: practitioner-report
 domains: [spec-driven-development, agent-architecture, documentation-maintenance]
 ---
 

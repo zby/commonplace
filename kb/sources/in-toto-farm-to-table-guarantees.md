@@ -3,8 +3,8 @@ source: https://www.usenix.org/system/files/sec19-torres-arias.pdf
 description: USENIX Security '19 paper introducing in-toto, a framework that cryptographically verifies the integrity of each step in a software supply chain from source to deployment via a signed layout and per-step link metadata.
 captured: 2026-07-06
 capture: pdf-read
+genre: scientific-paper
 type: ./types/snapshot.md
-tags: [academic-paper]
 ---
 
 # in-toto: Providing farm-to-table guarantees for bits and bytes

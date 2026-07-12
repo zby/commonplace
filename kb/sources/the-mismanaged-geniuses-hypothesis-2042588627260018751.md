@@ -2,8 +2,8 @@
 source: https://x.com/a1zhang/status/2042588627260018751
 captured: 2026-04-10T20:39:59.169708+00:00
 capture: xdk
+genre: conceptual-essay
 type: kb/sources/types/snapshot.md
-tags: [x-article]
 status_id: 2042588627260018751
 conversation_id: 2042588627260018751
 post_count: 5

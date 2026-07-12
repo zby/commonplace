@@ -3,7 +3,6 @@ description: "Transformer analogy paper linking analogical transfer to relationa
 source_snapshot: "emergent-analogical-reasoning-transformers.md"
 ingested: "2026-05-26"
 type: kb/sources/types/ingest-report.md
-source_type: scientific-paper
 domains: [learning-theory, analogical-reasoning, transformer-mechanisms, discovery]
 ---
 

@@ -3,7 +3,6 @@ description: MercadoLibre engineering lead's practitioner guide to Spec Driven D
 source_snapshot: the-spec-is-the-new-code-a-guide-to-spec-driven-development.md
 ingested: "2026-03-16"
 type: kb/sources/types/ingest-report.md
-source_type: practitioner-report
 domains: [spec-driven-development, agent-architecture, context-engineering, constraining]
 ---
 

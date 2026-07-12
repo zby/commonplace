@@ -3,7 +3,6 @@ description: First empirical study of AI context files across 466 OSS projects â
 source_snapshot: context-engineering-ai-agents-oss.md
 ingested: "2026-03-09"
 type: kb/sources/types/ingest-report.md
-source_type: scientific-paper
 domains: [context-engineering, agentic-systems, open-source, software-artifacts]
 ---
 

@@ -3,7 +3,6 @@ description: Empirical study measuring Maximum Effective Context Window (MECW) a
 source_snapshot: paulsen-maximum-effective-context-window-mecw.md
 ingested: "2026-03-16"
 type: kb/sources/types/ingest-report.md
-source_type: scientific-paper
 domains: [context-windows, llm-evaluation, rag-systems, agent-architecture]
 ---
 

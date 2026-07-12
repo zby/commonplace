@@ -3,7 +3,6 @@ description: "SkillRL paper showing trajectory-distilled skill banks co-evolving
 source_snapshot: "skillrl-evolving-agents-recursive-skill-augmented-rl.md"
 ingested: "2026-06-30"
 type: kb/sources/types/ingest-report.md
-source_type: scientific-paper
 domains: [skill-learning, trace-derived-learning, reinforcement-learning, deploy-time-learning]
 ---
 

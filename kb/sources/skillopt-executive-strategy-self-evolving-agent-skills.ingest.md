@@ -3,7 +3,6 @@ description: "SkillOpt paper showing validation-gated text-space optimization of
 source_snapshot: "skillopt-executive-strategy-self-evolving-agent-skills.md"
 ingested: "2026-05-28"
 type: kb/sources/types/ingest-report.md
-source_type: scientific-paper
 domains: [skill-optimization, deploy-time-learning, trace-derived-learning, readable-artifacts]
 ---
 

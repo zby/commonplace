@@ -4,7 +4,6 @@ author: Wei Jie Yeo, Teddy Ferdinan, Przemyslaw Kazienko, Ranjan Satapathy, Erik
 source_snapshot: self-training-large-language-models-through-knowledge-detection.md
 ingested: "2026-04-20"
 type: kb/sources/types/ingest-report.md
-source_type: scientific-paper
 domains: [learning-theory, continual-learning, oracle-theory, trace-derived-learning]
 ---
 

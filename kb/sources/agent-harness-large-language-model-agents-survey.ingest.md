@@ -3,7 +3,6 @@ description: "Survey defining the LLM agent harness as execution loop, tool regi
 source_snapshot: "agent-harness-large-language-model-agents-survey.md"
 ingested: "2026-05-28"
 type: kb/sources/types/ingest-report.md
-source_type: scientific-paper
 domains: [harness-engineering, agent-runtime, context-engineering, agent-reliability]
 ---
 

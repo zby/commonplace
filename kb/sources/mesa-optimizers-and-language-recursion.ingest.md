@@ -3,7 +3,6 @@ description: Speculative essay arguing mesa optimizers may emerge suddenly becau
 source_snapshot: mesa-optimizers-and-language-recursion.md
 ingested: "2026-03-31"
 type: kb/sources/types/ingest-report.md
-source_type: conceptual-essay
 domains: [mesa-optimization, language-theory, capability-emergence, learning-theory]
 ---
 

@@ -3,8 +3,8 @@ source: https://arxiv.org/html/2504.15965v2
 description: Survey proposing a 3D-8Q taxonomy (object/form/time) for LLM memory mechanisms, mapping human memory types (sensory, working, explicit, implicit) to AI implementations across eight quadrants — useful for comparing how different systems position their memory architectures.
 captured: 2026-06-09
 capture: web-fetch
+genre: scientific-paper
 type: kb/sources/types/snapshot.md
-tags: [academic-paper]
 ---
 
 # From Human Memory to AI Memory: A Survey on Memory Mechanisms in the Era of LLMs

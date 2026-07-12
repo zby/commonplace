@@ -3,7 +3,6 @@ description: "W3C PROV family roadmap — the canonical standard for 'full prove
 source_snapshot: "prov-overview.md"
 ingested: "2026-07-06"
 type: kb/sources/types/ingest-report.md
-source_type: design-proposal
 domains: [provenance, lineage, standards]
 ---
 

@@ -4,8 +4,8 @@ description: Updated position paper proposing a four-field architectural vocabul
 original_title: "Where It Lives Is Not What It Is: An Architectural Vocabulary for Retained Adaptation in Agentic Systems"
 captured: 2026-06-23
 capture: local-file
+genre: scientific-paper
 type: kb/sources/types/snapshot.md
-tags: [academic-paper]
 ---
 
 # Where It Lives Is Not What It Is: Vocabulary for Retained Adaptation in Agentic Systems

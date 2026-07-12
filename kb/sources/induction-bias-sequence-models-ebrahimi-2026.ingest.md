@@ -3,7 +3,6 @@ description: 190k-run empirical study showing transformers need orders-of-magnit
 source_snapshot: induction-bias-sequence-models-ebrahimi-2026.md
 ingested: "2026-03-09"
 type: kb/sources/types/ingest-report.md
-source_type: scientific-paper
 domains: [ml-architecture, state-tracking, data-efficiency, inductive-bias]
 ---
 

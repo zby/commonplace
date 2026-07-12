@@ -3,7 +3,6 @@ description: "VAIR paper showing large reasoning models can solve math problems 
 source_snapshot: "an-enigma-of-artificial-reason-production-evaluation-gap-lrms.md"
 ingested: "2026-06-17"
 type: kb/sources/types/ingest-report.md
-source_type: scientific-paper
 domains: [evaluation, oracle-theory, reasoning, llm-interpretation-errors]
 ---
 

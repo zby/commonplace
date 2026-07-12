@@ -3,7 +3,6 @@ description: Epiplexity paper formalizing extractable structure for computationa
 source_snapshot: from-entropy-to-epiplexity-rethinking-information-computationally.md
 ingested: "2026-04-20"
 type: kb/sources/types/ingest-report.md
-source_type: scientific-paper
 domains: [information-theory, learning-theory, context-engineering, computational-complexity]
 ---
 

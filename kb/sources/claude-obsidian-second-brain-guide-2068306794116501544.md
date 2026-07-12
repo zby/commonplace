@@ -2,8 +2,8 @@
 source: https://x.com/undefinedKi/status/2068306794116501544
 captured: 2026-06-30T04:45:33.865959+00:00
 capture: xdk
+genre: practitioner-report
 type: kb/sources/types/snapshot.md
-tags: [x-article]
 status_id: 2068306794116501544
 conversation_id: 2068306794116501544
 post_count: 1

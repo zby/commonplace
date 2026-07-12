@@ -3,7 +3,6 @@ description: Graph-first agent memory with bi-temporal edge invalidation — the
 source_snapshot: graphiti-temporal-knowledge-graph.md
 ingested: "2026-03-09"
 type: kb/sources/types/ingest-report.md
-source_type: design-proposal
 domains: [agent-memory, knowledge-graphs, temporal-data, retrieval-systems]
 ---
 

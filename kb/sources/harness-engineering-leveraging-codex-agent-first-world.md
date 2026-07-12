@@ -2,8 +2,8 @@
 source: https://openai.com/index/harness-engineering/
 captured: 2026-03-05
 capture: web-fetch
+genre: practitioner-report
 type: kb/sources/types/snapshot.md
-tags: [blog-post]
 ---
 
 # Harness Engineering: Leveraging Codex in an Agent-First World

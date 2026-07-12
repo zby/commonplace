@@ -2,8 +2,8 @@
 source: https://x.com/mfpiccolo/status/2060069083878408689
 captured: 2026-05-29T07:13:46.021671+00:00
 capture: xdk
+genre: practitioner-report
 type: kb/sources/types/snapshot.md
-tags: [x-article]
 status_id: 2060069083878408689
 conversation_id: 2060069083878408689
 post_count: 2

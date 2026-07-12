@@ -3,7 +3,6 @@ description: "Ashpreet Bedi's ContextProvider pattern: source-scoped sub-agents 
 source_snapshot: "context-providers-the-missing-layer-between-agents-and-tools.md"
 ingested: "2026-04-27"
 type: kb/sources/types/ingest-report.md
-source_type: practitioner-report
 domains: [context-engineering, tool-loop, agent-orchestration]
 ---
 

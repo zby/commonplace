@@ -3,7 +3,6 @@ description: Argues that pairwise judging plus round-robin win rates is a better
 source_snapshot: kb/sources/even-if-you-set-aside-whether-citations-are-the-right-proxy-for.md
 ingested: "2026-03-23"
 type: kb/sources/types/ingest-report.md
-source_type: conceptual-essay
 domains: [evaluation, context-engineering, llm-interpretation-errors]
 ---
 

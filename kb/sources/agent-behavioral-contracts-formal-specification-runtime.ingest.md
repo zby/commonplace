@@ -3,7 +3,6 @@ description: "Formal framework (ABC) extending Design-by-Contract to autonomous 
 source_snapshot: agent-behavioral-contracts-formal-specification-runtime-enforcement.md
 ingested: "2026-03-09"
 type: kb/sources/types/ingest-report.md
-source_type: scientific-paper
 domains: [agent-reliability, formal-methods, runtime-enforcement, design-by-contract]
 ---
 

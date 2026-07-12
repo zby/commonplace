@@ -3,7 +3,6 @@ description: AWM paper showing web agents can learn reusable prompt workflows fr
 source_snapshot: agent-workflow-memory.md
 ingested: "2026-05-08"
 type: kb/sources/types/ingest-report.md
-source_type: scientific-paper
 domains: [agent-memory, trace-derived-learning, deploy-time-learning, web-agents]
 ---
 

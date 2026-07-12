@@ -154,8 +154,8 @@ def test_source_snapshot_validates_without_description(tmp_path: Path) -> None:
 source: https://example.com/article
 captured: 2026-04-19
 capture: web-fetch
+genre: conceptual-essay
 type: kb/sources/types/snapshot.md
-tags: [blog-post]
 ---
 
 # Sample
@@ -171,7 +171,7 @@ Captured text.
     assert any("type schema: snapshot requirements satisfied" in item for item in results.passes)
 
 
-def test_source_snapshot_requires_family_tag(tmp_path: Path) -> None:
+def test_source_snapshot_requires_genre(tmp_path: Path) -> None:
     write(
         tmp_path / "kb" / "sources" / "types" / "snapshot.schema.yaml",
         (Path.cwd() / "kb" / "sources" / "types" / "snapshot.schema.yaml").read_text(
@@ -202,7 +202,43 @@ Captured text.
     results = validation.validate_note(snapshot, repo_root=tmp_path)
 
     assert results.note_type == "snapshot"
-    assert any("'tags' is a required property" in item for item in results.fails)
+    assert any("'genre' is a required property" in item for item in results.fails)
+
+
+def test_source_snapshot_off_list_genre_warns_not_fails(tmp_path: Path) -> None:
+    write(
+        tmp_path / "kb" / "sources" / "types" / "snapshot.schema.yaml",
+        (Path.cwd() / "kb" / "sources" / "types" / "snapshot.schema.yaml").read_text(
+            encoding="utf-8"
+        ),
+    )
+    write_type_spec(
+        tmp_path,
+        "kb/sources/types/snapshot.md",
+        name="snapshot",
+        schema="kb/sources/types/snapshot.schema.yaml",
+    )
+    snapshot = write(
+        tmp_path / "kb" / "sources" / "sample.md",
+        """---
+source: https://example.com/article
+captured: 2026-04-19
+capture: web-fetch
+genre: podcast-transcript
+type: kb/sources/types/snapshot.md
+---
+
+# Sample
+
+Captured text.
+""",
+    )
+
+    results = validation.validate_note(snapshot, repo_root=tmp_path)
+
+    assert results.note_type == "snapshot"
+    assert results.fails == []
+    assert any("genre" in item for item in results.warns)
 
 
 @pytest.mark.parametrize(

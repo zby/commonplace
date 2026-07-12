@@ -97,7 +97,7 @@ From the fetched content and URL, determine:
 
 - **title**: The article/post title. Use the first H1 if present, otherwise derive from content.
 - **author**: If identifiable from the content or URL (e.g. simonwillison.net → Simon Willison)
-- **family tag**: the content-family tag per the snapshot type spec (`kb/sources/types/snapshot.md`), e.g. `blog-post`, `academic-paper`. Prefer a tag already in use in `kb/sources/` over inventing a near-synonym; default to `web-page` when nothing more specific fits.
+- **genre**: the source's genre per the snapshot type spec's vocabulary (`kb/sources/types/snapshot.md`), e.g. `scientific-paper`, `practitioner-report`, `conceptual-essay`. This is a surface judgment of what kind of document the source is as evidence — ingestion may correct it later. Prefer a value from the type spec's list; a value outside it validates with a warning, so extend only for a genuinely new evidential kind, not a container.
 - **description**: One sentence describing what makes this source worth retrieving. Not a summary — a retrieval filter (e.g. "Anthropic CEO's capability-timeline predictions — verifiable domains get confident timelines, unverifiable ones get hedged"). Focus on what distinguishes this source from others on the same topic.
 - **slug**: Lowercase, hyphenated, max 70 chars. Derived from title. Example: `simon-willison-karpathy-claws`
 
@@ -113,8 +113,8 @@ source: {url}
 description: {description}
 captured: {YYYY-MM-DD}
 capture: {capture_method}
+genre: {genre}
 type: kb/sources/types/snapshot.md
-tags: [{family-tag}]
 ---
 
 # {title}

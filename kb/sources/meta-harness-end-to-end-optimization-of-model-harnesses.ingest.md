@@ -3,7 +3,6 @@ description: Controlled ablation showing raw execution traces (10 MTok/iter) out
 source_snapshot: meta-harness-end-to-end-optimization-of-model-harnesses.md
 ingested: "2026-03-30"
 type: kb/sources/types/ingest-report.md
-source_type: scientific-paper
 domains: [learning-theory, context-engineering, evaluation, harness-engineering]
 ---
 

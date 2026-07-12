@@ -2,8 +2,8 @@
 source: https://owl.purdue.edu/owl/general_writing/academic_writing/historical_perspectives_on_argumentation/toulmin_argument.html
 captured: 2026-02-26
 capture: web-fetch
+genre: conceptual-essay
 type: kb/sources/types/snapshot.md
-tags: [documentation]
 ---
 
 # Toulmin Argument

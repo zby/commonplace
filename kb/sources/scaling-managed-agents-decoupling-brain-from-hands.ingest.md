@@ -3,7 +3,6 @@ description: Anthropic Managed Agents report showing brain/hand/session interfac
 source_snapshot: scaling-managed-agents-decoupling-brain-from-hands.md
 ingested: "2026-04-11"
 type: kb/sources/types/ingest-report.md
-source_type: practitioner-report
 domains: [agent-runtime, context-engineering, orchestration, isolation]
 ---
 

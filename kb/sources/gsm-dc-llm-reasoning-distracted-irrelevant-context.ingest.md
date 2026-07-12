@@ -3,7 +3,6 @@ description: Controlled benchmark quantifying how irrelevant context degrades LL
 source_snapshot: gsm-dc-llm-reasoning-distracted-irrelevant-context.md
 ingested: "2026-03-26"
 type: kb/sources/types/ingest-report.md
-source_type: scientific-paper
 domains: [reasoning-robustness, context-degradation, training-methodology, evaluation-benchmarks]
 ---
 

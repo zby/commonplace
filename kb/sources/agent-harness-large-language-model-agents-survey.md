@@ -3,8 +3,8 @@ source: https://www.preprints.org/manuscript/202604.0428
 description: "Survey framing the LLM agent harness as a six-component runtime governance layer and primary determinant of deployed agent reliability"
 captured: 2026-05-28
 capture: web-fetch
+genre: scientific-paper
 type: kb/sources/types/snapshot.md
-tags: [academic-paper]
 ---
 
 # Agent Harness for Large Language Model Agents: A Survey

@@ -2,8 +2,8 @@
 source: https://x.com/ashpreetbedi/status/2048817143974613089
 captured: 2026-04-27T18:29:20.288781+00:00
 capture: xdk
+genre: practitioner-report
 type: kb/sources/types/snapshot.md
-tags: [x-article]
 status_id: 2048817143974613089
 conversation_id: 2048817143974613089
 post_count: 1

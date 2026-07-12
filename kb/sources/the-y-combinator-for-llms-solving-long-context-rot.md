@@ -3,8 +3,8 @@ source: https://arxiv.org/pdf/2603.20105
 description: λ-RLM paper replacing open-ended recursive LLM control code with typed λ-calculus combinators for bounded long-context reasoning.
 captured: 2026-06-11
 capture: pdf-read
+genre: scientific-paper
 type: kb/sources/types/snapshot.md
-tags: [academic-paper]
 ---
 
 # The Y-Combinator for LLMs: Solving Long-Context Rot with λ-Calculus

@@ -3,7 +3,6 @@ description: Pedagogical treatment of Toulmin's six-part argument model — cano
 source_snapshot: purdue-owl-toulmin-argument.md
 ingested: "2026-03-09"
 type: kb/sources/types/ingest-report.md
-source_type: conceptual-essay
 domains: [argumentation-theory, knowledge-representation, structured-reasoning]
 ---
 

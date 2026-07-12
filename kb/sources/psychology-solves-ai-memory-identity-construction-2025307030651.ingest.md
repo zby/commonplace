@@ -3,7 +3,6 @@ description: Thread proposing five psychology principles (Conway, Damasio, Brune
 source_snapshot: psychology-solves-ai-memory-identity-construction-2025307030651871631.md
 ingested: "2026-04-04"
 type: kb/sources/types/ingest-report.md
-source_type: conversation-thread
 domains: [memory-architecture, learning-theory, context-engineering]
 ---
 

@@ -3,7 +3,6 @@ description: Ingest of NeurIPS 25 workshop paper benchmarking LLM web agents und
 source_snapshot: llm-webagents-long-context-reasoning-benchmark.md
 ingested: "2026-03-26"
 type: kb/sources/types/ingest-report.md
-source_type: scientific-paper
 domains: [context-degradation, agent-systems, web-agents, long-context-evaluation]
 ---
 

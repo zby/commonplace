@@ -3,7 +3,6 @@ description: "Position paper formalising LLM agent execution as a scheduler; cor
 source_snapshot: "scheduler-theoretic-framework-llm-agent-execution.md"
 ingested: "2026-06-28"
 type: kb/sources/types/ingest-report.md
-source_type: design-proposal
 domains: [agent-orchestration, scheduling-theory, failure-recovery]
 ---
 

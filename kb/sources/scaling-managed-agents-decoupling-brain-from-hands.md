@@ -3,8 +3,8 @@ source: https://www.anthropic.com/engineering/managed-agents
 description: Anthropic's Managed Agents architecture argues for stable brain, hand, and session interfaces that outlast changing agent harness implementations.
 captured: 2026-04-11
 capture: web-fetch
+genre: practitioner-report
 type: kb/sources/types/snapshot.md
-tags: [blog-post]
 ---
 
 # Scaling Managed Agents: Decoupling the brain from the hands

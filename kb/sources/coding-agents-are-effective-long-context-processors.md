@@ -3,8 +3,8 @@ source: https://arxiv.org/html/2603.20432v1
 description: Benchmark paper arguing coding agents process long contexts better by turning text corpora into file-system-native tool workflows rather than latent attention or fixed retrieval
 captured: 2026-03-31
 capture: web-fetch
+genre: scientific-paper
 type: kb/sources/types/snapshot.md
-tags: [academic-paper]
 ---
 
 # Coding Agents are Effective Long-Context Processors

@@ -3,7 +3,6 @@ description: Investor/researcher argument that oracle availability (not capabili
 source_snapshot: when-code-is-free-research-is-all-that-matters-2031072399731675269.md
 ingested: "2026-03-10"
 type: kb/sources/types/ingest-report.md
-source_type: conceptual-essay
 domains: [automation-boundary, research-methodology, oracle-theory, labor-economics]
 ---
 

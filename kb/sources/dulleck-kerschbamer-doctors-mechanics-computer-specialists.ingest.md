@@ -3,7 +3,6 @@ description: "Credence-goods microeconomics paper — evidence and refinement fo
 source_snapshot: "dulleck-kerschbamer-doctors-mechanics-computer-specialists.md"
 ingested: "2026-07-06"
 type: kb/sources/types/ingest-report.md
-source_type: scientific-paper
 domains: [verification, information-asymmetry, mechanism-design]
 ---
 

@@ -3,7 +3,6 @@ description: Formula-based adaptive forgetting with constrained optimization for
 source_snapshot: novel-memory-forgetting-techniques-autonomous-ai-agents.md
 ingested: "2026-04-04"
 type: kb/sources/types/ingest-report.md
-source_type: scientific-paper
 domains: [agent-memory, context-efficiency, memory-curation, forgetting]
 ---
 

@@ -3,7 +3,6 @@ description: Spacebot README ingest covering process-typed concurrent agent runt
 source_snapshot: spacedriveapp-spacebot-ai-agent.md
 ingested: "2026-04-20"
 type: kb/sources/types/ingest-report.md
-source_type: tool-announcement
 domains: [agent-architecture, orchestration, context-engineering, memory-systems]
 ---
 

@@ -3,7 +3,6 @@ description: "Convenient Claude+Obsidian second-brain setup guide -- useful adop
 source_snapshot: "claude-obsidian-second-brain-guide-2068306794116501544.md"
 ingested: "2026-06-30"
 type: kb/sources/types/ingest-report.md
-source_type: practitioner-report
 domains: [agent-memory, context-engineering, obsidian, skills]
 ---
 

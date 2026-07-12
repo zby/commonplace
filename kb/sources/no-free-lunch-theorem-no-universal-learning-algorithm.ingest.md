@@ -3,7 +3,6 @@ description: "No Free Lunch explainer grounding codification as an unavoidable i
 source_snapshot: "no-free-lunch-theorem-no-universal-learning-algorithm.md"
 ingested: "2026-05-19"
 type: kb/sources/types/ingest-report.md
-source_type: conceptual-essay
 domains: [learning-theory, inductive-bias, codification, system-design]
 ---
 

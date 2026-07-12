@@ -3,7 +3,6 @@ description: Practitioner report on thread-weaving agent architecture — bounde
 source_snapshot: slate-moving-beyond-react-and-rlm.md
 ingested: "2026-03-12"
 type: kb/sources/types/ingest-report.md
-source_type: practitioner-report
 domains: [agent-architecture, context-engineering, orchestration, episodic-memory]
 ---
 

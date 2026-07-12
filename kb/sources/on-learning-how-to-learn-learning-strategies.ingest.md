@@ -3,7 +3,6 @@ description: "Schmidhuber's reward-gated self-modification report as historical 
 source_snapshot: on-learning-how-to-learn-learning-strategies.md
 ingested: "2026-04-29"
 type: kb/sources/types/ingest-report.md
-source_type: scientific-paper
 domains: [learning-theory, self-improvement, oracle-theory, agent-memory]
 ---
 

@@ -3,8 +3,8 @@ source: https://arxiv.org/html/2606.01444v1
 description: Category-theoretic framework for agentic scientific discovery systems that models artifact states as copresheaves and distinguishes retrieval, search, and discovery as structurally different operations — grounded in a materials-science case study.
 captured: 2026-06-06
 capture: web-fetch
+genre: scientific-paper
 type: kb/sources/types/snapshot.md
-tags: [academic-paper]
 ---
 
 # Self-Revising Discovery Systems for Science

@@ -3,7 +3,6 @@ description: Company blog using Sudoku benchmark (97.4% vs 0% LLM) to argue tran
 source_snapshot: pathway-beyond-transformers-sudoku-bench.md
 ingested: "2026-03-26"
 type: kb/sources/types/ingest-report.md
-source_type: practitioner-report
 domains: [ml-architecture, constraint-satisfaction, reasoning-benchmarks]
 ---
 

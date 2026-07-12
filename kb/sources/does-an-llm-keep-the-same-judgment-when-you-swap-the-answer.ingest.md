@@ -3,7 +3,6 @@ description: "Lech Mazur's public benchmark announcement compressing the headlin
 source_snapshot: "kb/sources/does-an-llm-keep-the-same-judgment-when-you-swap-the-answer-order.md"
 ingested: "2026-04-23"
 type: kb/sources/types/ingest-report.md
-source_type: tool-announcement
 domains: [evaluation, judge-reliability, position-bias, llm-as-judge]
 ---
 

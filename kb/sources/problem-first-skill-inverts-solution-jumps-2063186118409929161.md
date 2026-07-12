@@ -2,8 +2,8 @@
 source: https://x.com/nurijanian/status/2063186118409929161
 captured: 2026-06-17T09:08:07.099475+00:00
 capture: xdk
+genre: practitioner-report
 type: kb/sources/types/snapshot.md
-tags: [x-article]
 status_id: 2063186118409929161
 conversation_id: 2063186118409929161
 post_count: 1

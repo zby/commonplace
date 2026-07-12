@@ -3,7 +3,6 @@ description: "How the scheduler×rebuilder build-systems framework grounds the K
 source_snapshot: "build-systems-a-la-carte.md"
 ingested: "2026-07-06"
 type: kb/sources/types/ingest-report.md
-source_type: scientific-paper
 domains: [build-systems, incremental-computation, staleness-detection, caching]
 ---
 

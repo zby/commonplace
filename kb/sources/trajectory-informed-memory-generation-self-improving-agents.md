@@ -3,8 +3,8 @@ source: https://arxiv.org/html/2603.10600v1
 description: IBM Research framework that extracts three categories of actionable tips (strategy, recovery, optimization) from agent execution trajectories and injects them at runtime — evaluated on AppWorld showing up to 14.3 pp gains in scenario goal completion.
 captured: 2026-03-13
 capture: web-fetch
+genre: scientific-paper
 type: kb/sources/types/snapshot.md
-tags: [academic-paper]
 ---
 
 # Trajectory-Informed Memory Generation for Self-Improving Agent Systems

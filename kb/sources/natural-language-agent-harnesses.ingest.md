@@ -3,7 +3,6 @@ description: "NLAH paper externalizes agent control logic as portable natural-la
 source_snapshot: natural-language-agent-harnesses.md
 ingested: "2026-03-28"
 type: kb/sources/types/ingest-report.md
-source_type: scientific-paper
 domains: [agent-orchestration, harness-engineering, specification-level-separation, deploy-time-learning]
 ---
 

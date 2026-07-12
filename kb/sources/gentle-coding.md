@@ -2,8 +2,8 @@
 source: https://github.com/OttoRenner/Gentle-Coding
 captured: 2026-06-05
 capture: web-fetch
+genre: code-repository
 type: kb/sources/types/snapshot.md
-tags: [github-repository, readme]
 description: "README snapshot for Gentle-Coding, a proof-of-concept repository about kindness-oriented prompt framing for AI coding and reasoning tasks."
 ---
 

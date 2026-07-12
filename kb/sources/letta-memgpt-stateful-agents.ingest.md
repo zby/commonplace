@@ -3,7 +3,6 @@ description: Agent memory platform where the LLM self-manages a three-tier memor
 source_snapshot: letta-memgpt-stateful-agents.md
 ingested: "2026-03-09"
 type: kb/sources/types/ingest-report.md
-source_type: design-proposal
 domains: [agent-memory, context-engineering, stateful-agents, memory-architecture]
 ---
 

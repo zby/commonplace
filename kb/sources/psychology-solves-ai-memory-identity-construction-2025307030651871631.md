@@ -5,8 +5,8 @@ source_url: https://x.com/rryssf_/status/2025307030651871631
 source: https://x.com/rryssf_/status/2025307030651871631
 captured: 2026-04-04
 capture: xdk
+genre: conversation-thread
 type: kb/sources/types/snapshot.md
-tags: [x-thread]
 description: Thread arguing AI memory should adopt psychology's model of identity construction through autobiographical memory, citing Conway, Damasio, Bruner, and Klein & Nichols
 ---
 

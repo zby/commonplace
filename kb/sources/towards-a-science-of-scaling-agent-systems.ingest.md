@@ -3,7 +3,6 @@ description: Controlled multi-agent scaling paper showing coordination gains dep
 source_snapshot: towards-a-science-of-scaling-agent-systems.md
 ingested: "2026-04-20"
 type: kb/sources/types/ingest-report.md
-source_type: scientific-paper
 domains: [multi-agent-systems, agent-architecture, scaling-laws, coordination]
 ---
 

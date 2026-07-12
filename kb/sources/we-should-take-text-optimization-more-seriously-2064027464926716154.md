@@ -2,8 +2,8 @@
 source: https://x.com/yoonholeee/status/2064027464926716154
 captured: 2026-06-09T15:02:46.024584+00:00
 capture: xdk
+genre: conceptual-essay
 type: kb/sources/types/snapshot.md
-tags: [x-article]
 status_id: 2064027464926716154
 conversation_id: 2064027464926716154
 post_count: 1

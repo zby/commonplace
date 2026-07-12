@@ -3,7 +3,6 @@ description: Objective-vs-subjective intelligence essay arguing that AI's real b
 source_snapshot: adam-mastroianni-infinite-midwit.md
 ingested: "2026-04-06"
 type: kb/sources/types/ingest-report.md
-source_type: conceptual-essay
 domains: [automation-boundary, oracle-theory, research-methodology, writing-quality]
 ---
 

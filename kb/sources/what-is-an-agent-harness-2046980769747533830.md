@@ -2,8 +2,8 @@
 source: https://x.com/aparnadhinak/status/2046980769747533830
 captured: 2026-04-29T17:20:12.356351+00:00
 capture: xdk
+genre: conceptual-essay
 type: kb/sources/types/snapshot.md
-tags: [x-article]
 status_id: 2046980769747533830
 conversation_id: 2046980769747533830
 post_count: 7

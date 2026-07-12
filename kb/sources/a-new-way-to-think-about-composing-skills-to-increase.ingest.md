@@ -3,7 +3,6 @@ description: "Sakhuja's practitioner reframe of skill graphs into a three-tier c
 source_snapshot: a-new-way-to-think-about-composing-skills-to-increase-leverage-skill.md
 ingested: "2026-04-23"
 type: kb/sources/types/ingest-report.md
-source_type: practitioner-report
 domains: [skill-composition, agent-orchestration, reliability, capability-placement]
 ---
 

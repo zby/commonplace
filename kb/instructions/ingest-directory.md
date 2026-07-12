@@ -74,14 +74,13 @@ description: {one-line retrieval filter — what makes this source distinctive}
 source_snapshot: {input-directory-path, e.g. tmp/<slug>/}
 ingested: "{current UTC date}"
 type: kb/sources/types/ingest-report.md
-source_type: code-repository
 domains: [{tag1}, {tag2}, {tag3}]
 ---
 ```
 
 Note: `source_snapshot` points to the working copy, which is typically gitignored and ephemeral. The Pin line below (commit hash) is the canonical identifier for reproducibility.
 
-If the directory is not a code repo (e.g. paper + supplements), pick the closest existing `source_type` or extend `kb/sources/types/ingest-report.schema.yaml` as a companion change.
+Genre normally lives on the source snapshot (`genre` in snapshot frontmatter, vocabulary in `kb/sources/types/snapshot.md`), but a directory ingest has no snapshot artifact — the genre (normally `code-repository`) appears only in the Classification section's prose line. If the directory is not a code repo (e.g. paper + supplements), pick the closest genre from the snapshot type spec's vocabulary; an off-list value is a deliberate extension, not an error.
 
 Draft body:
 
@@ -94,7 +93,7 @@ From: {upstream URL if known, e.g. GitHub repo URL}
 Pin: {commit hash if known, else "unpinned — captured HEAD at <date>"}
 
 ## Classification
-Type: code-repository — {brief justification, e.g. "working eval harness with ~N tests"}
+Genre: code-repository — {brief justification, e.g. "working eval harness with ~N tests"}
 Domains: {tag1}, {tag2}, {tag3}
 Author: {credibility signal, or "unknown"}
 

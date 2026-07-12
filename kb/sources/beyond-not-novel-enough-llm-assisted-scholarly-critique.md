@@ -3,8 +3,8 @@ source: https://arxiv.org/html/2508.10795v4
 description: "LLM-assisted scholarly novelty-assessment paper using related-work retrieval and structured comparison against human novelty reviews."
 captured: 2026-06-22
 capture: web-fetch
+genre: scientific-paper
 type: kb/sources/types/snapshot.md
-tags: [academic-paper]
 ---
 
 # Beyond “Not Novel Enough”: Enriching Scholarly Critique with LLM-Assisted Feedback

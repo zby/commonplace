@@ -3,7 +3,6 @@ description: "claude-workstream-kit announcement arguing that stronger models re
 source_snapshot: "claude-workstream-kit-fable-agent-scaffolding.md"
 ingested: "2026-06-12"
 type: kb/sources/types/ingest-report.md
-source_type: tool-announcement
 domains: [agent-memory, context-engineering, workstreams, claude-code]
 ---
 

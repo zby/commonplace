@@ -3,7 +3,6 @@ description: "Solution-injection paper showing agents observe explicit task solu
 source_snapshot: "agents-explore-but-agents-ignore-llms-lack-environmental-curiosity.md"
 ingested: "2026-04-22"
 type: kb/sources/types/ingest-report.md
-source_type: scientific-paper
 domains: [agent-reliability, evaluation, tool-loop, context-engineering]
 ---
 

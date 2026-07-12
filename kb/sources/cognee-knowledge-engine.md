@@ -2,8 +2,8 @@
 source: https://github.com/topoteretes/cognee
 captured: 2026-03-05
 capture: manual
+genre: tool-announcement
 type: kb/sources/types/snapshot.md
-tags: [github-repo]
 ---
 
 # Cognee: Knowledge Engine for AI Agent Memory

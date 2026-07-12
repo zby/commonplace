@@ -3,7 +3,6 @@ description: "Ingest of the 3D-8Q LLM-memory survey: how object/form/time taxono
 source_snapshot: "from-human-memory-to-ai-memory-survey-llm-memory-mechanisms.md"
 ingested: "2026-06-09"
 type: kb/sources/types/ingest-report.md
-source_type: scientific-paper
 domains: [agent-memory, learning-theory, memory-taxonomy]
 ---
 

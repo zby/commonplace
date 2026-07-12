@@ -3,7 +3,6 @@ description: Formal no-escape theorem for semantic memory interference, with exa
 source_snapshot: the-price-of-meaning-why-every-semantic-memory-system-forgets.md
 ingested: "2026-04-10"
 type: kb/sources/types/ingest-report.md
-source_type: scientific-paper
 domains: [agent-memory, retrieval-architecture, forgetting, learning-theory]
 ---
 

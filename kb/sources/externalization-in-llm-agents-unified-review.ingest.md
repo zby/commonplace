@@ -3,7 +3,6 @@ description: Survey paper unifying LLM agent memory, skills, protocols, and harn
 source_snapshot: externalization-in-llm-agents-unified-review.md
 ingested: "2026-04-13"
 type: kb/sources/types/ingest-report.md
-source_type: scientific-paper
 domains: [agent-architecture, context-engineering, agent-memory, harness-engineering]
 ---
 

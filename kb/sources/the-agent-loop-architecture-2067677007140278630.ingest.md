@@ -3,7 +3,6 @@ description: "Inngest practitioner framing of durable agent loops as loop + skil
 source_snapshot: "the-agent-loop-architecture-2067677007140278630.md"
 ingested: "2026-06-19"
 type: kb/sources/types/ingest-report.md
-source_type: practitioner-report
 domains: [agent-orchestration, durable-execution, deploy-time-learning]
 ---
 

@@ -3,8 +3,8 @@ source: https://arxiv.org/html/2409.07429v1
 description: AWM paper on inducing reusable web-agent workflows online or offline, with WebArena and Mind2Web evaluations against exemplar prompting and workflow baselines.
 captured: 2026-05-08
 capture: web-fetch
+genre: scientific-paper
 type: kb/sources/types/snapshot.md
-tags: [academic-paper]
 ---
 
 # Agent Workflow Memory

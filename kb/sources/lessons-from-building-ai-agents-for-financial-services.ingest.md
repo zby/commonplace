@@ -3,7 +3,6 @@ description: Production practitioner report on building AI agents for financial 
 source_snapshot: lessons-from-building-ai-agents-for-financial-services-201517481849743.md
 ingested: "2026-03-09"
 type: kb/sources/types/ingest-report.md
-source_type: practitioner-report
 domains: [agent-architecture, context-engineering, skills-as-product, filesystem-first]
 ---
 

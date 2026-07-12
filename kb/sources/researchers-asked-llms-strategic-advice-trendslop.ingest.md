@@ -3,7 +3,6 @@ description: "HBR trendslop article: LLM strategy advice follows fashionable man
 source_snapshot: "researchers-asked-llms-strategic-advice-trendslop.md"
 ingested: "2026-04-21"
 type: kb/sources/types/ingest-report.md
-source_type: conceptual-essay
 domains: [llm-reasoning, prompt-sensitivity, strategy, evaluation]
 ---
 

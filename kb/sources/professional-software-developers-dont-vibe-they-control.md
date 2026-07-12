@@ -2,8 +2,8 @@
 source: https://arxiv.org/html/2512.14012v1
 captured: 2026-03-09
 capture: pdf-read
+genre: scientific-paper
 type: kb/sources/types/snapshot.md
-tags: [academic-paper]
 ---
 
 # Professional Software Developers Don't Vibe, They Control: AI Agent Use for Coding in 2025

@@ -3,8 +3,8 @@ source: https://arxiv.org/html/2604.17609v1
 description: "Solution-injection benchmark paper showing agents often discover explicit task solutions but fail to exploit them."
 captured: 2026-04-22
 capture: web-fetch
+genre: scientific-paper
 type: kb/sources/types/snapshot.md
-tags: [academic-paper]
 ---
 
 # Agents Explore but Agents Ignore: LLMs Lack Environmental Curiosity

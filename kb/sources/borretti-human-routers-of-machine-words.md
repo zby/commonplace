@@ -3,8 +3,8 @@ source: https://borretti.me/article/human-routers-of-machine-words
 description: Fernando Borretti's polemic arguing that outsourcing writing to AI is contemptible because writing is thinking — not transcription — and delegating it skips the cognitive work that makes ideas real.
 captured: 2026-06-14
 capture: web-fetch
+genre: conceptual-essay
 type: kb/sources/types/snapshot.md
-tags: [blog-post]
 ---
 
 # Human Routers of Machine Words

@@ -3,8 +3,8 @@ source: https://arxiv.org/html/2606.28277v1
 description: "Google Paper Assistant Tool paper on inference-scaled AI review, STOC/ICML author pilots, and roles for AI automation in peer review."
 captured: 2026-07-01
 capture: pdf-read
+genre: scientific-paper
 type: kb/sources/types/snapshot.md
-tags: [academic-paper]
 ---
 
 # Towards Automating Scientific Review with Google's Paper Assistant Tool

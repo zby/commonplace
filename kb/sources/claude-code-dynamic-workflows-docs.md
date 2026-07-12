@@ -3,8 +3,8 @@ source: https://code.claude.com/docs/en/workflows
 description: Claude Code's dynamic workflows feature docs — JavaScript scripts that orchestrate up to 1,000 subagents per run, covering when to use them, how to write/save/manage them, and how they compare to subagents and agent teams.
 captured: 2026-06-03
 capture: web-fetch
+genre: tool-announcement
 type: kb/sources/types/snapshot.md
-tags: [documentation]
 ---
 
 # Orchestrate subagents at scale with dynamic workflows

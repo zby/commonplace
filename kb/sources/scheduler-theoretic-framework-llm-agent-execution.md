@@ -3,8 +3,8 @@ source: https://arxiv.org/html/2604.11378v1
 description: Position paper recasting the Agent Loop as a single-ready-unit scheduler and proposing Graph Harness (SGH) — a static-DAG execution model with immutable plan versions, three-layer separation, and bounded three-level recovery.
 captured: 2026-06-28
 capture: manual-paste
+genre: design-proposal
 type: kb/sources/types/snapshot.md
-tags: [academic-paper]
 ---
 
 # From Agent Loops to Structured Graphs: A Scheduler-Theoretic Framework for LLM Agent Execution

@@ -3,7 +3,6 @@ description: "Anthropic practitioner account of dynamic workflows in Claude Code
 source_snapshot: "a-harness-for-every-task-dynamic-workflows.md"
 ingested: "2026-06-03"
 type: kb/sources/types/ingest-report.md
-source_type: practitioner-report
 domains: [agent-orchestration, sub-agent-coordination, context-engineering, verification]
 ---
 

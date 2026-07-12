@@ -3,7 +3,6 @@ description: Applied bitter-lesson analysis predicting which multi-agent pattern
 source_snapshot: voooooogel-multi-agent-future.md
 ingested: "2026-03-09"
 type: kb/sources/types/ingest-report.md
-source_type: conceptual-essay
 domains: [multi-agent-systems, bitter-lesson, agent-orchestration, context-management]
 ---
 

@@ -2,8 +2,8 @@
 source: https://arxiv.org/html/2602.22302v1
 captured: 2026-03-04
 capture: web-fetch
+genre: scientific-paper
 type: kb/sources/types/snapshot.md
-tags: [academic-paper]
 ---
 
 # Agent Behavioral Contracts for Reliable Agents

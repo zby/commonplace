@@ -3,7 +3,6 @@ description: Databricks memory-scaling experiments showing enterprise agent gain
 source_snapshot: databricks-memory-scaling-ai-agents.md
 ingested: "2026-04-11"
 type: kb/sources/types/ingest-report.md
-source_type: practitioner-report
 domains: [agent-memory, context-engineering, learning-theory, enterprise-ai]
 ---
 

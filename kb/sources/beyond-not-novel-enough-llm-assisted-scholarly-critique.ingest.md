@@ -3,7 +3,6 @@ description: "Assesses an LLM-assisted scholarly novelty-review paper as evidenc
 source_snapshot: "beyond-not-novel-enough-llm-assisted-scholarly-critique.md"
 ingested: "2026-06-22"
 type: kb/sources/types/ingest-report.md
-source_type: scientific-paper
 domains: [evaluation, oracle-theory, peer-review, scholarly-literature]
 ---
 

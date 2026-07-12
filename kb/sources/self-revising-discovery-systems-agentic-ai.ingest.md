@@ -3,7 +3,6 @@ description: "Category-theoretic discovery framework: typed-artifact copresheave
 source_snapshot: "self-revising-discovery-systems-agentic-ai.md"
 ingested: "2026-06-06"
 type: kb/sources/types/ingest-report.md
-source_type: scientific-paper
 domains: [learning-theory, discovery, verification, typed-artifacts]
 ---
 

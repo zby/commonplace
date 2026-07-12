@@ -3,7 +3,6 @@ description: RL framework that trains agents from live next-state signals (user 
 source_snapshot: openclaw-rl-train-any-agent-simply-by-talking.md
 ingested: "2026-03-14"
 type: kb/sources/types/ingest-report.md
-source_type: scientific-paper
 domains: [reinforcement-learning, continuous-learning, agent-training, personalization]
 ---
 

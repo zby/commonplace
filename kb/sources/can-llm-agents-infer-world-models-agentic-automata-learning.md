@@ -3,8 +3,8 @@ source: https://arxiv.org/pdf/2606.16576
 description: "Agentic automata-learning benchmark evaluating whether tool-calling LLM agents infer hidden DFAs through membership and equivalence queries."
 captured: 2026-06-22
 capture: pdf-read
+genre: scientific-paper
 type: kb/sources/types/snapshot.md
-tags: [academic-paper]
 ---
 
 # Can LLM Agents Infer World Models? Evidence from Agentic Automata Learning

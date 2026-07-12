@@ -3,7 +3,6 @@ description: S3-backed CLI coordination tool for multi-agent systems — exempli
 source_snapshot: arrmlet-tracecraft.md
 ingested: "2026-04-04"
 type: kb/sources/types/ingest-report.md
-source_type: tool-announcement
 domains: [multi-agent-coordination, agent-infrastructure, distributed-systems]
 ---
 

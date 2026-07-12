@@ -2,8 +2,8 @@
 source: https://x.com/ChristopherA/status/2065234780497883259
 captured: 2026-06-12T12:17:46.079283+00:00
 capture: xdk
+genre: tool-announcement
 type: kb/sources/types/snapshot.md
-tags: [x-article]
 status_id: 2065234780497883259
 conversation_id: 2065234780497883259
 post_count: 1

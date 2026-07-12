@@ -3,8 +3,8 @@ source: https://arxiv.org/pdf/2602.11865
 description: Google DeepMind framework for intelligent AI delegation — proposes adaptive protocols covering task decomposition, multi-objective optimization, trust/reputation, verifiable completion, and security for human-AI and AI-AI delegation networks, with explicit analysis of how MCP, A2A, AP2, and UCP map onto these requirements.
 captured: 2026-03-16
 capture: pdf-read
+genre: scientific-paper
 type: kb/sources/types/snapshot.md
-tags: [academic-paper]
 ---
 
 # Intelligent AI Delegation

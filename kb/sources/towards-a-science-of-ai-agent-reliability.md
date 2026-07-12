@@ -2,8 +2,8 @@
 source: https://arxiv.org/pdf/2602.16666
 captured: 2026-02-25
 capture: pdf-read
+genre: scientific-paper
 type: kb/sources/types/snapshot.md
-tags: [academic-paper]
 ---
 
 # Towards a Science of AI Agent Reliability

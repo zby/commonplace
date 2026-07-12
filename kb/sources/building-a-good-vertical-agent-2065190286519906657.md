@@ -2,8 +2,8 @@
 source: https://x.com/BrainsAndTennis/status/2065190286519906657
 captured: 2026-06-12T10:11:23.632350+00:00
 capture: xdk
+genre: practitioner-report
 type: kb/sources/types/snapshot.md
-tags: [x-article]
 status_id: 2065190286519906657
 conversation_id: 2065190286519906657
 post_count: 13

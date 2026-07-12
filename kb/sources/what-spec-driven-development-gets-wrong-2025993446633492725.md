@@ -2,8 +2,8 @@
 source: https://x.com/augmentcode/status/2025993446633492725
 captured: 2026-03-10T13:09:52.885228+00:00
 capture: xdk
+genre: practitioner-report
 type: kb/sources/types/snapshot.md
-tags: [x-article]
 status_id: 2025993446633492725
 conversation_id: 2025993446633492725
 post_count: 1
