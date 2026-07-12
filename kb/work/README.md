@@ -6,7 +6,8 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
-- [extensible-controlled-vocabularies](./extensible-controlled-vocabularies/README.md) — designing how a code-enforced closed enum (ingest-report's `source_type`) becomes open-ended per installed KB while staying validator-checkable
+- [extensible-controlled-vocabularies](./extensible-controlled-vocabularies/README.md) — designing how a code-enforced closed enum becomes open-ended per installed KB while staying validator-checkable; the trigger case (snapshot `genre`, formerly ingest-report `source_type`) shipped with a severity-warn floor (ADR 045), the structured vocabulary-file layer and `source-tier` remain open
+- [authority-ranking](./authority-ranking/README.md) — testing whether source authority is a linear rank at all (partial order, domain-conditional, time-varying, non-additive under independence) and what consumers a ranking function actually has; framework-side companion to the epistack author-dossier casework
 - [lineage-mechanisms](./lineage-mechanisms/README.md) — designing one derived-artifact lineage vocabulary across multiple storage weights; review keeps its purpose-built DB while generic lineage state stays deferred until a second churning mesh earns it
 - [src-architecture-alternatives](./src-architecture-alternatives/README.md) — alternative architectures for `src/commonplace/` from a full code read; active thread is an append-only event log as review-store source of truth with acceptance events that embed their snapshots
 - [relocation-move-map-engine](./relocation-move-map-engine/README.md) — collapsing note and directory relocation around one move-map engine for link rewriting, file moves, redirects, and removal of review-store rekeying
