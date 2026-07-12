@@ -1,25 +1,40 @@
-#!/usr/bin/env python3
-"""Prototype verifier for ``verbatim``-marked Markdown quotations.
+"""Verifier for ``verbatim``-marked Markdown quotations.
 
-The checker deliberately targets the prose convention used by dialectical/
-evidential Commonplace collections.  It discovers quoted spans near a
-``verbatim`` marker, associates them with the nearest linked Markdown source,
-and checks normalized substring containment.  Unclear pairings are reported
-instead of guessed.
+A ``verbatim`` citation asserts that a quoted span is copied exactly from a
+linked source retained in the KB. That assertion is mechanically decidable —
+does string X occur in file Y — so it is a Level A deterministic check, and
+leaving it hand-trusted is the state the derived-copy rule forbids.
 
-Usage: python3 scripts/verify_quotes.py PATH [PATH ...]
+The checker targets the prose convention used by dialectical/evidential
+collections: a quoted span, a ``verbatim`` marker, and a Markdown link to the
+source, in one paragraph. It discovers quoted spans near a marker, associates
+each with the nearest linked Markdown source, and checks normalized substring
+containment. Unclear pairings are reported as ``unresolved`` rather than
+guessed, so parser coverage gaps stay visible instead of passing silently.
+
+Three outcomes per candidate:
+
+``match``
+    the quote occurs in the linked source
+``mismatch``
+    the quote does not occur — the ``verbatim`` claim is false
+``unresolved``
+    no quote could be confidently paired with the citation
+
+``commonplace-validate`` consumes this via :func:`verify_note`; the
+``commonplace-verify-quotes`` command reports over a corpus.
 """
 
 from __future__ import annotations
 
-import argparse
 import html
 import re
-import sys
 import unicodedata
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable, Sequence
+
+from commonplace.lib.note_parser import blank_fenced_code_blocks
 
 
 LINK_RE = re.compile(r"\[([^]]*)\]\(([^)]+\.md)(?:#[^)]*)?\)")
@@ -192,8 +207,15 @@ def _marker_is_confident(paragraph: str, quote: _Quote, link: _Link) -> bool:
     return positive_marker(paragraph[max(0, link.start - 80) : quote.start])
 
 
-def verify_note(note: Path) -> list[QuoteResult]:
-    text = note.read_text(encoding="utf-8")
+def verify_content(content: str, note: Path) -> list[QuoteResult]:
+    """Verify verbatim quotations in already-read note content.
+
+    Code fences are neutralized through the shared parser primitive, so this
+    check and link health agree on what counts as code: a fence *demonstrating*
+    the citation convention is showing it, not asserting it, and scanning one
+    would report a false mismatch against whatever source the example links.
+    """
+    text = blank_fenced_code_blocks(content)
     results: list[QuoteResult] = []
 
     for start_line, paragraph in _paragraphs(text):
@@ -280,6 +302,10 @@ def verify_note(note: Path) -> list[QuoteResult]:
     return results
 
 
+def verify_note(note: Path) -> list[QuoteResult]:
+    return verify_content(note.read_text(encoding="utf-8"), note)
+
+
 def markdown_files(paths: Sequence[Path]) -> list[Path]:
     files: set[Path] = set()
     for path in paths:
@@ -294,47 +320,8 @@ def markdown_files(paths: Sequence[Path]) -> list[Path]:
     return sorted(files)
 
 
-def _display_path(path: Path) -> str:
+def display_path(path: Path) -> str:
     try:
         return str(path.relative_to(Path.cwd()))
     except ValueError:
         return str(path)
-
-
-def main(argv: Sequence[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument(
-        "paths", nargs="+", type=Path, help="Markdown files or directories"
-    )
-    parser.add_argument(
-        "--show-matches", action="store_true", help="print successful checks too"
-    )
-    args = parser.parse_args(argv)
-
-    results = [
-        result for note in markdown_files(args.paths) for result in verify_note(note)
-    ]
-    visible = results if args.show_matches else [r for r in results if r.status != "match"]
-    for result in visible:
-        source = f" -> {_display_path(result.source)}" if result.source else ""
-        quote = f": {result.quote!r}" if result.quote else ""
-        print(
-            f"{result.status.upper()} {_display_path(result.note)}:{result.line}{source}{quote}"
-        )
-        if result.detail:
-            print(f"  {result.detail}")
-
-    counts = {
-        status: sum(r.status == status for r in results)
-        for status in ("match", "mismatch", "unresolved")
-    }
-    print(
-        f"Checked {len(markdown_files(args.paths))} Markdown files: "
-        f"{counts['match']} match, {counts['mismatch']} mismatch, "
-        f"{counts['unresolved']} unresolved."
-    )
-    return 1 if counts["mismatch"] else 0
-
-
-if __name__ == "__main__":
-    sys.exit(main())

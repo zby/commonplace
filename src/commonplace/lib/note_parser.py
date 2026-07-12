@@ -39,6 +39,27 @@ def strip_frontmatter(content: str) -> str:
     return fm_mod.strip(content)
 
 
+def _blank(match: re.Match[str]) -> str:
+    """Replace a matched span with same-shaped whitespace, preserving newlines."""
+    return "".join("\n" if char == "\n" else " " for char in match.group(0))
+
+
+def blank_fenced_code_blocks(text: str) -> str:
+    """Neutralize fenced code while preserving every offset and line number.
+
+    Code fences are not note content: a fence demonstrating a convention is
+    showing it, not asserting it. Body-content checks must therefore agree on
+    what counts as code — see the checks that consume this.
+
+    Blanking rather than deleting is what lets a check report a line number.
+    Callers that only need the *set* of matches (link health) are indifferent,
+    since a blanked span cannot match a link; callers that pair elements by
+    proximity (verbatim-quote resolution) require the offsets to survive. One
+    primitive serves both, so the two checks cannot disagree about code.
+    """
+    return _FENCED_CODE_RE.sub(_blank, text)
+
+
 def remove_fenced_code_blocks(text: str) -> str:
     return _FENCED_CODE_RE.sub("", text)
 
@@ -68,7 +89,7 @@ def _is_inside_span(start: int, end: int, spans: tuple[tuple[int, int], ...]) ->
 
 
 def _iter_markdown_link_matches(body: str) -> tuple[re.Match[str], ...]:
-    cleaned = remove_fenced_code_blocks(body)
+    cleaned = blank_fenced_code_blocks(body)
     inline_code_spans = tuple(match.span() for match in _INLINE_CODE_RE.finditer(cleaned))
     return tuple(
         match

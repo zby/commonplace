@@ -12,6 +12,7 @@ from jsonschema.exceptions import ValidationError
 
 from commonplace.lib.naming import MAX_NOTE_SLUG_LENGTH, MAX_NOTE_TITLE_LENGTH
 from commonplace.lib.note_parser import ParsedDocument, parse_document
+from commonplace.lib.quote_verification import verify_content
 from commonplace.lib.type_resolver import TypeProfile, resolve_type, validate_instance
 
 
@@ -194,6 +195,46 @@ def validate_quote_citations(results: CheckResults, content: str) -> None:
         results.passes.append(f"quote-anchored citations: {found} well-formed")
 
 
+def validate_verbatim_quotes(results: CheckResults, content: str, path: Path) -> None:
+    """Resolve `verbatim`-marked quotations against the sources they cite.
+
+    A `verbatim` citation claims a quoted span is copied exactly from a linked
+    source retained in the KB. That is mechanically decidable, so leaving it
+    hand-trusted is the state the derived-copy rule forbids: a false `verbatim`
+    claim is a false copy, and false copies fail rather than warn.
+
+    `unresolved` candidates are reported only in notes that demonstrably use the
+    convention (they carry at least one resolvable verbatim quote). Prose that
+    merely discusses verbatim citation near a link would otherwise warn in every
+    KB that never adopted the convention, and a check that cries wolf teaches
+    authors to ignore it — which is the failure this check exists to prevent.
+    """
+    quote_results = verify_content(content, path)
+    if not quote_results:
+        return
+
+    resolved = [r for r in quote_results if r.status in ("match", "mismatch")]
+    mismatches = [r for r in quote_results if r.status == "mismatch"]
+    matches = [r for r in quote_results if r.status == "match"]
+
+    for result in mismatches:
+        source = result.source.name if result.source else "linked source"
+        results.fails.append(
+            f"verbatim quote: not found in {source} (line {result.line}): {result.quote!r}"
+        )
+
+    if resolved:
+        for result in (r for r in quote_results if r.status == "unresolved"):
+            results.warns.append(
+                f"verbatim quote: {result.detail} (line {result.line})"
+            )
+
+    if matches and not mismatches:
+        results.passes.append(
+            f"verbatim quotes: {len(matches)} resolve against their cited sources"
+        )
+
+
 def _linked_md_targets(parsed: ParsedNote) -> set[Path]:
     """Resolve the note's local markdown links to absolute paths."""
     targets: set[Path] = set()
@@ -363,6 +404,7 @@ def validate_note(path: Path, *, repo_root: Path) -> CheckResults:
         note_type=parsed.note_type,
     )
     validate_links_from_document(results, parsed.path, parsed.document.links)
+    validate_verbatim_quotes(results, parsed.content, parsed.path)
     for rule in _TYPE_RULES.get(parsed.note_type, []):
         rule(results, parsed, repo_root=repo_root)
     apply_schema_validation(results, parsed)

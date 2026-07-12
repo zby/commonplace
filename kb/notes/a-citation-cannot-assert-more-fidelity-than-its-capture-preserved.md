@@ -42,7 +42,7 @@ The practical consequence is that provenance quality is decided *before any note
 
 ---
 
-Evidence for the layering and for the failure of naive `verbatim` marking comes from the epistack casebook work in the sibling `epistack-casebooks` repository: a worked black-hole case (roughly forty citations across five notes over eight captured sources) in which zero bare file-level links survived contact with writing and the three-part convention emerged without coordination; and a deterministic quote-verification prototype which, run over fourteen casebook notes, found twenty-four of eighty-eight `verbatim`-marked spans did not in fact appear in their cited snapshot, with no false mismatches on manual audit.
+Evidence for the layering and for the failure of naive `verbatim` marking comes from the epistack casebook work in the sibling `epistack-casebooks` repository: a worked black-hole case (roughly forty citations across five notes over eight captured sources) in which zero bare file-level links survived contact with writing and the three-part convention emerged without coordination; and a deterministic quote checker (now shipped, [ADR 046](../reference/adr/046-verbatim-quotes-are-validated-against-their-cited-source.md)) which, run over that corpus, found eighteen of eighty-seven `verbatim`-marked spans did not in fact appear in their cited snapshot, with no false mismatches on manual audit.
 
 Relevant Notes:
 
@@ -52,5 +52,5 @@ Relevant Notes:
 - [Trace-derived memory earns authority per operation, not at capture](./trace-derived-memory-earns-authority-per-operation-not-at-capture.md) — contrasts: the orthogonal axis — authority rises after capture, fidelity is spent at it; the two compose as ceiling and climb
 - [Structure inference needs capture at the decision surface](./structure-inference-needs-capture-at-the-decision-surface.md) — contrasts: the same locality-of-provenance argument applied to decision rationale rather than quote fidelity
 - [Distillation](./definitions/distillation.md) — defined-in: a paraphrase-layer passage is a distillate produced at capture time, and distillation is lossy by definition
-- [Verifiable quotes proposal](../reference/proposals/verifiable-quotes.md) — evidence: the deterministic verbatim-quote checker whose corpus run supplies this note's failure data
+- [ADR 046 — Verbatim quotes are validated against their cited source](../reference/adr/046-verbatim-quotes-are-validated-against-their-cited-source.md) — evidence: the deterministic verbatim-quote checker whose corpus run supplies this note's failure data
 - [Text contract profiles](../reference/text-contract-profiles.md) — evidence: the dialectical/evidential profile ships the grounding-layer marker this note supplies the theory for

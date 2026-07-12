@@ -66,3 +66,20 @@ Close when this workshop produces:
 - a minimal API proposal and first implementation slice;
 - or a decision that repeated scans are acceptable, with the consistency risks named and local helper extractions chosen instead.
 
+
+## New evidence (2026-07-12): body-content checks are an undesigned check class
+
+Shipping the verbatim-quote check ([ADR 046](../../reference/adr/046-verbatim-quotes-are-validated-against-their-cited-source.md)) made a distinction visible that this workshop should absorb, because it sharpens the loader question from "should consumers share a scan?" to "what model should they share?"
+
+Validation now has **two check classes with different natures**:
+
+- **Frontmatter checks** — schema-driven, type-owned, declarative. Adding one is a schema edit.
+- **Body-content checks** — link health and verbatim-quote resolution. Hand-written regex passes over prose, with **no shared model of "an element inside a note," no shared severity policy, and no declared owner.** Adding one is a new bespoke parser.
+
+The class arrived without being designed, and it immediately produced a defect: the quote checker shipped with its own code-fence handling and none at all, so a fenced block *demonstrating* the citation convention was scanned as a live claim and reported as a false mismatch. Two checks over the same prose had disagreed about what counts as content.
+
+The immediate fix was to make code-fence neutralization a single shared primitive (`note_parser.blank_fenced_code_blocks`), blanking rather than deleting so offsets survive. But the deeper problem stands, and it bears directly on the `LoadedNote` design in step 2 above:
+
+**The shared parse is lossy for its consumers.** `ParsedDocument.links` is a tuple of URLs — no positions, no spans. That is sufficient for link health, which only needs the *set*. It is insufficient for the quote checker, which pairs quotes to citations *by proximity* and must report line numbers, so it still carries its own link regex. A `LoadedNote` that merely deduplicates the file read, without carrying **positioned** body elements (links, quotes, code spans, blockquotes), will not let the second consumer drop its private parser — and the divergence will regrow.
+
+So the minimal `LoadedNote` (step 2) should be evaluated against a concrete second consumer, not just against `validation.ParsedNote`: can the verbatim-quote check be expressed over it *without* re-parsing? If not, the loader has unified the read but not the model, which is the cheaper half of the problem.

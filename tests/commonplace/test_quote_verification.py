@@ -1,8 +1,15 @@
-"""Tests for the reusable quote-verification prototype."""
+"""Tests for verbatim-quote verification and its validator integration."""
 
 from pathlib import Path
 
-from scripts.verify_quotes import normalize_text, verify_note
+from commonplace.lib.quote_verification import normalize_text, verify_note
+from commonplace.lib.validation import CheckResults, validate_verbatim_quotes
+
+
+def _check(note: Path) -> CheckResults:
+    results = CheckResults(note_type="note")
+    validate_verbatim_quotes(results, note.read_text(encoding="utf-8"), note)
+    return results
 
 
 def _write_pair(tmp_path: Path, note_body: str, source_body: str) -> Path:
@@ -184,3 +191,132 @@ def test_missing_linked_source_is_unresolved(tmp_path: Path):
     results = verify_note(note)
 
     assert [result.status for result in results] == ["unresolved"]
+
+
+# --- validator integration ---------------------------------------------------
+
+
+def test_validator_fails_a_false_verbatim_claim(tmp_path: Path):
+    note = _write_pair(
+        tmp_path,
+        'It says "words never written" '
+        "([Source](../sources/source.md), Abstract, verbatim).",
+        "The source says something else entirely.",
+    )
+
+    results = _check(note)
+
+    assert any("verbatim quote: not found" in fail for fail in results.fails)
+    assert not results.warns
+
+
+def test_validator_passes_a_true_verbatim_claim(tmp_path: Path):
+    note = _write_pair(
+        tmp_path,
+        'It says "quoted words here" '
+        "([Source](../sources/source.md), Abstract, verbatim).",
+        "The source has quoted words here in its abstract.",
+    )
+
+    results = _check(note)
+
+    assert not results.fails
+    assert any("1 resolve against their cited sources" in p for p in results.passes)
+
+
+def test_validator_stays_silent_on_unresolved_where_the_convention_is_unused(tmp_path: Path):
+    """A KB that never adopted the convention must not be warned at.
+
+    An unpaired verbatim citation is an `unresolved` candidate. Warning on it
+    unconditionally would fire in every KB that only *writes about* the
+    convention without adopting it, and a check that cries wolf teaches authors
+    to ignore it — the failure this check exists to prevent. So `unresolved` is
+    reported only alongside at least one resolvable verbatim quote.
+    """
+    note = _write_pair(
+        tmp_path,
+        "The source makes the claim "
+        "([Source](../sources/source.md), Abstract, verbatim).",
+        "The source makes the claim.",
+    )
+
+    assert [r.status for r in verify_note(note)] == ["unresolved"]
+
+    results = _check(note)
+
+    assert not results.fails
+    assert not results.warns
+
+
+def test_validator_warns_on_unresolved_only_where_the_convention_is_used(tmp_path: Path):
+    """One resolvable verbatim quote proves the note uses the convention, so its
+    unpaired verbatim citations become visible coverage gaps rather than noise."""
+    note = _write_pair(
+        tmp_path,
+        'It says "quoted words here" '
+        "([Source](../sources/source.md), Abstract, verbatim).\n\n"
+        "The figure is reported as 4.7 "
+        "([Source](../sources/source.md), Table 1, verbatim).",
+        "The source has quoted words here in its abstract.",
+    )
+
+    results = _check(note)
+
+    assert not results.fails
+    assert any("verbatim quote:" in warn for warn in results.warns)
+
+
+def test_validator_is_inert_on_notes_with_no_verbatim_marker(tmp_path: Path):
+    note = _write_pair(
+        tmp_path,
+        'A plain note quoting "quoted words here" from [Source](../sources/source.md).',
+        "The source has quoted words here in its abstract.",
+    )
+
+    results = _check(note)
+
+    assert not results.fails
+    assert not results.warns
+    assert not results.passes
+
+
+def test_fenced_code_demonstrating_the_convention_is_not_a_claim(tmp_path: Path):
+    """A fence *showing* the convention is not asserting it.
+
+    Documentation, type specs, and ADRs all contain worked examples of a
+    verbatim citation. Scanning them reports a false mismatch against whatever
+    source the example happens to link. Code fences are neutralized through the
+    shared parser primitive, so this check and link health agree on what counts
+    as code.
+    """
+    note = _write_pair(
+        tmp_path,
+        "Write a verbatim citation like this:\n\n"
+        "```markdown\n"
+        'The paper says "an example quote never in the source" '
+        "([Source](../sources/source.md), Abstract, verbatim).\n"
+        "```\n\n"
+        "That is the whole convention.",
+        "Real source text, containing nothing from the example.",
+    )
+
+    assert verify_note(note) == []
+    results = _check(note)
+    assert not results.fails
+    assert not results.warns
+
+
+def test_line_numbers_survive_a_preceding_code_fence(tmp_path: Path):
+    """Blanking rather than deleting is what keeps reported line numbers true."""
+    note = _write_pair(
+        tmp_path,
+        "Intro.\n\n```python\nx = 1\ny = 2\n```\n\n"
+        'The source says "quoted words here" '
+        "([Source](../sources/source.md), Abstract, verbatim).",
+        "The source has quoted words here in its abstract.",
+    )
+
+    results = verify_note(note)
+
+    assert [r.status for r in results] == ["match"]
+    assert results[0].line == 8

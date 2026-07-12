@@ -41,6 +41,7 @@ commonplace-review-job-list = "commonplace.cli.review.review_job_list:main"
 commonplace-resolve-criteria = "commonplace.cli.review.resolve_criteria:main"
 commonplace-review-target-selector = "commonplace.cli.review.review_target_selector:main"
 commonplace-validate = "commonplace.cli.validate_notes:main"
+commonplace-verify-quotes = "commonplace.cli.verify_quotes:main"
 commonplace-warn-selector = "commonplace.cli.review.warn_selector:main"
 commonplace-x-snapshot = "commonplace.cli.x_snapshot:main"
 
