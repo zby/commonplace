@@ -40,6 +40,7 @@ A framework-side review of this menu produced library artifacts that change the 
 - [Confidence must be attributed, never a mark](./attributed-confidence-not-marks.md)
 - [Epistemic review gates](./epistemic-review-gates.md)
 - [Adjudication as a separate, labeled, downstream layer](./adjudication-as-separate-layer.md)
+- [Ranking by authority: identity is a field, track record is a dossier, rank is derived](./author-authority-ranking.md) — composes genre, author-entity dossiers, and independence into a derived ranking; the only new machinery is the author/party entity artifact
 
 ## Additional candidates (imported from the second opinion)
 
