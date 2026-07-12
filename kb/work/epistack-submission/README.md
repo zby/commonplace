@@ -87,17 +87,26 @@ The [authority-ranking workshop](../authority-ranking/README.md) says the order 
 
 The rejection is not merely "no time" — it is **the discipline in the negative**, and it belongs in the submission as such: we decline to build a structure whose shape we have not established, which is exactly the restraint we are indicting other approaches for lacking. A half-built scalar rank would hand a judge the precise flattening critique this entry exists to make. Name it in the submission as a documented open problem; the brief explicitly asks entrants to make clear where design choices are uncertain.
 
+### Rebuild the three cases from scratch (committed — this is the experiment)
+
+**[replication-plan.md](./replication-plan.md).** The first build got messy — contract invented in flight, a framework upgrade mid-stream, nearest-fit source types, lifecycle churn — and, more importantly, it *cannot test the thesis*: the contract was co-developed with case 1, so "transferred to cases 2 and 3 without amendment" is a fitted result, not a tested one. One operator, sequential builds, full memory, no independent arm. The headline evidence is consistent with the thesis and equally consistent with its negation.
+
+The rebuild inverts the crucial condition: **the contract is now fixed in advance.** Every amendment the rebuild needs becomes a finding rather than a fitting, and every structure that survives unamended is a genuine transfer result. The instrument is convergence between builders who never saw each other's work (exclusion, not instruction — our own contamination finding forbids the cheap version), scoring which structures converge (forced) against which diverge (chosen), against predictions **sealed before the run**.
+
+This is the workshop's most expensive item and the one most likely to embarrass us. That is why it goes first.
+
 ## Plan
 
 Days are working days from 12 July; submission 19 July.
 
 | Days | Work |
 |---|---|
-| 1–2 | Quote verifier: settle where it lives, ship it, run clean across all three cases, fix or re-mark the 24 mismatches, record before/after |
-| 3–4 | Independence instrument: link-grammar addition, one worked note per case, review gate |
-| 5–6 | Write the submission document; buffer |
+| 1 | Ship the quote verifier — it must exist *before* the rebuild lands, so the rebuild's citations are machine-checked rather than hand-trusted. Settle where it lives; run it on the old build to fix the 24/88 baseline |
+| 1–3 | Rebuild: freeze the contract, seal predictions, run clean-room builders (see [replication-plan.md](./replication-plan.md)). Starts early because it needs wall-clock and its result changes what the document says |
+| 3–4 | Independence instrument, built *on the rebuilt cases* — a live transfer test on clean ground |
+| 5–6 | Score the rebuild against the sealed predictions; write the submission document; buffer |
 
-The document needs two full days and does not exist yet. If the schedule slips, the build shrinks — not the writing.
+The document needs two full days and does not exist yet. If the schedule slips, the build shrinks — not the writing, and not the replication. An entry whose central claim was tested and survived, or was tested and qualified, beats one whose central claim was merely asserted more fluently.
 
 ## Entry material we already have and should not hide
 
