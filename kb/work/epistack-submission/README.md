@@ -4,19 +4,7 @@ Building the actual entry to the FLF [Epistemic Case Study Competition](../../so
 
 The two existing epistack workshops are inputs, not competitors to this one: [epistack-competition](../epistack-competition/README.md) holds the two-repo protocol (framework here, casework in the sibling `epistack-casebooks`), and [epistack-framework-additions](../epistack-framework-additions/README.md) holds the design menu of candidate additions. Neither one decides what we submit. This workshop does.
 
-## The lead: the entry is the *second instance* of an assessment pipeline
-
-**[assessment-machinery-line.md](./assessment-machinery-line.md) — read this first; it leads the submission.**
-
-The tempting line was "Commonplace makes assessment pipelines cheap — look, 141 reviews and a matrix." That reads a general capability off a single bespoke instance, which is the exact failure this entry indicts. The truth: the pipeline is **n=1**, its code is **~755 bespoke lines** shipped as no command at all, and the generalization is *identified but unbuilt* — the [bulk-operations workshop](../bulk-operations/README.md) already calls `kb/agent-memory-systems/` "the existing implicit precedent" and names the missing **document-set spec** as open.
-
-So the claim is narrower and better: **the domain-specific surface was small.** A 141-subject, 55-column comparative corpus with quantitative findings and an ASIS&T paper cost one type spec, one skill, and ~755 lines, because the framework carried types, validation, production, provenance, and freshness. That is a defensible "not much effort" — it is not "we have a generic facility."
-
-**Therefore the entry is the second instance.** Build-local-first, upstream-what-survives says a structure earns promotion by surviving a second, differently-shaped case. We have one; the epistemic source-assessment pipeline is the second, in a hostile domain, on a one-week clock. **n=2 is the first point at which forced can be told from chosen** — what survives both is the generic apparatus, and extracting it *is* the deliverable (and the document-set spec bulk-operations is waiting for). We preregister which of the 755 lines we expect to survive, then measure.
-
-Its honest limit is its sharpest finding: **the method works where data can be gathered uniformly.** GitHub handed the 141-corpus that uniformity for free; `source-tier` excluding doc-grounded reviews from the matrix *is* that precondition, already enforced. Epistemic casework has no `git clone`, so the retarget aggregates over **provenance** (author, funding, genre, data dependency, independence, capture layer) — uniform across heterogeneous sources — not over contested content, which is not. Generalized: **the assessment layer's ceiling is set at ingestion.**
-
-## The theory underneath it
+## The thesis we lead on
 
 **Bespoke structure is invisible from the inside. That — not representation — is why knowledge artifacts don't compound. We have a discipline that makes the boundary legible, and a rig that tests it.**
 
@@ -37,6 +25,23 @@ This is the brief's **protocol** shape — "interoperability and compounding wit
 They are differently shaped **on purpose**: LHC is one load-bearing dependency chain, COVID is two parallel evidential structures plus a split institutional layer, eggs is dueling syntheses over a single relationship. A structure that survives all three unamended is, by construction, not bespoke. One that needs amendment tells you exactly which limb was local. That is a transfer test rig, and it is the thing no six-week entrant can assemble.
 
 It also gives us the critique the brief explicitly invites as an entry shape. Entrants building argument graphs are asserting a universal structure — claims, support/attack edges, weights — for all epistemic disputes. That is a design choice presented as a necessity, and *from inside one case you cannot tell the difference*. Our rig is the apparatus that would reveal it.
+
+### The supporting case: the assessment pipeline, where we are the ones who cannot tell
+
+**[assessment-machinery-line.md](./assessment-machinery-line.md)** — a *supporting case*, not the lead. It earns that place by being the thesis applied to us.
+
+We built one repeatable assessment pipeline: the `agent-memory-system-review` type, run over **141 code-grounded reviews**, parsed into a **55-column matrix**, yielding quantitative findings and an [ASIS&T position paper](../../sources/where-it-lives-retained-adaptation-2026-06-23.md). It works. It cost one type spec, one skill, and **~755 lines**, because the framework carried types, validation, production, provenance, and freshness.
+
+And **we cannot tell, from inside it, which parts of it are forced and which are ours.** That is the whole thesis, stated about our own tooling. The tempting claim — "Commonplace makes assessment pipelines cheap, look at the matrix" — reads a general capability off a single bespoke instance, which is exactly the error the thesis indicts. The truth is n=1, ~755 lines shipped as no command, and a generalization the [bulk-operations workshop](../bulk-operations/README.md) has *identified but not built* (it already calls this corpus "the existing implicit precedent" and names the missing **document-set spec** as open).
+
+So the honest claim is narrower and checkable: **the domain-specific surface was small.** And the way to find out what it really was is to build a second instance and see what survives. That is a *tooling-layer* convergence test, it runs on the same rig, and the entry preregisters which of the 755 lines it expects to survive before measuring.
+
+**Scope boundary — do not overpromise here.** The generic bulk-operations facility is *planned, large, and not ready*, and six days will not build it. The entry's deliverable is the **second instance plus the measured split**, and a written statement of what the generic layer would have to contain — which feeds the bulk-operations workshop as a requirement, not a shipped abstraction. Claiming the facility would be a second overclaim stacked on the one we just caught. Say plainly: *we ran the transfer test on our own tooling, here is what survived, here is what a general layer would need, and we have not built it.*
+
+Two things fall out of it that the entry needs regardless:
+
+- **The uniform-capture limit.** GitHub handed the 141-corpus its uniformity for free — same subject kind, same access, same evidence class. `source-tier` excluding doc-grounded reviews from the matrix *is* that precondition, already enforced, for reasons predating this competition. Epistemic casework has no `git clone`. Generalized: **the assessment layer's ceiling is set at ingestion** — a matrix cannot aggregate more than its capture gathered uniformly, just as a citation cannot assert more fidelity than its capture preserved.
+- **The welded token.** `**Axis:** \`value\` — justification` in one line of prose, with the matrix *derived by parsing it*, so no second structured copy exists to drift. This is the concrete mechanism behind "flatten the provenance, not the argument," and the piece most likely to survive transfer.
 
 ### Subordinate result: flatten the provenance, not the argument
 
@@ -114,11 +119,11 @@ Days are working days from 12 July; submission 19 July.
 | Days | Work |
 |---|---|
 | 1 | Ship the quote verifier — must exist *before* the rebuild lands, so the rebuild's citations are machine-checked, not hand-trusted. Settle where it lives; run it on the old build to fix the 24/88 baseline |
-| 1–3 | Rebuild, **in the background** — it is agent wall-clock, not our attention. Minimum-viable: COVID, two cross-family builders, contract frozen, predictions sealed ([replication-plan.md](./replication-plan.md)) |
-| 1–4 | **Our attention goes here:** the second pipeline instance — seal the code-split prediction, write the `source-assessment` type spec, retarget the parser, build the provenance matrix over the three cases' sources, then **extract whatever survived into the generic layer** ([assessment-machinery-line.md](./assessment-machinery-line.md)). This *subsumes* the independence instrument: the correlated-evidence flag becomes a computed cluster, not a bespoke link-grammar addition |
-| 5–6 | Score both preregistered predictions (rebuild convergence, code split); write the submission; buffer |
+| 1–3 | **Primary evidence — the rebuild.** Freeze the contract, seal predictions, run clean-room builders ([replication-plan.md](./replication-plan.md)). Mostly agent wall-clock, so it can run in the background while attention goes elsewhere |
+| 1–4 | **The supporting case — the second pipeline instance.** Seal the code-split prediction, write the `source-assessment` type spec, retarget the parser, build the provenance matrix over the three cases' sources ([assessment-machinery-line.md](./assessment-machinery-line.md)). *Subsumes* the independence instrument: the correlated-evidence flag becomes a computed cluster, not a bespoke link-grammar addition. **Stops at the measured split** — it does not build the generic facility |
+| 5–6 | Score both sealed predictions (rebuild convergence, code split); write the submission; buffer |
 
-The retarget and the rebuild compete for the same days. If only one runs, **run the retarget** — it has 141 data points behind it against the casebooks' three, answers more of the brief, and carries external validation. The rebuild is mostly background wall-clock, so try for both; if it slips, run the matrix over the existing cases and declare the mess.
+**Priority if the days run out.** The rebuild is the thesis's primary evidence and is on the competition's own subject matter, so it wins ties. The second pipeline instance is the supporting case and also delivers the correlated-evidence instrument the brief asks for, so it is not optional either — but it is the one to trim. **Neither may expand into building the generic bulk-operations layer**, which is planned, large, and not ready; the entry reports the requirement and stops.
 
 The document needs two full days and does not exist yet. If the schedule slips, the build shrinks — not the writing, and not the replication. An entry whose central claim was tested and survived, or was tested and qualified, beats one whose central claim was merely asserted more fluently.
 

@@ -1,6 +1,8 @@
-# The assessment-machinery line
+# The assessment-machinery line — a supporting case
 
-**Recommendation: this leads the submission — but not as "we already have it."** The honest version is stronger than the boast, and the boast would have been the exact error this entry exists to indict.
+**Role: supporting case, not the lead.** The submission leads on the [transfer thesis](./README.md); this earns its place by being that thesis applied to *us*. We built an assessment pipeline that works, and we cannot tell from inside it which parts are forced and which are ours. The build finds out.
+
+Leading with this would have been wrong twice over: the pipeline is n=1, and reading a general capability off a single bespoke instance is the precise error the thesis indicts.
 
 ## The overclaim we nearly made
 
@@ -32,15 +34,19 @@ The `agent-memory-system-review` type ([spec](../../agent-memory-systems/types/a
 
 It proves the *shape* works and that the domain surface is small. It does **not** prove the shape transfers. Only a second instance can do that.
 
-## Therefore: the entry is the second instance
+## Therefore: build the second instance
 
-This is the build, and it is also the argument.
+Build-local-first, upstream-what-survives is our own discipline, and it says a structure earns promotion by surviving a second, differently-shaped case. We have one. **The epistemic source-assessment pipeline is the second** — in a genuinely hostile domain, on a one-week clock.
 
-Build-local-first, upstream-what-survives is our own discipline, and it says a structure earns promotion by surviving a second, differently-shaped case. We have one. **The epistemic source-assessment pipeline is the second** — in a genuinely hostile domain, on a one-week clock, in public.
+**n=2 is the first point at which forced can be told from chosen.** What survives both instances was generic; what has to be rebuilt was domain-specific all along.
 
-**n=2 is the first point at which forced can be told from chosen.** What survives both instances is the generic apparatus; what has to be rebuilt was domain-specific all along. Extracting that layer *is* the deliverable — and it is precisely the document-set spec the bulk-operations workshop says is missing. The competition deadline is the forcing function that finally produces it.
+### Scope boundary: we are not building the generic facility
 
-That framing is honest, falsifiable, tested *inside* the entry, and it makes the submission's central claim something we demonstrate rather than assert. Judges will trust it **because** we refused to claim the general capability from n=1.
+The deliverable is the **second instance and the measured split**, plus a written statement of what a general layer would have to contain. **Not the layer itself.**
+
+The bulk-operations work is *planned, large, and not ready* — [its workshop](../bulk-operations/README.md) already names this corpus as "the existing implicit precedent" and the missing **document-set spec** as an open direction, and six days will not close it. Promising the facility would stack a second overclaim on the one this document was written to catch.
+
+So the entry says exactly this, and no more: *we ran the transfer test on our own tooling; here is what survived; here is what a general layer would need; we have not built it, and here is why it is a lot of work.* The requirement feeds the bulk-operations workshop. The **finding** — not the facility — is the durable artifact, and it is honest, falsifiable, and tested inside the entry. Judges will trust it **because** we refused to claim the general capability from n=1.
 
 ### Preregister the split
 
@@ -109,8 +115,8 @@ That lands on the brief's reachable Assessment bullets (*"flag correlated eviden
 1. **A `source-assessment` type spec** — rows are sources; axes are provenance and independence; same welded-token discipline, same absence semantics, same evidence-tier gating.
 2. **Retarget the parser, measuring the split against the preregistered prediction.** The domain vocabulary is a config table; the extraction machinery is generic *by hypothesis*. Test it.
 3. **Run it over the three cases' sources**; produce the provenance matrix and the correlated-evidence clusters.
-4. **Extract whatever survived into the generic layer** — the document-set spec the bulk-operations workshop is waiting for. This is the upstream promotion the discipline demands, and the entry's durable artifact.
-5. *(Stretch)* **Multi-method comparison** — two rival assessment specs over the same subquestions, divergence localized. Entry shape #4, and where the brief's hook cashes out: **six independent Bayesian analyses of the same COVID evidence spanned 23 orders of magnitude** — a bespoke-structure failure, where each analyst's decomposition looked forced from inside. Steps 1–4 stand alone without this.
+4. **Score the split against the sealed prediction, and write down what a generic layer would need.** A requirement, filed to [bulk-operations](../bulk-operations/README.md) — **not** an implementation. This is the honest stopping point.
+5. *(Stretch, only if 1–4 land early)* **Multi-method comparison** — two rival assessment specs over the same subquestions, divergence localized. Entry shape #4, and where the brief's hook cashes out: **six independent Bayesian analyses of the same COVID evidence spanned 23 orders of magnitude** — a bespoke-structure failure, where each analyst's decomposition looked forced from inside. Steps 1–4 stand alone without this.
 
 ## How it unifies with the transfer thesis
 
