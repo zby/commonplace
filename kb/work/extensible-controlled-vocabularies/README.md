@@ -2,6 +2,8 @@
 
 **Note-status disposition (2026-07-11).** [ADR 044](../../reference/adr/044-user-verification-replaces-global-note-status.md) removed the global note `status` field rather than making it collection-expandable. This workshop now concerns only genuinely coherent controlled vocabularies such as `source_type`; the status analysis below is retained as the investigation that ruled note status out of this mechanism.
 
+**Field placement disposition (2026-07-12).** [Proposal: source genre is one open-vocabulary field on the snapshot](../../reference/proposals/source-genre-is-one-open-field-on-the-snapshot.md) — source genre is currently recorded twice (snapshot `tags` content-family values and the ingest-report `source_type` enum, with divergent vocabularies: `academic-paper` vs `scientific-paper` split the corpus roughly in half). The proposal unifies on one field on the *snapshot*; the report drops its copy and reads the snapshot for lens selection. Consequence for this workshop: the open-list mechanism designed here would attach to the snapshot schema, not the ingest-report schema, and the meaning-vs-values guard is now stated generally in [collections never own frontmatter semantics](../../reference/collections-never-own-frontmatter-semantics.md) — values extend, meanings never become collection-relative.
+
 Workshop for designing how a **code-enforced, closed enum field** becomes open-ended per installed KB while staying validator-checkable.
 
 ## Trigger
