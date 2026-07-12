@@ -1,59 +1,73 @@
 # The assessment-machinery line
 
-**Recommendation: this leads the submission.** Not as an alternative to the transfer thesis — that becomes the theory explaining why it works. This is the evidence, and there is far more of it than the casebooks have.
+**Recommendation: this leads the submission — but not as "we already have it."** The honest version is stronger than the boast, and the boast would have been the exact error this entry exists to indict.
 
-## The claim
+## The overclaim we nearly made
 
-**Commonplace makes a repeatable assessment instrument cheap to stand up.** You *declare* the methodology as a type; the framework supplies the apparatus around it.
+The tempting line was: *Commonplace makes repeatable assessment instruments cheap to stand up — look, 141 reviews and a matrix.* That reads a **general capability off a single bespoke instance**, which is the bespoke-structure-invisible-from-the-inside failure, committed by us, in the document arguing against it. Stated plainly, so it stays caught:
 
-That is the submission line, and it reframes what looked like our biggest weakness. We said: *the epistemology tools the competition needs can be built in Commonplace, but we don't have them ready-made, and there are only six days.* The correct response is not to apologise for that. It is to say: **ready-made is the wrong ask, and six days is enough — here is us doing it, and here is the same thing already done once at scale in another domain.**
+- The pipeline is **n=1**. One domain, one uniform source (GitHub), one corpus.
+- The pipeline code is **bespoke: ~755 lines** across `src/commonplace/lib/systems_matrix.py`, `scripts/build_systems_matrix.py`, `scripts/analyze_matrix.py`, `scripts/render_systems_table.py`. **None of it ships as a `commonplace-*` command.**
+- The generalization is *identified but unbuilt*. The [bulk-operations workshop](../bulk-operations/README.md) already names `kb/agent-memory-systems/` as "the existing implicit precedent (`systems.csv` registry + review member type + generated matrix)" and names the missing abstraction — a **document-set spec** — as an open direction.
 
-The bottleneck in epistemic investigation was never the shortage of assessment methodologies. Everyone has opinions about how to weigh evidence. The bottleneck is that every methodology needs an *apparatus* around it before it can be applied repeatably and compared — a schema, structural validation, a production pipeline, provenance rules, staleness tracking, and some way to aggregate N results into a comparable whole. Building that apparatus is expensive, so methodologies get applied once, by hand, by their author, and never travel. That is exactly the brief's complaint: *"single-user artifacts tuned to one investigator's context, not the kind that travel, combine, or survive scrutiny."*
+So we do not have assessment-pipeline machinery. We have **one worked pipeline and a hypothesis about what generalizes from it.** Say that.
 
-Commonplace supplies the apparatus generically. The methodology becomes a declaration.
+## What we do have, stated at the strength the evidence supports
 
-## The existence proof
+Two separable things, and only the first is proven.
 
-The `agent-memory-system-review` type ([spec](../../agent-memory-systems/types/agent-memory-system-review.md)) is a codified assessment methodology, declared as a type, and run repeatably:
+**Shipped and real — the substrate.** Types with schema validation; collection contracts that act as review criteria; the review system (snapshot-anchored assays, criterion paths, model partitions, freshness baselines); skills owning production; quote-anchored citations with a grounding check. None of this was built for the memory corpus; all of it was available to it.
 
-- **151 reviews on disk; 141 code-grounded** and admitted to the matrix.
-- **A 55-column matrix** ([`systems.csv`](../../agent-memory-systems/systems.csv)), built by **parsing the review prose** (`scripts/build_systems_matrix.py`, `src/commonplace/lib/systems_matrix.py`).
-- **Quantitative cross-corpus findings** with real *n*s ([comparative review](../../agent-memory-systems/agentic-memory-systems-comparative-review.md)): files/repo storage leads at 98/141 yet predicts little; 79/95 trace-derived systems push memory while 34/50 pull-only systems are not trace-derived; automatic activation is largely shipped untested.
-- **Peer-review-grade output**: the ASIS&T 2026 position paper ([snapshot](../../sources/where-it-lives-retained-adaptation-2026-06-23.md)) applies the four-field vocabulary to the corpus.
+**Bespoke and unproven-as-general — the pipeline.** The parse-to-matrix layer: lead-token extraction, one-hot indicators, applicability rules, absence semantics, cross-corpus analysis. Written once, for one shape of data.
 
-Nobody wrote an application to get this. Someone wrote a **type spec** and a **skill**, and the framework did the rest.
+The checkable claim that survives is narrower and better: **the domain-specific surface was small.** A 141-subject, 55-column comparative corpus with quantitative findings and an [ASIS&T position paper](../../sources/where-it-lives-retained-adaptation-2026-06-23.md) cost **one type spec, one skill, and ~755 lines** — because the framework carried types, validation, production, provenance, and freshness. That is a defensible "not much effort." It is *not* "we have a generic facility," and the difference is the whole credibility of the entry.
 
-## What the framework supplies, versus what the analyst declares
+## The existence proof, and what it is proof *of*
 
-This table is the entry. It is what makes the claim concrete rather than a boast.
+The `agent-memory-system-review` type ([spec](../../agent-memory-systems/types/agent-memory-system-review.md)), run repeatably:
 
-| The analyst declares | Commonplace supplies for free |
-|---|---|
-| The methodology's sections and axes (the type spec) | Structural validation against the schema — every review conforms or fails |
-| The controlled vocabularies | A parser that one-hots authored tokens into a matrix; unassessed axes surface as a worklist, not as silent zeroes |
-| The evidence rules (what grounds a claim) | Quote-anchored citations pinned to immutable revisions, plus a grounding check |
-| The prose contract (how reviews are written) | `COLLECTION.md` conformance as a review gate — the contract *is* the criterion |
-| What makes a review stale | Snapshot-anchored freshness baselines, partitioned by model |
-| The production procedure | A skill owning source prep, delegation, QA, validation, reporting |
+- **151 reviews; 141 code-grounded** and admitted to the matrix.
+- **A 55-column matrix** ([`systems.csv`](../../agent-memory-systems/systems.csv)) built by **parsing the review prose**.
+- **Quantitative cross-corpus findings** with real *n*s ([comparative review](../../agent-memory-systems/agentic-memory-systems-comparative-review.md)): files/repo storage leads at 98/141 yet predicts little; 79/95 trace-derived systems push memory; automatic activation is largely shipped untested.
 
-The analyst writes the epistemology. The framework writes everything that makes the epistemology *repeatable*.
+It proves the *shape* works and that the domain surface is small. It does **not** prove the shape transfers. Only a second instance can do that.
+
+## Therefore: the entry is the second instance
+
+This is the build, and it is also the argument.
+
+Build-local-first, upstream-what-survives is our own discipline, and it says a structure earns promotion by surviving a second, differently-shaped case. We have one. **The epistemic source-assessment pipeline is the second** — in a genuinely hostile domain, on a one-week clock, in public.
+
+**n=2 is the first point at which forced can be told from chosen.** What survives both instances is the generic apparatus; what has to be rebuilt was domain-specific all along. Extracting that layer *is* the deliverable — and it is precisely the document-set spec the bulk-operations workshop says is missing. The competition deadline is the forcing function that finally produces it.
+
+That framing is honest, falsifiable, tested *inside* the entry, and it makes the submission's central claim something we demonstrate rather than assert. Judges will trust it **because** we refused to claim the general capability from n=1.
+
+### Preregister the split
+
+Before the retarget, predict which of the ~755 lines is which, then measure. Same convergence instrument as the [rebuild](./replication-plan.md), applied to code.
+
+- **Predicted generic (survives untouched):** lead-token regex; one-hot indicator construction; applicability rules; the three-kinds-of-absence semantics; the worklist-of-blanks; evidence-tier gating of matrix admission.
+- **Predicted domain-specific (replaced wholesale):** the axis/vocabulary config table; the CSV column schema; the analysis queries.
+- **Genuinely uncertain:** whether the *row unit* generalizes. Memory systems are naturally one-row-per-subject. Whether epistemic sources are too is the open question below.
+
+If the "generic" list needs rewriting, the general facility does not exist and we say so. That is a publishable result and the brief names it as an entry shape.
 
 ## The transferable invention, named: the welded token
 
-The mechanism worth submitting is not the memory-system vocabulary. It is how a value and its justification are bound together:
+The mechanism worth submitting is not the memory-system vocabulary. It is how a value and its justification are bound:
 
 ```
 **Storage substrate:** `graph` — the retained state persists in a Neo4j-backed store, so …
 ```
 
-The controlled, machine-parseable value is written **as the lead of its own justifying sentence**, in the prose, as part of the finding. The type spec says why in one line: *"so the value and its reasoning cannot drift apart."*
+The controlled, machine-parseable value is the **lead of its own justifying sentence**, in the prose, as part of the finding. The type spec says why in one line: *"so the value and its reasoning cannot drift apart."*
 
-This resolves the exact tension the brief names as the hard problem for a protocol entry — *"how to link diverse subtopics and complex, multi-perspective investigations while preserving important detail."* Both obvious answers fail:
+This resolves the tension the brief names as the hard problem for a protocol entry — *"how to link diverse subtopics and complex, multi-perspective investigations while preserving important detail."* Both obvious answers fail:
 
 - **A structured layer beside the prose** → it drifts, and by our own [derived-copy rule](../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) an unchecked derived copy is forbidden outright.
 - **Flatten the prose into a schema** → the nuance that made the analysis worth doing is destroyed.
 
-The welded token does neither. There is **one artifact**; the matrix is *derived by parsing it*, so no second copy exists to drift, and the justification travels attached to the value it justifies. Interoperability and nuance out of the same line of prose — proven at n=141.
+The welded token does neither. **One artifact**; the matrix is *derived by parsing it*, so no second copy exists to drift, and the justification travels attached to the value it justifies. This is the piece most likely to survive the transfer, and the piece worth naming in the submission whatever else happens.
 
 ## Epistemic metadata that is already first-class
 
@@ -62,85 +76,50 @@ The brief asks what *"supporting epistemic metadata would help [assessment metho
 - **Three distinct kinds of absence.** `not-determinable` (assessed, could not tell) ≠ `none` (assessed, verified absent) ≠ blank (not assessed). The parser keeps them apart and turns blanks into a worklist. Most schemes collapse all three — which is how "no evidence of X" quietly becomes "evidence of no X."
 - **Evidence tiers gate aggregation.** `source-tier: code-grounded | doc-grounded`, and doc-grounded reviews are **excluded from the matrix**. Provenance decides what may be *counted*, not merely what may be read.
 - **Structural/quality separation.** Mark what the evidence class cannot license as *not verified from code*.
-- **Quote-anchored citations** pinned to immutable revisions, with a write-time grounding check ([verify-review-quote-grounding](../../instructions/verify-review-quote-grounding.md)) — the same discipline the [quote verifier](../../reference/proposals/verifiable-quotes.md) enforces on the casebooks.
-
-## Why it answers the brief better than the casebooks
-
-| The brief asks | The machinery answers |
-|---|---|
-| "Does it compound, with multiple people building on each other's work?" | **Mechanically.** Each new review adds a matrix row *by being parsed*. No integration step, no curator. Every entrant will promise this; we can show it. |
-| "Does it scale with improvements to AI or more compute?" | **Linearly.** More reviews, more axes, more model partitions. 141 already ran. |
-| "Does it generalize?" | One contract, 141 subjects, findings that hold across them — and now a second domain in six days. |
-| Entry shape: *"comparative analysis repeatably applying two or more AI assessment methodologies to the same subquestions"* | Two type specs over the same claims. The machinery is built; see the gap below. |
-
-It also lands on the **Assessment layer** — which I originally judged our weakest. That judgment was wrong, and it was wrong for an instructive reason: I was looking at the casebooks and not at the 141-system corpus next door. Worth saying in the submission, because it is the same blindness the entry is about.
-
-## The six days are the experiment, not the constraint
-
-The build is a **retarget of a known-good pattern**, and that is what makes it feasible *and* what makes it evidence:
-
-1. **A `source-assessment` type spec** — rows are **sources**, axes are **provenance and independence** (author, institution, funding, genre, data dependency, independence relations, capture layer, primary/secondary), because those are the facts a heterogeneous corpus can answer uniformly. Same welded-token discipline, same three-kinds-of-absence, same evidence-tier gating.
-2. **Retarget the matrix parser.** The machinery in `systems_matrix.py` is generic — lead-token regex, one-hot indicators, applicability rules, `not-determinable`/`none` handling. The domain vocabulary is a **config table at the top of the file**. Retargeting is a table swap, not a rewrite. *This is the single most important feasibility fact in this document.*
-3. **Run it over the three cases' sources**; produce the provenance matrix. The immediate payoff is the correlated-evidence flag the brief asks for: COVID's Andersen/Worobey/Pekar author overlap and the analyses reusing the same Huanan metagenomic dataset stop being a prose caveat and become **a computed cluster** — which is what makes it checkable, and what makes it compound.
-4. **Then the multi-method comparison** — two rival assessment specs over the same subquestions, divergence localized. Entry shape #4, and where the brief's own hook cashes out: **six independent Bayesian analyses of the same COVID evidence spanned 23 orders of magnitude.** That is a *bespoke-structure* failure — each analyst chose a decomposition, and from inside each the decomposition looked forced. Running *k* methodologies over the same pinned evidence and localizing **where** they diverge is the direct answer. Stretch goal; steps 1–3 stand alone.
-
-**Preregister the split before running it**, exactly as the [rebuild plan](./replication-plan.md) does: predict that the *apparatus* (welded tokens, absence semantics, evidence tiers, freshness) survives the domain change untouched, and that the *domain vocabulary* is replaced wholesale. The retarget then **is** the transfer test — the thesis eating its own dog food, on a one-week clock, in public.
+- **Quote-anchored citations** pinned to immutable revisions with a write-time grounding check ([verify-review-quote-grounding](../../instructions/verify-review-quote-grounding.md)).
 
 ## The precondition, and the honest limit: uniform capture
 
-**The method works where the data can be gathered uniformly.** The 141-system corpus had that handed to it: the source was **GitHub**. Every subject was the same kind of thing, reachable the same way, yielding the same evidence class. Clone the repo, read the code, answer the axes. `storage substrate: graph` is checkable against source, uniformly, for every row.
+**The method works where the data can be gathered uniformly.** The 141-corpus had that handed to it: the source was **GitHub**. Same kind of subject, same access method, same evidence class, every row. Clone, read, answer the axes.
 
-The framework already knows this is the binding constraint — which is why `source-tier` exists at all. Systems with no reachable source are `doc-grounded` and **excluded from the matrix**. That exclusion *is* the uniformity precondition, enforced. We did not add it because it was elegant; we added it because non-uniform evidence cannot be aggregated honestly.
+The framework already knows this is binding — which is why `source-tier` exists. Systems with no reachable source are `doc-grounded` and **excluded from the matrix**. That exclusion *is* the uniformity precondition, enforced, for reasons that predate this competition.
 
-**Epistemic casework has no such uniform surface.** COVID alone spans peer-reviewed papers, an intelligence assessment, a WHO report, court filings, a Bulletin essay, preprints, and social threads — different genres, different access methods, different evidence classes, different capture fidelities. There is no `git clone` for a contested question. This is exactly the heterogeneity that drove the source-genre gap to recur three times before [ADR 045](../../reference/adr/045-source-genre-is-a-single-open-field-on-the-snapshot.md) opened the field.
+**Epistemic casework has no such surface.** COVID alone spans peer-reviewed papers, an intelligence assessment, a WHO report, court filings, an essay, preprints, and threads — different genres, access methods, evidence classes, capture fidelities. There is no `git clone` for a contested question, and this heterogeneity is what drove the source-genre gap to recur three times before [ADR 045](../../reference/adr/045-source-genre-is-a-single-open-field-on-the-snapshot.md) opened the field.
 
-So the naive retarget — a matrix whose rows are *claims* and whose axes *adjudicate* them — will not work, and we should say so before a judge says it for us. Two obvious failure modes:
-
-- **Non-uniform axes.** You cannot ask a court filing and a molecular-clock preprint the same architectural question and get comparable answers.
-- **Manufactured precision.** A controlled vocabulary over *"is the furin cleavage site evidence of engineering"* flattens precisely what must not be flattened — the failure this entry exists to indict.
+So the naive retarget — rows are *claims*, axes *adjudicate* them — fails twice: **non-uniform axes** (you cannot ask a court filing and a molecular-clock preprint the same question and get comparable answers) and **manufactured precision** (a controlled vocabulary over *"is the furin cleavage site evidence of engineering"* flattens exactly what must not be flattened).
 
 ### What *is* uniformly gatherable
 
-This is the design move, and it is the contribution. Heterogeneous sources still share **uniform provenance facts**. Every source, whatever its genre, has:
+The design move, and the contribution. Heterogeneous sources still share **uniform provenance facts**. Every source, whatever its genre, has an **author** (institution, funding), a **genre**, a **data dependency**, an **independence relation** to every other source (shared authors, shared data, shared funder, citation chain), a **capture layer** ([a citation cannot assert more fidelity than its capture preserved](../../notes/a-citation-cannot-assert-more-fidelity-than-its-capture-preserved.md)), and a **primary/secondary** standing.
 
-- an **author** (and an institution, and a funding status);
-- a **genre**;
-- a **data dependency** — which datasets, samples, or prior results it rests on;
-- an **independence relation** to every other source — shared authors, shared data, shared funder, or a citation chain;
-- a **capture layer** — verbatim, paraphrase, or second-hand ([a citation cannot assert more fidelity than its capture preserved](../../notes/a-citation-cannot-assert-more-fidelity-than-its-capture-preserved.md));
-- a **primary/secondary** standing.
+Those are answerable uniformly across a court filing *and* a preprint *and* a WHO report. **Provenance is uniform even when content is not.** So the matrix's rows are **sources**, and its axes are **provenance and independence** — not claims and verdicts.
 
-Those axes are answerable uniformly across a court filing *and* a preprint *and* a WHO report. **Provenance is uniform even when content is not.** So the matrix's rows should be **sources**, and its axes should be **provenance and independence** — not claims and adjudications.
-
-And that lands precisely on the brief's Assessment bullets we can actually reach: *"flag correlated evidence being treated as independent"*, *"surface what's missing"*, *"identify rhetorical moves that carry more persuasive weight than evidential weight."* It also collapses two build items into one: **the independence instrument and the matrix retarget are the same thing**, done with proven machinery instead of a bespoke link-grammar addition.
+That lands on the brief's reachable Assessment bullets (*"flag correlated evidence being treated as independent"*, *"surface what's missing"*), and it collapses two build items into one: **the independence instrument and the matrix retarget are the same thing.** COVID's Andersen/Worobey/Pekar author overlap and the analyses reusing the same Huanan metagenomic dataset stop being a prose caveat and become **a computed cluster**.
 
 ### The finding this yields
 
-There is a real, transferable claim here, and it unifies the layers:
-
-**The assessment layer's ceiling is set at ingestion.** A citation cannot assert more fidelity than its capture preserved; a matrix cannot aggregate more than its capture gathered *uniformly*. Same principle, one level up — what the ingestion layer failed to make comparable, no assessment methodology can make comparable afterwards. That is why `source-tier` gates the matrix, and it is why the epistemic retarget must aggregate over provenance rather than over content.
-
-That claim is worth the submission on its own, it is falsifiable, and it explains a design decision we made for other reasons long before this competition.
+**The assessment layer's ceiling is set at ingestion.** A citation cannot assert more fidelity than its capture preserved; a matrix cannot aggregate more than its capture gathered *uniformly*. Same principle one level up — what ingestion failed to make comparable, no assessment methodology can make comparable afterwards. It explains `source-tier`, it explains why the epistemic retarget must aggregate over provenance, and it is falsifiable.
 
 ### The discipline that keeps it honest
 
-**The matrix must be allowed to come out mostly `not-determinable`.** If the epistemic axes will not fill, that is the finding — that contested material resists the treatment architectural facts accept — and we publish it rather than tuning the axes until the cells populate. The brief names "a critique with counterexamples" as an entry shape in its own right.
+**The matrix must be allowed to come out mostly `not-determinable`.** If the epistemic axes will not fill, that is the finding — contested material resists the treatment architectural facts accept — and we publish it rather than tuning axes until the cells populate.
+
+## The build
+
+1. **A `source-assessment` type spec** — rows are sources; axes are provenance and independence; same welded-token discipline, same absence semantics, same evidence-tier gating.
+2. **Retarget the parser, measuring the split against the preregistered prediction.** The domain vocabulary is a config table; the extraction machinery is generic *by hypothesis*. Test it.
+3. **Run it over the three cases' sources**; produce the provenance matrix and the correlated-evidence clusters.
+4. **Extract whatever survived into the generic layer** — the document-set spec the bulk-operations workshop is waiting for. This is the upstream promotion the discipline demands, and the entry's durable artifact.
+5. *(Stretch)* **Multi-method comparison** — two rival assessment specs over the same subquestions, divergence localized. Entry shape #4, and where the brief's hook cashes out: **six independent Bayesian analyses of the same COVID evidence spanned 23 orders of magnitude** — a bespoke-structure failure, where each analyst's decomposition looked forced from inside. Steps 1–4 stand alone without this.
 
 ## How it unifies with the transfer thesis
 
-One idea, demonstrated at two layers:
+One idea, demonstrated at three layers:
 
 **Convergence is the test of forced-versus-chosen.**
 
-- **Structure layer** — do independent builders converge on the same casebook structure? ([the rebuild](./replication-plan.md))
-- **Assessment layer** — do independent methodologies converge on the same verdict, and *where exactly* do they diverge? (the multi-method matrix)
+- **Structure** — do independent builders converge on the same casebook structure? ([the rebuild](./replication-plan.md))
+- **Assessment** — do independent methodologies converge on the same verdict, and where do they diverge? (the multi-method matrix)
+- **Tooling** — does our own pipeline code survive a second domain, or was it bespoke all along? (the preregistered code split)
 
-The welded token is what makes both cheap, repeatable, and machine-aggregable without flattening. The 141-system corpus proves the mechanism at scale *in a domain where the answers can be checked* — which is what earns the right to try it where they cannot.
-
-## The tension to resolve
-
-The rebuild and this line compete for the same days.
-
-- **If only one runs: this one.** More evidence, more of the brief answered, external validation, a nameable mechanism.
-- **They compose in sequence** — the rebuild produces clean casebooks; the matrix runs over them. A matrix built on the messy first build inherits the mess.
-- **Practical resolution:** the rebuild is mostly agent wall-clock rather than our attention. Start it in the background (minimum-viable: COVID, two cross-family builders) and spend our attention on the retarget. If the rebuild slips, run the matrix over the existing cases and declare the mess.
+The third is new, and it is the one that makes the entry honest: we run the test on ourselves, and we did not know the answer when we wrote it down.

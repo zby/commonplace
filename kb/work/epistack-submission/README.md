@@ -4,13 +4,17 @@ Building the actual entry to the FLF [Epistemic Case Study Competition](../../so
 
 The two existing epistack workshops are inputs, not competitors to this one: [epistack-competition](../epistack-competition/README.md) holds the two-repo protocol (framework here, casework in the sibling `epistack-casebooks`), and [epistack-framework-additions](../epistack-framework-additions/README.md) holds the design menu of candidate additions. Neither one decides what we submit. This workshop does.
 
-## The lead: Commonplace makes a repeatable assessment instrument cheap to stand up
+## The lead: the entry is the *second instance* of an assessment pipeline
 
-**[assessment-machinery-line.md](./assessment-machinery-line.md) — read this first; it now leads the submission.** You *declare* the methodology as a type; the framework supplies validation, production, provenance rules, freshness, and aggregation. The existence proof is not the casebooks — it is the **141 code-grounded agent-memory-system reviews**, parsed into a 55-column matrix, yielding quantitative findings and an ASIS&T position paper. Nobody wrote an application to get that; someone wrote a type spec and a skill.
+**[assessment-machinery-line.md](./assessment-machinery-line.md) — read this first; it leads the submission.**
 
-This reframes what looked like our weakness. We said the epistemology tools can be built in Commonplace but aren't ready-made, and there are only six days. The right answer is that **ready-made is the wrong ask** — the bottleneck was never the shortage of assessment methodologies, it is that each one needs an apparatus before it can be applied repeatably and compared. Commonplace *is* the apparatus. So the six days become the demonstration, not the excuse.
+The tempting line was "Commonplace makes assessment pipelines cheap — look, 141 reviews and a matrix." That reads a general capability off a single bespoke instance, which is the exact failure this entry indicts. The truth: the pipeline is **n=1**, its code is **~755 bespoke lines** shipped as no command at all, and the generalization is *identified but unbuilt* — the [bulk-operations workshop](../bulk-operations/README.md) already calls `kb/agent-memory-systems/` "the existing implicit precedent" and names the missing **document-set spec** as open.
 
-Its honest limit is also its sharpest finding: **the method works where data can be gathered uniformly.** GitHub handed the 141-corpus that uniformity for free. Epistemic casework has no `git clone`. So the retarget aggregates over **provenance** (author, funding, genre, data dependency, independence, capture layer) — uniform across heterogeneous sources — rather than over contested content, which is not. Generalized: **the assessment layer's ceiling is set at ingestion.**
+So the claim is narrower and better: **the domain-specific surface was small.** A 141-subject, 55-column comparative corpus with quantitative findings and an ASIS&T paper cost one type spec, one skill, and ~755 lines, because the framework carried types, validation, production, provenance, and freshness. That is a defensible "not much effort" — it is not "we have a generic facility."
+
+**Therefore the entry is the second instance.** Build-local-first, upstream-what-survives says a structure earns promotion by surviving a second, differently-shaped case. We have one; the epistemic source-assessment pipeline is the second, in a hostile domain, on a one-week clock. **n=2 is the first point at which forced can be told from chosen** — what survives both is the generic apparatus, and extracting it *is* the deliverable (and the document-set spec bulk-operations is waiting for). We preregister which of the 755 lines we expect to survive, then measure.
+
+Its honest limit is its sharpest finding: **the method works where data can be gathered uniformly.** GitHub handed the 141-corpus that uniformity for free; `source-tier` excluding doc-grounded reviews from the matrix *is* that precondition, already enforced. Epistemic casework has no `git clone`, so the retarget aggregates over **provenance** (author, funding, genre, data dependency, independence, capture layer) — uniform across heterogeneous sources — not over contested content, which is not. Generalized: **the assessment layer's ceiling is set at ingestion.**
 
 ## The theory underneath it
 
@@ -111,8 +115,8 @@ Days are working days from 12 July; submission 19 July.
 |---|---|
 | 1 | Ship the quote verifier — must exist *before* the rebuild lands, so the rebuild's citations are machine-checked, not hand-trusted. Settle where it lives; run it on the old build to fix the 24/88 baseline |
 | 1–3 | Rebuild, **in the background** — it is agent wall-clock, not our attention. Minimum-viable: COVID, two cross-family builders, contract frozen, predictions sealed ([replication-plan.md](./replication-plan.md)) |
-| 1–4 | **Our attention goes here:** the `source-assessment` retarget — type spec, parser config-table swap, provenance matrix over the three cases' sources ([assessment-machinery-line.md](./assessment-machinery-line.md)). This *subsumes* the independence instrument: the correlated-evidence flag becomes a computed cluster rather than a bespoke link-grammar addition |
-| 5–6 | Score the rebuild against the sealed predictions; write the submission; buffer |
+| 1–4 | **Our attention goes here:** the second pipeline instance — seal the code-split prediction, write the `source-assessment` type spec, retarget the parser, build the provenance matrix over the three cases' sources, then **extract whatever survived into the generic layer** ([assessment-machinery-line.md](./assessment-machinery-line.md)). This *subsumes* the independence instrument: the correlated-evidence flag becomes a computed cluster, not a bespoke link-grammar addition |
+| 5–6 | Score both preregistered predictions (rebuild convergence, code split); write the submission; buffer |
 
 The retarget and the rebuild compete for the same days. If only one runs, **run the retarget** — it has 141 data points behind it against the casebooks' three, answers more of the brief, and carries external validation. The rebuild is mostly background wall-clock, so try for both; if it slips, run the matrix over the existing cases and declare the mess.
 
