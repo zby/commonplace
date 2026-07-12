@@ -130,7 +130,7 @@ For the full read path and scaling direction, see [navigation.md](./navigation.m
 
 *What happens.* The validator checks schemas, links, filename constraints, and type-specific structural requirements.
 
-*What you get.* A pass/fail report per note with `FAIL`, `WARN`, and `INFO` lines.
+*What you get.* A pass/fail report per note with `FAIL`, `WARN`, and `INFO` lines. Each finding is labelled with the source that produced it — `[base]`, `[type: <name>]`, or `[schema]` — so a rule your type spec never mentioned is traceable to the contract that does impose it. See the [validation contract](./validation-contract.md) for what each source can express and what every typed note is checked for regardless of type.
 
 *Limitations.* Validation is structural only. Vacuous descriptions or weak claims are review problems, not validator problems.
 

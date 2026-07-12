@@ -27,7 +27,7 @@ commonplace-init --root /path/to/project
 
 Deterministic validator for KB notes. Checks frontmatter validity, schema constraints, link health, verbatim-quote resolution, structural description presence, description length warnings, required sections, and batch signals such as orphan detection. Description discrimination quality is handled by review gates, not deterministic validation.
 
-A `verbatim`-marked quotation is resolved against the markdown source it links: a quote that does not occur in its cited source **fails** (the note asserts a falsehood), an unpairable verbatim citation **warns** where the convention is in use, and matches are reported as a passing count ([ADR 046](./adr/046-verbatim-quotes-are-validated-against-their-cited-source.md)).
+Findings are labelled with the source that produced them — `[base]` (every typed note), `[type: <name>]` (rules the type owns), `[schema]` (the type's declarative constraints). What each source can express, and what every typed note is checked for regardless of type, is the [validation contract](./validation-contract.md).
 
 ```bash
 commonplace-validate notes               # validate one collection by name

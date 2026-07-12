@@ -385,29 +385,71 @@ def apply_schema_validation(results: CheckResults, parsed: ParsedNote) -> None:
             results.warns.append(message)
 
 
+def _merge_labelled(dest: CheckResults, src: CheckResults, source: str) -> None:
+    """Fold one check group's findings into the result, tagged with its source."""
+    for level in ("passes", "warns", "fails", "infos"):
+        getattr(dest, level).extend(
+            f"[{source}] {message}" for message in getattr(src, level)
+        )
+
+
 def validate_note(path: Path, *, repo_root: Path) -> CheckResults:
+    """Validate a note against the base contract, its type rules, and its schema.
+
+    Every finding is labelled with the source that produced it, because a reader
+    who only read the type spec would otherwise get failures from rules that spec
+    never mentions. The source is attached here, at dispatch, rather than by each
+    check, so it is decided by *where a check runs* and cannot be forgotten.
+
+    Three sources, documented in `kb/reference/validation-contract.md`:
+
+    `base`
+        Applies to every typed note whatever its type. Includes the referential
+        checks (link health, verbatim quotes), which the schema cannot express
+        because JSON Schema cannot dereference.
+    `type: <name>`
+        Imperative rules the type owns. May dereference (tag-readme marks are
+        re-derived from the collection), which is why type-owned and referential
+        are independent axes, not two ends of one.
+    `schema`
+        Declarative constraints the type's schema owns, over frontmatter *and*
+        body-derived facts (headings, links, dates).
+    """
     parsed, parse_error = parse_note(path, repo_root=repo_root)
     if parse_error:
-        return CheckResults(note_type="unknown", fails=[parse_error])
+        return CheckResults(note_type="unknown", fails=[f"[base] {parse_error}"])
 
     assert parsed is not None
 
     if parsed.document.frontmatter is None:
-        return CheckResults(note_type="text", passes=["text file: no frontmatter, no structural requirements"])
+        return CheckResults(
+            note_type="text",
+            passes=["[base] text file: no frontmatter, no structural requirements"],
+        )
 
     results = CheckResults(note_type=parsed.note_type)
-    results.passes.append("frontmatter: valid delimiters, well-formed YAML")
+
+    base = CheckResults(note_type=parsed.note_type)
+    base.passes.append("frontmatter: valid delimiters, well-formed YAML")
     validate_title_and_slug(
-        results,
+        base,
         parsed.path,
         parsed.document,
         note_type=parsed.note_type,
     )
-    validate_links_from_document(results, parsed.path, parsed.document.links)
-    validate_verbatim_quotes(results, parsed.content, parsed.path)
+    validate_links_from_document(base, parsed.path, parsed.document.links)
+    validate_verbatim_quotes(base, parsed.content, parsed.path)
+    _merge_labelled(results, base, "base")
+
     for rule in _TYPE_RULES.get(parsed.note_type, []):
-        rule(results, parsed, repo_root=repo_root)
-    apply_schema_validation(results, parsed)
+        type_results = CheckResults(note_type=parsed.note_type)
+        rule(type_results, parsed, repo_root=repo_root)
+        _merge_labelled(results, type_results, f"type: {parsed.note_type}")
+
+    schema_results = CheckResults(note_type=parsed.note_type)
+    apply_schema_validation(schema_results, parsed)
+    _merge_labelled(results, schema_results, "schema")
+
     return results
 
 

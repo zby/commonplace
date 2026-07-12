@@ -307,7 +307,7 @@ type: kb/types/note.md
 
     assert results.note_type == "note"
     assert results.fails == []
-    assert f"frontmatter.description: {expected}" in results.warns
+    assert any(f"frontmatter.description: {expected}" in item for item in results.warns)
 
 
 def test_link_validation_skips_code_and_external_urls(tmp_path: Path) -> None:
@@ -337,8 +337,8 @@ External link: [site](https://example.com/foo.md)
 
     results = validation.validate_note(note, repo_root=tmp_path)
 
-    assert "link health: all local relative links resolve" not in results.passes
-    assert "link health: missing target ./missing.md" in results.warns
+    assert all("link health: all local relative links resolve" not in item for item in results.passes)
+    assert any("link health: missing target ./missing.md" in item for item in results.warns)
     assert all("ignored.md" not in item for item in results.warns)
     assert all("example.com" not in item for item in results.warns)
 
@@ -370,9 +370,9 @@ Protocol-relative URL: [cdn](//example.com/file.txt)
 
     results = validation.validate_note(note, repo_root=tmp_path)
 
-    assert "link health: all local relative links resolve" not in results.passes
-    assert "link health: missing target ./missing-dir/" in results.warns
-    assert "link health: missing target ./missing.txt" in results.warns
+    assert all("link health: all local relative links resolve" not in item for item in results.passes)
+    assert any("link health: missing target ./missing-dir/" in item for item in results.warns)
+    assert any("link health: missing target ./missing.txt" in item for item in results.warns)
     assert all("target.txt" not in item for item in results.warns)
     assert all("existing-dir" not in item for item in results.warns)
     assert all("#heading" not in item for item in results.warns)
@@ -420,7 +420,7 @@ type: spec
     results = validation.validate_note(note, repo_root=tmp_path)
 
     assert results.note_type == "unknown"
-    assert "frontmatter.type: must start with kb/ or be file-relative (./ or ../): spec" in results.fails
+    assert any("frontmatter.type: must start with kb/ or be file-relative (./ or ../): spec" in item for item in results.fails)
 
 
 def test_agent_memory_review_fails_when_last_checked_missing(tmp_path: Path) -> None:
@@ -470,7 +470,7 @@ Watch.
 
     results = validation.validate_note(note, repo_root=tmp_path)
 
-    assert "frontmatter: 'last-checked' is a required property" in results.fails
+    assert any("frontmatter: 'last-checked' is a required property" in item for item in results.fails)
 
 
 def test_schema_violation_fails_by_default() -> None:
@@ -673,7 +673,7 @@ Check the sample condition.
 
     assert results.fails == []
     assert results.warns == []
-    assert "type schema: instruction requirements satisfied" in results.passes
+    assert any("type schema: instruction requirements satisfied" in item for item in results.passes)
 
 
 def test_title_length_over_limit_fails_validation(tmp_path: Path) -> None:
@@ -693,7 +693,7 @@ traits: []
 
     results = validation.validate_note(note, repo_root=tmp_path)
 
-    assert "title: 101 chars exceeds limit of 100" in results.fails
+    assert any("title: 101 chars exceeds limit of 100" in item for item in results.fails)
 
 
 def test_filename_slug_length_over_limit_fails_validation(tmp_path: Path) -> None:
@@ -713,10 +713,11 @@ traits: []
 
     results = validation.validate_note(note, repo_root=tmp_path)
 
-    assert (
+    expected = (
         f"filename slug: {MAX_NOTE_SLUG_LENGTH + 1} chars exceeds limit of "
         f"{MAX_NOTE_SLUG_LENGTH}"
-    ) in results.fails
+    )
+    assert any(expected in item for item in results.fails)
 
 
 def test_connect_report_derived_slug_is_exempt_from_note_limit(tmp_path: Path) -> None:
@@ -743,10 +744,11 @@ type: kb/reports/types/connect-report.md
 
     derived_slug_length = MAX_NOTE_SLUG_LENGTH + len(".connect")
     assert results.fails == []
-    assert (
+    expected = (
         f"filename slug: {derived_slug_length} chars "
         "(derived connect-report name; authored-artifact limit not applied)"
-    ) in results.passes
+    )
+    assert any(expected in item for item in results.passes)
 
 
 def test_list_kb_note_paths_skips_nested_git_repos(tmp_path: Path) -> None:
