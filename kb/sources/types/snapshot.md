@@ -41,6 +41,11 @@ Classify what kind of document the source is as evidence. The default vocabulary
 
 The vocabulary is open: a value outside this list validates with a warning, not a failure. Extend deliberately — a new genre should name an evidential kind that recurs, not a one-off container. Genre meanings are fixed everywhere; collections and installed KBs extend the value list, never reinterpret existing values.
 
+Two extension paths:
+
+- **Occasional off-list source:** just use the new value and keep the warning — it is the standing signal of an undocumented genre, and a validation sweep lists every such extension.
+- **A KB whose sources need their own vocabulary** (recurring new genres, domain-specific lens guidance, extra capture fields): do not edit this shipped spec. Declare a collection-local snapshot type — drop a type-spec doc and schema into the sources collection's `types/` directory and point `COLLECTION.md`'s Types menu at it; the capture skill stamps whatever snapshot type that menu declares. The local type owns its genre list and lenses outright, with fixed meanings, the same way this spec owns the defaults. Types are the extension point; scaffolded specs are not editing surfaces.
+
 `genre` is stamped at capture as a surface judgment. If ingestion's closer reading disagrees, correct the snapshot's `genre` in place — the snapshot stays the single ground truth.
 
 ## Boundaries
