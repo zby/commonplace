@@ -4,7 +4,15 @@ Building the actual entry to the FLF [Epistemic Case Study Competition](../../so
 
 The two existing epistack workshops are inputs, not competitors to this one: [epistack-competition](../epistack-competition/README.md) holds the two-repo protocol (framework here, casework in the sibling `epistack-casebooks`), and [epistack-framework-additions](../epistack-framework-additions/README.md) holds the design menu of candidate additions. Neither one decides what we submit. This workshop does.
 
-## The thesis we are entering on
+## The lead: Commonplace makes a repeatable assessment instrument cheap to stand up
+
+**[assessment-machinery-line.md](./assessment-machinery-line.md) — read this first; it now leads the submission.** You *declare* the methodology as a type; the framework supplies validation, production, provenance rules, freshness, and aggregation. The existence proof is not the casebooks — it is the **141 code-grounded agent-memory-system reviews**, parsed into a 55-column matrix, yielding quantitative findings and an ASIS&T position paper. Nobody wrote an application to get that; someone wrote a type spec and a skill.
+
+This reframes what looked like our weakness. We said the epistemology tools can be built in Commonplace but aren't ready-made, and there are only six days. The right answer is that **ready-made is the wrong ask** — the bottleneck was never the shortage of assessment methodologies, it is that each one needs an apparatus before it can be applied repeatably and compared. Commonplace *is* the apparatus. So the six days become the demonstration, not the excuse.
+
+Its honest limit is also its sharpest finding: **the method works where data can be gathered uniformly.** GitHub handed the 141-corpus that uniformity for free. Epistemic casework has no `git clone`. So the retarget aggregates over **provenance** (author, funding, genre, data dependency, independence, capture layer) — uniform across heterogeneous sources — rather than over contested content, which is not. Generalized: **the assessment layer's ceiling is set at ingestion.**
+
+## The theory underneath it
 
 **Bespoke structure is invisible from the inside. That — not representation — is why knowledge artifacts don't compound. We have a discipline that makes the boundary legible, and a rig that tests it.**
 
@@ -101,10 +109,12 @@ Days are working days from 12 July; submission 19 July.
 
 | Days | Work |
 |---|---|
-| 1 | Ship the quote verifier — it must exist *before* the rebuild lands, so the rebuild's citations are machine-checked rather than hand-trusted. Settle where it lives; run it on the old build to fix the 24/88 baseline |
-| 1–3 | Rebuild: freeze the contract, seal predictions, run clean-room builders (see [replication-plan.md](./replication-plan.md)). Starts early because it needs wall-clock and its result changes what the document says |
-| 3–4 | Independence instrument, built *on the rebuilt cases* — a live transfer test on clean ground |
-| 5–6 | Score the rebuild against the sealed predictions; write the submission document; buffer |
+| 1 | Ship the quote verifier — must exist *before* the rebuild lands, so the rebuild's citations are machine-checked, not hand-trusted. Settle where it lives; run it on the old build to fix the 24/88 baseline |
+| 1–3 | Rebuild, **in the background** — it is agent wall-clock, not our attention. Minimum-viable: COVID, two cross-family builders, contract frozen, predictions sealed ([replication-plan.md](./replication-plan.md)) |
+| 1–4 | **Our attention goes here:** the `source-assessment` retarget — type spec, parser config-table swap, provenance matrix over the three cases' sources ([assessment-machinery-line.md](./assessment-machinery-line.md)). This *subsumes* the independence instrument: the correlated-evidence flag becomes a computed cluster rather than a bespoke link-grammar addition |
+| 5–6 | Score the rebuild against the sealed predictions; write the submission; buffer |
+
+The retarget and the rebuild compete for the same days. If only one runs, **run the retarget** — it has 141 data points behind it against the casebooks' three, answers more of the brief, and carries external validation. The rebuild is mostly background wall-clock, so try for both; if it slips, run the matrix over the existing cases and declare the mess.
 
 The document needs two full days and does not exist yet. If the schedule slips, the build shrinks — not the writing, and not the replication. An entry whose central claim was tested and survived, or was tested and qualified, beats one whose central claim was merely asserted more fluently.
 
