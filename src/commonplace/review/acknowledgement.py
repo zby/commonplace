@@ -6,7 +6,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from commonplace.review.clock import iso_now
-from commonplace.review.paths import criterion_id_from_stored_path, normalize_criterion_path
+from commonplace.review.paths import criterion_id_from_stored_path, normalize_criterion_path, normalize_repo_relative_path
 from commonplace.review.review_db import (
     connect,
     ensure_db,
@@ -30,14 +30,7 @@ def _normalize_note_path(repo_root: Path, raw: str) -> str:
     note_path = raw.strip()
     if not note_path:
         raise ValueError("note path must not be empty")
-    normalized = Path(note_path).as_posix()
-    path_parts = Path(normalized).parts
-    if (
-        Path(normalized).is_absolute()
-        or normalized == "."
-        or ".." in path_parts
-    ):
-        raise ValueError(f"note path must be repo-relative: {raw}")
+    normalized = normalize_repo_relative_path(note_path, label="note path")
     if not (repo_root / normalized).is_file():
         raise FileNotFoundError(f"note not found: {normalized}")
     return normalized

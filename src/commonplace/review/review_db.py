@@ -5,7 +5,7 @@ from __future__ import annotations
 
 import os
 import sqlite3
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 from hashlib import sha256
 from importlib import resources
 from pathlib import Path
@@ -13,8 +13,9 @@ from typing import Sequence
 
 from commonplace.review.artifacts import job_output_path_rel, prompt_path_rel, result_path
 from commonplace.review.clock import iso_now
-from commonplace.review.paths import criterion_id_from_stored_path
+from commonplace.review.paths import criterion_id_from_stored_path, normalize_repo_relative_path
 from commonplace.review.review_model import build_model_partition, normalize_model_partition, normalize_reasoning_effort
+from commonplace.review.review_schema import connect as connect
 from commonplace.review.review_schema import init_db
 
 DEFAULT_DB_PATH = Path("kb/reports/review-store.sqlite")
@@ -122,6 +123,18 @@ class ReviewPairRow:
     def criterion_id(self) -> str:
         return criterion_id_from_stored_path(self.criterion_path)
 
+    def to_payload(self) -> dict[str, object]:
+        return {
+            "review_pair_id": self.review_pair_id,
+            "note_path": self.note_path,
+            "criterion_path": self.criterion_path,
+            "criterion_id": self.criterion_id,
+            "pair_ordinal": self.pair_ordinal,
+            "result_kind": self.result_kind,
+            "outcome": self.outcome,
+            "result_path": self.result_path,
+        }
+
 
 @dataclass(frozen=True)
 class ReviewPairRequest:
@@ -158,12 +171,33 @@ class ReviewJobPlan:
     grouping: str
     pairs: tuple[ReviewPairRow, ...]
 
-
-def connect(db_path: Path) -> sqlite3.Connection:
-    conn = sqlite3.connect(db_path)
-    conn.row_factory = sqlite3.Row
-    conn.execute("PRAGMA foreign_keys = ON")
-    return conn
+    def to_payload(self, *, include_timestamps: bool = False) -> dict[str, object]:
+        ordered_pairs = sorted(self.pairs, key=lambda pair: pair.pair_ordinal)
+        pair_items = [pair.to_payload() for pair in ordered_pairs]
+        payload: dict[str, object] = {
+            "review_job_id": self.review_job_id,
+            "status": self.status,
+            "model_partition": self.model_partition,
+            "runner": self.runner,
+            "runner_model": self.runner_model,
+            "runner_effort": self.runner_effort,
+            "grouping": self.grouping,
+            "prompt_path": self.prompt_path,
+            "job_output_path": self.job_output_path,
+            "pair_count": len(self.pairs),
+            "pairs": pair_items,
+        }
+        if include_timestamps:
+            payload.update(
+                {
+                    "created_at": self.created_at,
+                    "completed_at": self.completed_at,
+                    "failure_reason": self.failure_reason,
+                }
+            )
+            for item, pair in zip(pair_items, ordered_pairs, strict=True):
+                item["completed_at"] = pair.completed_at
+        return payload
 
 
 def resolve_db_path(repo_root: Path, db_override: str | None = None) -> Path:
@@ -195,14 +229,7 @@ def _placeholders(values: Sequence[object]) -> str:
 
 
 def snapshot_file(conn: sqlite3.Connection, *, repo_root: Path, path: str) -> ReviewFileSnapshot:
-    normalized_path = Path(path).as_posix()
-    path_parts = Path(normalized_path).parts
-    if (
-        Path(normalized_path).is_absolute()
-        or normalized_path == "."
-        or ".." in path_parts
-    ):
-        raise ValueError(f"snapshot path must be repo-relative: {path}")
+    normalized_path = normalize_repo_relative_path(path, label="snapshot path")
     content_text = (repo_root / normalized_path).read_text(encoding="utf-8")
     content_sha256 = sha256(content_text.encode("utf-8")).hexdigest()
     conn.execute(
@@ -452,22 +479,11 @@ def load_review_pairs_for_job(conn: sqlite3.Connection, *, review_job_id: int) -
 
 
 def _job_plan_from_job(conn: sqlite3.Connection, job: ReviewJobRow) -> ReviewJobPlan:
-    pairs = tuple(load_review_pairs_for_job(conn, review_job_id=job.review_job_id))
     return ReviewJobPlan(
-        review_job_id=job.review_job_id,
-        model_partition=job.model_partition,
-        runner=job.runner,
-        runner_model=job.runner_model,
-        runner_effort=job.runner_effort,
-        created_at=job.created_at,
-        completed_at=job.completed_at,
-        status=job.status,
-        failure_reason=job.failure_reason,
-        telemetry_json=job.telemetry_json,
+        **asdict(job),
         prompt_path=prompt_path_rel(job.review_job_id),
         job_output_path=job_output_path_rel(job.review_job_id),
-        grouping=job.grouping,
-        pairs=pairs,
+        pairs=tuple(load_review_pairs_for_job(conn, review_job_id=job.review_job_id)),
     )
 
 
@@ -579,7 +595,7 @@ def attach_execution_data(
             (review_job_id,),
         ).fetchone()
         if row is None:
-            return
+            raise ValueError(f"review job not found: {review_job_id}")
         effective_model = runner_model if runner_model is not None else row["runner_model"]
         effective_effort = runner_effort if runner_effort is not None else row["runner_effort"]
         normalized_effort = _validated_runner_effort(

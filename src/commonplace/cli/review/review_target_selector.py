@@ -7,7 +7,7 @@ import argparse
 from pathlib import Path
 
 from commonplace.review.paths import review_gates_dir
-from commonplace.review.resolve_criteria import all_gate_requests, resolve_criterion_requests
+from commonplace.review.resolve_criteria import criterion_ids_for_cli
 from commonplace.review.review_target_selector import (
     render_grouped,
     render_json,
@@ -72,20 +72,10 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
 
     gates_dir = review_gates_dir(repo_root)
 
-    if args.all_gates:
-        if args.criterion_or_bundle:
-            parser.error("criterion/bundle names and --all-gates are mutually exclusive")
-        try:
-            criterion_ids = all_gate_requests(gates_dir)
-        except (FileNotFoundError, ValueError) as exc:
-            parser.error(str(exc))
-    elif args.criterion_or_bundle:
-        try:
-            criterion_ids = resolve_criterion_requests(args.criterion_or_bundle, gates_dir)
-        except (FileNotFoundError, ValueError) as exc:
-            parser.error(str(exc))
-    else:
-        parser.error("provide criterion/bundle names or --all-gates")
+    try:
+        criterion_ids = criterion_ids_for_cli(gates_dir, args.criterion_or_bundle, all_gates=args.all_gates)
+    except (FileNotFoundError, ValueError) as exc:
+        parser.error(str(exc))
 
     if args.mode == "requested" and args.reason is not None:
         parser.error("--reason is only valid with --mode stale")

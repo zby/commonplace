@@ -8,13 +8,19 @@ from typing import Any
 from commonplace.lib import frontmatter
 from commonplace.review.collection_conformance import COLLECTION_CONFORMANCE_LENS, is_collection_conformance_request
 from commonplace.review.critique import is_critique_request
+from commonplace.review.paths import reject_unsafe_relative
 from commonplace.review.type_conformance import TYPE_CONFORMANCE_LENS, is_type_conformance_request
 
 
-def _reject_unsafe_criterion_arg(arg: str) -> None:
-    path = Path(arg)
-    if path.is_absolute() or arg.strip() in {"", "."} or ".." in path.parts:
-        raise ValueError(f"criterion id or bundle must stay inside the review gate catalog: {arg}")
+def criterion_ids_for_cli(gates_dir: Path, requests: list[str], *, all_gates: bool) -> list[str]:
+    """Resolve the shared CLI contract: positional criterion/bundle names XOR --all-gates."""
+    if all_gates:
+        if requests:
+            raise ValueError("criterion/bundle names and --all-gates are mutually exclusive")
+        return all_gate_requests(gates_dir)
+    if requests:
+        return resolve_criterion_requests(requests, gates_dir)
+    raise ValueError("provide criterion/bundle names or --all-gates")
 
 
 def resolve_criterion_requests(requests: list[str], gates_dir: Path) -> list[str]:
@@ -61,7 +67,7 @@ def resolve_to_criterion_ids(args: list[str], gates_dir: Path) -> list[str]:
     criterion_ids: list[str] = []
     for arg in args:
         arg = arg.strip()
-        _reject_unsafe_criterion_arg(arg)
+        reject_unsafe_relative(arg, kind="criterion id or bundle")
         bundle_dir = gates_dir / arg
         if bundle_dir.is_dir():
             for gate_file in sorted(bundle_dir.glob("*.md")):

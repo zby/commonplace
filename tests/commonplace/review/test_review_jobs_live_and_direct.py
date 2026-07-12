@@ -595,7 +595,7 @@ def test_finalize_review_job_uses_job_owned_paths_and_writes_provenance_frontmat
     assert payload == {
         "completed": True,
         "completed_pair_count": 1,
-        "failed": [],
+        "failure_reason": None,
         "job": {"review_job_id": review_job_id, "status": "completed"},
         "review_job_id": review_job_id,
         "state_changed": True,
@@ -666,9 +666,7 @@ def test_finalize_review_job_result_write_failure_rolls_back_and_preserves_prove
     payload = json.loads(result.stdout)
     assert payload["completed"] is False
     assert payload["completed_pair_count"] == 0
-    assert payload["failed"] == [
-        {"review_job_id": review_job_id, "reason": "simulated result write failure"}
-    ]
+    assert payload["failure_reason"] == "simulated result write failure"
     assert payload["job"] == {"review_job_id": review_job_id, "status": "failed"}
     with sqlite3.connect(db_path) as conn:
         conn.row_factory = sqlite3.Row

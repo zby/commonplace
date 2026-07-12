@@ -20,6 +20,10 @@ class ReviewPairForPath(Protocol):
     pair_ordinal: int
 
 
+class ReviewPairForManifest(ReviewPairForPath, Protocol):
+    result_kind: str
+
+
 class ReviewJobForResult(Protocol):
     review_job_id: int
     model_partition: str
@@ -187,7 +191,7 @@ def write_manifest(
     grouping: str,
     prompt_path: str,
     job_output_path: str,
-    pairs: Sequence[ReviewPairForPath],
+    pairs: Sequence[ReviewPairForManifest],
     failure_reason: str | None = None,
 ) -> str:
     result_paths = result_paths_by_pair_id(
@@ -206,7 +210,7 @@ def write_manifest(
             "review_pair_id": pair.review_pair_id,
             "note_path": pair.note_path,
             "criterion_path": pair.criterion_path,
-            "result_kind": getattr(pair, "result_kind", "verdict"),
+            "result_kind": pair.result_kind,
             "status": pair_display_status,
             "result_path": result_paths[pair.review_pair_id],
         }

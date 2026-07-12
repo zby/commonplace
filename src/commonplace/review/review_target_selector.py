@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import difflib
 import json
 from dataclasses import dataclass
 from pathlib import Path
@@ -283,8 +284,6 @@ def _criterion_paths_for_notes(
 
 
 def note_diff_from_text(note_path: str, previous_text: str, current_text: str) -> str | None:
-    import difflib
-
     diff = "".join(
         difflib.unified_diff(
             previous_text.splitlines(keepends=True),

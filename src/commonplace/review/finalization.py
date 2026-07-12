@@ -62,7 +62,7 @@ class FinalizeReviewJobOutcome:
     state_changed: bool
     review_job_id: int
     completed_pair_count: int = 0
-    failed: tuple[tuple[int, str], ...] = ()
+    failure_reason: str | None = None
     job_status: str | None = None
     reason: str | None = None
     warnings: tuple[str, ...] = ()
@@ -87,10 +87,7 @@ class FinalizeReviewJobOutcome:
             "state_changed": True,
             "review_job_id": self.review_job_id,
             "completed_pair_count": self.completed_pair_count,
-            "failed": [
-                {"review_job_id": review_job_id, "reason": reason}
-                for review_job_id, reason in self.failed
-            ],
+            "failure_reason": self.failure_reason,
             "job": {
                 "review_job_id": self.review_job_id,
                 "status": self.job_status,
@@ -208,7 +205,7 @@ def finalize_review_job_from_owned_output(
                 state_changed=True,
                 review_job_id=review_job_id,
                 completed_pair_count=0,
-                failed=((review_job_id, failure_reason),),
+                failure_reason=failure_reason,
                 job_status="failed",
                 warnings=warnings,
             )
@@ -222,7 +219,6 @@ def finalize_review_job_from_owned_output(
             state_changed=True,
             review_job_id=review_job_id,
             completed_pair_count=len(finalized.pairs),
-            failed=(),
             job_status="completed",
             warnings=warnings,
         )

@@ -29,7 +29,7 @@ EXPECTED_REVIEW_VIEWS = frozenset({"current_freshness_baselines"})
 
 def init_db(db_path: Path, schema_path: Path) -> None:
     db_path.parent.mkdir(parents=True, exist_ok=True)
-    conn = _connect(db_path)
+    conn = connect(db_path)
     try:
         existing_tables = _schema_object_names(conn, "table")
         review_tables = {
@@ -60,7 +60,7 @@ def apply_schema(conn: sqlite3.Connection, schema_path: Path) -> None:
     conn.executescript(schema_path.read_text(encoding="utf-8"))
 
 
-def _connect(db_path: Path) -> sqlite3.Connection:
+def connect(db_path: Path) -> sqlite3.Connection:
     conn = sqlite3.connect(db_path)
     conn.row_factory = sqlite3.Row
     conn.execute("PRAGMA foreign_keys = ON")

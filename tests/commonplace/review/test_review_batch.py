@@ -245,7 +245,7 @@ def test_finalize_review_job_finalizes_all_criterion_packed_pairs(tmp_path: Path
     payload = json.loads(result.stdout)
     assert payload["completed"] is True
     assert payload["completed_pair_count"] == 2
-    assert payload["failed"] == []
+    assert payload["failure_reason"] is None
     assert payload["job"] == {"review_job_id": review_job_id, "status": "completed"}
 
     with sqlite3.connect(db_path) as conn:
@@ -314,9 +314,7 @@ def test_finalize_review_job_fails_partial_output_without_salvage(tmp_path: Path
     assert payload["completed"] is False
     assert payload["completed_pair_count"] == 0
     assert payload["state_changed"] is True
-    assert payload["failed"] == [
-        {"review_job_id": review_job_id, "reason": f"missing pairs: kb/notes/second.md :: {GATE_PATH}"}
-    ]
+    assert payload["failure_reason"] == f"missing pairs: kb/notes/second.md :: {GATE_PATH}"
     assert payload["job"] == {"review_job_id": review_job_id, "status": "failed"}
 
     with sqlite3.connect(db_path) as conn:
@@ -395,7 +393,7 @@ def test_finalize_review_job_parse_error_marks_job_failed(tmp_path: Path) -> Non
     assert payload["completed"] is False
     assert payload["completed_pair_count"] == 0
     assert payload["state_changed"] is True
-    assert "unexpected pair" in payload["failed"][0]["reason"]
+    assert "unexpected pair" in payload["failure_reason"]
     with sqlite3.connect(db_path) as conn:
         conn.row_factory = sqlite3.Row
         job = conn.execute("SELECT status, failure_reason FROM review_jobs").fetchone()
@@ -429,7 +427,7 @@ def test_finalize_review_job_error_fails_without_pair_completion_or_baseline(tmp
     assert result.returncode == 1
     payload = json.loads(result.stdout)
     assert payload["completed_pair_count"] == 0
-    assert payload["failed"][0]["reason"] == "worker reported ERROR"
+    assert payload["failure_reason"] == "worker reported ERROR"
     with sqlite3.connect(db_path) as conn:
         job = conn.execute("SELECT status FROM review_jobs").fetchone()
         pair = conn.execute("SELECT outcome, completed_at FROM review_pairs").fetchone()

@@ -28,10 +28,19 @@ SOURCE_GATES_ROOT = Path("kb/instructions/review-gates")
 INSTALLED_GATES_ROOT = Path("kb/commonplace/instructions/review-gates")
 
 
-def _reject_unsafe_relative(raw: str, *, kind: str) -> None:
+def reject_unsafe_relative(raw: str, *, kind: str) -> None:
     path = Path(raw)
     if path.is_absolute() or raw in {"", "."} or ".." in path.parts:
         raise ValueError(f"{kind} must be relative and stay inside the review gate catalog: {raw}")
+
+
+def normalize_repo_relative_path(raw: str, *, label: str) -> str:
+    """Validate a repo-relative path string and return its POSIX form."""
+    path = Path(raw)
+    normalized = path.as_posix()
+    if path.is_absolute() or normalized == "." or ".." in path.parts:
+        raise ValueError(f"{label} must be repo-relative: {raw}")
+    return normalized
 
 
 def review_gates_dir(repo_root: Path) -> Path:
@@ -51,7 +60,7 @@ def review_gates_dir(repo_root: Path) -> Path:
 def criterion_path_for_id(repo_root: Path, criterion_id: str) -> str:
     """Resolve a criterion shorthand to its repo-relative markdown path."""
     normalized = criterion_id.strip().removesuffix(".md")
-    _reject_unsafe_relative(normalized, kind="criterion id")
+    reject_unsafe_relative(normalized, kind="criterion id")
     if is_type_conformance_request(normalized):
         return resolve_type_criterion_id(repo_root, normalized)
     if is_collection_conformance_request(normalized):
@@ -70,7 +79,7 @@ def criterion_path_for_id(repo_root: Path, criterion_id: str) -> str:
 
 def criterion_id_for_path(repo_root: Path, criterion_path: str) -> str:
     """Derive the human-facing criterion shorthand from a repo-relative criterion path."""
-    _reject_unsafe_relative(criterion_path, kind="criterion path")
+    reject_unsafe_relative(criterion_path, kind="criterion path")
     if is_type_spec_criterion_path(Path(criterion_path).as_posix()):
         if not (repo_root / criterion_path).is_file():
             raise FileNotFoundError(f"criterion not found: {criterion_path}")
@@ -116,29 +125,28 @@ def normalize_criterion_path(repo_root: Path, criterion: str) -> str:
     raw = criterion.strip()
     if not raw:
         raise ValueError("criterion must not be empty")
-    _reject_unsafe_relative(raw, kind="criterion path")
+    reject_unsafe_relative(raw, kind="criterion path")
     candidate = Path(raw)
-    if candidate.is_absolute():
-        raise ValueError(f"criterion path must be repo-relative: {criterion}")
-    if raw.endswith(".md") or raw.startswith("kb/"):
-        if (
-            is_type_spec_criterion_path(candidate.as_posix())
-            or is_collection_md_criterion_path(candidate.as_posix())
-            or is_critique_criterion_path(candidate.as_posix())
-        ):
-            criterion_abs = (repo_root / candidate).resolve()
-            if not criterion_abs.is_file():
-                raise FileNotFoundError(f"criterion not found: {criterion}")
-            return criterion_abs.relative_to(repo_root.resolve()).as_posix()
-        criterion_abs = (repo_root / candidate).resolve()
-        if criterion_abs.is_file():
-            gates_dir = review_gates_dir(repo_root).resolve()
-            if not criterion_abs.is_relative_to(gates_dir):
-                raise ValueError(f"criterion path is outside the review gate catalog: {criterion}")
-            return criterion_abs.relative_to(repo_root.resolve()).as_posix()
-        if raw.startswith("kb/"):
-            gates_dir = review_gates_dir(repo_root).resolve()
-            if not criterion_abs.is_relative_to(gates_dir):
-                raise ValueError(f"criterion path is outside the review gate catalog: {criterion}")
+    if not raw.endswith(".md") and not raw.startswith("kb/"):
+        return criterion_path_for_id(repo_root, raw)
+
+    criterion_abs = (repo_root / candidate).resolve()
+    if (
+        is_type_spec_criterion_path(candidate.as_posix())
+        or is_collection_md_criterion_path(candidate.as_posix())
+        or is_critique_criterion_path(candidate.as_posix())
+    ):
+        if not criterion_abs.is_file():
             raise FileNotFoundError(f"criterion not found: {criterion}")
+        return criterion_abs.relative_to(repo_root.resolve()).as_posix()
+
+    if criterion_abs.is_file() or raw.startswith("kb/"):
+        gates_dir = review_gates_dir(repo_root).resolve()
+        if not criterion_abs.is_relative_to(gates_dir):
+            raise ValueError(f"criterion path is outside the review gate catalog: {criterion}")
+        if not criterion_abs.is_file():
+            raise FileNotFoundError(f"criterion not found: {criterion}")
+        return criterion_abs.relative_to(repo_root.resolve()).as_posix()
+    # A `.md` name outside kb/ that resolves to no file is a shorthand with an
+    # extension; criterion_path_for_id strips it and searches the catalog.
     return criterion_path_for_id(repo_root, raw)

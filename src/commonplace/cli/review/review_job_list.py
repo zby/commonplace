@@ -7,15 +7,11 @@ import argparse
 import json
 from pathlib import Path
 
-from commonplace.cli.review.create_review_jobs import _job_payload
 from commonplace.review.review_db import JOB_STATUS_VALUES, connect, list_review_job_plans, prepare_review_db
 from commonplace.review.review_model import normalize_model_partition
 
 
 def _print_table(jobs: list[dict[str, object]]) -> None:
-    if not jobs:
-        print("review_job_id\tstatus\tmodel_partition\tgrouping\trunner\tpairs\tprompt_path\tjob_output_path\tfailure_reason")
-        return
     print("review_job_id\tstatus\tmodel_partition\tgrouping\trunner\tpairs\tprompt_path\tjob_output_path\tfailure_reason")
     for job in jobs:
         print(
@@ -58,7 +54,7 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
             model_partition=model_partition,
         )
 
-    jobs = [_job_payload(plan, include_timestamps=True) for plan in plans]
+    jobs = [plan.to_payload(include_timestamps=True) for plan in plans]
     if args.json:
         payload = {
             "filters": {

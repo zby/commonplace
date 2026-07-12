@@ -41,7 +41,6 @@ A design insight is worth a note when it changes how someone would build or oper
 
 Terms needed to understand the project's structure and everyday operations, alphabetical. Each links its full definition.
 
-- **Freshness baseline** — the current snapshot-pinned freshness baseline for one `(note, criterion, model partition)` pair. It records completed evidence, not global approval; a fresh report is not “handled.” See `kb/reference/README-REVIEW-SYSTEM.md#concepts`.
 - **Assay** — any snapshot-anchored LLM evaluation executed through the review job pipeline. Closed-ended assays ask a fixed question; open-ended assays sample a space of possible findings. This question shape is distinct from the persisted `verdict`/`report` result kind. See `kb/reference/README-REVIEW-SYSTEM.md#concepts`.
 - **Codification** — the far end of constraining, where natural language crosses into a symbolic artifact (code, schema, grammar) with formal semantics. See `kb/notes/definitions/codification.md`.
 - **Collection** — a `kb/` subtree whose root contains `COLLECTION.md`; that file is the local authoring and routing contract for artifacts in the subtree. See `kb/reference/definitions/collection.md`.

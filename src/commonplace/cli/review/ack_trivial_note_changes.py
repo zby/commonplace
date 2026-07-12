@@ -13,7 +13,7 @@ from pathlib import Path
 
 from commonplace.review.acknowledgement import ack_pairs
 from commonplace.review.ack_trivial_note_changes import qualifying_pairs
-from commonplace.review.resolve_criteria import all_gate_requests, resolve_criterion_requests
+from commonplace.review.resolve_criteria import criterion_ids_for_cli
 from commonplace.review.paths import review_gates_dir
 
 
@@ -66,31 +66,17 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     if not model:
         parser.error("--model-partition must not be empty")
 
-    if args.all_gates:
-        if args.criterion_or_bundle:
-            parser.error("criterion/bundle names and --all-gates are mutually exclusive")
-        try:
-            criterion_ids = all_gate_requests(gates_dir)
-        except (FileNotFoundError, ValueError) as exc:
-            parser.error(str(exc))
-    elif args.criterion_or_bundle:
-        try:
-            criterion_ids = resolve_criterion_requests(args.criterion_or_bundle, gates_dir)
-        except (FileNotFoundError, ValueError) as exc:
-            parser.error(str(exc))
-    else:
-        parser.error("provide criterion/bundle names or --all-gates")
-
-    if args.note_paths and args.user_verified:
-        parser.error("--note and --user-verified are mutually exclusive")
-
-    pairs = qualifying_pairs(
-        repo_root,
-        model=model,
-        criterion_ids=criterion_ids,
-        note_filter=args.note_paths,
-        user_verified_only=args.user_verified,
-    )
+    try:
+        criterion_ids = criterion_ids_for_cli(gates_dir, args.criterion_or_bundle, all_gates=args.all_gates)
+        pairs = qualifying_pairs(
+            repo_root,
+            model=model,
+            criterion_ids=criterion_ids,
+            note_filter=args.note_paths,
+            user_verified_only=args.user_verified,
+        )
+    except (FileNotFoundError, ValueError) as exc:
+        parser.error(str(exc))
 
     if not pairs:
         print("No qualifying stale pairs found.")

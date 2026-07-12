@@ -13,7 +13,6 @@ from commonplace.review.batch import prepare_grouped_review_job
 from commonplace.review.paths import criterion_id_for_path, normalize_criterion_path, review_gates_dir
 from commonplace.review.resolve_criteria import applicable_criterion_ids_for_note
 from commonplace.review.review_db import (
-    ReviewJobPlan,
     connect,
     load_review_job_plan,
     prepare_review_db,
@@ -240,48 +239,6 @@ def _group_pairs(pairs: list[RequestedPair], *, grouping: str, batch_size: int) 
     raise ValueError(f"invalid grouping: {grouping}")
 
 
-def _pair_payload(pair) -> dict[str, object]:
-    return {
-        "review_pair_id": pair.review_pair_id,
-        "note_path": pair.note_path,
-        "criterion_path": pair.criterion_path,
-        "criterion_id": pair.criterion_id,
-        "pair_ordinal": pair.pair_ordinal,
-        "result_kind": pair.result_kind,
-        "outcome": pair.outcome,
-        "result_path": pair.result_path,
-    }
-
-
-def _job_payload(plan: ReviewJobPlan, *, include_timestamps: bool = False) -> dict[str, object]:
-    ordered_pairs = sorted(plan.pairs, key=lambda item: item.pair_ordinal)
-    pair_items = [_pair_payload(pair) for pair in ordered_pairs]
-    payload: dict[str, object] = {
-        "review_job_id": plan.review_job_id,
-        "status": plan.status,
-        "model_partition": plan.model_partition,
-        "runner": plan.runner,
-        "runner_model": plan.runner_model,
-        "runner_effort": plan.runner_effort,
-        "grouping": plan.grouping,
-        "prompt_path": plan.prompt_path,
-        "job_output_path": plan.job_output_path,
-        "pair_count": len(plan.pairs),
-        "pairs": pair_items,
-    }
-    if include_timestamps:
-        payload.update(
-            {
-                "created_at": plan.created_at,
-                "completed_at": plan.completed_at,
-                "failure_reason": plan.failure_reason,
-            }
-        )
-        for item, pair in zip(pair_items, ordered_pairs, strict=True):
-            item["completed_at"] = pair.completed_at
-    return payload
-
-
 def _skipped_payload(skipped: list[SkippedRequestedPair]) -> list[dict[str, object]]:
     payload: list[dict[str, object]] = []
     for pair in skipped:
@@ -377,7 +334,7 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
         "grouping": args.grouping,
         "created_count": len(plans),
         "skipped_count": len(skipped_pairs),
-        "jobs": [_job_payload(plan) for plan in plans],
+        "jobs": [plan.to_payload() for plan in plans],
         "skipped_pairs": _skipped_payload(skipped_pairs),
     }
     print(json.dumps(payload, ensure_ascii=True, sort_keys=True))
