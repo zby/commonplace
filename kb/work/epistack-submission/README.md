@@ -18,13 +18,13 @@ The design rule is: **standardize the connective tissue, not the contested subst
 - **Artifact identity and local contracts** — addressable Markdown artifacts declare their roles, while each collection declares the case-local grammar its artifacts obey.
 - **Discourse and inference relationships** — labelled, contextual links expose positions, subquestions, evidence, objections, dependencies, caveats, and contested joints.
 - **Non-flattening extension** — case-specific structures may be introduced locally without silently becoming universal framework concepts.
-- **Deterministic conformance** — schemas, links, dates, and verbatim quotations are machine-checked; false assertions fail.
+- **Deterministic conformance** — machine-readable claims are checked: schema shape, link resolution, `verbatim` spans against cited sources, type-owned marks, and other dereferencing rules the [validation contract](../../reference/validation-contract.md) names. A false machine-readable assertion fails; prose claims are not pretend-deterministic.
 - **Semantic review** — truth, grounding, consistency, and completeness remain criterion- and snapshot-anchored LLM judgments rather than pretend-deterministic fields.
-- **Maintenance and handoff** — source, artifact, criterion, and model changes expose targeted stale work another agent can discover and continue.
+- **Maintenance and handoff** — the protocol requires that source, artifact, criterion, and model changes expose targeted stale work another agent can discover and continue. **Shipped today:** review freshness for `(note, criterion, model partition)` pairs; type- and collection-conformance pairs when a type spec or `COLLECTION.md` changes ([ADR 038](../../reference/adr/038-type-conformance-reviews-use-the-type-spec-as-the-gate.md), [ADR 041](../../reference/adr/041-collection-conformance-reviews-use-collection-md-as-the-gate.md)); marked tag-README impact fan-out ([ADR 050](../../reference/adr/050-validation-runs-share-parsed-artifacts-and-collection-indexes.md)); full-pass disposition guards before asynchronous resolution ([ADR 051](../../reference/adr/051-full-pass-packets-own-guarded-captures-and-resolutions.md)). **Not shipped:** repository-wide artifact-neutral dependency baselines, reverse selection from arbitrary changed inputs, or ingest-report staleness when casebook notes appear — see [artifact-freshness-and-referential-checks](../artifact-freshness-and-referential-checks/README.md), actively in design and not submission-blocking.
 
 ### Commonplace as the reference implementation
 
-The implementation is running code, not a proposed format. `commonplace-validate` and `commonplace-verify-quotes` enforce referential claims ([ADR 046](../../reference/adr/046-verbatim-quotes-are-validated-against-their-cited-source.md)); collection and type contracts enforce the artifact grammar; snapshot-anchored review gates and model partitions preserve review provenance and freshness ([review system](../../reference/README-REVIEW-SYSTEM.md)). The welded-token form — `**Axis:** \`value\` — justification` — demonstrates how a machine-readable value can remain attached to the prose that earns it, with derived matrices checked rather than maintained as a second truth.
+The implementation is running code, not a proposed format. The [validation contract](../../reference/validation-contract.md) is the normative deterministic surface: `commonplace-validate` labels findings by source (`[base]`, `[type]`, `[schema]`), runs referential base checks (link health, verbatim quotes — [ADR 046](../../reference/adr/046-verbatim-quotes-are-validated-against-their-cited-source.md)), and shares one execution context per run ([ADR 050](../../reference/adr/050-validation-runs-share-parsed-artifacts-and-collection-indexes.md)); `commonplace-verify-quotes` gives the corpus-wide view. Collection and type contracts enforce artifact grammar; snapshot-anchored review gates and model partitions preserve review provenance and freshness ([review system](../../reference/README-REVIEW-SYSTEM.md)). `commonplace-guard-full-pass-report` is the second shipped non-review freshness pattern: packet-owned captures, shared text hashing, and a guard that refuses disposition work against changed inputs ([ADR 051](../../reference/adr/051-full-pass-packets-own-guarded-captures-and-resolutions.md)). The welded-token form — `**Axis:** \`value\` — justification` — demonstrates how a machine-readable value can remain attached to the prose that earns it, with derived matrices checked rather than maintained as a second truth.
 
 ### Demonstration on the three cases
 
@@ -63,12 +63,23 @@ Sized to a section, this is an asset. Sized to the spine, it would be a plan tha
 - **No new framework machinery that a worked case hasn't earned.** Build-local-first still holds; the deadline is not a licence to ship speculative types.
 - **Doctrine constraints are inputs, not open questions:** no stored confidence/authority scalars, adjudication stays a downstream labelled layer, frontmatter semantics stay type-owned.
 - **Nothing here builds the generic bulk-operations layer.** It is planned, large, and not ready. The entry reports the requirement and stops.
+- **General artifact freshness is in active design, not ready to claim.** [artifact-freshness-and-referential-checks](../artifact-freshness-and-referential-checks/README.md) owns dependency baselines, repository-wide selection, and the Epistack-motivated collection source snapshot. The entry defines the maintenance contract, names what is shipped (review, conformance pairs, full-pass guard), and states what is designed but not yet implemented. Do not wait for general freshness to ship before submitting.
 
 ## Build candidates
 
 ### Extract the standalone protocol and conformance guide (the main deliverable)
 
 The repository already implements the protocol, but its normative surface is distributed across collection contracts, type specifications, ADRs, validators, and review documentation. Extract one submission-facing specification containing: scope; required artifact and source surfaces; relationship grammar; local-extension rules; deterministic-versus-semantic verification boundary; change/freshness semantics; a conformance checklist; and one worked path through each case.
+
+**Normative sources to consolidate.** Treat [validation-contract.md](../../reference/validation-contract.md) as the submission-facing deterministic half (intra-document schema versus referential dereferencing, base contract, severity asymmetry). Treat [README-REVIEW-SYSTEM.md](../../reference/README-REVIEW-SYSTEM.md) plus ADRs 038, 041, and 051 as the shipped freshness inventory. For change/freshness semantics, describe three tiers explicitly:
+
+| Tier | Mechanism | Status |
+|---|---|---|
+| Review freshness | DB snapshots, selector, ack, model partitions | Shipped |
+| Disposition guarding | Packet captures + `commonplace-guard-full-pass-report` | Shipped, narrow |
+| General artifact freshness | Dependency baselines, reverse selection, collection source snapshots | Designed; [workshop](../artifact-freshness-and-referential-checks/README.md) in progress |
+
+State plainly that prose cross-artifact claims (for example an ingest report still saying no casebook notes exist) are semantic maintenance or review work unless codified into a machine-readable mark — not missing validator code. The Epistack collection-membership case is a motivating witness for the third tier's collection source snapshot, not evidence that `commonplace-validate` should parse ingest prose.
 
 The protocol document and runnable Commonplace walkthrough are the entry. New machinery is subordinate to making those two artifacts precise, inspectable, and usable by another investigator.
 
@@ -126,7 +137,7 @@ Days are working days from 12 July; submission 19 July.
 
 | Days | Work |
 |---|---|
-| 1 | **DONE.** Quote verifier shipped ([ADR 046](../../reference/adr/046-verbatim-quotes-are-validated-against-their-cited-source.md)) |
+| 1 | **DONE.** Quote verifier ([ADR 046](../../reference/adr/046-verbatim-quotes-are-validated-against-their-cited-source.md)); validation runs ([ADR 050](../../reference/adr/050-validation-runs-share-parsed-artifacts-and-collection-indexes.md)); full-pass guard ([ADR 051](../../reference/adr/051-full-pass-packets-own-guarded-captures-and-resolutions.md)); [validation contract](../../reference/validation-contract.md) |
 | 1–2 | **Extract the protocol.** Write the standalone normative specification, conformance checklist, and exact runnable workflow. Freeze the submission claim around the Structure layer and reference implementation |
 | 1–3 | **Build the three-case demonstration.** Fix the 18 quotation mismatches, rerun validation cleanly, and produce a requirements/results table plus one navigational walkthrough per case |
 | 3 | **Cheap judge-facing evidence.** Package the one-command adversarial demo (clone → verify-quotes → planted failure fails) and log one hands-free transcript of the source→note→validate→review loop on a new source |
