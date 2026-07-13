@@ -48,6 +48,10 @@ Five design principles the system is built on. The research claims behind them l
 
 **Externalized methodology.** The procedures for working the wiki — how to write a note, connect it, validate it — are written down as skills and conventions, not baked into a particular model or assistant. Every agent reads them fresh, so a different model, or a new session, produces consistent work: the manual is on disk, not in the weights.
 
+## Research threads
+
+The methodology notes live under `kb/notes/`; the rendered-site homepage is [kb/index.md](./kb/index.md). Start with [deploy-time learning](./kb/notes/deploy-time-learning-is-the-missing-middle.md). For when executable methodology becomes reflexive system machinery — and how retained design rationale feeds that loop when authors carry it forward — see [actionable theories and reflexive system construction](./kb/notes/actionable-theories-and-reflexive-system-construction.md) and [design rationale management in Commonplace](./kb/reference/design-rationale-management.md).
+
 ## Skills, instructions, and commands
 
 Commonplace gives agents three kinds of operative artifact.
