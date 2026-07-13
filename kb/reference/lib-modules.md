@@ -138,8 +138,8 @@ Bare enum values, missing type files, missing `schema` fields in type specs, abs
 - `schema: dict | None` — parsed JSON Schema mapping, or `None`
 
 
-**`resolve_type(file_path: Path, frontmatter: dict | None, *, repo_root: Path) -> TypeProfile`**
-Note-oriented entry point. Validates the path-valued `type:` and delegates the referenced type document to `resolve_type_definition`.
+**`resolve_type(file_path: Path, frontmatter: dict | None, *, repo_root: Path, load_type_frontmatter=None) -> TypeProfile`**
+Note-oriented entry point. Validates the path-valued `type:` and delegates the referenced type document to `resolve_type_definition`. A validation run supplies its cached frontmatter loader; standalone callers omit it and the resolver reads the type document directly.
 
 **`resolve_type_definition(type_doc_path: Path, *, repo_root: Path, type_frontmatter: dict | None = None) -> TypeProfile`**
 Load an identified type-spec document and its declared schema directly. Callers that already parsed the document may supply its frontmatter to avoid reopening it; ordinary note resolution omits the mapping and loads the type document itself.

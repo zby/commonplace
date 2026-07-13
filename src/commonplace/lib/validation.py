@@ -138,6 +138,19 @@ class ValidationRun:
         self._documents[key] = loaded
         return loaded
 
+    def load_type_frontmatter(self, path: Path) -> dict[str, object]:
+        """Return cached type-spec frontmatter with resolver-compatible errors."""
+        loaded = self.load_document(path)
+        display_path = path.resolve().relative_to(self.repo_root).as_posix()
+        if loaded.error:
+            raise ValueError(
+                f"{display_path}: invalid type-spec frontmatter: {loaded.error}"
+            )
+        assert loaded.document is not None
+        if not loaded.document.frontmatter:
+            raise ValueError(f"{display_path}: type spec must have frontmatter")
+        return loaded.document.frontmatter
+
     def parse_note(self, path: Path) -> tuple[ParsedNote | None, str | None]:
         """Resolve a cached parsed document's type for deterministic validation."""
         key = path.resolve()
@@ -152,7 +165,10 @@ class ValidationRun:
 
         try:
             profile = resolve_type(
-                key, loaded.document.frontmatter, repo_root=self.repo_root
+                key,
+                loaded.document.frontmatter,
+                repo_root=self.repo_root,
+                load_type_frontmatter=self.load_type_frontmatter,
             )
         except (FileNotFoundError, ValueError) as exc:
             result = (None, str(exc))
@@ -403,7 +419,13 @@ def validate_quote_citations(results: CheckResults, content: str) -> None:
         results.passes.append(f"quote-anchored citations: {found} well-formed")
 
 
-def validate_verbatim_quotes(results: CheckResults, content: str, path: Path) -> None:
+def validate_verbatim_quotes(
+    results: CheckResults,
+    content: str,
+    path: Path,
+    *,
+    load_source: Callable[[Path], str] | None = None,
+) -> None:
     """Resolve `verbatim`-marked quotations against the sources they cite.
 
     A `verbatim` citation claims a quoted span is copied exactly from a linked
@@ -417,7 +439,7 @@ def validate_verbatim_quotes(results: CheckResults, content: str, path: Path) ->
     KB that never adopted the convention, and a check that cries wolf teaches
     authors to ignore it — which is the failure this check exists to prevent.
     """
-    quote_results = verify_content(content, path)
+    quote_results = verify_content(content, path, load_source=load_source)
     if not quote_results:
         return
 
@@ -710,7 +732,12 @@ def _validate_parsed_note(parsed: ParsedNote, *, run: ValidationRun) -> CheckRes
         note_type=parsed.note_type,
     )
     validate_links_from_document(base, parsed.path, parsed.document.links)
-    validate_verbatim_quotes(base, parsed.content, parsed.path)
+    validate_verbatim_quotes(
+        base,
+        parsed.content,
+        parsed.path,
+        load_source=lambda path: run.load_document(path).content,
+    )
     _merge_labelled(results, base, "base")
 
     type_identity = canonical_type_identity(parsed.profile)

@@ -1160,7 +1160,7 @@ def test_validation_run_parses_collection_artifacts_once_and_reuses_indexes(
 ) -> None:
     notes = configure_tag_readme_repo(tmp_path)
 
-    def tagged(name: str, tags: str) -> Path:
+    def tagged(name: str, tags: str, body: str = "") -> Path:
         return write(
             notes / f"{name}.md",
             f"""---
@@ -1170,6 +1170,8 @@ tags: [{tags}]
 ---
 
 # {name.title()}
+
+{body}
 """,
         )
 
@@ -1193,8 +1195,13 @@ complete: true
 """,
         )
 
-    first = tagged("first", "alpha, beta")
-    second = tagged("second", "alpha")
+    first = tagged(
+        "first",
+        "alpha, beta",
+        'The source says "cache fixture phrase" '
+        "([Second](./second.md), verbatim).",
+    )
+    second = tagged("second", "alpha", "The cache fixture phrase appears here.")
     alpha = complete_head("alpha", ("first", "second"))
     beta = complete_head("beta", ("first",))
     paths = tuple(project_paths.list_collection_note_paths(notes))
@@ -1228,6 +1235,49 @@ complete: true
         beta,
     }
     assert not outcome.collection_structure
+
+
+def test_validation_run_reuses_target_type_document_for_resolution(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    notes = configure_temp_repo(tmp_path)
+    type_spec = write_type_spec(
+        tmp_path,
+        "kb/types/type-spec.md",
+        name="type-spec",
+        schema=None,
+    )
+    note_type = tmp_path / "kb" / "types" / "note.md"
+    note = write(
+        notes / "sample.md",
+        """---
+description: Sample note exercising cached type resolution
+type: kb/types/note.md
+---
+
+# Sample
+""",
+    )
+    selected = {path.resolve() for path in (type_spec, note_type, note)}
+    reads: Counter[Path] = Counter()
+    original_read_text = Path.read_text
+
+    def counting_read_text(path: Path, *args: object, **kwargs: object) -> str:
+        resolved = path.resolve()
+        if resolved in selected:
+            reads[resolved] += 1
+        return original_read_text(path, *args, **kwargs)
+
+    monkeypatch.setattr(Path, "read_text", counting_read_text)
+
+    outcome = validation.ValidationRun(
+        repo_root=tmp_path,
+        paths=(note_type, note),
+    ).evaluate()
+
+    assert not any(result.fails for result in outcome.results.values())
+    assert all(reads[path] == 1 for path in selected)
 
 
 def test_bulk_scopes_are_rejected(tmp_path: Path) -> None:

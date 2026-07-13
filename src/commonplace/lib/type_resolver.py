@@ -6,7 +6,7 @@ from dataclasses import dataclass
 from functools import lru_cache
 from pathlib import Path
 from urllib.parse import urlparse
-from typing import Any
+from typing import Any, Callable
 
 import yaml
 from jsonschema import Draft202012Validator, FormatChecker
@@ -354,6 +354,7 @@ def resolve_type(
     frontmatter: dict[str, Any] | None,
     *,
     repo_root: Path,
+    load_type_frontmatter: Callable[[Path], dict[str, Any]] | None = None,
 ) -> TypeProfile:
     workspace_root = repo_root.resolve()
     if frontmatter is None:
@@ -373,9 +374,15 @@ def resolve_type(
         repo_root=workspace_root,
         source_file=file_path,
     )
+    type_frontmatter = (
+        load_type_frontmatter(type_doc_path)
+        if load_type_frontmatter is not None and type_doc_path.is_file()
+        else None
+    )
     return resolve_type_definition(
         type_doc_path,
         repo_root=workspace_root,
+        type_frontmatter=type_frontmatter,
     )
 
 

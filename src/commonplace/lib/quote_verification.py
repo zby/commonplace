@@ -32,7 +32,7 @@ import re
 import unicodedata
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Iterable, Sequence
+from typing import Callable, Iterable, Sequence
 
 from commonplace.lib.note_parser import blank_fenced_code_blocks
 
@@ -207,7 +207,12 @@ def _marker_is_confident(paragraph: str, quote: _Quote, link: _Link) -> bool:
     return positive_marker(paragraph[max(0, link.start - 80) : quote.start])
 
 
-def verify_content(content: str, note: Path) -> list[QuoteResult]:
+def verify_content(
+    content: str,
+    note: Path,
+    *,
+    load_source: Callable[[Path], str] | None = None,
+) -> list[QuoteResult]:
     """Verify verbatim quotations in already-read note content.
 
     Code fences are neutralized through the shared parser primitive, so this
@@ -215,6 +220,11 @@ def verify_content(content: str, note: Path) -> list[QuoteResult]:
     the citation convention is showing it, not asserting it, and scanning one
     would report a false mismatch against whatever source the example links.
     """
+    if load_source is None:
+
+        def load_source(path: Path) -> str:
+            return path.read_text(encoding="utf-8")
+
     text = blank_fenced_code_blocks(content)
     results: list[QuoteResult] = []
 
@@ -256,9 +266,7 @@ def verify_content(content: str, note: Path) -> list[QuoteResult]:
                         "linked source is missing or is not a file",
                     )
                 )
-            elif normalize_text(quote.text) in normalize_text(
-                source.read_text(encoding="utf-8")
-            ):
+            elif normalize_text(quote.text) in normalize_text(load_source(source)):
                 results.append(QuoteResult("match", note, line, quote.text, source, ""))
             else:
                 results.append(
