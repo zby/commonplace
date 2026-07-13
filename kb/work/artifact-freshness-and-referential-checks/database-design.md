@@ -65,7 +65,7 @@ The one Commonplace review pair without a current baseline remains retained revi
 |---|---|---|---|
 | `review_jobs` | `review_jobs` | **Stays** | Same name, columns, checks, indexes, ids, and review ownership. |
 | `review_file_snapshots` | `artifact_snapshots` | **Renamed and generalized** | Each `(path, hash, text)` becomes a `file-text` snapshot. Path remains artifact identity; snapshot ids, hashes, text, and timestamps are preserved. |
-| `review_pairs` | `review_pairs` | **Stays, foreign keys retargeted** | Same review fields and ids. The two reviewed snapshot columns now reference `artifact_snapshots`. |
+| `review_pairs` | `review_pairs` | **Stays, foreign keys retargeted** | Same review fields and ids. The two reviewed snapshot columns now reference `artifact_snapshots`. Add `expected_baseline_revision` for queued-job CAS. |
 | `freshness_baselines` | `freshness_baselines` + `freshness_inputs` | **Generalized** | The old review-shaped row becomes one current `review-pair` baseline and two accepted input roles, `note` and `criterion`. Target identity stays on the baseline row. |
 | `freshness_baselines.evidence_review_pair_id` | `review_freshness_evidence.evidence_review_pair_id` | **Moved** | Evidence ownership is review-specific and retains a real FK to `review_pairs`. |
 | `freshness_baselines.baseline_note_snapshot_id` | `freshness_inputs.accepted_snapshot_id`, input `note` | **Moved** | The role becomes data instead of a dedicated column. |
@@ -104,7 +104,54 @@ CREATE TABLE artifact_snapshots (
 
 The stored hash must equal `SHA-256(content_text.encode("utf-8"))`. Snapshot text is mandatory because accepted-to-current diffs are part of acknowledgement. Path is artifact identity; `version_kind` fixes how that path is rendered into versioned text. Identical versions of the same path and version kind deduplicate.
 
-`file-text` reads one regular non-symlink UTF-8 file under `kb/`. `collection-text` renders one `COLLECTION.md`-bearing directory with a fixed Commonplace rule: sorted visible regular non-symlink Markdown content, excluding `COLLECTION.md`, `types/` subtrees, and replaced archives. It has no per-target include/exclude configuration.
+`file-text` reads one regular non-symlink UTF-8 file under `kb/`.
+
+`collection-text` renders one `COLLECTION.md`-bearing directory with the fixed rule in [Collection-text encoding](#collection-text-encoding). It has no per-target include/exclude configuration.
+
+### Collection-text encoding
+
+`collection-text` is a deterministic UTF-8 byte sequence. The stored snapshot hash is `SHA-256` of those bytes. The encoding is versioned by its first line; any rule change requires an explicit migration because every registered `collection-text` baseline becomes stale.
+
+**Scope.** One collection root: a normalized repository-relative directory that contains `COLLECTION.md`. Membership is non-recursive into nested collection roots — a child directory bearing its own `COLLECTION.md` is a separate collection identity and is excluded from the parent snapshot.
+
+**Member enumeration.** Collect every visible regular-file `*.md` under the collection root using the same visibility walk as `commonplace.lib.project_paths.walk_visible`:
+
+- include files in subdirectories of the collection root;
+- exclude dot-prefixed paths and nested git repositories;
+- exclude symlinks and non-regular files;
+- exclude `COLLECTION.md`;
+- exclude any path with a `types/` directory segment between the collection root and the file;
+- exclude `.replaced.*.md` archive filenames; and
+- do not apply repository-wide artifact-dir pruning (`build/`, `node_modules/`, etc.) inside a collection walk.
+
+Sort members by normalized repository-relative POSIX path with `/` separators.
+
+**Byte layout.**
+
+```text
+COMMONPLACE-COLLECTION-TEXT/1
+<member-record>*
+```
+
+Each `<member-record>` is:
+
+```text
+--- member
+path: <normalized-repo-relative-path>
+sha256: <64 lowercase hex of member file UTF-8 bytes>
+---
+<exact member file UTF-8 text>
+```
+
+Rules:
+
+- the format line, record headers, and delimiters use ASCII `LF` (`\n`) only;
+- member file text is read as UTF-8 and embedded verbatim — no newline normalization inside content;
+- if the member file lacks a trailing newline, the record body lacks one too;
+- there is no record delimiter after the final member; and
+- an empty collection yields only the format line and one trailing `LF`.
+
+The inline `sha256` field is redundant with the outer snapshot hash but makes member-level diffs human-readable without reparsing headers.
 
 ### Current accepted baseline and target identity
 
@@ -191,12 +238,17 @@ No freshness input, path-versioning, or generic transition field is added to `re
 
 ### `review_pairs`
 
-Every existing column and constraint stays. Only the FK destination changes:
+Every existing column and constraint stays except one new optimistic-lock field and FK retargeting:
 
 ```sql
 reviewed_note_snapshot_id INTEGER REFERENCES artifact_snapshots(snapshot_id),
-reviewed_criterion_snapshot_id INTEGER REFERENCES artifact_snapshots(snapshot_id)
+reviewed_criterion_snapshot_id INTEGER REFERENCES artifact_snapshots(snapshot_id),
+expected_baseline_revision INTEGER CHECK (
+    expected_baseline_revision IS NULL OR expected_baseline_revision >= 1
+)
 ```
+
+`expected_baseline_revision` is written when the pair is created, not at finalization. It records the current baseline revision the job expected to supersede — or `NULL` when the target had no registered baseline (`missing-baseline` at queue time). Finalization passes this value to the generic refresh transaction as `expected_revision`; if the live baseline revision differs, the job fails closed rather than overwriting newer evidence.
 
 The column names remain review-specific because they describe the inputs embedded in one review job. They are not the canonical current baseline after finalization; the accepted generic inputs are.
 
@@ -234,6 +286,16 @@ Whole-store initialization runs generic integrity checks and then the explicit r
 
 ## Transaction semantics
 
+Two refresh paths share the same baseline/input tables but differ in observation validation. Review finalization uses the capture path; operator-facing accept and ack use the observation path.
+
+| path | entry | live-version check | evidence |
+|---|---|---|---|
+| **Capture refresh** | `commonplace.review.finalize_capture_refresh()` | No — writes job-owned snapshots | Replaced on review-pair targets |
+| **Observation refresh** | `commonplace-freshness-accept` | Yes — each supplied hash must match current resolved text | Unchanged; not applicable to review-pair targets |
+| **Observation ack** | `commonplace-freshness-ack`, `commonplace-ack-review` | Yes — revalidates status output | Preserved on review-pair targets |
+
+Generic `commonplace-freshness-accept` rejects `target_kind = review-pair`. Review evidence replacement requires a completed pair id and therefore stays in the review-owned capture transaction.
+
 ### Initial acceptance
 
 Within one `BEGIN IMMEDIATE` transaction:
@@ -248,28 +310,44 @@ Within one `BEGIN IMMEDIATE` transaction:
 
 Any failure rolls back the baseline, inputs, and review evidence together.
 
-### Refresh acceptance
+### Capture refresh (review finalization)
+
+`commonplace.review.finalize_capture_refresh()` runs inside one transaction owned by review code:
+
+1. for each completing pair, load `expected_baseline_revision` captured at pair creation;
+2. require the current baseline revision equals that expected value, or that both are absent for a first-time `missing-baseline` target;
+3. insert or reuse the pair's captured note and criterion snapshots — not reread live files;
+4. call the generic refresh primitive with those snapshots and the pair's `expected_baseline_revision`;
+5. replace `review_freshness_evidence` for each refreshed target;
+6. mark pairs and job completed;
+7. run integrity checks;
+8. commit; and
+9. prune superseded evidence and unreferenced snapshots.
+
+If step 2 fails because another writer advanced the baseline after queue time, the whole job fails with `stale-baseline-revision` and no baseline row changes. This is the live job-49 case: pair `81` captured note snapshot `24` while the current baseline already uses snapshot `29`; finalization must fail, not downgrade the accepted baseline.
+
+Capture refresh deliberately does not require captured snapshots to equal current live text. The selector reports the resulting baseline stale immediately when live files moved on during the run.
+
+### Observation refresh (generic accept)
 
 Within one transaction:
 
-1. load the target and require `revision == expected_revision`;
-2. insert or reuse the exact snapshots the producer inspected or consumed;
-3. replace the complete input set;
-4. update the acceptance timestamp;
-5. increment revision once;
-6. let the review wrapper replace evidence when the target is a review pair;
+1. reject `target_kind = review-pair`;
+2. load the target and require `revision == expected_revision`;
+3. resolve each supplied path/version kind to current text and require the supplied content hash matches that resolution;
+4. insert or reuse those exact snapshots;
+5. replace the complete input set;
+6. update the acceptance timestamp and increment revision once;
 7. run integrity checks;
 8. commit; and
-9. prune superseded evidence and unreferenced snapshots according to owning references.
-
-Review finalization may accept its job-owned historical snapshots even if live files changed during execution. The selector immediately reports the resulting baseline stale against current text. It never substitutes unseen live text at finalization.
+9. prune unreferenced snapshots.
 
 ### Acknowledgement
 
 Within one transaction:
 
 1. require the selector payload's expected baseline revision;
-2. require each selected current observation still has the version shown to the operator;
+2. re-resolve each selected input and require the current hash still matches the observation shown to the operator;
 3. update only the selected inputs' accepted snapshots;
 4. preserve unselected inputs and review evidence, when present;
 5. increment revision once and update `accepted_at`;
@@ -278,9 +356,15 @@ Within one transaction:
 
 This prevents a displayed diff from acknowledging a later, unseen edit. File locks and filesystem transactions remain out of scope; an edit after the final observation simply makes the new baseline stale.
 
-### Deletion and pruning
+### Target retirement
 
-There is no generic retirement or target-deletion command in the first implementation. The FK shape nevertheless ensures that an explicitly removed baseline cascades its inputs and review evidence without deleting review jobs or pairs. Snapshot garbage collection occurs only after all `freshness_inputs` and `review_pairs` references are gone.
+`commonplace-freshness-retire` deletes one registered baseline by target identity. The `ON DELETE CASCADE` shape removes its `freshness_inputs` and `review_freshness_evidence` rows without deleting review jobs, pairs, or historical result files. Retirement is the supported disposition for relocated or deleted artifacts that should stop appearing in global status.
+
+Retirement is not a stale result. After retirement the target simply no longer exists in the store.
+
+### Snapshot pruning
+
+Snapshot garbage collection occurs only after all `freshness_inputs` and `review_pairs` references are gone.
 
 ## Generic selection query
 
@@ -292,6 +376,10 @@ The repository-wide selector:
 4. emits `input-changed`, `input-missing`, or `version-error`, including input role, path, accepted/current versions, and optional accepted-to-current diff;
 5. groups changed inputs by target; and
 6. returns target identity, baseline revision, and changed inputs.
+
+`input-missing` means the accepted path no longer resolves to versionable content — deleted file, deleted collection root, or path escape. It is ordinary staleness for disposition purposes (exit `1`), not a store-integrity failure. The supported dispositions are observation refresh after restoring the path, acknowledgement when the operator accepts the absence, or `commonplace-freshness-retire` when the target should leave the registry.
+
+`version-error` means the resolver could not produce canonical text (permissions, invalid UTF-8, symlink where a file is required). That is an invocation or integrity failure (exit `2`).
 
 The selector does not create targets for applicable work that has never been accepted. Review-specific discovery still emits `missing-baseline` for derived `(note, criterion, model partition)` pairs with no registered `review-pair` target.
 
@@ -360,23 +448,24 @@ The migration is source-to-destination, never in-place:
 4. require schema v7, `journal_mode=delete` with no live journal sidecar, and validate every current review baseline;
 5. create `commonplace-store.sqlite.tmp` with new schema version 1;
 6. copy every old snapshot with the same `snapshot_id`, path, hash, exact text, and capture time, setting `version_kind = 'file-text'`;
-7. copy every review job and pair with identical ids and values, retargeting snapshot FKs;
-8. transform each old baseline using the review mapping above;
-9. run new generic, review, FK, and SQLite integrity checks;
-10. compare the old `current_freshness_baselines` projection row-for-row with the new `current_review_freshness_baselines` projection;
-11. compare review selector JSON on fresh and deliberately changed fixture files;
-12. commit and close the destination;
-13. atomically rename only the verified temporary destination to `commonplace-store.sqlite`; and
-14. re-hash `review-store.sqlite` and require it to match the source hash recorded at step 3.
+7. copy every review job and pair with identical ids and values, retargeting snapshot FKs and initializing `expected_baseline_revision` to `NULL`;
+8. transform each old baseline using the review mapping above, **skipping** rows whose `note_path` or `criterion_path` no longer exists on disk — the four `kb/work/transformation-closure/README.md` baselines in the current Commonplace store are skipped, not migrated;
+9. for each queued pair on a still-`queued` job, set `expected_baseline_revision` from the migrated baseline revision for its `(note_path, criterion_path, model_partition)` target, or leave `NULL` when no baseline was migrated; when captured note/criterion snapshot ids differ from the current accepted inputs, mark the parent job `failed` with `stale-queued-capture` — Commonplace job `49` is in this class today;
+10. run new generic, review, FK, and SQLite integrity checks;
+11. compare the old `current_freshness_baselines` projection row-for-row with the new `current_review_freshness_baselines` projection for every baseline that was migrated in step 8;
+12. compare review selector JSON on fresh and deliberately changed fixture files;
+13. commit and close the destination;
+14. atomically rename only the verified temporary destination to `commonplace-store.sqlite`; and
+15. re-hash `review-store.sqlite` and require it to match the source hash recorded at step 3.
 
 Both current source stores use `journal_mode=delete`. A source using WAL must be cleanly checkpointed by the operator before this read-only migration; the migration does not mutate it to do so. If another process changes the source during migration, the final hash check refuses installation of the destination. If any step fails, delete only the temporary destination. The old `review-store.sqlite` remains the backup and recovery source. Neither successful migration nor later normal operation removes it automatically.
 
-Expected transformed counts:
+Expected transformed counts after retirement and queued-job disposition:
 
-| repository | snapshots | baselines | inputs | review evidence rows |
-|---|---:|---:|---:|---:|
-| Commonplace | 19 | 52 | 104 | 52 |
-| Epistack casebooks | 17 | 14 | 28 | 14 |
+| repository | snapshots | baselines | inputs | review evidence rows | retired baselines | failed queued jobs |
+|---|---:|---:|---:|---:|---:|---:|
+| Commonplace | 19 | 48 | 96 | 48 | 4 (`transformation-closure`) | 1 (job `49`, `stale-queued-capture`) |
+| Epistack casebooks | 17 | 14 | 28 | 14 | 0 | 0 |
 
 ## Integrity contract
 
@@ -428,6 +517,9 @@ Do not begin schema or review-code changes until this design and the implementat
 3. path-keyed snapshot versioning;
 4. generic baseline/input keys and delete behavior;
 5. the review evidence extension and parity view;
-6. refresh and acknowledgement transaction semantics;
-7. integrity and pruning ownership; and
-8. the Epistack collection source snapshot representation.
+6. capture versus observation refresh semantics and review-owned finalization;
+7. queued-job `expected_baseline_revision` capture and migration disposition;
+8. target retirement and `input-missing` exit semantics;
+9. integrity and pruning ownership;
+10. the `collection-text` byte encoding; and
+11. the canonical status/accept/ack JSON contracts in [freshness-schemas.md](./freshness-schemas.md).

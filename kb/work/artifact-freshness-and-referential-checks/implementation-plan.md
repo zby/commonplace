@@ -15,7 +15,12 @@ This is a current-state mechanism. It records the exact input snapshots against 
 - **Registration is explicit.** Authored links may suggest dependencies to a producer, but only an accepted baseline registers them.
 - **Selection is not execution or truth adjudication.** A changed input means the accepted basis changed. The consuming workflow decides whether to reassess, regenerate, or acknowledge it.
 - **Optimistic transitions.** Baseline writes compare an expected baseline revision to prevent two writers from silently overwriting each other. They do not lock repository files. A file edit after capture or acceptance makes the new baseline immediately stale on the next check.
+- **Queued-job revision is captured at pair creation.** Each `review_pairs` row stores `expected_baseline_revision` (or `NULL` for first-time targets). Finalization CASes against that stored value, not the revision read at finalize time. If the baseline moved after queue — job `49` today — the job fails with `stale-baseline-revision` or is marked `failed` with `stale-queued-capture` during migration when captures no longer match accepted inputs.
+- **Two refresh paths.** Capture refresh (review finalization) writes job-owned snapshots without live-version equality. Observation refresh/ack (`commonplace-freshness-accept`, `commonplace-freshness-ack`) revalidates current resolved text. Generic accept rejects `review-pair` targets; review finalization uses a review-owned transaction, not `commonplace-freshness-accept`.
+- **Dead targets retire explicitly.** `commonplace-freshness-retire` removes registered baselines whose artifacts were deleted or relocated. Migration skips baselines whose paths no longer exist. `input-missing` is ordinary staleness (exit `1`), not store integrity (exit `2`).
 - **Review behavior is preserved before extension.** Result kinds, outcomes, model partitions, missing-baseline discovery, stale reasons, diffs, acknowledgement, all-or-nothing finalization, evidence retention, and pruning must have parity before the first Epistack target is registered.
+- **Malformed state is not staleness.** Store-integrity failures are errors. Neither the general selector nor the review adapter may downgrade a malformed accepted baseline to `missing-baseline` or an ordinary stale result.
+- **Review precedence survives migration.** When both review inputs changed, the public review selector continues to report `criterion-changed` before `note-changed`, even though the generic selector may return both changed inputs.
 - **Collection source snapshot is a bounded version function, not a source ontology.** `collection-text` applies one fixed Commonplace collection-content rule to a collection path. Epistack points it at a source collection; the freshness core sees an ordinary path-based text snapshot.
 
 ## Semantic model
@@ -60,10 +65,12 @@ The core emits `input-changed`, `input-missing`, or `version-error` with the inp
 
 ### Transitions
 
-- **Refresh acceptance** replaces the complete input set. The review wrapper also records a newly completed evidence pair and its already captured note/criterion snapshots. For an Epistack casebook the transition records the casebook and source-collection snapshots inspected after the maintenance pass.
-- **Acknowledgement** preserves review evidence, when present, and advances only explicitly selected input snapshots after the operator has inspected their diffs. Unselected stale inputs remain stale.
-- Both transitions require the caller's expected baseline revision. Initial acceptance requires that no baseline exists.
-- Captured versions, not whatever files happen to contain later, are written. A subsequent filesystem edit therefore produces ordinary staleness rather than a failed or partially rewritten acceptance.
+- **Capture refresh** (review finalization only) replaces the complete input set from job-owned snapshots. It CASes against each pair's `expected_baseline_revision` captured at queue time, replaces `review_freshness_evidence`, and does not require captured snapshots to equal current live text.
+- **Observation refresh** (`commonplace-freshness-accept`) replaces the complete input set from caller-supplied observations that must still match live resolved versions. It rejects `review-pair` targets.
+- **Acknowledgement** preserves review evidence, when present, and advances only explicitly selected input snapshots after the operator has inspected their diffs. Unselected stale inputs remain stale. It revalidates live versions like observation refresh.
+- **Retirement** deletes a registered baseline and its inputs/evidence bridge without deleting review jobs or pairs.
+- Initial acceptance requires that no baseline exists. All other transitions require the caller's expected baseline revision.
+- A filesystem edit after capture or acceptance produces ordinary staleness on the next check rather than a failed or partially rewritten transition.
 
 ## Store schema
 
@@ -85,8 +92,8 @@ Introduce `commonplace.freshness.versioning` with one result type containing art
 ### `collection-text`
 
 - Identity: one normalized `COLLECTION.md`-bearing directory path.
-- Apply one fixed Commonplace rule: enumerate visible, regular, non-symlink Markdown content; exclude `COLLECTION.md`, `types/` subtrees, and replaced archives; sort normalized repository-relative paths.
-- Produce canonical text containing an unambiguous path header and exact content for every member. The combined text is the snapshot, so additions, removals, renames, and edits all change one content hash and yield an accepted-to-current diff without Git.
+- Apply the fixed byte encoding in [database-design.md § Collection-text encoding](./database-design.md#collection-text-encoding): visible regular-file members, exclusions aligned with `project_paths` visibility, sorted normalized paths, `COMMONPLACE-COLLECTION-TEXT/1` header, and per-member `path`/`sha256` records with verbatim UTF-8 bodies.
+- Fix that encoding in milestone M1 and cover it with golden tests before persisting hashes or shipping CLIs. A later encoding or membership-rule change invalidates every registered `collection-text` baseline and therefore requires an explicit migration.
 - Epistack names one use a **collection source snapshot** and points it at a case's source collection.
 - Binary/PDF versioning, external URLs, Git revisions, arbitrary queries, and configurable member rules remain out of scope.
 
@@ -122,18 +129,22 @@ The migration must be transactional and preservation-first:
 3. create one `review-pair` baseline containing target identity per old freshness row;
 4. create two generic inputs per migrated baseline, named `note` and `criterion`;
 5. create one review evidence bridge per migrated baseline;
-6. retain queued, completed, and failed review jobs and every review pair unchanged;
-7. verify row counts, paths, hashes, evidence ids, outcomes, result kinds, model partitions, and selector classifications before commit;
+6. retain queued, completed, and failed review jobs and every review pair, adding `expected_baseline_revision` disposition for queued jobs and skipping baselines whose paths no longer exist;
+7. verify row counts, paths, hashes, evidence ids, outcomes, result kinds, model partitions, retired/skipped baselines, failed queued jobs, and selector classifications before commit;
 8. construct and verify `commonplace-store.sqlite` separately while opening `review-store.sqlite` read-only;
 9. report and recheck the old database's byte hash so it demonstrably remains the untouched backup; and
 10. refuse to overwrite an existing destination.
+
+The migration accepts only a clean `journal_mode=delete` source. If the source uses WAL, it refuses with instructions for the operator to checkpoint it before retrying; the read-only migration must not perform that checkpoint or otherwise mutate the backup.
 
 Current preservation fixtures:
 
 | repository | jobs | pairs | snapshots | source baselines | new baselines | new inputs |
 |---|---:|---:|---:|---:|---:|---:|
-| Commonplace | 39 | 53 | 19 | 52 | 52 | 104 |
+| Commonplace | 39 | 53 | 19 | 52 | 48 | 96 |
 | Epistack casebooks | 14 | 14 | 17 | 14 | 14 | 28 |
+
+The Commonplace delta is four skipped `transformation-closure` baselines and one queued job (`49`) marked `failed` with `stale-queued-capture`.
 
 The one Commonplace review pair without a current baseline remains review evidence/history and creates no freshness baseline.
 
@@ -142,16 +153,21 @@ The one Commonplace review pair without a current baseline remains review eviden
 Change review code in this order:
 
 1. capture note and criterion inputs through `file-text` and `artifact_snapshots`;
-2. load `review-pair` targets through the general baseline query and review evidence bridge;
-3. make finalization call the generic refresh-acceptance transaction, then perform existing review-evidence pruning;
-4. make `commonplace-ack-review` and trivial-change acknowledgement call the generic acknowledgement transaction while preserving the evidence bridge;
-5. make the review target selector consume generic resolution results and retain its current missing-baseline discovery and public reason names;
-6. make warning selection read the generic baseline projection; and
-7. update snapshot/evidence pruning so a snapshot is removed only when neither a queued/retained review pair nor any generic freshness input references it.
+2. at pair creation, load the current baseline revision for the target (or `NULL`) and persist it as `expected_baseline_revision` on each `review_pairs` row;
+3. load `review-pair` targets through the general baseline query and review evidence bridge;
+4. add `commonplace.review.finalize_capture_refresh()` — one review-owned transaction that completes pairs, CASes against each pair's stored `expected_baseline_revision`, calls the generic refresh primitive with captured snapshots, replaces `review_freshness_evidence`, and prunes superseded evidence;
+5. make `commonplace-ack-review` and trivial-change acknowledgement call the generic observation-acknowledgement transaction while preserving the evidence bridge;
+6. make the review target selector consume generic resolution results and retain its current missing-baseline discovery and public reason names;
+7. make warning selection read the generic baseline projection; and
+8. update snapshot/evidence pruning so a snapshot is removed only when neither a queued/retained review pair nor any generic freshness input references it.
 
 Delete the old review-specific baseline read/write helpers, old baseline table/view, and duplicate review snapshot code in the same change. A temporary compatibility adapter is allowed only inside an in-progress commit and must not survive the completed migration.
 
-Review relocation behavior stays unchanged: historical review targets retain their old path identity, and the relocated artifact receives `missing-baseline` under its new path rather than silently re-keying old evidence.
+`commonplace-freshness-accept` must reject `target_kind = review-pair`. Review finalization must call `finalize_capture_refresh()`, not the accept CLI.
+
+Review relocation behavior stays unchanged: historical review targets retain their old path identity, and the relocated artifact receives `missing-baseline` under its new path rather than silently re-keying old evidence. Operators retire or refresh stale registered targets at the old path explicitly.
+
+Finalization may accept job-owned note and criterion snapshots even when live files changed during the run, but only when the stored `expected_baseline_revision` still matches the current baseline. It must not block on live-version equality and must not substitute unseen current text. The accepted baseline is immediately stale on the next check when live files moved on during the run.
 
 ### 4. Prove review parity
 
@@ -160,12 +176,14 @@ Before adding non-review registration:
 - run the complete existing review test suite unchanged at its CLI boundary;
 - add schema/integrity tests for malformed target keys, missing inputs, wrong evidence pairs, wrong model partitions, incomplete evidence, and corrupted snapshots;
 - add migration tests using populated schema-v7 fixtures;
-- compare pre/post migration selector JSON for fresh, missing-baseline, note-changed, and criterion-changed cases;
+- compare pre/post migration selector JSON for fresh, missing-baseline, note-changed, criterion-changed, and both-changed cases, preserving review's criterion-first public precedence;
 - prove verdict and report pairs keep their distinct completion semantics;
 - prove finalization remains all-or-nothing;
 - prove ack preserves evidence and refresh replaces it;
 - prove superseded evidence and snapshots are pruned without deleting shared generic snapshots; and
 - rehearse the migration on copies of both current live stores and compare the counts in the table above.
+
+Shared snapshot pruning across `freshness_inputs` and `review_pairs` is the highest-risk implementation area. In addition to the general pruning case above, explicitly test acknowledging only one stale input, finalizing a superseding review pair, and migrating retained snapshot IDs. No operation may remove a snapshot while either ownership path still references it.
 
 Do not proceed to Epistack targets until parity passes.
 
@@ -180,7 +198,7 @@ Default behavior:
 - print only stale targets unless `--all` is supplied;
 - support `--json`, `--diff`, `--target-kind`, and exact target-key filtering;
 - return target kind/key, baseline revision, and changed inputs with accepted/current versions and optional diffs;
-- exit `0` when all selected registered targets are fresh, `1` when any are stale, and `2` for invocation, versioning, or store-integrity failures.
+- exit `0` when all selected registered targets are fresh, `1` when any are stale (including `input-changed` and `input-missing`), and `2` for invocation, `version-error`, or store-integrity failures.
 
 “Global” means all registered targets. It does not infer unregistered dependencies, discover applicable-but-never-reviewed pairs, or treat every link as a baseline. Review's target selector remains responsible for review-specific missing-baseline discovery.
 
@@ -190,18 +208,21 @@ The first global-status acceptance test is review-only: edit one note and one cr
 
 Add library operations before choosing elaborate CLI syntax:
 
-- `accept_target(target, complete_inputs, expected_revision)`;
-- `ack_target_inputs(target, selected_observations, expected_revision)`;
+- `accept_target_observations(target, complete_inputs, expected_revision)` — observation refresh only; rejects `review-pair`;
+- `ack_target_inputs(target, selected_observations, expected_revision)` — observation ack;
+- `refresh_target_from_captures(target, captured_inputs, expected_revision, evidence=...)` — internal primitive used by review capture refresh;
+- `retire_target(target)`;
 - `load_target_status(target)`; and
 - `select_stale_targets(filters)`.
 
-The operations accept resolved observations, not bare paths, so producers can pass the exact versions they inspected or consumed. Expose them as:
+The canonical JSON shapes live in [freshness-schemas.md](./freshness-schemas.md). Expose the operations as:
 
-- `commonplace-freshness-accept --input FILE|-` — initial or refresh acceptance from a target manifest containing target identity, complete path/version-kind inputs, the expected baseline revision or expected absence, and the observed versions being accepted;
-- `commonplace-freshness-ack --input FILE|- [--input-role ROLE ...]` — advance all or selected changed inputs from `commonplace-freshness-status --json` output while preserving review evidence; and
+- `commonplace-freshness-accept --input FILE|-` — initial or observation refresh acceptance from a manifest; rejects `review-pair`;
+- `commonplace-freshness-ack --input FILE|- [--input-role ROLE ...]` — advance all or selected changed inputs from `commonplace-freshness-status --json` output while preserving review evidence;
+- `commonplace-freshness-retire --input FILE|-` — remove a registered target that should stop appearing in global status; and
 - `commonplace-freshness-status ... --json` — the canonical observation payload for acknowledgement and target workflows.
 
-Accept and ack must reject a mismatched baseline revision or any current version that no longer matches the supplied observation. This is the optimistic-lock boundary: inspect/status, decide, then conditionally advance. Review finalization remains allowed to accept the job-owned snapshots it actually evaluated even when live files have since moved on; the resulting baseline is immediately stale, which is more truthful than silently accepting unseen current text.
+Observation accept and ack must reject a mismatched baseline revision or any current version that no longer matches the supplied observation. Capture refresh CASes against the pair's stored `expected_baseline_revision` and does not revalidate live text. Review finalization uses capture refresh only.
 
 Do not build refresh jobs, prompt construction, model dispatch, automatic rewriting, or link-derived registration.
 
@@ -245,6 +266,14 @@ Epistack acceptance cases:
 7. editing again after acceptance makes the target immediately stale; and
 8. the same global command reports stale review-pair and collection-maintenance targets together.
 
+### Milestone gates
+
+These gates are ordering constraints, not reporting labels:
+
+1. **M1 — substrate and migration:** fix the `collection-text` encoding, pin [freshness-schemas.md](./freshness-schemas.md), pass schema and migration fixtures (including skipped baselines and failed queued job `49`), rehearse migration on copies of both live stores, and prove each old `review-store.sqlite` byte hash is unchanged.
+2. **M2 — review parity:** pass the full review suite at the CLI boundary and prove selector JSON parity before and after migration, including the both-changed precedence case. Do not register Epistack targets before M2 passes.
+3. **M3 — non-review adoption:** only after M2, expose the generic acceptance/acknowledgement surfaces and register the three casebook targets with the Epistack acceptance cases above.
+
 ### 8. Documentation and rollout
 
 Update, in the implementation commit sequence:
@@ -269,6 +298,8 @@ Rollout order:
 7. run the first global freshness check and disposition every selected target; and
 8. only then make global freshness part of Epistack's normal update/handoff instructions.
 
+Rollback is code-and-store atomic. If an installed new store proves bad, either restore the last pre-migration code and point its `COMMONPLACE_REVIEW_DB` at the untouched schema-v7 backup, or keep the new code, quarantine the bad destination, and rebuild a fresh `commonplace-store.sqlite` from that backup. New code must never point `COMMONPLACE_STORE` at `review-store.sqlite`: without a compatibility shim it cannot operate on the old schema. Never automatically update or delete the backup.
+
 ## File-level work map
 
 Expected new implementation surfaces:
@@ -283,7 +314,8 @@ Expected new implementation surfaces:
 - `src/commonplace/freshness/selector.py`
 - `src/commonplace/freshness/transitions.py`
 - `src/commonplace/cli/freshness_status.py`
-- acceptance/ack CLI modules after the library contract settles
+- `src/commonplace/cli/freshness_accept.py`, `freshness_ack.py`, `freshness_retire.py`
+- `kb/work/artifact-freshness-and-referential-checks/freshness-schemas.md`
 - `scripts/migrate-review-db-v7-to-commonplace-store.py`
 - corresponding `tests/commonplace/freshness/`, migration, and CLI tests
 
@@ -338,12 +370,13 @@ Use the actual model partitions present in each store when comparing selector ou
 
 ## Done when
 
-1. no review-specific freshness table, snapshot table, selector implementation, or acknowledgement implementation remains;
+1. no duplicated review-owned freshness compare/persist logic remains — no review-specific baseline/snapshot tables and no second copy of generic transition persistence — while review adapters for `missing-baseline` discovery, public reason mapping, trivial-change eligibility, and capture finalization remain;
 2. every retained Commonplace and Epistack review baseline is preserved on the generic schema with parity-tested selection and evidence semantics;
 3. review finalization and acknowledgement use the same refresh/ack transitions available to other target kinds;
 4. one global command reports all registered stale review and non-review targets from the same store;
 5. `collection-text` detects collection membership and content changes using stored UTF-8 snapshots and diffs;
 6. all three Epistack casebooks have registered collection-maintenance baselines and a source change selects the correct casebook without source-specific freshness code;
 7. acknowledgement and semantic refresh advance exact accepted versions without conflating changed inputs with false outputs;
-8. the full test suite and both live-store migration rehearsals pass, with each old `review-store.sqlite` retained byte-identically as backup; and
-9. durable architecture, command, storage, review, and operator documentation describes the shipped mechanism, after which this workshop can close.
+8. the full test suite and both live-store migration rehearsals pass, with each old `review-store.sqlite` retained byte-identically as backup;
+9. queued jobs capture `expected_baseline_revision`, capture refresh and observation refresh are separated, dead targets can be retired, and `input-missing` exits `1`; and
+10. durable architecture, command, storage, review, and operator documentation describes the shipped mechanism, after which this workshop can close.
