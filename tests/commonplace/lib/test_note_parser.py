@@ -56,6 +56,26 @@ Date: 2026-04-09
     assert document.body_dates == ("2026-04-09",)
 
 
+def test_parse_document_excludes_dates_in_code_regions() -> None:
+    document, error = parse_document(
+        """# Title
+
+Prose date: 2026-04-09
+Inline example: `released: 2026-04-10`
+
+```yaml
+released: 2026-04-11
+```
+
+Repeated prose date: 2026-04-09
+"""
+    )
+
+    assert error is None
+    assert document is not None
+    assert document.body_dates == ("2026-04-09",)
+
+
 def test_find_markdown_links_with_text_keeps_code_formatted_link_text() -> None:
     links = find_markdown_links_with_text(
         "Reference [`examples/`](../examples/) and `[ignored](./ignored.md)`."

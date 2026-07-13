@@ -16,6 +16,7 @@ from commonplace.lib.project_paths import list_collection_note_paths
 class PromotionReportResult:
     output: Path
     text_count: int
+    invalid_count: int
 
 
 def resolve_link(source: Path, target: str) -> Path | None:
@@ -36,6 +37,7 @@ def write_promotion_candidates_report(root: Path) -> PromotionReportResult:
         raise FileNotFoundError(f"Not a directory: {notes_dir}")
 
     text_files: dict[Path, str] = {}
+    invalid_frontmatter: dict[Path, tuple[str, ...]] = {}
     all_notes: dict[Path, dict] = {}
 
     for path in list_collection_note_paths(notes_dir):
@@ -44,7 +46,13 @@ def write_promotion_candidates_report(root: Path) -> PromotionReportResult:
 
         abs_path = path.resolve()
         content = path.read_text(encoding="utf-8")
-        frontmatter = fm_mod.parse(content).data if fm_mod.opens_frontmatter(content) else None
+        if fm_mod.opens_frontmatter(content):
+            parsed_frontmatter = fm_mod.parse(content)
+            frontmatter = parsed_frontmatter.data
+            if not parsed_frontmatter.ok:
+                invalid_frontmatter[abs_path] = tuple(parsed_frontmatter.errors)
+        else:
+            frontmatter = None
         body = strip_frontmatter(content)
         title = extract_title(body)
         links = find_markdown_links(body)
@@ -102,7 +110,20 @@ def write_promotion_candidates_report(root: Path) -> PromotionReportResult:
     else:
         lines.extend(["No text files found.", ""])
 
+    lines.extend(["## Invalid frontmatter", ""])
+    if invalid_frontmatter:
+        for path, errors in sorted(invalid_frontmatter.items()):
+            rel = all_notes[path]["rel"].relative_to(notes_dir)
+            title = all_notes[path]["title"]
+            lines.append(f"- [{title}](../notes/{rel})")
+            for error in errors:
+                diagnostic = " ".join(error.split())
+                lines.append(f"  - {diagnostic}")
+            lines.append("")
+    else:
+        lines.extend(["No invalid frontmatter found.", ""])
+
     output = reports_dir / "promotion-candidates.md"
     reports_dir.mkdir(parents=True, exist_ok=True)
     output.write_text("\n".join(lines), encoding="utf-8")
-    return PromotionReportResult(output, len(text_files))
+    return PromotionReportResult(output, len(text_files), len(invalid_frontmatter))

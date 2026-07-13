@@ -17,7 +17,10 @@ def main() -> int:
         print(exc, file=sys.stderr)
         return 1
 
-    print(f"Wrote {result.output} ({result.text_count} unstructured text files)")
+    print(
+        f"Wrote {result.output} ({result.text_count} unstructured text files, "
+        f"{result.invalid_count} invalid frontmatter files)"
+    )
     return 0
 
 

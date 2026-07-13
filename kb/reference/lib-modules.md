@@ -14,6 +14,7 @@ Shared library modules used by CLI commands and the review system. `frontmatter`
 frontmatter.py    Parse/validate markdown frontmatter (strict YAML subset)
 naming.py         Shared note title and filename-slug constraints
 note_parser.py    Parse markdown notes into a schema-friendly document model
+project_paths.py  Define KB boundaries, collection discovery, and visible walks
 index_generated.py Build generated tag sections and shared collection tag indexes
 type_resolver.py  Resolve note types from scoped JSON Schema definitions
 validation.py     Deterministic validation rules for KB notes (commonplace-validate lib)
@@ -23,9 +24,9 @@ relocation.py     Move/rename a KB note or directory: rewrite backlinks and mkdo
 Dependencies:
 - `note_parser` → `frontmatter`
 - `index_generated` → `note_parser`, `project_paths`
+- `type_resolver` → `frontmatter`, `project_paths`
 - `validation` → `index_generated`, `note_parser`, `type_resolver`, `naming`
 - `relocation` → `naming`, `project_paths`
-- `type_resolver` is otherwise independent (but requires external packages)
 
 ---
 
@@ -100,13 +101,48 @@ All `[text](url)` link URLs, ignoring links inside code regions.
 All `[text](url)` links as `(text, url)` pairs, ignoring links inside code regions. Used by review prompt preparation when rendering link tables in prompts.
 
 **`extract_body_dates(body: str) -> tuple[str, ...]`**
-Deduplicated ISO dates found in body text.
+Deduplicated ISO dates found in prose body content, ignoring fenced and inline code.
 
 **`remove_fenced_code_blocks(text: str) -> str`** / **`remove_code_regions(text: str) -> str`**
 Strip fenced code blocks, or both fenced and inline code. Used internally before heading extraction and other text scans to avoid false matches.
 
 **`strip_frontmatter(content: str) -> str`**
 Delegates to `frontmatter.strip()`.
+
+---
+
+## project_paths
+
+Define the package-owned filesystem boundary for collections and Markdown walks. Hidden entries and nested repositories are invisible; repository-wide walks additionally skip the fixed build/vendor names in `REPO_ARTIFACT_DIR_NAMES`. Git and gitignore are never consulted.
+
+### Public API
+
+**`kb_root(root: Path) -> Path`**
+Return the workspace's `kb/` path.
+
+**`collection_dirs(root: Path) -> list[Path]`** / **`collection_for_path(path: Path, root: Path) -> Path`**
+Discover `COLLECTION.md`-bearing content roots, or find the nearest collection containing a path.
+
+**`is_collection_dir(path: Path) -> bool`** / **`is_collection_metadata(path: Path) -> bool`** / **`is_replaced_archive(path: Path) -> bool`** / **`is_type_definition_content(path: Path, boundary: Path) -> bool`**
+Classify collection roots and artifacts that callers may exclude from their own domains. Type definitions are ordinary validation artifacts; index and presentation consumers exclude them explicitly when appropriate.
+
+**`walk_visible(root, *, exclude_dir_names=frozenset())`** / **`iter_visible_markdown_files(root, *, exclude_dir_names=frozenset())`**
+Walk visible filesystem entries in deterministic order. Both prune hidden directories and nested repositories; the Markdown projection also skips hidden filenames.
+
+**`list_collection_note_paths(collection: Path) -> list[Path]`**
+Return visible Markdown artifacts under one collection, including everything under `types/`. Skip collection metadata and replaced archives. Filename suffixes such as `*.template.md` and `*.instructions.md` have no special meaning.
+
+**`list_kb_note_paths(root: Path) -> list[Path]`** / **`list_notes_collection_paths(root: Path) -> list[Path]`**
+Return artifacts from every discovered collection, or only from `kb/notes/`.
+
+**`list_type_spec_paths(root: Path) -> list[Path]`**
+Return Markdown artifacts under `kb/**/types/*.md`, excluding only `text.md`, the implicit no-frontmatter root rather than a type-spec artifact. Used by the `commonplace-validate types` target.
+
+**`find_repo_markdown_files(root: Path) -> list[Path]`**
+Apply the visible Markdown walk to the whole repository while also pruning `REPO_ARTIFACT_DIR_NAMES`.
+
+**`resolve_note(arg: str, root: Path) -> Path`**
+Resolve an absolute path, repository-relative path, unique filename, or unique stem to one Markdown artifact under `kb/`.
 
 ---
 
@@ -189,15 +225,6 @@ Deterministic validation execution and rules for KB notes. Used by `commonplace-
 **`run_validation(paths, *, repo_root, collection=None) -> ValidationRunResults`**
 Primary batch entry point. The optional collection is explicit target semantics: it enables authored-link orphan information and collection-structure checks. Direct files, `recent`, and `types` remain non-collection runs.
 
-**`list_collection_note_paths(collection: Path) -> list[Path]`**
-Return visible Markdown artifacts under one collection, including everything under `types/`. Skips collection metadata, replaced archives, hidden entries, and nested git repositories. Filename suffixes such as `*.template.md` and `*.instructions.md` have no special meaning. Visibility is package-owned (`project_paths.walk_visible`); gitignore rules have no effect on what the tools see.
-
-**`list_type_spec_paths(root: Path) -> list[Path]`**
-Return Markdown artifacts under `kb/**/types/*.md`, excluding only `text.md`, the implicit no-frontmatter root rather than a type-spec artifact. Used by the `commonplace-validate types` target.
-
-**`is_type_definition_content(path: Path, boundary: Path) -> bool`**
-Return whether a path is inside a `types/` directory beneath the supplied boundary. Consumers such as generated indexes use it when their domain excludes contracts; validation does not categorically exclude type definitions.
-
 **`parse_note(path: Path, *, repo_root: Path) -> tuple[ParsedNote | None, str | None]`**
 One-path convenience wrapper around the run parser. Returns `(parsed, None)` on success or `(None, error_message)` on parse/type-resolution failure.
 
@@ -223,12 +250,15 @@ Return nested-collection failures anchored on the offending `COLLECTION.md`. `Va
 
 ## relocation
 
-Move or rename a KB note: rewrite inbound and outbound links across the repo and update `mkdocs.yml` redirects. Review state is path-keyed and is not relocated. Used by `commonplace-relocate-note`.
+Move or rename a KB note or directory: rewrite inbound and outbound links across the visible repository Markdown set and update `mkdocs.yml` redirects. Review state is path-keyed and is not relocated.
 
 ### Public API
 
 **`relocate_note(*, root: Path, note_arg: str, new_name: str | None = None, dest_path: str | None = None, apply: bool = False) -> int`**
 Top-level orchestrator. Resolves the source note from a path or unique stem, computes the destination, walks all repo markdown files to plan link rewrites, and either prints a dry-run plan or executes everything (file move, link rewrites, mkdocs update). The mkdocs step is skipped when the project has no `mkdocs.yml`. Returns a process exit code.
+
+**`relocate_directory(*, root: Path, source_arg: str, dest_path: str, redirect_from: str | None = None, redirect_to: str | None = None, apply: bool = False) -> int`**
+Move a directory payload wholesale with `Path.rename`, while rewriting links only in visible repository Markdown. The move map includes every payload file because every path changes when the directory is renamed; hidden files and nested-repository contents move verbatim but are not opened for link rewriting. Replacing the payload walk with `walk_visible` would make the move map incomplete without changing what the final rename moves.
 
 **`resolve_note(arg, *, root)`**
 Find a note by absolute path, repo-relative path, full filename, or unique stem. Searches the entire `kb/` tree, not just `kb/notes/`, so notes can be relocated between collections.

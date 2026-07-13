@@ -110,7 +110,7 @@ def find_markdown_links_with_text(body: str) -> tuple[tuple[str, str], ...]:
 
 
 def extract_body_dates(body: str) -> tuple[str, ...]:
-    return tuple(dict.fromkeys(_DATE_RE.findall(body)))
+    return tuple(dict.fromkeys(_DATE_RE.findall(remove_code_regions(body))))
 
 
 def parse_document(content: str) -> tuple[ParsedDocument | None, str | None]:

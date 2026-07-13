@@ -252,12 +252,9 @@ class ValidationRun:
             if loaded.document is None:
                 continue
             for link in loaded.document.links:
-                if re.match(r"^[a-z]+://", link):
+                target = _resolve_local_link_target(source, link)
+                if target is None or target.suffix != ".md":
                     continue
-                link_path = link.split("#", 1)[0]
-                if not link_path.endswith(".md"):
-                    continue
-                target = (source.parent / link_path).resolve()
                 if target == source:
                     continue
                 matched = resolved_index.get(target)
@@ -366,18 +363,25 @@ def validate_title_and_slug(
         )
 
 
+def _resolve_local_link_target(source: Path, link: str) -> Path | None:
+    """Resolve a local relative link target with URL syntax normalized once."""
+    parsed = urlsplit(link)
+    if parsed.scheme or parsed.netloc:
+        return None
+    link_path = unquote(parsed.path)
+    if not link_path or Path(link_path).is_absolute():
+        return None
+    return (source.parent / link_path).resolve()
+
+
 def validate_links_from_document(
     results: CheckResults, path: Path, links: tuple[str, ...]
 ) -> None:
     missing: list[str] = []
     for link in links:
-        parsed = urlsplit(link)
-        if parsed.scheme or parsed.netloc:
+        target = _resolve_local_link_target(path, link)
+        if target is None:
             continue
-        link_path = unquote(parsed.path)
-        if not link_path or Path(link_path).is_absolute():
-            continue
-        target = (path.parent / link_path).resolve()
         if not target.exists():
             missing.append(link)
 

@@ -442,6 +442,52 @@ Protocol-relative URL: [cdn](//example.com/file.txt)
     assert all("example.com" not in item for item in results.warns)
 
 
+def test_link_health_and_inbound_detection_share_url_resolution(tmp_path: Path) -> None:
+    notes = configure_temp_repo(tmp_path)
+    source = write(
+        notes / "source.md",
+        """---
+description: Source note exercising normalized local and external Markdown link targets
+type: kb/types/note.md
+traits: []
+---
+
+# Source
+
+[Encoded target](./target%20name.md?mode=brief#details)
+[Uppercase external scheme](HTTPS://example.com/external.md)
+[Self](./source.md#local)
+""",
+    )
+    target = write(
+        notes / "target name.md",
+        """---
+description: Target note whose filename requires percent decoding during link resolution
+type: kb/types/note.md
+traits: []
+---
+
+# Target
+""",
+    )
+
+    results = validation.validate_note(source, repo_root=tmp_path)
+    run = validation.ValidationRun(
+        repo_root=tmp_path,
+        paths=(source, target),
+        collection=notes,
+    )
+    inbound = run.inbound_info((source, target))
+
+    assert any(
+        "link health: all local relative links resolve" in item
+        for item in results.passes
+    )
+    assert results.warns == []
+    assert inbound[source.resolve()] is False
+    assert inbound[target.resolve()] is True
+
+
 def test_structured_claim_requires_evidence_and_reasoning(tmp_path: Path) -> None:
     notes_root = configure_temp_repo(tmp_path)
     note = write(

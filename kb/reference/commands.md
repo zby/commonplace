@@ -85,7 +85,7 @@ Without `--apply`, previews changes without writing. `--redirect` takes `OLD:NEW
 
 ### commonplace-promotion-candidates
 
-List unstructured text files ranked by incoming links so operators can decide which captures are worth structuring.
+List unstructured text files ranked by incoming links so operators can decide which captures are worth structuring. The report separately surfaces files whose opened frontmatter cannot be parsed; they are invalid notes, not text candidates.
 
 ```bash
 commonplace-promotion-candidates

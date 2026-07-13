@@ -161,6 +161,32 @@ plugins:
     assert "'notes/stale.md': 'notes/new.md'" in mkdocs_content
 
 
+def test_relocate_directory_moves_hidden_payload_without_inspecting_it(
+    tmp_path: Path,
+) -> None:
+    source_dir = tmp_path / "kb" / "notes" / "source"
+    external_link = "[def](../definitions/d.md)"
+    write(source_dir / "visible.md", f"# Visible\n\n{external_link}\n")
+    write(source_dir / ".hidden.md", f"# Hidden\n\n{external_link}\n")
+    write(tmp_path / "kb" / "notes" / "definitions" / "d.md", "# Definition\n")
+
+    exit_code = relocation.relocate_directory(
+        root=tmp_path,
+        source_arg="kb/notes/source",
+        dest_path="kb/moved",
+        apply=True,
+    )
+
+    destination = tmp_path / "kb" / "moved"
+    assert exit_code == 0
+    assert not source_dir.exists()
+    assert (destination / ".hidden.md").is_file()
+    assert "[def](../notes/definitions/d.md)" in (
+        destination / "visible.md"
+    ).read_text(encoding="utf-8")
+    assert external_link in (destination / ".hidden.md").read_text(encoding="utf-8")
+
+
 def test_relocate_directory_apply_leaves_review_state_rows_unchanged_and_paths_derived(
     tmp_path: Path, capsys
 ) -> None:
