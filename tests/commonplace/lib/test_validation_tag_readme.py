@@ -104,6 +104,25 @@ def test_complete_mark_passes_when_all_members_linked(tmp_path: Path) -> None:
     assert any("complete mark: all 1 members linked" in p for p in results.passes)
 
 
+def test_complete_mark_normalizes_edge_case_local_urls(tmp_path: Path) -> None:
+    notes = setup_repo(tmp_path)
+    note(notes / "linked note.md", ["kb-design"])
+    readme = tag_readme(
+        notes / "kb-design-README.md",
+        "kb-design",
+        marks="complete: true\n",
+        body=(
+            "\n## Picks\n\n"
+            "- [linked note](./linked%20note.md?view=brief#details) — placed\n"
+        ),
+    )
+
+    results = validate_note(readme, repo_root=tmp_path)
+
+    assert not results.fails
+    assert any("complete mark: all 1 members linked" in p for p in results.passes)
+
+
 def test_weight_gates_warn_and_fail(tmp_path: Path) -> None:
     notes = setup_repo(tmp_path)
     filler_soft = "x" * (TAG_README_SOFT_BYTES + 100)

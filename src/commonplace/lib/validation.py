@@ -473,13 +473,10 @@ def _linked_md_targets(parsed: ParsedNote) -> set[Path]:
     """Resolve the note's local markdown links to absolute paths."""
     targets: set[Path] = set()
     for link in parsed.document.links:
-        parsed_url = urlsplit(link)
-        if parsed_url.scheme or parsed_url.netloc:
+        target = _resolve_local_link_target(parsed.path, link)
+        if target is None or target.suffix != ".md":
             continue
-        link_path = unquote(parsed_url.path)
-        if not link_path.endswith(".md") or Path(link_path).is_absolute():
-            continue
-        targets.add((parsed.path.parent / link_path).resolve())
+        targets.add(target)
     return targets
 
 
