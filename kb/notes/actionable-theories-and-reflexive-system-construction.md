@@ -7,15 +7,15 @@ tags: [foundations, computational-model]
 
 # Actionable theories and reflexive system construction
 
-Some theories do more than explain a class of systems. They also specify distinctions to make, decisions to take, artifacts to produce, and tests to apply. When a capable interpreter can act on such a theory, the theory doubles as a construction mechanism. An LLM makes this relationship unusually direct: natural-language methodology can produce operational behavior without first being translated by a human into a separate implementation language.
+Some theories do more than explain a class of systems. They also specify distinctions to make, decisions to take, artifacts to produce, and tests to apply. When a capable interpreter can act on such a theory, the theory doubles as a construction mechanism. An LLM is one practical interpreter path: natural-language methodology can produce operational behavior without first being compiled into a separate implementation language—but the prose still requires human authoring and curation, and other interpreters (rule engines, human operators following runbooks) can also apply actionable theory.
 
-The relationship takes three progressively stronger forms:
+The relationship takes three progressively stronger forms—not necessarily strict prerequisites, but increasing demands on self-targeting and verification:
 
 1. **Executable theory.** An interpreter applies a theory to construct or operate some system.
 2. **Reflexive executable theory.** The system carrying the theory is among the systems the theory can construct or modify.
 3. **Verified reflexive extension.** Candidate modifications are retained only when an applicable oracle accepts them as improvements.
 
-Schmidhuber's [Gödel machine](https://people.idsia.ch/~juergen/gmweb2/gmweb2.html) is the proof-bound limiting case of the third form: a formally specified self-improving system whose proof searcher may rewrite any part of the machine, including itself, only after proving increased utility. Agent-operated knowledge systems occupy a less formal but often more practically reachable part of the same design space—actionable methodology applied by an interpreter to a mutable self-representation, with improvement bounded by what the system can verify rather than by formal proof.
+Schmidhuber's [Gödel machine](https://people.idsia.ch/~juergen/gmweb2/gmweb2.html) is the proof-bound limiting case of the third form—as oracles are strengthened toward formal proof, not as a claim of convergence to equivalence: a formally specified self-improving system whose proof searcher may rewrite any part of the machine, including itself, only after proving increased utility. Agent-operated knowledge systems occupy a less formal but often more practically reachable part of the same design space—actionable methodology applied by an interpreter to a mutable self-representation, with improvement bounded by what the system can verify rather than by formal proof.
 
 ## From explanation to construction
 
@@ -24,19 +24,19 @@ A theory becomes system machinery when four conditions coincide:
 - It is **actionable**: its concepts discriminate cases and imply operations rather than merely naming phenomena;
 - An **interpreter** can turn those implications into actions;
 - The system has a **mutable representation** the interpreter is authorized to change; and
-- Accepted changes have a path to **behavioral effect** in later operation.
+- Accepted changes have a path to **behavioral effect** in later operation (a retained artifact, an enforced rule, or another change in system behavior traceable to the modification—not merely a one-off interpretation).
 
 Together, these conditions yield a generative rule:
 
 > A theory of system construction becomes part of a system's implementation when an interpreter can apply it to a mutable representation of that system.
 
-"Implementation" here means the mutable surround—context, instructions, tools, and stored knowledge—not the fixed model weights or inference procedure. In an LLM system, prose can fill both explanatory and operational roles because [LLM context is a homoiconic medium](./llm-context-is-a-homoiconic-medium.md)—a shared representation in which prose can act as both data and instruction: methodology, system description, and instructions can share one representation. A note can therefore be read as evidence in one call and executed as a prescription in another. The theory has not become deterministic code, but it changes the conditions for subsequent interpretation rather than rewriting the executing machinery itself.
+"Implementation" here means the mutable surround—context, instructions, tools, and stored knowledge—not the fixed model weights or inference procedure. In an LLM system, prose can fill both explanatory and operational roles because [LLM context is a homoiconic medium](./llm-context-is-a-homoiconic-medium.md)—a shared representation in which prose can act as both data and instruction: methodology, system description, and instructions can share one representation. The same text may be read as evidence in one call and treated as prescription in another, but that duality is not guaranteed: it depends on prompt framing, and stochastic interpretation can diverge across sessions. The theory has not become deterministic code; at most it changes the conditions for subsequent interpretation rather than rewriting the executing machinery itself.
 
 ## Reflexivity requires closure
 
 Executability alone does not make a theory self-extending. A methodology may competently direct the construction of ordinary artifacts while saying nothing about how its own rules, validators, or representations should change.
 
-Reflexivity begins where [a methodology is closed under its own recommendations](./methodology-agent-extensible-only-with-closure-under-recommendations.md). The theory must cover the meta-decisions raised by applying it to itself: which representational form the new artifact should take, how it should be verified, and how it acquires authority over subsequent behavior. At that point, the theory can generate changes to the machinery through which the theory itself operates.
+Reflexivity begins where [a methodology is closed under its own recommendations](./methodology-agent-extensible-only-with-closure-under-recommendations.md). The theory must cover the meta-decisions raised by applying it to itself: which representational form the new artifact should take, how it should be verified, and how it acquires authority over subsequent behavior. At that point, the theory can propose changes to the machinery through which the theory itself operates—subject to whatever oracles and authority paths the system actually supplies.
 
 Closure is not all-or-nothing. A methodology may be closed for adding a validator but open for changing its quality goals; closed for revising instructions but open for deciding who may approve them. Its self-extension frontier is the first consequential meta-decision for which it supplies neither a rule nor an oracle.
 
@@ -61,11 +61,15 @@ The two systems fail in opposite directions. A Gödel machine cannot use an impr
 
 The Gödel-machine comparison makes the oracle impossible to treat as an afterthought. Self-description and an interpreter can generate candidate modifications indefinitely; neither establishes that the modifications are improvements. The effective reach of reflexive construction is therefore bounded by what the system can evaluate—the same structural limit named in [the boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) and graded by [oracle strength](./oracle-strength-spectrum.md) (how decisively a verification method can accept or reject changes).
 
-Retained [design rationale](../reference/design-rationale-management.md)—decision records that capture constraints, alternatives, and acceptance reasons—can feed this loop prospectively, delimiting candidate changes and selecting verification methods when authors carry them forward explicitly; the reference surfaces support retention but do not guarantee end-to-end continuity.
+Retained [design rationale](../reference/design-rationale-management.md)—decision records that capture constraints, alternatives, and acceptance reasons—may inform this loop prospectively, delimiting candidate changes and selecting verification methods when authors carry them forward explicitly; the reference surfaces support retention but do not guarantee end-to-end continuity or reliable agent mining of rationale on each pass.
 
-A further risk arises when the same theory generates a change and supplies the only judgment of that change: the loop may become self-confirming—the reflexive analogue of the oracle gap [automated synthesis is missing good oracles](./automated-synthesis-is-missing-good-oracles.md) names. Deterministic tests, observations from an external environment, independent review contexts, and human authority do not provide formal proof, but they can prevent proposal and acceptance from collapsing into one act. In a proof-relaxed system, separation and diversity of verification compensate partly for the missing theorem prover, following the same logic as [error correction with decorrelated checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md).
+A further risk arises when the same theory generates a change and supplies the only judgment of that change: the loop may become self-confirming—the reflexive analogue of the oracle gap [automated synthesis is missing good oracles](./automated-synthesis-is-missing-good-oracles.md) names. Deterministic tests, observations from an external environment, independent review contexts, and human authority do not provide formal proof, but they can prevent proposal and acceptance from collapsing into one act. In a proof-relaxed system, separation and diversity of verification may compensate partly for the missing theorem prover when oracles are decorrelated and above chance, following the same logic as [error correction with decorrelated checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md)—but no degree of compensation is guaranteed here.
 
 The practical analogue of a Gödel machine is therefore not simply a system that edits itself. It is a system in which self-description, actionable methodology, a change mechanism, an authority path, and verification form a closed—but revisable—loop.
+
+## Open questions
+
+- **TODO:** Record a worked Commonplace example when one occurs in maintenance work: one retained artifact (note, skill, validator, or instruction), one verification step, and one later behavior change traceable to that artifact—grounding the homoiconicity→implementation bridge in observed practice rather than architectural analogy alone.
 
 ---
 
