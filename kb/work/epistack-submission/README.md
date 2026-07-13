@@ -1,160 +1,209 @@
 # Workshop: epistack-submission
 
-This workshop is building the entry to the FLF [Epistemic Case Study Competition](../../sources/epistemic-case-study-competition.md). **Due 19 July 2026**; opened 12 July, it has roughly six working days and closes at submission.
+This workshop is building the entry to the FLF [Epistemic Case Study Competition](../../sources/epistemic-case-study-competition.md). **Due 19 July 2026**; opened 12 July, roughly six working days to submission.
 
-The two existing epistack workshops are inputs, not competitors to this one: [epistack-competition](../epistack-competition/README.md) holds the two-repo protocol (framework here, casework in the sibling `epistack-casebooks`), and [epistack-framework-additions](../epistack-framework-additions/README.md) holds the design menu of candidate additions. Neither decides what we submit. This workshop does.
+Inputs, not competitors: [epistack-competition](../epistack-competition/README.md) (two-repo protocol), [epistack-framework-additions](../epistack-framework-additions/README.md) (design menu). This workshop decides what we submit.
 
 ## The pitch
 
-**The Commonplace Casebook Protocol is a Structure-layer protocol for compounding epistemic investigations without flattening their arguments. Commonplace is its working reference implementation.**
+**Constraint-driven design for compounding epistemic investigations: derive stack machinery from explicit constraints, build local-first, promote only what survives heterogeneous cases — with a runnable reference implementation and three stress-test casebooks.**
 
-This is one of the submission shapes the brief explicitly invites: a protocol enabling interoperability and compounding while preserving nuance, demonstrated on the cases and maintained as sources, users, and AI capabilities change. It also anchors the work in one named stack layer. The protocol structures how heterogeneous claims, positions, evidence, caveats, and subquestions connect; it does not force every dispute into one universal argument ontology.
+The brief asks for workflows and methodologies that advance AI-assisted investigations and **compounding** knowledge bases. The hard problem it names is **methodology and workflow design**, not capability alone. Our answer is not "here is a Structure-layer protocol" as the title — it is a **design methodology for the epistemic stack** (ingestion, structure, assessment operating in concert), with the Commonplace Casebook Protocol as one disciplined instantiation that happened to be buildable in six days.
 
-The design rule is: **standardize the connective tissue, not the contested substance.** A conforming casebook standardizes source identity, artifact roles, relationship semantics, local contracts, validation, review state, and change semantics. Claims and justification remain in attributed prose, where differences in framing and scope stay visible.
+The surprise we intend: most entries will present **a stack**. We present **how to design a stack without smuggling in unmarked verdicts** — including verdicts disguised as metadata, scalar credences, authority rankings, or "neutral" synthesis prose.
 
-### The protocol surface
+### The compounding barrier
 
-- **Source identity and attribution** — citations resolve to retained snapshots with explicit capture fidelity.
-- **Artifact identity and local contracts** — addressable Markdown artifacts declare their roles, while each collection declares the case-local grammar its artifacts obey.
-- **Discourse and inference relationships** — labelled, contextual links expose positions, subquestions, evidence, objections, dependencies, caveats, and contested joints.
-- **Non-flattening extension** — case-specific structures may be introduced locally without silently becoming universal framework concepts.
-- **Deterministic conformance** — machine-readable claims are checked: schema shape, link resolution, `verbatim` spans against cited sources, type-owned marks, and other dereferencing rules the [validation contract](../../reference/validation-contract.md) names. A false machine-readable assertion fails; prose claims are not pretend-deterministic.
-- **Semantic review** — truth, grounding, consistency, and completeness remain criterion- and snapshot-anchored LLM judgments rather than pretend-deterministic fields.
-- **Maintenance and handoff** — the protocol requires that source, artifact, criterion, and model changes expose targeted stale work another agent can discover and continue. **Shipped today:** review freshness for `(note, criterion, model partition)` pairs; type- and collection-conformance pairs when a type spec or `COLLECTION.md` changes ([ADR 038](../../reference/adr/038-type-conformance-reviews-use-the-type-spec-as-the-gate.md), [ADR 041](../../reference/adr/041-collection-conformance-reviews-use-collection-md-as-the-gate.md)); marked tag-README impact fan-out ([ADR 050](../../reference/adr/050-validation-runs-share-parsed-artifacts-and-collection-indexes.md)); full-pass disposition guards before asynchronous resolution ([ADR 051](../../reference/adr/051-full-pass-packets-own-guarded-captures-and-resolutions.md)). **Not shipped:** repository-wide artifact-neutral dependency baselines, reverse selection from arbitrary changed inputs, or ingest-report staleness when casebook notes appear — see [artifact-freshness-and-referential-checks](../artifact-freshness-and-referential-checks/README.md), actively in design and not submission-blocking.
+Compounding fails when three different things look identical on disk:
 
-### Commonplace as the reference implementation
+| Class | Example |
+|---|---|
+| **Forced by the world** | You cannot cite more precisely than you captured. |
+| **Forced by this problem** | COVID needs an institutional layer because official bodies contradict; LHC needs dependency traversal because the case is mostly settled but hinges on a chain. |
+| **Freely chosen** | Whether the grounding-layer marker is a prose word or a frontmatter field. |
 
-The implementation is running code, not a proposed format. The [validation contract](../../reference/validation-contract.md) is the normative deterministic surface: `commonplace-validate` labels findings by source (`[base]`, `[type]`, `[schema]`), runs referential base checks (link health, verbatim quotes — [ADR 046](../../reference/adr/046-verbatim-quotes-are-validated-against-their-cited-source.md)), and shares one execution context per run ([ADR 050](../../reference/adr/050-validation-runs-share-parsed-artifacts-and-collection-indexes.md)); `commonplace-verify-quotes` gives the corpus-wide view. Collection and type contracts enforce artifact grammar; snapshot-anchored review gates and model partitions preserve review provenance and freshness ([review system](../../reference/README-REVIEW-SYSTEM.md)). `commonplace-guard-full-pass-report` is the second shipped non-review freshness pattern: packet-owned captures, shared text hashing, and a guard that refuses disposition work against changed inputs ([ADR 051](../../reference/adr/051-full-pass-packets-own-guarded-captures-and-resolutions.md)). The welded-token form — `**Axis:** \`value\` — justification` — demonstrates how a machine-readable value can remain attached to the prose that earns it, with derived matrices checked rather than maintained as a second truth.
+Without explicit rationale, history, or transfer evidence, the next investigator cannot tell which parts would survive the trip. **Unmarked design contingency is a barrier to compounding** — and it is the problem constraint-driven design addresses.
 
-### Demonstration on the three cases
+### The method (what we submit as methodology)
 
-The sibling casebooks are conformance demonstrations, not experimental arms:
+**Constraint-driven design** — derive tooling from named constraints; refuse structures whose shape is unknown; keep forced, problem-local, and chosen decisions in different homes with different promotion rules.
 
-- **COVID** demonstrates parallel evidential structures, institutional positions, reused evidence, and claims whose similar wording must not erase different scope.
-- **LHC** demonstrates a mostly settled conclusion whose dependency chain and speculative joints remain traversable.
-- **Eggs** demonstrates competing syntheses across populations, outcomes, exposures, and caveats that must not be silently averaged.
+| Mechanism | Role |
+|---|---|
+| **Name the constraint** | Forces in proposals; backlog entries record what friction proved what. |
+| **Build local-first** | Collection-local types and conventions (`epistack-snapshot`, COVID `standing`) before framework promotion. |
+| **Worked-case guard** | A structure earns promotion only after surviving real material — ideally a second, differently-shaped case ([demotion note](../../notes/a-universal-knowledge-framework-demotes-content-taxonomies-to-defaults.md), [ADR 042](../../reference/adr/042-register-becomes-a-default-profile-under-open-ended-text-contracts.md)). |
+| **Deterministic where ground truth is shared** | Schema, link resolution, verbatim quotes ([validation contract](../../reference/validation-contract.md), [ADR 046](../../reference/adr/046-verbatim-quotes-are-validated-against-their-cited-source.md)). |
+| **Semantic where judgment is local** | Collection-conformance, type-conformance, criterion-anchored review — with calibration against labelled samples (gate rationalization finding). |
+| **Negative results on the record** | Rejected authority ranking, unbuilt span locator, preregistered replication unrun, quote-verifier proposal written before friction case. |
 
-The submission will show the same source → artifact → connection → validation → review → freshness workflow on all three, plus one user question per case that the resulting structure makes easier to answer. Quote verification supplies the adversarial conformance example; the provenance matrix and correlated-evidence clusters are a supporting Assessment-layer demonstration if they land without displacing the protocol or write-up.
+**Standardize the connective tissue, not the contested substance** — the operational rule that falls out of the constraints, not the thesis itself.
 
-## Does it generalize — the transfer discipline
+### Applying constraints to the epistemic stack
 
-The second thing the judges say they care about, after *would this help someone reason about this case*, is *does it generalize*. So the entry has to say how we know which parts of this layer are forced by the problem and which are our taste. That is a section, and it is the right size for one.
+The brief's ingestion / structure / assessment layers are **outputs of constraint satisfaction**, not a feature checklist. The submission maps each layer this way:
 
-**Unmarked design contingency is one barrier to knowledge artifacts compounding.** Three different things can emerge from a working session looking identical on disk:
+| Layer | Constraint (why) | What we built / refused |
+|---|---|---|
+| **Ingestion** | Capture bounds citation; provenance must be legible without KB-voice ranking | Retained snapshots, `capture_fidelity`, typed `genre`, COVID `standing` constituents (sibling repo: `kb/notes/standing-is-recorded-by-its-constituents-not-by-a-ranking.md`); **refused** scalar source credibility |
+| **Structure** | Contested substance cannot be flattened; verdict in context contaminates downstream maps | Stance-neutral casebooks, verdict/map separation, attributed prose + labelled links; local extension without silent universalization |
+| **Assessment** | Shared ground → mechanical check; local judgment → criterion review; some failures are locally defensible | `commonplace-verify-quotes` (127/127 on rebuilt corpus); collection-conformance gates; **refused** crux scoring and authority ranking until shape is known |
 
-- **Forced by the world** — you cannot cite more precisely than you captured.
-- **Forced by this problem** — COVID needs a split institutional layer because three official bodies contradict one another; LHC does not, because it has one safety review.
-- **Freely chosen** — whether the grounding-layer marker is a prose word or a frontmatter field.
+Brief bullets we answer **by constraint derivation** (not by omission):
 
-All three arrive as links and headings. Without explicit rationale, history, or an independent transfer case, their surface form does not reveal which parts would survive the trip. Commonplace's practice keeps them apart by giving each a **different home and a different promotion rule**: proposals carry literal `## Forces` and `## Free choices` sections; problem-local structure stays collection-local; transferable structure must *earn* promotion by surviving a second, differently-shaped case. The framework has applied this to itself — [ADR 042](../../reference/adr/042-register-becomes-a-default-profile-under-open-ended-text-contracts.md) demoted registers from universals to *default profiles*, keeping only the declared contract and answerability as universal ([the demotion note](../../notes/a-universal-knowledge-framework-demotes-content-taxonomies-to-defaults.md)).
+- **Correlated evidence** — independence is not visible from agreement → `standing.independence`, prose clusters in casebooks; optional computed matrix is supporting only ([assessment-machinery-line.md](./assessment-machinery-line.md)).
+- **Cruxes** — contested joints and attributed positions *are* crux mapping; we decline crux *scoring* (shape unknown, same constraint that kills ranking).
+- **Calibration** — snapshot-anchored, partition-scoped review *is* the calibration framework; register-drift experiment is the mechanistic argument against scalar credences in frontmatter (sibling repo: `kb/notes/a-verdict-in-context-produces-register-drift-not-verdict-copying.md`).
 
-Three things make this a bounded design rationale rather than an unsupported universality claim:
+### Reference implementation (evidence, not the spine)
 
-1. **The three implementations already differ locally.** The same protocol surface supports COVID, LHC, and eggs while their discourse structures remain visibly case-specific. This demonstrates applicability across the supplied cases, not universal optimality. Because LHC shaped the contract, eggs and COVID provide two observed case-to-case transfers, not two independent transfer tests; correspondingly, the preregistered protocol in (2) still carries the generalization claim's real evidential burden. The entry says so plainly.
-2. **The protocol for measuring it properly, designed and unrun.** [replication-plan.md](./replication-plan.md) is a full clean-room convergence experiment: fix the contract in advance, build the same case with independent builders who never see each other's work, and score which structures converge (forced) and which diverge (chosen) against predictions sealed beforehand. It is designed, preregistered, and **we did not have the budget to run it in six days**. We publish it as a protocol, with the predictions sealed, and say plainly that it is untested.
-3. **The negative results we kept.** The source-span locator was *not* built — the discipline stopped a structure that felt necessary and wasn't. The `source_type` gap recurred three times before earning promotion ([ADR 045](../../reference/adr/045-source-genre-is-a-single-open-field-on-the-snapshot.md)). Author-authority ranking is **rejected** below, on the record.
+The [Commonplace Casebook Protocol](../epistack-competition/README.md) is the runnable proof that the method can produce inspectable artifacts:
 
-Sized to a section, this is an asset. Sized to the spine, it would be a plan that never shipped a tool.
+- **Sibling casebooks** (`epistack-casebooks`) — three stress tests, from-scratch rebuild **complete** (2026-07-13): 0 validate failures, **127/127** quote matches, **14/14** collection-conformance PASS, freshness demonstrated. Entry points documented in `kb/work/rebuild-from-scratch/README.md` there.
+- **Framework** (this repo) — `commonplace-validate`, `commonplace-verify-quotes`, review freshness ([ADR 052](../../reference/adr/052-general-freshness-store-review-first-migration.md)), skills layer.
+
+Judges who never open a repo should still get the methodology. Judges who clone should get **falsification** (adversarial quote demo below).
+
+### Three cases as constraint stress tests
+
+Cases demonstrate **which constraints bit**, not which side is right:
+
+| Case | Constraint surfaced | One navigational question for the write-up |
+|---|---|---|
+| **COVID** | Parallel institutional verdicts; correlated zoonotic cluster; scope must not collapse | "Do these three papers independently confirm zoonosis, or one programme thrice?" |
+| **LHC** | Settled conclusion with load-bearing dependency chain and speculative joints | "What does the safety case rest on, and where is the argument's own reliability contested?" |
+| **Eggs** | Competing syntheses; population/outcome caveats; institutional voices that diverged | "Why did the 2015 guideline reversal not settle the dispute?" |
+
+Same workflow on all three: source → ingest → note → validate → review → freshness. One walkthrough per case in the submission document.
+
+## Generalization — bounded claims
+
+The judges ask: *does it generalize?* Constraint-driven design generalizes as **methodology** (any layer, any stack). Specific machinery generalizes only with evidence:
+
+1. **Observed transfer across three unlike shapes** — LHC-shaped contract transferred to eggs and COVID without amendment; visibly different local structure (institutional layer, dependency map, synthesis dispute). LHC shaped the contract → two observed transfers, not independent replication. Say so plainly.
+2. **Principled constraints** — authority is claim-relative; context contamination operates below compliance reasoning; closed enums can lie confidently. These are not "our bug reports"; they are design pressures any agent-operated controversy KB faces.
+3. **Spot experiments** — register drift (n=2, confounded); gate calibration (fitted revision on 4 labelled notes). Calibrate claims to sample size.
+4. **Designed, unrun replication** — [replication-plan.md](./replication-plan.md): clean-room convergence to separate material-forced from contract-induced structure. Appendix material, not spine. Honest uncertainty is an asset.
+
+## Submission document outline
+
+The deliverable is a **judge-facing document**. Code and repos are evidence. Target structure:
+
+| § | Title | Length | Content |
+|---|---|---|---|
+| 1 | The compounding barrier | ½ page | Unmarked contingency; why methodology beats feature lists |
+| 2 | Constraint-driven design | 1–1½ pages | Three constraint classes; promotion rules; three homes (framework / collection-local / proposal) |
+| 3 | Constraints → epistemic stack | 1 page | Table above expanded; built vs refused per layer |
+| 4 | Reference implementation | 1 page | Casebook Protocol + Commonplace; deterministic vs semantic boundary; falsification path |
+| 5 | Three stress tests | 1½ pages | One question + one path through the map per case |
+| 6 | Evidence and limits | 1 page | Rebuild gates, experiments, backlog audit trail, replication protocol, n=2 caveats |
+| App | Runnable walkthrough | short | Clone path, commands, planted-failure demo |
+
+**Tone:** lead with §1–2 for the naive reader. ADR numbers and CLI names live in §4–6 and the appendix.
 
 ## Evaluation boundary
 
-- **The deliverable is the submission document.** The code is evidence for it. Nothing else in this workshop outranks getting the document written.
-- **Casework stays in the sibling repo**, per the [existing protocol](../epistack-competition/README.md). Framework changes land here.
-- **No new framework machinery that a worked case hasn't earned.** Build-local-first still holds; the deadline is not a licence to ship speculative types.
-- **Doctrine constraints are inputs, not open questions:** no stored confidence/authority scalars, adjudication stays a downstream labelled layer, frontmatter semantics stay type-owned.
-- **Nothing here builds the generic bulk-operations layer.** It is planned, large, and not ready. The entry reports the requirement and stops.
-- **General artifact freshness v1 is shipped; collection-as-artifact is deferred.** Review-pair targets, `file-text` inputs, global status, and migration to `commonplace-store.sqlite` are live ([ADR 052](../../reference/adr/052-general-freshness-store-review-first-migration.md), [freshness architecture](../../reference/freshness-architecture.md)). `collection-text` / `collection-maintenance` remain a proposal ([collection-as-artifact freshness](../../reference/proposals/collection-as-artifact-freshness.md)). Do not wait for collection-as-artifact freshness before submitting.
+- **The submission document outranks everything.** No new machinery that casework has not earned before 19 July.
+- **Casework stays in the sibling repo.** Framework changes land here.
+- **Doctrine constraints are settled:** no stored confidence/authority scalars; adjudication is downstream and labelled; frontmatter semantics stay type-owned.
+- **Do not build** the generic bulk-operations layer or the independent-builder experiment on the critical path.
+- **Collection-as-artifact freshness** remains deferred ([proposal](../../reference/proposals/collection-as-artifact-freshness.md)); ADR 052 v1 review-pair freshness is sufficient evidence.
 
-## Build candidates
+## Build plan
 
-### Extract the standalone protocol and conformance guide (the main deliverable)
+### Done (evidence landed)
 
-The repository already implements the protocol, but its normative surface is distributed across collection contracts, type specifications, ADRs, validators, and review documentation. Extract one submission-facing specification containing: scope; required artifact and source surfaces; relationship grammar; local-extension rules; deterministic-versus-semantic verification boundary; change/freshness semantics; a conformance checklist; and one worked path through each case.
+| Item | Status | Evidence |
+|---|---|---|
+| Quote verifier | **DONE** | [ADR 046](../../reference/adr/046-verbatim-quotes-are-validated-against-their-cited-source.md); rebuilt corpus **127/127** |
+| Validation contract + shared runs | **DONE** | [validation contract](../../reference/validation-contract.md), [ADR 050](../../reference/adr/050-validation-runs-share-parsed-artifacts-and-collection-indexes.md) |
+| Full-pass guard | **DONE** | [ADR 051](../../reference/adr/051-full-pass-packets-own-guarded-captures-and-resolutions.md) |
+| Three-case rebuild | **DONE** | Sibling `kb/work/rebuild-from-scratch/README.md` — all closure gates |
 
-**Normative sources to consolidate.** Treat [validation-contract.md](../../reference/validation-contract.md) as the submission-facing deterministic half (intra-document schema versus referential dereferencing, base contract, severity asymmetry). Treat [README-REVIEW-SYSTEM.md](../../reference/README-REVIEW-SYSTEM.md) plus ADRs 038, 041, and 051 as the shipped freshness inventory. For change/freshness semantics, describe three tiers explicitly:
+### Must ship (critical path)
+
+**Extract the methodology + protocol guide (main artifact).** One submission-facing document (or doc + short spec appendix) containing:
+
+- Constraint-driven design as named methodology (§2–3 above).
+- Casebook Protocol as reference implementation: artifact surfaces, local-extension rules, conformance checklist, freshness tiers.
+
+Normative sources to consolidate: [validation-contract.md](../../reference/validation-contract.md) (deterministic half); [README-REVIEW-SYSTEM.md](../../reference/README-REVIEW-SYSTEM.md) + ADRs 038, 041, 051, 052 (semantic + freshness). State three freshness tiers:
 
 | Tier | Mechanism | Status |
 |---|---|---|
 | Review freshness | DB snapshots, selector, ack, model partitions | Shipped |
 | Disposition guarding | Packet captures + `commonplace-guard-full-pass-report` | Shipped, narrow |
-| General artifact freshness | Dependency baselines, reverse selection, collection source snapshots | Designed; [workshop](../artifact-freshness-and-referential-checks/README.md) in progress |
+| General artifact freshness | Dependency baselines, reverse selection, collection snapshots | Designed; [workshop](../artifact-freshness-and-referential-checks/README.md) |
 
-State plainly that prose cross-artifact claims (for example an ingest report still saying no casebook notes exist) are semantic maintenance or review work unless codified into a machine-readable mark — not missing validator code. The Epistack collection-membership case is a motivating witness for the third tier's collection source snapshot, not evidence that `commonplace-validate` should parse ingest prose.
+**Write the submission document** following the outline. Run adversarial review and a **naive-reader pass** (judge may never clone).
 
-The protocol document and runnable Commonplace walkthrough are the entry. New machinery is subordinate to making those two artifacts precise, inspectable, and usable by another investigator.
+**Package judge-facing falsification:**
 
-Two of the brief's assessment bullets the document answers **head-on rather than by omission**, or a judge reads the doctrine as "we don't do the hard part":
+- Clone casebooks → `commonplace-verify-quotes` + `commonplace-validate` on clean corpus → pass.
+- Plant one broken `verbatim` span → fail. Full install is not the demo; this short path is.
 
-- **Calibration.** Attributed, snapshot-anchored, partition-scoped judgments *are* the calibration framework; the register-drift finding is the mechanistic argument for why scalar credences in frontmatter are an anti-pattern, not a deferred feature.
-- **Cruxes.** Contested joints, `contradicts` edges, and attributed positions *are* crux mapping; the entry declines crux *scoring* and says why (the same shape-unknown argument that rejects authority ranking below).
+### Should ship if time allows
 
-And one judging question gets its own explicit half-page rather than being scattered: **does it scale with AI/compute.** Model partitions mean a better model opens a new partition over the same criteria instead of invalidating the archive; criterion-anchored assays simply re-run; gates are cheap-to-add criterion files; the skills layer makes the whole workflow agent-operable. The story is strong and currently under-told.
+- **Hands-free transcript** — one agent run: source → note → validate → review, unassisted. Weakens the scaling story if missing; cut after matrix, before weakening §5.
+- **Scaling-with-AI half-page** — model partitions, criterion re-run, cheap gates, skills — currently under-told.
 
-### Ship the quote verifier (DONE — 2026-07-12)
+### Cut first
 
-Shipped as [ADR 046](../../reference/adr/046-verbatim-quotes-are-validated-against-their-cited-source.md): `commonplace-validate` now resolves every `verbatim`-marked quotation against the source it links (a false claim **fails**), plus `commonplace-verify-quotes` for corpus sweeps. It runs as a generic body-content check alongside link health, not a type rule, because the trigger is the citation rather than the note's type.
+- **Correlated-evidence matrix build** — prose `standing.independence` and casebook callouts already satisfy the constraint story; matrix is optional ([assessment-machinery-line.md](./assessment-machinery-line.md)).
+- **Replication experiment execution** — stays designed-but-unrun.
+- **ADR laundry lists** in main text — footnote only.
 
-Baseline on the sibling casebooks: **63 match, 18 mismatch, 6 unresolved** across 87 candidates. The mismatches are real failures of the strict assertion — editorial omission, bracketed substitution, case changes, punctuation moved inside the quotation boundary. They are now the fix queue, not a rebuild-blocked write-off: with the rebuild off the critical path (below), **the 18 get repaired, and the repaired corpus is what ships.** A submission whose citations pass its own checker is the point.
+### Rejected — entry material (negative results)
 
-Shipping it surfaced an architectural gap worth naming in the entry. The schema already validates the note *body* — headings, links, dates — so the dividing line in validation is not frontmatter versus body. It is **dereferencing**: the schema cannot say *follow this path and look inside the artifact it names*. That makes link health and verbatim-quote resolution a distinct class of **referential** checks, whose ground truth lives in a second artifact, and which are hand-written imperative passes with no shared model, no shared severity policy, and no owner. The immediate divergence is fixed (both now share one code-fence primitive, after a fenced example was caught being scanned as a live claim), but the class still has no design. Logged to [kb-graph-loader](../kb-graph-loader/README.md), where it belongs — a referential check *is* a graph edge being resolved.
+**Author-authority ranking** — [workshop](../authority-ranking/README.md): order shape unknown. Rejection *is* the discipline. A half-built scalar rank would be the flattening this entry argues against.
 
-### The correlated-evidence matrix (supporting Assessment-layer demonstration)
+**Crux scoring, scalar credence in frontmatter** — same shape-unknown constraint.
 
-**[assessment-machinery-line.md](./assessment-machinery-line.md).** The one assessment-layer bullet in the brief we can reach in the time, and every case already contains a textbook instance that is identified but unmapped. Correlated evidence takes a **different form in each case**:
-
-- **COVID** — Andersen/Worobey/Pekar author overlap, *plus* multiple analyses reusing the same Huanan-market metagenomic dataset. The case contract already flags this hazard; no note maps it. This is also the outstanding COVID depth work, so the two tasks are one.
-- **LHC** — the whole safety case funnels through the cosmic-ray argument as a single load-bearing dependency; Ord–Hillerbrand–Sandberg is literally an out-of-model-error critique of exactly that.
-- **Eggs** — industry funding (Barnard 2019).
-
-The design move that makes this tractable: heterogeneous sources cannot be asked the same *content* questions — you cannot put a court filing and a molecular-clock preprint on the same claim axis without manufacturing precision — but they share **uniform provenance facts**. Author, genre, data dependency, funder, citation chain, capture layer, primary/secondary standing. **Provenance is uniform even when content is not.** So the matrix's rows are sources and its axes are provenance and independence, and the correlated-evidence flag becomes a **computed cluster** rather than a prose caveat.
-
-Build the smallest version that demonstrates the named Assessment requirement without delaying the protocol or submission. Reuse current artifacts where possible; do not build the generic bulk-operations layer. The preregistered code split is useful secondary evidence only if the retarget happens anyway.
-
-Present the three instances as what they are. COVID's shared authors and reused dataset are the clearest multi-source correlation cluster. The eggs instance is a funding-correlation pattern reported across a literature, and therefore closer to the correlated-evidence bullet than LHC, but the current casebook has not captured the individual industry-funded studies needed to map that cluster source by source. The LHC instance is a **single load-bearing dependency funnel**, not a multi-source cluster — real, and worth mapping, but the write-up must not sell all three as equivalent independence-cluster mappings.
-
-### Two cheap judge-facing artifacts
-
-Both convert claims from asserted to shown at near-zero build cost; neither is new machinery.
-
-- **The one-command adversarial demo.** The judge-facing path is: clone the casebooks, run `commonplace-verify-quotes` and `commonplace-validate`, and watch a deliberately broken citation **fail**. The full install (venv, direnv, `commonplace-init`, skills) is not "close to single click" and must not be the demo; package this short path explicitly in the submission and make it the first thing a judge can falsify themselves.
-- **The hands-free transcript.** The brief wants graceful scaling toward hands-free operation; current evidence is one heavily-steering operator. Log one transcript of an agent running the source → note → validate → review loop on a single new source, unassisted, and include it. This is the cheapest possible conversion of the scaling story's weakest claim.
-
-### Rebuild the three cases from scratch (designed, not run — published as a protocol)
-
-**[replication-plan.md](./replication-plan.md).** This was the plan's centre of mass and it should not have been. It is an *experiment about* a tool, not a tool — it answers "does it generalize," and only indirectly, while three of the four things the judges say they care about go unaddressed by it. It also consumes the two days the write-up needs.
-
-It comes off the critical path. It ships as a **designed-but-unrun protocol**: contract frozen, predictions sealed, clean-room conditions specified, measurement decided in advance. That is an honest and useful artifact — the brief asks entrants to "make clear where design choices are uncertain," and a preregistered protocol we did not run is a sharper statement of uncertainty than a result we could have narrated our way into.
-
-### Author-authority ranking (rejected — and the rejection is entry material)
-
-The [authority-ranking workshop](../authority-ranking/README.md) says the order shape itself is unknown: possibly partial, possibly domain-conditional, non-additive under independence. Six days will not settle that.
-
-The rejection is **the discipline in the negative** and belongs in the submission as such. We decline to build a structure whose shape we have not established — exactly the restraint we are indicting other approaches for lacking. A half-built scalar rank would hand a judge the precise flattening critique this entry exists to make.
-
-## Plan
+## Schedule
 
 Days are working days from 12 July; submission 19 July.
 
 | Days | Work |
 |---|---|
-| 1 | **DONE.** Quote verifier ([ADR 046](../../reference/adr/046-verbatim-quotes-are-validated-against-their-cited-source.md)); validation runs ([ADR 050](../../reference/adr/050-validation-runs-share-parsed-artifacts-and-collection-indexes.md)); full-pass guard ([ADR 051](../../reference/adr/051-full-pass-packets-own-guarded-captures-and-resolutions.md)); [validation contract](../../reference/validation-contract.md) |
-| 1–2 | **Extract the protocol.** Write the standalone normative specification, conformance checklist, and exact runnable workflow. Freeze the submission claim around the Structure layer and reference implementation |
-| 1–3 | **Build the three-case demonstration.** Fix the 18 quotation mismatches, rerun validation cleanly, and produce a requirements/results table plus one navigational walkthrough per case |
-| 3 | **Cheap judge-facing evidence.** Package the one-command adversarial demo (clone → verify-quotes → planted failure fails) and log one hands-free transcript of the source→note→validate→review loop on a new source |
-| 2–3 | **Optional supporting assessment.** Build only the minimum correlated-evidence matrix that can run on the available case artifacts; cut it if it threatens protocol clarity or writing time ([assessment-machinery-line.md](./assessment-machinery-line.md)) |
-| 4–6 | **Write and package the submission.** Lead on the protocol, demonstrate the reference implementation, answer the calibration and crux bullets head-on, include the unrun replication protocol as future evaluation, run adversarial review **and a naive-reader pass** (the judge will never open the repo, and the house style is dense), and preserve a full day of buffer |
+| 1 | **DONE.** Quote verifier, validation contract, rebuild closure |
+| 1–2 | **Draft §2–3 + protocol appendix.** Methodology spine and constraint→stack table |
+| 2–3 | **Draft §4–5.** Reference implementation, three case walkthroughs, results table |
+| 3 | **Falsification package + optional transcript** |
+| 4–6 | **Integrate, naive-reader pass, adversarial review, buffer** |
 
-**Priority if the days run out.** Protect, in order: the submission document; the standalone protocol and conformance guide; clean demonstrations on all three cases; the quote-verification walkthrough (the one-command demo path travels with it); the hands-free transcript; then the correlated-evidence matrix. Cut the matrix first, the transcript second, before weakening the three-case protocol demonstration or losing writing/review time. Do not begin the independent-builder experiment or generic bulk-operations layer.
+**Priority if days run out.** Protect, in order:
 
-## Entry material we already have and should not hide
+1. Submission document (§1–6)
+2. Methodology + protocol guide (extracted spec)
+3. Three case walkthroughs + rebuild evidence table
+4. One-command falsification demo
+5. Hands-free transcript
+6. Correlated-evidence matrix
 
-The repo's own working record is evidence, not embarrassment. The sibling repo's `backlog-to-commonplace.md` (append-only, with Outcome lines showing what earned promotion and what did not), this repo's open workshops, the `## Forces` / `## Free choices` sections in proposals, and [rejected-candidates](../epistack-framework-additions/rejected-candidates.md) are the audit trail showing the boundary between forced and chosen being drawn in real time by people who did not yet know the answer.
+Do not weaken §2–5 to build optional Assessment machinery.
 
-Two items in particular:
+## Entry material we already have — do not hide
 
-- **The quote-verifier proposal admits in writing that it "did not originate from a felt friction case"** — the discipline catching its own violation on the page, before the prototype supplied the missing evidence. Do not tidy this away; it is the strongest honesty signal in the entry.
-- **The register-drift experiment** — an assumption ("contradictions get silently averaged") tested and found wrong in an instructive way, with a blind judge, a declared confound, and an n=2 caveat. It promoted to [context contamination operates below an agent's compliance reasoning](../../notes/context-contamination-operates-below-an-agents-compliance-reasoning.md).
+The audit trail **is** constraint-driven design in action:
+
+- Sibling `backlog-to-commonplace.md` — append-only, Outcome lines for what earned promotion
+- `## Forces` / `## Free choices` in proposals
+- [rejected-candidates](../epistack-framework-additions/rejected-candidates.md)
+- Quote-verifier proposal admitting it "did not originate from a felt friction case" — discipline catching violation on the page
+- Register-drift experiment + gate calibration — constraints predicted failure modes; spot checks confirmed
+- Rebuild workshop closure — constraints → machinery → measurable gates (127 quotes, 14/14 conformance)
+
+## Judging questions — how we answer
+
+| Question | Answer |
+|---|---|
+| Would this help someone reason about the case? | §5 walkthroughs; maps are stance-neutral navigation aids, not verdicts |
+| Does it generalize? | Methodology generalizes; machinery bounded by three cases + replication protocol |
+| Does it scale with AI/compute? | Partitions, re-runnable criteria, agent-operable skills — §4 sidebar |
+| Does it compound? | **The spine:** constraint classes + promotion rules make handoffs legible |
 
 ## What closes it
 
-The submission is sent by 19 July with a protocol specification, reference-implementation walkthrough, three-case conformance evidence, and explicit limitations. Then: promote the protocol and any durable implementation conclusions into `kb/reference/` and `kb/notes/`, fold the predecessor workshops into whatever survives, and delete this directory.
+Submission sent by 19 July: constraint-driven design methodology, epistemic-stack mapping, reference-implementation walkthrough, three-case evidence, explicit limitations and negative results.
+
+Then: promote durable conclusions into `kb/reference/` and `kb/notes/`; fold predecessor workshops into what survives; delete this directory.
