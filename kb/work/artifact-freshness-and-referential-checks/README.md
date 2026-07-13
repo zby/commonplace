@@ -2,33 +2,30 @@
 
 ## Question
 
-Given one proven operation-local artifact-version contract and a second real consumer, what boundary should Commonplace extract for registering artifact-to-artifact dependencies, retaining accepted dependency baselines, selecting targets affected by changed inputs, and distinguishing freshness from deterministic cross-artifact validity?
+Given the shipped full-pass capture/guard case, what additional boundary does a second consumer require for registering artifact-to-artifact dependencies, retaining accepted dependency baselines, selecting targets affected by changed inputs, and distinguishing freshness from deterministic cross-artifact validity?
 
 No artifact class is intrinsically a source or a derivative. A source snapshot, ingest, note, criterion, type specification, instruction, report, or generated index may be an input in one target and a freshness target in another. Artifact types may define different refresh policies, but the mechanism must not special-case sources or ingests.
 
-## Prerequisite
+## Implemented foundation
 
-[ADR 051](../../reference/adr/051-full-pass-packets-own-guarded-captures-and-resolutions.md) implements the full-pass-local packet-owned capture and guarded transition prerequisite.
+[ADR 051](../../reference/adr/051-full-pass-packets-own-guarded-captures-and-resolutions.md) shipped the first non-review artifact-version case:
 
-That decision proves these behaviors without exposing a reusable subsystem:
+- full-pass packets retain immutable `.txt` start-state captures under separate logical artifact identities;
+- `commonplace.lib.hashing` supplies the shared UTF-8-text SHA-256 contract already used by review freshness and full-pass captures;
+- the typed full-pass report records every guarded logical path, packet-relative capture, and accepted hash;
+- `commonplace-guard-full-pass-report` verifies captures, compares all live inputs, emits `matching`, `changed`, `missing`, or `corrupt-capture`, includes diffs for changed text, and refuses unless all inputs match;
+- deterministic validation rechecks capture integrity and report-resolution consistency; and
+- the resolution and full-pass instructions require the guard immediately before packet-driven transitions.
 
-- logical artifact identity kept separate from a packet-owned start-state capture;
-- immutable capture of the content present when an operation starts;
-- an explicit content-version/hash contract;
-- current-version resolution for a logical artifact;
-- capture-to-current diff generation;
-- an optimistic pre-transition guard that refuses inputs already changed or missing at check time without locking live artifacts; and
-- machine-readable changed/missing/matching results.
+The implementation is intentionally split at the demonstrated boundary. Content hashing is shared. Report parsing, packet-capture persistence, capture verification, comparison/diff results, and guarding remain in `commonplace.lib.full_pass`, with a full-pass-specific command and type contract. There is no general capture store, artifact-version service, or freshness target API.
 
-Its first consumer, the full-pass disposition workflow recorded by [ADR 051](../../reference/adr/051-full-pass-packets-own-guarded-captures-and-resolutions.md), owns packet-local `.txt` captures and proves one target-owned response to net drift: a disposition report becomes `superseded` instead of executing a recommendation when its guarded inputs no longer match their start state. That capture persistence and resolution state remain specific to full-pass operation; neither is the general freshness store. The contract deliberately holds no policy about what a changed input means — choosing those responses per target kind is this workshop's problem, not its prerequisite's.
+That is the desired starting point, not unfinished foundation work. Full-pass owns one persistence policy and one response to net drift: a disposition becomes `superseded` instead of executing against changed text. General freshness should extract full-pass comparison or guard code only after its second consumer demonstrates the same shape; shared semantics do not require shared storage or a universal `GuardedInput` type.
 
-This workshop consumes the proven semantics but not the full-pass persistence policy. Once a second consumer exists, its first implementation step is to compare both worked cases and extract only the shared identity, hashing, comparison, diff, and guard boundary. Packet-local capture persistence may remain private to full-pass code; a general freshness target may earn a different owner and retention policy.
+Pinned assessment input is not part of the shipped foundation. Full-pass methods still read live logical paths under a cooperative no-edit rule; the final optimistic guard covers later application and asynchronous resolution, not in-flight reads or the residual check-to-mutation race. Evidence that this rule is restrictive or unreliable must appear before this workshop adds pinned-input seams or stronger concurrency machinery.
 
-Pinned assessment input is not part of the prerequisite. The first full-pass implementation leaves methods reading live logical paths and instead requires cooperative ownership: other actors do not edit guarded notes while the active pass runs. The final guard covers later application and asynchronous resolution, not in-flight reads. Evidence that this operating rule is restrictive or unreliable must appear before this workshop treats pinned-input seams as earned infrastructure.
+## Remaining problem after the foundation
 
-## Remaining problem after the prerequisite
-
-Review freshness already proves accepted baselines for one purpose-built target kind: a `(note, criterion, model partition)` pair retains the note and criterion snapshots against which its evidence was accepted. The artifact-version prerequisite adds a worked operation-local capture/comparison contract; its full-pass consumer adds a report-owned version-guarded decision. It intentionally does not yet add an artifact-neutral API.
+Review freshness proves accepted baselines for one purpose-built target kind: a `(note, criterion, model partition)` pair retains the note and criterion snapshots against which its evidence was accepted. ADR 051 adds a report-owned capture, selector-like comparison, diff, and guarded response. Together they establish the vocabulary and two storage weights, but still do not provide an artifact-neutral dependency baseline or reverse selector.
 
 General freshness still lacks:
 
@@ -57,9 +54,9 @@ Existing content-addressed verbatim-quote verification is already a robust refer
 
 The remaining mechanism must account for these witnesses:
 
-- **Artifact-neutral baseline:** a non-review target records an accepted set of versioned artifact dependencies using the prerequisite's artifact-version contract.
+- **Artifact-neutral baseline:** a non-review target records an accepted set of versioned artifact dependencies using the shipped text-version contract.
 - **Reverse selection:** changing any registered dependency selects every affected target regardless of the path class or colloquial role of either side.
-- **Diff-backed acknowledgement:** the operator uses the extracted comparison, diff, and version guard, then advances selected dependency baselines without claiming that a new target output was produced.
+- **Diff-backed acknowledgement:** the operator inspects the accepted-to-current change and advances selected dependency baselines without claiming that a new target output was produced; the second consumer determines whether full-pass comparison/diff code should be extracted.
 - **Refresh acceptance:** producing or reassessing a target records its current target version and complete accepted dependency baseline.
 - **Target-owned consequence:** the shared selector emits neutral reasons such as `input-changed`, `output-missing`, or `contract-changed`; the target kind decides the permissible response.
 - **Cross-artifact validity:** a deterministic check can detect a claim such as “the target collection is empty” becoming false, or establish why that claim cannot be represented safely enough to check.
@@ -68,7 +65,7 @@ The remaining mechanism must account for these witnesses:
 
 ## General contract under test
 
-A freshness target adds this state on top of the artifact-version boundary extracted from the two worked consumers:
+A freshness target adds this state beyond the shipped review and full-pass cases:
 
 - a stable target kind and structured key;
 - the accepted target/output version, where an output artifact exists;
@@ -76,7 +73,7 @@ A freshness target adds this state on top of the artifact-version boundary extra
 - the target policy used to interpret neutral selector results; and
 - accepted baseline transitions for refresh and acknowledgement.
 
-Acknowledgement means that the existing target remains acceptable against displayed current dependency versions. It advances only those versions and preserves the target output. Refresh means that the target was produced or reassessed and records a new target version plus its complete dependency baseline. Both operations optimistically recheck their complete input set immediately before the baseline transition and refuse a known mismatch. They do not lock artifacts or claim atomic exclusion across the check-to-write interval; target-owned postcondition verification and reconciliation retain the prerequisite's explicit residual-race boundary.
+Acknowledgement means that the existing target remains acceptable against displayed current dependency versions. It advances only those versions and preserves the target output. Refresh means that the target was produced or reassessed and records a new target version plus its complete dependency baseline. Both operations record the exact versions inspected or consumed, not whichever versions happen to be current later. A concurrent subsequent edit therefore makes the new baseline immediately stale without requiring locks or atomic filesystem transactions.
 
 The first implementation need not create a general database. The storage carrier follows the existing weight rule: keep naturally owned, low-churn state with its artifact; introduce an operational edge store only when mutable many-to-many state and a real selector outgrow artifact-owned records or recomputation.
 
@@ -86,13 +83,13 @@ This workshop owns the vertical behavior contract for artifact-neutral dependenc
 
 It consumes rather than duplicates adjacent work:
 
-- [ADR 051](../../reference/adr/051-full-pass-packets-own-guarded-captures-and-resolutions.md) supplies the first worked case: packet-owned capture, current-version comparison, guarding, and report-specific resolution. This workshop owns extraction only after a second consumer demonstrates the common boundary.
+- [ADR 051](../../reference/adr/051-full-pass-packets-own-guarded-captures-and-resolutions.md) owns the shipped packet capture, full-pass comparison/guard command, and report-specific resolution. This workshop owns only the additional baseline and reverse-selection behavior plus any extraction a second consumer earns.
 - [lineage-mechanisms](../lineage-mechanisms/README.md) owns the general dependency/freshness vocabulary, storage-weight rules, and any common operational state design.
 - [kb-graph-loader](../kb-graph-loader/README.md) owns shared reading, parsing, and artifact indexes used by deterministic referential checks.
 - [bulk-operations](../bulk-operations/README.md) owns executing selected refresh work at scale.
 - The review subsystem continues to own review-pair lifecycle, result protocols, and its purpose-built store unless a migration is separately justified.
 
-Out of scope: implementing the prerequisite again, automatic rewriting, semantic truth adjudication, a universal dependency-role ontology, authority ranking, and refresh-job execution.
+Out of scope: reworking full-pass capture/guard behavior, adding pinned-input or full-concurrency machinery without a failed case, automatic rewriting, semantic truth adjudication, a universal dependency-role ontology, authority ranking, and refresh-job execution.
 
 ## Open decisions
 
@@ -107,13 +104,12 @@ Out of scope: implementing the prerequisite again, automatic rewriting, semantic
 
 The workshop closes when:
 
-1. the full-pass prerequisite has executable capture/comparison/diff/optimistic-guard cases, and a second consumer is used to extract the smallest reusable artifact-version API;
-2. at least one non-review target records and queries an advancing accepted dependency baseline using that API;
-3. a changed dependency selects the registered target with its accepted and current versions plus a neutral reason;
-4. acknowledgement and refresh demonstrate distinct, guarded baseline transitions;
-5. the boundary between dependency discovery, changed dependency, deterministic invalidity, and target-owned response has a written contract and executable cases;
-6. Commonplace either implements the storage weight earned by the witness or records why artifact-owned state remains sufficient;
-7. durable outcomes move to the appropriate API/reference documentation, ADR or proposal, validator instruction, and owning workshops; and
-8. any submission claim about targeted maintenance is narrowed or substantiated to match the result.
+1. at least one non-review target records and queries an advancing accepted dependency baseline and serves as the second consumer for extracting only the artifact-version behavior it shares with ADR 051;
+2. a changed dependency selects the registered target with its accepted and current versions plus a neutral reason;
+3. acknowledgement and refresh demonstrate distinct baseline transitions over the exact inspected or consumed versions;
+4. the boundary between dependency discovery, changed dependency, deterministic invalidity, and target-owned response has a written contract and executable cases;
+5. Commonplace either implements the storage weight earned by the witness or records why artifact-owned state remains sufficient;
+6. durable outcomes move to the appropriate API/reference documentation, ADR or proposal, validator instruction, and owning workshops; and
+7. any submission claim about targeted maintenance is narrowed or substantiated to match the result.
 
 Then delete this workshop and remove it from the active-workshop index.
