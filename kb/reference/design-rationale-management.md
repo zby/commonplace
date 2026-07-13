@@ -1,0 +1,54 @@
+---
+description: "How Commonplace distributes design-rationale records across proposals, ADRs, contracts, and enforcement, without enforcing end-to-end continuity"
+type: kb/types/note.md
+traits: [has-external-sources, has-comparison]
+---
+
+# Design rationale management
+
+Commonplace provides distributed repository surfaces for retaining **design rationale**: why a system feature exists, what constrained it, which alternatives remained possible, what was chosen or rejected, and what evidence justified promoting a local solution into shared machinery. Work-in-flight workshops, finished proposals, architecture decision records (ADRs), contract-governed [collections](./definitions/collection.md), type specs, validators, package code, and version history each retain different parts of that rationale according to the design's state and authority. There is no central rationale database or single rationale-management command.
+
+These surfaces support rationale retention, but they do not guarantee end-to-end continuity. Current proposal and ADR contracts do not require stable decision identities, provenance links, or backlinks from implemented machinery. Later recovery therefore still depends on what authors explicitly carry forward or connect.
+
+This is an application of established design methodology, not a new method called "constraint-driven design." Design-rationale research uses the term for reasoning that explains and justifies design decisions, including alternatives and trade-offs ([MIT Design Rationale](https://rationale.csail.mit.edu/); [Feature, specification and evidence framework](https://doi.org/10.1017/dsj.2024.19)). The IDEF methods make the boundary especially explicit: IDEF9 discovers and analyses constraints, while IDEF6 captures rationale when situational constraints do not determine a unique decision ([IDEF methods compendium](https://www.idef.com/wp-content/uploads/2016/02/compendium.pdf)).
+
+## Vocabulary boundary
+
+Three nearby terms operate on different objects:
+
+| Term | What it does in Commonplace |
+|---|---|
+| **Design constraint** | Restricts the feasible design space. A first principle is a constraint inherited from a consumer, substrate, domain, or machinery commitment; a problem-local constraint can restrict one collection without binding the framework. |
+| **Design rationale** | Records how constraints, assumptions, alternatives, evidence, and trade-offs support a decision—especially where the constraints leave more than one feasible choice. |
+| **Constraining** | Narrows the valid interpretations of a retained artifact. It is a deploy-time learning operation, not the name of the design methodology. |
+
+A design constraint can motivate [distillation](../notes/definitions/distillation.md)—extracting a use-shaped artifact from larger material—deferred commitment, local variation, or relaxation rather than constraining. Conversely, a freely chosen convention can constrain an artifact even though no inherited constraint required that convention. Commonplace therefore reserves *constraining* for the semantic operation [defined in the learning-theory vocabulary](../notes/definitions/constraining.md), while [first principles are inherited constraints, not design choices](../notes/first-principles-are-inherited-constraints-not-design-choices.md).
+
+## Repository representation
+
+| Rationale state | Commonplace surface | What the surface can retain |
+|---|---|---|
+| Active exploration | `kb/work/` | Evidence, competing framings, experiments, and provisional decisions that have not earned library status |
+| Finished but undecided design | [`kb/reference/proposals/`](./proposals/README.md) | Problem, option space, forces, free choices, current-state assumptions, and adoption criteria |
+| Implemented decision | [Architecture decision record (ADR)](./types/adr.md) | Required context, decision, and consequences; richer records may also retain alternatives and evidence |
+| Local operating contract | `COLLECTION.md` and collection-local type specs | The constraints proven for one collection without claiming framework-wide reach |
+| Shared reusable design | Global types, profiles, instructions, validators, and package code | A commitment promoted after its scope and enforcement shape became clear |
+| Rejected or displaced design | Rejected proposal options, ADR consequences, supersession links, and git history | Explicitly authored reasons; git history remains an archival fallback rather than a semantic rationale relation |
+
+These surfaces support an intended promotion path; they do not require every design to traverse every stage. A local convention can remain local indefinitely. A deterministic defect can move directly into a validator. A mature decision may need an ADR without a standing proposal. A selected but unimplemented design remains in `kb/work/` until implementation because ADRs record implemented decisions. [ADR 028](./adr/028-design-proposals-live-in-reference-proposals.md) defines the proposal-to-ADR lifecycle, but no transition contract requires every proposal field to survive that move.
+
+Two shipped decisions illustrate the intended discipline. [ADR 042](./adr/042-register-becomes-a-default-profile-under-open-ended-text-contracts.md) promotes a collection-local counterexample into an open, worked-case-gated profile system while retaining the local-vs-universal boundary. [ADR 040](./adr/040-scripts-directory-is-the-accumulation-substrate-for-ad-hoc-tooling.md) keeps reusable ad hoc tooling in `scripts/` until repeated, stable use earns package promotion. They show what well-retained rationale can look like, not an invariant that every Commonplace artifact satisfies.
+
+## What the Epistack casework added
+
+Casework in the sibling `epistack-casebooks` project, undertaken for the [2026 Epistemic Case Study Competition](../sources/epistemic-case-study-competition.md), exposed rationale management as a unifying description of Commonplace's distributed practice. Its useful compounding argument is that, when the retained artifact does not distinguish inherited constraints, local requirements, and free choices, a later investigator cannot confidently assess a design's transferability.
+
+For Commonplace, **design rationale management for evolving knowledge infrastructure** is therefore a repository discipline rather than an enforced traceability protocol. Constraint discovery identifies what bounds a decision; rationale records what those constraints do and do not determine; worked cases test whether the rationale has reach; and constraining gives selected commitments the warranted degree of semantic or mechanical force. Where later recovery matters, authors must still carry or link that rationale explicitly.
+
+---
+
+Relevant Notes:
+
+- [Design proposals differ from claims in kind, not confidence](../notes/design-proposals-differ-from-claims-in-kind-not-confidence.md) — rationale: explains why free design parameters need a proposal surface judged by forces and usefulness rather than truth alone
+- [First-principles reasoning selects for explanatory reach over adaptive fit](../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md) — rationale: supplies the rival-practice and transfer tests used to judge whether a rationale reaches beyond its originating case
+- [Progressive constraining commits only after patterns stabilize](../notes/progressive-constraining-commits-only-after-patterns-stabilize.md) — rationale: explains why some rationale should remain provisional until repeated behavior supports a stronger commitment
