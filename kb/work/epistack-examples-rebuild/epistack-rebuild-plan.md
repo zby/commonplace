@@ -1,6 +1,6 @@
 # Workshop: rebuild casebooks from scratch
 
-Status: **ready to execute** (2026-07-13)
+Status: **ready to execute** (2026-07-13; freshness section updated 2026-07-13)
 
 > **Origin:** This file is maintained in the Commonplace framework repo at `kb/work/epistack-examples-rebuild/epistack-rebuild-plan.md` and copied here to drive casework. Edit the copy in this repo during execution; promote durable changes back through `backlog-to-commonplace.md`, not by editing `kb/commonplace/`.
 
@@ -14,6 +14,7 @@ Produce conformance demonstrations for LHC, COVID, and eggs that:
 - pass `commonplace-validate` with zero failures on all six case collections
 - pass `commonplace-verify-quotes` with zero mismatches on all casebook notes (ADR 046)
 - satisfy collection-conformance review against each case's `notes/COLLECTION.md` (ADR 041)
+- demonstrate review freshness on the general store (ADR 052): baselines in `kb/reports/commonplace-store.sqlite`, global status, staleness on edit
 - carry no global `status` field and no inferred `user-verified: true` (ADR 044)
 
 ## Why rebuild, not repair
@@ -43,7 +44,7 @@ Keep captured sources (markdown snapshots, PDF siblings, methodology notes). Del
 | Source snapshots | 26 | No `genre`; family duplicated in `tags` |
 | Ingest reports | 26 | Still carry `source_type` (rejected by current schema) |
 | Casebook notes | 14 | Quote verification failures on every collection |
-| Review artifacts | `kb/reports/review-jobs/`, `review-store.sqlite` | Tied to old note bodies |
+| Review / freshness store | `kb/reports/review-jobs/`, `review-store.sqlite`, `commonplace-store.sqlite` | Tied to old note bodies; pre-ADR-052 layout if only `review-store.sqlite` exists |
 
 Sources validate clean today only because the scaffolded schema is stale. After `commonplace-init`, the source layer will fail until migrated.
 
@@ -59,7 +60,20 @@ Confirm after init:
 - `kb/sources/types/snapshot.schema.yaml` requires `genre`
 - `kb/sources/types/ingest-report.schema.yaml` rejects `source_type` (`source_type: false`)
 
-Read `kb/commonplace/reference/adr/045-source-genre-is-a-single-open-field-on-the-snapshot.md` and `kb/commonplace/reference/adr/046-verbatim-quotes-are-validated-against-their-cited-source.md` before writing.
+Read before writing:
+
+- `kb/commonplace/reference/adr/045-source-genre-is-a-single-open-field-on-the-snapshot.md`
+- `kb/commonplace/reference/adr/046-verbatim-quotes-are-validated-against-their-cited-source.md`
+- `kb/commonplace/reference/adr/052-general-freshness-store-review-first-migration.md`
+- `kb/commonplace/reference/freshness-architecture.md`
+
+Confirm the freshness commands resolve:
+
+```bash
+command -v commonplace-freshness-status
+```
+
+**Store on a from-scratch rebuild:** do not migrate old evidence. Phase 1 removes both `kb/reports/review-store.sqlite` and `kb/reports/commonplace-store.sqlite` if present. The operational store is created fresh on the first review command. (Migration via `scripts/migrate-review-db-v7-to-commonplace-store.py` lives in the framework repo and applies only when retaining baselines — not this rebuild.)
 
 ## Phase 1 — Pin contracts and archive downstream artifacts
 
@@ -78,8 +92,9 @@ On a dedicated branch:
 
 1. Delete all `kb/{lhc,covid,eggs}/notes/*.md` except each `COLLECTION.md`.
 2. Delete all `kb/{lhc,covid,eggs}/sources/*.ingest.md`.
-3. Delete `kb/reports/review-jobs/` and remove `kb/reports/review-store.sqlite`.
-4. **Keep** all snapshots, PDF siblings, and `kb/notes/` methodology notes.
+3. Delete `kb/reports/review-jobs/`.
+4. Remove `kb/reports/review-store.sqlite` and `kb/reports/commonplace-store.sqlite` if present (fresh store on first review use).
+5. **Keep** all snapshots, PDF siblings, and `kb/notes/` methodology notes.
 
 ```bash
 git add -A && git commit -m "rebuild: clear downstream artifacts, retain sources"
@@ -129,7 +144,7 @@ Order: **LHC → eggs → COVID**. LHC is the contract's first proof; eggs tests
 2. Use git history of deleted notes as a **coverage checklist**, not a structural template.
 3. Write root orientation note plus notes for each major contested joint / dependency chain / institutional layer.
 4. After each note: `commonplace-validate` and `commonplace-verify-quotes`.
-5. After each case: collection-conformance review on all notes in that case; record warns.
+5. After each case: collection-conformance review on all notes in that case; finalize jobs; record warns.
 
 ### Citation discipline (main failure mode of the first build)
 
@@ -171,7 +186,9 @@ Apply v2 `## Review` bullets while writing. No uncited evaluative glosses beside
 
 Target note counts from the first build (~6 LHC, ~4 eggs, ~4 COVID) are guides, not constraints.
 
-## Phase 4 — Corpus verification
+## Phase 4 — Corpus verification and freshness demonstration
+
+### Deterministic checks
 
 ```bash
 commonplace-validate kb/lhc/sources
@@ -190,6 +207,41 @@ commonplace-verify-quotes kb/lhc/notes kb/covid/notes kb/eggs/notes
 | Quote unresolved | 0 (or relabel to paraphrase/second-hand) |
 | Collection-conformance | Documented sweep; compare to old 14/14 warn rate |
 
+### Review freshness (ADR 052 — shipped v1)
+
+v1 registers **`review-pair`** targets with **`file-text`** inputs (`note` + `criterion` paths). Collection-wide membership staleness (`collection-maintenance` / `collection-text`) is **not** shipped — see `kb/commonplace/reference/proposals/collection-as-artifact-freshness.md`. Ingest `Connections Found` prose must stay correct by authoring discipline, not by an automatic membership check.
+
+After collection-conformance jobs are finalized for the rebuilt corpus:
+
+```bash
+commonplace-freshness-status --json
+```
+
+Expect registered targets fresh (exit 0) once all finalized pairs match current file text.
+
+**Staleness demonstration** (one note is enough; record which):
+
+1. Edit a load-bearing sentence in a reviewed note without re-running review.
+2. Confirm staleness surfaces:
+
+```bash
+commonplace-review-target-selector --json    # pair should appear stale
+commonplace-freshness-status --json          # same target stale in global status
+```
+
+3. Optionally ack trivial mechanical fixes via `commonplace-ack-review` or re-run and finalize review for substantive edits.
+
+Document: target count registered, fresh/stale counts before and after the edit, and which command surfaced the stale pair first.
+
+### Freshness gate
+
+| Check | Target |
+|---|---|
+| Operational store | `kb/reports/commonplace-store.sqlite` exists after first finalized review |
+| Registered baselines | At least one finalized collection-conformance pair per case (or document why a case deferred) |
+| Global status | `commonplace-freshness-status --json` exit 0 when corpus is current |
+| Staleness on edit | Deliberate note edit → selector or global status reports stale |
+
 ## Phase 5 — Close out
 
 ### Backlog
@@ -198,7 +250,7 @@ Append **Outcome** lines to `backlog-to-commonplace.md` where this rebuild settl
 
 - PDF-as-artifact / extraction-layer — still unstructured in capture, or earned a pattern?
 - Standing block — survived rebuild? `disclosed_interests` split applied?
-- Empty-collection validator gap — should not recur on fresh ingests
+- Empty-collection validator gap — should not recur on fresh ingests; note ADR 052 v1 does **not** yet implement `collection-maintenance` (proposal only) — per-pair review freshness is demonstrated, membership staleness remains authoring discipline until that proposal lands
 
 ### Workshops and control plane
 
@@ -212,6 +264,7 @@ Append **Outcome** lines to `backlog-to-commonplace.md` where this rebuild settl
 - Re-capture sources unless fidelity is wrong for a load-bearing passage.
 - Add framework types (claim type, link ontology, standing promotion) during rebuild.
 - Launch Track A factorial or replication-plan clean-room arms from this pass.
+- Block rebuild closure on adopting `collection-maintenance` targets — that is a follow-on proposal, not ADR 052 v1.
 
 ## Effort estimate
 
@@ -223,7 +276,8 @@ Append **Outcome** lines to `backlog-to-commonplace.md` where this rebuild settl
 | 3 — LHC (~6 notes) | 1–2 days |
 | 3 — eggs (~4 notes) | 1 day |
 | 3 — COVID (~4 notes) | 1–2 days |
-| 4–5 — verification + backlog | half day |
+| 4 — verification + freshness demo | half day |
+| 5 — backlog + close | 2–3 hours |
 
 **Total: ~5–7 working days** for one careful operator.
 
@@ -232,6 +286,7 @@ Append **Outcome** lines to `backlog-to-commonplace.md` where this rebuild settl
 1. All six case collections validate with zero failures.
 2. Quote verification: zero mismatches.
 3. Collection-conformance sweep documented.
-4. Backlog Outcome lines appended; `post-commonplace-upgrade` retired.
+4. Review freshness demonstrated on `commonplace-store.sqlite` (baselines, global status, edit → stale).
+5. Backlog Outcome lines appended; `post-commonplace-upgrade` retired.
 
 Delete this workshop directory when done, or leave a one-line pointer in `AGENTS.md`.

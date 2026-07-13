@@ -4,7 +4,7 @@ Rebuild the three epistack casebook demonstrations in the sibling [`epistack-cas
 
 ## Goal
 
-Produce three conformance demonstrations (LHC, COVID, eggs) that validate clean under today's framework: snapshot `genre` ([ADR 045](../../reference/adr/045-source-genre-is-a-single-open-field-on-the-snapshot.md)), no ingest `source_type`, verbatim quotes machine-checked ([ADR 046](../../reference/adr/046-verbatim-quotes-are-validated-against-their-cited-source.md)), collection-conformance review against the shipped dialectical/evidential contracts, and no lifecycle-field churn ([ADR 044](../../reference/adr/044-user-verification-replaces-global-note-status.md)).
+Produce three conformance demonstrations (LHC, COVID, eggs) that validate clean under today's framework: snapshot `genre` ([ADR 045](../../reference/adr/045-source-genre-is-a-single-open-field-on-the-snapshot.md)), no ingest `source_type`, verbatim quotes machine-checked ([ADR 046](../../reference/adr/046-verbatim-quotes-are-validated-against-their-cited-source.md)), collection-conformance review against the shipped dialectical/evidential contracts, review freshness on the general store ([ADR 052](../../reference/adr/052-general-freshness-store-review-first-migration.md)), and no lifecycle-field churn ([ADR 044](../../reference/adr/044-user-verification-replaces-global-note-status.md)).
 
 The plan has two parts:
 
@@ -27,11 +27,12 @@ The sibling's scaffolded `kb/types/` is also stale relative to upstream: snapsho
 
 ## What closes the workshop
 
-Close when all three hold:
+Close when all four hold:
 
 1. Sibling `commonplace-validate` passes on every case `sources/` and `notes/` collection with zero failures.
 2. `commonplace-verify-quotes` reports zero mismatches on all casebook notes (unresolved only where the convention is genuinely in use and the source layer cannot support verbatim — those citations must be relabeled `paraphrase layer` or `second-hand`, not patched around).
 3. A collection-conformance review sweep on the rebuilt notes produces a documented warn queue that hand-verifies as real drift, not gate rationalisation — or passes clean.
+4. Review freshness runs on `kb/reports/commonplace-store.sqlite`: finalized collection-conformance pairs register baselines, `commonplace-freshness-status` reports them fresh, and a deliberate note edit surfaces staleness via the selector or global status.
 
 Then: append a closing entry to the sibling backlog if anything new earned promotion; retire or fold the sibling `post-commonplace-upgrade` workshop; remove this workshop from [kb/work/README.md](../README.md).
 
@@ -47,6 +48,8 @@ Then: append a closing entry to the sibling backlog if anything new earned promo
 | [text-contract-profiles.md](../../reference/text-contract-profiles.md) | Shipped dialectical/evidential profile |
 | [epistack-competition](../epistack-competition/README.md) | Two-repo protocol |
 | [epistack-submission](../epistack-submission/README.md) | What the demonstrations must support at submission time |
+| [freshness-architecture.md](../../reference/freshness-architecture.md) | Shipped general freshness store and commands (ADR 052) |
+| [collection-as-artifact-freshness](../../reference/proposals/collection-as-artifact-freshness.md) | Deferred `collection-maintenance` targets — not required for rebuild closure |
 
 ## Bookkeeping
 

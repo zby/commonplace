@@ -33,8 +33,9 @@ Confirm the following **in this repo** before telling the sibling operator to ru
 | ADR 046 shipped | `commonplace-verify-quotes` exists; `commonplace-validate` runs verbatim quote check |
 | ADR 044 shipped | Base note schema rejects global `status` |
 | ADR 041/042 shipped | Collection-conformance gate reads `## Review` from `COLLECTION.md`; dialectical profile in `kb/reference/text-contract-profiles.md` |
+| ADR 052 shipped | General freshness in `commonplace-store.sqlite`; `commonplace-freshness-{status,accept,ack,retire}`; review adapter over `review-pair` + `file-text` inputs ([freshness-architecture.md](../../reference/freshness-architecture.md)) |
 | `commonplace-init` output current | `AGENTS.md.template` paths correct (review system README name, no dangling `kb/reference/README.md` bullet unless scaffold creates it) |
-| Tests green | `pytest` passes on this checkout |
+| Tests green | `pytest` passes on this checkout (includes freshness migration and store parity tests) |
 
 If uncommitted framework changes in this repo affect validation, review, or init output, **commit or explicitly scope them** before the sibling rebuild starts — otherwise the sibling will be rebuilding against a moving target.
 
@@ -96,11 +97,11 @@ The copy is the **execution authority** in the sibling repo. If execution diverg
 
 | Phase | What |
 |---|---|
-| 0 | `commonplace-init`; confirm ADR 045/046 schemas |
-| 1 | Archive old notes, ingests, review artifacts; keep sources |
+| 0 | `commonplace-init`; confirm ADR 045/046 schemas; confirm ADR 052 store commands |
+| 1 | Archive old notes, ingests, review artifacts; reset operational store; keep sources |
 | 2 | Migrate 26 snapshots (`genre`); rewrite ingests |
 | 3 | Rebuild casebooks LHC → eggs → COVID with per-note quote gates |
-| 4 | Corpus-wide validate + verify-quotes |
+| 4 | Corpus-wide validate + verify-quotes + conformance reviews + freshness demonstration |
 | 5 | Backlog Outcomes; retire `post-commonplace-upgrade`; update `AGENTS.md` |
 
 Closure criteria (both repos agree these are the bar):
@@ -108,6 +109,9 @@ Closure criteria (both repos agree these are the bar):
 1. Zero `commonplace-validate` failures on all six case collections.
 2. Zero `commonplace-verify-quotes` mismatches.
 3. Collection-conformance sweep documented.
+4. Review freshness on `commonplace-store.sqlite` demonstrated (baselines registered, status fresh, edit surfaces staleness).
+
+**Freshness scope note:** ADR 052 ships repository-wide freshness for registered `review-pair` targets. [`collection-maintenance`](../../reference/proposals/collection-as-artifact-freshness.md) targets (the Epistack-motivated ingest↔casebook membership check) remain a proposal — the rebuild demonstrates per-pair review freshness, not collection-wide membership staleness. Fresh ingests still must not claim empty casebooks.
 
 ### Part II effort
 
@@ -129,3 +133,4 @@ Closure criteria (both repos agree these are the bar):
 - Track A neutrality factorial redesign
 - Collection-local snapshot type for epistack-specific genre vocabulary
 - Framework promotion of COVID `standing` block — only if rebuild proves it and backlog asks for it
+- Adopt and register `collection-maintenance` targets per [collection-as-artifact-freshness](../../reference/proposals/collection-as-artifact-freshness.md) — closes the ingest empty-collection validator gap at the freshness layer
