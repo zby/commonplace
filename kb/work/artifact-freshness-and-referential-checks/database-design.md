@@ -348,7 +348,7 @@ Each casebook gets one `collection-maintenance` target. It registers three path-
 
 `collection-text` stores canonical combined UTF-8 text, not only a directory timestamp or list of hashes. Consequently the same snapshot/diff machinery shows which members and content changed. It applies one fixed Commonplace collection-content rule; no schema column says `source`, `ingest`, or `casebook`.
 
-A source-scope change selects one casebook target. The semantic workflow decides which notes to revise. Refresh replaces all three accepted inputs; acknowledgement may advance only `source-scope` when its inspected change does not affect the casebook.
+A source-scope change selects one casebook target. A casebook addition, removal, rename, or edit selects that same target through the `casebook` input. The semantic workflow decides which notes and source-owned `.ingest.md` reports to revise; the freshness core only reports the changed collection input. Refresh replaces all three accepted inputs; acknowledgement may advance only `source-scope` when its inspected change does not affect the casebook.
 
 ## Migration algorithm: old database remains the backup
 

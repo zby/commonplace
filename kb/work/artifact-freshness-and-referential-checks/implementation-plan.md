@@ -232,13 +232,13 @@ Use one coarse maintenance target per casebook rather than staling every note in
 
 Use equivalent targets for eggs and COVID. The fixed `collection-text` rule separates collection content from `COLLECTION.md`, local type specifications, hidden files, generated reports, and replaced archives. Contracts are registered separately when they are accepted inputs.
 
-The coarse snapshot is deliberate. A source addition has no pre-existing per-file edge, so the collection source snapshot detects it. A changed source selects the casebook target; the semantic maintenance workflow decides which notes, if any, require edits. After that workflow, refresh acceptance records the new casebook, source-scope, and contract snapshots. If the source change does not affect the map, acknowledgement advances only `source-scope` after its diff is inspected.
+The coarse snapshot is deliberate. A source addition has no pre-existing per-file edge, so the collection source snapshot detects it. A changed source selects the casebook target; the semantic maintenance workflow decides which notes, if any, require edits. Conversely, adding casebook notes changes the registered `casebook` input and selects the same target; reassessment includes revising affected `.ingest.md` reports whose source-to-casebook account is now stale even when no captured source snapshot changed. After either workflow, refresh acceptance records the new casebook, source-scope, and contract snapshots. If a source change does not affect the map, acknowledgement advances only `source-scope` after its diff is inspected.
 
 Epistack acceptance cases:
 
 1. adding a source selects exactly its casebook target;
 2. editing or removing a source selects the same target and exposes a diff;
-3. changing one casebook note selects its casebook target but not another case;
+3. adding casebook notes selects its casebook target but not another case, and reassessment revises affected `.ingest.md` reports even when no captured source snapshot changed;
 4. changing an unrelated artifact selects no casebook target;
 5. acknowledging an irrelevant source diff preserves the accepted casebook snapshot;
 6. refreshing after note edits replaces the complete accepted input set;
