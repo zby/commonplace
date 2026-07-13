@@ -63,7 +63,7 @@ Sized to a section, this is an asset. Sized to the spine, it would be a plan tha
 - **No new framework machinery that a worked case hasn't earned.** Build-local-first still holds; the deadline is not a licence to ship speculative types.
 - **Doctrine constraints are inputs, not open questions:** no stored confidence/authority scalars, adjudication stays a downstream labelled layer, frontmatter semantics stay type-owned.
 - **Nothing here builds the generic bulk-operations layer.** It is planned, large, and not ready. The entry reports the requirement and stops.
-- **General artifact freshness is in active design, not ready to claim.** [artifact-freshness-and-referential-checks](../artifact-freshness-and-referential-checks/README.md) owns dependency baselines, repository-wide selection, and the Epistack-motivated collection source snapshot. The entry defines the maintenance contract, names what is shipped (review, conformance pairs, full-pass guard), and states what is designed but not yet implemented. Do not wait for general freshness to ship before submitting.
+- **General artifact freshness v1 is shipped; collection-as-artifact is deferred.** Review-pair targets, `file-text` inputs, global status, and migration to `commonplace-store.sqlite` are live ([ADR 052](../../reference/adr/052-general-freshness-store-review-first-migration.md), [freshness architecture](../../reference/freshness-architecture.md)). `collection-text` / `collection-maintenance` remain a proposal ([collection-as-artifact freshness](../../reference/proposals/collection-as-artifact-freshness.md)). Do not wait for collection-as-artifact freshness before submitting.
 
 ## Build candidates
 

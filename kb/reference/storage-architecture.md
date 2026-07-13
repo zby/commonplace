@@ -6,7 +6,7 @@ tags: []
 
 # Storage
 
-Commonplace stores data in three layers: authored markdown files under `kb/`, derived indexes rebuilt from those files, and a local SQLite database scoped to the review subsystem.
+Commonplace stores data in three layers: authored markdown files under `kb/`, derived indexes rebuilt from those files, and a local SQLite operational store for review execution and artifact freshness.
 
 ## Authored markdown
 
@@ -44,19 +44,22 @@ Generated reports record operational work products rather than curated library k
 
 Full-pass packets are the scoped exception to report statelessness. A pending or resolved `full-pass-report.md` owns non-regenerable disposition state plus immutable start-state captures, so resolution-aware cleanup retains the packet as one unit while that state remains actionable ([ADR 051](./adr/051-full-pass-packets-own-guarded-captures-and-resolutions.md)). The packet remains local and gitignored; portability across clones or machines is not promised.
 
-## Review state (SQLite)
+## Operational store (SQLite)
 
-Review state is the one subsystem that is not file-backed. The review database stores:
+The operational store (`kb/reports/commonplace-store.sqlite`; override `COMMONPLACE_STORE`) is the one subsystem that is not file-backed. It holds general artifact freshness and review execution in one database ([ADR 052](./adr/052-general-freshness-store-review-first-migration.md)). The retained `kb/reports/review-store.sqlite` is the schema-v7 backup; migrate before relying on the new default.
 
 | Table | Contents |
 |---|---|
-| `review_jobs` | One row per review invocation/prompt, with freshness `model_partition`, nullable finalization-time runner provenance, `queued`/`completed`/`failed` status, created/completed timing, and grouping |
-| `review_pairs` | One row per requested `(note_path, criterion_path)` pair inside a job, with persisted `result_kind`, nullable outcome, `completed_at`, and reviewed snapshot IDs; model partition is derived through the parent job |
-| `freshness_baselines` | Current snapshot-pinned freshness baseline per `(note_path, criterion_path, model_partition)` |
+| `artifact_snapshots` | Path-keyed `file-text` versions with mandatory stored text |
+| `freshness_baselines` | Current accepted baseline per `(target_kind, target_key_json)` with monotonic `revision` |
+| `freshness_inputs` | Accepted input roles pointing at snapshot ids |
+| `review_freshness_evidence` | Review-only bridge from a `review-pair` target to its evidence pair |
+| `review_jobs` | One row per review invocation/prompt, with `model_partition`, nullable runner provenance, status, timing, grouping |
+| `review_pairs` | One row per requested `(note_path, criterion_path)` pair, with result protocol, reviewed snapshot ids, and queued-job `expected_baseline_revision` |
 
-Prompt, job-output, manifest, and per-pair result paths are derived from the review job id, grouping, and pair set. A freshness baseline is keyed by `(note_path, criterion_path, model_partition)` and stored as one current row per key; it means the evidence is fresh, not that the note is globally approved. `current_freshness_baselines` enriches those rows with evidence-pair results and baseline snapshot content. Selector logic compares current note and criterion hashes against those snapshots; malformed baselines raise integrity errors. Successful supersede prunes obsolete review rows, unreferenced snapshots, and whole obsolete job artifact directories inline; there is no separate prune command.
+Prompt, job-output, manifest, and per-pair result paths remain derived from review job state. Review freshness baselines are `review-pair` targets over `note` and `criterion` `file-text` inputs; `current_review_freshness_baselines` is the review-shaped adapter view. `commonplace-freshness-status` reports all registered targets; `commonplace-review-target-selector` keeps applicable-pair discovery including `missing-baseline`. Malformed baselines raise store integrity errors. Successful supersede prunes obsolete review rows, unreferenced snapshots, and whole obsolete job artifact directories inline.
 
-Notes, criteria, instructions, and source material remain file-backed. The operational schema and commands name the generic assay axis `criterion`; `gate` names only closed-ended, verdict-kind criteria and their catalog. See [ADR-010](./adr/010-review-state-should-move-to-sqlite-once-reviews-leave-git-and.md), [ADR-032](./adr/032-review-freshness-uses-db-snapshots-not-git.md), [ADR-033](./adr/033-honest-review-run-state.md), [ADR-034](./adr/034-queued-review-jobs-and-execution-provenance.md), [ADR-035](./adr/035-review-jobs-finalize-all-or-nothing-with-derived-artifacts.md), and [ADR-036](./adr/036-review-acceptance-is-current-state-not-append-only-history.md) for the rationale.
+Notes, criteria, instructions, and source material remain file-backed. See [freshness architecture](./freshness-architecture.md), [review architecture](./review-architecture.md), [ADR-010](./adr/010-review-state-should-move-to-sqlite-once-reviews-leave-git-and.md), [ADR-032](./adr/032-review-freshness-uses-db-snapshots-not-git.md), and [ADR-052](./adr/052-general-freshness-store-review-first-migration.md).
 
 ## See also
 
@@ -65,3 +68,5 @@ Notes, criteria, instructions, and source material remain file-backed. The opera
 - [ADR-010](./adr/010-review-state-should-move-to-sqlite-once-reviews-leave-git-and.md) — outcome: SQLite for review state
 - [ADR-007](./adr/007-reports-directory-for-generated-snapshots.md) — outcome: `kb/reports/` for generated operational artifacts
 - [ADR 051](./adr/051-full-pass-packets-own-guarded-captures-and-resolutions.md) — outcome: full-pass packets are a stateful, resolution-aware report exception
+- [freshness-architecture.md](./freshness-architecture.md) — general freshness substrate and review adapter
+- [ADR 052](./adr/052-general-freshness-store-review-first-migration.md) — outcome: commonplace-store replaces review-only freshness tables

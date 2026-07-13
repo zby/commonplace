@@ -14,7 +14,7 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser = argparse.ArgumentParser(description="Select notes with actionable findings from effective warn reviews.")
     parser.add_argument("note_paths", nargs="*", help="Optional note path filter.")
     parser.add_argument("--json", action="store_true", help="JSON output with full WARN text.")
-    parser.add_argument("--db", help="Override COMMONPLACE_REVIEW_DB.")
+    parser.add_argument("--db", help="Override COMMONPLACE_STORE.")
     args = parser.parse_args(argv)
 
     repo_root = cwd if cwd is not None else Path.cwd()

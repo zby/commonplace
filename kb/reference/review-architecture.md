@@ -54,7 +54,7 @@ The DB is the source of truth; human-readable markdown is derived.
 
 ### Freshness mechanism
 
-The selector computes SHA-256 over the current note and criterion text and compares it against baseline snapshot hashes from `current_freshness_baselines`, reconstructing note diffs from baseline snapshot text. No row produces `missing-baseline`; a present row with missing or inconsistent data raises an integrity error. There is no separate catalog-bundle manifest hash; if bundle-level manifests ever become freshness-relevant, this should widen to an effective review-contract hash rather than a leaf criterion-file hash.
+The selector computes SHA-256 over the current note and criterion text and compares it against baseline snapshot hashes from `current_review_freshness_baselines`, reconstructing note diffs from baseline snapshot text. No row produces `missing-baseline`; a present row with missing or inconsistent data raises a store integrity error. Global status over registered targets lives in `commonplace-freshness-status` ([freshness architecture](./freshness-architecture.md)). There is no separate catalog-bundle manifest hash; if bundle-level manifests ever become freshness-relevant, this should widen to an effective review-contract hash rather than a leaf criterion-file hash.
 
 The hash boundary is deliberate and narrower than the full assay contract: the prompt scaffolding (`protocol/prompt.py` — runner system prompt, reading scope, output contract, the conformance wrappers) and the prompt-assembling code are outside it, so editing them invalidates no freshness baselines. The compensating rule is that judgment-bearing criteria live only in hashed note/criterion files, and the scaffolding stays mechanical; a scaffolding change that shifts judgments is a system upgrade calling for a deliberate corpus-wide re-review or ack outcome. Both modules carry comments marking this boundary. For conformance pairs specifically, a wrapper may say how to apply a type spec or COLLECTION.md as a criterion, never what a good note of the type or collection looks like — conformance criteria that need sharpening go into an authored `## Review` section of the dependency document, where the hash sees them.
 
@@ -89,12 +89,12 @@ The two-input shape is also the growth path: the default answer to a new review 
 
 ### State and maintenance
 
-- `review_db.py` owns review rows, finalization state transitions, current freshness baseline rows, inline superseded-review pruning, and query helpers.
+- `review_db.py` owns review rows, finalization state transitions, review adapter queries over generic freshness tables, inline superseded-review pruning, and query helpers.
 - `review_model.py` normalizes model partitions and optional reasoning-effort labels.
 - `acknowledgement.py` advances existing baselines for trivial changes while preserving their evidence-pair identity.
 - `ack_trivial_note_changes.py` finds stale pairs whose watched note portions did not change.
 - `warn_selector.py` extracts actionable warn findings from current baseline evidence.
-- `review_schema.py` owns current-schema setup and integrity checks.
+- `review_schema.py` delegates store setup and integrity to `commonplace.store`.
 - Superseded-review pruning runs inline on successful freshness baseline writes; there is no standalone prune command.
 
 ## Command surface
@@ -120,7 +120,7 @@ State and inspection:
 - `MANIFEST.json` is inspectable output, not pipeline state.
 - Finalization accepts only `queued` jobs and moves them atomically to `completed` or `failed`.
 - Failed jobs write no freshness baseline rows and reset pair completion state (`outcome` and `completed_at` null).
-- `current_freshness_baselines` requires a completed parent job and per-kind pair completion: outcome-bearing verdict or decisionless report.
+- `current_review_freshness_baselines` requires a completed parent job and per-kind pair completion: outcome-bearing verdict or decisionless report.
 - A successful freshness baseline supersedes the prior row for the same `(note_path, criterion_path, model_partition)` key and prunes obsolete review evidence inline.
 - Freshness baseline state is path-keyed; relocating notes or criteria requires a fresh assay under the new path.
 - Missing telemetry is normal. Review identity is `(note_path, criterion_path, model_partition)`, not worker-provided execution metadata.

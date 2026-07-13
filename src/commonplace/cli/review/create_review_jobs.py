@@ -274,7 +274,7 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     )
     parser.add_argument("--grouping", required=True, choices=["note", "criterion"], help="Job grouping axis.")
     parser.add_argument("--batch-size", type=int, help="Note targets per criterion-packed job. Defaults to 5.")
-    parser.add_argument("--db", help="Override COMMONPLACE_REVIEW_DB.")
+    parser.add_argument("--db", help="Override COMMONPLACE_STORE.")
     args = parser.parse_args(argv)
 
     if args.grouping == "note" and args.batch_size is not None:

@@ -36,7 +36,7 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser.add_argument("--status", choices=sorted(JOB_STATUS_VALUES), help="Filter by job status.")
     parser.add_argument("--model-partition", help="Filter by review model partition.")
     parser.add_argument("--json", action="store_true", help="Print JSON.")
-    parser.add_argument("--db", help="Override COMMONPLACE_REVIEW_DB.")
+    parser.add_argument("--db", help="Override COMMONPLACE_STORE.")
     args = parser.parse_args(argv)
 
     repo_root = cwd if cwd is not None else Path.cwd()

@@ -6,9 +6,11 @@ What general mechanism should register artifact-to-artifact dependencies, retain
 
 No artifact class is intrinsically a source or a derivative. A source snapshot, ingest, note, criterion, type specification, instruction, report, or generated index may be an input in one target and a freshness target in another. The mechanism must not special-case sources or ingests.
 
-## Current phase (v1)
+## Current phase (v1 — shipped)
 
-Ship **review-first migration** onto a general operational store:
+v1 landed in [ADR 052](../../reference/adr/052-general-freshness-store-review-first-migration.md) and [freshness architecture](../../reference/freshness-architecture.md). This workshop may close after operators confirm migration on external copies.
+
+Shipped scope — **review-first migration** onto a general operational store:
 
 - one `file-text` version function;
 - `review-pair` targets only;
@@ -33,7 +35,7 @@ Referential-check class design (general cross-artifact prose validation, positio
 
 [ADR 051](../../reference/adr/051-full-pass-packets-own-guarded-captures-and-resolutions.md) shipped the first non-review artifact-version case: packet-owned captures, shared UTF-8 SHA-256 hashing, guarded comparison, and report-resolution validation. Full-pass owns its persistence and guard command; this workshop adds the **operational-store** baseline mesh for targets whose state has no natural owner artifact.
 
-Review freshness today retains accepted `(note, criterion, model partition)` baselines in `review-store.sqlite`. v1 generalizes that substrate without changing review execution semantics.
+Review freshness baselines now live in `commonplace-store.sqlite` as `review-pair` targets over generic tables; `review-store.sqlite` remains the schema-v7 backup.
 
 ## What v1 adds
 

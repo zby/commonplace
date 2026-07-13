@@ -70,12 +70,14 @@ Human-readable review output — the per-pair result files and each job's `MANIF
 The selector reports each requested `(note, criterion)` pair as fresh or, if not, why it is stale. JSON and schema fields use `criterion_*` names. Selection compares the current note file, current criterion file, and current freshness baseline for the persisted key.
 
 - no freshness baseline for the pair → `missing-baseline`
-- malformed, missing, or inconsistent data inside a present baseline → review-store integrity error
+- malformed, missing, or inconsistent data inside a present baseline → store integrity error
 - baseline criterion text differs from the current criterion → `criterion-changed`
 - baseline note text differs from the current note → `note-changed`
 - otherwise the pair is fresh
 
 For `note-changed` pairs, the selector can show the diff against the baseline note text, so you can judge whether the change invalidates that assay's evidence.
+
+Repository-wide status over **registered** targets is separate from applicable-pair discovery. `commonplace-freshness-status` reports every migrated `review-pair` baseline, with `--json`, `--diff`, `--all`, and partition filters. It does not emit `missing-baseline` for pairs that were never reviewed. See [freshness architecture](./freshness-architecture.md).
 
 ## Running a review batch
 
@@ -147,6 +149,8 @@ With `--model-partition` omitted, the selector reports only model-agnostic missi
 **Ack** — `commonplace-ack-review --model-partition {model-partition} {note_path} {criterion_id}...`.
 
 **Warn queue** — `commonplace-warn-selector`.
+
+**Global freshness** — `commonplace-freshness-status [--json] [--diff] [--all] [--model-partition {partition}]`. `commonplace-freshness-ack --input -` and `commonplace-freshness-retire --input -` consume JSON manifests. Generic accept rejects `review-pair` targets in v1.
 
 ## The reviewer output contract
 

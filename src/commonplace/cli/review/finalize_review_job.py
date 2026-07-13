@@ -26,7 +26,7 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
         "--telemetry-json",
         help="Opaque per-harness execution telemetry blob, stored verbatim and never interpreted.",
     )
-    parser.add_argument("--db", help="Override COMMONPLACE_REVIEW_DB.")
+    parser.add_argument("--db", help="Override COMMONPLACE_STORE.")
     args = parser.parse_args(argv)
 
     runner = args.runner.strip() if args.runner is not None else None

@@ -279,3 +279,13 @@ Update `mkdocs.yml` in place: rewrite any matching `nav` entries and `redirect_m
 Move a path on disk with `Path.rename`, creating the destination's parent directories first. Git is not involved; it detects the rename on commit.
 
 The smaller helpers (`format_relative_link`, `split_link_target`, `is_relative_markdown_target`, `resolve_directory`, `add_single_redirect`) are exported but rarely interesting outside the orchestrator.
+
+---
+
+## Related package modules (not under `commonplace.lib`)
+
+General freshness and the operational store live outside `commonplace.lib`. See [freshness-architecture.md](./freshness-architecture.md) for the full module map.
+
+**`commonplace.store`** — `connect`, `ensure_db`, `resolve_db_path`, `assert_store_integrity`; schema in `store-schema.sql`.
+
+**`commonplace.freshness`** — `versioning.resolve_file_text`, `transitions.{accept_target_observations, ack_target_inputs, retire_target}`, `status.load_target_status`, `selector.select_stale_review_targets`.
