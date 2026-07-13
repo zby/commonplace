@@ -9,14 +9,14 @@ This is a current-state mechanism. It records the exact input snapshots against 
 ## Fixed decisions
 
 - **One mechanism and one operational store.** Review freshness migrates first. There will not be a general freshness store beside `freshness_baselines` or a review freshness implementation beside the general one.
-- **The existing store becomes general.** Rename the default local database from `kb/reports/review-store.sqlite` to `kb/reports/commonplace-store.sqlite`; replace `COMMONPLACE_REVIEW_DB` with `COMMONPLACE_STORE`. Review jobs and evidence remain review-owned tables in that database, while snapshots, targets, baselines, inputs, selection, and acknowledgement become general.
+- **The existing store becomes general without in-place migration.** Build `kb/reports/commonplace-store.sqlite` from the old database, then switch the default and replace `COMMONPLACE_REVIEW_DB` with `COMMONPLACE_STORE`. The untouched `kb/reports/review-store.sqlite` remains the migration backup. Review jobs and evidence remain review-owned tables in the new database, while snapshots, target baselines, inputs, selection, and acknowledgement become general.
 - **Accepted snapshots, not timestamps or Git, decide freshness.** A version remains the SHA-256 of exact UTF-8 text. Snapshot text is retained so selectors can show accepted-to-current diffs.
-- **Targets and inputs are artifact-neutral.** The freshness core sees a target kind, canonical structured key, opaque target policy, named input roles, resolver identities, accepted snapshots, and optional target-owned acceptance metadata. It does not branch on source, ingest, note, report, or criterion paths.
+- **Targets and inputs are artifact-neutral.** The freshness core sees a target kind, canonical structured key, path-based input roles, one of the two demonstrated version functions, accepted snapshots, and optional review-owned evidence metadata. It does not branch on source, ingest, note, report, or criterion path classes.
 - **Registration is explicit.** Authored links may suggest dependencies to a producer, but only an accepted baseline registers them.
-- **Selection is not execution or truth adjudication.** A changed input means the accepted basis changed. Target-owned code decides whether the response is reassessment, regeneration, acknowledgement, retirement, or something else.
+- **Selection is not execution or truth adjudication.** A changed input means the accepted basis changed. The consuming workflow decides whether to reassess, regenerate, or acknowledge it.
 - **Optimistic transitions.** Baseline writes compare an expected baseline revision to prevent two writers from silently overwriting each other. They do not lock repository files. A file edit after capture or acceptance makes the new baseline immediately stale on the next check.
 - **Review behavior is preserved before extension.** Result kinds, outcomes, model partitions, missing-baseline discovery, stale reasons, diffs, acknowledgement, all-or-nothing finalization, evidence retention, and pruning must have parity before the first Epistack target is registered.
-- **Collection source snapshot is a bounded resolver, not a source ontology.** It is implemented as a generic canonical UTF-8 file-set snapshot. Epistack supplies a source-collection configuration; the freshness core sees an ordinary resolved text input.
+- **Collection source snapshot is a bounded version function, not a source ontology.** `collection-text` applies one fixed Commonplace collection-content rule to a collection path. Epistack points it at a source collection; the freshness core sees an ordinary path-based text snapshot.
 
 ## Semantic model
 
@@ -32,7 +32,7 @@ Examples:
 
 - review: `review-pair` plus `{note_path, criterion_path, model_partition}`;
 - Epistack: `collection-maintenance` plus `{collection_path}`;
-- later: a generated view, report, instruction bundle, note-maintenance target, or another artifact-owned policy.
+- later target kinds are added only when a worked case needs them.
 
 The target key is identity, not display text. JSON is normalized with sorted keys and compact separators before persistence and comparison.
 
@@ -43,92 +43,52 @@ One current baseline belongs to one target and contains:
 - monotonically increasing `revision`;
 - `accepted_at`;
 - the complete accepted input set;
-- optional opaque `policy_json` returned by the selector; and
-- target-owned acceptance metadata stored by an adapter, such as the completed evidence pair for a review target.
+- review-owned evidence metadata when the target is a review pair.
 
-Replacing a baseline is current-state upsert, not an append-only event log. Superseded snapshots and target-owned evidence are pruned according to their owning subsystem's retention rules.
+Replacing a baseline is current-state upsert, not an append-only event log. Superseded snapshots and review evidence are pruned according to review's retention rules.
 
 ### Input
 
 Each accepted input has:
 
-- a stable input name within the target;
-- an opaque role meaningful to the target adapter;
-- resolver kind and canonical resolver key;
+- one stable target-owned input role;
+- a normalized repository-relative artifact path;
+- `file-text` or `collection-text` as its version kind;
 - accepted snapshot id, hash, and exact text.
 
-The core emits `input-changed`, `input-missing`, or `resolver-error` with the input name and role. Adapters may project these into existing domain language. The review adapter maps `note` changes to `note-changed` and `criterion` changes to `criterion-changed` without changing the generic result.
+The core emits `input-changed`, `input-missing`, or `version-error` with the input role and path. The review adapter maps `note` changes to `note-changed` and `criterion` changes to `criterion-changed` without changing the generic result.
 
 ### Transitions
 
-- **Refresh acceptance** replaces the complete input set and target-owned acceptance metadata. For reviews it records a newly completed evidence pair and its already captured note/criterion snapshots. For an Epistack casebook it records the casebook and source-collection snapshots inspected after the maintenance pass.
-- **Acknowledgement** preserves target-owned evidence and advances only explicitly selected input snapshots after the operator has inspected their diffs. Unselected stale inputs remain stale.
+- **Refresh acceptance** replaces the complete input set. The review wrapper also records a newly completed evidence pair and its already captured note/criterion snapshots. For an Epistack casebook the transition records the casebook and source-collection snapshots inspected after the maintenance pass.
+- **Acknowledgement** preserves review evidence, when present, and advances only explicitly selected input snapshots after the operator has inspected their diffs. Unselected stale inputs remain stale.
 - Both transitions require the caller's expected baseline revision. Initial acceptance requires that no baseline exists.
 - Captured versions, not whatever files happen to contain later, are written. A subsequent filesystem edit therefore produces ordinary staleness rather than a failed or partially rewritten acceptance.
 
 ## Store schema
 
-Create one package-owned operational schema and connection layer under `commonplace.store`; review and freshness modules use it instead of each initializing overlapping schema state.
+The exact old-to-new object map, path-keyed `artifact_snapshots` schema, target and input keys, review adapter view, transaction behavior, indexes, integrity checks, migration algorithm, and delete/pruning rules live in the [database design](./database-design.md). It is the schema authority for this plan.
 
-```text
-artifact_snapshots
-  snapshot_id INTEGER PRIMARY KEY
-  resolver_kind TEXT NOT NULL
-  resolver_key_json TEXT NOT NULL
-  content_sha256 TEXT NOT NULL
-  content_text TEXT NOT NULL
-  captured_at TEXT NOT NULL
-  UNIQUE(resolver_kind, resolver_key_json, content_sha256)
+Create one package-owned operational schema and connection layer under `commonplace.store`; review and freshness modules use it instead of each initializing overlapping schema state. Do not introduce generic events, runner fields, output tables, scheduling state, or a polymorphic evidence foreign key. Review evidence remains in its one explicit extension table with a real foreign key.
 
-freshness_targets
-  target_id INTEGER PRIMARY KEY
-  target_kind TEXT NOT NULL
-  target_key_json TEXT NOT NULL
-  UNIQUE(target_kind, target_key_json)
+## Version functions
 
-freshness_baselines
-  target_id INTEGER PRIMARY KEY REFERENCES freshness_targets(target_id)
-  revision INTEGER NOT NULL
-  accepted_at TEXT NOT NULL
-  policy_json TEXT NOT NULL
-
-freshness_inputs
-  target_id INTEGER NOT NULL REFERENCES freshness_baselines(target_id) ON DELETE CASCADE
-  input_name TEXT NOT NULL
-  role TEXT NOT NULL
-  resolver_kind TEXT NOT NULL
-  resolver_key_json TEXT NOT NULL
-  snapshot_id INTEGER NOT NULL REFERENCES artifact_snapshots(snapshot_id)
-  PRIMARY KEY(target_id, input_name)
-  UNIQUE(target_id, resolver_kind, resolver_key_json, role)
-
-review_freshness_evidence
-  target_id INTEGER PRIMARY KEY REFERENCES freshness_baselines(target_id) ON DELETE CASCADE
-  evidence_review_pair_id INTEGER NOT NULL REFERENCES review_pairs(review_pair_id)
-```
-
-`review_pairs.reviewed_note_snapshot_id` and `reviewed_criterion_snapshot_id` reference `artifact_snapshots`; the old `review_file_snapshots` table disappears. The review evidence bridge is review-owned acceptance metadata, not a second baseline. Review integrity checks require every `review-pair` baseline to have exactly `note` and `criterion` inputs, a matching structured key, and one completed evidence pair under the same model partition.
-
-Do not introduce generic events, runner fields, output tables, scheduling state, or a polymorphic evidence foreign key. Target-specific evidence remains in target-owned extension tables with real foreign keys.
-
-## Resolver contract
-
-Introduce `commonplace.freshness.resolvers` with one result type containing resolver identity, exact text, and content hash.
+Introduce `commonplace.freshness.versioning` with one result type containing artifact path, version kind, exact text, and content hash. This is a closed two-function module, not a resolver plugin registry.
 
 ### `file-text`
 
 - Key: `{path}` with a normalized repository-relative path under `kb/`.
 - Reject path escape, symlinks, non-files, non-UTF-8 content, and inconsistent stored hashes.
 - Reuse `commonplace.lib.hashing` for the version contract.
-- This resolver replaces review's path-specific snapshot helper.
+- This version function replaces review's path-specific snapshot helper.
 
-### `file-set-text`
+### `collection-text`
 
-- Key: normalized root plus explicit include/exclude rules.
-- Enumerate visible, regular, non-symlink UTF-8 files deterministically; sort normalized repository-relative paths.
+- Identity: one normalized `COLLECTION.md`-bearing directory path.
+- Apply one fixed Commonplace rule: enumerate visible, regular, non-symlink Markdown content; exclude `COLLECTION.md`, `types/` subtrees, and replaced archives; sort normalized repository-relative paths.
 - Produce canonical text containing an unambiguous path header and exact content for every member. The combined text is the snapshot, so additions, removals, renames, and edits all change one content hash and yield an accepted-to-current diff without Git.
-- The resolver is generic. Epistack names one configured use a **collection source snapshot** and points it at a case's source collection.
-- The first version supports Markdown inputs only. Binary/PDF versioning, external URLs, Git revisions, and arbitrary query resolvers remain out of scope.
+- Epistack names one use a **collection source snapshot** and points it at a case's source collection.
+- Binary/PDF versioning, external URLs, Git revisions, arbitrary queries, and configurable member rules remain out of scope.
 
 ## Implementation sequence
 
@@ -151,30 +111,31 @@ Add:
 
 - `src/commonplace/store.py` and a single packaged schema resource;
 - `src/commonplace/freshness/models.py`;
-- `src/commonplace/freshness/resolvers.py`;
+- `src/commonplace/freshness/versioning.py`;
 - `src/commonplace/freshness/store.py` for target, snapshot, baseline, input, transition, integrity, and pruning operations; and
 - `scripts/migrate-review-db-v7-to-commonplace-store.py`.
 
 The migration must be transactional and preservation-first:
 
 1. refuse anything except a schema-v7 source that passes `integrity_check`, `foreign_key_check`, and current review-baseline integrity;
-2. create generic snapshots while preserving snapshot IDs and exact text;
-3. create one `review-pair` target and baseline per old freshness row;
+2. create path-keyed snapshots while preserving snapshot IDs and exact text;
+3. create one `review-pair` baseline containing target identity per old freshness row;
 4. create two generic inputs per migrated baseline, named `note` and `criterion`;
 5. create one review evidence bridge per migrated baseline;
 6. retain queued, completed, and failed review jobs and every review pair unchanged;
 7. verify row counts, paths, hashes, evidence ids, outcomes, result kinds, model partitions, and selector classifications before commit;
-8. write a byte-identical backup and report its hash before replacing the live store; and
-9. refuse to overwrite an existing destination.
+8. construct and verify `commonplace-store.sqlite` separately while opening `review-store.sqlite` read-only;
+9. report and recheck the old database's byte hash so it demonstrably remains the untouched backup; and
+10. refuse to overwrite an existing destination.
 
 Current preservation fixtures:
 
-| repository | jobs | pairs | snapshots | baselines | migrated targets | migrated inputs |
+| repository | jobs | pairs | snapshots | source baselines | new baselines | new inputs |
 |---|---:|---:|---:|---:|---:|---:|
 | Commonplace | 39 | 53 | 19 | 52 | 52 | 104 |
 | Epistack casebooks | 14 | 14 | 17 | 14 | 14 | 28 |
 
-The one Commonplace review pair without a current baseline remains review evidence/history and creates no freshness target.
+The one Commonplace review pair without a current baseline remains review evidence/history and creates no freshness baseline.
 
 ### 3. Put review freshness behind the general API
 
@@ -218,8 +179,8 @@ Default behavior:
 - resolve each unique current input once per run;
 - print only stale targets unless `--all` is supplied;
 - support `--json`, `--diff`, `--target-kind`, and exact target-key filtering;
-- return target kind/key, baseline revision, policy, and changed inputs with accepted/current versions and optional diffs;
-- exit `0` when all selected registered targets are fresh, `1` when any are stale, and `2` for invocation, resolver, or store-integrity failures.
+- return target kind/key, baseline revision, and changed inputs with accepted/current versions and optional diffs;
+- exit `0` when all selected registered targets are fresh, `1` when any are stale, and `2` for invocation, versioning, or store-integrity failures.
 
 “Global” means all registered targets. It does not infer unregistered dependencies, discover applicable-but-never-reviewed pairs, or treat every link as a baseline. Review's target selector remains responsible for review-specific missing-baseline discovery.
 
@@ -229,16 +190,16 @@ The first global-status acceptance test is review-only: edit one note and one cr
 
 Add library operations before choosing elaborate CLI syntax:
 
-- `accept_target(target, complete_inputs, target_metadata, expected_revision)`;
+- `accept_target(target, complete_inputs, expected_revision)`;
 - `ack_target_inputs(target, selected_observations, expected_revision)`;
 - `load_target_status(target)`; and
 - `select_stale_targets(filters)`.
 
 The operations accept resolved observations, not bare paths, so producers can pass the exact versions they inspected or consumed. Expose them as:
 
-- `commonplace-freshness-accept --input FILE|-` — initial or refresh acceptance from a target manifest containing target identity, policy, complete resolver specifications, expected baseline revision, and the observed versions being accepted;
-- `commonplace-freshness-ack --input FILE|- [--input-name NAME ...]` — advance all or selected changed inputs from `commonplace-freshness-status --json` output while preserving target-owned evidence; and
-- `commonplace-freshness-status ... --json` — the canonical observation payload for acknowledgement and external refresh producers.
+- `commonplace-freshness-accept --input FILE|-` — initial or refresh acceptance from a target manifest containing target identity, complete path/version-kind inputs, the expected baseline revision or expected absence, and the observed versions being accepted;
+- `commonplace-freshness-ack --input FILE|- [--input-role ROLE ...]` — advance all or selected changed inputs from `commonplace-freshness-status --json` output while preserving review evidence; and
+- `commonplace-freshness-status ... --json` — the canonical observation payload for acknowledgement and target workflows.
 
 Accept and ack must reject a mismatched baseline revision or any current version that no longer matches the supplied observation. This is the optimistic-lock boundary: inspect/status, decide, then conditionally advance. Review finalization remains allowed to accept the job-owned snapshots it actually evaluated even when live files have since moved on; the resulting baseline is immediately stale, which is more truthful than silently accepting unseen current text.
 
@@ -252,28 +213,24 @@ Use one coarse maintenance target per casebook rather than staling every note in
 {
   "target_kind": "collection-maintenance",
   "target_key": {"collection_path": "kb/lhc/notes"},
-  "policy": {"on_input_change": "semantic-reassessment"},
   "inputs": {
     "casebook": {
-      "role": "maintained-artifact-set",
-      "resolver": "file-set-text",
-      "root": "kb/lhc/notes"
+      "version_kind": "collection-text",
+      "path": "kb/lhc/notes"
     },
     "source-scope": {
-      "role": "collection-source-snapshot",
-      "resolver": "file-set-text",
-      "root": "kb/lhc/sources"
+      "version_kind": "collection-text",
+      "path": "kb/lhc/sources"
     },
     "contract": {
-      "role": "maintenance-contract",
-      "resolver": "file-text",
+      "version_kind": "file-text",
       "path": "kb/lhc/notes/COLLECTION.md"
     }
   }
 }
 ```
 
-Use equivalent targets for eggs and COVID. File-set include/exclude configuration must separate collection content from `COLLECTION.md`, local type specifications, hidden files, and generated reports; those dependencies are registered separately only when the target policy needs them.
+Use equivalent targets for eggs and COVID. The fixed `collection-text` rule separates collection content from `COLLECTION.md`, local type specifications, hidden files, generated reports, and replaced archives. Contracts are registered separately when they are accepted inputs.
 
 The coarse snapshot is deliberate. A source addition has no pre-existing per-file edge, so the collection source snapshot detects it. A changed source selects the casebook target; the semantic maintenance workflow decides which notes, if any, require edits. After that workflow, refresh acceptance records the new casebook, source-scope, and contract snapshots. If the source change does not affect the map, acknowledgement advances only `source-scope` after its diff is inspected.
 
@@ -304,10 +261,10 @@ Update, in the implementation commit sequence:
 Rollout order:
 
 1. land schema, migration, generic API, and review adapter with fixture tests;
-2. migrate a copy of the Commonplace live store and run full parity checks;
-3. migrate the Commonplace live store and switch its default path;
-4. migrate a copy of the Epistack live store and run review/global parity checks;
-5. migrate the Epistack live store;
+2. construct a candidate Commonplace store from the read-only old database and run full parity checks;
+3. install the verified Commonplace store at the new path and switch the default, retaining the old database as backup;
+4. construct a candidate Epistack store from its read-only old database and run review/global parity checks;
+5. install the verified Epistack store at the new path, retaining its old database as backup;
 6. register the three Epistack collection-maintenance targets;
 7. run the first global freshness check and disposition every selected target; and
 8. only then make global freshness part of Epistack's normal update/handoff instructions.
@@ -316,11 +273,12 @@ Rollout order:
 
 Expected new implementation surfaces:
 
+- `kb/work/artifact-freshness-and-referential-checks/database-design.md` (schema authority during implementation)
 - `src/commonplace/store.py`
 - `src/commonplace/store-schema.sql`
 - `src/commonplace/freshness/__init__.py`
 - `src/commonplace/freshness/models.py`
-- `src/commonplace/freshness/resolvers.py`
+- `src/commonplace/freshness/versioning.py`
 - `src/commonplace/freshness/store.py`
 - `src/commonplace/freshness/selector.py`
 - `src/commonplace/freshness/transitions.py`
@@ -371,7 +329,7 @@ Use the actual model partitions present in each store when comparing selector ou
 - automatic note rewriting or refresh execution;
 - dependency inference from links or prose;
 - source- or ingest-specific branches in the freshness core;
-- general binary, URL, external-Git, database-row, or package-asset resolvers;
+- configurable or pluggable version resolvers, and binary, URL, external-Git, database-row, or package-asset versions;
 - locks, filesystem transactions, or stronger concurrency before a failed optimistic case;
 - migration of full-pass packet state into SQLite;
 - append-only lineage events or historical baseline retention;
@@ -384,8 +342,8 @@ Use the actual model partitions present in each store when comparing selector ou
 2. every retained Commonplace and Epistack review baseline is preserved on the generic schema with parity-tested selection and evidence semantics;
 3. review finalization and acknowledgement use the same refresh/ack transitions available to other target kinds;
 4. one global command reports all registered stale review and non-review targets from the same store;
-5. the file-set resolver detects collection membership and content changes using stored UTF-8 snapshots and diffs;
+5. `collection-text` detects collection membership and content changes using stored UTF-8 snapshots and diffs;
 6. all three Epistack casebooks have registered collection-maintenance baselines and a source change selects the correct casebook without source-specific freshness code;
 7. acknowledgement and semantic refresh advance exact accepted versions without conflating changed inputs with false outputs;
-8. the full test suite and both live-store migration rehearsals pass; and
+8. the full test suite and both live-store migration rehearsals pass, with each old `review-store.sqlite` retained byte-identically as backup; and
 9. durable architecture, command, storage, review, and operator documentation describes the shipped mechanism, after which this workshop can close.

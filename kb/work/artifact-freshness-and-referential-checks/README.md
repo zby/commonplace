@@ -6,6 +6,11 @@ What general mechanism should register artifact-to-artifact dependencies, retain
 
 No artifact class is intrinsically a source or a derivative. A source snapshot, ingest, note, criterion, type specification, instruction, report, or generated index may be an input in one target and a freshness target in another. Artifact types may define different refresh policies, but the mechanism must not special-case sources or ingests.
 
+Working design:
+
+- [Implementation plan](./implementation-plan.md)
+- [Database design](./database-design.md) — exact old-to-new schema map, review-first migration, transitions, integrity, and Epistack representation
+
 ## Implemented foundation
 
 [ADR 051](../../reference/adr/051-full-pass-packets-own-guarded-captures-and-resolutions.md) shipped the first non-review artifact-version case:
@@ -34,12 +39,12 @@ General freshness still lacks:
 - a repository-wide status and selector from changed dependencies to affected target keys and reasons;
 - acknowledgement that advances selected dependency versions while preserving the target output;
 - refresh acceptance that records a new target version and complete dependency baseline;
-- target-owned policy for mapping neutral changes to reassess, regenerate, acknowledge, retire, or another action; and
+- a target-kind-specific workflow for mapping neutral changes to reassess, regenerate, or acknowledge; and
 - a storage-weight decision for dependency state that has no natural owner artifact.
 
 Ordinary links may nominate dependency candidates, but Commonplace defines links as reader aids rather than obligations. A link alone cannot create an accepted baseline or prove that its target is stale.
 
-Epistack also needs to detect a source collection gaining, losing, or changing a member even when no target has registered an edge to the new member. The bounded workaround is a **collection source snapshot**: canonical text containing the sorted member paths and versions for one collection. A target may register that snapshot as one dependency. The collection-owned policy produces its current canonical text; the general freshness mechanism stores and compares it like any other versioned artifact, without giving sources or ingests special semantics.
+Epistack also needs to detect a source collection gaining, losing, or changing a member even when no target has registered an edge to the new member. The bounded workaround is a **collection source snapshot**: canonical text containing the sorted member paths and contents for one collection. A target may register that snapshot as one dependency. The fixed `collection-text` version function produces its current canonical text; the general freshness mechanism stores and compares it like any other path-based snapshot, without giving sources or ingests special semantics.
 
 ## Why referential checks remain in the workshop
 
@@ -59,7 +64,7 @@ The remaining mechanism must account for these witnesses:
 - **Collection source snapshot:** adding, removing, or changing a member changes the canonical collection snapshot and selects targets registered against it; the freshness core still sees an ordinary artifact identity and text version.
 - **Diff-backed acknowledgement:** the operator inspects the accepted-to-current change and advances selected dependency baselines without claiming that a new target output was produced.
 - **Refresh acceptance:** producing or reassessing a target records its current target version and complete accepted dependency baseline.
-- **Target-owned consequence:** the shared selector emits neutral reasons such as `input-changed`, `output-missing`, or `contract-changed`; the target kind decides the permissible response.
+- **Target-kind consequence:** the shared selector emits neutral input-change reasons; the workflow consuming that target kind decides whether to reassess, regenerate, or acknowledge.
 - **Relationship is not freshness:** backlinks and authored links remain discovery evidence unless a target acceptance registers them as dependencies.
 - **Selection is not execution:** the mechanism returns target keys, changed inputs, and reasons; review, regeneration, agent revision, or bulk-operation workflows decide what to do.
 
@@ -70,12 +75,11 @@ A freshness target adds this state beyond the shipped review and full-pass cases
 - a stable target kind and structured key;
 - the accepted target/output version, where an output artifact exists;
 - registered dependency identities, roles, and accepted versions;
-- the target policy used to interpret neutral selector results; and
 - accepted baseline transitions for refresh and acknowledgement.
 
 Acknowledgement means that the existing target remains acceptable against displayed current dependency versions. It advances only those versions and preserves the target output. Refresh means that the target was produced or reassessed and records a new target version plus its complete dependency baseline. Both operations record the exact versions inspected or consumed, not whichever versions happen to be current later. A concurrent subsequent edit therefore makes the new baseline immediately stale without requiring locks or atomic filesystem transactions.
 
-The first implementation need not create a general database. The storage carrier follows the existing weight rule: keep naturally owned, low-churn state with its artifact; introduce an operational edge store only when mutable many-to-many state and a real selector outgrow artifact-owned records or recomputation.
+The review-first migration uses one operational SQLite store for the mutable many-to-many baseline state and global selector. Authored artifacts remain files; full-pass packet captures retain their separate artifact-owned storage because they do not participate in this baseline mesh.
 
 ## Ownership boundaries
 
@@ -87,17 +91,13 @@ It consumes rather than duplicates adjacent work:
 - [lineage-mechanisms](../lineage-mechanisms/README.md) owns the general dependency/freshness vocabulary, storage-weight rules, and any common operational state design.
 - [kb-graph-loader](../kb-graph-loader/README.md) owns shared reading, parsing, and artifact indexes used by deterministic referential checks.
 - [bulk-operations](../bulk-operations/README.md) owns executing selected refresh work at scale.
-- The review subsystem continues to own review-pair lifecycle, result protocols, and its purpose-built store unless a migration is separately justified.
+- The review subsystem continues to own review-pair lifecycle, result protocols, and evidence; the planned migration moves only its snapshots and freshness baselines onto the general tables in the shared operational store.
 
 Out of scope: reworking full-pass capture/guard behavior, adding pinned-input or full-concurrency machinery without a failed case, automatic rewriting, semantic truth adjudication, a universal dependency-role ontology, authority ranking, and refresh-job execution.
 
 ## Open decisions
 
-- Which artifact-neutral target should provide the first end-to-end acceptance and global-selection case?
 - Which dependencies are declared in artifact contracts or manifests, and which are registered only by an acceptance operation?
-- How is a collection source snapshot identified and produced while keeping its collection-specific membership policy outside the freshness core?
-- Does the first reverse selector recompute over artifact-owned baselines, use a generated index, or already meet the many-to-many/churn threshold for SQLite?
-- How does a target register its allowed responses without branching on artifact path classes in the shared selector?
 - When an input is itself a stale target but its content is unchanged, does the dependency watch content only or explicitly require the input target's accepted freshness state?
 - How should deterministic referential checks publish invalidity without conflating a currently false assertion with a stale accepted derivation?
 
@@ -109,7 +109,7 @@ The workshop closes when:
 2. a repository-wide check reports stale registered targets, and a changed dependency selects each affected target with its accepted and current versions plus a neutral reason;
 3. an Epistack-shaped collection source snapshot demonstrates that adding, removing, or changing a collection member can select a registered target without source-specific behavior in the freshness core;
 4. acknowledgement and refresh demonstrate distinct baseline transitions over the exact inspected or consumed versions;
-5. the boundary between dependency discovery, changed dependency, deterministic invalidity, and target-owned response has a written contract and executable cases;
+5. the boundary between dependency discovery, changed dependency, deterministic invalidity, and target-kind workflow response has a written contract and executable cases;
 6. Commonplace either implements the storage weight earned by the witness or records why artifact-owned state remains sufficient;
 7. durable outcomes move to the appropriate API/reference documentation, ADR or proposal, validator instruction, and owning workshops; and
 8. any submission claim about targeted maintenance is narrowed or substantiated to match the result.
