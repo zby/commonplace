@@ -6,7 +6,11 @@ import sqlite3
 from dataclasses import dataclass
 
 from commonplace.freshness.keys import review_pair_target_key
-from commonplace.freshness.revisions import allocate_initial_revision, allocate_successor_revision
+from commonplace.freshness.revisions import (
+    allocate_initial_revision,
+    allocate_successor_revision,
+    load_generation_next_revision,
+)
 from commonplace.review.review_model import normalize_model_partition
 
 REVIEW_PAIR_KIND = "review-pair"
@@ -75,6 +79,7 @@ def _assert_capture_revision(
     criterion_path: str,
     model_partition: str,
     expected_baseline_revision: int | None,
+    expected_generation_next_revision: int | None = None,
 ) -> TargetRow | None:
     current = load_review_target(
         conn,
@@ -82,9 +87,24 @@ def _assert_capture_revision(
         criterion_path=criterion_path,
         model_partition=model_partition,
     )
+    target_key_json = review_pair_target_key(
+        note_path=note_path,
+        criterion_path=criterion_path,
+        model_partition=normalize_model_partition(model_partition),
+    )
     if expected_baseline_revision is None:
         if current is not None:
             raise ValueError("stale-baseline-revision: baseline already exists")
+        if expected_generation_next_revision is not None:
+            current_generation = load_generation_next_revision(
+                conn,
+                target_kind=REVIEW_PAIR_KIND,
+                target_key_json=target_key_json,
+            )
+            if current_generation != expected_generation_next_revision:
+                raise ValueError(
+                    "stale-baseline-revision: baseline generation advanced since queue"
+                )
         return None
     if current is None:
         raise ValueError("stale-baseline-revision: expected baseline but none registered")
@@ -107,6 +127,7 @@ def refresh_review_baseline_from_captures(
     baseline_criterion_snapshot_id: int,
     expected_baseline_revision: int | None,
     accepted_at: str,
+    expected_generation_next_revision: int | None = None,
 ) -> tuple[int | None, int | None]:
     """Return (superseded_evidence_pair_id, superseded_target_id) or Nones."""
     previous = _assert_capture_revision(
@@ -115,6 +136,7 @@ def refresh_review_baseline_from_captures(
         criterion_path=criterion_path,
         model_partition=model_partition,
         expected_baseline_revision=expected_baseline_revision,
+        expected_generation_next_revision=expected_generation_next_revision,
     )
     superseded_evidence_pair_id: int | None = None
     superseded_target_id: int | None = None
@@ -220,9 +242,14 @@ def refresh_review_baseline_from_observation(
     )
     if current is None:
         raise ValueError("no freshness baseline to acknowledge")
-    if expected_baseline_revision is not None and expected_baseline_revision != current.revision:
+    cas_revision = (
+        expected_baseline_revision
+        if expected_baseline_revision is not None
+        else current.revision
+    )
+    if cas_revision != current.revision:
         raise ValueError(
-            f"stale-baseline-revision: expected {expected_baseline_revision}, "
+            f"stale-baseline-revision: expected {cas_revision}, "
             f"current {current.revision}"
         )
     superseded_evidence_pair_id, _ = refresh_review_baseline_from_captures(
@@ -233,7 +260,7 @@ def refresh_review_baseline_from_observation(
         evidence_review_pair_id=evidence_review_pair_id,
         baseline_note_snapshot_id=baseline_note_snapshot_id,
         baseline_criterion_snapshot_id=baseline_criterion_snapshot_id,
-        expected_baseline_revision=current.revision,
+        expected_baseline_revision=cas_revision,
         accepted_at=accepted_at,
     )
     return superseded_evidence_pair_id

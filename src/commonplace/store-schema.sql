@@ -85,6 +85,9 @@ CREATE TABLE IF NOT EXISTS review_pairs (
     expected_baseline_revision INTEGER CHECK (
         expected_baseline_revision IS NULL OR expected_baseline_revision >= 1
     ),
+    expected_generation_next_revision INTEGER CHECK (
+        expected_generation_next_revision IS NULL OR expected_generation_next_revision >= 1
+    ),
     completed_at TEXT,
     CHECK (
         (completed_at IS NULL AND outcome IS NULL)

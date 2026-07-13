@@ -7,7 +7,7 @@ import sqlite3
 from importlib import resources
 from pathlib import Path
 
-STORE_SCHEMA_VERSION = 2
+STORE_SCHEMA_VERSION = 3
 SCHEMA_PATH = "store-schema.sql"
 DEFAULT_DB_PATH = Path("kb/reports/commonplace-store.sqlite")
 LEGACY_DB_PATH = Path("kb/reports/review-store.sqlite")
@@ -124,7 +124,7 @@ def _migrate_store(conn: sqlite3.Connection) -> None:
     current_version = _get_user_version(conn)
     if current_version == STORE_SCHEMA_VERSION:
         return
-    if current_version == 1 and STORE_SCHEMA_VERSION == 2:
+    if current_version == 1 and STORE_SCHEMA_VERSION >= 2:
         conn.executescript(_GENERATIONS_TABLE_SQL)
         conn.execute(
             """
@@ -133,6 +133,18 @@ def _migrate_store(conn: sqlite3.Connection) -> None:
             )
             SELECT target_kind, target_key_json, revision + 1
             FROM freshness_baselines
+            """
+        )
+        current_version = 2
+        _set_user_version(conn, current_version)
+    if current_version == 2 and STORE_SCHEMA_VERSION == 3:
+        conn.execute(
+            """
+            ALTER TABLE review_pairs
+            ADD COLUMN expected_generation_next_revision INTEGER CHECK (
+                expected_generation_next_revision IS NULL
+                OR expected_generation_next_revision >= 1
+            )
             """
         )
         _set_user_version(conn, STORE_SCHEMA_VERSION)

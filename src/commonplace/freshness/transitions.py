@@ -13,7 +13,7 @@ from commonplace.freshness.revisions import allocate_initial_revision, allocate_
 from commonplace.freshness.snapshots import insert_or_get_snapshot
 from commonplace.freshness.versioning import FILE_TEXT, resolve_file_text
 from commonplace.review.clock import iso_now
-from commonplace.review.review_db import SupersededFreshnessBaseline, snapshot_file
+from commonplace.review.review_db import SupersededFreshnessBaseline
 from commonplace.review.review_model import normalize_model_partition
 
 REVIEW_PAIR_KIND = freshness_baselines.REVIEW_PAIR_KIND
@@ -221,11 +221,15 @@ def ack_target_inputs(
     ).fetchall()
     registered_inputs = {row["input_role"]: row for row in input_rows}
 
-    roles_to_ack: set[str]
+    fresh_snapshot_ids: dict[str, int] = {}
     if selected_inputs is None:
-        roles_to_ack = {"note", "criterion"}
+        for role, path in (("note", note_path), ("criterion", criterion_path)):
+            resolved = resolve_file_text(repo_root=repo_root, path=path)
+            snapshot = insert_or_get_snapshot(conn, resolved=resolved)
+            fresh_snapshot_ids[role] = snapshot.snapshot_id
     else:
-        roles_to_ack = {observation.input_role for observation in selected_inputs}
+        if not selected_inputs:
+            raise ValueError("selected_inputs must not be empty")
         for observation in selected_inputs:
             registered = registered_inputs.get(observation.input_role)
             if registered is None:
@@ -249,15 +253,17 @@ def ack_target_inputs(
                     f"live hash mismatch for {registered['artifact_path']}: "
                     f"expected {observation.content_sha256}, current {resolved.content_sha256}"
                 )
+            snapshot = insert_or_get_snapshot(conn, resolved=resolved)
+            fresh_snapshot_ids[observation.input_role] = snapshot.snapshot_id
 
-    note_snapshot_id = int(registered_inputs["note"]["accepted_snapshot_id"])
-    criterion_snapshot_id = int(registered_inputs["criterion"]["accepted_snapshot_id"])
-    if "note" in roles_to_ack:
-        note_snapshot = snapshot_file(conn, repo_root=repo_root, path=note_path)
-        note_snapshot_id = note_snapshot.snapshot_id
-    if "criterion" in roles_to_ack:
-        criterion_snapshot = snapshot_file(conn, repo_root=repo_root, path=criterion_path)
-        criterion_snapshot_id = criterion_snapshot.snapshot_id
+    note_snapshot_id = fresh_snapshot_ids.get(
+        "note",
+        int(registered_inputs["note"]["accepted_snapshot_id"]),
+    )
+    criterion_snapshot_id = fresh_snapshot_ids.get(
+        "criterion",
+        int(registered_inputs["criterion"]["accepted_snapshot_id"]),
+    )
 
     accepted = accepted_at or iso_now()
     superseded_evidence_pair_id = freshness_baselines.refresh_review_baseline_from_observation(
@@ -268,6 +274,7 @@ def ack_target_inputs(
         evidence_review_pair_id=evidence_review_pair_id,
         baseline_note_snapshot_id=note_snapshot_id,
         baseline_criterion_snapshot_id=criterion_snapshot_id,
+        expected_baseline_revision=expected_baseline_revision,
         accepted_at=accepted,
     )
     if superseded_evidence_pair_id is None:
@@ -293,6 +300,7 @@ def refresh_target_from_captures(
     baseline_criterion_snapshot_id: int,
     expected_baseline_revision: int | None,
     accepted_at: str,
+    expected_generation_next_revision: int | None = None,
 ) -> tuple[int | None, int | None]:
     """Review-owned capture refresh. Returns superseded evidence pair and target ids."""
     return freshness_baselines.refresh_review_baseline_from_captures(
@@ -305,6 +313,7 @@ def refresh_target_from_captures(
         baseline_criterion_snapshot_id=baseline_criterion_snapshot_id,
         expected_baseline_revision=expected_baseline_revision,
         accepted_at=accepted_at,
+        expected_generation_next_revision=expected_generation_next_revision,
     )
 
 

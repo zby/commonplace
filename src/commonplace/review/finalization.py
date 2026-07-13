@@ -34,6 +34,7 @@ def finalize_capture_refresh(
     baseline_note_snapshot_id: int,
     baseline_criterion_snapshot_id: int,
     expected_baseline_revision: int | None,
+    expected_generation_next_revision: int | None,
     baseline_updated_at: str,
 ) -> review_db.SupersededFreshnessBaseline | None:
     """Review-owned capture refresh: CAS, replace evidence, no live revalidation."""
@@ -47,6 +48,7 @@ def finalize_capture_refresh(
         baseline_criterion_snapshot_id=baseline_criterion_snapshot_id,
         baseline_updated_at=baseline_updated_at,
         expected_baseline_revision=expected_baseline_revision,
+        expected_generation_next_revision=expected_generation_next_revision,
         capture_refresh=True,
     )
 
@@ -295,6 +297,7 @@ def record_and_finalize_job(
                 baseline_note_snapshot_id=pair.reviewed_note_snapshot_id,
                 baseline_criterion_snapshot_id=pair.reviewed_criterion_snapshot_id,
                 expected_baseline_revision=pair.expected_baseline_revision,
+                expected_generation_next_revision=pair.expected_generation_next_revision,
                 baseline_updated_at=finished_at,
             )
         )

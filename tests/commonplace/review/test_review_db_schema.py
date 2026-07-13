@@ -83,6 +83,7 @@ def test_ensure_db_initializes_current_schema(tmp_path: Path) -> None:
     assert "pair_status" not in pair_columns
     assert "result_path" not in pair_columns_detail
     assert "expected_baseline_revision" in pair_columns_detail
+    assert "expected_generation_next_revision" in pair_columns_detail
     assert "target_kind" in freshness_baseline_columns
     assert "target_key_json" in freshness_baseline_columns
     assert "revision" in freshness_baseline_columns

@@ -120,7 +120,7 @@ def _write_v7_source(
     return note_path, other_note_path
 
 
-def test_migration_removes_only_stale_queued_pairs(tmp_path: Path) -> None:
+def test_migration_fails_job_with_stale_queued_capture(tmp_path: Path) -> None:
     if not SCHEMA_PATH.is_file():
         pytest.skip("legacy review schema fixture not present")
 
@@ -128,7 +128,7 @@ def test_migration_removes_only_stale_queued_pairs(tmp_path: Path) -> None:
     repo_root.mkdir()
     source = tmp_path / "review-store.sqlite"
     destination = tmp_path / "commonplace-store.sqlite"
-    note_path, other_note_path = _write_v7_source(
+    _write_v7_source(
         source_path=source,
         repo_root=repo_root,
         stale_pair_job_id=49,
@@ -159,27 +159,7 @@ def test_migration_removes_only_stale_queued_pairs(tmp_path: Path) -> None:
         pair_count = conn.execute(
             "SELECT count(*) FROM review_pairs WHERE review_job_id = 49"
         ).fetchone()[0]
-        remaining_pairs = conn.execute(
-            """
-            SELECT note_path, reviewed_note_snapshot_id
-            FROM review_pairs
-            WHERE review_job_id = 49
-            ORDER BY pair_ordinal
-            """
-        ).fetchall()
-        other_baseline = conn.execute(
-            """
-            SELECT note_path
-            FROM current_review_freshness_baselines
-            WHERE note_path = ?
-            """,
-            (other_note_path,),
-        ).fetchone()
 
-    assert job["status"] == "queued"
-    assert job["failure_reason"] is None
-    assert pair_count == 1
-    assert len(remaining_pairs) == 1
-    assert remaining_pairs[0]["note_path"] == note_path
-    assert int(remaining_pairs[0]["reviewed_note_snapshot_id"]) == 1
-    assert other_baseline is not None
+    assert job["status"] == "failed"
+    assert job["failure_reason"] == "stale-queued-capture"
+    assert pair_count == 2

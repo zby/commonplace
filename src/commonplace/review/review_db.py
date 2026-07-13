@@ -109,6 +109,7 @@ class ReviewPairRow:
     reviewed_note_snapshot_id: int | None
     reviewed_criterion_snapshot_id: int | None
     expected_baseline_revision: int | None
+    expected_generation_next_revision: int | None
     completed_at: str | None
 
     @property
@@ -245,6 +246,7 @@ _PAIR_SELECT = """
     rp.reviewed_note_snapshot_id,
     rp.reviewed_criterion_snapshot_id,
     rp.expected_baseline_revision,
+    rp.expected_generation_next_revision,
     rp.completed_at
 """
 
@@ -269,6 +271,7 @@ def _review_pair_from_row(row: sqlite3.Row) -> ReviewPairRow:
         reviewed_note_snapshot_id=row["reviewed_note_snapshot_id"],
         reviewed_criterion_snapshot_id=row["reviewed_criterion_snapshot_id"],
         expected_baseline_revision=row["expected_baseline_revision"],
+        expected_generation_next_revision=row["expected_generation_next_revision"],
         completed_at=row["completed_at"],
     )
 
@@ -343,6 +346,9 @@ def create_review_pairs(
         raise ValueError("review job cannot mix result kinds")
     model_partition = normalize_model_partition(model_partition)
     review_pair_ids: list[int] = []
+    from commonplace.freshness.keys import review_pair_target_key
+    from commonplace.freshness.revisions import load_generation_next_revision
+
     for pair in pairs:
         expected_revision = freshness_baselines.load_expected_baseline_revision(
             conn,
@@ -350,6 +356,18 @@ def create_review_pairs(
             criterion_path=pair.criterion_path,
             model_partition=model_partition,
         )
+        expected_generation: int | None = None
+        if expected_revision is None:
+            target_key_json = review_pair_target_key(
+                note_path=pair.note_path,
+                criterion_path=pair.criterion_path,
+                model_partition=model_partition,
+            )
+            expected_generation = load_generation_next_revision(
+                conn,
+                target_kind=freshness_baselines.REVIEW_PAIR_KIND,
+                target_key_json=target_key_json,
+            )
         cursor = conn.execute(
             """
             INSERT INTO review_pairs (
@@ -360,8 +378,9 @@ def create_review_pairs(
                 result_kind,
                 reviewed_note_snapshot_id,
                 reviewed_criterion_snapshot_id,
-                expected_baseline_revision
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                expected_baseline_revision,
+                expected_generation_next_revision
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
             """,
             (
                 review_job_id,
@@ -372,6 +391,7 @@ def create_review_pairs(
                 pair.reviewed_note_snapshot_id,
                 pair.reviewed_criterion_snapshot_id,
                 expected_revision,
+                expected_generation,
             ),
         )
         review_pair_ids.append(int(cursor.lastrowid))
@@ -715,6 +735,7 @@ def upsert_freshness_baseline(
     baseline_criterion_snapshot_id: int,
     baseline_updated_at: str,
     expected_baseline_revision: int | None = None,
+    expected_generation_next_revision: int | None = None,
     capture_refresh: bool = False,
 ) -> SupersededFreshnessBaseline | None:
     if evidence_review_pair_id is None:
@@ -764,6 +785,7 @@ def upsert_freshness_baseline(
             baseline_criterion_snapshot_id=baseline_criterion_snapshot_id,
             expected_baseline_revision=expected_baseline_revision,
             accepted_at=baseline_updated_at,
+            expected_generation_next_revision=expected_generation_next_revision,
         )
     else:
         freshness_baselines.refresh_review_baseline_from_observation(

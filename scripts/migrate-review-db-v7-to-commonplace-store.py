@@ -10,6 +10,7 @@ from importlib import resources
 from pathlib import Path
 
 from commonplace.freshness.keys import review_pair_target_key
+from commonplace.freshness.revisions import load_generation_next_revision
 from commonplace.store import DEFAULT_DB_PATH, LEGACY_DB_PATH, STORE_SCHEMA_VERSION
 
 
@@ -159,13 +160,14 @@ def migrate(
                     review_job_id, review_pair_id, note_path, criterion_path,
                     pair_ordinal, result_kind, outcome,
                     reviewed_note_snapshot_id, reviewed_criterion_snapshot_id,
-                    expected_baseline_revision, completed_at
+                    expected_baseline_revision, expected_generation_next_revision,
+                    completed_at
                 )
                 SELECT
                     review_job_id, review_pair_id, note_path, criterion_path,
                     pair_ordinal, result_kind, outcome,
                     reviewed_note_snapshot_id, reviewed_criterion_snapshot_id,
-                    NULL, completed_at
+                    NULL, NULL, completed_at
                 FROM source.review_pairs;
                 """
             )
@@ -237,7 +239,6 @@ def migrate(
             )
 
             failed_job_ids: set[int] = set()
-            removed_stale_pairs = 0
             queued_pairs = dest.execute(
                 """
                 SELECT
@@ -281,13 +282,25 @@ def migrate(
                     ),
                 ).fetchone()
                 expected_revision = int(baseline_row["revision"]) if baseline_row is not None else None
+                expected_generation = None
+                if expected_revision is None:
+                    expected_generation = load_generation_next_revision(
+                        dest,
+                        target_kind=REVIEW_PAIR_KIND,
+                        target_key_json=review_pair_target_key(
+                            note_path=pair["note_path"],
+                            criterion_path=pair["criterion_path"],
+                            model_partition=pair["model_partition"],
+                        ),
+                    )
                 dest.execute(
                     """
                     UPDATE review_pairs
-                    SET expected_baseline_revision = ?
+                    SET expected_baseline_revision = ?,
+                        expected_generation_next_revision = ?
                     WHERE review_pair_id = ?
                     """,
-                    (expected_revision, pair["review_pair_id"]),
+                    (expected_revision, expected_generation, pair["review_pair_id"]),
                 )
                 if baseline_row is None:
                     continue
@@ -301,33 +314,17 @@ def migrate(
                 )
                 if note_mismatch or criterion_mismatch:
                     dest.execute(
-                        "DELETE FROM review_pairs WHERE review_pair_id = ?",
-                        (pair["review_pair_id"],),
+                        """
+                        UPDATE review_jobs
+                        SET status = 'failed',
+                            completed_at = created_at,
+                            failure_reason = 'stale-queued-capture'
+                        WHERE review_job_id = ?
+                          AND status = 'queued'
+                        """,
+                        (pair["review_job_id"],),
                     )
-                    removed_stale_pairs += 1
-                    remaining_pairs = int(
-                        dest.execute(
-                            """
-                            SELECT count(*)
-                            FROM review_pairs
-                            WHERE review_job_id = ?
-                            """,
-                            (pair["review_job_id"],),
-                        ).fetchone()[0]
-                    )
-                    if remaining_pairs == 0:
-                        dest.execute(
-                            """
-                            UPDATE review_jobs
-                            SET status = 'failed',
-                                completed_at = created_at,
-                                failure_reason = 'stale-queued-capture'
-                            WHERE review_job_id = ?
-                              AND status = 'queued'
-                            """,
-                            (pair["review_job_id"],),
-                        )
-                        failed_job_ids.add(int(pair["review_job_id"]))
+                    failed_job_ids.add(int(pair["review_job_id"]))
 
             from commonplace.store import assert_store_integrity
 
@@ -346,8 +343,7 @@ def migrate(
                 raise RuntimeError("snapshot count mismatch after migration")
             if dest_counts["review_jobs"] != source_counts["review_jobs"]:
                 raise RuntimeError("review job count mismatch after migration")
-            expected_review_pairs = source_counts["review_pairs"] - removed_stale_pairs
-            if dest_counts["review_pairs"] != expected_review_pairs:
+            if dest_counts["review_pairs"] != source_counts["review_pairs"]:
                 raise RuntimeError("review pair count mismatch after migration")
             if dest_counts["freshness_inputs"] != dest_counts["freshness_baselines"] * 2:
                 raise RuntimeError("freshness input count mismatch after migration")
@@ -365,7 +361,6 @@ def migrate(
         "inputs": dest_counts["freshness_inputs"],
         "skipped_baselines": skipped_baselines,
         "failed_queued_jobs": len(failed_job_ids),
-        "removed_stale_pairs": removed_stale_pairs,
     }
 
 
