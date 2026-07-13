@@ -275,11 +275,78 @@ def _validator_for_path(path_str: str) -> Draft202012Validator:
     )
 
 
-def _schema_identity_type_path(profile: TypeProfile) -> str:
+def canonical_type_identity(profile: TypeProfile) -> str:
+    """Return the portable path identity used for type-owned behavior.
+
+    Installed framework types live below ``kb/commonplace/`` but retain the
+    same logical identity as their source paths so schemas and imperative rules
+    behave identically in author and installed-reader repositories.
+    """
     parts = Path(profile.type_path).parts
     if len(parts) >= 4 and parts[0] == "kb" and parts[1] == "commonplace":
         return Path("kb", *parts[2:]).as_posix()
     return profile.type_path
+
+
+def resolve_type_definition(
+    type_doc_path: Path,
+    *,
+    repo_root: Path,
+    type_frontmatter: dict[str, Any] | None = None,
+) -> TypeProfile:
+    """Load one identified type-spec document and its declared schema."""
+    workspace_root = repo_root.resolve()
+    resolved_type_doc = type_doc_path.resolve()
+    boundary = kb_root(workspace_root).resolve()
+    try:
+        resolved_type_doc.relative_to(boundary)
+    except ValueError as exc:
+        raise ValueError(
+            f"type definition path must stay under kb/: {type_doc_path}"
+        ) from exc
+
+    type_doc_rel = resolved_type_doc.relative_to(workspace_root).as_posix()
+    if type_frontmatter is None:
+        type_frontmatter = _load_type_frontmatter(
+            resolved_type_doc, workspace_root
+        )
+    elif not resolved_type_doc.is_file():
+        raise FileNotFoundError(
+            f"frontmatter.type points to a missing type spec: {type_doc_rel}"
+        )
+
+    if type_frontmatter.get("type") != TYPE_SPEC_PATH:
+        raise ValueError(
+            f"{type_doc_rel}: type spec must declare type: {TYPE_SPEC_PATH}"
+        )
+
+    type_name = type_frontmatter.get("name")
+    if not isinstance(type_name, str) or not type_name.strip():
+        raise ValueError(f"{type_doc_rel}: type spec frontmatter must include name")
+    if (
+        not isinstance(type_frontmatter.get("description"), str)
+        or not type_frontmatter["description"].strip()
+    ):
+        raise ValueError(
+            f"{type_doc_rel}: type spec frontmatter must include description"
+        )
+
+    schema_path = _schema_path_from_type_doc(
+        type_doc_rel,
+        resolved_type_doc,
+        type_frontmatter,
+        workspace_root,
+    )
+    schema = (
+        _load_schema(str(schema_path.resolve())) if schema_path is not None else None
+    )
+    return TypeProfile(
+        type_path=type_doc_rel,
+        type_doc_path=resolved_type_doc,
+        type_name=type_name.strip(),
+        schema_path=schema_path,
+        schema=schema,
+    )
 
 
 def resolve_type(
@@ -301,43 +368,14 @@ def resolve_type(
     if "type" not in frontmatter:
         raise ValueError("frontmatter.type is required for files with frontmatter")
 
-    type_doc_rel, type_doc_path = validate_type_path(
+    _, type_doc_path = validate_type_path(
         frontmatter["type"],
         repo_root=workspace_root,
         source_file=file_path,
     )
-    type_frontmatter = _load_type_frontmatter(type_doc_path, workspace_root)
-    if type_frontmatter.get("type") != TYPE_SPEC_PATH:
-        raise ValueError(
-            f"{type_doc_rel}: type spec must declare type: {TYPE_SPEC_PATH}"
-        )
-
-    type_name = type_frontmatter.get("name")
-    if not isinstance(type_name, str) or not type_name.strip():
-        raise ValueError(f"{type_doc_rel}: type spec frontmatter must include name")
-    if (
-        not isinstance(type_frontmatter.get("description"), str)
-        or not type_frontmatter["description"].strip()
-    ):
-        raise ValueError(
-            f"{type_doc_rel}: type spec frontmatter must include description"
-        )
-
-    schema_path = _schema_path_from_type_doc(
-        type_doc_rel,
+    return resolve_type_definition(
         type_doc_path,
-        type_frontmatter,
-        workspace_root,
-    )
-    schema = (
-        _load_schema(str(schema_path.resolve())) if schema_path is not None else None
-    )
-    return TypeProfile(
-        type_path=type_doc_rel,
-        type_doc_path=type_doc_path,
-        type_name=type_name.strip(),
-        schema_path=schema_path,
-        schema=schema,
+        repo_root=workspace_root,
     )
 
 
@@ -350,7 +388,7 @@ def validate_instance(
     # `const: kb/<col>/types/<name>.md` match regardless of whether the source
     # used repo-relative or file-relative form.
     fm = instance.get("frontmatter")
-    schema_type_path = _schema_identity_type_path(profile)
+    schema_type_path = canonical_type_identity(profile)
     if isinstance(fm, dict) and fm.get("type") != schema_type_path:
         instance = {**instance, "frontmatter": {**fm, "type": schema_type_path}}
     validator = _validator_for_path(str(profile.schema_path.resolve()))

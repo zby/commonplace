@@ -137,7 +137,13 @@ Bare enum values, missing type files, missing `schema` fields in type specs, abs
 
 
 **`resolve_type(file_path: Path, frontmatter: dict | None, *, repo_root: Path) -> TypeProfile`**
-Main entry point. Validates the path-valued `type:`, loads the type-spec doc, and loads the declared schema when present.
+Note-oriented entry point. Validates the path-valued `type:` and delegates the referenced type document to `resolve_type_definition`.
+
+**`resolve_type_definition(type_doc_path: Path, *, repo_root: Path, type_frontmatter: dict | None = None) -> TypeProfile`**
+Load an identified type-spec document and its declared schema directly. Callers that already parsed the document may supply its frontmatter to avoid reopening it; ordinary note resolution omits the mapping and loads the type document itself.
+
+**`canonical_type_identity(profile: TypeProfile) -> str`**
+Return the portable path identity used by schemas and imperative type-rule dispatch. Installed framework paths under `kb/commonplace/` normalize to their source `kb/` identity; collection-local paths remain distinct.
 
 **`validate_instance(profile: TypeProfile, instance: dict) -> list[ValidationError]`**
 Validate a document instance (from `ParsedDocument.to_validation_object()`) against the type's JSON Schema. Returns errors sorted by document path. Returns an empty list for implicit `text` and for type specs with `schema: null`.
@@ -159,10 +165,10 @@ Deterministic validation rules for KB notes. Used by `commonplace-validate`. The
 **`ParsedNote`** — dataclass bundling a note's `path`, `content`, `note_type`, `profile` (`TypeProfile`), and `document` (`ParsedDocument`).
 
 **`list_collection_note_paths(collection: Path) -> list[Path]`**
-Return validation-capable Markdown artifacts under one collection, including first-class type-spec documents. Skips collection metadata, replaced archives, hidden entries, nested git repositories, and legacy type support files (`*.template.md`, `*.instructions.md`, `text.md`). Visibility is package-owned (`project_paths.walk_visible`); gitignore rules have no effect on what the tools see.
+Return visible Markdown artifacts under one collection, including everything under `types/`. Skips collection metadata, replaced archives, hidden entries, and nested git repositories. Filename suffixes such as `*.template.md` and `*.instructions.md` have no special meaning. Visibility is package-owned (`project_paths.walk_visible`); gitignore rules have no effect on what the tools see.
 
 **`list_type_spec_paths(root: Path) -> list[Path]`**
-Return the global and collection-local first-class type-spec inventory under `kb/**/types/*.md`, excluding legacy support files and the implicit `text` type. Used by the `commonplace-validate types` target.
+Return Markdown artifacts under `kb/**/types/*.md`, excluding only `text.md`, the implicit no-frontmatter root rather than a type-spec artifact. Used by the `commonplace-validate types` target.
 
 **`is_type_definition_content(path: Path, boundary: Path) -> bool`**
 Return whether a path is inside a `types/` directory beneath the supplied boundary. Consumers such as generated indexes use it when their domain excludes contracts; validation does not categorically exclude type definitions.
@@ -173,8 +179,8 @@ Read a note, parse its frontmatter and body, resolve its type. Returns `(parsed,
 **`validate_note(path: Path, *, repo_root: Path) -> CheckResults`**
 Run the full deterministic validation pipeline on one note: title/slug length, link health, registered type-specific rules, then schema validation. Returns the populated `CheckResults`.
 
-**`type_rule(*type_names)`**
-Decorator registering a type-specific rule `(results, parsed, *, repo_root) -> None` for the given type names; `validate_note` runs matching rules between the generic checks and schema validation. Current registrations: quote-citation shape checks for `agent-memory-system-review`, declared-schema resolution for `type-spec`, and weight/completeness/coverage gates for `tag-readme`.
+**`type_rule(*type_paths)`**
+Decorator registering a type-specific rule `(results, parsed, *, repo_root) -> None` for canonical type paths; `validate_note` runs matching rules between the generic checks and schema validation. Path dispatch prevents same-named collection-local types from inheriting framework rules. Current registrations: quote-citation shape checks for `kb/agent-memory-systems/types/agent-memory-system-review.md`, declared-schema resolution for `kb/types/type-spec.md`, and weight/completeness/coverage gates for `kb/types/tag-readme.md`.
 
 **`validate_title_and_slug(results, path, document)`**
 Filesystem naming check: title length and slug length against `MAX_NOTE_TITLE_LENGTH` / `MAX_NOTE_SLUG_LENGTH`.

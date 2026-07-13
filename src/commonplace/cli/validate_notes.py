@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import sys
+from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
 
@@ -33,48 +34,72 @@ _TOO_BROAD_MESSAGE = (
 )
 
 
-def resolve_targets(arg: str, *, repo_root: Path) -> list[Path]:
+@dataclass(frozen=True)
+class ResolvedValidationTarget:
+    paths: tuple[Path, ...]
+    collection: Path | None = None
+
+
+def _collection_target(collection: Path) -> ResolvedValidationTarget:
+    resolved = collection.resolve()
+    return ResolvedValidationTarget(
+        paths=tuple(list_collection_note_paths(resolved)),
+        collection=resolved,
+    )
+
+
+def resolve_validation_target(
+    arg: str, *, repo_root: Path
+) -> ResolvedValidationTarget:
     if arg == "all":
         raise ValueError(_TOO_BROAD_MESSAGE)
     if arg == "notes":
-        return list_notes_collection_paths(repo_root)
+        collection = (kb_root(repo_root) / "notes").resolve()
+        return ResolvedValidationTarget(
+            paths=tuple(list_notes_collection_paths(repo_root)),
+            collection=collection,
+        )
     if arg == "types":
-        return list_type_spec_paths(repo_root)
+        return ResolvedValidationTarget(paths=tuple(list_type_spec_paths(repo_root)))
 
     if arg in {"recent", "today"}:
         today = datetime.now().date()
-        return sorted(
-            path
-            for path in list_notes_collection_paths(repo_root)
-            if datetime.fromtimestamp(path.stat().st_mtime).date() == today
+        return ResolvedValidationTarget(
+            paths=tuple(
+                sorted(
+                    path
+                    for path in list_notes_collection_paths(repo_root)
+                    if datetime.fromtimestamp(path.stat().st_mtime).date() == today
+                )
+            )
         )
 
     kb = kb_root(repo_root).resolve()
 
     candidate = Path(arg)
     if candidate.is_absolute() and candidate.is_file():
-        return [candidate.resolve()]
+        return ResolvedValidationTarget(paths=(candidate.resolve(),))
     if candidate.is_absolute() and candidate.is_dir():
         resolved = candidate.resolve()
         if resolved == kb:
             raise ValueError(_TOO_BROAD_MESSAGE)
-        return list_collection_note_paths(resolved)
+        return _collection_target(resolved)
 
     repo_candidate = (repo_root / arg).resolve()
     if repo_candidate.is_file():
-        return [repo_candidate]
+        return ResolvedValidationTarget(paths=(repo_candidate,))
     if repo_candidate.is_dir():
         if repo_candidate == kb:
             raise ValueError(_TOO_BROAD_MESSAGE)
-        return list_collection_note_paths(repo_candidate)
+        return _collection_target(repo_candidate)
 
     collection_candidate = (kb_root(repo_root) / arg).resolve()
     if collection_candidate.is_dir():
         if collection_candidate == kb:
             raise ValueError(_TOO_BROAD_MESSAGE)
-        return list_collection_note_paths(collection_candidate)
+        return _collection_target(collection_candidate)
 
-    return [resolve_note(arg, repo_root)]
+    return ResolvedValidationTarget(paths=(resolve_note(arg, repo_root),))
 
 
 def _display_path(path: Path, *, repo_root: Path) -> str:
@@ -82,31 +107,6 @@ def _display_path(path: Path, *, repo_root: Path) -> str:
         return str(path.relative_to(repo_root))
     except ValueError:
         return str(path)
-
-
-def batch_scope(arg: str, *, repo_root: Path) -> str | None:
-    """Return a display label when the target should use batch reporting."""
-    if arg == "notes":
-        return "kb/notes"
-
-    candidate = Path(arg)
-    if candidate.is_absolute() and candidate.is_dir():
-        resolved = candidate.resolve()
-        return (
-            _display_path(resolved, repo_root=repo_root)
-            if is_collection_dir(resolved)
-            else None
-        )
-
-    repo_candidate = (repo_root / arg).resolve()
-    if repo_candidate.is_dir() and is_collection_dir(repo_candidate):
-        return _display_path(repo_candidate, repo_root=repo_root)
-
-    collection_candidate = (kb_root(repo_root) / arg).resolve()
-    if collection_candidate.is_dir() and is_collection_dir(collection_candidate):
-        return _display_path(collection_candidate, repo_root=repo_root)
-
-    return None
 
 
 def impacted_marked_tag_readmes(paths: list[Path], *, repo_root: Path) -> list[Path]:
@@ -217,18 +217,23 @@ def main(argv: list[str] | None = None) -> int:
     repo_root = Path.cwd().resolve()
 
     try:
-        paths = resolve_targets(args.target, repo_root=repo_root)
+        target = resolve_validation_target(args.target, repo_root=repo_root)
     except (FileNotFoundError, ValueError) as exc:
         print(str(exc), file=sys.stderr)
         return 1
 
-    if not paths:
+    if not target.paths:
         print("No notes matched target.", file=sys.stderr)
         return 1
 
+    paths = list(target.paths)
     paths.extend(impacted_marked_tag_readmes(paths, repo_root=repo_root))
 
-    scope = batch_scope(args.target, repo_root=repo_root)
+    scope = (
+        _display_path(target.collection, repo_root=repo_root)
+        if target.collection is not None
+        else None
+    )
     inbound = orphan_info(paths) if scope is not None else {}
     had_failures = False
     text_count = 0
@@ -258,8 +263,9 @@ def main(argv: list[str] | None = None) -> int:
             failure_items.extend((path, failure) for failure in results.fails)
 
     if scope is not None:
+        assert target.collection is not None
         structure_failures = validate_collection_structure(
-            repo_root / scope, repo_root=repo_root
+            target.collection, repo_root=repo_root
         )
         if structure_failures:
             had_failures = True

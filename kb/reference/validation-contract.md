@@ -42,6 +42,8 @@ This page documents 1 and 2. The third is not a lesser mechanism: **a type spec'
 
 Type-spec documents are ordinary validation artifacts. Collection validation includes local type specs, and `commonplace-validate types` runs the same base, type-rule, and schema pipeline over the complete global and local type inventory. There is no separate type-system validation pass.
 
+Imperative rules select types by canonical path, not by the type spec's bare `name`. An installed framework path under `kb/commonplace/` normalizes to its source identity, while a same-named collection-local type remains distinct ([ADR 048](./adr/048-imperative-type-rules-dispatch-by-canonical-path.md)). Reports still use the shorter `type: <name>` label because a display label is not an identity key.
+
 ## What the schema can and cannot express
 
 The schema is **not** limited to frontmatter. `ParsedDocument.to_validation_object()` hands it `frontmatter`, `body`, `headings`, `links`, and `body_dates`, so a type can require a `## Reasoning` heading or constrain body content declaratively, and several do.

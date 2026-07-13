@@ -22,7 +22,7 @@ The split contradicted the type system's own representation. A type specificatio
 
 Type-spec documents use the normal deterministic validation pipeline.
 
-- Collection validation includes first-class `.md` type specifications under the collection's `types/` directories. Legacy `.template.md` and `.instructions.md` support files remain excluded, as does `text.md`, whose absence of frontmatter defines the implicit root type.
+- Collection validation includes every visible `.md` artifact under the collection's `types/` directories. The retired `.template.md` and `.instructions.md` suffixes carry no validation semantics. `text.md` remains absent only from the dedicated `types` target because its lack of frontmatter defines the implicit root rather than a type-spec artifact.
 - The `type-spec` type registers an imperative rule that resolves the validated document itself as a type definition. This checks its `name`, `description`, and `schema` declaration and loads the declared schema when non-null. `type-spec.schema.yaml` remains responsible for intra-document structure; the imperative rule owns dereferencing.
 - `validate_type_specs` and its special batch-report section are removed.
 - `commonplace-validate types` validates the complete global and collection-local type-spec inventory through the same per-artifact result pipeline. Validating a collection also validates its local type specs.
@@ -46,7 +46,7 @@ Harder:
 
 Risks:
 
-- A future non-type support document placed under `types/` could enter collection validation. Reserved legacy support suffixes are excluded; any new support-file class must either be a valid artifact or declare its own explicit exclusion.
+- A future support document placed under `types/` enters collection validation. It must therefore be a valid artifact; filename suffixes do not create a hidden second classification system alongside frontmatter `type:`.
 
 ## Links
 

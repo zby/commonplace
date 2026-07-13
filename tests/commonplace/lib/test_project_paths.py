@@ -47,7 +47,7 @@ def test_collection_dirs_raises_when_kb_root_is_missing(tmp_path: Path) -> None:
         project_paths.collection_dirs(tmp_path)
 
 
-def test_list_collection_note_paths_includes_type_specs_but_skips_type_support_files(
+def test_list_collection_note_paths_includes_visible_type_directory_markdown(
     tmp_path: Path,
 ) -> None:
     collection_root = collection(tmp_path / "kb" / "notes")
@@ -65,8 +65,8 @@ def test_list_collection_note_paths_includes_type_specs_but_skips_type_support_f
     assert kept in discovered
     assert nested not in discovered
     assert type_spec in discovered
-    assert template not in discovered
-    assert nested_template not in discovered
+    assert template in discovered
+    assert nested_template in discovered
 
 
 def test_list_collection_note_paths_skips_hidden_entries_but_not_visible_content(

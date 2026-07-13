@@ -71,15 +71,6 @@ def is_type_definition_content(path: Path, boundary: Path) -> bool:
     return "types" in rel.parent.parts
 
 
-def is_type_support_content(path: Path, boundary: Path) -> bool:
-    """Return True for non-artifact support files inside a types/ directory."""
-    return is_type_definition_content(path, boundary) and (
-        path.name.endswith(".template.md")
-        or path.name.endswith(".instructions.md")
-        or path.name == "text.md"
-    )
-
-
 def is_replaced_archive(path: Path) -> bool:
     """Return True when path is a `.replaced.*.md` archive of a superseded note.
 
@@ -103,7 +94,7 @@ def is_collection_dir(path: Path) -> bool:
 
 def list_collection_note_paths(collection: Path) -> list[Path]:
     """Return markdown note paths under a collection, excluding collection
-    metadata, replaced archives, and legacy type support files."""
+    metadata and replaced archives."""
     if not collection.is_dir():
         raise FileNotFoundError(f"Collection directory does not exist: {collection}")
     if not is_collection_dir(collection):
@@ -113,7 +104,6 @@ def list_collection_note_paths(collection: Path) -> list[Path]:
         for path in iter_visible_markdown_files(collection)
         if not is_collection_metadata(path)
         and not is_replaced_archive(path)
-        and not is_type_support_content(path, collection)
     )
 
 
@@ -127,16 +117,14 @@ def list_kb_note_paths(root: Path) -> list[Path]:
 
 
 def list_type_spec_paths(root: Path) -> list[Path]:
-    """Return first-class type-spec markdown paths under kb/**/types/."""
+    """Return type-directory Markdown artifacts except the implicit text root."""
     boundary = kb_root(root)
     if not boundary.is_dir():
         return []
     return sorted(
         path
         for path in boundary.glob("**/types/*.md")
-        if not path.name.endswith(".template.md")
-        and not path.name.endswith(".instructions.md")
-        and path.name != "text.md"
+        if path.name != "text.md"
     )
 
 

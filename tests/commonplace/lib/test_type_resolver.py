@@ -65,6 +65,17 @@ properties:
     )
 
 
+def test_canonical_type_identity_unwraps_installed_framework_namespace() -> None:
+    profile = type_resolver.TypeProfile(
+        type_path="kb/commonplace/types/tag-readme.md",
+        type_doc_path=Path("/repo/kb/commonplace/types/tag-readme.md"),
+        type_name="tag-readme",
+        schema_path=None,
+    )
+
+    assert type_resolver.canonical_type_identity(profile) == "kb/types/tag-readme.md"
+
+
 def test_path_valued_type_profile_loads_declared_schema(tmp_path: Path) -> None:
     write_note_schema(tmp_path)
     write_type_spec(
@@ -95,6 +106,43 @@ type: kb/types/note.md
     assert profile.type_name == "note"
     assert profile.schema_path == tmp_path / "kb" / "types" / "note.schema.yaml"
     assert profile.schema is not None
+
+
+def test_resolve_type_definition_uses_already_parsed_frontmatter(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    schema = write(
+        tmp_path / "kb" / "notes" / "types" / "local.schema.yaml",
+        '$schema: "https://json-schema.org/draft/2020-12/schema"\ntype: object\n',
+    )
+    type_doc = write_type_spec(
+        tmp_path,
+        "kb/notes/types/local.md",
+        name="local",
+        schema="./local.schema.yaml",
+    )
+    parsed_frontmatter = {
+        "type": "kb/types/type-spec.md",
+        "name": "local",
+        "description": "Type spec for local",
+        "schema": "./local.schema.yaml",
+    }
+
+    def fail_if_reloaded(*args: object, **kwargs: object) -> None:
+        raise AssertionError("type frontmatter should not be reloaded")
+
+    monkeypatch.setattr(type_resolver, "_load_type_frontmatter", fail_if_reloaded)
+
+    profile = type_resolver.resolve_type_definition(
+        type_doc,
+        repo_root=tmp_path,
+        type_frontmatter=parsed_frontmatter,
+    )
+
+    assert profile.type_path == "kb/notes/types/local.md"
+    assert profile.type_name == "local"
+    assert profile.schema_path == schema
 
 
 def test_validate_instance_uses_declared_schema(tmp_path: Path) -> None:

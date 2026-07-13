@@ -31,13 +31,13 @@ Plus a scope-expansion step, `impacted_marked_tag_readmes`, which pulls tag-READ
 **A type's checks are split across two owners and two languages.** The declarative half is a `.schema.yaml` in the KB, authored by whoever owns the type. The imperative half is a Python decorator in the shipped package:
 
 ```python
-@type_rule("tag-readme")
-@type_rule("agent-memory-system-review")
+@type_rule("kb/types/tag-readme.md")
+@type_rule("kb/agent-memory-systems/types/agent-memory-system-review.md")
 ```
 
 **`agent-memory-system-review` is a collection-local type** (`kb/agent-memory-systems/types/`, referenced as `../types/agent-memory-system-review.md`), yet its rule ships inside `llm-commonplace`. Every downstream project installing the package receives a registration for a type it does not have. Meanwhile a downstream KB **cannot add an imperative check at all** without editing the framework — there is no hook, entry point, or declarative escape.
 
-**Dispatch keys on the wrong identity.** `_TYPE_RULES` is keyed by the type's bare `name:` string, while type identity in this system is *path-valued* — that is the entire point of collection-local types. Two collections may each define a type named `x` and both silently receive the framework's rule for `x`.
+The former name-vs-path dispatch defect is resolved by [ADR 048](../adr/048-imperative-type-rules-dispatch-by-canonical-path.md): `_TYPE_RULES` now keys applicability on canonical path-valued type identity. This proposal therefore retains only the broader execution, dependency, and authoring questions.
 
 **A schema cannot dereference.** JSON Schema validates one instance document; it has no way to follow a path and inspect the artifact it names. That is inherited from the substrate and is why the imperative mechanism exists. It is not a defect to fix — it is the constraint the design must route around ([a derived copy of recomputable truth must be checked or absent](../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) is what makes the routing obligatory rather than optional).
 
@@ -102,7 +102,7 @@ checks_for(type_profile) -> [SchemaCheck(schema_path), MarkCheck(...), QuoteShap
 
 Schema findings should retain schema provenance after unification. Owner (`type`) and mechanism/source (`schema` or imperative rule) answer different repair questions; a single dispatch path is not a reason to collapse their labels.
 
-Independent of A: **fix the name-vs-path dispatch key**, a defect on any option.
+Path-valued applicability is already shipped independently of A ([ADR 048](../adr/048-imperative-type-rules-dispatch-by-canonical-path.md)).
 
 ### B. A declarative mark primitive — **deferred: too much machinery at current demand**
 
@@ -142,8 +142,8 @@ For current demand, **collection is a validation boundary and a menu of types, n
 - **A mark must be machine-checked or absent.** This is what makes a *deterministic* type-owned check load-bearing rather than a convenience — and what makes option D insufficient on its own.
 - **The KB is data, not code.** The substrate commitment that makes artifacts inspectable, diffable, and reviewable. Option C trades it away; that is why C stays rejected.
 - **Framework-owned closed registries fail under downstream pressure — and the declarative relief valve is known.** The `source_type` enum recurred three times from the epistack casework before [ADR 045](../adr/045-source-genre-is-a-single-open-field-on-the-snapshot.md) opened it, and the extension route that closed the question was a collection-local type. `_TYPE_RULES` is the same closed-registry shape for imperative rules; local schemas relieve its declarative half, while B would address only the narrower mark-shaped imperative demand.
-- **YAGNI, honestly applied.** The awaited worked case landed on local types + D, not on B or E. Demand for a KB-authored *imperative* check remains n=0. Present demand supports naming the execution/dependency model and fixing path identity; it does not yet require a new authoring language or collection-owned checker.
-- **Identity should be path-valued.** Rule dispatch keying on a bare `name:` contradicts the type system's own path-valued identity. A defect regardless of option.
+- **YAGNI, honestly applied.** The awaited worked case landed on local types + D, not on B or E. Demand for a KB-authored *imperative* check remains n=0. Present demand supports naming the execution/dependency model; it does not yet require a new authoring language or collection-owned checker.
+- **Identity is path-valued.** [ADR 048](../adr/048-imperative-type-rules-dispatch-by-canonical-path.md) now establishes this as a shipped boundary the broader design must preserve.
 - **Evaluation reads and invalidation are related but distinct.** A broad index may be cheapest to build once for evaluation while a narrow dependency key is needed to avoid invalidating unrelated anchors.
 - **Diagnostic provenance must survive dispatch unification.** Owner says whose contract is being enforced; mechanism and check identity tell an operator where and how to repair it.
 
@@ -157,7 +157,7 @@ For current demand, **collection is a validation boundary and a menu of types, n
 
 ## Adoption criteria
 
-The path-valued dispatch defect is independent and can be fixed without adopting this proposal.
+The path-valued dispatch defect was fixed independently by [ADR 048](../adr/048-imperative-type-rules-dispatch-by-canonical-path.md).
 
 The broader anchored-check model is ready for an ADR only when a small implementation sketch or prototype can represent at least four unlike cases — schema validation, tag-README marks, collection-scoped authored-link orphan detection, and the now-shipped type-spec resolution rule — while satisfying these tests:
 
@@ -182,6 +182,7 @@ Relevant Notes:
 - [ADR 045 — Source genre is a single open field on the snapshot](../adr/045-source-genre-is-a-single-open-field-on-the-snapshot.md) — evidence: the worked case whose resolution — declare a collection-local type — removes present demand for option E
 - [ADR 025 — Complete generated indexes are build-time only](../adr/025-complete-generated-indexes-are-build-time-only.md) — evidence: why orphan detection sees the authored collection graph rather than generated inventory links
 - [ADR 047 — Type specifications use normal deterministic validation](../adr/047-type-specifications-use-normal-deterministic-validation.md) — evidence: the shipped artifact-anchored replacement for the former special type-system batch pass
+- [ADR 048 — Imperative type rules dispatch by canonical path](../adr/048-imperative-type-rules-dispatch-by-canonical-path.md) — partial-adoption: fixes applicability identity without deciding the broader execution model
 - [Collections and types](../collections-and-types.md) — evidence: types as the declared extension point and the `COLLECTION.md` Types menu used by the current worked case
 - [Collections never own frontmatter semantics](../collections-never-own-frontmatter-semantics.md) — rationale: the boundary a collection-scope check mechanism would have violated
 - [First principles are inherited constraints, not design choices](../../notes/first-principles-are-inherited-constraints-not-design-choices.md) — grounds: the test separating the schema's dereferencing limit (inherited) from the mechanism/owner coupling (chosen, and the one that hurts)

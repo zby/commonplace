@@ -13,7 +13,13 @@ from jsonschema.exceptions import ValidationError
 from commonplace.lib.naming import MAX_NOTE_SLUG_LENGTH, MAX_NOTE_TITLE_LENGTH
 from commonplace.lib.note_parser import ParsedDocument, parse_document
 from commonplace.lib.quote_verification import verify_content
-from commonplace.lib.type_resolver import TypeProfile, resolve_type, validate_instance
+from commonplace.lib.type_resolver import (
+    TypeProfile,
+    canonical_type_identity,
+    resolve_type_definition,
+    resolve_type,
+    validate_instance,
+)
 
 
 # Weight gates for tag-readme artifacts: the type contract is that a tag's
@@ -69,7 +75,7 @@ class ParsedNote:
     document: ParsedDocument
 
 
-# Type-specific validation rules, registered per type name so adding a
+# Type-specific validation rules, registered per canonical type path so adding a
 # cross-file validator is a function plus a registration, not another branch
 # in validate_note. Rules run after the generic checks and before schema
 # validation, in registration order.
@@ -78,12 +84,12 @@ TypeRule = Callable[..., None]
 _TYPE_RULES: dict[str, list[TypeRule]] = {}
 
 
-def type_rule(*type_names: str) -> Callable[[TypeRule], TypeRule]:
-    """Register a rule `(results, parsed, *, repo_root) -> None` for the given type names."""
+def type_rule(*type_paths: str) -> Callable[[TypeRule], TypeRule]:
+    """Register a rule for the given canonical type paths."""
 
     def register(rule: TypeRule) -> TypeRule:
-        for type_name in type_names:
-            _TYPE_RULES.setdefault(type_name, []).append(rule)
+        for type_path in type_paths:
+            _TYPE_RULES.setdefault(type_path, []).append(rule)
         return rule
 
     return register
@@ -251,14 +257,14 @@ def _linked_md_targets(parsed: ParsedNote) -> set[Path]:
     return targets
 
 
-@type_rule("agent-memory-system-review")
+@type_rule("kb/agent-memory-systems/types/agent-memory-system-review.md")
 def _quote_citation_rule(
     results: CheckResults, parsed: ParsedNote, *, repo_root: Path
 ) -> None:
     validate_quote_citations(results, parsed.content)
 
 
-@type_rule("type-spec")
+@type_rule("kb/types/type-spec.md")
 def validate_type_spec_definition(
     results: CheckResults,
     parsed: ParsedNote,
@@ -267,11 +273,10 @@ def validate_type_spec_definition(
 ) -> None:
     """Resolve this type-spec as a type definition, including its declared schema."""
     try:
-        type_path = parsed.path.resolve().relative_to(repo_root.resolve()).as_posix()
-        profile = resolve_type(
+        profile = resolve_type_definition(
             parsed.path,
-            {"type": type_path},
             repo_root=repo_root,
+            type_frontmatter=parsed.document.frontmatter,
         )
     except (FileNotFoundError, ValueError) as exc:
         results.fails.append(f"type definition: {exc}")
@@ -286,7 +291,7 @@ def validate_type_spec_definition(
         )
 
 
-@type_rule("tag-readme")
+@type_rule("kb/types/tag-readme.md")
 def validate_tag_readme(
     results: CheckResults, parsed: ParsedNote, *, repo_root: Path
 ) -> None:
@@ -481,7 +486,8 @@ def validate_note(path: Path, *, repo_root: Path) -> CheckResults:
     validate_verbatim_quotes(base, parsed.content, parsed.path)
     _merge_labelled(results, base, "base")
 
-    for rule in _TYPE_RULES.get(parsed.note_type, []):
+    type_identity = canonical_type_identity(parsed.profile)
+    for rule in _TYPE_RULES.get(type_identity, []):
         type_results = CheckResults(note_type=parsed.note_type)
         rule(type_results, parsed, repo_root=repo_root)
         _merge_labelled(results, type_results, f"type: {parsed.note_type}")

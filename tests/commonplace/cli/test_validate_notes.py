@@ -152,6 +152,35 @@ def test_text_file_has_no_structural_requirements(tmp_path: Path) -> None:
     assert any("no frontmatter" in item for item in results.passes)
 
 
+def test_imperative_type_rules_dispatch_by_path_not_bare_name(tmp_path: Path) -> None:
+    configure_temp_repo(tmp_path)
+    write_type_spec(
+        tmp_path,
+        "kb/notes/types/tag-readme.md",
+        name="tag-readme",
+        schema=None,
+    )
+    note = write(
+        tmp_path / "kb" / "notes" / "same-name-local-type.md",
+        """---
+description: Local type that deliberately shares a framework type name
+type: kb/notes/types/tag-readme.md
+---
+
+# Same-name local type
+""",
+    )
+
+    results = validation.validate_note(note, repo_root=tmp_path)
+
+    assert results.note_type == "tag-readme"
+    assert not any(
+        finding.startswith("[type: tag-readme]")
+        for findings in (results.passes, results.warns, results.fails, results.infos)
+        for finding in findings
+    )
+
+
 def test_source_snapshot_validates_without_description(tmp_path: Path) -> None:
     write(
         tmp_path / "kb" / "sources" / "types" / "snapshot.schema.yaml",
@@ -885,7 +914,9 @@ traits: []
     assert nested_repo / "ignored.md" not in discovered
 
 
-def test_list_kb_note_paths_skips_type_definitions(tmp_path: Path) -> None:
+def test_list_kb_note_paths_includes_visible_type_directory_markdown(
+    tmp_path: Path,
+) -> None:
     notes_root = tmp_path / "kb" / "notes"
     write(notes_root / "COLLECTION.md", "# Notes collection\n")
     write(
@@ -927,9 +958,9 @@ type: collection-item
     discovered = project_paths.list_kb_note_paths(tmp_path)
 
     assert notes_root / "real.md" in discovered
-    assert notes_root / "types" / "adr.template.md" not in discovered
-    assert notes_root / "types" / "adr.instructions.md" not in discovered
-    assert notes_root / "collection" / "types" / "nested.template.md" not in discovered
+    assert notes_root / "types" / "adr.template.md" in discovered
+    assert notes_root / "types" / "adr.instructions.md" in discovered
+    assert notes_root / "collection" / "types" / "nested.template.md" in discovered
 
 
 def test_list_kb_note_paths_skips_replaced_archives(tmp_path: Path) -> None:
@@ -997,10 +1028,11 @@ traits: []
     today_note.touch()
     os.utime(old_note, (old_ts, old_ts))
 
-    recent = validate_notes.resolve_targets("recent", repo_root=tmp_path)
+    recent = validate_notes.resolve_validation_target("recent", repo_root=tmp_path)
 
-    assert today_note.resolve() in recent
-    assert old_note.resolve() not in recent
+    assert today_note.resolve() in recent.paths
+    assert old_note.resolve() not in recent.paths
+    assert recent.collection is None
 
 
 def test_notes_target_scans_only_notes_collection(tmp_path: Path) -> None:
@@ -1032,11 +1064,12 @@ traits: []
         "# Local type\n",
     )
 
-    notes = validate_notes.resolve_targets("notes", repo_root=tmp_path)
+    notes = validate_notes.resolve_validation_target("notes", repo_root=tmp_path)
 
-    assert note in notes
-    assert local_type in notes
-    assert report not in notes
+    assert note in notes.paths
+    assert local_type in notes.paths
+    assert report not in notes.paths
+    assert notes.collection == (tmp_path / "kb" / "notes").resolve()
 
 
 def test_types_target_scans_all_type_spec_directories(tmp_path: Path) -> None:
@@ -1046,12 +1079,19 @@ def test_types_target_scans_all_type_spec_directories(tmp_path: Path) -> None:
         "# Structured claim type\n",
     )
     write(tmp_path / "kb" / "types" / "text.md", "# Text\n")
-    write(tmp_path / "kb" / "notes" / "types" / "legacy.template.md", "# Template\n")
+    legacy_template = write(
+        tmp_path / "kb" / "notes" / "types" / "legacy.template.md",
+        "# Template\n",
+    )
 
-    assert validate_notes.resolve_targets("types", repo_root=tmp_path) == [
+    target = validate_notes.resolve_validation_target("types", repo_root=tmp_path)
+
+    assert target.paths == (
+        legacy_template,
         local_type,
         global_type,
-    ]
+    )
+    assert target.collection is None
 
 
 def test_note_target_also_validates_marked_tag_readmes(
@@ -1110,6 +1150,7 @@ Orientation paragraph.
     assert "=== VALIDATION: kb-design-README.md ===" in output
     assert "=== VALIDATION: unmarked-README.md ===" not in output
     assert "complete mark: missing entry for kb/notes/tagged-note.md" in output
+    assert "=== BATCH INFO ===" not in output
 
 
 def test_bulk_scopes_are_rejected(tmp_path: Path) -> None:
@@ -1118,7 +1159,7 @@ def test_bulk_scopes_are_rejected(tmp_path: Path) -> None:
 
     for target in ("all", "kb", "kb/"):
         with pytest.raises(ValueError):
-            validate_notes.resolve_targets(target, repo_root=tmp_path)
+            validate_notes.resolve_validation_target(target, repo_root=tmp_path)
 
 
 def test_collection_directory_targets_scan_that_collection(tmp_path: Path) -> None:
@@ -1175,22 +1216,21 @@ traits: []
 """,
     )
 
-    bare_collection = validate_notes.resolve_targets(
+    bare_collection = validate_notes.resolve_validation_target(
         "agent-memory-systems", repo_root=tmp_path
     )
-    repo_relative_dir = validate_notes.resolve_targets(
+    repo_relative_dir = validate_notes.resolve_validation_target(
         "kb/agent-memory-systems", repo_root=tmp_path
     )
 
     assert bare_collection == repo_relative_dir
-    assert collection_note in bare_collection
-    assert review_note in bare_collection
-    assert local_type in bare_collection
-    assert template not in bare_collection
-    assert other_note not in bare_collection
-    assert (
-        validate_notes.batch_scope("agent-memory-systems", repo_root=tmp_path)
-        == "kb/agent-memory-systems"
+    assert collection_note in bare_collection.paths
+    assert review_note in bare_collection.paths
+    assert local_type in bare_collection.paths
+    assert template in bare_collection.paths
+    assert other_note not in bare_collection.paths
+    assert bare_collection.collection == (
+        tmp_path / "kb" / "agent-memory-systems"
     )
 
 
@@ -1211,9 +1251,7 @@ traits: []
     )
 
     with pytest.raises(ValueError, match="not a KB collection"):
-        validate_notes.resolve_targets("kb/reports", repo_root=tmp_path)
-
-    assert validate_notes.batch_scope("kb/reports", repo_root=tmp_path) is None
+        validate_notes.resolve_validation_target("kb/reports", repo_root=tmp_path)
 
 
 def test_validate_collection_structure_flags_nested_collection(tmp_path: Path) -> None:
