@@ -70,7 +70,11 @@ Failure classes remain distinct. A capture that does not match its recorded hash
 
 After mutation, the consumer verifies its own postconditions and routes incomplete or ambiguous state to reconciliation. A missing artifact never proves that deletion or merge succeeded.
 
-This guard may be a small consumer-local helper or explicit workflow step. No shared module is required for the first consumer. The freshness workshop may extract the hash, comparison, and guard boundary after a second consumer proves which parts are genuinely reusable.
+The guard is a deterministic command, not a prose workflow step. It takes the consumer's declared guarded-input set — for the first consumer, the capture fields of one full-pass report — and emits one machine-readable result per input: `matching`, `changed` with a capture-to-current diff, `missing`, or `corrupt-capture`. Its exit status refuses the transition when any input is not `matching`.
+
+Requiring a command is not gold-plating a small check. Once captured input is cut, this comparison is the design's entire safety property: it is what stops an hours-old delete or merge recommendation from being executed against text nobody assessed. A hash comparison an agent is merely instructed to perform is exactly the step that gets skipped under time pressure, and skipping it silently restores the defect the packet exists to prevent. The check must be executable and its result must be inspectable, or the cooperative no-edit rule has nothing behind it.
+
+Hashing belongs in `commonplace.lib` rather than the review package, since the guard is not review machinery. The freshness workshop later extracts the comparison and guard boundary once a second consumer proves which parts are genuinely reusable; the command is that extraction's seed, not a competing abstraction.
 
 The guard is optimistic, not transactional. A write racing between the final comparison and mutation remains possible. Commonplace accepts that small residual window instead of adding filesystem locks or compare-and-set machinery; postcondition verification catches incomplete or unexpected results but cannot prove that no race occurred.
 
@@ -80,7 +84,8 @@ The guard is optimistic, not transactional. A write racing between the final com
 - **Locking versus guarded application.** A repository or artifact lock would reduce concurrency only for cooperating writers; editors, Git, and direct filesystem writes need not honor it. The settled default is no lock: a cooperative no-edit rule covers the active pass, and guards protect later report-driven transitions from net drift.
 - **Packet capture versus review-DB snapshot.** Review snapshots already contain suitable text but have evidence-owned pruning semantics. The settled default is a packet-owned `.txt` capture whose lifetime matches the operation. This adds one checked file rather than changing review storage ownership.
 - **Automatic rebase versus supersession.** Applying an editorial packet to a changed note requires semantic three-way reconciliation, not a version check. The settled default is to preserve the live edit and supersede the old operation. A new pass may assess the new text.
-- **Shared API now versus later.** One full-pass workflow does not justify a general artifact-version subsystem. The initial implementation adds only packet capture plus an explicit comparison-and-guard workflow. Extraction belongs to the freshness workshop when it has a second worked consumer.
+- **Shared API now versus later.** One full-pass workflow does not justify a general artifact-version subsystem. The initial implementation adds only packet capture, a hashing helper in `commonplace.lib`, and one guard command. Extraction of a general artifact-version API belongs to the freshness workshop when it has a second worked consumer.
+- **Guard as command versus workflow step.** A prose step costs no code but leaves the design's only safety property unenforceable and its results uninspectable, and it cannot produce the machine-readable comparison the freshness workshop expects to extract. The settled default is one deterministic command. This is the single place where the design accepts code rather than convention, because it is the single place where convention cannot be checked.
 - **Capture scope.** Consumers declare their guarded input set. A full pass captures the source note and, only if proposed, its merge target. Collection contracts, prompt scaffolding, and other system-definition dependencies remain under their own version or freshness policies.
 
 ## Forces and risks
@@ -90,7 +95,7 @@ The guard is optimistic, not transactional. A write racing between the final com
 - **The capture is a second copy of the text.** Its hash check makes disagreement detectable, and operation ownership gives the copy a bounded lifetime. An unchecked or independently retained copy would not be acceptable.
 - **The no-edit rule is cooperative.** Methods reopen the live artifact, so an actor that violates the rule can make a completed packet combine findings over different versions. If the live text remains changed, the guard supersedes the work; an edit followed by an exact revert is not detectable. The first implementation accepts this low-concurrency limitation instead of paying for pinned-input seams or locking.
 - **The optimistic guard is not a transaction.** The small check-to-mutation race remains explicit residual risk.
-- **Code proportionality still matters.** A packet file and an explicit compare-and-guard step are sufficient. Captured-input overrides, a capture registry, lock manager, general resolver, or freshness policy engine would outgrow the worked case.
+- **Code proportionality still matters.** A packet file, a hashing helper, and one guard command are sufficient. Captured-input overrides, a capture registry, lock manager, general resolver, or freshness policy engine would outgrow the worked case.
 
 ## Adoption criteria
 
@@ -99,13 +104,13 @@ Adopt only with the full-improvement pass as an end-to-end worked case:
 1. The pass writes one immutable UTF-8 `.txt` capture for the source note's start state, records its logical path and SHA-256 separately, and rejects a capture whose hash does not match. Every capture path is normalized, packet-relative, confined to the packet, and resolves to a regular non-symlink file.
 2. The operative instruction tells other actors not to edit the source while the active pass runs, and applies the same rule to a proposed merge target from capture through report finalization.
 3. Assessment methods continue to receive the logical path and may read the live artifact; the implementation adds no capture-path or text-override seam to review or direct methods.
-4. Before applying a `keep` packet, executing a delete or merge, rejecting a recommendation, or recording an alternative operation, one guard checks the complete input set, returns every `matching`, `changed`, or `missing` result, and refuses the transition unless all match.
+4. Before applying a `keep` packet, executing a delete or merge, rejecting a recommendation, or recording an alternative operation, one guard **command** checks the complete input set, returns a machine-readable `matching`, `changed`, `missing`, or `corrupt-capture` result per input, and refuses the transition unless all match. A guard performed only as an instructed prose step does not satisfy this criterion.
 5. A merge recommendation owns and guards a separate capture for its target; source-only guarding is insufficient.
 6. Changed inputs produce a capture-to-current diff and follow the consumer's mismatch policy. Missing inputs and corrupted captures route to reconciliation rather than implying success or supersession.
 7. A successful transition verifies target-owned postconditions; incomplete or ambiguous results route to explicit reconciliation.
 8. Packet cleanup retains reports and captures as one unit while the operation remains actionable and may remove them together afterward.
 
-The implementation adds **no review-DB schema or retention change, no general capture store, no repository lock, no automatic rebase, and no shared artifact-version module** for this first consumer. If the worked case requires any of those, revisit the boundary rather than hiding the added system behind a small API.
+Beyond the packet capture, one hashing helper, and one guard command, the implementation adds **no review-DB schema or retention change, no captured-input seam, no general capture store, no repository lock, no automatic rebase, and no general artifact-version API** for this first consumer. If the worked case requires any of those, revisit the boundary rather than hiding the added system behind a small API.
 
 When a second consumer arrives, the freshness workshop first extracts the proven capture/comparison/guard boundary, then evaluates general dependency baselines and reverse selection. Pinned method input is not part of that proven boundary. The full-pass packet remains one consumer-owned persistence policy, not the universal storage design.
 
