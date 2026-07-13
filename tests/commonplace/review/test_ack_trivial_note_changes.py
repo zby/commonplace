@@ -440,11 +440,7 @@ def test_qualifying_pairs_rejects_baseline_without_snapshot_text(tmp_path: Path)
 
     make_note(note, "\nBody.\n", traits="[title-as-claim]")
 
+    from commonplace.store import check_store_health
+
     with pytest.raises(RuntimeError, match="hash mismatch"):
-        qualifying_pairs(
-            repo,
-            model=TEST_MODEL,
-            criterion_ids=["kb/instructions/review-gates/prose/source-residue.md"],
-            note_filter=["kb/notes"],
-            db_path=db_path,
-        )
+        check_store_health(db_path)

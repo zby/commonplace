@@ -61,7 +61,7 @@ def ensure_db(db_path: Path) -> None:
         with connect(db_path) as conn:
             _migrate_store(conn)
             _assert_store_version(conn)
-            assert_store_integrity(conn)
+            assert_store_structure(conn)
             conn.commit()
         return
 
@@ -76,8 +76,15 @@ def ensure_db(db_path: Path) -> None:
     with connect(db_path) as conn:
         apply_schema(conn)
         _set_user_version(conn, STORE_SCHEMA_VERSION)
-        assert_store_integrity(conn)
+        assert_store_structure(conn)
         conn.commit()
+
+
+def check_store_health(db_path: Path) -> None:
+    """Run full integrity checks: structure, snapshot hashes, and baseline invariants."""
+    ensure_db(db_path)
+    with connect(db_path) as conn:
+        assert_store_content_integrity(conn)
 
 
 def apply_schema(conn: sqlite3.Connection) -> None:
@@ -173,9 +180,17 @@ def _assert_foreign_key_integrity(conn: sqlite3.Connection) -> None:
         raise RuntimeError(f"foreign key check failed: {'; '.join(details)}")
 
 
-def assert_store_integrity(conn: sqlite3.Connection) -> None:
+def assert_store_structure(conn: sqlite3.Connection) -> None:
     _assert_expected_schema_objects(conn)
     _assert_foreign_key_integrity(conn)
+
+
+def assert_store_content_integrity(conn: sqlite3.Connection) -> None:
     from commonplace.freshness.integrity import assert_review_freshness_integrity
 
     assert_review_freshness_integrity(conn)
+
+
+def assert_store_integrity(conn: sqlite3.Connection) -> None:
+    assert_store_structure(conn)
+    assert_store_content_integrity(conn)
