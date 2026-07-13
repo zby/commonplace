@@ -26,6 +26,8 @@ Plus a scope-expansion step, `impacted_marked_tag_readmes`, which pulls tag-READ
 
 [ADR 047](../adr/047-type-specifications-use-normal-deterministic-validation.md) retired the former `validate_type_specs` batch pass. Type definitions are notes of type `type-spec`: collection validation includes local definitions, `commonplace-validate types` targets the complete inventory, and an ordinary imperative type rule resolves each definition's declared schema. This is one shipped instance of giving a batch responsibility an artifact anchor; it does not settle the broader execution or invalidation design below.
 
+[ADR 049](../adr/049-validator-resolution-returns-scope-and-loads-types-directly.md) removed duplicate target interpretation. `resolve_validation_target` now returns the selected paths plus optional collection scope, from which batch reporting, orphan calculation, and collection-structure validation derive. It also replaced type-spec synthetic self-resolution with a direct definition loader. These changes make scope and type loading explicit, but they do not declare check dependencies, share one execution protocol, or generalize incremental invalidation.
+
 `orphan_info` is intentionally not a repository-wide graph. It asks whether another visible source artifact in the validated collection links to the note. Build-time-only `dir-index.md` pages and generated tag tails do not exist in the working tree and therefore do not contribute; links in authored prose, Relevant Notes footers, and curated tag-README heads do. The signal is authored integration into a collection, not mere discoverability in a generated inventory ([ADR 025](../adr/025-complete-generated-indexes-are-build-time-only.md)).
 
 **A type's checks are split across two owners and two languages.** The declarative half is a `.schema.yaml` in the KB, authored by whoever owns the type. The imperative half is a Python decorator in the shipped package:
@@ -71,7 +73,7 @@ Every existing check, whether artifact-local or evaluated from a wider index, fi
 | tag-README marks (`complete`, `covered_by`) | the tag-README | relevant tag-membership indexes for its collection | mark declaration or membership of the relevant tags | type |
 | orphan detection | the content note | authored-link graph of the validation scope | scope membership or authored outbound links within that scope | framework |
 | nested-`COLLECTION.md` placement | the candidate `COLLECTION.md` | its path and ancestor collection boundaries | path/name or ancestor boundaries | framework |
-| type-spec resolution | the type-spec doc | its frontmatter and declared schema target | type-spec contents or schema existence | framework |
+| type-spec resolution | the type-spec doc | its frontmatter and declared schema target | type-spec contents or schema existence | type |
 
 Under this model there can be **one evaluation algorithm**: establish a validation scope, resolve the checks applicable to each anchor, build any shared indexes those checks require once, and evaluate each check against its declared inputs. Document-local and collection-indexed validation differ in their inputs and index requirements, not in how findings are attached or reported.
 
@@ -109,7 +111,7 @@ Path-valued applicability is already shipped independently of A ([ADR 048](../ad
 A type spec could declare a mark's recomputation (`recompute: tag-members(index_key)`, `compare: every-member-linked`), keeping the KB data while letting a collection-local type own a dereferencing check.
 
 *For:* it is exactly the shape the derived-copy rule demands, and under the anchored-check model it has a precise slot: a declared way for a type to author a collection-indexed check without code. The primitive could also declare the dependency keys needed for invalidation.
-*Against:* it is a new language, and languages grow. At n=2 imperative rules (one of which, `tag-readme`, is a framework type anyway) the primitive would be designed against one real example. A shared check interface would be useful substrate, but its exact form should not be dictated by a hypothetical declaration language.
+*Against:* it is a new language, and languages grow. There are three framework-side imperative registrations, but only one mark-shaped worked example: `tag-readme`. The primitive would therefore still be designed against one real example. A shared check interface would be useful substrate, but its exact form should not be dictated by a hypothetical declaration language.
 
 ### C. A KB-side code hook — **rejected, and not needed yet**
 
@@ -183,6 +185,7 @@ Relevant Notes:
 - [ADR 025 — Complete generated indexes are build-time only](../adr/025-complete-generated-indexes-are-build-time-only.md) — evidence: why orphan detection sees the authored collection graph rather than generated inventory links
 - [ADR 047 — Type specifications use normal deterministic validation](../adr/047-type-specifications-use-normal-deterministic-validation.md) — evidence: the shipped artifact-anchored replacement for the former special type-system batch pass
 - [ADR 048 — Imperative type rules dispatch by canonical path](../adr/048-imperative-type-rules-dispatch-by-canonical-path.md) — partial-adoption: fixes applicability identity without deciding the broader execution model
+- [ADR 049 — Validator resolution returns scope and loads types directly](../adr/049-validator-resolution-returns-scope-and-loads-types-directly.md) — partial-adoption: removes duplicate target interpretation and synthetic type loading without introducing the broader execution model
 - [Collections and types](../collections-and-types.md) — evidence: types as the declared extension point and the `COLLECTION.md` Types menu used by the current worked case
 - [Collections never own frontmatter semantics](../collections-never-own-frontmatter-semantics.md) — rationale: the boundary a collection-scope check mechanism would have violated
 - [First principles are inherited constraints, not design choices](../../notes/first-principles-are-inherited-constraints-not-design-choices.md) — grounds: the test separating the schema's dereferencing limit (inherited) from the mechanism/owner coupling (chosen, and the one that hurts)
