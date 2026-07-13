@@ -78,12 +78,24 @@ At most one matching pending report may exist for a source. If more than one exi
    Otherwise (Disposition `keep`), run `commonplace-guard-full-pass-report <report-path>` immediately before the first edit. Continue only on exit 0 with every input `matching`. On exit 1 with `changed`, do not edit the note; render the report as `superseded` with `version-guard` authority and stop. A `missing` or `corrupt-capture` result, or exit 2, requires reconciliation and leaves the report unchanged.
 
    After a successful guard, apply the packet's body edits directly to the note. If `composition-friction-gate` ran, reread its report's "For the human" line against the edited text before moving on. This is not a re-run of the gate — just a check that the one thing it pointed to is still accurate, or has actually been addressed, now that the edit has changed the prose around it. If it looks wrong given the edit, note that in the packet's Open items rather than silently re-editing.
-9. Run a final revise pass over the edited note with exactly this prompt: `revise the note for flow, coherence, logic and readability`. Give a newly isolated sub-agent that performed no earlier work in this pass (or yourself, if editing directly) only the current note text and that prompt — not the packet or the underlying reports. Do not use a follow-up turn to a reviewer from steps 2–6. This step is a copyedit pass, not a second chance to re-open the content decisions steps 1–8 already made; it should not reintroduce material step 8 removed or add new claims.
-10. Run one closing cycle over all five methods, as specified in "Closing cycle" below. Append its summary to `full-pass-report.md`; route residual findings to Open items and stop after this one cycle.
+9. Run a final revise pass over the edited note with exactly this prompt: `revise the note for flow, coherence, logic and readability`. Give a newly isolated sub-agent that performed no earlier work in this pass (or yourself, if editing directly) only the current note text and that prompt — not the packet or the underlying reports. Do not use a follow-up turn to a reviewer from steps 2–6. This step is a copyedit pass, not a second chance to re-open the content decisions steps 1–8 already made; it should not reintroduce material step 8 removed or add new claims. **Do not start step 10 until this step completes and `{note-path}` is stable on disk.**
+10. Run one closing cycle over all five methods, as specified in "Closing cycle" below — **only after step 9 has finished**. Append its summary to `full-pass-report.md`; route residual findings to Open items and stop after this one cycle.
+
+### Synchronization: steps 8–10
+
+Steps 8, 9, and 10 are a **strict pipeline**, not a parallel batch. The note has one authoritative "final" version for the closing cycle; every closing assay must read that same version.
+
+| Barrier | Rule |
+|---|---|
+| 8 → 9 | Start step 9 only after step 8 body edits (and any friction reread) are committed. |
+| 9 → 10 | **Hard stop:** do not create closing review jobs, dispatch closing workers, or rerun any closing method until step 9's copyedit is complete and verified on disk. |
+| Within 10 | Closing methods may run concurrently with each other **only after** the step-9 barrier clears. Every closing run — including critique and semantic review jobs — must target the post-step-9 bytes. |
+
+Review jobs snapshot `{note-path}` at **pair create**, not at finalize. A closing `critique-note` or `semantic` job queued while step 9 is still running will pin freshness to pre-copyedit text even if finalization happens later. Wait for step 9, then record the final note SHA-256, then begin step 10.
 
 ## Closing cycle
 
-Record the final note SHA-256 before any closing run. Retain every closing report under `closing/` and leave `initial/` byte-identical. Run each semantic gate as its own requested-mode job against the final note:
+**Prerequisite:** step 9 complete; `{note-path}` byte-stable. Record the final note SHA-256 **now** — before creating any closing review job or dispatching any closing worker. Retain every closing report under `closing/` and leave `initial/` byte-identical. Run each semantic gate as its own requested-mode job against the final note:
 
 ```bash
 commonplace-review-target-selector --mode requested --model-partition {model-partition} {semantic-gate} --note {note-path} --json \
@@ -199,6 +211,7 @@ Never omit "Routed attention" — even a clean SURVIVES with no thin joints belo
 - Do not resolve a compression-vs-semantic disagreement by dropping one finding; record both and let the packet's reader judge, since they test different properties.
 - Do not convert `composition-friction-gate`'s filter verdict or thinnest-joints ranking into a remove/compress/keep action. Its hard rule against self-graded verdicts is why this instruction carries its findings unresolved instead of reconciling them like the others.
 - Do not let the step 9 revise pass change claims, add material, or restore anything step 8 cut. If it does, that's a sign the packet's body edits left the note incoherent — fix the edit, not the prose around it.
+- Do not start step 10 — including creating closing review jobs — while step 9 is still running or before its edits are on disk. Parallelizing copyedit with closing critique or semantic jobs pins review snapshots to the wrong text.
 - Do not delete, merge, mark, or otherwise edit the note within the pass when its Disposition is `delete` or `merge`. The retained packet is the pass's entire output in that case; executing the disposition is the packet reader's call.
 - Do not begin any packet-driven edit, deletion, merge, rejection, or alternative operation without a successful `commonplace-guard-full-pass-report` result over the complete guarded-input set.
 
