@@ -110,8 +110,9 @@ The workshop closes when:
 2. a repository-wide check reports stale registered targets, and a changed dependency selects each affected target with its accepted and current versions plus a neutral reason;
 3. acknowledgement and refresh demonstrate distinct baseline transitions over the exact inspected or consumed versions for review-pair targets;
 4. the boundary between dependency discovery, changed dependency, deterministic invalidity, and target-kind workflow response has a written contract and executable cases for the shipped scope;
-5. Commonplace implements the operational-store storage weight for review freshness and documents collection-as-artifact freshness as deferred future work;
-6. durable outcomes move to the appropriate API/reference documentation, ADR or proposal, validator instruction, and owning workshops; and
-7. collection-source-snapshot witness cases move to [future-work-collection-freshness.md](./future-work-collection-freshness.md) rather than blocking this phase.
+5. Commonplace implements the operational-store storage weight for review freshness;
+6. durable outcomes move to the appropriate API/reference documentation, ADR, validator instruction, and owning workshops;
+7. deferred collection-as-artifact freshness is promoted to a formal proposal in `kb/reference/proposals/` per implementation-plan step 9 (M4); and
+8. the workshop scratch in [future-work-collection-freshness.md](./future-work-collection-freshness.md) is retired or narrowed to point at that proposal.
 
 Then delete this workshop and remove it from the active-workshop index.

@@ -2,7 +2,7 @@
 
 Authority: [implementation-plan.md](./implementation-plan.md), [database-design.md](./database-design.md), [freshness-schemas.md](./freshness-schemas.md).
 
-**Verdict:** architecture is go; **M2 unblocked** — the four contracts below are now written into plan/design.
+**Verdict:** architecture is go; **M2 unblocked**. Plan ends at **M4: write proposals** for deferred work (`kb/reference/proposals/collection-as-artifact-freshness.md`).
 
 ---
 

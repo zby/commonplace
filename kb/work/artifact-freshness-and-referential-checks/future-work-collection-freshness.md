@@ -1,6 +1,6 @@
 # Deferred: collection-as-artifact freshness
 
-**Status:** postponed — not part of the current implementation sequence.
+**Status:** postponed — not part of the current implementation sequence. **Terminal deliverable:** promote this sketch to `kb/reference/proposals/collection-as-artifact-freshness.md` per implementation-plan step 9 (M4).
 
 Epistack maintenance still needs to detect when a source collection gains, loses, or changes a member without a pre-existing per-file dependency edge. The planned workaround is a **`collection-text` version function** and a **`collection-maintenance` target** that registers coarse collection snapshots. That design remains valid but ships in a later phase after review-first migration and generic `file-text` infrastructure are proven.
 

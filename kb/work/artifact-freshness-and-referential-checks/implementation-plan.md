@@ -228,6 +228,7 @@ These gates are ordering constraints, not reporting labels:
 1. **M1 — substrate and migration:** pin [freshness-schemas.md](./freshness-schemas.md), pass `file-text` schema and migration fixtures (including skipped baselines and failed queued job `49`), rehearse migration on copies of both live stores, and prove each old `review-store.sqlite` byte hash is unchanged.
 2. **M2 — review parity:** pass the full review suite at the CLI boundary and prove selector JSON parity before and after migration, including the both-changed precedence case.
 3. **M3 — generic surfaces:** only after M2, expose `commonplace-freshness-status`, accept, ack, and retire over registered `review-pair` targets. No non-review target registration in this phase.
+4. **M4 — future-work proposals:** after M3 ships, promote deferred designs into `kb/reference/proposals/` per the [proposals contract](../../reference/proposals/README.md). The plan ends here; implementation of those proposals is a separate adoption cycle.
 
 ### 8. Documentation and rollout
 
@@ -253,6 +254,29 @@ Rollout order:
 
 Rollback is code-and-store atomic. If an installed new store proves bad, either restore the last pre-migration code and point its `COMMONPLACE_REVIEW_DB` at the untouched schema-v7 backup, or keep the new code, quarantine the bad destination, and rebuild a fresh `commonplace-store.sqlite` from that backup. New code must never point `COMMONPLACE_STORE` at `review-store.sqlite`: without a compatibility shim it cannot operate on the old schema. Never automatically update or delete the backup.
 
+### 9. Write proposals for deferred future work
+
+After the shipped v1 mechanism is documented and tested, close the exploration loop by promoting deferred designs to formal proposals. Do not start a second implementation phase in this workshop.
+
+Write at least:
+
+| proposal | source sketch | what it must cover |
+|---|---|---|
+| `kb/reference/proposals/collection-as-artifact-freshness.md` | [future-work-collection-freshness.md](./future-work-collection-freshness.md) | `collection-text` encoding, `collection-maintenance` target shape, schema widening from `file-text`-only v1, Epistack acceptance cases, forces (coarse snapshot vs per-file cost), free choices, adoption criteria |
+
+Each proposal must follow the [proposals contract](../../reference/proposals/README.md):
+
+- `description` leads with `Proposal:`;
+- `traits: [design-proposal]`;
+- a dated **Current state (as of YYYY-MM-DD)** anchor naming the shipped general freshness store, `file-text` versioning, and review-first migration;
+- transferable requirements cited from `kb/notes/` via `rationale` edges, not inlined;
+- explicit forces, free choices, and adoption criteria; and
+- no claim that the design is already shipped.
+
+Retire or narrow [future-work-collection-freshness.md](./future-work-collection-freshness.md) once the proposal lands — it becomes a workshop scratch pointer to the proposal, not a parallel authority. Open workshop questions that remain undecided after v1 (referential-check publishing, dependency-on-stale-target semantics) may become additional proposals in the same step when they have enough worked material; otherwise leave them in this workshop's open-decisions list until a later promotion.
+
+This step is the plan's terminal deliverable. Workshop deletion waits until M4 proposals are committed and cross-linked from rollout documentation.
+
 ## File-level work map
 
 Expected new implementation surfaces:
@@ -270,6 +294,7 @@ Expected new implementation surfaces:
 - `src/commonplace/cli/freshness_accept.py`, `freshness_ack.py`, `freshness_retire.py`
 - `kb/work/artifact-freshness-and-referential-checks/freshness-schemas.md`
 - `kb/work/artifact-freshness-and-referential-checks/future-work-collection-freshness.md`
+- `kb/reference/proposals/collection-as-artifact-freshness.md` (M4 terminal deliverable)
 - `scripts/migrate-review-db-v7-to-commonplace-store.py`
 - corresponding `tests/commonplace/freshness/`, migration, and CLI tests
 
@@ -333,5 +358,6 @@ Use the actual model partitions present in each store when comparing selector ou
 6. acknowledgement and observation refresh advance exact accepted versions without conflating changed inputs with false outputs;
 7. the full test suite and both live-store migration rehearsals pass, with each old `review-store.sqlite` retained byte-identically as backup;
 8. queued jobs capture `expected_baseline_revision`, capture refresh and observation refresh are separated, dead targets can be retired, and `input-missing` exits `1`;
-9. durable architecture, command, storage, review, and operator documentation describes the shipped mechanism; and
-10. collection-as-artifact freshness remains documented as deferred future work, not a blocking gap in this phase.
+9. durable architecture, command, storage, review, and operator documentation describes the shipped mechanism;
+10. at least one formal proposal in `kb/reference/proposals/` promotes deferred collection-as-artifact freshness per the proposals contract (M4); and
+11. this workshop can close after that proposal is committed — implementation of deferred work follows proposal adoption, not this plan.
