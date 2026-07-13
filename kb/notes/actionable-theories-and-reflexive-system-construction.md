@@ -79,7 +79,7 @@ Sources:
 
 Relevant Notes:
 
-- [Design rationale management](../reference/design-rationale-management.md) — see-also: locates the descriptive field whose retained decision structures become generative material in an agent-operated system
+- [Design rationale management](../reference/design-rationale-management.md) — see-also: locates the descriptive field whose retained decision structures may inform reflexive construction when authors carry rationale forward explicitly
 - [Deploy-time learning is the missing middle](./deploy-time-learning-is-the-missing-middle.md) — extends: the retained-artifact loop is deploy-time learning framed as reflexive executable theory
 - [The readable-artifact loop is the tractable unit for continual learning](./readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md) — extends: names the practical near-term substrate for verified reflexive extension under heterogeneous oracles
 - [Ingest: Huxley-Gödel Machine](../sources/huxley-godel-machine-human-level-coding-agent-development.ingest.md) — evidence: modern inspectable-scaffold self-improvement in Schmidhuber's lineage at benchmark-oracle strength
