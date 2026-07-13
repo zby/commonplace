@@ -14,33 +14,21 @@ The brief asks for workflows and methodologies that advance AI-assisted investig
 
 The surprise we intend: most entries will present **a stack**. We present **how to build and hand off a stack when design choices look identical on disk but carry different authority** — and how to refuse commitments whose shape is unknown (scalar credence, authority ranking, crux scoring) until rationale and evidence support them.
 
-### Vocabulary (load-bearing — say once in the submission)
+### The compounding barrier (judge-facing)
 
-Commonplace uses three nearby terms on **different objects**. Judges and readers must not conflate them:
+Compounding fails when later readers cannot recover **why** a design looks the way it does — what was forced, what this problem required, what was freely chosen, and what was rejected:
 
-| Term | Meaning |
+| Class | Example |
 |---|---|
-| **Design constraint** | Bounds the feasible design space — inherited from consumer/substrate/domain/machinery ([first principles](../../notes/first-principles-are-inherited-constraints-not-design-choices.md)) or local to one problem/collection. |
-| **Design rationale** | Records how constraints, alternatives, evidence, and trade-offs support a decision — especially where constraints leave more than one feasible choice. |
-| **Constraining** | Deploy-time narrowing of valid *interpretations* of a retained artifact ([definition](../../notes/definitions/constraining.md)) — codification, validators, conventions. **Not** the name of the design methodology. |
+| **Forced by the world** | You cannot cite more precisely than you captured. |
+| **Forced by this problem** | COVID needs an institutional layer; LHC needs dependency traversal. |
+| **Freely chosen** | Grounding-layer marker as prose word vs frontmatter field — either works; the pick must be recorded with alternatives. |
 
-IDEF makes the split explicit: IDEF9 discovers constraints; IDEF6 captures rationale when constraints do not determine a unique decision ([IDEF compendium](https://www.idef.com/wp-content/uploads/2016/02/compendium.pdf)). Epistack casework did not invent this — it exposed that Commonplace already practiced it in distributed form.
-
-### The compounding barrier
-
-Compounding fails when later readers cannot recover **design rationale** — what was forced, what was problem-local, what was freely chosen, and what was rejected:
-
-| Class | Rationale role | Example |
-|---|---|---|
-| **Inherited constraint** | Cannot demote without changing boundary commitment | You cannot cite more precisely than you captured; bounded context economy for agent consumers. |
-| **Problem-local constraint** | Proven for one collection; may stay local | COVID needs an institutional layer; LHC needs dependency traversal. |
-| **Undetermined choice** | Constraints leave multiple feasible options; rationale must record the pick and alternatives | Grounding-layer marker as prose word vs frontmatter field. |
-
-Without repository surfaces that preserve this distinction, the next investigator treats every link and heading as equally authoritative. **Unmarked design contingency is a barrier to compounding** — design rationale management is the response.
+Without surfaces that preserve this, the next investigator treats every link and heading as equally authoritative. **Unmarked design contingency is a barrier to compounding.** Design rationale management — an established discipline, not a coinage — is the response. IDEF9/IDEF6 split is the accessible hook: discover what bounds the decision; record rationale when the bounds still leave more than one feasible option ([IDEF compendium](https://www.idef.com/wp-content/uploads/2016/02/compendium.pdf)).
 
 ### The method (what we submit)
 
-**Design rationale management for evolving knowledge infrastructure** — constraint discovery, explicit rationale, worked-case testing, and graduated [constraining](../../notes/definitions/constraining.md) only after the commitment earns force.
+**Design rationale management for evolving knowledge infrastructure** — discover constraints, record rationale and alternatives, test on worked cases, promote shared machinery only after evidence warrants it, enforce mechanically only where ground truth is shared.
 
 | Mechanism | Commonplace surface | Role |
 |---|---|---|
@@ -59,11 +47,11 @@ Epistack-specific practice on top (not a separate method): sibling `backlog-to-c
 
 The brief's ingestion / structure / assessment layers are **design outcomes whose rationale must be recoverable**, not a feature checklist:
 
-| Layer | Design constraint (bounds the space) | Rationale + commitment (what we built / refused) |
+| Layer | What bounds the design | What we built / refused (with rationale on record) |
 |---|---|---|
-| **Ingestion** | Capture bounds citation; provenance legible without KB-voice ranking | Snapshots, `capture_fidelity`, typed `genre`, COVID `standing` constituents (sibling: `kb/notes/standing-is-recorded-by-its-constituents-not-by-a-ranking.md`); **rejected** scalar source credibility — rationale on record |
-| **Structure** | Contested substance cannot be flattened; verdict in context contaminates downstream maps | Stance-neutral casebooks, verdict/map separation; register-drift experiment as rationale for the separation |
-| **Assessment** | Shared ground → mechanical check; local judgment → criterion review; some violations are locally defensible | `commonplace-verify-quotes` (127/127); collection-conformance + calibration; **rejected** crux scoring and authority ranking until shape is known |
+| **Ingestion** | Capture bounds citation; provenance legible without the KB ranking sources | Snapshots, capture fidelity, typed genres, standing constituents (sibling note on standing); **rejected** scalar source credibility |
+| **Structure** | Contested substance cannot be flattened; verdict in context contaminates downstream maps | Stance-neutral casebooks, verdict/map separation; register-drift experiment as evidence for the separation |
+| **Assessment** | Shared ground → mechanical check; local judgment → documented criteria | Quote verification (127/127); collection-conformance + calibration; **rejected** crux scoring and authority ranking until shape is known |
 
 Brief bullets answered **by recorded rationale** (not by omission):
 
@@ -96,9 +84,9 @@ Workflow on all three: source → ingest → note → validate → review → fr
 
 *Does it generalize?*
 
-1. **The methodology** — design rationale management is established research applied to agent-operated KB infrastructure; not a bespoke "constraint-driven design" coinage.
+1. **The methodology** — design rationale management is established research applied to agent-operated knowledge infrastructure.
 2. **The machinery** — three unlike case shapes + observed contract transfer (LHC-shaped → eggs, COVID); not independent replication. Say so plainly.
-3. **Inherited constraints** — claim-relative authority, context contamination below compliance, closed enums asserting false types: design pressures with rationale, not bug reports.
+3. **Principled pressures** — claim-relative authority, context contamination below explicit compliance, type systems that assert false precision: recorded as rationale, not dismissed as implementation bugs.
 4. **Spot experiments** — register drift (n=2); gate calibration (fitted on 4 labelled notes). Size claims to evidence.
 5. **Designed, unrun replication** — [replication-plan.md](./replication-plan.md): convergence test for forced vs chosen structure. Appendix, not spine.
 
@@ -109,14 +97,18 @@ Judge-facing document; code and repos are evidence.
 | § | Title | Length | Content |
 |---|---|---|---|
 | 1 | The compounding barrier | ½ page | Unmarked contingency; why rationale beats feature lists |
-| 2 | Design rationale management | 1–1½ pages | Established lineage (DR/DSA/IDEF); vocabulary table; repository surfaces; **not** constraining-as-methodology |
+| 2 | Design rationale management | 1–1½ pages | Established lineage (DR/DSA/IDEF); three-class compounding barrier; repository surfaces in plain language |
 | 3 | Rationale → epistemic stack | 1 page | Layer table; built vs rejected with alternatives named |
 | 4 | Reference implementation | 1 page | Casebook Protocol + Commonplace; deterministic vs semantic boundary; falsification |
 | 5 | Three stress tests | 1½ pages | One question + path per case |
 | 6 | Evidence and limits | 1 page | Rebuild gates, experiments, backlog/ADR audit trail, replication protocol |
 | App | Runnable walkthrough | short | Clone, verify-quotes, planted failure |
 
-**Tone:** §1–2 for naive readers. Link [design-rationale-management.md](../../reference/design-rationale-management.md) as the fuller reference (note: still revising). ADR/CLI detail in §4–6.
+**Tone:** §1–2 for naive readers — no Commonplace internal vocabulary (see operator note below). ADR/CLI detail in §4–6. Optional footnote or appendix link to [design-rationale-management.md](../../reference/design-rationale-management.md) for framework operators, not required reading for judges.
+
+### Operator note (authors only — not submission spine)
+
+When syncing with [design-rationale-management.md](../../reference/design-rationale-management.md): Commonplace distinguishes **design constraints**, **design rationale**, and technical **constraining** (deploy-time interpretation narrowing). That boundary matters for framework docs and must not appear in the judge-facing submission — judges have no reason to learn our learning-theory vocabulary. Translate to plain language: *what bounded the choice, what was recorded, what was enforced mechanically, what stayed provisional.*
 
 ## Evaluation boundary
 
@@ -125,7 +117,7 @@ Judge-facing document; code and repos are evidence.
 - **Settled design commitments:** no scalar confidence/authority in frontmatter; adjudication downstream and labelled; frontmatter semantics type-owned.
 - **Do not build** bulk-operations layer or independent-builder experiment on critical path.
 - **Collection-as-artifact freshness** deferred; ADR 052 v1 sufficient ([proposal](../../reference/proposals/collection-as-artifact-freshness.md)).
-- **Sync with DRM doc:** as `design-rationale-management.md` revises, align submission §2 and this README; do not let the submission outrun the reference doc's vocabulary.
+- **Sync with DRM doc:** as `design-rationale-management.md` revises, align operator notes and §2 plain-language framing; keep internal vocabulary out of the submission document.
 
 ## Build plan
 
@@ -143,7 +135,7 @@ Judge-facing document; code and repos are evidence.
 
 **Extract submission-facing methodology + protocol guide:**
 
-- Design rationale management as §2 spine (cite established research + vocabulary boundary).
+- Design rationale management as §2 spine (established research + three-class barrier + repository surfaces — plain language).
 - Casebook Protocol appendix: surfaces, local-extension rules, conformance checklist, freshness tiers.
 
 Consolidate from: [design-rationale-management.md](../../reference/design-rationale-management.md), [validation-contract.md](../../reference/validation-contract.md), [README-REVIEW-SYSTEM.md](../../reference/README-REVIEW-SYSTEM.md), ADRs 038, 041, 046, 051, 052.
@@ -182,7 +174,7 @@ Freshness tiers:
 | Days | Work |
 |---|---|
 | 1 | **DONE.** Quote verifier, validation contract, rebuild closure |
-| 1–2 | **Draft §2–3 + DRM sync.** Methodology spine, vocabulary, stack table; align with revising reference doc |
+| 1–2 | **Draft §2–3 + DRM sync.** Methodology spine, stack table; plain language only in submission prose |
 | 2–3 | **Draft §4–5.** Reference implementation, case walkthroughs |
 | 3 | **Falsification + optional transcript** |
 | 4–6 | **Integrate, naive-reader pass, buffer** |
@@ -197,7 +189,7 @@ Distributed rationale surfaces already populated:
 - Proposals: `## Forces` / `## Free choices`
 - ADRs, rejected candidates, supersession links
 - Quote-verifier proposal written before friction case — rationale catching its own violation
-- Register-drift + gate calibration — constraint predicted failure; rationale revised; constraining graduated (validator, revised `## Review` bullets)
+- Register-drift + gate calibration — predicted failure mode; rationale revised; mechanical enforcement added where ground truth was shared (quote verifier, revised review criteria)
 - Rebuild closure — rationale → commitments → measurable gates
 
 ## Judging questions
@@ -211,6 +203,6 @@ Distributed rationale surfaces already populated:
 
 ## What closes it
 
-Submission by 19 July: design rationale management methodology (with vocabulary boundary), epistemic-stack mapping, reference-implementation walkthrough, three-case evidence, limitations and negative results.
+Submission by 19 July: design rationale management methodology (judge-facing plain language), epistemic-stack mapping, reference-implementation walkthrough, three-case evidence, limitations and negative results.
 
 Then: promote durable conclusions; fold predecessor workshops; delete this directory when done.
