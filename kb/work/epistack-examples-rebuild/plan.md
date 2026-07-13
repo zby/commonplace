@@ -99,7 +99,7 @@ The copy is the **execution authority** in the sibling repo. If execution diverg
 |---|---|
 | 0 | `commonplace-init`; confirm ADR 045/046 schemas; confirm ADR 052 store commands |
 | 1 | Archive old notes, ingests, review artifacts; reset operational store; keep sources |
-| 2 | Migrate 26 snapshots (`genre`); rewrite ingests |
+| 2 | Declare tracked local source types (Phase 2.0); migrate 26 snapshots (`genre`, capture fidelity); rewrite ingests |
 | 3 | Rebuild casebooks LHC → eggs → COVID with per-note quote gates |
 | 4 | Corpus-wide validate + verify-quotes + conformance reviews + freshness demonstration |
 | 5 | Backlog Outcomes; retire `post-commonplace-upgrade`; update `AGENTS.md` |
@@ -131,6 +131,7 @@ Closure criteria (both repos agree these are the bar):
 
 - Replication-plan independent-builder experiment
 - Track A neutrality factorial redesign
-- Collection-local snapshot type for epistack-specific genre vocabulary
-- Framework promotion of COVID `standing` block — only if rebuild proves it and backlog asks for it
+- Framework promotion of epistack local source types (`epistack-snapshot`, `epistack-ingest-report`) — only after Phase 2.0 proves them on the rebuilt corpus and backlog entries ask for it
+- Framework promotion of COVID `standing` block — local ingest schema first (Phase 2.0); upstream only if rebuild proves it
+- `casebook-claim` collection-local note type — deferred until a second consuming project needs it
 - Adopt and register `collection-maintenance` targets per [collection-as-artifact-freshness](../../reference/proposals/collection-as-artifact-freshness.md) — closes the ingest empty-collection validator gap at the freshness layer

@@ -104,21 +104,54 @@ git add -A && git commit -m "rebuild: clear downstream artifacts, retain sources
 
 Use genre decisions from `kb/work/post-commonplace-upgrade/track-b/source-type-inventory.md` as the default mapping.
 
+### Phase 2.0 — Declare tracked project-local source types (do this first)
+
+**This step is not optional.** ADR 045 and `kb/sources/types/snapshot.md` define two extension paths: occasional off-list `genre` values on the shipped type (warn only), or a **collection-local snapshot type** when the KB needs its own genre vocabulary and richer capture fields. Epistack is the second case — three controversies surfaced ~15 genres the shipped enum does not cover (`commissioned-safety-review`, `meta-analysis`, `government-report`, `intelligence-assessment`, `open-letter`, `advisory-committee-report`, `guideline-report`, …), and every long-paper capture uses the PDF-sibling + extraction-layer pattern that the backlog has been asking to type since 2026-07-09.
+
+The rebuild agent's shortcut — off-list `genre` values on the shipped `kb/sources/types/snapshot.md` plus `capture_note` prose — satisfies validation but **does not** satisfy the agreed mechanism in [richer-source-type](../../work/epistack-framework-additions/richer-source-type.md) or the backlog's build-local-first protocol. It also fights a gitignore trap: `kb/sources/types/` is regenerable scaffold (gitignored in this repo); edits there are wiped by `commonplace-init` and never committed. **Local types must live in a tracked `types/` directory under a case sources collection.**
+
+**Procedure:**
+
+1. Create a shared, **tracked** type tree at `kb/lhc/sources/types/` (canonical owner; LHC is first case). Add at minimum:
+   - `epistack-snapshot.md` + `epistack-snapshot.schema.yaml` — extends the shipped snapshot contract with:
+     - a **closed** `genre` enum covering the shipped defaults **plus** every genre the inventory proved load-bearing across three cases (see inventory table below);
+     - `capture_fidelity`: `full-verbatim-md` | `extraction-layer` | `partial-extraction` (replaces improvising this in `capture_note` prose alone);
+     - `authoritative_artifact`: optional repo-relative path to the sibling PDF or other verbatim artifact (when `capture_fidelity` is not `full-verbatim-md`).
+   - `epistack-ingest-report.md` + `epistack-ingest-report.schema.yaml` — extends the shipped ingest contract with:
+     - per-genre Limitations lenses for the epistack-only genres (copied/adapted from `ingest-report.md` prose table);
+     - optional `standing` object schema (seven fields from `kb/covid/sources/COLLECTION.md`), with `disclosed_interests` using `not-disclosed-in-document` | `not-captured` | prose — not bare `unknown`.
+2. Update **all three** `kb/{case}/sources/COLLECTION.md` `## Types` sections: replace "does not define its own source types" with pointers to the local types (from `kb/lhc/sources/`, use `./types/epistack-snapshot.md`; from `kb/covid/sources/` and `kb/eggs/sources/`, use `../../lhc/sources/types/epistack-snapshot.md`).
+3. Repoint every snapshot and ingest `type:` frontmatter field to the local type paths. Re-run `commonplace-validate` on all three source collections — zero failures, **zero genre warnings** (the local enum should cover every value in use).
+4. Log the local types in `backlog-to-commonplace.md` under **What we built locally** on the relevant type-gap entries — this is the proof the mechanism works before any upstream promotion ask.
+
+**Genre enum for `epistack-snapshot` (starting set — extend only when inventory proves a new recurring kind):**
+
+| Group | Values |
+|---|---|
+| Shipped defaults | `scientific-paper`, `practitioner-report`, `conceptual-essay`, `design-proposal`, `tool-announcement`, `github-issue`, `conversation-thread`, `code-repository`, `court-opinion`, `news-article`, `official-statement` |
+| LHC-proved | `commissioned-safety-review` |
+| Eggs-proved | `meta-analysis`, `advisory-committee-report`, `guideline-report` |
+| COVID-proved | `government-report`, `intelligence-assessment`, `open-letter` |
+
+**What this is not:** editing `kb/commonplace/` or opening framework PRs for new enum values. Local types are the extension point; framework promotion comes later via the backlog if the worked case earns it.
+
+**Note-layer local types remain optional** for rebuild closure — a `casebook-claim` type is still deferred until a second consuming project needs it ([text-contract-profiles](../../reference/text-contract-profiles.md)). The source layer is not deferrable: genre vocabulary and capture fidelity are load-bearing for quote verification and institutional standing.
+
 ### Per snapshot (`kb/{case}/sources/<slug>.md`)
 
-1. Add `genre: <value>` from the inventory **now** column.
-2. Strip content-family entries from `tags` (`academic-paper`, `official-statement`, etc.). Keep topical tags only, or omit `tags`.
-3. Leave `capture_note` intact unless it contradicts the new genre.
-4. Re-read PDFs only when `capture_note` flags unread load-bearing regions.
-
-Off-list genres the inventory named as load-bearing (`commissioned-safety-review`, `meta-analysis`, `government-report`, `intelligence-assessment`, etc.) should be used as off-list `genre` values. ADR 045 warns on unknown values — preferable to nearest-fit false confidence.
+1. Add `genre: <value>` from the inventory **now** column — must be a member of the local `epistack-snapshot` enum, not an off-list warn on the shipped type.
+2. Set `capture_fidelity` and `authoritative_artifact` per the local snapshot type spec (PDF-sibling captures: `extraction-layer` + sibling `.pdf` path; public-domain full-verbatim md: `full-verbatim-md`; G&M-style partial reads: `partial-extraction`).
+3. Strip content-family entries from `tags` (`academic-paper`, `official-statement`, etc.). Keep topical tags only, or omit `tags`.
+4. Leave `capture_note` for capture-method detail (pages unread, JS-rendered FAQ quirks, second-hand upgrade history) — not as the only record of fidelity layer or authoritative artifact.
+5. Re-read PDFs only when `capture_note` flags unread load-bearing regions.
 
 ### Rewrite ingests
 
 For each snapshot, fresh `.ingest.md` via `cp-skill-ingest`:
 
 - No `source_type` in frontmatter.
-- Classification prose names the snapshot's `genre`; explain any off-list value.
+- Use `type: …/epistack-ingest-report.md` (local type from Phase 2.0).
+- Classification prose names the snapshot's `genre`; COVID institutional cluster carries a typed `standing` block per the local ingest schema.
 - `Connections Found` states the source's durable role against the **current** casebook — never "collection is empty".
 - `Recommended Next Action` states real capture debt only.
 
@@ -132,7 +165,7 @@ commonplace-validate kb/covid/sources
 commonplace-validate kb/eggs/sources
 ```
 
-Zero failures before Phase 3. Off-list `genre` warnings are expected and should match the inventory.
+Zero failures before Phase 3. With local types in place, off-list `genre` warnings should be **zero** — any warn means the local enum is incomplete.
 
 ## Phase 3 — Casebook rebuild
 
@@ -262,7 +295,9 @@ Append **Outcome** lines to `backlog-to-commonplace.md` where this rebuild settl
 
 - Repair old notes in place.
 - Re-capture sources unless fidelity is wrong for a load-bearing passage.
-- Add framework types (claim type, link ontology, standing promotion) during rebuild.
+- Open framework PRs for new genre enum values or edit shipped `kb/sources/types/` specs — use tracked collection-local types (Phase 2.0) instead.
+- Promote `standing` or capture-fidelity fields to the framework during rebuild — prove them locally first, log upstream asks in the backlog.
+- Add framework-level note types (claim type, link ontology) during rebuild — source-layer local types are required; note-layer local types remain optional.
 - Launch Track A factorial or replication-plan clean-room arms from this pass.
 - Block rebuild closure on adopting `collection-maintenance` targets — that is a follow-on proposal, not ADR 052 v1.
 
