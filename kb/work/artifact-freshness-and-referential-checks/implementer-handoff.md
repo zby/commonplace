@@ -2,31 +2,54 @@
 
 Authority: [implementation-plan.md](./implementation-plan.md), [database-design.md](./database-design.md).
 
-## Easy to miss
+**Verdict:** architecture is go; **four contracts must be written before persisted hashes / public CLIs** (M1 schema OK; M2 blocked until these land in plan or database-design).
 
-- **No compatibility shim.** Delete review-specific freshness tables/helpers in the same change that lands the general schema. A temporary adapter inside one in-progress commit is the only allowance.
-- **Malformed ≠ stale.** Integrity failures are store errors. Selectors must never downgrade bad baselines to `missing-baseline` or ordinary staleness.
-- **Review precedence survives migration.** When both note and criterion changed, public selector output still reports `criterion-changed` before `note-changed`.
-- **Finalization may accept job snapshots that are already stale.** That is correct: live text moved on during the run; the new baseline should go stale immediately on the next check — not block finalization or silently substitute current files.
-- **`collection-text` hash stability is the contract.** Fix the member delimiter and collection rule in M1 and test it. No per-target include/exclude; changing the rule later invalidates every registered baseline.
-- **Stale ingests are derivative maintenance, not validator work.** `.ingest.md` lives in the source collection; casebook edits change `casebook`, ingest edits change `source-scope`. Reassessment revises derivatives — do not parse ingest prose.
-- **Global status is not discovery.** `commonplace-freshness-status` reports registered targets only. Review selector still owns `missing-baseline`.
-- **WAL sources.** Migration opens the old DB read-only. If `journal_mode=wal`, operator must checkpoint first; migration refuses a changed source hash.
+---
 
-## Gates (do not skip)
+## Blocking — resolve in design first
 
-1. **M1:** migration fixtures + both live-store copies; old `review-store.sqlite` byte hash unchanged.
-2. **M2:** full review test suite at CLI boundary; selector JSON parity pre/post migration. **No Epistack targets before this passes.**
-3. **M3:** register casebook targets only after M2.
+### 1. Queued-job CAS (live today)
 
-## Highest bug risk
+Refresh requires `expected_revision`, but queued pairs store captured snapshots only — not revision at job creation. **Job 49** is the case: captured note snapshot `24`, current baseline snapshot `29`; finalize-as-is would overwrite newer evidence.
 
-Shared snapshot pruning across `freshness_inputs` and `review_pairs`. Test: ack one input only, finalization supersede, migration preserving snapshot IDs.
+**Decide:** persist `expected_revision` or `expected_absence` on each pair at job create; on finalize, CAS against that — fail/requeue if baseline moved. Policy for migrated queued jobs with stale captures.
 
-## Rollback
+### 2. Two refresh paths — do not conflate
 
-Bad new store → point `COMMONPLACE_STORE` at untouched `review-store.sqlite`. Never auto-delete the backup.
+| Path | Live-file check | Writes |
+|---|---|---|
+| **Capture refresh** (review finalize) | No — job-owned snapshots | Baseline CAS + evidence replace |
+| **Observation refresh** (accept CLI, ack) | Yes — must match status output | Baseline CAS, evidence preserved on ack |
 
-## Out of scope for this build
+Generic `commonplace-freshness-accept` must **not** be the review finalization entry point. Expose one **review-owned transaction** (or extension hook) that atomically: complete pairs → generic refresh from captures → `review_freshness_evidence` update.
 
-Semantic truth checks, link-derived registration, resolver plugins, full-pass in SQLite, baseline history, auto-registration of all artifacts.
+### 3. Dead registered targets
+
+No deletion/retirement in v1, but global status scans all registered targets. **Four live baselines** still point at deleted `kb/work/transformation-closure/README.md` → perpetual `input-missing`.
+
+**Decide:** target retirement command, migration-time prune of dead paths, or documented manual SQL — and whether `input-missing` exits `1` (stale) or `2` (integrity).
+
+### 4. Done-when wording
+
+Criterion 1 ("no review-specific selector or acknowledgement implementation") contradicts keeping review adapters for `missing-baseline`, reason mapping, trivial ack.
+
+**Reword:** prohibit **duplicated** freshness compare/persist in review code; adapters and discovery stay.
+
+---
+
+## Pin in M1 (before hashing / JSON CLI)
+
+- **`collection-text` byte format** — recursive scope, nested collections, hidden paths, archive filenames, path framing, newlines. Hash stability depends on this.
+- **Status / accept / ack JSON** — canonical schema; ack consumes status output.
+
+---
+
+## Still easy to miss (non-blocking)
+
+- No compatibility shim surviving migration.
+- Malformed baselines → store error, never `missing-baseline`.
+- `criterion-changed` before `note-changed` in public review output.
+- Stale ingests = derivative maintenance via `casebook` / `source-scope` change — not prose parsing.
+- Global status ≠ discovery; review selector owns `missing-baseline`.
+- WAL DB: checkpoint before read-only migration.
+- Snapshot pruning across `freshness_inputs` + `review_pairs` is highest bug risk.
