@@ -127,6 +127,33 @@ def _migration_required_error(*, detail: str) -> RuntimeError:
     return RuntimeError(f"migration required: {detail}; run {_MIGRATION_SCRIPT}")
 
 
+_UNGUARDED_QUEUED_CAS_FAILURE = "unguarded-queued-cas"
+
+
+def _fail_unguarded_queued_jobs_after_v3_upgrade(conn: sqlite3.Connection) -> None:
+    """Fail queued jobs whose pairs have no reconstructable CAS guard (both fields NULL)."""
+    conn.execute(
+        """
+        UPDATE review_jobs
+        SET status = 'failed',
+            completed_at = created_at,
+            failure_reason = ?
+        WHERE status = 'queued'
+          AND review_job_id IN (
+            SELECT DISTINCT rp.review_job_id
+            FROM review_pairs AS rp
+            JOIN review_jobs AS j
+              ON j.review_job_id = rp.review_job_id
+            WHERE j.status = 'queued'
+              AND rp.completed_at IS NULL
+              AND rp.expected_baseline_revision IS NULL
+              AND rp.expected_generation_next_revision IS NULL
+          )
+        """,
+        (_UNGUARDED_QUEUED_CAS_FAILURE,),
+    )
+
+
 def _migrate_store(conn: sqlite3.Connection) -> None:
     current_version = _get_user_version(conn)
     if current_version == STORE_SCHEMA_VERSION:
@@ -156,6 +183,7 @@ def _migrate_store(conn: sqlite3.Connection) -> None:
             )
             """
         )
+        _fail_unguarded_queued_jobs_after_v3_upgrade(conn)
         _set_user_version(conn, STORE_SCHEMA_VERSION)
         return
     raise RuntimeError(

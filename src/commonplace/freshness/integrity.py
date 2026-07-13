@@ -22,8 +22,37 @@ def assert_snapshot_hash_integrity(conn: sqlite3.Connection) -> None:
             raise RuntimeError(f"artifact snapshot hash mismatch: snapshot_id={row['snapshot_id']}")
 
 
+def assert_queued_pair_cas_integrity(conn: sqlite3.Connection) -> None:
+    row = conn.execute(
+        """
+        SELECT rp.review_pair_id
+        FROM review_pairs AS rp
+        JOIN review_jobs AS j
+          ON j.review_job_id = rp.review_job_id
+        WHERE j.status = 'queued'
+          AND rp.completed_at IS NULL
+          AND NOT (
+              (
+                  rp.expected_baseline_revision IS NOT NULL
+                  AND rp.expected_generation_next_revision IS NULL
+              )
+              OR (
+                  rp.expected_baseline_revision IS NULL
+                  AND rp.expected_generation_next_revision IS NOT NULL
+              )
+          )
+        LIMIT 1
+        """
+    ).fetchone()
+    if row is not None:
+        raise RuntimeError(
+            f"queued pair must populate exactly one CAS field: review_pair_id={row['review_pair_id']}"
+        )
+
+
 def assert_review_freshness_integrity(conn: sqlite3.Connection) -> None:
     assert_snapshot_hash_integrity(conn)
+    assert_queued_pair_cas_integrity(conn)
     row = conn.execute(
         """
         SELECT b.target_id
