@@ -1,0 +1,7 @@
+# A richer `source` type
+
+Layer: ingestion / provenance.
+
+`kb/sources/` exists, but casework needs capture metadata as first-class fields: retrieval date, author/institution, medium, an archived snapshot hash, and known credibility signals. Rationale: [history has one chance to become checkable](../../notes/history-has-one-chance-to-become-checkable.md) — production history is only convertible to checkable form at capture time.
+
+**Mechanism decided framework-side (2026-07-12).** [ADR 045](../../reference/adr/045-source-genre-is-a-single-open-field-on-the-snapshot.md) put a single open-vocabulary `genre` field on the snapshot (off-list values warn, not fail), and the extension question closed on: **the casebook declares its own snapshot type** in its sources collection — a collection-local type-spec doc + schema, listed in the casebook's `COLLECTION.md` Types menu, which the capture skill reads. That local type is where everything this candidate asks for goes: the casebook's genre vocabulary and lenses, plus author/institution, archive hash, and other first-class capture fields. Do not extend the framework's shipped snapshot spec or schema — types are the extension point (see `kb/sources/types/snapshot.md`, Genre section, and [collections and types](../../reference/collections-and-types.md)). The framework-PR route this casework previously used to add `court-opinion`/`news-article`/`official-statement` to the shipped enum is retired.

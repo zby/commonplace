@@ -1,0 +1,6 @@
+# Suggested first experiments (for the sibling repo, not here)
+
+- Prototype the [source-span locator](./source-span-citations.md) and the [dialectical/evidential contract](./fourth-register.md) first — everything else hangs off those two. (Per the 2026-07-08 update, the second is now a `COLLECTION.md` text contract to write, not a register to get approved.)
+- Run them against one worked case (the black-hole/LHC case is the cleanest dependency chain) before generalizing.
+- **Test the "silently averaged" mechanism (added 2026-07-08).** The claim that contradictions loaded into one context get silently averaged justifies the core tension, the verdict/map separation, and the control-room rejection — it is the most load-bearing untested assumption in this menu, and the casework is a natural experiment for it. Cheap version: give a case root that *does* carry a bottom line to one agent and a verdict-free root to another, have both extend the neutral map, and compare whether the bottom-line version's edits drift toward the verdict. If the mechanism is real, the separation architecture rests on tested ground; if not, some of it is cheaper than assumed.
+- Log outcomes to `epistack-casebooks/backlog-to-commonplace.md`; promote to this repo only what survives.
