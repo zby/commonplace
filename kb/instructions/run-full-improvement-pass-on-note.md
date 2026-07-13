@@ -13,6 +13,8 @@ Inputs:
 
 - first and only argument: `{note-path}` — repository-relative note path.
 
+Concurrency precondition: from step 1 until the pass stops after step 8 or completes step 10, no other actor or process may edit `{note-path}`. The orchestrator's prescribed edits in steps 8 and 9 are the only exception. If step 7 inspects a proposed merge target, no other actor or process may edit that target until the packet is finalized and handed back. These are cooperative ownership rules, not filesystem locks; do not start the pass when they cannot be maintained.
+
 Derive `<note-name>` from `{note-path}` as the filename without its extension (`kb/notes/linking-theory.md` → `linking-theory`). At the start of every invocation mint a unique `<pass-id>` (a UTC timestamp plus a short random suffix is sufficient). Retain reports under `kb/reports/full-pass/<note-name>/<pass-id>/{initial,closing}/`; never reuse a pass ID or overwrite an initial report.
 
 Steps 1 through 7 below only write reports; none of them edit the note. For a `keep` Disposition, steps 8 and 9 apply the packet and run a final flow pass, and step 10 closes review over those edits without starting another transformation round. When step 7 concludes the note should not exist as a unit (Disposition `delete` or `merge`), leave the note byte-identical and stop after handing back the packet — see step 8.
