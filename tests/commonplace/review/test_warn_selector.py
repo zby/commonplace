@@ -109,7 +109,7 @@ def test_warn_selector_uses_criterion_snapshot_hash_without_git(tmp_path: Path) 
     repo.mkdir()
     make_note(repo / "kb" / "notes" / "sample.md")
     make_gate(repo / GATE_PATH)
-    db_path = repo / "kb" / "reports" / "review-store.sqlite"
+    db_path = repo / "kb" / "reports" / "commonplace-store.sqlite"
     seed_warn_review(repo, db_path)
 
     notes, stale_gates = warn_selector.scan_reviews(repo, db_path=db_path)
@@ -125,7 +125,7 @@ def test_warn_selector_skips_warns_when_snapshot_gate_changed(tmp_path: Path) ->
     repo.mkdir()
     make_note(repo / "kb" / "notes" / "sample.md")
     gate = make_gate(repo / GATE_PATH)
-    db_path = repo / "kb" / "reports" / "review-store.sqlite"
+    db_path = repo / "kb" / "reports" / "commonplace-store.sqlite"
     seed_warn_review(repo, db_path)
     make_gate(gate, extra="\nChanged gate text.\n")
 

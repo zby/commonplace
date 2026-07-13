@@ -11,7 +11,7 @@ from tests.commonplace.review.pair_helpers import accept_pair, insert_completed_
 
 
 def test_ensure_db_initializes_current_schema(tmp_path: Path) -> None:
-    db_path = tmp_path / "review-store.sqlite"
+    db_path = tmp_path / "commonplace-store.sqlite"
 
     review_db.ensure_db(db_path)
 
@@ -40,7 +40,7 @@ def test_ensure_db_initializes_current_schema(tmp_path: Path) -> None:
                 baseline_criterion_snapshot_id,
                 baseline_note_hash,
                 baseline_criterion_hash
-            FROM current_freshness_baselines
+            FROM current_review_freshness_baselines
             WHERE note_path = 'kb/notes/fresh.md'
             """
         ).fetchone()
@@ -51,6 +51,7 @@ def test_ensure_db_initializes_current_schema(tmp_path: Path) -> None:
             row["name"]: row
             for row in conn.execute("PRAGMA table_info(freshness_baselines)").fetchall()
         }
+        pair_columns_detail = pair_columns
         index_names = {
             row["name"]
             for row in conn.execute(
@@ -80,23 +81,26 @@ def test_ensure_db_initializes_current_schema(tmp_path: Path) -> None:
     assert "job_output_path" not in job_columns
     assert "model_partition" not in pair_columns
     assert "pair_status" not in pair_columns
-    assert "result_path" not in pair_columns
-    assert "freshness_baseline_event_id" not in freshness_baseline_columns
-    assert freshness_baseline_columns["evidence_review_pair_id"]["notnull"] == 1
+    assert "result_path" not in pair_columns_detail
+    assert "expected_baseline_revision" in pair_columns_detail
+    assert "target_kind" in freshness_baseline_columns
+    assert "target_key_json" in freshness_baseline_columns
+    assert "revision" in freshness_baseline_columns
+    assert "accepted_at" in freshness_baseline_columns
     assert "idx_review_pairs_note_criterion" in index_names
-    assert "idx_review_pairs_note_criterion_model_partition" not in index_names
-    assert "idx_freshness_baselines_note_criterion_model_partition" in index_names
-    assert "idx_freshness_baseline_events_latest_by_key" not in index_names
+    assert "idx_freshness_inputs_path" in index_names
     assert table_names == {
+        "artifact_snapshots",
         "freshness_baselines",
-        "review_file_snapshots",
+        "freshness_inputs",
+        "review_freshness_evidence",
         "review_jobs",
         "review_pairs",
     }
 
 
 def test_ensure_db_rejects_stale_review_store_shape(tmp_path: Path) -> None:
-    db_path = tmp_path / "review-store.sqlite"
+    db_path = tmp_path / "commonplace-store.sqlite"
     db_path.parent.mkdir(parents=True, exist_ok=True)
     with sqlite3.connect(db_path) as conn:
         conn.execute("CREATE TABLE review_jobs (review_job_id INTEGER PRIMARY KEY)")
@@ -107,7 +111,7 @@ def test_ensure_db_rejects_stale_review_store_shape(tmp_path: Path) -> None:
 
 
 def test_upsert_freshness_baseline_requires_review_pair(tmp_path: Path) -> None:
-    db_path = tmp_path / "review-store.sqlite"
+    db_path = tmp_path / "commonplace-store.sqlite"
     review_db.ensure_db(db_path)
 
     with review_db.connect(db_path) as conn:
@@ -126,7 +130,7 @@ def test_upsert_freshness_baseline_requires_review_pair(tmp_path: Path) -> None:
 
 
 def test_db_checks_remain_final_enum_backstop(tmp_path: Path) -> None:
-    db_path = tmp_path / "review-store.sqlite"
+    db_path = tmp_path / "commonplace-store.sqlite"
     review_db.ensure_db(db_path)
 
     with review_db.connect(db_path) as conn:
@@ -204,7 +208,7 @@ def test_db_checks_remain_final_enum_backstop(tmp_path: Path) -> None:
 
 
 def test_model_partition_writes_are_canonicalized(tmp_path: Path) -> None:
-    db_path = tmp_path / "review-store.sqlite"
+    db_path = tmp_path / "commonplace-store.sqlite"
     review_db.ensure_db(db_path)
 
     with review_db.connect(db_path) as conn:
@@ -225,14 +229,16 @@ def test_model_partition_writes_are_canonicalized(tmp_path: Path) -> None:
             baseline_updated_at="2026-04-10T10:02:00+02:00",
         )
         job_model = conn.execute("SELECT model_partition FROM review_jobs").fetchone()[0]
-        freshness_baseline_model = conn.execute("SELECT model_partition FROM freshness_baselines").fetchone()[0]
+        freshness_baseline_model = conn.execute(
+            "SELECT model_partition FROM current_review_freshness_baselines"
+        ).fetchone()[0]
 
     assert job_model == "claude-opus"
     assert freshness_baseline_model == "claude-opus"
 
 
 def test_freshness_baseline_rejects_pair_from_incomplete_job(tmp_path: Path) -> None:
-    db_path = tmp_path / "review-store.sqlite"
+    db_path = tmp_path / "commonplace-store.sqlite"
     review_db.ensure_db(db_path)
 
     with review_db.connect(db_path) as conn:
@@ -279,7 +285,7 @@ def test_freshness_baseline_rejects_pair_from_incomplete_job(tmp_path: Path) -> 
 
 
 def test_job_cannot_complete_until_every_pair_completes(tmp_path: Path) -> None:
-    db_path = tmp_path / "review-store.sqlite"
+    db_path = tmp_path / "commonplace-store.sqlite"
     review_db.ensure_db(db_path)
 
     with review_db.connect(db_path) as conn:
@@ -313,7 +319,7 @@ def test_job_cannot_complete_until_every_pair_completes(tmp_path: Path) -> None:
 
 
 def test_snapshot_file_deduplicates_per_path_and_hashes_exact_utf8(tmp_path: Path) -> None:
-    db_path = tmp_path / "review-store.sqlite"
+    db_path = tmp_path / "commonplace-store.sqlite"
     repo = tmp_path / "repo"
     repo.mkdir()
     note = repo / "kb" / "notes" / "sample.md"
@@ -343,7 +349,7 @@ def test_snapshot_file_deduplicates_per_path_and_hashes_exact_utf8(tmp_path: Pat
 
 
 def test_load_review_job_exposes_created_at(tmp_path: Path) -> None:
-    db_path = tmp_path / "review-store.sqlite"
+    db_path = tmp_path / "commonplace-store.sqlite"
     review_db.ensure_db(db_path)
 
     with review_db.connect(db_path) as conn:
@@ -371,7 +377,7 @@ def test_load_review_job_exposes_created_at(tmp_path: Path) -> None:
 
 
 def test_create_job_validates_runner_model_partition(tmp_path: Path) -> None:
-    db_path = tmp_path / "review-store.sqlite"
+    db_path = tmp_path / "commonplace-store.sqlite"
     review_db.ensure_db(db_path)
 
     with review_db.connect(db_path) as conn:
@@ -406,7 +412,7 @@ def test_create_job_validates_runner_model_partition(tmp_path: Path) -> None:
 
 
 def test_attach_execution_data_validates_runner_model_partition(tmp_path: Path) -> None:
-    db_path = tmp_path / "review-store.sqlite"
+    db_path = tmp_path / "commonplace-store.sqlite"
     review_db.ensure_db(db_path)
 
     with review_db.connect(db_path) as conn:
@@ -442,7 +448,7 @@ def test_attach_execution_data_validates_runner_model_partition(tmp_path: Path) 
 
 
 def test_prune_superseded_freshness_baselines_deletes_unreferenced_snapshots(tmp_path: Path) -> None:
-    db_path = tmp_path / "review-store.sqlite"
+    db_path = tmp_path / "commonplace-store.sqlite"
     repo = tmp_path / "repo"
     repo.mkdir()
     files = {
@@ -519,7 +525,7 @@ def test_prune_superseded_freshness_baselines_deletes_unreferenced_snapshots(tmp
         deleted_job_ids = review_db.prune_superseded_freshness_baselines(conn, [superseded])
         remaining_snapshot_ids = {
             int(row["snapshot_id"])
-            for row in conn.execute("SELECT snapshot_id FROM review_file_snapshots").fetchall()
+            for row in conn.execute("SELECT snapshot_id FROM artifact_snapshots").fetchall()
         }
         old_pair = conn.execute(
             "SELECT review_pair_id FROM review_pairs WHERE review_pair_id = ?",
@@ -540,7 +546,7 @@ def test_prune_superseded_freshness_baselines_deletes_unreferenced_snapshots(tmp
 
 
 def test_current_freshness_baseline_view_exposes_snapshot_hashes(tmp_path: Path) -> None:
-    db_path = tmp_path / "review-store.sqlite"
+    db_path = tmp_path / "commonplace-store.sqlite"
     repo = tmp_path / "repo"
     repo.mkdir()
     note = repo / "kb" / "notes" / "sample.md"
@@ -586,7 +592,7 @@ def test_current_freshness_baseline_view_exposes_snapshot_hashes(tmp_path: Path)
                 baseline_criterion_snapshot_id,
                 baseline_note_hash,
                 baseline_criterion_hash
-            FROM current_freshness_baselines
+            FROM current_review_freshness_baselines
             WHERE note_path = 'kb/notes/sample.md'
             """
         ).fetchone()
@@ -598,7 +604,7 @@ def test_current_freshness_baseline_view_exposes_snapshot_hashes(tmp_path: Path)
 
 
 def test_snapshot_file_rejects_non_repo_relative_paths(tmp_path: Path) -> None:
-    db_path = tmp_path / "review-store.sqlite"
+    db_path = tmp_path / "commonplace-store.sqlite"
     repo = tmp_path / "repo"
     repo.mkdir()
     review_db.ensure_db(db_path)

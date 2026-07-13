@@ -20,7 +20,7 @@ REVIEWED_AT = "2026-03-31T00:00:00+00:00"
 
 
 def db_path_for(repo_root: Path) -> Path:
-    return repo_root / "kb" / "reports" / "review-store.sqlite"
+    return repo_root / "kb" / "reports" / "commonplace-store.sqlite"
 
 
 def write(path: Path, content: str) -> Path:
@@ -654,7 +654,7 @@ class TestAckMetadata:
             row = conn.execute(
                 """
                 SELECT evidence_review_pair_id, baseline_note_hash
-                FROM current_freshness_baselines
+                FROM current_review_freshness_baselines
                 WHERE note_path = ? AND criterion_path = ? AND model_partition = ?
                 """,
                 ("kb/notes/stable.md", "kb/instructions/review-gates/prose/source-residue.md", TEST_MODEL),
@@ -677,7 +677,7 @@ class TestAckMetadata:
             row = conn.execute(
                 """
                 SELECT baseline_note_snapshot_id, baseline_note_hash
-                FROM current_freshness_baselines
+                FROM current_review_freshness_baselines
                 WHERE note_path = ? AND criterion_path = ? AND model_partition = ?
                 """,
                 ("kb/notes/stable.md", "kb/instructions/review-gates/prose/source-residue.md", TEST_MODEL),
@@ -736,7 +736,7 @@ Fixture test.
             row = conn.execute(
                 """
                 SELECT evidence_review_pair_id, baseline_criterion_snapshot_id, baseline_criterion_hash
-                FROM current_freshness_baselines
+                FROM current_review_freshness_baselines
                 WHERE note_path = ? AND criterion_path = ? AND model_partition = ?
                 """,
                 ("kb/notes/stable.md", "kb/instructions/review-gates/prose/source-residue.md", TEST_MODEL),
@@ -755,7 +755,7 @@ Fixture test.
             original_snapshot_id = conn.execute(
                 """
                 SELECT baseline_note_snapshot_id
-                FROM current_freshness_baselines
+                FROM current_review_freshness_baselines
                 WHERE note_path = ? AND criterion_path = ? AND model_partition = ?
                 """,
                 ("kb/notes/stable.md", criterion_path, TEST_MODEL),
@@ -768,7 +768,7 @@ Fixture test.
             first_ack_snapshot_id = conn.execute(
                 """
                 SELECT baseline_note_snapshot_id
-                FROM current_freshness_baselines
+                FROM current_review_freshness_baselines
                 WHERE note_path = ? AND criterion_path = ? AND model_partition = ?
                 """,
                 ("kb/notes/stable.md", criterion_path, TEST_MODEL),
@@ -781,14 +781,14 @@ Fixture test.
             second_ack_snapshot_id = conn.execute(
                 """
                 SELECT baseline_note_snapshot_id
-                FROM current_freshness_baselines
+                FROM current_review_freshness_baselines
                 WHERE note_path = ? AND criterion_path = ? AND model_partition = ?
                 """,
                 ("kb/notes/stable.md", criterion_path, TEST_MODEL),
             ).fetchone()["baseline_note_snapshot_id"]
             remaining_snapshot_ids = {
                 int(row["snapshot_id"])
-                for row in conn.execute("SELECT snapshot_id FROM review_file_snapshots").fetchall()
+                for row in conn.execute("SELECT snapshot_id FROM artifact_snapshots").fetchall()
             }
 
         assert original_snapshot_id in remaining_snapshot_ids
@@ -834,7 +834,7 @@ Fixture test.
             row = conn.execute(
                 """
                 SELECT evidence_review_pair_id
-                FROM current_freshness_baselines
+                FROM current_review_freshness_baselines
                 WHERE note_path = ? AND criterion_path = ? AND model_partition = ?
                 """,
                 ("kb/notes/stable.md", "kb/instructions/review-gates/prose/source-residue.md", TEST_MODEL),
@@ -864,7 +864,7 @@ Fixture test.
         assert len(stale_before) == 2
         with sqlite3.connect(db_path_for(tmp_path)) as conn:
             freshness_baseline_count_before = conn.execute("SELECT count(*) FROM freshness_baselines").fetchone()[0]
-            snapshot_count_before = conn.execute("SELECT count(*) FROM review_file_snapshots").fetchone()[0]
+            snapshot_count_before = conn.execute("SELECT count(*) FROM artifact_snapshots").fetchone()[0]
 
         with pytest.raises(ValueError, match="no freshness baseline"):
             ack_pairs(
@@ -886,7 +886,7 @@ Fixture test.
 
         with sqlite3.connect(db_path_for(tmp_path)) as conn:
             freshness_baseline_count_after = conn.execute("SELECT count(*) FROM freshness_baselines").fetchone()[0]
-            snapshot_count_after = conn.execute("SELECT count(*) FROM review_file_snapshots").fetchone()[0]
+            snapshot_count_after = conn.execute("SELECT count(*) FROM artifact_snapshots").fetchone()[0]
         assert freshness_baseline_count_after == freshness_baseline_count_before
         assert snapshot_count_after == snapshot_count_before
 
@@ -896,7 +896,7 @@ Fixture test.
 
         with sqlite3.connect(db_path_for(tmp_path)) as conn:
             freshness_baseline_count_before = conn.execute("SELECT count(*) FROM freshness_baselines").fetchone()[0]
-            snapshot_count_before = conn.execute("SELECT count(*) FROM review_file_snapshots").fetchone()[0]
+            snapshot_count_before = conn.execute("SELECT count(*) FROM artifact_snapshots").fetchone()[0]
 
         with pytest.raises(ValueError, match="no freshness baseline"):
             ack_pairs(
@@ -917,7 +917,7 @@ Fixture test.
         assert len(stale_after) == 1
         with sqlite3.connect(db_path_for(tmp_path)) as conn:
             freshness_baseline_count_after = conn.execute("SELECT count(*) FROM freshness_baselines").fetchone()[0]
-            snapshot_count_after = conn.execute("SELECT count(*) FROM review_file_snapshots").fetchone()[0]
+            snapshot_count_after = conn.execute("SELECT count(*) FROM artifact_snapshots").fetchone()[0]
         assert freshness_baseline_count_after == freshness_baseline_count_before
         assert snapshot_count_after == snapshot_count_before
 
@@ -930,7 +930,7 @@ Fixture test.
             freshness_baseline_count_before = conn.execute(
                 """
                 SELECT count(*)
-                FROM freshness_baselines
+                FROM current_review_freshness_baselines
                 WHERE note_path = ? AND criterion_path = ? AND model_partition = ?
                 """,
                 ("kb/notes/stable.md", criterion_path, TEST_MODEL),
@@ -949,7 +949,7 @@ Fixture test.
             freshness_baseline_count_after = conn.execute(
                 """
                 SELECT count(*)
-                FROM freshness_baselines
+                FROM current_review_freshness_baselines
                 WHERE note_path = ? AND criterion_path = ? AND model_partition = ?
                 """,
                 ("kb/notes/stable.md", criterion_path, TEST_MODEL),
@@ -1174,7 +1174,7 @@ class TestModelOptional:
             row = conn.execute(
                 """
                 SELECT evidence_review_pair_id
-                FROM current_freshness_baselines
+                FROM current_review_freshness_baselines
                 WHERE note_path = ? AND criterion_path = ? AND model_partition = ?
                 """,
                 ("kb/notes/stable.md", "kb/instructions/review-gates/prose/source-residue.md", TEST_MODEL),

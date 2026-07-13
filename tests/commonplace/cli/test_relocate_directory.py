@@ -195,7 +195,7 @@ def test_relocate_directory_apply_leaves_review_state_rows_unchanged_and_paths_d
     bar = make_reviewable_note(source_dir / "bar.md", "Bar")
     make_gate(tmp_path)
 
-    db_path = tmp_path / "kb" / "reports" / "review-store.sqlite"
+    db_path = tmp_path / "kb" / "reports" / "commonplace-store.sqlite"
     seed_accepted_review(tmp_path, db_path, note_path="kb/notes/related-systems/foo.md")
     seed_accepted_review(tmp_path, db_path, note_path="kb/notes/related-systems/bar.md")
     with review_db.connect(db_path) as conn:

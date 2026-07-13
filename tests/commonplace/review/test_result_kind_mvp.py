@@ -49,7 +49,7 @@ type: kb/types/instruction.md
 Attack the central commitment.
 """,
     )
-    db_path = root / "kb/reports/review-store.sqlite"
+    db_path = root / "kb/reports/commonplace-store.sqlite"
     review_db.ensure_db(db_path)
     return db_path
 

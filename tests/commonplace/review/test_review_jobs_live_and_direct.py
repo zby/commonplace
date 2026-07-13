@@ -93,7 +93,7 @@ def build_repo_fixture(
         "prose",
     )
     commit_all(repo, "fixture")
-    return repo, repo / "kb" / "reports" / "review-store.sqlite"
+    return repo, repo / "kb" / "reports" / "commonplace-store.sqlite"
 
 
 def pair_block(note_path: str, criterion_id: str, body: str, outcome: str) -> str:
@@ -222,9 +222,9 @@ def test_create_review_jobs_groups_cross_lens_gates_by_bundle(tmp_path: Path) ->
                 note_snapshot.content_text AS note_text,
                 criterion_snapshot.content_text AS criterion_text
             FROM review_pairs AS rp
-            JOIN review_file_snapshots AS note_snapshot
+            JOIN artifact_snapshots AS note_snapshot
               ON rp.reviewed_note_snapshot_id = note_snapshot.snapshot_id
-            JOIN review_file_snapshots AS criterion_snapshot
+            JOIN artifact_snapshots AS criterion_snapshot
               ON rp.reviewed_criterion_snapshot_id = criterion_snapshot.snapshot_id
             ORDER BY rp.review_job_id, rp.pair_ordinal
             """
@@ -278,7 +278,7 @@ Dirty gate marker.
             """
             SELECT snapshot.content_text
             FROM review_pairs AS rp
-            JOIN review_file_snapshots AS snapshot
+            JOIN artifact_snapshots AS snapshot
               ON rp.reviewed_criterion_snapshot_id = snapshot.snapshot_id
             WHERE rp.criterion_path = ?
             """,
@@ -732,11 +732,11 @@ def test_finalize_review_job_finalizes_queued_job(tmp_path: Path) -> None:
             SELECT
                 rp.reviewed_note_snapshot_id,
                 rp.reviewed_criterion_snapshot_id,
-                ae.baseline_note_snapshot_id,
-                ae.baseline_criterion_snapshot_id
+                v.baseline_note_snapshot_id,
+                v.baseline_criterion_snapshot_id
             FROM review_pairs AS rp
-                JOIN freshness_baselines AS ae
-              ON ae.evidence_review_pair_id = rp.review_pair_id
+                JOIN current_review_freshness_baselines AS v
+              ON v.evidence_review_pair_id = rp.review_pair_id
             ORDER BY rp.pair_ordinal
             """
         ).fetchall()
@@ -793,7 +793,7 @@ def test_failed_rereview_preserves_previous_freshness_baseline_and_artifacts(tmp
         current_freshness_baseline = conn.execute(
             """
             SELECT evidence_review_pair_id
-            FROM current_freshness_baselines
+            FROM current_review_freshness_baselines
             WHERE note_path = ? AND criterion_path = ? AND model_partition = ?
             """,
             ("kb/notes/sample.md", GATE_ONE_PATH, "test-model"),
@@ -854,7 +854,7 @@ def test_successful_rereview_prunes_superseded_job_and_artifacts(tmp_path: Path)
         current_freshness_baseline = conn.execute(
             """
             SELECT evidence_review_pair_id
-            FROM current_freshness_baselines
+            FROM current_review_freshness_baselines
             WHERE note_path = ? AND criterion_path = ? AND model_partition = ?
             """,
             ("kb/notes/sample.md", GATE_ONE_PATH, "test-model"),

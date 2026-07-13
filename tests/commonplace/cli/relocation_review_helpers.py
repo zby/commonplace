@@ -62,7 +62,7 @@ def review_state_rows(conn: sqlite3.Connection) -> dict[str, list[dict[str, obje
     return {
         "review_jobs": table_rows(conn, "review_jobs", "review_job_id"),
         "review_pairs": table_rows(conn, "review_pairs", "review_pair_id"),
-        "freshness_baselines": table_rows(conn, "freshness_baselines", "note_path, criterion_path, model_partition"),
+        "freshness_baselines": table_rows(conn, "freshness_baselines", "target_id"),
     }
 
 

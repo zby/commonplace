@@ -56,7 +56,7 @@ def _insert_completed_job(
 
 
 def test_inline_prune_keeps_bundled_job_until_all_pairs_are_superseded(tmp_path: Path) -> None:
-    db_path = tmp_path / "review-store.sqlite"
+    db_path = tmp_path / "commonplace-store.sqlite"
     review_db.ensure_db(db_path)
 
     with review_db.connect(db_path) as conn:
@@ -189,7 +189,7 @@ def test_result_paths_stay_stable_when_a_sibling_pair_is_pruned(tmp_path: Path) 
     """Derived result paths are a pure function of the pair row: pruning a
     superseded sibling (here, a basename-colliding note in a criterion-packed job)
     must not change the surviving pair's result path."""
-    db_path = tmp_path / "review-store.sqlite"
+    db_path = tmp_path / "commonplace-store.sqlite"
     review_db.ensure_db(db_path)
 
     with review_db.connect(db_path) as conn:

@@ -80,6 +80,8 @@ def accept_pair(
             path=criterion_path,
             captured_at=baseline_updated_at,
         )
+    from commonplace.freshness import baselines as freshness_baselines
+
     return review_db.upsert_freshness_baseline(
         conn,
         note_path=note_path,
@@ -89,6 +91,13 @@ def accept_pair(
         baseline_note_snapshot_id=baseline_note_snapshot_id,
         baseline_criterion_snapshot_id=baseline_criterion_snapshot_id,
         baseline_updated_at=baseline_updated_at,
+        expected_baseline_revision=freshness_baselines.load_expected_baseline_revision(
+            conn,
+            note_path=note_path,
+            criterion_path=criterion_path,
+            model_partition=model_partition,
+        ),
+        capture_refresh=True,
     )
 
 
@@ -97,16 +106,16 @@ def _synthetic_snapshot(conn: sqlite3.Connection, *, path: str, captured_at: str
     content_hash = sha256(content_text.encode("utf-8")).hexdigest()
     conn.execute(
         """
-        INSERT OR IGNORE INTO review_file_snapshots (
-            path, content_sha256, content_text, captured_at
-        ) VALUES (?, ?, ?, ?)
+        INSERT OR IGNORE INTO artifact_snapshots (
+            artifact_path, version_kind, content_sha256, content_text, captured_at
+        ) VALUES (?, 'file-text', ?, ?, ?)
         """,
         (path, content_hash, content_text, captured_at),
     )
     row = conn.execute(
         """
-        SELECT snapshot_id FROM review_file_snapshots
-        WHERE path = ? AND content_sha256 = ?
+        SELECT snapshot_id FROM artifact_snapshots
+        WHERE artifact_path = ? AND version_kind = 'file-text' AND content_sha256 = ?
         """,
         (path, content_hash),
     ).fetchone()

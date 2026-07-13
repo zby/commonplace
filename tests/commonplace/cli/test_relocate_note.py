@@ -191,7 +191,7 @@ def test_relocate_note_apply_leaves_review_state_rows_unchanged_and_paths_derive
     old_note = make_reviewable_note(notes_root / "old-note.md")
     make_gate(repo_root)
     write(repo_root / "mkdocs.yml", "plugins:\n  - redirects:\n      redirect_maps:\n")
-    db_path = kb_root / "reports" / "review-store.sqlite"
+    db_path = kb_root / "reports" / "commonplace-store.sqlite"
     review_pair_id = seed_accepted_review(repo_root, db_path, note_path="kb/notes/old-note.md")
     with review_db.connect(db_path) as conn:
         rows_before = review_state_rows(conn)

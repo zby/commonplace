@@ -86,7 +86,7 @@ def build_repo_fixture(tmp_path: Path) -> tuple[Path, Path]:
     )
     subprocess.run(["git", "add", "."], cwd=repo, check=True, capture_output=True)
     subprocess.run(["git", "commit", "-m", "fixture"], cwd=repo, check=True, capture_output=True)
-    db_path = repo / "kb" / "reports" / "review-store.sqlite"
+    db_path = repo / "kb" / "reports" / "commonplace-store.sqlite"
     return repo, db_path
 
 
@@ -511,7 +511,7 @@ watches: [body]
 Terms are undefined.
 """,
     )
-    db_path = repo / "kb" / "reports" / "review-store.sqlite"
+    db_path = repo / "kb" / "reports" / "commonplace-store.sqlite"
     review_db.ensure_db(db_path)
 
     with pytest.raises(ValueError, match="exactly one note"):

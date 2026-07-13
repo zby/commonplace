@@ -28,18 +28,20 @@ The persisted unit is a `review_pairs` row inside one `review_jobs` row. A job's
 
 ## Data model
 
-SQLite database, default location `kb/reports/review-store.sqlite`; override with `COMMONPLACE_REVIEW_DB` or a command-specific `--db`. `review_schema.py` owns current-schema setup and integrity checks. Unsupported schema versions are refused; the retained v5 store has an explicit direct v5→v7 preservation script.
+SQLite operational store, default `kb/reports/commonplace-store.sqlite`; override with `COMMONPLACE_STORE` or a command-specific `--db`. `commonplace.store` owns schema setup and whole-store integrity; `review_schema.py` delegates to it. The retained `kb/reports/review-store.sqlite` is the schema-v7 backup; migrate with `scripts/migrate-review-db-v7-to-commonplace-store.py` before switching the default.
 
 | Table | Contents |
 |---|---|
+| `artifact_snapshots` | Path-keyed `file-text` snapshots: exact UTF-8 text and SHA-256 for prompt rendering, diffing, and accepted inputs |
+| `freshness_baselines` | Current accepted baseline per `(target_kind, target_key_json)` with monotonic `revision` |
+| `freshness_inputs` | Accepted input roles for a target, each pointing at an `artifact_snapshots` row |
+| `review_freshness_evidence` | Review-only bridge: completed evidence pair retained by a `review-pair` target |
 | `review_jobs` | One review invocation: model partition, nullable runner/model/effort provenance, status, grouping (`note`/`criterion`), `created_at`, nullable `completed_at`, telemetry, failure context |
-| `review_pairs` | One requested `(note_path, criterion_path)` pair inside a job: persisted `result_kind` (`verdict`/`report`), nullable outcome, and reviewed note/criterion snapshot IDs; derives `model_partition` from its parent job |
-| `review_file_snapshots` | Role-neutral snapshots by `(path, content_sha256)`, storing exact UTF-8 text when it must be reusable for prompt rendering or diffing |
-| `freshness_baselines` | Current freshness baseline per `(note_path, criterion_path, model_partition)`; `evidence_review_pair_id` points at completed evidence and baseline snapshot IDs pin note/criterion text |
+| `review_pairs` | One requested `(note_path, criterion_path)` pair inside a job: persisted `result_kind` (`verdict`/`report`), nullable outcome, reviewed snapshot IDs, nullable `expected_baseline_revision` for queued-job CAS |
 
 Artifact paths — prompt, job output, manifest, and per-pair result files — are **derived**, not stored columns. Each per-pair result filename (`pair-{ordinal}-{stem}.md`) is a pure function of that pair's own row (`pair_ordinal` plus the grouping-varying path stem), never of sibling pairs, so inline pruning of superseded sibling pairs cannot change a surviving pair's path.
 
-The `current_freshness_baselines` view enriches each current row with evidence-pair result data and baseline snapshot hashes/text. A baseline is valid only when its evidence pair, parent job, paths, model partition, snapshots, and per-kind completion agree. `review_schema.py` checks those invariants at initialization, and baseline query helpers repeat the check rather than hiding malformed rows as stale state.
+The `current_review_freshness_baselines` view projects review-shaped rows over generic freshness tables plus `review_freshness_evidence`. A baseline is valid only when its evidence pair, parent job, paths, model partition, snapshots, and per-kind completion agree. Store initialization checks those invariants, and baseline query helpers repeat the check rather than hiding malformed rows as stale state.
 
 ### Canonical state vs derived output
 

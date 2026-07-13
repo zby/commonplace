@@ -27,7 +27,7 @@ REVIEWED_AT = "2026-07-01T00:00:00+00:00"
 
 
 def db_path_for(repo_root: Path) -> Path:
-    return repo_root / "kb" / "reports" / "review-store.sqlite"
+    return repo_root / "kb" / "reports" / "commonplace-store.sqlite"
 
 
 def write(path: Path, content: str) -> Path:

@@ -154,6 +154,40 @@ Optional provenance flags are recorded at finalization time. `--runner` may be s
 
 The command accepts `queued` jobs, rejects `completed` and `failed`, reads the job-owned `job-output.md`, writes per-pair result files to derived result paths with provenance frontmatter, refreshes `MANIFEST.json` for inspection, and prints JSON for success, mutated failure, and precondition failure. Result-file write failures are fatal evidence failures. Manifest refresh failures after DB completion do not fail the job; they are returned in an optional top-level `warnings` array.
 
+### commonplace-freshness-status
+
+Report repository-wide freshness for registered targets. v1 covers migrated `review-pair` targets only. Exit `0` when all selected targets are fresh, `1` when any input changed or is missing, `2` on misuse or store errors.
+
+```bash
+commonplace-freshness-status --json
+commonplace-freshness-status --all --json --model-partition codex
+commonplace-freshness-status --json --diff
+```
+
+### commonplace-freshness-accept
+
+Observation refresh or initial acceptance for non-review targets. Rejects `review-pair` in v1 — review capture finalization owns those targets.
+
+```bash
+commonplace-freshness-accept --input manifest.json
+```
+
+### commonplace-freshness-ack
+
+Acknowledge changed inputs for a registered target from a status-derived manifest. Review-pair targets preserve evidence automatically.
+
+```bash
+commonplace-freshness-ack --input ack.json
+```
+
+### commonplace-freshness-retire
+
+Remove a registered baseline when an artifact or target should leave global status. Idempotent when the target is already absent.
+
+```bash
+commonplace-freshness-retire --input retire.json
+```
+
 ### commonplace-ack-review
 
 Advance an existing freshness baseline for specific criteria without re-running the assay. For report pairs this reuses current evidence; it does not endorse or resolve the report.

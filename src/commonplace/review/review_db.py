@@ -3,24 +3,23 @@
 
 from __future__ import annotations
 
-import os
 import sqlite3
 from dataclasses import asdict, dataclass
-from importlib import resources
 from pathlib import Path
 from typing import Sequence
-
-from commonplace.lib.hashing import content_sha256_for_text
 from commonplace.review.artifacts import job_output_path_rel, prompt_path_rel, result_path
-from commonplace.review.clock import iso_now
-from commonplace.review.paths import criterion_id_from_stored_path, normalize_repo_relative_path
+from commonplace.review.paths import criterion_id_from_stored_path
 from commonplace.review.review_model import build_model_partition, normalize_model_partition, normalize_reasoning_effort
-from commonplace.review.review_schema import connect as connect
-from commonplace.review.review_schema import init_db
+from commonplace import store
+from commonplace.freshness import baselines as freshness_baselines
+from commonplace.freshness.models import ArtifactSnapshot as ReviewFileSnapshot
+from commonplace.freshness.snapshots import insert_or_get_snapshot, load_snapshot_by_id
+from commonplace.freshness.versioning import resolve_file_text
 
-DEFAULT_DB_PATH = Path("kb/reports/review-store.sqlite")
-SCHEMA_PATH = "review-schema.sql"
-DB_ENV_VAR = "COMMONPLACE_REVIEW_DB"
+connect = store.connect
+
+DEFAULT_DB_PATH = store.DEFAULT_DB_PATH
+DB_ENV_VAR = store.DB_ENV_VAR
 JOB_STATUS_VALUES = frozenset({"queued", "completed", "failed"})
 
 
@@ -48,14 +47,6 @@ def _validated_runner_effort(
             f"does not match model_partition {expected_partition!r}"
         )
     return runner_effort
-
-
-@dataclass(frozen=True)
-class ReviewFileSnapshot:
-    snapshot_id: int
-    path: str
-    content_sha256: str
-    content_text: str
 
 
 @dataclass(frozen=True)
@@ -117,6 +108,7 @@ class ReviewPairRow:
     result_path: str | None
     reviewed_note_snapshot_id: int | None
     reviewed_criterion_snapshot_id: int | None
+    expected_baseline_revision: int | None
     completed_at: str | None
 
     @property
@@ -201,20 +193,11 @@ class ReviewJobPlan:
 
 
 def resolve_db_path(repo_root: Path, db_override: str | None = None) -> Path:
-    if db_override:
-        return Path(db_override).resolve()
-    raw = os.environ.get(DB_ENV_VAR, "").strip()
-    if raw:
-        db_path = Path(raw)
-        if not db_path.is_absolute():
-            db_path = repo_root / db_path
-        return db_path
-    return repo_root / DEFAULT_DB_PATH
+    return store.resolve_db_path(repo_root, db_override)
 
 
 def ensure_db(db_path: Path) -> None:
-    with resources.as_file(resources.files("commonplace.review") / SCHEMA_PATH) as schema_path:
-        init_db(db_path, schema_path)
+    store.ensure_db(db_path)
 
 
 def prepare_review_db(repo_root: Path, db_override: str | None = None) -> Path:
@@ -229,37 +212,8 @@ def _placeholders(values: Sequence[object]) -> str:
 
 
 def snapshot_file(conn: sqlite3.Connection, *, repo_root: Path, path: str) -> ReviewFileSnapshot:
-    normalized_path = normalize_repo_relative_path(path, label="snapshot path")
-    content_text = (repo_root / normalized_path).read_text(encoding="utf-8")
-    content_sha256 = content_sha256_for_text(content_text)
-    conn.execute(
-        """
-        INSERT OR IGNORE INTO review_file_snapshots (
-            path,
-            content_sha256,
-            content_text,
-            captured_at
-        ) VALUES (?, ?, ?, ?)
-        """,
-        (normalized_path, content_sha256, content_text, iso_now()),
-    )
-    row = conn.execute(
-        """
-        SELECT snapshot_id, path, content_sha256, content_text
-        FROM review_file_snapshots
-        WHERE path = ?
-          AND content_sha256 = ?
-        """,
-        (normalized_path, content_sha256),
-    ).fetchone()
-    if row is None:
-        raise RuntimeError(f"failed to load review file snapshot: {normalized_path}")
-    return ReviewFileSnapshot(
-        snapshot_id=row["snapshot_id"],
-        path=row["path"],
-        content_sha256=row["content_sha256"],
-        content_text=row["content_text"],
-    )
+    resolved = resolve_file_text(repo_root=repo_root, path=path)
+    return insert_or_get_snapshot(conn, resolved=resolved)
 
 
 def _review_job_from_row(row: sqlite3.Row) -> ReviewJobRow:
@@ -290,6 +244,7 @@ _PAIR_SELECT = """
     rp.outcome,
     rp.reviewed_note_snapshot_id,
     rp.reviewed_criterion_snapshot_id,
+    rp.expected_baseline_revision,
     rp.completed_at
 """
 
@@ -313,6 +268,7 @@ def _review_pair_from_row(row: sqlite3.Row) -> ReviewPairRow:
         ),
         reviewed_note_snapshot_id=row["reviewed_note_snapshot_id"],
         reviewed_criterion_snapshot_id=row["reviewed_criterion_snapshot_id"],
+        expected_baseline_revision=row["expected_baseline_revision"],
         completed_at=row["completed_at"],
     )
 
@@ -376,6 +332,7 @@ def create_review_pairs(
     conn: sqlite3.Connection,
     *,
     review_job_id: int,
+    model_partition: str,
     pairs: Sequence[ReviewPairRequest],
 ) -> list[int]:
     result_kinds = {pair.result_kind for pair in pairs}
@@ -384,8 +341,15 @@ def create_review_pairs(
         raise ValueError(f"invalid result kind: {sorted(invalid_result_kinds)}")
     if len(result_kinds) > 1:
         raise ValueError("review job cannot mix result kinds")
+    model_partition = normalize_model_partition(model_partition)
     review_pair_ids: list[int] = []
     for pair in pairs:
+        expected_revision = freshness_baselines.load_expected_baseline_revision(
+            conn,
+            note_path=pair.note_path,
+            criterion_path=pair.criterion_path,
+            model_partition=model_partition,
+        )
         cursor = conn.execute(
             """
             INSERT INTO review_pairs (
@@ -395,8 +359,9 @@ def create_review_pairs(
                 pair_ordinal,
                 result_kind,
                 reviewed_note_snapshot_id,
-                reviewed_criterion_snapshot_id
-            ) VALUES (?, ?, ?, ?, ?, ?, ?)
+                reviewed_criterion_snapshot_id,
+                expected_baseline_revision
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             """,
             (
                 review_job_id,
@@ -406,6 +371,7 @@ def create_review_pairs(
                 pair.result_kind,
                 pair.reviewed_note_snapshot_id,
                 pair.reviewed_criterion_snapshot_id,
+                expected_revision,
             ),
         )
         review_pair_ids.append(int(cursor.lastrowid))
@@ -434,7 +400,12 @@ def create_job_with_pairs(
         grouping=grouping,
         status=status,
     )
-    create_review_pairs(conn, review_job_id=review_job_id, pairs=pairs)
+    create_review_pairs(
+        conn,
+        review_job_id=review_job_id,
+        model_partition=model_partition,
+        pairs=pairs,
+    )
     return review_job_id
 
 
@@ -553,7 +524,7 @@ def load_current_freshness_baselines(conn: sqlite3.Connection) -> dict[tuple[str
             baseline_updated_at,
             result_kind,
             outcome
-        FROM current_freshness_baselines
+        FROM current_review_freshness_baselines
         """
     ).fetchall()
     return {
@@ -743,10 +714,119 @@ def upsert_freshness_baseline(
     baseline_note_snapshot_id: int,
     baseline_criterion_snapshot_id: int,
     baseline_updated_at: str,
+    expected_baseline_revision: int | None = None,
+    capture_refresh: bool = False,
 ) -> SupersededFreshnessBaseline | None:
     if evidence_review_pair_id is None:
         raise ValueError("evidence_review_pair_id is required")
     model_partition = normalize_model_partition(model_partition)
+    _validate_evidence_pair(
+        conn,
+        evidence_review_pair_id=evidence_review_pair_id,
+        note_path=note_path,
+        criterion_path=criterion_path,
+        model_partition=model_partition,
+    )
+    note_snapshot = load_snapshot_by_id(conn, baseline_note_snapshot_id)
+    criterion_snapshot = load_snapshot_by_id(conn, baseline_criterion_snapshot_id)
+    if note_snapshot is None or note_snapshot.artifact_path != note_path or not note_snapshot.content_text:
+        raise ValueError("baseline note snapshot is missing or does not match the note path")
+    if (
+        criterion_snapshot is None
+        or criterion_snapshot.artifact_path != criterion_path
+        or not criterion_snapshot.content_text
+    ):
+        raise ValueError("baseline criterion snapshot is missing or does not match the criterion path")
+
+    current_target = freshness_baselines.load_review_target(
+        conn,
+        note_path=note_path,
+        criterion_path=criterion_path,
+        model_partition=model_partition,
+    )
+    previous_superseded: SupersededFreshnessBaseline | None = None
+    if current_target is not None:
+        previous_superseded = _superseded_baseline_for_target(
+            conn,
+            note_path=note_path,
+            criterion_path=criterion_path,
+            model_partition=model_partition,
+            target_id=current_target.target_id,
+        )
+    if current_target is None or capture_refresh:
+        freshness_baselines.refresh_review_baseline_from_captures(
+            conn,
+            note_path=note_path,
+            criterion_path=criterion_path,
+            model_partition=model_partition,
+            evidence_review_pair_id=evidence_review_pair_id,
+            baseline_note_snapshot_id=baseline_note_snapshot_id,
+            baseline_criterion_snapshot_id=baseline_criterion_snapshot_id,
+            expected_baseline_revision=expected_baseline_revision,
+            accepted_at=baseline_updated_at,
+        )
+    else:
+        freshness_baselines.refresh_review_baseline_from_observation(
+            conn,
+            note_path=note_path,
+            criterion_path=criterion_path,
+            model_partition=model_partition,
+            evidence_review_pair_id=evidence_review_pair_id,
+            baseline_note_snapshot_id=baseline_note_snapshot_id,
+            baseline_criterion_snapshot_id=baseline_criterion_snapshot_id,
+            accepted_at=baseline_updated_at,
+        )
+
+    if previous_superseded is None:
+        return None
+    return previous_superseded
+
+
+def _superseded_baseline_for_target(
+    conn: sqlite3.Connection,
+    *,
+    note_path: str,
+    criterion_path: str,
+    model_partition: str,
+    target_id: int,
+) -> SupersededFreshnessBaseline:
+    evidence_row = conn.execute(
+        """
+        SELECT evidence_review_pair_id
+        FROM review_freshness_evidence
+        WHERE target_id = ?
+        """,
+        (target_id,),
+    ).fetchone()
+    if evidence_row is None:
+        raise RuntimeError(f"review evidence missing for target_id={target_id}")
+    input_rows = conn.execute(
+        """
+        SELECT input_role, accepted_snapshot_id
+        FROM freshness_inputs
+        WHERE target_id = ?
+        """,
+        (target_id,),
+    ).fetchall()
+    snapshots = {row["input_role"]: int(row["accepted_snapshot_id"]) for row in input_rows}
+    return SupersededFreshnessBaseline(
+        note_path=note_path,
+        criterion_path=criterion_path,
+        model_partition=model_partition,
+        evidence_review_pair_id=int(evidence_row["evidence_review_pair_id"]),
+        baseline_note_snapshot_id=snapshots.get("note"),
+        baseline_criterion_snapshot_id=snapshots.get("criterion"),
+    )
+
+
+def _validate_evidence_pair(
+    conn: sqlite3.Connection,
+    *,
+    evidence_review_pair_id: int,
+    note_path: str,
+    criterion_path: str,
+    model_partition: str,
+) -> None:
     row = conn.execute(
         """
         SELECT
@@ -779,79 +859,6 @@ def upsert_freshness_baseline(
         or row["model_partition"] != model_partition
     ):
         raise ValueError(f"evidence review pair does not match freshness baseline key: {evidence_review_pair_id}")
-    snapshot_rows = conn.execute(
-        """
-        SELECT snapshot_id, path, content_text
-        FROM review_file_snapshots
-        WHERE snapshot_id IN (?, ?)
-        """,
-        (baseline_note_snapshot_id, baseline_criterion_snapshot_id),
-    ).fetchall()
-    snapshots = {int(snapshot["snapshot_id"]): snapshot for snapshot in snapshot_rows}
-    note_snapshot = snapshots.get(baseline_note_snapshot_id)
-    criterion_snapshot = snapshots.get(baseline_criterion_snapshot_id)
-    if note_snapshot is None or note_snapshot["path"] != note_path or note_snapshot["content_text"] is None:
-        raise ValueError("baseline note snapshot is missing or does not match the note path")
-    if (
-        criterion_snapshot is None
-        or criterion_snapshot["path"] != criterion_path
-        or criterion_snapshot["content_text"] is None
-    ):
-        raise ValueError("baseline criterion snapshot is missing or does not match the criterion path")
-    previous = conn.execute(
-        """
-        SELECT
-            note_path,
-            criterion_path,
-            model_partition,
-            evidence_review_pair_id,
-            baseline_note_snapshot_id,
-            baseline_criterion_snapshot_id
-        FROM freshness_baselines
-        WHERE note_path = ?
-          AND criterion_path = ?
-          AND model_partition = ?
-        """,
-        (note_path, criterion_path, model_partition),
-    ).fetchone()
-    conn.execute(
-        """
-        INSERT INTO freshness_baselines (
-            note_path,
-            criterion_path,
-            model_partition,
-            evidence_review_pair_id,
-            baseline_note_snapshot_id,
-            baseline_criterion_snapshot_id,
-            baseline_updated_at
-        ) VALUES (?, ?, ?, ?, ?, ?, ?)
-        ON CONFLICT(note_path, criterion_path, model_partition)
-        DO UPDATE SET
-            evidence_review_pair_id = excluded.evidence_review_pair_id,
-            baseline_note_snapshot_id = excluded.baseline_note_snapshot_id,
-            baseline_criterion_snapshot_id = excluded.baseline_criterion_snapshot_id,
-            baseline_updated_at = excluded.baseline_updated_at
-        """,
-        (
-            note_path,
-            criterion_path,
-            model_partition,
-            evidence_review_pair_id,
-            baseline_note_snapshot_id,
-            baseline_criterion_snapshot_id,
-            baseline_updated_at,
-        ),
-    )
-    if previous is None:
-        return None
-    return SupersededFreshnessBaseline(
-        note_path=previous["note_path"],
-        criterion_path=previous["criterion_path"],
-        model_partition=previous["model_partition"],
-        evidence_review_pair_id=previous["evidence_review_pair_id"],
-        baseline_note_snapshot_id=previous["baseline_note_snapshot_id"],
-        baseline_criterion_snapshot_id=previous["baseline_criterion_snapshot_id"],
-    )
 
 
 def prune_superseded_freshness_baselines(
@@ -883,8 +890,8 @@ def prune_superseded_freshness_baselines(
             WHERE review_pair_id IN ({_placeholders(candidate_pair_ids)})
               AND NOT EXISTS (
                   SELECT 1
-                  FROM freshness_baselines AS a
-                  WHERE a.evidence_review_pair_id = rp.review_pair_id
+                  FROM review_freshness_evidence AS e
+                  WHERE e.evidence_review_pair_id = rp.review_pair_id
               )
             ORDER BY review_pair_id
             """,
@@ -937,19 +944,18 @@ def prune_superseded_freshness_baselines(
     if candidate_snapshot_id_tuple:
         conn.execute(
             f"""
-            DELETE FROM review_file_snapshots
+            DELETE FROM artifact_snapshots
             WHERE snapshot_id IN ({_placeholders(candidate_snapshot_id_tuple)})
               AND NOT EXISTS (
                   SELECT 1
-                  FROM freshness_baselines AS a
-                  WHERE a.baseline_note_snapshot_id = review_file_snapshots.snapshot_id
-                     OR a.baseline_criterion_snapshot_id = review_file_snapshots.snapshot_id
+                  FROM freshness_inputs AS i
+                  WHERE i.accepted_snapshot_id = artifact_snapshots.snapshot_id
               )
               AND NOT EXISTS (
                   SELECT 1
                   FROM review_pairs AS rp
-                  WHERE rp.reviewed_note_snapshot_id = review_file_snapshots.snapshot_id
-                     OR rp.reviewed_criterion_snapshot_id = review_file_snapshots.snapshot_id
+                  WHERE rp.reviewed_note_snapshot_id = artifact_snapshots.snapshot_id
+                     OR rp.reviewed_criterion_snapshot_id = artifact_snapshots.snapshot_id
               )
             """,
             candidate_snapshot_id_tuple,
@@ -1027,7 +1033,7 @@ def load_effective_review_pair_map(
     rows = conn.execute(
         f"""
         SELECT {_PAIR_SELECT}
-        FROM current_freshness_baselines AS a
+        FROM current_review_freshness_baselines AS a
         JOIN review_pairs AS rp
           ON rp.review_pair_id = a.evidence_review_pair_id
         JOIN review_jobs AS j

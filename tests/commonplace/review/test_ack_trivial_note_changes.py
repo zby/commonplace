@@ -87,7 +87,7 @@ def build_fixture(
         watches=watches,
     )
 
-    db_path = repo / "kb" / "reports" / "review-store.sqlite"
+    db_path = repo / "kb" / "reports" / "commonplace-store.sqlite"
     review_db.ensure_db(db_path)
     with review_db.connect(db_path) as conn:
         note_snapshot = review_db.snapshot_file(conn, repo_root=repo, path="kb/notes/sample.md")
@@ -259,7 +259,7 @@ def test_qualifying_pairs_finds_note_with_only_unwatched_changes_and_ack_records
                 baseline_criterion_snapshot_id,
                 baseline_note_hash,
                 baseline_criterion_hash
-            FROM current_freshness_baselines
+            FROM current_review_freshness_baselines
             WHERE note_path = ? AND criterion_path = ? AND model_partition = ?
             """,
             ("kb/notes/sample.md", "kb/instructions/review-gates/prose/source-residue.md", TEST_MODEL),
@@ -292,7 +292,7 @@ def test_ack_trivial_note_changes_cli_writes_non_null_review_pair_id(tmp_path: P
         row = conn.execute(
             """
             SELECT evidence_review_pair_id
-            FROM current_freshness_baselines
+            FROM current_review_freshness_baselines
             WHERE note_path = ? AND criterion_path = ? AND model_partition = ?
             """,
             ("kb/notes/sample.md", "kb/instructions/review-gates/prose/source-residue.md", TEST_MODEL),
@@ -353,7 +353,7 @@ def test_qualifying_pairs_uses_snapshot_text_without_git(tmp_path: Path) -> None
         repo / "kb" / "instructions" / "review-gates" / "prose" / "source-residue.md",
         "prose/source-residue",
     )
-    db_path = repo / "kb" / "reports" / "review-store.sqlite"
+    db_path = repo / "kb" / "reports" / "commonplace-store.sqlite"
     seed_snapshot_review(
         repo,
         db_path,
@@ -403,7 +403,7 @@ def test_qualifying_pairs_rejects_baseline_without_snapshot_text(tmp_path: Path)
         "prose/source-residue",
     )
 
-    db_path = repo / "kb" / "reports" / "review-store.sqlite"
+    db_path = repo / "kb" / "reports" / "commonplace-store.sqlite"
     review_db.ensure_db(db_path)
     with review_db.connect(db_path) as conn:
         note_snapshot = review_db.snapshot_file(conn, repo_root=repo, path="kb/notes/sample.md")
@@ -433,14 +433,14 @@ def test_qualifying_pairs_rejects_baseline_without_snapshot_text(tmp_path: Path)
             baseline_updated_at="2026-04-04T08:36:13+02:00",
         )
         conn.execute(
-            "UPDATE review_file_snapshots SET content_text = NULL WHERE snapshot_id = ?",
-            (note_snapshot.snapshot_id,),
+            "UPDATE artifact_snapshots SET content_text = 'corrupt', content_sha256 = ? WHERE snapshot_id = ?",
+            ("0" * 64, note_snapshot.snapshot_id),
         )
         conn.commit()
 
     make_note(note, "\nBody.\n", traits="[title-as-claim]")
 
-    with pytest.raises(RuntimeError, match="malformed freshness baseline"):
+    with pytest.raises(RuntimeError, match="hash mismatch"):
         qualifying_pairs(
             repo,
             model=TEST_MODEL,
