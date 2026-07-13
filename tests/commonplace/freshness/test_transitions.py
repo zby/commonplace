@@ -212,6 +212,52 @@ def test_ack_rejects_decoy_artifact_path(tmp_path: Path) -> None:
             )
 
 
+def test_upsert_observation_rejects_mismatched_expected_revision(tmp_path: Path) -> None:
+    from commonplace.review import review_db
+
+    db_path = _init_store(tmp_path)
+    with connect(db_path) as conn:
+        note_snapshot = snapshot_file(conn, repo_root=tmp_path, path="kb/notes/example.md")
+        criterion_snapshot = snapshot_file(
+            conn,
+            repo_root=tmp_path,
+            path="kb/instructions/review-gates/prose/source-residue.md",
+        )
+        pair_id = insert_completed_pair(
+            conn,
+            note_path="kb/notes/example.md",
+            criterion_id="prose/source-residue",
+            model_partition="codex",
+            outcome="pass",
+            completed_at="2026-07-13T00:00:00+00:00",
+            reviewed_note_snapshot_id=note_snapshot.snapshot_id,
+            reviewed_criterion_snapshot_id=criterion_snapshot.snapshot_id,
+        )
+        accept_pair(
+            conn,
+            review_pair_id=pair_id,
+            note_path="kb/notes/example.md",
+            criterion_id="prose/source-residue",
+            model_partition="codex",
+            baseline_updated_at="2026-07-13T00:00:00+00:00",
+            baseline_note_snapshot_id=note_snapshot.snapshot_id,
+            baseline_criterion_snapshot_id=criterion_snapshot.snapshot_id,
+        )
+        with pytest.raises(ValueError, match="stale-baseline-revision"):
+            review_db.upsert_freshness_baseline(
+                conn,
+                note_path="kb/notes/example.md",
+                criterion_path="kb/instructions/review-gates/prose/source-residue.md",
+                model_partition="codex",
+                evidence_review_pair_id=pair_id,
+                baseline_note_snapshot_id=note_snapshot.snapshot_id,
+                baseline_criterion_snapshot_id=criterion_snapshot.snapshot_id,
+                baseline_updated_at="2026-07-13T01:00:00+00:00",
+                expected_baseline_revision=99,
+                capture_refresh=False,
+            )
+
+
 def test_retire_recreate_advances_revision_and_rejects_stale_finalize(tmp_path: Path) -> None:
     from commonplace.freshness.keys import review_pair_target_key
     from commonplace.review.review_db import (

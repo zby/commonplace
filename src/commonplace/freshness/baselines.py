@@ -208,6 +208,7 @@ def refresh_review_baseline_from_observation(
     evidence_review_pair_id: int,
     baseline_note_snapshot_id: int,
     baseline_criterion_snapshot_id: int,
+    expected_baseline_revision: int | None = None,
     accepted_at: str,
 ) -> int | None:
     """Ack-style refresh: CAS on current revision, preserve evidence pair id."""
@@ -219,6 +220,11 @@ def refresh_review_baseline_from_observation(
     )
     if current is None:
         raise ValueError("no freshness baseline to acknowledge")
+    if expected_baseline_revision is not None and expected_baseline_revision != current.revision:
+        raise ValueError(
+            f"stale-baseline-revision: expected {expected_baseline_revision}, "
+            f"current {current.revision}"
+        )
     superseded_evidence_pair_id, _ = refresh_review_baseline_from_captures(
         conn,
         note_path=note_path,

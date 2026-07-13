@@ -112,6 +112,32 @@ def _changed_inputs_for_baseline(
                 )
             )
             continue
+        except (UnicodeDecodeError, ValueError):
+            changed.append(
+                ChangedInput(
+                    input_role=role,
+                    artifact_path=path,
+                    version_kind="file-text",
+                    status="version-error",
+                    accepted_snapshot_id=accepted_snapshot_id,
+                    accepted_content_sha256=accepted_hash,
+                    current_content_sha256=None,
+                )
+            )
+            continue
+        except OSError:
+            changed.append(
+                ChangedInput(
+                    input_role=role,
+                    artifact_path=path,
+                    version_kind="file-text",
+                    status="version-error",
+                    accepted_snapshot_id=accepted_snapshot_id,
+                    accepted_content_sha256=accepted_hash,
+                    current_content_sha256=None,
+                )
+            )
+            continue
         if resolved.content_sha256 != accepted_hash:
             changed.append(
                 ChangedInput(

@@ -774,6 +774,7 @@ def upsert_freshness_baseline(
             evidence_review_pair_id=evidence_review_pair_id,
             baseline_note_snapshot_id=baseline_note_snapshot_id,
             baseline_criterion_snapshot_id=baseline_criterion_snapshot_id,
+            expected_baseline_revision=expected_baseline_revision,
             accepted_at=baseline_updated_at,
         )
 

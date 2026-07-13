@@ -237,6 +237,7 @@ def migrate(
             )
 
             failed_job_ids: set[int] = set()
+            removed_stale_pairs = 0
             queued_pairs = dest.execute(
                 """
                 SELECT
@@ -300,17 +301,33 @@ def migrate(
                 )
                 if note_mismatch or criterion_mismatch:
                     dest.execute(
-                        """
-                        UPDATE review_jobs
-                        SET status = 'failed',
-                            completed_at = created_at,
-                            failure_reason = 'stale-queued-capture'
-                        WHERE review_job_id = ?
-                          AND status = 'queued'
-                        """,
-                        (pair["review_job_id"],),
+                        "DELETE FROM review_pairs WHERE review_pair_id = ?",
+                        (pair["review_pair_id"],),
                     )
-                    failed_job_ids.add(int(pair["review_job_id"]))
+                    removed_stale_pairs += 1
+                    remaining_pairs = int(
+                        dest.execute(
+                            """
+                            SELECT count(*)
+                            FROM review_pairs
+                            WHERE review_job_id = ?
+                            """,
+                            (pair["review_job_id"],),
+                        ).fetchone()[0]
+                    )
+                    if remaining_pairs == 0:
+                        dest.execute(
+                            """
+                            UPDATE review_jobs
+                            SET status = 'failed',
+                                completed_at = created_at,
+                                failure_reason = 'stale-queued-capture'
+                            WHERE review_job_id = ?
+                              AND status = 'queued'
+                            """,
+                            (pair["review_job_id"],),
+                        )
+                        failed_job_ids.add(int(pair["review_job_id"]))
 
             from commonplace.store import assert_store_integrity
 
@@ -329,7 +346,8 @@ def migrate(
                 raise RuntimeError("snapshot count mismatch after migration")
             if dest_counts["review_jobs"] != source_counts["review_jobs"]:
                 raise RuntimeError("review job count mismatch after migration")
-            if dest_counts["review_pairs"] != source_counts["review_pairs"]:
+            expected_review_pairs = source_counts["review_pairs"] - removed_stale_pairs
+            if dest_counts["review_pairs"] != expected_review_pairs:
                 raise RuntimeError("review pair count mismatch after migration")
             if dest_counts["freshness_inputs"] != dest_counts["freshness_baselines"] * 2:
                 raise RuntimeError("freshness input count mismatch after migration")
@@ -347,6 +365,7 @@ def migrate(
         "inputs": dest_counts["freshness_inputs"],
         "skipped_baselines": skipped_baselines,
         "failed_queued_jobs": len(failed_job_ids),
+        "removed_stale_pairs": removed_stale_pairs,
     }
 
 
