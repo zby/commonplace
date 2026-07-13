@@ -3,7 +3,7 @@ revision = 3
 requires-python = ">=3.11"
 
 [options]
-exclude-newer = "2026-04-06T08:44:00.432724675Z"
+exclude-newer = "0001-01-01T00:00:00Z" # This has no effect and is included for backwards compatibility when using relative exclude-newer values.
 exclude-newer-span = "P7D"
 
 [[package]]
@@ -214,11 +214,12 @@ wheels = [
 
 [[package]]
 name = "llm-commonplace"
-version = "0.1.0"
+version = "0.1.2"
 source = { editable = "." }
 dependencies = [
     { name = "jsonschema" },
     { name = "pyyaml" },
+    { name = "referencing" },
 ]
 
 [package.optional-dependencies]
@@ -234,6 +235,7 @@ docs = [
     { name = "mkdocs-redirects" },
 ]
 snapshot = [
+    { name = "python-dotenv" },
     { name = "xdk" },
 ]
 
@@ -251,8 +253,10 @@ requires-dist = [
     { name = "mkdocs-redirects", marker = "extra == 'all'" },
     { name = "mkdocs-redirects", marker = "extra == 'docs'" },
     { name = "python-dotenv", marker = "extra == 'all'" },
+    { name = "python-dotenv", marker = "extra == 'snapshot'" },
     { name = "pyyaml", specifier = ">=6.0.0" },
     { name = "pyyaml", marker = "extra == 'all'" },
+    { name = "referencing", specifier = ">=0.31.0" },
     { name = "xdk", marker = "extra == 'all'" },
     { name = "xdk", marker = "extra == 'snapshot'" },
 ]
