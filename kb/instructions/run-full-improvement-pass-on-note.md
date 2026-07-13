@@ -15,7 +15,7 @@ Inputs:
 
 Derive `<note-name>` from `{note-path}` as the filename without its extension (`kb/notes/linking-theory.md` → `linking-theory`). At the start of every invocation mint a unique `<pass-id>` (a UTC timestamp plus a short random suffix is sufficient). Retain reports under `kb/reports/full-pass/<note-name>/<pass-id>/{initial,closing}/`; never reuse a pass ID or overwrite an initial report.
 
-Steps 1 through 7 below only write reports; none of them edit the note. Steps 8 and 9 do — applying the packet and then a final flow pass. Step 10 closes review over those edits without starting another transformation round. One exception to that arc: when step 7 concludes the note should not exist as a unit (packet Disposition `delete` or `merge`), step 8's only edit is a TODO marker in the note and the pass stops there — see step 8.
+Steps 1 through 7 below only write reports; none of them edit the note. For a `keep` Disposition, steps 8 and 9 apply the packet and run a final flow pass, and step 10 closes review over those edits without starting another transformation round. When step 7 concludes the note should not exist as a unit (Disposition `delete` or `merge`), leave the note byte-identical and stop after handing back the packet — see step 8.
 
 ## Execution roles and isolation
 
@@ -57,13 +57,7 @@ Here, **fresh sub-agent** means a newly isolated execution context that has not 
    Immediately copy every finalized semantic pair result to `kb/reports/full-pass/<note-name>/<pass-id>/initial/semantic/`, preserving one file per gate.
 6. Run `cp-skill-connect` against the note and immediately copy its canonical report to `kb/reports/full-pass/<note-name>/<pass-id>/initial/connect.md`. The closing connect run writes the same canonical report path and will overwrite it; the pass-scoped copy is the retained initial evidence.
 7. Synthesize the retained reports (below) into one packet at `kb/reports/full-pass/<note-name>/<pass-id>/full-pass-report.md`, including the note-level Disposition (`keep`, `delete`, or `merge into <target>` — see "Reconciling disagreement"). This is the only step among 1–7 that reconciles disagreement; do not just concatenate the reports.
-8. Read the packet's Disposition first. If it is `delete` or `merge`, do not apply the body edits — polishing a note the pass recommends removing wastes the edit and would bury the recommendation. Instead insert this marker as the first body line after the title heading:
-
-   ```markdown
-   > **TODO(full-pass):** pass `<pass-id>` recommends <deleting this note | merging this note into [<target title>](<relative-target-path>)>. <One-sentence rationale, restated so it stands without the packet.> Packet: `kb/reports/full-pass/<note-name>/<pass-id>/full-pass-report.md`.
-   ```
-
-   The rationale sentence must stand alone: the packet is a gitignored inspection artifact and may be gone by the time someone acts on the marker. Then stop the pass — skip steps 9 and 10, retain the pass directory, and hand back the packet. Executing the deletion or merge belongs to whoever reads the packet, not to this instruction.
+8. Read the packet's Disposition first. If it is `delete` or `merge`, do not edit the note or apply the packet's body edits. Leave the note byte-identical, retain the pass directory, hand back `kb/reports/full-pass/<note-name>/<pass-id>/full-pass-report.md`, and stop the pass — skip steps 9 and 10. The packet is the sole handoff until the disposition is accepted, rejected, or superseded; executing the deletion or merge belongs to whoever reads it, not to this instruction.
 
    Otherwise (Disposition `keep`), apply the packet's body edits directly to the note. If `composition-friction-gate` ran, reread its report's "For the human" line against the edited text before moving on. This is not a re-run of the gate — just a check that the one thing it pointed to is still accurate, or has actually been addressed, now that the edit has changed the prose around it. If it looks wrong given the edit, note that in the packet's Open items rather than silently re-editing.
 9. Run a final revise pass over the edited note with exactly this prompt: `revise the note for flow, coherence, logic and readability`. Give a newly isolated sub-agent that performed no earlier work in this pass (or yourself, if editing directly) only the current note text and that prompt — not the packet or the underlying reports. Do not use a follow-up turn to a reviewer from steps 2–6. This step is a copyedit pass, not a second chance to re-open the content decisions steps 1–8 already made; it should not reintroduce material step 8 removed or add new claims.
@@ -148,7 +142,7 @@ Append this section to the packet:
 
 Never omit "Routed attention" — even a clean SURVIVES with no thin joints below THIN is worth one line, since silently dropping the section would make the friction gate's absence indistinguishable from a clean result. Never omit "Disposition" either: an explicit `keep` distinguishes "considered and kept" from "never considered".
 
-`kb/reports/full-pass/*`, `kb/reports/critique/*`, `kb/reports/friction/*`, and `kb/reports/connect/*` are gitignored inspection artifacts. Quote or restate enough of each source report's substance directly into the packet that it stands alone. Retain the pass directory while its packet or residual findings are still in use; delete it after those outputs have been consumed. An unactioned `delete`/`merge` Disposition counts as still in use — though the TODO marker's rationale, not the pass directory, is what must survive until someone acts.
+`kb/reports/full-pass/*`, `kb/reports/critique/*`, `kb/reports/friction/*`, and `kb/reports/connect/*` are gitignored inspection artifacts. Quote or restate enough of each source report's substance directly into the packet that it stands alone. Retain the pass directory while its packet or residual findings are still in use; delete it after those outputs have been consumed. An unactioned `delete`/`merge` Disposition counts as still in use, so retain its packet until someone accepts, rejects, or supersedes it.
 
 ## Do not
 
@@ -158,7 +152,7 @@ Never omit "Routed attention" — even a clean SURVIVES with no thin joints belo
 - Do not resolve a compression-vs-semantic disagreement by dropping one finding; record both and let the packet's reader judge, since they test different properties.
 - Do not convert `composition-friction-gate`'s filter verdict or thinnest-joints ranking into a remove/compress/keep action. Its hard rule against self-graded verdicts is why this instruction carries its findings unresolved instead of reconciling them like the others.
 - Do not let the step 9 revise pass change claims, add material, or restore anything step 8 cut. If it does, that's a sign the packet's body edits left the note incoherent — fix the edit, not the prose around it.
-- Do not delete or merge the note within the pass, and do not apply body edits alongside a `delete`/`merge` Disposition. The TODO marker and the packet are the pass's entire output in that case; executing the disposition is the packet reader's call.
+- Do not delete, merge, mark, or otherwise edit the note within the pass when its Disposition is `delete` or `merge`. The retained packet is the pass's entire output in that case; executing the disposition is the packet reader's call.
 
 ---
 
