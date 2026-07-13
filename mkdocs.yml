@@ -57,6 +57,7 @@ plugins:
         'notes/traversal-improves-the-graph.md': 'notes/traversal-improvements-should-be-deferred-via-logging-to-avoid-mid-task-context-switching.md'
         'notes/type-system-index.md': 'notes/type-system-README.md'
         'notes/underspecification-and-indeterminism-make-programming-practices-harder-in-distinct-ways-when-applied-to-prompting.md': 'notes/underspecification-and-indeterminism-complicate-programming-for-prompts-in-distinct-ways.md'
+        'reference/proposals/one-validation-algorithm-over-declared-scopes.md': 'reference/proposals/anchored-validation-checks-with-declared-dependencies.md'
         'sources/before-llms-palantir-was-competing-with-snowflake-and-databricks-po-2006384049485484145.md': 'sources/palantir-competed-with-snowflake-before-llms.md'
         'sources/large-language-model-agents-are-not-always-faithful-self-evolvers.ingest.md': 'sources/llm-agents-are-not-always-faithful-self-evolvers.ingest.md'
         'sources/large-language-model-agents-are-not-always-faithful-self-evolvers.md': 'sources/llm-agents-are-not-always-faithful-self-evolvers.md'

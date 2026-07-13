@@ -47,18 +47,24 @@ def test_collection_dirs_raises_when_kb_root_is_missing(tmp_path: Path) -> None:
         project_paths.collection_dirs(tmp_path)
 
 
-def test_list_collection_note_paths_skips_nested_repos_and_type_dirs(tmp_path: Path) -> None:
+def test_list_collection_note_paths_includes_type_specs_but_skips_type_support_files(
+    tmp_path: Path,
+) -> None:
     collection_root = collection(tmp_path / "kb" / "notes")
     kept = write(collection_root / "kept.md")
     nested = write(collection_root / "vendor" / "repo" / "ignored.md")
     (nested.parent / ".git").mkdir()
+    type_spec = write(collection_root / "types" / "structured-claim.md")
     template = write(collection_root / "types" / "note.template.md")
-    nested_template = write(collection_root / "definitions" / "types" / "definition.template.md")
+    nested_template = write(
+        collection_root / "definitions" / "types" / "definition.template.md"
+    )
 
     discovered = project_paths.list_collection_note_paths(collection_root)
 
     assert kept in discovered
     assert nested not in discovered
+    assert type_spec in discovered
     assert template not in discovered
     assert nested_template not in discovered
 
@@ -80,7 +86,9 @@ def test_list_collection_note_paths_skips_hidden_entries_but_not_visible_content
     assert visible_dir_index in discovered
 
 
-def test_find_repo_markdown_files_skips_artifact_trees_and_hidden_dirs(tmp_path: Path) -> None:
+def test_find_repo_markdown_files_skips_artifact_trees_and_hidden_dirs(
+    tmp_path: Path,
+) -> None:
     kept = write(tmp_path / "kb" / "notes" / "note.md")
     top_level = write(tmp_path / "README.md")
     venv_doc = write(tmp_path / ".venv" / "lib" / "pkg" / "README.md")
@@ -100,6 +108,7 @@ def test_list_kb_note_paths_spans_all_content_collections(tmp_path: Path) -> Non
     collection(tmp_path / "kb" / "notes")
     collection(tmp_path / "kb" / "sources")
     note = write(tmp_path / "kb" / "notes" / "note.md")
+    local_type = write(tmp_path / "kb" / "notes" / "types" / "structured-claim.md")
     source = write(tmp_path / "kb" / "sources" / "source.md")
     report = write(tmp_path / "kb" / "reports" / "report.md")
     type_doc = write(tmp_path / "kb" / "types" / "note.md")
@@ -107,6 +116,7 @@ def test_list_kb_note_paths_spans_all_content_collections(tmp_path: Path) -> Non
     discovered = project_paths.list_kb_note_paths(tmp_path)
 
     assert note in discovered
+    assert local_type in discovered
     assert source in discovered
     assert report not in discovered
     assert type_doc not in discovered

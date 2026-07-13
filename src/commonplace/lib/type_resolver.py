@@ -26,7 +26,6 @@ class TypeProfile:
     schema: dict[str, Any] | None = None
 
 
-
 TYPE_SPEC_PATH = "kb/types/type-spec.md"
 
 
@@ -135,7 +134,9 @@ def _load_type_frontmatter(type_doc_path: Path, workspace_root: Path) -> dict[st
             f"{_display_path(type_doc_path, workspace_root)}: invalid type-spec frontmatter: {'; '.join(parsed.errors)}"
         )
     if not parsed.data:
-        raise ValueError(f"{_display_path(type_doc_path, workspace_root)}: type spec must have frontmatter")
+        raise ValueError(
+            f"{_display_path(type_doc_path, workspace_root)}: type spec must have frontmatter"
+        )
     return parsed.data
 
 
@@ -235,7 +236,9 @@ def _register_schema_alias_tree(
     return registry
 
 
-def _build_registry_for_path(path: Path, registry: Registry | None = None, seen: set[Path] | None = None) -> Registry:
+def _build_registry_for_path(
+    path: Path, registry: Registry | None = None, seen: set[Path] | None = None
+) -> Registry:
     if registry is None:
         registry = Registry()
     if seen is None:
@@ -267,7 +270,9 @@ def _validator_for_path(path_str: str) -> Draft202012Validator:
     path = Path(path_str).resolve()
     schema = _load_schema(str(path))
     registry = _build_registry_for_path(path)
-    return Draft202012Validator(schema, registry=registry, format_checker=FormatChecker())
+    return Draft202012Validator(
+        schema, registry=registry, format_checker=FormatChecker()
+    )
 
 
 def _schema_identity_type_path(profile: TypeProfile) -> str:
@@ -310,8 +315,13 @@ def resolve_type(
     type_name = type_frontmatter.get("name")
     if not isinstance(type_name, str) or not type_name.strip():
         raise ValueError(f"{type_doc_rel}: type spec frontmatter must include name")
-    if not isinstance(type_frontmatter.get("description"), str) or not type_frontmatter["description"].strip():
-        raise ValueError(f"{type_doc_rel}: type spec frontmatter must include description")
+    if (
+        not isinstance(type_frontmatter.get("description"), str)
+        or not type_frontmatter["description"].strip()
+    ):
+        raise ValueError(
+            f"{type_doc_rel}: type spec frontmatter must include description"
+        )
 
     schema_path = _schema_path_from_type_doc(
         type_doc_rel,
@@ -319,7 +329,9 @@ def resolve_type(
         type_frontmatter,
         workspace_root,
     )
-    schema = _load_schema(str(schema_path.resolve())) if schema_path is not None else None
+    schema = (
+        _load_schema(str(schema_path.resolve())) if schema_path is not None else None
+    )
     return TypeProfile(
         type_path=type_doc_rel,
         type_doc_path=type_doc_path,
@@ -329,7 +341,9 @@ def resolve_type(
     )
 
 
-def validate_instance(profile: TypeProfile, instance: dict[str, Any]) -> list[ValidationError]:
+def validate_instance(
+    profile: TypeProfile, instance: dict[str, Any]
+) -> list[ValidationError]:
     if profile.schema_path is None or profile.schema is None:
         return []
     # Normalize frontmatter.type to the canonical kb/... form so schemas with
@@ -340,24 +354,7 @@ def validate_instance(profile: TypeProfile, instance: dict[str, Any]) -> list[Va
     if isinstance(fm, dict) and fm.get("type") != schema_type_path:
         instance = {**instance, "frontmatter": {**fm, "type": schema_type_path}}
     validator = _validator_for_path(str(profile.schema_path.resolve()))
-    return sorted(validator.iter_errors(instance), key=lambda error: tuple(str(part) for part in error.absolute_path))
-
-
-def validate_type_specs(workspace_root: Path) -> list[str]:
-    """Return failures for malformed type-spec docs under kb/**/types/*.md."""
-    failures: list[str] = []
-    boundary = kb_root(workspace_root)
-    if not boundary.is_dir():
-        return failures
-    for path in sorted(boundary.glob("**/types/*.md")):
-        if path.name == "text.md":
-            continue
-        try:
-            parsed = frontmatter.parse(path.read_text(encoding="utf-8"))
-            if not parsed.ok:
-                failures.append(f"{path.relative_to(workspace_root)}: {'; '.join(parsed.errors)}")
-                continue
-            resolve_type(path, parsed.data, repo_root=workspace_root)
-        except (FileNotFoundError, ValueError) as exc:
-            failures.append(f"{path.relative_to(workspace_root)}: {exc}")
-    return failures
+    return sorted(
+        validator.iter_errors(instance),
+        key=lambda error: tuple(str(part) for part in error.absolute_path),
+    )

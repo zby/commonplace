@@ -9,6 +9,7 @@ status: accepted
 
 **Status:** accepted
 **Date:** 2026-07-05
+**Amended:** 2026-07-13 by [ADR 047](./047-type-specifications-use-normal-deterministic-validation.md)
 
 ## Context
 
@@ -23,6 +24,8 @@ An inventory of what gitignore filtering actually excluded showed the delegation
 Visibility is a package-owned contract and the `commonplace-*` commands never invoke the git binary.
 
 The contract, implemented in `project_paths.walk_visible`: hidden (dot-prefixed) entries and nested git repositories are invisible to every markdown walk; repository-wide walks (relocation's `find_repo_markdown_files`) additionally skip a fixed set of build/vendor artifact directory names (`build`, `dist`, `node_modules`, `site`, `tmp`, `__pycache__`). Collection walks exclude structural metadata and archives at the caller, but otherwise treat every visible Markdown file as content. Gitignore rules have no effect on what the tools see. Nested repositories are detected by the presence of a `.git` entry — a filesystem layout check, not a git invocation.
+
+ADR 047 narrows the original `types/` exclusion: type-spec documents are ordinary validation artifacts and enter collection validation, while consumers whose domain excludes contracts retain their own explicit filter.
 
 There is no mechanism for declaring collection content local-only. Everything visible under a collection is KB content; content that must not be swept lives outside collections, in hidden directories, or does not exist in the working tree. If a declaration mechanism is ever needed, it will be an explicit package-owned one, not gitignore.
 

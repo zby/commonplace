@@ -71,6 +71,15 @@ def is_type_definition_content(path: Path, boundary: Path) -> bool:
     return "types" in rel.parent.parts
 
 
+def is_type_support_content(path: Path, boundary: Path) -> bool:
+    """Return True for non-artifact support files inside a types/ directory."""
+    return is_type_definition_content(path, boundary) and (
+        path.name.endswith(".template.md")
+        or path.name.endswith(".instructions.md")
+        or path.name == "text.md"
+    )
+
+
 def is_replaced_archive(path: Path) -> bool:
     """Return True when path is a `.replaced.*.md` archive of a superseded note.
 
@@ -93,8 +102,8 @@ def is_collection_dir(path: Path) -> bool:
 
 
 def list_collection_note_paths(collection: Path) -> list[Path]:
-    """Return markdown note paths under a collection, excluding types, collection
-    metadata, and replaced archives."""
+    """Return markdown note paths under a collection, excluding collection
+    metadata, replaced archives, and legacy type support files."""
     if not collection.is_dir():
         raise FileNotFoundError(f"Collection directory does not exist: {collection}")
     if not is_collection_dir(collection):
@@ -102,9 +111,9 @@ def list_collection_note_paths(collection: Path) -> list[Path]:
     return sorted(
         path
         for path in iter_visible_markdown_files(collection)
-        if not is_type_definition_content(path, collection)
-        and not is_collection_metadata(path)
+        if not is_collection_metadata(path)
         and not is_replaced_archive(path)
+        and not is_type_support_content(path, collection)
     )
 
 

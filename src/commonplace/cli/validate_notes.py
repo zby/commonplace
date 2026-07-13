@@ -15,9 +15,9 @@ from commonplace.lib.project_paths import (
     kb_root,
     list_collection_note_paths,
     list_notes_collection_paths,
+    list_type_spec_paths,
     resolve_note,
 )
-from commonplace.lib.type_resolver import validate_type_specs
 from commonplace.lib.validation import (
     CheckResults,
     orphan_info,
@@ -28,8 +28,8 @@ from commonplace.lib.validation import (
 
 _TOO_BROAD_MESSAGE = (
     "Validation scope must be a specific collection or file. "
-    "Pass one of: notes, reference, instructions, agent-memory-systems, sources, "
-    "or a note path."
+    "Pass one of: notes, types, reference, instructions, agent-memory-systems, "
+    "sources, or a note path."
 )
 
 
@@ -38,6 +38,8 @@ def resolve_targets(arg: str, *, repo_root: Path) -> list[Path]:
         raise ValueError(_TOO_BROAD_MESSAGE)
     if arg == "notes":
         return list_notes_collection_paths(repo_root)
+    if arg == "types":
+        return list_type_spec_paths(repo_root)
 
     if arg in {"recent", "today"}:
         today = datetime.now().date()
@@ -90,7 +92,11 @@ def batch_scope(arg: str, *, repo_root: Path) -> str | None:
     candidate = Path(arg)
     if candidate.is_absolute() and candidate.is_dir():
         resolved = candidate.resolve()
-        return _display_path(resolved, repo_root=repo_root) if is_collection_dir(resolved) else None
+        return (
+            _display_path(resolved, repo_root=repo_root)
+            if is_collection_dir(resolved)
+            else None
+        )
 
     repo_candidate = (repo_root / arg).resolve()
     if repo_candidate.is_dir() and is_collection_dir(repo_candidate):
@@ -127,7 +133,11 @@ def impacted_marked_tag_readmes(paths: list[Path], *, repo_root: Path) -> list[P
             if not readme.is_file() or readme in seen:
                 continue
             readme_parsed, readme_error = parse_note(readme, repo_root=repo_root)
-            if readme_error or readme_parsed is None or readme_parsed.note_type != "tag-readme":
+            if (
+                readme_error
+                or readme_parsed is None
+                or readme_parsed.note_type != "tag-readme"
+            ):
                 continue
             fm = readme_parsed.document.frontmatter or {}
             has_checked_mark = fm.get("complete") is True or bool(fm.get("covered_by"))
@@ -197,7 +207,10 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "target",
-        help="collection directory, note path or name, or today/recent (kb/notes modified today)",
+        help=(
+            "collection directory, note path or name, types, or today/recent "
+            "(kb/notes modified today)"
+        ),
     )
     args = parser.parse_args(argv)
 
@@ -228,7 +241,12 @@ def main(argv: list[str] | None = None) -> int:
         results = validate_note(path, repo_root=repo_root)
         if results.note_type == "text":
             text_count += 1
-        if scope is not None and path in inbound and not inbound[path] and results.note_type != "text":
+        if (
+            scope is not None
+            and path in inbound
+            and not inbound[path]
+            and results.note_type not in {"text", "type-spec"}
+        ):
             results.infos.append(f"orphan check: no inbound links found in {scope}")
         print(format_block(path, results))
         if results.warns:
@@ -240,10 +258,9 @@ def main(argv: list[str] | None = None) -> int:
             failure_items.extend((path, failure) for failure in results.fails)
 
     if scope is not None:
-        type_failures = validate_type_specs(repo_root)
-        if type_failures:
-            had_failures = True
-        structure_failures = validate_collection_structure(repo_root / scope, repo_root=repo_root)
+        structure_failures = validate_collection_structure(
+            repo_root / scope, repo_root=repo_root
+        )
         if structure_failures:
             had_failures = True
 
@@ -252,12 +269,6 @@ def main(argv: list[str] | None = None) -> int:
         print(f"Text files: {text_count}")
         print(f"Notes with warnings: {warning_count}")
         print(f"Failing notes: {failure_count}")
-        print("\nType system:")
-        if type_failures:
-            for failure in type_failures:
-                print(f"- FAIL: {failure}")
-        else:
-            print("- PASS: all type-spec docs are valid")
         print("\nCollection structure:")
         if structure_failures:
             for failure in structure_failures:

@@ -125,6 +125,23 @@ properties:
     return notes
 
 
+def configure_type_spec_repo(tmp_path: Path) -> None:
+    notes = tmp_path / "kb" / "notes"
+    write(notes / "COLLECTION.md", "# Notes collection\n")
+    write(
+        tmp_path / "kb" / "types" / "type-spec.schema.yaml",
+        (Path.cwd() / "kb" / "types" / "type-spec.schema.yaml").read_text(
+            encoding="utf-8"
+        ),
+    )
+    write_type_spec(
+        tmp_path,
+        "kb/types/type-spec.md",
+        name="type-spec",
+        schema="kb/types/type-spec.schema.yaml",
+    )
+
+
 def test_text_file_has_no_structural_requirements(tmp_path: Path) -> None:
     note = write(tmp_path / "raw-capture.md", "# Raw capture\n\nJust text.\n")
 
@@ -168,7 +185,10 @@ Captured text.
 
     assert results.note_type == "snapshot"
     assert results.fails == []
-    assert any("type schema: snapshot requirements satisfied" in item for item in results.passes)
+    assert any(
+        "type schema: snapshot requirements satisfied" in item
+        for item in results.passes
+    )
 
 
 def test_source_snapshot_requires_genre(tmp_path: Path) -> None:
@@ -337,8 +357,13 @@ External link: [site](https://example.com/foo.md)
 
     results = validation.validate_note(note, repo_root=tmp_path)
 
-    assert all("link health: all local relative links resolve" not in item for item in results.passes)
-    assert any("link health: missing target ./missing.md" in item for item in results.warns)
+    assert all(
+        "link health: all local relative links resolve" not in item
+        for item in results.passes
+    )
+    assert any(
+        "link health: missing target ./missing.md" in item for item in results.warns
+    )
     assert all("ignored.md" not in item for item in results.warns)
     assert all("example.com" not in item for item in results.warns)
 
@@ -370,9 +395,16 @@ Protocol-relative URL: [cdn](//example.com/file.txt)
 
     results = validation.validate_note(note, repo_root=tmp_path)
 
-    assert all("link health: all local relative links resolve" not in item for item in results.passes)
-    assert any("link health: missing target ./missing-dir/" in item for item in results.warns)
-    assert any("link health: missing target ./missing.txt" in item for item in results.warns)
+    assert all(
+        "link health: all local relative links resolve" not in item
+        for item in results.passes
+    )
+    assert any(
+        "link health: missing target ./missing-dir/" in item for item in results.warns
+    )
+    assert any(
+        "link health: missing target ./missing.txt" in item for item in results.warns
+    )
     assert all("target.txt" not in item for item in results.warns)
     assert all("existing-dir" not in item for item in results.warns)
     assert all("#heading" not in item for item in results.warns)
@@ -420,16 +452,66 @@ type: spec
     results = validation.validate_note(note, repo_root=tmp_path)
 
     assert results.note_type == "unknown"
-    assert any("frontmatter.type: must start with kb/ or be file-relative (./ or ../): spec" in item for item in results.fails)
+    assert any(
+        "frontmatter.type: must start with kb/ or be file-relative (./ or ../): spec"
+        in item
+        for item in results.fails
+    )
+
+
+def test_type_spec_validation_resolves_its_own_declared_schema(tmp_path: Path) -> None:
+    configure_type_spec_repo(tmp_path)
+    type_spec = write_type_spec(
+        tmp_path,
+        "kb/notes/types/local.md",
+        name="local",
+        schema="kb/notes/types/missing.schema.yaml",
+    )
+
+    results = validation.validate_note(type_spec, repo_root=tmp_path)
+
+    assert any(
+        "[type: type-spec] type definition: "
+        "kb/notes/types/local.md: schema file is missing" in failure
+        for failure in results.fails
+    )
+
+
+def test_type_spec_validation_accepts_explicitly_schema_less_type(
+    tmp_path: Path,
+) -> None:
+    configure_type_spec_repo(tmp_path)
+    type_spec = write_type_spec(
+        tmp_path,
+        "kb/notes/types/local.md",
+        name="local",
+        schema=None,
+    )
+
+    results = validation.validate_note(type_spec, repo_root=tmp_path)
+
+    assert results.fails == []
+    assert any(
+        "[type: type-spec] type definition: schema is explicitly null" in item
+        for item in results.passes
+    )
 
 
 def test_agent_memory_review_fails_when_last_checked_missing(tmp_path: Path) -> None:
     notes_root = configure_temp_repo(tmp_path)
     write(
-        tmp_path / "kb" / "agent-memory-systems" / "types" / "agent-memory-system-review.schema.yaml",
-        (Path.cwd() / "kb" / "agent-memory-systems" / "types" / "agent-memory-system-review.schema.yaml").read_text(
-            encoding="utf-8"
-        ),
+        tmp_path
+        / "kb"
+        / "agent-memory-systems"
+        / "types"
+        / "agent-memory-system-review.schema.yaml",
+        (
+            Path.cwd()
+            / "kb"
+            / "agent-memory-systems"
+            / "types"
+            / "agent-memory-system-review.schema.yaml"
+        ).read_text(encoding="utf-8"),
     )
     write_type_spec(
         tmp_path,
@@ -470,7 +552,10 @@ Watch.
 
     results = validation.validate_note(note, repo_root=tmp_path)
 
-    assert any("frontmatter: 'last-checked' is a required property" in item for item in results.fails)
+    assert any(
+        "frontmatter: 'last-checked' is a required property" in item
+        for item in results.fails
+    )
 
 
 def test_schema_violation_fails_by_default() -> None:
@@ -494,7 +579,12 @@ def test_schema_constraint_can_opt_down_to_warn() -> None:
     error = ValidationError(
         "[] is too short",
         validator="minItems",
-        schema={"type": "array", "minItems": 3, "ruleId": "min-items-example", "severity": "warn"},
+        schema={
+            "type": "array",
+            "minItems": 3,
+            "ruleId": "min-items-example",
+            "severity": "warn",
+        },
         path=["links"],
     )
 
@@ -513,7 +603,9 @@ def test_quote_citation_shape_passes_when_well_formed() -> None:
 
     validation.validate_quote_citations(results, content)
 
-    assert any("quote-anchored citations: 1 well-formed" in item for item in results.passes)
+    assert any(
+        "quote-anchored citations: 1 well-formed" in item for item in results.passes
+    )
     assert results.warns == []
 
 
@@ -595,7 +687,9 @@ status: current
 
     results = validation.validate_note(readme, repo_root=tmp_path)
 
-    assert any("False schema does not allow 'current'" in failure for failure in results.fails)
+    assert any(
+        "False schema does not allow 'current'" in failure for failure in results.fails
+    )
 
 
 def test_adr_status_uses_type_specific_enum_from_note_base(tmp_path: Path) -> None:
@@ -673,7 +767,10 @@ Check the sample condition.
 
     assert results.fails == []
     assert results.warns == []
-    assert any("type schema: instruction requirements satisfied" in item for item in results.passes)
+    assert any(
+        "type schema: instruction requirements satisfied" in item
+        for item in results.passes
+    )
 
 
 def test_title_length_over_limit_fails_validation(tmp_path: Path) -> None:
@@ -693,7 +790,9 @@ traits: []
 
     results = validation.validate_note(note, repo_root=tmp_path)
 
-    assert any("title: 101 chars exceeds limit of 100" in item for item in results.fails)
+    assert any(
+        "title: 101 chars exceeds limit of 100" in item for item in results.fails
+    )
 
 
 def test_filename_slug_length_over_limit_fails_validation(tmp_path: Path) -> None:
@@ -834,7 +933,10 @@ type: collection-item
 
 
 def test_list_kb_note_paths_skips_replaced_archives(tmp_path: Path) -> None:
-    write(tmp_path / "kb" / "agent-memory-systems" / "COLLECTION.md", "# Agent memory systems\n")
+    write(
+        tmp_path / "kb" / "agent-memory-systems" / "COLLECTION.md",
+        "# Agent memory systems\n",
+    )
     reviews_root = tmp_path / "kb" / "agent-memory-systems" / "reviews"
     current = write(
         reviews_root / "napkin.md",
@@ -925,11 +1027,31 @@ traits: []
 # Report
 """,
     )
+    local_type = write(
+        tmp_path / "kb" / "notes" / "types" / "local.md",
+        "# Local type\n",
+    )
 
     notes = validate_notes.resolve_targets("notes", repo_root=tmp_path)
 
     assert note in notes
+    assert local_type in notes
     assert report not in notes
+
+
+def test_types_target_scans_all_type_spec_directories(tmp_path: Path) -> None:
+    global_type = write(tmp_path / "kb" / "types" / "note.md", "# Note type\n")
+    local_type = write(
+        tmp_path / "kb" / "notes" / "types" / "structured-claim.md",
+        "# Structured claim type\n",
+    )
+    write(tmp_path / "kb" / "types" / "text.md", "# Text\n")
+    write(tmp_path / "kb" / "notes" / "types" / "legacy.template.md", "# Template\n")
+
+    assert validate_notes.resolve_targets("types", repo_root=tmp_path) == [
+        local_type,
+        global_type,
+    ]
 
 
 def test_note_target_also_validates_marked_tag_readmes(
@@ -1001,7 +1123,10 @@ def test_bulk_scopes_are_rejected(tmp_path: Path) -> None:
 
 def test_collection_directory_targets_scan_that_collection(tmp_path: Path) -> None:
     configure_temp_repo(tmp_path)
-    write(tmp_path / "kb" / "agent-memory-systems" / "COLLECTION.md", "# Agent memory systems\n")
+    write(
+        tmp_path / "kb" / "agent-memory-systems" / "COLLECTION.md",
+        "# Agent memory systems\n",
+    )
     collection_note = write(
         tmp_path / "kb" / "agent-memory-systems" / "index.md",
         """---
@@ -1034,6 +1159,10 @@ type: kb/types/note.md
 # Template
 """,
     )
+    local_type = write(
+        tmp_path / "kb" / "agent-memory-systems" / "types" / "review.md",
+        "# Review type\n",
+    )
     other_note = write(
         tmp_path / "kb" / "reports" / "report.md",
         """---
@@ -1046,18 +1175,28 @@ traits: []
 """,
     )
 
-    bare_collection = validate_notes.resolve_targets("agent-memory-systems", repo_root=tmp_path)
-    repo_relative_dir = validate_notes.resolve_targets("kb/agent-memory-systems", repo_root=tmp_path)
+    bare_collection = validate_notes.resolve_targets(
+        "agent-memory-systems", repo_root=tmp_path
+    )
+    repo_relative_dir = validate_notes.resolve_targets(
+        "kb/agent-memory-systems", repo_root=tmp_path
+    )
 
     assert bare_collection == repo_relative_dir
     assert collection_note in bare_collection
     assert review_note in bare_collection
+    assert local_type in bare_collection
     assert template not in bare_collection
     assert other_note not in bare_collection
-    assert validate_notes.batch_scope("agent-memory-systems", repo_root=tmp_path) == "kb/agent-memory-systems"
+    assert (
+        validate_notes.batch_scope("agent-memory-systems", repo_root=tmp_path)
+        == "kb/agent-memory-systems"
+    )
 
 
-def test_directory_without_collection_file_is_not_a_validation_scope(tmp_path: Path) -> None:
+def test_directory_without_collection_file_is_not_a_validation_scope(
+    tmp_path: Path,
+) -> None:
     configure_temp_repo(tmp_path)
     write(
         tmp_path / "kb" / "reports" / "report.md",
@@ -1079,7 +1218,9 @@ traits: []
 
 def test_validate_collection_structure_flags_nested_collection(tmp_path: Path) -> None:
     configure_temp_repo(tmp_path)
-    write(tmp_path / "kb" / "notes" / "definitions" / "COLLECTION.md", "# Definitions\n")
+    write(
+        tmp_path / "kb" / "notes" / "definitions" / "COLLECTION.md", "# Definitions\n"
+    )
 
     failures = validate_notes.validate_collection_structure(
         tmp_path / "kb" / "notes",
@@ -1091,10 +1232,14 @@ def test_validate_collection_structure_flags_nested_collection(tmp_path: Path) -
     ]
 
 
-def test_validate_collection_structure_allows_namespace_collections(tmp_path: Path) -> None:
+def test_validate_collection_structure_allows_namespace_collections(
+    tmp_path: Path,
+) -> None:
     collection = tmp_path / "kb" / "commonplace" / "notes"
     write(collection / "COLLECTION.md", "# Shipped notes\n")
 
-    failures = validate_notes.validate_collection_structure(collection, repo_root=tmp_path)
+    failures = validate_notes.validate_collection_structure(
+        collection, repo_root=tmp_path
+    )
 
     assert failures == []

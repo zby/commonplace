@@ -158,11 +158,14 @@ Deterministic validation rules for KB notes. Used by `commonplace-validate`. The
 
 **`ParsedNote`** — dataclass bundling a note's `path`, `content`, `note_type`, `profile` (`TypeProfile`), and `document` (`ParsedDocument`).
 
-**`list_kb_note_paths(notes_root: Path) -> list[Path]`**
-Return all `.md` files under `notes_root`, skipping hidden entries, nested git repositories, and `types/` template directories. Visibility is package-owned (`project_paths.walk_visible`): hidden (dot-prefixed) entries and nested git repositories are always invisible, repo-wide walks additionally skip build/vendor artifact trees, and gitignore rules have no effect on what the tools see.
+**`list_collection_note_paths(collection: Path) -> list[Path]`**
+Return validation-capable Markdown artifacts under one collection, including first-class type-spec documents. Skips collection metadata, replaced archives, hidden entries, nested git repositories, and legacy type support files (`*.template.md`, `*.instructions.md`, `text.md`). Visibility is package-owned (`project_paths.walk_visible`); gitignore rules have no effect on what the tools see.
 
-**`is_type_definition_content(path: Path, notes_root: Path) -> bool`**
-Predicate used by `list_kb_note_paths` for the `types/` skip rule.
+**`list_type_spec_paths(root: Path) -> list[Path]`**
+Return the global and collection-local first-class type-spec inventory under `kb/**/types/*.md`, excluding legacy support files and the implicit `text` type. Used by the `commonplace-validate types` target.
+
+**`is_type_definition_content(path: Path, boundary: Path) -> bool`**
+Return whether a path is inside a `types/` directory beneath the supplied boundary. Consumers such as generated indexes use it when their domain excludes contracts; validation does not categorically exclude type definitions.
 
 **`parse_note(path: Path, *, repo_root: Path) -> tuple[ParsedNote | None, str | None]`**
 Read a note, parse its frontmatter and body, resolve its type. Returns `(parsed, None)` on success or `(None, error_message)` on parse failure.
@@ -171,7 +174,7 @@ Read a note, parse its frontmatter and body, resolve its type. Returns `(parsed,
 Run the full deterministic validation pipeline on one note: title/slug length, link health, registered type-specific rules, then schema validation. Returns the populated `CheckResults`.
 
 **`type_rule(*type_names)`**
-Decorator registering a type-specific rule `(results, parsed, *, repo_root) -> None` for the given type names; `validate_note` runs matching rules between the generic checks and schema validation. Current registrations: quote-citation shape checks for `agent-memory-system-review`, weight/completeness/coverage gates for `tag-readme`.
+Decorator registering a type-specific rule `(results, parsed, *, repo_root) -> None` for the given type names; `validate_note` runs matching rules between the generic checks and schema validation. Current registrations: quote-citation shape checks for `agent-memory-system-review`, declared-schema resolution for `type-spec`, and weight/completeness/coverage gates for `tag-readme`.
 
 **`validate_title_and_slug(results, path, document)`**
 Filesystem naming check: title length and slug length against `MAX_NOTE_TITLE_LENGTH` / `MAX_NOTE_SLUG_LENGTH`.

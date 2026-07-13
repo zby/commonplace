@@ -31,6 +31,7 @@ Findings are labelled with the source that produced them — `[base]` (every typ
 
 ```bash
 commonplace-validate notes               # validate one collection by name
+commonplace-validate types               # validate every global and collection-local type spec
 commonplace-validate kb/notes/           # validate one collection by path
 commonplace-validate kb/notes/my-note.md # validate one note
 ```
@@ -38,7 +39,7 @@ commonplace-validate kb/notes/my-note.md # validate one note
 Bare `kb` and `all` are rejected — scope must be a specific collection or file. To validate the authored library, loop over the collections explicitly:
 
 ```bash
-for c in notes reference instructions agent-memory-systems sources; do
+for c in types notes reference instructions agent-memory-systems sources; do
   commonplace-validate "$c"
 done
 ```

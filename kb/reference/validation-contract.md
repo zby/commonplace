@@ -35,10 +35,12 @@ This page documents 1 and 2. The third is not a lesser mechanism: **a type spec'
 | Source | Owner | Mechanism | Can dereference? |
 |---|---|---|---|
 | `base` | framework | imperative, applies to every typed note | yes — link health, verbatim quotes |
-| `type: <name>` | the type | imperative rules registered for that type | yes — tag-readme marks re-derive from the collection |
+| `type: <name>` | the type | imperative rules registered for that type | yes — tag-readme marks re-derive from the collection; type specs resolve their declared schemas |
 | `schema` | the type | declarative JSON Schema over the parsed document | **no** |
 
-**A type is not verified by its schema alone.** `tag-readme` proves it: its `complete` mark is checked by re-walking the collection and re-deriving membership from every tagged note — imperative, dereferencing, and impossible to express in a schema. So *who owns a rule* and *whether it dereferences* are independent axes, which is why the table has no empty cells and why "schema versus everything else" is the wrong mental model.
+**A type is not verified by its schema alone.** `tag-readme` proves it: its `complete` mark is checked by re-walking the collection and re-deriving membership from every tagged note — imperative, dereferencing, and impossible to express in a schema. `type-spec` supplies a smaller example: `type-spec.schema.yaml` can constrain the `schema:` field's shape, but an imperative rule must follow a non-null path and load the declared schema. So *who owns a rule* and *whether it dereferences* are independent axes, which is why the table has no empty cells and why "schema versus everything else" is the wrong mental model.
+
+Type-spec documents are ordinary validation artifacts. Collection validation includes local type specs, and `commonplace-validate types` runs the same base, type-rule, and schema pipeline over the complete global and local type inventory. There is no separate type-system validation pass.
 
 ## What the schema can and cannot express
 

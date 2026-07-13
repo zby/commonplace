@@ -144,7 +144,9 @@ def validate_title_and_slug(
         )
 
 
-def validate_links_from_document(results: CheckResults, path: Path, links: tuple[str, ...]) -> None:
+def validate_links_from_document(
+    results: CheckResults, path: Path, links: tuple[str, ...]
+) -> None:
     missing: list[str] = []
     for link in links:
         parsed = urlsplit(link)
@@ -250,12 +252,44 @@ def _linked_md_targets(parsed: ParsedNote) -> set[Path]:
 
 
 @type_rule("agent-memory-system-review")
-def _quote_citation_rule(results: CheckResults, parsed: ParsedNote, *, repo_root: Path) -> None:
+def _quote_citation_rule(
+    results: CheckResults, parsed: ParsedNote, *, repo_root: Path
+) -> None:
     validate_quote_citations(results, parsed.content)
 
 
+@type_rule("type-spec")
+def validate_type_spec_definition(
+    results: CheckResults,
+    parsed: ParsedNote,
+    *,
+    repo_root: Path,
+) -> None:
+    """Resolve this type-spec as a type definition, including its declared schema."""
+    try:
+        type_path = parsed.path.resolve().relative_to(repo_root.resolve()).as_posix()
+        profile = resolve_type(
+            parsed.path,
+            {"type": type_path},
+            repo_root=repo_root,
+        )
+    except (FileNotFoundError, ValueError) as exc:
+        results.fails.append(f"type definition: {exc}")
+        return
+
+    if profile.schema_path is None:
+        results.passes.append("type definition: schema is explicitly null")
+    else:
+        results.passes.append(
+            f"type definition: declared schema resolves to "
+            f"{profile.schema_path.relative_to(repo_root)}"
+        )
+
+
 @type_rule("tag-readme")
-def validate_tag_readme(results: CheckResults, parsed: ParsedNote, *, repo_root: Path) -> None:
+def validate_tag_readme(
+    results: CheckResults, parsed: ParsedNote, *, repo_root: Path
+) -> None:
     """Enforce the tag-readme type contract: weight gates plus the optional
     `complete` (membership) and `covered_by` (coverage) marks (ADR 026)."""
     from commonplace.lib.index_generated import (
@@ -297,10 +331,14 @@ def validate_tag_readme(results: CheckResults, parsed: ParsedNote, *, repo_root:
         if source == "tag":
             members = [(path, title) for path, title, _ in notes_by_tag.get(key, [])]
         else:
-            members = [(path, title) for path, title, _ in collect_tag_index_entries(collection, repo_root)]
+            members = [
+                (path, title)
+                for path, title, _ in collect_tag_index_entries(collection, repo_root)
+            ]
         linked = _linked_md_targets(parsed)
         missing = [
-            path for path, _ in members
+            path
+            for path, _ in members
             if path.resolve() not in linked and path.resolve() != parsed.path.resolve()
         ]
         if missing:
@@ -325,8 +363,10 @@ def validate_tag_readme(results: CheckResults, parsed: ParsedNote, *, repo_root:
             for path, _, _ in notes_by_tag.get(str(child), [])
         }
         uncovered = [
-            path for path, _, _ in notes_by_tag.get(key, [])
-            if path.resolve() not in covered_paths and path.resolve() != parsed.path.resolve()
+            path
+            for path, _, _ in notes_by_tag.get(key, [])
+            if path.resolve() not in covered_paths
+            and path.resolve() != parsed.path.resolve()
         ]
         if uncovered:
             for path in uncovered:
