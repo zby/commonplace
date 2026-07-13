@@ -4,110 +4,128 @@ This workshop is building the entry to the FLF [Epistemic Case Study Competition
 
 Inputs, not competitors: [epistack-competition](../epistack-competition/README.md) (two-repo protocol), [epistack-framework-additions](../epistack-framework-additions/README.md) (design menu). This workshop decides what we submit.
 
+Normative spine (still revising): [design-rationale-management.md](../../reference/design-rationale-management.md).
+
 ## The pitch
 
-**Constraint-driven design for compounding epistemic investigations: derive stack machinery from explicit constraints, build local-first, promote only what survives heterogeneous cases — with a runnable reference implementation and three stress-test casebooks.**
+**Design rationale management for compounding epistemic investigations: preserve why each commitment exists — constraints, alternatives, evidence, and transfer — across the epistemic stack, with a runnable reference implementation and three stress-test casebooks.**
 
-The brief asks for workflows and methodologies that advance AI-assisted investigations and **compounding** knowledge bases. The hard problem it names is **methodology and workflow design**, not capability alone. Our answer is not "here is a Structure-layer protocol" as the title — it is a **design methodology for the epistemic stack** (ingestion, structure, assessment operating in concert), with the Commonplace Casebook Protocol as one disciplined instantiation that happened to be buildable in six days.
+The brief asks for workflows and methodologies that advance AI-assisted investigations and **compounding** knowledge bases. The hard problem it names is **methodology and workflow design**, not capability alone. Our answer is not a feature tour of one layer — it is an established design discipline applied to knowledge infrastructure that must evolve under agents: **design rationale management** ([MIT Design Rationale](https://rationale.csail.mit.edu/); [Feature, specification and evidence framework](https://doi.org/10.1017/dsj.2024.19); [Design Space Analysis](https://europe.naverlabs.com/history/past-research/design-space-analysis/)). The Commonplace Casebook Protocol is one worked instantiation buildable in six days.
 
-The surprise we intend: most entries will present **a stack**. We present **how to design a stack without smuggling in unmarked verdicts** — including verdicts disguised as metadata, scalar credences, authority rankings, or "neutral" synthesis prose.
+The surprise we intend: most entries will present **a stack**. We present **how to build and hand off a stack when design choices look identical on disk but carry different authority** — and how to refuse commitments whose shape is unknown (scalar credence, authority ranking, crux scoring) until rationale and evidence support them.
+
+### Vocabulary (load-bearing — say once in the submission)
+
+Commonplace uses three nearby terms on **different objects**. Judges and readers must not conflate them:
+
+| Term | Meaning |
+|---|---|
+| **Design constraint** | Bounds the feasible design space — inherited from consumer/substrate/domain/machinery ([first principles](../../notes/first-principles-are-inherited-constraints-not-design-choices.md)) or local to one problem/collection. |
+| **Design rationale** | Records how constraints, alternatives, evidence, and trade-offs support a decision — especially where constraints leave more than one feasible choice. |
+| **Constraining** | Deploy-time narrowing of valid *interpretations* of a retained artifact ([definition](../../notes/definitions/constraining.md)) — codification, validators, conventions. **Not** the name of the design methodology. |
+
+IDEF makes the split explicit: IDEF9 discovers constraints; IDEF6 captures rationale when constraints do not determine a unique decision ([IDEF compendium](https://www.idef.com/wp-content/uploads/2016/02/compendium.pdf)). Epistack casework did not invent this — it exposed that Commonplace already practiced it in distributed form.
 
 ### The compounding barrier
 
-Compounding fails when three different things look identical on disk:
+Compounding fails when later readers cannot recover **design rationale** — what was forced, what was problem-local, what was freely chosen, and what was rejected:
 
-| Class | Example |
-|---|---|
-| **Forced by the world** | You cannot cite more precisely than you captured. |
-| **Forced by this problem** | COVID needs an institutional layer because official bodies contradict; LHC needs dependency traversal because the case is mostly settled but hinges on a chain. |
-| **Freely chosen** | Whether the grounding-layer marker is a prose word or a frontmatter field. |
-
-Without explicit rationale, history, or transfer evidence, the next investigator cannot tell which parts would survive the trip. **Unmarked design contingency is a barrier to compounding** — and it is the problem constraint-driven design addresses.
-
-### The method (what we submit as methodology)
-
-**Constraint-driven design** — derive tooling from named constraints; refuse structures whose shape is unknown; keep forced, problem-local, and chosen decisions in different homes with different promotion rules.
-
-| Mechanism | Role |
-|---|---|
-| **Name the constraint** | Forces in proposals; backlog entries record what friction proved what. |
-| **Build local-first** | Collection-local types and conventions (`epistack-snapshot`, COVID `standing`) before framework promotion. |
-| **Worked-case guard** | A structure earns promotion only after surviving real material — ideally a second, differently-shaped case ([demotion note](../../notes/a-universal-knowledge-framework-demotes-content-taxonomies-to-defaults.md), [ADR 042](../../reference/adr/042-register-becomes-a-default-profile-under-open-ended-text-contracts.md)). |
-| **Deterministic where ground truth is shared** | Schema, link resolution, verbatim quotes ([validation contract](../../reference/validation-contract.md), [ADR 046](../../reference/adr/046-verbatim-quotes-are-validated-against-their-cited-source.md)). |
-| **Semantic where judgment is local** | Collection-conformance, type-conformance, criterion-anchored review — with calibration against labelled samples (gate rationalization finding). |
-| **Negative results on the record** | Rejected authority ranking, unbuilt span locator, preregistered replication unrun, quote-verifier proposal written before friction case. |
-
-**Standardize the connective tissue, not the contested substance** — the operational rule that falls out of the constraints, not the thesis itself.
-
-### Applying constraints to the epistemic stack
-
-The brief's ingestion / structure / assessment layers are **outputs of constraint satisfaction**, not a feature checklist. The submission maps each layer this way:
-
-| Layer | Constraint (why) | What we built / refused |
+| Class | Rationale role | Example |
 |---|---|---|
-| **Ingestion** | Capture bounds citation; provenance must be legible without KB-voice ranking | Retained snapshots, `capture_fidelity`, typed `genre`, COVID `standing` constituents (sibling repo: `kb/notes/standing-is-recorded-by-its-constituents-not-by-a-ranking.md`); **refused** scalar source credibility |
-| **Structure** | Contested substance cannot be flattened; verdict in context contaminates downstream maps | Stance-neutral casebooks, verdict/map separation, attributed prose + labelled links; local extension without silent universalization |
-| **Assessment** | Shared ground → mechanical check; local judgment → criterion review; some failures are locally defensible | `commonplace-verify-quotes` (127/127 on rebuilt corpus); collection-conformance gates; **refused** crux scoring and authority ranking until shape is known |
+| **Inherited constraint** | Cannot demote without changing boundary commitment | You cannot cite more precisely than you captured; bounded context economy for agent consumers. |
+| **Problem-local constraint** | Proven for one collection; may stay local | COVID needs an institutional layer; LHC needs dependency traversal. |
+| **Undetermined choice** | Constraints leave multiple feasible options; rationale must record the pick and alternatives | Grounding-layer marker as prose word vs frontmatter field. |
 
-Brief bullets we answer **by constraint derivation** (not by omission):
+Without repository surfaces that preserve this distinction, the next investigator treats every link and heading as equally authoritative. **Unmarked design contingency is a barrier to compounding** — design rationale management is the response.
 
-- **Correlated evidence** — independence is not visible from agreement → `standing.independence`, prose clusters in casebooks; optional computed matrix is supporting only ([assessment-machinery-line.md](./assessment-machinery-line.md)).
-- **Cruxes** — contested joints and attributed positions *are* crux mapping; we decline crux *scoring* (shape unknown, same constraint that kills ranking).
-- **Calibration** — snapshot-anchored, partition-scoped review *is* the calibration framework; register-drift experiment is the mechanistic argument against scalar credences in frontmatter (sibling repo: `kb/notes/a-verdict-in-context-produces-register-drift-not-verdict-copying.md`).
+### The method (what we submit)
+
+**Design rationale management for evolving knowledge infrastructure** — constraint discovery, explicit rationale, worked-case testing, and graduated [constraining](../../notes/definitions/constraining.md) only after the commitment earns force.
+
+| Mechanism | Commonplace surface | Role |
+|---|---|---|
+| **Active exploration** | `kb/work/` | Experiments, competing framings, provisional decisions |
+| **Finished but undecided** | `kb/reference/proposals/` | Questions–options–criteria: forces, free choices, adoption criteria |
+| **Implemented decision** | ADRs | Context, decision, consequences, supersession |
+| **Local operating contract** | `COLLECTION.md`, collection-local types | Problem-local constraints without framework claim |
+| **Shared commitment** | Global types, validators, package code | Promotion after scope and enforcement are clear |
+| **Rejected / displaced** | Rejected options, backlog Outcomes, git history | Why an alternative was not selected |
+
+Epistack-specific practice on top (not a separate method): sibling `backlog-to-commonplace.md` (append-only + Outcome lines); build-local-first; worked-case guard before framework promotion ([demotion note](../../notes/a-universal-knowledge-framework-demotes-content-taxonomies-to-defaults.md), [ADR 042](../../reference/adr/042-register-becomes-a-default-profile-under-open-ended-text-contracts.md)).
+
+**Standardize the connective tissue, not the contested substance** — a design commitment that falls out of the constraints on controversy maps, recorded in rationale rather than asserted as taste.
+
+### Applying rationale to the epistemic stack
+
+The brief's ingestion / structure / assessment layers are **design outcomes whose rationale must be recoverable**, not a feature checklist:
+
+| Layer | Design constraint (bounds the space) | Rationale + commitment (what we built / refused) |
+|---|---|---|
+| **Ingestion** | Capture bounds citation; provenance legible without KB-voice ranking | Snapshots, `capture_fidelity`, typed `genre`, COVID `standing` constituents (sibling: `kb/notes/standing-is-recorded-by-its-constituents-not-by-a-ranking.md`); **rejected** scalar source credibility — rationale on record |
+| **Structure** | Contested substance cannot be flattened; verdict in context contaminates downstream maps | Stance-neutral casebooks, verdict/map separation; register-drift experiment as rationale for the separation |
+| **Assessment** | Shared ground → mechanical check; local judgment → criterion review; some violations are locally defensible | `commonplace-verify-quotes` (127/127); collection-conformance + calibration; **rejected** crux scoring and authority ranking until shape is known |
+
+Brief bullets answered **by recorded rationale** (not by omission):
+
+- **Correlated evidence** — rationale: independence not visible from agreement → `standing.independence`, casebook prose; optional matrix supporting only ([assessment-machinery-line.md](./assessment-machinery-line.md)).
+- **Cruxes** — contested joints *are* crux mapping; crux *scoring* declined with written rationale (shape unknown).
+- **Calibration** — partition-scoped review as calibration framework; register drift as rationale against scalar credences (sibling: `kb/notes/a-verdict-in-context-produces-register-drift-not-verdict-copying.md`).
 
 ### Reference implementation (evidence, not the spine)
 
-The [Commonplace Casebook Protocol](../epistack-competition/README.md) is the runnable proof that the method can produce inspectable artifacts:
+The [Commonplace Casebook Protocol](../epistack-competition/README.md) shows the repository surfaces producing inspectable artifacts:
 
-- **Sibling casebooks** (`epistack-casebooks`) — three stress tests, from-scratch rebuild **complete** (2026-07-13): 0 validate failures, **127/127** quote matches, **14/14** collection-conformance PASS, freshness demonstrated. Entry points documented in `kb/work/rebuild-from-scratch/README.md` there.
-- **Framework** (this repo) — `commonplace-validate`, `commonplace-verify-quotes`, review freshness ([ADR 052](../../reference/adr/052-general-freshness-store-review-first-migration.md)), skills layer.
+- **Sibling casebooks** — three stress tests; rebuild **complete** (2026-07-13): 0 validate failures, **127/127** quotes, **14/14** conformance PASS, freshness demonstrated (`kb/work/rebuild-from-scratch/README.md` there).
+- **Framework** (this repo) — validators, review freshness ([ADR 052](../../reference/adr/052-general-freshness-store-review-first-migration.md)), skills — each with ADR/proposal/backlog rationale where promoted.
 
-Judges who never open a repo should still get the methodology. Judges who clone should get **falsification** (adversarial quote demo below).
+Judges who never clone still get the methodology. Judges who clone get **falsification** (quote demo below).
 
-### Three cases as constraint stress tests
+### Three cases as rationale stress tests
 
-Cases demonstrate **which constraints bit**, not which side is right:
+Cases show **which constraints and rationale commitments bit**, not which side is right:
 
-| Case | Constraint surfaced | One navigational question for the write-up |
+| Case | Constraint / rationale surfaced | One navigational question |
 |---|---|---|
-| **COVID** | Parallel institutional verdicts; correlated zoonotic cluster; scope must not collapse | "Do these three papers independently confirm zoonosis, or one programme thrice?" |
-| **LHC** | Settled conclusion with load-bearing dependency chain and speculative joints | "What does the safety case rest on, and where is the argument's own reliability contested?" |
-| **Eggs** | Competing syntheses; population/outcome caveats; institutional voices that diverged | "Why did the 2015 guideline reversal not settle the dispute?" |
+| **COVID** | Institutional incommensurability; correlated cluster | "Do these three papers independently confirm zoonosis, or one programme thrice?" |
+| **LHC** | Dependency chain; argument-reliability as contested sub-question | "What does the safety case rest on, and where is the argument's own reliability contested?" |
+| **Eggs** | Competing syntheses; institutional divergence | "Why did the 2015 guideline reversal not settle the dispute?" |
 
-Same workflow on all three: source → ingest → note → validate → review → freshness. One walkthrough per case in the submission document.
+Workflow on all three: source → ingest → note → validate → review → freshness. One walkthrough per case.
 
 ## Generalization — bounded claims
 
-The judges ask: *does it generalize?* Constraint-driven design generalizes as **methodology** (any layer, any stack). Specific machinery generalizes only with evidence:
+*Does it generalize?*
 
-1. **Observed transfer across three unlike shapes** — LHC-shaped contract transferred to eggs and COVID without amendment; visibly different local structure (institutional layer, dependency map, synthesis dispute). LHC shaped the contract → two observed transfers, not independent replication. Say so plainly.
-2. **Principled constraints** — authority is claim-relative; context contamination operates below compliance reasoning; closed enums can lie confidently. These are not "our bug reports"; they are design pressures any agent-operated controversy KB faces.
-3. **Spot experiments** — register drift (n=2, confounded); gate calibration (fitted revision on 4 labelled notes). Calibrate claims to sample size.
-4. **Designed, unrun replication** — [replication-plan.md](./replication-plan.md): clean-room convergence to separate material-forced from contract-induced structure. Appendix material, not spine. Honest uncertainty is an asset.
+1. **The methodology** — design rationale management is established research applied to agent-operated KB infrastructure; not a bespoke "constraint-driven design" coinage.
+2. **The machinery** — three unlike case shapes + observed contract transfer (LHC-shaped → eggs, COVID); not independent replication. Say so plainly.
+3. **Inherited constraints** — claim-relative authority, context contamination below compliance, closed enums asserting false types: design pressures with rationale, not bug reports.
+4. **Spot experiments** — register drift (n=2); gate calibration (fitted on 4 labelled notes). Size claims to evidence.
+5. **Designed, unrun replication** — [replication-plan.md](./replication-plan.md): convergence test for forced vs chosen structure. Appendix, not spine.
 
 ## Submission document outline
 
-The deliverable is a **judge-facing document**. Code and repos are evidence. Target structure:
+Judge-facing document; code and repos are evidence.
 
 | § | Title | Length | Content |
 |---|---|---|---|
-| 1 | The compounding barrier | ½ page | Unmarked contingency; why methodology beats feature lists |
-| 2 | Constraint-driven design | 1–1½ pages | Three constraint classes; promotion rules; three homes (framework / collection-local / proposal) |
-| 3 | Constraints → epistemic stack | 1 page | Table above expanded; built vs refused per layer |
-| 4 | Reference implementation | 1 page | Casebook Protocol + Commonplace; deterministic vs semantic boundary; falsification path |
-| 5 | Three stress tests | 1½ pages | One question + one path through the map per case |
-| 6 | Evidence and limits | 1 page | Rebuild gates, experiments, backlog audit trail, replication protocol, n=2 caveats |
-| App | Runnable walkthrough | short | Clone path, commands, planted-failure demo |
+| 1 | The compounding barrier | ½ page | Unmarked contingency; why rationale beats feature lists |
+| 2 | Design rationale management | 1–1½ pages | Established lineage (DR/DSA/IDEF); vocabulary table; repository surfaces; **not** constraining-as-methodology |
+| 3 | Rationale → epistemic stack | 1 page | Layer table; built vs rejected with alternatives named |
+| 4 | Reference implementation | 1 page | Casebook Protocol + Commonplace; deterministic vs semantic boundary; falsification |
+| 5 | Three stress tests | 1½ pages | One question + path per case |
+| 6 | Evidence and limits | 1 page | Rebuild gates, experiments, backlog/ADR audit trail, replication protocol |
+| App | Runnable walkthrough | short | Clone, verify-quotes, planted failure |
 
-**Tone:** lead with §1–2 for the naive reader. ADR numbers and CLI names live in §4–6 and the appendix.
+**Tone:** §1–2 for naive readers. Link [design-rationale-management.md](../../reference/design-rationale-management.md) as the fuller reference (note: still revising). ADR/CLI detail in §4–6.
 
 ## Evaluation boundary
 
-- **The submission document outranks everything.** No new machinery that casework has not earned before 19 July.
-- **Casework stays in the sibling repo.** Framework changes land here.
-- **Doctrine constraints are settled:** no stored confidence/authority scalars; adjudication is downstream and labelled; frontmatter semantics stay type-owned.
-- **Do not build** the generic bulk-operations layer or the independent-builder experiment on the critical path.
-- **Collection-as-artifact freshness** remains deferred ([proposal](../../reference/proposals/collection-as-artifact-freshness.md)); ADR 052 v1 review-pair freshness is sufficient evidence.
+- **Submission document outranks everything.** No new machinery casework has not earned before 19 July.
+- **Casework stays in sibling repo.** Framework changes land here.
+- **Settled design commitments:** no scalar confidence/authority in frontmatter; adjudication downstream and labelled; frontmatter semantics type-owned.
+- **Do not build** bulk-operations layer or independent-builder experiment on critical path.
+- **Collection-as-artifact freshness** deferred; ADR 052 v1 sufficient ([proposal](../../reference/proposals/collection-as-artifact-freshness.md)).
+- **Sync with DRM doc:** as `design-rationale-management.md` revises, align submission §2 and this README; do not let the submission outrun the reference doc's vocabulary.
 
 ## Build plan
 
@@ -115,19 +133,22 @@ The deliverable is a **judge-facing document**. Code and repos are evidence. Tar
 
 | Item | Status | Evidence |
 |---|---|---|
-| Quote verifier | **DONE** | [ADR 046](../../reference/adr/046-verbatim-quotes-are-validated-against-their-cited-source.md); rebuilt corpus **127/127** |
+| Quote verifier | **DONE** | [ADR 046](../../reference/adr/046-verbatim-quotes-are-validated-against-their-cited-source.md); **127/127** |
 | Validation contract + shared runs | **DONE** | [validation contract](../../reference/validation-contract.md), [ADR 050](../../reference/adr/050-validation-runs-share-parsed-artifacts-and-collection-indexes.md) |
 | Full-pass guard | **DONE** | [ADR 051](../../reference/adr/051-full-pass-packets-own-guarded-captures-and-resolutions.md) |
-| Three-case rebuild | **DONE** | Sibling `kb/work/rebuild-from-scratch/README.md` — all closure gates |
+| Three-case rebuild | **DONE** | Sibling rebuild workshop — all closure gates |
+| DRM reference doc | **in progress** | [design-rationale-management.md](../../reference/design-rationale-management.md) |
 
 ### Must ship (critical path)
 
-**Extract the methodology + protocol guide (main artifact).** One submission-facing document (or doc + short spec appendix) containing:
+**Extract submission-facing methodology + protocol guide:**
 
-- Constraint-driven design as named methodology (§2–3 above).
-- Casebook Protocol as reference implementation: artifact surfaces, local-extension rules, conformance checklist, freshness tiers.
+- Design rationale management as §2 spine (cite established research + vocabulary boundary).
+- Casebook Protocol appendix: surfaces, local-extension rules, conformance checklist, freshness tiers.
 
-Normative sources to consolidate: [validation-contract.md](../../reference/validation-contract.md) (deterministic half); [README-REVIEW-SYSTEM.md](../../reference/README-REVIEW-SYSTEM.md) + ADRs 038, 041, 051, 052 (semantic + freshness). State three freshness tiers:
+Consolidate from: [design-rationale-management.md](../../reference/design-rationale-management.md), [validation-contract.md](../../reference/validation-contract.md), [README-REVIEW-SYSTEM.md](../../reference/README-REVIEW-SYSTEM.md), ADRs 038, 041, 046, 051, 052.
+
+Freshness tiers:
 
 | Tier | Mechanism | Status |
 |---|---|---|
@@ -135,75 +156,61 @@ Normative sources to consolidate: [validation-contract.md](../../reference/valid
 | Disposition guarding | Packet captures + `commonplace-guard-full-pass-report` | Shipped, narrow |
 | General artifact freshness | Dependency baselines, reverse selection, collection snapshots | Designed; [workshop](../artifact-freshness-and-referential-checks/README.md) |
 
-**Write the submission document** following the outline. Run adversarial review and a **naive-reader pass** (judge may never clone).
+**Write submission document** per outline. Naive-reader pass + adversarial review.
 
-**Package judge-facing falsification:**
-
-- Clone casebooks → `commonplace-verify-quotes` + `commonplace-validate` on clean corpus → pass.
-- Plant one broken `verbatim` span → fail. Full install is not the demo; this short path is.
+**Falsification package:** clean corpus passes `commonplace-verify-quotes` / `commonplace-validate`; planted `verbatim` break fails.
 
 ### Should ship if time allows
 
-- **Hands-free transcript** — one agent run: source → note → validate → review, unassisted. Weakens the scaling story if missing; cut after matrix, before weakening §5.
-- **Scaling-with-AI half-page** — model partitions, criterion re-run, cheap gates, skills — currently under-told.
+- Hands-free transcript (source → note → validate → review).
+- Scaling-with-AI half-page (partitions, criterion re-run, skills).
 
 ### Cut first
 
-- **Correlated-evidence matrix build** — prose `standing.independence` and casebook callouts already satisfy the constraint story; matrix is optional ([assessment-machinery-line.md](./assessment-machinery-line.md)).
-- **Replication experiment execution** — stays designed-but-unrun.
-- **ADR laundry lists** in main text — footnote only.
+- Correlated-evidence matrix build ([assessment-machinery-line.md](./assessment-machinery-line.md)).
+- Replication experiment execution.
+- ADR laundry lists in main text.
 
-### Rejected — entry material (negative results)
+### Rejected — rationale on record (negative results)
 
-**Author-authority ranking** — [workshop](../authority-ranking/README.md): order shape unknown. Rejection *is* the discipline. A half-built scalar rank would be the flattening this entry argues against.
+**Author-authority ranking** — shape unknown; rejection is the discipline ([workshop](../authority-ranking/README.md)).
 
-**Crux scoring, scalar credence in frontmatter** — same shape-unknown constraint.
+**Crux scoring, scalar credence** — same undetermined-shape rationale.
 
 ## Schedule
-
-Days are working days from 12 July; submission 19 July.
 
 | Days | Work |
 |---|---|
 | 1 | **DONE.** Quote verifier, validation contract, rebuild closure |
-| 1–2 | **Draft §2–3 + protocol appendix.** Methodology spine and constraint→stack table |
-| 2–3 | **Draft §4–5.** Reference implementation, three case walkthroughs, results table |
-| 3 | **Falsification package + optional transcript** |
-| 4–6 | **Integrate, naive-reader pass, adversarial review, buffer** |
+| 1–2 | **Draft §2–3 + DRM sync.** Methodology spine, vocabulary, stack table; align with revising reference doc |
+| 2–3 | **Draft §4–5.** Reference implementation, case walkthroughs |
+| 3 | **Falsification + optional transcript** |
+| 4–6 | **Integrate, naive-reader pass, buffer** |
 
-**Priority if days run out.** Protect, in order:
+**Priority if days run out:** submission doc → methodology extract (DRM-centered) → case walkthroughs → falsification demo → transcript → matrix.
 
-1. Submission document (§1–6)
-2. Methodology + protocol guide (extracted spec)
-3. Three case walkthroughs + rebuild evidence table
-4. One-command falsification demo
-5. Hands-free transcript
-6. Correlated-evidence matrix
+## Entry material — the audit trail is the method
 
-Do not weaken §2–5 to build optional Assessment machinery.
+Distributed rationale surfaces already populated:
 
-## Entry material we already have — do not hide
+- Sibling `backlog-to-commonplace.md` — friction → local build → Outcome
+- Proposals: `## Forces` / `## Free choices`
+- ADRs, rejected candidates, supersession links
+- Quote-verifier proposal written before friction case — rationale catching its own violation
+- Register-drift + gate calibration — constraint predicted failure; rationale revised; constraining graduated (validator, revised `## Review` bullets)
+- Rebuild closure — rationale → commitments → measurable gates
 
-The audit trail **is** constraint-driven design in action:
-
-- Sibling `backlog-to-commonplace.md` — append-only, Outcome lines for what earned promotion
-- `## Forces` / `## Free choices` in proposals
-- [rejected-candidates](../epistack-framework-additions/rejected-candidates.md)
-- Quote-verifier proposal admitting it "did not originate from a felt friction case" — discipline catching violation on the page
-- Register-drift experiment + gate calibration — constraints predicted failure modes; spot checks confirmed
-- Rebuild workshop closure — constraints → machinery → measurable gates (127 quotes, 14/14 conformance)
-
-## Judging questions — how we answer
+## Judging questions
 
 | Question | Answer |
 |---|---|
-| Would this help someone reason about the case? | §5 walkthroughs; maps are stance-neutral navigation aids, not verdicts |
-| Does it generalize? | Methodology generalizes; machinery bounded by three cases + replication protocol |
-| Does it scale with AI/compute? | Partitions, re-runnable criteria, agent-operable skills — §4 sidebar |
-| Does it compound? | **The spine:** constraint classes + promotion rules make handoffs legible |
+| Would this help someone reason about the case? | §5 walkthroughs; maps navigate contestation |
+| Does it generalize? | Established DRM methodology + bounded machinery claims + replication protocol |
+| Scales with AI/compute? | Partitions, re-runnable criteria, skills — §4 sidebar |
+| Does it compound? | **Spine:** recoverable rationale across repository surfaces and handoffs |
 
 ## What closes it
 
-Submission sent by 19 July: constraint-driven design methodology, epistemic-stack mapping, reference-implementation walkthrough, three-case evidence, explicit limitations and negative results.
+Submission by 19 July: design rationale management methodology (with vocabulary boundary), epistemic-stack mapping, reference-implementation walkthrough, three-case evidence, limitations and negative results.
 
-Then: promote durable conclusions into `kb/reference/` and `kb/notes/`; fold predecessor workshops into what survives; delete this directory.
+Then: promote durable conclusions; fold predecessor workshops; delete this directory when done.
