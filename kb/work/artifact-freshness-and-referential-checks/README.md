@@ -8,7 +8,7 @@ No artifact class is intrinsically a source or a derivative. A source snapshot, 
 
 ## Prerequisite
 
-Implement the full-pass-local [packet-owned capture for guarded operation transitions](../../reference/proposals/artifact-version-substrate-for-pinned-operation-inputs.md) first.
+Implement the full-pass-local [packet-owned capture for guarded operation transitions](../../reference/proposals/packet-owned-captures-for-guarded-operation-transitions.md) first.
 
 That proposal proves these behaviors without exposing a reusable subsystem:
 
@@ -86,7 +86,7 @@ This workshop owns the vertical behavior contract for artifact-neutral dependenc
 
 It consumes rather than duplicates adjacent work:
 
-- The [packet-owned capture proposal](../../reference/proposals/artifact-version-substrate-for-pinned-operation-inputs.md) and the [full-pass disposition proposal](../../reference/proposals/report-owned-resolution-for-asynchronous-full-pass-dispositions.md) jointly supply the first worked case: packet-owned capture, current-version comparison, guarding, and report-specific resolution. This workshop owns extraction only after a second consumer demonstrates the common boundary.
+- The [packet-owned capture proposal](../../reference/proposals/packet-owned-captures-for-guarded-operation-transitions.md) and the [full-pass disposition proposal](../../reference/proposals/report-owned-resolution-for-asynchronous-full-pass-dispositions.md) jointly supply the first worked case: packet-owned capture, current-version comparison, guarding, and report-specific resolution. This workshop owns extraction only after a second consumer demonstrates the common boundary.
 - [lineage-mechanisms](../lineage-mechanisms/README.md) owns the general dependency/freshness vocabulary, storage-weight rules, and any common operational state design.
 - [kb-graph-loader](../kb-graph-loader/README.md) owns shared reading, parsing, and artifact indexes used by deterministic referential checks.
 - [bulk-operations](../bulk-operations/README.md) owns executing selected refresh work at scale.

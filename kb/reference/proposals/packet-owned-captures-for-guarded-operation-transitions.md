@@ -35,6 +35,8 @@ The logical identity continues to determine collection membership, type resoluti
 
 At operation start, the orchestrator reads the live artifact once, writes the resulting Unicode character sequence as UTF-8 to a non-Markdown file inside the packet, and records its SHA-256. The capture is immutable for the operation. A consumer verifies the hash whenever it loads the file; the report and capture are one retention unit.
 
+A capture path is a normalized packet-relative `.txt` path. It must not be absolute, contain `..`, or resolve through a symlink or other indirection outside the packet; loading requires a regular file whose resolved path remains inside that packet. These constraints keep a report field from turning capture verification into an arbitrary filesystem read.
+
 This duplication is deliberate rather than a second shared store. The packet copy is the operation's authoritative guard and diff basis, not an input transport or cache of review state. It requires no review-DB ownership rows, pruning exception, global capture catalogue, or new artifact type. Its `.txt` extension keeps KB link scans, artifact scans, and Markdown validators from treating it as an authored knowledge artifact.
 
 An operation may guard several inputs. A merge recommendation captures both the source and proposed target because the recommendation is a claim about the pair. Each retains its own logical path, packet-relative capture path, and hash.
@@ -64,6 +66,8 @@ Immediately before the first mutation, the consumer:
 4. returns every `matching`, `changed`, or `missing` comparison, including a capture-to-current diff for changed text; and
 5. refuses to begin unless every input is `matching`.
 
+Failure classes remain distinct. A capture that does not match its recorded hash is a corrupted packet: the consumer stops and routes it to reconciliation, never to `superseded`. A readable live input whose hash differs from the verified capture is version drift and follows the consumer's target-owned mismatch policy. A missing live input also routes to reconciliation because absence cannot prove which transition, if any, occurred.
+
 After mutation, the consumer verifies its own postconditions and routes incomplete or ambiguous state to reconciliation. A missing artifact never proves that deletion or merge succeeded.
 
 This guard may be a small consumer-local helper or explicit workflow step. No shared module is required for the first consumer. The freshness workshop may extract the hash, comparison, and guard boundary after a second consumer proves which parts are genuinely reusable.
@@ -92,12 +96,12 @@ The guard is optimistic, not transactional. A write racing between the final com
 
 Adopt only with the full-improvement pass as an end-to-end worked case:
 
-1. The pass writes one immutable UTF-8 `.txt` capture for the source note's start state, records its logical path and SHA-256 separately, and rejects a capture whose hash does not match.
+1. The pass writes one immutable UTF-8 `.txt` capture for the source note's start state, records its logical path and SHA-256 separately, and rejects a capture whose hash does not match. Every capture path is normalized, packet-relative, confined to the packet, and resolves to a regular non-symlink file.
 2. The operative instruction tells other actors not to edit the source while the active pass runs, and applies the same rule to a proposed merge target from capture through report finalization.
 3. Assessment methods continue to receive the logical path and may read the live artifact; the implementation adds no capture-path or text-override seam to review or direct methods.
-4. Before applying a `keep` packet or resolving a delete or merge, one guard checks the complete input set, returns every `matching`, `changed`, or `missing` result, and refuses the transition unless all match.
+4. Before applying a `keep` packet, executing a delete or merge, rejecting a recommendation, or recording an alternative operation, one guard checks the complete input set, returns every `matching`, `changed`, or `missing` result, and refuses the transition unless all match.
 5. A merge recommendation owns and guards a separate capture for its target; source-only guarding is insufficient.
-6. Changed inputs produce a capture-to-current diff. Missing inputs route to reconciliation rather than implying success.
+6. Changed inputs produce a capture-to-current diff and follow the consumer's mismatch policy. Missing inputs and corrupted captures route to reconciliation rather than implying success or supersession.
 7. A successful transition verifies target-owned postconditions; incomplete or ambiguous results route to explicit reconciliation.
 8. Packet cleanup retains reports and captures as one unit while the operation remains actionable and may remove them together afterward.
 
