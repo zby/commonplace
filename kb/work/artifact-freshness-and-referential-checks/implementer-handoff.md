@@ -13,7 +13,7 @@ Authority: [implementation-plan.md](./implementation-plan.md), [database-design.
 3. **Dead targets** — migration skips four `transformation-closure` baselines; runtime `commonplace-freshness-retire` for later cases. `input-missing` → exit `1`.
 4. **Done-when** — prohibit duplicated compare/persist in review; adapters stay.
 
-**M1 pins:** `collection-text` byte format in database-design; JSON in freshness-schemas.md.
+**M1 pins:** `file-text` versioning only; JSON in freshness-schemas.md. Collection-as-artifact freshness is [deferred](./future-work-collection-freshness.md).
 
 ---
 
@@ -22,7 +22,7 @@ Authority: [implementation-plan.md](./implementation-plan.md), [database-design.
 - No compatibility shim surviving migration.
 - Malformed baselines → store error, never `missing-baseline`.
 - `criterion-changed` before `note-changed` in public review output.
-- Stale ingests = derivative maintenance via `casebook` / `source-scope` change — not prose parsing.
+- Stale ingests = semantic derivative maintenance — not prose parsing; collection-level selection is deferred.
 - Global status ≠ discovery; review selector owns `missing-baseline`.
 - WAL DB: checkpoint before read-only migration.
 - Snapshot pruning across `freshness_inputs` + `review_pairs` is highest bug risk.

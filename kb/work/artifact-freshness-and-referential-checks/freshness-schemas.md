@@ -17,14 +17,7 @@ Canonical shapes for `commonplace-freshness-status`, `commonplace-freshness-acce
 }
 ```
 
-```json
-{
-  "target_kind": "collection-maintenance",
-  "target_key": {
-    "collection_path": "kb/lhc/notes"
-  }
-}
-```
+Non-review target examples (`collection-maintenance`, `collection-text`) are deferred to [future-work-collection-freshness.md](./future-work-collection-freshness.md). v1 schemas use `review-pair` and `file-text` only.
 
 ### Input observation
 
@@ -88,28 +81,7 @@ Fresh targets appear only with `--all`. The payload is the canonical observation
 
 ## Accept manifest (`commonplace-freshness-accept --input -`)
 
-Observation refresh or initial acceptance only. `target_kind = review-pair` is rejected.
-
-```json
-{
-  "schema": "commonplace-freshness-accept/1",
-  "transition": "initial",
-  "target_kind": "collection-maintenance",
-  "target_key": {
-    "collection_path": "kb/lhc/notes"
-  },
-  "expected_baseline_revision": null,
-  "inputs": [
-    {
-      "input_role": "casebook",
-      "artifact_path": "kb/lhc/notes",
-      "version_kind": "collection-text",
-      "content_sha256": "…",
-      "content_text": "COMMONPLACE-COLLECTION-TEXT/1\n…"
-    }
-  ]
-}
-```
+Observation refresh or initial acceptance only. `target_kind = review-pair` is rejected in v1. Non-review accept manifests ship when the first non-review target kind is registered; see deferred [future-work-collection-freshness.md](./future-work-collection-freshness.md) for the planned `collection-maintenance` shape.
 
 `transition` is `initial` or `refresh`. For `initial`, `expected_baseline_revision` must be `null`. For `refresh`, it must equal the current baseline revision. Every registered input role for the target must appear exactly once with observations whose hashes match live resolution at commit time.
 

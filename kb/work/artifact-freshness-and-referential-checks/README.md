@@ -9,7 +9,8 @@ No artifact class is intrinsically a source or a derivative. A source snapshot, 
 Working design:
 
 - [Implementation plan](./implementation-plan.md)
-- [Database design](./database-design.md) — exact old-to-new schema map, review-first migration, transitions, integrity, and Epistack representation
+- [Database design](./database-design.md) — exact old-to-new schema map, review-first migration, transitions, and integrity
+- [Future work: collection freshness](./future-work-collection-freshness.md) — deferred `collection-text` and casebook targets
 
 ## Implemented foundation
 
@@ -44,7 +45,7 @@ General freshness still lacks:
 
 Ordinary links may nominate dependency candidates, but Commonplace defines links as reader aids rather than obligations. A link alone cannot create an accepted baseline or prove that its target is stale.
 
-Epistack also needs to detect a source collection gaining, losing, or changing a member even when no target has registered an edge to the new member. The bounded workaround is a **collection source snapshot**: canonical text containing the sorted member paths and contents for one collection. A target may register that snapshot as one dependency. The fixed `collection-text` version function produces its current canonical text; the general freshness mechanism stores and compares it like any other path-based snapshot, without giving sources or ingests special semantics.
+Epistack eventually needs to detect a source collection gaining, losing, or changing a member even when no target has registered an edge to the new member. The planned workaround — a **collection source snapshot** via `collection-text` and `collection-maintenance` targets — is [deferred](./future-work-collection-freshness.md). The current implementation phase ships review-first migration and `file-text` infrastructure only.
 
 ## Why referential checks remain in the workshop
 
@@ -61,7 +62,7 @@ The remaining mechanism must account for these witnesses:
 
 - **Artifact-neutral baseline:** a non-review target records an accepted set of versioned artifact dependencies using the shipped text-version contract.
 - **Global and reverse selection:** one check reports every registered stale target, while changing any registered dependency selects every affected target regardless of the path class or colloquial role of either side.
-- **Collection source snapshot:** adding, removing, or changing a member changes the canonical collection snapshot and selects targets registered against it; the freshness core still sees an ordinary artifact identity and text version.
+- **Collection source snapshot (deferred):** adding, removing, or changing a member will change a canonical collection snapshot and select registered targets; see [future-work-collection-freshness.md](./future-work-collection-freshness.md).
 - **Diff-backed acknowledgement:** the operator inspects the accepted-to-current change and advances selected dependency baselines without claiming that a new target output was produced.
 - **Refresh acceptance:** producing or reassessing a target records its current target version and complete accepted dependency baseline.
 - **Target-kind consequence:** the shared selector emits neutral input-change reasons; the workflow consuming that target kind decides whether to reassess, regenerate, or acknowledge.
@@ -107,11 +108,10 @@ The workshop closes when:
 
 1. at least one artifact-neutral target records and queries an advancing accepted dependency baseline through the general mechanism;
 2. a repository-wide check reports stale registered targets, and a changed dependency selects each affected target with its accepted and current versions plus a neutral reason;
-3. an Epistack-shaped collection source snapshot demonstrates that adding, removing, or changing a collection member can select a registered target without source-specific behavior in the freshness core;
-4. acknowledgement and refresh demonstrate distinct baseline transitions over the exact inspected or consumed versions;
-5. the boundary between dependency discovery, changed dependency, deterministic invalidity, and target-kind workflow response has a written contract and executable cases;
-6. Commonplace either implements the storage weight earned by the witness or records why artifact-owned state remains sufficient;
-7. durable outcomes move to the appropriate API/reference documentation, ADR or proposal, validator instruction, and owning workshops; and
-8. any submission claim about targeted maintenance is narrowed or substantiated to match the result.
+3. acknowledgement and refresh demonstrate distinct baseline transitions over the exact inspected or consumed versions for review-pair targets;
+4. the boundary between dependency discovery, changed dependency, deterministic invalidity, and target-kind workflow response has a written contract and executable cases for the shipped scope;
+5. Commonplace implements the operational-store storage weight for review freshness and documents collection-as-artifact freshness as deferred future work;
+6. durable outcomes move to the appropriate API/reference documentation, ADR or proposal, validator instruction, and owning workshops; and
+7. collection-source-snapshot witness cases move to [future-work-collection-freshness.md](./future-work-collection-freshness.md) rather than blocking this phase.
 
 Then delete this workshop and remove it from the active-workshop index.

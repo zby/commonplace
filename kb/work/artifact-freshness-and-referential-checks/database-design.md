@@ -89,7 +89,7 @@ CREATE TABLE artifact_snapshots (
     snapshot_id INTEGER PRIMARY KEY,
     artifact_path TEXT NOT NULL CHECK (length(artifact_path) > 0),
     version_kind TEXT NOT NULL CHECK (
-        version_kind IN ('file-text', 'collection-text')
+        version_kind IN ('file-text')
     ),
     content_sha256 TEXT NOT NULL CHECK (
         length(content_sha256) = 64
@@ -104,54 +104,7 @@ CREATE TABLE artifact_snapshots (
 
 The stored hash must equal `SHA-256(content_text.encode("utf-8"))`. Snapshot text is mandatory because accepted-to-current diffs are part of acknowledgement. Path is artifact identity; `version_kind` fixes how that path is rendered into versioned text. Identical versions of the same path and version kind deduplicate.
 
-`file-text` reads one regular non-symlink UTF-8 file under `kb/`.
-
-`collection-text` renders one `COLLECTION.md`-bearing directory with the fixed rule in [Collection-text encoding](#collection-text-encoding). It has no per-target include/exclude configuration.
-
-### Collection-text encoding
-
-`collection-text` is a deterministic UTF-8 byte sequence. The stored snapshot hash is `SHA-256` of those bytes. The encoding is versioned by its first line; any rule change requires an explicit migration because every registered `collection-text` baseline becomes stale.
-
-**Scope.** One collection root: a normalized repository-relative directory that contains `COLLECTION.md`. Membership is non-recursive into nested collection roots — a child directory bearing its own `COLLECTION.md` is a separate collection identity and is excluded from the parent snapshot.
-
-**Member enumeration.** Collect every visible regular-file `*.md` under the collection root using the same visibility walk as `commonplace.lib.project_paths.walk_visible`:
-
-- include files in subdirectories of the collection root;
-- exclude dot-prefixed paths and nested git repositories;
-- exclude symlinks and non-regular files;
-- exclude `COLLECTION.md`;
-- exclude any path with a `types/` directory segment between the collection root and the file;
-- exclude `.replaced.*.md` archive filenames; and
-- do not apply repository-wide artifact-dir pruning (`build/`, `node_modules/`, etc.) inside a collection walk.
-
-Sort members by normalized repository-relative POSIX path with `/` separators.
-
-**Byte layout.**
-
-```text
-COMMONPLACE-COLLECTION-TEXT/1
-<member-record>*
-```
-
-Each `<member-record>` is:
-
-```text
---- member
-path: <normalized-repo-relative-path>
-sha256: <64 lowercase hex of member file UTF-8 bytes>
----
-<exact member file UTF-8 text>
-```
-
-Rules:
-
-- the format line, record headers, and delimiters use ASCII `LF` (`\n`) only;
-- member file text is read as UTF-8 and embedded verbatim — no newline normalization inside content;
-- if the member file lacks a trailing newline, the record body lacks one too;
-- there is no record delimiter after the final member; and
-- an empty collection yields only the format line and one trailing `LF`.
-
-The inline `sha256` field is redundant with the outer snapshot hash but makes member-level diffs human-readable without reparsing headers.
+`file-text` reads one regular non-symlink UTF-8 file under `kb/`. v1 admits only this version kind. `collection-text` and collection-as-artifact targets are deferred to [future-work-collection-freshness.md](./future-work-collection-freshness.md).
 
 ### Current accepted baseline and target identity
 
@@ -176,12 +129,6 @@ CREATE TABLE freshness_baselines (
 }
 ```
 
-Epistack collection maintenance uses:
-
-```json
-{"collection_path":"kb/lhc/notes"}
-```
-
 There is exactly one current baseline row per accepted target. There is no separately persisted unaccepted target and no baseline history. Target kind tells the consuming workflow how to respond; any authored contract that affects acceptance is registered as an ordinary input.
 
 ### Accepted target inputs
@@ -193,7 +140,7 @@ CREATE TABLE freshness_inputs (
     input_role TEXT NOT NULL CHECK (length(input_role) > 0),
     artifact_path TEXT NOT NULL CHECK (length(artifact_path) > 0),
     version_kind TEXT NOT NULL CHECK (
-        version_kind IN ('file-text', 'collection-text')
+        version_kind IN ('file-text')
     ),
     accepted_snapshot_id INTEGER NOT NULL,
     PRIMARY KEY (target_id, input_role),
@@ -206,7 +153,7 @@ CREATE INDEX idx_freshness_inputs_path
 ON freshness_inputs(artifact_path, version_kind, target_id);
 ```
 
-The composite FK prevents a baseline from pairing one path/version function with another path's snapshot. `input_role` is stable within the target, drives acknowledgement selection, and carries the target-owned meaning (`note`, `criterion`, `casebook`, `source-scope`, or `contract`). The path index is the reverse-selection route from a changed path to affected targets.
+The composite FK prevents a baseline from pairing one path/version function with another path's snapshot. `input_role` is stable within the target, drives acknowledgement selection, and carries the target-owned meaning. Review uses `note` and `criterion`; other roles arrive with later target kinds. The path index is the reverse-selection route from a changed path to affected targets.
 
 ### Review-owned evidence extension
 
@@ -274,7 +221,7 @@ The old `current_freshness_baselines` name is removed so no caller can accidenta
 | concern | owner |
 |---|---|
 | DB path, connection, schema version, transaction setup, whole-store integrity | `commonplace.store` |
-| Path versioning (`file-text` / `collection-text`), snapshots, hashes, generic baseline/input rows | `commonplace.freshness` |
+| Path versioning (`file-text` in v1), snapshots, hashes, generic baseline/input rows | `commonplace.freshness` |
 | Generic current-status and reverse-selection queries | `commonplace.freshness` |
 | Refresh acceptance and acknowledgement compare-and-swap | `commonplace.freshness` |
 | Review job/pair CRUD and result integrity | `commonplace.review` |
@@ -424,19 +371,9 @@ The review selector maps generic results as follows:
 
 Existing review precedence currently reports `criterion-changed` before `note-changed`; migration preserves that public behavior even though global status may list both changed inputs.
 
-## Epistack mapping
+## Deferred: collection-as-artifact targets
 
-Each casebook gets one `collection-maintenance` target. It registers three path-based inputs:
-
-| input role | version kind | meaning |
-|---|---|---|
-| `casebook` | `collection-text` over the notes collection | Exact maintained output set accepted by the last maintenance pass. |
-| `source-scope` | `collection-text` over the source collection | Collection source snapshot; catches member addition, removal, rename, and content change. |
-| `contract` | `file-text` over the notes `COLLECTION.md` | Maintenance semantics applied by the pass. |
-
-`collection-text` stores canonical combined UTF-8 text, not only a directory timestamp or list of hashes. Consequently the same snapshot/diff machinery shows which members and content changed. It applies one fixed Commonplace collection-content rule; no schema column says `source`, `ingest`, or `casebook`.
-
-A source-scope change selects one casebook target. A casebook addition, removal, rename, or edit selects that same target through the `casebook` input. The semantic workflow decides which notes and source-owned `.ingest.md` reports to revise; the freshness core only reports the changed collection input. Refresh replaces all three accepted inputs; acknowledgement may advance only `source-scope` when its inspected change does not affect the casebook.
+Epistack `collection-maintenance` targets and the `collection-text` version function are specified in [future-work-collection-freshness.md](./future-work-collection-freshness.md). They are not part of v1 schema or migration.
 
 ## Migration algorithm: old database remains the backup
 
@@ -520,6 +457,7 @@ Do not begin schema or review-code changes until this design and the implementat
 6. capture versus observation refresh semantics and review-owned finalization;
 7. queued-job `expected_baseline_revision` capture and migration disposition;
 8. target retirement and `input-missing` exit semantics;
-9. integrity and pruning ownership;
-10. the `collection-text` byte encoding; and
-11. the canonical status/accept/ack JSON contracts in [freshness-schemas.md](./freshness-schemas.md).
+9. integrity and pruning ownership; and
+10. the canonical status/accept/ack JSON contracts in [freshness-schemas.md](./freshness-schemas.md).
+
+Collection-as-artifact freshness is deferred and does not gate v1 implementation.
