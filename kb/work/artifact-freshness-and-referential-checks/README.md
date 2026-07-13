@@ -2,7 +2,7 @@
 
 ## Question
 
-Given the shipped full-pass capture/guard case, what additional boundary does a second consumer require for registering artifact-to-artifact dependencies, retaining accepted dependency baselines, selecting targets affected by changed inputs, and distinguishing freshness from deterministic cross-artifact validity?
+What general mechanism should register artifact-to-artifact dependencies, retain accepted dependency baselines, expose repository-wide freshness status, select targets affected by changed inputs, and distinguish freshness from deterministic cross-artifact validity?
 
 No artifact class is intrinsically a source or a derivative. A source snapshot, ingest, note, criterion, type specification, instruction, report, or generated index may be an input in one target and a freshness target in another. Artifact types may define different refresh policies, but the mechanism must not special-case sources or ingests.
 
@@ -19,7 +19,7 @@ No artifact class is intrinsically a source or a derivative. A source snapshot, 
 
 The implementation is intentionally split at the demonstrated boundary. Content hashing is shared. Report parsing, packet-capture persistence, capture verification, comparison/diff results, and guarding remain in `commonplace.lib.full_pass`, with a full-pass-specific command and type contract. There is no general capture store, artifact-version service, or freshness target API.
 
-That is the desired starting point, not unfinished foundation work. Full-pass owns one persistence policy and one response to net drift: a disposition becomes `superseded` instead of executing against changed text. General freshness should extract full-pass comparison or guard code only after its second consumer demonstrates the same shape; shared semantics do not require shared storage or a universal `GuardedInput` type.
+That is the desired starting point, not unfinished foundation work. Full-pass owns one persistence policy and one response to net drift: a disposition becomes `superseded` instead of executing against changed text. General freshness is independently justified by repository-wide dependency maintenance. Its implementation may extract full-pass comparison or diff code where the shapes coincide, but shared semantics do not require shared storage or a universal `GuardedInput` type.
 
 Pinned assessment input is not part of the shipped foundation. Full-pass methods still read live logical paths under a cooperative no-edit rule; the final optimistic guard covers later application and asynchronous resolution, not in-flight reads or the residual check-to-mutation race. Evidence that this rule is restrictive or unreliable must appear before this workshop adds pinned-input seams or stronger concurrency machinery.
 
@@ -31,13 +31,15 @@ General freshness still lacks:
 
 - an artifact-neutral target identity and dependency-registration contract;
 - accepted baselines over the dependencies of non-review targets;
-- a selector from a changed dependency to affected target keys and reasons;
+- a repository-wide status and selector from changed dependencies to affected target keys and reasons;
 - acknowledgement that advances selected dependency versions while preserving the target output;
 - refresh acceptance that records a new target version and complete dependency baseline;
 - target-owned policy for mapping neutral changes to reassess, regenerate, acknowledge, retire, or another action; and
 - a storage-weight decision for dependency state that has no natural owner artifact.
 
 Ordinary links may nominate dependency candidates, but Commonplace defines links as reader aids rather than obligations. A link alone cannot create an accepted baseline or prove that its target is stale.
+
+Epistack also needs to detect a source collection gaining, losing, or changing a member even when no target has registered an edge to the new member. The bounded workaround is a **collection source snapshot**: canonical text containing the sorted member paths and versions for one collection. A target may register that snapshot as one dependency. The collection-owned policy produces its current canonical text; the general freshness mechanism stores and compares it like any other versioned artifact, without giving sources or ingests special semantics.
 
 ## Why referential checks remain in the workshop
 
@@ -53,8 +55,9 @@ Existing content-addressed verbatim-quote verification is already a robust refer
 The remaining mechanism must account for these witnesses:
 
 - **Artifact-neutral baseline:** a non-review target records an accepted set of versioned artifact dependencies using the shipped text-version contract.
-- **Reverse selection:** changing any registered dependency selects every affected target regardless of the path class or colloquial role of either side.
-- **Diff-backed acknowledgement:** the operator inspects the accepted-to-current change and advances selected dependency baselines without claiming that a new target output was produced; the second consumer determines whether full-pass comparison/diff code should be extracted.
+- **Global and reverse selection:** one check reports every registered stale target, while changing any registered dependency selects every affected target regardless of the path class or colloquial role of either side.
+- **Collection source snapshot:** adding, removing, or changing a member changes the canonical collection snapshot and selects targets registered against it; the freshness core still sees an ordinary artifact identity and text version.
+- **Diff-backed acknowledgement:** the operator inspects the accepted-to-current change and advances selected dependency baselines without claiming that a new target output was produced.
 - **Refresh acceptance:** producing or reassessing a target records its current target version and complete accepted dependency baseline.
 - **Target-owned consequence:** the shared selector emits neutral reasons such as `input-changed`, `output-missing`, or `contract-changed`; the target kind decides the permissible response.
 - **Relationship is not freshness:** backlinks and authored links remain discovery evidence unless a target acceptance registers them as dependencies.
@@ -80,7 +83,7 @@ This workshop owns the vertical behavior contract for artifact-neutral dependenc
 
 It consumes rather than duplicates adjacent work:
 
-- [ADR 051](../../reference/adr/051-full-pass-packets-own-guarded-captures-and-resolutions.md) owns the shipped packet capture, full-pass comparison/guard command, and report-specific resolution. This workshop owns only the additional baseline and reverse-selection behavior plus any extraction a second consumer earns.
+- [ADR 051](../../reference/adr/051-full-pass-packets-own-guarded-captures-and-resolutions.md) owns the shipped packet capture, full-pass comparison/guard command, and report-specific resolution. This workshop owns the additional baseline, global-status, and reverse-selection behavior plus any implementation-level extraction justified by matching code shapes.
 - [lineage-mechanisms](../lineage-mechanisms/README.md) owns the general dependency/freshness vocabulary, storage-weight rules, and any common operational state design.
 - [kb-graph-loader](../kb-graph-loader/README.md) owns shared reading, parsing, and artifact indexes used by deterministic referential checks.
 - [bulk-operations](../bulk-operations/README.md) owns executing selected refresh work at scale.
@@ -90,8 +93,9 @@ Out of scope: reworking full-pass capture/guard behavior, adding pinned-input or
 
 ## Open decisions
 
-- What is the smallest real non-review target that needs an advancing accepted dependency baseline and can serve as the second consumer for extraction?
+- Which artifact-neutral target should provide the first end-to-end acceptance and global-selection case?
 - Which dependencies are declared in artifact contracts or manifests, and which are registered only by an acceptance operation?
+- How is a collection source snapshot identified and produced while keeping its collection-specific membership policy outside the freshness core?
 - Does the first reverse selector recompute over artifact-owned baselines, use a generated index, or already meet the many-to-many/churn threshold for SQLite?
 - How does a target register its allowed responses without branching on artifact path classes in the shared selector?
 - When an input is itself a stale target but its content is unchanged, does the dependency watch content only or explicitly require the input target's accepted freshness state?
@@ -101,12 +105,13 @@ Out of scope: reworking full-pass capture/guard behavior, adding pinned-input or
 
 The workshop closes when:
 
-1. at least one non-review target records and queries an advancing accepted dependency baseline and serves as the second consumer for extracting only the artifact-version behavior it shares with ADR 051;
-2. a changed dependency selects the registered target with its accepted and current versions plus a neutral reason;
-3. acknowledgement and refresh demonstrate distinct baseline transitions over the exact inspected or consumed versions;
-4. the boundary between dependency discovery, changed dependency, deterministic invalidity, and target-owned response has a written contract and executable cases;
-5. Commonplace either implements the storage weight earned by the witness or records why artifact-owned state remains sufficient;
-6. durable outcomes move to the appropriate API/reference documentation, ADR or proposal, validator instruction, and owning workshops; and
-7. any submission claim about targeted maintenance is narrowed or substantiated to match the result.
+1. at least one artifact-neutral target records and queries an advancing accepted dependency baseline through the general mechanism;
+2. a repository-wide check reports stale registered targets, and a changed dependency selects each affected target with its accepted and current versions plus a neutral reason;
+3. an Epistack-shaped collection source snapshot demonstrates that adding, removing, or changing a collection member can select a registered target without source-specific behavior in the freshness core;
+4. acknowledgement and refresh demonstrate distinct baseline transitions over the exact inspected or consumed versions;
+5. the boundary between dependency discovery, changed dependency, deterministic invalidity, and target-owned response has a written contract and executable cases;
+6. Commonplace either implements the storage weight earned by the witness or records why artifact-owned state remains sufficient;
+7. durable outcomes move to the appropriate API/reference documentation, ADR or proposal, validator instruction, and owning workshops; and
+8. any submission claim about targeted maintenance is narrowed or substantiated to match the result.
 
 Then delete this workshop and remove it from the active-workshop index.
