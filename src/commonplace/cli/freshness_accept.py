@@ -24,6 +24,9 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     db_path = resolve_db_path(repo_root, args.db)
     try:
         payload = read_input_payload(args.input)
+        schema = payload.get("schema")
+        if schema != "commonplace-freshness-accept/1":
+            raise ValueError("schema must be commonplace-freshness-accept/1")
         target_kind = payload.get("target_kind")
         if not isinstance(target_kind, str) or not target_kind.strip():
             raise ValueError("target_kind is required")

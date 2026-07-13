@@ -39,26 +39,6 @@ def load_target_status(
     return FreshnessStatus(targets=targets, exit_class=exit_class)
 
 
-def select_stale_targets(
-    conn: sqlite3.Connection,
-    *,
-    repo_root: Path,
-    include_fresh: bool = False,
-    include_diff: bool = False,
-    model_partition: str | None = None,
-) -> list[StaleTarget]:
-    """Repository-wide stale target selection (v1: review-pair only)."""
-    targets = select_stale_review_targets(
-        conn,
-        repo_root=repo_root,
-        include_fresh=include_fresh,
-        model_partition=model_partition,
-    )
-    if include_diff:
-        return [_attach_diffs(conn, repo_root=repo_root, target=target) for target in targets]
-    return targets
-
-
 def _exit_class(targets: tuple[StaleTarget, ...] | list[StaleTarget]) -> str:
     for target in targets:
         for changed in target.changed_inputs:

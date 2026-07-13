@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Helpers for the canonical review-store SQLite database."""
+"""Helpers for review tables in the commonplace operational store."""
 
 from __future__ import annotations
 
@@ -62,6 +62,7 @@ class FreshnessBaseline:
     baseline_note_text: str
     baseline_criterion_text: str
     baseline_updated_at: str
+    baseline_revision: int
     result_kind: str
     outcome: str | None
 
@@ -542,6 +543,7 @@ def load_current_freshness_baselines(conn: sqlite3.Connection) -> dict[tuple[str
             baseline_note_text,
             baseline_criterion_text,
             baseline_updated_at,
+            baseline_revision,
             result_kind,
             outcome
         FROM current_review_freshness_baselines
@@ -560,6 +562,7 @@ def load_current_freshness_baselines(conn: sqlite3.Connection) -> dict[tuple[str
             baseline_note_text=row["baseline_note_text"],
             baseline_criterion_text=row["baseline_criterion_text"],
             baseline_updated_at=row["baseline_updated_at"],
+            baseline_revision=int(row["baseline_revision"]),
             result_kind=row["result_kind"],
             outcome=row["outcome"],
         )

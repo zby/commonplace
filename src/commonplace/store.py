@@ -67,9 +67,8 @@ def ensure_db(db_path: Path) -> None:
 
     legacy_hint = db_path.parent / LEGACY_DB_PATH.name
     if legacy_hint.exists() and db_path.name == DEFAULT_DB_PATH.name:
-        raise RuntimeError(
-            f"migration required: found {legacy_hint} but not {db_path}; "
-            "run scripts/migrate-review-db-v7-to-commonplace-store.py"
+        raise _migration_required_error(
+            detail=f"found {legacy_hint} but not {db_path}",
         )
 
     db_path.parent.mkdir(parents=True, exist_ok=True)
@@ -120,10 +119,20 @@ CREATE TABLE IF NOT EXISTS freshness_target_generations (
 """
 
 
+_LEGACY_REVIEW_STORE_VERSION = 7
+_MIGRATION_SCRIPT = "scripts/migrate-review-db-v7-to-commonplace-store.py"
+
+
+def _migration_required_error(*, detail: str) -> RuntimeError:
+    return RuntimeError(f"migration required: {detail}; run {_MIGRATION_SCRIPT}")
+
+
 def _migrate_store(conn: sqlite3.Connection) -> None:
     current_version = _get_user_version(conn)
     if current_version == STORE_SCHEMA_VERSION:
         return
+    if current_version == _LEGACY_REVIEW_STORE_VERSION:
+        raise _migration_required_error(detail="legacy review-store schema v7 detected")
     if current_version == 1 and STORE_SCHEMA_VERSION >= 2:
         conn.executescript(_GENERATIONS_TABLE_SQL)
         conn.execute(

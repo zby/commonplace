@@ -83,6 +83,24 @@ Fresh targets only with `--all`. Ack copies `baseline_revision` and intended `cu
 
 ## Accept (`commonplace-freshness-accept --input -`)
 
+```json
+{
+  "schema": "commonplace-freshness-accept/1",
+  "target_kind": "example-target",
+  "target_key": { "...": "..." },
+  "transition": "refresh",
+  "expected_baseline_revision": 3,
+  "inputs": {
+    "primary": {
+      "input_role": "primary",
+      "artifact_path": "kb/example.md",
+      "version_kind": "file-text",
+      "content_sha256": "64 lowercase hex"
+    }
+  }
+}
+```
+
 Observation refresh or initial acceptance. **`review-pair` rejected in v1.** Non-review manifests ship with first non-review target kind.
 
 `transition`: `initial` (`expected_baseline_revision: null`) or `refresh` (must match current revision). All registered roles required; hashes must match live resolution at commit.

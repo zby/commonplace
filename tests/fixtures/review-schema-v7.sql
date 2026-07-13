@@ -1,4 +1,4 @@
--- SQLite schema for canonical review storage.
+-- SQLite schema for legacy review-store v7 (migration test fixture).
 --
 -- `review_jobs` records one review invocation: one prompt/job directory.
 -- `review_pairs` records each requested (note_path, criterion_path) pair inside
@@ -126,14 +126,3 @@ LEFT JOIN review_file_snapshots AS criterion_snapshot
 WHERE j.status = 'completed'
   AND rp.completed_at IS NOT NULL
   AND (rp.result_kind = 'report' OR rp.outcome IS NOT NULL);
-
--- Query pattern expected for selector:
---
--- 1. resolve current note SHA-256 from candidate note files
--- 2. resolve current criterion SHA-256 from criterion files
--- 3. LEFT JOIN current_freshness_baselines view on (note_path, criterion_path, model_partition)
--- 4. classify:
---      no row                  -> missing-baseline
---      baseline_criterion_hash != ? -> criterion-changed
---      baseline_note_hash != ? -> note-changed
---      else fresh

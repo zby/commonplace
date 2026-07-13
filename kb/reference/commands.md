@@ -188,6 +188,15 @@ Remove a registered baseline when an artifact or target should leave global stat
 commonplace-freshness-retire --input retire.json
 ```
 
+### commonplace-store-healthcheck
+
+Run full store integrity checks: schema structure, foreign keys, snapshot hash consistency, and review freshness baseline invariants. Use after manual DB edits or when diagnosing store corruption. `ensure_db` and routine review/freshness commands check structure only; this command adds content verification.
+
+```bash
+commonplace-store-healthcheck
+commonplace-store-healthcheck --db kb/reports/commonplace-store.sqlite
+```
+
 ### commonplace-ack-review
 
 Advance an existing freshness baseline for specific criteria without re-running the assay. For report pairs this reuses current evidence; it does not endorse or resolve the report.

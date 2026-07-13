@@ -2,10 +2,10 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
 from pathlib import Path
 
-from commonplace.review.clock import iso_now
+from commonplace.freshness.baselines import REVIEW_PAIR_KIND
+from commonplace.freshness.transitions import ack_target_inputs
 from commonplace.review.paths import criterion_id_from_stored_path, normalize_criterion_path, normalize_repo_relative_path
 from commonplace.review.review_db import (
     connect,
@@ -13,17 +13,8 @@ from commonplace.review.review_db import (
     load_current_freshness_baselines,
     prune_superseded_freshness_baselines,
     resolve_db_path,
-    snapshot_file,
-    upsert_freshness_baseline,
 )
 from commonplace.review.review_model import normalize_model_partition
-
-
-@dataclass(frozen=True)
-class AckPair:
-    note_path: str
-    criterion_path: str
-    evidence_review_pair_id: int
 
 
 def _normalize_note_path(repo_root: Path, raw: str) -> str:
@@ -72,7 +63,7 @@ def ack_pairs(
     normalized_pairs = _normalize_requested_pairs(repo_root, pairs)
     with connect(db_path) as conn:
         baselines = load_current_freshness_baselines(conn)
-        ack_pairs_to_write: list[AckPair] = []
+        pairs_to_ack: list[tuple[str, str, int]] = []
         for note_path, criterion_path in normalized_pairs:
             baseline = baselines.get((note_path, criterion_path, model))
             if baseline is None:
@@ -80,31 +71,23 @@ def ack_pairs(
                     "no freshness baseline to acknowledge: "
                     f"{note_path}:{criterion_id_from_stored_path(criterion_path)} for {model}"
                 )
-            ack_pairs_to_write.append(
-                AckPair(
-                    note_path=note_path,
-                    criterion_path=criterion_path,
-                    evidence_review_pair_id=baseline.evidence_review_pair_id,
-                )
-            )
+            pairs_to_ack.append((note_path, criterion_path, baseline.baseline_revision))
 
         superseded_baselines = []
-        for pair in ack_pairs_to_write:
-            note_snapshot = snapshot_file(conn, repo_root=repo_root, path=pair.note_path)
-            criterion_snapshot = snapshot_file(conn, repo_root=repo_root, path=pair.criterion_path)
-            superseded_baselines.append(
-                upsert_freshness_baseline(
-                    conn,
-                    note_path=pair.note_path,
-                    criterion_path=pair.criterion_path,
-                    model_partition=model,
-                    evidence_review_pair_id=pair.evidence_review_pair_id,
-                    baseline_note_snapshot_id=note_snapshot.snapshot_id,
-                    baseline_criterion_snapshot_id=criterion_snapshot.snapshot_id,
-                    baseline_updated_at=iso_now(),
-                )
+        for note_path, criterion_path, expected_revision in pairs_to_ack:
+            superseded = ack_target_inputs(
+                conn,
+                repo_root=repo_root,
+                target_kind=REVIEW_PAIR_KIND,
+                target_key={
+                    "note_path": note_path,
+                    "criterion_path": criterion_path,
+                    "model_partition": model,
+                },
+                expected_baseline_revision=expected_revision,
             )
-            acked.append((pair.note_path, criterion_id_from_stored_path(pair.criterion_path)))
+            superseded_baselines.append(superseded)
+            acked.append((note_path, criterion_id_from_stored_path(criterion_path)))
         prune_superseded_freshness_baselines(conn, superseded_baselines)
         conn.commit()
     return acked

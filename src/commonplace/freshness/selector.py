@@ -6,7 +6,6 @@ import sqlite3
 from dataclasses import dataclass
 from pathlib import Path
 
-from commonplace.freshness.keys import review_pair_target_key
 from commonplace.freshness.versioning import resolve_file_text
 from commonplace.review.review_db import FreshnessBaseline, load_current_freshness_baselines
 
@@ -55,30 +54,12 @@ def select_stale_review_targets(
                         "criterion_path": criterion_path,
                         "model_partition": partition,
                     },
-                    baseline_revision=_baseline_revision(conn, baseline=baseline),
+                    baseline_revision=baseline.baseline_revision,
                     accepted_at=baseline.baseline_updated_at,
                     changed_inputs=changed,
                 )
             )
     return stale
-
-
-def _baseline_revision(conn: sqlite3.Connection, *, baseline: FreshnessBaseline) -> int:
-    target_key_json = review_pair_target_key(
-        note_path=baseline.note_path,
-        criterion_path=baseline.criterion_path,
-        model_partition=baseline.model_partition,
-    )
-    row = conn.execute(
-        """
-        SELECT revision FROM freshness_baselines
-        WHERE target_kind = 'review-pair' AND target_key_json = ?
-        """,
-        (target_key_json,),
-    ).fetchone()
-    if row is None:
-        raise RuntimeError("baseline row missing for current view entry")
-    return int(row["revision"])
 
 
 def _changed_inputs_for_baseline(

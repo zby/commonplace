@@ -12,7 +12,7 @@ from commonplace.review.review_db import connect
 
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
-SCHEMA_PATH = REPO_ROOT / "src/commonplace/review/review-schema.sql"
+SCHEMA_PATH = REPO_ROOT / "tests/fixtures/review-schema-v7.sql"
 
 
 def _write_v7_source(
