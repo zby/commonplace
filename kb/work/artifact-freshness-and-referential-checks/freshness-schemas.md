@@ -1,10 +1,12 @@
-# Freshness JSON contracts
+# Freshness JSON contracts (v1)
 
-Canonical shapes for `commonplace-freshness-status`, `commonplace-freshness-accept`, and `commonplace-freshness-ack`. Target keys use sorted keys and compact separators before persistence; CLI JSON may pretty-print but must compare canonically.
+Canonical shapes for `commonplace-freshness-status`, `accept`, `ack`, and `retire`.
 
-## Shared fragments
+**v1 scope:** `review-pair` targets, `file-text` inputs. Non-review examples live in [future-work-collection-freshness.md](./future-work-collection-freshness.md).
 
-### Target identity
+Target keys: sorted keys, compact separators before persistence. CLI may pretty-print; compare canonically.
+
+## Target identity
 
 ```json
 {
@@ -17,9 +19,7 @@ Canonical shapes for `commonplace-freshness-status`, `commonplace-freshness-acce
 }
 ```
 
-Non-review target examples (`collection-maintenance`, `collection-text`) are deferred to [future-work-collection-freshness.md](./future-work-collection-freshness.md). v1 schemas use `review-pair` and `file-text` only.
-
-### Input observation
+## Input observation
 
 ```json
 {
@@ -31,9 +31,9 @@ Non-review target examples (`collection-maintenance`, `collection-text`) are def
 }
 ```
 
-`content_text` is required in accept manifests and optional in status output when `--diff` is off.
+`content_text` required in accept manifests; optional in status without `--diff`.
 
-### Changed input (status)
+## Changed input (status)
 
 ```json
 {
@@ -48,46 +48,40 @@ Non-review target examples (`collection-maintenance`, `collection-text`) are def
 }
 ```
 
-`status` is one of `input-changed`, `input-missing`, or `version-error`.
+`status`: `input-changed` | `input-missing` | `version-error`.
 
-## Status output (`commonplace-freshness-status --json`)
-
-Top-level object:
+## Status (`commonplace-freshness-status --json`)
 
 ```json
 {
   "schema": "commonplace-freshness-status/1",
-  "generated_at": "ISO-8601 UTC timestamp",
+  "generated_at": "ISO-8601 UTC",
   "exit_class": "fresh",
   "targets": []
 }
 ```
 
-`exit_class` is `fresh`, `stale`, or `error`. Each stale target entry:
+`exit_class`: `fresh` | `stale` | `error`. Stale target entry:
 
 ```json
 {
   "target_kind": "review-pair",
   "target_key": { "...": "..." },
   "baseline_revision": 3,
-  "accepted_at": "ISO-8601 UTC timestamp",
-  "changed_inputs": [
-    { "...": "changed input object" }
-  ]
+  "accepted_at": "ISO-8601 UTC",
+  "changed_inputs": []
 }
 ```
 
-Fresh targets appear only with `--all`. The payload is the canonical observation source for acknowledgement: ack must copy `baseline_revision` and the `current_content_sha256` values it intends to accept.
+Fresh targets only with `--all`. Ack copies `baseline_revision` and intended `current_content_sha256` values.
 
-## Accept manifest (`commonplace-freshness-accept --input -`)
+## Accept (`commonplace-freshness-accept --input -`)
 
-Observation refresh or initial acceptance only. `target_kind = review-pair` is rejected in v1. Non-review accept manifests ship when the first non-review target kind is registered; see deferred [future-work-collection-freshness.md](./future-work-collection-freshness.md) for the planned `collection-maintenance` shape.
+Observation refresh or initial acceptance. **`review-pair` rejected in v1.** Non-review manifests ship with first non-review target kind.
 
-`transition` is `initial` or `refresh`. For `initial`, `expected_baseline_revision` must be `null`. For `refresh`, it must equal the current baseline revision. Every registered input role for the target must appear exactly once with observations whose hashes match live resolution at commit time.
+`transition`: `initial` (`expected_baseline_revision: null`) or `refresh` (must match current revision). All registered roles required; hashes must match live resolution at commit.
 
-## Ack manifest (`commonplace-freshness-ack --input -`)
-
-Subset or full advance from a status observation. Review evidence is preserved automatically for `review-pair` targets.
+## Ack (`commonplace-freshness-ack --input -`)
 
 ```json
 {
@@ -100,15 +94,15 @@ Subset or full advance from a status observation. Review evidence is preserved a
       "input_role": "note",
       "artifact_path": "kb/notes/example.md",
       "version_kind": "file-text",
-      "content_sha256": "hash copied from status current_content_sha256"
+      "content_sha256": "from status current_content_sha256"
     }
   ]
 }
 ```
 
-Omitted `selected_inputs` means all changed inputs from the paired status payload. Each selected hash must still match live resolution when the transaction commits.
+Omitted `selected_inputs` → all changed inputs from paired status. Review evidence preserved automatically.
 
-## Retire manifest (`commonplace-freshness-retire --input -`)
+## Retire (`commonplace-freshness-retire --input -`)
 
 ```json
 {
@@ -118,7 +112,7 @@ Omitted `selected_inputs` means all changed inputs from the paired status payloa
 }
 ```
 
-Retirement succeeds idempotently when the target is already absent.
+Idempotent when target already absent.
 
 ## Exit codes
 
@@ -126,4 +120,4 @@ Retirement succeeds idempotently when the target is already absent.
 |---|---:|
 | all selected targets fresh | 0 |
 | any `input-changed` or `input-missing` | 1 |
-| CLI misuse, `version-error`, malformed store, failed CAS | 2 |
+| misuse, `version-error`, store error, failed CAS | 2 |

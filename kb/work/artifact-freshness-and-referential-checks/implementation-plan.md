@@ -1,363 +1,163 @@
-# Implementation plan: one general freshness mechanism, migrated review-first
+# Implementation plan: general freshness, review-first (v1)
 
 ## Outcome
 
-Replace the review-specific freshness tables with one artifact-neutral freshness substrate, migrate all retained review baselines onto it, and make review commands adapters over that substrate. Ship repository-wide status and generic accept/ack/retire surfaces over `file-text` inputs. **Collection-as-artifact freshness** (`collection-text`, `collection-maintenance` targets) is [deferred](./future-work-collection-freshness.md) — not part of this implementation sequence.
+Replace review-specific freshness tables with one artifact-neutral substrate, migrate retained review baselines, and make review commands adapters over that substrate. Ship repository-wide status and generic accept/ack/retire over **`file-text`** inputs and **`review-pair`** targets.
 
-This is a current-state mechanism. It records the exact input snapshots against which a target was accepted, compares them with current resolved versions, and selects affected targets. It does not decide whether changed prose is still true, run a review, update a note, or infer dependencies from authored links.
+Collection-as-artifact freshness (`collection-text`, `collection-maintenance`) is **deferred** — sketched in [future-work-collection-freshness.md](./future-work-collection-freshness.md), promoted to a proposal in step 9 (M4). This plan does not implement it.
+
+The mechanism records exact input snapshots against which a target was accepted, compares them with current resolved versions, and selects affected targets. It does not adjudicate truth, run reviews, rewrite notes, or infer dependencies from links.
+
+## Milestones
+
+| gate | blocks | done when |
+|---|---|---|
+| **M1** | all code | schema + [freshness-schemas.md](./freshness-schemas.md) pinned; migration fixtures pass; live-store rehearsal; backup byte hash unchanged |
+| **M2** | M3 | full review suite at CLI boundary; selector JSON parity pre/post migration |
+| **M3** | M4 | `commonplace-freshness-{status,accept,ack,retire}` over review-pair targets |
+| **M4** | workshop close | proposal committed; plan ends |
 
 ## Fixed decisions
 
-- **One mechanism and one operational store.** Review freshness migrates first. There will not be a general freshness store beside `freshness_baselines` or a review freshness implementation beside the general one.
-- **The existing store becomes general without in-place migration.** Build `kb/reports/commonplace-store.sqlite` from the old database, then switch the default and replace `COMMONPLACE_REVIEW_DB` with `COMMONPLACE_STORE`. The untouched `kb/reports/review-store.sqlite` remains the migration backup. Review jobs and evidence remain review-owned tables in the new database, while snapshots, target baselines, inputs, selection, and acknowledgement become general.
-- **Accepted snapshots, not timestamps or Git, decide freshness.** A version remains the SHA-256 of exact UTF-8 text. Snapshot text is retained so selectors can show accepted-to-current diffs.
-- **Targets and inputs are artifact-neutral.** The freshness core sees a target kind, canonical structured key, path-based input roles, a version function, accepted snapshots, and optional review-owned evidence metadata. v1 implements `file-text` only; it does not branch on source, ingest, note, report, or criterion path classes.
-- **Registration is explicit.** Authored links may suggest dependencies to a producer, but only an accepted baseline registers them.
-- **Selection is not execution or truth adjudication.** A changed input means the accepted basis changed. The consuming workflow decides whether to reassess, regenerate, or acknowledge it.
-- **Optimistic transitions.** Baseline writes compare an expected baseline revision to prevent two writers from silently overwriting each other. They do not lock repository files. A file edit after capture or acceptance makes the new baseline immediately stale on the next check.
-- **Queued-job revision is captured at pair creation.** Each `review_pairs` row stores `expected_baseline_revision` (or `NULL` for first-time targets). Finalization CASes against that stored value, not the revision read at finalize time. If the baseline moved after queue — job `49` today — the job fails with `stale-baseline-revision` or is marked `failed` with `stale-queued-capture` during migration when captures no longer match accepted inputs.
-- **Two refresh paths.** Capture refresh (review finalization) writes job-owned snapshots without live-version equality. Observation refresh/ack (`commonplace-freshness-accept`, `commonplace-freshness-ack`) revalidates current resolved text. Generic accept rejects `review-pair` targets; review finalization uses a review-owned transaction, not `commonplace-freshness-accept`.
-- **Dead targets retire explicitly.** `commonplace-freshness-retire` removes registered baselines whose artifacts were deleted or relocated. Migration skips baselines whose paths no longer exist. `input-missing` is ordinary staleness (exit `1`), not store integrity (exit `2`).
-- **Review behavior is preserved before extension.** Result kinds, outcomes, model partitions, missing-baseline discovery, stale reasons, diffs, acknowledgement, all-or-nothing finalization, evidence retention, and pruning must have parity before any non-review target kind is registered.
-- **Malformed state is not staleness.** Store-integrity failures are errors. Neither the general selector nor the review adapter may downgrade a malformed accepted baseline to `missing-baseline` or an ordinary stale result.
-- **Review precedence survives migration.** When both review inputs changed, the public review selector continues to report `criterion-changed` before `note-changed`, even though the generic selector may return both changed inputs.
-- **Collection-as-artifact freshness is deferred.** `collection-text` versioning and `collection-maintenance` targets are sketched in [future-work-collection-freshness.md](./future-work-collection-freshness.md) and ship in a later phase.
+- **One mechanism, one store.** `commonplace-store.sqlite` replaces the default; `review-store.sqlite` stays an untouched read-only backup. No parallel freshness implementations.
+- **`file-text` only in v1.** SHA-256 of exact UTF-8 file content; snapshot text retained for diffs.
+- **Explicit registration.** Links suggest candidates; only accepted baselines register dependencies.
+- **Optimistic revision.** Transitions CAS on `expected_baseline_revision`; no file locks.
+- **Queued-job revision at pair create.** `review_pairs.expected_baseline_revision` (or `NULL`). Finalization CASes the stored value. Baseline moved after queue → fail (`stale-baseline-revision` / migration `stale-queued-capture` for job `49`).
+- **Two refresh paths.** Capture (review `finalize_capture_refresh()`, job snapshots) vs observation (accept/ack, live revalidation). Generic accept rejects `review-pair`.
+- **Retirement.** `commonplace-freshness-retire`; migration skips baselines whose paths no longer exist (four `transformation-closure`). `input-missing` → exit `1`.
+- **Review parity before extension.** Missing-baseline discovery, reason mapping, trivial ack, all-or-nothing finalization, evidence retention, pruning — unchanged at the CLI boundary. `criterion-changed` before `note-changed` when both changed.
+- **Malformed state is errors.** Never downgrade to `missing-baseline` or ordinary staleness.
 
 ## Semantic model
 
-### Target
+**Target:** `target_kind` + canonical `target_key_json`. v1: `review-pair` + `{note_path, criterion_path, model_partition}`.
 
-A target is the unit whose freshness can be asked:
+**Baseline:** one current row per target — `revision`, `accepted_at`, complete input set, optional review evidence bridge.
 
-```text
-target_kind + canonical target_key_json
-```
+**Input:** role + path + `file-text` + accepted snapshot id/hash/text. Core emits `input-changed`, `input-missing`, `version-error`; review adapter maps to `note-changed` / `criterion-changed`.
 
-Examples:
+**Transitions:**
 
-- review: `review-pair` plus `{note_path, criterion_path, model_partition}`;
-- later target kinds (including deferred `collection-maintenance`) are added only when a worked case needs them.
+| transition | who | live check | evidence |
+|---|---|---|---|
+| capture refresh | review finalization | no | replaced |
+| observation refresh | `commonplace-freshness-accept` | yes | n/a (rejects review-pair) |
+| observation ack | `commonplace-freshness-ack`, `commonplace-ack-review` | yes | preserved |
+| retirement | `commonplace-freshness-retire` | — | cascade delete bridge |
 
-The target key is identity, not display text. JSON is normalized with sorted keys and compact separators before persistence and comparison.
-
-### Accepted baseline
-
-One current baseline belongs to one target and contains:
-
-- monotonically increasing `revision`;
-- `accepted_at`;
-- the complete accepted input set;
-- review-owned evidence metadata when the target is a review pair.
-
-Replacing a baseline is current-state upsert, not an append-only event log. Superseded snapshots and review evidence are pruned according to review's retention rules.
-
-### Input
-
-Each accepted input has:
-
-- one stable target-owned input role;
-- a normalized repository-relative artifact path;
-- `file-text` as its version kind in v1;
-- accepted snapshot id, hash, and exact text.
-
-The core emits `input-changed`, `input-missing`, or `version-error` with the input role and path. The review adapter maps `note` changes to `note-changed` and `criterion` changes to `criterion-changed` without changing the generic result.
-
-### Transitions
-
-- **Capture refresh** (review finalization only) replaces the complete input set from job-owned snapshots. It CASes against each pair's `expected_baseline_revision` captured at queue time, replaces `review_freshness_evidence`, and does not require captured snapshots to equal current live text.
-- **Observation refresh** (`commonplace-freshness-accept`) replaces the complete input set from caller-supplied observations that must still match live resolved versions. It rejects `review-pair` targets.
-- **Acknowledgement** preserves review evidence, when present, and advances only explicitly selected input snapshots after the operator has inspected their diffs. Unselected stale inputs remain stale. It revalidates live versions like observation refresh.
-- **Retirement** deletes a registered baseline and its inputs/evidence bridge without deleting review jobs or pairs.
-- Initial acceptance requires that no baseline exists. All other transitions require the caller's expected baseline revision.
-- A filesystem edit after capture or acceptance produces ordinary staleness on the next check rather than a failed or partially rewritten transition.
-
-## Store schema
-
-The exact old-to-new object map, path-keyed `artifact_snapshots` schema, target and input keys, review adapter view, transaction behavior, indexes, integrity checks, migration algorithm, and delete/pruning rules live in the [database design](./database-design.md). It is the schema authority for this plan.
-
-Create one package-owned operational schema and connection layer under `commonplace.store`; review and freshness modules use it instead of each initializing overlapping schema state. Do not introduce generic events, runner fields, output tables, scheduling state, or a polymorphic evidence foreign key. Review evidence remains in its one explicit extension table with a real foreign key.
-
-## Version functions
-
-Introduce `commonplace.freshness.versioning` with one result type containing artifact path, version kind, exact text, and content hash. v1 is a single-function module (`file-text`); additional version kinds are added only when a deferred phase needs them.
-
-### `file-text` (v1)
-
-- Key: `{path}` with a normalized repository-relative path under `kb/`.
-- Reject path escape, symlinks, non-files, non-UTF-8 content, and inconsistent stored hashes.
-- Reuse `commonplace.lib.hashing` for the version contract.
-- This version function replaces review's path-specific snapshot helper.
-
-`collection-text` and other version functions remain specified in [future-work-collection-freshness.md](./future-work-collection-freshness.md). Binary/PDF versioning, external URLs, Git revisions, arbitrary queries, and configurable member rules remain out of scope.
+Schema authority: [database-design.md](./database-design.md). JSON authority: [freshness-schemas.md](./freshness-schemas.md).
 
 ## Implementation sequence
 
-### 1. Record the architectural change
+### 1. ADR
 
-Write an ADR accepting general freshness and review-first migration. It should:
+Record general freshness and review-first migration. Supersede ADR 032/051 only where they assume review-only or defer generalization until a second consumer. Preserve ADR 051 full-pass captures. State operational DB is now a Commonplace store. Leave review execution review-owned. Note collection-as-artifact freshness is deferred to a follow-on proposal, not this ADR's implementation scope.
 
-- supersede ADR 032 only where it says the universal shape remains review-only;
-- supersede ADR 051 only where it defers generalization until a second consumer;
-- preserve ADR 051's full-pass-owned captures, retention, and transition policy;
-- state that the operational database has become a Commonplace store rather than a review store;
-- leave review execution, evidence, result protocols, and model partitions review-owned; and
-- retire the source-as-gate branch of `factored-dependency-pairs-for-review-freshness.md` in favor of a general maintenance target, while retaining factored type and collection conformance pairs.
+### 2. Store, schema, migration (M1)
 
-Do not rewrite accepted ADR history to make it appear that the decision was always general.
+Add `commonplace.store`, `commonplace.freshness.*`, `scripts/migrate-review-db-v7-to-commonplace-store.py`.
 
-### 2. Add the general store, schema, models, and migrations
+Migration (read-only source, refuse WAL without checkpoint, refuse existing destination):
 
-Add:
+1. copy snapshots → `artifact_snapshots` (`file-text`), preserving ids and text;
+2. copy jobs/pairs; add `expected_baseline_revision` column (init `NULL`);
+3. transform baselines → `review-pair` + two inputs + evidence bridge; **skip** rows whose note or criterion path missing on disk;
+4. disposition queued pairs: set `expected_baseline_revision`; fail job when captures ≠ accepted (`job 49`);
+5. verify counts, integrity, selector parity; atomically install destination;
+6. re-hash source backup unchanged.
 
-- `src/commonplace/store.py` and a single packaged schema resource;
-- `src/commonplace/freshness/models.py`;
-- `src/commonplace/freshness/versioning.py`;
-- `src/commonplace/freshness/store.py` for target, snapshot, baseline, input, transition, integrity, and pruning operations; and
-- `scripts/migrate-review-db-v7-to-commonplace-store.py`.
-
-The migration must be transactional and preservation-first:
-
-1. refuse anything except a schema-v7 source that passes `integrity_check`, `foreign_key_check`, and current review-baseline integrity;
-2. create path-keyed snapshots while preserving snapshot IDs and exact text;
-3. create one `review-pair` baseline containing target identity per old freshness row;
-4. create two generic inputs per migrated baseline, named `note` and `criterion`;
-5. create one review evidence bridge per migrated baseline;
-6. retain queued, completed, and failed review jobs and every review pair, adding `expected_baseline_revision` disposition for queued jobs and skipping baselines whose paths no longer exist;
-7. verify row counts, paths, hashes, evidence ids, outcomes, result kinds, model partitions, retired/skipped baselines, failed queued jobs, and selector classifications before commit;
-8. construct and verify `commonplace-store.sqlite` separately while opening `review-store.sqlite` read-only;
-9. report and recheck the old database's byte hash so it demonstrably remains the untouched backup; and
-10. refuse to overwrite an existing destination.
-
-The migration accepts only a clean `journal_mode=delete` source. If the source uses WAL, it refuses with instructions for the operator to checkpoint it before retrying; the read-only migration must not perform that checkpoint or otherwise mutate the backup.
-
-Current preservation fixtures:
-
-| repository | jobs | pairs | snapshots | source baselines | new baselines | new inputs |
+| repository | jobs | pairs | snapshots | source baselines | → baselines | → inputs |
 |---|---:|---:|---:|---:|---:|---:|
 | Commonplace | 39 | 53 | 19 | 52 | 48 | 96 |
-| Epistack casebooks | 14 | 14 | 17 | 14 | 14 | 28 |
+| Epistack | 14 | 14 | 17 | 14 | 14 | 28 |
 
-The Commonplace delta is four skipped `transformation-closure` baselines and one queued job (`49`) marked `failed` with `stale-queued-capture`.
+Commonplace delta: 4 skipped `transformation-closure`, 1 failed queued job.
 
-The one Commonplace review pair without a current baseline remains review evidence/history and creates no freshness baseline.
+### 3. Review adapter (M2)
 
-### 3. Put review freshness behind the general API
+In order:
 
-Change review code in this order:
+1. snapshots through `file-text` / `artifact_snapshots`;
+2. persist `expected_baseline_revision` at pair create;
+3. load targets via general baseline + evidence bridge;
+4. `finalize_capture_refresh()` — complete job, CAS, refresh from captures, replace evidence, prune;
+5. ack paths → observation ack transaction;
+6. review target selector ← generic resolution + `missing-baseline` discovery;
+7. warn selector ← generic projection;
+8. pruning respects both `freshness_inputs` and `review_pairs` references.
 
-1. capture note and criterion inputs through `file-text` and `artifact_snapshots`;
-2. at pair creation, load the current baseline revision for the target (or `NULL`) and persist it as `expected_baseline_revision` on each `review_pairs` row;
-3. load `review-pair` targets through the general baseline query and review evidence bridge;
-4. add `commonplace.review.finalize_capture_refresh()` — one review-owned transaction that completes pairs, CASes against each pair's stored `expected_baseline_revision`, calls the generic refresh primitive with captured snapshots, replaces `review_freshness_evidence`, and prunes superseded evidence;
-5. make `commonplace-ack-review` and trivial-change acknowledgement call the generic observation-acknowledgement transaction while preserving the evidence bridge;
-6. make the review target selector consume generic resolution results and retain its current missing-baseline discovery and public reason names;
-7. make warning selection read the generic baseline projection; and
-8. update snapshot/evidence pruning so a snapshot is removed only when neither a queued/retained review pair nor any generic freshness input references it.
+Delete old review baseline tables/helpers in the same change. No surviving compatibility shim.
 
-Delete the old review-specific baseline read/write helpers, old baseline table/view, and duplicate review snapshot code in the same change. A temporary compatibility adapter is allowed only inside an in-progress commit and must not survive the completed migration.
+### 4. Review parity tests (M2 gate)
 
-`commonplace-freshness-accept` must reject `target_kind = review-pair`. Review finalization must call `finalize_capture_refresh()`, not the accept CLI.
+Full review test suite; migration fixtures; selector JSON parity (fresh, missing-baseline, note/criterion/both changed); finalization all-or-nothing; ack preserves evidence; pruning cases including single-input ack and shared snapshots.
 
-Review relocation behavior stays unchanged: historical review targets retain their old path identity, and the relocated artifact receives `missing-baseline` under its new path rather than silently re-keying old evidence. Operators retire or refresh stale registered targets at the old path explicitly.
+Do not proceed to step 5 until M2 passes.
 
-Finalization may accept job-owned note and criterion snapshots even when live files changed during the run, but only when the stored `expected_baseline_revision` still matches the current baseline. It must not block on live-version equality and must not substitute unseen current text. The accepted baseline is immediately stale on the next check when live files moved on during the run.
+### 5. Global selector (M3)
 
-### 4. Prove review parity
+`commonplace-freshness-status` — all registered targets, deduped resolution, `--json`/`--diff`/`--all`/filters, exit 0/1/2 per [freshness-schemas.md](./freshness-schemas.md). Review selector keeps `missing-baseline` discovery.
 
-Before adding non-review registration:
+### 6. Generic surfaces (M3)
 
-- run the complete existing review test suite unchanged at its CLI boundary;
-- add schema/integrity tests for malformed target keys, missing inputs, wrong evidence pairs, wrong model partitions, incomplete evidence, and corrupted snapshots;
-- add migration tests using populated schema-v7 fixtures;
-- compare pre/post migration selector JSON for fresh, missing-baseline, note-changed, criterion-changed, and both-changed cases, preserving review's criterion-first public precedence;
-- prove verdict and report pairs keep their distinct completion semantics;
-- prove finalization remains all-or-nothing;
-- prove ack preserves evidence and refresh replaces it;
-- prove superseded evidence and snapshots are pruned without deleting shared generic snapshots; and
-- rehearse the migration on copies of both current live stores and compare the counts in the table above.
+Library: `accept_target_observations`, `ack_target_inputs`, `refresh_target_from_captures`, `retire_target`, `load_target_status`, `select_stale_targets`.
 
-Shared snapshot pruning across `freshness_inputs` and `review_pairs` is the highest-risk implementation area. In addition to the general pruning case above, explicitly test acknowledging only one stale input, finalizing a superseding review pair, and migrating retained snapshot IDs. No operation may remove a snapshot while either ownership path still references it.
+CLI: `commonplace-freshness-{accept,ack,retire,status}`. Accept rejects `review-pair`. Ack consumes status JSON.
 
-Do not proceed to Epistack targets until parity passes.
+### 7. Documentation and rollout
 
-### 5. Add the repository-wide selector
+Update commands, storage-architecture, lib-modules, review docs, ADR, `AGENTS.md` vocabulary, package entry points. Rollout: land code → migrate Commonplace copy → switch default → migrate Epistack copy → global check on review targets. Rollback: restore code + point at v7 backup, or rebuild destination from backup.
 
-Add `commonplace-freshness-status` as a thin CLI over the general selector.
+### 8. Proposals for deferred work (M4 — terminal)
 
-Default behavior:
+Promote [future-work-collection-freshness.md](./future-work-collection-freshness.md) to `kb/reference/proposals/collection-as-artifact-freshness.md` per [proposals contract](../../reference/proposals/README.md):
 
-- inspect every registered target in `commonplace-store.sqlite`;
-- resolve each unique current input once per run;
-- print only stale targets unless `--all` is supplied;
-- support `--json`, `--diff`, `--target-kind`, and exact target-key filtering;
-- return target kind/key, baseline revision, and changed inputs with accepted/current versions and optional diffs;
-- exit `0` when all selected registered targets are fresh, `1` when any are stale (including `input-changed` and `input-missing`), and `2` for invocation, `version-error`, or store-integrity failures.
+- `description` leads with `Proposal:`; `traits: [design-proposal]`;
+- dated current-state anchor on shipped v1 store;
+- `collection-text` encoding, `collection-maintenance` shape, schema widening, Epistack acceptance cases, forces, free choices, adoption criteria;
+- rationale edges to `kb/notes/`, not inlined theory.
 
-“Global” means all registered targets. It does not infer unregistered dependencies, discover applicable-but-never-reviewed pairs, or treat every link as a baseline. Review's target selector remains responsible for review-specific missing-baseline discovery.
+Narrow the workshop scratch to a pointer. Open referential-check questions become additional proposals only when worked material exists.
 
-The first global-status acceptance test is review-only: edit one note and one criterion, then prove the global selector and review selector report the same underlying changed inputs while the review adapter preserves its existing public reason names.
+**This step ends the plan.** Workshop deletion follows M4 commit.
 
-### 6. Add generic acceptance and acknowledgement surfaces
+## File map
 
-Add library operations before choosing elaborate CLI syntax:
+**New:** `src/commonplace/store.py`, `store-schema.sql`, `freshness/{models,versioning,store,selector,transitions}.py`, `cli/freshness_*.py`, migration script, tests.
 
-- `accept_target_observations(target, complete_inputs, expected_revision)` — observation refresh only; rejects `review-pair`;
-- `ack_target_inputs(target, selected_observations, expected_revision)` — observation ack;
-- `refresh_target_from_captures(target, captured_inputs, expected_revision, evidence=...)` — internal primitive used by review capture refresh;
-- `retire_target(target)`;
-- `load_target_status(target)`; and
-- `select_stale_targets(filters)`.
+**Edit:** `review/{review_db,review_schema,freshness,review_target_selector,acknowledgement,ack_trivial_note_changes,finalization,warn_selector}.py` and tests using old table names.
 
-The canonical JSON shapes live in [freshness-schemas.md](./freshness-schemas.md). Expose the operations as:
+**Docs:** this workshop set + `kb/reference/proposals/collection-as-artifact-freshness.md` (M4).
 
-- `commonplace-freshness-accept --input FILE|-` — initial or observation refresh acceptance from a manifest; rejects `review-pair`;
-- `commonplace-freshness-ack --input FILE|- [--input-role ROLE ...]` — advance all or selected changed inputs from `commonplace-freshness-status --json` output while preserving review evidence;
-- `commonplace-freshness-retire --input FILE|-` — remove a registered target that should stop appearing in global status; and
-- `commonplace-freshness-status ... --json` — the canonical observation payload for acknowledgement and target workflows.
-
-Observation accept and ack must reject a mismatched baseline revision or any current version that no longer matches the supplied observation. Capture refresh CASes against the pair's stored `expected_baseline_revision` and does not revalidate live text. Review finalization uses capture refresh only.
-
-Do not build refresh jobs, prompt construction, model dispatch, automatic rewriting, or link-derived registration.
-
-Collection-as-artifact targets (`collection-maintenance`, `collection-text`) are deferred to [future-work-collection-freshness.md](./future-work-collection-freshness.md).
-
-### Milestone gates
-
-These gates are ordering constraints, not reporting labels:
-
-1. **M1 — substrate and migration:** pin [freshness-schemas.md](./freshness-schemas.md), pass `file-text` schema and migration fixtures (including skipped baselines and failed queued job `49`), rehearse migration on copies of both live stores, and prove each old `review-store.sqlite` byte hash is unchanged.
-2. **M2 — review parity:** pass the full review suite at the CLI boundary and prove selector JSON parity before and after migration, including the both-changed precedence case.
-3. **M3 — generic surfaces:** only after M2, expose `commonplace-freshness-status`, accept, ack, and retire over registered `review-pair` targets. No non-review target registration in this phase.
-4. **M4 — future-work proposals:** after M3 ships, promote deferred designs into `kb/reference/proposals/` per the [proposals contract](../../reference/proposals/README.md). The plan ends here; implementation of those proposals is a separate adoption cycle.
-
-### 8. Documentation and rollout
-
-Update, in the implementation commit sequence:
-
-- `kb/reference/commands.md`;
-- `kb/reference/storage-architecture.md`;
-- `kb/reference/lib-modules.md`;
-- `kb/reference/README-REVIEW-SYSTEM.md` and `review-architecture.md`;
-- the accepted ADR and affected proposal status;
-- `.gitignore`, package data, and CLI entry points;
-- `AGENTS.md` vocabulary so freshness baseline is no longer defined as review-only; and
-- the artifact-freshness and lineage workshops, extracting or retiring the now-implemented deferred generic design.
-
-Rollout order:
-
-1. land schema, migration, generic API, and review adapter with fixture tests;
-2. construct a candidate Commonplace store from the read-only old database and run full parity checks;
-3. install the verified Commonplace store at the new path and switch the default, retaining the old database as backup;
-4. construct a candidate Epistack store from its read-only old database and run review/global parity checks;
-5. install the verified Epistack store at the new path, retaining its old database as backup; and
-6. run global freshness check over registered review targets. Collection-maintenance registration waits for the deferred phase.
-
-Rollback is code-and-store atomic. If an installed new store proves bad, either restore the last pre-migration code and point its `COMMONPLACE_REVIEW_DB` at the untouched schema-v7 backup, or keep the new code, quarantine the bad destination, and rebuild a fresh `commonplace-store.sqlite` from that backup. New code must never point `COMMONPLACE_STORE` at `review-store.sqlite`: without a compatibility shim it cannot operate on the old schema. Never automatically update or delete the backup.
-
-### 9. Write proposals for deferred future work
-
-After the shipped v1 mechanism is documented and tested, close the exploration loop by promoting deferred designs to formal proposals. Do not start a second implementation phase in this workshop.
-
-Write at least:
-
-| proposal | source sketch | what it must cover |
-|---|---|---|
-| `kb/reference/proposals/collection-as-artifact-freshness.md` | [future-work-collection-freshness.md](./future-work-collection-freshness.md) | `collection-text` encoding, `collection-maintenance` target shape, schema widening from `file-text`-only v1, Epistack acceptance cases, forces (coarse snapshot vs per-file cost), free choices, adoption criteria |
-
-Each proposal must follow the [proposals contract](../../reference/proposals/README.md):
-
-- `description` leads with `Proposal:`;
-- `traits: [design-proposal]`;
-- a dated **Current state (as of YYYY-MM-DD)** anchor naming the shipped general freshness store, `file-text` versioning, and review-first migration;
-- transferable requirements cited from `kb/notes/` via `rationale` edges, not inlined;
-- explicit forces, free choices, and adoption criteria; and
-- no claim that the design is already shipped.
-
-Retire or narrow [future-work-collection-freshness.md](./future-work-collection-freshness.md) once the proposal lands — it becomes a workshop scratch pointer to the proposal, not a parallel authority. Open workshop questions that remain undecided after v1 (referential-check publishing, dependency-on-stale-target semantics) may become additional proposals in the same step when they have enough worked material; otherwise leave them in this workshop's open-decisions list until a later promotion.
-
-This step is the plan's terminal deliverable. Workshop deletion waits until M4 proposals are committed and cross-linked from rollout documentation.
-
-## File-level work map
-
-Expected new implementation surfaces:
-
-- `kb/work/artifact-freshness-and-referential-checks/database-design.md` (schema authority during implementation)
-- `src/commonplace/store.py`
-- `src/commonplace/store-schema.sql`
-- `src/commonplace/freshness/__init__.py`
-- `src/commonplace/freshness/models.py`
-- `src/commonplace/freshness/versioning.py`
-- `src/commonplace/freshness/store.py`
-- `src/commonplace/freshness/selector.py`
-- `src/commonplace/freshness/transitions.py`
-- `src/commonplace/cli/freshness_status.py`
-- `src/commonplace/cli/freshness_accept.py`, `freshness_ack.py`, `freshness_retire.py`
-- `kb/work/artifact-freshness-and-referential-checks/freshness-schemas.md`
-- `kb/work/artifact-freshness-and-referential-checks/future-work-collection-freshness.md`
-- `kb/reference/proposals/collection-as-artifact-freshness.md` (M4 terminal deliverable)
-- `scripts/migrate-review-db-v7-to-commonplace-store.py`
-- corresponding `tests/commonplace/freshness/`, migration, and CLI tests
-
-Expected review edits:
-
-- `src/commonplace/review/review_db.py`
-- `src/commonplace/review/review_schema.py` and the old review schema resource, which are replaced or narrowed to review integrity/evidence ownership
-- `src/commonplace/review/freshness.py`
-- `src/commonplace/review/review_target_selector.py`
-- `src/commonplace/review/acknowledgement.py`
-- `src/commonplace/review/ack_trivial_note_changes.py`
-- `src/commonplace/review/finalization.py`
-- `src/commonplace/review/warn_selector.py`
-- tests that query old table/view names directly
-
-Extract a shared unified-text-diff helper only when review, full-pass, and general selector call sites can use the same exact input/output contract. Do not force full-pass report parsing or capture retention into the general store.
-
-## Verification commands
-
-At each implementation phase:
+## Verification
 
 ```bash
-pytest tests/commonplace/freshness
-pytest tests/commonplace/review
+pytest tests/commonplace/freshness tests/commonplace/review
 pytest tests/commonplace/cli/test_guard_full_pass_report.py tests/commonplace/lib/test_full_pass.py
-ruff check src tests
-pytest
+ruff check src tests && pytest
 ```
 
-For every migrated live-store copy:
+Per migrated store copy:
 
 ```bash
 sqlite3 -readonly kb/reports/commonplace-store.sqlite 'PRAGMA integrity_check; PRAGMA foreign_key_check;'
-commonplace-review-target-selector --all-gates --model-partition codex --json
+commonplace-review-target-selector --all-gates --model-partition <partition> --json
 commonplace-freshness-status --all --json
 ```
 
-Use the actual model partitions present in each store when comparing selector output; do not assume `codex` is the only partition.
+## Non-goals
 
-## Explicit non-goals
-
-- semantic truth checking in deterministic code;
-- automatic note rewriting or refresh execution;
-- dependency inference from links or prose;
-- source- or ingest-specific branches in the freshness core;
-- configurable or pluggable version resolvers, and binary, URL, external-Git, database-row, or package-asset versions;
-- locks, filesystem transactions, or stronger concurrency before a failed optimistic case;
-- migration of full-pass packet state into SQLite;
-- append-only lineage events or historical baseline retention;
-- automatic registration of every artifact in the KB;
-- claiming that global status proves unregistered work is current; and
-- `collection-text` versioning or `collection-maintenance` target registration in this phase (see [future-work-collection-freshness.md](./future-work-collection-freshness.md)).
+Semantic truth checking; auto-rewrite; link-derived registration; pluggable resolvers; full-pass state in SQLite; lineage events; collection-text / collection-maintenance in v1.
 
 ## Done when
 
-1. no duplicated review-owned freshness compare/persist logic remains — no review-specific baseline/snapshot tables and no second copy of generic transition persistence — while review adapters for `missing-baseline` discovery, public reason mapping, trivial-change eligibility, and capture finalization remain;
-2. every retained Commonplace and Epistack review baseline is preserved on the generic schema with parity-tested selection and evidence semantics;
-3. review finalization and acknowledgement use the same refresh/ack transitions available to other target kinds;
-4. one global command reports all registered stale targets from the same store (review-pair targets in v1);
-5. generic accept, ack, and retire work for `file-text` inputs with fixture coverage;
-6. acknowledgement and observation refresh advance exact accepted versions without conflating changed inputs with false outputs;
-7. the full test suite and both live-store migration rehearsals pass, with each old `review-store.sqlite` retained byte-identically as backup;
-8. queued jobs capture `expected_baseline_revision`, capture refresh and observation refresh are separated, dead targets can be retired, and `input-missing` exits `1`;
-9. durable architecture, command, storage, review, and operator documentation describes the shipped mechanism;
-10. at least one formal proposal in `kb/reference/proposals/` promotes deferred collection-as-artifact freshness per the proposals contract (M4); and
-11. this workshop can close after that proposal is committed — implementation of deferred work follows proposal adoption, not this plan.
+1. no duplicated review freshness compare/persist; adapters for discovery, reasons, trivial ack, capture finalization remain;
+2. retained review baselines on generic schema with parity-tested behavior;
+3. finalization and ack use shared transition primitives (capture vs observation split intact);
+4. global status over registered review-pair targets;
+5. accept/ack/retire fixture-tested for `file-text`;
+6. migration rehearsals pass; backups byte-identical;
+7. queued-job CAS, retirement, `input-missing` exit `1` shipped;
+8. reference docs + ADR current; and
+9. M4 proposal committed — workshop may close.

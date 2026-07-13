@@ -1,5 +1,7 @@
 # Database design: review-first general freshness store
 
+Schema authority for [implementation-plan.md](./implementation-plan.md) v1. **`file-text` only; `review-pair` targets only.** Collection-as-artifact extensions are deferred — [future-work-collection-freshness.md](./future-work-collection-freshness.md).
+
 ## Decision
 
 Build a new `kb/reports/commonplace-store.sqlite` beside the existing `kb/reports/review-store.sqlite`. The old database is the immutable migration backup: the migration opens it read-only, never renames it, never changes its schema version, and never deletes it. Only after the new database passes structural and behavioral verification do commands switch their default path to `commonplace-store.sqlite`.
@@ -447,17 +449,16 @@ The critical new query is reverse selection by artifact path and version kind. N
 
 ## Implementation gate
 
-Do not begin schema or review-code changes until this design and the implementation plan agree on:
+v1 implementation may begin when plan and design agree on:
 
-1. the source-to-destination migration with the old database retained untouched;
-2. the exact old-to-new object map;
-3. path-keyed snapshot versioning;
-4. generic baseline/input keys and delete behavior;
-5. the review evidence extension and parity view;
-6. capture versus observation refresh semantics and review-owned finalization;
-7. queued-job `expected_baseline_revision` capture and migration disposition;
-8. target retirement and `input-missing` exit semantics;
-9. integrity and pruning ownership; and
-10. the canonical status/accept/ack JSON contracts in [freshness-schemas.md](./freshness-schemas.md).
+1. source-to-destination migration with untouched backup;
+2. old-to-new object map;
+3. `file-text` path-keyed snapshots;
+4. baseline/input keys, retirement, and cascade delete;
+5. review evidence bridge and adapter view;
+6. capture vs observation refresh and `finalize_capture_refresh()`;
+7. queued-job `expected_baseline_revision` and migration disposition (job `49`);
+8. `input-missing` exit `1`; and
+9. JSON contracts in [freshness-schemas.md](./freshness-schemas.md).
 
-Collection-as-artifact freshness is deferred and does not gate v1 implementation.
+Collection-as-artifact freshness does not gate v1. It exits via M4 proposal ([implementation-plan.md](./implementation-plan.md) step 8).

@@ -1,59 +1,43 @@
 # Deferred: collection-as-artifact freshness
 
-**Status:** postponed — not part of the current implementation sequence. **Terminal deliverable:** promote this sketch to `kb/reference/proposals/collection-as-artifact-freshness.md` per implementation-plan step 9 (M4).
+**Status:** not in v1. **Exit:** promote to `kb/reference/proposals/collection-as-artifact-freshness.md` (implementation-plan step 8 / M4).
 
-Epistack maintenance still needs to detect when a source collection gains, loses, or changes a member without a pre-existing per-file dependency edge. The planned workaround is a **`collection-text` version function** and a **`collection-maintenance` target** that registers coarse collection snapshots. That design remains valid but ships in a later phase after review-first migration and generic `file-text` infrastructure are proven.
+## Problem
+
+Epistack maintenance must detect when a source collection gains, loses, or changes a member without a pre-existing per-file dependency edge. Per-file `file-text` registration cannot see new members until something registers them.
+
+## Planned approach
+
+A **`collection-text` version function** renders canonical UTF-8 for one `COLLECTION.md`-bearing directory. A **`collection-maintenance` target** registers coarse snapshots as accepted inputs. The freshness core treats these as ordinary path-keyed versions — no source/ingest branches.
 
 ## Why deferred
 
-- The immediate driver is review freshness migration and repository-wide status over **registered file paths**, not Epistack casebook registration.
-- `collection-text` encoding, golden tests, and three casebook targets add M1/M3 surface before the review parity gate earns confidence.
-- Per-file `file-text` inputs plus semantic maintenance workflows remain sufficient for submission work until this phase lands.
+- v1 driver is review migration and global status over registered file paths.
+- Encoding + golden tests + three casebook targets expand M1/M3 before review parity is proven.
+- Semantic maintenance with per-file edges suffices for current submission work.
 
-## Planned version function: `collection-text`
+## `collection-text` encoding (`COMMONPLACE-COLLECTION-TEXT/1`)
 
-Identity: one normalized `COLLECTION.md`-bearing directory path.
+Deterministic UTF-8; hash = SHA-256(bytes).
 
-### Encoding (`COMMONPLACE-COLLECTION-TEXT/1`)
+**Scope:** one collection root; exclude nested collection roots (child `COLLECTION.md` = separate identity).
 
-`collection-text` is a deterministic UTF-8 byte sequence. The stored snapshot hash is `SHA-256` of those bytes.
+**Members:** visible regular `*.md` under root via `project_paths.walk_visible` — include subdirs; exclude dots, nested git repos, symlinks, `COLLECTION.md`, `types/` segments, `.replaced.*.md`; no repo artifact-dir pruning inside collection.
 
-**Scope.** One collection root. Membership is non-recursive into nested collection roots — a child directory bearing its own `COLLECTION.md` is a separate collection identity.
-
-**Member enumeration.** Collect every visible regular-file `*.md` under the collection root using `commonplace.lib.project_paths.walk_visible`:
-
-- include files in subdirectories of the collection root;
-- exclude dot-prefixed paths and nested git repositories;
-- exclude symlinks and non-regular files;
-- exclude `COLLECTION.md`;
-- exclude any path with a `types/` directory segment between the collection root and the file;
-- exclude `.replaced.*.md` archive filenames; and
-- do not apply repository-wide artifact-dir pruning inside a collection walk.
-
-Sort members by normalized repository-relative POSIX path with `/` separators.
-
-**Byte layout.**
+Sort by normalized repo-relative POSIX path.
 
 ```text
 COMMONPLACE-COLLECTION-TEXT/1
-<member-record>*
-```
-
-Each `<member-record>`:
-
-```text
 --- member
-path: <normalized-repo-relative-path>
-sha256: <64 lowercase hex of member file UTF-8 bytes>
+path: <path>
+sha256: <64 hex>
 ---
-<exact member file UTF-8 text>
+<verbatim file UTF-8>
 ```
 
-Delimiter and header lines use ASCII `LF` only. Member bodies are verbatim UTF-8.
+## `collection-maintenance` target
 
-## Planned target: `collection-maintenance`
-
-One coarse target per casebook:
+One target per casebook (lhc, eggs, COVID):
 
 ```json
 {
@@ -67,8 +51,17 @@ One coarse target per casebook:
 }
 ```
 
-Equivalent targets for eggs and COVID. Acceptance cases from the implementation plan (source addition selects casebook, diff-backed ack of `source-scope` only, etc.) move here unchanged.
+## Acceptance cases (for proposal / later implementation)
 
-## Schema extension when implemented
+1. adding a source selects exactly its casebook target;
+2. editing/removing a source selects that target with diff;
+3. adding casebook notes selects its target, not another case — reassessment may revise affected `.ingest.md` even when source snapshot unchanged;
+4. unrelated edits select no casebook target;
+5. ack of irrelevant source diff preserves accepted casebook snapshot;
+6. refresh after note edits replaces full input set;
+7. post-acceptance edit makes target immediately stale; and
+8. global status reports stale review-pair and collection-maintenance targets together.
 
-v1 store schema ships with `file-text` only. A later migration widens `version_kind` checks to admit `collection-text` and registers the first non-review targets.
+## Schema extension
+
+v1 admits `file-text` only. Adoption widens `version_kind` checks and registers first non-review targets via migration.
