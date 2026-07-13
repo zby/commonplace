@@ -46,8 +46,6 @@ Freshness and referential validation resolve relationships in different ways:
 - **Freshness selection** compares registered accepted dependency versions with their current versions. It says the accepted basis changed, not that a claim is false.
 - **Referential validation** follows a type- or check-owned relationship to test current state. It can prove a cross-artifact assertion invalid without any prior accepted baseline.
 
-The Epistack casebooks provide the worked referential failure: 26 ingest reports kept saying their target collections were empty after every source was cited by live notes. Per-file validation stayed green because the falsehood lived between each report and the collection ([Epistack workshop protocol](../epistack-competition/README.md)).
-
 Existing content-addressed verbatim-quote verification is already a robust referential check. It remains evidence that domain-owned referential checks can work; this workshop does not redesign its positional parsing.
 
 ## Evaluation boundary
@@ -59,7 +57,6 @@ The remaining mechanism must account for these witnesses:
 - **Diff-backed acknowledgement:** the operator inspects the accepted-to-current change and advances selected dependency baselines without claiming that a new target output was produced; the second consumer determines whether full-pass comparison/diff code should be extracted.
 - **Refresh acceptance:** producing or reassessing a target records its current target version and complete accepted dependency baseline.
 - **Target-owned consequence:** the shared selector emits neutral reasons such as `input-changed`, `output-missing`, or `contract-changed`; the target kind decides the permissible response.
-- **Cross-artifact validity:** a deterministic check can detect a claim such as “the target collection is empty” becoming false, or establish why that claim cannot be represented safely enough to check.
 - **Relationship is not freshness:** backlinks and authored links remain discovery evidence unless a target acceptance registers them as dependencies.
 - **Selection is not execution:** the mechanism returns target keys, changed inputs, and reasons; review, regeneration, agent revision, or bulk-operation workflows decide what to do.
 
