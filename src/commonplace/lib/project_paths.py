@@ -93,8 +93,8 @@ def is_collection_dir(path: Path) -> bool:
 
 
 def list_collection_note_paths(collection: Path) -> list[Path]:
-    """Return markdown note paths under a collection, excluding types, replaced
-    archives, and stale generated dir-index pages (build-time-only, ADR 025)."""
+    """Return markdown note paths under a collection, excluding types, collection
+    metadata, and replaced archives."""
     if not collection.is_dir():
         raise FileNotFoundError(f"Collection directory does not exist: {collection}")
     if not is_collection_dir(collection):
@@ -105,7 +105,6 @@ def list_collection_note_paths(collection: Path) -> list[Path]:
         if not is_type_definition_content(path, collection)
         and not is_collection_metadata(path)
         and not is_replaced_archive(path)
-        and path.name != "dir-index.md"
     )
 
 
