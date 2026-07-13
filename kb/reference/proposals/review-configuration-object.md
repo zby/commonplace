@@ -7,9 +7,11 @@ tags: [kb-maintenance]
 
 # Review configuration object
 
-The review subsystem's assumptions about project shape are hardcoded as module-level constants, so a consuming project with a different layout — reviewable notes outside `kb/notes/` and `kb/reference/` — cannot extend review scope without editing installed package code. This proposal consolidates those constants into one configuration object **owned by the review subsystem**, not a global `ProjectConfig`: the review subsystem is the experimental part of the package and its only database user, and a package-wide config object would couple the stable core's change cadence to it. Configuration is per subsystem; a subsystem earns a config object when its constants need to vary.
+The review subsystem's assumptions about project shape are hardcoded as module-level constants, so a consuming project with a different layout — reviewable notes outside `kb/notes/` and `kb/reference/` — cannot extend review scope without editing installed package code. This proposal consolidates those constants into one configuration object **owned by the review subsystem**, not a global `ProjectConfig`: review execution and freshness are experimental surfaces with a faster change cadence than `commonplace.lib`, and a package-wide config object would couple the stable core to them. Configuration is per subsystem; a subsystem earns a config object when its constants need to vary.
 
-## Current state (as of 2026-06-12)
+## Current state (as of 2026-07-13)
+
+General freshness and review execution share one operational store ([ADR 052](../adr/052-general-freshness-store-review-first-migration.md)). Store path resolution lives in `commonplace.store` (`kb/reports/commonplace-store.sqlite`; `COMMONPLACE_STORE`, with `COMMONPLACE_REVIEW_DB` as a legacy fallback). Review modules re-export `DEFAULT_DB_PATH` and `resolve_db_path` from there. A `ReviewConfig` would still be review-owned, but its `db_path` field should align with `commonplace.store` rather than reintroducing a review-only default.
 
 Project-shape constants partition cleanly by owner:
 
@@ -19,10 +21,10 @@ Project-shape constants partition cleanly by owner:
 |---|---|---|
 | `NOTES_ROOT`, `REFERENCE_ROOT` | `review/review_target_selector.py` | which collections are reviewable (scan roots) |
 | gate catalog roots | `review/paths.py` | where review gates live |
-| `BUNDLE_ARTIFACTS_ROOT` | `review/review_db.py` + `review/artifacts.py` | where review artifacts are written |
-| `DEFAULT_DB_PATH` | `review/review_db.py` | review store location (env override `COMMONPLACE_REVIEW_DB` exists) |
+| `REVIEW_JOBS_ROOT` | `review/artifacts.py` | where review job artifacts are written |
+| `DEFAULT_DB_PATH` | `commonplace.store` (re-exported in `review/review_db.py`) | operational store location (`COMMONPLACE_STORE` / `--db`) |
 
-Override mechanisms are inconsistent: the DB path has an env var and a `--db` flag; the rest have no project override.
+Override mechanisms are inconsistent: the store path has env vars and a `--db` flag on review and freshness CLIs; scan roots, gate catalog roots, and artifact roots have no project override.
 
 **Core-owned**: the scaffold/promoted-skills policy was the one core entry in this proposal's original table; it shipped separately as `commonplace.scaffold_manifest` (data the installer executes), which already gives the stable core its policy-as-data form without a runtime config object. `lib/project_paths.py` covers indexing concerns and is untouched. No core constant currently needs per-project variation.
 
@@ -30,7 +32,7 @@ The hardcoded scan roots are the operative limitation: `list_reviewable_notes` w
 
 ## The design
 
-One frozen dataclass `ReviewConfig` in `commonplace.review`, holding the review-owned table above, constructed once per CLI invocation from defaults merged with a per-project override source, and passed explicitly to the functions that consume it — no module-global mutation, no import-time `Path.cwd()`, following the existing `repo_root`/`db_path` threading convention. It subsumes the current DB env override (`COMMONPLACE_REVIEW_DB`) so the override story is uniform.
+One frozen dataclass `ReviewConfig` in `commonplace.review`, holding the review-owned table above, constructed once per CLI invocation from defaults merged with a per-project override source, and passed explicitly to the functions that consume it — no module-global mutation, no import-time `Path.cwd()`, following the existing `repo_root`/`db_path` threading convention. Its `db_path` default delegates to `commonplace.store.resolve_db_path` so review and freshness CLIs share one override story (`COMMONPLACE_STORE`, legacy `COMMONPLACE_REVIEW_DB`, `--db`).
 
 The core deliberately gets nothing: if a stable-core constant ever needs per-project variation, it gets its own object then, with its own (slower) change cadence. The two configs share at most an override-file format, not a type.
 
@@ -54,5 +56,7 @@ Adopt when a consuming project (or this repo) actually needs a non-default revie
 
 Relevant Notes:
 
+- [052-general freshness store, review-first migration](../adr/052-general-freshness-store-review-first-migration.md) — see-also: operational store path now owned by `commonplace.store`, not review-only tables
+- [freshness architecture](../freshness-architecture.md) — see-also: shared store boundary review config must not fork
 - [030-harness-facing seams: batch endpoints and runner adapters](../adr/030-harness-facing-seams-batch-endpoints-and-runner-adapters.md) — see-also: the same adaptability direction at the execution seam; this proposal addresses the review subsystem's project-shape seam
 - [collection](../definitions/collection.md) — see-also: the unit a consuming project would reshape; one free choice derives scan roots from collection contracts

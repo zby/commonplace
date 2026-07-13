@@ -1,6 +1,6 @@
 # Implementer handoff
 
-**Start here.** Authority chain: this file → [implementation-plan.md](./implementation-plan.md) → [database-design.md](./database-design.md) → [freshness-schemas.md](./freshness-schemas.md).
+**Start here.** Authority chain: this file → [implementation-plan.md](./implementation-plan.md) → [database-design.md](./database-design.md) → [freshness-schemas.md](../../reference/freshness-schemas.md).
 
 **Verdict:** go. Build v1 review-first; end at M4 proposals. Do not implement `collection-text` or register non-review targets in this phase.
 
@@ -8,7 +8,7 @@
 
 | gate | deliverable |
 |---|---|
-| **M1** | `file-text` schema, [freshness-schemas.md](./freshness-schemas.md), migration script + fixtures (skip 4 dead baselines; fail job `49`) |
+| **M1** | `file-text` schema, [freshness-schemas.md](../../reference/freshness-schemas.md), migration script + fixtures (skip 4 dead baselines; fail job `49`) |
 | **M2** | full review suite parity at CLI boundary; selector JSON before/after migration |
 | **M3** | `commonplace-freshness-{status,accept,ack,retire}` over `review-pair` targets only |
 | **M4** | `kb/reference/proposals/collection-as-artifact-freshness.md` from [future-work sketch](./future-work-collection-freshness.md) — **terminal step** |

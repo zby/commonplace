@@ -12,7 +12,7 @@ The mechanism records exact input snapshots against which a target was accepted,
 
 | gate | blocks | done when |
 |---|---|---|
-| **M1** | all code | schema + [freshness-schemas.md](./freshness-schemas.md) pinned; migration fixtures pass; live-store rehearsal; backup byte hash unchanged |
+| **M1** | all code | schema + [freshness-schemas.md](../../reference/freshness-schemas.md) pinned; migration fixtures pass; live-store rehearsal; backup byte hash unchanged |
 | **M2** | M3 | full review suite at CLI boundary; selector JSON parity pre/post migration |
 | **M3** | M4 | `commonplace-freshness-{status,accept,ack,retire}` over review-pair targets |
 | **M4** | workshop close | proposal committed; plan ends |
@@ -46,7 +46,7 @@ The mechanism records exact input snapshots against which a target was accepted,
 | observation ack | `commonplace-freshness-ack`, `commonplace-ack-review` | yes | preserved |
 | retirement | `commonplace-freshness-retire` | — | cascade delete bridge |
 
-Schema authority: [database-design.md](./database-design.md). JSON authority: [freshness-schemas.md](./freshness-schemas.md).
+Schema authority: [database-design.md](./database-design.md). JSON authority: [freshness-schemas.md](../../reference/freshness-schemas.md).
 
 ## Implementation sequence
 
@@ -97,7 +97,7 @@ Do not proceed to step 5 until M2 passes.
 
 ### 5. Global selector (M3)
 
-`commonplace-freshness-status` — all registered targets, deduped resolution, `--json`/`--diff`/`--all`/filters, exit 0/1/2 per [freshness-schemas.md](./freshness-schemas.md). Review selector keeps `missing-baseline` discovery.
+`commonplace-freshness-status` — all registered targets, deduped resolution, `--json`/`--diff`/`--all`/filters, exit 0/1/2 per [freshness-schemas.md](../../reference/freshness-schemas.md). Review selector keeps `missing-baseline` discovery.
 
 ### 6. Generic surfaces (M3)
 

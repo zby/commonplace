@@ -459,6 +459,6 @@ v1 implementation may begin when plan and design agree on:
 6. capture vs observation refresh and `finalize_capture_refresh()`;
 7. queued-job `expected_baseline_revision` and migration disposition (job `49`);
 8. `input-missing` exit `1`; and
-9. JSON contracts in [freshness-schemas.md](./freshness-schemas.md).
+9. JSON contracts in [freshness-schemas.md](../../reference/freshness-schemas.md).
 
 Collection-as-artifact freshness does not gate v1. It exits via M4 proposal ([implementation-plan.md](./implementation-plan.md) step 8).

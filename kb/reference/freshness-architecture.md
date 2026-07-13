@@ -67,7 +67,7 @@ Queued review jobs record `review_pairs.expected_baseline_revision` at pair crea
 
 ## Selection and status
 
-`commonplace-freshness-status` reports all registered targets. It dedupes resolution, supports `--json`, `--diff`, `--all`, and `--model-partition`, and exits `0`/`1`/`2` per [freshness JSON contracts](../work/artifact-freshness-and-referential-checks/freshness-schemas.md).
+`commonplace-freshness-status` reports all registered targets. It dedupes resolution, supports `--json`, `--diff`, `--all`, and `--model-partition`, and exits `0`/`1`/`2` per [freshness JSON contracts](./freshness-schemas.md).
 
 `commonplace-review-target-selector` keeps `missing-baseline` discovery for applicable pairs not yet registered. Global status does not replace that discovery path.
 
@@ -87,5 +87,6 @@ Collection-as-artifact freshness (`collection-text`, `collection-maintenance`) i
 ## See also
 
 - [ADR 052](./adr/052-general-freshness-store-review-first-migration.md) — decision record
+- [Freshness JSON contracts](./freshness-schemas.md) — status, accept, ack, retire shapes and exit codes
 - [Storage](./storage-architecture.md) — where the store sits among authored markdown and derived indexes
 - [Review architecture](./review-architecture.md) — review adapter and execution flow

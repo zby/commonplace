@@ -156,7 +156,7 @@ The command accepts `queued` jobs, rejects `completed` and `failed`, reads the j
 
 ### commonplace-freshness-status
 
-Report repository-wide freshness for registered targets. v1 covers migrated `review-pair` targets only. Exit `0` when all selected targets are fresh, `1` when any input changed or is missing, `2` on misuse or store errors.
+Report repository-wide freshness for registered targets. v1 covers migrated `review-pair` targets only. JSON shapes and exit codes: [freshness-schemas.md](./freshness-schemas.md). Exit `0` when all selected targets are fresh, `1` when any input changed or is missing, `2` on misuse or store errors.
 
 ```bash
 commonplace-freshness-status --json

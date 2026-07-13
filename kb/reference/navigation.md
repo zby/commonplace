@@ -86,6 +86,7 @@ Relevant Notes:
 
 - [Storage](./storage-architecture.md) - part-of: authored markdown is the source of truth while generated indexes are rebuildable navigation artifacts
 - [Freshness architecture](./freshness-architecture.md) - part-of: operational store, file-text versioning, global status, and review adapter
+- [Freshness JSON contracts](./freshness-schemas.md) - part-of: status, accept, ack, and retire manifest shapes
 - [Collections and types](./collections-and-types.md) - part-of: collection conventions and type specs define where agents look before writing or linking
 - [Link vocabulary and linking approach](./link-vocabulary.md) - part-of: the link-specific layer inside the broader navigation stack
 - [Agent memory coverage](./agent-memory-coverage.md) - part-of: summarizes discoverability surfaces and current gaps across the shipped system
