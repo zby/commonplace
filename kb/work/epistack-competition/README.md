@@ -21,4 +21,4 @@ So this repo stays the framework; the sibling stays the casework; the backlog is
 
 ## Status
 
-Sibling repo scaffolded with a filled-in control plane and a kickoff briefing for its agent. First experiment queued there: provenance with plain notes on the black-hole case (does file-level linking suffice, or do claims need a source-span locator type?). Watch the backlog for the result.
+The sibling is well past scaffolding. The first experiment (source-span provenance on the LHC case) ran and answered: a layer-aware prose convention beat both file-links and a locator type, so no locator type was built (backlog, 2026-07-09). The backlog now carries ~12 dated entries with Outcome lines, reconciled against the installed framework on 2026-07-12; promotions that came through it include the source-genre field (ADR 045) and the verbatim-quote verifier (ADR 046). Continue watching the backlog for new case-scoped and cross-case entries.

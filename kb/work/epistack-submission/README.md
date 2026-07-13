@@ -50,7 +50,7 @@ All three arrive as links and headings. Without explicit rationale, history, or 
 
 Three things make this a bounded design rationale rather than an unsupported universality claim:
 
-1. **The three implementations already differ locally.** The same protocol surface supports COVID, LHC, and eggs while their discourse structures remain visibly case-specific. This demonstrates applicability across the supplied cases, not universal optimality.
+1. **The three implementations already differ locally.** The same protocol surface supports COVID, LHC, and eggs while their discourse structures remain visibly case-specific. This demonstrates applicability across the supplied cases, not universal optimality. Because LHC shaped the contract, eggs and COVID provide two observed case-to-case transfers, not two independent transfer tests; correspondingly, the preregistered protocol in (2) still carries the generalization claim's real evidential burden. The entry says so plainly.
 2. **The protocol for measuring it properly, designed and unrun.** [replication-plan.md](./replication-plan.md) is a full clean-room convergence experiment: fix the contract in advance, build the same case with independent builders who never see each other's work, and score which structures converge (forced) and which diverge (chosen) against predictions sealed beforehand. It is designed, preregistered, and **we did not have the budget to run it in six days**. We publish it as a protocol, with the predictions sealed, and say plainly that it is untested.
 3. **The negative results we kept.** The source-span locator was *not* built — the discipline stopped a structure that felt necessary and wasn't. The `source_type` gap recurred three times before earning promotion ([ADR 045](../../reference/adr/045-source-genre-is-a-single-open-field-on-the-snapshot.md)). Author-authority ranking is **rejected** below, on the record.
 
@@ -72,6 +72,13 @@ The repository already implements the protocol, but its normative surface is dis
 
 The protocol document and runnable Commonplace walkthrough are the entry. New machinery is subordinate to making those two artifacts precise, inspectable, and usable by another investigator.
 
+Two of the brief's assessment bullets the document answers **head-on rather than by omission**, or a judge reads the doctrine as "we don't do the hard part":
+
+- **Calibration.** Attributed, snapshot-anchored, partition-scoped judgments *are* the calibration framework; the register-drift finding is the mechanistic argument for why scalar credences in frontmatter are an anti-pattern, not a deferred feature.
+- **Cruxes.** Contested joints, `contradicts` edges, and attributed positions *are* crux mapping; the entry declines crux *scoring* and says why (the same shape-unknown argument that rejects authority ranking below).
+
+And one judging question gets its own explicit half-page rather than being scattered: **does it scale with AI/compute.** Model partitions mean a better model opens a new partition over the same criteria instead of invalidating the archive; criterion-anchored assays simply re-run; gates are cheap-to-add criterion files; the skills layer makes the whole workflow agent-operable. The story is strong and currently under-told.
+
 ### Ship the quote verifier (DONE — 2026-07-12)
 
 Shipped as [ADR 046](../../reference/adr/046-verbatim-quotes-are-validated-against-their-cited-source.md): `commonplace-validate` now resolves every `verbatim`-marked quotation against the source it links (a false claim **fails**), plus `commonplace-verify-quotes` for corpus sweeps. It runs as a generic body-content check alongside link health, not a type rule, because the trigger is the citation rather than the note's type.
@@ -91,6 +98,15 @@ Shipping it surfaced an architectural gap worth naming in the entry. The schema 
 The design move that makes this tractable: heterogeneous sources cannot be asked the same *content* questions — you cannot put a court filing and a molecular-clock preprint on the same claim axis without manufacturing precision — but they share **uniform provenance facts**. Author, genre, data dependency, funder, citation chain, capture layer, primary/secondary standing. **Provenance is uniform even when content is not.** So the matrix's rows are sources and its axes are provenance and independence, and the correlated-evidence flag becomes a **computed cluster** rather than a prose caveat.
 
 Build the smallest version that demonstrates the named Assessment requirement without delaying the protocol or submission. Reuse current artifacts where possible; do not build the generic bulk-operations layer. The preregistered code split is useful secondary evidence only if the retarget happens anyway.
+
+Present the three instances as what they are. COVID's shared authors and reused dataset are the clearest multi-source correlation cluster. The eggs instance is a funding-correlation pattern reported across a literature, and therefore closer to the correlated-evidence bullet than LHC, but the current casebook has not captured the individual industry-funded studies needed to map that cluster source by source. The LHC instance is a **single load-bearing dependency funnel**, not a multi-source cluster — real, and worth mapping, but the write-up must not sell all three as equivalent independence-cluster mappings.
+
+### Two cheap judge-facing artifacts
+
+Both convert claims from asserted to shown at near-zero build cost; neither is new machinery.
+
+- **The one-command adversarial demo.** The judge-facing path is: clone the casebooks, run `commonplace-verify-quotes` and `commonplace-validate`, and watch a deliberately broken citation **fail**. The full install (venv, direnv, `commonplace-init`, skills) is not "close to single click" and must not be the demo; package this short path explicitly in the submission and make it the first thing a judge can falsify themselves.
+- **The hands-free transcript.** The brief wants graceful scaling toward hands-free operation; current evidence is one heavily-steering operator. Log one transcript of an agent running the source → note → validate → review loop on a single new source, unassisted, and include it. This is the cheapest possible conversion of the scaling story's weakest claim.
 
 ### Rebuild the three cases from scratch (designed, not run — published as a protocol)
 
@@ -113,10 +129,11 @@ Days are working days from 12 July; submission 19 July.
 | 1 | **DONE.** Quote verifier shipped ([ADR 046](../../reference/adr/046-verbatim-quotes-are-validated-against-their-cited-source.md)) |
 | 1–2 | **Extract the protocol.** Write the standalone normative specification, conformance checklist, and exact runnable workflow. Freeze the submission claim around the Structure layer and reference implementation |
 | 1–3 | **Build the three-case demonstration.** Fix the 18 quotation mismatches, rerun validation cleanly, and produce a requirements/results table plus one navigational walkthrough per case |
+| 3 | **Cheap judge-facing evidence.** Package the one-command adversarial demo (clone → verify-quotes → planted failure fails) and log one hands-free transcript of the source→note→validate→review loop on a new source |
 | 2–3 | **Optional supporting assessment.** Build only the minimum correlated-evidence matrix that can run on the available case artifacts; cut it if it threatens protocol clarity or writing time ([assessment-machinery-line.md](./assessment-machinery-line.md)) |
-| 4–6 | **Write and package the submission.** Lead on the protocol, demonstrate the reference implementation, include the unrun replication protocol as future evaluation, run adversarial review, and preserve a full day of buffer |
+| 4–6 | **Write and package the submission.** Lead on the protocol, demonstrate the reference implementation, answer the calibration and crux bullets head-on, include the unrun replication protocol as future evaluation, run adversarial review **and a naive-reader pass** (the judge will never open the repo, and the house style is dense), and preserve a full day of buffer |
 
-**Priority if the days run out.** Protect, in order: the submission document; the standalone protocol and conformance guide; clean demonstrations on all three cases; the quote-verification walkthrough; then the correlated-evidence matrix. Cut the matrix before weakening the three-case protocol demonstration or losing writing/review time. Do not begin the independent-builder experiment or generic bulk-operations layer.
+**Priority if the days run out.** Protect, in order: the submission document; the standalone protocol and conformance guide; clean demonstrations on all three cases; the quote-verification walkthrough (the one-command demo path travels with it); the hands-free transcript; then the correlated-evidence matrix. Cut the matrix first, the transcript second, before weakening the three-case protocol demonstration or losing writing/review time. Do not begin the independent-builder experiment or generic bulk-operations layer.
 
 ## Entry material we already have and should not hide
 
