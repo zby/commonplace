@@ -6,11 +6,11 @@ from __future__ import annotations
 import os
 import sqlite3
 from dataclasses import asdict, dataclass
-from hashlib import sha256
 from importlib import resources
 from pathlib import Path
 from typing import Sequence
 
+from commonplace.lib.hashing import content_sha256_for_text
 from commonplace.review.artifacts import job_output_path_rel, prompt_path_rel, result_path
 from commonplace.review.clock import iso_now
 from commonplace.review.paths import criterion_id_from_stored_path, normalize_repo_relative_path
@@ -231,7 +231,7 @@ def _placeholders(values: Sequence[object]) -> str:
 def snapshot_file(conn: sqlite3.Connection, *, repo_root: Path, path: str) -> ReviewFileSnapshot:
     normalized_path = normalize_repo_relative_path(path, label="snapshot path")
     content_text = (repo_root / normalized_path).read_text(encoding="utf-8")
-    content_sha256 = sha256(content_text.encode("utf-8")).hexdigest()
+    content_sha256 = content_sha256_for_text(content_text)
     conn.execute(
         """
         INSERT OR IGNORE INTO review_file_snapshots (

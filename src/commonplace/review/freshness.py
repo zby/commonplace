@@ -16,7 +16,6 @@ with the dependency on the criterion side, not a wider per-pair input set.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from hashlib import sha256
 from pathlib import Path
 from typing import Sequence
 
@@ -31,14 +30,6 @@ class CapturedReviewInputs:
     pair_requests: list[ReviewPairRequest]
     note_texts: dict[str, str]
     criterion_texts: dict[str, str]
-
-
-def content_sha256_for_text(text: str) -> str:
-    return sha256(text.encode("utf-8")).hexdigest()
-
-
-def file_content_sha256(path: Path) -> str:
-    return content_sha256_for_text(path.read_text(encoding="utf-8"))
 
 
 def capture_review_inputs(

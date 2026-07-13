@@ -8,7 +8,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from commonplace.lib import frontmatter
-from commonplace.review.freshness import (
+from commonplace.lib.hashing import (
     content_sha256_for_text,
     file_content_sha256,
 )

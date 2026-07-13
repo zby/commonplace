@@ -10,7 +10,7 @@ import re
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from commonplace.review.freshness import file_content_sha256
+from commonplace.lib.hashing import file_content_sha256
 from commonplace.review.protocol.outcomes import strip_explicit_review_result_lines
 from commonplace.review.review_db import (
     ReviewPairRow,
