@@ -25,6 +25,16 @@ The parent agent running this instruction is the **orchestrator**. It alone crea
 
 Here, **fresh sub-agent** means a newly isolated execution context that has not participated in an earlier method or edit in this pass. A follow-up turn to an earlier worker is not fresh. When capacity is exhausted, queue work until a slot opens rather than nesting delegation or reusing a worker. Step 9 has the strictest isolation: its worker must be new to the pass and receive only the current note text and the exact copyedit prompt.
 
+## Re-entrancy preflight
+
+Before minting a new pass ID, inspect existing `kb/reports/full-pass/*/*/full-pass-report.md` files whose `source` equals `{note-path}`:
+
+- If one has `resolution: pending`, run `commonplace-guard-full-pass-report <report-path>`. Exit 0 means the old recommendation is still current: return that report and stop. Exit 1 with a `changed` input means the old report must be resolved to `superseded` under `kb/instructions/resolve-full-pass-disposition.md` before a new pass starts. A `missing` or `corrupt-capture` result requires reconciliation and blocks a new pass. Exit 2 means the report is invalid and also blocks the pass.
+- If a prior report is `rejected`, run the guard. Exit 0 retains its resolution for step 7 synthesis: do not show it to review workers, and do not repeat the rejected disposition without materially new evidence. Exit 1 with `changed` removes that constraint while preserving the old report as history. A `missing` or `corrupt-capture` result, or exit 2, requires reconciliation before a new pass.
+- `not-required`, `accepted`, `alternative-applied`, and `superseded` reports do not block a new pass.
+
+At most one matching pending report may exist for a source. If more than one exists, stop for reconciliation.
+
 ## Why this order
 
 - **Compression bundle first.** Across early validation cases, the compression bundle (`kb/instructions/compression-bundle/README.md`, run via `run-compression-bundle-on-note.md`) matched or exceeded earlier standalone prune and split/rehome instruction drafts and additionally covers core-claim-obscured and detail-overhang. It is the most reliable single source of edit-strategy signal (compress, fold, delete, rehome), and runs outside the review DB — no freshness baseline state written.
@@ -37,7 +47,7 @@ Here, **fresh sub-agent** means a newly isolated execution context that has not 
 
 ## Procedure
 
-1. Mint `<pass-id>`, create its `initial/` and `closing/` directories, record the initial note SHA-256, then read the target note fully.
+1. Mint `<pass-id>` and create its `initial/` and `closing/` directories. Read `{note-path}` once as UTF-8 text, write that exact Unicode character sequence as UTF-8 to `kb/reports/full-pass/<note-name>/<pass-id>/source.txt`, and compute the SHA-256 of the capture's UTF-8 text. Retain the logical `{note-path}`, packet-relative `source.txt`, and hash as three separate values. Never rewrite the capture. Then read the target note normally for the pass; assessment methods continue to receive `{note-path}`, never `source.txt`.
 2. Run the compression bundle per `run-compression-bundle-on-note.md` (`kb/instructions/run-compression-bundle-on-note.md`), passing `kb/reports/full-pass/<note-name>/<pass-id>/initial/compression-bundle-review.md` as its `{output-path}` argument. No DB writes.
 3. Run `critique-note` through the requested-mode review pipeline in a fresh sub-agent:
 
@@ -58,10 +68,16 @@ Here, **fresh sub-agent** means a newly isolated execution context that has not 
    Then delegate, finalize, and verify exactly as that instruction describes.
    Immediately copy every finalized semantic pair result to `kb/reports/full-pass/<note-name>/<pass-id>/initial/semantic/`, preserving one file per gate.
 6. Run `cp-skill-connect` against the note and immediately copy its canonical report to `kb/reports/full-pass/<note-name>/<pass-id>/initial/connect.md`. The closing connect run writes the same canonical report path and will overwrite it; the pass-scoped copy is the retained initial evidence.
-7. Synthesize the retained reports (below) into one packet at `kb/reports/full-pass/<note-name>/<pass-id>/full-pass-report.md`, including the note-level Disposition (`keep`, `delete`, or `merge into <target>` — see "Reconciling disagreement"). This is the only step among 1–7 that reconciles disagreement; do not just concatenate the reports.
+7. Synthesize the retained reports (below) into one typed packet at `kb/reports/full-pass/<note-name>/<pass-id>/full-pass-report.md`, including the note-level Disposition (`keep`, `delete`, or `merge into <target>` — see "Reconciling disagreement"). This is the only step among 1–7 that reconciles disagreement; do not just concatenate the reports.
+
+   If the disposition is `merge`, treat the target as provisional until you read it fully, confirm that the rationale still applies, write its exact UTF-8 text to packet-relative `merge-target.txt`, and record its logical path, H1 title, and text SHA-256. From that capture until the report is finalized, no other actor may edit the target. If the rationale fails against the captured target, choose `keep` or `delete` instead; do not retain provisional merge fields.
+
+   Write every frontmatter field and the canonical `Resolution` section shown in the Output Contract. A `keep` report starts `not-required`; `delete` and `merge` start `pending`. Run `commonplace-validate <report-path>` and stop on any failure.
 8. Read the packet's Disposition first. If it is `delete` or `merge`, do not edit the note or apply the packet's body edits. Leave the note byte-identical, retain the pass directory, hand back `kb/reports/full-pass/<note-name>/<pass-id>/full-pass-report.md`, and stop the pass — skip steps 9 and 10. The packet is the sole handoff until the disposition is accepted, rejected, or superseded; executing the deletion or merge belongs to whoever reads it, not to this instruction.
 
-   Otherwise (Disposition `keep`), apply the packet's body edits directly to the note. If `composition-friction-gate` ran, reread its report's "For the human" line against the edited text before moving on. This is not a re-run of the gate — just a check that the one thing it pointed to is still accurate, or has actually been addressed, now that the edit has changed the prose around it. If it looks wrong given the edit, note that in the packet's Open items rather than silently re-editing.
+   Otherwise (Disposition `keep`), run `commonplace-guard-full-pass-report <report-path>` immediately before the first edit. Continue only on exit 0 with every input `matching`. On exit 1 with `changed`, do not edit the note; render the report as `superseded` with `version-guard` authority and stop. A `missing` or `corrupt-capture` result, or exit 2, requires reconciliation and leaves the report unchanged.
+
+   After a successful guard, apply the packet's body edits directly to the note. If `composition-friction-gate` ran, reread its report's "For the human" line against the edited text before moving on. This is not a re-run of the gate — just a check that the one thing it pointed to is still accurate, or has actually been addressed, now that the edit has changed the prose around it. If it looks wrong given the edit, note that in the packet's Open items rather than silently re-editing.
 9. Run a final revise pass over the edited note with exactly this prompt: `revise the note for flow, coherence, logic and readability`. Give a newly isolated sub-agent that performed no earlier work in this pass (or yourself, if editing directly) only the current note text and that prompt — not the packet or the underlying reports. Do not use a follow-up turn to a reviewer from steps 2–6. This step is a copyedit pass, not a second chance to re-open the content decisions steps 1–8 already made; it should not reintroduce material step 8 removed or add new claims.
 10. Run one closing cycle over all five methods, as specified in "Closing cycle" below. Append its summary to `full-pass-report.md`; route residual findings to Open items and stop after this one cycle.
 
@@ -102,6 +118,26 @@ Append this section to the packet:
 ## Output Contract
 
 ```markdown
+---
+description: "Full improvement pass over <note title>"
+type: kb/reports/types/full-pass-report.md
+source: <note-path>
+source_capture: source.txt
+source_sha256: <SHA-256 of source.txt as UTF-8 text>
+pass_id: <pass-id>
+disposition: keep | delete | merge
+merge_target: null | <target-path>
+merge_target_capture: null | merge-target.txt
+merge_target_title: null | <captured target H1>
+merge_target_sha256: null | <SHA-256 of merge-target.txt as UTF-8 text>
+resolution: not-required | pending
+resolved_at: null
+resolution_authority: null
+resolution_summary: null
+resolution_rationale: null
+resulting_paths: []
+---
+
 # Full Improvement Pass: <note title>
 
 **Target:** `<note-path>`
@@ -140,6 +176,15 @@ Append this section to the packet:
 
 ## Open items
 <branches or claims that need evidence before a rehoming or deletion decision can be made, plus any routed-attention item above that the editor judges worth acting on>
+
+## Resolution
+
+**Status:** <not-required for keep | pending for delete/merge>
+**Resolved at:** —
+**Authority:** —
+**Outcome:** —
+**Rationale:** —
+**Resulting paths:** —
 ```
 
 Never omit "Routed attention" — even a clean SURVIVES with no thin joints below THIN is worth one line, since silently dropping the section would make the friction gate's absence indistinguishable from a clean result. Never omit "Disposition" either: an explicit `keep` distinguishes "considered and kept" from "never considered".
@@ -155,6 +200,7 @@ Never omit "Routed attention" — even a clean SURVIVES with no thin joints belo
 - Do not convert `composition-friction-gate`'s filter verdict or thinnest-joints ranking into a remove/compress/keep action. Its hard rule against self-graded verdicts is why this instruction carries its findings unresolved instead of reconciling them like the others.
 - Do not let the step 9 revise pass change claims, add material, or restore anything step 8 cut. If it does, that's a sign the packet's body edits left the note incoherent — fix the edit, not the prose around it.
 - Do not delete, merge, mark, or otherwise edit the note within the pass when its Disposition is `delete` or `merge`. The retained packet is the pass's entire output in that case; executing the disposition is the packet reader's call.
+- Do not begin any packet-driven edit, deletion, merge, rejection, or alternative operation without a successful `commonplace-guard-full-pass-report` result over the complete guarded-input set.
 
 ---
 
@@ -162,3 +208,4 @@ Relevant Notes:
 
 - [Error correction works with above-chance oracles and decorrelated checks](../notes/error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — why running compression, critique-note, composition-friction-gate, semantic, and connect side by side catches more than repeating one check.
 - [Synthesis is not error correction](../notes/synthesis-is-not-error-correction.md) — why step 7 reconciles complementary findings instead of voting one down.
+- [Resolve a full-pass disposition](./resolve-full-pass-disposition.md) — applies-when: a retained delete or merge report needs inspection or resolution

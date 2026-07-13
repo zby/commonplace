@@ -42,6 +42,8 @@ The `redirect_maps` block in `mkdocs.yml` preserves external URLs across note re
 
 Generated reports record operational work products rather than curated library knowledge. Connect reports under `kb/reports/connect/` are discovery artifacts produced by `/cp-skill-connect` and consumed by downstream workflows such as ingestion. They are intentionally gitignored because they are regenerable from the source artifact and current KB state; their absence from `git status` is expected.
 
+Full-pass packets are the scoped exception to report statelessness. A pending or resolved `full-pass-report.md` owns non-regenerable disposition state plus immutable start-state captures, so resolution-aware cleanup retains the packet as one unit while that state remains actionable ([ADR 051](./adr/051-full-pass-packets-own-guarded-captures-and-resolutions.md)). The packet remains local and gitignored; portability across clones or machines is not promised.
+
 ## Review state (SQLite)
 
 Review state is the one subsystem that is not file-backed. The review database stores:
@@ -62,3 +64,4 @@ Notes, criteria, instructions, and source material remain file-backed. The opera
 - [architecture.md](./architecture.md) — installed project layout and surface-by-role
 - [ADR-010](./adr/010-review-state-should-move-to-sqlite-once-reviews-leave-git-and.md) — outcome: SQLite for review state
 - [ADR-007](./adr/007-reports-directory-for-generated-snapshots.md) — outcome: `kb/reports/` for generated operational artifacts
+- [ADR 051](./adr/051-full-pass-packets-own-guarded-captures-and-resolutions.md) — outcome: full-pass packets are a stateful, resolution-aware report exception

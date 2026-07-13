@@ -32,6 +32,7 @@ The shipped Commonplace scaffold installs global type specs under `kb/types/` an
 | `ingest-report` | `kb/sources/types/ingest-report.md` | Source ingestion analysis artifacts. |
 | `source-review` | `kb/sources/types/source-review.md` | Structured source extraction notes. |
 | `connect-report` | `kb/reports/types/connect-report.md` | Generated connection discovery reports. |
+| `full-pass-report` | `kb/reports/types/full-pass-report.md` | Stateful full-improvement packet with guarded captures and disposition resolution. |
 
 Task type specs also exist under `kb/tasks/types/` for existing task workflows, but tasks are not currently a normal `cp-skill-write` target.
 

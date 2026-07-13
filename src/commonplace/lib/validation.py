@@ -10,8 +10,25 @@ from urllib.parse import unquote, urlsplit
 
 from jsonschema.exceptions import ValidationError
 
+from commonplace.lib.full_pass import (
+    FULL_PASS_REPORT_TYPE,
+    parse_full_pass_report,
+    render_resolution_section,
+    resolution_section,
+    verify_capture,
+)
+from commonplace.lib.index_generated import (
+    CollectionTagIndex,
+    collect_collection_tag_index,
+)
 from commonplace.lib.naming import MAX_NOTE_SLUG_LENGTH, MAX_NOTE_TITLE_LENGTH
 from commonplace.lib.note_parser import ParsedDocument, parse_document
+from commonplace.lib.project_paths import (
+    collection_for_path,
+    is_collection_dir,
+    is_type_definition_content,
+    iter_visible_markdown_files,
+)
 from commonplace.lib.quote_verification import verify_content
 from commonplace.lib.type_resolver import (
     TypeProfile,
@@ -75,6 +92,204 @@ class ParsedNote:
     document: ParsedDocument
 
 
+@dataclass(frozen=True)
+class LoadedDocument:
+    content: str
+    document: ParsedDocument | None
+    error: str | None
+
+
+@dataclass
+class ValidationRunResults:
+    paths: tuple[Path, ...]
+    results: dict[Path, CheckResults]
+    collection_structure: list[tuple[Path, str]]
+
+
+@dataclass
+class ValidationRun:
+    """Run deterministic checks over one target with shared parse/index caches."""
+
+    repo_root: Path
+    paths: tuple[Path, ...]
+    collection: Path | None = None
+    _documents: dict[Path, LoadedDocument] = field(default_factory=dict, init=False)
+    _notes: dict[Path, tuple[ParsedNote | None, str | None]] = field(
+        default_factory=dict, init=False
+    )
+    _collection_indexes: dict[Path, CollectionTagIndex] = field(
+        default_factory=dict, init=False
+    )
+
+    def __post_init__(self) -> None:
+        self.repo_root = self.repo_root.resolve()
+        self.paths = tuple(path.resolve() for path in self.paths)
+        if self.collection is not None:
+            self.collection = self.collection.resolve()
+
+    def load_document(self, path: Path) -> LoadedDocument:
+        """Read and parse one Markdown artifact at most once during this run."""
+        key = path.resolve()
+        if key in self._documents:
+            return self._documents[key]
+        content = key.read_text(encoding="utf-8")
+        document, error = parse_document(content)
+        loaded = LoadedDocument(content=content, document=document, error=error)
+        self._documents[key] = loaded
+        return loaded
+
+    def parse_note(self, path: Path) -> tuple[ParsedNote | None, str | None]:
+        """Resolve a cached parsed document's type for deterministic validation."""
+        key = path.resolve()
+        if key in self._notes:
+            return self._notes[key]
+        loaded = self.load_document(key)
+        if loaded.error:
+            result = (None, loaded.error)
+            self._notes[key] = result
+            return result
+        assert loaded.document is not None
+
+        try:
+            profile = resolve_type(
+                key, loaded.document.frontmatter, repo_root=self.repo_root
+            )
+        except (FileNotFoundError, ValueError) as exc:
+            result = (None, str(exc))
+            self._notes[key] = result
+            return result
+
+        result = (
+            ParsedNote(
+                path=key,
+                content=loaded.content,
+                note_type=profile.type_name,
+                profile=profile,
+                document=loaded.document,
+            ),
+            None,
+        )
+        self._notes[key] = result
+        return result
+
+    def collection_index(self, collection: Path) -> CollectionTagIndex:
+        """Build tag membership and tag-index entries in one cached scan."""
+        key = collection.resolve()
+        if key in self._collection_indexes:
+            return self._collection_indexes[key]
+        index = collect_collection_tag_index(
+            key,
+            load_document=lambda path: self.load_document(path).document,
+        )
+        self._collection_indexes[key] = index
+        return index
+
+    def impacted_marked_tag_readmes(self, paths: tuple[Path, ...]) -> list[Path]:
+        """Return marked tag READMEs whose claims may be affected by paths."""
+        seen = {path.resolve() for path in paths}
+        impacted: list[Path] = []
+
+        for path in paths:
+            parsed, parse_error = self.parse_note(path)
+            if parse_error or parsed is None or parsed.document.frontmatter is None:
+                continue
+            tags = parsed.document.frontmatter.get("tags")
+            if not isinstance(tags, list):
+                continue
+            try:
+                collection = collection_for_path(path, self.repo_root)
+            except ValueError:
+                continue
+
+            for tag in tags:
+                if not isinstance(tag, str):
+                    continue
+                readme = (collection / f"{tag}-README.md").resolve()
+                if not readme.is_file() or readme in seen:
+                    continue
+                readme_parsed, readme_error = self.parse_note(readme)
+                if (
+                    readme_error
+                    or readme_parsed is None
+                    or readme_parsed.note_type != "tag-readme"
+                ):
+                    continue
+                frontmatter = readme_parsed.document.frontmatter or {}
+                has_checked_mark = frontmatter.get("complete") is True or bool(
+                    frontmatter.get("covered_by")
+                )
+                if not has_checked_mark:
+                    continue
+
+                impacted.append(readme)
+                seen.add(readme)
+
+        return impacted
+
+    def inbound_info(self, paths: tuple[Path, ...]) -> dict[Path, bool]:
+        """Build authored-link inbound presence once for this evaluation."""
+        keys = tuple(path.resolve() for path in paths)
+        inbound: dict[Path, bool] = {path: False for path in keys}
+        resolved_index = {path.resolve(): path for path in keys}
+        for source in keys:
+            loaded = self.load_document(source)
+            if loaded.document is None:
+                continue
+            for link in loaded.document.links:
+                if re.match(r"^[a-z]+://", link):
+                    continue
+                link_path = link.split("#", 1)[0]
+                if not link_path.endswith(".md"):
+                    continue
+                target = (source.parent / link_path).resolve()
+                if target == source:
+                    continue
+                matched = resolved_index.get(target)
+                if matched is not None:
+                    inbound[matched] = True
+
+        return inbound
+
+    def validate(self, path: Path) -> CheckResults:
+        parsed, parse_error = self.parse_note(path)
+        if parse_error:
+            return CheckResults(note_type="unknown", fails=[f"[base] {parse_error}"])
+        assert parsed is not None
+        return _validate_parsed_note(parsed, run=self)
+
+    def evaluate(self) -> ValidationRunResults:
+        """Expand explicit impacts and evaluate every anchor in this run."""
+        paths = self.paths + tuple(self.impacted_marked_tag_readmes(self.paths))
+        inbound = self.inbound_info(paths) if self.collection is not None else {}
+        results: dict[Path, CheckResults] = {}
+
+        for path in paths:
+            result = self.validate(path)
+            if (
+                self.collection is not None
+                and path in inbound
+                and not inbound[path]
+                and result.note_type not in {"text", "type-spec"}
+            ):
+                try:
+                    scope = str(self.collection.relative_to(self.repo_root))
+                except ValueError:
+                    scope = str(self.collection)
+                result.infos.append(f"orphan check: no inbound links found in {scope}")
+            results[path] = result
+
+        structure = (
+            validate_collection_structure(self.collection, repo_root=self.repo_root)
+            if self.collection is not None
+            else []
+        )
+        return ValidationRunResults(
+            paths=paths,
+            results=results,
+            collection_structure=structure,
+        )
+
+
 # Type-specific validation rules, registered per canonical type path so adding a
 # cross-file validator is a function plus a registration, not another branch
 # in validate_note. Rules run after the generic checks and before schema
@@ -96,23 +311,8 @@ def type_rule(*type_paths: str) -> Callable[[TypeRule], TypeRule]:
 
 
 def parse_note(path: Path, *, repo_root: Path) -> tuple[ParsedNote | None, str | None]:
-    content = path.read_text(encoding="utf-8")
-    document, parse_error = parse_document(content)
-    if parse_error:
-        return None, parse_error
-    assert document is not None
-
-    try:
-        profile = resolve_type(path, document.frontmatter, repo_root=repo_root)
-    except (FileNotFoundError, ValueError) as exc:
-        return None, str(exc)
-    return ParsedNote(
-        path=path,
-        content=content,
-        note_type=profile.type_name,
-        profile=profile,
-        document=document,
-    ), None
+    """Parse one note outside a wider run."""
+    return ValidationRun(repo_root=repo_root, paths=(path,)).parse_note(path)
 
 
 def validate_title_and_slug(
@@ -259,7 +459,7 @@ def _linked_md_targets(parsed: ParsedNote) -> set[Path]:
 
 @type_rule("kb/agent-memory-systems/types/agent-memory-system-review.md")
 def _quote_citation_rule(
-    results: CheckResults, parsed: ParsedNote, *, repo_root: Path
+    results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:
     validate_quote_citations(results, parsed.content)
 
@@ -269,13 +469,13 @@ def validate_type_spec_definition(
     results: CheckResults,
     parsed: ParsedNote,
     *,
-    repo_root: Path,
+    run: ValidationRun,
 ) -> None:
     """Resolve this type-spec as a type definition, including its declared schema."""
     try:
         profile = resolve_type_definition(
             parsed.path,
-            repo_root=repo_root,
+            repo_root=run.repo_root,
             type_frontmatter=parsed.document.frontmatter,
         )
     except (FileNotFoundError, ValueError) as exc:
@@ -287,22 +487,16 @@ def validate_type_spec_definition(
     else:
         results.passes.append(
             f"type definition: declared schema resolves to "
-            f"{profile.schema_path.relative_to(repo_root)}"
+            f"{profile.schema_path.relative_to(run.repo_root)}"
         )
 
 
 @type_rule("kb/types/tag-readme.md")
 def validate_tag_readme(
-    results: CheckResults, parsed: ParsedNote, *, repo_root: Path
+    results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:
     """Enforce the tag-readme type contract: weight gates plus the optional
     `complete` (membership) and `covered_by` (coverage) marks (ADR 026)."""
-    from commonplace.lib.index_generated import (
-        collect_notes_by_tag,
-        collect_tag_index_entries,
-    )
-    from commonplace.lib.project_paths import collection_for_path
-
     fm = parsed.document.frontmatter or {}
 
     size = len(parsed.content.encode("utf-8"))
@@ -323,22 +517,22 @@ def validate_tag_readme(
         )
 
     try:
-        collection = collection_for_path(parsed.path, repo_root)
+        collection = collection_for_path(parsed.path, run.repo_root)
     except ValueError as exc:
         results.fails.append(f"tag-readme: {exc}")
         return
 
     source = fm.get("index_source")
     key = str(fm.get("index_key", ""))
-    notes_by_tag = collect_notes_by_tag(collection)
+    collection_index = run.collection_index(collection)
+    notes_by_tag = collection_index.notes_by_tag
 
     if fm.get("complete") is True:
         if source == "tag":
             members = [(path, title) for path, title, _ in notes_by_tag.get(key, [])]
         else:
             members = [
-                (path, title)
-                for path, title, _ in collect_tag_index_entries(collection, repo_root)
+                (path, title) for path, title, _ in collection_index.tag_index_entries
             ]
         linked = _linked_md_targets(parsed)
         missing = [
@@ -349,7 +543,7 @@ def validate_tag_readme(
         if missing:
             for path in missing:
                 results.fails.append(
-                    f"complete mark: missing entry for {path.relative_to(repo_root)} — "
+                    f"complete mark: missing entry for {path.relative_to(run.repo_root)} — "
                     f"add it with a context phrase or drop the mark; {_TAG_README_FIX_HINT}"
                 )
         else:
@@ -376,13 +570,52 @@ def validate_tag_readme(
         if uncovered:
             for path in uncovered:
                 results.fails.append(
-                    f"covered_by: {path.relative_to(repo_root)} carries no listed child tag — "
+                    f"covered_by: {path.relative_to(run.repo_root)} carries no listed child tag — "
                     f"tag it with one of {covered_by} or revise the list; {_TAG_README_FIX_HINT}"
                 )
         else:
             results.passes.append(
                 f"covered_by: all tagged notes carry one of {len(covered_by)} children"
             )
+
+
+@type_rule(FULL_PASS_REPORT_TYPE)
+def validate_full_pass_report(
+    results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
+) -> None:
+    """Verify report-owned captures and the canonical resolution projection."""
+    try:
+        report = parse_full_pass_report(
+            parsed.path, parsed.document, repo_root=run.repo_root
+        )
+    except ValueError as exc:
+        results.fails.append(f"full-pass report: {exc}")
+        return
+
+    capture_failures = 0
+    for guarded_input in report.guarded_inputs:
+        _text, actual_sha256, error = verify_capture(
+            guarded_input, packet_dir=report.packet_dir
+        )
+        if error is not None:
+            capture_failures += 1
+            results.fails.append(
+                f"{guarded_input.role} capture: {error}"
+                + (f" ({actual_sha256})" if actual_sha256 is not None else "")
+            )
+    if not capture_failures:
+        results.passes.append(
+            f"packet captures: all {len(report.guarded_inputs)} present and hash-verified"
+        )
+
+    expected_resolution = render_resolution_section(report.frontmatter)
+    actual_resolution = resolution_section(report.body)
+    if actual_resolution != expected_resolution:
+        results.fails.append(
+            "resolution projection: body section does not match canonical frontmatter rendering"
+        )
+    else:
+        results.passes.append("resolution projection: body matches frontmatter")
 
 
 def _schema_error_message(error: ValidationError) -> tuple[str, str]:
@@ -438,8 +671,8 @@ def _merge_labelled(dest: CheckResults, src: CheckResults, source: str) -> None:
         )
 
 
-def validate_note(path: Path, *, repo_root: Path) -> CheckResults:
-    """Validate a note against the base contract, its type rules, and its schema.
+def _validate_parsed_note(parsed: ParsedNote, *, run: ValidationRun) -> CheckResults:
+    """Validate a parsed note against the base contract, type rules, and schema.
 
     Every finding is labelled with the source that produced it, because a reader
     who only read the type spec would otherwise get failures from rules that spec
@@ -460,12 +693,6 @@ def validate_note(path: Path, *, repo_root: Path) -> CheckResults:
         Declarative constraints the type's schema owns, over frontmatter *and*
         body-derived facts (headings, links, dates).
     """
-    parsed, parse_error = parse_note(path, repo_root=repo_root)
-    if parse_error:
-        return CheckResults(note_type="unknown", fails=[f"[base] {parse_error}"])
-
-    assert parsed is not None
-
     if parsed.document.frontmatter is None:
         return CheckResults(
             note_type="text",
@@ -489,7 +716,7 @@ def validate_note(path: Path, *, repo_root: Path) -> CheckResults:
     type_identity = canonical_type_identity(parsed.profile)
     for rule in _TYPE_RULES.get(type_identity, []):
         type_results = CheckResults(note_type=parsed.note_type)
-        rule(type_results, parsed, repo_root=repo_root)
+        rule(type_results, parsed, run=run)
         _merge_labelled(results, type_results, f"type: {parsed.note_type}")
 
     schema_results = CheckResults(note_type=parsed.note_type)
@@ -499,25 +726,46 @@ def validate_note(path: Path, *, repo_root: Path) -> CheckResults:
     return results
 
 
-def orphan_info(all_paths: list[Path]) -> dict[Path, bool]:
-    inbound: dict[Path, bool] = {path: False for path in all_paths}
-    resolved_index: dict[Path, Path] = {path.resolve(): path for path in all_paths}
-    for source in all_paths:
-        content = source.read_text(encoding="utf-8")
-        document, _ = parse_document(content)
-        if document is None:
+def validate_note(path: Path, *, repo_root: Path) -> CheckResults:
+    """Run the deterministic pipeline on one note outside a wider run."""
+    return ValidationRun(repo_root=repo_root, paths=(path,)).validate(path)
+
+
+def validate_collection_structure(
+    collection: Path, *, repo_root: Path
+) -> list[tuple[Path, str]]:
+    """Return anchored structural failures for one collection boundary."""
+    collection = collection.resolve()
+    repo_root = repo_root.resolve()
+    if not is_collection_dir(collection):
+        return []
+
+    failures: list[tuple[Path, str]] = []
+    for path in iter_visible_markdown_files(collection):
+        if path.name != "COLLECTION.md" or path.parent == collection:
             continue
-        source_resolved = source.resolve()
-        for link in document.links:
-            if re.match(r"^[a-z]+://", link):
-                continue
-            link_path = link.split("#", 1)[0]
-            if not link_path.endswith(".md"):
-                continue
-            target_resolved = (source.parent / link_path).resolve()
-            if target_resolved == source_resolved:
-                continue
-            key = resolved_index.get(target_resolved)
-            if key is not None:
-                inbound[key] = True
-    return inbound
+        if is_type_definition_content(path, collection):
+            continue
+        failures.append(
+            (
+                path,
+                "nested COLLECTION.md: "
+                f"{path.relative_to(repo_root)} is inside collection "
+                f"{collection.relative_to(repo_root)}",
+            )
+        )
+    return failures
+
+
+def run_validation(
+    paths: tuple[Path, ...],
+    *,
+    repo_root: Path,
+    collection: Path | None = None,
+) -> ValidationRunResults:
+    """Evaluate one validation target with shared parsing and indexes."""
+    return ValidationRun(
+        repo_root=repo_root,
+        paths=paths,
+        collection=collection,
+    ).evaluate()

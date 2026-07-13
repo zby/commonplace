@@ -3,6 +3,7 @@ from __future__ import annotations
 import os
 import shutil
 import sys
+from collections import Counter
 from datetime import datetime
 from pathlib import Path
 
@@ -1153,6 +1154,82 @@ Orientation paragraph.
     assert "=== BATCH INFO ===" not in output
 
 
+def test_validation_run_parses_collection_artifacts_once_and_reuses_indexes(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    notes = configure_tag_readme_repo(tmp_path)
+
+    def tagged(name: str, tags: str) -> Path:
+        return write(
+            notes / f"{name}.md",
+            f"""---
+description: {name.title()} note in the validation-run cache fixture
+type: kb/types/note.md
+tags: [{tags}]
+---
+
+# {name.title()}
+""",
+        )
+
+    def complete_head(tag: str, members: tuple[str, ...]) -> Path:
+        links = "\n".join(
+            f"- [{member.title()}](./{member}.md) — member" for member in members
+        )
+        return write(
+            notes / f"{tag}-README.md",
+            f"""---
+description: Complete curated head for {tag}
+type: kb/types/tag-readme.md
+index_source: tag
+index_key: {tag}
+complete: true
+---
+
+# {tag.title()}
+
+{links}
+""",
+        )
+
+    first = tagged("first", "alpha, beta")
+    second = tagged("second", "alpha")
+    alpha = complete_head("alpha", ("first", "second"))
+    beta = complete_head("beta", ("first",))
+    paths = tuple(project_paths.list_collection_note_paths(notes))
+    selected = {path.resolve() for path in paths}
+    reads: Counter[Path] = Counter()
+    original_read_text = Path.read_text
+
+    def counting_read_text(path: Path, *args: object, **kwargs: object) -> str:
+        resolved = path.resolve()
+        if resolved in selected:
+            reads[resolved] += 1
+        return original_read_text(path, *args, **kwargs)
+
+    monkeypatch.setattr(Path, "read_text", counting_read_text)
+
+    run = validation.ValidationRun(
+        repo_root=tmp_path,
+        paths=paths,
+        collection=notes,
+    )
+    outcome = run.evaluate()
+
+    assert outcome.paths == paths
+    assert set(outcome.results) == selected
+    assert {first, second, alpha, beta} <= set(outcome.results)
+    assert all(reads[path.resolve()] == 1 for path in paths)
+    collection_index = run.collection_index(notes)
+    assert collection_index is run.collection_index(notes)
+    assert {path for path, _title, _description in collection_index.tag_index_entries} == {
+        alpha,
+        beta,
+    }
+    assert not outcome.collection_structure
+
+
 def test_bulk_scopes_are_rejected(tmp_path: Path) -> None:
     (tmp_path / "kb").mkdir()
     (tmp_path / "kb" / "notes").mkdir()
@@ -1260,13 +1337,16 @@ def test_validate_collection_structure_flags_nested_collection(tmp_path: Path) -
         tmp_path / "kb" / "notes" / "definitions" / "COLLECTION.md", "# Definitions\n"
     )
 
-    failures = validate_notes.validate_collection_structure(
+    failures = validation.validate_collection_structure(
         tmp_path / "kb" / "notes",
         repo_root=tmp_path,
     )
 
     assert failures == [
-        "nested COLLECTION.md: kb/notes/definitions/COLLECTION.md is inside collection kb/notes"
+        (
+            tmp_path / "kb" / "notes" / "definitions" / "COLLECTION.md",
+            "nested COLLECTION.md: kb/notes/definitions/COLLECTION.md is inside collection kb/notes",
+        )
     ]
 
 
@@ -1276,7 +1356,7 @@ def test_validate_collection_structure_allows_namespace_collections(
     collection = tmp_path / "kb" / "commonplace" / "notes"
     write(collection / "COLLECTION.md", "# Shipped notes\n")
 
-    failures = validate_notes.validate_collection_structure(
+    failures = validation.validate_collection_structure(
         collection, repo_root=tmp_path
     )
 

@@ -1,0 +1,194 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+allOf:
+  - $ref: "../../types/note.schema.yaml"
+  - type: object
+    properties:
+      frontmatter:
+        type: object
+        required:
+          - description
+          - type
+          - source
+          - source_capture
+          - source_sha256
+          - pass_id
+          - disposition
+          - merge_target
+          - merge_target_capture
+          - merge_target_title
+          - merge_target_sha256
+          - resolution
+          - resolved_at
+          - resolution_authority
+          - resolution_summary
+          - resolution_rationale
+          - resulting_paths
+        properties:
+          type:
+            const: kb/reports/types/full-pass-report.md
+          source:
+            type: string
+            pattern: '^kb/.+\.md$'
+          source_capture:
+            type: string
+            pattern: '^[^/].*\.txt$'
+          source_sha256:
+            type: string
+            pattern: '^[0-9a-f]{64}$'
+          pass_id:
+            type: string
+            minLength: 1
+          disposition:
+            enum: [keep, delete, merge]
+          merge_target:
+            type: [string, "null"]
+          merge_target_capture:
+            type: [string, "null"]
+          merge_target_title:
+            type: [string, "null"]
+          merge_target_sha256:
+            anyOf:
+              - type: "null"
+              - type: string
+                pattern: '^[0-9a-f]{64}$'
+          resolution:
+            enum:
+              - not-required
+              - pending
+              - accepted
+              - rejected
+              - alternative-applied
+              - superseded
+          resolved_at:
+            type: [string, "null"]
+          resolution_authority:
+            enum: [user, version-guard, null]
+          resolution_summary:
+            type: [string, "null"]
+          resolution_rationale:
+            type: [string, "null"]
+          resulting_paths:
+            type: array
+            uniqueItems: true
+            items:
+              type: string
+              pattern: '^kb/'
+        additionalProperties: true
+      headings:
+        type: array
+        contains:
+          const: "## Resolution"
+        minContains: 1
+        maxContains: 1
+  - if:
+      properties:
+        frontmatter:
+          properties:
+            disposition:
+              const: merge
+    then:
+      properties:
+        frontmatter:
+          properties:
+            merge_target:
+              type: string
+              minLength: 1
+            merge_target_capture:
+              type: string
+              minLength: 1
+            merge_target_title:
+              type: string
+              minLength: 1
+            merge_target_sha256:
+              type: string
+    else:
+      properties:
+        frontmatter:
+          properties:
+            merge_target:
+              const: null
+            merge_target_capture:
+              const: null
+            merge_target_title:
+              const: null
+            merge_target_sha256:
+              const: null
+  - if:
+      properties:
+        frontmatter:
+          properties:
+            disposition:
+              const: keep
+    then:
+      properties:
+        frontmatter:
+          properties:
+            resolution:
+              enum: [not-required, superseded]
+    else:
+      properties:
+        frontmatter:
+          properties:
+            resolution:
+              enum: [pending, accepted, rejected, alternative-applied, superseded]
+  - if:
+      properties:
+        frontmatter:
+          properties:
+            resolution:
+              enum: [not-required, pending]
+    then:
+      properties:
+        frontmatter:
+          properties:
+            resolved_at:
+              const: null
+            resolution_authority:
+              const: null
+            resolution_summary:
+              const: null
+            resolution_rationale:
+              const: null
+            resulting_paths:
+              maxItems: 0
+    else:
+      properties:
+        frontmatter:
+          properties:
+            resolved_at:
+              type: string
+              minLength: 1
+              format: date-time
+            resolution_summary:
+              type: string
+              minLength: 1
+              pattern: '^[^\r\n]+$'
+            resolution_rationale:
+              type: string
+              minLength: 1
+              pattern: '^[^\r\n]+$'
+  - if:
+      properties:
+        frontmatter:
+          properties:
+            resolution:
+              const: superseded
+    then:
+      properties:
+        frontmatter:
+          properties:
+            resolution_authority:
+              const: version-guard
+    else:
+      if:
+        properties:
+          frontmatter:
+            properties:
+              resolution:
+                enum: [accepted, rejected, alternative-applied]
+      then:
+        properties:
+          frontmatter:
+            properties:
+              resolution_authority:
+                const: user

@@ -51,4 +51,4 @@ Risks:
 ## Links
 
 - [Validation contract](../validation-contract.md) — implemented-by: the normal schema/type-rule split applied to type-spec documents
-- [Artifact-anchored validation over a run-scoped context](../proposals/artifact-anchored-validation-over-a-run-scoped-context.md) — implements: retires one special batch pass by giving its responsibility an artifact anchor and ordinary type-owned check
+- [ADR 050 — Validation runs share parsed artifacts and collection indexes](./050-validation-runs-share-parsed-artifacts-and-collection-indexes.md) — part-of: type-spec validation runs through the same artifact-anchored execution surface

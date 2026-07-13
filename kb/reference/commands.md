@@ -50,6 +50,16 @@ Complete generated listings — per-collection `dir-index.md` pages and per-tag 
 
 ## Note operations
 
+### commonplace-guard-full-pass-report
+
+Compare every packet-owned capture named by one full-pass report with its current logical artifact. The command always emits JSON with one `matching`, `changed`, `missing`, or `corrupt-capture` result per guarded input; changed results include a capture-to-current unified diff.
+
+```bash
+commonplace-guard-full-pass-report kb/reports/full-pass/my-note/<pass-id>/full-pass-report.md
+```
+
+Exit 0 only when every input matches. Exit 1 is a valid guard refusal. Exit 2 means the report or invocation is invalid. The command never mutates the report or live artifacts.
+
 ### commonplace-relocate-note
 
 Rename or move a note, updating all backlinks across the KB.

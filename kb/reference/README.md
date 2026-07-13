@@ -159,6 +159,7 @@ Most operations go through the agent, but a few CLI commands are reasonable to r
 | Command | Purpose |
 |---|---|
 | `commonplace-validate <path>` | Run the deterministic validator on a note or directory |
+| `commonplace-guard-full-pass-report <report>` | Refuse a full-pass transition unless every packet capture still matches its live artifact |
 | `commonplace-relocate-note <note> --to <dest> [--apply]` | Move or rename a note with link rewrites and mkdocs redirect; dry-run by default |
 | `commonplace-github-snapshot <url>` | Snapshot a GitHub issue, PR, or repo README into `kb/sources/` |
 | `commonplace-x-snapshot <url>` | Snapshot a Twitter/X post into `kb/sources/` |

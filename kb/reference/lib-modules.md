@@ -1,5 +1,5 @@
 ---
-description: Internal API reference for commonplace.lib - frontmatter, naming, note_parser, type_resolver, validation, and relocation modules used by CLI commands and the review system
+description: Internal API reference for commonplace.lib parsing, indexing, type resolution, validation, and relocation modules used by CLI commands and review
 type: kb/types/note.md
 tags: []
 ---
@@ -14,6 +14,7 @@ Shared library modules used by CLI commands and the review system. `frontmatter`
 frontmatter.py    Parse/validate markdown frontmatter (strict YAML subset)
 naming.py         Shared note title and filename-slug constraints
 note_parser.py    Parse markdown notes into a schema-friendly document model
+index_generated.py Build generated tag sections and shared collection tag indexes
 type_resolver.py  Resolve note types from scoped JSON Schema definitions
 validation.py     Deterministic validation rules for KB notes (commonplace-validate lib)
 relocation.py     Move/rename a KB note or directory: rewrite backlinks and mkdocs config
@@ -21,7 +22,8 @@ relocation.py     Move/rename a KB note or directory: rewrite backlinks and mkdo
 
 Dependencies:
 - `note_parser` → `frontmatter`
-- `validation` → `note_parser`, `type_resolver`, `naming`
+- `index_generated` → `note_parser`, `project_paths`
+- `validation` → `index_generated`, `note_parser`, `type_resolver`, `naming`
 - `relocation` → `naming`, `project_paths`
 - `type_resolver` is otherwise independent (but requires external packages)
 
@@ -154,15 +156,38 @@ Schema loading (`_load_schema`) and validator construction (`_validator_for_path
 
 ---
 
-## validation
+## index_generated
 
-Deterministic validation rules for KB notes. Used by `commonplace-validate`. The schema (loaded via `type_resolver`) is the single source of truth for content rules; this module only adds checks the schema cannot express (filesystem-level constraints) plus a thin translator that turns raw `jsonschema` errors into user-facing messages.
+Build generated tag-index sections and provide the collection tag inventory shared with validation.
 
 ### Public API
 
-**`CheckResults`** — mutable dataclass holding pass/warn/fail/info string lists for one note. Constructed once per validation run.
+**`CollectionTagIndex`** — frozen dataclass containing `notes_by_tag` and `tag_index_entries` from one collection scan.
+
+**`collect_collection_tag_index(collection_dir, *, load_document=None) -> CollectionTagIndex`**
+Scan visible collection artifacts once. The optional loader lets a validation run supply cached `ParsedDocument` values; without one, the collector reads and parses the artifacts itself.
+
+**`collect_notes_by_tag(collection_dir)`** / **`collect_tag_index_entries(collection_dir, root)`**
+Convenience projections of the shared collection index used by generated-page consumers.
+
+---
+
+## validation
+
+Deterministic validation execution and rules for KB notes. Used by `commonplace-validate`. A library-owned run caches parsed artifacts and collection indexes, expands explicit impacts, evaluates per-artifact checks, and returns anchored results; the CLI resolves targets and presents them.
+
+### Public API
+
+**`CheckResults`** — mutable dataclass holding pass/warn/fail/info string lists for one note.
 
 **`ParsedNote`** — dataclass bundling a note's `path`, `content`, `note_type`, `profile` (`TypeProfile`), and `document` (`ParsedDocument`).
+
+**`ValidationRun`** — one target's execution context. Caches loaded `ParsedDocument` and resolved `ParsedNote` values by path, lazily caches `CollectionTagIndex` values, runs explicit marked-tag-README impact selection, builds collection inbound-link information once, and evaluates the unchanged base → imperative type rules → schema pipeline.
+
+**`ValidationRunResults`** — expanded path tuple, per-path `CheckResults` mapping, and collection-structure findings as `(anchor_path, message)` tuples.
+
+**`run_validation(paths, *, repo_root, collection=None) -> ValidationRunResults`**
+Primary batch entry point. The optional collection is explicit target semantics: it enables authored-link orphan information and collection-structure checks. Direct files, `recent`, and `types` remain non-collection runs.
 
 **`list_collection_note_paths(collection: Path) -> list[Path]`**
 Return visible Markdown artifacts under one collection, including everything under `types/`. Skips collection metadata, replaced archives, hidden entries, and nested git repositories. Filename suffixes such as `*.template.md` and `*.instructions.md` have no special meaning. Visibility is package-owned (`project_paths.walk_visible`); gitignore rules have no effect on what the tools see.
@@ -174,13 +199,13 @@ Return Markdown artifacts under `kb/**/types/*.md`, excluding only `text.md`, th
 Return whether a path is inside a `types/` directory beneath the supplied boundary. Consumers such as generated indexes use it when their domain excludes contracts; validation does not categorically exclude type definitions.
 
 **`parse_note(path: Path, *, repo_root: Path) -> tuple[ParsedNote | None, str | None]`**
-Read a note, parse its frontmatter and body, resolve its type. Returns `(parsed, None)` on success or `(None, error_message)` on parse failure.
+One-path convenience wrapper around the run parser. Returns `(parsed, None)` on success or `(None, error_message)` on parse/type-resolution failure.
 
 **`validate_note(path: Path, *, repo_root: Path) -> CheckResults`**
-Run the full deterministic validation pipeline on one note: title/slug length, link health, registered type-specific rules, then schema validation. Returns the populated `CheckResults`.
+One-path convenience wrapper around `ValidationRun.validate`.
 
 **`type_rule(*type_paths)`**
-Decorator registering a type-specific rule `(results, parsed, *, repo_root) -> None` for canonical type paths; `validate_note` runs matching rules between the generic checks and schema validation. Path dispatch prevents same-named collection-local types from inheriting framework rules. Current registrations: quote-citation shape checks for `kb/agent-memory-systems/types/agent-memory-system-review.md`, declared-schema resolution for `kb/types/type-spec.md`, and weight/completeness/coverage gates for `kb/types/tag-readme.md`.
+Decorator registering a type-specific rule `(results, parsed, *, run) -> None` for canonical type paths. The run supplies repository identity and shared referential inputs; matching rules still execute between generic checks and schema validation. Current registrations: quote-citation shape checks for `kb/agent-memory-systems/types/agent-memory-system-review.md`, declared-schema resolution for `kb/types/type-spec.md`, and weight/completeness/coverage gates for `kb/types/tag-readme.md`.
 
 **`validate_title_and_slug(results, path, document)`**
 Filesystem naming check: title length and slug length against `MAX_NOTE_TITLE_LENGTH` / `MAX_NOTE_SLUG_LENGTH`.
@@ -191,8 +216,8 @@ Filesystem link health: verify each local relative link target actually exists.
 **`apply_schema_validation(results, parsed)`**
 Run the parsed document through `validate_instance(...)` and translate each `jsonschema` error via `_schema_error_message` (severity from a 2-element fail-path set, with `contains` extraction for missing headings and an optional `description`/`title` hint from the schema).
 
-**`orphan_info(all_paths: list[Path]) -> dict[Path, bool]`**
-Batch cross-note analysis: for each note in the list, return `True` if any other note in the list contains a relative `.md` link resolving to it. Used by the CLI to flag orphaned notes after a full sweep.
+**`validate_collection_structure(collection, *, repo_root) -> list[tuple[Path, str]]`**
+Return nested-collection failures anchored on the offending `COLLECTION.md`. `ValidationRun.evaluate` includes these in its result; the CLI retains their batch presentation.
 
 ---
 

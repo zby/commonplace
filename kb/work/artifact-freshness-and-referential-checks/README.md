@@ -8,9 +8,9 @@ No artifact class is intrinsically a source or a derivative. A source snapshot, 
 
 ## Prerequisite
 
-Implement the full-pass-local [packet-owned capture for guarded operation transitions](../../reference/proposals/packet-owned-captures-for-guarded-operation-transitions.md) first.
+[ADR 051](../../reference/adr/051-full-pass-packets-own-guarded-captures-and-resolutions.md) implements the full-pass-local packet-owned capture and guarded transition prerequisite.
 
-That proposal proves these behaviors without exposing a reusable subsystem:
+That decision proves these behaviors without exposing a reusable subsystem:
 
 - logical artifact identity kept separate from a packet-owned start-state capture;
 - immutable capture of the content present when an operation starts;
@@ -20,7 +20,7 @@ That proposal proves these behaviors without exposing a reusable subsystem:
 - an optimistic pre-transition guard that refuses inputs already changed or missing at check time without locking live artifacts; and
 - machine-readable changed/missing/matching results.
 
-Its first consumer, [report-owned resolution for asynchronous full-pass dispositions](../../reference/proposals/report-owned-resolution-for-asynchronous-full-pass-dispositions.md), owns packet-local `.txt` captures and proves one target-owned response to net drift: a disposition report becomes `superseded` instead of executing a recommendation when its guarded inputs no longer match their start state. That capture persistence and resolution state remain specific to full-pass operation; neither is the general freshness store. The contract deliberately holds no policy about what a changed input means — choosing those responses per target kind is this workshop's problem, not its prerequisite's.
+Its first consumer, the full-pass disposition workflow recorded by [ADR 051](../../reference/adr/051-full-pass-packets-own-guarded-captures-and-resolutions.md), owns packet-local `.txt` captures and proves one target-owned response to net drift: a disposition report becomes `superseded` instead of executing a recommendation when its guarded inputs no longer match their start state. That capture persistence and resolution state remain specific to full-pass operation; neither is the general freshness store. The contract deliberately holds no policy about what a changed input means — choosing those responses per target kind is this workshop's problem, not its prerequisite's.
 
 This workshop consumes the proven semantics but not the full-pass persistence policy. Once a second consumer exists, its first implementation step is to compare both worked cases and extract only the shared identity, hashing, comparison, diff, and guard boundary. Packet-local capture persistence may remain private to full-pass code; a general freshness target may earn a different owner and retention policy.
 
@@ -86,7 +86,7 @@ This workshop owns the vertical behavior contract for artifact-neutral dependenc
 
 It consumes rather than duplicates adjacent work:
 
-- The [packet-owned capture proposal](../../reference/proposals/packet-owned-captures-for-guarded-operation-transitions.md) and the [full-pass disposition proposal](../../reference/proposals/report-owned-resolution-for-asynchronous-full-pass-dispositions.md) jointly supply the first worked case: packet-owned capture, current-version comparison, guarding, and report-specific resolution. This workshop owns extraction only after a second consumer demonstrates the common boundary.
+- [ADR 051](../../reference/adr/051-full-pass-packets-own-guarded-captures-and-resolutions.md) supplies the first worked case: packet-owned capture, current-version comparison, guarding, and report-specific resolution. This workshop owns extraction only after a second consumer demonstrates the common boundary.
 - [lineage-mechanisms](../lineage-mechanisms/README.md) owns the general dependency/freshness vocabulary, storage-weight rules, and any common operational state design.
 - [kb-graph-loader](../kb-graph-loader/README.md) owns shared reading, parsing, and artifact indexes used by deterministic referential checks.
 - [bulk-operations](../bulk-operations/README.md) owns executing selected refresh work at scale.

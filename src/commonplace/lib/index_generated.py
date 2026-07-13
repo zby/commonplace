@@ -4,11 +4,13 @@ from __future__ import annotations
 
 import os
 import re
+from collections.abc import Callable
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
 from commonplace.lib import frontmatter
-from commonplace.lib.note_parser import extract_title, strip_frontmatter
+from commonplace.lib.note_parser import ParsedDocument, parse_document
 from commonplace.lib.project_paths import (
     collection_for_path,
     is_replaced_archive,
@@ -32,35 +34,61 @@ GENERATED_HEADING_BY_SOURCE = {
 URL_SCHEME_RE = re.compile(r"^[a-z][a-z0-9+.-]*:", re.IGNORECASE)
 
 
-def collect_notes_by_tag(
-    collection_dir: Path,
-) -> dict[str, list[tuple[Path, str, str]]]:
-    """Scan a collection and group notes by tag."""
-    by_tag: dict[str, list[tuple[Path, str, str]]] = {}
+@dataclass(frozen=True)
+class CollectionTagIndex:
+    notes_by_tag: dict[str, list[tuple[Path, str, str]]]
+    tag_index_entries: list[tuple[Path, str, str]]
 
+
+def collect_collection_tag_index(
+    collection_dir: Path,
+    *,
+    load_document: Callable[[Path], ParsedDocument | None] | None = None,
+) -> CollectionTagIndex:
+    """Scan a collection once for tag memberships and tag index artifacts."""
+    if load_document is None:
+
+        def load_document(path: Path) -> ParsedDocument | None:
+            document, _error = parse_document(path.read_text(encoding="utf-8"))
+            return document
+
+    by_tag: dict[str, list[tuple[Path, str, str]]] = {}
+    tag_indexes: list[tuple[Path, str, str]] = []
     for path in sorted(iter_visible_markdown_files(collection_dir)):
         if is_replaced_archive(path):
-            continue
-        content = path.read_text(encoding="utf-8")
-        fm = frontmatter.parse(content).data
-
-        if fm.get("type") in TAG_PAGE_TYPES:
             continue
         rel_parts = path.relative_to(collection_dir).parts
         if "types" in rel_parts or ".collection" in rel_parts:
             continue
 
-        tags = fm.get(FIELD_NAME)
-        if not isinstance(tags, list) or not tags:
+        document = load_document(path)
+        if document is None:
+            continue
+        fm = document.frontmatter or {}
+        if fm.get("type") in TAG_PAGE_TYPES:
+            if fm.get("index_source") == "tag":
+                tag_indexes.append(
+                    (path, document.title, str(fm.get("description", "")))
+                )
             continue
 
-        title = extract_title(strip_frontmatter(content))
-        desc = fm.get("description", "")
-
+        tags = fm.get(FIELD_NAME)
+        if not isinstance(tags, list):
+            continue
         for tag in tags:
-            by_tag.setdefault(tag, []).append((path, title, desc))
+            if isinstance(tag, str):
+                by_tag.setdefault(tag, []).append(
+                    (path, document.title, str(fm.get("description", "")))
+                )
 
-    return by_tag
+    return CollectionTagIndex(by_tag, tag_indexes)
+
+
+def collect_notes_by_tag(
+    collection_dir: Path,
+) -> dict[str, list[tuple[Path, str, str]]]:
+    """Scan a collection and group notes by tag."""
+    return collect_collection_tag_index(collection_dir).notes_by_tag
 
 
 def index_frontmatter(path: Path, content: str | None = None) -> dict[str, Any]:
@@ -89,21 +117,10 @@ def index_source(path: Path, root: Path, content: str | None = None) -> str | No
 
 
 def collect_tag_index_entries(
-    collection_dir: Path, root: Path
+    collection_dir: Path, _root: Path
 ) -> list[tuple[Path, str, str]]:
     """Return all tag indexes within a collection."""
-    entries: list[tuple[Path, str, str]] = []
-    for path in sorted(iter_visible_markdown_files(collection_dir)):
-        if is_replaced_archive(path):
-            continue
-        content = path.read_text(encoding="utf-8")
-        if index_source(path, root, content) != "tag":
-            continue
-        fm = index_frontmatter(path, content)
-        title = extract_title(strip_frontmatter(content))
-        desc = fm.get("description", "")
-        entries.append((path, title, desc))
-    return entries
+    return collect_collection_tag_index(collection_dir).tag_index_entries
 
 
 def extract_curated_links(curated_section: str) -> set[str]:

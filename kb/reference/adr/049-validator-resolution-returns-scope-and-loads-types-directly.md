@@ -28,10 +28,11 @@ Load type definitions directly. `resolve_type_definition` accepts an identified 
 - `recent`, `types`, and direct-file targets retain non-collection semantics even when their paths happen to lie in one collection.
 - Ordinary note resolution and type-spec referential validation use one definition-loading contract and retain existing error messages and installed-path normalization.
 - The new values and function names replace the former internal APIs; no compatibility wrapper remains.
-- This does not generalize wide checks: `orphan_info`, marked tag-README invalidation, and collection-structure validation retain their existing responsibilities.
+- At this decision, wide checks retained their existing responsibilities. [ADR 050](./050-validation-runs-share-parsed-artifacts-and-collection-indexes.md) later moved their orchestration behind one library-owned validation run without changing target semantics.
 
 ## Links
 
 - [ADR 047 — Type specifications use normal deterministic validation](./047-type-specifications-use-normal-deterministic-validation.md) — implements: simplifies the type-owned referential rule without changing its contract
 - [ADR 048 — Imperative type rules dispatch by canonical path](./048-imperative-type-rules-dispatch-by-canonical-path.md) — preserves: direct loading retains canonical path-valued identity
 - [Validation contract](../validation-contract.md) — part-of: collection scope and type-owned referential checks remain behaviorally unchanged
+- [ADR 050 — Validation runs share parsed artifacts and collection indexes](./050-validation-runs-share-parsed-artifacts-and-collection-indexes.md) — extended-by: resolved paths and collection scope now seed one shared execution context

@@ -1,5 +1,5 @@
 ---
-description: "The three sources of validation findings — base, type rules, schema — what each can express, why dereferencing checks cannot live in a schema, and what every typed note is checked for regardless of its type"
+description: "The base, type-rule, and schema sources of deterministic findings, their dereferencing limits, and the run-scoped execution model"
 type: kb/types/note.md
 tags: [type-system]
 ---
@@ -73,7 +73,7 @@ Letting a type opt out of link health or verbatim-quote resolution would be a kn
 
 ## Open
 
-The referential class has no shared model. Link health and verbatim-quote resolution are separate hand-written passes; they now share one notion of code (`note_parser.blank_fenced_code_blocks`) after a fenced example was found being scanned as a live claim, but the parse model is still positionless — `ParsedDocument.links` is a tuple of URLs with no spans — so the quote checker carries its own link regex. A third referential check would mean a third parser. Tracked in [kb-graph-loader](../work/kb-graph-loader/README.md): a referential check is a graph edge being resolved, so a `LoadedNote` that carries *positioned* elements is what would retire the private parsers.
+[ADR 050](./adr/050-validation-runs-share-parsed-artifacts-and-collection-indexes.md) gives referential checks a shared execution context: one validation run caches parsed artifacts and collection tag indexes and builds the authored-link graph once. It does not give Markdown elements a shared positioned representation. Link health and verbatim-quote resolution remain separate hand-written passes; they share one notion of code (`note_parser.blank_fenced_code_blocks`), but `ParsedDocument.links` is still a tuple of URLs with no spans, so the quote checker carries its own link regex. A third positioned referential check could still mean a third parser. Tracked in [kb-graph-loader](../work/kb-graph-loader/README.md): a `LoadedNote` carrying *positioned* elements is what would retire those private parsers.
 
 ---
 
@@ -84,3 +84,4 @@ Relevant Notes:
 - [ADR 024 — Schema severity is per-constraint, fail by default](./adr/024-schema-severity-is-per-constraint-fail-by-default.md) — evidence: how the `schema` source assigns its own severities
 - [Commands](./commands.md) — see-also: the `commonplace-validate` command surface
 - [ADR 038 — Type-conformance reviews use the type spec as the gate](./adr/038-type-conformance-reviews-use-the-type-spec-as-the-gate.md) — see-also: the third verification mechanism, where a type spec's prose binds as an LLM-judged criterion at review time
+- [ADR 050 — Validation runs share parsed artifacts and collection indexes](./adr/050-validation-runs-share-parsed-artifacts-and-collection-indexes.md) — implemented-by: artifact-local and collection-indexed checks share one execution context without a generic dependency engine

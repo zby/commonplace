@@ -9,10 +9,6 @@ from datetime import datetime
 from pathlib import Path
 
 from commonplace.lib.project_paths import (
-    collection_for_path,
-    is_collection_dir,
-    is_type_definition_content,
-    iter_visible_markdown_files,
     kb_root,
     list_collection_note_paths,
     list_notes_collection_paths,
@@ -21,9 +17,7 @@ from commonplace.lib.project_paths import (
 )
 from commonplace.lib.validation import (
     CheckResults,
-    orphan_info,
-    parse_note,
-    validate_note,
+    run_validation,
 )
 
 
@@ -109,67 +103,6 @@ def _display_path(path: Path, *, repo_root: Path) -> str:
         return str(path)
 
 
-def impacted_marked_tag_readmes(paths: list[Path], *, repo_root: Path) -> list[Path]:
-    """Return marked tag READMEs whose claims may be affected by these notes."""
-    seen = {path.resolve() for path in paths}
-    impacted: list[Path] = []
-
-    for path in paths:
-        parsed, parse_error = parse_note(path, repo_root=repo_root)
-        if parse_error or parsed is None or parsed.document.frontmatter is None:
-            continue
-        tags = parsed.document.frontmatter.get("tags")
-        if not isinstance(tags, list):
-            continue
-        try:
-            collection = collection_for_path(path, repo_root)
-        except ValueError:
-            continue
-
-        for tag in tags:
-            if not isinstance(tag, str):
-                continue
-            readme = (collection / f"{tag}-README.md").resolve()
-            if not readme.is_file() or readme in seen:
-                continue
-            readme_parsed, readme_error = parse_note(readme, repo_root=repo_root)
-            if (
-                readme_error
-                or readme_parsed is None
-                or readme_parsed.note_type != "tag-readme"
-            ):
-                continue
-            fm = readme_parsed.document.frontmatter or {}
-            has_checked_mark = fm.get("complete") is True or bool(fm.get("covered_by"))
-            if not has_checked_mark:
-                continue
-
-            impacted.append(readme)
-            seen.add(readme)
-
-    return impacted
-
-
-def validate_collection_structure(collection: Path, *, repo_root: Path) -> list[str]:
-    """Return collection-level structural failures for a validation scope."""
-    collection = collection.resolve()
-    repo_root = repo_root.resolve()
-    if not is_collection_dir(collection):
-        return []
-
-    failures: list[str] = []
-    for path in iter_visible_markdown_files(collection):
-        if path.name != "COLLECTION.md" or path.parent == collection:
-            continue
-        if is_type_definition_content(path, collection):
-            continue
-        failures.append(
-            "nested COLLECTION.md: "
-            f"{path.relative_to(repo_root)} is inside collection {collection.relative_to(repo_root)}"
-        )
-    return failures
-
-
 def format_block(path: Path, results: CheckResults) -> str:
     lines = [f"=== VALIDATION: {path.name} ===", "", f"Type: {results.note_type}", ""]
 
@@ -226,15 +159,18 @@ def main(argv: list[str] | None = None) -> int:
         print("No notes matched target.", file=sys.stderr)
         return 1
 
-    paths = list(target.paths)
-    paths.extend(impacted_marked_tag_readmes(paths, repo_root=repo_root))
+    outcome = run_validation(
+        target.paths,
+        repo_root=repo_root,
+        collection=target.collection,
+    )
+    paths = list(outcome.paths)
 
     scope = (
         _display_path(target.collection, repo_root=repo_root)
         if target.collection is not None
         else None
     )
-    inbound = orphan_info(paths) if scope is not None else {}
     had_failures = False
     text_count = 0
     warning_count = 0
@@ -243,16 +179,9 @@ def main(argv: list[str] | None = None) -> int:
     failure_items: list[tuple[Path, str]] = []
 
     for path in paths:
-        results = validate_note(path, repo_root=repo_root)
+        results = outcome.results[path]
         if results.note_type == "text":
             text_count += 1
-        if (
-            scope is not None
-            and path in inbound
-            and not inbound[path]
-            and results.note_type not in {"text", "type-spec"}
-        ):
-            results.infos.append(f"orphan check: no inbound links found in {scope}")
         print(format_block(path, results))
         if results.warns:
             warning_count += 1
@@ -263,10 +192,7 @@ def main(argv: list[str] | None = None) -> int:
             failure_items.extend((path, failure) for failure in results.fails)
 
     if scope is not None:
-        assert target.collection is not None
-        structure_failures = validate_collection_structure(
-            target.collection, repo_root=repo_root
-        )
+        structure_failures = outcome.collection_structure
         if structure_failures:
             had_failures = True
 
@@ -277,7 +203,7 @@ def main(argv: list[str] | None = None) -> int:
         print(f"Failing notes: {failure_count}")
         print("\nCollection structure:")
         if structure_failures:
-            for failure in structure_failures:
+            for _path, failure in structure_failures:
                 print(f"- FAIL: {failure}")
         else:
             print("- PASS: no nested COLLECTION.md files")
