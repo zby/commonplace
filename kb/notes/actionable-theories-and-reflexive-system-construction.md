@@ -32,6 +32,12 @@ Together, these conditions yield a generative rule:
 
 "Implementation" here means the mutable surround—context, instructions, tools, and stored knowledge—not the fixed model weights or inference procedure. In an LLM system, prose can fill both explanatory and operational roles because [LLM context is a homoiconic medium](./llm-context-is-a-homoiconic-medium.md)—a shared representation in which prose can act as both data and instruction: methodology, system description, and instructions can share one representation. The same text may be read as evidence in one call and treated as prescription in another, but that duality is not guaranteed: it depends on prompt framing, and stochastic interpretation can diverge across sessions. The theory has not become deterministic code; at most it changes the conditions for subsequent interpretation rather than rewriting the executing machinery itself.
 
+## Prose and symbolic co-evolution
+
+Agent-operated systems rarely live in prose alone. The [readable pair](./readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md)—prose and symbolic artifacts updated under shared context and heterogeneous oracles—is the tractable unit for deploy-time improvement. Methodology in notes, instructions, and skills proposes changes; validators, tests, schemas, and package code enforce and execute them. Reflexive construction therefore applies to **both** halves: a theory that recommends new gates but never updates the validator that enforces them, or code that enforces rules no note still endorses, is not self-extending—it is a split implementation.
+
+Commonplace is the local instance: `kb/` carries prose registers; `src/commonplace/` and the review store carry symbolic machinery. Closure under recommendations must span that boundary—when to [codify](./definitions/codification.md) prose into schemas and commands, and when rationale for a symbolic change must be retained in prose.
+
 ## Reflexivity requires closure
 
 Executability alone does not make a theory self-extending. A methodology may competently direct the construction of ordinary artifacts while saying nothing about how its own rules, validators, or representations should change.
@@ -69,7 +75,7 @@ The practical analogue of a Gödel machine is therefore not simply a system that
 
 ## Open questions
 
-- **TODO:** Record a worked Commonplace example when one occurs in maintenance work: one retained artifact (note, skill, validator, or instruction), one verification step, and one later behavior change traceable to that artifact—grounding the homoiconicity→implementation bridge in observed practice rather than architectural analogy alone.
+- **TODO:** Record a worked Commonplace example when one occurs in maintenance work: a prose change and a symbolic change that co-evolved (note/skill plus validator, schema, or CLI command), one verification step, and one later behavior change traceable to both—grounding the readable-pair loop in observed practice rather than architectural analogy alone.
 
 ---
 
