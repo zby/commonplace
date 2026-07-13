@@ -9,6 +9,7 @@ from pathlib import Path
 
 from commonplace.freshness import baselines as freshness_baselines
 from commonplace.freshness.keys import canonical_json, review_pair_target_key
+from commonplace.freshness.revisions import allocate_initial_revision, allocate_successor_revision
 from commonplace.freshness.snapshots import insert_or_get_snapshot
 from commonplace.freshness.versioning import FILE_TEXT, resolve_file_text
 from commonplace.review.clock import iso_now
@@ -16,6 +17,7 @@ from commonplace.review.review_db import SupersededFreshnessBaseline, snapshot_f
 from commonplace.review.review_model import normalize_model_partition
 
 REVIEW_PAIR_KIND = freshness_baselines.REVIEW_PAIR_KIND
+V1_ACCEPT_TARGET_KINDS: frozenset[str] = frozenset()
 
 
 @dataclass(frozen=True)
@@ -85,6 +87,8 @@ def accept_target_observations(
     """Observation refresh or initial acceptance. Rejects review-pair in v1."""
     if target_kind == REVIEW_PAIR_KIND:
         raise ValueError("review-pair targets must use review capture finalization, not generic accept")
+    if target_kind not in V1_ACCEPT_TARGET_KINDS:
+        raise ValueError(f"target kind {target_kind!r} is not supported for generic accept in v1")
     if not inputs:
         raise ValueError("accept manifest must include at least one input role")
     target_key_json = _target_key_json(target_kind, target_key)
@@ -123,18 +127,27 @@ def accept_target_observations(
         snapshot_ids[role] = snapshot.snapshot_id
 
     if current is None:
+        revision = allocate_initial_revision(
+            conn,
+            target_kind=target_kind,
+            target_key_json=target_key_json,
+        )
         cursor = conn.execute(
             """
             INSERT INTO freshness_baselines (target_kind, target_key_json, revision, accepted_at)
-            VALUES (?, ?, 1, ?)
+            VALUES (?, ?, ?, ?)
             """,
-            (target_kind, target_key_json, accepted),
+            (target_kind, target_key_json, revision, accepted),
         )
         target_id = int(cursor.lastrowid)
-        revision = 1
     else:
         target_id = int(current["target_id"])
-        revision = int(current["revision"]) + 1
+        revision = allocate_successor_revision(
+            conn,
+            target_kind=target_kind,
+            target_key_json=target_key_json,
+            current_revision=int(current["revision"]),
+        )
         conn.execute(
             """
             UPDATE freshness_baselines
@@ -198,33 +211,47 @@ def ack_target_inputs(
         raise RuntimeError(f"review evidence missing for target_id={current.target_id}")
     evidence_review_pair_id = int(evidence_row["evidence_review_pair_id"])
 
+    input_rows = conn.execute(
+        """
+        SELECT input_role, artifact_path, version_kind, accepted_snapshot_id
+        FROM freshness_inputs
+        WHERE target_id = ?
+        """,
+        (current.target_id,),
+    ).fetchall()
+    registered_inputs = {row["input_role"]: row for row in input_rows}
+
     roles_to_ack: set[str]
     if selected_inputs is None:
         roles_to_ack = {"note", "criterion"}
     else:
         roles_to_ack = {observation.input_role for observation in selected_inputs}
         for observation in selected_inputs:
+            registered = registered_inputs.get(observation.input_role)
+            if registered is None:
+                raise ValueError(f"unknown input role for target: {observation.input_role}")
+            if observation.artifact_path != registered["artifact_path"]:
+                raise ValueError(
+                    f"artifact_path for {observation.input_role} must be {registered['artifact_path']}"
+                )
+            if observation.version_kind != registered["version_kind"]:
+                raise ValueError(
+                    f"version_kind for {observation.input_role} must be {registered['version_kind']}"
+                )
             if observation.version_kind != FILE_TEXT:
                 raise ValueError(f"unsupported version kind: {observation.version_kind}")
-            resolved = resolve_file_text(repo_root=repo_root, path=observation.artifact_path)
+            resolved = resolve_file_text(
+                repo_root=repo_root,
+                path=registered["artifact_path"],
+            )
             if resolved.content_sha256 != observation.content_sha256:
                 raise ValueError(
-                    f"live hash mismatch for {observation.artifact_path}: "
+                    f"live hash mismatch for {registered['artifact_path']}: "
                     f"expected {observation.content_sha256}, current {resolved.content_sha256}"
                 )
 
-    input_rows = conn.execute(
-        """
-        SELECT input_role, artifact_path, accepted_snapshot_id
-        FROM freshness_inputs
-        WHERE target_id = ?
-        """,
-        (current.target_id,),
-    ).fetchall()
-    snapshots_by_role = {row["input_role"]: row for row in input_rows}
-
-    note_snapshot_id = int(snapshots_by_role["note"]["accepted_snapshot_id"])
-    criterion_snapshot_id = int(snapshots_by_role["criterion"]["accepted_snapshot_id"])
+    note_snapshot_id = int(registered_inputs["note"]["accepted_snapshot_id"])
+    criterion_snapshot_id = int(registered_inputs["criterion"]["accepted_snapshot_id"])
     if "note" in roles_to_ack:
         note_snapshot = snapshot_file(conn, repo_root=repo_root, path=note_path)
         note_snapshot_id = note_snapshot.snapshot_id
@@ -250,8 +277,8 @@ def ack_target_inputs(
         criterion_path=criterion_path,
         model_partition=model_partition,
         evidence_review_pair_id=superseded_evidence_pair_id,
-        baseline_note_snapshot_id=snapshots_by_role["note"]["accepted_snapshot_id"],
-        baseline_criterion_snapshot_id=snapshots_by_role["criterion"]["accepted_snapshot_id"],
+        baseline_note_snapshot_id=registered_inputs["note"]["accepted_snapshot_id"],
+        baseline_criterion_snapshot_id=registered_inputs["criterion"]["accepted_snapshot_id"],
     )
 
 

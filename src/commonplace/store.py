@@ -7,7 +7,7 @@ import sqlite3
 from importlib import resources
 from pathlib import Path
 
-STORE_SCHEMA_VERSION = 1
+STORE_SCHEMA_VERSION = 2
 SCHEMA_PATH = "store-schema.sql"
 DEFAULT_DB_PATH = Path("kb/reports/commonplace-store.sqlite")
 LEGACY_DB_PATH = Path("kb/reports/review-store.sqlite")
@@ -18,6 +18,7 @@ EXPECTED_TABLES = frozenset(
     {
         "artifact_snapshots",
         "freshness_baselines",
+        "freshness_target_generations",
         "freshness_inputs",
         "review_freshness_evidence",
         "review_jobs",
@@ -58,6 +59,7 @@ def resolve_db_path(repo_root: Path, db_override: str | None = None) -> Path:
 def ensure_db(db_path: Path) -> None:
     if db_path.exists():
         with connect(db_path) as conn:
+            _migrate_store(conn)
             _assert_store_version(conn)
             assert_store_integrity(conn)
             conn.commit()
@@ -99,6 +101,39 @@ def _assert_store_version(conn: sqlite3.Connection) -> None:
             f"store schema version {current_version} does not match current "
             f"version {STORE_SCHEMA_VERSION}; recreate or migrate the store"
         )
+
+
+_GENERATIONS_TABLE_SQL = """
+CREATE TABLE IF NOT EXISTS freshness_target_generations (
+    target_kind TEXT NOT NULL CHECK (length(target_kind) > 0),
+    target_key_json TEXT NOT NULL CHECK (length(target_key_json) > 0),
+    next_revision INTEGER NOT NULL CHECK (next_revision >= 1),
+    PRIMARY KEY (target_kind, target_key_json)
+);
+"""
+
+
+def _migrate_store(conn: sqlite3.Connection) -> None:
+    current_version = _get_user_version(conn)
+    if current_version == STORE_SCHEMA_VERSION:
+        return
+    if current_version == 1 and STORE_SCHEMA_VERSION == 2:
+        conn.executescript(_GENERATIONS_TABLE_SQL)
+        conn.execute(
+            """
+            INSERT INTO freshness_target_generations (
+                target_kind, target_key_json, next_revision
+            )
+            SELECT target_kind, target_key_json, revision + 1
+            FROM freshness_baselines
+            """
+        )
+        _set_user_version(conn, STORE_SCHEMA_VERSION)
+        return
+    raise RuntimeError(
+        f"store schema version {current_version} does not match current "
+        f"version {STORE_SCHEMA_VERSION}; recreate or migrate the store"
+    )
 
 
 def _schema_object_names(conn: sqlite3.Connection, object_type: str) -> set[str]:

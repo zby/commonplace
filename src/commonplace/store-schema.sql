@@ -24,6 +24,13 @@ CREATE TABLE IF NOT EXISTS freshness_baselines (
     UNIQUE (target_kind, target_key_json)
 );
 
+CREATE TABLE IF NOT EXISTS freshness_target_generations (
+    target_kind TEXT NOT NULL CHECK (length(target_kind) > 0),
+    target_key_json TEXT NOT NULL CHECK (length(target_key_json) > 0),
+    next_revision INTEGER NOT NULL CHECK (next_revision >= 1),
+    PRIMARY KEY (target_kind, target_key_json)
+);
+
 CREATE TABLE IF NOT EXISTS freshness_inputs (
     target_id INTEGER NOT NULL
         REFERENCES freshness_baselines(target_id) ON DELETE CASCADE,

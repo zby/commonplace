@@ -92,6 +92,7 @@ def test_ensure_db_initializes_current_schema(tmp_path: Path) -> None:
     assert table_names == {
         "artifact_snapshots",
         "freshness_baselines",
+        "freshness_target_generations",
         "freshness_inputs",
         "review_freshness_evidence",
         "review_jobs",

@@ -6,6 +6,7 @@ import sqlite3
 from dataclasses import dataclass
 
 from commonplace.freshness.keys import review_pair_target_key
+from commonplace.freshness.revisions import allocate_initial_revision, allocate_successor_revision
 from commonplace.review.review_model import normalize_model_partition
 
 REVIEW_PAIR_KIND = "review-pair"
@@ -136,19 +137,28 @@ def refresh_review_baseline_from_captures(
         model_partition=model_partition,
     )
     if previous is None:
+        revision = allocate_initial_revision(
+            conn,
+            target_kind=REVIEW_PAIR_KIND,
+            target_key_json=target_key_json,
+        )
         cursor = conn.execute(
             """
             INSERT INTO freshness_baselines (
                 target_kind, target_key_json, revision, accepted_at
-            ) VALUES (?, ?, 1, ?)
+            ) VALUES (?, ?, ?, ?)
             """,
-            (REVIEW_PAIR_KIND, target_key_json, accepted_at),
+            (REVIEW_PAIR_KIND, target_key_json, revision, accepted_at),
         )
         target_id = int(cursor.lastrowid)
-        revision = 1
     else:
         target_id = previous.target_id
-        revision = previous.revision + 1
+        revision = allocate_successor_revision(
+            conn,
+            target_kind=REVIEW_PAIR_KIND,
+            target_key_json=target_key_json,
+            current_revision=previous.revision,
+        )
         conn.execute(
             """
             UPDATE freshness_baselines

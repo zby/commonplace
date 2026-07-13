@@ -109,7 +109,7 @@ def _attach_diffs(conn: sqlite3.Connection, *, repo_root: Path, target: StaleTar
 def _accepted_text(conn: sqlite3.Connection, *, item: ChangedInput) -> str:
     if item.accepted_snapshot_id is not None:
         snapshot = load_snapshot_by_id(conn, item.accepted_snapshot_id)
-        if snapshot is not None and snapshot.content_text:
+        if snapshot is not None and snapshot.content_text is not None:
             return snapshot.content_text
     raise RuntimeError(f"cannot resolve accepted text for {item.artifact_path}")
 

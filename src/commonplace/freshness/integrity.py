@@ -15,7 +15,7 @@ def assert_snapshot_hash_integrity(conn: sqlite3.Connection) -> None:
         """
     ).fetchall()
     for row in rows:
-        if not row["content_text"]:
+        if row["content_text"] is None:
             raise RuntimeError(f"artifact snapshot missing text: snapshot_id={row['snapshot_id']}")
         actual = content_sha256_for_text(row["content_text"])
         if actual != row["content_sha256"]:

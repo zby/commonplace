@@ -729,12 +729,12 @@ def upsert_freshness_baseline(
     )
     note_snapshot = load_snapshot_by_id(conn, baseline_note_snapshot_id)
     criterion_snapshot = load_snapshot_by_id(conn, baseline_criterion_snapshot_id)
-    if note_snapshot is None or note_snapshot.artifact_path != note_path or not note_snapshot.content_text:
+    if note_snapshot is None or note_snapshot.artifact_path != note_path or note_snapshot.content_text is None:
         raise ValueError("baseline note snapshot is missing or does not match the note path")
     if (
         criterion_snapshot is None
         or criterion_snapshot.artifact_path != criterion_path
-        or not criterion_snapshot.content_text
+        or criterion_snapshot.content_text is None
     ):
         raise ValueError("baseline criterion snapshot is missing or does not match the criterion path")
 

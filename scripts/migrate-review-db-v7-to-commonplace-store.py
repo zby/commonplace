@@ -226,6 +226,16 @@ def migrate(
                 )
                 migrated_keys.add((note_path, criterion_path, model_partition))
 
+            dest.execute(
+                """
+                INSERT INTO freshness_target_generations (
+                    target_kind, target_key_json, next_revision
+                )
+                SELECT target_kind, target_key_json, revision + 1
+                FROM freshness_baselines
+                """
+            )
+
             failed_job_ids: set[int] = set()
             queued_pairs = dest.execute(
                 """
