@@ -1,6 +1,6 @@
 # The assessment-machinery line — an optional supporting demonstration
 
-**Role: an optional supporting Assessment-layer demonstration for the [design rationale management submission](./README.md).** The provenance matrix and computed correlated-evidence clusters address one brief bullet explicitly, but they are not the entry's spine. Build the smallest usable version only if it does not displace the methodology write-up, three-case walkthroughs, or submission document.
+**Role: an optional supporting Assessment-layer demonstration for the [actionable methodology submission](./README.md).** The provenance matrix and computed correlated-evidence clusters address one brief bullet explicitly, but they are not the entry's spine. Build the smallest usable version only if it does not displace the loop + DRM write-up, three-case walkthroughs, or submission document.
 
 If the retarget happens, it does double duty: retargeting the parser from software-repo reviews to epistemic sources **is** a transfer test on our own tooling, so preregistering the code split costs a diff. That secondary evidence is worth retaining, but it does not justify expanding the build.
 
