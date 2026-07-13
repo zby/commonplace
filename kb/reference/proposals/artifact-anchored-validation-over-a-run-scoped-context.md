@@ -1,13 +1,13 @@
 ---
-description: "Proposal: model deterministic validation as artifact-anchored checks with explicit evaluation inputs and invalidation dependencies, while deferring new KB-authored imperative mechanisms"
+description: "Proposal: simplify deterministic validation around artifact anchors and a run-scoped context; keep invalidation explicit until repeated cases justify dependency machinery"
 type: kb/types/note.md
 traits: [design-proposal]
 tags: [type-system, kb-maintenance]
 ---
 
-# Anchored validation checks with declared dependencies
+# Artifact-anchored validation over a run-scoped context
 
-Deterministic validation grew a check at a time. It now mixes per-artifact checks, batch checks, target expansion, and shared-index construction across a library and a CLI. Some distinctions are named in reporting, but the sequence in `validate_note` and `validate_notes.main` remains the execution specification. This proposal asks what common model those checks share, what that model can say about targeting, and where a check should live.
+Deterministic validation grew a check at a time. It now mixes per-artifact checks, batch checks, target expansion, and shared-index construction across a library and a CLI. Some distinctions are named in reporting, but the sequence in `validate_note` and `validate_notes.main` remains the execution specification. This proposal asks what small common model those checks share, how much code that model can remove now, and which dependency machinery should remain deferred.
 
 The trigger was shipping the verbatim-quote check ([ADR 046](../adr/046-verbatim-quotes-are-validated-against-their-cited-source.md)), which produced a second referential check and made the missing model visible. Findings are now labelled by source ([validation contract](../validation-contract.md)), which fixes the *reporting* symptom without giving the *architecture* a shape.
 
@@ -58,11 +58,13 @@ Today, mechanism is *coupled to owner*: if you own a type and need a check a sch
 
 And an execution model is missing: **nothing unifies artifact-local checks with checks evaluated from shared collection indexes.** `orphan_info` and `impacted_marked_tag_readmes` remain one-off CLI passes because there is no model that says what an indexed check is relative to a document-local check. Each new wide check would be another hand-merged special case.
 
-## The unifying idea: anchored checks with declared dependencies
+## The unifying idea: anchored checks over a shared run context
 
 Every existing check, whether artifact-local or evaluated from a wider index, fits one shape:
 
-> A check is **anchored** on exactly one artifact — the artifact its finding lands on — and declares enough about its evaluation inputs and invalidation dependencies to run it and to know when its result may have changed.
+> A check is **anchored** on exactly one artifact — the artifact its finding lands on — and its design identifies both what it reads when evaluated and what changes could invalidate its result.
+
+"Identifies" is deliberately weaker than "encodes in a generic dependency language." Evaluation inputs and invalidation dependencies are part of the check's model even when ordinary function calls and explicit selectors remain their implementation. Turning them into executable metadata is a later optimization that must earn its machinery.
 
 | Check | Anchor | Evaluation inputs | Invalidation dependencies | Owner |
 |---|---|---|---|---|
@@ -75,7 +77,9 @@ Every existing check, whether artifact-local or evaluated from a wider index, fi
 | nested-`COLLECTION.md` placement | the candidate `COLLECTION.md` | its path and ancestor collection boundaries | path/name or ancestor boundaries | framework |
 | type-spec resolution | the type-spec doc | its frontmatter and declared schema target | type-spec contents or schema existence | type |
 
-Under this model there can be **one evaluation algorithm**: establish a validation scope, resolve the checks applicable to each anchor, build any shared indexes those checks require once, and evaluate each check against its declared inputs. Document-local and collection-indexed validation differ in their inputs and index requirements, not in how findings are attached or reported.
+Under this model there can be **one small evaluation shape**: establish a validation run, resolve its anchors, parse each artifact once, expose shared indexes lazily from a run-scoped context, and evaluate applicable checks with findings attached to their anchors. Document-local and collection-indexed validation differ in what they read from the context, not in how findings are attached or reported.
+
+The minimal realization needs no check-object hierarchy or dependency graph. A `ValidationRun` or `ValidationContext` can cache parsed artifacts, the authored-link graph, and tag-membership indexes; existing base functions, imperative type rules, and schema validation can keep their current dispatch. The CLI then resolves a target, asks the library to evaluate the run, and formats the returned results. This directly removes repeated parsing and hand-merging without first redesigning every check.
 
 Target selection is related but not identical. A coarse statement such as "reads the collection" is sufficient to run a check but insufficient for precise incremental invalidation: a body-only edit should not revalidate every tag-README. Incremental targeting needs concrete dependency keys or an explicit invalidation selector, and may need old and new state. The inverse dependency map can be indexed, recomputed conservatively, or remain special-cased until repeated demand justifies a general engine.
 
@@ -83,15 +87,15 @@ This gives the current ad hoc behavior a more precise interpretation:
 
 - **`impacted_marked_tag_readmes` is an invalidation selector.** It is a hand-computed inverse dependency for one check, not evidence that every inverse can be derived from a coarse read-scope label.
 - **The derived-copy rule gets an address.** A wide-read check is precisely the recompute-and-compare that [a derived copy of recomputable truth must be checked or absent](../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) demands; its evaluation dependencies name the ground truth from which the cached value is derived.
-- **Definition changes are first-class invalidators.** A schema check depends not only on the note instance but on the type spec, schema, and referenced-schema closure. Editing a schema must be able to invalidate every applicable note even though the note contents did not change.
+- **Definition changes are first-class invalidators.** A schema check depends not only on the note instance but on the type spec, schema, and referenced-schema closure. A later incremental-invalidation system must be able to target applicable notes after a schema edit even though the note contents did not change.
 
 The residue is then small: current checks have two owners (framework and type), mechanisms remain schema or code, and dependencies describe both evaluation and invalidation. Collection remains an execution boundary and a menu of types; whether it should ever become a check owner remains a separate extension question (see option E).
 
-This is a naming and structuring move before it is a code move: most checks already fit the model, but the current implementation does not declare their dependencies or share one execution protocol.
+This is a naming and structuring move before it is a code move: most checks already fit the model, but the current implementation does not share a run context or one result-attachment protocol. Precise dependency declarations are not required for that simplification.
 
 ## Option space (revised)
 
-### A. Resolve schema and imperative rules through one type-check interface
+### A. Resolve schema and imperative rules through one type-check interface — **deferred: not the first experiment**
 
 Make the schema *one kind of type check*, so all of a type's checks sit behind a single registration:
 
@@ -99,12 +103,14 @@ Make the schema *one kind of type check*, so all of a type's checks sit behind a
 checks_for(type_profile) -> [SchemaCheck(schema_path), MarkCheck(...), QuoteShapeCheck(...)]
 ```
 
-*For:* one dispatch path per resolved type; schema and imperative rules can implement the same finding protocol; applicability keys on the canonical path-valued type identity. This is a bounded refactor and a plausible first experiment with the anchored-check interface.
+*For:* one dispatch path per resolved type; schema and imperative rules can implement the same finding protocol; applicability keys on the canonical path-valued type identity. This remains a bounded refactor if the current sequence later becomes a source of duplication.
 *Against:* it unifies the *call site*, not the authoring surface, dependency model, shared-index lifecycle, or incremental targeting. The imperative half of a type's contract still lives in Python. It therefore does not by itself turn `orphan_info` or collection-structure validation into instances of one algorithm.
 
 Schema findings should retain schema provenance after unification. Owner (`type`) and mechanism/source (`schema` or imperative rule) answer different repair questions; a single dispatch path is not a reason to collapse their labels.
 
 Path-valued applicability is already shipped independently of A ([ADR 048](../adr/048-imperative-type-rules-dispatch-by-canonical-path.md)).
+
+A does not exercise the part of the model that currently causes orchestration and repeated work. The first experiment should instead put orphan detection and tag-membership evaluation behind a run-scoped context while leaving the readable base → type rules → schema sequence intact. Revisit A only if that sequence itself becomes a source of duplication.
 
 ### B. A declarative mark primitive — **deferred: too much machinery at current demand**
 
@@ -151,25 +157,35 @@ For current demand, **collection is a validation boundary and a menu of types, n
 
 ## Free choices
 
-- Whether the anchored-check model is adopted *explicitly* in code (check objects or functions carrying applicability, dependency, owner, mechanism, and identity) or first as names on the existing sequence.
-- The granularity and representation of invalidation keys: artifact, path existence, frontmatter field, tag membership, schema-definition closure, or another small vocabulary proven by implementation.
-- Whether dependency inverses are computed generically, maintained in indexes, or remain explicit selectors such as `impacted_marked_tag_readmes` until a second incremental case establishes common machinery.
-- Whether `validate_collection_structure` and `orphan_info` move into one library execution surface. Their current orchestration in the CLI looks accidental, but shared placement alone does not produce a shared model.
+- The exact boundary of the run-scoped context: parsed artifacts only, or also lazy authored-link and tag-membership indexes.
+- Whether `validate_collection_structure` becomes an anchored result in the same library run immediately or follows after orphan and tag-README checks prove the context boundary.
+- How results retain check identity, owner, and mechanism without forcing every existing check into a new object hierarchy; dispatch-owned provenance is sufficient if it stays unambiguous.
+- The granularity and representation of invalidation keys, if a later implementation earns them: artifact, path existence, frontmatter field, tag membership, schema-definition closure, or another small vocabulary proven by repeated selectors.
+- Whether dependency inverses are ever computed generically or maintained in indexes. Until repeated demand establishes common machinery, explicit selectors such as `impacted_marked_tag_readmes` remain the default.
 - The mark-declaration syntax in option B, if B is ever taken.
 
 ## Adoption criteria
 
 The path-valued dispatch defect was fixed independently by [ADR 048](../adr/048-imperative-type-rules-dispatch-by-canonical-path.md).
 
-The broader anchored-check model is ready for an ADR only when a small implementation sketch or prototype can represent at least four unlike cases — schema validation, tag-README marks, collection-scoped authored-link orphan detection, and the now-shipped type-spec resolution rule — while satisfying these tests:
+### Near-term: artifact-anchored evaluation over a run-scoped context
+
+This bounded model is ready for an ADR when a small implementation sketch or prototype can cover ordinary per-artifact validation, tag-README marks, and collection-scoped authored-link orphan detection while satisfying these tests:
 
 - full-collection validation produces the same findings and severities;
-- every finding retains check identity, owner, and mechanism provenance;
+- every finding remains attached to one artifact and retains unambiguous source provenance;
+- each artifact is parsed at most once per validation run;
 - shared graphs and membership indexes are built once per validation scope rather than once per anchor;
-- schema and referenced-schema changes can invalidate applicable notes;
-- incremental targeting is either dependency-correct or explicitly conservative, without claiming that coarse evaluation scope alone derives a precise inverse.
+- `validate_notes.main` is reduced to target resolution, library invocation, and presentation rather than continuing to merge wide checks itself;
+- base checks, imperative type rules, and schema validation may remain functions in their current sequence—no check classes or generic dependency representation are required.
 
-Option A is a bounded candidate experiment because it exercises common dispatch across schema and imperative type rules. Its success would establish only that interface, not the collection-indexed execution or invalidation model.
+The implementation should be judged as a simplification, not merely an abstraction: its new run/context code should replace repeated parsing and CLI orchestration rather than sit beside them.
+
+### Deferred: generalized incremental invalidation
+
+Incremental targeting remains dependency-correct where an explicit selector exists and otherwise explicitly conservative. A generic invalidation model is ready for a separate ADR only after at least two unlike selectors expose a stable common vocabulary beyond "reads this collection." That later design must account for old and new state, deletions, path-existence changes, and definition closures. Schema and referenced-schema changes invalidating applicable notes belong to that later gate; they are not a condition for adopting the run-scoped evaluator.
+
+Option A remains deferred because common schema/type-rule dispatch would establish only a call interface, not the collection-indexed execution model that currently promises code reduction.
 
 Option B still waits, and its trigger is sharper than "a worked case": **a collection-local type needing a mark** — a cached recomputable value that D cannot hold and a local schema cannot recompute. Option E waits for a mechanical relation that is inherently collection-owned after attempting an honest artifact anchor and type owner. Until either wall is reached, the imperative authoring surface stays framework-side and collections remain routing/validation boundaries rather than rule hosts.
 

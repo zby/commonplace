@@ -35,4 +35,4 @@ Imperative type rules register and dispatch by canonical path-valued type identi
 ## Links
 
 - [Validation contract](../validation-contract.md) — implemented-by: type-owned rules retain their reporting source while selecting by canonical identity
-- [Anchored validation checks with declared dependencies](../proposals/anchored-validation-checks-with-declared-dependencies.md) — partial-adoption-of: removes the independent identity defect while leaving the broader check model undecided
+- [Artifact-anchored validation over a run-scoped context](../proposals/artifact-anchored-validation-over-a-run-scoped-context.md) — partial-adoption-of: removes the independent identity defect while leaving the broader check model undecided

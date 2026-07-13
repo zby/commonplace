@@ -51,4 +51,4 @@ Risks:
 ## Links
 
 - [Validation contract](../validation-contract.md) — implemented-by: the normal schema/type-rule split applied to type-spec documents
-- [Anchored validation checks with declared dependencies](../proposals/anchored-validation-checks-with-declared-dependencies.md) — implements: retires one special batch pass by giving its responsibility an artifact anchor and ordinary type-owned check
+- [Artifact-anchored validation over a run-scoped context](../proposals/artifact-anchored-validation-over-a-run-scoped-context.md) — implements: retires one special batch pass by giving its responsibility an artifact anchor and ordinary type-owned check
