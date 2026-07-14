@@ -110,6 +110,7 @@ The honest summary: reflective coverage reaches modification depth on the prose 
 - Rationale lineage is not mechanically guaranteed.
 - Commonplace cannot modify the model weights, the inference machinery, or the other dependencies outside its boundary.
 - Reflection does not entail [closure under recommendations](../notes/a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md). Commonplace is reflective whether or not its methodology governs the meta-decisions its own extension raises; those are separate properties, assessed separately.
+- The bare classification is not the informative part: under a human-inclusive boundary nearly every maintained system is reflective, since [human-inclusive boundaries make reflection cheap](../notes/human-inclusive-boundaries-make-reflection-cheap.md). What the trace establishes is this system's autonomy profile — the harness, validators, and agents consume the self-representation without a human in the read path, while search and judgment-heavy evaluation remain human.
 
 ---
 

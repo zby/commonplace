@@ -41,6 +41,8 @@ People may be components of a reflective system when the declared boundary inclu
 
 Under Commonplace's extension, a monitored service, dashboard, and operator role qualify only when the dashboard functions within the declared whole as a representation of that same whole. A display used merely as telemetry in an external control loop does not qualify. Second-order cybernetics supports including an observer and the observer's purposes in the analyzed boundary, but observer inclusion alone supplies neither a self-representation nor a causal-connection test ([von Foerster 1979, PDF pp. 2–3](../../sources/von-foerster-cybernetics-of-cybernetics-1979.ingest.md)).
 
+The extension is permissive by consequence: with a standing maintainer role inside the boundary, nearly every maintained system classifies as reflective, so the bare classification is a qualification rather than a discrimination — [human-inclusive boundaries make reflection cheap; autonomy is the discriminating gradient](../human-inclusive-boundaries-make-reflection-cheap.md).
+
 ## Retrieval-mediated causal connection
 
 The causal connection need not be an interpreter or a compiler. Where the self-representation is a body of retained artifacts, the connection can run through **discovery**: a process searches the artifacts, finds the ones bearing on the change it is making, and derives its behavior from what it found. Editing an artifact then reaches later behavior without anyone deciding to re-derive, provided the retrieval procedure surfaces it.
