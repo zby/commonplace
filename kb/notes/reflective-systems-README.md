@@ -10,6 +10,8 @@ complete: true
 
 A [reflective system](./definitions/reflective-system.md) keeps descriptions of itself that its own processes read and write — edit a description and the system later behaves differently. This repository is one: its notes, skills, and validators describe how it works, the agents working on it consume and update them, and changing them changes what those agents do.
 
+Where the self-representation is a body of retained artifacts rather than code an interpreter reads, the causal path runs through search — so [retrieval failure is reflection failure](./retrieval-failure-is-reflection-failure.md). A represented constraint no process can find is inert, and an index that claims completeness it does not have cuts the path exactly where a consumer was relying on it.
+
 The definition sets a deliberately low bar, and its exclusions carry the weight: reflection is *not* autonomy, *not* verification, and *not* closure. Each of those three exclusions is picked up by a note that turns it into a grading over the same base. The gradings answer different questions and move independently — a system can widen one without touching the others.
 
 ## Three gradings over the base

@@ -8,9 +8,9 @@ tags: [foundations, computational-model, reflective-systems]
 
 A **reflective system** contains a causally connected representation of itself that is available to its own processes, such that operations mediated through that representation can affect the system's subsequent behavior.
 
-This definition takes its structural core from the established term in computational reflection. Maes defines a reflective system as a computational system that reasons about itself “in a causally connected way” and calls the structures that represent selected aspects of the system its **self-representation** ([Maes 1988, printed pp. 1–2; PDF pp. 1–2](../../sources/maes-computational-reflection-1988.ingest.md)). The Commonplace knowledge-base framework generalizes these criteria to an explicitly declared computational or socio-technical boundary; Maes does not directly ground the human-inclusive extension.
+The structural core is the established term in computational reflection: a system that reasons about itself in a causally connected way, through structures that represent selected aspects of it — its **self-representation**. Commonplace generalizes the criteria to an explicitly declared computational or socio-technical boundary. Where that generalization outruns its sources is recorded under [Provenance](#provenance-and-departures) below.
 
-Changing the boundary alone does not satisfy the definition. The representation must be available inside the boundary *as a representation of that same system*, not merely as telemetry or a control signal correlated with its state. Commonplace therefore retains **reflective system** across boundary choices and reserves **reflexive system** for a future concept only if it names a distinct property.
+Changing the boundary alone does not satisfy the definition. The representation must be available inside the boundary *as a representation of that same system*, not merely as telemetry or a control signal correlated with its state.
 
 ## Scope
 
@@ -22,7 +22,7 @@ Calling a system reflective requires five things to be stated:
 - Processes inside the boundary that can inspect or act through the representation; and
 - The **causal connection** by which changes in the represented aspects update the self-representation and representation-mediated operations affect later system behavior.
 
-Reflection is therefore aspect-bound, not global. Maes's theory-relativity point is decisive: the terminology and granularity of the self-representation determine which questions and interventions the system can formulate about itself ([printed pp. 14–17; PDF pp. 14–17](../../sources/maes-computational-reflection-1988.ingest.md)). No self-representation exhausts every possible aspect, although it may be complete relative to its declared set of represented aspects. A reflective architecture may also retain an unrepresented or unmodifiable kernel.
+Reflection is therefore aspect-bound, not global. The terminology and granularity of the self-representation determine which questions and interventions the system can formulate about itself — Maes's theory-relativity point, and a decisive one. No self-representation exhausts every possible aspect, although it may be complete relative to its declared set of represented aspects. A reflective architecture may also retain an unrepresented or unmodifiable kernel.
 
 The following neighboring terms mark different capabilities:
 
@@ -39,17 +39,13 @@ Intercession is a capability within reflection, but not every reflective archite
 
 People may be components of a reflective system when the declared boundary includes an established role whose interpretation, authorization, or action forms part of the causal path. A standing human review role can therefore participate inside a socio-technical reflective system. By contrast, a person who occasionally rescues a failed process from outside its established operation does not become an internal component merely because the rescue affected it.
 
-Under Commonplace's extension, a monitored service, dashboard, and operator role qualify only when the dashboard functions within the declared whole as a representation of that same whole. A display used merely as telemetry in an external control loop does not qualify. Second-order cybernetics supports including an observer and the observer's purposes in the analyzed boundary, but observer inclusion alone supplies neither a self-representation nor a causal-connection test ([von Foerster 1979, PDF pp. 2–3](../../sources/von-foerster-cybernetics-of-cybernetics-1979.ingest.md)).
+Under Commonplace's extension, a monitored service, dashboard, and operator role qualify only when the dashboard functions within the declared whole as a representation of that same whole. A display used merely as telemetry in an external control loop does not qualify.
 
 The extension is permissive by consequence: with a standing maintainer role inside the boundary, nearly every maintained system classifies as reflective, so the bare classification is a qualification rather than a discrimination — [human-inclusive boundaries make reflection cheap; autonomy is the discriminating gradient](../human-inclusive-boundaries-make-reflection-cheap.md).
 
 ## Retrieval-mediated causal connection
 
-The causal connection need not be an interpreter or a compiler. Where the self-representation is a body of retained artifacts, the connection can run through **discovery**: a process searches the artifacts, finds the ones bearing on the change it is making, and derives its behavior from what it found. Editing an artifact then reaches later behavior without anyone deciding to re-derive, provided the retrieval procedure surfaces it.
-
-This puts retrieval inside the reflective architecture rather than alongside it. The search recipes, the fields that make an artifact findable, and the indexes that shortcut the search are the wire along which the self-representation acts, and a represented constraint that no process can find is inert. **Retrieval failure is therefore reflection failure** — the analogue of a compiler silently dropping a declaration, and the reason [stale indexes are worse than no indexes](../stale-indexes-are-worse-than-no-indexes.md): a membership claim that tells an exhaustive consumer to stop looking, while members are missing, cuts the wire precisely where it is trusted.
-
-Retrieval-mediated connection is weaker than procedural reflection in one specific way: it is best-effort. A compiler propagates every change to a representation it consumes; a search propagates the changes it happens to surface. Such a system can strengthen the wire — enforcing a membership claim rather than asserting it, or correcting a search recipe observed to miss a member — but it cannot assume the wire holds by construction.
+The causal connection need not be an interpreter or a compiler. Where the self-representation is a body of retained artifacts, it can run through **discovery**: a process searches the artifacts, finds the ones bearing on what it is doing, and derives its behavior from what it found. Retrieval is then the wire the representation acts along, and it is best-effort where a compiler is exhaustive — so [retrieval failure is reflection failure](../retrieval-failure-is-reflection-failure.md), which develops what that costs and how the wire is strengthened.
 
 ## Exclusions
 
@@ -64,12 +60,22 @@ Reflection is also not **adaptation**, in either direction. A reflective archite
 - Calling a telemetry-driven controller reflective when its signal is not available inside the declared boundary as a representation of that same system.
 - Using **reflexive** and **reflective** interchangeably without identifying a distinct property that the new term would name.
 
+## Provenance and departures
+
+The criteria above are inherited; the extensions are not. Collected here so the definition can be read as a definition, and so each departure is auditable in one place.
+
+- **Causal connection, self-representation, theory-relativity — inherited.** Maes defines a reflective system as a computational system that reasons about itself “in a causally connected way,” and names the structures representing selected aspects its self-representation ([Maes 1988, printed pp. 1–2, 14–17; PDF pp. 1–2, 14–17](../../sources/maes-computational-reflection-1988.ingest.md)). The introspection/intercession split is corroborated in [Wuyts and Ducasse 2001](../../sources/wuyts-ducasse-2001-symbiotic-reflection.ingest.md); the embedded-self-theory lineage is [Smith 1984](../../sources/smith-reflection-and-semantics-in-lisp-1984.ingest.md).
+- **The socio-technical boundary — Commonplace's own.** Maes's criteria are computational and do not directly ground the human-inclusive extension. Second-order cybernetics supports including an observer and the observer's purposes in the analyzed boundary, but observer inclusion alone supplies neither a self-representation nor a causal-connection test ([von Foerster 1979, PDF pp. 2–3](../../sources/von-foerster-cybernetics-of-cybernetics-1979.ingest.md)). The extension therefore rests on the causal-path requirement, not on cybernetic precedent — and it is permissive by consequence, which is the subject of [human-inclusive boundaries make reflection cheap](../human-inclusive-boundaries-make-reflection-cheap.md).
+- **Retrieval as a causal connection — Commonplace's own.** No source treats discovery over retained artifacts as the wire. See [retrieval failure is reflection failure](../retrieval-failure-is-reflection-failure.md).
+- **Terminology reservation.** Commonplace retains **reflective system** across boundary choices and reserves **reflexive system** for a future concept only if it names a distinct property. Nothing currently requires the second term.
+
 ---
 
 Relevant Notes:
 
 - [Actionable methodology](./actionable-methodology.md) — grounds: an internal process may act through a methodology, but actionability alone does not establish reflection
 - [Behavioral authority](./behavioral-authority.md) — enables: names the consumer, channel, and force that make a self-representation operative
+- [Retrieval failure is reflection failure](../retrieval-failure-is-reflection-failure.md) — extends: develops the retrieval-mediated causal connection, and the best-effort weakness that comes with it
 - [Reflective coverage is graded across representational forms](../reflective-coverage-is-graded-across-representational-forms.md) — extends: when behavior spans heterogeneous forms, coverage must be claimed per form and operation depth
 - [Governed adaptation requires search, evaluation, and operative retention](../governed-adaptation-requires-search-evaluation-and-retention.md) — extends: reflection supplies one causal path into the loop, but not the search, evaluation, or operative retention the loop needs
 - [A methodology governs its own extension only as far as it settles the meta-decisions it raises](../a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md) — contrasts: closure under recommendations is a stronger self-extension property than reflection

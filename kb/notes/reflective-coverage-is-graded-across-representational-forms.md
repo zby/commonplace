@@ -16,9 +16,11 @@ That need cannot be assessed all-or-nothing. **Reflective coverage** is relative
 **Form coverage** asks which forms' aspects enter the self-representation at all. **Operation depth** asks what processes inside the boundary can do to a covered component, rising through at least four levels:
 
 1. **Observation** — the component can be read or probed, and what is learned is available inside the boundary.
-2. **Selection** — the system can swap one sealed component for another without seeing inside either.
-3. **Configuration** — the component exposes parameters the system can set, within an interface it did not author.
-4. **Modification** — the substrate itself can be edited from inside the boundary.
+2. **Selection** — the system can swap one sealed component for another without seeing inside either. A skill pinning `model: opus` selects among sealed alternatives and reaches nothing finer.
+3. **Configuration** — the component exposes parameters the system can set, within an interface it did not author. Commonplace's skill frontmatter does this to the harness: `allowed-tools: Read, Write, Grep, Glob, Bash, Skill` and `context: fork` set the tool surface and context regime for a skill run, through a schema the harness owns. The system can set those fields and cannot inspect or edit the machinery that honours them.
+4. **Modification** — the substrate itself can be edited from inside the boundary. Editing `kb/types/tag-readme.md` changes what the validator enforces, because the spec's own path is the validator's dispatch key.
+
+The rungs are per component, not per form: the two instances above sit at different depths over different components — selection over the weights, configuration over the harness — and both are outside the declared boundary in the [case classification](../reference/commonplace-as-a-reflective-system.md). Nothing in this repository configures the parametric form itself; that rung is instanced against the harness, not the weights.
 
 Neither dimension implies the other, and no form inherits either from another. The instructive case pairs modification depth on prose and symbolic artifacts with selection depth on a parametric component: an agent system whose instructions can require a particular model, or a class of models, exercises real intercession over its distributed-parametric form — the choice of weights is represented, causally connected, and revisable by the system's own processes — yet nothing inside the boundary can inspect or edit what the weights do. Calling this "no reflection over the model" misses the lever that exists; calling it "reflective coverage of the weights" overstates what the lever reaches. It is selection-grade coverage of the parametric form, and should be claimed as exactly that.
 
@@ -27,6 +29,8 @@ A coverage claim therefore states form and depth, separately for each form the b
 ## Mapping coverage is not mapping modifiability
 
 Three properties must remain distinct. **Mapping coverage** asks whether a supported observation or intervention is reliably realized across the boundary. **Mapping inspectability** asks whether the system can examine how the transfer works. **Mapping modifiability** asks whether the system can change it. A trusted compiler may sit in an unmodifiable kernel and still preserve full reflective coverage of a desired-state aspect — provided the declared interface exposes its semantics and its relevant failures.
+
+The properties come apart in practice. Commonplace's type-spec-to-validator mapping is unusually well covered: the validator dispatches on the spec's own path (`@type_rule("kb/types/tag-readme.md")`), so a prose spec and the code enforcing it cannot drift silently — the specification file *is* the enforcement key. That is high mapping coverage bought by a naming convention, not by making the dispatch mechanism modifiable. Most other prose-to-code relationships in the same repository have no such binding, and there the mapping is uncovered: the prose can change with nothing to notice that the code no longer matches.
 
 The demand rises only when a system claims to inspect or adapt the transfer itself. Then the mapping must enter the self-representation: its interface, authority rule, rationale-to-implementation lineage, [codification](./definitions/codification.md) boundary, or consistency mechanism. Declaring a terminal kernel keeps this from becoming an infinite demand to represent every mechanism that represents another mechanism.
 
