@@ -35,19 +35,19 @@ Governed adaptation alone is not enough either, and the negative case is real ra
 
 Route the same loop through a self-representation and the accepted change lands in an artifact the system also *reads*. Improvement becomes legible, criticizable, and compounding: each retained change is available to the next round of search and evaluation, as knowledge rather than as a setting. That is what the intersection buys, and it is why neither component alone is the object of interest.
 
-## Autonomy is the value; verification is the price
+## Autonomy is bought with an oracle
 
-Autonomy cannot simply be turned up. Automating an evaluation for which no adequate oracle exists does not produce a *more* self-improving system — it produces a *less governed* one, retaining changes that nothing checked. That is self-modification, which governed adaptation is explicitly narrower than. The system drops out of the category rather than advancing within it.
+Autonomy is the goal, and there is no reason to want less of it. It simply cannot be turned up at will. Automating an evaluation for which no adequate oracle exists does not produce a *more* self-improving system — it produces a *less governed* one, retaining changes nothing checked. That is self-modification, which governed adaptation is narrower than: the system drops out of the category rather than advancing within it.
 
-So autonomy in evaluation extends exactly as far as mechanical verification reaches, [since the boundary of automation is the boundary of verification](../the-boundary-of-automation-is-the-boundary-of-verification.md). This predicts *where* a human will still be standing: at the gates no oracle closes. It is also why the [Gödel machine](../goedel-machines-are-a-proof-governed-case-of-self-modification.md) reaches full autonomy only by refusing every improvement it cannot prove — it pays the price in full, and the reach it gives up is the receipt.
+So autonomy in evaluation extends exactly as far as mechanical verification reaches, [since the boundary of automation is the boundary of verification](../the-boundary-of-automation-is-the-boundary-of-verification.md). This predicts *where* a human will still be standing: at the gates no oracle closes.
+
+The design tension therefore sits one level down, between **oracle strength and reach**. A stronger oracle accepts fewer things — proof accepts less than tests, tests accept less than judgment — so buying autonomy with a stronger oracle costs reach. The [Gödel machine](../goedel-machines-are-a-proof-governed-case-of-self-modification.md) shows the bill in full: it adopts the strongest available oracle, gets total autonomy with it, and gives up every improvement it cannot prove. Autonomy is downstream of where a system settles that trade, which is why the useful question is never *how autonomous is it* but *what does its oracle reach, and what does that cost*.
 
 ## Exclusions
 
 **Self-improving is not self-modifying.** A blind, accidental, or unconditional rewrite changes later behavior without applying any criterion. It is self-modification, and it completes no loop.
 
 **Self-improving is not a binary.** There is no threshold at which a system becomes one. The conditions are met or not; the *degree* is the autonomy profile, and it is read per function against a declared boundary. Moving the boundary moves the reading.
-
-**More autonomous is not automatically better.** It is more self-improving — that is what the word means — but a mid-gradient system that keeps a human at the unverifiable gate may be the correct design. The two judgments are separate and should be made separately.
 
 ## Misuse Cases
 
