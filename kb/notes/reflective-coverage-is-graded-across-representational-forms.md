@@ -1,17 +1,17 @@
 ---
 description: "Reflective coverage is graded per representational form and operation depth; selection among opaque components — pinning a model — is real but crude coverage of the parametric form"
 type: kb/types/note.md
-traits: [has-comparison, has-external-sources, synthesis]
+traits: [title-as-claim, has-comparison, has-external-sources, synthesis]
 tags: [foundations, computational-model, constraining, reflective-systems]
 ---
 
-# Cross-representational reflection
+# Reflective coverage is graded across representational forms
 
-**Cross-representational reflection** occurs when a causally connected self-representation spans aspects expressed in different representational regimes. Processes within a declared system boundary can inspect or intervene on those aspects across the mappings that connect the regimes. They need not be able to inspect or modify the mappings themselves.
+A [reflective system](./definitions/reflective-system.md)'s behavior is rarely carried by one kind of artifact. Its [system-definition artifacts](./definitions/system-definition-artifact.md) — the artifacts it consumes with binding force — take different [representational forms](./definitions/representational-form.md): prose interpreted by models and humans, symbolic structures with formal consumers, and distributed-parametric state such as model weights. Reflective reach must span all of them: a behavior bound by an artifact whose form the self-representation does not cover is outside that reach, however thoroughly the other forms are covered.
 
-The aspects that matter are carried by [system-definition artifacts](./definitions/system-definition-artifact.md) — the artifacts a system consumes with binding force — and those artifacts take different [representational forms](./definitions/representational-form.md): prose interpreted by models and humans, symbolic structures with formal consumers, and distributed-parametric state such as model weights. A behavior bound by an artifact whose form the self-representation does not span is outside reflective reach, however thoroughly the other forms are covered. **Reflective coverage** is therefore relative to the declared aspects and operations, and inspection and modification are separate dimensions — a [reflective system](./definitions/reflective-system.md) may expose an aspect to introspection without permitting intercession.
+That need cannot be assessed all-or-nothing. **Reflective coverage** is relative to the declared aspects and operations, and it grades — by which forms the self-representation spans, and by what the system can do to each covered component. Processes inside the boundary may inspect or intervene on aspects across the mappings that connect the forms without being able to inspect or modify the mappings themselves; inspection and modification are separate dimensions throughout.
 
-## Coverage is graded, not binary
+## Two dimensions grade coverage
 
 Coverage grades along two independent dimensions. **Form coverage** asks which forms' aspects enter the self-representation at all. **Operation depth** asks what processes inside the boundary can do to a covered component. Depth rises through at least four levels:
 
@@ -22,7 +22,7 @@ Coverage grades along two independent dimensions. **Form coverage** asks which f
 
 Neither dimension implies the other, and no form inherits either from another. The instructive case is modification-depth coverage of prose and symbolic artifacts coexisting with selection-depth coverage of a parametric component. An agent system whose instructions can require a particular model, or a class of models, exercises real intercession over its distributed-parametric form: the choice of weights is represented in a system-definition artifact, causally connected to everything downstream, and revisable by the system's own processes. Yet nothing inside the boundary can inspect or edit what those weights do — the intervention granularity is swapping a sealed unit. Calling this "no reflection over the model" misses the lever that exists; calling it "reflective coverage of the weights" overstates what the lever reaches. It is selection-grade coverage of the parametric form, and it should be claimed as exactly that.
 
-Grading dissolves the binary question. A system need not cover all its forms to be reflective — reflection is aspect-bound — but a coverage claim must state the form and the depth, separately for each form the system's behavior lives in. Depth is a descriptive grade, not a target: the kernel-boundary discussion below shows why a fixed mapping held at shallow depth can be the correct design rather than a deficiency. Each covered form also brings its own verification obligations, since form sets the default review method: read prose, test symbolic artifacts, probe parametric ones behaviorally.
+Grading dissolves the binary question. A system need not cover all its forms to be reflective — reflection is aspect-bound — but a coverage claim must state the form and the depth, separately for each form the system's behavior lives in. Depth describes a design; it does not rank it — the kernel-boundary discussion below shows why a fixed mapping held at shallow depth can be the correct choice. Each covered form also brings its own verification obligations, since form sets the default review method: read prose, test symbolic artifacts, probe parametric ones behaviorally.
 
 ## Coverage patterns
 
@@ -60,7 +60,7 @@ Six questions establish what a claimed cross-representational capability actuall
 - **Consistency and failure.** Partially answered. Staleness after a source change is covered; rejected translations are not. When a source item cannot render into a target — filtered out, unsupported, too long — nothing requires that omission to surface.
 - **Kernel boundary.** Not declared. The renderer and the harness's context-loading mechanism both sit outside the reflective surface, unnamed.
 
-The pass separates cases the source rules treat together. A policy rendered into an `AGENTS.md` excerpt stays prose, consumed by natural-language interpretation on both sides; a convention rendered into a lint rule crosses into symbolic form and acquires a formal consumer. Only the second is cross-representational, and that [codification](./definitions/codification.md) crossing is where transfer can fail silently.
+The pass separates cases the source rules treat together. A policy rendered into an `AGENTS.md` excerpt stays prose, consumed by natural-language interpretation on both sides; a convention rendered into a lint rule crosses into symbolic form and acquires a formal consumer. Only the second crosses representational forms, and that [codification](./definitions/codification.md) crossing is where transfer can fail silently.
 
 It also locates the gap precisely. The renderer's non-modifiability is not the defect — an unmodifiable kernel is compatible with full coverage. But that compatibility was conditional on the interface exposing its semantics and its relevant failures, and target-specific filtering that can silently drop a policy for one assistant while keeping it for another is exactly such a failure. The unexposed failure is the defect, not the fixed mapping.
 
@@ -70,7 +70,7 @@ Pattie Maes's *Computational Reflection* distinguishes **procedural reflection**
 
 Cross-language reflection offers the closest direct precedent for spanning access. In *Symbiotic Reflection between an Object-Oriented and a Logic Programming Language*, Roel Wuyts and Stéphane Ducasse make entity transfer explicit, enabling each language to reason about and act on the other ([2001, printed pp. 4–10; PDF pp. 4–10](../sources/wuyts-ducasse-2001-symbiotic-reflection.ingest.md)). In *Inter-language Reflection*, Kris Gybels and colleagues distinguish **data mappings**, which move values across a boundary, from **protocol mappings**, which make the receiving side's operations applicable to representations of those values ([2006, printed pp. 110–112; PDF pp. 2–4](../sources/gybels-et-al-2006-inter-language-reflection.ingest.md)). Their architecture exposes both ordinary program behavior and reflective operations over its representations.
 
-Cross-representational reflection carries the same analytical questions beyond programming languages: what is represented, what crosses each boundary, which operations remain available, and how changes acquire consequences. The precedents do not establish that asynchronous artifacts, human interpretation, or repository workflows behave like language interpreters. Such systems must demonstrate their own boundaries and causal paths.
+The graded-coverage criterion carries the same analytical questions beyond programming languages: what is represented, what crosses each boundary, which operations remain available, and how changes acquire consequences. The precedents do not establish that asynchronous artifacts, human interpretation, or repository workflows behave like language interpreters. Such systems must demonstrate their own boundaries and causal paths.
 
 ## Semantic–formal is broader than neuro-symbolic
 
@@ -82,7 +82,7 @@ Combining prose and code does not increase computational universality. The stron
 
 > Combining semantic and formal representations extends reflective coverage over a system whose behavior is already distributed across both — and that coverage is graded: a claim must name the form and the operation depth, and no form inherits either from another.
 
-Joint adaptation, movement between forms, and shared callable interfaces may support that coverage, but none of them establishes it without a causally connected self-representation. What the concept supplies is a vocabulary and a graded coverage criterion. It does not, by itself, classify Commonplace or any other system.
+Joint adaptation, movement between forms, and shared callable interfaces may support that coverage, but none of them establishes it without a causally connected self-representation. What this note supplies is a vocabulary and a graded coverage criterion. It does not, by itself, classify Commonplace or any other system.
 
 ---
 

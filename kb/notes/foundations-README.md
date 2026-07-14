@@ -23,7 +23,7 @@ Core theory that the rest of the KB builds on. These notes define the quality cr
 - [mechanistic constraints make Popperian KB recommendations actionable](./mechanistic-constraints-make-popperian-kb-recommendations-actionable.md) — bridges conjecture-and-refutation with bounded-context mechanics
 ### Reflective systems
 
-- [reflective systems](./reflective-systems-README.md) — actionable theory, reflection, governed adaptation, closure, and case classification; distinct properties, not a maturity ladder
+- [reflective systems](./reflective-systems-README.md) — actionable theory, reflection, governed adaptation, closure, and case classification; each property can hold without the others
 
 ### Rationale and design method
 

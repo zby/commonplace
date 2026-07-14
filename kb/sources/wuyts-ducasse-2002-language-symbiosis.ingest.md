@@ -24,7 +24,7 @@ This 2002 version defines **symbiotic reflection** as reflection between two lan
 
 ## Connections Found
 
-The durable relationship is a `compares-with` lineage edge to [the 2001 snapshot](./wuyts-ducasse-2001-symbiotic-reflection.md). It should not add a second evidence vote to [Cross-representational reflection](../notes/cross-representational-reflection.md). [Representational form](../notes/definitions/representational-form.md) still supplies the local constraint on generalizing from programming paradigms to prose/symbolic forms.
+The durable relationship is a `compares-with` lineage edge to [the 2001 snapshot](./wuyts-ducasse-2001-symbiotic-reflection.md). It should not add a second evidence vote to [Cross-representational reflection](../notes/reflective-coverage-is-graded-across-representational-forms.md). [Representational form](../notes/definitions/representational-form.md) still supplies the local constraint on generalizing from programming paradigms to prose/symbolic forms.
 
 ## Inherited Vocabulary
 

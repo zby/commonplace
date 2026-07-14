@@ -78,4 +78,4 @@ The paper's general definition is compressed and is better supported by Maes's 1
 
 ## Recommended Next Action
 
-Use the 3-KRS object/meta-object/interpreter topology as an implementation precedent for [Cross-representational reflection](../notes/cross-representational-reflection.md), while citing Maes 1988—not this related version—for the general definition.
+Use the 3-KRS object/meta-object/interpreter topology as an implementation precedent for [Cross-representational reflection](../notes/reflective-coverage-is-graded-across-representational-forms.md), while citing Maes 1988—not this related version—for the general definition.
