@@ -1,5 +1,5 @@
 ---
-description: "Curated head for the reflective-systems tag — the lens the agent-memory-system reviews are conducted through: a low-bar definition, three independent gradings over it (coverage, closure, autonomy), and what they let you ask of a system that claims to improve itself"
+description: "Curated head for the reflective-systems tag — what to ask of a self-improving loop: reflection supplies only the wire, and autonomy, bounded by verification, is what discriminates"
 type: kb/types/tag-readme.md
 index_source: tag
 index_key: reflective-systems
@@ -12,17 +12,17 @@ A [reflective system](./definitions/reflective-system.md) keeps descriptions of 
 
 ## What the frame is for
 
-Three jobs, all of them already running in this repository.
+The idea in fashion is the **self-improving loop**: give an agent a description of itself that it can read and rewrite, and it gets better at its job on its own. Most systems in [agent-memory-systems](../agent-memory-systems/README.md) are a bid at some version of it — mine the traces, write the lesson down somewhere durable, load it next time. This cluster exists to say something true about that loop rather than admire it, and two results do most of the work.
 
-**Reviewing systems that claim to learn.** The [agent-memory-system-review](../agent-memory-systems/types/agent-memory-system-review.md) type is built out of this vocabulary. It instructs every reviewer to record a system's representational forms, its behavioral authority as *consumer, channel, and force*, and whether its artifacts are knowledge or system-definition — then to find its **promotion path**, whether a candidate can move from prose advice to symbolic validator to enforced gate, which the spec calls "often the most design-relevant question." Those are this cluster's terms, and the [comparison matrix](../agent-memory-systems/systems-table.md) is generated from them. Without the frame the reviews collapse into feature lists.
+**Reflection gives you the wire, not the loop.** A self-representation the system's own processes can read and write supplies exactly one thing: a causal path from an edited description to changed behavior. It supplies no *search* (what is worth changing?), no *evaluation* (did it help?), and no *operative retention* (does the accepted change reach a consumer with force?) — [governed adaptation requires all three](./governed-adaptation-requires-search-evaluation-and-retention.md), and they fail independently. This is the frame's diagnostic edge: a system that has the wire and stalls anyway is usually missing a named function. A reviewed note no prompt-assembly step loads has no consumer. An approved patch never merged has no channel. A generated validator nothing invokes has no force. In each, the work happened and the loop stayed open.
 
-**Diagnosing a learning system that does not learn.** The decomposition says where to look: a reviewed note no prompt-assembly step loads has no *consumer*; an approved patch never merged has no *channel*; a generated validator nothing invokes has no *force*. In each the work happened and the loop stayed open. It also predicts what a better evaluator cannot buy you — search reach and evaluation strength are independent limits, and no verifier can select a candidate the generator never reached.
+**And the "self-" is the cheap part — autonomy is the real question.** Declare a maintainer inside the boundary and essentially every maintained codebase becomes a reflective, self-modifying system, so [reflection is nearly free](./human-inclusive-boundaries-make-reflection-cheap.md) and *the system improves itself* discriminates almost nothing. What carries information is **how much of the loop runs inside the system** — noticing what to change, judging whether it helped, making the change stick — assessed function by function rather than claimed as a slogan. A system where a human notices every problem and approves every change is fully reflective and barely autonomous; that is not a failure, but it is not what the loop is being sold as either.
 
-**Reading a "self-improving system" claim without being taken in.** Under a human-inclusive boundary reflection is nearly free, so *the system modifies itself* discriminates almost nothing — every maintained codebase qualifies. The questions that discriminate are which functions run without a human, and what oracle bounds them; autonomy in evaluation extends exactly as far as verification reaches, and no further.
+Autonomy is also *bounded*, which is what makes it predictive rather than merely descriptive: it extends exactly as far as mechanical verification reaches, [since the boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md). So the frame tells you where the human will still be standing — in Commonplace, at search and the judgment-heavy evaluation, precisely the gates no validator can close. The Gödel machine reaches full autonomy only by refusing every improvement it cannot prove.
 
-## The wire, where the representation is prose
+This is why the external reviews are written in this vocabulary instead of feature lists: the [agent-memory-system-review](../agent-memory-systems/types/agent-memory-system-review.md) type asks each system for its representational forms, its behavioral authority as *consumer, channel, and force*, and its **promotion path** — whether a candidate can move from prose advice to symbolic validator to enforced gate, which the spec calls "often the most design-relevant question." The [comparison matrix](../agent-memory-systems/systems-table.md) is generated from those terms.
 
-Where the self-representation is a body of retained artifacts rather than code an interpreter reads, the causal path runs through search — so [retrieval failure is reflection failure](./retrieval-failure-is-reflection-failure.md). A represented constraint no process can find is inert, and an index that claims completeness it does not have cuts the path exactly where a consumer was relying on it.
+Where the self-representation is retained artifacts rather than code an interpreter reads, the wire runs through search — so [retrieval failure is reflection failure](./retrieval-failure-is-reflection-failure.md). A represented constraint no process can find is inert.
 
 ## The base and its gradings
 
@@ -36,13 +36,13 @@ All three grade over one decomposition: [governed adaptation requires search, ev
 
 ## Occupants
 
-Schmidhuber's Gödel machine makes all of its code rewritable, including the routine that searches for code changes, and accepts a rewrite only with a proof that it helps — [a proof-governed case of reflective self-modification](./goedel-machines-are-a-proof-governed-case-of-self-modification.md), closed to the point of ignoring improvements it cannot prove. It sits at the far corner of all three gradings at once.
+The [Gödel machine](./goedel-machines-are-a-proof-governed-case-of-self-modification.md) makes all of its code rewritable — including the routine that searches for rewrites — and accepts one only under proof that it helps. It sits at the far corner of all three gradings at once, and pays for it by ignoring every improvement it cannot prove.
 
-[Commonplace classifies as a reflective system](../reference/commonplace-as-a-reflective-system.md) with the same skeleton and a looser gate: tests, validators, and a human maintainer who notices what to change and judges whether it helped. It grades unevenly — modification depth on prose and code, selection depth on the model; closure on some axes and not others; humans at search and the judgment-heavy evaluation.
+[Commonplace](../reference/commonplace-as-a-reflective-system.md) has the same skeleton and a looser gate: tests, validators, and a maintainer who notices what to change and judges whether it helped. It grades unevenly — modification depth on prose and code, selection depth on the model; humans at search and the judgment-heavy evaluation.
 
 ## Consequence for agentic systems
 
-[Improving an agentic system crosses the prose-symbolic boundary](./improving-an-agentic-system-crosses-the-prose-symbolic-boundary.md): the changes that improve reliability move behavior between prose and code rather than staying in either, so coverage of a single form cannot carry them.
+[Improving an agentic system crosses the prose-symbolic boundary](./improving-an-agentic-system-crosses-the-prose-symbolic-boundary.md): reliability gains move behavior between prose and code rather than staying in either, so coverage of a single form cannot carry them.
 
 ## Related Tags
 
