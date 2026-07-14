@@ -19,6 +19,8 @@ The two ends of that gap have occupants. Schmidhuber's Gödel machine makes all 
 - [Actionable theory](./definitions/actionable-theory.md) — the prior question: when can written theory guide an operator's actions at all
 - [Governed adaptation requires search, evaluation, and operative retention](./governed-adaptation-requires-search-evaluation-and-retention.md) — the change-loop functions reflection feeds but does not supply
 - [Reflective coverage is graded across representational forms](./reflective-coverage-is-graded-across-representational-forms.md) — a system may edit its prose and code freely while its only reach over the model weights is choosing which sealed model runs
+- [Human-inclusive boundaries make reflection cheap; autonomy is the discriminating gradient](./human-inclusive-boundaries-make-reflection-cheap.md) — because the human-inclusive boundary makes the bare classification near-trivial, autonomy — how much of the loop runs without a human — is the axis that discriminates
+- [Improving an agentic system crosses the prose-symbolic boundary](./improving-an-agentic-system-crosses-the-prose-symbolic-boundary.md) — reliability-improving changes cross between prose and code, so single-form reflective coverage cannot carry them
 
 ## Related Tags
 
