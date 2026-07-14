@@ -7,9 +7,9 @@ tags: [foundations, constraining, reflective-systems]
 
 # Closure under recommendations bounds methodology-governed self-extension
 
-A methodology is a theory for design and action: in the hands of an operator that can follow it, it is an [actionable theory](./definitions/actionable-theory.md), mapping represented conditions to a choice among interventions. But when the system a methodology governs is asked to extend *itself* by following that methodology, its prescriptions raise further decisions. Extension proceeds under the methodology's governance only as far as the methodology settles those decisions. Call this **closure under its own recommendations**.
+A methodology that an operator can follow is an [actionable theory](./definitions/actionable-theory.md): it maps represented conditions to a choice among interventions. But when the system a methodology governs is asked to extend *itself* by following that methodology, its prescriptions raise further decisions. Extension proceeds under the methodology's governance only as far as the methodology settles those decisions. Call this **closure under its own recommendations**.
 
-## Closure is not reflection
+## Closure is a stronger property than reflection
 
 A [reflective system](./definitions/reflective-system.md) has a causally connected self-representation available to its own processes. That is a structural condition, and it is weaker than closure. A reflective system may modify itself without possessing any methodology that governs how those modifications should be made — it changes, but nothing prescribes the change.
 
