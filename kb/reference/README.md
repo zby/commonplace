@@ -190,7 +190,7 @@ Look up how the shipped system is put together: its architecture, type system, a
 - [available-types.md](./available-types.md) — catalog of shipped types: global (`text`, `note`, `instruction`, `definition`, `index`) and directory-scoped specialised types
 - [type-loading.md](./type-loading.md) — how authoring skills and validation resolve a type contract through collection-scoped lookup
 - [link-vocabulary.md](./link-vocabulary.md) — linking approach and label catalogue: collection-owned outbound rules, reader-need labels, articulation tests, connect reports, and guidance for `COLLECTION.md` authors
-- [definitions/](./definitions/) — vocabulary terms used by the shipped system (e.g., [collection](./definitions/collection.md))
+- [definitions/](./definitions/dir-index.md) — vocabulary terms used by the shipped system (e.g., [collection](./definitions/collection.md))
 
 ### Authoring and operator procedures
 
