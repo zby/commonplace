@@ -97,8 +97,9 @@ Basic reflection does not require the stronger claim that Commonplace's reflecti
 - **Symbolic execution producing evidence that revises prose** — demonstrated, once. The `covered_by` check found what the documented `rg` recipe missed, and the recipe was corrected.
 - **Mappings represented and modifiable** — partial. The type-spec-to-validator mapping is unusually tight (the spec path is the dispatch key), so it is hard for the two to drift silently. Most other prose-to-code relationships in the repository have no such binding.
 - **Lineage and staleness across the forms** — largely unrepresented. Commonplace's rationale surfaces are distributed, and it does not guarantee an end-to-end trace from a claim to the code that implements it; see [design rationale management](./design-rationale-management.md). Freshness tracking exists for review pairs, not for theory-to-implementation lineage.
+- **The distributed-parametric form — selection-grade only.** The model weights sit outside the boundary: nothing inside can inspect or edit them. The one represented lever is selection among sealed alternatives — skill frontmatter pins a model (`model: opus` in `kb/instructions/cp-skill-write/SKILL.md`, `model: sonnet` on lighter skills), and review baselines partition by model. Editing that prose changes which parametric substrate runs, and nothing finer. In the [graded-coverage terms](../notes/cross-representational-reflection.md) this is real intercession over the parametric form at the crudest useful depth.
 
-The honest summary: cross-representational reflection is demonstrated on the type-system spine and is architecturally possible elsewhere, not systematically achieved.
+The honest summary: reflective coverage here is graded, not uniform. It reaches modification depth on the prose and symbolic forms — demonstrated on the type-system spine, architecturally possible elsewhere, not systematically achieved — and only selection depth on the parametric form.
 
 ## What this classification does not claim
 
