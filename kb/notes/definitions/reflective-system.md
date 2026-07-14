@@ -41,9 +41,19 @@ People may be components of a reflective system when the declared boundary inclu
 
 Under Commonplace's extension, a monitored service, dashboard, and operator role qualify only when the dashboard functions within the declared whole as a representation of that same whole. A display used merely as telemetry in an external control loop does not qualify. Second-order cybernetics supports including an observer and the observer's purposes in the analyzed boundary, but observer inclusion alone supplies neither a self-representation nor a causal-connection test ([von Foerster 1979, PDF pp. 2–3](../../sources/von-foerster-cybernetics-of-cybernetics-1979.ingest.md)).
 
+## Retrieval-mediated causal connection
+
+The causal connection need not be an interpreter or a compiler. Where the self-representation is a body of retained artifacts, the connection can run through **discovery**: a process searches the artifacts, finds the ones bearing on the change it is making, and derives its behavior from what it found. Editing an artifact then reaches later behavior without anyone deciding to re-derive, provided the retrieval procedure surfaces it.
+
+This puts retrieval inside the reflective architecture rather than alongside it. The search recipes, the fields that make an artifact findable, and the indexes that shortcut the search are the wire along which the self-representation acts, and a represented constraint that no process can find is inert. **Retrieval failure is therefore reflection failure** — the analogue of a compiler silently dropping a declaration, and the reason [stale indexes are worse than no indexes](../stale-indexes-are-worse-than-no-indexes.md): a membership claim that tells an exhaustive consumer to stop looking, while members are missing, cuts the wire precisely where it is trusted.
+
+Retrieval-mediated connection is weaker than procedural reflection in one specific way: it is best-effort. A compiler propagates every change to a representation it consumes; a search propagates the changes it happens to surface. Such a system can strengthen the wire — enforcing a membership claim rather than asserting it, or correcting a search recipe observed to miss a member — but it cannot assume the wire holds by construction.
+
 ## Exclusions
 
 Reflection is not autonomy, successful self-improvement, formal verification, or closure under a set of recommendations. Nor is it **organizational closure**, the recursive regeneration of a network of component interactions, or **autopoiesis**, the narrower self-production of a living system ([Varela 1981, printed pp. 14–18; PDF pp. 1–5](../../sources/varela-autonomy-and-autopoiesis-1981.ingest.md)).
+
+Reflection is also not **adaptation**, in either direction. A reflective architecture permitting intercession supplies a causal path by which a system could change itself; it does not supply the search, evaluation, and operative retention that [governed adaptation requires](../governed-adaptation-requires-search-evaluation-and-retention.md). Conversely, a system can run that loop with no self-representation at all — Ashby's Homeostat adapts by varying parameters against a viability test ([Ashby 1960, chapters 7–8](../../sources/ashby-design-for-a-brain-ultrastability.md)). The two properties are orthogonal: reflection is structural, adaptation is a process, and each is available without the other.
 
 ## Misuse Cases
 
@@ -59,8 +69,10 @@ Relevant Notes:
 - [Actionable theory](./actionable-theory.md) — grounds: an internal process may act through theory, but actionability alone does not establish reflection
 - [Behavioral authority](./behavioral-authority.md) — enables: names the consumer, channel, and force that make a self-representation operative
 - [Cross-representational reflection](../cross-representational-reflection.md) — extends: asks how aspect-bounded reflection covers systems whose behavior spans heterogeneous representations and their mappings
-- [A methodology is agent-extensible only where it is closed under its own recommendations](../methodology-agent-extensible-only-with-closure-under-recommendations.md) — contrasts: closure under recommendations is a stronger self-extension property than reflection
+- [Governed adaptation requires search, evaluation, and operative retention](../governed-adaptation-requires-search-evaluation-and-retention.md) — extends: reflection supplies one causal path into the loop, but not the search, evaluation, or operative retention the loop needs
+- [Closure under recommendations bounds methodology-governed self-extension](../closure-under-recommendations-bounds-governed-self-extension.md) — contrasts: closure under recommendations is a stronger self-extension property than reflection
 - [Smith, Reflection and Semantics in Lisp](../../sources/smith-reflection-and-semantics-in-lisp-1984.ingest.md) — derived-from: supplies the earlier embedded-self-theory and bidirectional-causality lineage
 - [Maes, Computational Reflection](../../sources/maes-computational-reflection-1988.ingest.md) — derived-from: supplies causal connection, self-representation, and theory-relativity
 - [Wuyts and Ducasse, Symbiotic Reflection](../../sources/wuyts-ducasse-2001-symbiotic-reflection.ingest.md) — evidence: corroborates the causal self-representation threshold and the introspection/intercession distinction
 - [von Foerster, Cybernetics of Cybernetics](../../sources/von-foerster-cybernetics-of-cybernetics-1979.ingest.md) — derived-from: supports observer-inclusive boundaries without replacing the computational criteria
+- [Ashby, Design for a Brain — ultrastability](../../sources/ashby-design-for-a-brain-ultrastability.md) — evidence: a negative case — an adaptive, self-modifying system that is not reflective, having no self-representation
