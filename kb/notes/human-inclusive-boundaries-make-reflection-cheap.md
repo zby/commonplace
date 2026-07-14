@@ -45,7 +45,7 @@ A system can move on any one axis without moving on the others: it can widen cov
 ## Scope
 
 - **Per-function and boundary-relative, not global.** Autonomy is assessed function by function against a declared boundary; there is no single scalar for a whole system, and moving the boundary moves the readings.
-- **Not a merit order.** More autonomy is not automatically better. The Gödel machine buys full autonomy at the price of ignoring every improvement it cannot prove; a mid-gradient system that keeps a human at the unverifiable gate may be the correct design.
+- **Constitutive, but not a merit order.** Two judgments must stay separate. More autonomy does make a system *more self-improving* — that is what the "self" in the term names, [since a system is self-improving to the degree its loop runs without a human](./definitions/self-improving-system.md). It does not make the system *better*. Autonomy taken past the verification boundary produces not a stronger loop but an ungoverned one, retaining changes nothing checked; the Gödel machine buys full autonomy by refusing every improvement it cannot prove, and a mid-gradient system that keeps a human at the unverifiable gate may be the correct design. Autonomy is the value; verification is the price, and it cannot be spent unpaid.
 - **Reflection remains the qualification; autonomy is the position.** This preserves the definition's exclusion that *reflection is not autonomy*. Classification answers whether the system is in the design space at all; the gradient answers where in the space it sits. They are different questions, and conflating them is what makes the bare classification look empty.
 
 ---
