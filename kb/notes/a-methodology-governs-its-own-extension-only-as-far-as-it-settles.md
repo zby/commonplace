@@ -5,7 +5,7 @@ traits: [title-as-claim]
 tags: [foundations, constraining, reflective-systems]
 ---
 
-# Closure under recommendations bounds methodology-governed self-extension
+# A methodology governs its own extension only as far as it settles the meta-decisions it raises
 
 A methodology that an operator can follow is an [actionable theory](./definitions/actionable-theory.md): it maps represented conditions to a choice among interventions. But when the system a methodology governs is asked to extend *itself* by following that methodology, its prescriptions raise further decisions. Extension proceeds under the methodology's governance only as far as the methodology settles those decisions. Call this **closure under its own recommendations**.
 
@@ -41,6 +41,7 @@ The three axes above belong to closure under recommendations because the recomme
 
 - **Closure is a direction, not a binary.** No real methodology settles every extension decision it could face. The claim is that methodology-governed self-extension scales with how much it settles, and stalls at the first consequential meta-decision it leaves open. The self-extension frontier is that first open decision.
 - **The counter worth taking seriously.** A capable agent brings general competence and can improvise the decisions a methodology omits. Where that improvisation is reliable, closure buys less. The claim's force therefore tracks how *consequential and divergence-prone* the omitted decisions are — high for what-to-codify, how-to-verify, and what-grants-force; low for cosmetic choices.
+- **Whether Commonplace is closed is a separate assessment.** This note supplies the criterion, not the verdict. [Commonplace as a reflective system](../reference/commonplace-as-a-reflective-system.md) establishes the weaker structural property and explicitly leaves closure unassessed; the body above gives only per-axis fragments (heuristics for form, no governed search). The full per-axis assessment is open work for the reference layer.
 - **Why the artifact is retained, not re-derived.** Closure explains how the system produces a codified artifact from the methodology; retention is a separate argument. A persisted symbolic artifact is deterministic and inspectable, while re-derivation pays the cost each session and risks divergent interpretations. In agent systems [the prescription/implementation boundary collapses](./a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md) — the prescription and the code it becomes are the same retained thing at different points on the constraining gradient.
 
 ---

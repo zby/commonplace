@@ -109,7 +109,7 @@ The honest summary: reflective coverage reaches modification depth on the prose 
 - The search and evaluation processes are not complete. The system [requires search, evaluation, and retention](../notes/governed-adaptation-requires-search-evaluation-and-retention.md) to close a change loop, and its evaluation is strong for structural constraints and weak for judgment-heavy ones.
 - Rationale lineage is not mechanically guaranteed.
 - Commonplace cannot modify the model weights, the inference machinery, or the other dependencies outside its boundary.
-- Reflection does not entail [closure under recommendations](../notes/closure-under-recommendations-bounds-governed-self-extension.md). Commonplace is reflective whether or not its methodology governs the meta-decisions its own extension raises; those are separate properties, assessed separately.
+- Reflection does not entail [closure under recommendations](../notes/a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md). Commonplace is reflective whether or not its methodology governs the meta-decisions its own extension raises; those are separate properties, assessed separately.
 
 ---
 
@@ -119,7 +119,7 @@ Relevant Notes:
 - [Behavioral authority](../notes/definitions/behavioral-authority.md) — defined-in: names the consumer, channel, and force in the observed trace
 - [Reflective coverage is graded across representational forms](../notes/reflective-coverage-is-graded-across-representational-forms.md) — rationale: the graded coverage criterion this system meets unevenly across its forms
 - [Governed adaptation requires search, evaluation, and operative retention](../notes/governed-adaptation-requires-search-evaluation-and-retention.md) — rationale: the change-loop decomposition the trace is read against
-- [Closure under recommendations bounds methodology-governed self-extension](../notes/closure-under-recommendations-bounds-governed-self-extension.md) — rationale: the separate, stronger self-extension property
+- [A methodology governs its own extension only as far as it settles the meta-decisions it raises](../notes/a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md) — rationale: the separate, stronger self-extension property
 - [ADR 026: tag-readme type with completeness and coverage marks](./adr/026-tag-readme-type-with-completeness-and-coverage-marks.md) — evidence: the decision at the center of the observed trace
 - [Design rationale management in Commonplace](./design-rationale-management.md) — part-of: why theory-to-implementation lineage is not enforced end to end
 - [stale indexes are worse than no indexes](../notes/stale-indexes-are-worse-than-no-indexes.md) — rationale: the retained claim through which the adaptation signal was interpreted

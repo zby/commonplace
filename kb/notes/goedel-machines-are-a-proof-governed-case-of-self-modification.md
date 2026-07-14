@@ -49,5 +49,5 @@ The comparison separates two dimensions that a single [oracle-strength spectrum]
 
 Relevant Notes:
 
-- [Closure under recommendations bounds methodology-governed self-extension](./closure-under-recommendations-bounds-governed-self-extension.md) — extends: gated goal change demonstrates that an acceptance rule can govern rewrites of itself, while exposing the price
+- [A methodology governs its own extension only as far as it settles the meta-decisions it raises](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md) — extends: gated goal change demonstrates that an acceptance rule can govern rewrites of itself, while exposing the price
 - [Schmidhuber, Gödel Machines](../sources/goedel-machines-schmidhuber.ingest.md) — derived-from: the primary paper, its theorems, and its stated limitations
