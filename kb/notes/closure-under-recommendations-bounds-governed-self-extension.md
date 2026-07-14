@@ -7,9 +7,7 @@ tags: [foundations, constraining, reflective-systems]
 
 # Closure under recommendations bounds methodology-governed self-extension
 
-A methodology can direct the construction of artifacts, and an [actionable theory](./definitions/actionable-theory.md) can supply an operator with a mapping from represented conditions to a choice among interventions. But when the system a methodology governs is asked to extend *itself* by following that methodology, the methodology's own prescriptions raise further decisions. Extension proceeds under the methodology's governance only as far as the methodology settles those decisions. Call this **closure under its own recommendations**.
-
-Closure is a property of the methodology-as-input, not of any one system, and not of any one agent's capabilities.
+A methodology is a theory for design and action: in the hands of an operator that can follow it, it is an [actionable theory](./definitions/actionable-theory.md), mapping represented conditions to a choice among interventions. But when the system a methodology governs is asked to extend *itself* by following that methodology, its prescriptions raise further decisions. Extension proceeds under the methodology's governance only as far as the methodology settles those decisions. Call this **closure under its own recommendations**.
 
 ## Closure is not reflection
 
@@ -19,7 +17,7 @@ Closure asks a different question: how far can methodology-governed self-extensi
 
 ## The system, not the lone agent
 
-The governed system may include human reviewers, agents, deterministic tools, and authority procedures. Closure asks whether that combined system has a governed route for each relevant meta-decision — not whether one model can act unassisted. Where a methodology specifies "a maintainer approves this class of change," that is a closure, not a gap: the decision has a governed route. The gap is where the methodology specifies nothing and someone must improvise.
+Closure is a property of the methodology-as-input, not of any one system or agent's capabilities. The governed system may include human reviewers, agents, deterministic tools, and authority procedures. Closure asks whether that combined system has a governed route for each relevant meta-decision — not whether one model can act unassisted. Where a methodology specifies "a maintainer approves this class of change," that is a closure, not a gap: the decision has a governed route. The gap is where the methodology specifies nothing and someone must improvise.
 
 This matters because improvised meta-decisions are where two sessions diverge, [since agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) rather than executing them.
 
@@ -27,27 +25,23 @@ This matters because improvised meta-decisions are where two sessions diverge, [
 
 Carrying out a recommendation forces the system to settle:
 
-1. **Representational form** — should the artifact stay prose to be interpreted, or be frozen into deterministic code, schema, or grammar? A methodology is closed on this axis when it hands over criteria rather than leaving the choice to be guessed. Commonplace supplies the [codify-versus-LLM decision heuristics](./codify-versus-llm-decision-heuristics.md) and the [constraining gradient](./methodology-enforcement-is-constraining.md) from convention to code; the decision itself is [codification](./definitions/codification.md). Where a recommendation spans several representations at once, the choice extends to the mappings between them, and [reflective coverage is graded across representational forms](./reflective-coverage-is-graded-across-representational-forms.md) supplies the criterion for claims about that reach.
+1. **Representational form** — should the artifact stay prose to be interpreted, or be frozen into deterministic code, schema, or grammar? A methodology is closed on this axis when it hands over criteria rather than leaving the choice to be guessed. Commonplace supplies the [codify-versus-LLM decision heuristics](./codify-versus-llm-decision-heuristics.md) and the [constraining gradient](./methodology-enforcement-is-constraining.md) from convention to code; the decision itself is [codification](./definitions/codification.md). Where a recommendation spans several representations, the choice extends to the mappings between them, since [reflective coverage is graded across representational forms](./reflective-coverage-is-graded-across-representational-forms.md).
 2. **Verification** — once the artifact exists, what establishes that it is correct? A methodology is closed on this axis when it tells the system which oracle to build or invoke. This is the binding constraint: an artifact can be produced only as reliably as it can be checked, [since the boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md). A methodology closed on form but open on verification generates artifacts nobody can confirm — output, not automation.
 3. **Authority and retention** — how does the accepted artifact acquire a consumer, a channel, and a force, so that it affects later behavior? In [behavioral authority](./definitions/behavioral-authority.md) terms, a recommendation that produces an artifact but specifies no consumption path leaves the change loop open. A methodology that prescribes a new gate without saying what invokes it, or a new note without saying who reads it, is not closed on this axis.
 
-This reframes what a methodology's verification and authority machinery — typed artifacts, validators, review gates, routing contracts — is *for*. It is not bureaucracy around the knowledge. It is what raises the ceiling on how far the system can extend itself from the methodology alone.
+This is what a methodology's verification and authority machinery — typed artifacts, validators, review gates, routing contracts — is *for*: it raises the ceiling on how far the system can extend itself from the methodology alone.
 
 ## Closure under recommendations is not search closure
 
-The full change loop also [requires search, evaluation, and retention](./governed-adaptation-requires-search-evaluation-and-retention.md): something must find a candidate before anything can accept it. But finding the problem is a different question from carrying out a recommendation already reached.
+The full change loop also [requires search, evaluation, and retention](./governed-adaptation-requires-search-evaluation-and-retention.md): something must find a candidate before anything can accept it. But search closure — how the system finds problems and generates candidates — is a different property from closure under recommendations, which asks how the system resolves the meta-decisions entailed by a recommendation it already has.
 
-- **Search closure** asks how the system finds problems and generates candidates.
-- **Closure under recommendations** asks how the system resolves the meta-decisions entailed by a recommendation it already has.
-
-The three axes above belong to closure under recommendations because the recommendation itself raises each of them: the prescribed artifact must take some form, it must be checked somehow, and it must acquire force to matter. Search is a precondition of the loop rather than a decision the recommendation forces, so it is not a fourth axis here. A methodology could separately prescribe how to search — and Commonplace largely does not — but that is a claim about search closure, and it should be argued as one.
+The three axes above belong to closure under recommendations because the recommendation itself raises each of them: the prescribed artifact must take some form, be checked somehow, and acquire force to matter. Search is a precondition of the loop, not a decision the recommendation forces. A methodology could separately prescribe how to search — Commonplace largely does not — but that is a claim about search closure, and it should be argued as one.
 
 ## Scope
 
 - **Closure is a direction, not a binary.** No real methodology settles every extension decision it could face. The claim is that methodology-governed self-extension scales with how much it settles, and stalls at the first consequential meta-decision it leaves open. The self-extension frontier is that first open decision.
-- **Coverage, not autonomy.** The property measured is the methodology's coverage of its own meta-decisions. Whether the resulting route is walked by an agent, a script, or a human is a separate matter.
 - **The counter worth taking seriously.** A capable agent brings general competence and can improvise the decisions a methodology omits. Where that improvisation is reliable, closure buys less. The claim's force therefore tracks how *consequential and divergence-prone* the omitted decisions are — high for what-to-codify, how-to-verify, and what-grants-force; low for cosmetic choices.
-- **Why the artifact is retained, not re-derived.** Closure explains how the system produces a codified artifact from the methodology; it does not argue for reproducing it each session. A persisted symbolic artifact is deterministic and inspectable in a way a re-derivation is not — re-deriving pays the cost again and risks two interpretations drifting apart. The methodology *generates* the artifact via closure; the KB *retains* it so nobody re-derives it. In agent systems [the prescription/implementation boundary collapses](./a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md) — the prescription and the code it becomes are the same retained thing at different points on the constraining gradient.
+- **Why the artifact is retained, not re-derived.** Closure explains how the system produces a codified artifact from the methodology; retention is a separate argument. A persisted symbolic artifact is deterministic and inspectable, while re-derivation pays the cost each session and risks divergent interpretations. In agent systems [the prescription/implementation boundary collapses](./a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md) — the prescription and the code it becomes are the same retained thing at different points on the constraining gradient.
 
 ---
 
@@ -59,4 +53,3 @@ Relevant Notes:
 - [Behavioral authority](./definitions/behavioral-authority.md) — enables: names the consumer, channel, and force the authority axis demands
 - [Reflective coverage is graded across representational forms](./reflective-coverage-is-graded-across-representational-forms.md) — extends: the representational-form axis widens to the mappings between forms when a recommendation spans them
 - [the boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — mechanism: why the verification axis is the ceiling
-</content>
