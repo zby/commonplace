@@ -52,9 +52,9 @@ Autonomy is the interesting direction, and it *can* be turned up at will — whi
 
 Remove the evaluator, replacing it with an unconditional accept, and there is no evaluator: nothing can be rejected, the loop does not close, and the system drops out of the category into plain self-modification. That is a **category** failure.
 
-Weaken the evaluator — a soft rubric, a model judge, a shallow test — and the loop closes exactly as before. A fallible evaluator still rejects some candidates, so it evaluates; the system is fully autonomous at that gate and fully self-improving. It is simply wrong more often, and its errors are the ones that survive, [since evaluation is the terminal filter](../search-errors-are-filtered-evaluation-errors-are-retained.md). That is a **quality** failure, and it leaves the system inside the category, degrading.
+Weaken the evaluator — a soft rubric, a model judge, a shallow test — and the loop closes exactly as before. A fallible evaluator still rejects some candidates, so it evaluates; the system is fully autonomous at that gate and fully self-improving. It is simply wrong more often, and its errors are the ones that survive, [since false-positive acceptance becomes operative](../false-positive-generation-is-filtered-before-retention.md). That is a **quality** failure, and it leaves the system inside the category, degrading.
 
-So what an oracle bounds is not autonomy but **warranted autonomy**: how far the loop can run unattended and still be trusted. [The boundary of automation is the boundary of verification](../the-boundary-of-automation-is-the-boundary-of-verification.md) marks that ceiling, and [a stronger oracle buys autonomy and pays in reach](../a-stronger-oracle-buys-autonomy-and-pays-in-reach.md) prices what it costs to take autonomy *and be right*. Unwarranted autonomy is always available and always cheap.
+So what an oracle bounds is not autonomy but **warranted autonomy**: how far the loop can run unattended and still be trusted. [The boundary of automation is the boundary of verification](../the-boundary-of-automation-is-the-boundary-of-verification.md) marks that ceiling, while [warranted autonomy is bounded by oracle reach](../warranted-autonomy-is-bounded-by-oracle-reach.md). Unwarranted autonomy is always available and always cheap.
 
 ## Exclusions
 
@@ -83,9 +83,9 @@ Relevant Notes:
 - [Reflective system](./reflective-system.md) — grounds: the causally connected self-representation, and the intercession capability, that supply the machinery
 - [An adaptation loop requires search, evaluation, and operative retention](../an-adaptation-loop-requires-search-evaluation-and-retention.md) — grounds: the three functions the loop must accomplish, and why each is required
 - [Human-inclusive boundaries make reflection cheap; autonomy is the discriminating gradient](../human-inclusive-boundaries-make-reflection-cheap.md) — grounds: why the machinery is nearly free, and why autonomy is the gradient that discriminates
-- [Search errors are filtered; evaluation errors are retained](../search-errors-are-filtered-evaluation-errors-are-retained.md) — extends: which function to make autonomous first, and why evaluation is the one that must be bought
+- [False-positive generation is filtered; false-positive acceptance becomes operative](../false-positive-generation-is-filtered-before-retention.md) — extends: why false-positive acceptance is the dangerous evaluation failure
 - [The boundary of automation is the boundary of verification](../the-boundary-of-automation-is-the-boundary-of-verification.md) — mechanism: the ceiling on autonomous evaluation
-- [A stronger oracle buys autonomy and pays in reach](../a-stronger-oracle-buys-autonomy-and-pays-in-reach.md) — mechanism: the price of the autonomy the gradient grades, and why position on it is downstream of the oracle trade
+- [Warranted autonomy is bounded by oracle reach](../warranted-autonomy-is-bounded-by-oracle-reach.md) — mechanism: the oracle limit on unattended evaluation that remains trustworthy
 - [Oracle strength spectrum](../oracle-strength-spectrum.md) — grounds: what an evaluator's acceptance can and cannot establish, which is why acceptance is only an improvement claim
 - [Behavioral authority](./behavioral-authority.md) — defined-in: the consumer, channel, and force that operative retention requires
 - [Gödel machines are a proof-governed case of reflective self-modification](../goedel-machines-are-a-proof-governed-case-of-self-modification.md) — exemplifies: the autonomous corner, and what it costs

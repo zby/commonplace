@@ -9,9 +9,9 @@ tags: [foundations, computational-model, self-improving-systems]
 
 Commonplace is a reflective system: it contains a causally connected representation of selected aspects of itself, available to processes inside its declared boundary, and operations mediated through that representation change its subsequent behavior.
 
-It is also a human-inclusive [self-improving system](../notes/definitions/self-improving-system.md), which the same trace discharges below.
+It is also a human-inclusive [self-improving system](../notes/definitions/self-improving-system.md) — the stronger and more interesting claim, since reflection alone is cheap.
 
-This is a case classification, not a new theory. It discharges the five obligations that [reflective system](../notes/definitions/reflective-system.md) requires anyone to state before applying the term, and it rests on one observed repository trace rather than on architectural possibility. Reflection here is aspect-bound and partial; the negative conclusions at the end are part of the claim, not hedges around it.
+This is a case classification, not a new theory. It discharges the five obligations that [reflective system](../notes/definitions/reflective-system.md) requires anyone to state before applying the term, then reads the same trace against the self-improving definition, which asks for two further things: a loop that runs on the system itself and an objective it could have failed. Both classifications rest on one observed repository trace rather than on architectural possibility. Reflection here is aspect-bound and partial; the negative conclusions at the end are part of the claim, not hedges around it.
 
 ## 1. The declared boundary
 
@@ -105,7 +105,7 @@ Reflection is the machinery; it is not yet the interesting claim. The trace abov
 
 The improvement objective is the requirement the reflective classification never had to state, and stating it is what makes the loop improvement-*directed* rather than merely change-directed. Note what it does not establish: the validator's acceptance says the marks are consistent, not that the type split made the KB better. That remains an improvement *claim*.
 
-**Autonomy profile.** Search: human. Evaluation: split — mechanical where the constraint is structural, human where it is judgment-heavy. Retention: mechanical once merged, with the merge itself human. So Commonplace is a **human-inclusive self-improving system**, not an autonomous one — and the humans sit exactly where no oracle reaches, which is [what the theory predicts and what it costs](../notes/a-stronger-oracle-buys-autonomy-and-pays-in-reach.md).
+**Autonomy profile.** Search: human. Evaluation: split — mechanical where the constraint is structural, human where it is judgment-heavy. Retention: mechanical once merged, with the merge itself human. So Commonplace is a **human-inclusive self-improving system**, not an autonomous one — and humans remain where no adequate automatable oracle reaches, [since warranted autonomy is bounded by oracle reach](../notes/warranted-autonomy-is-bounded-by-oracle-reach.md).
 
 ## Coverage across representational forms: partially demonstrated
 
@@ -123,12 +123,11 @@ In summary: reflective coverage reaches modification depth on the prose and symb
 
 - Commonplace does not represent every aspect of itself; reflection is aspect-bound.
 - Not all self-modification is automated. Search — noticing the problem, choosing the target — remains substantially human, and the system's methodology does not govern it.
-- Not all accepted changes are improvements. Retention under the tests and review that applied does not establish global utility.
-- The search and evaluation processes are not complete. The system [requires search, evaluation, and retention](../notes/an-adaptation-loop-requires-search-evaluation-and-retention.md) to close a change loop, and its evaluation is strong for structural constraints and weak for judgment-heavy ones.
+- Nothing here establishes that the accepted changes were improvements; the autonomy profile above says what was checked and by what, and the improvement claim stops there.
 - Rationale lineage is not mechanically guaranteed.
 - Commonplace cannot modify the model weights, the inference machinery, or the other dependencies outside its boundary.
 - Reflection does not entail [closure under recommendations](../notes/a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md). Commonplace is reflective whether or not its methodology governs the meta-decisions its own extension raises; those are separate properties, assessed separately.
-- The bare classification is not the informative part: under a human-inclusive boundary nearly every maintained system is reflective, since [human-inclusive boundaries make reflection cheap](../notes/human-inclusive-boundaries-make-reflection-cheap.md). What the trace establishes is this system's autonomy profile — the harness, validators, and agents consume the self-representation without a human in the read path, while search and judgment-heavy evaluation remain human.
+- The bare classification is not the informative part: under a human-inclusive boundary nearly every maintained system is reflective, since [human-inclusive boundaries make reflection cheap](../notes/human-inclusive-boundaries-make-reflection-cheap.md). What the trace establishes is not that Commonplace qualifies but where it sits — which is what the autonomy profile above records.
 
 ---
 

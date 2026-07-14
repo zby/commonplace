@@ -1,11 +1,11 @@
 ---
-description: "Evaluation is the terminal filter in an adaptation loop, so a bad candidate costs only effort while a bad acceptance is kept and compounds — which makes search the function to automate first"
+description: "False-positive generation faces evaluation before retention, while false-positive acceptance becomes operative and can compound"
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [foundations, self-improving-systems]
 ---
 
-# Search errors are filtered; evaluation errors are retained
+# False-positive generation is filtered; false-positive acceptance becomes operative
 
 In an [adaptation loop](./an-adaptation-loop-requires-search-evaluation-and-retention.md), search and evaluation fail in ways that are not symmetric, and the asymmetry is structural rather than incidental.
 
@@ -21,7 +21,7 @@ The asymmetry is between the two kinds of *false positive*. Search produces some
 
 Search's other failures are not filtered, because there is nothing to filter. Search also fails by **omission** — never generating the candidate worth having, choosing the wrong target, stopping too early — and those errors are invisible and permanent. No evaluator recovers them: [evaluation cannot select a candidate that search never reaches](./an-adaptation-loop-requires-search-evaluation-and-retention.md). They are not *retained* either, since nothing enters the system; they are simply forgone, and the system cannot tell that they were.
 
-So the precise claim is narrower than the title:
+The precise claim is:
 
 > False-positive generation is filtered before retention; false-positive acceptance becomes operative.
 
@@ -51,14 +51,13 @@ But that correction path is itself evaluation, and it inherits the same bound. T
 - It runs against the same oracle that made the original mistake, so the blind spot that let the change in is the blind spot that lets it stay. A second pass with an unchanged oracle is not a second chance.
 - Meanwhile the artifact has been operative, and may have acquired dependents — the cost of removing it is no longer the cost of never having accepted it.
 
-Search errors are caught by machinery already running in the loop, at no extra cost. Evaluation errors are caught only by spending more of the thing that was scarce, and only if the oracle has meanwhile improved.
+False-positive generation is caught by machinery already running in the loop, at no extra cost. False-positive acceptance is caught only by spending more of the thing that was scarce, and only if the oracle has meanwhile improved.
 
 ## Scope
 
 - The claim assumes evaluation is the terminal filter. If a system adds monitoring or rollback downstream, that is not a counterexample — it is more evaluation, and it inherits the same bound.
 - It holds whether evaluation runs before a candidate becomes operative or after. Post-hoc evaluation changes when the bad change is caught, not whether an unfiltered acceptance is retained.
 - It ranks *what to automate first* under a fixed oracle. It does not say search is easy: [automating KB learning is an open problem](./automating-kb-learning-is-an-open-problem.md), and the judgment-heavy parts of search remain hard for their own reasons.
-- It covers only the errors the loop can observe. Search errors of omission are neither filtered nor retained — they never enter — and no amount of evaluation strength recovers them.
 
 ---
 

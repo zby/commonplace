@@ -44,7 +44,7 @@ They move independently: a system can widen coverage while keeping a human at ev
 ## Scope
 
 - **Per-function and boundary-relative, not global.** Autonomy is assessed function by function against a declared boundary; there is no single scalar for a whole system, and moving the boundary moves the readings.
-- **Autonomy is bought, not chosen.** It does not decide whether a system is [self-improving](./definitions/self-improving-system.md) — a human-inclusive loop still is one — but it is the axis worth moving along, and there is no reason to want less of it. There is only a price: [a stronger oracle buys autonomy and pays in reach](./a-stronger-oracle-buys-autonomy-and-pays-in-reach.md). A system's position on this gradient is downstream of where it settled that trade.
+- **Autonomy is separate from merit.** It does not decide whether a system is [self-improving](./definitions/self-improving-system.md) — a human-inclusive loop still is one. More autonomy strengthens the autonomy attribution but is not automatically a better design; [warranted autonomy is bounded by oracle reach](./warranted-autonomy-is-bounded-by-oracle-reach.md).
 - **The gradient does not repeal the exclusion.** *Reflection is not autonomy* still holds: classification answers whether the system is in the design space at all, and the gradient answers where in it the system sits.
 
 ---
@@ -57,5 +57,5 @@ Relevant Notes:
 - [A methodology governs its own extension only as far as it settles the meta-decisions it raises](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md) — contrasts: closure grades the methodology's settledness, not the performer
 - [Gödel machines are a proof-governed case of reflective self-modification](./goedel-machines-are-a-proof-governed-case-of-self-modification.md) — exemplifies: the full-autonomy corner of the gradient
 - [The boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — mechanism: what limits autonomous evaluation
-- [A stronger oracle buys autonomy and pays in reach](./a-stronger-oracle-buys-autonomy-and-pays-in-reach.md) — mechanism: the price of moving along this gradient, and why position on it is downstream of the oracle trade
+- [Warranted autonomy is bounded by oracle reach](./warranted-autonomy-is-bounded-by-oracle-reach.md) — mechanism: the oracle limit on autonomy that remains trustworthy
 - [Commonplace as a reflective system](../reference/commonplace-as-a-reflective-system.md) — evidence: a mid-gradient occupant with the human at the judgment-heavy gate
