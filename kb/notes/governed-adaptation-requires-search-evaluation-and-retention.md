@@ -50,7 +50,7 @@ In each case, search ran and evaluation passed, but the adaptation loop remained
 
 ## Feedback informs later iterations
 
-For adaptation to repeat, consequences of retained changes must reach later search or evaluation through tests, usage traces, incidents, human observation, or revised criteria. Such feedback does not guarantee convergence: a loop can reinforce bad criteria, search the wrong region, or retain locally successful but globally harmful changes.
+For adaptation to repeat, consequences of retained changes must reach later search or evaluation through tests, usage traces, incidents, human observation, or revised criteria.
 
 Retained design rationale is one such channel. Recorded constraints and rejected alternatives can narrow later search, while prior evidence can explain why an evaluator once accepted a choice. The record neither establishes that the same oracle remains adequate after the environment, criteria, or risk posture changes nor affects the loop unless a later consumer reads it. [Design rationale management in Commonplace](../reference/design-rationale-management.md) documents this useful but non-mechanical retention path.
 

@@ -9,7 +9,7 @@ tags: [foundations, reflective-systems]
 
 The [reflective-system definition](./definitions/reflective-system.md) permits human-inclusive boundaries: people count as internal components when they occupy an established role in the causal path. That permission is deliberate and well-sourced, but it makes the bare classification nearly free — so cheap that it barely discriminates. What discriminates among reflective systems is **autonomy**: the extent to which the reflective loop's functions run without human mediation.
 
-## The trivialization lemma
+## Why the classification is nearly free
 
 Run any maintained software system through the definition's five requirements with its development team declared inside the boundary, and all five pass:
 
@@ -18,11 +18,7 @@ Run any maintained software system through the definition's five requirements wi
 - **Internal processes.** Developers inspect the code and act through it.
 - **Causal connection.** Editing the source, building, and running changes later behavior; and observed behavior feeds back into edits.
 
-So under a human-inclusive boundary, essentially every maintained software system classifies as reflective. This is not a defect in the definition — its guards block boundary gerrymandering, not standing maintainer roles — but it means the classification alone tells you little.
-
-## Diagnosis: the human imports reflectivity wholesale
-
-Humans are already reflective. Declaring one inside the boundary imports that reflectivity wholesale, and the bare classification then collapses to "someone maintains it." The definition can keep its low bar — it is honest and sourced — but a classification claim that is meant to carry information needs a second, discriminating dimension. Membership in the class is not that dimension; position within it is.
+So under a human-inclusive boundary, essentially every maintained software system classifies as reflective. The mechanism is that humans are already reflective: declaring one inside the boundary imports that reflectivity wholesale, and the bare classification collapses to "someone maintains it." This is not a defect in the definition — its guards block boundary gerrymandering, not standing maintainer roles — but a classification meant to carry information needs a second, discriminating dimension. Membership in the class is not that dimension; position within it is.
 
 ## The gradient is autonomy
 
