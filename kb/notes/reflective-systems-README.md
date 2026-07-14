@@ -8,7 +8,7 @@ complete: true
 
 # Reflective systems
 
-A [reflective system](./definitions/reflective-system.md) keeps descriptions of itself that its own processes read — edit a description and the system later behaves differently. This repository is one: its notes, skills, and validators describe how it works, the agents working on it consume them, and changing them changes what those agents do.
+A [reflective system](./definitions/reflective-system.md) maintains descriptions of itself that are causally connected in both directions: the descriptions are kept current as the system changes, and editing them changes what the system later does. This repository is one: its notes, skills, and validators describe how it works, and the agents working on it read them, act on them, and update them when the system changes.
 
 Reflection is structural: a causal path from self-description to behavior, with no promise that changes along it are governed. The contrasting property is closure: [a methodology governs its own extension only as far as it settles the meta-decisions it raises](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md) — what form a new artifact takes, how it is verified, what gives it force. A system can be reflective without being closed.
 
