@@ -39,6 +39,6 @@ Relevant Notes:
 
 - [Reflective coverage is graded across representational forms](./reflective-coverage-is-graded-across-representational-forms.md) — grounds: supplies the form and operation-depth vocabulary this claim selects sufficient grades from
 - [Scheduler-LLM separation exploits an error-correction asymmetry](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — mechanism: the error profile that sorts bookkeeping into code and judgment into prose
-- [Closure under recommendations bounds methodology-governed self-extension](./closure-under-recommendations-bounds-governed-self-extension.md) — extends: the representational-form meta-decision a recommendation raises is, by this claim, the decision most improvements must settle
+- [A methodology governs its own extension only as far as it settles the meta-decisions it raises](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md) — extends: the representational-form meta-decision a recommendation raises is, by this claim, the decision most improvements must settle
 - [Codification](./definitions/codification.md) — defined-in: the prose-to-symbolic crossing
 - [Commonplace as a reflective system](../reference/commonplace-as-a-reflective-system.md) — evidence: the observed trace where one decision crossed into four forms and a symbolic check corrected the prose recipe
