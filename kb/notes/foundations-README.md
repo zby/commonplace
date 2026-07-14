@@ -21,17 +21,9 @@ Core theory that the rest of the KB builds on. These notes define the quality cr
 - [a-knowledge-base-should-support-fluid-resolution-switching](./a-knowledge-base-should-support-fluid-resolution-switching.md) — KB quality measured by how fluidly it supports moving between abstraction levels
 - [charting-the-knowledge-access-problem-beyond-rag](./charting-the-knowledge-access-problem-beyond-rag.md) — exploratory decomposition: separates substrate, pointers, navigation modes, synthesis, and maintenance so RAG-vs-filesystem debates stop collapsing unlike tasks
 - [mechanistic constraints make Popperian KB recommendations actionable](./mechanistic-constraints-make-popperian-kb-recommendations-actionable.md) — bridges conjecture-and-refutation with bounded-context mechanics
-### Reflection and self-extension
+### Reflective systems
 
-Read in order: the two definitions fix the vocabulary, the middle three develop it, and the case note applies it to this system.
-
-- [actionable theory](./definitions/actionable-theory.md) — definition: a relational property of theory, operator, available operations, and target system
-- [reflective system](./definitions/reflective-system.md) — definition: aspect-bounded, causally connected self-representation inside a declared computational or socio-technical boundary
-- [cross-representational reflection](./cross-representational-reflection.md) — synthesis: reflective coverage across behavior-bearing representations and the mappings between them
-- [governed adaptation requires search, evaluation, and operative retention](./governed-adaptation-requires-search-evaluation-and-retention.md) — theory: reflection supplies the causal path, not the change loop that finds, accepts, and empowers a modification
-- [closure under recommendations bounds methodology-governed self-extension](./closure-under-recommendations-bounds-governed-self-extension.md) — theory: the stronger condition — whether a methodology settles the form, verification, and authority decisions its own recommendations raise
-- [Gödel machines are a proof-governed case of reflective self-modification](./goedel-machines-are-a-proof-governed-case-of-self-modification.md) — comparison: the proof-governed corner of the design space, and what fallible-oracle systems reach that it cannot
-- [Commonplace as a reflective system](../reference/commonplace-as-a-reflective-system.md) — case: the classification discharged against an observed repository trace
+- [reflective systems](./reflective-systems-README.md) — actionable theory, reflection, governed adaptation, closure, and case classification; distinct properties, not a maturity ladder
 
 ### Rationale and design method
 

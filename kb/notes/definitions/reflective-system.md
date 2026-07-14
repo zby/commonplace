@@ -1,7 +1,7 @@
 ---
 description: "Definition — a reflective system has an aspect-bounded, causally connected self-representation available to processes inside a declared system boundary"
 type: kb/types/definition.md
-tags: [foundations, computational-model]
+tags: [foundations, computational-model, reflective-systems]
 ---
 
 # Reflective system

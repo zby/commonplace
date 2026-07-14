@@ -1,7 +1,7 @@
 ---
 description: "Definition — actionability relates a theory to an operator, available operations, a target system, and a stated setting"
 type: kb/types/definition.md
-tags: [foundations]
+tags: [foundations, reflective-systems]
 user-verified: true
 ---
 

@@ -2,7 +2,7 @@
 description: "A methodology governs its own extension only as far as it settles the meta-decisions its recommendations raise — representational form, verification, and authority"
 type: kb/types/note.md
 traits: [title-as-claim]
-tags: [foundations, constraining]
+tags: [foundations, constraining, reflective-systems]
 ---
 
 # Closure under recommendations bounds methodology-governed self-extension

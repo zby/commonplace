@@ -2,7 +2,7 @@
 description: "Coverage, inspectability, and modifiability of the mappings between representational forms are three separate properties; a fixed trusted kernel is compatible with full reflective coverage"
 type: kb/types/note.md
 traits: [has-comparison, has-external-sources, synthesis]
-tags: [foundations, computational-model, constraining]
+tags: [foundations, computational-model, constraining, reflective-systems]
 ---
 
 # Cross-representational reflection

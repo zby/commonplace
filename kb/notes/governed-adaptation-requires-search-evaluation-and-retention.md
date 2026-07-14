@@ -2,7 +2,7 @@
 description: "A governed adaptation loop needs search to produce a candidate, evaluation that can reject it, and operative retention; reflection supplies only one causal path into that loop"
 type: kb/types/note.md
 traits: [title-as-claim, has-external-sources]
-tags: [foundations, computational-model]
+tags: [foundations, computational-model, reflective-systems]
 ---
 
 # Governed adaptation requires search, evaluation, and operative retention

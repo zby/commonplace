@@ -14,6 +14,7 @@ For current-state documentation about the live Commonplace system rather than tr
 ## Tag Indexes
 
 - [Foundations](./foundations-README.md) — core theory: contextual competence, bounded context, reach, design methodology, composability
+- [Reflective systems](./reflective-systems-README.md) — actionable theory, reflection, governed adaptation, closure; distinct properties, not a maturity ladder
 - [Architecture](./architecture-README.md) — how Commonplace is structured and installed: repo layout, control-plane design, file-based storage
 - [Evaluation](./evaluation-README.md) — what works, what doesn't, what needs testing
 - [Learning theory](./learning-theory-README.md) — how systems learn, verify, and improve; covered by seven child tags (enforced), so its README routes rather than enumerates:
