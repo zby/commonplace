@@ -21,9 +21,9 @@ Core theory that the rest of the KB builds on. These notes define the quality cr
 - [a-knowledge-base-should-support-fluid-resolution-switching](./a-knowledge-base-should-support-fluid-resolution-switching.md) — KB quality measured by how fluidly it supports moving between abstraction levels
 - [charting-the-knowledge-access-problem-beyond-rag](./charting-the-knowledge-access-problem-beyond-rag.md) — exploratory decomposition: separates substrate, pointers, navigation modes, synthesis, and maintenance so RAG-vs-filesystem debates stop collapsing unlike tasks
 - [mechanistic constraints make Popperian KB recommendations actionable](./mechanistic-constraints-make-popperian-kb-recommendations-actionable.md) — bridges conjecture-and-refutation with bounded-context mechanics
-### Reflective systems
+### Self-improving systems
 
-- [reflective systems](./reflective-systems-README.md) — reflection, governed adaptation, closure, and case classification; each property can hold without the others
+- [self-improving systems](./self-improving-systems-README.md) — the loop that improves a system through its own self-representation; reflection and intercession are the cheap machinery, and autonomy over search and evaluation is what earns the name
 - [actionable methodology](./definitions/actionable-methodology.md) — the prior vocabulary: a methodology supplies an intervention-relevant mapping; actionability relates it to an operator, operations, target, and setting
 
 ### Rationale and design method

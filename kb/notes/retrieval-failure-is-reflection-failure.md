@@ -2,7 +2,7 @@
 description: "Where a self-representation is retained artifacts, retrieval is the wire it acts along — a search that misses a represented constraint breaks the causal connection, not just convenience"
 type: kb/types/note.md
 traits: [title-as-claim]
-tags: [foundations, computational-model, reflective-systems]
+tags: [foundations, computational-model, self-improving-systems]
 ---
 
 # Retrieval failure is reflection failure

@@ -1,7 +1,7 @@
 ---
 description: "Definition — self-improving to the degree a governed adaptation loop runs through the system's own self-representation without a human; reflection and intercession are machinery, not the property"
 type: kb/types/definition.md
-tags: [foundations, computational-model, reflective-systems]
+tags: [foundations, computational-model, self-improving-systems]
 ---
 
 # Self-improving system

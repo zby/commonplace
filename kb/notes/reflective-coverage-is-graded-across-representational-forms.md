@@ -2,7 +2,7 @@
 description: "Reflective coverage is graded per representational form and operation depth; selection among opaque components — pinning a model — is real but crude coverage of the parametric form"
 type: kb/types/note.md
 traits: [title-as-claim, has-comparison, has-external-sources, synthesis]
-tags: [foundations, computational-model, constraining, reflective-systems]
+tags: [foundations, computational-model, constraining, self-improving-systems]
 ---
 
 # Reflective coverage is graded across representational forms

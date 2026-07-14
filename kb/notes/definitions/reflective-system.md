@@ -1,7 +1,7 @@
 ---
 description: "Definition — a reflective system has an aspect-bounded, causally connected self-representation available to processes inside a declared system boundary"
 type: kb/types/definition.md
-tags: [foundations, computational-model, reflective-systems]
+tags: [foundations, computational-model, self-improving-systems]
 ---
 
 # Reflective system
@@ -51,7 +51,13 @@ The causal connection need not be an interpreter or a compiler. Where the self-r
 
 Reflection is not autonomy, successful self-improvement, formal verification, or closure under a set of recommendations. Nor is it **organizational closure**, the recursive regeneration of a network of component interactions, or **autopoiesis**, the narrower self-production of a living system ([Varela 1981, printed pp. 14–18; PDF pp. 1–5](../../sources/varela-autonomy-and-autopoiesis-1981.ingest.md)).
 
-Reflection is also not **adaptation**, in either direction. A reflective architecture permitting intercession supplies a causal path by which a system could change itself; it does not supply the search, evaluation, and operative retention that [governed adaptation requires](../governed-adaptation-requires-search-evaluation-and-retention.md). Conversely, a system can run that loop with no self-representation at all — Ashby's Homeostat adapts by varying parameters against a viability test ([Ashby 1960, chapters 7–8](../../sources/ashby-design-for-a-brain-ultrastability.md)). The two properties are orthogonal: reflection is structural, adaptation is a process, and each is available without the other.
+Reflection is also not **adaptation**, and this is the misreading the term invites most. Both directions have occupants.
+
+*Reflection and intercession without adaptation.* A Smalltalk image is the case to hold in mind. Classes are objects; methods can be added at runtime, superclasses changed, message dispatch intercepted, the compiler edited with the compiler. Implementation and self-representation are one structure, so the causal connection is as tight as it gets and intercession is total. Left alone, the image sits there for a decade and improves nothing — nothing in it notices that a method is slow, decides the change is worth making, or judges whether the rewrite helped. **The programmer supplies search and evaluation.** Remove the programmer and the loop is not weakened; it is absent. A reflective architecture permitting intercession supplies a causal path by which a system *could* change itself. It does not supply the search, evaluation, and operative retention that [governed adaptation requires](../governed-adaptation-requires-search-evaluation-and-retention.md).
+
+*Adaptation without reflection.* Conversely, a system can run that loop with no self-representation at all — Ashby's Homeostat adapts by varying parameters against a viability test ([Ashby 1960, chapters 7–8](../../sources/ashby-design-for-a-brain-ultrastability.md)).
+
+The two properties are orthogonal: reflection is structural, adaptation is a process, and each is available without the other. What the fashionable [self-improving system](./self-improving-system.md) requires is the *intersection*, plus autonomy over the loop's functions — and reflection is the cheap half of it.
 
 ## Misuse Cases
 

@@ -2,7 +2,7 @@
 description: "Evaluation is the terminal filter in an adaptation loop, so a bad candidate costs only effort while a bad acceptance is kept and compounds — which makes search the function to automate first"
 type: kb/types/note.md
 traits: [title-as-claim]
-tags: [foundations, reflective-systems]
+tags: [foundations, self-improving-systems]
 ---
 
 # Search errors are filtered; evaluation errors are retained

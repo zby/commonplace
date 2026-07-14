@@ -2,7 +2,7 @@
 description: "The error-correction asymmetry sorts agentic behavior between prose and code, so reliability-improving changes cross the boundary; reflective coverage of one form cannot carry them"
 type: kb/types/note.md
 traits: [title-as-claim]
-tags: [foundations, constraining, reflective-systems]
+tags: [foundations, constraining, self-improving-systems]
 ---
 
 # Improving an agentic system crosses the prose-symbolic boundary

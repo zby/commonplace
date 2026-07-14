@@ -2,7 +2,7 @@
 description: "Human-inclusive boundaries make nearly every maintained system reflective, so classification barely discriminates; the discriminating axis is autonomy — how much of the loop runs without a human"
 type: kb/types/note.md
 traits: [title-as-claim]
-tags: [foundations, reflective-systems]
+tags: [foundations, self-improving-systems]
 ---
 
 # Human-inclusive boundaries make reflection cheap; autonomy is the discriminating gradient

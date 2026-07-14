@@ -2,7 +2,7 @@
 description: "Classifies the shipped Commonplace system against the five reflective-system obligations, with one observed repository trace from type spec through validator to changed behavior"
 type: kb/types/note.md
 traits: [has-implementation]
-tags: [foundations, computational-model, reflective-systems]
+tags: [foundations, computational-model, self-improving-systems]
 ---
 
 # Commonplace as a reflective system

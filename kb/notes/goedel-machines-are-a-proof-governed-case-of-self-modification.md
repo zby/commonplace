@@ -2,7 +2,7 @@
 description: "The Gödel machine realizes reflective self-modification with a proof-gated acceptance rule, gaining model-relative rigor at the cost of excluding useful changes it cannot prove"
 type: kb/types/note.md
 traits: [title-as-claim, has-comparison, has-external-sources]
-tags: [foundations, computational-model, reflective-systems]
+tags: [foundations, computational-model, self-improving-systems]
 ---
 
 # Gödel machines are a proof-governed case of reflective self-modification
