@@ -22,15 +22,7 @@ That need cannot be assessed all-or-nothing. **Reflective coverage** is relative
 
 Neither dimension implies the other, and no form inherits either from another. The instructive case pairs modification depth on prose and symbolic artifacts with selection depth on a parametric component: an agent system whose instructions can require a particular model, or a class of models, exercises real intercession over its distributed-parametric form — the choice of weights is represented, causally connected, and revisable by the system's own processes — yet nothing inside the boundary can inspect or edit what the weights do. Calling this "no reflection over the model" misses the lever that exists; calling it "reflective coverage of the weights" overstates what the lever reaches. It is selection-grade coverage of the parametric form, and should be claimed as exactly that.
 
-A coverage claim therefore states form and depth, separately for each form the behavior lives in. Depth describes a design; it does not rank it — a fixed mapping held at shallow depth can be the correct choice, as the kernel boundary below shows. Each covered form also brings its own verification obligations: read prose, test symbolic artifacts, probe parametric ones behaviorally.
-
-## Coverage patterns
-
-1. **A revisable specification behind a fixed mapping.** Revising a desired-state specification that a compiler or reconciler realizes can be complete coverage of the declared aspect even if the generated program is never exposed — partial only where the translating layer makes significant choices the self-representation can neither observe nor control.
-2. **A reachable implementation without its governing prose.** Inspecting or modifying implemented operations while lacking the purposes, authority claims, or rationale that govern them covers the implementation and leaves those prose aspects outside the reflective surface.
-3. **Spanning access.** Where each form carries independently represented aspects, coverage must be shown for each: reaching the implementation establishes nothing about the prose that governs its interpretation, and reaching a specification establishes nothing about choices it does not determine.
-
-The patterns are not exhaustive, but they show why the obvious evidence is not evidence: that one agent can edit both Markdown and Python establishes neither that those artifacts form a self-representation nor that changes to them reach later operation through a causally connected path.
+A coverage claim therefore states form and depth, separately for each form the behavior lives in — neither form inherits coverage from the other, and the obvious evidence is not evidence: that one agent can edit both Markdown and Python establishes neither that those artifacts form a self-representation nor that changes to them reach later operation through a causally connected path. Depth describes a design; it does not rank it — a fixed mapping held at shallow depth can be the correct choice, as the kernel boundary below shows. Each covered form also brings its own verification obligations: read prose, test symbolic artifacts, probe parametric ones behaviorally.
 
 ## Mapping coverage is not mapping modifiability
 
@@ -83,6 +75,7 @@ Relevant Notes:
 - [System-definition artifact](./definitions/system-definition-artifact.md) — defined-in: the binding artifacts whose forms a coverage claim must span
 - [Lineage](./definitions/lineage.md) — defined-in: records dependencies that require invalidation, regeneration, retirement, or review across representations
 - [Behavioral authority](./definitions/behavioral-authority.md) — defined-in: identifies the consumer, channel, and force by which one representation governs behavior
+- [Improving an agentic system crosses the prose-symbolic boundary](./improving-an-agentic-system-crosses-the-prose-symbolic-boundary.md) — extends: why single-form coverage is insufficient for agentic systems — the reliability-improving changes are the crossings
 - [Commonplace as a reflective system](../reference/commonplace-as-a-reflective-system.md) — evidence: a system graded across forms — modification-depth coverage of prose and symbolic artifacts, selection-grade control over the parametric form
 - [Keep lineage and compiled views from drifting](./agent-memory-requirements/keep-compiled-views-aligned.md) — worked case: source-of-truth, regeneration, and staleness rules for behavior-changing derivatives, read here as a mapping whose transfer and kernel boundary stay unrepresented
 - [Unified calling conventions enable bidirectional refactoring](./unified-calling-conventions-enable-bidirectional-refactoring.md) — mechanism: supplies one interface-level mapping while leaving aspect coverage, authority, and lineage as separate obligations
