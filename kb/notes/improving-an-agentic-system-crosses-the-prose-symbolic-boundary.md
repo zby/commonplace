@@ -19,7 +19,11 @@ The sorting runs in both directions, and each direction is a boundary crossing:
 
 **Prose to symbolic.** A convention that decays into violations becomes a validator; a membership claim becomes an enforced mark. The improvement is precisely the acquisition of a formal consumer — the unenforced prose version of a completeness claim is a trap, [since stale indexes are worse than no indexes](./stale-indexes-are-worse-than-no-indexes.md): it tells an exhaustive consumer to stop looking while members are missing. What made the system more reliable was not better prose but the crossing itself.
 
+Commonplace's `complete` mark is this crossing, observed. The claim *this head links every note carrying the tag* existed as an intention before it existed as a check; ADR 026 turned it into an enforced frontmatter mark and is explicit that the unenforced prose version must never be written. The decision landed in four forms in one commit — prose spec, JSON schema, validator, renderer — and the validator now rejects a `complete: true` head with a missing member. Nothing about the prose got better. It acquired a formal consumer.
+
 **Symbolic to prose.** An enforcement that misfires — rejecting what it should accept, or encoding a decision the system has outgrown — cannot be fixed by editing code alone, because the fix must be *derived* from somewhere. The correction runs through the recorded rationale: revise the intent, then re-derive the rule. Enforcement whose rationale is not revisable drifts opaque; prose whose enforcement is not updatable decays into advice.
+
+The same repository supplies this direction too, and it is the more telling one. Adopting `covered_by` on the `learning-theory` head, the new symbolic check caught a member the *documented* `rg` recipe had missed — a note using block-style YAML tags, invisible to the prose pattern. The fix was not to the code. Executing the symbolic artifact produced evidence that the prose was wrong, and the search recipe in `kb/reference/navigation.md` was corrected. Had the recipe not been a revisable artifact inside the system, the check would have been left reporting a discrepancy nobody could act on.
 
 Changes confined to one form exist — rewording a note, refactoring under a fixed contract — but they polish behavior rather than change what the system can rely on. The reliability gains concentrate where interpretation is replaced by enforcement, or enforcement is re-grounded in revised intent.
 
@@ -31,7 +35,7 @@ Changes confined to one form exist — rewording a note, refactoring under a fix
 
 - The claim characterizes where reliability gains concentrate under the stated pressure; it is not a universal over every improvement. A system without reliability pressure, or with no formal consumers at all, is outside the argument.
 - It concerns the prose-symbolic pair. The distributed-parametric form sits under selection-grade levers in current agent systems, and this argument does not extend to it.
-- The mechanism carries the claim; the direct evidence base is currently one repository trace — a single decision landing as prose spec, schema, validator, and renderer in one commit, and a symbolic check later catching a member the prose recipe had missed. Classifying external agent-memory systems by which forms their improvements touch would test the claim beyond this repository.
+- The mechanism carries the claim; the direct evidence base is the single repository trace used in both directions above, set out in full in [Commonplace as a reflective system](../reference/commonplace-as-a-reflective-system.md). One trace is not a sample. Classifying external agent-memory systems by which forms their improvements touch would test the claim beyond this repository.
 
 ---
 
