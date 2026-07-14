@@ -8,7 +8,7 @@ tags: [foundations, computational-model, self-improving-systems]
 
 A **self-improving system** runs a [governed adaptation loop](../governed-adaptation-requires-search-evaluation-and-retention.md) — search, evaluation, operative retention — whose changes are made through its own causally connected self-representation. It is self-improving **to the degree that** those functions run without human mediation.
 
-The gradient is not decoration. It is what the word *self* is doing.
+That gradient is what the word *self* is doing.
 
 ## What has to hold
 

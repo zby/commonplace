@@ -22,7 +22,7 @@ Calling a system reflective requires five things to be stated:
 - Processes inside the boundary that can inspect or act through the representation; and
 - The **causal connection** by which changes in the represented aspects update the self-representation and representation-mediated operations affect later system behavior.
 
-Reflection is therefore aspect-bound, not global. The terminology and granularity of the self-representation determine which questions and interventions the system can formulate about itself — Maes's theory-relativity point, and a decisive one. No self-representation exhausts every possible aspect, although it may be complete relative to its declared set of represented aspects. A reflective architecture may also retain an unrepresented or unmodifiable kernel.
+Reflection is therefore aspect-bound, not global. The terminology and granularity of the self-representation determine which questions and interventions the system can formulate about itself — Maes's theory-relativity point. No self-representation exhausts every possible aspect, although it may be complete relative to its declared set of represented aspects. A reflective architecture may also retain an unrepresented or unmodifiable kernel.
 
 The following neighboring terms mark different capabilities:
 

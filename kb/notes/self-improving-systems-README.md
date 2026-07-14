@@ -18,7 +18,7 @@ The machinery is also nearly free: declare a maintainer inside the boundary and 
 
 ## The loop is where the work is
 
-[Governed adaptation requires search, evaluation, and operative retention](./governed-adaptation-requires-search-evaluation-and-retention.md), and they fail independently — the frame's diagnostic edge. A system with the wire that stalls anyway is missing a *named* function: a reviewed note nothing loads has no consumer; a patch never merged has no channel; a validator nothing invokes has no force. In each, the work happened and the loop stayed open.
+[Governed adaptation requires search, evaluation, and operative retention](./governed-adaptation-requires-search-evaluation-and-retention.md), and they fail independently. A system with the wire that stalls anyway is missing a *named* function: a reviewed note nothing loads has no consumer; a patch never merged has no channel; a validator nothing invokes has no force. In each, the work happened and the loop stayed open.
 
 The two scarce functions are not alike. [Search errors are filtered; evaluation errors are retained](./search-errors-are-filtered-evaluation-errors-are-retained.md) — evaluation is the terminal filter, so a bad candidate costs only effort while a bad acceptance is kept and compounds. Automate search first; **buy** evaluation with an oracle.
 
