@@ -18,9 +18,9 @@ The machinery is also nearly free: declare a maintainer inside the boundary and 
 
 ## The loop is where the work is
 
-[An adaptation loop requires search, evaluation, and operative retention](./an-adaptation-loop-requires-search-evaluation-and-retention.md), and they fail independently. A system with the wire that stalls anyway is missing a *named* function: a reviewed note nothing loads has no consumer; a patch never merged has no channel; a validator nothing invokes has no force. In each, the work happened and the loop stayed open.
+[An adaptation loop requires search, evaluation, and operative retention](./an-adaptation-loop-requires-search-evaluation-and-retention.md), and they fail in different ways. A system with the wire that stalls anyway is missing a *named* function: a reviewed note nothing loads has no consumer; a patch never merged has no channel; a validator nothing invokes has no force. In each, the work happened and the loop stayed open.
 
-The two scarce functions are not alike. [Search errors are filtered; evaluation errors are retained](./search-errors-are-filtered-evaluation-errors-are-retained.md) — evaluation is the terminal filter, so a bad candidate costs only effort while a bad acceptance is kept and compounds. Automate search first; **buy** evaluation with an oracle. And what the oracle returns is a claim, not a result: acceptance says the candidate met the criterion applied, not that the system improved.
+The two scarce functions are not alike. [Search errors are filtered; evaluation errors are retained](./search-errors-are-filtered-evaluation-errors-are-retained.md) — evaluation is the terminal filter, so a bad *candidate* costs only effort while a bad *acceptance* is kept and compounds. Automate search first; **buy** evaluation with an oracle. And what the oracle returns is a claim, not a result: acceptance says the candidate met the criterion applied, not that the system improved.
 
 ## Three gradings over the same base
 
@@ -32,9 +32,9 @@ They answer different questions and move independently — a system can widen on
 
 ## Autonomy is bought, not chosen
 
-Autonomy does not decide whether a system is self-improving; a human-inclusive loop still is one, and *autonomous* self-improving is reserved for a boundary with no human in it. It is the axis worth moving along, and there is no reason to want less of it — but it cannot be turned up at will. Automate an evaluation with no oracle behind it and the result is not a stronger loop but a broken one, retaining changes nothing checked. Autonomy in evaluation extends exactly as far as [mechanical verification reaches](./the-boundary-of-automation-is-the-boundary-of-verification.md), which predicts where the human will still be standing.
+Autonomy does not decide whether a system is self-improving; a human-inclusive loop still is one, and *autonomous* self-improving is reserved for a boundary with no human in it. It is the axis worth moving along, and there is no reason to want less of it — but only one kind of it is free. Hand a gate to a model with a rubric and the system is autonomous there tomorrow: the evaluator is fallible, but it still rejects things, so [the loop still closes](./definitions/self-improving-system.md) and the system stays self-improving while quietly getting worse. What is bounded by [mechanical verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) is *warranted* autonomy — running unattended and still deserving trust — and that is what predicts where the human will still be standing.
 
-The price sits one level down: [a stronger oracle buys autonomy and pays in reach](./a-stronger-oracle-buys-autonomy-and-pays-in-reach.md). Proof accepts less than tests, tests less than judgment — so a system's place on the gradient is downstream of where it settled that trade, and the useful question is never *how autonomous is it* but *what does its oracle reach, and what does that cost*.
+The price sits one level down: [a stronger oracle buys autonomy and pays in reach](./a-stronger-oracle-buys-autonomy-and-pays-in-reach.md). An oracle is strong when it refuses to certify what it cannot establish, and the same refusal makes its acceptances rare — so a system's place on the gradient is downstream of where it settled that trade, and the useful question is never *how autonomous is it* but *what does its oracle reach, and what does that cost*.
 
 ## Occupants
 

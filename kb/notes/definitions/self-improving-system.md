@@ -18,7 +18,7 @@ The declared boundary may contain humans. A system whose search and evaluation a
 - **Evaluation against an improvement objective.** Something can *reject* the candidate, on a standard that says what would make the system better. An unconditional trigger is not an evaluator.
 - **Operative retention.** The accepted change acquires a consumer, a channel, and a force, in [behavioral authority](./behavioral-authority.md) terms.
 
-The first two are the machinery; the last three are the loop. Reflection routes the loop through the self-representation, which is the difference between improving and merely adapting.
+The first two are the machinery; the last three are the loop. Each of the two additions to a bare adaptation loop does a different job, and they should not be run together: the **objective** is what makes the loop improvement-*directed* rather than merely change-directed, and **reflection** is what lets its results accumulate rather than stay opaque.
 
 ## The improvement objective, and what acceptance establishes
 
@@ -40,7 +40,7 @@ A Smalltalk image has both maximally — the compiler can be edited with the com
 
 Adaptation alone is not enough either. [Ashby's Homeostat](../../sources/ashby-design-for-a-brain-ultrastability.md) runs a complete adaptation loop — search, evaluation, retention — with no self-representation anywhere in the mechanism, and it retains: the surviving configuration persists and steers later behavior. What it cannot do is *accumulate*. The thing retained is an opaque parameter setting rather than a representation, so no process in the mechanism can read it, say why it was good, criticize it, or carry it to the next problem. The loop runs indefinitely and nothing compounds.
 
-Route the same loop through a self-representation and the accepted change lands in an artifact the system also *reads*. Each retained change becomes available to the next round of search and evaluation, as knowledge rather than as a setting. That is what the intersection buys, and it is why neither component alone is the object of interest.
+Route the same loop through a self-representation and the accepted change lands in an artifact the system also *reads*. Each retained change becomes available to the next round of search and evaluation, as knowledge rather than as a setting. Available, not guaranteed: reflection makes the retained change addressable, and whether a later round actually finds it is a further question — [retrieval failure is reflection failure](../retrieval-failure-is-reflection-failure.md). What the intersection buys is the *possibility* of compounding, which a setting does not admit at all.
 
 ## Autonomy is a separate gradient
 
@@ -48,7 +48,13 @@ Autonomy asks a different question: of search, evaluation, and retention, how mu
 
 **Autonomous self-improving system** is reserved for the case where the declared boundary contains no human component: search, evaluation, and retention all run without a person. Moving the boundary moves the reading, which is why the boundary must be declared before the grading means anything.
 
-Autonomy is the interesting direction, and it cannot be turned up at will. Automating an evaluation for which no adequate oracle exists retains changes nothing checked; evaluation that cannot reject is not evaluation, so the system does not advance along the gradient but drops out of the category, into plain self-modification. Taking autonomy therefore costs something, and [a stronger oracle buys autonomy and pays in reach](../a-stronger-oracle-buys-autonomy-and-pays-in-reach.md) prices it.
+Autonomy is the interesting direction, and it *can* be turned up at will — which is the trap. Two ways of automating an evaluation look alike and are not.
+
+Remove the evaluator, replacing it with an unconditional accept, and there is no evaluator: nothing can be rejected, the loop does not close, and the system drops out of the category into plain self-modification. That is a **category** failure.
+
+Weaken the evaluator — a soft rubric, a model judge, a shallow test — and the loop closes exactly as before. A fallible evaluator still rejects some candidates, so it evaluates; the system is fully autonomous at that gate and fully self-improving. It is simply wrong more often, and its errors are the ones that survive, [since evaluation is the terminal filter](../search-errors-are-filtered-evaluation-errors-are-retained.md). That is a **quality** failure, and it leaves the system inside the category, degrading.
+
+So what an oracle bounds is not autonomy but **warranted autonomy**: how far the loop can run unattended and still be trusted. [The boundary of automation is the boundary of verification](../the-boundary-of-automation-is-the-boundary-of-verification.md) marks that ceiling, and [a stronger oracle buys autonomy and pays in reach](../a-stronger-oracle-buys-autonomy-and-pays-in-reach.md) prices what it costs to take autonomy *and be right*. Unwarranted autonomy is always available and always cheap.
 
 ## Exclusions
 
@@ -58,12 +64,15 @@ Autonomy is the interesting direction, and it cannot be turned up at will. Autom
 
 **Self-improving is not improving.** The evaluator's acceptance is a claim about the objective it applied, not a demonstration that the system got better.
 
+**A weak oracle is not a broken loop.** An inadequate evaluator still rejects things, so the loop still closes. What it costs is trust, not membership.
+
 ## Misuse Cases
 
 - Calling a system self-improving because it can modify itself, without identifying what performs search and what could reject a candidate.
 - Refusing the name to a loop that closes through a self-representation on the grounds that a human performs part of it — that is an autonomy reading, not a category one.
 - Reporting an autonomy grade without declaring the boundary it was assessed against.
-- Presenting an autonomy gain as an improvement when the evaluation it automated has no oracle behind it.
+- Reading a weak oracle as a broken loop, or a broken loop as a weak oracle: the first is still self-improving and less trustworthy, the second is not self-improving at all.
+- Presenting an autonomy gain as an improvement, when what was automated was the *judgment* and not the verification behind it.
 - Treating an evaluator's acceptance as evidence that the change improved the system.
 - Treating reflection or intercession as the property, rather than as the machinery the property runs on.
 

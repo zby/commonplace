@@ -1,5 +1,5 @@
 ---
-description: "Classifies the shipped Commonplace system against the five reflective-system obligations, with one observed repository trace from type spec through validator to changed behavior"
+description: "Classifies the shipped Commonplace system against the five reflective-system obligations and, on the same trace, as a human-inclusive self-improving system"
 type: kb/types/note.md
 traits: [has-implementation]
 tags: [foundations, computational-model, self-improving-systems]
@@ -8,6 +8,8 @@ tags: [foundations, computational-model, self-improving-systems]
 # Commonplace as a reflective system
 
 Commonplace is a reflective system: it contains a causally connected representation of selected aspects of itself, available to processes inside its declared boundary, and operations mediated through that representation change its subsequent behavior.
+
+It is also a human-inclusive [self-improving system](../notes/definitions/self-improving-system.md), which the same trace discharges below.
 
 This is a case classification, not a new theory. It discharges the five obligations that [reflective system](../notes/definitions/reflective-system.md) requires anyone to state before applying the term, and it rests on one observed repository trace rather than on architectural possibility. Reflection here is aspect-bound and partial; the negative conclusions at the end are part of the claim, not hedges around it.
 
@@ -89,6 +91,22 @@ The third runs in the opposite direction, from code back to prose. In `ba1a7d9f`
 
 Both directions of causal connection are therefore observed: a change in the system's organization forced revision of its self-representation, and a change made through the self-representation altered what the system subsequently required, rejected, and searched.
 
+## The same trace as a self-improving system
+
+Reflection is the machinery; it is not yet the interesting claim. The trace above also discharges [self-improving system](../notes/definitions/self-improving-system.md), and it is worth reading a second time in those terms, because the definition asks for two things the reflective obligations do not.
+
+| Requirement | Discharged by |
+|---|---|
+| **Loop on itself** | The change ran on `kb/types/tag-readme.md` — a self-representing artifact, not ordinary content. |
+| **Search** | Human. A maintainer noticed the `index` type was doing two jobs and that the `learning-theory` head had outgrown its completeness claim. |
+| **Improvement objective** | The criterion under which the change could have failed: a marked head must not lie to an exhaustive consumer, per [stale indexes are worse than no indexes](../notes/stale-indexes-are-worse-than-no-indexes.md). ADR 026 makes it enforceable — `complete` is a mark the validator can falsify. |
+| **Evaluation** | Mixed. Tests and the validator are mechanical; the judgment that the type split was the right shape was the maintainer's. |
+| **Operative retention** | The three consumers in the table above: enforcement, routing, advice. |
+
+The improvement objective is the requirement the reflective classification never had to state, and stating it is what makes the loop improvement-*directed* rather than merely change-directed. Note what it does not establish: the validator's acceptance says the marks are consistent, not that the type split made the KB better. That remains an improvement *claim*.
+
+**Autonomy profile.** Search: human. Evaluation: split — mechanical where the constraint is structural, human where it is judgment-heavy. Retention: mechanical once merged, with the merge itself human. So Commonplace is a **human-inclusive self-improving system**, not an autonomous one — and the humans sit exactly where no oracle reaches, which is [what the theory predicts and what it costs](../notes/a-stronger-oracle-buys-autonomy-and-pays-in-reach.md).
+
 ## Coverage across representational forms: partially demonstrated
 
 Basic reflection does not require the stronger claim that Commonplace's reflective reach *covers* every behavior-bearing representation and the mappings between them. Since [reflective coverage is graded across representational forms](../notes/reflective-coverage-is-graded-across-representational-forms.md), the assessment goes form by form, and the trace above shows real but incomplete coverage:
@@ -117,6 +135,7 @@ In summary: reflective coverage reaches modification depth on the prose and symb
 Relevant Notes:
 
 - [Reflective system](../notes/definitions/reflective-system.md) — rationale: supplies the five obligations this classification discharges
+- [Self-improving system](../notes/definitions/self-improving-system.md) — rationale: supplies the loop, objective, and autonomy profile the same trace is read against a second time
 - [Behavioral authority](../notes/definitions/behavioral-authority.md) — defined-in: names the consumer, channel, and force in the observed trace
 - [Reflective coverage is graded across representational forms](../notes/reflective-coverage-is-graded-across-representational-forms.md) — rationale: the graded coverage criterion this system meets unevenly across its forms
 - [An adaptation loop requires search, evaluation, and operative retention](../notes/an-adaptation-loop-requires-search-evaluation-and-retention.md) — rationale: the change-loop decomposition the trace is read against

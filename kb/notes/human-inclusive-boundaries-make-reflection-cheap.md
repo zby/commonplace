@@ -33,7 +33,7 @@ The discriminating dimension is autonomy, and it is assessed per function. Take 
 
 ## What bounds the gradient
 
-Autonomy in evaluation extends only as far as mechanical verification reaches, [since the boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md). A system's autonomy profile therefore tracks its verification profile. This predicts *where* the human sits: Commonplace's human occupies exactly the positions where evaluation is judgment-heavy and cannot be checked mechanically, and the Gödel machine reaches full evaluation autonomy only by restricting acceptance to what it can prove under its formalization.
+*Warranted* autonomy in evaluation — running unattended and still deserving trust — extends only as far as mechanical verification reaches, [since the boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md). Bare autonomy is not bounded at all: any gate can be handed to a fallible judge tomorrow. A system's *defensible* autonomy profile therefore tracks its verification profile. This predicts *where* the human sits: Commonplace's human occupies exactly the positions where evaluation is judgment-heavy and cannot be checked mechanically, and the Gödel machine reaches full evaluation autonomy only by restricting acceptance to what it can prove under its formalization.
 
 ## Distinguish from sibling gradings
 

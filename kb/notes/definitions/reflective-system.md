@@ -57,7 +57,7 @@ Reflection is also not **adaptation**, and this is the misreading the term invit
 
 *Adaptation without reflection.* Conversely, a system can run that loop with no self-representation at all. Ashby's Homeostat jogs its parameters to random values whenever its essential variables leave viable limits, holds the configuration that restores them, and so adapts — search, evaluation, and retention, all of it ([Ashby 1960, chapters 7–8](../../sources/ashby-design-for-a-brain-ultrastability.md)). It modifies its own organization and is causally coupled to its own viability, and it is still not reflective, because nothing in it *represents* that organization. What it retains is a setting rather than a map, and [what that costs is accumulation](./self-improving-system.md).
 
-The two properties are orthogonal: reflection is structural, adaptation is a process, and each is available without the other. A [self-improving system](./self-improving-system.md) requires the *intersection* — and reflection is the cheap half of it.
+The two properties are orthogonal: reflection is structural, adaptation is a process, and each is available without the other. A [self-improving system](./self-improving-system.md) requires the *intersection*, plus an improvement objective for the loop to aim at — and reflection is the cheap half of it.
 
 ## Misuse Cases
 

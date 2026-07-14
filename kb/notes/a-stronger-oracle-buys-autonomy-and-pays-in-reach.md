@@ -1,5 +1,5 @@
 ---
-description: "Autonomy in evaluation extends only as far as an oracle reaches, and strengthening the oracle narrows what it will accept — so autonomy is bought, and the currency is reach"
+description: "Bare autonomy is free; warranted autonomy extends only as far as an oracle reaches, and a stronger oracle narrows what it accepts — so trustworthy autonomy is bought, and the currency is reach"
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [foundations, self-improving-systems, evaluation]
@@ -7,17 +7,19 @@ tags: [foundations, self-improving-systems, evaluation]
 
 # A stronger oracle buys autonomy and pays in reach
 
-Autonomy — how much of an [adaptation loop](./an-adaptation-loop-requires-search-evaluation-and-retention.md) runs without a person — is the gradient a [self-improving system](./definitions/self-improving-system.md) is graded on, and there is no reason to want less of it. It cannot be turned up at will. Automating an evaluation for which no adequate oracle exists does not buy autonomy; it retains changes nothing checked. Evaluation that cannot reject is not evaluation, so the loop no longer closes: the system does not advance along the gradient, it drops off it, into plain self-modification.
+Autonomy — how much of an [adaptation loop](./an-adaptation-loop-requires-search-evaluation-and-retention.md) runs without a person — is the gradient a [self-improving system](./definitions/self-improving-system.md) is graded on, and there is no reason to want less of it. Bare autonomy is free: hand the gate to a model with a rubric and no human runs it. What is not free is **warranted** autonomy — a loop that runs unattended and can still be trusted with what it accepts.
 
-So autonomy in evaluation extends exactly as far as mechanical verification reaches, [since the boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md). What that framing leaves implicit is the price, and the price is the point: **a stronger oracle accepts fewer things.**
+That is what an oracle buys, and it is bounded, [since the boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md). What that framing leaves implicit is the price, and the price is the point: **a stronger oracle accepts fewer things.**
 
 ## The trade
 
-Rank the oracles by strength and the acceptance sets nest. Proof accepts less than tests; tests accept less than judgment. That ordering is not incidental — it is what strength *means*. An oracle is strong because it refuses to certify what it cannot establish, and the same refusal that makes its acceptances trustworthy makes them rare. Buy autonomy with a stronger oracle and the loop can run unattended over a smaller space of improvements.
+An oracle is strong when it refuses to certify what it cannot establish. That refusal is what makes its acceptances trustworthy, and it is the same refusal that makes them rare: the more a check must establish before it will pass something, the fewer things clear it. Buy warranted autonomy with a stronger oracle and the loop can run unattended over a smaller space of improvements.
 
-The [Gödel machine](./goedel-machines-are-a-proof-governed-case-of-self-modification.md) shows the bill in full. It adopts the strongest oracle available — accept a rewrite only under proof that it helps — and gets total autonomy with it: search, evaluation, and retention all run without a human. It pays the whole price in reach. Every improvement it cannot prove is unreachable, and most improvements worth having cannot be proved.
+Strength is therefore about *what a check establishes*, not about how little it accepts, and the acceptance sets do not simply nest. A test suite licenses changes no proof system would certify and rejects changes a maintainer would wave through; tests and judgment overlap without either containing the other. The trade is a direction, not an ordering — take more assurance at a gate and you narrow what that gate will pass.
 
-[Commonplace](../reference/commonplace-as-a-reflective-system.md) settles the same trade at the other end. Its oracles are tests, validators, and a maintainer's judgment; its acceptance set is correspondingly wide, and it can adopt improvements no proof system would certify. It pays in autonomy: the human is still standing at every gate where the judgment cannot be mechanized — which is exactly where the theory predicts a human must stand.
+The [Gödel machine](./goedel-machines-are-a-proof-governed-case-of-self-modification.md) shows the bill in full. It adopts the strongest oracle available — accept a rewrite only under proof that it helps — and gets *warranted* total autonomy with it: search, evaluation, and retention all run without a human, and every acceptance is licensed. It pays the whole price in reach. Every improvement it cannot prove is unreachable, and most improvements worth having cannot be proved.
+
+[Commonplace](../reference/commonplace-as-a-reflective-system.md) settles the same trade at the other end. Its oracles are tests, validators, and a maintainer's judgment; its acceptance set is correspondingly wide, and it can adopt improvements no proof system would certify. It pays in autonomy: the human is still standing at every gate where the judgment cannot be mechanized — which is exactly where the theory predicts a human must stand. It could hand those gates to a model tomorrow and become more autonomous overnight, without becoming more *warranted* — the trade would simply have gone unpaid.
 
 Neither is misconfigured. They are two settlements of one trade, and the position on the autonomy gradient is *downstream* of where the trade was settled. That is why the useful question about a self-improving system is never *how autonomous is it* but **what does its oracle reach, and what does that reach cost**.
 
@@ -29,15 +31,16 @@ But hardening moves the frontier; it does not remove it. At any fixed level of o
 
 ## Scope
 
-- The claim is about **evaluation** autonomy. Search autonomy is not bought the same way and is cheaper to take, [since search errors are filtered while evaluation errors are retained](./search-errors-are-filtered-evaluation-errors-are-retained.md) — a bad candidate costs effort, a bad acceptance compounds.
-- Strength and reach are not a single scalar each, so the trade is a direction, not an exchange rate. Two oracles can be incomparable, accepting overlapping but non-nested sets, and a system usually runs several at once at different gates.
+- The claim is about **evaluation** autonomy. Search autonomy is not bought the same way and is cheaper to take, [since a bad candidate is filtered while a bad acceptance is retained](./search-errors-are-filtered-evaluation-errors-are-retained.md).
+- The claim prices *warranted* autonomy. Bare autonomy — nobody at the gate — is always available for nothing, and taking it without the oracle is what [degrades a self-improving system rather than advancing it](./definitions/self-improving-system.md).
+- Strength and reach are not a single scalar each, so the trade is a direction and never an exchange rate. A system usually runs several oracles at once at different gates, and its reach is the union of what they will pass.
 - Reach is measured against improvements the system could otherwise have adopted. An oracle that refuses nothing useful costs no reach — which is the case for the well-mechanized gates, and precisely why they were mechanized first.
 
 ---
 
 Relevant Notes:
 
-- [The boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — grounds: the ceiling this note prices; autonomy in evaluation reaches exactly as far as verification does
+- [The boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — grounds: the ceiling this note prices; warranted autonomy in evaluation reaches exactly as far as verification does
 - [An adaptation loop requires search, evaluation, and operative retention](./an-adaptation-loop-requires-search-evaluation-and-retention.md) — grounds: the loop whose evaluation function is being bought
 - [Self-improving system](./definitions/self-improving-system.md) — extends: supplies the price behind the definition's autonomy gradient
 - [Search errors are filtered; evaluation errors are retained](./search-errors-are-filtered-evaluation-errors-are-retained.md) — extends: why evaluation is the function that must be bought and search is the one to automate first
