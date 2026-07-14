@@ -1,5 +1,5 @@
 ---
-description: "Coverage, inspectability, and modifiability of the mappings between representational forms are three separate properties; a fixed trusted kernel is compatible with full reflective coverage"
+description: "Reflective coverage is graded per representational form and operation depth; selection among opaque components — pinning a model — is real but crude coverage of the parametric form"
 type: kb/types/note.md
 traits: [has-comparison, has-external-sources, synthesis]
 tags: [foundations, computational-model, constraining, reflective-systems]
@@ -9,7 +9,20 @@ tags: [foundations, computational-model, constraining, reflective-systems]
 
 **Cross-representational reflection** occurs when a causally connected self-representation spans aspects expressed in different representational regimes. Processes within a declared system boundary can inspect or intervene on those aspects across the mappings that connect the regimes. They need not be able to inspect or modify the mappings themselves.
 
-**Reflective coverage** is relative to the aspects and operations declared to be part of the self-representation: the artifacts or structures through which the system represents its own behavior. Coverage does not require unlimited access to every encoding in the causal implementation chain. Inspection and modification are also separate dimensions — a [reflective system](./definitions/reflective-system.md) may expose an aspect to introspection without permitting intercession.
+The aspects that matter are carried by [system-definition artifacts](./definitions/system-definition-artifact.md) — the artifacts a system consumes with binding force — and those artifacts take different [representational forms](./definitions/representational-form.md): prose interpreted by models and humans, symbolic structures with formal consumers, and distributed-parametric state such as model weights. A behavior bound by an artifact whose form the self-representation does not span is outside reflective reach, however thoroughly the other forms are covered. **Reflective coverage** is therefore relative to the declared aspects and operations, and inspection and modification are separate dimensions — a [reflective system](./definitions/reflective-system.md) may expose an aspect to introspection without permitting intercession.
+
+## Coverage is graded, not binary
+
+Coverage grades along two independent dimensions. **Form coverage** asks which forms' aspects enter the self-representation at all. **Operation depth** asks what processes inside the boundary can do to a covered component. Depth rises through at least four levels:
+
+1. **Observation** — the component can be read or probed, and what is learned is available inside the boundary as a representation of the system.
+2. **Selection** — the system can choose among opaque alternatives: swap one sealed component for another without seeing inside either.
+3. **Configuration** — the component exposes parameters the system can set, within an interface it did not author.
+4. **Modification** — the substrate itself can be edited by processes inside the boundary.
+
+Neither dimension implies the other, and no form inherits either from another. The instructive case is modification-depth coverage of prose and symbolic artifacts coexisting with selection-depth coverage of a parametric component. An agent system whose instructions can require a particular model, or a class of models, exercises real intercession over its distributed-parametric form: the choice of weights is represented in a system-definition artifact, causally connected to everything downstream, and revisable by the system's own processes. Yet nothing inside the boundary can inspect or edit what those weights do — the intervention granularity is swapping a sealed unit. Calling this "no reflection over the model" misses the lever that exists; calling it "reflective coverage of the weights" overstates what the lever reaches. It is selection-grade coverage of the parametric form, and it should be claimed as exactly that.
+
+Grading dissolves the binary question. A system need not cover all its forms to be reflective — reflection is aspect-bound — but a coverage claim must state the form and the depth, separately for each form the system's behavior lives in. Depth is a descriptive grade, not a target: the kernel-boundary discussion below shows why a fixed mapping held at shallow depth can be the correct design rather than a deficiency. Each covered form also brings its own verification obligations, since form sets the default review method: read prose, test symbolic artifacts, probe parametric ones behaviorally.
 
 ## Coverage patterns
 
@@ -67,16 +80,19 @@ In this KB's [representational-form](./definitions/representational-form.md) voc
 
 Combining prose and code does not increase computational universality. The stronger and narrower claim is:
 
-> Combining semantic and formal representations extends reflective coverage over a system whose behavior is already distributed across both.
+> Combining semantic and formal representations extends reflective coverage over a system whose behavior is already distributed across both — and that coverage is graded: a claim must name the form and the operation depth, and no form inherits either from another.
 
-Joint adaptation, movement between forms, and shared callable interfaces may support that coverage, but none of them establishes it without a causally connected self-representation. What the concept supplies is a vocabulary and a coverage criterion. It does not, by itself, classify Commonplace or any other system.
+Joint adaptation, movement between forms, and shared callable interfaces may support that coverage, but none of them establishes it without a causally connected self-representation. What the concept supplies is a vocabulary and a graded coverage criterion. It does not, by itself, classify Commonplace or any other system.
 
 ---
 
 Relevant Notes:
 
 - [Reflective system](./definitions/reflective-system.md) — grounds: supplies the aspect-relative causal self-representation criterion
+- [Representational form](./definitions/representational-form.md) — defined-in: the prose / symbolic / distributed-parametric axis coverage grades over
+- [System-definition artifact](./definitions/system-definition-artifact.md) — defined-in: the binding artifacts whose forms a coverage claim must span
 - [Lineage](./definitions/lineage.md) — defined-in: records dependencies that require invalidation, regeneration, retirement, or review across representations
 - [Behavioral authority](./definitions/behavioral-authority.md) — defined-in: identifies the consumer, channel, and force by which one representation governs behavior
+- [Commonplace as a reflective system](../reference/commonplace-as-a-reflective-system.md) — evidence: a system graded across forms — modification-depth coverage of prose and symbolic artifacts, selection-grade control over the parametric form
 - [Keep lineage and compiled views from drifting](./agent-memory-requirements/keep-compiled-views-aligned.md) — worked case: source-of-truth, regeneration, and staleness rules for behavior-changing derivatives, read here as a mapping whose transfer and kernel boundary stay unrepresented
 - [Unified calling conventions enable bidirectional refactoring](./unified-calling-conventions-enable-bidirectional-refactoring.md) — mechanism: supplies one interface-level mapping while leaving aspect coverage, authority, and lineage as separate obligations
