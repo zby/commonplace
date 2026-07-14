@@ -24,7 +24,7 @@ Conant and Ashby formalize regulation using possible outcomes Z, acceptable outc
 
 ## Connections Found
 
-This is constrained cybernetic background for [Actionable theories and reflexive system construction](../notes/actionable-theories-and-reflexive-system-construction.md). It does not define actionable theory, reflection, or reflexivity.
+This is constrained cybernetic background for [Reflective system](../notes/definitions/reflective-system.md). It does not define actionable theory or reflection.
 
 ## Inherited Vocabulary
 

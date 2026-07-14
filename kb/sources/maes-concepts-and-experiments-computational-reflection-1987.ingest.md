@@ -24,7 +24,7 @@ Maes defines computational reflection as the behavior of a computational system 
 
 ## Connections Found
 
-This is a related earlier version of [Maes's 1988 Computational Reflection](./maes-computational-reflection-1988.md), not an independent foundation: the causal-connection and procedural/declarative claims should be deduplicated in favor of the later treatment. Its distinct value for [Actionable theories and reflexive system construction](../notes/actionable-theories-and-reflexive-system-construction.md) is the implemented 3-KRS topology—objects, meta-objects, and interpreter-mediated behavioral effect—and its local granularity. Its meta-circular discussion also limits the analogy in [LLM context is a homoiconic medium](../notes/llm-context-is-a-homoiconic-medium.md): common program/data representation enables one reflective implementation strategy but is not the general definition.
+This is a related earlier version of [Maes's 1988 Computational Reflection](./maes-computational-reflection-1988.md), not an independent foundation: the causal-connection and procedural/declarative claims should be deduplicated in favor of the later treatment. Its distinct value for [Reflective system](../notes/definitions/reflective-system.md) is the implemented 3-KRS topology—objects, meta-objects, and interpreter-mediated behavioral effect—and its local granularity. Its meta-circular discussion also limits the analogy in [LLM context is a homoiconic medium](../notes/llm-context-is-a-homoiconic-medium.md): common program/data representation enables one reflective implementation strategy but is not the general definition.
 
 ## Extractable Value
 
@@ -78,4 +78,4 @@ The paper's general definition is compressed and is better supported by Maes's 1
 
 ## Recommended Next Action
 
-Use the 3-KRS object/meta-object/interpreter topology as the implementation precedent when later drafting a cross-representational-reflection note, while citing Maes 1988—not this related version—for the general definition.
+Use the 3-KRS object/meta-object/interpreter topology as an implementation precedent for [Cross-representational reflection](../notes/cross-representational-reflection.md), while citing Maes 1988—not this related version—for the general definition.

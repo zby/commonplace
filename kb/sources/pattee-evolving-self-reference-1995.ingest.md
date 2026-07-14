@@ -24,7 +24,7 @@ Pattee distinguishes logical self-reference, material causal loops, and cognitiv
 
 ## Connections Found
 
-The paper is a structural analogue and boundary warning for [Actionable theories and reflexive system construction](../notes/actionable-theories-and-reflexive-system-construction.md) and [Representational form](../notes/definitions/representational-form.md). It is not a direct theory of Markdown, code, or LLM systems.
+The paper is a structural analogue and boundary warning for [Cross-representational reflection](../notes/cross-representational-reflection.md) and [Representational form](../notes/definitions/representational-form.md). It is not a direct theory of Markdown, code, or LLM systems.
 
 ## Inherited Vocabulary
 
@@ -64,4 +64,4 @@ This is a theoretical synthesis rather than a test of software or knowledge syst
 
 ## Recommended Next Action
 
-Use this ingest as a limitation-bearing source when later drafting a separate cross-representational-reflection note, with an explicit non-equivalence paragraph.
+Use this ingest only as a limitation-bearing structural analogy in [Cross-representational reflection](../notes/cross-representational-reflection.md), retaining its explicit non-equivalence with prose/code relations.

@@ -24,7 +24,7 @@ Varela separates **autopoiesis**, the self-production organization of living sys
 
 ## Connections Found
 
-This is a terminological constraint on [Actionable theories and reflexive system construction](../notes/actionable-theories-and-reflexive-system-construction.md). Its “closure” is not the same mechanism as a methodology being closed under its recommendations.
+This is a terminological constraint on [Reflective system](../notes/definitions/reflective-system.md). Its “closure” is not the same mechanism as reflection or a methodology being closed under its recommendations.
 
 ## Inherited Vocabulary
 

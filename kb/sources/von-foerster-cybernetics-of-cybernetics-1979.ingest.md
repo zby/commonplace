@@ -24,7 +24,7 @@ Von Foerster begins from Maturana's claim that anything said is said by an obser
 
 ## Connections Found
 
-This is primary evidence for the human-inclusive boundary question in [Actionable theories and reflexive system construction](../notes/actionable-theories-and-reflexive-system-construction.md). It does not supply Maes's computational-reflection conditions and should constrain, not replace, that vocabulary.
+This is primary evidence for the human-inclusive boundary question in [Reflective system](../notes/definitions/reflective-system.md). It does not supply Maes's computational-reflection conditions and should constrain, not replace, that vocabulary.
 
 ## Inherited Vocabulary
 
@@ -64,4 +64,4 @@ The essay is compressed, programmatic, and partly normative. It does not formali
 
 ## Recommended Next Action
 
-Use this ingest as the primary observer-boundary source when later splitting or revising `actionable-theories-and-reflexive-system-construction.md`.
+Use this ingest as the primary observer-boundary source for [Reflective system](../notes/definitions/reflective-system.md), without treating observer inclusion by itself as computational reflection.

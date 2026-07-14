@@ -24,7 +24,7 @@ Von Foerster develops observer inclusion and circular human relations early in t
 
 ## Connections Found
 
-This reinforces the human-inclusive boundary in [Actionable theories and reflexive system construction](../notes/actionable-theories-and-reflexive-system-construction.md), but the 1979 paper remains the shorter primary vocabulary source.
+This reinforces the human-inclusive boundary in [Reflective system](../notes/definitions/reflective-system.md), but the 1979 paper remains the shorter primary vocabulary source.
 
 ## Inherited Vocabulary
 

@@ -24,7 +24,7 @@ Wuyts and Ducasse define **symbiotic reflection** as an extension of reflective 
 
 ## Connections Found
 
-This source is the early technical anchor that can discipline [Actionable theories and reflexive system construction](../notes/actionable-theories-and-reflexive-system-construction.md): causal connection and mutual access/action are stronger conditions than co-location or co-evolution. [Representational form](../notes/definitions/representational-form.md) remains the local vocabulary for any later generalization, because the paper's distinction is between programming languages and paradigms rather than Commonplace's prose, symbolic, and distributed-parametric forms.
+This source is the early technical anchor for [Cross-representational reflection](../notes/cross-representational-reflection.md): causal connection and mutual access/action are stronger conditions than co-location or co-evolution. [Representational form](../notes/definitions/representational-form.md) remains the local vocabulary for any later generalization, because the paper's distinction is between programming languages and paradigms rather than Commonplace's prose, symbolic, and distributed-parametric forms.
 
 ## Inherited Vocabulary
 
@@ -69,4 +69,4 @@ The paper is a conceptual and implementation report centered on one SOUL/Smallta
 
 ## Recommended Next Action
 
-Use this snapshot as the primary early-source anchor when revising `kb/notes/actionable-theories-and-reflexive-system-construction.md`, explicitly testing each retained reflection claim against causal connection, self-representation, mutual access/action, entity transfer, and stated system boundary.
+Use this snapshot as the primary early-source anchor for [Cross-representational reflection](../notes/cross-representational-reflection.md), explicitly testing each retained claim against causal connection, mutual access and action, entity transfer, and the stated system boundary.

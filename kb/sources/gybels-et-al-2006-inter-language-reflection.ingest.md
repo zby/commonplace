@@ -24,7 +24,7 @@ Gybels et al. define **inter-language reflection** as traditional reflection in 
 
 ## Connections Found
 
-The paper supplies the mature technical model missing from [Actionable theories and reflexive system construction](../notes/actionable-theories-and-reflexive-system-construction.md) and adds a useful qualification to [Unified calling conventions enable bidirectional refactoring](../notes/unified-calling-conventions-enable-bidirectional-refactoring.md): sharing a callable surface requires both data mappings and protocol mappings when regimes disagree about values and behavior. [Representational form](../notes/definitions/representational-form.md) constrains the proposed generalization beyond programming languages.
+The paper supplies the mature technical model for [Cross-representational reflection](../notes/cross-representational-reflection.md) and adds a useful qualification to [Unified calling conventions enable bidirectional refactoring](../notes/unified-calling-conventions-enable-bidirectional-refactoring.md): sharing a callable surface requires both data mappings and protocol mappings when regimes disagree about values and behavior. [Representational form](../notes/definitions/representational-form.md) constrains the proposed generalization beyond programming languages.
 
 ## Inherited Vocabulary
 
@@ -69,4 +69,4 @@ The model is supported by two language pairs but not by a systematic comparison 
 
 ## Recommended Next Action
 
-Use the data-mapping/protocol-mapping/base-and-meta-access decomposition as the required structure for a future `cross-representational-reflection` note, while leaving Commonplace's satisfaction of those conditions explicitly undecided.
+Use the data-mapping/protocol-mapping/base-and-meta-access decomposition to constrain [Cross-representational reflection](../notes/cross-representational-reflection.md), while leaving Commonplace's satisfaction of those conditions explicitly undecided.

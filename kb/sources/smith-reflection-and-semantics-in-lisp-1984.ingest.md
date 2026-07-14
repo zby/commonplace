@@ -24,7 +24,7 @@ Smith argues that self-reference is not enough for reflection. A reflective syst
 
 ## Connections Found
 
-Smith is the historical anchor for [Actionable theories and reflexive system construction](../notes/actionable-theories-and-reflexive-system-construction.md): its self-description and behavioral-effect conditions need to be compared with Smith's embedded theory, two-way causality, and vantage point, while its authority and verification conditions remain Commonplace additions. The paper also supplies the primary Lisp lineage for [LLM context is a homoiconic medium](../notes/llm-context-is-a-homoiconic-medium.md), but blocks the inference from homoiconicity or metacircular self-description to reflection. [Maes 1987](./maes-concepts-and-experiments-computational-reflection-1987.md) and [Maes 1988](./maes-computational-reflection-1988.md) retain the causal core while generalizing beyond procedural languages and using “reflection” for what Smith presents here as the narrower procedural case.
+Smith is a historical anchor for [Reflective system](../notes/definitions/reflective-system.md): self-description and behavioral effect must be compared with Smith's embedded theory, two-way causality, and vantage point. The paper also supplies the primary Lisp lineage for [LLM context is a homoiconic medium](../notes/llm-context-is-a-homoiconic-medium.md), but blocks the inference from homoiconicity or metacircular self-description to reflection. [Maes 1987](./maes-concepts-and-experiments-computational-reflection-1987.md) and [Maes 1988](./maes-computational-reflection-1988.md) retain the causal core while generalizing beyond procedural languages and using “reflection” for what Smith presents here as the narrower procedural case.
 
 ## Extractable Value
 
@@ -85,4 +85,4 @@ Smith explicitly limits the architecture's generality claim to serial, single-pr
 
 ## Recommended Next Action
 
-Use Smith's three-part test—embedded self-theory, bidirectional causal connection, and vantage point—as the historical baseline when revising [Actionable theories and reflexive system construction](../notes/actionable-theories-and-reflexive-system-construction.md), while keeping Commonplace's operator, authority, and verification conditions explicitly separate additions.
+Use Smith's three-part test—embedded self-theory, bidirectional causal connection, and vantage point—as historical context for [Reflective system](../notes/definitions/reflective-system.md), while keeping operator authority and evaluation as separate additions.
