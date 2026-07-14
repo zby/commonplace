@@ -11,7 +11,7 @@ A [reflective system](./definitions/reflective-system.md)'s behavior is rarely c
 
 That need cannot be assessed all-or-nothing. **Reflective coverage** is relative to the declared aspects and operations, and it grades — by which forms the self-representation spans, and by what the system can do to each covered component. Processes inside the boundary may inspect or intervene on aspects across the mappings that connect the forms without being able to inspect or modify the mappings themselves; inspection and modification are separate dimensions throughout.
 
-## Coverage is graded, not binary
+## Two dimensions grade coverage
 
 Coverage grades along two independent dimensions. **Form coverage** asks which forms' aspects enter the self-representation at all. **Operation depth** asks what processes inside the boundary can do to a covered component. Depth rises through at least four levels:
 
@@ -22,7 +22,7 @@ Coverage grades along two independent dimensions. **Form coverage** asks which f
 
 Neither dimension implies the other, and no form inherits either from another. The instructive case is modification-depth coverage of prose and symbolic artifacts coexisting with selection-depth coverage of a parametric component. An agent system whose instructions can require a particular model, or a class of models, exercises real intercession over its distributed-parametric form: the choice of weights is represented in a system-definition artifact, causally connected to everything downstream, and revisable by the system's own processes. Yet nothing inside the boundary can inspect or edit what those weights do — the intervention granularity is swapping a sealed unit. Calling this "no reflection over the model" misses the lever that exists; calling it "reflective coverage of the weights" overstates what the lever reaches. It is selection-grade coverage of the parametric form, and it should be claimed as exactly that.
 
-Grading dissolves the binary question. A system need not cover all its forms to be reflective — reflection is aspect-bound — but a coverage claim must state the form and the depth, separately for each form the system's behavior lives in. Depth is a descriptive grade, not a target: the kernel-boundary discussion below shows why a fixed mapping held at shallow depth can be the correct design rather than a deficiency. Each covered form also brings its own verification obligations, since form sets the default review method: read prose, test symbolic artifacts, probe parametric ones behaviorally.
+Grading dissolves the binary question. A system need not cover all its forms to be reflective — reflection is aspect-bound — but a coverage claim must state the form and the depth, separately for each form the system's behavior lives in. Depth describes a design; it does not rank it — the kernel-boundary discussion below shows why a fixed mapping held at shallow depth can be the correct choice. Each covered form also brings its own verification obligations, since form sets the default review method: read prose, test symbolic artifacts, probe parametric ones behaviorally.
 
 ## Coverage patterns
 
