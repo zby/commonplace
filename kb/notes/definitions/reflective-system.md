@@ -68,7 +68,7 @@ Relevant Notes:
 
 - [Actionable theory](./actionable-theory.md) — grounds: an internal process may act through theory, but actionability alone does not establish reflection
 - [Behavioral authority](./behavioral-authority.md) — enables: names the consumer, channel, and force that make a self-representation operative
-- [Cross-representational reflection](../cross-representational-reflection.md) — extends: asks how aspect-bounded reflection covers systems whose behavior spans heterogeneous representations and their mappings
+- [Reflective coverage is graded across representational forms](../reflective-coverage-is-graded-across-representational-forms.md) — extends: when behavior spans heterogeneous forms, coverage must be claimed per form and operation depth
 - [Governed adaptation requires search, evaluation, and operative retention](../governed-adaptation-requires-search-evaluation-and-retention.md) — extends: reflection supplies one causal path into the loop, but not the search, evaluation, or operative retention the loop needs
 - [Closure under recommendations bounds methodology-governed self-extension](../closure-under-recommendations-bounds-governed-self-extension.md) — contrasts: closure under recommendations is a stronger self-extension property than reflection
 - [Smith, Reflection and Semantics in Lisp](../../sources/smith-reflection-and-semantics-in-lisp-1984.ingest.md) — derived-from: supplies the earlier embedded-self-theory and bidirectional-causality lineage

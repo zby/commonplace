@@ -24,7 +24,7 @@ Pattee defines the primeval epistemic cut as the genotype/phenotype separation b
 
 ## Connections Found
 
-The source constrains analogies used in [Representational form](../notes/definitions/representational-form.md) and [Cross-representational reflection](../notes/cross-representational-reflection.md). It should not be used to redefine the KB's [Codification](../notes/definitions/codification.md) boundary.
+The source constrains analogies used in [Representational form](../notes/definitions/representational-form.md) and [Cross-representational reflection](../notes/reflective-coverage-is-graded-across-representational-forms.md). It should not be used to redefine the KB's [Codification](../notes/definitions/codification.md) boundary.
 
 ## Inherited Vocabulary
 

@@ -89,15 +89,15 @@ The third is the most telling about direction of causation. In `ba1a7d9f`, adopt
 
 Both directions of causal connection are therefore observed: a change in the system's organization forced revision of its self-representation, and a change made through the self-representation altered what the system subsequently required, rejected, and searched.
 
-## Cross-representational reflection: partially demonstrated
+## Coverage across representational forms: partially demonstrated
 
-Basic reflection does not require the stronger claim that Commonplace's reflective reach *covers* every behavior-bearing representation and the mappings between them. Assessed against [cross-representational reflection](../notes/cross-representational-reflection.md), the trace above shows real but incomplete coverage:
+Basic reflection does not require the stronger claim that Commonplace's reflective reach *covers* every behavior-bearing representation and the mappings between them. Since [reflective coverage is graded across representational forms](../notes/reflective-coverage-is-graded-across-representational-forms.md), the assessment goes form by form, and the trace above shows real but incomplete coverage:
 
 - **Prose-mediated reasoning revising formal artifacts** — demonstrated. ADR 026's prose decision became a schema and a validator.
 - **Symbolic execution producing evidence that revises prose** — demonstrated, once. The `covered_by` check found what the documented `rg` recipe missed, and the recipe was corrected.
 - **Mappings represented and modifiable** — partial. The type-spec-to-validator mapping is unusually tight (the spec path is the dispatch key), so it is hard for the two to drift silently. Most other prose-to-code relationships in the repository have no such binding.
 - **Lineage and staleness across the forms** — largely unrepresented. Commonplace's rationale surfaces are distributed, and it does not guarantee an end-to-end trace from a claim to the code that implements it; see [design rationale management](./design-rationale-management.md). Freshness tracking exists for review pairs, not for theory-to-implementation lineage.
-- **The distributed-parametric form — selection-grade only.** The model weights sit outside the boundary: nothing inside can inspect or edit them. The one represented lever is selection among sealed alternatives — skill frontmatter pins a model (`model: opus` in `kb/instructions/cp-skill-write/SKILL.md`, `model: sonnet` on lighter skills), and review baselines partition by model. Editing that prose changes which parametric substrate runs, and nothing finer. In the [graded-coverage terms](../notes/cross-representational-reflection.md) this is real intercession over the parametric form at the crudest useful depth.
+- **The distributed-parametric form — selection-grade only.** The model weights sit outside the boundary: nothing inside can inspect or edit them. The one represented lever is selection among sealed alternatives — skill frontmatter pins a model (`model: opus` in `kb/instructions/cp-skill-write/SKILL.md`, `model: sonnet` on lighter skills), and review baselines partition by model. Editing that prose changes which parametric substrate runs, and nothing finer. In the [graded-coverage terms](../notes/reflective-coverage-is-graded-across-representational-forms.md) this is real intercession over the parametric form at the crudest useful depth.
 
 The honest summary: reflective coverage here is graded, not uniform. It reaches modification depth on the prose and symbolic forms — demonstrated on the type-system spine, architecturally possible elsewhere, not systematically achieved — and only selection depth on the parametric form.
 
@@ -117,7 +117,7 @@ Relevant Notes:
 
 - [Reflective system](../notes/definitions/reflective-system.md) — rationale: supplies the five obligations this classification discharges
 - [Behavioral authority](../notes/definitions/behavioral-authority.md) — defined-in: names the consumer, channel, and force in the observed trace
-- [Cross-representational reflection](../notes/cross-representational-reflection.md) — rationale: the stronger coverage criterion this system only partially meets
+- [Reflective coverage is graded across representational forms](../notes/reflective-coverage-is-graded-across-representational-forms.md) — rationale: the graded coverage criterion this system meets unevenly across its forms
 - [Governed adaptation requires search, evaluation, and operative retention](../notes/governed-adaptation-requires-search-evaluation-and-retention.md) — rationale: the change-loop decomposition the trace is read against
 - [Closure under recommendations bounds methodology-governed self-extension](../notes/closure-under-recommendations-bounds-governed-self-extension.md) — rationale: the separate, stronger self-extension property
 - [ADR 026: tag-readme type with completeness and coverage marks](./adr/026-tag-readme-type-with-completeness-and-coverage-marks.md) — evidence: the decision at the center of the observed trace
