@@ -7,11 +7,11 @@ tags: [foundations, computational-model, self-improving-systems]
 
 # Governed adaptation requires search, evaluation, and operative retention
 
-A governed adaptation loop requires at least three analytically separable functions: **search** brings a candidate change into consideration, **evaluation** supplies grounds for accepting or rejecting it, and **operative retention** preserves an accepted change with behavioral authority. One process may perform several functions, and evaluation may occur before or after a candidate first becomes operative. The decomposition specifies what the loop must accomplish, not a fixed sequence or component architecture.
+A governed adaptation loop requires three functions: **search** brings a candidate change into consideration, **evaluation** supplies grounds for accepting or rejecting it, and **operative retention** preserves an accepted change with behavioral authority. Remove any one and the loop does not close — a change nobody proposed, nobody could reject, or nobody will ever act on.
 
 Governed adaptation is therefore narrower than self-modification. A blind, accidental, or unconditional rewrite may change later behavior without applying any criterion; a transient rewrite may fail to preserve the result. Both can count as self-modification, but neither completes a governed adaptation loop. Conversely, the three functions can organize adaptation in a system that is not reflective.
 
-A [reflective system](./definitions/reflective-system.md) supplies one possible causal path into this loop. Through **intercession**—an operation that changes the system through its causally connected self-representation—it can modify a represented aspect of itself. Making that path available does not itself provide search, evaluation, or retention.
+A [reflective system](./definitions/reflective-system.md) supplies one possible causal path into this loop. Through **intercession** — an operation that changes the system through its causally connected self-representation — it can modify a represented aspect of itself. Making that path available does not itself provide search, evaluation, or retention.
 
 ## Search determines what enters consideration
 
@@ -61,6 +61,10 @@ Cybernetician W. Ross Ashby's ultrastable system is a governed adaptation loop t
 It is a real instance, not a defective one; it is simply not the kind of system this KB is built to reason about. Its interest here is evidential: it shows that **reflection is not a premise of the decomposition**. The three functions are established without appeal to a self-representation, which is why the claim is stated for governed adaptation rather than restricted to reflective systems. The reflective case is the one everything downstream develops.
 
 At the formal extreme, [Gödel machines](./goedel-machines-are-a-proof-governed-case-of-self-modification.md) are proof-governed self-rewriting systems whose acceptance rule can govern changes to the rule-governed machinery itself. Their meta-level closure depends on proving a target theorem relative to axiomatized hardware, environment, and utility models ([Schmidhuber 2003](../sources/goedel-machines-schmidhuber.ingest.md)). A fallible evaluator may still estimate downstream consequences, but it does not inherit that guarantee.
+
+## What the decomposition claims
+
+The three functions are analytically separable, not architecturally separate. One process may perform several of them — a maintainer who notices a problem, drafts the fix, and merges it performs all three — and evaluation may run before a candidate becomes operative or after. The decomposition specifies what the loop must accomplish, not a sequence, a component diagram, or a division of labour. Its use is diagnostic: when a loop stalls, ask which of the three is missing rather than which component failed.
 
 ## Open Questions
 
