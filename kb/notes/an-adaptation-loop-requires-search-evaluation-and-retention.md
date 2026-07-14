@@ -1,15 +1,15 @@
 ---
-description: "A governed adaptation loop needs search to produce a candidate, evaluation that can reject it, and operative retention; reflection supplies only one causal path into that loop"
+description: "An adaptation loop needs search to produce a candidate, evaluation that can reject it, and operative retention; reflection supplies only one causal path into that loop"
 type: kb/types/note.md
 traits: [title-as-claim, has-external-sources]
 tags: [foundations, computational-model, self-improving-systems]
 ---
 
-# Governed adaptation requires search, evaluation, and operative retention
+# An adaptation loop requires search, evaluation, and operative retention
 
-A governed adaptation loop requires three functions: **search** brings a candidate change into consideration, **evaluation** supplies grounds for accepting or rejecting it, and **operative retention** preserves an accepted change with behavioral authority. Remove any one and the loop does not close — a change nobody proposed, nobody could reject, or nobody will ever act on.
+An adaptation loop requires three functions: **search** brings a candidate change into consideration, **evaluation** supplies grounds for accepting or rejecting it, and **operative retention** preserves an accepted change with behavioral authority. Remove any one and the loop does not close — a change nobody proposed, nobody could reject, or nobody will ever act on.
 
-Governed adaptation is therefore narrower than self-modification. A blind, accidental, or unconditional rewrite may change later behavior without applying any criterion; a transient rewrite may fail to preserve the result. Both can count as self-modification, but neither completes a governed adaptation loop. Conversely, the three functions can organize adaptation in a system that is not reflective.
+An adaptation loop is therefore narrower than self-modification. A blind, accidental, or unconditional rewrite may change later behavior without applying any criterion; a transient rewrite may fail to preserve the result. Both can count as self-modification, but neither closes an adaptation loop. Conversely, the three functions can organize adaptation in a system that is not reflective at all.
 
 A [reflective system](./definitions/reflective-system.md) supplies one possible causal path into this loop. Through **intercession** — an operation that changes the system through its causally connected self-representation — it can modify a represented aspect of itself. Making that path available does not itself provide search, evaluation, or retention.
 
@@ -56,9 +56,11 @@ Retained design rationale is one such channel. Recorded constraints and rejected
 
 ## Boundary cases clarify the claim
 
-Cybernetician W. Ross Ashby's ultrastable system is a governed adaptation loop that is not reflective. His electromechanical Homeostat varies parameters randomly when essential variables leave viable bounds, tests whether viability returns, and preserves a surviving configuration through non-displacement — search, evaluation, and operative retention, with no self-representation anywhere in the mechanism ([Ashby 1960, chapters 7–8](../sources/ashby-design-for-a-brain-ultrastability.md)).
+Cybernetician W. Ross Ashby's ultrastable system is an adaptation loop that is not reflective. His electromechanical Homeostat varies parameters randomly when essential variables leave viable bounds, tests whether viability returns, and preserves a surviving configuration through non-displacement — search, evaluation, and operative retention, with no self-representation anywhere in the mechanism ([Ashby 1960, chapters 7–8](../sources/ashby-design-for-a-brain-ultrastability.md)).
 
-It is a real instance, not a defective one; it is simply not the kind of system this KB is built to reason about. Its interest here is evidential: it shows that **reflection is not a premise of the decomposition**. The three functions are established without appeal to a self-representation, which is why the claim is stated for governed adaptation rather than restricted to reflective systems. The reflective case is the one everything downstream develops.
+It is a real instance, not a defective one, and it establishes that **reflection is not a premise of the decomposition** — the three functions are exhibited without appeal to a self-representation, which is why the claim is stated for adaptation loops generally rather than restricted to reflective systems. It also marks the floor. Each function is present in its weakest viable form: search is a draw from a random-number table bearing no relation to the problem, evaluation is a one-bit viability test that ranks nothing, and retention is equilibrium — a configuration survives because nothing is left to displace it, not because anything endorsed it. Reading the Homeostat is therefore the cheapest way to see what a stronger generator and a real oracle actually buy.
+
+What it does not buy is accumulation. The Homeostat retains — the surviving configuration persists and steers later behavior, which is what makes the retention operative — but what it retains is an opaque parameter setting, not a representation. No process in the mechanism can read that setting, say why it was good, criticize it, or reuse it on the next problem. So the loop runs indefinitely without anything compounding. That gap is exactly what routing the loop through a self-representation closes, and it is the subject of [self-improving system](./definitions/self-improving-system.md).
 
 At the formal extreme, [Gödel machines](./goedel-machines-are-a-proof-governed-case-of-self-modification.md) are proof-governed self-rewriting systems whose acceptance rule can govern changes to the rule-governed machinery itself. Their meta-level closure depends on proving a target theorem relative to axiomatized hardware, environment, and utility models ([Schmidhuber 2003](../sources/goedel-machines-schmidhuber.ingest.md)). A fallible evaluator may still estimate downstream consequences, but it does not inherit that guarantee.
 
@@ -82,4 +84,5 @@ Relevant Notes:
 - [Gödel machines are a proof-governed case of reflective self-modification](./goedel-machines-are-a-proof-governed-case-of-self-modification.md) — exemplifies: realizes the three functions under a formal acceptance gate
 - [Commonplace as a reflective system](../reference/commonplace-as-a-reflective-system.md) — evidence: traces the functions through an observed repository change loop
 - [Schmidhuber, Gödel Machines](../sources/goedel-machines-schmidhuber.ingest.md) — evidence: supplies the proof-governed limit case
-- [Ashby, Design for a Brain — ultrastability](../sources/ashby-design-for-a-brain-ultrastability.md) — evidence: a governed adaptation loop with no self-representation, establishing that reflection is not a premise of the decomposition
+- [Self-improving system](./definitions/self-improving-system.md) — extends: the case where the loop runs through the system's own self-representation, which is what lets improvement accumulate
+- [Ashby, Design for a Brain — ultrastability](../sources/ashby-design-for-a-brain-ultrastability.md) — evidence: an adaptation loop with no self-representation, establishing that reflection is not a premise of the decomposition, and marking the floor of each function

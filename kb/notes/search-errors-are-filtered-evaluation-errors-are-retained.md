@@ -7,7 +7,7 @@ tags: [foundations, self-improving-systems]
 
 # Search errors are filtered; evaluation errors are retained
 
-In a [governed adaptation loop](./governed-adaptation-requires-search-evaluation-and-retention.md), search and evaluation fail in ways that are not symmetric, and the asymmetry is structural rather than incidental.
+In a [adaptation loop](./an-adaptation-loop-requires-search-evaluation-and-retention.md), search and evaluation fail in ways that are not symmetric, and the asymmetry is structural rather than incidental.
 
 Search sits *upstream of a filter*. A bad candidate — useless, harmful, off-target — reaches evaluation and is rejected. It cost effort and nothing else; it never became operative.
 
@@ -15,7 +15,7 @@ Evaluation *is* the filter. A bad acceptance is not caught by anything downstrea
 
 > Only the last filter's errors survive.
 
-This is why the two functions cannot be traded against each other, and why "make the evaluator stronger" is not a general answer to a weak generator: [evaluation cannot select a candidate that search never reaches](./governed-adaptation-requires-search-evaluation-and-retention.md).
+This is why the two functions cannot be traded against each other, and why "make the evaluator stronger" is not a general answer to a weak generator: [evaluation cannot select a candidate that search never reaches](./an-adaptation-loop-requires-search-evaluation-and-retention.md).
 
 ## The consequence: automate search first
 
@@ -23,7 +23,7 @@ The costs of automating the two functions are paid in different currencies.
 
 **Automating search costs evaluation throughput.** Machine-generated candidates are judged by the same evaluator that judged the human's. The failure mode is a queue: candidates arriving faster than anything can judge or prune them, which is exactly the pathology in [entropy management must scale with generation throughput](./entropy-management-must-scale-with-generation-throughput.md). That is a *capacity* problem, and capacity problems are tractable — batch, prioritize, sample, or strengthen the evaluator.
 
-**Automating evaluation costs correctness.** A weak oracle accepts changes that do not help, they are retained, and they compound: a bad note gets linked, cited, and distilled into a skill. That is not a capacity problem and no amount of throughput fixes it. It is bounded by [the boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md), and taking the autonomy anyway converts governed adaptation into plain self-modification.
+**Automating evaluation costs correctness.** A weak oracle accepts changes that do not help, they are retained, and they compound: a bad note gets linked, cited, and distilled into a skill. That is not a capacity problem and no amount of throughput fixes it. It is bounded by [the boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md), and taking the autonomy anyway breaks the loop, leaving plain self-modification.
 
 So search is the function whose failures the loop already catches, and it is the one to automate first. Evaluation is the one that has to be *bought*, with an oracle.
 
@@ -51,7 +51,7 @@ Search errors are caught by machinery already running in the loop, at no extra c
 
 Relevant Notes:
 
-- [Governed adaptation requires search, evaluation, and operative retention](./governed-adaptation-requires-search-evaluation-and-retention.md) — grounds: the loop whose functions this claim distinguishes, and the reach-versus-strength point it extends
+- [An adaptation loop requires search, evaluation, and operative retention](./an-adaptation-loop-requires-search-evaluation-and-retention.md) — grounds: the loop whose functions this claim distinguishes, and the reach-versus-strength point it extends
 - [Self-improving system](./definitions/self-improving-system.md) — extends: tells the autonomy gradient which function to climb first, and why the other must be bought
 - [The boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — mechanism: why evaluation is the bounded function and its errors are the permanent ones
 - [Entropy management must scale with generation throughput](./entropy-management-must-scale-with-generation-throughput.md) — evidence: the capacity failure that automated search produces when evaluation does not scale with it

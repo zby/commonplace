@@ -7,7 +7,7 @@ tags: [foundations, self-improving-systems, evaluation]
 
 # A stronger oracle buys autonomy and pays in reach
 
-Autonomy — how much of a [governed adaptation loop](./governed-adaptation-requires-search-evaluation-and-retention.md) runs without a person — is what the *self* in self-improving names, and there is no reason to want less of it. It cannot be turned up at will. Automating an evaluation for which no adequate oracle exists does not produce a more self-improving system; it produces a less governed one, retaining changes nothing checked. The system does not advance within the category, it drops out of it, into plain self-modification.
+Autonomy — how much of an [adaptation loop](./an-adaptation-loop-requires-search-evaluation-and-retention.md) runs without a person — is the gradient a [self-improving system](./definitions/self-improving-system.md) is graded on, and there is no reason to want less of it. It cannot be turned up at will. Automating an evaluation for which no adequate oracle exists does not buy autonomy; it retains changes nothing checked. Evaluation that cannot reject is not evaluation, so the loop no longer closes: the system does not advance along the gradient, it drops off it, into plain self-modification.
 
 So autonomy in evaluation extends exactly as far as mechanical verification reaches, [since the boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md). What that framing leaves implicit is the price, and the price is the point: **a stronger oracle accepts fewer things.**
 
@@ -38,7 +38,7 @@ But hardening moves the frontier; it does not remove it. At any fixed level of o
 Relevant Notes:
 
 - [The boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — grounds: the ceiling this note prices; autonomy in evaluation reaches exactly as far as verification does
-- [Governed adaptation requires search, evaluation, and operative retention](./governed-adaptation-requires-search-evaluation-and-retention.md) — grounds: the loop whose evaluation function is being bought
+- [An adaptation loop requires search, evaluation, and operative retention](./an-adaptation-loop-requires-search-evaluation-and-retention.md) — grounds: the loop whose evaluation function is being bought
 - [Self-improving system](./definitions/self-improving-system.md) — extends: supplies the price behind the definition's autonomy gradient
 - [Search errors are filtered; evaluation errors are retained](./search-errors-are-filtered-evaluation-errors-are-retained.md) — extends: why evaluation is the function that must be bought and search is the one to automate first
 - [Gödel machines are a proof-governed case of reflective self-modification](./goedel-machines-are-a-proof-governed-case-of-self-modification.md) — exemplifies: the strongest-oracle corner, where autonomy is total and reach is minimal

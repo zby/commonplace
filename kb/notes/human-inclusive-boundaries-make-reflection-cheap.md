@@ -22,7 +22,7 @@ So under a human-inclusive boundary, essentially every maintained software syste
 
 ## The gradient is autonomy
 
-The discriminating dimension is autonomy, and it is assessed per function. Take the change loop's decomposition — search, evaluation, retention, [since governed adaptation requires search, evaluation, and operative retention](./governed-adaptation-requires-search-evaluation-and-retention.md) — together with each read of the self-representation, and for each ask: does a human or a non-human process perform it?
+The discriminating dimension is autonomy, and it is assessed per function. Take the change loop's decomposition — search, evaluation, retention, [since an adaptation loop requires search, evaluation, and operative retention](./an-adaptation-loop-requires-search-evaluation-and-retention.md) — together with each read of the self-representation, and for each ask: does a human or a non-human process perform it?
 
 - **Zero end — software plus its dev team.** The machine consumes the code only by executing it, never *as a representation of itself*. Every reflective act — noticing what to change, judging a candidate, deciding what to keep — happens in human heads; the artifacts merely store the results. This is fully reflective under the human-inclusive boundary and fully un-autonomous.
 - **Middle — Commonplace.** In [Commonplace as a reflective system](../reference/commonplace-as-a-reflective-system.md), the harness loads skills and `CLAUDE.md` automatically, validators enforce type specs, and agents retrieve notes mid-task and derive behavior from what they find — non-human processes consume the self-representation *as a representation*. Humans keep search (noticing what is worth changing) and the judgment-heavy part of evaluation.
@@ -41,7 +41,7 @@ They move independently: a system can widen coverage while keeping a human at ev
 ## Scope
 
 - **Per-function and boundary-relative, not global.** Autonomy is assessed function by function against a declared boundary; there is no single scalar for a whole system, and moving the boundary moves the readings.
-- **Autonomy is bought, not chosen.** More autonomy does make a system more self-improving — that is what the "self" names, [since a system is self-improving to the degree its loop runs without a human](./definitions/self-improving-system.md) — and there is no reason to want less of it. There is only a price: [a stronger oracle buys autonomy and pays in reach](./a-stronger-oracle-buys-autonomy-and-pays-in-reach.md). So a system's position on this gradient is not chosen directly; it is downstream of where the system settled that trade.
+- **Autonomy is bought, not chosen.** Autonomy does not decide whether a system is [self-improving](./definitions/self-improving-system.md) — a human-inclusive loop still is one — but it is the axis worth moving along, and *autonomous* self-improving is reserved for a boundary with no human in it. There is no reason to want less of it. There is only a price: [a stronger oracle buys autonomy and pays in reach](./a-stronger-oracle-buys-autonomy-and-pays-in-reach.md). So a system's position on this gradient is not chosen directly; it is downstream of where the system settled that trade.
 - **Reflection remains the qualification; autonomy is the position.** This preserves the definition's exclusion that *reflection is not autonomy*. Classification answers whether the system is in the design space at all; the gradient answers where in the space it sits. They are different questions, and conflating them is what makes the bare classification look empty.
 
 ---
@@ -49,7 +49,7 @@ They move independently: a system can widen coverage while keeping a human at ev
 Relevant Notes:
 
 - [Reflective system](./definitions/reflective-system.md) — grounds: the human-inclusive boundary extension whose consequence this note states
-- [Governed adaptation requires search, evaluation, and operative retention](./governed-adaptation-requires-search-evaluation-and-retention.md) — grounds: the function decomposition autonomy grades over
+- [An adaptation loop requires search, evaluation, and operative retention](./an-adaptation-loop-requires-search-evaluation-and-retention.md) — grounds: the function decomposition autonomy grades over
 - [Reflective coverage is graded across representational forms](./reflective-coverage-is-graded-across-representational-forms.md) — contrasts: a sibling grading over forms rather than performers
 - [A methodology governs its own extension only as far as it settles the meta-decisions it raises](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md) — contrasts: closure grades the methodology's settledness, not the performer
 - [Gödel machines are a proof-governed case of reflective self-modification](./goedel-machines-are-a-proof-governed-case-of-self-modification.md) — exemplifies: the full-autonomy corner of the gradient

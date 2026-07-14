@@ -1,5 +1,5 @@
 ---
-description: "Curated head for the self-improving-systems tag — reflection is the machinery and the cheap part; the loop, and how much of it runs without a human, is the object"
+description: "Curated head for the self-improving-systems tag — reflection is the machinery and the cheap part; the loop is the object, and autonomy is a separate gradient over it"
 type: kb/types/tag-readme.md
 index_source: tag
 index_key: self-improving-systems
@@ -8,7 +8,7 @@ complete: true
 
 # Self-improving systems
 
-The object is the [**self-improving system**](./definitions/self-improving-system.md): a governed adaptation loop whose changes are made through the system's own self-representation, graded by how much of it runs without a human. Most systems in [agent-memory-systems](../agent-memory-systems/README.md) are a bid at some version of it — mine the traces, write the lesson down, load it next time.
+The object is the [**self-improving system**](./definitions/self-improving-system.md): an adaptation loop that runs on the system itself, through its own writable self-representation, against an improvement objective. Humans may sit inside the boundary; **autonomy** — how much of the loop runs without one — is a separate gradient over it. Most systems in [agent-memory-systems](../agent-memory-systems/README.md) are a bid at some version of it — mine the traces, write the lesson down, load it next time.
 
 ## Reflection is the machinery, not the property
 
@@ -18,13 +18,13 @@ The machinery is also nearly free: declare a maintainer inside the boundary and 
 
 ## The loop is where the work is
 
-[Governed adaptation requires search, evaluation, and operative retention](./governed-adaptation-requires-search-evaluation-and-retention.md), and they fail independently. A system with the wire that stalls anyway is missing a *named* function: a reviewed note nothing loads has no consumer; a patch never merged has no channel; a validator nothing invokes has no force. In each, the work happened and the loop stayed open.
+[An adaptation loop requires search, evaluation, and operative retention](./an-adaptation-loop-requires-search-evaluation-and-retention.md), and they fail independently. A system with the wire that stalls anyway is missing a *named* function: a reviewed note nothing loads has no consumer; a patch never merged has no channel; a validator nothing invokes has no force. In each, the work happened and the loop stayed open.
 
-The two scarce functions are not alike. [Search errors are filtered; evaluation errors are retained](./search-errors-are-filtered-evaluation-errors-are-retained.md) — evaluation is the terminal filter, so a bad candidate costs only effort while a bad acceptance is kept and compounds. Automate search first; **buy** evaluation with an oracle.
+The two scarce functions are not alike. [Search errors are filtered; evaluation errors are retained](./search-errors-are-filtered-evaluation-errors-are-retained.md) — evaluation is the terminal filter, so a bad candidate costs only effort while a bad acceptance is kept and compounds. Automate search first; **buy** evaluation with an oracle. And what the oracle returns is a claim, not a result: acceptance says the candidate met the criterion applied, not that the system improved.
 
-## Autonomy earns the name, and is bought
+## Autonomy is a separate gradient, and is bought
 
-Autonomy — how much of the loop runs without a person — is what the *self* in self-improving names, and there is no reason to want less of it. It cannot be turned up at will: automate an evaluation with no oracle behind it and the result is not a stronger loop but an ungoverned one. Autonomy in evaluation extends exactly as far as [mechanical verification reaches](./the-boundary-of-automation-is-the-boundary-of-verification.md), which predicts where the human will still be standing.
+Autonomy — how much of the loop runs without a person — does not decide whether a system is self-improving; a human-inclusive loop still is one, and *autonomous* self-improving is reserved for a boundary with no human in it. It is the axis worth moving along, and there is no reason to want less of it. It cannot be turned up at will: automate an evaluation with no oracle behind it and the result is not a stronger loop but a broken one, retaining changes nothing checked. Autonomy in evaluation extends exactly as far as [mechanical verification reaches](./the-boundary-of-automation-is-the-boundary-of-verification.md), which predicts where the human will still be standing.
 
 The price sits one level down: [a stronger oracle buys autonomy and pays in reach](./a-stronger-oracle-buys-autonomy-and-pays-in-reach.md). Proof accepts less than tests, tests less than judgment — so a system's place on the gradient is downstream of where it settled that trade, and the useful question is never *how autonomous is it* but *what does its oracle reach, and what does that cost*.
 
@@ -38,9 +38,9 @@ They answer different questions and move independently — a system can widen on
 
 ## Occupants
 
-The [Gödel machine](./goedel-machines-are-a-proof-governed-case-of-self-modification.md) makes all of its code rewritable — including the routine that searches for rewrites — and accepts one only under proof that it helps. Full autonomy, bought with the strongest available oracle and paid for in reach: every improvement it cannot prove is unreachable.
+The [Gödel machine](./goedel-machines-are-a-proof-governed-case-of-self-modification.md) makes all of its code rewritable — including the routine that searches for rewrites — and accepts one only under proof that it helps. It is the *autonomous* case, bought with the strongest available oracle and paid for in reach: every improvement it cannot prove is unreachable.
 
-[Commonplace](../reference/commonplace-as-a-reflective-system.md) has the same skeleton and a looser gate: tests, validators, and a maintainer who notices what to change and judges whether it helped. Humans hold search and the judgment-heavy evaluation — exactly the gates no oracle closes.
+[Commonplace](../reference/commonplace-as-a-reflective-system.md) has the same skeleton and a looser gate: tests, validators, and a maintainer who notices what to change and judges whether it helped. Humans hold search and the judgment-heavy evaluation — exactly the gates no oracle closes. That makes it human-inclusive rather than autonomous, and self-improving all the same.
 
 ## Consequence for agentic systems
 

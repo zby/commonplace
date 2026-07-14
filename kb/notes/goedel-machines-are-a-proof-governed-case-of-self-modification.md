@@ -13,7 +13,7 @@ It is a comparison case, not a foundation: it realizes the reflective change loo
 
 ## The change loop, formally realized
 
-The architecture maps onto the [search, evaluation, and retention](./governed-adaptation-requires-search-evaluation-and-retention.md) decomposition:
+The architecture maps onto the [search, evaluation, and retention](./an-adaptation-loop-requires-search-evaluation-and-retention.md) decomposition:
 
 | Reflective change function | Gödel-machine realization |
 |---|---|
