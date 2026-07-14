@@ -34,18 +34,14 @@ Autonomy in evaluation extends only as far as mechanical verification reaches, [
 
 ## Distinguish from sibling gradings
 
-Autonomy is one of several graded refinements over the same reflective-system base; they answer different questions and move independently.
+Autonomy grades *who performs the functions*. It is one of three graded refinements over the same reflective-system base, alongside coverage — *what is represented*, [since reflective coverage is graded across representational forms](./reflective-coverage-is-graded-across-representational-forms.md) — and closure — *what the methodology settles*, [since a methodology governs its own extension only as far as it settles the meta-decisions it raises](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md).
 
-- **Coverage** grades *what is represented* — per representational form and operation depth, [since reflective coverage is graded across representational forms](./reflective-coverage-is-graded-across-representational-forms.md).
-- **Closure** grades whether the methodology *settles the meta-decisions a change raises*, regardless of who walks the governed route, [since a methodology governs its own extension only as far as it settles them](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md).
-- **Autonomy** grades *who performs the functions*.
-
-A system can move on any one axis without moving on the others: it can widen coverage while keeping a human at every judgment, settle more meta-decisions without automating any of them, or hand a function to a machine without changing what is represented.
+They move independently: a system can widen coverage while keeping a human at every judgment, settle more meta-decisions without automating any of them, or hand a function to a machine without changing what is represented. Autonomy is the one that discriminates, which is this note's claim.
 
 ## Scope
 
 - **Per-function and boundary-relative, not global.** Autonomy is assessed function by function against a declared boundary; there is no single scalar for a whole system, and moving the boundary moves the readings.
-- **Autonomy is bought, not chosen.** More autonomy does make a system more self-improving — that is what the "self" names, [since a system is self-improving to the degree its loop runs without a human](./definitions/self-improving-system.md) — and there is no reason to want less of it. There is only a price. Autonomy in evaluation extends exactly as far as an oracle reaches, and taking more than has been paid for yields not a stronger loop but an ungoverned one, retaining changes nothing checked. The real tension is one level down, between **oracle strength and reach**: a stronger oracle accepts fewer things. The Gödel machine is not a warning against autonomy but a demonstration of the bill — it adopts the strongest available oracle, gets full autonomy with it, and pays in reach, since every improvement it cannot prove is unreachable. Autonomy is downstream of where a system settles that trade.
+- **Autonomy is bought, not chosen.** More autonomy does make a system more self-improving — that is what the "self" names, [since a system is self-improving to the degree its loop runs without a human](./definitions/self-improving-system.md) — and there is no reason to want less of it. There is only a price: [a stronger oracle buys autonomy and pays in reach](./a-stronger-oracle-buys-autonomy-and-pays-in-reach.md). So a system's position on this gradient is not chosen directly; it is downstream of where the system settled that trade.
 - **Reflection remains the qualification; autonomy is the position.** This preserves the definition's exclusion that *reflection is not autonomy*. Classification answers whether the system is in the design space at all; the gradient answers where in the space it sits. They are different questions, and conflating them is what makes the bare classification look empty.
 
 ---
@@ -58,4 +54,5 @@ Relevant Notes:
 - [A methodology governs its own extension only as far as it settles the meta-decisions it raises](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md) — contrasts: closure grades the methodology's settledness, not the performer
 - [Gödel machines are a proof-governed case of reflective self-modification](./goedel-machines-are-a-proof-governed-case-of-self-modification.md) — exemplifies: the full-autonomy corner of the gradient
 - [The boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — mechanism: what limits autonomous evaluation
+- [A stronger oracle buys autonomy and pays in reach](./a-stronger-oracle-buys-autonomy-and-pays-in-reach.md) — mechanism: the price of moving along this gradient, and why position on it is downstream of the oracle trade
 - [Commonplace as a reflective system](../reference/commonplace-as-a-reflective-system.md) — evidence: a mid-gradient occupant with the human at the judgment-heavy gate
