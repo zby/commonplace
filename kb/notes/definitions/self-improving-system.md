@@ -62,7 +62,7 @@ So what an oracle bounds is not autonomy but **warranted autonomy**: how far the
 
 **Self-improving is not autonomous.** The two are independent, and conflating them is what the reserved term exists to prevent. A human-inclusive loop is self-improving; only a boundary with no human in it is autonomously so.
 
-**Self-improving is not improving.** The evaluator's acceptance is a claim about the objective it applied, not a demonstration that the system got better.
+**Self-improving names the loop, not the outcome.** Membership is earned by how the system is built — a loop, aimed at an objective, running through its own self-representation. Nothing in that guarantees the objective was the right one, or that the oracle could tell. A system can run its loop faithfully for years and decline.
 
 **A weak oracle is not a broken loop.** An inadequate evaluator still rejects things, so the loop still closes. What it costs is trust, not membership.
 
