@@ -72,6 +72,7 @@ At the formal extreme, [Gödel machines](./goedel-machines-are-a-proof-governed-
 Relevant Notes:
 
 - [Reflective system](./definitions/reflective-system.md) — contrasts: reflection is structural and supplies one causal path into the loop; neither property implies the other
+- [Search errors are filtered; evaluation errors are retained](./search-errors-are-filtered-evaluation-errors-are-retained.md) — extends: the two functions fail asymmetrically, because evaluation is the terminal filter and its errors are the permanent ones
 - [Actionable methodology](./definitions/actionable-methodology.md) — grounds: the operator, available operations, and setting that make a criterion usable in the loop
 - [A methodology governs its own extension only as far as it settles the meta-decisions it raises](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md) — extends: asks whether a system's methodology governs changes to its own change process
 - [Gödel machines are a proof-governed case of reflective self-modification](./goedel-machines-are-a-proof-governed-case-of-self-modification.md) — exemplifies: realizes the three functions under a formal acceptance gate

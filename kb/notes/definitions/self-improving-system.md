@@ -63,6 +63,7 @@ Relevant Notes:
 - [Reflective system](./reflective-system.md) — grounds: the causally connected self-representation, and the intercession capability, that supply the machinery
 - [Governed adaptation requires search, evaluation, and operative retention](../governed-adaptation-requires-search-evaluation-and-retention.md) — grounds: the loop, and the Homeostat case establishing it does not require reflection
 - [Human-inclusive boundaries make reflection cheap; autonomy is the discriminating gradient](../human-inclusive-boundaries-make-reflection-cheap.md) — grounds: why the machinery is nearly free, and why autonomy is the gradient that discriminates
+- [Search errors are filtered; evaluation errors are retained](../search-errors-are-filtered-evaluation-errors-are-retained.md) — extends: which function to make autonomous first, and why evaluation is the one that must be bought
 - [The boundary of automation is the boundary of verification](../the-boundary-of-automation-is-the-boundary-of-verification.md) — mechanism: the price of autonomy, and the ceiling on it
 - [Behavioral authority](./behavioral-authority.md) — defined-in: the consumer, channel, and force that operative retention requires
 - [Gödel machines are a proof-governed case of reflective self-modification](../goedel-machines-are-a-proof-governed-case-of-self-modification.md) — exemplifies: the full-autonomy corner, and what it costs
