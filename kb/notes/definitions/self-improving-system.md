@@ -32,17 +32,15 @@ The oracle certifies that the candidate met the criterion it applied. It does no
 
 ## Why reflection and intercession are not the property
 
-This is the standing confusion the term needs sharpening against. Reflection and intercession are nearly free, and they deliver nothing on their own.
+This is the standing confusion the term needs sharpening against: reflection and intercession are nearly free, and they deliver nothing on their own.
 
-A Smalltalk image has both maximally — the compiler can be edited with the compiler — and left alone it improves nothing for a decade, because [nothing in it performs search or evaluation](./reflective-system.md). Remove the programmer and the loop is not weakened; it is absent. Add the programmer back, and put her inside the declared boundary, and Smalltalk-plus-programmer may well be a self-improving system: the loop closes, and it closes through a self-representation. That is the human-inclusive case, and it is admitted rather than explained away.
+A Smalltalk image has both maximally — the compiler can be edited with the compiler — and left alone it improves nothing for a decade, because [nothing in it performs search or evaluation](./reflective-system.md). Put the programmer inside the declared boundary and Smalltalk-plus-programmer may well be a self-improving system: the loop closes, and it closes through a self-representation. That is the human-inclusive case, and the definition admits it.
 
 ## Why the loop must run *through* the self-representation
 
-Adaptation alone is not enough either, and the negative case is real rather than constructed. [Ashby's Homeostat](../../sources/ashby-design-for-a-brain-ultrastability.md) runs a complete adaptation loop — it varies its parameters when its essential variables leave viable limits, tests whether viability returns, and holds the surviving configuration — with no self-representation anywhere in the mechanism.
+Adaptation alone is not enough either. [Ashby's Homeostat](../../sources/ashby-design-for-a-brain-ultrastability.md) runs a complete adaptation loop — search, evaluation, retention — with no self-representation anywhere in the mechanism, and it retains: the surviving configuration persists and steers later behavior. What it cannot do is *accumulate*. The thing retained is an opaque parameter setting rather than a representation, so no process in the mechanism can read it, say why it was good, criticize it, or carry it to the next problem. The loop runs indefinitely and nothing compounds.
 
-It adapts, and it retains: the surviving configuration persists and steers later behavior. What it cannot do is *accumulate*. The thing retained is an opaque parameter setting rather than a representation, so no process in the mechanism can read it, say why it was good, criticize it, or carry it to the next problem. The loop runs indefinitely and nothing compounds.
-
-Route the same loop through a self-representation and the accepted change lands in an artifact the system also *reads*. Improvement becomes legible, criticizable, and compounding: each retained change is available to the next round of search and evaluation, as knowledge rather than as a setting. That is what the intersection buys, and it is why neither component alone is the object of interest.
+Route the same loop through a self-representation and the accepted change lands in an artifact the system also *reads*. Each retained change becomes available to the next round of search and evaluation, as knowledge rather than as a setting. That is what the intersection buys, and it is why neither component alone is the object of interest.
 
 ## Autonomy is a separate gradient
 
@@ -50,11 +48,7 @@ Autonomy asks a different question: of search, evaluation, and retention, how mu
 
 **Autonomous self-improving system** is reserved for the case where the declared boundary contains no human component: search, evaluation, and retention all run without a person. Moving the boundary moves the reading, which is why the boundary must be declared before the grading means anything.
 
-## Autonomy is bought with an oracle
-
-Autonomy is the interesting direction, and it cannot be turned up at will. Automating an evaluation for which no adequate oracle exists does not produce a *more* self-improving system — it produces one whose loop no longer closes, retaining changes nothing checked. Evaluation that cannot reject is not evaluation, so the system does not advance along the autonomy gradient; it drops out of the category, into plain self-modification.
-
-So autonomy in evaluation extends only as far as an oracle reaches, and taking it costs something: [a stronger oracle buys autonomy and pays in reach](../a-stronger-oracle-buys-autonomy-and-pays-in-reach.md). A system's position on the gradient is therefore downstream of where it settled that trade, which is why the useful question is never *how autonomous is it* but *what does its oracle reach, and what does that cost*.
+Autonomy is the interesting direction, and it cannot be turned up at will. Automating an evaluation for which no adequate oracle exists retains changes nothing checked; evaluation that cannot reject is not evaluation, so the system does not advance along the gradient but drops out of the category, into plain self-modification. Taking autonomy therefore costs something, and [a stronger oracle buys autonomy and pays in reach](../a-stronger-oracle-buys-autonomy-and-pays-in-reach.md) prices it.
 
 ## Exclusions
 

@@ -7,7 +7,7 @@ tags: [foundations, self-improving-systems]
 
 # Search errors are filtered; evaluation errors are retained
 
-In a [adaptation loop](./an-adaptation-loop-requires-search-evaluation-and-retention.md), search and evaluation fail in ways that are not symmetric, and the asymmetry is structural rather than incidental.
+In an [adaptation loop](./an-adaptation-loop-requires-search-evaluation-and-retention.md), search and evaluation fail in ways that are not symmetric, and the asymmetry is structural rather than incidental.
 
 Search sits *upstream of a filter*. A bad candidate — useless, harmful, off-target — reaches evaluation and is rejected. It cost effort and nothing else; it never became operative.
 

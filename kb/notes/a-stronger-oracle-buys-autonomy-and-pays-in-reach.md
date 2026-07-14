@@ -25,7 +25,7 @@ Neither is misconfigured. They are two settlements of one trade, and the positio
 
 The obvious objection is that the trade is an artifact of not trying hard enough — build a *better* oracle, one that is both strong and broad, and the tension dissolves. Sometimes it does. Oracle-hardening is real work with real wins: a rubric that becomes a validator, a heuristic that becomes a test, a property that turns out to be checkable after all. The [oracle-strength spectrum](./oracle-strength-spectrum.md) is a description of where that work has and has not paid off.
 
-But hardening moves the frontier; it does not remove it. At any fixed level of oracle-construction effort, the strength you take is paid for in breadth, because the improvements that resist mechanization are not a residue of laziness — they are the ones whose criteria the system cannot state. A system that could state them would have an oracle already. The trade binds wherever criteria outrun formalization, which is most places that matter, and the effect of hardening is to shift *which* improvements sit on the far side of it, not to empty that side.
+But hardening moves the frontier; it does not remove it. At any fixed level of oracle-construction effort, the strength you take is paid for in breadth, because the improvements that resist mechanization are not a residue of laziness — they are the ones whose criteria the system cannot state. A system that could state them would have an oracle already. So the trade binds wherever criteria outrun formalization, and the effect of hardening is to shift *which* improvements sit on the far side of it, not to empty that side.
 
 ## Scope
 

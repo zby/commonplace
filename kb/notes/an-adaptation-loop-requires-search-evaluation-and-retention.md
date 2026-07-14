@@ -48,9 +48,9 @@ Acceptance alone does not make a change consequential. Operative retention combi
 
 In each case, search ran and evaluation passed, but the adaptation loop remained open: the artifact exists without becoming behaviorally consequential.
 
-## Feedback informs later iterations
+## Feedback is what makes later iterations responsive
 
-For adaptation to repeat, consequences of retained changes must reach later search or evaluation through tests, usage traces, incidents, human observation, or revised criteria.
+The loop can repeat without feedback — on a timer, on a fresh request, on an unrelated proposal. What it cannot do without feedback is respond to what the last iteration did: the consequences of retained changes have to reach later search or evaluation, through tests, usage traces, incidents, human observation, or revised criteria. Feedback is a condition on learning from the loop, not on running it.
 
 Retained design rationale is one such channel. Recorded constraints and rejected alternatives can narrow later search, while prior evidence can explain why an evaluator once accepted a choice. The record neither establishes that the same oracle remains adequate after the environment, criteria, or risk posture changes nor affects the loop unless a later consumer reads it. [Design rationale management in Commonplace](../reference/design-rationale-management.md) documents this useful but non-mechanical retention path.
 
@@ -60,7 +60,7 @@ Cybernetician W. Ross Ashby's ultrastable system is an adaptation loop that is n
 
 It is a real instance, not a defective one, and it establishes that **reflection is not a premise of the decomposition** — the three functions are exhibited without appeal to a self-representation, which is why the claim is stated for adaptation loops generally rather than restricted to reflective systems. It also marks the floor. Each function is present in its weakest viable form: search is a draw from a random-number table bearing no relation to the problem, evaluation is a one-bit viability test that ranks nothing, and retention is equilibrium — a configuration survives because nothing is left to displace it, not because anything endorsed it. Reading the Homeostat is therefore the cheapest way to see what a stronger generator and a real oracle actually buy.
 
-What it does not buy is accumulation. The Homeostat retains — the surviving configuration persists and steers later behavior, which is what makes the retention operative — but what it retains is an opaque parameter setting, not a representation. No process in the mechanism can read that setting, say why it was good, criticize it, or reuse it on the next problem. So the loop runs indefinitely without anything compounding. That gap is exactly what routing the loop through a self-representation closes, and it is the subject of [self-improving system](./definitions/self-improving-system.md).
+What it does not buy is accumulation. What the Homeostat retains is an opaque parameter setting rather than a representation, so the loop runs indefinitely without anything compounding — the gap that routing the loop through a self-representation closes, and the subject of [self-improving system](./definitions/self-improving-system.md).
 
 At the formal extreme, [Gödel machines](./goedel-machines-are-a-proof-governed-case-of-self-modification.md) are proof-governed self-rewriting systems whose acceptance rule can govern changes to the rule-governed machinery itself. Their meta-level closure depends on proving a target theorem relative to axiomatized hardware, environment, and utility models ([Schmidhuber 2003](../sources/goedel-machines-schmidhuber.ingest.md)). A fallible evaluator may still estimate downstream consequences, but it does not inherit that guarantee.
 

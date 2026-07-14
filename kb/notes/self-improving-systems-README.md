@@ -22,19 +22,19 @@ The machinery is also nearly free: declare a maintainer inside the boundary and 
 
 The two scarce functions are not alike. [Search errors are filtered; evaluation errors are retained](./search-errors-are-filtered-evaluation-errors-are-retained.md) — evaluation is the terminal filter, so a bad candidate costs only effort while a bad acceptance is kept and compounds. Automate search first; **buy** evaluation with an oracle. And what the oracle returns is a claim, not a result: acceptance says the candidate met the criterion applied, not that the system improved.
 
-## Autonomy is a separate gradient, and is bought
-
-Autonomy — how much of the loop runs without a person — does not decide whether a system is self-improving; a human-inclusive loop still is one, and *autonomous* self-improving is reserved for a boundary with no human in it. It is the axis worth moving along, and there is no reason to want less of it. It cannot be turned up at will: automate an evaluation with no oracle behind it and the result is not a stronger loop but a broken one, retaining changes nothing checked. Autonomy in evaluation extends exactly as far as [mechanical verification reaches](./the-boundary-of-automation-is-the-boundary-of-verification.md), which predicts where the human will still be standing.
-
-The price sits one level down: [a stronger oracle buys autonomy and pays in reach](./a-stronger-oracle-buys-autonomy-and-pays-in-reach.md). Proof accepts less than tests, tests less than judgment — so a system's place on the gradient is downstream of where it settled that trade, and the useful question is never *how autonomous is it* but *what does its oracle reach, and what does that cost*.
-
 ## Three gradings over the same base
 
 They answer different questions and move independently — a system can widen one without touching the others.
 
 - **Coverage — what is represented.** [Reflective coverage is graded across representational forms](./reflective-coverage-is-graded-across-representational-forms.md): a claim must name the form (prose, symbolic, distributed-parametric) and the operation depth.
 - **Closure — what the methodology settles.** [A methodology governs its own extension only as far as it settles the meta-decisions it raises](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md): whether each decision a change raises has a governed answer, or must be improvised.
-- **Autonomy — who performs the functions.** [Human-inclusive boundaries make reflection cheap](./human-inclusive-boundaries-make-reflection-cheap.md): the axis that actually discriminates.
+- **Autonomy — who performs the functions.** [Human-inclusive boundaries make reflection cheap](./human-inclusive-boundaries-make-reflection-cheap.md): the axis that actually discriminates, and the one the rest of this page follows.
+
+## Autonomy is bought, not chosen
+
+Autonomy does not decide whether a system is self-improving; a human-inclusive loop still is one, and *autonomous* self-improving is reserved for a boundary with no human in it. It is the axis worth moving along, and there is no reason to want less of it — but it cannot be turned up at will. Automate an evaluation with no oracle behind it and the result is not a stronger loop but a broken one, retaining changes nothing checked. Autonomy in evaluation extends exactly as far as [mechanical verification reaches](./the-boundary-of-automation-is-the-boundary-of-verification.md), which predicts where the human will still be standing.
+
+The price sits one level down: [a stronger oracle buys autonomy and pays in reach](./a-stronger-oracle-buys-autonomy-and-pays-in-reach.md). Proof accepts less than tests, tests less than judgment — so a system's place on the gradient is downstream of where it settled that trade, and the useful question is never *how autonomous is it* but *what does its oracle reach, and what does that cost*.
 
 ## Occupants
 

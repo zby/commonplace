@@ -20,7 +20,7 @@ The system is socio-technical. Inside the boundary:
 - agents operating under the repository's instructions and skills;
 - the established human authoring, review, and authorization roles — the maintainer who approves and merges.
 
-Outside the boundary: the model provider and its weights, the fixed inference machinery, the hosting and CI infrastructure, and unaffiliated readers of the published site. Commonplace cannot reach these through its self-representation, and nothing below claims that it can.
+Outside the boundary: the model provider and its weights, the fixed inference machinery, the hosting and CI infrastructure, and unaffiliated readers of the published site. Commonplace cannot inspect or modify any of these, and nothing below claims that it can. It does hold one lever over the model — it can name which sealed alternative runs — and the coverage section below states exactly how far that reaches, which is not far.
 
 ## 2. Represented aspects
 
@@ -85,7 +85,7 @@ The validator change is the sharpest. `dab163c6` made validating *one ordinary n
 
 The agent-routing change is `kb/instructions/cp-skill-connect/SKILL.md:58`: "If a tag-README declares `complete: true`, it links every note carrying that tag — **skip the by-tag rg for that tag**." An agent now performs fewer tool calls because of what the self-representation asserts.
 
-The third is the most telling about direction of causation. In `ba1a7d9f`, adopting `covered_by` on the `learning-theory` head, the new symbolic check **caught a member the prose `rg` recipe had missed** — a note using block-style YAML tags, invisible to the documented pattern. The prose recipe in `kb/reference/navigation.md` was then corrected to record the blind spot. Execution of the symbolic artifact produced evidence that revised the prose, and the loop closed back into theory when the workshop was dissolved into a retained note (`46f106c5`).
+The third runs in the opposite direction, from code back to prose. In `ba1a7d9f`, adopting `covered_by` on the `learning-theory` head, the new symbolic check **caught a member the prose `rg` recipe had missed** — a note using block-style YAML tags, invisible to the documented pattern. The prose recipe in `kb/reference/navigation.md` was then corrected to record the blind spot. Execution of the symbolic artifact produced evidence that revised the prose, and the loop closed back into theory when the workshop was dissolved into a retained note (`46f106c5`).
 
 Both directions of causal connection are therefore observed: a change in the system's organization forced revision of its self-representation, and a change made through the self-representation altered what the system subsequently required, rejected, and searched.
 
@@ -97,9 +97,9 @@ Basic reflection does not require the stronger claim that Commonplace's reflecti
 - **Symbolic execution producing evidence that revises prose** — demonstrated, once. The `covered_by` check found what the documented `rg` recipe missed, and the recipe was corrected.
 - **Mappings represented and modifiable** — partial. The type-spec-to-validator mapping is unusually tight (the spec path is the dispatch key), so it is hard for the two to drift silently. Most other prose-to-code relationships in the repository have no such binding.
 - **Lineage and staleness across the forms** — largely unrepresented. Commonplace's rationale surfaces are distributed, and it does not guarantee an end-to-end trace from a claim to the code that implements it; see [design rationale management](./design-rationale-management.md). Freshness tracking exists for review pairs, not for theory-to-implementation lineage.
-- **The distributed-parametric form — selection-grade only.** The model weights sit outside the boundary: nothing inside can inspect or edit them. The one represented lever is selection among sealed alternatives — skill frontmatter pins a model (`model: opus` in `kb/instructions/cp-skill-write/SKILL.md`, `model: sonnet` on lighter skills), and review baselines partition by model. Editing that prose changes which parametric substrate runs, and nothing finer. In the [graded-coverage terms](../notes/reflective-coverage-is-graded-across-representational-forms.md) this is real intercession over the parametric form at the crudest useful depth.
+- **The distributed-parametric form — selection-grade only.** The model weights sit outside the boundary: nothing inside can inspect or edit them. The one represented lever is selection among sealed alternatives — skill frontmatter pins a model (`model: opus` in `kb/instructions/cp-skill-write/SKILL.md`, `model: sonnet` on lighter skills), and review baselines partition by model. What is represented and modifiable here is the *binding*, not the component: editing that prose changes which parametric substrate runs, and nothing finer. In the [graded-coverage terms](../notes/reflective-coverage-is-graded-across-representational-forms.md) this is selection depth over the parametric form — a real lever, and the crudest one that is useful.
 
-The honest summary: reflective coverage reaches modification depth on the prose and symbolic forms — demonstrated on the type-system spine, architecturally possible elsewhere, not systematically achieved — and selection depth on the parametric form.
+In summary: reflective coverage reaches modification depth on the prose and symbolic forms — demonstrated on the type-system spine, architecturally possible elsewhere, not systematically achieved — and selection depth on the parametric form.
 
 ## What this classification does not claim
 
@@ -124,4 +124,3 @@ Relevant Notes:
 - [ADR 026: tag-readme type with completeness and coverage marks](./adr/026-tag-readme-type-with-completeness-and-coverage-marks.md) — evidence: the decision at the center of the observed trace
 - [Design rationale management in Commonplace](./design-rationale-management.md) — part-of: why theory-to-implementation lineage is not enforced end to end
 - [stale indexes are worse than no indexes](../notes/stale-indexes-are-worse-than-no-indexes.md) — rationale: the retained claim through which the adaptation signal was interpreted
-</content>

@@ -48,5 +48,9 @@ The axis separates two dimensions a single [oracle-strength spectrum](./oracle-s
 
 Relevant Notes:
 
+- [Self-improving system](./definitions/self-improving-system.md) — exemplifies: the autonomous corner of the category — a boundary with no human in it, and what that costs
+- [An adaptation loop requires search, evaluation, and operative retention](./an-adaptation-loop-requires-search-evaluation-and-retention.md) — grounds: the decomposition the architecture is mapped onto above
+- [A stronger oracle buys autonomy and pays in reach](./a-stronger-oracle-buys-autonomy-and-pays-in-reach.md) — exemplifies: the strongest-oracle settlement of the trade, where autonomy is total and reach is minimal
+- [Reflective system](./definitions/reflective-system.md) — contrasts: reflection requires a causally connected self-representation, not a proof gate; the proof is added to reflection, not constitutive of it
 - [A methodology governs its own extension only as far as it settles the meta-decisions it raises](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md) — extends: gated goal change demonstrates that an acceptance rule can govern rewrites of itself, while exposing the price
 - [Schmidhuber, Gödel Machines](../sources/goedel-machines-schmidhuber.ingest.md) — derived-from: the primary paper, its theorems, and its stated limitations

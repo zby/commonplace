@@ -19,7 +19,7 @@ This is why Commonplace's `complete` and `covered_by` marks are validator-enforc
 
 ## Best-effort, not by construction
 
-Retrieval-mediated connection is weaker than procedural reflection in one specific way: it is best-effort. A compiler propagates every change to a representation it consumes. A search propagates the changes it happens to surface.
+Retrieval-mediated connection is weaker than procedural reflection in one specific way: it is best-effort. A compiler consumes a *declared* input set, and over that set it is exhaustive — every change to an input it was told about reaches the output. A search has no declared input set. It consumes what its query happens to surface, and relevance is a guess. The contrast is not perfection against fallibility — a compiler can also miss, if the input set is declared wrong — but enumeration against discovery, and only one of the two can be made exhaustive by construction.
 
 A system can strengthen the wire — enforcing a membership claim rather than asserting it, adding a field that makes an artifact findable, correcting a search recipe observed to miss a member. It cannot assume the wire holds by construction, and the difference shows up as a class of silent failure that procedural reflection does not have.
 

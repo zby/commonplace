@@ -14,11 +14,14 @@ The [reflective-system definition](./definitions/reflective-system.md) permits h
 Run any maintained software system through the definition's five requirements with its development team declared inside the boundary, and all five pass:
 
 - **Boundary.** The dev team is an established role, not a post-hoc outsider who rescued a failed process. The definition's guards exclude boundary gerrymandering — expanding the boundary after a failure so any helpful outsider counts — but they do not exclude a standing maintainer role.
-- **Represented aspects and self-representation.** The source code represents selected aspects of the system's own behavior.
+- **Represented aspects.** The system's own structure and behavior, at the granularity the source expresses them.
+- **Self-representation.** The source code, which developers read *as a description of the running system*, not merely as the input that produced it.
 - **Internal processes.** Developers inspect the code and act through it.
-- **Causal connection.** Editing the source, building, and running changes later behavior; and observed behavior feeds back into edits.
+- **Causal connection.** Editing the source, building, and running changes later behavior; and observed behavior feeds back into edits, through an established maintenance process that keeps the source true to what runs.
 
-So under a human-inclusive boundary, essentially every maintained software system classifies as reflective. The mechanism is that humans are already reflective: declaring one inside the boundary imports that reflectivity wholesale, and the bare classification collapses to "someone maintains it." This is not a defect in the definition — its guards block boundary gerrymandering, not standing maintainer roles — but a classification meant to carry information needs a second, discriminating dimension. Membership in the class is not that dimension; position within it is.
+So under a human-inclusive boundary, essentially every maintained software system classifies as reflective, and the bare classification collapses to "someone maintains it."
+
+The two requirements doing the work are the third and the fifth: the artifact must be consumed as a representation of the same declared whole, and a standing process must keep it true. A maintained system satisfies both by default, which is why the bar is so low — but not vacuously. A team operating a sealed third-party service, with no access to its internals and only external telemetry and vendor tickets to work through, fails both: nothing inside the declared boundary represents that service to itself, and no process the team runs keeps such a representation true. The definition still discriminates; it just does not discriminate among the systems anyone builds. A classification meant to carry information therefore needs a second dimension. Membership in the class is not that dimension; position within it is.
 
 ## The gradient is autonomy
 
@@ -41,8 +44,8 @@ They move independently: a system can widen coverage while keeping a human at ev
 ## Scope
 
 - **Per-function and boundary-relative, not global.** Autonomy is assessed function by function against a declared boundary; there is no single scalar for a whole system, and moving the boundary moves the readings.
-- **Autonomy is bought, not chosen.** Autonomy does not decide whether a system is [self-improving](./definitions/self-improving-system.md) — a human-inclusive loop still is one — but it is the axis worth moving along, and *autonomous* self-improving is reserved for a boundary with no human in it. There is no reason to want less of it. There is only a price: [a stronger oracle buys autonomy and pays in reach](./a-stronger-oracle-buys-autonomy-and-pays-in-reach.md). So a system's position on this gradient is not chosen directly; it is downstream of where the system settled that trade.
-- **Reflection remains the qualification; autonomy is the position.** This preserves the definition's exclusion that *reflection is not autonomy*. Classification answers whether the system is in the design space at all; the gradient answers where in the space it sits. They are different questions, and conflating them is what makes the bare classification look empty.
+- **Autonomy is bought, not chosen.** It does not decide whether a system is [self-improving](./definitions/self-improving-system.md) — a human-inclusive loop still is one — but it is the axis worth moving along, and there is no reason to want less of it. There is only a price: [a stronger oracle buys autonomy and pays in reach](./a-stronger-oracle-buys-autonomy-and-pays-in-reach.md). A system's position on this gradient is downstream of where it settled that trade.
+- **The gradient does not repeal the exclusion.** *Reflection is not autonomy* still holds: classification answers whether the system is in the design space at all, and the gradient answers where in it the system sits.
 
 ---
 
