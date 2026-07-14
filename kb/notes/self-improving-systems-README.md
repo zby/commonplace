@@ -1,5 +1,5 @@
 ---
-description: "Curated head for the self-improving-systems tag — reflection is the machinery and the cheap part; the loop is the object, and autonomy is a separate gradient over it"
+description: "Curated head for the self-improving-systems tag — the loop is the object; reflection is cheap and enables the loop without running it, and autonomy grades the object rather than defining it"
 type: kb/types/tag-readme.md
 index_source: tag
 index_key: self-improving-systems
@@ -8,9 +8,9 @@ complete: true
 
 # Self-improving systems
 
-The object is the [**self-improving system**](./definitions/self-improving-system.md): an adaptation loop that runs on the system itself, through its own writable self-representation, against an improvement objective. Humans may sit inside the boundary; **autonomy** — how much of the loop runs without one — is a separate gradient over it. Most systems in [agent-memory-systems](../agent-memory-systems/README.md) are a bid at some version of it — mine the traces, write the lesson down, load it next time.
+The object is the [**self-improving system**](./definitions/self-improving-system.md): an adaptation loop that runs on the system itself, through its own writable self-representation, against an improvement objective. Humans may sit inside the boundary — a loop with a person in every seat is still self-improving. **Autonomy** — how much of the loop runs without one — grades that object rather than defining it. Most systems in [agent-memory-systems](../agent-memory-systems/README.md) are a bid at some version of it — mine the traces, write the lesson down, load it next time.
 
-## Reflection is the machinery, not the property
+## Reflection enables the loop but does not run it
 
 A [reflective system](./definitions/reflective-system.md) holds a causally connected map of itself: kept true, and steering. Add **intercession** and the map is writable from inside. That is the whole machinery, and it delivers nothing on its own — a Smalltalk image has it maximally, classes as objects and a compiler that edits itself, and left alone it improves nothing for a decade. The programmer supplies what is missing. Remove the programmer and the loop is not weakened; it is absent.
 
@@ -30,7 +30,7 @@ They answer different questions and move independently — a system can widen on
 - **Closure — what the methodology settles.** [A methodology governs its own extension only as far as it settles the meta-decisions it raises](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md): whether each decision a change raises has a governed answer, or must be improvised.
 - **Autonomy — who performs the functions.** [Human-inclusive boundaries make reflection cheap](./human-inclusive-boundaries-make-reflection-cheap.md): the axis that actually discriminates, and the one the rest of this page follows.
 
-## Autonomy is bought, not chosen
+## Only warranted autonomy is bought
 
 Autonomy does not decide whether a system is self-improving; a human-inclusive loop still is one, and *autonomous* self-improving is reserved for a boundary with no human in it. More autonomy strengthens the autonomy attribution, but it is not automatically a better design. Hand a gate to a model with a rubric and the system is autonomous there tomorrow: the evaluator is fallible, but it still rejects things, so [the loop still closes](./definitions/self-improving-system.md) and the system stays self-improving while quietly getting worse. What is bounded by [mechanical verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) is *warranted* autonomy — running unattended and still deserving trust — and that is what predicts where a human remains necessary.
 
