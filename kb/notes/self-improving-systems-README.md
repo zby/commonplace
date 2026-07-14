@@ -8,7 +8,7 @@ complete: true
 
 # Self-improving systems
 
-The object is the [**self-improving system**](./definitions/self-improving-system.md): a governed adaptation loop whose changes are made through the system's own self-representation, graded by how much of it runs without a human. Most systems in [agent-memory-systems](../agent-memory-systems/README.md) are a bid at some version of it — mine the traces, write the lesson down, load it next time. This cluster exists to say something true about that loop rather than admire it.
+The object is the [**self-improving system**](./definitions/self-improving-system.md): a governed adaptation loop whose changes are made through the system's own self-representation, graded by how much of it runs without a human. Most systems in [agent-memory-systems](../agent-memory-systems/README.md) are a bid at some version of it — mine the traces, write the lesson down, load it next time.
 
 ## Reflection is the machinery, not the property
 
@@ -24,7 +24,9 @@ The two scarce functions are not alike. [Search errors are filtered; evaluation 
 
 ## Autonomy earns the name, and is bought
 
-Autonomy — how much of the loop runs without a person — is what the *self* in self-improving names, and there is no reason to want less of it. It cannot be turned up at will: automate an evaluation with no oracle behind it and the result is not a stronger loop but an ungoverned one. Autonomy in evaluation extends exactly as far as [mechanical verification reaches](./the-boundary-of-automation-is-the-boundary-of-verification.md), which predicts where the human will still be standing. The real trade sits one level down, between oracle strength and reach.
+Autonomy — how much of the loop runs without a person — is what the *self* in self-improving names, and there is no reason to want less of it. It cannot be turned up at will: automate an evaluation with no oracle behind it and the result is not a stronger loop but an ungoverned one. Autonomy in evaluation extends exactly as far as [mechanical verification reaches](./the-boundary-of-automation-is-the-boundary-of-verification.md), which predicts where the human will still be standing.
+
+The price sits one level down: [a stronger oracle buys autonomy and pays in reach](./a-stronger-oracle-buys-autonomy-and-pays-in-reach.md). Proof accepts less than tests, tests less than judgment — so a system's place on the gradient is downstream of where it settled that trade, and the useful question is never *how autonomous is it* but *what does its oracle reach, and what does that cost*.
 
 ## Three gradings over the same base
 
