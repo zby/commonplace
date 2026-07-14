@@ -4,25 +4,42 @@ This workshop is building the entry to the FLF [Epistemic Case Study Competition
 
 Inputs, not competitors: [epistack-competition](../epistack-competition/README.md) (two-repo protocol), [epistack-framework-additions](../epistack-framework-additions/README.md) (design menu). This workshop decides what we submit.
 
-**Normative sources** (full-pass revised 2026-07-13; keep submission prose inside their qualified claims):
+**Normative sources** (motivation thread revised 2026-07-14; keep submission prose inside their qualified claims):
 
-- Motivation: [actionable-theories-and-reflexive-system-construction.md](../../notes/actionable-theories-and-reflexive-system-construction.md) — `b02cbc1c`, `28665b55`
+- Motivation vocabulary: [actionable theory](../../notes/definitions/actionable-theory.md), [reflective system](../../notes/definitions/reflective-system.md), [cross-representational reflection](../../notes/cross-representational-reflection.md), [governed adaptation](../../notes/governed-adaptation-requires-search-evaluation-and-retention.md), [closure under recommendations](../../notes/closure-under-recommendations-bounds-governed-self-extension.md) — distinct properties, **not a maturity ladder**; do not inherit the former synthesis's ladder
+- Classification: [Commonplace as a reflective system](../../reference/commonplace-as-a-reflective-system.md) — discharges the five obligations against an observed repository trace (ADR 026 → schema → validator → changed agent behavior). **The deferral this workshop previously recorded is superseded.**
+- Comparison: [Gödel machines](../../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md) — the sourced note the Gödel paragraph was waiting on now exists
 - Method: [design-rationale-management.md](../../reference/design-rationale-management.md) — `81920ed9` (body edits from [full-pass report](../../kb/reports/full-pass/design-rationale-management/20260713T190521Z-ea26/full-pass-report.md))
 
 ## The pitch
 
-**Actionable methodology for compounding epistemic investigations: an agent-executable construction loop with heterogeneous verification and retained design rationale — demonstrated with a runnable reference implementation and three stress-test casebooks.**
+**Investigations compound when a knowledge system's own rules are causally connected to its behavior — and in an agent-operated system that connection runs through retrieval. We present a governed adaptation loop (search → evaluation → operative retention) with heterogeneous verification and retained design rationale, demonstrated by a runnable reference implementation and three stress-test casebooks.**
+
+Corollary the entry is built to earn: *a rule nobody can find is inert*, so findability is epistemic infrastructure, not housekeeping.
 
 Two layers, one entry — do not submit them as parallel theses:
 
 | Layer | Claim | Source |
 |---|---|---|
-| **Why (motivation)** | When agents build investigations, methodology must be executable and successful changes must be retained — otherwise every session re-pays interpretation and drifts | [Actionable theories note](../../notes/actionable-theories-and-reflexive-system-construction.md) |
+| **Why (motivation)** | A knowledge system compounds when it holds a causally connected representation of its own rules — and that connection runs through **retrieval**, which is why findability is load-bearing rather than cosmetic | [Reflective system](../../notes/definitions/reflective-system.md) and [Commonplace as a reflective system](../../reference/commonplace-as-a-reflective-system.md) |
 | **How (method)** | Design rationale management — established discipline; Commonplace distributes surfaces that *can retain* constraints, alternatives, evidence, and rejections when authors use them | [DRM reference](../../reference/design-rationale-management.md) |
 
-The brief's hard problem is **methodology and workflow design**, not capability alone. Most entries will present **a stack**. We present **a reflexive construction loop**: actionable theory and retained rationale → candidate change → verification → retained artifact → changed conditions for the next application. The [Commonplace Casebook Protocol](../epistack-competition/README.md) is one closed-but-revisable instantiation, not a formal self-optimizing machine.
+The brief's hard problem is **methodology and workflow design**, not capability alone. Most entries will present **a stack**. We present **a governed adaptation loop**: search brings a candidate change into consideration, evaluation supplies grounds to accept or reject it, and operative retention preserves the accepted change *with behavioral authority* — so it binds the next pass instead of merely being on file ([governed adaptation](../../notes/governed-adaptation-requires-search-evaluation-and-retention.md)). The [Commonplace Casebook Protocol](../epistack-competition/README.md) is one closed-but-revisable instantiation, not a formal self-optimizing machine.
 
-**Where we sit (say plainly):** reflexive executable methodology (the system carrying the theory is among what the theory can construct or modify). **Not** verified reflexive extension — no proof that each change is globally optimal. Heterogeneous oracles (deterministic checks, experiments, semantic review, human judgment) bound reach instead.
+**Where we sit (say plainly):** Commonplace **is** a reflective system in the established computational sense — aspect-bound, socio-technical, and evidenced by an observed trace rather than by architecture. Its own type specs, collection contracts, and skills are a self-representation that its validators and agents consume *as their rule*, and changing that representation changes what the system subsequently requires, rejects, and searches ([classification](../../reference/commonplace-as-a-reflective-system.md)). The claim is on the **exercised** path, not the available one: intercession was performed, not merely permitted (the validator dispatches on the type spec's own path; in `dab163c6` the represented constraint reached back and forced edits to the represented system). Never argue this from architectural possibility — that reading sounds grander and is weaker.
+
+**Keep two kinds of limit apart; a judge will conflate them.**
+
+| Limit | What it bounds |
+|---|---|
+| Reflection is **aspect-bound** — most of the KB is knowledge, not self-representation | The reflective claim itself. State it wherever the claim appears. |
+| **Search is substantially human** — the maintainer notices the problem; the methodology does not govern that. Evaluation is strong for structural constraints, weak for judgment-heavy ones. Retention passes through human merge | The **adaptation loop**, *not* reflection. |
+
+This split is the answer to the obvious challenge ("but a person does the thinking — how is that self-reflective?"): a reflective architecture supplies a causal path by which the system can change itself; it does not supply the search, evaluation, and retention that governed adaptation requires ([governed adaptation](../../notes/governed-adaptation-requires-search-evaluation-and-retention.md)). Human-in-the-loop objections land on the loop, not on the classification. The converse holds too, and we say so: a change loop does **not** imply reflection — Ashby's ultrastable homeostat searches, evaluates, and retains while having no self-representation at all. The two properties are independent, which is why we evidence them separately. Reflection is also **not** autonomy, proof of improvement, or [closure under recommendations](../../notes/closure-under-recommendations-bounds-governed-self-extension.md).
+
+**The mechanism that makes this more than a label.** In a system whose self-representation is a body of retained artifacts, the causal connection is *discovery*: an agent sweeps the artifacts, finds the ones bearing on the change it is making, and derives its behavior from what it found. Editing an artifact reaches later behavior with no one deciding to re-derive — **provided retrieval surfaces it**. So the search recipes, the descriptions that make an artifact findable, and the indexes that shortcut the sweep are the wire along which the system's rules act, and **retrieval failure is reflection failure**: a rule nobody can find is inert, and a completeness claim that stops an exhaustive reader while members are missing cuts the wire exactly where it is trusted. This is the general answer to why the unglamorous parts of the discipline — descriptions as retrieval filters, enforced rather than asserted index marks — are the parts that decide whether anything compounds.
+
+An evaluation process determines whether there are sufficient grounds to retain a proposed change; an **oracle** here means the component or procedure supplying that judgment, such as deterministic checks, experiments, semantic review, human judgment, or a combination.
 
 ### The compounding barrier (judge-facing)
 
@@ -34,21 +51,25 @@ Compounding fails when the next investigator cannot recover **why** the system l
 | **Forced by this problem** | COVID needs an institutional layer; LHC needs dependency traversal. |
 | **Freely chosen** | Grounding-layer marker as prose vs field — either works; record the pick and alternatives. |
 
-In agent-built systems the barrier bites harder: without **retained** artifacts and **explicitly carried** rationale, each session re-pays interpretation and may diverge ([actionable theories note](../../notes/actionable-theories-and-reflexive-system-construction.md)). Retained rationale **may then inform** the next pass — delimiting candidates, flagging disturbed premises, selecting verification — **when authors carry it forward**; surfaces support retention but do not guarantee continuity or reliable automatic recovery on every agent pass.
+In agent-built systems the barrier bites harder: without **retained** artifacts and **explicitly carried** rationale, each session re-pays interpretation and may diverge ([deploy-time learning](../../notes/deploy-time-learning-is-the-missing-middle.md)). Retained rationale **may then inform** the next pass — delimiting candidates, flagging disturbed premises, selecting verification — **when authors carry it forward**; surfaces support retention but do not guarantee continuity or reliable automatic recovery on every agent pass.
 
-### The construction loop (judge-facing spine)
+**Why it fails, mechanically.** The three failure modes judges will have seen — rationale nobody rereads, indexes that lie, conventions that drift from the code enforcing them — are one failure, not three. Each cuts the path from a retained rule to the next agent that should have obeyed it. That reframes the barrier from a discipline problem ("authors must be diligent") into an architecture problem with testable parts: *is the rule findable, is the finding enforced, and does the enforcement bind a consumer?* It also explains why diligence alone never fixed it.
+
+### The governed adaptation loop (judge-facing spine)
 
 ```
-actionable methodology + retained rationale
-  → candidate change
-  → verification (heterogeneous oracles)
-  → retained system artifact
-  → changed conditions for the next application
+search      — a candidate change enters consideration
+  → evaluation   — grounds to accept or reject, under applicable criteria
+  → operative retention — the accepted change is preserved *with authority over
+                          a consumer*, not merely filed
+  → changed conditions for the next pass — reached via retrieval
 ```
 
-**Verification is not an afterthought.** The same methodology must not be the sole judge of its own proposals (self-confirming loop risk). Separation of oracles is part of the design: mechanical checks where ground truth is shared; criterion-based review where judgment is local; experiments and labelled calibration where claims are empirical; explicit rejection records where shape is unknown.
+**Operative** is the load-bearing word: retention that no later process discovers changes nothing. Search reach and evaluation strength are independent limits — *evaluation cannot select a candidate that search never reaches* — which is why the submission reports both, and reports that our search is the human one.
 
-**Gödel machine (one paragraph max in submission):** architectural analogy only — self-description, candidate rewrite, proof of improvement, executed self-modification. Knowledge systems trade proof-bound reach for fallible reach via diverse verification. Not an equivalence claim ([Schmidhuber, 2003](https://people.idsia.ch/~juergen/gmweb2/gmweb2.html) via actionable theories note).
+**Evaluation is not an afterthought.** The same methodology must not be the sole judge of its own proposals (self-confirming loop risk). Separation of evaluation procedures is part of the design: mechanical checks where ground truth is shared; criterion-based review where judgment is local; experiments and labelled calibration where claims are empirical; explicit rejection records where shape is unknown. A retained change is accepted under those criteria, not thereby proved to be an improvement.
+
+**Gödel machine (now admissible; one paragraph max).** The blocking condition — "not without a separate sourced note" — is met: [Gödel machines are a proof-governed case of reflective self-modification](../../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md). Use it as the *contrast that names our design choice*, not as an aspiration we fall short of. Schmidhuber's machine runs the same loop with a single proof gate: no rewrite without a proof it improves expected utility. That buys deductive rigor relative to a formalization and pays for it by making beneficial-but-unprovable changes unreachable. A knowledge system cannot formalize its own utility, so it substitutes **heterogeneous fallible oracles** — mechanical checks, experiments, criterion-based review, human judgment — and accepts a weaker guarantee (accepted under stated criteria) in exchange for a reachable candidate space. Same loop, different gate; naming the tradeoff is the point ([Schmidhuber, 2003](https://people.idsia.ch/~juergen/gmweb2/gmweb2.html)).
 
 ### The method — design rationale management
 
@@ -110,10 +131,10 @@ One walkthrough per case: source → ingest → note → validate → review →
 
 ## Generalization — bounded claims
 
-1. **The loop** — architectural pattern for agent-built knowledge infrastructure; we claim **reflexive executable** scope only (mutable surround, heterogeneous oracles), not verified reflexive extension. LLM is one interpreter path; homoiconic prose is **conditional** on framing, not guaranteed ([actionable theories note](../../notes/actionable-theories-and-reflexive-system-construction.md)).
-2. **DRM** — established design discipline; Commonplace contribution is **distributed surfaces + author discipline** on worked material, not enforced end-to-end rationale continuity.
+1. **The loop** — architectural pattern for agent-built knowledge infrastructure. The [reflective-system](../../notes/definitions/reflective-system.md) classification is **no longer deferred**: it is discharged against an observed repository trace in [Commonplace as a reflective system](../../reference/commonplace-as-a-reflective-system.md). Claim it, with its three shipped limits (aspect-bound, human search, not closure). Do not revive the former "reflexive executable" ladder — these are distinct properties, not stages.
+2. **DRM** — established design discipline; Commonplace contribution is **distributed surfaces + author discipline** on worked material, not enforced end-to-end rationale continuity. The theory now says *why* that gap matters and what would close it: an unretrieved rule is an inert rule.
 3. **Machinery** — three case shapes + observed contract transfer; transferability argument is **risk-framed**, not replication-proven ([replication-plan.md](./replication-plan.md) appendix carries the honest test).
-4. **Spot experiments** — register drift (n=2); gate calibration (fitted on 4 notes). Actionable-theories note still lacks a worked Commonplace maintenance trace (TODO in note) — cite epistack loop evidence instead until filled.
+4. **Spot experiments** — register drift (n=2); gate calibration (fitted on 4 notes). The classification rests on **one** worked maintenance trace (ADR 026), which is enough to establish the causal connection and not enough to characterize its reliability. Cite the epistack loop as construction evidence; cite the tag-readme trace for the classification. Do not merge the two.
 
 ## Submission document outline
 
@@ -121,8 +142,8 @@ Judge-facing; repos are evidence. **No Commonplace internal vocabulary** (operat
 
 | § | Title | Length | Content |
 |---|---|---|---|
-| 1 | Why compounding fails under agents | ½–1 page | Compounding barrier; retained rationale may inform next pass when carried forward; loop diagram; oracle diversity + self-confirming risk |
-| 2 | The construction loop | ½ page | Actionable methodology; reflexive scope (surround not weights); Gödel analogy with limits; level-2 only |
+| 1 | Why compounding fails under agents | ½–1 page | Compounding barrier; the three classic failures are one failure (the rule → next-agent path is cut); retained rationale may inform next pass when carried forward; evaluation diversity + self-confirming risk |
+| 2 | The governed adaptation loop | ½ page | Search / evaluation / operative retention; the system's rules are causally connected to its behavior **through retrieval**; Gödel-machine contrast (proof gate vs heterogeneous oracles); the three limits |
 | 3 | Design rationale management | 1 page | Established lineage (DR/IDEF); surfaces *can retain*; **no** mechanical lineage; Epistack as sibling-repo illustration |
 | 4 | Loop → epistemic stack | 1 page | Layer table; built vs rejected |
 | 5 | Reference implementation | 1 page | Casebook Protocol + Commonplace; mechanical vs judgment boundary; falsification |
@@ -130,11 +151,13 @@ Judge-facing; repos are evidence. **No Commonplace internal vocabulary** (operat
 | 7 | Evidence and limits | 1 page | Rebuild gates, experiments, audit trail, replication protocol; full-pass residuals (no traceability product, transfer claim unsupported, lifecycle gaps) |
 | App | Runnable walkthrough | short | Clone, verify, planted failure |
 
-**Tone:** §1–3 for naive readers. Framework operator docs (DRM, actionable theories) optional appendix links — not required judge reading.
+**Tone:** §1–3 for naive readers. Framework operator docs (DRM and the foundational vocabulary notes) are optional appendix links, not required judge reading.
 
 ### Operator note (authors only)
 
-Sync with post-full-pass [actionable-theories note](../../notes/actionable-theories-and-reflexive-system-construction.md) and [DRM](../../reference/design-rationale-management.md). **Do not outrun qualified claims:** no "generative material" without "when authors carry forward"; no "safe reuse" without worked comparison; no "manages/preserves rationale" — use *surfaces can retain*. Internal vocabulary stays in framework notes.
+Sync with [actionable theory](../../notes/definitions/actionable-theory.md), [reflective system](../../notes/definitions/reflective-system.md), [cross-representational reflection](../../notes/cross-representational-reflection.md), [governed adaptation](../../notes/governed-adaptation-requires-search-evaluation-and-retention.md), [the classification](../../reference/commonplace-as-a-reflective-system.md), and [DRM](../../reference/design-rationale-management.md). **Do not outrun qualified claims:** no "generative material" without "when authors carry forward"; no "safe reuse" without worked comparison; no "manages/preserves rationale" — use *surfaces can retain*. Internal vocabulary stays in framework notes.
+
+**On the reflective claim specifically — the failure mode has flipped.** The risk was overclaiming; now that the classification is discharged, the risk is *inflating* it. Reflective ≠ autonomous, ≠ self-improving, ≠ proven-better. Never write it without the aspect bound and the human-search limit in the same breath. In judge-facing prose prefer the plain mechanism — "the system's own rules are what its validators and agents read, so changing a rule changes what it enforces and what it searches" — over the term "reflective system," which invites exactly the sci-fi reading §1–3 must avoid.
 
 **§7 must name limits from full-pass (not solved in prose):**
 
@@ -149,8 +172,8 @@ Map epistack evidence to loop stages explicitly when drafting §7:
 |---|---|
 | Backlog / proposals / ADRs | Retained rationale |
 | Standing block, local types, quote verifier | Candidate → verify → retain |
-| Register-drift experiment | Verification oracle for structure layer |
-| Gate calibration | Oracle calibration (charitable-reading failure) |
+| Register-drift experiment | Evaluation procedure for the structure layer |
+| Gate calibration | Evaluation calibration (charitable-reading failure) |
 | 127/127 quotes, 14/14 conformance | Mechanical verification on shipped corpus |
 | Rejected ranking / crux scoring | Recorded rejection |
 
@@ -215,11 +238,11 @@ Authority ranking, crux scoring, scalar credence — shape unknown; rejection is
 |---|---|
 | Help reason about the case? | §6 walkthroughs |
 | Generalize? | Loop as methodology + DRM as discipline + bounded machinery + replication appendix |
-| Scale with AI/compute? | **§1–2:** methodology stays in executable prose; better models re-run criteria in new partitions; skills operationalize the loop |
-| Compound? | **§1:** loop compounds only when verified outputs are **retained artifacts** and rationale is **explicitly carried** — not automatic from distributed surfaces alone |
+| Scale with AI/compute? | **§1–2:** methodology stays in executable prose; better models re-run criteria in new partitions; skills operationalize the loop. Scaling raises *evaluation* strength and *search* reach — the two independent limits — and the loop is built to absorb that without redesign |
+| Compound? | **§1–2:** the loop compounds only when an accepted change is **operatively retained** — findable by the next pass and binding on a consumer. Filing it is not enough; a rule nobody retrieves is inert. This is why we report retrieval machinery (descriptions, enforced index marks) as *epistemic* infrastructure, not housekeeping |
 
 ## What closes it
 
-Submission by 19 July: actionable reflexive methodology (bounded), design rationale management, epistemic-stack mapping, reference implementation, three-case evidence, limitations and negative results.
+Submission by 19 July: actionable methodology (bounded), design rationale management, epistemic-stack mapping, reference implementation, three-case evidence, limitations and negative results.
 
 Then: promote durable conclusions; fold predecessor workshops; delete this directory.
