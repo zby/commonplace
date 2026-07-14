@@ -68,7 +68,7 @@ Reflection is also not **adaptation**, in either direction. A reflective archite
 
 Relevant Notes:
 
-- [Actionable theory](./actionable-theory.md) — grounds: an internal process may act through theory, but actionability alone does not establish reflection
+- [Actionable methodology](./actionable-methodology.md) — grounds: an internal process may act through a methodology, but actionability alone does not establish reflection
 - [Behavioral authority](./behavioral-authority.md) — enables: names the consumer, channel, and force that make a self-representation operative
 - [Reflective coverage is graded across representational forms](../reflective-coverage-is-graded-across-representational-forms.md) — extends: when behavior spans heterogeneous forms, coverage must be claimed per form and operation depth
 - [Governed adaptation requires search, evaluation, and operative retention](../governed-adaptation-requires-search-evaluation-and-retention.md) — extends: reflection supplies one causal path into the loop, but not the search, evaluation, or operative retention the loop needs

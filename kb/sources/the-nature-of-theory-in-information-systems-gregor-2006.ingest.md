@@ -24,7 +24,7 @@ Gregor classifies theories by four possible primary goals—analysis/description
 
 ## Connections Found
 
-The load-bearing target is [Actionable theory](../notes/definitions/actionable-theory.md): this paper supplies the mature Type V definition while preventing its collapse into the theory–operator relation. [A knowledge base holds theories, descriptions, and prescriptions with asymmetric linking](../notes/a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md) is a secondary connection because Gregor's purpose taxonomy allows theory to be prescriptive, whereas Commonplace's theoretical and prescriptive profiles are local text contracts rather than ontological partitions. Relative to [Gregor 2002](./design-theory-in-information-systems-gregor-2002.md), the 2006 paper is the broader and more structurally explicit account, not merely independent corroboration.
+The load-bearing target is [Actionable methodology](../notes/definitions/actionable-methodology.md): this paper supplies the mature Type V definition while preventing its collapse into the theory–operator relation. [A knowledge base holds theories, descriptions, and prescriptions with asymmetric linking](../notes/a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md) is a secondary connection because Gregor's purpose taxonomy allows theory to be prescriptive, whereas Commonplace's theoretical and prescriptive profiles are local text contracts rather than ontological partitions. Relative to [Gregor 2002](./design-theory-in-information-systems-gregor-2002.md), the 2006 paper is the broader and more structurally explicit account, not merely independent corroboration.
 
 ## Extractable Value
 
@@ -82,4 +82,4 @@ Editorial opinion. The taxonomy is analytic and only lightly tested through clas
 
 ## Recommended Next Action
 
-Use the 2006 taxonomy to constrain [Actionable theory](../notes/definitions/actionable-theory.md): define Type V within Gregor's taxonomy and present operator-dependent actionability as a separately argued relation, not a sixth theory type.
+Use the 2006 taxonomy to constrain [Actionable methodology](../notes/definitions/actionable-methodology.md): define Type V within Gregor's taxonomy and present operator-dependent actionability as a separately argued relation, not a sixth theory type.

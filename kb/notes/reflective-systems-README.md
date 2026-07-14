@@ -16,7 +16,6 @@ The two ends of that gap have occupants. Schmidhuber's Gödel machine makes all 
 
 ## Other notes
 
-- [Actionable theory](./definitions/actionable-theory.md) — the prior question: when can written theory guide an operator's actions at all
 - [Governed adaptation requires search, evaluation, and operative retention](./governed-adaptation-requires-search-evaluation-and-retention.md) — the change-loop functions reflection feeds but does not supply
 - [Reflective coverage is graded across representational forms](./reflective-coverage-is-graded-across-representational-forms.md) — a system may edit its prose and code freely while its only reach over the model weights is choosing which sealed model runs
 - [Human-inclusive boundaries make reflection cheap; autonomy is the discriminating gradient](./human-inclusive-boundaries-make-reflection-cheap.md) — because the human-inclusive boundary makes the bare classification near-trivial, autonomy — how much of the loop runs without a human — is the axis that discriminates
@@ -24,6 +23,6 @@ The two ends of that gap have occupants. Schmidhuber's Gödel machine makes all 
 
 ## Related Tags
 
-- [foundations](./foundations-README.md) — the broader core theory this thread sits inside
+- [foundations](./foundations-README.md) — the broader core theory this thread sits inside, including [actionable methodology](./definitions/actionable-methodology.md), the operator relation a governed recommendation presupposes
 - [constraining](./constraining-README.md) — closure is a constraining property of methodology-as-input
 - [computational-model](./computational-model-README.md) — reflection and intercession as computational concepts generalized to socio-technical boundaries

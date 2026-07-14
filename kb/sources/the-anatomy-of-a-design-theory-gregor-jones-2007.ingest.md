@@ -24,7 +24,7 @@ Gregor and Jones distinguish eight possible components of an information-systems
 
 ## Connections Found
 
-The paper supplies supporting component anatomy for [Actionable theory](../notes/definitions/actionable-theory.md), especially by preventing four conflations: design principles with implementation principles, anticipated artifact mutability with an authorized write path, abstract theory with a physical instantiation, and human participation inside the target system with the external operator who applies the theory. It complements [Gregor 2006](./the-nature-of-theory-in-information-systems-gregor-2006.md), which defines Type V by prescriptive purpose, and refines [Gregor 2002](./design-theory-in-information-systems-gregor-2002.md), which introduced the product/process distinction without this complete anatomy. Broader local work on readable artifacts and design rationale is adjacent but does not directly depend on the ISDT component scheme.
+The paper supplies supporting component anatomy for [Actionable methodology](../notes/definitions/actionable-methodology.md), especially by preventing four conflations: design principles with implementation principles, anticipated artifact mutability with an authorized write path, abstract theory with a physical instantiation, and human participation inside the target system with the external operator who applies the theory. It complements [Gregor 2006](./the-nature-of-theory-in-information-systems-gregor-2006.md), which defines Type V by prescriptive purpose, and refines [Gregor 2002](./design-theory-in-information-systems-gregor-2002.md), which introduced the product/process distinction without this complete anatomy. Broader local work on readable artifacts and design rationale is adjacent but does not directly depend on the ISDT component scheme.
 
 ## Extractable Value
 
@@ -88,4 +88,4 @@ Editorial opinion. The proposed anatomy is a conceptual synthesis assessed again
 
 ## Recommended Next Action
 
-Use this anatomy only in later work that needs to decompose a design theory internally. Keep [Actionable theory](../notes/definitions/actionable-theory.md) focused on the separate relation between prescriptive content and an operator capable of applying it.
+Use this anatomy only in later work that needs to decompose a design theory internally. Keep [Actionable methodology](../notes/definitions/actionable-methodology.md) focused on the separate relation between prescriptive content and an operator capable of applying it.

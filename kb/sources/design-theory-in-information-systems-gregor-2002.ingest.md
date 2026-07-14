@@ -24,7 +24,7 @@ Gregor classifies information-systems theory by primary purpose into analysis/de
 
 ## Connections Found
 
-The primary connection is [Actionable theory](../notes/definitions/actionable-theory.md): Gregor grounds the prescriptive theory subtype while showing that operator availability is a later relational addition rather than an inherited Type V criterion. A secondary connection is [A knowledge base holds theories, descriptions, and prescriptions with asymmetric linking](../notes/a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md): Gregor's taxonomy treats prescription as a possible primary goal of theory, so the local theory and prescription text profiles should not be mistaken for mutually exclusive kinds of knowledge.
+The primary connection is [Actionable methodology](../notes/definitions/actionable-methodology.md): Gregor grounds the prescriptive theory subtype while showing that operator availability is a later relational addition rather than an inherited Type V criterion. A secondary connection is [A knowledge base holds theories, descriptions, and prescriptions with asymmetric linking](../notes/a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md): Gregor's taxonomy treats prescription as a possible primary goal of theory, so the local theory and prescription text profiles should not be mistaken for mutually exclusive kinds of knowledge.
 
 ## Extractable Value
 
@@ -77,4 +77,4 @@ Editorial opinion. This is a short conceptual article, not an empirical test of 
 
 ## Recommended Next Action
 
-Use [Actionable theory](../notes/definitions/actionable-theory.md) as the canonical local refinement: preserve Gregor's Type V subtype while treating actionability as the separate relation between a theory and an operator capable of applying it.
+Use [Actionable methodology](../notes/definitions/actionable-methodology.md) as the canonical local refinement: preserve Gregor's Type V subtype while treating actionability as the separate relation between a theory and an operator capable of applying it.

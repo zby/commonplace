@@ -7,7 +7,7 @@ tags: [foundations, constraining, reflective-systems]
 
 # A methodology governs its own extension only as far as it settles the meta-decisions it raises
 
-A methodology that an operator can follow is an [actionable theory](./definitions/actionable-theory.md): it maps represented conditions to a choice among interventions. But when the system a methodology governs is asked to extend *itself* by following that methodology, its prescriptions raise further decisions. Extension proceeds under the methodology's governance only as far as the methodology settles those decisions. Call this **closure under its own recommendations**.
+A [methodology](./definitions/actionable-methodology.md) maps represented conditions to a choice among interventions, and is actionable for an operator who can carry that choice through. But when the system a methodology governs is asked to extend *itself* by following that methodology, its prescriptions raise further decisions. Extension proceeds under the methodology's governance only as far as the methodology settles those decisions. Call this **closure under its own recommendations**.
 
 ## Closure is a stronger property than reflection
 
@@ -49,7 +49,7 @@ The three axes above belong to closure under recommendations because the recomme
 Relevant Notes:
 
 - [Reflective system](./definitions/reflective-system.md) — contrasts: reflection is a structural condition on self-representation; closure is a stronger condition on methodology-governed change
-- [Actionable theory](./definitions/actionable-theory.md) — grounds: supplies the theory–operator–target relation a governed recommendation presupposes
+- [Actionable methodology](./definitions/actionable-methodology.md) — grounds: supplies the methodology–operator–target relation a governed recommendation presupposes
 - [Governed adaptation requires search, evaluation, and operative retention](./governed-adaptation-requires-search-evaluation-and-retention.md) — contrasts: separates the change loop's functions from the meta-decisions a recommendation raises
 - [Behavioral authority](./definitions/behavioral-authority.md) — enables: names the consumer, channel, and force the authority axis demands
 - [Reflective coverage is graded across representational forms](./reflective-coverage-is-graded-across-representational-forms.md) — extends: the representational-form axis widens to the mappings between forms when a recommendation spans them
