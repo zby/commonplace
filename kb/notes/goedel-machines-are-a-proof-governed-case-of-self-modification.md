@@ -9,7 +9,7 @@ tags: [foundations, computational-model, reflective-systems]
 
 Schmidhuber's Gödel machine makes all of its code rewritable, including the routine that searches for code changes. Every rewrite must pass a single gate: an embedded proof searcher must prove that switching now yields greater expected utility than continuing the current search, under axioms describing the machine's hardware, initial code, environment, and utility function ([Schmidhuber 2003, printed pp. 4, 9–10; PDF pp. 5, 10–11](../sources/goedel-machines-schmidhuber.ingest.md)).
 
-The Gödel machine is a comparison case, not a foundation. It realizes the reflective change loop in a fully formal register and makes the proof gate's defining tradeoff explicit: deductive rigor relative to a formalization, purchased by making beneficial but unprovable rewrites unreachable.
+It is a comparison case, not a foundation: it realizes the reflective change loop in a fully formal register, and its gate makes the defining tradeoff explicit — deductive rigor relative to a formalization, at the price of making beneficial but unprovable rewrites unreachable.
 
 ## The change loop, formally realized
 
@@ -23,31 +23,30 @@ The architecture maps onto the [search, evaluation, and retention](./governed-ad
 | Authority | The proof checker invokes the proved replacement program; no other path can invoke it |
 | Retention | The replacement becomes the machine's subsequent code |
 
-This mapping shows that the decomposition applies to a fully formal construction, not only to systems with fallible evaluators. It does not show that the functions vary independently or that the decomposition is universally necessary. In the Gödel machine, authority and retention are coupled: passing the proof checker both invokes the replacement and installs it as the machine's subsequent code.
+The decomposition thus applies to a fully formal construction, not only to systems with fallible evaluators. It does not follow that the functions vary independently: here authority and retention are coupled — passing the proof checker both invokes the replacement and installs it as the machine's subsequent code.
 
 ## What the proof gate buys, and what it costs
 
-Schmidhuber's Global Optimality Theorem concerns the alternatives compared by the target theorem. Continuing the current search implicitly includes every later rewrite that the search might find. A proved switch is therefore better, according to the encoded axioms and utility function, than waiting for any of those alternatives. The resulting “no local maxima” claim applies to the sequence of self-modifications, not to the reward landscape of the external problem. Because the proof accounts for later self-modifications affected by the current one, the acceptance criterion also collapses the regress of separate meta-levels (printed p. 12; PDF p. 13).
+The Global Optimality Theorem builds waiting into the comparison: continuing the current search implicitly includes every later rewrite the search might find, so a proved switch is better — according to the encoded axioms and utility function — than holding out for any of them. The "no local maxima" claim applies to the sequence of self-modifications, not to the external problem's reward landscape; and because the proof accounts for later self-modifications affected by the current one, the acceptance criterion collapses the regress of separate meta-levels (printed p. 12; PDF p. 13).
 
-The paper states the corresponding cost directly: a Gödel machine “must ignore those self-improvements whose effectiveness it cannot prove” (printed p. 5; PDF p. 6). The gate therefore excludes unproved switches, but it does not exclude every actual-world mistake. When the axioms describe the environment and hardware soundly, and the utility function captures the intended objective, a valid proof supplies a rigorous conditional guarantee. When that formalization is wrong, a valid proof can still license a harmful change.
+The cost is stated in the paper: a Gödel machine "must ignore those self-improvements whose effectiveness it cannot prove" (printed p. 5; PDF p. 6). And the guarantee is only as good as the formalization, whose consistency is assumed rather than proved: sound axioms and a faithful utility function make a valid proof a rigorous conditional guarantee, while a wrong formalization lets a valid proof license a harmful change. Axiomatization moves judgment upstream into model specification; it does not eliminate it.
 
-Fallible empirical evaluators have the opposite risk profile: they may accept changes that do not help, but they can also reach changes that no available proof can license. Neither regime dominates without assumptions about model adequacy, proof reach, and the cost of each kind of error.
+Fallible empirical evaluators have the opposite risk profile: they may accept changes that do not help, but they can reach changes no available proof can license. Neither regime dominates without assumptions about model adequacy, proof reach, and the cost of each kind of error.
 
 ## Acceptance evidence varies across systems
 
-The acceptance gate provides a useful axis of comparison, but neither a controlled experiment nor a single ladder of strength. A Gödel machine requires proof under its formalization. [Incremental Self-Improvement](../agent-memory-systems/lightweight/incremental-self-improvement.md) retains policy changes using reward history and rollback. The [Huxley-Gödel Machine](../sources/huxley-godel-machine-human-level-coding-agent-development.ingest.md) estimates the future value of a lineage from benchmark evidence. Commonplace combines tests, validators, review, and human judgment. These systems also differ in their objectives, candidate-generation processes, feedback timing, and enactment authority.
+The acceptance gate is a useful axis of comparison — not a controlled experiment, and not a single ladder of strength. A Gödel machine requires proof under its formalization. [Incremental Self-Improvement](../agent-memory-systems/lightweight/incremental-self-improvement.md) retains policy changes on reward history and rollback. The [Huxley-Gödel Machine](../sources/huxley-godel-machine-human-level-coding-agent-development.ingest.md) estimates a lineage's future value from benchmark evidence. Commonplace combines tests, validators, review, and human judgment.
 
-The comparison separates two dimensions that a single [oracle-strength spectrum](./oracle-strength-spectrum.md) can obscure: the rigor of the inference from stated premises, and the adequacy of those premises or proxies to the external objective. In a Gödel machine, [the boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) by construction. But that verification boundary is provability relative to the formalization, not complete access to truth about the world.
+The axis separates two dimensions a single [oracle-strength spectrum](./oracle-strength-spectrum.md) can obscure: the rigor of the inference from stated premises, and the adequacy of those premises to the external objective. In a Gödel machine [the boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) by construction — but the boundary is provability under the formalization, not truth about the world.
 
 ## What this comparison does not license
 
-- **Proof is added to reflection; it does not define or complete it.** A [reflective system](./definitions/reflective-system.md) requires a causally connected self-representation, not formal verification or successful improvement. The Gödel machine occupies one proof-governed corner of the design space, not the endpoint of a maturity ladder.
-- **The guarantee is relative to the formalization.** The construction assumes rather than proves the consistency of its axioms, and changing the environment model or utility function changes the guarantee. Axiomatization moves judgment upstream into model specification; it does not eliminate judgment.
-- **The cited paper describes a construction, not a running system.** It reports neither an implementation nor experiments, so it supports architectural conclusions rather than empirical performance claims.
+- **Proof is added to reflection; it does not define it.** A [reflective system](./definitions/reflective-system.md) requires a causally connected self-representation, not formal verification or successful improvement. The Gödel machine occupies one proof-governed corner of the design space, not the endpoint of a maturity ladder.
+- **The paper describes a construction, not a running system.** It reports no implementation and no experiments, so it supports architectural conclusions, not empirical performance claims.
 
 ---
 
 Relevant Notes:
 
-- [Closure under recommendations bounds methodology-governed self-extension](./closure-under-recommendations-bounds-governed-self-extension.md) — extends: gated goal change demonstrates that an acceptance rule can govern rewrites of itself, while exposing the price
+- [A methodology governs its own extension only as far as it settles the meta-decisions it raises](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md) — extends: gated goal change demonstrates that an acceptance rule can govern rewrites of itself, while exposing the price
 - [Schmidhuber, Gödel Machines](../sources/goedel-machines-schmidhuber.ingest.md) — derived-from: the primary paper, its theorems, and its stated limitations
