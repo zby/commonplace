@@ -61,6 +61,8 @@ So what an oracle bounds is not autonomy but **warranted autonomy**: how far the
 
 **Self-improving is not self-modifying.** A blind, accidental, or unconditional rewrite changes later behavior without applying any criterion. It is self-modification, and it closes no loop.
 
+**Self-improving is not regulation.** A thermostat changes its environment, not its organization: the setpoint, hysteresis band, and switching rule never change, so no candidate change to the system ever exists for an evaluator to reject or for retention to keep. Switching the heater on is transient control output, not a retained change. This is Ashby's own line, drawn with this example — the thermostat is his canonical regulator, and ultrastability, the second loop that rewires the machine's own parameters when regulation fails, is exactly what he added to get adaptation. The contrast that earns membership: a *learning* thermostat that revises its own setpoint schedule from occupancy feedback is inside the category — it has the second loop, an objective that can reject a schedule change, and a retained schedule that persists and steers. It is autonomous, and even modestly reflective, since a schedule is a readable artifact. The plain thermostat and the learning thermostat sit on opposite sides of the line, with the [Homeostat](../../sources/ashby-design-for-a-brain-ultrastability.md) just above the floor.
+
 **Self-improving is not reflective.** A loop that retains improvement in an opaque substrate is inside the category; the reserved term marks the case where retention is also readable. Refusing the name to a weight-level learner is a reflection reading, not a category one.
 
 **Self-improving is not autonomous.** The two are independent, and conflating them is what the reserved term exists to prevent. A human-inclusive loop is self-improving; only a boundary with no human in it is autonomously so.
@@ -72,6 +74,7 @@ So what an oracle bounds is not autonomy but **warranted autonomy**: how far the
 ## Misuse Cases
 
 - Calling a system self-improving because it can modify itself, without identifying what performs search and what could reject a candidate.
+- Calling a system self-improving because it "adapts" in the everyday sense — responds, compensates, regulates. First-order control changes the environment, not the system; the loop this definition names is the second-order one.
 - Refusing the name to a loop because a human performs part of it — that is an autonomy reading, not a category one.
 - Refusing the name to a loop because what it retains is opaque — that is a reflection reading, not a category one.
 - Treating **reflective self-improving system** as the definition rather than the reserved boundary term, which re-smuggles the addressability thesis into membership.
