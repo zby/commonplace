@@ -14,7 +14,7 @@ A **self-improving system** makes operative changes to its own behavior-determin
 
 *Responsive to evidence* — spelled out in [evidence bearing on an improvement objective](./evidence-bearing-on-an-improvement-objective.md) — has at least two common realizations, which may occur separately or in combination:
 
-- **Direct determination.** Evidence determines the update itself, as in gradient-, reward-, error-, or viability-driven adaptation: the update rule computes the change from the evidence, and every update is adopted.
+- **Direct determination.** Evidence determines the update itself — computing its content, as a gradient does, or directly triggering it, as a viability violation does — and every update is adopted; nothing assesses a candidate against the option of not adopting it.
 - **Evaluation and selection.** Evidence is used to evaluate candidate changes and select among them, with the possibility that a candidate is not adopted.
 
 A separately represented candidate, evaluator, rejection decision, or acceptance gate is therefore **not** required by the base definition. What is required is the objective:
