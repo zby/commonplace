@@ -17,7 +17,7 @@ The case for reflective pathways is a four-step chain; only the first step is ar
 1. Reflection makes retained lessons **addressable**: later rounds can read, criticize, and selectively revise them — [reflection buys addressability](./reflection-buys-addressability.md).
 2. An addressable lesson is **second-order**: it can reject a prior commitment outright, where a gradient can only nudge it — [reflection makes retained lessons second-order](./reflection-makes-retained-lessons-second-order.md).
 3. The payoff conjecture: [addressable hypotheses may reduce target data under structured shifts](./addressable-hypotheses-may-reduce-target-data-under-structured-shifts.md). This is Commonplace's own bet, not a result; the note carries the prediction and the test design.
-4. The standing discount: a lesson nothing surfaces contributes nothing — [retrieval failure is reflection failure](./retrieval-failure-is-reflection-failure.md).
+4. The standing discount: retrieval is best-effort, and a lesson that never surfaces contributes nothing — [retrieval failure is reflection failure](./retrieval-failure-is-reflection-failure.md).
 
 ## The four gradings
 
