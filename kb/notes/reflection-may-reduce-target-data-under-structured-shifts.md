@@ -1,11 +1,11 @@
 ---
-description: "Conjecture: an addressable learned commitment whose reach covers a structured shift may cut the new target observations adaptation needs; the reflection-to-efficiency bridge is itself conjectural"
+description: "Conjecture: reflection may cut the new target observations adaptation needs when a retained commitment's reach covers a structured shift; the reflection-to-efficiency bridge is itself conjectural"
 type: kb/types/note.md
 traits: [title-as-claim, has-external-sources]
 tags: [foundations, self-improving-systems]
 ---
 
-# Addressable hypotheses may reduce target data under structured shifts
+# Reflection may reduce target data under structured shifts
 
 Among the expected advantages of a reflective improvement pathway — hypotheses to be tested against built systems, not definitional truths, [since reflection buys addressability](./reflection-buys-addressability.md) — reuse and transfer is the one that promises a target-data payoff. The vocabulary is **learned inductive commitments** and their **reach**, [fixed where reflection makes retained lessons second-order](./reflection-makes-retained-lessons-second-order.md): a commitment shapes how the system generalizes, and reach is the scope it operates over — normally wider than the evidence that produced it, which is Deutsch's point in *The Beginning of Infinity* that a good explanation applies far beyond the problem that produced it. Reach motivates the conjecture; it is not evidence for it. Reach is the scope a commitment operates over, not the scope it holds over, and nothing in the definition settles the statistical comparison this note stakes out.
 
@@ -23,7 +23,7 @@ An earlier formulation said samples do not transfer and theories do. That is fal
 
 ## Two efficiencies, one ledger
 
-The conjecture makes a **primary statistical hypothesis**: an addressable-hypothesis pathway may need fewer new target observations to reach a fixed performance level. Distinct from it is the **economic qualification**: that target-data advantage may shrink or disappear once the full cost is counted. Frame the total as amortized cost across a task family, and keep the ledger symmetric. The explicit pathway's ledger runs: hypothesis discovery, codification, retrieval, applicability checking, validation, application, maintenance, and correction. The parametric ledger runs: pretraining, target adaptation data, optimization, and evaluation. Only the target-observation entries are the statistical hypothesis; the rest is economics, and calling every entry "sample efficiency" conflates the two.
+The conjecture makes a **primary statistical hypothesis**: a reflective pathway may need fewer new target observations to reach a fixed performance level. Distinct from it is the **economic qualification**: that target-data advantage may shrink or disappear once the full cost is counted. Frame the total as amortized cost across a task family, and keep the ledger symmetric. The explicit pathway's ledger runs: hypothesis discovery, codification, retrieval, applicability checking, validation, application, maintenance, and correction. The parametric ledger runs: pretraining, target adaptation data, optimization, and evaluation. Only the target-observation entries are the statistical hypothesis; the rest is economics, and calling every entry "sample efficiency" conflates the two.
 
 Three ledger entries deserve emphasis. Retrieval is a real discount on the explicit side, [since retrieval failure is reflection failure](./retrieval-failure-is-reflection-failure.md): a hypothesis nothing surfaces contributes nothing. Parametric retention avoids a separate artifact-retrieval step because it is resident in the operative substrate — which does not guarantee that the relevant learned behavior will activate, generalize, or remain accessible in the current context; its discount is differently shaped, not absent. The boundary must be drawn honestly: counting the historical evidence that produced the explicit theory as free, while charging the parametric learner for all its training data, biases the comparison before it starts. And validation has more routes than criticism — proof, simulation, model checking, causal analysis, counterexample generation, targeted experiments. Criticism is the judgment-heavy route whose reliability bounds unattended use, [since warranted autonomy is bounded by oracle reach](./warranted-autonomy-is-bounded-by-oracle-reach.md); it is not the only one.
 
@@ -43,7 +43,7 @@ The comparison must isolate addressability, or it merely shows that one pathway 
 
 Measure the new target observations required to reach a fixed performance level, alongside retrieval success, validation cost, correction cost, compute, and total amortized cost across the family.
 
-The directional prediction: **for task families sharing a stable mechanism or compositional rule, a matched addressable-hypothesis pathway should reach a fixed target performance with fewer new target observations than a parametric adaptation baseline — an advantage that increases with the number of tasks across which the retained structure is reused, decreases with retrieval and applicability errors, and disappears or reverses when the hypothesis is wrong or no relevant stable structure exists.**
+The directional prediction: **for task families sharing a stable mechanism or compositional rule, a matched explicit-hypothesis pathway should reach a fixed target performance with fewer new target observations than a parametric adaptation baseline — an advantage that increases with the number of tasks across which the retained structure is reused, decreases with retrieval and applicability errors, and disappears or reverses when the hypothesis is wrong or no relevant stable structure exists.**
 
 The sequence, each step at its own strength: reflection may make a commitment's content and scope addressable; an addressable commitment may support explicit reusable structure; a correct commitment whose reach covers the shift may lower marginal target-data requirements. Existing literature supports pieces of that mechanism. The full reflection-to-efficiency claim is Commonplace's hypothesis, and it remains to be tested.
 
