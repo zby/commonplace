@@ -46,6 +46,7 @@ plugins:
         'notes/execution-traces-may-be-worth-storing-but-should-not-be-default-next-context.md': 'notes/session-history-should-not-be-the-default-next-context.md'
         'notes/failure-modes-index.md': 'notes/failure-modes-README.md'
         'notes/foundations-index.md': 'notes/foundations-README.md'
+        'notes/inductive-bias-splits-into-generic-and-specific-levels.md': 'notes/addressable-hypotheses-may-reduce-target-data-under-structured-shifts.md'
         'notes/kb-maintenance-index.md': 'notes/kb-maintenance-README.md'
         'notes/learning-theory-index.md': 'notes/learning-theory-README.md'
         'notes/links-index.md': 'notes/links-README.md'
