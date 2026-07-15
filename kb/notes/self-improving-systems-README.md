@@ -8,7 +8,7 @@ complete: true
 
 # Self-improving systems
 
-A [self-improving system](./definitions/self-improving-system.md) makes operative changes to its own behavior-determining organization in response to evidence about an improvement objective. The definition is deliberately broad — a weight-level learner qualifies, and so does a dev team. The distinction that carries the design information is whether the improvement pathway is **reflective** — routed through a self-representation — or not. Most systems in [agent-memory-systems](../agent-memory-systems/README.md) are bids at the reflective kind: mine the traces, write the lesson down, load it next time.
+A [self-improving system](./definitions/self-improving-system.md) makes operative changes to its own behavior-determining organization in response to evidence about an improvement objective. The definition is deliberately broad — a weight-level learner qualifies, and so does a dev team. The distinction that carries the design information is whether the improvement pathway is **reflective** — routed through a self-representation — or not. Most systems in [agent-memory-systems](../agent-memory-systems/README.md) are bids at the reflective kind — mine the traces, write the lesson down, load it next time — though mined lessons amount to reflection only when what is loaded functions as a representation of the system's own behavior, not just accumulated knowledge.
 
 ## Why reflection might pay
 
