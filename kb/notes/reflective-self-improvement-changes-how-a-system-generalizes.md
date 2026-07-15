@@ -1,29 +1,29 @@
 ---
-description: "Retained lessons are learned inductive commitments and reach is the scope they operate over; reflection may make content and scope addressable without guaranteeing either is correct"
+description: "A reflective self-improving system's retained lessons are learned inductive commitments with reach; reflection makes content and scope addressable without warranting either"
 type: kb/types/note.md
 traits: [title-as-claim, has-external-sources]
 tags: [foundations, self-improving-systems]
 ---
 
-# Self-improvement changes how a system generalizes, not only what it knows or does
+# Reflective self-improvement changes how a system generalizes, not only what it knows
 
-Self-improvement changes not only what the system knows or does, but how it generalizes from future evidence. Retained lessons that shape this generalization are **learned inductive commitments**, and **reach** is the scope over which those commitments operate. Reflection may make their content and scope addressable, without guaranteeing that either is correct.
+Reflective self-improvement changes not only what the system knows or does, but how it generalizes from future evidence. Retained lessons that shape this generalization are **learned inductive commitments**, and **reach** is the scope over which those commitments operate. Reflection may make their content and scope addressable, without guaranteeing that either is correct.
 
-The rest of the note unpacks those three sentences: why retention is a change to the learner and not just to behavior, what the commitment and its reach are, and what reflection does and does not add.
+For a parametric learner the first sentence would be a tautology: training just is a change to how the system generalizes, and nobody contests it. The claim earns its keep where retention is reflective — where the lesson is an artifact the system reads back through a self-representation. There it looks as if the system merely knows more; the claim is that it is biased differently. The rest of the note unpacks the three sentences: why retention is a change to the learner and not just to its knowledge, what the commitment and its reach are, and what reflection does and does not add.
 
 ## A retained lesson is inductive bias acquired at runtime
 
 No system generalizes without an inductive bias — an assumption, prior to the data, about which unseen cases resemble the seen ones. Mitchell made this concrete: a learner with no bias can fit its training set in infinitely many ways and has no basis to prefer any extrapolation ("The Need for Biases in Learning Generalizations", 1980). Wolpert's No Free Lunch result sharpens it into an impossibility: averaged over all possible target functions, every learning algorithm has identical off-training-set performance ("The Lack of A Priori Distinctions Between Learning Algorithms", 1996). The bias is not overhead; it is the whole of what does the generalizing.
 
-A lesson retained by an improvement pathway joins that bias. Once kept, it stands prior to the system's future evidence: the next episode is read through it, extrapolations compatible with it are preferred, and candidates it excludes are never generated. Retention is therefore not only a change in what the system does — it is a change in the learner, and its effects run forward through everything the system learns next. A self-improving system is, through its retention step, continuously rewriting its own inductive bias.
+A lesson retained by an improvement pathway joins that bias. Once kept and brought to bear, it stands prior to the system's future evidence: the next episode is read through it, extrapolations compatible with it are preferred, and candidates it excludes are never generated. Retention is therefore not only a change in what the system does — it is a change in the learner, and its effects run forward through everything the system learns next. A self-improving system is, through its retention step, continuously rewriting its own inductive bias — and a reflective one is doing so in artifacts it can read.
 
 One boundary is fixed. The generic half of any bias — the bet that structure exists at all, that the world is compressible — is presupposed by the act of generalizing, held equally by every learner, and not itself learnable: no lesson could teach it, and no retained artifact states it. Every learned commitment is therefore a *specific* commitment — which structure, which invariant, which applicability condition — and everything below about reach and addressability lives at that specific level.
 
 ## The commitment threshold is cumulative retention
 
-Not every retained change is a commitment. [Reflection buys addressability, not compounding](./reflection-buys-addressability-not-compounding.md) grades retention as operative, cumulative, and addressable; the commitment threshold is the middle grade. The Homeostat's surviving setting is operative only — it steers behavior, but the next round of variation is a blind draw the setting cannot inform, so it commits the system to nothing about future evidence. A parametric learner's weights are commitments in full: they parameterize everything the system makes of what it encounters next — cumulative by construction, and opaque. Addressable retention adds the reflective grade: the commitment is also an object a process inside the boundary can read.
+Not every retained change is a commitment. [Reflection buys addressability, not compounding](./reflection-buys-addressability-not-compounding.md) grades retention as operative, cumulative, and addressable; the commitment threshold is the middle grade, and it does not require reflection. The Homeostat's surviving setting is operative only — it steers behavior, but the next round of variation is a blind draw the setting cannot inform, so it commits the system to nothing about future evidence. A parametric learner's weights are commitments in full: they parameterize everything the system makes of what it encounters next — cumulative by construction, and opaque. Addressable retention adds the reflective grade: the commitment is also an object a process inside the boundary can read.
 
-"Learned inductive commitment" thus names cumulative-or-better retention viewed from the generalization side. The grades classify what the system can do *to* a retained change; the commitment vocabulary asks what the retained change does to the system's future learning.
+"Learned inductive commitment" thus names cumulative-or-better retention viewed from the generalization side, whichever pathway holds it. The grades classify what the system can do *to* a retained change; the commitment vocabulary asks what the retained change does to the system's future learning. The reflective case is the one where the second question is easy to miss — a written lesson files as knowledge, and its bias-setting role stays implicit.
 
 ## Reach is the scope of operation, not of validation
 
@@ -45,6 +45,7 @@ Making a commitment legible makes neither its content true nor its scope right. 
 
 ## Scope
 
+- The commitment and reach vocabulary is pathway-neutral — parametric retention holds commitments too, which is what makes the parametric-vs-reflective comparison well-posed. The title claim is scoped to the reflective case because that is where it is contestable; for weight-level learning it is definitionally true.
 - Commitments need not be learned. An architecture's built-in symmetries and a designed hypothesis class are specific inductive commitments fixed at construction; this note is about the retained kind, which self-improvement adds on top. The location claim — reach and addressability attach to specific commitments, never the generic bet — covers both.
 - Reach, warrant, and addressability are three independent properties of one commitment: it can be general without being justified, justified while narrow, and either while opaque or legible.
 - Reach here is the scope over which a commitment *operates*, whether or not correctly; how far it operates correctly is reach and warrant together. The definition deliberately leaves correctness out, because the mismatch between where a commitment operates and where it holds is exactly what needs a name.
