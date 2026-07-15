@@ -7,54 +7,23 @@ tags: [foundations, computational-model, self-improving-systems]
 
 # Commonplace as a reflective system
 
-Commonplace is a reflective system: it contains a causally connected representation of selected aspects of itself, available to processes inside its declared boundary, and operations mediated through that representation change its subsequent behavior.
+Commonplace is a reflective system: it contains a causally connected representation of selected aspects of itself, available to processes inside its declared boundary, and operations mediated through that representation change its subsequent behavior. It is also a human-inclusive, reflective [self-improving system](../notes/definitions/self-improving-system.md) — the stronger and more interesting claim, since reflection alone is cheap.
 
-It is also a human-inclusive, reflective [self-improving system](../notes/definitions/self-improving-system.md) — the stronger and more interesting claim, since reflection alone is cheap.
+This is a case classification, not a new theory. It discharges the five obligations [reflective system](../notes/definitions/reflective-system.md) requires, then reads the same trace against [self-improving system](../notes/definitions/self-improving-system.md), which asks for two further things: operative change to the system's own organization, and responsiveness to evidence bearing on an improvement objective it could have failed. Both classifications rest on one observed repository trace, not on architectural possibility. Reflection here is aspect-bound and partial; the negative conclusions at the end are part of the claim, not hedges around it.
 
-This is a case classification, not a new theory. It discharges the five obligations that [reflective system](../notes/definitions/reflective-system.md) requires anyone to state before applying the term, then reads the same trace against the self-improving definition, which asks for two further things: operative change to the system's own organization, and responsiveness to evidence bearing on an improvement objective it could have failed. Both classifications rest on one observed repository trace rather than on architectural possibility. Reflection here is aspect-bound and partial; the negative conclusions at the end are part of the claim, not hedges around it.
+## The frame
 
-## 1. The declared boundary
+The system is socio-technical. Four of the five obligations are structural and are discharged by the table below; the fifth, causal connection, needs the observed trace in the next section and carries the weight of the classification.
 
-The system is socio-technical. Inside the boundary:
+| Obligation | Discharged by |
+|---|---|
+| **Declared boundary** | Inside: the repository and its retained artifacts; the software that validates, selects, renders, or consumes them (`src/commonplace/`, the `commonplace-*` commands, the review store); agents operating under the repository's instructions and skills; the established human authoring, review, and merge roles. Outside: the model provider and its weights, the fixed inference machinery, hosting and CI, and unaffiliated readers — none of which Commonplace can inspect or modify. |
+| **Represented aspects** | Artifact types and contracts (`kb/types/`), collection routing (`COLLECTION.md`), repository organization and navigation, maintenance/review/validation procedures, behavioral-authority paths, and design rationale (`kb/reference/adr/`). Unrepresented or only partial: the model's runtime behavior, any note's effectiveness at its job, the search process by which problems get noticed, and most ordinary knowledge content. |
+| **Self-representation** | The artifacts that state how the system's own artifacts must be shaped — type specs, collection contracts, instructions and skills, ADRs, schemas, review criteria. `kb/types/tag-readme.md` qualifies, because the system consumes it as the rule for that type; a note about a general phenomenon does not. |
+| **Internal reflective processes** | Human maintainers who author and approve contract changes; editing and review agents under the repository's instructions; the validators and review commands that *load the self-representation as their rule*; the build-time renderer and routing surfaces that make represented constraints operative. Human judgment identifies how part of the process is implemented, per the definition's allowance for established roles — not a limit on the classification. |
+| **Causal connection** | The `tag-readme` trace below, observed end to end and in both directions. |
 
-- the Commonplace repository and its retained artifacts;
-- the software that validates, selects, renders, or otherwise consumes those artifacts (`src/commonplace/`, the `commonplace-*` commands, the review store);
-- agents operating under the repository's instructions and skills;
-- the established human authoring, review, and authorization roles — the maintainer who approves and merges.
-
-Outside the boundary: the model provider and its weights, the fixed inference machinery, the hosting and CI infrastructure, and unaffiliated readers of the published site. Commonplace cannot inspect or modify any of these, and nothing below claims that it can. It does hold one lever over the model — it can name which sealed alternative runs — and the coverage section below states exactly how far that reaches, which is not far.
-
-## 2. Represented aspects
-
-Commonplace does not represent all of itself. The aspects it does represent are:
-
-- artifact types and their contracts (`kb/types/`);
-- collection routing and authoring contracts (`COLLECTION.md` files);
-- repository organization and navigation;
-- maintenance, review, and validation procedures;
-- behavioral-authority paths — which artifact governs which consumer;
-- design decisions and their rationale (`kb/reference/adr/`).
-
-Unrepresented or only partially represented: the runtime behavior of the model interpreting the instructions, the effectiveness of any given note at its job, the search process by which problems are noticed, and most of the repository's ordinary knowledge content, which is *about* KB methodology but is not a representation of *this* system's organization.
-
-## 3. The self-representation
-
-The self-representing artifacts are those that represent Commonplace as a system, not merely the files it happens to store. They include the type specifications, collection contracts, instructions and skills, ADRs, and the schemas and review criteria that state how the system's own artifacts must be shaped.
-
-Not every repository file qualifies. A note about deploy-time learning is a knowledge artifact about a general phenomenon; `kb/types/tag-readme.md` is a self-representation, because it states what a Commonplace artifact of that type must be and the system consumes it as such.
-
-## 4. Internal reflective processes
-
-Processes inside the boundary that inspect or act through the self-representation:
-
-- human maintainers, who author and approve changes to the contracts;
-- editing and review agents operating under the repository's own instructions;
-- the validators and review commands, which *load the self-representation as their rule*;
-- the build-time renderer and routing surfaces that make represented constraints operative.
-
-The presence of human judgment is not a limitation on the classification. It identifies how part of the reflective process is implemented, per the definition's allowance for established roles inside a socio-technical boundary.
-
-## 5. Causal connection: an observed trace
+## Causal connection: an observed trace
 
 The decisive obligation is causal connection, and it needs an observed instance rather than an argument from architecture. The `tag-readme` type (ADR 026) supplies one, end to end.
 
@@ -111,11 +80,11 @@ The improvement objective is the requirement the reflective classification never
 
 Basic reflection does not require the stronger claim that Commonplace's reflective reach *covers* every behavior-bearing representation and the mappings between them. Since [reflective coverage is graded across representational forms](../notes/reflective-coverage-is-graded-across-representational-forms.md), the assessment goes form by form, and the trace above shows real but incomplete coverage:
 
-- **Prose-mediated reasoning revising formal artifacts** — demonstrated. ADR 026's prose decision became a schema and a validator.
-- **Symbolic execution producing evidence that revises prose** — demonstrated, once. The `covered_by` check found what the documented `rg` recipe missed, and the recipe was corrected.
-- **Mappings represented and modifiable** — partial. The type-spec-to-validator mapping is unusually tight (the spec path is the dispatch key), so it is hard for the two to drift silently. Most other prose-to-code relationships in the repository have no such binding.
-- **Lineage and staleness across the forms** — largely unrepresented. Commonplace's rationale surfaces are distributed, and it does not guarantee an end-to-end trace from a claim to the code that implements it; see [design rationale management](./design-rationale-management.md). Freshness tracking exists for review pairs, not for theory-to-implementation lineage.
-- **The distributed-parametric form — selection-grade only.** The model weights sit outside the boundary: nothing inside can inspect or edit them. The one represented lever is selection among sealed alternatives — skill frontmatter pins a model (`model: opus` in `kb/instructions/cp-skill-write/SKILL.md`, `model: sonnet` on lighter skills), and review baselines partition by model. What is represented and modifiable here is the *binding*, not the component: editing that prose changes which parametric substrate runs, and nothing finer. In the [graded-coverage terms](../notes/reflective-coverage-is-graded-across-representational-forms.md) this is selection depth over the parametric form — a real lever, and the crudest one that is useful.
+- **Prose-mediated reasoning revising formal artifacts** — demonstrated by the trace above: ADR 026's prose decision became a schema and a validator.
+- **Symbolic execution producing evidence that revises prose** — demonstrated once in the trace above: the `covered_by` check found what the documented `rg` recipe missed, and the recipe was corrected.
+- **Mappings represented and modifiable** — partial. The type-spec-to-validator mapping is unusually tight (the spec path is the dispatch key), so the two are hard to drift silently; most other prose-to-code relationships in the repository have no such binding.
+- **Lineage and staleness across the forms** — largely unrepresented. Commonplace does not guarantee an end-to-end trace from a claim to the code that implements it; see [design rationale management](./design-rationale-management.md). Freshness tracking exists for review pairs, not for theory-to-implementation lineage.
+- **The distributed-parametric form — selection-grade only.** The model weights sit outside the boundary: nothing inside can inspect or edit them. The one represented lever is selection among sealed alternatives — skill frontmatter pins a model (`model: opus` in `kb/instructions/cp-skill-write/SKILL.md`, `model: sonnet` on lighter skills), and review baselines partition by model. What is modifiable is the *binding*, not the component: editing that prose changes which parametric substrate runs, and nothing finer — selection depth over the parametric form, the crudest lever that is still useful.
 
 In summary: reflective coverage reaches modification depth on the prose and symbolic forms — demonstrated on the type-system spine, architecturally possible elsewhere, not systematically achieved — and selection depth on the parametric form.
 
@@ -124,8 +93,7 @@ In summary: reflective coverage reaches modification depth on the prose and symb
 - Commonplace does not represent every aspect of itself; reflection is aspect-bound.
 - Not all self-modification is automated. Search — noticing the problem, choosing the target — remains substantially human, and the system's methodology does not govern it.
 - Nothing here establishes that the accepted changes were improvements; the autonomy profile above says what was checked and by what, and the improvement claim stops there.
-- Rationale lineage is not mechanically guaranteed.
-- Commonplace cannot modify the model weights, the inference machinery, or the other dependencies outside its boundary.
+- Commonplace cannot modify the model weights, the inference machinery, or the other dependencies outside its boundary, and rationale lineage across the forms is not mechanically guaranteed.
 - Reflection does not entail [closure under recommendations](../notes/a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md). Commonplace is reflective whether or not its methodology governs the meta-decisions its own extension raises; those are separate properties, assessed separately.
 - The bare classification is not the informative part: under a human-inclusive boundary nearly every maintained system is reflective, since [human-inclusive boundaries make reflection cheap](../notes/human-inclusive-boundaries-make-reflection-cheap.md). What the trace establishes is not that Commonplace qualifies but where it sits — which is what the autonomy profile above records.
 
