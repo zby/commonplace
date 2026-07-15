@@ -23,7 +23,7 @@ The **specific** bias is everything the learner commits to beyond "structure exi
 
 The generic bet is not an object a learner represents and reads; it is presupposed by the act of generalizing. There is nothing there to inspect, criticize, or revise — a learner does not "believe harder" that structure exists. What can be made explicit, stated, checked, transferred, and selectively corrected is always a *specific* commitment: this invariant, this mechanism, this applicability condition. So [addressability — the affordance a reflective pathway adds to retention](./reflection-buys-addressability-not-compounding.md) can only ever touch the specific level. A parametric learner and a reflective one make the same generic bet; what distinguishes them is how each encodes its *specific* bias — one opaquely in weights, one in an artifact the system can read.
 
-This locates the reach conjecture. [The claim that reflective addressability can make retention more sample-efficient off-distribution](./reach-makes-addressable-retention-sample-efficient-off-distribution.md) cannot be drawing on the generic bet, because every learner already holds it in full. If an addressable pathway wins the amortized evidence ledger, it wins because it represents its *specific* structural hypothesis in a form that can be retrieved, validated, and reused across a structured shift — not because it is any more committed to the world being compressible. The whole contest between pathways lives at the specific level; the generic level is common ground neither side can exploit.
+This locates the reach conjecture. [The claim that addressable hypotheses may reduce target data under structured shifts](./addressable-hypotheses-may-reduce-target-data-under-structured-shifts.md) cannot be drawing on the generic bet, because every learner already holds it in full. If an addressable pathway wins the amortized evidence ledger, it wins because it represents its *specific* structural hypothesis in a form that can be retrieved, validated, and reused across a structured shift — not because it is any more committed to the world being compressible. The whole contest between pathways lives at the specific level; the generic level is common ground neither side can exploit.
 
 ## Scope
 
@@ -40,5 +40,5 @@ This locates the reach conjecture. [The claim that reflective addressability can
 
 Relevant Notes:
 
-- [Reach makes addressable retention more sample-efficient off-distribution](./reach-makes-addressable-retention-sample-efficient-off-distribution.md) — extends: takes the specific-level location established here and develops it into a falsifiable data-efficiency conjecture
+- [Addressable hypotheses may reduce target data under structured shifts](./addressable-hypotheses-may-reduce-target-data-under-structured-shifts.md) — extends: takes the specific-level location established here and develops it into a falsifiable target-data conjecture
 - [Reflection buys addressability, not compounding](./reflection-buys-addressability-not-compounding.md) — grounds: the addressability affordance that this note argues can only apply to the specific level

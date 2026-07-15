@@ -55,6 +55,7 @@ plugins:
         'notes/minimum-viable-vocabulary-is-the-set-of-names-that-maximally-reduces-extraction-cost-for-a-bounded-observer.md': 'notes/minimum-viable-vocabulary-is-the-naming-set-that-most-reduces-extraction-cost-for-a-bounded-observer.md'
         'notes/observability-index.md': 'notes/observability-README.md'
         'notes/per-window-context-inefficiency-makes-tasks-infeasible.md': 'notes/feasibility-is-the-heaviest-forks-net-load.md'
+        'notes/reach-makes-addressable-retention-sample-efficient-off-distribution.md': 'notes/addressable-hypotheses-may-reduce-target-data-under-structured-shifts.md'
         'notes/reflective-systems-README.md': 'notes/self-improving-systems-README.md'
         'notes/related-systems/related-systems-index.md': 'agent-memory-systems/README.md'
         'notes/reverse-compression-is-the-failure-mode-where-llm-output-expands-without-adding-information.md': 'notes/reverse-compression-is-when-llm-output-expands-without-adding-information.md'
