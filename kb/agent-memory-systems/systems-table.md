@@ -55,7 +55,7 @@ Curation operations and the full authority and signal flag sets are dropped from
 this compact view; they live in [`systems.csv`](./systems.csv).
 
 
-## The systems (147 code-reviewed)
+## The systems (148 code-reviewed)
 
 | System | What it is | Storage | Read-back | Targeting | Learns from traces | Enforces |
 |---|---|---|---|---|---|---|
@@ -104,6 +104,7 @@ this compact view; they live in [`systems.csv`](./systems.csv).
 | [cq](./reviews/cq.md) | Mozilla AI plugin and MCP store for structured agent knowledge units, review-gated sharing, and agent-led reflection | sqlite | pull | — | yes | yes |
 | [CrewAI Memory](./reviews/crewai-memory.md) | unified vector memory with LLM extraction, scoped recall, task/HITL learning, tools, and pre-task prompt injection | vector | both | targeted | yes | yes |
 | [Decapod](./reviews/decapod.md) | Rust repo-native governance kernel with SQLite stores, context capsules, trace lessons, proof gates, and pull-first memory reads | files | pull | — | yes | yes |
+| [deja-vu](./reviews/deja-vu.md) | local lexical memory over Claude, Codex, and opencode traces with redacted file index, MCP recall, sync/share, and SessionStart auto-recall | files | both | targeted | yes | — |
 | [dense-mem](./reviews/dense-mem.md) | self-hosted MCP memory server with Neo4j evidence, typed claims, verifier gates, fact promotion, and tiered recall | graph | pull | — | yes | yes |
 | [DocMason](./reviews/docmason.md) | repo-native private-document KB with provenance, governed ask, deterministic retrieval, and interaction-memory promotion | files | both | targeted | yes | yes |
 | [Dynamic Cheatsheet](./reviews/dynamic-cheatsheet.md) | trace-derived test-time prompt memory with LLM cheatsheet curation, embedding retrieval, and automatic solver read-back | in-memory | push | targeted | yes | — |

@@ -4,7 +4,7 @@ A survey of external **agent memory systems** — how AI agents store, retrieve,
 **Choosing or designing one?** Scan the [comparison table](./systems-table.md) — one
 row per system, a plain-English description plus the handful of fields that
 actually discriminate. Then read the [comparison](./agentic-memory-systems-comparative-review.md),
-which synthesizes the current 141-row matrix, and
+which synthesizes the current 148-row matrix, and
 browse the repo-backed reviews under `reviews/` — each reads the actual
 code and reports what a system _does_, not what its README claims.
 
@@ -45,7 +45,7 @@ Cross-cutting reads:
 
 - [Comparison table](./systems-table.md) — one scannable row per code-reviewed system
   
-- [Comparison](./agentic-memory-systems-comparative-review.md) — the current synthesis across 141 code-reviewed systems
+- [Comparison](./agentic-memory-systems-comparative-review.md) — the current synthesis across 148 code-reviewed systems
   
 - [Trace-derived learning techniques in related systems](./trace-derived-learning-techniques-in-related-systems.md) — broadens the comparison to artifact-learning and weight-learning systems fed by live traces
   
