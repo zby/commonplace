@@ -51,15 +51,9 @@ Neither side is a membership test. A weight-level learner is fully a self-improv
 
 ## The proposal-selection improvement loop
 
-One architecture for evidence-responsiveness is important enough to carry a reserved name. In a **proposal-selection improvement loop**, candidate changes are generated, evaluated with a possibility of non-adoption, and selectively made operative. [Such a loop requires search, evaluation, and operative retention](../a-proposal-selection-loop-requires-search-evaluation-and-retention.md): something brings a candidate into consideration, something can *reject* it against the improvement objective, and the accepted change acquires behavioral authority.
+One architecture for evidence-responsiveness is important enough to carry a reserved name: the **proposal-selection improvement loop**, where candidates are generated, evaluated with a possibility of non-adoption, and selectively made operative. It is a subtype, not the definition — [it requires search, evaluation, and operative retention](../a-proposal-selection-loop-requires-search-evaluation-and-retention.md), and it is where the improvement criterion is implemented as an evaluator rather than consumed wholesale by an update rule, which is why it carries its own vocabulary of oracles, rejection, and warranted autonomy.
 
-This is a subtype, not the definition — but it is where a distinctive body of machinery and risk lives, because it is the architecture in which the improvement criterion *is* implemented as an evaluator:
-
-- **Oracle** is the shorthand for whatever supplies the evaluator's evidence or judgment — proof, test, validator, measurement, rubric, model judge, human review — and [oracles are graded by what their acceptance can establish](../oracle-strength-spectrum.md).
-- Rejection is what makes the gate a gate: an unconditional trigger is not an evaluator, and search and evaluation fail asymmetrically, [since false-positive generation is filtered while false-positive acceptance becomes operative](../false-positive-generation-is-filtered-before-retention.md).
-- The gate is also where unattended operation is bounded: [the boundary of automation is the boundary of verification](../the-boundary-of-automation-is-the-boundary-of-verification.md), and [warranted autonomy is bounded by oracle reach](../warranted-autonomy-is-bounded-by-oracle-reach.md).
-
-The [Gödel machine](../goedel-machines-are-a-proof-governed-case-of-self-modification.md) is a proposal-selection loop under the strongest available oracle; [Commonplace](../../reference/commonplace-as-a-reflective-system.md) is one whose pathways split — reflective and autonomous where a validator or an agent consults an explicit self-representation, non-reflective and human-inclusive where a maintainer notices what is worth fixing or judges whether a fix is the right shape. Direct-determination self-improvers stand outside the subtype: a gradient step is never rejected, so the subtype's gate vocabulary does not describe them — which is a reason to name the subtype, not a reason to read them out of the category.
+Direct-determination self-improvers stand outside the subtype: a gradient step is never rejected, so the subtype's gate vocabulary does not describe them — a reason to name the subtype, not to read them out of the category.
 
 ## The two dimensions cross
 
