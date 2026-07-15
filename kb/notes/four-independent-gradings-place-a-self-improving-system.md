@@ -16,7 +16,7 @@ Membership in the [self-improving system](./definitions/self-improving-system.md
 
 ## The gradings move independently
 
-A system can widen one axis without touching the others: widen coverage while keeping a human at every judgment; settle more meta-decisions without automating any of them; hand a function to a machine without changing what is represented; move retention from weights to artifacts without changing who runs the loop. Independence is what makes the gradings usable as a placement scheme — a reading on one axis predicts nothing about the others, so all four must be reported.
+A system can widen one axis without touching the others: widen coverage while keeping a human at every judgment; settle more meta-decisions without automating any of them; hand a function to a machine without changing what is represented; move retention from weights to artifacts without changing who runs the loop. The axes are analytically distinct — a reading on one does not entail a reading on the others, though they may correlate at the extremes — which is what makes the gradings usable as a placement scheme: all four must be reported.
 
 ## Each grading pairs a free attribution with a costly one
 

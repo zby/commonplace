@@ -12,7 +12,7 @@ A **self-improving system** makes operative changes to its own behavior-determin
 
 *Operative* means the change affects subsequent operation over the relevant horizon, through a consumer, a channel, and a force — [operative change](./operative-change.md), which does not require permanence; a transient compensation, or a change nothing ever acts on, does not qualify.
 
-*Responsive to evidence* — spelled out in [evidence bearing on an improvement objective](./evidence-bearing-on-an-improvement-objective.md) — can be realized in two ways, and the definition requires either, not both:
+*Responsive to evidence* — spelled out in [evidence bearing on an improvement objective](./evidence-bearing-on-an-improvement-objective.md) — has at least two common realizations, which may occur separately or in combination:
 
 - **Direct determination.** Evidence determines the update itself, as in gradient-, reward-, error-, or viability-driven adaptation: the update rule computes the change from the evidence, and every update is adopted.
 - **Evaluation and selection.** Evidence is used to evaluate candidate changes and select among them, with the possibility that a candidate is not adopted.
@@ -23,7 +23,7 @@ A separately represented candidate, evaluator, rejection decision, or acceptance
 
 There must be something the evidence *bears on* — a loss function, a reward channel, viability bounds, a test suite, a rubric, a maintainer's standard — or the changes are merely caused, not improvement-directed. But that criterion need not be implemented as a component that judges candidates. [Ashby's Homeostat](../../sources/ashby-design-for-a-brain-ultrastability.md) has no evaluator anywhere in its mechanism: its criterion — keeping the essential variables within viable bounds — is what the physical dynamics respond to, and the surviving configuration is retained by equilibrium, not by anything's endorsement.
 
-Online gradient methods are the canonical formal case of the direct arm. In [Zinkevich's online convex programming](https://dl.acm.org/doi/10.5555/3041838.3041955) (ICML 2003), each round's just-revealed cost function yields a gradient that directly moves the operative point; every step is adopted, and the method still carries a no-regret guarantee — objective-derived improvement with provable outcomes and no accept/reject gate anywhere. A policy improved by self-play is the same shape at scale. All of these are self-improving systems, and none contains a part whose job is to reject.
+Online gradient methods are the canonical formal case of the direct arm. In [Zinkevich's online convex programming](https://dl.acm.org/doi/10.5555/3041838.3041955) (ICML 2003), each round's just-revealed cost function yields a gradient that directly moves the operative point; every step is adopted, with no accept/reject gate anywhere, and under its assumptions the method carries a no-regret guarantee relative to the best fixed comparator — which bounds cumulative regret, not a theorem that each update improves the current system. A policy improved by self-play is the same shape at scale. All of these are self-improving systems, and none contains a part whose job is to reject.
 
 ## The central distinction: reflective versus non-reflective
 
@@ -72,7 +72,7 @@ How a change is *produced* and how it *reaches the substrate* are different ques
 
 > Search and evaluation describe one way changes are produced; reflection describes the representational route through which the system changes itself.
 
-The examples mark the cells; they are not yet canonical placements. What the crossing exposes is the independence: an evolutionary strategy runs a full generate-and-select loop over a substrate nothing inside it can read, and the memory-appending agent is gateless while writing into the most readable substrate there is. Neither dimension predicts the other.
+The examples mark the cells; they are not yet canonical placements. What the crossing exposes is that the dimensions are analytically distinct: an evolutionary strategy runs a full generate-and-select loop over a substrate nothing inside it can read, and the memory-appending agent is gateless while writing into the most readable substrate there is. Neither dimension entails the other — and the mechanisms combine: one system's pathways may differ cell by cell, and a single pathway may chain them, as when direct gradient updates feed checkpoint selection.
 
 ## What responsiveness establishes
 
