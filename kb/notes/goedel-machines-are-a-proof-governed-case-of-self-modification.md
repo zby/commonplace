@@ -9,9 +9,9 @@ tags: [foundations, computational-model, self-improving-systems]
 
 Schmidhuber's Gödel machine makes all of its code rewritable, including the routine that searches for code changes. Every rewrite must pass a single gate: an embedded proof searcher must prove that switching now yields greater expected utility than continuing the current search, under axioms describing the machine's hardware, initial code, environment, and utility function ([Schmidhuber 2003, printed pp. 4, 9–10; PDF pp. 5, 10–11](../sources/goedel-machines-schmidhuber.ingest.md)).
 
-It is a comparison case, not a foundation: it realizes the reflective change loop in a fully formal register, and its gate makes the defining tradeoff explicit — deductive rigor relative to a formalization, at the price of making beneficial but unprovable rewrites unreachable.
+It is a comparison case, not a foundation: it realizes the reflective improvement loop in a fully formal register, and its gate makes the defining tradeoff explicit — deductive rigor relative to a formalization, at the price of making beneficial but unprovable rewrites unreachable.
 
-## The change loop, formally realized
+## The improvement loop, formally realized
 
 The architecture maps onto the [search, evaluation, and retention](./an-improvement-loop-requires-search-evaluation-and-operative-retention.md) decomposition:
 

@@ -23,7 +23,7 @@ Core theory that the rest of the KB builds on. These notes define the quality cr
 - [mechanistic constraints make Popperian KB recommendations actionable](./mechanistic-constraints-make-popperian-kb-recommendations-actionable.md) — bridges conjecture-and-refutation with bounded-context mechanics
 ### Self-improving systems
 
-- [self-improving systems](./self-improving-systems-README.md) — the improvement loop run on the system itself against an improvement objective; reflection and autonomy grade the loop independently, and warranted autonomy is what costs
+- [self-improving systems](./self-improving-systems-README.md) — the improvement loop run on the system itself; reflection and autonomy grade the loop independently, and warranted autonomy is what costs
 - [actionable methodology](./definitions/actionable-methodology.md) — the prior vocabulary: a methodology supplies an intervention-relevant mapping; actionability relates it to an operator, operations, target, and setting
 
 ### Rationale and design method

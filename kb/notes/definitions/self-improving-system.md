@@ -1,12 +1,12 @@
 ---
-description: "Definition — an improvement loop run on the system itself; reflective and autonomous name the loop's two independent gradings, each reserved for its boundary case"
+description: "Definition — an improvement loop run on the system itself; reflective and autonomous are reserved terms for the boundary cases of two of its independent gradings"
 type: kb/types/definition.md
 tags: [foundations, computational-model, self-improving-systems]
 ---
 
 # Self-improving system
 
-A **self-improving system** runs an [improvement loop](../an-improvement-loop-requires-search-evaluation-and-operative-retention.md) — search, evaluation, operative retention — *on itself*, evaluating candidate changes against an **improvement objective**.
+A **self-improving system** runs an [improvement loop](../an-improvement-loop-requires-search-evaluation-and-operative-retention.md) — search, evaluation against an **improvement objective**, operative retention — *on itself*.
 
 *On itself* means the object of change is the system's own behavior-determining structure — its organization, its artifacts, its rules — not an external work product. A compiler that optimizes programs is not self-improving; a compiler pipeline that rewrites its own optimizer is. This is Ashby's two-loop distinction: operating a system is one loop, modifying the system that operates is another.
 
@@ -14,6 +14,8 @@ Two independent properties grade the category without deciding membership, and e
 
 - **Reflection** — does the loop run *through* a causally connected self-representation? **Reflective self-improving system** is reserved for a loop whose retained changes land in a representation the system also reads.
 - **Autonomy** — how much of the loop runs without a person? **Autonomous self-improving system** is reserved for a declared boundary containing no human component.
+
+These are the boundary cases of two of the four gradings that place a system — retention form and autonomy, alongside coverage and closure; [four independent gradings place a self-improving system](../four-independent-gradings-place-a-self-improving-system.md) collects the scheme, and these two are the ones that carry reserved terms.
 
 The declared boundary may contain humans. A system whose search and evaluation are performed by people is still a self-improving system; it is simply not an autonomous one. And a system that retains improvement in an opaque substrate — a parameter setting, model weights — is still a self-improving system; it is simply not a reflective one.
 
@@ -94,6 +96,7 @@ Relevant Notes:
 
 - [An improvement loop requires search, evaluation, and operative retention](../an-improvement-loop-requires-search-evaluation-and-operative-retention.md) — grounds: the three functions the loop must accomplish, and why each is required
 - [Reflection buys addressability, not compounding](../reflection-buys-addressability-not-compounding.md) — extends: the thesis the reflective reserved term marks — what retention through a readable self-representation adds, and what compounds without it
+- [Four independent gradings place a self-improving system](../four-independent-gradings-place-a-self-improving-system.md) — extends: the placement scheme over the category, of which the two reserved terms mark boundary cases
 - [Reflective system](./reflective-system.md) — grounds: the causally connected self-representation, and the intercession capability, that the reflective reserved term requires
 - [Human-inclusive boundaries make reflection cheap; autonomy is the discriminating gradient](../human-inclusive-boundaries-make-reflection-cheap.md) — grounds: why the machinery is nearly free, and why bare classification discriminates little
 - [False-positive generation is filtered; false-positive acceptance becomes operative](../false-positive-generation-is-filtered-before-retention.md) — extends: why false-positive acceptance is the dangerous evaluation failure
