@@ -40,7 +40,7 @@ Bare autonomy is cheap at both ends: a human-inclusive loop is self-improving wi
 ## Occupants, placed on the two axes
 
 - [Ashby's Homeostat](../sources/ashby-design-for-a-brain-ultrastability.md) — non-reflective and fully autonomous, the floor of the category: random search, a one-bit oracle, retention by equilibrium. It retains without accumulating, which is the cleanest view of what each axis costs to climb.
-- Parametric self-improvers — policies improved by self-play, agents fine-tuned on their own trajectories — non-reflective and cumulative: compounding without addressability. The corner this KB has covered least; new notes on non-reflective self-improvement belong under this tag.
+- Parametric self-improvers — self-play policies, agents fine-tuned on their own trajectories, a thermostat learning in weights — non-reflective and cumulative: compounding without addressability. The dominant learning paradigm, and the corner this KB has covered least; new notes belong under this tag.
 - The [Gödel machine](./goedel-machines-are-a-proof-governed-case-of-self-modification.md) — reflective and autonomous, bought with the strongest available oracle and paid for in reach: every improvement it cannot prove is unreachable.
 - [Commonplace](../reference/commonplace-as-a-reflective-system.md) — reflective and human-inclusive: tests, validators, and a maintainer who notices what to change and judges whether it helped. Humans hold search and the judgment-heavy evaluation — the gates no adequate automatable oracle closes.
 - A Smalltalk image alone — maximal machinery, no loop, not a member. The programmer supplies what is missing; remove the programmer and the loop is not weakened, it is absent.

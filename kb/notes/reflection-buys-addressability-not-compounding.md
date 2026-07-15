@@ -25,6 +25,8 @@ All three grades are occupied, and the middle one is what breaks the equation of
 
 A parametric learner — a policy improved by self-play, an agent fine-tuned on its own trajectories — retains improvement in its weights, and its loop is cumulative by construction: the retained weights *parameterize the next round of search*, so each round generates candidates from everything the loop has kept. Improvement genuinely builds on improvement. This is why a definition that requires reflection for self-improvement fails against the field's central cases.
 
+Nor are those cases exotic. Retention in opaque weights is now the dominant paradigm of learning, reaching down from frontier models to a learning thermostat whose occupancy model is a small network rather than a legible schedule. The cumulative-but-opaque grade is the deployed default, not a corner case — which is what makes the grade boundary worth naming at all.
+
 But the weights are the system, not a map of it. Nothing inside the loop can read a weight update, state what it claims, or explain why it was accepted. Three consequences mark the grade boundary:
 
 - **No selective revision.** A bad note can be found and corrected; a bad update can only be trained over or rolled back wholesale.
