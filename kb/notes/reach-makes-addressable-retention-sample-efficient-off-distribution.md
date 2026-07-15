@@ -51,3 +51,4 @@ Relevant Notes:
 - [Warranted autonomy is bounded by oracle reach](./warranted-autonomy-is-bounded-by-oracle-reach.md) — mechanism: why criticism, among the validation routes, is the one bounded by oracle reach
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — grounds: the architecture through which an explicit hypothesis is adopted and later corrected
 - [Self-improving system](./definitions/self-improving-system.md) — defined-in: the reflective/non-reflective distinction whose conjectured payoff this note makes falsifiable
+- [Inductive bias splits into a generic level shared by all and a specific level where learners differ](./inductive-bias-splits-into-generic-and-specific-levels.md) — grounds: locates this conjecture at the specific inductive bias, the only level addressability and any differential advantage can touch
