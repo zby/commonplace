@@ -7,7 +7,7 @@ tags: [foundations, self-improving-systems]
 
 # Human-inclusive boundaries make reflection cheap; autonomy is the discriminating gradient
 
-The [reflective-system definition](./definitions/reflective-system.md) permits human-inclusive boundaries: people count as internal components when they occupy an established role in the causal path. That permission is deliberate and well-sourced, but it makes the bare classification nearly free — so cheap that it barely discriminates. What discriminates among reflective systems is **autonomy**: the extent to which the reflective loop's functions run without human mediation.
+The [reflective-system definition](./definitions/reflective-system.md) permits human-inclusive boundaries: people count as internal components when they occupy an established role in the causal path. That permission is a deliberate socio-technical extension of computational reflection, carried on the inherited causal-connection criterion — but it makes the bare classification nearly free — so cheap that it barely discriminates. What discriminates among reflective systems is **autonomy**: the extent to which the reflective loop's functions run without human mediation.
 
 ## Why the classification is nearly free
 

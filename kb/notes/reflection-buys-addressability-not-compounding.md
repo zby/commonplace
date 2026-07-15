@@ -7,19 +7,19 @@ tags: [foundations, computational-model, self-improving-systems]
 
 # Reflection buys addressability, not compounding
 
-What does routing an improvement pathway through a self-representation — making the self-improvement [reflective rather than non-reflective](./definitions/self-improving-system.md) — actually add? The tempting answer — compounding, improvement building on improvement — claims too much, because compounding is available without reflection. What reflection uniquely buys is **addressability**: retention that later rounds of improvement can *read*, not merely run on.
+What does routing an improvement pathway through a self-representation — making the self-improvement [reflective rather than non-reflective](./definitions/self-improving-system.md) — actually add? The tempting answer — compounding, improvement building on improvement — claims too much, because compounding is available without reflection. Reflection's distinctive affordance is stronger, more direct **addressability**: retention that later rounds of improvement can *read*, not merely run on.
 
 The claim sharpens by grading retention. A [self-improving system](./definitions/self-improving-system.md)'s changes must be operative at all — persisting, with behavioral authority; the two further grades are where architectures diverge.
 
 - **Operative** retention steers: the retained change persists and affects later behavior.
-- **Cumulative** retention compounds: later rounds of search build on what earlier rounds retained.
+- **Cumulative** retention compounds: later improvement rounds build on what earlier rounds retained.
 - **Addressable** retention is knowledge: processes inside the boundary can inspect the retained change, say what it claims, criticize it, revise it selectively, and carry it to a problem other than the one it came from.
 
 All three grades are occupied, and the middle one is what breaks the equation of reflection with compounding.
 
 ## The floor: operative without cumulative
 
-[Ashby's Homeostat](../sources/ashby-design-for-a-brain-ultrastability.md) retains genuinely — the surviving configuration persists and steers later behavior — and nothing compounds. The next round of search is a blind draw from a random-number table, unrelated to what was kept; the retained setting cannot inform it, because nothing in the mechanism can read the setting at all. The loop runs indefinitely and every problem is solved from scratch. Retention here is operative and nothing more.
+[Ashby's Homeostat](../sources/ashby-design-for-a-brain-ultrastability.md) retains genuinely — the surviving configuration persists and steers later behavior — and nothing compounds. The next round of variation is a blind draw from a random-number table, unrelated to what was kept; the retained setting cannot inform it, because nothing in the mechanism can read the setting at all. The process runs indefinitely and every problem is solved from scratch. Retention here is operative and nothing more.
 
 ## Compounding without a representation
 

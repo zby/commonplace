@@ -1,12 +1,12 @@
 ---
-description: "Definition — the retained structure that fixes how a system will operate: parameters, policies, memory, rules, workflows, tools, code, architecture, evaluators; outputs and environment excluded"
+description: "Definition — the retained structure that shapes how a system will operate: parameters, policies, memory, rules, workflows, tools, code, architecture, evaluators; outputs and environment excluded"
 type: kb/types/definition.md
 tags: [foundations, self-improving-systems]
 ---
 
 # Behavior-determining organization
 
-A system's **behavior-determining organization** is the retained structure that fixes how the system will operate on future inputs — as opposed to the outputs it produces and the environment it acts on. It is what the [self-improving system](./self-improving-system.md) definition requires the change to land *in*: change the organization and later behavior changes; change only an output and nothing about the system has improved.
+A system's **behavior-determining organization** is the retained structure that causally shapes how the system will operate on future inputs — as opposed to the outputs it produces and the environment it acts on. It is what the [self-improving system](./self-improving-system.md) definition requires the change to land *in*: change the organization and later behavior changes; change only an output and nothing about the system has improved.
 
 ## Scope
 
