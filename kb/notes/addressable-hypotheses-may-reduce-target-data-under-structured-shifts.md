@@ -67,6 +67,7 @@ The sequence, each step at its own strength: reflection may make a commitment's 
 Relevant Notes:
 
 - [Reflection buys addressability, not compounding](./reflection-buys-addressability-not-compounding.md) — grounds: supplies the reuse-and-transfer affordance this note sharpens into a conditional target-data hypothesis
+- [Reflection makes retained lessons second-order: a lesson can reject or rescope a prior commitment](./reflection-makes-retained-lessons-second-order.md) — mechanism: the operations by which a single target observation can trigger a rejection or rescoping instead of a gradient nudge
 - [Retrieval failure is reflection failure](./retrieval-failure-is-reflection-failure.md) — mechanism: the retrieval entry in the explicit pathway's ledger
 - [Warranted autonomy is bounded by oracle reach](./warranted-autonomy-is-bounded-by-oracle-reach.md) — mechanism: why criticism, among the validation routes, is the one bounded by oracle reach
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — grounds: one architecture for evaluating, adopting, and correcting an explicit hypothesis
