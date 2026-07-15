@@ -75,6 +75,7 @@ plugins:
         'reference/proposals/one-validation-algorithm-over-declared-scopes.md': 'reference/adr/050-validation-runs-share-parsed-artifacts-and-collection-indexes.md'
         'reference/proposals/packet-owned-captures-for-guarded-operation-transitions.md': 'reference/adr/051-full-pass-packets-own-guarded-captures-and-resolutions.md'
         'reference/proposals/report-owned-resolution-for-asynchronous-full-pass-dispositions.md': 'reference/adr/051-full-pass-packets-own-guarded-captures-and-resolutions.md'
+        'reference/search-mechanisms-in-commonplace.md': 'reference/where-change-candidates-come-from-in-commonplace.md'
         'sources/before-llms-palantir-was-competing-with-snowflake-and-databricks-po-2006384049485484145.md': 'sources/palantir-competed-with-snowflake-before-llms.md'
         'sources/large-language-model-agents-are-not-always-faithful-self-evolvers.ingest.md': 'sources/llm-agents-are-not-always-faithful-self-evolvers.ingest.md'
         'sources/large-language-model-agents-are-not-always-faithful-self-evolvers.md': 'sources/llm-agents-are-not-always-faithful-self-evolvers.md'

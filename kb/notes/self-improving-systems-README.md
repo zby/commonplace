@@ -33,12 +33,14 @@ Since membership is cheap, a system is characterized by where it sits on [four i
 - [Ashby's Homeostat](../sources/ashby-design-for-a-brain-ultrastability.md) — the floor: non-reflective, fully autonomous, nothing accumulates.
 - Parametric self-improvers (self-play policies, agents fine-tuned on their own trajectories) — compounding without addressability; the dominant paradigm and the conjecture's comparison baseline.
 - The [Gödel machine](./goedel-machines-are-a-proof-governed-case-of-self-modification.md) — reflective, autonomous, proof-gated: the strongest oracle, paid for in reach.
-- [Commonplace itself](../reference/commonplace-as-a-reflective-system.md) — reflective, human-inclusive: humans hold search and the judgment-heavy evaluation.
+- [Commonplace itself](../reference/commonplace-as-a-reflective-system.md) — reflective, human-inclusive: search is human-initiated but agent-assisted, and humans hold the judgment-heavy part of evaluation.
 
 Read every claim at its stated strength: the definitions are stipulated and revisable, the reflective advantage is a hypothesis, and whether it holds is the open empirical question the chain above sharpens.
 
 ## Further notes under the tag
 
+- [Measuring autonomy well enough to see it improve is an open problem](./measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md) — the per-function grading above tells you where a system sits, but not whether it is getting more autonomous or how it compares to a differently-decomposed system.
+- [Admitting a human into the boundary trades reflectivity for autonomy](./admitting-a-human-into-the-boundary-trades-reflectivity-for-autonomy.md) — the human-inclusive move that makes reflection cheap above doesn't resolve reflectivity's own measurement problem, it relocates it onto autonomy's.
 - [Behavior-determining organization](./definitions/behavior-determining-organization.md), [operative change](./definitions/operative-change.md), [evidence bearing on an improvement objective](./definitions/evidence-bearing-on-an-improvement-objective.md) — the definition's three base terms.
 - [The definition classifies its boundary cases without ad hoc exceptions](./the-self-improving-system-definition-classifies-its-boundary-cases.md) — nine inclusion tests, from gradient learning to accidental self-modification.
 - [A proposal-selection loop requires search, evaluation, and operative retention](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md) and [false-positive acceptance becomes operative](./false-positive-generation-is-filtered-before-retention.md) — the generate-evaluate-retain subtype and why evaluation is its terminal filter.
