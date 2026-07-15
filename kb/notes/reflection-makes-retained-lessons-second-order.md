@@ -23,7 +23,7 @@ Route retention through a [causally connected self-representation](./definitions
 - **Rescoping** — the theory survives with its applicability boundary redrawn: "this holds" becomes "this holds for cases like these", or a boundary found too tight is widened.
 - **Revision** — the content itself is corrected in place, keeping the commitment's identity and history.
 
-These are discontinuous changes to how the system generalizes: the effect of one second-order lesson is proportional to the reach of the commitment it operates on, not to the evidential weight of the episode that produced it. One counterexample retained as a rejection undoes a theory that a thousand first-order updates could only slowly dilute. This is the mechanism behind selective revision and targeted rollback, listed as expected advantages of reflective pathways — and it is why the [conjectured target-data advantage](./addressable-hypotheses-may-reduce-target-data-under-structured-shifts.md) is plausible at all: fewer target observations are needed when one of them can legitimately trigger a rescoping instead of a gradient nudge.
+These are discontinuous changes to how the system generalizes: the effect of one second-order lesson is proportional to the reach of the commitment it operates on, not to the evidential weight of the episode that produced it. One counterexample retained as a rejection undoes a theory that a thousand first-order updates could only slowly dilute. This is the mechanism behind selective revision and targeted rollback, listed as expected advantages of reflective pathways — and it is why the [conjectured target-data advantage](./reflection-may-reduce-target-data-under-structured-shifts.md) is plausible at all: fewer target observations are needed when one of them can legitimately trigger a rescoping instead of a gradient nudge.
 
 ## Without reflection, scope is global
 
@@ -50,7 +50,7 @@ One dependency from the aspect-bounded nature of reflection: rejection requires 
 Relevant Notes:
 
 - [Reflection buys addressability](./reflection-buys-addressability.md) — grounds: addressable retention is what makes a prior commitment an operable object; this note develops the selective-revision advantage into the first-order/second-order distinction
-- [Addressable hypotheses may reduce target data under structured shifts](./addressable-hypotheses-may-reduce-target-data-under-structured-shifts.md) — extends: stakes the statistical payoff this note supplies the mechanism for
+- [Reflection may reduce target data under structured shifts](./reflection-may-reduce-target-data-under-structured-shifts.md) — extends: stakes the statistical payoff this note supplies the mechanism for
 - [Reflective system](./definitions/reflective-system.md) — defined-in: the causally connected, aspect-bounded self-representation whose represented aspects determine which second-order operations are available
 - [Retrieval failure is reflection failure](./retrieval-failure-is-reflection-failure.md) — mechanism: the retrieval wire that makes artifact commitments bounded-by-default where parametric ones are global-by-default
 - [False-positive generation is filtered; false-positive acceptance becomes operative](./false-positive-generation-is-filtered-before-retention.md) — contrasts: a wrong second-order lesson is the acceptance failure at its most expensive, discarding or misbounding a commitment with all its reach
