@@ -14,17 +14,17 @@ A [self-improving system](./definitions/self-improving-system.md) makes operativ
 
 The case for reflective pathways is a four-step chain; only the first step is architectural rather than conjectural.
 
-1. Reflection makes retained lessons **addressable**: later rounds can read, criticize, and selectively revise them — [reflection buys addressability](./reflection-buys-addressability.md). The guard against overclaiming: compounding alone needs no reflection; parametric learners compound by construction.
+1. Reflection makes retained lessons **addressable**: later rounds can read, criticize, and selectively revise them — [reflection buys addressability](./reflection-buys-addressability.md).
 2. An addressable lesson is **second-order**: it can reject a prior commitment outright, where a gradient can only nudge it — [reflection makes retained lessons second-order](./reflection-makes-retained-lessons-second-order.md).
 3. The payoff conjecture: [addressable hypotheses may reduce target data under structured shifts](./addressable-hypotheses-may-reduce-target-data-under-structured-shifts.md). This is Commonplace's own bet, not a result; the note carries the prediction and the test design.
-4. The standing discount: a lesson nothing surfaces contributes nothing — [retrieval failure is reflection failure](./retrieval-failure-is-reflection-failure.md).
+4. The standing discount: retrieval is best-effort, and a lesson that never surfaces contributes nothing — [retrieval failure is reflection failure](./retrieval-failure-is-reflection-failure.md).
 
 ## The four gradings
 
 - **Retention form** — operative, cumulative, or addressable. The chain above is this axis's payoff; the machinery is the [reflective system](./definitions/reflective-system.md)'s causally connected self-map.
 - **Coverage** — [reflective coverage is graded across representational forms](./reflective-coverage-is-graded-across-representational-forms.md).
 - **Closure** — [a methodology governs its own extension only as far as it settles the meta-decisions it raises](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md).
-- **Autonomy** — bare autonomy is free; warrant is what costs. [Human-inclusive boundaries make reflection cheap](./human-inclusive-boundaries-make-reflection-cheap.md), and [warranted autonomy is bounded by oracle reach](./warranted-autonomy-is-bounded-by-oracle-reach.md).
+- **Autonomy** — who performs each function of the pathway, assessed against a declared system boundary that may include humans. Both borders of this axis are trivially reached: with humans inside the boundary, reflection is nearly universal — [human-inclusive boundaries make reflection cheap](./human-inclusive-boundaries-make-reflection-cheap.md) — and with humans removed, autonomy is just as free — Ashby's Homeostat runs with no human anywhere. What costs is **warrant**, trusting what an unattended loop accepts: [warranted autonomy is bounded by oracle reach](./warranted-autonomy-is-bounded-by-oracle-reach.md).
 
 ## Example placements
 
