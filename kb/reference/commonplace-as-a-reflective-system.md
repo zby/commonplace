@@ -11,7 +11,7 @@ Commonplace is a reflective system: it contains a causally connected representat
 
 It is also a human-inclusive, reflective [self-improving system](../notes/definitions/self-improving-system.md) — the stronger and more interesting claim, since reflection alone is cheap.
 
-This is a case classification, not a new theory. It discharges the five obligations that [reflective system](../notes/definitions/reflective-system.md) requires anyone to state before applying the term, then reads the same trace against the self-improving definition, which asks for two further things: a loop that runs on the system itself and an objective it could have failed. Both classifications rest on one observed repository trace rather than on architectural possibility. Reflection here is aspect-bound and partial; the negative conclusions at the end are part of the claim, not hedges around it.
+This is a case classification, not a new theory. It discharges the five obligations that [reflective system](../notes/definitions/reflective-system.md) requires anyone to state before applying the term, then reads the same trace against the self-improving definition, which asks for two further things: operative change to the system's own organization, and responsiveness to evidence bearing on an improvement objective it could have failed. Both classifications rest on one observed repository trace rather than on architectural possibility. Reflection here is aspect-bound and partial; the negative conclusions at the end are part of the claim, not hedges around it.
 
 ## 1. The declared boundary
 
@@ -93,11 +93,11 @@ Both directions of causal connection are therefore observed: a change in the sys
 
 ## The same trace as a self-improving system
 
-Reflection is the machinery; it is not yet the interesting claim. The trace above also discharges [self-improving system](../notes/definitions/self-improving-system.md), and it is worth reading a second time in those terms, because the definition asks for two things the reflective obligations do not.
+Reflection is the machinery; it is not yet the interesting claim. The trace above also discharges [self-improving system](../notes/definitions/self-improving-system.md), and it is worth reading a second time in those terms, because the definition asks for two things the reflective obligations do not: a change to the system's own organization, and evidence-responsiveness toward an objective. Commonplace's improvement pathway takes the [proposal-selection](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) form — candidates are drafted, reviewed with a real possibility of rejection, and selectively merged — so the subtype's decomposition is the right reading grid.
 
 | Requirement | Discharged by |
 |---|---|
-| **Loop on itself** | The change ran on `kb/types/tag-readme.md` — a self-representing artifact, not ordinary content. |
+| **Change to the system itself** | The change ran on `kb/types/tag-readme.md` — a self-representing artifact, not ordinary content. |
 | **Search** | Human. A maintainer noticed the `index` type was doing two jobs and that the `learning-theory` head had outgrown its completeness claim. |
 | **Improvement objective** | The criterion under which the change could have failed: a marked head must not lie to an exhaustive consumer, per [stale indexes are worse than no indexes](../notes/stale-indexes-are-worse-than-no-indexes.md). ADR 026 makes it enforceable — `complete` is a mark the validator can falsify. |
 | **Evaluation** | Mixed. Tests and the validator are mechanical; the judgment that the type split was the right shape was the maintainer's. |
@@ -137,7 +137,7 @@ Relevant Notes:
 - [Self-improving system](../notes/definitions/self-improving-system.md) — rationale: supplies the loop, objective, and autonomy profile the same trace is read against a second time
 - [Behavioral authority](../notes/definitions/behavioral-authority.md) — defined-in: names the consumer, channel, and force in the observed trace
 - [Reflective coverage is graded across representational forms](../notes/reflective-coverage-is-graded-across-representational-forms.md) — rationale: the graded coverage criterion this system meets unevenly across its forms
-- [An improvement loop requires search, evaluation, and operative retention](../notes/an-improvement-loop-requires-search-evaluation-and-operative-retention.md) — rationale: the change-loop decomposition the trace is read against
+- [A proposal-selection improvement loop requires search, evaluation, and operative retention](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — rationale: the change-loop decomposition the trace is read against
 - [A methodology governs its own extension only as far as it settles the meta-decisions it raises](../notes/a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md) — rationale: the separate, stronger self-extension property
 - [ADR 026: tag-readme type with completeness and coverage marks](./adr/026-tag-readme-type-with-completeness-and-coverage-marks.md) — evidence: the decision at the center of the observed trace
 - [Design rationale management in Commonplace](./design-rationale-management.md) — part-of: why theory-to-implementation lineage is not enforced end to end

@@ -25,7 +25,7 @@ The two requirements doing the work are the third and the fifth: the artifact mu
 
 ## The gradient is autonomy
 
-The discriminating dimension is autonomy, and it is assessed per function. Take the change loop's decomposition — search, evaluation, retention, [since an improvement loop requires search, evaluation, and operative retention](./an-improvement-loop-requires-search-evaluation-and-operative-retention.md) — together with each read of the self-representation, and for each ask: does a human or a non-human process perform it?
+The discriminating dimension is autonomy, and it is assessed per function. The systems compared here all improve through a proposal-selection loop, so take that loop's decomposition — search, evaluation, retention, [since a proposal-selection improvement loop requires search, evaluation, and operative retention](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — together with each read of the self-representation, and for each ask: does a human or a non-human process perform it? (A direct evidence-driven pathway is graded the same way over whatever performs its updates; it simply has fewer separable functions to hand over.)
 
 - **Zero end — software plus its dev team.** The machine consumes the code only by executing it, never *as a representation of itself*. Every reflective act — noticing what to change, judging a candidate, deciding what to keep — happens in human heads; the artifacts merely store the results. This is fully reflective under the human-inclusive boundary and fully un-autonomous.
 - **Middle — Commonplace.** In [Commonplace as a reflective system](../reference/commonplace-as-a-reflective-system.md), the harness loads skills and `CLAUDE.md` automatically, validators enforce type specs, and agents retrieve notes mid-task and derive behavior from what they find — non-human processes consume the self-representation *as a representation*. Humans keep search (noticing what is worth changing) and the judgment-heavy part of evaluation.
@@ -52,7 +52,7 @@ They move independently: a system can widen coverage while keeping a human at ev
 Relevant Notes:
 
 - [Reflective system](./definitions/reflective-system.md) — grounds: the human-inclusive boundary extension whose consequence this note states
-- [An improvement loop requires search, evaluation, and operative retention](./an-improvement-loop-requires-search-evaluation-and-operative-retention.md) — grounds: the function decomposition autonomy grades over
+- [A proposal-selection improvement loop requires search, evaluation, and operative retention](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — grounds: the function decomposition autonomy grades over
 - [Reflective coverage is graded across representational forms](./reflective-coverage-is-graded-across-representational-forms.md) — contrasts: a sibling grading over forms rather than performers
 - [A methodology governs its own extension only as far as it settles the meta-decisions it raises](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md) — contrasts: closure grades the methodology's settledness, not the performer
 - [Gödel machines are a proof-governed case of reflective self-modification](./goedel-machines-are-a-proof-governed-case-of-self-modification.md) — exemplifies: the full-autonomy corner of the gradient

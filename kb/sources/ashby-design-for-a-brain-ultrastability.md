@@ -54,7 +54,7 @@ Stated plainly, because the gaps matter more than the correspondences:
 
 ## Relevance to the KB
 
-Ashby is the cybernetic **precedent** for the claim that [an improvement loop requires search, evaluation, and operative retention](../notes/an-improvement-loop-requires-search-evaluation-and-operative-retention.md) — an adaptive system that changes its own organization when ordinary regulation fails, with a second loop distinct from the first. The two-loop structure is exactly the distinction between operating a system and modifying it. The Homeostat is a real instance of the loop, not a defective one, and because the mechanism holds no self-representation it establishes that **reflection is not a premise of the decomposition**: the three functions are exhibited without it.
+Ashby is the cybernetic **precedent** for the claim that [a proposal-selection improvement loop requires search, evaluation, and operative retention](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — an adaptive system that changes its own organization when ordinary regulation fails, with a second loop distinct from the first. The two-loop structure is exactly the distinction between operating a system and modifying it. The Homeostat is a real instance of the loop, not a defective one, and because the mechanism holds no self-representation it establishes that **reflection is not a premise of the decomposition**: the three functions are exhibited without it.
 
 But the mapping onto the modern vocabulary is an **interpretation**, and it marks the *floor* rather than the archetype. Read through that vocabulary, ultrastability occupies the minimal corner of the design space: search is a random draw, evaluation is a one-bit viability test, and retention is equilibrium — the absence of a force to change further. Ashby did not decompose adaptation into generator and oracle, and translating him as though he had would credit him with distinctions he explicitly did without.
 
@@ -73,7 +73,7 @@ Finally, Ashby is a clean **negative case** for [reflective system](../notes/def
 
 Relevant Notes:
 
-- [An improvement loop requires search, evaluation, and operative retention](../notes/an-improvement-loop-requires-search-evaluation-and-operative-retention.md) — evidence: an improvement loop with no self-representation, establishing that reflection is not a premise of the decomposition, and marking the floor of each function
+- [A proposal-selection improvement loop requires search, evaluation, and operative retention](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — evidence: an improvement loop with no self-representation, establishing that reflection is not a premise of the decomposition, and marking the floor of each function
 - [Self-improving system](../notes/definitions/self-improving-system.md) — exemplifies: the floor of the category — a minimal, non-reflective, autonomous occupant whose every function takes its weakest viable form
 - [Reflection buys addressability, not compounding](../notes/reflection-buys-addressability-not-compounding.md) — evidence: a loop that retains without a self-representation, so what is kept is a setting rather than knowledge and nothing accumulates
 - [Reflective system](../notes/definitions/reflective-system.md) — evidence: a negative case — an adaptive, self-modifying system that is not reflective, because it has no self-representation

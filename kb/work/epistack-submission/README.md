@@ -6,8 +6,8 @@ Inputs, not competitors: [epistack-competition](../epistack-competition/README.m
 
 **Normative sources** (self-improvement cluster rewritten 2026-07-15; keep submission prose inside their qualified claims):
 
-- The object: [self-improving system](../../notes/definitions/self-improving-system.md) — an improvement loop run on the system itself, against an improvement objective. Reflection and autonomy are **separate gradients**, not part of the definition; *reflective self-improving system* and *autonomous self-improving system* are the reserved boundary terms, and Commonplace claims the first. What reflection buys is [addressability, not compounding](../../notes/reflection-buys-addressability-not-compounding.md).
-- The loop: [an improvement loop requires search, evaluation, and operative retention](../../notes/an-improvement-loop-requires-search-evaluation-and-operative-retention.md).
+- The object: [self-improving system](../../notes/definitions/self-improving-system.md) — operative changes to the system's own behavior-determining organization, causally responsive to evidence bearing on an improvement objective. The central distinction is **reflective versus non-reflective self-improvement**, pathway-relative; autonomy is a separate gradient; Commonplace's pathway is reflective and human-inclusive. What reflection buys is [addressability, not compounding](../../notes/reflection-buys-addressability-not-compounding.md).
+- The loop: [a proposal-selection improvement loop requires search, evaluation, and operative retention](../../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — the named subtype Commonplace instantiates; the gate/oracle machinery is scoped there, not to the base definition.
 - The bound: [warranted autonomy is bounded by oracle reach](../../notes/warranted-autonomy-is-bounded-by-oracle-reach.md) and [the boundary of automation is the boundary of verification](../../notes/the-boundary-of-automation-is-the-boundary-of-verification.md).
 - The asymmetry: [false-positive generation is filtered; false-positive acceptance becomes operative](../../notes/false-positive-generation-is-filtered-before-retention.md).
 - The unit: [actionable methodology](../../notes/definitions/actionable-methodology.md) — a methodology is actionable only relative to an operator, available operations, a target, and a setting. This is what we are submitting.
@@ -19,7 +19,7 @@ Inputs, not competitors: [epistack-competition](../epistack-competition/README.m
 
 ## The pitch
 
-**A knowledge system that improves is an improvement loop — search, evaluation, operative retention — run on itself. In an agent-operated system, the thing it runs *through* is its methodology: the retained prose an agent reads before it acts. So methodology, not capability, is what compounds. We present a methodology for agent-operated epistemic investigation, a runnable reference implementation, and three stress-test casebooks — and we are candid that the binding constraint is the evaluator, which is the part we are actively building.**
+**A knowledge system that improves runs a proposal-selection improvement loop — search, evaluation, operative retention — on itself. In an agent-operated system, the thing it runs *through* is its methodology: the retained prose an agent reads before it acts. So methodology, not capability, is what compounds. We present a methodology for agent-operated epistemic investigation, a runnable reference implementation, and three stress-test casebooks — and we are candid that the binding constraint is the evaluator, which is the part we are actively building.**
 
 The entry's distinguishing move is a refusal followed by a program. Most entries will present a stack whose assessment layer is an LLM judge. We ran that experiment, it failed silently, and we caught it — so we do not claim what we cannot yet verify. Instead we ship the methodology, the mechanical checks where ground truth is shared, an explicit record of the gates where judgment stays human, and **the procedure for moving gates out of that category one at a time**.
 
@@ -177,7 +177,7 @@ Judge-facing; repos are evidence. **No Commonplace internal vocabulary** (operat
 
 ### Operator note (authors only)
 
-Sync with [self-improving system](../../notes/definitions/self-improving-system.md), [the improvement loop](../../notes/an-improvement-loop-requires-search-evaluation-and-operative-retention.md), [warranted autonomy](../../notes/warranted-autonomy-is-bounded-by-oracle-reach.md), [the false-positive asymmetry](../../notes/false-positive-generation-is-filtered-before-retention.md), [actionable methodology](../../notes/definitions/actionable-methodology.md), [the classification](../../reference/commonplace-as-a-reflective-system.md), and [DRM](../../reference/design-rationale-management.md).
+Sync with [self-improving system](../../notes/definitions/self-improving-system.md), [the improvement loop](../../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md), [warranted autonomy](../../notes/warranted-autonomy-is-bounded-by-oracle-reach.md), [the false-positive asymmetry](../../notes/false-positive-generation-is-filtered-before-retention.md), [actionable methodology](../../notes/definitions/actionable-methodology.md), [the classification](../../reference/commonplace-as-a-reflective-system.md), and [DRM](../../reference/design-rationale-management.md).
 
 **Do not outrun the qualified claims:**
 
