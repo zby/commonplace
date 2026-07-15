@@ -7,7 +7,7 @@ tags: [foundations, self-improving-systems, evaluation]
 
 # Warranted autonomy is bounded by oracle reach
 
-Autonomy — how much of an [adaptation loop](./an-adaptation-loop-requires-search-evaluation-and-retention.md) runs without a person — is a separate gradient over a [self-improving system](./definitions/self-improving-system.md). Bare autonomy is free: hand the gate to a model with a rubric and no human runs it. More autonomy strengthens that attribution, but it is not automatically a better design. What is bounded is **warranted autonomy** — a loop that runs unattended and can still be trusted with what it accepts.
+Autonomy — how much of an [improvement loop](./an-improvement-loop-requires-search-evaluation-and-operative-retention.md) runs without a person — is a separate gradient over a [self-improving system](./definitions/self-improving-system.md). Bare autonomy is free: hand the gate to a model with a rubric and no human runs it. More autonomy strengthens that attribution, but it is not automatically a better design. What is bounded is **warranted autonomy** — a loop that runs unattended and can still be trusted with what it accepts.
 
 Warranted evaluation autonomy reaches only the candidates the available oracle can assess with the required confidence, [since the boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md). Outside that reach, unattended evaluation remains possible but unwarranted.
 
@@ -41,7 +41,7 @@ Hardening may expand warranted reach by resolving cases the old oracle could not
 Relevant Notes:
 
 - [The boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — grounds: verification bounds unattended evaluation that remains trustworthy
-- [An adaptation loop requires search, evaluation, and operative retention](./an-adaptation-loop-requires-search-evaluation-and-retention.md) — grounds: the loop whose evaluation function the oracle governs
+- [An improvement loop requires search, evaluation, and operative retention](./an-improvement-loop-requires-search-evaluation-and-operative-retention.md) — grounds: the loop whose evaluation function the oracle governs
 - [Self-improving system](./definitions/self-improving-system.md) — extends: distinguishes bare autonomy from warranted autonomy
 - [False-positive generation is filtered; false-positive acceptance becomes operative](./false-positive-generation-is-filtered-before-retention.md) — extends: why unattended evaluation has the more consequential false-positive failure
 - [Gödel machines are a proof-governed case of reflective self-modification](./goedel-machines-are-a-proof-governed-case-of-self-modification.md) — exemplifies: warranted autonomy bounded by a proof requirement

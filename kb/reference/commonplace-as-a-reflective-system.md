@@ -137,7 +137,7 @@ Relevant Notes:
 - [Self-improving system](../notes/definitions/self-improving-system.md) — rationale: supplies the loop, objective, and autonomy profile the same trace is read against a second time
 - [Behavioral authority](../notes/definitions/behavioral-authority.md) — defined-in: names the consumer, channel, and force in the observed trace
 - [Reflective coverage is graded across representational forms](../notes/reflective-coverage-is-graded-across-representational-forms.md) — rationale: the graded coverage criterion this system meets unevenly across its forms
-- [An adaptation loop requires search, evaluation, and operative retention](../notes/an-adaptation-loop-requires-search-evaluation-and-retention.md) — rationale: the change-loop decomposition the trace is read against
+- [An improvement loop requires search, evaluation, and operative retention](../notes/an-improvement-loop-requires-search-evaluation-and-operative-retention.md) — rationale: the change-loop decomposition the trace is read against
 - [A methodology governs its own extension only as far as it settles the meta-decisions it raises](../notes/a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md) — rationale: the separate, stronger self-extension property
 - [ADR 026: tag-readme type with completeness and coverage marks](./adr/026-tag-readme-type-with-completeness-and-coverage-marks.md) — evidence: the decision at the center of the observed trace
 - [Design rationale management in Commonplace](./design-rationale-management.md) — part-of: why theory-to-implementation lineage is not enforced end to end

@@ -1,15 +1,17 @@
 ---
-description: "An adaptation loop needs search to produce a candidate, evaluation that can reject it, and operative retention; reflection supplies only one causal path into that loop"
+description: "An improvement loop needs search to produce a candidate, evaluation that can reject it, and operative retention; reflection supplies only one causal path into that loop"
 type: kb/types/note.md
 traits: [title-as-claim, has-external-sources]
 tags: [foundations, computational-model, self-improving-systems]
 ---
 
-# An adaptation loop requires search, evaluation, and operative retention
+# An improvement loop requires search, evaluation, and operative retention
 
-An adaptation loop requires three functions: **search** brings a candidate change into consideration, **evaluation** supplies grounds for accepting or rejecting it, and **operative retention** preserves an accepted change with behavioral authority. Remove any one and the loop does not close — a change nobody proposed, nobody could reject, or nobody will ever act on.
+An improvement loop requires three functions: **search** brings a candidate change into consideration, **evaluation** supplies grounds for accepting or rejecting it, and **operative retention** preserves an accepted change with behavioral authority. Remove any one and the loop does not close — a change nobody proposed, nobody could reject, or nobody will ever act on.
 
-An adaptation loop is therefore narrower than self-modification. A blind, accidental, or unconditional rewrite may change later behavior without applying any criterion; a transient rewrite may fail to preserve the result. Both can count as self-modification, but neither closes an adaptation loop. Conversely, the three functions can organize adaptation in a system that is not reflective at all.
+An improvement loop is therefore narrower than self-modification. A blind, accidental, or unconditional rewrite may change later behavior without applying any criterion; a transient rewrite may fail to preserve the result. Both can count as self-modification, but neither closes an improvement loop. Conversely, the three functions can close the loop in a system that is not reflective at all.
+
+A terminology note: the concept descends from Ashby's **adaptation** — his ultrastable system is the precedent developed below — but it is named for what the loop aims at rather than by his word for it. Everyday adaptation is transient compensation, an eye adjusting to the dark, and retains nothing; retention is one of the three requirements. Where this note says *adaptation* or *adaptive*, it means Ashby's phenomenon; the loop is the improvement loop.
 
 A [reflective system](./definitions/reflective-system.md) supplies one possible causal path into this loop. Through **intercession** — an operation that changes the system through its causally connected self-representation — it can modify a represented aspect of itself. Making that path available does not itself provide search, evaluation, or retention.
 
@@ -46,7 +48,7 @@ Acceptance alone does not make a change consequential. Operative retention combi
 - An approved patch that is never merged has no channel.
 - A generated validator that no command invokes has no force.
 
-In each case, search ran and evaluation passed, but the adaptation loop remained open: the artifact exists without becoming behaviorally consequential.
+In each case, search ran and evaluation passed, but the improvement loop remained open: the artifact exists without becoming behaviorally consequential.
 
 ## Feedback is what makes later iterations responsive
 
@@ -56,9 +58,9 @@ Retained design rationale is one such channel. Recorded constraints and rejected
 
 ## Boundary cases clarify the claim
 
-Cybernetician W. Ross Ashby's ultrastable system is an adaptation loop that is not reflective. His electromechanical Homeostat varies parameters randomly when essential variables leave viable bounds, tests whether viability returns, and preserves a surviving configuration through non-displacement — search, evaluation, and operative retention, with no self-representation anywhere in the mechanism ([Ashby 1960, chapters 7–8](../sources/ashby-design-for-a-brain-ultrastability.md)).
+Cybernetician W. Ross Ashby's ultrastable system is an improvement loop that is not reflective. His electromechanical Homeostat varies parameters randomly when essential variables leave viable bounds, tests whether viability returns, and preserves a surviving configuration through non-displacement — search, evaluation, and operative retention, with no self-representation anywhere in the mechanism ([Ashby 1960, chapters 7–8](../sources/ashby-design-for-a-brain-ultrastability.md)).
 
-It is a real instance, not a defective one, and it establishes that **reflection is not a premise of the decomposition** — the three functions are exhibited without appeal to a self-representation, which is why the claim is stated for adaptation loops generally rather than restricted to reflective systems. It also marks the floor. Each function is present in its weakest viable form: search is a draw from a random-number table bearing no relation to the problem, evaluation is a one-bit viability test that ranks nothing, and retention is equilibrium — a configuration survives because nothing is left to displace it, not because anything endorsed it. Reading the Homeostat is therefore the cheapest way to see what a stronger generator and a real oracle actually buy.
+It is a real instance, not a defective one, and it establishes that **reflection is not a premise of the decomposition** — the three functions are exhibited without appeal to a self-representation, which is why the claim is stated for improvement loops generally rather than restricted to reflective systems. It also marks the floor. Each function is present in its weakest viable form: search is a draw from a random-number table bearing no relation to the problem, evaluation is a one-bit viability test that ranks nothing, and retention is equilibrium — a configuration survives because nothing is left to displace it, not because anything endorsed it. Reading the Homeostat is therefore the cheapest way to see what a stronger generator and a real oracle actually buy.
 
 What it does not buy is accumulation. What the Homeostat retains is an opaque parameter setting rather than a representation, so nothing in the mechanism can read what it kept and the loop runs indefinitely without anything compounding. Routing the loop through a self-representation is what addresses that gap — it makes each retained change *addressable* by the next round, which is not the same as guaranteeing it is read. That is the subject of [reflection buys addressability, not compounding](./reflection-buys-addressability-not-compounding.md); the loop run on the system itself against an improvement objective, with or without that routing, is a [self-improving system](./definitions/self-improving-system.md).
 
@@ -86,4 +88,4 @@ Relevant Notes:
 - [Schmidhuber, Gödel Machines](../sources/goedel-machines-schmidhuber.ingest.md) — evidence: supplies the proof-governed limit case
 - [Self-improving system](./definitions/self-improving-system.md) — extends: the case where the loop runs on the system itself against an improvement objective
 - [Reflection buys addressability, not compounding](./reflection-buys-addressability-not-compounding.md) — extends: what routing the loop through a self-representation adds to bare retention
-- [Ashby, Design for a Brain — ultrastability](../sources/ashby-design-for-a-brain-ultrastability.md) — evidence: an adaptation loop with no self-representation, establishing that reflection is not a premise of the decomposition, and marking the floor of each function
+- [Ashby, Design for a Brain — ultrastability](../sources/ashby-design-for-a-brain-ultrastability.md) — evidence: an improvement loop with no self-representation, establishing that reflection is not a premise of the decomposition, and marking the floor of each function

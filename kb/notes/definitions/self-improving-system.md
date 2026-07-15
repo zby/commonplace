@@ -1,12 +1,12 @@
 ---
-description: "Definition — an adaptation loop run on the system itself against an improvement objective; reflective and autonomous name the loop's two independent gradings, each reserved for its boundary case"
+description: "Definition — an improvement loop run on the system itself; reflective and autonomous name the loop's two independent gradings, each reserved for its boundary case"
 type: kb/types/definition.md
 tags: [foundations, computational-model, self-improving-systems]
 ---
 
 # Self-improving system
 
-A **self-improving system** runs an [adaptation loop](../an-adaptation-loop-requires-search-evaluation-and-retention.md) — search, evaluation, operative retention — *on itself*, evaluating candidate changes against an **improvement objective**.
+A **self-improving system** runs an [improvement loop](../an-improvement-loop-requires-search-evaluation-and-operative-retention.md) — search, evaluation, operative retention — *on itself*, evaluating candidate changes against an **improvement objective**.
 
 *On itself* means the object of change is the system's own behavior-determining structure — its organization, its artifacts, its rules — not an external work product. A compiler that optimizes programs is not self-improving; a compiler pipeline that rewrites its own optimizer is. This is Ashby's two-loop distinction: operating a system is one loop, modifying the system that operates is another.
 
@@ -92,7 +92,7 @@ An earlier revision of this definition built the self-representation requirement
 
 Relevant Notes:
 
-- [An adaptation loop requires search, evaluation, and operative retention](../an-adaptation-loop-requires-search-evaluation-and-retention.md) — grounds: the three functions the loop must accomplish, and why each is required
+- [An improvement loop requires search, evaluation, and operative retention](../an-improvement-loop-requires-search-evaluation-and-operative-retention.md) — grounds: the three functions the loop must accomplish, and why each is required
 - [Reflection buys addressability, not compounding](../reflection-buys-addressability-not-compounding.md) — extends: the thesis the reflective reserved term marks — what retention through a readable self-representation adds, and what compounds without it
 - [Reflective system](./reflective-system.md) — grounds: the causally connected self-representation, and the intercession capability, that the reflective reserved term requires
 - [Human-inclusive boundaries make reflection cheap; autonomy is the discriminating gradient](../human-inclusive-boundaries-make-reflection-cheap.md) — grounds: why the machinery is nearly free, and why bare classification discriminates little

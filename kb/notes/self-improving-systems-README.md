@@ -8,11 +8,11 @@ complete: true
 
 # Self-improving systems
 
-The object is the [**self-improving system**](./definitions/self-improving-system.md): an adaptation loop — search, evaluation, operative retention — run on the system itself against an improvement objective. Membership is deliberately broad: a weight-level learner is inside without reflection, a fully staffed dev team is inside without autonomy, and reserved compound terms (*reflective*, *autonomous* self-improving system) mark the boundary cases. The name therefore carries little information on its own — the design information is in the loop's health and in the gradings, [since four independent gradings place a self-improving system](./four-independent-gradings-place-a-self-improving-system.md). Most systems in [agent-memory-systems](../agent-memory-systems/README.md) are a bid at the reflective kind — mine the traces, write the lesson down, load it next time.
+The object is the [**self-improving system**](./definitions/self-improving-system.md): an improvement loop — search, evaluation, operative retention — run on the system itself against an improvement objective. Membership is deliberately broad: a weight-level learner is inside without reflection, a fully staffed dev team is inside without autonomy, and reserved compound terms (*reflective*, *autonomous* self-improving system) mark the boundary cases. The name therefore carries little information on its own — the design information is in the loop's health and in the gradings, [since four independent gradings place a self-improving system](./four-independent-gradings-place-a-self-improving-system.md). Most systems in [agent-memory-systems](../agent-memory-systems/README.md) are a bid at the reflective kind — mine the traces, write the lesson down, load it next time.
 
 ## The loop
 
-- [An adaptation loop requires search, evaluation, and operative retention](./an-adaptation-loop-requires-search-evaluation-and-retention.md) — the three functions, their weakest viable forms, and the diagnostic use: when a loop stalls, ask which function is missing rather than which component failed.
+- [An improvement loop requires search, evaluation, and operative retention](./an-improvement-loop-requires-search-evaluation-and-operative-retention.md) — the three functions, their weakest viable forms, and the diagnostic use: when a loop stalls, ask which function is missing rather than which component failed.
 - [False-positive generation is filtered; false-positive acceptance becomes operative](./false-positive-generation-is-filtered-before-retention.md) — evaluation is the terminal filter: a rejected candidate costs effort, a bad acceptance is kept and compounds. Acceptance is an improvement claim, not evidence of improvement.
 
 ## The gradings
