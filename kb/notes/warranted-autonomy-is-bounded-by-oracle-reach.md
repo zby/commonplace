@@ -46,5 +46,4 @@ Relevant Notes:
 - [False-positive generation is filtered; false-positive acceptance becomes operative](./false-positive-generation-is-filtered-before-retention.md) — extends: why unattended evaluation has the more consequential false-positive failure
 - [Gödel machines are a proof-governed case of reflective self-modification](./goedel-machines-are-a-proof-governed-case-of-self-modification.md) — exemplifies: warranted autonomy bounded by a proof requirement
 - [Oracle-strength spectrum](./oracle-strength-spectrum.md) — extends: grades the verification surfaces that determine oracle reach
-- [Human-inclusive boundaries make reflection cheap](./human-inclusive-boundaries-make-reflection-cheap.md) — extends: autonomy is a separate grading over a human-inclusive system
-- [Commonplace as a reflective system](../reference/commonplace-as-a-reflective-system.md) — evidence: a mixed autonomy profile aligned with heterogeneous oracle reach
+- [Commonplace as a reflective system](../reference/commonplace-as-a-reflective-system.md) — evidence: a pathway-mixed system whose autonomy profile aligns with heterogeneous oracle reach

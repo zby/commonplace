@@ -8,7 +8,7 @@ tags: [foundations, computational-model, self-improving-systems]
 
 A **reflective system** contains a causally connected representation of itself that is available to its own processes, such that operations mediated through that representation can affect the system's subsequent behavior.
 
-The structural core is the established term in computational reflection: a system that reasons about itself in a causally connected way, through structures that represent selected aspects of it — its **self-representation**. Commonplace generalizes the criteria to an explicitly declared computational or socio-technical boundary. Where that generalization outruns its sources is recorded under [Provenance](#provenance-and-departures) below.
+The structural core is the established term in computational reflection: a system that reasons about itself in a causally connected way, through structures that represent selected aspects of it — its **self-representation**. Commonplace generalizes the criteria to an explicitly declared computational boundary. Where that generalization outruns its sources is recorded under [Provenance](#provenance-and-departures) below.
 
 Changing the boundary alone does not satisfy the definition. The representation must be available inside the boundary *as a representation of that same system*, not merely as telemetry or a control signal correlated with its state.
 
@@ -16,7 +16,7 @@ Changing the boundary alone does not satisfy the definition. The representation 
 
 Calling a system reflective requires five things to be stated:
 
-- The **system boundary**—what processes, artifacts, people, and environment count as the system;
+- The **system boundary**—what processes, artifacts, and environment count as the system;
 - The **represented aspects** of that system and their granularity;
 - A **self-representation** that exposes those aspects;
 - Processes inside the boundary that can inspect or act through the representation; and
@@ -34,14 +34,6 @@ The following neighboring terms mark different capabilities:
 | **Intercession** | Reflective access permits direct modification of represented system state or interpretation. |
 
 Intercession is a capability within reflection, but not every reflective architecture permits it.
-
-## Human-inclusive boundaries
-
-People may be components of a reflective system when the declared boundary includes an established role whose interpretation, authorization, or action forms part of the causal path. A standing human review role can therefore participate inside a socio-technical reflective system. By contrast, a person who occasionally rescues a failed process from outside its established operation does not become an internal component merely because the rescue affected it.
-
-Under Commonplace's extension, a monitored service, dashboard, and operator role qualify only when the dashboard functions within the declared whole as a representation of that same whole. A display used merely as telemetry in an external control loop does not qualify.
-
-The extension is permissive by consequence: with a standing maintainer role inside the boundary, nearly every maintained system classifies as reflective, so the bare classification is a qualification rather than a discrimination — [human-inclusive boundaries make reflection cheap; autonomy is the discriminating gradient](../human-inclusive-boundaries-make-reflection-cheap.md).
 
 ## Retrieval-mediated causal connection
 
@@ -71,7 +63,6 @@ The two properties are orthogonal: reflection is structural, adaptation is a pro
 The criteria above are inherited; the extensions are not. Collected here so the definition can be read as a definition, and so each departure is auditable in one place.
 
 - **Causal connection, self-representation, theory-relativity — inherited.** Maes defines a reflective system as a computational system that reasons about itself “in a causally connected way,” and names the structures representing selected aspects its self-representation ([Maes 1988, printed pp. 1–2, 14–17; PDF pp. 1–2, 14–17](../../sources/maes-computational-reflection-1988.ingest.md)). The introspection/intercession split is corroborated in [Wuyts and Ducasse 2001](../../sources/wuyts-ducasse-2001-symbiotic-reflection.ingest.md); the embedded-self-theory lineage is [Smith 1984](../../sources/smith-reflection-and-semantics-in-lisp-1984.ingest.md).
-- **The socio-technical boundary — Commonplace's own.** Maes's criteria are computational and do not directly ground the human-inclusive extension. Second-order cybernetics supports including an observer and the observer's purposes in the analyzed boundary, but observer inclusion alone supplies neither a self-representation nor a causal-connection test ([von Foerster 1979, PDF pp. 2–3](../../sources/von-foerster-cybernetics-of-cybernetics-1979.ingest.md)). The extension therefore rests on the causal-path requirement, not on cybernetic precedent — and it is permissive by consequence, which is the subject of [human-inclusive boundaries make reflection cheap](../human-inclusive-boundaries-make-reflection-cheap.md).
 - **Retrieval as a causal connection — Commonplace's own.** No source treats discovery over retained artifacts as the wire. See [retrieval failure is reflection failure](../retrieval-failure-is-reflection-failure.md).
 - **Terminology reservation.** Commonplace retains **reflective system** across boundary choices and reserves **reflexive system** for a future concept only if it names a distinct property. Nothing currently requires the second term.
 
@@ -88,5 +79,4 @@ Relevant Notes:
 - [Smith, Reflection and Semantics in Lisp](../../sources/smith-reflection-and-semantics-in-lisp-1984.ingest.md) — derived-from: supplies the earlier embedded-self-theory and bidirectional-causality lineage
 - [Maes, Computational Reflection](../../sources/maes-computational-reflection-1988.ingest.md) — derived-from: supplies causal connection, self-representation, and theory-relativity
 - [Wuyts and Ducasse, Symbiotic Reflection](../../sources/wuyts-ducasse-2001-symbiotic-reflection.ingest.md) — evidence: corroborates the causal self-representation threshold and the introspection/intercession distinction
-- [von Foerster, Cybernetics of Cybernetics](../../sources/von-foerster-cybernetics-of-cybernetics-1979.ingest.md) — derived-from: supports observer-inclusive boundaries without replacing the computational criteria
 - [Ashby, Design for a Brain — ultrastability](../../sources/ashby-design-for-a-brain-ultrastability.md) — evidence: a negative case — an adaptive, self-modifying system that is not reflective, having no self-representation
