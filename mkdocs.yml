@@ -24,6 +24,7 @@ plugins:
         'notes/actionable-theories-and-reflexive-system-construction.md': 'notes/self-improving-systems-README.md'
         'notes/agent-memory-index.md': 'notes/agent-memory-README.md'
         'notes/agent-memory-serves-contextual-competence-through-discoverable-composable-trusted-knowledge.md': 'notes/agent-memory-needs-discoverable-composable-trusted-knowledge-under-bounded-context.md'
+        'notes/an-adaptation-loop-requires-search-evaluation-and-retention.md': 'notes/an-improvement-loop-requires-search-evaluation-and-operative-retention.md'
         'notes/architecture-index.md': 'notes/architecture-README.md'
         'notes/closure-under-recommendations-bounds-governed-self-extension.md': 'notes/a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md'
         'notes/commonplace-architecture.md': 'reference/architecture.md'

@@ -7,7 +7,7 @@ tags: [foundations, self-improving-systems]
 
 # False-positive generation is filtered; false-positive acceptance becomes operative
 
-In an [adaptation loop](./an-adaptation-loop-requires-search-evaluation-and-retention.md), search and evaluation fail in ways that are not symmetric, and the asymmetry is structural rather than incidental.
+In an [improvement loop](./an-improvement-loop-requires-search-evaluation-and-operative-retention.md), search and evaluation fail in ways that are not symmetric, and the asymmetry is structural rather than incidental.
 
 Search sits *upstream of a filter*. A bad candidate — useless, harmful, off-target — reaches evaluation and is rejected. It cost effort and nothing else; it never became operative.
 
@@ -19,7 +19,7 @@ Evaluation *is* the filter. A bad acceptance is not caught by anything downstrea
 
 The asymmetry is between the two kinds of *false positive*. Search produces something that should not have been produced, and the filter catches it. Evaluation passes something that should not have passed, and nothing catches it.
 
-Search's other failures are not filtered, because there is nothing to filter. Search also fails by **omission** — never generating the candidate worth having, choosing the wrong target, stopping too early — and those errors are invisible and permanent. No evaluator recovers them: [evaluation cannot select a candidate that search never reaches](./an-adaptation-loop-requires-search-evaluation-and-retention.md). They are not *retained* either, since nothing enters the system; they are simply forgone, and the system cannot tell that they were.
+Search's other failures are not filtered, because there is nothing to filter. Search also fails by **omission** — never generating the candidate worth having, choosing the wrong target, stopping too early — and those errors are invisible and permanent. No evaluator recovers them: [evaluation cannot select a candidate that search never reaches](./an-improvement-loop-requires-search-evaluation-and-operative-retention.md). They are not *retained* either, since nothing enters the system; they are simply forgone, and the system cannot tell that they were.
 
 The precise claim is:
 
@@ -63,7 +63,7 @@ False-positive generation is caught by machinery already running in the loop, at
 
 Relevant Notes:
 
-- [An adaptation loop requires search, evaluation, and operative retention](./an-adaptation-loop-requires-search-evaluation-and-retention.md) — grounds: the loop whose functions this claim distinguishes, and the reach-versus-strength point it extends
+- [An improvement loop requires search, evaluation, and operative retention](./an-improvement-loop-requires-search-evaluation-and-operative-retention.md) — grounds: the loop whose functions this claim distinguishes, and the reach-versus-strength point it extends
 - [Self-improving system](./definitions/self-improving-system.md) — extends: tells the autonomy gradient which function to climb first, and why the other must be bought
 - [The boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — mechanism: why evaluation is the bounded function and its errors are the permanent ones
 - [Entropy management must scale with generation throughput](./entropy-management-must-scale-with-generation-throughput.md) — evidence: the capacity failure that automated search produces when evaluation does not scale with it

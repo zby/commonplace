@@ -53,7 +53,7 @@ Because all three were settled, the extension proceeded without anyone improvisi
 
 ## Closure under recommendations is not search closure
 
-The full change loop also [requires search, evaluation, and retention](./an-adaptation-loop-requires-search-evaluation-and-retention.md): something must find a candidate before anything can accept it. But search closure — how the system finds problems and generates candidates — is a different property from closure under recommendations, which asks how the system resolves the meta-decisions entailed by a recommendation it already has.
+The full change loop also [requires search, evaluation, and retention](./an-improvement-loop-requires-search-evaluation-and-operative-retention.md): something must find a candidate before anything can accept it. But search closure — how the system finds problems and generates candidates — is a different property from closure under recommendations, which asks how the system resolves the meta-decisions entailed by a recommendation it already has.
 
 The three axes above belong to closure under recommendations because the recommendation itself raises each of them: the prescribed artifact must take some form, be checked somehow, and acquire force to matter. Search is a precondition of the loop, not a decision the recommendation forces. A methodology could separately prescribe how to search — Commonplace largely does not — but that is a claim about search closure, and it should be argued as one.
 
@@ -70,7 +70,7 @@ Relevant Notes:
 
 - [Reflective system](./definitions/reflective-system.md) — contrasts: reflection is a structural condition on self-representation; closure is a stronger condition on methodology-governed change
 - [Actionable methodology](./definitions/actionable-methodology.md) — grounds: supplies the methodology–operator–target relation a governed recommendation presupposes
-- [An adaptation loop requires search, evaluation, and operative retention](./an-adaptation-loop-requires-search-evaluation-and-retention.md) — contrasts: separates the change loop's functions from the meta-decisions a recommendation raises
+- [An improvement loop requires search, evaluation, and operative retention](./an-improvement-loop-requires-search-evaluation-and-operative-retention.md) — contrasts: separates the change loop's functions from the meta-decisions a recommendation raises
 - [Behavioral authority](./definitions/behavioral-authority.md) — enables: names the consumer, channel, and force the authority axis demands
 - [Reflective coverage is graded across representational forms](./reflective-coverage-is-graded-across-representational-forms.md) — extends: the representational-form axis widens to the mappings between forms when a recommendation spans them
 - [the boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — mechanism: why the verification axis is the ceiling

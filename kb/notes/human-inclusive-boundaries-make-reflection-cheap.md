@@ -25,7 +25,7 @@ The two requirements doing the work are the third and the fifth: the artifact mu
 
 ## The gradient is autonomy
 
-The discriminating dimension is autonomy, and it is assessed per function. Take the change loop's decomposition — search, evaluation, retention, [since an adaptation loop requires search, evaluation, and operative retention](./an-adaptation-loop-requires-search-evaluation-and-retention.md) — together with each read of the self-representation, and for each ask: does a human or a non-human process perform it?
+The discriminating dimension is autonomy, and it is assessed per function. Take the change loop's decomposition — search, evaluation, retention, [since an improvement loop requires search, evaluation, and operative retention](./an-improvement-loop-requires-search-evaluation-and-operative-retention.md) — together with each read of the self-representation, and for each ask: does a human or a non-human process perform it?
 
 - **Zero end — software plus its dev team.** The machine consumes the code only by executing it, never *as a representation of itself*. Every reflective act — noticing what to change, judging a candidate, deciding what to keep — happens in human heads; the artifacts merely store the results. This is fully reflective under the human-inclusive boundary and fully un-autonomous.
 - **Middle — Commonplace.** In [Commonplace as a reflective system](../reference/commonplace-as-a-reflective-system.md), the harness loads skills and `CLAUDE.md` automatically, validators enforce type specs, and agents retrieve notes mid-task and derive behavior from what they find — non-human processes consume the self-representation *as a representation*. Humans keep search (noticing what is worth changing) and the judgment-heavy part of evaluation.
@@ -39,7 +39,7 @@ The discriminating dimension is autonomy, and it is assessed per function. Take 
 
 Autonomy grades *who performs the functions*. It is one of three graded refinements over the same reflective-system base, alongside coverage — *what is represented*, [since reflective coverage is graded across representational forms](./reflective-coverage-is-graded-across-representational-forms.md) — and closure — *what the methodology settles*, [since a methodology governs its own extension only as far as it settles the meta-decisions it raises](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md).
 
-They move independently: a system can widen coverage while keeping a human at every judgment, settle more meta-decisions without automating any of them, or hand a function to a machine without changing what is represented. Autonomy is the one that discriminates, which is this note's claim.
+They move independently: a system can widen coverage while keeping a human at every judgment, settle more meta-decisions without automating any of them, or hand a function to a machine without changing what is represented. Autonomy is the one that discriminates *among reflective systems*, which is this note's claim. Over the broader self-improving base a fourth grading joins them — retention form, [since reflection buys addressability, not compounding](./reflection-buys-addressability-not-compounding.md) — and [four independent gradings place a self-improving system](./four-independent-gradings-place-a-self-improving-system.md) collects the full scheme.
 
 ## Scope
 
@@ -52,7 +52,7 @@ They move independently: a system can widen coverage while keeping a human at ev
 Relevant Notes:
 
 - [Reflective system](./definitions/reflective-system.md) — grounds: the human-inclusive boundary extension whose consequence this note states
-- [An adaptation loop requires search, evaluation, and operative retention](./an-adaptation-loop-requires-search-evaluation-and-retention.md) — grounds: the function decomposition autonomy grades over
+- [An improvement loop requires search, evaluation, and operative retention](./an-improvement-loop-requires-search-evaluation-and-operative-retention.md) — grounds: the function decomposition autonomy grades over
 - [Reflective coverage is graded across representational forms](./reflective-coverage-is-graded-across-representational-forms.md) — contrasts: a sibling grading over forms rather than performers
 - [A methodology governs its own extension only as far as it settles the meta-decisions it raises](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md) — contrasts: closure grades the methodology's settledness, not the performer
 - [Gödel machines are a proof-governed case of reflective self-modification](./goedel-machines-are-a-proof-governed-case-of-self-modification.md) — exemplifies: the full-autonomy corner of the gradient
