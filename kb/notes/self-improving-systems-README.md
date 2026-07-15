@@ -8,7 +8,7 @@ complete: true
 
 # Self-improving systems
 
-A [self-improving system](./definitions/self-improving-system.md) makes operative changes to its own behavior-determining organization in response to evidence about an improvement objective. The definition is deliberately broad — a weight-level learner qualifies, and so does a dev team. The design information is not in the label but in where a system falls on [four independent gradings](./four-independent-gradings-place-a-self-improving-system.md), and above all in whether its improvement pathway is **reflective** — routed through a self-representation — or not. Most systems in [agent-memory-systems](../agent-memory-systems/README.md) are bids at the reflective kind: mine the traces, write the lesson down, load it next time.
+A [self-improving system](./definitions/self-improving-system.md) makes operative changes to its own behavior-determining organization in response to evidence about an improvement objective. The definition is deliberately broad — a weight-level learner qualifies, and so does a dev team. The distinction that carries the design information is whether the improvement pathway is **reflective** — routed through a self-representation — or not. Most systems in [agent-memory-systems](../agent-memory-systems/README.md) mine their traces for lessons and load them into later runs — a bid at the reflective kind that succeeds only when the loaded lessons function as a representation of the system's own behavior, not just accumulated knowledge.
 
 ## Why reflection might pay
 
@@ -20,6 +20,8 @@ The case for reflective pathways is a four-step chain; only the first step is ar
 4. The standing discount: retrieval is best-effort, and a lesson that never surfaces contributes nothing — [retrieval failure is reflection failure](./retrieval-failure-is-reflection-failure.md).
 
 ## The four gradings
+
+Since membership is cheap, a system is characterized by where it sits on [four independent gradings](./four-independent-gradings-place-a-self-improving-system.md):
 
 - **Retention form** — operative, cumulative, or addressable. The chain above is this axis's payoff; the machinery is the [reflective system](./definitions/reflective-system.md)'s causally connected self-map.
 - **Coverage** — [reflective coverage is graded across representational forms](./reflective-coverage-is-graded-across-representational-forms.md).
