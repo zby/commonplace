@@ -1,106 +1,119 @@
 ---
-description: "Definition — an improvement loop run on the system itself; reflective and autonomous name the loop's two independent gradings, each reserved for its boundary case"
+description: "Definition — operative, evidence-responsive change to a system's own behavior-determining organization; the central distinction is reflective versus non-reflective self-improvement, pathway-relative"
 type: kb/types/definition.md
 tags: [foundations, computational-model, self-improving-systems]
 ---
 
 # Self-improving system
 
-A **self-improving system** runs an [improvement loop](../an-improvement-loop-requires-search-evaluation-and-operative-retention.md) — search, evaluation, operative retention — *on itself*, evaluating candidate changes against an **improvement objective**.
+A **self-improving system** makes operative changes to its own behavior-determining organization, where those changes are causally responsive to evidence bearing on an **improvement objective**.
 
-*On itself* means the object of change is the system's own behavior-determining structure — its organization, its artifacts, its rules — not an external work product. A compiler that optimizes programs is not self-improving; a compiler pipeline that rewrites its own optimizer is. This is Ashby's two-loop distinction: operating a system is one loop, modifying the system that operates is another.
+*Its own* means the object of change is the system's behavior-determining structure — its organization, its artifacts, its rules — not an external work product. A compiler that optimizes programs is not self-improving; a compiler pipeline that rewrites its own optimizer is. This is Ashby's two-loop distinction: operating a system is one loop, modifying the system that operates is another.
 
-Two independent properties grade the category without deciding membership, and each has a reserved boundary term:
+*Operative* means the change persists and acquires a consumer, a channel, and a force, in [behavioral authority](./behavioral-authority.md) terms — a transient compensation, or a change nothing ever acts on, does not qualify.
 
-- **Reflection** — does the loop run *through* a causally connected self-representation? **Reflective self-improving system** is reserved for a loop whose retained changes land in a representation the system also reads.
-- **Autonomy** — how much of the loop runs without a person? **Autonomous self-improving system** is reserved for a declared boundary containing no human component.
+*Responsive to evidence* can be realized in two ways, and the definition requires either, not both:
 
-The declared boundary may contain humans. A system whose search and evaluation are performed by people is still a self-improving system; it is simply not an autonomous one. And a system that retains improvement in an opaque substrate — a parameter setting, model weights — is still a self-improving system; it is simply not a reflective one.
+- **Direct determination.** Evidence determines the update itself, as in gradient-, reward-, error-, or viability-driven adaptation: the update rule computes the change from the evidence, and every update is adopted.
+- **Evaluation and selection.** Evidence is used to evaluate candidate changes and select among them, with the possibility that a candidate is not adopted.
 
-## What has to hold
+A separately represented candidate, evaluator, rejection decision, or acceptance gate is therefore **not** required by the base definition. What is required is the objective:
 
-- **Search.** Something brings a candidate change into consideration — notices the problem, picks the target, generates the candidate.
-- **Evaluation against an improvement objective.** Something can *reject* the candidate, on a standard that says what would make the system better. An unconditional trigger is not an evaluator.
-- **Operative retention.** The accepted change acquires a consumer, a channel, and a force, in [behavioral authority](./behavioral-authority.md) terms.
+> An improvement criterion is required semantically; an explicit evaluator is not required architecturally.
 
-That is the whole membership criterion: the loop, aimed. Each function has a weakest viable form, and the floor is occupied. [Ashby's Homeostat](../../sources/ashby-design-for-a-brain-ultrastability.md) searches by random draw, evaluates with a one-bit viability test, and retains by equilibrium — and it modifies its own organization against a standard that can reject, so on this definition it is a self-improving system: minimal, non-reflective, and fully autonomous. What it conspicuously lacks — accumulation — is what the reflective reserved term marks, not what membership requires.
+There must be something the evidence *bears on* — a loss function, a reward channel, viability bounds, a test suite, a maintainer's standard — or the changes are merely caused, not improvement-directed. But that criterion need not be implemented as a component that judges candidates. [Ashby's Homeostat](../../sources/ashby-design-for-a-brain-ultrastability.md) has no evaluator anywhere in its mechanism: its criterion — keeping the essential variables within viable bounds — is what the physical dynamics respond to, and the surviving configuration is retained by equilibrium, not by anything's endorsement. A policy improved by self-play has no acceptance gate: its criterion is the objective the update rule climbs. Both are self-improving systems, minimal and paradigmatic respectively, and neither contains a part whose job is to reject.
 
-## The improvement objective, and what acceptance establishes
+## The central distinction: reflective versus non-reflective
 
-The improvement objective is the standard the evaluator applies: the criterion against which a candidate can *fail*. It is what separates an improvement loop from a mere change loop, and it need not be formal — a proof obligation, a test suite, a validator, a rubric, or a maintainer's judgment all qualify, so long as some possible result is rejection.
+Self-improvement divides by *how the change reaches the operative substrate*, and this is the distinction the vocabulary is organized around:
 
-What acceptance establishes is narrower than it looks:
+- **Reflective self-improvement** — the relevant change is mediated through a writable, causally connected self-representation of the aspect being changed. The machinery is [reflection plus intercession](./reflective-system.md): the change lands in an artifact the system also reads as a representation of itself, so what was retained is available to later work as knowledge rather than only as a setting.
+- **Non-reflective self-improvement** — the operative substrate changes without the change being routed through such a self-representation. Weight updates, retained parameter settings, and equilibrium configurations are the common cases: the change steers later behavior, and nothing inside the system can read it as a claim.
 
-> Evaluator acceptance is an *improvement claim*, not evidence that improvement occurred.
+The distinction is **pathway- and aspect-relative, not a partition of systems**. One system may improve some aspects reflectively and others non-reflectively: an agent platform that fine-tunes its model on its own trajectories (non-reflective) while also revising its own skill files and routing rules (reflective) is doing both at once, and a placement that assigns the whole system one label loses exactly the information that matters. Attribute the property to a named improvement pathway or aspect; a system-level attribution is shorthand for the pathways under discussion.
 
-The oracle certifies that the candidate met the criterion it applied. It does not certify that the system got better — the criterion may be wrong, partial, or measuring the wrong thing, and [oracles are graded precisely because they differ in what they can establish](../oracle-strength-spectrum.md). So a self-improving system is one that *aims* at improvement and can be wrong about it. The objective makes the loop improvement-directed; only outcomes make it improving.
+Neither side is a membership test. A weight-level learner is fully a self-improving system; so is a maintained codebase whose changes all pass through prose and code the team reads. What the reflective side buys is not membership and not even compounding — parametric loops compound — but *addressability*: retention that later rounds can inspect, criticize, selectively revise, and transfer. That thesis has content and stays contestable rather than definitional; it lives in [reflection buys addressability, not compounding](../reflection-buys-addressability-not-compounding.md). And the machinery alone delivers nothing: a Smalltalk image has reflection maximally — the compiler editable with the compiler — and left alone it improves nothing for a decade, because nothing in it responds to evidence about an objective. Put the programmer inside the declared boundary and the pathway closes, reflectively.
 
-## Reflective self-improving system
+## The proposal-selection improvement loop
 
-The reserved term for a loop that runs *through* the system's own self-representation: retention lands in an artifact the system also reads, so each accepted change is available to later rounds of search and evaluation as knowledge rather than as a setting.
+One architecture for evidence-responsiveness is important enough to carry a reserved name. In a **proposal-selection improvement loop**, candidate changes are generated, evaluated with a possibility of non-adoption, and selectively made operative. [Such a loop requires search, evaluation, and operative retention](../a-proposal-selection-loop-requires-search-evaluation-and-retention.md): something brings a candidate into consideration, something can *reject* it against the improvement objective, and the accepted change acquires behavioral authority.
 
-The machinery is [reflection plus intercession](./reflective-system.md): a causally connected self-representation that processes inside the boundary can write, not only read. The machinery alone delivers nothing — a Smalltalk image has it maximally, the compiler editable with the compiler, and left alone it improves nothing for a decade, because nothing in it performs search or evaluation. Put the programmer inside the declared boundary and Smalltalk-plus-programmer may well be a reflective self-improving system: the loop closes, and it closes through a self-representation.
+This is a subtype, not the definition — but it is where a distinctive body of machinery and risk lives, because it is the architecture in which the improvement criterion *is* implemented as an evaluator:
 
-Reflection is deliberately *not* part of the membership criterion, for two reasons. First, similarity: the field's central cases include loops that retain improvement in weights — a policy improved by self-play, an agent fine-tuned on its own trajectories — and a definition that excludes them by construction would fight every source that uses the term. Second, honesty about what is claim and what is stipulation: the argument for caring about reflection — that only retention through a readable representation is inspectable, criticizable, and transferable — is a thesis with content, and it should stay contestable rather than become true by definition. It lives in [reflection buys addressability, not compounding](../reflection-buys-addressability-not-compounding.md).
+- **Oracle** is the shorthand for whatever supplies the evaluator's evidence or judgment — proof, test, validator, measurement, rubric, model judge, human review — and [oracles are graded by what their acceptance can establish](../oracle-strength-spectrum.md).
+- Rejection is what makes the gate a gate: an unconditional trigger is not an evaluator, and search and evaluation fail asymmetrically, [since false-positive generation is filtered while false-positive acceptance becomes operative](../false-positive-generation-is-filtered-before-retention.md).
+- The gate is also where unattended operation is bounded: [the boundary of automation is the boundary of verification](../the-boundary-of-automation-is-the-boundary-of-verification.md), and [warranted autonomy is bounded by oracle reach](../warranted-autonomy-is-bounded-by-oracle-reach.md).
+
+The [Gödel machine](../goedel-machines-are-a-proof-governed-case-of-self-modification.md) is a proposal-selection loop under the strongest available oracle; [Commonplace](../../reference/commonplace-as-a-reflective-system.md) is one with humans at search and the judgment-heavy evaluation. Direct-determination self-improvers stand outside the subtype: a gradient step is never rejected, so the subtype's gate vocabulary does not describe them — which is a reason to name the subtype, not a reason to read them out of the category.
+
+## The improvement objective, and what responsiveness establishes
+
+The improvement objective is what the evidence bears on: the standard that makes the changes improvement-*directed* rather than merely caused. It need not be formal — a proof obligation, a loss function, viability bounds, a test suite, a rubric, or a maintainer's judgment all qualify.
+
+What responsiveness establishes is narrower than it looks:
+
+> Evidence-responsiveness makes a system improvement-directed; only outcomes make it improving.
+
+In a proposal-selection loop this takes the familiar form — evaluator acceptance is an *improvement claim*, not evidence that improvement occurred, because the criterion the oracle applied may be wrong, partial, or measuring the wrong thing. The direct-determination form is the same point without the gate: a learner faithfully descending a mis-specified loss is exactly as improvement-directed and exactly as capable of getting worse. A self-improving system is one that *aims* at improvement and can be wrong about it.
 
 ## Autonomous self-improving system
 
-Autonomy asks a different question: of search, evaluation, and retention, how much runs without a person? It is assessed function by function against the declared boundary, and it grades a self-improving system without deciding whether it is one. A maintained codebase with its dev team sits at the zero end and is genuinely a self-improving system, human-inclusive and fully un-autonomous — [which is cheap to satisfy, and why bare classification discriminates little](../human-inclusive-boundaries-make-reflection-cheap.md).
+Autonomy asks a different question: how much of the improvement pathway runs without a person? It is assessed pathway by pathway against a declared boundary, and it grades a self-improving system without deciding whether it is one. The declared boundary may contain humans: a maintained codebase with its dev team is genuinely a self-improving system, human-inclusive and fully un-autonomous — [which is cheap to satisfy, and why bare classification discriminates little](../human-inclusive-boundaries-make-reflection-cheap.md).
 
-**Autonomous self-improving system** is reserved for the case where the declared boundary contains no human component: search, evaluation, and retention all run without a person. Moving the boundary moves the reading, which is why the boundary must be declared before the grading means anything. Note that bare autonomy is also cheap at the floor — the Homeostat runs unattended — so the attribution that discriminates is not autonomy but *warranted* autonomy, and the interesting occupants are composites: the Gödel machine is reflective and autonomous under the strongest available oracle; Commonplace is reflective and human-inclusive.
+**Autonomous self-improving system** is reserved for the case where the declared boundary contains no human component. Moving the boundary moves the reading, which is why the boundary must be declared before the grading means anything. Bare autonomy is cheap at the floor — the Homeostat runs unattended — so the attribution that discriminates is not autonomy but *warranted* autonomy, and the interesting occupants are composites: the Gödel machine's improvement pathway is reflective and autonomous under the strongest available oracle; Commonplace's is reflective and human-inclusive.
 
-Autonomy *can* be turned up at will — which is the trap. Two ways of automating an evaluation look alike and are not.
-
-Remove the evaluator, replacing it with an unconditional accept, and there is no evaluator: nothing can be rejected, the loop does not close, and the system drops out of the category into plain self-modification. That is a **category** failure.
-
-Weaken the evaluator — a soft rubric, a model judge, a shallow test — and the loop closes exactly as before. A fallible evaluator still rejects some candidates, so it evaluates; the system is fully autonomous at that gate and fully self-improving. It is simply wrong more often, and its errors are the ones that survive, [since false-positive acceptance becomes operative](../false-positive-generation-is-filtered-before-retention.md). That is a **quality** failure, and it leaves the system inside the category, degrading.
-
-So what an oracle bounds is not autonomy but **warranted autonomy**: how far the loop can run unattended and still be trusted. [The boundary of automation is the boundary of verification](../the-boundary-of-automation-is-the-boundary-of-verification.md) marks that ceiling, while [warranted autonomy is bounded by oracle reach](../warranted-autonomy-is-bounded-by-oracle-reach.md). Unwarranted autonomy is always available and always cheap.
+In a proposal-selection loop, autonomy has a trap worth naming, because two ways of automating the gate look alike and are not. *Remove* the evaluator — replace it with an unconditional accept — and the selection architecture is gone; whether the system is still self-improving then depends on whether evidence-responsiveness survives elsewhere in the pathway (an evidence-driven generator can carry it), and if nothing responds to evidence the system drops to plain self-modification. *Weaken* the evaluator — a soft rubric, a model judge, a shallow test — and the loop closes exactly as before: a fallible evaluator still rejects some candidates, so the system stays fully self-improving. It is simply wrong more often, and its errors are the ones that survive, [since false-positive acceptance becomes operative](../false-positive-generation-is-filtered-before-retention.md). The first is an architecture change; the second is a quality failure that leaves the system inside the category, degrading. Unwarranted autonomy is always available and always cheap.
 
 ## Exclusions
 
-**Self-improving is not self-modifying.** A blind, accidental, or unconditional rewrite changes later behavior without applying any criterion. It is self-modification, and it closes no loop.
+**Self-improving is not self-modifying.** A blind, accidental, or unconditional rewrite changes later behavior without being responsive to any evidence bearing on an objective. It is self-modification with no direction.
 
-**Self-improving is not regulation.** A thermostat changes its environment, not its organization: the setpoint, hysteresis band, and switching rule never change, so no candidate change to the system ever exists for an evaluator to reject or for retention to keep. Switching the heater on is transient control output, not a retained change. This is Ashby's own line, drawn with this example — the thermostat is his canonical regulator, and ultrastability, the second loop that rewires the machine's own parameters when regulation fails, is exactly what he added to get adaptation. The contrast that earns membership: a *learning* thermostat that revises its own setpoint schedule from occupancy feedback is inside the category — it has the second loop, an objective that can reject a schedule change, and a retained schedule that persists and steers. It is autonomous either way; whether it is *reflective* depends on where the learning lands. A legible setpoint schedule the controller consults is a readable artifact — modestly addressable retention. In the dominant implementation the learning lands in opaque weights, and the device is then a non-reflective self-improving system: [compounding without addressability](../reflection-buys-addressability-not-compounding.md), the household instance of what is now the dominant paradigm of learning. The plain thermostat and the learning thermostat sit on opposite sides of the membership line, with the [Homeostat](../../sources/ashby-design-for-a-brain-ultrastability.md) just above the floor — and the reflective grading cuts *across* the learning thermostat, by representational form.
+**Self-improving is not regulation.** A thermostat changes its environment, not its organization: the setpoint, hysteresis band, and switching rule never change, so there is no retained change to the system for evidence to have shaped. Switching the heater on is transient control output. This is Ashby's own line, drawn with this example — the thermostat is his canonical regulator, and ultrastability, the second loop that rewires the machine's own parameters when regulation fails, is exactly what he added to get adaptation. The contrast that earns membership: a *learning* thermostat that revises its own setpoint schedule from occupancy feedback is inside the category — its organization changes, and the change is driven by evidence bearing on an objective. It is autonomous either way; whether its self-improvement is *reflective* depends on where the learning lands. A legible setpoint schedule the controller consults is a readable artifact — a reflectively improved aspect. In the dominant implementation the learning lands in opaque weights, and the pathway is then non-reflective: [compounding without addressability](../reflection-buys-addressability-not-compounding.md), the household instance of the dominant paradigm of learning. The plain thermostat and the learning thermostat sit on opposite sides of the membership line — and the reflective distinction cuts *across* the learning thermostat, by representational form.
 
-**Self-improving is not reflective.** A loop that retains improvement in an opaque substrate is inside the category; the reserved term marks the case where retention is also readable. Refusing the name to a weight-level learner is a reflection reading, not a category one.
+**Self-improving does not require a gate.** Refusing the name to a gradient learner, or to the Homeostat, because nothing in it represents candidates or performs rejection demands the proposal-selection architecture, which is a subtype. The base definition asks for evidence-responsiveness, which direct determination satisfies.
 
-**Self-improving is not autonomous.** The two are independent, and conflating them is what the reserved term exists to prevent. A human-inclusive loop is self-improving; only a boundary with no human in it is autonomously so.
+**Non-reflective is not non-member.** A pathway that retains improvement in an opaque substrate is inside the category; the reflective/non-reflective distinction classifies pathways, not membership.
 
-**Self-improving names the loop, not the outcome.** Membership is earned by how the system is built — a loop, aimed at an objective, running on the system itself. Nothing in that guarantees the objective was the right one, or that the oracle could tell. A system can run its loop faithfully for years and decline.
+**Self-improving is not autonomous.** The two are independent. A human-inclusive pathway is self-improving; only a boundary with no human in it is autonomously so.
 
-**A weak oracle is not a broken loop.** An inadequate evaluator still rejects things, so the loop still closes. What it costs is trust, not membership.
+**Self-improving names the direction, not the outcome.** Membership is earned by how the system is built — operative change, responsive to evidence, aimed at an objective. Nothing in that guarantees the objective was the right one, or that the evidence could tell. A system can respond to its evidence faithfully for years and decline.
+
+**A weak oracle is not a broken loop.** Within the proposal-selection subtype, an inadequate evaluator still rejects things, so the loop still closes. What it costs is trust, not membership.
 
 ## Misuse Cases
 
-- Calling a system self-improving because it can modify itself, without identifying what performs search and what could reject a candidate.
-- Calling a system self-improving because it "adapts" in the everyday sense — responds, compensates, regulates. First-order control changes the environment, not the system; the loop this definition names is the second-order one.
-- Refusing the name to a loop because a human performs part of it — that is an autonomy reading, not a category one.
-- Refusing the name to a loop because what it retains is opaque — that is a reflection reading, not a category one.
-- Treating **reflective self-improving system** as the definition rather than the reserved boundary term, which re-smuggles the addressability thesis into membership.
+- Calling a system self-improving because it can modify itself, without identifying the evidence channel and the objective the evidence bears on.
+- Calling a system self-improving because it "adapts" in the everyday sense — responds, compensates, regulates. First-order control changes the environment, not the system; membership needs a retained change to the system's own organization.
+- Refusing the name because the system has no explicit evaluator, candidate representation, or acceptance gate — that demands the proposal-selection subtype's architecture, not the definition.
+- Refusing the name because a human performs part of the pathway — that is an autonomy reading, not a category one.
+- Refusing the name because what is retained is opaque — that is a reflective/non-reflective reading of one pathway, not a category one.
+- Assigning a whole system a single reflective or non-reflective label when its improvement pathways differ — the distinction is pathway-relative.
+- Treating the proposal-selection improvement loop as the definition rather than a named subtype, which re-smuggles an architecture into semantics.
 - Reporting an autonomy grade without declaring the boundary it was assessed against.
-- Reading a weak oracle as a broken loop, or a broken loop as a weak oracle: the first is still self-improving and less trustworthy, the second is not self-improving at all.
-- Presenting an autonomy gain as an improvement, when what was automated was the *judgment* and not the verification behind it.
-- Treating an evaluator's acceptance as evidence that the change improved the system.
-- Treating reflection or intercession as the property, rather than as the machinery one grading of the property runs on.
+- Treating evidence-responsiveness — or, in the subtype, an evaluator's acceptance — as evidence that the change improved the system.
+- Treating reflection or intercession as the property, rather than as the machinery the reflective pathway runs through.
 
 ## Provenance and departures
 
-An earlier revision of this definition built the self-representation requirement into membership — "runs an adaptation loop on itself, *through its own writable, causally connected self-representation*." That narrowing was retired in favor of the reserved term, on explication grounds: it failed the similarity criterion (the literature's central cases — parametric self-improvers — fell outside it by construction), and it immunized a substantive thesis by making it definitional. The thesis survives as a claim, where it can be argued with: [reflection buys addressability, not compounding](../reflection-buys-addressability-not-compounding.md). The move mirrors how this definition already treated autonomy: grade the property, reserve a compound term for its boundary case, and keep membership broad.
+Two narrowings have been retired from this definition, both on explication grounds.
+
+The first revision built the self-representation requirement into membership — "runs an adaptation loop on itself, *through its own writable, causally connected self-representation*." That failed the similarity criterion (the literature's central cases — parametric self-improvers — fell outside it by construction) and immunized a substantive thesis by making it definitional. The thesis survives as a claim, where it can be argued with: [reflection buys addressability, not compounding](../reflection-buys-addressability-not-compounding.md).
+
+The second revision retired the search–evaluation–retention loop from membership. The earlier definition required an evaluation that could *reject*, which admitted direct evidence-driven adapters — gradient learners, the Homeostat — only by stretching "evaluation" over mechanisms that contain no evaluator, and it read an architecture (the gate) into the semantics of the term (the criterion). Membership now asks for evidence-responsive operative change; the gate architecture is preserved intact as the [proposal-selection improvement loop](../a-proposal-selection-loop-requires-search-evaluation-and-retention.md) subtype, where the search, evaluation, oracle, and rejectability material applies with full force. The central distinction moves to reflective versus non-reflective self-improvement, stated pathway-relative — which is also where the first revision's reserved term lands: it now names one side of the main distinction rather than a boundary case.
 
 ---
 
 Relevant Notes:
 
-- [An improvement loop requires search, evaluation, and operative retention](../an-improvement-loop-requires-search-evaluation-and-operative-retention.md) — grounds: the three functions the loop must accomplish, and why each is required
-- [Reflection buys addressability, not compounding](../reflection-buys-addressability-not-compounding.md) — extends: the thesis the reflective reserved term marks — what retention through a readable self-representation adds, and what compounds without it
-- [Reflective system](./reflective-system.md) — grounds: the causally connected self-representation, and the intercession capability, that the reflective reserved term requires
+- [A proposal-selection improvement loop requires search, evaluation, and operative retention](../a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — extends: the named subtype where the improvement criterion is implemented as an evaluator, and the three functions that architecture requires
+- [Reflection buys addressability, not compounding](../reflection-buys-addressability-not-compounding.md) — extends: the thesis behind the central distinction — what routing a change through a readable self-representation adds, and what compounds without it
+- [Reflective system](./reflective-system.md) — grounds: the causally connected self-representation, and the intercession capability, that reflective self-improvement routes through
 - [Human-inclusive boundaries make reflection cheap; autonomy is the discriminating gradient](../human-inclusive-boundaries-make-reflection-cheap.md) — grounds: why the machinery is nearly free, and why bare classification discriminates little
-- [False-positive generation is filtered; false-positive acceptance becomes operative](../false-positive-generation-is-filtered-before-retention.md) — extends: why false-positive acceptance is the dangerous evaluation failure
-- [The boundary of automation is the boundary of verification](../the-boundary-of-automation-is-the-boundary-of-verification.md) — mechanism: the ceiling on autonomous evaluation
+- [False-positive generation is filtered; false-positive acceptance becomes operative](../false-positive-generation-is-filtered-before-retention.md) — extends: the subtype's asymmetry — why false-positive acceptance is the dangerous evaluation failure
+- [The boundary of automation is the boundary of verification](../the-boundary-of-automation-is-the-boundary-of-verification.md) — mechanism: the ceiling on autonomous evaluation in the subtype
 - [Warranted autonomy is bounded by oracle reach](../warranted-autonomy-is-bounded-by-oracle-reach.md) — mechanism: the oracle limit on unattended evaluation that remains trustworthy
 - [Oracle strength spectrum](../oracle-strength-spectrum.md) — grounds: what an evaluator's acceptance can and cannot establish, which is why acceptance is only an improvement claim
-- [Behavioral authority](./behavioral-authority.md) — defined-in: the consumer, channel, and force that operative retention requires
-- [Gödel machines are a proof-governed case of reflective self-modification](../goedel-machines-are-a-proof-governed-case-of-self-modification.md) — exemplifies: the reflective and autonomous corner, and what the proof gate costs
-- [Commonplace as a reflective system](../../reference/commonplace-as-a-reflective-system.md) — evidence: a reflective, human-inclusive occupant, with humans at search and the judgment-heavy evaluation
-- [Ashby, Design for a Brain — ultrastability](../../sources/ashby-design-for-a-brain-ultrastability.md) — exemplifies: the floor of the category — a minimal, non-reflective, autonomous occupant that retains without accumulating
+- [Behavioral authority](./behavioral-authority.md) — defined-in: the consumer, channel, and force that operative change requires
+- [Gödel machines are a proof-governed case of reflective self-modification](../goedel-machines-are-a-proof-governed-case-of-self-modification.md) — exemplifies: a reflective, autonomous proposal-selection loop under the strongest available oracle
+- [Commonplace as a reflective system](../../reference/commonplace-as-a-reflective-system.md) — evidence: a reflective, human-inclusive proposal-selection loop, with humans at search and the judgment-heavy evaluation
+- [Ashby, Design for a Brain — ultrastability](../../sources/ashby-design-for-a-brain-ultrastability.md) — exemplifies: the floor of the category — viability-driven, non-reflective self-improvement with no evaluator anywhere in the mechanism

@@ -13,7 +13,7 @@ It is a comparison case, not a foundation: it realizes the reflective change loo
 
 ## The change loop, formally realized
 
-The architecture maps onto the [search, evaluation, and retention](./an-improvement-loop-requires-search-evaluation-and-operative-retention.md) decomposition:
+The architecture is a [proposal-selection improvement loop](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — candidates generated, evaluated with a possibility of non-adoption, selectively made operative — and maps onto its search, evaluation, and retention decomposition:
 
 | Reflective change function | Gödel-machine realization |
 |---|---|
@@ -49,7 +49,7 @@ The axis separates two dimensions a single [oracle-strength spectrum](./oracle-s
 Relevant Notes:
 
 - [Self-improving system](./definitions/self-improving-system.md) — exemplifies: the reflective and autonomous corner of the category — a boundary with no human in it, and what that costs
-- [An improvement loop requires search, evaluation, and operative retention](./an-improvement-loop-requires-search-evaluation-and-operative-retention.md) — grounds: the decomposition the architecture is mapped onto above
+- [A proposal-selection improvement loop requires search, evaluation, and operative retention](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — grounds: the decomposition the architecture is mapped onto above
 - [Warranted autonomy is bounded by oracle reach](./warranted-autonomy-is-bounded-by-oracle-reach.md) — exemplifies: warranted autonomy bounded by provability under the formalization
 - [Reflective system](./definitions/reflective-system.md) — contrasts: reflection requires a causally connected self-representation, not a proof gate; the proof is added to reflection, not constitutive of it
 - [A methodology governs its own extension only as far as it settles the meta-decisions it raises](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md) — extends: gated goal change demonstrates that an acceptance rule can govern rewrites of itself, while exposing the price

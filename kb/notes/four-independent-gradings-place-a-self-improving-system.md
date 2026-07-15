@@ -7,7 +7,7 @@ tags: [foundations, self-improving-systems]
 
 # Four independent gradings place a self-improving system
 
-Membership in the [self-improving system](./definitions/self-improving-system.md) category is deliberately cheap. The definition asks only for the loop, run on the system itself, aimed at an objective that can reject — and both of its graded properties are free at the bare end: [a human-inclusive boundary makes reflection nearly universal](./human-inclusive-boundaries-make-reflection-cheap.md) among maintained systems, and the Homeostat occupies the autonomy floor with no human anywhere. So the classification carries little design information on its own. The information is in where a system sits along four gradings, each answering a different question, each movable without the others.
+Membership in the [self-improving system](./definitions/self-improving-system.md) category is deliberately cheap. The definition asks only for operative change to the system's own organization, responsive to evidence bearing on an improvement objective — and both of its graded properties are free at the bare end: [a human-inclusive boundary makes reflection nearly universal](./human-inclusive-boundaries-make-reflection-cheap.md) among maintained systems, and the Homeostat occupies the autonomy floor with no human anywhere. So the classification carries little design information on its own. The information is in where a system sits along four gradings, each answering a different question, each movable without the others.
 
 - **Retention form — how is improvement held?** Operative, cumulative, or addressable, [since reflection buys addressability, not compounding](./reflection-buys-addressability-not-compounding.md). Free end: any retention that steers. Costly end: retention the loop can read, criticize, selectively revise, and transfer.
 - **Coverage — what is represented?** Claimed per representational form and operation depth, [since reflective coverage is graded across representational forms](./reflective-coverage-is-graded-across-representational-forms.md). Free end: some behavior-bearing form represented somewhere. Costly end: coverage of every form the behavior spans, and of the mappings between them.
@@ -22,7 +22,7 @@ A system can widen one axis without touching the others: widen coverage while ke
 
 The pattern repeats across all four axes, and it is the reason the gradings rather than the membership carry the information. The free half names a capability and is nearly universal: *it retains*, *it is represented*, *it has answers*, *no human runs it*. The costly half names what can be trusted or built on: *addressable*, *covered per form*, *settled*, *warranted*. A report of the free half is close to no information; assessment should ask for the costly half by name.
 
-This is also why the [definition](./definitions/self-improving-system.md) reserves compound terms (*reflective*, *autonomous* self-improving system) instead of baking any axis into membership: the axes are where systems differ, and folding one into the category would spend the vocabulary's discriminating power on a boundary that was never the interesting one.
+This is also why the [definition](./definitions/self-improving-system.md) keeps every axis out of membership: the reflective/non-reflective distinction is stated pathway-relative rather than as a membership test, autonomy is graded against a declared boundary, and the gate architecture is scoped to the proposal-selection subtype. The axes are where systems differ, and folding one into the category would spend the vocabulary's discriminating power on a boundary that was never the interesting one.
 
 ## Open Questions
 
@@ -33,7 +33,7 @@ This is also why the [definition](./definitions/self-improving-system.md) reserv
 
 Relevant Notes:
 
-- [Self-improving system](./definitions/self-improving-system.md) — defined-in: the base category the gradings place, and the reserved-term design this note motivates
+- [Self-improving system](./definitions/self-improving-system.md) — defined-in: the base category the gradings place, and the keep-membership-cheap design this note motivates
 - [Reflection buys addressability, not compounding](./reflection-buys-addressability-not-compounding.md) — grounds: the retention-form axis and its costly end
 - [Reflective coverage is graded across representational forms](./reflective-coverage-is-graded-across-representational-forms.md) — grounds: the coverage axis
 - [A methodology governs its own extension only as far as it settles the meta-decisions it raises](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md) — grounds: the closure axis

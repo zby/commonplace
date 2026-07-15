@@ -7,9 +7,9 @@ tags: [foundations, computational-model, self-improving-systems]
 
 # Reflection buys addressability, not compounding
 
-What does routing an improvement loop through a self-representation actually add? The tempting answer — compounding, improvement building on improvement — claims too much, because compounding is available without reflection. What reflection uniquely buys is **addressability**: retention that later rounds of the loop can *read*, not merely run on.
+What does routing an improvement pathway through a self-representation — making the self-improvement [reflective rather than non-reflective](./definitions/self-improving-system.md) — actually add? The tempting answer — compounding, improvement building on improvement — claims too much, because compounding is available without reflection. What reflection uniquely buys is **addressability**: retention that later rounds of improvement can *read*, not merely run on.
 
-The claim sharpens by grading retention. A [self-improving system](./definitions/self-improving-system.md) needs operative retention to close its loop at all; the two further grades are where architectures diverge.
+The claim sharpens by grading retention. A [self-improving system](./definitions/self-improving-system.md)'s changes must be operative at all — persisting, with behavioral authority; the two further grades are where architectures diverge.
 
 - **Operative** retention steers: the retained change persists and affects later behavior.
 - **Cumulative** retention compounds: later rounds of search build on what earlier rounds retained.
@@ -49,16 +49,16 @@ The two architectures trade opposite guarantees. Parametric compounding is autom
 
 ## Open Questions
 
-- Whether external interpretability tooling inside a declared boundary can make parametric retention addressable *to the loop itself* — at which point the reflective reserved term would apply to a weight-level learner.
+- Whether external interpretability tooling inside a declared boundary can make parametric retention addressable *to the improving system itself* — at which point a weight-level learner's pathway would count as reflective self-improvement.
 - Whether cumulative-but-opaque loops systematically outrun addressable ones on single-gradient objectives, making the trade quantitative rather than architectural.
 
 ---
 
 Relevant Notes:
 
-- [Self-improving system](./definitions/self-improving-system.md) — defined-in: the category whose reflective reserved term this thesis motivates
+- [Self-improving system](./definitions/self-improving-system.md) — defined-in: the category whose reflective/non-reflective central distinction this thesis motivates
 - [Reflective system](./definitions/reflective-system.md) — defined-in: the causally connected self-representation that addressable retention runs through
-- [An improvement loop requires search, evaluation, and operative retention](./an-improvement-loop-requires-search-evaluation-and-operative-retention.md) — grounds: operative retention as the loop's baseline, which the further grades build on
+- [A proposal-selection improvement loop requires search, evaluation, and operative retention](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — grounds: operative retention as the loop's baseline, which the further grades build on
 - [Retrieval failure is reflection failure](./retrieval-failure-is-reflection-failure.md) — extends: why addressable retention compounds only best-effort, through the discovery wire
 - [Reflective coverage is graded across representational forms](./reflective-coverage-is-graded-across-representational-forms.md) — extends: addressability assessed per representational form and operation depth
 - [Ashby, Design for a Brain — ultrastability](../sources/ashby-design-for-a-brain-ultrastability.md) — evidence: the floor case — retention that steers without compounding, because nothing can read what was kept
