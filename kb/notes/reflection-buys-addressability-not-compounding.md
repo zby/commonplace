@@ -1,5 +1,5 @@
 ---
-description: "A self-improving loop can compound without reflection — parametric learners do — but only retention through a readable self-representation is inspectable, criticizable, and transferable"
+description: "Self-improvement can compound without reflection — parametric learners do — but non-reflective retention gives only indirect handles; reflective retention makes the changed object addressable"
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [foundations, computational-model, self-improving-systems]
@@ -23,23 +23,34 @@ All three grades are occupied, and the middle one is what breaks the equation of
 
 ## Compounding without a representation
 
-A parametric learner — a policy improved by self-play, an agent fine-tuned on its own trajectories — retains improvement in its weights, and its loop is cumulative by construction: the retained weights *parameterize the next round of search*, so each round generates candidates from everything the loop has kept. Improvement genuinely builds on improvement. This is why a definition that requires reflection for self-improvement fails against the field's central cases.
+A parametric learner — a policy improved by self-play, an agent fine-tuned on its own trajectories — retains improvement in its weights, and its pathway is cumulative by construction: the retained weights *parameterize everything the system does next*, so each round of improvement starts from everything the pathway has kept. Improvement genuinely builds on improvement. This is why a definition that requires reflection for self-improvement fails against the field's central cases.
 
 Nor are those cases exotic. Retention in opaque weights is now the dominant paradigm of learning, reaching down from frontier models to a learning thermostat whose occupancy model is a small network rather than a legible schedule. The cumulative-but-opaque grade is the deployed default, not a corner case — which is what makes the grade boundary worth naming at all.
 
-But the weights are the system, not a map of it. Nothing inside the loop can read a weight update, state what it claims, or explain why it was accepted. Three consequences mark the grade boundary:
+But the weights are the system, not a map of it. Nothing inside the pathway can read a weight update, state what it claims, or explain why it was accepted. The honest form of the contrast is comparative, not categorical: opaque retention is not beyond intervention — a bad update can be trained over, rolled back wholesale, probed from outside, steered against — but every one of those handles is indirect, operating on the substrate or the process rather than on the retained change *as an object*.
 
-- **No selective revision.** A bad note can be found and corrected; a bad update can only be trained over or rolled back wholesale.
-- **No transfer.** What the weights learned carries to a new problem only by running the loop again; an addressable artifact can simply be read into a different context.
-- **No re-litigation.** [Evaluator acceptance is an improvement claim, not evidence of improvement](./definitions/self-improving-system.md) — and only an addressable change leaves the claim open to later audit. An opaque acceptance can be measured but never argued with.
+> Non-reflective retention usually provides weaker and more indirect addressability; reflective retention makes the changed object explicit within the system's own operative representation.
 
-So the parametric loop compounds along the single gradient it climbs, and only there.
+So the parametric pathway compounds along the single gradient it climbs, and what it lacks is not the ability to change — it is a handle on each change.
 
-## What addressability changes about the loop
+## What addressability changes about the pathway
 
-Route retention through a readable self-representation and the accepted change lands in an artifact the system also reads. Both remaining functions of the loop can then consume it: retained knowledge narrows later *search* (recorded constraints and rejected alternatives prune the candidate space) and supplies later *evaluation* (a retained criterion is itself an oracle input). Retention stops being a substrate the loop runs on and becomes a premise the loop reasons from.
+Route retention through a readable self-representation and the retained change lands in an artifact the system also reads. Where the pathway is a proposal-selection loop, both remaining functions can consume it: retained knowledge narrows later *search* (recorded constraints and rejected alternatives prune the candidate space) and supplies later *evaluation* (a retained criterion is itself an oracle input). Retention stops being a substrate the pathway runs on and becomes a premise it reasons from.
 
 The two architectures trade opposite guarantees. Parametric compounding is automatic but opaque: the wire is the substrate itself, so nothing can fail to "find" the retained change — and nothing can audit it. Reflective compounding is criticizable but best-effort: the wire is discovery over artifacts, so a retained change compounds only if a later round actually reads it — [retrieval failure is reflection failure](./retrieval-failure-is-reflection-failure.md). Addressability is the *possibility* of compounding as knowledge, not a guarantee of it.
+
+## What reflection may buy — expected advantages, not definitional truths
+
+The definitional content of this note stops at the comparative claim above. What follows is what addressability is *expected* to enable — hypotheses to be tested against built systems, not truths to be inherited from the definition:
+
+- **Selective revision** — a bad change found and corrected in place, without retraining or wholesale rollback.
+- **Explanation** — a change that can be read can carry rationale, and can be explained to a person or another process.
+- **Reuse and transfer** — an explicit change read into a different context, rather than reached by running the loop again.
+- **Reasoning about interactions** — two explicit changes can be checked against each other; two weight updates compose silently.
+- **Criticism and rollback** — per-change and targeted, because [acceptance is an improvement claim](./definitions/self-improving-system.md) that an addressable change leaves open to later audit.
+- **Improvement of the improvement process itself** — an explicit evaluator, criterion, or update rule is [organization](./definitions/behavior-determining-organization.md) like any other, so a reflective pathway can be turned on its own machinery.
+
+Whether reflective pathways actually improve faster, more reliably, or more safely than non-reflective ones is an open empirical question, and nothing above settles it. The comparative claim is about what the architecture makes available, not about what it delivers.
 
 ## Scope
 

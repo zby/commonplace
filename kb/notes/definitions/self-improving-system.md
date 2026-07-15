@@ -8,11 +8,11 @@ tags: [foundations, computational-model, self-improving-systems]
 
 A **self-improving system** makes operative changes to its own behavior-determining organization, where those changes are causally responsive to evidence bearing on an **improvement objective**.
 
-*Its own* means the object of change is the system's behavior-determining structure — its organization, its artifacts, its rules — not an external work product. A compiler that optimizes programs is not self-improving; a compiler pipeline that rewrites its own optimizer is. This is Ashby's two-loop distinction: operating a system is one loop, modifying the system that operates is another.
+*Its own* means the object of change is the system's [behavior-determining organization](./behavior-determining-organization.md) — its parameters, policies, memory, rules, workflows, code — not an external work product. A compiler that optimizes programs is not self-improving; a compiler pipeline that rewrites its own optimizer is. This is Ashby's two-loop distinction: operating a system is one loop, modifying the system that operates is another. And like every reading in this cluster, *its own* is assessed against a declared boundary: a model fine-tuned by an external training pipeline is being improved, while the composite of model plus pipeline self-improves — [the boundary cases make this dependence explicit](../the-self-improving-system-definition-classifies-its-boundary-cases.md).
 
-*Operative* means the change persists and acquires a consumer, a channel, and a force, in [behavioral authority](./behavioral-authority.md) terms — a transient compensation, or a change nothing ever acts on, does not qualify.
+*Operative* means the change affects subsequent operation over the relevant horizon, through a consumer, a channel, and a force — [operative change](./operative-change.md), which does not require permanence; a transient compensation, or a change nothing ever acts on, does not qualify.
 
-*Responsive to evidence* can be realized in two ways, and the definition requires either, not both:
+*Responsive to evidence* — spelled out in [evidence bearing on an improvement objective](./evidence-bearing-on-an-improvement-objective.md) — can be realized in two ways, and the definition requires either, not both:
 
 - **Direct determination.** Evidence determines the update itself, as in gradient-, reward-, error-, or viability-driven adaptation: the update rule computes the change from the evidence, and every update is adopted.
 - **Evaluation and selection.** Evidence is used to evaluate candidate changes and select among them, with the possibility that a candidate is not adopted.
@@ -32,7 +32,20 @@ Self-improvement divides by *how the change reaches the operative substrate*, an
 - **Reflective self-improvement** — the relevant change is mediated through a writable, causally connected self-representation of the aspect being changed. The machinery is [reflection plus intercession](./reflective-system.md), grounded in [Maes's account](../../sources/maes-concepts-and-experiments-computational-reflection-1987.ingest.md) of causal connection — operations on the representation affect the system it represents. The change lands in an artifact the system also reads as a representation of itself, so what was retained is available to later work as knowledge rather than only as a setting.
 - **Non-reflective self-improvement** — the operative substrate changes without the change being routed through such a self-representation. Weight updates, retained parameter settings, and equilibrium configurations are the common cases: the change steers later behavior, and nothing inside the system can read it as a claim.
 
-The distinction is **pathway- and aspect-relative, not a partition of systems**. One system may improve some aspects reflectively and others non-reflectively: an agent platform that fine-tunes its model on its own trajectories (non-reflective) while also revising its own skill files and routing rules (reflective) is doing both at once, and a placement that assigns the whole system one label loses exactly the information that matters. Attribute the property to a named improvement pathway or aspect; a system-level attribution is shorthand for the pathways under discussion.
+One test decides which side a given pathway falls on:
+
+> Is the change mediated through a representation of the affected part that is available to the system's own processes and causally connected to that part?
+
+All three conditions bite. A representation nothing inside the boundary can read is documentation; one that is read but not causally connected is commentary; a causally connected substrate that is not *read as a representation* — weights, a parameter bank — is just the machine.
+
+The distinction is **pathway- and aspect-relative, not a partition of systems**. One system may, at the same time:
+
+- update its model weights non-reflectively;
+- revise an explicit workflow or policy document reflectively;
+- generate and adopt patches to its own code reflectively;
+- adjust low-level controller parameters non-reflectively.
+
+A placement that assigns the whole system one label loses exactly the information that matters. Attribute the property to a named improvement pathway or aspect; a system-level attribution is shorthand for the pathways under discussion.
 
 Neither side is a membership test. A weight-level learner is fully a self-improving system; so is a maintained codebase whose changes all pass through prose and code the team reads. What the reflective side buys is not membership and not even compounding — parametric loops compound — but *addressability*: retention that later rounds can inspect, criticize, selectively revise, and transfer. That thesis has content and stays contestable rather than definitional; it lives in [reflection buys addressability, not compounding](../reflection-buys-addressability-not-compounding.md). And the machinery alone delivers nothing: a Smalltalk image has reflection maximally — the compiler editable with the compiler — and left alone it improves nothing for a decade, because nothing in it responds to evidence about an objective. Put the programmer inside the declared boundary and the pathway closes, reflectively.
 
@@ -47,6 +60,19 @@ This is a subtype, not the definition — but it is where a distinctive body of 
 - The gate is also where unattended operation is bounded: [the boundary of automation is the boundary of verification](../the-boundary-of-automation-is-the-boundary-of-verification.md), and [warranted autonomy is bounded by oracle reach](../warranted-autonomy-is-bounded-by-oracle-reach.md).
 
 The [Gödel machine](../goedel-machines-are-a-proof-governed-case-of-self-modification.md) is a proposal-selection loop under the strongest available oracle; [Commonplace](../../reference/commonplace-as-a-reflective-system.md) is one with humans at search and the judgment-heavy evaluation. Direct-determination self-improvers stand outside the subtype: a gradient step is never rejected, so the subtype's gate vocabulary does not describe them — which is a reason to name the subtype, not a reason to read them out of the category.
+
+## The two dimensions cross
+
+How a change is *produced* and how it *reaches the substrate* are different questions, and every combination is occupied:
+
+| | Direct update | Proposal-selection |
+|---|---|---|
+| **Non-reflective** | A loss or error signal directly updates opaque parameters: gradient fine-tuning, the Homeostat's re-randomization. | Variants of opaque parameters are generated and selected on measured performance: evolutionary strategies, population-based training. |
+| **Reflective** | Failure evidence directly revises an explicit rule, policy, or workflow representation: an agent that unconditionally appends each failure's lesson to a memory file its next run loads. | The system proposes changes to its own code or structured self-model, evaluates them, and adopts the selected ones: the Gödel machine, Commonplace, a self-patching agent gated on its test suite. |
+
+> Search and evaluation describe one way changes are produced; reflection describes the representational route through which the system changes itself.
+
+The examples mark the cells; they are not yet canonical placements. What the crossing exposes is the independence: an evolutionary strategy runs a full generate-and-select loop over a substrate nothing inside it can read, and the memory-appending agent is gateless while writing into the most readable substrate there is. Neither dimension predicts the other.
 
 ## What responsiveness establishes
 
@@ -115,6 +141,9 @@ Relevant Notes:
 - [The boundary of automation is the boundary of verification](../the-boundary-of-automation-is-the-boundary-of-verification.md) — mechanism: the ceiling on autonomous evaluation in the subtype
 - [Warranted autonomy is bounded by oracle reach](../warranted-autonomy-is-bounded-by-oracle-reach.md) — mechanism: the oracle limit on unattended evaluation that remains trustworthy
 - [Oracle strength spectrum](../oracle-strength-spectrum.md) — grounds: what an evaluator's acceptance can and cannot establish, which is why acceptance is only an improvement claim
+- [Behavior-determining organization](./behavior-determining-organization.md) — defined-in: what "its own organization" covers, and why work products are excluded
+- [Operative change](./operative-change.md) — defined-in: persistence over a declared horizon plus a behavioral-authority path, without requiring permanence
+- [Evidence bearing on an improvement objective](./evidence-bearing-on-an-improvement-objective.md) — defined-in: what counts as the evidence, and why no evaluator component is required
 - [Behavioral authority](./behavioral-authority.md) — defined-in: the consumer, channel, and force that operative change requires
 - [Gödel machines are a proof-governed case of reflective self-modification](../goedel-machines-are-a-proof-governed-case-of-self-modification.md) — exemplifies: a reflective, autonomous proposal-selection loop under the strongest available oracle
 - [Commonplace as a reflective system](../../reference/commonplace-as-a-reflective-system.md) — evidence: a reflective, human-inclusive proposal-selection loop, with humans at search and the judgment-heavy evaluation
