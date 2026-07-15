@@ -25,7 +25,7 @@ The system is socio-technical. Four of the five obligations are structural and a
 
 ## Causal connection: an observed trace
 
-The decisive obligation is causal connection, and it needs an observed instance rather than an argument from architecture. The `tag-readme` type (ADR 026) supplies one, end to end.
+Causal connection is the decisive obligation, and it must be shown as an observed instance rather than argued from architecture. The `tag-readme` type (ADR 026) supplies one, end to end.
 
 **The adaptation signal.** An observed strain, not a logged failure: the `index` type was doing two jobs — complete enumeration and introduction to a tag — and the `learning-theory` head had reached 18.8 KB / 55 entries, a size at which completeness could no longer be declared. The strain was interpreted through a claim the KB already held, that [stale indexes are worse than no indexes](../notes/stale-indexes-are-worse-than-no-indexes.md): a marked-but-incomplete head tells an exhaustive consumer to stop looking while members are missing.
 
@@ -40,7 +40,7 @@ def validate_tag_readme(results, parsed, *, run) -> None:
 
 The ADR's numbers appear as constants (`TAG_README_SOFT_BYTES = 8 * 1024`, `TAG_README_HARD_BYTES = 16 * 1024`, `TAG_README_MAX_FANOUT = 7`), and the failure message routes the reader back to the maintenance instruction.
 
-**Evaluation.** Tests landed in the same commit, pinning the contract: `test_complete_mark_fails_on_missing_member`, `test_covered_by_fails_on_uncovered_note`, `test_weight_gates_warn_and_fail`. Evaluation here was tests plus human review and merge. ADR 026 mentions a rename-list review gate for the migration, but no review-system artifact recording that run was located, so the evaluation evidenced here is the test suite and the maintainer's merge.
+**Evaluation.** Tests landed in the same commit, pinning the contract: `test_complete_mark_fails_on_missing_member`, `test_covered_by_fails_on_uncovered_note`, `test_weight_gates_warn_and_fail`. ADR 026 mentions a rename-list review gate for the migration, but no review-system artifact recording that run was located — so the evaluation evidenced here is the test suite plus the maintainer's review and merge, not a logged review-gate run.
 
 **Retention.** `9976a081` migrated fifteen tag indexes to the new type. The marks are live: `kb/notes/tags-README.md`, `discovery-README.md`, `distillation-README.md`, and `artifact-analysis-README.md` carry `complete: true` today.
 
@@ -62,7 +62,7 @@ Both directions of causal connection are therefore observed: a change in the sys
 
 ## The same trace as a self-improving system
 
-Reflection is the machinery; it is not yet the interesting claim. The trace above also discharges [self-improving system](../notes/definitions/self-improving-system.md), and it is worth reading a second time in those terms, because the definition asks for two things the reflective obligations do not: a change to the system's own organization, and evidence-responsiveness toward an objective. Commonplace's improvement pathway takes the [proposal-selection](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) form — candidates are drafted, reviewed with a real possibility of rejection, and selectively merged — so the subtype's decomposition is the right reading grid.
+Reflection is the machinery; it is not yet the interesting claim. The trace above also discharges [self-improving system](../notes/definitions/self-improving-system.md), and it is worth rereading in those terms, since the definition asks for two things the reflective obligations do not: a change to the system's own organization, and evidence-responsiveness toward an objective. Commonplace's improvement pathway takes the [proposal-selection](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) form — candidates are drafted, reviewed with a real possibility of rejection, and selectively merged — so the subtype's decomposition is the right reading grid.
 
 | Requirement | Discharged by |
 |---|---|
@@ -74,7 +74,7 @@ Reflection is the machinery; it is not yet the interesting claim. The trace abov
 
 The improvement objective is the requirement the reflective classification never had to state, and stating it is what makes the loop improvement-*directed* rather than merely change-directed. Note what it does not establish: the validator's acceptance says the marks are consistent, not that the type split made the KB better. That remains an improvement *claim*.
 
-**Autonomy profile.** Search: human. Evaluation: split — mechanical where the constraint is structural, human where it is judgment-heavy. Retention: mechanical once merged, with the merge itself human. So Commonplace is a **human-inclusive, reflective self-improving system** — the loop closes, and it closes through the self-representation — not an autonomous one — and humans remain where no adequate automatable oracle reaches, [since warranted autonomy is bounded by oracle reach](../notes/warranted-autonomy-is-bounded-by-oracle-reach.md).
+**Autonomy profile.** Search: human. Evaluation: split — mechanical where the constraint is structural, human where it is judgment-heavy. Retention: mechanical once merged, with the merge itself human. So Commonplace is a **human-inclusive, reflective self-improving system**, not an autonomous one: the loop closes, and it closes through the self-representation. Humans remain where no adequate automatable oracle reaches, [since warranted autonomy is bounded by oracle reach](../notes/warranted-autonomy-is-bounded-by-oracle-reach.md).
 
 ## Coverage across representational forms: partially demonstrated
 
