@@ -24,7 +24,7 @@ The case for reflective pathways is a four-step chain; only the first step is ar
 - **Retention form** — operative, cumulative, or addressable. The chain above is this axis's payoff; the machinery is the [reflective system](./definitions/reflective-system.md)'s causally connected self-map.
 - **Coverage** — [reflective coverage is graded across representational forms](./reflective-coverage-is-graded-across-representational-forms.md).
 - **Closure** — [a methodology governs its own extension only as far as it settles the meta-decisions it raises](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md).
-- **Autonomy** — who performs each function of the pathway, assessed against a declared system boundary that may include humans, [since human-inclusive boundaries make reflection cheap](./human-inclusive-boundaries-make-reflection-cheap.md). Autonomy itself is nearly free — a thermostat runs with no human in the loop. What costs is **warrant**, trusting what an unattended loop accepts: [warranted autonomy is bounded by oracle reach](./warranted-autonomy-is-bounded-by-oracle-reach.md).
+- **Autonomy** — who performs each function of the pathway, assessed against a declared system boundary that may include humans. Both borders of this axis are trivially reached: with humans inside the boundary, reflection is nearly universal — [human-inclusive boundaries make reflection cheap](./human-inclusive-boundaries-make-reflection-cheap.md) — and with humans removed, autonomy is just as free — Ashby's Homeostat runs with no human anywhere. What costs is **warrant**, trusting what an unattended loop accepts: [warranted autonomy is bounded by oracle reach](./warranted-autonomy-is-bounded-by-oracle-reach.md).
 
 ## Example placements
 
