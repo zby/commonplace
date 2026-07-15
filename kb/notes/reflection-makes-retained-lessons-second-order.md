@@ -17,7 +17,7 @@ The qualifier matters: *marginally* is a claim about the operations available to
 
 ## Second-order retention: lessons about commitments
 
-Route retention through a [causally connected self-representation](./definitions/reflective-system.md) and prior commitments become addressable objects, [since reflection buys addressability, not compounding](./reflection-buys-addressability-not-compounding.md). Then a new lesson can be retained *as an operation on a commitment* rather than alongside it:
+Route retention through a [causally connected self-representation](./definitions/reflective-system.md) and prior commitments become addressable objects, [since reflection buys addressability](./reflection-buys-addressability.md). Then a new lesson can be retained *as an operation on a commitment* rather than alongside it:
 
 - **Rejection** — the theory is discarded, and its entire reach goes with it in one step: every future episode it would have governed is re-opened at once.
 - **Rescoping** — the theory survives with its applicability boundary redrawn: "this holds" becomes "this holds for cases like these", or a boundary found too tight is widened.
@@ -49,7 +49,7 @@ One dependency from the aspect-bounded nature of reflection: rejection requires 
 
 Relevant Notes:
 
-- [Reflection buys addressability, not compounding](./reflection-buys-addressability-not-compounding.md) — grounds: addressable retention is what makes a prior commitment an operable object; this note develops the selective-revision advantage into the first-order/second-order distinction
+- [Reflection buys addressability](./reflection-buys-addressability.md) — grounds: addressable retention is what makes a prior commitment an operable object; this note develops the selective-revision advantage into the first-order/second-order distinction
 - [Addressable hypotheses may reduce target data under structured shifts](./addressable-hypotheses-may-reduce-target-data-under-structured-shifts.md) — extends: stakes the statistical payoff this note supplies the mechanism for
 - [Reflective system](./definitions/reflective-system.md) — defined-in: the causally connected, aspect-bounded self-representation whose represented aspects determine which second-order operations are available
 - [Retrieval failure is reflection failure](./retrieval-failure-is-reflection-failure.md) — mechanism: the retrieval wire that makes artifact commitments bounded-by-default where parametric ones are global-by-default

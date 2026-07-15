@@ -5,7 +5,7 @@ traits: [title-as-claim]
 tags: [foundations, computational-model, self-improving-systems]
 ---
 
-# Reflection buys addressability, not compounding
+# Reflection buys addressability
 
 What does routing an improvement pathway through a self-representation — making the self-improvement [reflective rather than non-reflective](./definitions/self-improving-system.md) — actually add? The tempting answer — compounding, improvement building on improvement — claims too much, because compounding is available without reflection. Reflection's distinctive affordance is stronger, more direct **addressability**: retention that later rounds of improvement can *read*, not merely run on.
 
