@@ -48,7 +48,7 @@ The axis separates two dimensions a single [oracle-strength spectrum](./oracle-s
 
 Relevant Notes:
 
-- [Self-improving system](./definitions/self-improving-system.md) — exemplifies: the autonomous corner of the category — a boundary with no human in it, and what that costs
+- [Self-improving system](./definitions/self-improving-system.md) — exemplifies: the reflective and autonomous corner of the category — a boundary with no human in it, and what that costs
 - [An adaptation loop requires search, evaluation, and operative retention](./an-adaptation-loop-requires-search-evaluation-and-retention.md) — grounds: the decomposition the architecture is mapped onto above
 - [Warranted autonomy is bounded by oracle reach](./warranted-autonomy-is-bounded-by-oracle-reach.md) — exemplifies: warranted autonomy bounded by provability under the formalization
 - [Reflective system](./definitions/reflective-system.md) — contrasts: reflection requires a causally connected self-representation, not a proof gate; the proof is added to reflection, not constitutive of it

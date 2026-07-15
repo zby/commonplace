@@ -14,7 +14,7 @@ For current-state documentation about the live Commonplace system rather than tr
 ## Tag Indexes
 
 - [Foundations](./foundations-README.md) — core theory: contextual competence, bounded context, reach, design methodology, composability
-- [Self-improving systems](./self-improving-systems-README.md) — the loop that improves a system through its own self-representation; reflection is the cheap machinery, autonomy is what earns the name
+- [Self-improving systems](./self-improving-systems-README.md) — the adaptation loop run on the system itself against an improvement objective; reflection and autonomy grade it independently, and warranted autonomy is what costs
 - [Architecture](./architecture-README.md) — how Commonplace is structured and installed: repo layout, control-plane design, file-based storage
 - [Evaluation](./evaluation-README.md) — what works, what doesn't, what needs testing
 - [Learning theory](./learning-theory-README.md) — how systems learn, verify, and improve; covered by seven child tags (enforced), so its README routes rather than enumerates:

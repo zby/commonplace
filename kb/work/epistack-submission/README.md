@@ -6,7 +6,7 @@ Inputs, not competitors: [epistack-competition](../epistack-competition/README.m
 
 **Normative sources** (self-improvement cluster rewritten 2026-07-15; keep submission prose inside their qualified claims):
 
-- The object: [self-improving system](../../notes/definitions/self-improving-system.md) — an adaptation loop run on the system itself, through its own writable self-representation, against an improvement objective. Autonomy is a **separate gradient**, not part of the definition.
+- The object: [self-improving system](../../notes/definitions/self-improving-system.md) — an adaptation loop run on the system itself, against an improvement objective. Reflection and autonomy are **separate gradients**, not part of the definition; *reflective self-improving system* and *autonomous self-improving system* are the reserved boundary terms, and Commonplace claims the first. What reflection buys is [addressability, not compounding](../../notes/reflection-buys-addressability-not-compounding.md).
 - The loop: [an adaptation loop requires search, evaluation, and operative retention](../../notes/an-adaptation-loop-requires-search-evaluation-and-retention.md).
 - The bound: [warranted autonomy is bounded by oracle reach](../../notes/warranted-autonomy-is-bounded-by-oracle-reach.md) and [the boundary of automation is the boundary of verification](../../notes/the-boundary-of-automation-is-the-boundary-of-verification.md).
 - The asymmetry: [false-positive generation is filtered; false-positive acceptance becomes operative](../../notes/false-positive-generation-is-filtered-before-retention.md).
