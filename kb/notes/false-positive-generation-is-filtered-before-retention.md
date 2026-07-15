@@ -7,7 +7,7 @@ tags: [foundations, self-improving-systems]
 
 # False-positive generation is filtered; false-positive acceptance becomes operative
 
-In an [improvement loop](./an-improvement-loop-requires-search-evaluation-and-operative-retention.md), search and evaluation fail in ways that are not symmetric, and the asymmetry is structural rather than incidental.
+In a [proposal-selection improvement loop](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md), search and evaluation fail in ways that are not symmetric, and the asymmetry is structural rather than incidental.
 
 Search sits *upstream of a filter*. A bad candidate — useless, harmful, off-target — reaches evaluation and is rejected. It cost effort and nothing else; it never became operative.
 
@@ -19,7 +19,7 @@ Evaluation *is* the filter. A bad acceptance is not caught by anything downstrea
 
 The asymmetry is between the two kinds of *false positive*. Search produces something that should not have been produced, and the filter catches it. Evaluation passes something that should not have passed, and nothing catches it.
 
-Search's other failures are not filtered, because there is nothing to filter. Search also fails by **omission** — never generating the candidate worth having, choosing the wrong target, stopping too early — and those errors are invisible and permanent. No evaluator recovers them: [evaluation cannot select a candidate that search never reaches](./an-improvement-loop-requires-search-evaluation-and-operative-retention.md). They are not *retained* either, since nothing enters the system; they are simply forgone, and the system cannot tell that they were.
+Search's other failures are not filtered, because there is nothing to filter. Search also fails by **omission** — never generating the candidate worth having, choosing the wrong target, stopping too early — and those errors are invisible and permanent. No evaluator recovers them: [evaluation cannot select a candidate that search never reaches](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md). They are not *retained* either, since nothing enters the system; they are simply forgone, and the system cannot tell that they were.
 
 The precise claim is:
 
@@ -55,6 +55,7 @@ False-positive generation is caught by machinery already running in the loop, at
 
 ## Scope
 
+- The claim is scoped to the proposal-selection subtype of [self-improvement](./definitions/self-improving-system.md) — the architecture that has an acceptance step at all. A direct evidence-driven update pathway (gradient, reward, viability) adopts every update, so its failure surface is the adequacy of the objective and the update rule, not a gate's false positives.
 - The claim assumes evaluation is the terminal filter. If a system adds monitoring or rollback downstream, that is not a counterexample — it is more evaluation, and it inherits the same bound.
 - It holds whether evaluation runs before a candidate becomes operative or after. Post-hoc evaluation changes when the bad change is caught, not whether an unfiltered acceptance is retained.
 - It ranks *what to automate first* under a fixed oracle. It does not say search is easy: [automating KB learning is an open problem](./automating-kb-learning-is-an-open-problem.md), and the judgment-heavy parts of search remain hard for their own reasons.
@@ -63,7 +64,7 @@ False-positive generation is caught by machinery already running in the loop, at
 
 Relevant Notes:
 
-- [An improvement loop requires search, evaluation, and operative retention](./an-improvement-loop-requires-search-evaluation-and-operative-retention.md) — grounds: the loop whose functions this claim distinguishes, and the reach-versus-strength point it extends
+- [A proposal-selection improvement loop requires search, evaluation, and operative retention](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — grounds: the loop whose functions this claim distinguishes, and the reach-versus-strength point it extends
 - [Self-improving system](./definitions/self-improving-system.md) — extends: tells the autonomy gradient which function to climb first, and why the other must be bought
 - [The boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — mechanism: why evaluation is the bounded function and its errors are the permanent ones
 - [Entropy management must scale with generation throughput](./entropy-management-must-scale-with-generation-throughput.md) — evidence: the capacity failure that automated search produces when evaluation does not scale with it
