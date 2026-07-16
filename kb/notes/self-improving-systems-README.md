@@ -33,7 +33,7 @@ Autonomy — how much of the pathway runs without a person — is a fourth thing
 
 - [Ashby's Homeostat](../sources/ashby-design-for-a-brain-ultrastability.md) — the floor: non-reflective, fully autonomous, nothing accumulates.
 - Parametric self-improvers (self-play policies, agents fine-tuned on their own trajectories) — compounding without addressability; the dominant paradigm and the conjecture's comparison baseline.
-- The [Gödel machine](./goedel-machines-are-a-proof-governed-case-of-self-modification.md) — reflective, autonomous, proof-gated: the strongest oracle, paid for in reach.
+- The [Gödel machine](./goedel-machines-are-a-proof-governed-case-of-self-modification.md) — reflective, autonomous, proof-gated: the strongest oracle, paid for in domain.
 - [Commonplace itself](../reference/commonplace-as-a-reflective-system.md) — pathway-mixed: reflective and autonomous where a validator or agent consults an explicit self-representation, non-reflective and human-inclusive where a maintainer notices what's worth fixing or judges the shape of a fix.
 
 Read every claim at its stated strength: the definitions are stipulated and revisable, the reflective advantage is a hypothesis, and whether it holds is the open empirical question the chain above sharpens.
