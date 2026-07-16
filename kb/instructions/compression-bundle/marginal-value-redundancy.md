@@ -39,11 +39,15 @@ Do not flag repetition merely because two sentences use similar words. Flag only
 
 Conclusions get one extra check before WARN: a conclusion may restate the core condition if it turns the mechanism into a stance, a warning, or an operational bet. Warn only when the conclusion merely repeats earlier text or smuggles in an unsupported stronger claim.
 
+**Defensive redundancy is redundancy, not rigor.** A hedge clause that pre-empts an objection an earlier clause already closes does not earn its place by sounding careful — stacking qualifications against every possible misreading is a legal-drafting habit (defense in depth against an adversarial reader), not this KB's register, which states a claim plainly and lets scrutiny happen through review, not through armoring the prose itself. Flag a clause under this gate when the clause before it already entails it (e.g., "a hypothesis to be tested, not a definitional truth" — being a hypothesis to be tested already means it isn't one), or when a passage's closing restatement adds no admission beyond its own opening.
+
 In the review output, report WARN and INFO findings for the chunks that need attention. Do not emit a PASS finding for every chunk inspected. If the gate passes, write one concise PASS summary for the artifact as a whole. If the gate warns, omit passing chunks unless one non-obvious pass prevents a likely false positive.
 
 ## Example (fail)
 
 A note argues throughout that a rule applies only when a verifier is absent. A final `## Scope` section says: "This rule applies where no verifier exists; where a verifier exists, the verifier should decide. Mixed cases sit on a gradient." The gradient phrase is useful, but the standalone section mostly recaps what the note already established. Report WARN and recommend folding the gradient into the earlier mechanism paragraph.
+
+A note writes: "The advantage itself is a hypothesis to be tested against built systems, not a definitional truth." Being a hypothesis to be tested already means it is not a definitional truth; the second clause defends against a misreading the first clause already rules out. Report WARN and recommend cutting the trailing clause.
 
 ## Example (pass)
 
