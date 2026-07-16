@@ -133,7 +133,7 @@ Relevant Notes:
 - [Admitting a human into the boundary trades reflectivity for autonomy](../admitting-a-human-into-the-boundary-trades-reflectivity-for-autonomy.md) — grounds: why a pathway that is reflective under Commonplace's stricter, computational-only reading is thereby also autonomous
 - [False-positive generation is filtered; false-positive acceptance becomes operative](../false-positive-generation-is-filtered-before-retention.md) — extends: the subtype's asymmetry — why false-positive acceptance is the dangerous evaluation failure
 - [The boundary of automation is the boundary of verification](../the-boundary-of-automation-is-the-boundary-of-verification.md) — mechanism: the ceiling on autonomous evaluation in the subtype
-- [Warranted autonomy is bounded by oracle reach](../warranted-autonomy-is-bounded-by-oracle-reach.md) — mechanism: the oracle limit on unattended evaluation that remains trustworthy
+- [Warranted autonomy is bounded by oracle domain](../warranted-autonomy-is-bounded-by-oracle-domain.md) — mechanism: the oracle limit on unattended evaluation that remains trustworthy
 - [Oracle strength spectrum](../oracle-strength-spectrum.md) — grounds: what an evaluator's acceptance can and cannot establish, which is why acceptance is only an improvement claim
 - [Behavior-determining organization](./behavior-determining-organization.md) — defined-in: what "its own organization" covers, and why work products are excluded
 - [Operative change](./operative-change.md) — defined-in: persistence over a declared horizon plus a behavioral-authority path, without requiring permanence

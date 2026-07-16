@@ -1,5 +1,5 @@
 ---
-description: "Nine boundary cases run against the self-improving-system definition — each classifies by the stated criteria alone; the stress they apply falls on boundary declaration, not on the membership clauses"
+description: "Ten boundary cases run against the self-improving-system definition — each classifies by the stated criteria alone; the stress they apply falls on boundary declaration, not on the membership clauses"
 type: kb/types/note.md
 traits: [title-as-claim, has-comparison]
 tags: [foundations, self-improving-systems]
@@ -7,7 +7,7 @@ tags: [foundations, self-improving-systems]
 
 # The self-improving-system definition classifies its boundary cases without ad hoc exceptions
 
-An explication earns its keep by classifying the cases that motivated it *and* the cases built to break it. This note runs nine boundary cases against the [self-improving system](./definitions/self-improving-system.md) definition — operative change to the system's own [behavior-determining organization](./definitions/behavior-determining-organization.md), causally responsive to [evidence bearing on an improvement objective](./definitions/evidence-bearing-on-an-improvement-objective.md) — asking six questions of each: is there [operative](./definitions/operative-change.md) self-change; what is the objective; what evidence affects the change; is the pathway reflective; is it direct-update or proposal-selection; and is it improvement-directed or demonstrably improving.
+An explication earns its keep by classifying the cases that motivated it *and* the cases built to break it. This note runs ten boundary cases against the [self-improving system](./definitions/self-improving-system.md) definition — operative change to the system's own [behavior-determining organization](./definitions/behavior-determining-organization.md), causally responsive to [evidence bearing on an improvement objective](./definitions/evidence-bearing-on-an-improvement-objective.md) — asking six questions of each: is there [operative](./definitions/operative-change.md) self-change; what is the objective; what evidence affects the change; is the pathway reflective; is it direct-update or proposal-selection; and is it improvement-directed or demonstrably improving.
 
 ## The cases
 

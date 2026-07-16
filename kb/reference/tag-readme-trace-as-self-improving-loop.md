@@ -30,7 +30,7 @@ Two of the four rows split rather than land wholly on one side, and the autonomo
 - **Evaluation splits the same way.** The objective-check half is autonomous: because ADR 026 codified the objective into an enforced `complete` mark, the validator falsifies it on every run — validating an ordinary note now fails if a marked README sharing its tags is missing a member (`test_note_target_also_validates_marked_tag_readmes`). No human is consulted for that check. The shape-judgment half stays human: judging that the type split was the right shape is a step no validator can pass on.
 - **Retention is autonomous once the human merge lands.** The constraint rejects future violations by itself, and an agent skips a search by itself; the merge installed the change, but its continued operation is the system's.
 
-So the autonomy reaches wherever a step turns reflective — the agent formulating the candidate, the codified objective-check, the retention that enforces it — while noticing the strain and judging the fix's shape stay human throughout. Humans keep exactly the gates and the framing work where no adequate automatic check or retrievable claim reaches, [since warranted autonomy is bounded by oracle reach](../notes/warranted-autonomy-is-bounded-by-oracle-reach.md).
+So the autonomy reaches wherever a step turns reflective — the agent formulating the candidate, the codified objective-check, the retention that enforces it — while noticing the strain and judging the fix's shape stay human throughout. Humans keep exactly the gates and the framing work where no adequate automatic check or retrievable claim reaches, [since warranted autonomy is bounded by oracle domain](../notes/warranted-autonomy-is-bounded-by-oracle-domain.md).
 
 ---
 
@@ -42,5 +42,5 @@ Relevant Notes:
 - [Admitting a human into the boundary trades reflectivity for autonomy](../notes/admitting-a-human-into-the-boundary-trades-reflectivity-for-autonomy.md) — grounds: why the agent-formulated half of Search counts as reflective and thereby autonomous
 - [Self-improving system](../notes/definitions/self-improving-system.md) — rationale: the definition this trace is read against
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — rationale: the search/evaluation/retention grid used here
-- [warranted autonomy is bounded by oracle reach](../notes/warranted-autonomy-is-bounded-by-oracle-reach.md) — rationale: why the human gates sit where the oracle runs out
+- [warranted autonomy is bounded by oracle domain](../notes/warranted-autonomy-is-bounded-by-oracle-domain.md) — rationale: why the human gates sit where the oracle runs out
 - [stale indexes are worse than no indexes](../notes/stale-indexes-are-worse-than-no-indexes.md) — rationale: the improvement objective the loop aims at

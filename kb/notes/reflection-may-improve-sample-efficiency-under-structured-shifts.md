@@ -35,7 +35,7 @@ Three ledger entries deserve emphasis. Retrieval is a real discount on the expli
 
 The boundary must be drawn honestly: counting the historical evidence that produced the explicit theory as free, while charging the parametric learner for all its training data, biases the comparison before it starts.
 
-And validation has more routes than criticism — proof, simulation, model checking, causal analysis, counterexample generation, targeted experiments. Criticism is the judgment-heavy route whose reliability bounds unattended use, [since warranted autonomy is bounded by oracle reach](./warranted-autonomy-is-bounded-by-oracle-reach.md) — but it is not the only one.
+And validation has more routes than criticism — proof, simulation, model checking, causal analysis, counterexample generation, targeted experiments. Criticism is the judgment-heavy route whose reliability bounds unattended use, [since warranted autonomy is bounded by oracle domain](./warranted-autonomy-is-bounded-by-oracle-domain.md) — but it is not the only one.
 
 ## What would test it
 
@@ -75,7 +75,7 @@ Relevant Notes:
 - [Reflection makes retained lessons second-order: a lesson can reject or rescope a prior commitment](./reflection-makes-retained-lessons-second-order.md) — mechanism: the operations by which a single target observation can trigger a rejection or rescoping instead of a gradient nudge
 - [Retrieval failure is reflection failure](./retrieval-failure-is-reflection-failure.md) — mechanism: the retrieval entry in the explicit pathway's ledger
 - [Codification](./definitions/codification.md) — defined-in: the prose-to-symbolic crossing the explicit pathway's ledger names as its first cost
-- [Warranted autonomy is bounded by oracle reach](./warranted-autonomy-is-bounded-by-oracle-reach.md) — mechanism: why criticism, among the validation routes, is the one bounded by oracle reach
+- [Warranted autonomy is bounded by oracle domain](./warranted-autonomy-is-bounded-by-oracle-domain.md) — mechanism: why criticism, among the validation routes, is the one bounded by oracle domain
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — grounds: one architecture for evaluating, adopting, and correcting an explicit hypothesis
 - [Self-improving system](./definitions/self-improving-system.md) — defined-in: the reflective/non-reflective distinction whose conjectured payoff this note makes falsifiable
 - [Reflective system](./definitions/reflective-system.md) — defined-in: the causally connected self-representation a retained hypothesis must participate in for the conjecture to bear on reflection
