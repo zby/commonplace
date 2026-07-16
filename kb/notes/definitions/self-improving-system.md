@@ -102,15 +102,9 @@ In a proposal-selection loop, autonomy has a trap worth naming, because two ways
 
 ## Misuse Cases
 
-- Calling a system self-improving because it can modify itself, without identifying the evidence channel and the objective the evidence bears on.
-- Calling a system self-improving because it "adapts" in the everyday sense — responds, compensates, regulates. First-order control changes the environment, not the system; membership needs a retained change to the system's own organization.
-- Refusing the name because the system has no explicit evaluator, candidate representation, or acceptance gate — that demands the proposal-selection subtype's architecture, not the definition.
-- Refusing the name because a human performs part of the pathway — that is an autonomy reading, not a category one.
-- Refusing the name because what is retained is opaque — that is a reflective/non-reflective reading of one pathway, not a category one.
 - Assigning a whole system a single reflective or non-reflective label when its improvement pathways differ — the distinction is pathway-relative.
 - Treating the proposal-selection improvement loop as the definition rather than a named subtype, which re-smuggles an architecture into semantics.
 - Reporting an autonomy grade without declaring the boundary it was assessed against.
-- Treating evidence-responsiveness — or, in the subtype, an evaluator's acceptance — as evidence that the change improved the system.
 - Treating reflection or intercession as the property, rather than as the machinery the reflective pathway runs through.
 
 ## Provenance and departures
