@@ -5,7 +5,7 @@ traits: [title-as-claim, has-external-sources]
 tags: [foundations, self-improving-systems]
 ---
 
-# Reflection may reduce target data under structured shifts
+# Reflection may improve sample efficiency under structured shifts
 
 Among the expected advantages of a reflective improvement pathway — hypotheses to be tested against built systems, not definitional truths, [since reflection buys addressability](./reflection-buys-addressability.md) — reuse and transfer is the one that promises a payoff in **sample efficiency**, the field's term for reaching a fixed performance level on fewer training examples, narrowed here to fewer new target observations after a shift. The vocabulary is **learned inductive commitments** and their **reach**, [fixed where reflection makes retained lessons second-order](./reflection-makes-retained-lessons-second-order.md): a commitment shapes how the system generalizes, and reach is the scope it operates over — normally wider than the evidence that produced it, which is Deutsch's point in *The Beginning of Infinity* that a good explanation applies far beyond the problem that produced it. Reach motivates the conjecture; it is not evidence for it, and nothing in the definition settles the statistical comparison this note stakes out.
 
