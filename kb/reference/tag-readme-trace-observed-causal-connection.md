@@ -14,7 +14,7 @@ It began as a strain rather than a logged failure. The `index` type was doing tw
 
 ## Revising the self-representation
 
-The response was to revise the self-representation. Commit `91130f82` added [ADR 026](./adr/026-tag-readme-type-with-completeness-and-coverage-marks.md), which split the type in two and made `complete` an *enforced* mark — the ADR insists the unenforced prose version must never be written, since a trusted-but-stale cache is exactly the failure it guards against. Commit `94769805` then carried that single decision into four forms at once: the prose spec (`kb/types/tag-readme.md`), the JSON schema, the validator (`src/commonplace/lib/validation.py`), and the build-time renderer. The tie between prose and code is not loose — the validator dispatches on the spec's own path, so the spec file *is* the key that turns enforcement on:
+The response was to revise the self-representation, and formulating that response into a specific candidate was not the maintainer's work alone. An agent working in the repository, in Claude Code, retrieved [stale indexes are worse than no indexes](../notes/stale-indexes-are-worse-than-no-indexes.md) as the claim that made sense of the strain and drafted the two-type split around it — one instance of a wider set of candidate-forming mechanisms [surveyed separately](./where-change-candidates-come-from-in-commonplace.md). Commit `91130f82` then added [ADR 026](./adr/026-tag-readme-type-with-completeness-and-coverage-marks.md), which split the type in two and made `complete` an *enforced* mark — the ADR insists the unenforced prose version must never be written, since a trusted-but-stale cache is exactly the failure it guards against. Commit `94769805` then carried that single decision into four forms at once: the prose spec (`kb/types/tag-readme.md`), the JSON schema, the validator (`src/commonplace/lib/validation.py`), and the build-time renderer. The tie between prose and code is not loose — the validator dispatches on the spec's own path, so the spec file *is* the key that turns enforcement on:
 
 ```python
 @type_rule("kb/types/tag-readme.md")
@@ -45,6 +45,7 @@ Relevant Notes:
 
 - [Commonplace as a partially autonomous, reflective self-improving system](./commonplace-as-a-reflective-system.md) — part-of: the classification this trace is the evidence for
 - [The tag-readme trace read as a self-improving loop](./tag-readme-trace-as-self-improving-loop.md) — see-also: the same trace read as an improvement loop
+- [Where change candidates come from in Commonplace](./where-change-candidates-come-from-in-commonplace.md) — part-of: surveys the wider set of candidate-forming mechanisms the agent's drafting work here is one instance of
 - [Reflective system](../notes/definitions/reflective-system.md) — rationale: the causal-connection obligation this trace instantiates
 - [Behavioral authority](../notes/definitions/behavioral-authority.md) — defined-in: names each consumer, channel, and force in the trace
 - [stale indexes are worse than no indexes](../notes/stale-indexes-are-worse-than-no-indexes.md) — rationale: the retained claim the strain was read through

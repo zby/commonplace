@@ -6,7 +6,7 @@ tags: [foundations, computational-model, self-improving-systems]
 
 # Where change candidates come from in Commonplace
 
-[A proposal-selection improvement loop](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) needs search — noticing a problem, generating a candidate — before evaluation or retention can act on anything. [Commonplace as a reflective system](./commonplace-as-a-reflective-system.md) traces one instance of that — a maintainer noticing the `index` type doing two jobs, an agent formulating the fix as ADR 026 — and reads it as human-initiated, agent-assisted. That single trace understates how much of this Commonplace channels through its own mechanisms rather than a maintainer's unaided judgment; this note surveys the wider set.
+[A proposal-selection improvement loop](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) needs search — noticing a problem, generating a candidate — before evaluation or retention can act on anything. [Commonplace as a partially autonomous, reflective self-improving system](./commonplace-as-a-reflective-system.md) traces one instance of that — a maintainer noticing the `index` type doing two jobs, an agent formulating the fix as ADR 026 — and reads Search as split: non-reflective and human where the noticing happened, reflective and autonomous where the agent formulated the candidate. That single trace understates how much of this Commonplace channels through its own mechanisms rather than a maintainer's unaided judgment; this note surveys the wider set.
 
 ## Candidate formulation is channeled through self-representation
 
@@ -30,6 +30,8 @@ None of this runs on rails. The instructions above name conventions to read and 
 
 Relevant Notes:
 
-- [Commonplace as a reflective system](./commonplace-as-a-reflective-system.md) — evidence: the ADR 026 trace this note generalizes beyond
+- [Commonplace as a partially autonomous, reflective self-improving system](./commonplace-as-a-reflective-system.md) — evidence: the ADR 026 trace this note generalizes beyond
+- [The tag-readme change as an observed causal-connection trace](./tag-readme-trace-observed-causal-connection.md) — evidence: the full walkthrough of the agent-assisted drafting this note's opening trace summarizes
+- [The tag-readme trace read as a self-improving loop](./tag-readme-trace-as-self-improving-loop.md) — evidence: reads the same agent-assisted drafting as the reflective, autonomous half of Search
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — grounds: defines the search function this note catalogs mechanisms for
 - [Freshness architecture](./freshness-architecture.md) — evidence: the newer, systematic staleness-noticing mechanism, still limited to review-pair targets

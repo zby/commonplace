@@ -1,5 +1,5 @@
 ---
-description: "Maps the ADR-026 tag-readme trace onto the search/evaluation/retention loop, showing which steps run in code and which stay human"
+description: "Maps the ADR-026 tag-readme trace onto the search/evaluation/retention loop, showing which half of each step runs in code and which stays human"
 type: kb/types/note.md
 traits: [has-implementation]
 ---
@@ -11,7 +11,7 @@ The [observed trace](./tag-readme-trace-observed-causal-connection.md) discharge
 | Requirement | In the trace | Runs in |
 |---|---|---|
 | **Change to the system itself** | The edit landed on `kb/types/tag-readme.md`, a self-representing artifact rather than ordinary content. | — |
-| **Search** | A maintainer noticed the `index` type was doing two jobs and that the `learning-theory` head had outgrown its completeness claim. | Human |
+| **Search** | Splits: a maintainer noticed the `index` type was doing two jobs and that the `learning-theory` head had outgrown its completeness claim — human, non-reflective. Formulating that into ADR 026's specific candidate ran through an agent retrieving [stale indexes are worse than no indexes](../notes/stale-indexes-are-worse-than-no-indexes.md) as self-representation and drafting the split around it — reflective, autonomous. | Split |
 | **Improvement objective** | The bar the change could have missed: a marked head must not mislead a thorough reader, per [stale indexes are worse than no indexes](../notes/stale-indexes-are-worse-than-no-indexes.md). ADR 026 makes it testable — `complete` is a mark the validator can falsify. | Human frames it; code checks it |
 | **Evaluation** | Tests and the validator mechanically check that the marks are consistent; the judgment that the split was the right *shape* was the maintainer's. | Split |
 | **Operative retention** | The three consumers — enforcement, routing, advice — keep acting on the change after merge. | Code (after human merge) |
@@ -24,13 +24,13 @@ The honesty check lives here too: the validator passing means the marks are cons
 
 ## The autonomy the mapping exposes
 
-The three rows that are not fully human are where the loop runs without a person, and they cluster at the back of the loop:
+Two of the four rows split rather than land wholly on one side, and the autonomous halves cluster wherever a step routes through self-representation:
 
-- **The objective-check half of evaluation is autonomous.** Because ADR 026 codified the objective into an enforced `complete` mark, the validator falsifies it on every run — validating an ordinary note now fails if a marked README sharing its tags is missing a member (`test_note_target_also_validates_marked_tag_readmes`). No human is consulted for that check.
+- **Search splits.** Noticing the strain and choosing the target was the maintainer's — non-reflective, human-inclusive. Formulating it into ADR 026's specific candidate ran through an agent retrieving and reading [stale indexes are worse than no indexes](../notes/stale-indexes-are-worse-than-no-indexes.md) as self-representation — reflective, autonomous.
+- **Evaluation splits the same way.** The objective-check half is autonomous: because ADR 026 codified the objective into an enforced `complete` mark, the validator falsifies it on every run — validating an ordinary note now fails if a marked README sharing its tags is missing a member (`test_note_target_also_validates_marked_tag_readmes`). No human is consulted for that check. The shape-judgment half stays human: judging that the type split was the right shape is a step no validator can pass on.
 - **Retention is autonomous once the human merge lands.** The constraint rejects future violations by itself, and an agent skips a search by itself; the merge installed the change, but its continued operation is the system's.
-- **Search and shape-judgment stay human.** Noticing the strain and choosing the target, and judging that the type split was the right shape, are the steps no validator can pass on.
 
-So the autonomy covers the back of the loop — the codified objective-check and the retention that enforces it — while the front stays human. Humans keep exactly the gates where no adequate automatic check reaches, [since warranted autonomy is bounded by oracle reach](../notes/warranted-autonomy-is-bounded-by-oracle-reach.md); sharpening an objective enough to codify it is what moves a gate from the human side to the code side.
+So the autonomy reaches wherever a step turns reflective — the agent formulating the candidate, the codified objective-check, the retention that enforces it — while noticing the strain and judging the fix's shape stay human throughout. Humans keep exactly the gates and the framing work where no adequate automatic check or retrievable claim reaches, [since warranted autonomy is bounded by oracle reach](../notes/warranted-autonomy-is-bounded-by-oracle-reach.md).
 
 ---
 
@@ -38,6 +38,8 @@ Relevant Notes:
 
 - [Commonplace as a partially autonomous, reflective self-improving system](./commonplace-as-a-reflective-system.md) — part-of: the classification this reading supports
 - [The tag-readme change as an observed causal-connection trace](./tag-readme-trace-observed-causal-connection.md) — part-of: the trace this reading interprets
+- [Where change candidates come from in Commonplace](./where-change-candidates-come-from-in-commonplace.md) — part-of: surveys the wider set of candidate-forming mechanisms the agent's role in Search is one instance of
+- [Admitting a human into the boundary trades reflectivity for autonomy](../notes/admitting-a-human-into-the-boundary-trades-reflectivity-for-autonomy.md) — grounds: why the agent-formulated half of Search counts as reflective and thereby autonomous
 - [Self-improving system](../notes/definitions/self-improving-system.md) — rationale: the definition this trace is read against
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — rationale: the search/evaluation/retention grid used here
 - [warranted autonomy is bounded by oracle reach](../notes/warranted-autonomy-is-bounded-by-oracle-reach.md) — rationale: why the human gates sit where the oracle runs out
