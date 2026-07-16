@@ -24,7 +24,7 @@ The paper reviews why causal models matter for machine learning: they add the no
 
 ## Connections Found
 
-The source connects to [reach assessment](../notes/definitions/reach-assessment.md) and [Formal systems can assess reach through causal and proof obligations](../notes/formal-systems-can-assess-reach-through-causal-and-proof-obligations.md) as the broad causal-model grounding for intervention and counterfactual reach. It also supports [Reflection may improve sample efficiency under structured shifts](../notes/reflection-may-improve-sample-efficiency-under-structured-shifts.md), because the note's transfer mechanism depends on reusable causal mechanisms that survive structured shifts.
+The source connects to [reach assessment](../notes/definitions/reach-assessment.md) and [Formal symbolic systems assess reach only through causal and proof obligations](../notes/formal-systems-can-assess-reach-through-causal-and-proof-obligations.md) as the broad causal-model grounding for intervention and counterfactual reach. It also supports [Reflection may improve sample efficiency under structured shifts](../notes/reflection-may-improve-sample-efficiency-under-structured-shifts.md), because the note's transfer mechanism depends on reusable causal mechanisms that survive structured shifts.
 
 ## Extractable Value
 
@@ -39,4 +39,4 @@ As a review and agenda paper, this source is broad rather than decisive about an
 
 ## Recommended Next Action
 
-Use this as the broad causal-model source in [Formal systems can assess reach through causal and proof obligations](../notes/formal-systems-can-assess-reach-through-causal-and-proof-obligations.md); do not extract a separate causal-representation-learning note unless Commonplace later needs a dedicated comparison between causal variables and KB representational form.
+Use this as the broad causal-model source in [Formal symbolic systems assess reach only through causal and proof obligations](../notes/formal-systems-can-assess-reach-through-causal-and-proof-obligations.md); do not extract a separate causal-representation-learning note unless Commonplace later needs a dedicated comparison between causal variables and KB representational form.

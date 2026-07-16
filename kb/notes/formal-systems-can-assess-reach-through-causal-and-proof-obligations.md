@@ -1,13 +1,13 @@
 ---
-description: "Formal systems assess reach only after claimed generality is translated into causal or proof obligations inside a warranted model"
+description: "Formal symbolic systems assess reach only after claimed generality is translated into causal or proof obligations inside a warranted model"
 type: kb/types/note.md
 traits: [title-as-claim, has-comparison, has-external-sources]
 tags: [foundations, computational-model, self-improving-systems]
 ---
 
-# Formal systems assess reach only through causal and proof obligations
+# Formal symbolic systems assess reach only through causal and proof obligations
 
-[Reach assessment](./definitions/reach-assessment.md) is not intrinsically an LLM-only or prose-only capability. A formal system can contribute to reach assessment only when the candidate commitment's claimed generality has been translated into an obligation the system can check. That obligation might be a causal mechanism that should survive interventions or environment shifts, an identifiable causal effect under stated assumptions, or a theorem over a formally specified domain.
+[Reach assessment](./definitions/reach-assessment.md) is not intrinsically an LLM-only or prose-only capability. A formal symbolic system can contribute to reach assessment only when the candidate commitment's claimed generality has been translated into an obligation the system can check. That obligation might be a causal mechanism that should survive interventions or environment shifts, an identifiable causal effect under stated assumptions, or a theorem over a formally specified domain.
 
 The shift is from asking "does this sentence sound like a good generalization?" to asking "what formal consequence must hold if this generalization is genuine?" Formal machinery can then check modeled consequences. It does not by itself prove that the model faithfully captures the original prose claim.
 
