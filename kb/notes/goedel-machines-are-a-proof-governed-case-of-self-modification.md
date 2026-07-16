@@ -52,5 +52,6 @@ Relevant Notes:
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — grounds: the decomposition the architecture is mapped onto above
 - [Warranted autonomy is bounded by oracle reach](./warranted-autonomy-is-bounded-by-oracle-reach.md) — exemplifies: warranted autonomy bounded by provability under the formalization
 - [Reflective system](./definitions/reflective-system.md) — contrasts: reflection requires a causally connected self-representation, not a proof gate; the proof is added to reflection, not constitutive of it
+- [Reach assessment](./definitions/reach-assessment.md) — exemplifies: the proof-gated acceptance rule is the worked case of the formal, non-LLM route to reach assessment for a symbolic claim
 - [A methodology governs its own extension only as far as it settles the meta-decisions it raises](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md) — extends: gated goal change demonstrates that an acceptance rule can govern rewrites of itself, while exposing the price
 - [Schmidhuber, Gödel Machines](../sources/goedel-machines-schmidhuber.ingest.md) — derived-from: the primary paper, its theorems, and its stated limitations
