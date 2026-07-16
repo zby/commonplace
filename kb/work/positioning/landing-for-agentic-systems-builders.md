@@ -22,7 +22,7 @@ The model is the part you don't control and mostly don't need to. What decides w
 ## What's inside
 
 - **220+ theory notes** on context engineering, agent memory, deploy-time learning, and failure modes. Each note's title is its claim; each carries a description, a reliability status, and labeled links to the claims that ground or contradict it.
-- **141 code-grounded reviews of agent memory systems** — Mem0, Graphiti, Letta, Cognee, GBrain, and 136 more — classified on shared axes (storage substrate, lineage, behavioral authority, activation), plus [a comparative analysis of what the full matrix shows](../../agent-memory-systems/agentic-memory-systems-comparative-review.md). Code-grounded means we read the source, not the README.
+- **148 code-grounded reviews of agent memory systems** — Mem0, Graphiti, Letta, Cognee, GBrain, and 143 more — classified on shared axes (storage substrate, lineage, behavioral authority, activation), plus [a comparative analysis of what the full matrix shows](../../agent-memory-systems/agentic-memory-systems-comparative-review.md). Code-grounded means we read the source, not the README.
 - **Whole-system analyses** of agentic harnesses and orchestration layers — execution loops, control surfaces, learning loops.
 - **A worked vocabulary** — distillation, constraining, codification, activation, deploy-time learning — so design conversations stop talking past each other.
 
@@ -44,7 +44,7 @@ Then it's interactive in three ways:
 
 Because you can audit it. Every artifact here passed typed validation and review before it landed, every change to it is a git diff, and every claim links to what grounds it. The system reviews are grounded in source code you can go read. Where a claim is still speculative, its status says so — you always know what's load-bearing and what's a seedling.
 
-And because the catalogue is used the way it recommends: this knowledge base is maintained by AI agents following a methodology that is itself part of the knowledge base. The comparative analysis of 141 memory systems was mostly agent-produced — an agent traversing linked reviews and finding the pattern. The catalogue about making agents knowledgeable is produced by agents made knowledgeable by it.
+And because the catalogue is used the way it recommends: this knowledge base is maintained by AI agents following a methodology that is itself part of the knowledge base. The comparative analysis of 148 memory systems was mostly agent-produced — an agent traversing linked reviews and finding the pattern. The catalogue about making agents knowledgeable is produced by agents made knowledgeable by it.
 
 ## Who this is for
 

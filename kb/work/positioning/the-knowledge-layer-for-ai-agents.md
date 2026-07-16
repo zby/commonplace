@@ -32,7 +32,7 @@ Commonplace takes the opposite bet. **No second runtime.** Plain markdown in git
 
 ## See it in action: agent memory systems reviewed
 
-We used Commonplace to review 129 agent memory systems — Mem0, Graphiti, Cognee, Letta, Hindsight, GBrain, and more — with a comparative analysis across six architectural dimensions.
+We used Commonplace to review 148 agent memory systems — Mem0, Graphiti, Cognee, Letta, Hindsight, GBrain, and more — with a comparative analysis across shared architectural axes.
 
 **These reviews were mostly agent-produced** with minimal human steering. The comparative synthesis — including the finding that the fundamental split isn't storage format but *who decides what to remember* — came from an agent traversing linked reviews and spotting patterns across them. The wiki produced its own market analysis; that is the self-hosting loop doing useful work.
 

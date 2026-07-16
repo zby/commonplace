@@ -39,7 +39,7 @@ Your system will meet reality after you ship it. Where does what it learns go?
 
 ## Capstone — the field, surveyed
 
-- [What the matrix shows across 141 agent memory systems](../../agent-memory-systems/agentic-memory-systems-comparative-review.md) — every claim above, tested against the field: 141 code-grounded reviews classified on shared axes, showing that storage substrate predicts little and the real forks are who decides what to remember and whether memory ever reaches behavior.
+- [What the matrix shows across 148 agent memory systems](../../agent-memory-systems/agentic-memory-systems-comparative-review.md) — every claim above, tested against the field: 148 code-grounded reviews classified on shared axes, showing that storage substrate predicts little and the real forks are who decides what to remember and whether memory ever reaches behavior.
 
 ## Where next
 

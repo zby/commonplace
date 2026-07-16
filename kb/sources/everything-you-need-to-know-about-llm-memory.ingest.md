@@ -38,7 +38,7 @@ The connection report found a tight cluster around memory as context engineering
 
 5. **The common failure-mode list is useful as an evaluation checklist** -- Medium reach. Entity confusion, over-inference, derivation drift, stale context dominance, selective retrieval bias, compaction loss, confidence without provenance, and memory-induced bias are not novel mechanisms in isolation, but together they form a practical review checklist for future memory-system ingests. [experiment]
 
-6. **The system comparison table can refine our comparative review axes** -- Medium reach. The table overlaps the KB's six dimensions but foregrounds derivation timing, post-retrieval processing, and forgetting more explicitly. This is worth comparing against the existing review, but not blindly adopting because the source is a conceptual map, not an audited survey. [just-a-reference]
+6. **The system comparison table can refine our comparative review axes** -- Medium reach. The table overlaps the KB's current comparison axes but foregrounds derivation timing, post-retrieval processing, and forgetting more explicitly. This is worth comparing against the existing review, but not blindly adopting because the source is a conceptual map, not an audited survey. [just-a-reference]
 
 7. **The simpler account for "memory remains unsolved" is not mystery, but missing joint optimization** -- The source can sound like the problem is globally impossible, but the simpler mechanism is that current systems optimize one side of a multi-objective trade-off: retrieval, preservation, interpretation, cost, provenance, or forgetting. That makes the claim harder and more actionable than "memory is hard." [quick-win]
 

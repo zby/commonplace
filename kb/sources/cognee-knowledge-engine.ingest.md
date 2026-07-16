@@ -26,11 +26,11 @@ Cognee is a knowledge engine that transforms raw data into persistent AI memory 
 
 ## Connections Found
 
-The `/connect` discovery found 15 connections — 10 to KB notes, 4 to sibling memory system sources, and 1 to its own prior ingest report. The source is well-integrated: it is already analyzed in the [agentic-memory-systems-comparative-review](../agent-memory-systems/agentic-memory-systems-comparative-review.md) across all six architectural dimensions, and the synthesis opportunity flagged during the original 2026-03-05 ingest (a comparative matrix across 5+ systems) has been realized.
+The `/connect` discovery found 15 connections — 10 to KB notes, 4 to sibling memory system sources, and 1 to its own prior ingest report. The source is well-integrated: it is already analyzed in the [agentic-memory-systems-comparative-review](../agent-memory-systems/agentic-memory-systems-comparative-review.md) across the current shared architectural axes, and the synthesis opportunity flagged during the original 2026-03-05 ingest (a comparative matrix across 5+ systems) has been realized.
 
 **KB notes (10 connections):**
 
-- [agentic-memory-systems-comparative-review](../agent-memory-systems/agentic-memory-systems-comparative-review.md) (exemplifies) — Cognee fills the pipeline-first, schema-driven, graph+vector hybrid position across all six dimensions of the 11-system comparison. The review uses Cognee to illustrate extraction schema rigidity, the curation gap (memify ambitions vs implementation), and the developer-managed agency model.
+- [agentic-memory-systems-comparative-review](../agent-memory-systems/agentic-memory-systems-comparative-review.md) (exemplifies) — Cognee fills the pipeline-first, schema-driven, graph+vector hybrid position in the current comparison. The review uses Cognee to illustrate extraction schema rigidity, the curation gap (memify ambitions vs implementation), and the developer-managed agency model.
 
 - [files-not-database](../notes/files-not-database.md) (contradicts) — Cognee is the poly-store maximalist position (Neo4j + Qdrant + PostgreSQL), the strongest database-side counterexample to the files-first thesis. Databases are the primary substrate, not a derived layer.
 

@@ -1,5 +1,5 @@
 ---
-description: Mem0's two-phase add pipeline (extract facts + LLM-judged CRUD reconciliation) is the purest production example of automated accretion-without-synthesis — now contextualized against eleven systems in the comparative review
+description: Mem0's two-phase add pipeline (extract facts + LLM-judged CRUD reconciliation) is the purest production example of automated accretion-without-synthesis — now contextualized by the comparative review
 source_snapshot: mem0-memory-layer.md
 ingested: "2026-03-09"
 type: kb/sources/types/ingest-report.md
@@ -26,10 +26,10 @@ Mem0 is a memory layer for AI assistants that extracts declarative facts from co
 
 ## Connections Found
 
-The `/connect` discovery found 12 genuine connections — 7 to KB notes and 4 to sibling sources — plus 1 to the previous ingest report. Since the original ingestion, the [comparative review](../agent-memory-systems/agentic-memory-systems-comparative-review.md) has been written, synthesizing Mem0's architecture across six dimensions alongside ten other systems, and the [memory-management-policy](../notes/memory-management-policy-is-learnable-but-oracle-dependent.md) note now exists, creating a new tension with Mem0's hard-coded policy approach.
+The `/connect` discovery found 12 genuine connections — 7 to KB notes and 4 to sibling sources — plus 1 to the previous ingest report. Since the original ingestion, the [comparative review](../agent-memory-systems/agentic-memory-systems-comparative-review.md) has been written, synthesizing Mem0's architecture across the current shared architectural axes, and the [memory-management-policy](../notes/memory-management-policy-is-learnable-but-oracle-dependent.md) note now exists, creating a new tension with Mem0's hard-coded policy approach.
 
 **KB notes:**
-- [The fundamental split in agent memory is not storage format but who decides what to remember](../agent-memory-systems/agentic-memory-systems-comparative-review.md) (grounds) — the comparative review already analyzes Mem0 across all six architectural dimensions. This source provides the raw architectural details the review synthesizes. The review's finding of Mem0's "zero navigability" is grounded in the source's description of isolated facts with no link structure.
+- [The fundamental split in agent memory is not storage format but who decides what to remember](../agent-memory-systems/agentic-memory-systems-comparative-review.md) (grounds) — the comparative review already analyzes Mem0 across the current shared architectural axes. This source provides the raw architectural details the review synthesizes. The review's finding of Mem0's "zero navigability" is grounded in the source's description of isolated facts with no link structure.
 - [Memory management policy is learnable but oracle-dependent](../notes/memory-management-policy-is-learnable-but-oracle-dependent.md) (contradicts) — Mem0 and AgeMem make opposite bets. Mem0 hard-codes curation policy in extraction and reconciliation prompts (transparent but not adaptive); AgeMem learns policy through RL (adaptive but opaque). Neither resolves the policy-transparency trade-off.
 - [Three-space agent memory maps to Tulving's taxonomy](../notes/three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy.md) (exemplifies) — Mem0 stores conversational/factual, procedural, and graph relations in a single vector store differentiated only by metadata filters. This is the flat single-space design the three-space model predicts will produce cross-contamination failures.
 - [Automating KB learning is an open problem](../notes/automating-kb-learning-is-an-open-problem.md) (exemplifies) — Mem0's ADD/UPDATE/DELETE/NOOP covers only accretion and deduplication from the boiling cauldron's mutation spectrum. It cannot split, synthesize, regroup, or reformulate — drawing a concrete boundary for what LLM-mediated CRUD achieves.

@@ -7,7 +7,7 @@ tags: [learning-theory, computational-model, agent-memory]
 
 # Agent memory is a crosscutting concern, not a separable niche
 
-Many systems self-identify as "memory systems" — Mem0, Graphiti, Letta, ClawVault, cass-memory, CrewAI Memory, and others in the [related-systems index](../agent-memory-systems/README.md). The label suggests memory is a separable subsystem: build a memory layer, plug it in, the agent remembers things. The [comparative review](../agent-memory-systems/agentic-memory-systems-comparative-review.md) of eleven such systems reveals that the interesting design questions are not about memory at all — they are about context engineering, learning theory, and action capacity, wearing a memory costume.
+Many systems self-identify as "memory systems" — Mem0, Graphiti, Letta, ClawVault, cass-memory, CrewAI Memory, and others in the [related-systems index](../agent-memory-systems/README.md). The label suggests memory is a separable subsystem: build a memory layer, plug it in, the agent remembers things. The [comparative review](../agent-memory-systems/agentic-memory-systems-comparative-review.md) reveals that the interesting design questions are not about memory alone — they are about context engineering, learning theory, and action capacity, wearing a memory costume.
 
 ## Memory decomposes into three problems
 
@@ -21,7 +21,7 @@ And wrapping around all three: memory serves [action capacity](./claw-learning-l
 
 ## The comparative review already shows this
 
-The comparative review's [six dimensions](../agent-memory-systems/agentic-memory-systems-comparative-review.md) — storage unit, agency model, link structure, temporal model, curation operations, extraction schema — span all three decomposed problems. Storage unit is the storage problem. Agency model and extraction schema are the learning problem (who decides what to remember, and how). Link structure and temporal model are the retrieval problem (how do you find and navigate stored knowledge). The review is not really a "memory systems" comparison; it is a comparison of how systems manage knowledge persistence, activation, and learning, viewed through the memory lens.
+The comparative review's [current axes](../agent-memory-systems/agentic-memory-systems-comparative-review.md) span all three decomposed problems. Storage substrate is the storage problem. Lineage, write agency, trace-derived learning, and curation operations are the learning problem: who decides what to remember, from what evidence, and through which mutation operations. Read-back direction and signal are the retrieval/activation problem: whether remembered material is pulled, pushed, or targeted for the current task. The review is not really a "memory systems" comparison; it is a comparison of how systems manage knowledge persistence, activation, and learning, viewed through the memory lens.
 
 The systems themselves confirm the decomposition by specializing differently:
 
@@ -62,7 +62,7 @@ Relevant Notes:
 
 - [context efficiency is the central design concern](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — grounds: context scarcity is why retrieval/activation is the hard problem, not storage
 - [knowledge storage does not imply contextual activation](./knowledge-storage-does-not-imply-contextual-activation.md) — grounds: the activation gap is what makes memory a context engineering problem
-- [agentic memory systems comparative review](../agent-memory-systems/agentic-memory-systems-comparative-review.md) — evidence: six dimensions span storage, retrieval, and learning; the agency trilemma exists because the subproblems trade off against each other
+- [agentic memory systems comparative review](../agent-memory-systems/agentic-memory-systems-comparative-review.md) — evidence: the current matrix axes span storage, retrieval/activation, and learning; the agency trilemma exists because the subproblems trade off against each other
 - [agent runtimes decompose into scheduler, context engine, and execution substrate](./agent-runtimes-decompose-into-scheduler-context-engine-and-execution.md) — grounds: the runtime decomposition assigns memory's subproblems to different components, predicting that memory is crosscutting
 - [learning theory index](./learning-theory-README.md) — grounds: extraction, promotion, and graduation are instances of accumulation, constraining, distillation, and discovery
 - [claw learning loops must improve action capacity not just retrieval](./claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) — extends: memory serves contextual competence across five action modes, not just question-answering
