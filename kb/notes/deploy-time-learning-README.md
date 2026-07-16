@@ -15,6 +15,7 @@ The organizing framework of the learning-theory area: deployed systems adapt thr
 - [the verifiability gradient](./verifiability-gradient.md) — the ladder deploy-time artifacts sit on, from restructured prompts through schemas and evals to deterministic code
 - [readable-artifact loop is the tractable unit for continual learning](./readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md) — the loop that makes behaviour change cheap: readable system-definition artifacts revised in place
 - [treat continual learning as substrate coevolution](./treat-continual-learning-as-substrate-coevolution.md) — the system and its knowledge substrate evolve together rather than one training the other
+- [deploy-time learning is reflective self-improvement at deployment pace](./deploy-time-learning-is-reflective-self-improvement-at-deployment-pace.md) — the bridge to the [self-improving-systems](./self-improving-systems-README.md) cluster: the two clusters cross-classify one region on orthogonal axes (timing×medium here, retention form there)
 
 ## Learning fundamentals
 
@@ -33,6 +34,7 @@ The organizing framework of the learning-theory area: deployed systems adapt thr
 
 ## Related Tags
 
+- [self-improving-systems](./self-improving-systems-README.md) — the retention-form view of the same region: deploy-time learning is its reflective, addressable, deployment-paced case, and that cluster carries the neighbors (parametric, non-reflective) and the sample-efficiency stake
 - [constraining](./constraining-README.md) — the primary hardening mechanism inside the framework
 - [distillation](./distillation-README.md) — the extraction mechanism inside the framework
 - [discovery](./discovery-README.md) — the operation that produces the framework's highest-reach artifacts

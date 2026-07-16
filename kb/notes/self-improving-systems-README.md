@@ -47,9 +47,11 @@ Read every claim at its stated strength: the definitions are stipulated and revi
 - [Improving an agentic system crosses the prose-symbolic boundary](./improving-an-agentic-system-crosses-the-prose-symbolic-boundary.md) — reliability gains move behavior between prose and code, so coverage of one form cannot carry them. The [agent-memory-system reviews](../agent-memory-systems/types/agent-memory-system-review.md) and the [comparison matrix](../agent-memory-systems/systems-table.md) run on this vocabulary.
 - [Reach assessment](./definitions/reach-assessment.md) — the semantic judgment reflectivity's structural requirements do not supply; the sample-efficiency conjecture and second-order rescoping both depend on it, and current evaluators seem to have it with no theory for why.
 - [Formal symbolic systems assess reach only through causal and proof obligations](./formal-systems-can-assess-reach-through-causal-and-proof-obligations.md) — reach assessment isn't LLM-exclusive: causal inference and proof search give traditional symbolic systems a formal route to it once a claim's generality is encoded as a checkable obligation.
+- [Deploy-time learning is reflective self-improvement at deployment pace](./deploy-time-learning-is-reflective-self-improvement-at-deployment-pace.md) — bridges the [deploy-time-learning](./deploy-time-learning-README.md) cluster: its timing×medium axis and this cluster's retention-form axis cross-classify one region, whose intersection is durable, deployment-paced reflective retention.
 
 ## Related Tags
 
+- [deploy-time-learning](./deploy-time-learning-README.md) — the timing×medium view of the same region: its framework is the reflective, deployment-paced case of this cluster, plus the operators (constraining, codification) that move artifacts within it
 - [foundations](./foundations-README.md) — the broader core theory this sits inside
 - [constraining](./constraining-README.md) — closure is a constraining property of methodology-as-input
 - [computational-model](./computational-model-README.md) — reflection and intercession as computational concepts generalized to socio-technical boundaries
