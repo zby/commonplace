@@ -1,5 +1,5 @@
 ---
-description: "Conjecture: reflection may improve sample efficiency when a retained commitment's reach covers a structured shift; the reflection-to-efficiency bridge is itself conjectural"
+description: "Conjecture: reflection may improve sample efficiency when a retained commitment's reach covers a structured shift"
 type: kb/types/note.md
 traits: [title-as-claim, has-external-sources]
 tags: [foundations, self-improving-systems]
