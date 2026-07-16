@@ -50,7 +50,7 @@ The definitional content of this note stops at the comparative claim above. What
 - **Criticism and rollback** — per-change and targeted, because [acceptance is an improvement claim](./definitions/self-improving-system.md) that an addressable change leaves open to later audit.
 - **Improvement of the improvement process itself** — an explicit evaluator, criterion, or update rule is [organization](./definitions/behavior-determining-organization.md) like any other, so a reflective pathway can be turned on its own machinery.
 
-Whether reflective pathways actually improve faster, more reliably, or more safely than non-reflective ones is an open empirical question, and nothing above settles it. The comparative claim is about what the architecture makes available, not about what it delivers.
+Whether reflective pathways actually improve faster, more reliably, or more safely than non-reflective ones is an open empirical question, and nothing above settles it. The comparative claim is about what the architecture makes available, not about what it delivers. Delivering on selective revision and criticism specifically needs [reach assessment](./definitions/reach-assessment.md): addressability makes a bad change findable, but finding it as bad still requires judging its claimed scope, which addressability does not itself supply.
 
 ## Scope
 
@@ -69,6 +69,7 @@ Relevant Notes:
 
 - [Self-improving system](./definitions/self-improving-system.md) — defined-in: the category whose reflective/non-reflective central distinction this thesis motivates
 - [Reflective system](./definitions/reflective-system.md) — defined-in: the causally connected self-representation that addressable retention runs through
+- [Reach assessment](./definitions/reach-assessment.md) — extends: the judgment capability that would make selective revision and criticism deliver, not just become possible
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — grounds: operative retention as the loop's baseline, which the further grades build on
 - [Retrieval failure is reflection failure](./retrieval-failure-is-reflection-failure.md) — extends: why addressable retention compounds only best-effort, through the discovery wire
 - [Reflective coverage is graded across representational forms](./reflective-coverage-is-graded-across-representational-forms.md) — extends: addressability assessed per representational form and operation depth
