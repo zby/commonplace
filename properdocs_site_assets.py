@@ -15,7 +15,11 @@ ASSETS_DIR = Path(__file__).parent / "properdocs-assets"
 
 # Paths relative to ASSETS_DIR and to the built site root. Keep in sync with the
 # extra_javascript / extra_css entries in properdocs.yml.
-SITE_ASSETS = ["javascripts/tablesort-init.js"]
+SITE_ASSETS = [
+    "javascripts/tablesort-init.js",
+    "javascripts/giscus-comments.js",
+    "stylesheets/giscus.css",
+]
 
 
 def on_files(files, config):
