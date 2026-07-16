@@ -20,6 +20,8 @@ Apply reach to claim formulation:
 - Keep real boundaries explicit. A boundary belongs in the claim when the argument depends on it; otherwise it belongs in `## Scope`, `## Caveats`, or a nearby narrower application note.
 - Prefer a general lemma plus narrower consequences over a narrow lemma whose extra assumptions are only needed by one downstream use.
 
+**Don't defend against objections you've already closed.** A clause that pre-empts a misreading the previous clause already ruled out doesn't add rigor, it pads: "a hypothesis to be tested, not a definitional truth" — being a hypothesis to be tested already means it isn't one. State the claim once; let review catch what still needs defending.
+
 **Formulation constraint.** Title and opening argument must be statable in general terms, even when derived from a specific system.
 
 **Theory-independence constraint.** The claim must stand if any single cited description is removed — otherwise it's still a description.
