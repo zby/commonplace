@@ -22,6 +22,8 @@ Apply reach to claim formulation:
 
 **Don't defend against objections you've already closed.** A clause that pre-empts a misreading the previous clause already ruled out doesn't add rigor, it pads: "a hypothesis to be tested, not a definitional truth" — being a hypothesis to be tested already means it isn't one. State the claim once; let review catch what still needs defending.
 
+**Admit real gaps instead of hedging around them.** Precision means an agent can't misread the claim — it does not mean stacking qualifications against every conceivable pushback. When the argument has an actual gap — an assumption you can't yet defend, a case you haven't worked through — name it plainly in `## Scope` or `## Open Questions` as an opening for later investigation. A named gap is more useful than one padded shut with defensive language, and it's what review and later notes are for.
+
 **Formulation constraint.** Title and opening argument must be statable in general terms, even when derived from a specific system.
 
 **Theory-independence constraint.** The claim must stand if any single cited description is removed — otherwise it's still a description.
