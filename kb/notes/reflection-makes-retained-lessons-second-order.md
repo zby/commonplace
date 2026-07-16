@@ -35,7 +35,7 @@ One dependency from the aspect-bounded nature of reflection: rejection requires 
 
 ## Scope
 
-- The claim is about available operations, not outcomes. A second-order lesson is itself a commitment and can be wrong: a mistaken rejection discards a good theory with all its reach, so the same lever that makes correction cheap makes damage cheap. Nothing here says second-order changes are more often correct — acceptance remains an improvement claim, not evidence of improvement.
+- The claim is about available operations, not outcomes. A second-order lesson is itself a commitment and can be wrong: a mistaken rejection discards a good theory with all its reach, so the same lever that makes correction cheap makes damage cheap. Nothing here says second-order changes are more often correct — acceptance remains an improvement claim, not evidence of improvement. What would make them more often correct is [reach assessment](./definitions/reach-assessment.md) on the evaluator's part, which reflection's structural operations do not supply by themselves.
 - Parametric pathways can approximate second-order effects from outside the pathway — machine unlearning, targeted fine-tuning, activation steering — but these are indirect handles on the substrate, not operations by the system's own lessons on its own commitments; they are attempts to retrofit exactly the affordance this note locates in reflection.
 - "Global" scope describes the absence of a revisable boundary, not uniform influence: an opaque commitment's effective operation is modulated by learned context-sensitivity. The point is that this modulation is not addressable — it cannot be read, stated, or redrawn.
 
@@ -50,6 +50,7 @@ One dependency from the aspect-bounded nature of reflection: rejection requires 
 Relevant Notes:
 
 - [Reflection buys addressability](./reflection-buys-addressability.md) — grounds: addressable retention is what makes a prior commitment an operable object; this note develops the selective-revision advantage into the first-order/second-order distinction
+- [Reach assessment](./definitions/reach-assessment.md) — extends: the evaluator capability that would make second-order operations more often correct, not just cheaper
 - [Reflection may improve sample efficiency under structured shifts](./reflection-may-improve-sample-efficiency-under-structured-shifts.md) — extends: stakes the statistical payoff this note supplies the mechanism for
 - [Reflective system](./definitions/reflective-system.md) — defined-in: the causally connected, aspect-bounded self-representation whose represented aspects determine which second-order operations are available
 - [Retrieval failure is reflection failure](./retrieval-failure-is-reflection-failure.md) — mechanism: the retrieval wire that makes artifact commitments bounded-by-default where parametric ones are global-by-default

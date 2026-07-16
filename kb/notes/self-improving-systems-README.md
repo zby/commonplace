@@ -45,6 +45,7 @@ Read every claim at its stated strength: the definitions are stipulated and revi
 - [The definition classifies its boundary cases without ad hoc exceptions](./the-self-improving-system-definition-classifies-its-boundary-cases.md) — nine inclusion tests, from gradient learning to accidental self-modification.
 - [A proposal-selection loop requires search, evaluation, and operative retention](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md) and [false-positive acceptance becomes operative](./false-positive-generation-is-filtered-before-retention.md) — the generate-evaluate-retain subtype and why evaluation is its terminal filter.
 - [Improving an agentic system crosses the prose-symbolic boundary](./improving-an-agentic-system-crosses-the-prose-symbolic-boundary.md) — reliability gains move behavior between prose and code, so coverage of one form cannot carry them. The [agent-memory-system reviews](../agent-memory-systems/types/agent-memory-system-review.md) and the [comparison matrix](../agent-memory-systems/systems-table.md) run on this vocabulary.
+- [Reach assessment](./definitions/reach-assessment.md) — the semantic judgment reflectivity's structural requirements do not supply; the sample-efficiency conjecture and second-order rescoping both depend on it, and current evaluators seem to have it with no theory for why.
 
 ## Related Tags
 
