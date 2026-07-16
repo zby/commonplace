@@ -58,9 +58,9 @@ dev = ["pytest", "ruff"]
 include = ["src/**/*.py", "tests/**/*.py"]
 
 [project.optional-dependencies]
-docs = ["mkdocs", "mkdocs-redirects"]
+docs = ["properdocs", "properdocs-theme-mkdocs", "mkdocs-redirects"]
 snapshot = ["python-dotenv", "xdk"]
-all = ["mkdocs", "mkdocs-redirects", "python-dotenv", "pyyaml", "xdk"]
+all = ["properdocs", "properdocs-theme-mkdocs", "mkdocs-redirects", "python-dotenv", "pyyaml", "xdk"]
 
 [build-system]
 requires = ["hatchling"]

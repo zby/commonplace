@@ -18,7 +18,7 @@ project_paths.py  Define KB boundaries, collection discovery, and visible walks
 index_generated.py Build generated tag sections and shared collection tag indexes
 type_resolver.py  Resolve note types from scoped JSON Schema definitions
 validation.py     Deterministic validation rules for KB notes (commonplace-validate lib)
-relocation.py     Move/rename a KB note or directory: rewrite backlinks and mkdocs config
+relocation.py     Move/rename a KB note or directory: rewrite backlinks and ProperDocs config
 ```
 
 Dependencies:
@@ -250,12 +250,12 @@ Return nested-collection failures anchored on the offending `COLLECTION.md`. `Va
 
 ## relocation
 
-Move or rename a KB note or directory: rewrite inbound and outbound links across the visible repository Markdown set and update `mkdocs.yml` redirects. Review state is path-keyed and is not relocated.
+Move or rename a KB note or directory: rewrite inbound and outbound links across the visible repository Markdown set and update `properdocs.yml` redirects. Review state is path-keyed and is not relocated.
 
 ### Public API
 
 **`relocate_note(*, root: Path, note_arg: str, new_name: str | None = None, dest_path: str | None = None, apply: bool = False) -> int`**
-Top-level orchestrator. Resolves the source note from a path or unique stem, computes the destination, walks all repo markdown files to plan link rewrites, and either prints a dry-run plan or executes everything (file move, link rewrites, mkdocs update). The mkdocs step is skipped when the project has no `mkdocs.yml`. Returns a process exit code.
+Top-level orchestrator. Resolves the source note from a path or unique stem, computes the destination, walks all repo markdown files to plan link rewrites, and either prints a dry-run plan or executes everything (file move, link rewrites, ProperDocs update). The ProperDocs step is skipped when the project has no `properdocs.yml`. Returns a process exit code.
 
 **`relocate_directory(*, root: Path, source_arg: str, dest_path: str, redirect_from: str | None = None, redirect_to: str | None = None, apply: bool = False) -> int`**
 Move a directory payload wholesale with `Path.rename`, while rewriting links only in visible repository Markdown. The move map includes every payload file because every path changes when the directory is renamed; hidden files and nested-repository contents move verbatim but are not opened for link rewriting. Replacing the payload walk with `walk_visible` would make the move map incomplete without changing what the final rename moves.
@@ -272,8 +272,8 @@ For each markdown link in `content` whose target resolves to a key of `moves` (a
 **`rebase_and_rewrite_in_moved_file(content, old_source_file, new_source_file, moves) -> tuple[str, list[str]]`**
 For a file that is itself being moved: rewrite each of its outbound relative links so they still resolve from the new location, mapping targets that are also in `moves` to their new locations.
 
-**`update_mkdocs_config(content, old_docs_path, new_docs_path) -> tuple[str, list[str]]`**
-Update `mkdocs.yml` in place: rewrite any matching `nav` entries and `redirect_maps` targets, and append a new redirect entry from `old_docs_path` to `new_docs_path`. Preserves indentation and quoting style. A config without a `redirect_maps:` section still gets its values rewritten; the redirect entry is skipped.
+**`update_properdocs_config(content, old_docs_path, new_docs_path) -> tuple[str, list[str]]`**
+Update `properdocs.yml` in place: rewrite any matching `nav` entries and `redirect_maps` targets, and append a new redirect entry from `old_docs_path` to `new_docs_path`. Preserves indentation and quoting style. A config without a `redirect_maps:` section still gets its values rewritten; the redirect entry is skipped.
 
 **`move_path(source, destination)`**
 Move a path on disk with `Path.rename`, creating the destination's parent directories first. Git is not involved; it detects the rename on commit.

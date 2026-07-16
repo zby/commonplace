@@ -37,7 +37,7 @@ jobs:
         uses: actions/configure-pages@v5
 
       - name: Build static site
-        run: mkdocs build --clean --site-dir site
+        run: properdocs build --clean --site-dir site
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4

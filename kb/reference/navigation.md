@@ -30,7 +30,7 @@ A tag-README may declare two validator-enforced frontmatter marks (ADR 026): `co
 
 ## Complete listings are build-time only
 
-Complete generated listings — per-collection `dir-index.md` pages and per-tag generated tails — are not committed and are not on any agent read path. They are materialized at mkdocs build time for the published site, where human readers skim and Ctrl-F them sublinearly ([ADR 025](./adr/025-complete-generated-indexes-are-build-time-only.md)). An agent reads a file whole, so a complete inventory costs linear context for whichever consumer can least afford it; the agent path is the curated head plus a scoped `rg` listing over the slice it needs.
+Complete generated listings — per-collection `dir-index.md` pages and per-tag generated tails — are not committed and are not on any agent read path. They are materialized at ProperDocs build time for the published site, where human readers skim and Ctrl-F them sublinearly ([ADR 025](./adr/025-complete-generated-indexes-are-build-time-only.md)). An agent reads a file whole, so a complete inventory costs linear context for whichever consumer can least afford it; the agent path is the curated head plus a scoped `rg` listing over the slice it needs.
 
 ### Scoped listing recipes
 

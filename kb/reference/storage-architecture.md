@@ -30,13 +30,13 @@ Each surface below is derived from the authored markdown; none of it is committe
 
 | Surface | What it covers | Where it is produced |
 |---|---|---|
-| Directory listing pages (per-collection `dir-index.md`) | Title, description, and type of every note in the directory | mkdocs hook, build time only |
-| Per-tag generated listings (below each curated tag index) | Notes grouped by tag, minus already-curated entries | mkdocs hook, build time only |
-| MkDocs static site | Entire `kb/` tree, configured by `mkdocs.yml` | `mkdocs build` |
+| Directory listing pages (per-collection `dir-index.md`) | Title, description, and type of every note in the directory | ProperDocs hook, build time only |
+| Per-tag generated listings (below each curated tag index) | Notes grouped by tag, minus already-curated entries | ProperDocs hook, build time only |
+| ProperDocs static site | Entire `kb/` tree, configured by `properdocs.yml` | `properdocs build` |
 
 Agents enumerate the same information on demand with the scoped `rg` recipes in [navigation.md](./navigation.md).
 
-The `redirect_maps` block in `mkdocs.yml` preserves external URLs across note renames.
+The `redirect_maps` block in `properdocs.yml` preserves external URLs across note renames.
 
 ## Generated reports
 
@@ -63,7 +63,7 @@ Notes, criteria, instructions, and source material remain file-backed. See [fres
 
 ## See also
 
-- [documentation-site.md](./documentation-site.md) — how the MkDocs site renders these files, the README-vs-index rule, and the reader landing-page inventory
+- [documentation-site.md](./documentation-site.md) — how the ProperDocs site renders these files, the README-vs-index rule, and the reader landing-page inventory
 - [architecture.md](./architecture.md) — installed project layout and surface-by-role
 - [ADR-010](./adr/010-review-state-should-move-to-sqlite-once-reviews-leave-git-and.md) — outcome: SQLite for review state
 - [ADR-007](./adr/007-reports-directory-for-generated-snapshots.md) — outcome: `kb/reports/` for generated operational artifacts

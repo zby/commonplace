@@ -1,4 +1,4 @@
-"""MkDocs hooks: metadata badge, collection nav, build-time generated listings.
+"""ProperDocs hooks: metadata badge, collection nav, build-time generated listings.
 
 Complete generated listings (per-collection dir-index pages and per-tag
 generated tails) are materialized here at build time for the published site;
@@ -10,7 +10,7 @@ import re
 from functools import cache
 from pathlib import Path
 
-from mkdocs.structure.files import File
+from properdocs.structure.files import File
 
 from commonplace.lib import frontmatter, index_directory, index_generated
 from commonplace.lib.project_paths import collection_dirs, collection_for_path
@@ -50,7 +50,7 @@ def on_config(config):
         label = child.name.replace("-", " ").title()
         collection_entries.append({label: str(readme.relative_to(docs_dir))})
 
-    # TODO: read external links (Recent Changes, GitHub, etc.) from mkdocs.yml
+    # TODO: read external links (Recent Changes, GitHub, etc.) from properdocs.yml
     # so consuming projects don't have to fork this hook to change them.
     config["nav"] = [
         {"Home": "index.md"},

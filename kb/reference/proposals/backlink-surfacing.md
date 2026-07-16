@@ -12,13 +12,13 @@ How Commonplace could deliver the inbound-link view to its readers. Requirements
 ## Current state (as of 2026-06-12)
 
 - Outbound links are authored: inline prose links plus labelled "Relevant Notes" footers. No inbound visibility exists in the repo; inversion is possible on demand via `rg '<note-slug>' --glob '*.md'`, but agents must think to run it.
-- Nothing generated is committed at any size ([ADR 025](../adr/025-complete-generated-indexes-are-build-time-only.md), refined by ADR 026). Generated listings are materialized only at mkdocs build time for the web view; curated tag READMEs receive no generated links.
+- Nothing generated is committed at any size ([ADR 025](../adr/025-complete-generated-indexes-are-build-time-only.md), refined by ADR 026). Generated listings are materialized only at ProperDocs build time for the web view; curated tag READMEs receive no generated links.
 - Agents discover via curated heads plus scoped `rg`; ADR 025 deliberately added no query command, deferring codification until a recurring failure justifies it.
 - Symmetric link labels (`contradicts`, `contrasts`) are authored at both ends, so tension surfacing already works without machinery.
 
 ## Design space, split by consumer
 
-- **Human web readers** — render an inbound-links section per page at mkdocs build time: a second materialization of the authored outbound edges, one source of truth, nothing committed. This is the ADR 025 pattern applied to backlinks; browser scroll and find keep long inbound lists cheap to skim.
+- **Human web readers** — render an inbound-links section per page at ProperDocs build time: a second materialization of the authored outbound edges, one source of truth, nothing committed. This is the ADR 025 pattern applied to backlinks; browser scroll and find keep long inbound lists cheap to skim.
 - **Agents in the repo** — keep the inbound view a query: a documented scoped `rg` inversion recipe, optionally codified later as a `commonplace-*` command. Consistent with ADR 025's no-new-command default and the linear context cost of stored sections.
 - **Curated semantics** — where the relationship type matters (tension), the authored symmetric labels remain the mechanism; no generated machinery can infer edge semantics.
 

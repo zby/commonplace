@@ -160,7 +160,7 @@ Most operations go through the agent, but a few CLI commands are reasonable to r
 |---|---|
 | `commonplace-validate <path>` | Run the deterministic validator on a note or directory |
 | `commonplace-guard-full-pass-report <report>` | Refuse a full-pass transition unless every packet capture still matches its live artifact |
-| `commonplace-relocate-note <note> --to <dest> [--apply]` | Move or rename a note with link rewrites and mkdocs redirect; dry-run by default |
+| `commonplace-relocate-note <note> --to <dest> [--apply]` | Move or rename a note with link rewrites and ProperDocs redirect; dry-run by default |
 | `commonplace-github-snapshot <url>` | Snapshot a GitHub issue, PR, or repo README into `kb/sources/` |
 | `commonplace-x-snapshot <url>` | Snapshot a Twitter/X post into `kb/sources/` |
 
@@ -177,7 +177,7 @@ Look up how the shipped system is put together: its architecture, type system, a
 - [architecture.md](./architecture.md) — installed project layout (library under `kb/commonplace/`, user collections at top level), packaged runtime, promoted skills, and path invariance across source and ship
 - [scenario-architecture.md](./scenario-architecture.md) — scenario-derived architecture: the library/user split under `kb/commonplace/`, package-provided commands, and measurable scenario decomposition
 - [storage-architecture.md](./storage-architecture.md) — markdown as source of truth, derived indexes, and SQLite as a scoped exception for review state
-- [documentation-site.md](./documentation-site.md) — how the MkDocs site renders `kb/`: the README-vs-index rule, the nav-generation hook, and the full inventory of reader landing pages
+- [documentation-site.md](./documentation-site.md) — how the ProperDocs site renders `kb/`: the README-vs-index rule, the nav-generation hook, and the full inventory of reader landing pages
 - [navigation.md](./navigation.md) — how agents move through the KB using control-plane pointers, `rg`, titles/descriptions, indexes, links, connect reports, and future search layers
 - [control-plane-goals.md](./control-plane-goals.md) — how Commonplace ships KB goals in always-loaded context via `AGENTS.md`
 - [instruction-generation.md](./instruction-generation.md) — build-time instruction generation flow and `commonplace-init`

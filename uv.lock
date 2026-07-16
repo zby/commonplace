@@ -25,6 +25,15 @@ wheels = [
 ]
 
 [[package]]
+name = "babel"
+version = "2.18.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/7d/b2/51899539b6ceeeb420d40ed3cd4b7a40519404f9baf3d4ac99dc413a834b/babel-2.18.0.tar.gz", hash = "sha256:b80b99a14bd085fcacfa15c9165f651fbb3406e66cc603abf11c5750937c992d", size = 9959554, upload-time = "2026-02-01T12:30:56.078Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/77/f5/21d2de20e8b8b0408f0681956ca2c69f1320a3848ac50e6e7f39c6159675/babel-2.18.0-py3-none-any.whl", hash = "sha256:e2b422b277c2b9a9630c1d7903c2a00d0830c409c59ac8cae9081c92f1aeba35", size = 10196845, upload-time = "2026-02-01T12:30:53.445Z" },
+]
+
+[[package]]
 name = "certifi"
 version = "2026.2.25"
 source = { registry = "https://pypi.org/simple" }
@@ -224,15 +233,17 @@ dependencies = [
 
 [package.optional-dependencies]
 all = [
-    { name = "mkdocs" },
     { name = "mkdocs-redirects" },
+    { name = "properdocs" },
+    { name = "properdocs-theme-mkdocs" },
     { name = "python-dotenv" },
     { name = "pyyaml" },
     { name = "xdk" },
 ]
 docs = [
-    { name = "mkdocs" },
     { name = "mkdocs-redirects" },
+    { name = "properdocs" },
+    { name = "properdocs-theme-mkdocs" },
 ]
 snapshot = [
     { name = "python-dotenv" },
@@ -248,10 +259,12 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "jsonschema", specifier = ">=4.25.0" },
-    { name = "mkdocs", marker = "extra == 'all'" },
-    { name = "mkdocs", marker = "extra == 'docs'" },
     { name = "mkdocs-redirects", marker = "extra == 'all'" },
     { name = "mkdocs-redirects", marker = "extra == 'docs'" },
+    { name = "properdocs", marker = "extra == 'all'" },
+    { name = "properdocs", marker = "extra == 'docs'" },
+    { name = "properdocs-theme-mkdocs", marker = "extra == 'all'" },
+    { name = "properdocs-theme-mkdocs", marker = "extra == 'docs'" },
     { name = "python-dotenv", marker = "extra == 'all'" },
     { name = "python-dotenv", marker = "extra == 'snapshot'" },
     { name = "pyyaml", specifier = ">=6.0.0" },
@@ -477,6 +490,19 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/ec/29/f27a4e1eddf72ed3db6e47818fbafe6debbf09fd7051f9c1a007239b46ef/properdocs-1.6.7.tar.gz", hash = "sha256:adc7b16e562890af0e098a7e5b02e3a81c20894a87d6a28d345c9300de73c26e", size = 276141, upload-time = "2026-03-20T20:07:48.167Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/bd/4d/fc923f5c85318ee8cc903566dc4e0ebe41b2dfc1d2ecf5546db232397ed6/properdocs-1.6.7-py3-none-any.whl", hash = "sha256:6fa0cfa2e01bf338f684892c8a506cf70ea88ae7f3479c933b6fa20168101cbd", size = 225406, upload-time = "2026-03-20T20:07:46.875Z" },
+]
+
+[[package]]
+name = "properdocs-theme-mkdocs"
+version = "1.6.7"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "babel" },
+    { name = "properdocs" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/3e/26/b56fc756d812716e0b002b8c8df0e4555ecc40c0ff5082be6c6813373aa8/properdocs_theme_mkdocs-1.6.7.tar.gz", hash = "sha256:2ed30991f096e4824ac3af24c13775e2120dd436038b264bb1396f2f3957c017", size = 835699, upload-time = "2026-03-20T20:10:07.033Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/14/6a/778b99c5be9a1def61cf593d6317525ef2bfe9380326b6a8d0a0cd8d5836/properdocs_theme_mkdocs-1.6.7-py3-none-any.whl", hash = "sha256:675fed440bb212cc32533dae81c44ef028911ae9a73f01c8db90d96c3ef8eb16", size = 849658, upload-time = "2026-03-20T20:10:01.219Z" },
 ]
 
 [[package]]

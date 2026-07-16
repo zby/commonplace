@@ -31,7 +31,7 @@ src/commonplace/          Packaged operational engine
   cli/                    The commonplace-* commands
   review/                 Review system
   lib/                    Shared runtime helpers
-  docs/                   Rendered-site (MkDocs) hooks and assets
+  docs/                   Rendered-site (ProperDocs) hooks and assets
 ```
 
 ## Key ideas

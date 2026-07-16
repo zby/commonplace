@@ -24,7 +24,7 @@ def main() -> None:
     parser.add_argument(
         "--redirect",
         dest="redirect",
-        help="Single mkdocs redirect to add, formatted as OLD:NEW (e.g. notes/old/index.md:new/index.md)",
+        help="Single ProperDocs redirect to add, formatted as OLD:NEW (e.g. notes/old/index.md:new/index.md)",
     )
     parser.add_argument("--apply", action="store_true", help="Write changes instead of dry-running")
     args = parser.parse_args()

@@ -1,27 +1,27 @@
 ---
-description: How the MkDocs site renders kb/ — the README-vs-index rule, the nav-generation hook, and the full inventory of reader landing pages (GitHub repo page, site home, per-collection landings) that positioning copy must keep consistent
+description: How the ProperDocs site renders kb/ — the README-vs-index rule, the nav-generation hook, and the full inventory of reader landing pages (GitHub repo page, site home, per-collection landings) that positioning copy must keep consistent
 type: kb/types/note.md
 tags: []
 ---
 
 # Documentation site
 
-The KB renders to a static MkDocs site (`mkdocs.yml`, `docs_dir: kb`), published to GitHub Pages by `.github/workflows/pages.yml`. This doc covers how pages and the nav are produced, and — the load-bearing part for anyone doing positioning or site work — the full set of reader **landing pages**, which is larger than it looks and easy to update incompletely.
+The KB renders to a static ProperDocs site (`properdocs.yml`, `docs_dir: kb`), published to GitHub Pages by `.github/workflows/pages.yml`. This doc covers how pages and the nav are produced, and — the load-bearing part for anyone doing positioning or site work — the full set of reader **landing pages**, which is larger than it looks and easy to update incompletely.
 
 ## The README-vs-index rule
 
-MkDocs (1.6.1) renders a directory's main page from either `index.md` or `README.md`:
+ProperDocs renders a directory's main page from either `index.md` or `README.md`:
 
 - A file named `README.md` is treated as the directory index — it builds to `index.html` and is served at the directory URL. **So a directory with only a `README.md` renders that file as its main page.** Every `kb/<collection>/README.md` is therefore the rendered landing page for its collection.
-- If a directory contains **both** `index.md` and `README.md`, they collide on the same output path; `index.md` wins, `README.md` is dropped from the build, and MkDocs logs a warning.
+- If a directory contains **both** `index.md` and `README.md`, they collide on the same output path; `index.md` wins, `README.md` is dropped from the build, and ProperDocs logs a warning.
 
 This is why `kb/README.md` does **not** appear on the site: `kb/index.md` shadows it. `kb/README.md` survives only as a source-tree routing aid for agents reading the repo directly; if it ever needs to render, it must be renamed or merged into `kb/index.md`.
 
 ## Nav generation
 
-The nav is generated, not hand-listed. `src/commonplace/docs/mkdocs_hooks.py:on_config` walks the directories directly under `docs_dir` and adds a top-nav entry for each one that contains a `README.md`, pointing at that README. `Home` (fixed to `index.md`) leads the list; external `Recent Changes` and `GitHub` links bracket the end. Adding a collection to the nav means giving its directory a `README.md`; nothing in `mkdocs.yml` lists collections.
+The nav is generated, not hand-listed. `src/commonplace/docs/properdocs_hooks.py:on_config` walks the directories directly under `docs_dir` and adds a top-nav entry for each one that contains a `README.md`, pointing at that README. `Home` (fixed to `index.md`) leads the list; external `Recent Changes` and `GitHub` links bracket the end. Adding a collection to the nav means giving its directory a `README.md`; nothing in `properdocs.yml` lists collections.
 
-`mkdocs.yml` also carries a `redirect_maps` block (preserves external URLs across note renames; written by `commonplace-relocate-note`) and `exclude_docs` (keeps `reports/**` and a few workshop fixtures out of the build). Per-collection `dir-index.md` and per-tag listing pages are generated at build time only (ADR 025), covered in [storage-architecture.md](./storage-architecture.md).
+`properdocs.yml` also carries a `redirect_maps` block (preserves external URLs across note renames; written by `commonplace-relocate-note`) and `exclude_docs` (keeps `reports/**` and a few workshop fixtures out of the build). Per-collection `dir-index.md` and per-tag listing pages are generated at build time only (ADR 025), covered in [storage-architecture.md](./storage-architecture.md).
 
 ## Landing-page inventory
 
@@ -38,6 +38,6 @@ The root `README.md` (tool face) and `kb/index.md` (content face) are kept as se
 
 ## See also
 
-- [storage-architecture.md](./storage-architecture.md) — the build-time derived indexes and the MkDocs site as a derived surface over authored markdown
+- [storage-architecture.md](./storage-architecture.md) — the build-time derived indexes and the ProperDocs site as a derived surface over authored markdown
 - [navigation.md](./navigation.md) — how agents (not human site readers) move through the KB via `rg`, indexes, and links
-- [lib-modules.md](./lib-modules.md) — internal API of `commonplace.lib`; the nav/index hooks live in `commonplace.docs.mkdocs_hooks`
+- [lib-modules.md](./lib-modules.md) — internal API of `commonplace.lib`; the nav/index hooks live in `commonplace.docs.properdocs_hooks`

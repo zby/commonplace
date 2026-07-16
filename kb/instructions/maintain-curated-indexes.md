@@ -5,7 +5,7 @@ type: kb/types/instruction.md
 
 # Maintain curated indexes
 
-Audit curated tag READMEs (`<tag>-README.md`, type `tag-readme`) for editorial quality, completeness, and coherence. A tag README is the tag's curated head: a hand-written editorial body with groupings and context phrases, small by type contract (weight gates). The complete per-tag listing is not committed — it is generated at mkdocs build time for the published site (ADR 025); agents reconstruct it on demand with the scoped `rg` recipe below.
+Audit curated tag READMEs (`<tag>-README.md`, type `tag-readme`) for editorial quality, completeness, and coherence. A tag README is the tag's curated head: a hand-written editorial body with groupings and context phrases, small by type contract (weight gates). The complete per-tag listing is not committed — it is generated at ProperDocs build time for the published site (ADR 025); agents reconstruct it on demand with the scoped `rg` recipe below.
 
 This instruction is also the route for fixing validator warnings on tag-READMEs (weight gate, `complete` membership, `covered_by` coverage and fan-out). The marks' maintenance rules — when to declare or drop `complete`/`covered_by`, the lifecycle exits, the smells — live in the type spec, `kb/types/tag-readme.md`; read it before changing a mark.
 

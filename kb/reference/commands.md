@@ -46,7 +46,7 @@ done
 
 ### Generated indexes (no command)
 
-Complete generated listings — per-collection `dir-index.md` pages and per-tag generated tails — are not committed and have no rebuild command. The mkdocs hook (`src/commonplace/docs/mkdocs_hooks.py`) materializes them in-memory at build time for the published site (ADR 025); `mkdocs build` is the only way to produce them. Agents enumerate candidates with the scoped `rg` recipes in [navigation.md](./navigation.md). The retired commands `commonplace-refresh-indexes`, `commonplace-sync-generated-index`, and `commonplace-generate-notes-index` no longer exist.
+Complete generated listings — per-collection `dir-index.md` pages and per-tag generated tails — are not committed and have no rebuild command. The ProperDocs hook (`src/commonplace/docs/properdocs_hooks.py`) materializes them in-memory at build time for the published site (ADR 025); `properdocs build` is the only way to produce them. Agents enumerate candidates with the scoped `rg` recipes in [navigation.md](./navigation.md). The retired commands `commonplace-refresh-indexes`, `commonplace-sync-generated-index`, and `commonplace-generate-notes-index` no longer exist.
 
 ## Note operations
 
@@ -74,7 +74,7 @@ Without `--apply`, previews changes without writing.
 
 ### commonplace-relocate-directory
 
-Move a KB directory, updating links and optionally adding one MkDocs redirect.
+Move a KB directory, updating links and optionally adding one ProperDocs redirect.
 
 ```bash
 commonplace-relocate-directory kb/notes/related-systems kb/agent-memory-systems --apply

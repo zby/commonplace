@@ -12,7 +12,7 @@ status: accepted
 
 ## Context
 
-The KB has always had two internal audiences: agents (who get CLAUDE.md and on-demand methodology loaded into context) and the human operator (who has accumulated familiarity with the vocabulary and conventions). When we added GitHub Pages rendering via MkDocs, we implicitly committed to a third audience: external readers arriving at the rendered HTML with no prior context.
+The KB has always had two internal audiences: agents (who get CLAUDE.md and on-demand methodology loaded into context) and the human operator (who has accumulated familiarity with the vocabulary and conventions). When we added GitHub Pages rendering via ProperDocs, we implicitly committed to a third audience: external readers arriving at the rendered HTML with no prior context.
 
 This audience has neither the agent's loaded definitions (CLAUDE.md Vocabulary section, definition notes loaded on demand) nor the operator's background. A sentence like "the skill is produced by distillation from the methodology notes" is clear to both internal audiences but opaque to an external reader who doesn't know that "distillation" has a specific technical meaning in this KB.
 

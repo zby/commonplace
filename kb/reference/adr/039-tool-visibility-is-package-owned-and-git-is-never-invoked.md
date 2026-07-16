@@ -13,7 +13,7 @@ status: accepted
 
 ## Context
 
-Which files the tools could see was delegated to git: `project_paths.is_git_ignored` spawned one `git check-ignore --no-index` subprocess per file and directory, and every tree enumeration — validation, tag collection, dir-index generation, relocation link rewriting, the mkdocs build hooks — sat on top of it. Relocation additionally preferred `git mv` for moves, silently falling back to `Path.rename`.
+Which files the tools could see was delegated to git: `project_paths.is_git_ignored` spawned one `git check-ignore --no-index` subprocess per file and directory, and every tree enumeration — validation, tag collection, dir-index generation, relocation link rewriting, the ProperDocs build hooks — sat on top of it. Relocation additionally preferred `git mv` for moves, silently falling back to `Path.rename`.
 
 This coupling had three costs. Enumerating the Commonplace repo's ~1,000 notes spawned ~2,300 subprocesses and took about five seconds before any file was read. Behavior differed by environment: in a plain directory or a vendored install without git, the filter silently vanished and the tools saw *more* files than in a git checkout. And `--no-index` applies ignore *patterns* where git applies ignore *semantics*: a directory that was tracked in git but matched by a later-added `.gitignore` rule (`kb/work/agent-memory-design/`) was committed KB content that the KB's own tools could not see, while real `git check-ignore` reported it as not ignored.
 
@@ -35,7 +35,7 @@ Relocation moves files with `Path.rename` (creating destination parents first). 
 
 Easier:
 
-- Tree enumeration drops from seconds of subprocess churn to a plain filesystem walk, in every command and in the mkdocs build.
+- Tree enumeration drops from seconds of subprocess churn to a plain filesystem walk, in every command and in the ProperDocs build.
 - Behavior is identical with or without git, in checkouts, plain directories, and vendored installs.
 - Committed KB content can no longer be hidden from the tools by an ignore pattern; the tracked-but-pattern-matched divergence is gone by construction.
 - Relocation has one move path instead of two strategies chosen by environment.

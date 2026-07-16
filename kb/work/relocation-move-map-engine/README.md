@@ -12,7 +12,7 @@ Can note and directory relocation share one move-map engine for link rewriting, 
 - `rebase_relative_markdown_links` rewrites links inside that moved note.
 - `rewrite_links_to_moved_files` rewrites links pointing to any file in a moved directory.
 - `rebase_and_rewrite_in_moved_file` rewrites links inside moved directory files.
-- `update_mkdocs_config` and `add_single_redirect` both parse and rewrite `redirect_maps`.
+- `update_properdocs_config` and `add_single_redirect` both parse and rewrite `redirect_maps`.
 
 The directory path already uses the more general representation: a map of old absolute paths to new absolute paths. The single-note path can probably become the one-entry case of the same engine.
 
@@ -23,8 +23,8 @@ The review-execution plan changed the relocation boundary: **do not relocate his
 In scope:
 
 - one link-rewrite function parameterized by `moves: dict[Path, Path]` and source old/new location;
-- one MkDocs redirect-map parser/renderer used by both note and directory relocation;
-- a shared relocation plan object that describes file moves, markdown writes, and MkDocs edits before apply;
+- one ProperDocs redirect-map parser/renderer used by both note and directory relocation;
+- a shared relocation plan object that describes file moves, markdown writes, and ProperDocs edits before apply;
 - removing review-store rekeying from the relocation flow once review identity is explicitly path-keyed;
 - preserving the existing `commonplace-relocate-note` and `commonplace-relocate-directory` command contracts for file moves, link rewrites, and redirects.
 
@@ -52,7 +52,7 @@ The right internal model is:
 class RelocationPlan:
     moves: dict[Path, Path]
     markdown_updates: dict[Path, tuple[Path, str, list[str]]]
-    mkdocs_update: tuple[str, list[str]] | None
+    properdocs_update: tuple[str, list[str]] | None
 ```
 
 `relocate_note` builds a one-entry `moves` map. `relocate_directory` builds a many-entry map. Both pass through the same planner, reporter, and applier, with only argument resolution and optional redirect defaults kept separate.

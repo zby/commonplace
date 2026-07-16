@@ -31,7 +31,7 @@ quoted_string:= '"' [^"]* '"'  |  "'" [^']* "'"
 unquoted_scalar := .+  (trimmed; must not start with [ or {)
 ```
 
-All scripts — including `validate_notes.py` — now use this shared module. PyYAML is removed entirely from core and validation scripts. Move all external dependencies (`mkdocs`, `xdk`) to optional dependency groups in `pyproject.toml`. Core scripts (`scripts/`) require only Python 3.11+ stdlib.
+All scripts — including `validate_notes.py` — now use this shared module. PyYAML is removed entirely from core and validation scripts. Move all external dependencies (`properdocs`, `xdk`) to optional dependency groups in `pyproject.toml`. Core scripts (`scripts/`) require only Python 3.11+ stdlib.
 
 ## Consequences
 
@@ -39,7 +39,7 @@ All scripts — including `validate_notes.py` — now use this shared module. Py
 - **No cwd problem**: Skills can invoke scripts from any working directory by using an absolute path to the script. (Now moot — commands are on `$PATH` after `pip install`.)
 - **Grammar is the contract**: The frontmatter grammar is defined in one place (`scripts/frontmatter.py` docstring). Validation enforces it. If the grammar needs to grow, the parser and the grammar spec evolve together.
 - **Duplicate key detection preserved**: The shared parser detects and reports duplicate keys, maintaining the validation guarantee that PyYAML's custom loader previously provided.
-- **Optional capabilities still need setup**: MkDocs site building needs `pip install commonplace[docs]`, X snapshots need `pip install commonplace[snapshot]`.
+- **Optional capabilities still need setup**: ProperDocs site building needs `pip install commonplace[docs]`, X snapshots need `pip install commonplace[snapshot]`.
 - **Block-style YAML is intentionally unsupported**: If someone writes `tags:\n  - foo\n  - bar`, the parser won't understand it. This is a feature — the grammar is narrow by design and the validator will flag the error.
 
 ---

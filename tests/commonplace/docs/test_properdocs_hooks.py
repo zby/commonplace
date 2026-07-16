@@ -3,7 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 from types import SimpleNamespace
 
-from commonplace.docs import mkdocs_hooks
+from commonplace.docs import properdocs_hooks
 
 
 def write(path: Path, content: str) -> Path:
@@ -38,7 +38,7 @@ def test_on_page_markdown_renders_user_verification_and_specialized_status(tmp_p
         file=SimpleNamespace(abs_src_path=str(note)),
     )
 
-    result = mkdocs_hooks.on_page_markdown("# Example\n\nBody\n", page)
+    result = properdocs_hooks.on_page_markdown("# Example\n\nBody\n", page)
 
     assert "**Status:** accepted" in result
     assert "**User verified:** yes" in result
@@ -57,7 +57,7 @@ def test_on_page_markdown_links_every_tag_with_declared_index(tmp_path: Path) ->
         file=SimpleNamespace(abs_src_path=str(note)),
     )
 
-    result = mkdocs_hooks.on_page_markdown("# Example\n\nBody\n", page)
+    result = properdocs_hooks.on_page_markdown("# Example\n\nBody\n", page)
 
     assert (
         "**Tags:** [agent-memory](agent-memory-index.md), "
@@ -67,7 +67,7 @@ def test_on_page_markdown_links_every_tag_with_declared_index(tmp_path: Path) ->
 
 
 def test_on_page_markdown_appends_generated_tail_to_tag_index(tmp_path: Path) -> None:
-    mkdocs_hooks._notes_by_tag.cache_clear()
+    properdocs_hooks._notes_by_tag.cache_clear()
     notes = tmp_path / "kb" / "notes"
     write(notes / "COLLECTION.md", "# Notes collection\n")
     index = tag_index(notes, "kb-design")
@@ -103,7 +103,7 @@ tags: [kb-design]
     )
     curated_body = "# kb-design\n\n## Notes\n\n- [Curated](curated.md) — placed\n"
 
-    result = mkdocs_hooks.on_page_markdown(
+    result = properdocs_hooks.on_page_markdown(
         curated_body,
         page,
         config={"docs_dir": str(tmp_path / "kb")},
@@ -117,7 +117,7 @@ tags: [kb-design]
 
 
 def test_on_page_markdown_appends_tail_to_tag_readme_type(tmp_path: Path) -> None:
-    mkdocs_hooks._notes_by_tag.cache_clear()
+    properdocs_hooks._notes_by_tag.cache_clear()
     notes = tmp_path / "kb" / "notes"
     write(notes / "COLLECTION.md", "# Notes collection\n")
     readme = write(
@@ -152,7 +152,7 @@ tags: [kb-design]
         file=SimpleNamespace(abs_src_path=str(readme)),
     )
 
-    result = mkdocs_hooks.on_page_markdown(
+    result = properdocs_hooks.on_page_markdown(
         "# kb-design\n\nOrientation.\n",
         page,
         config={"docs_dir": str(tmp_path / "kb")},
@@ -163,7 +163,7 @@ tags: [kb-design]
 
 
 def test_on_page_markdown_skips_empty_tail_for_complete_readme(tmp_path: Path) -> None:
-    mkdocs_hooks._notes_by_tag.cache_clear()
+    properdocs_hooks._notes_by_tag.cache_clear()
     notes = tmp_path / "kb" / "notes"
     write(notes / "COLLECTION.md", "# Notes collection\n")
     readme = write(
@@ -201,7 +201,7 @@ tags: [kb-design]
     )
     curated_body = "# kb-design\n\n- [Curated](./curated.md) — placed\n"
 
-    result = mkdocs_hooks.on_page_markdown(
+    result = properdocs_hooks.on_page_markdown(
         curated_body,
         page,
         config={"docs_dir": str(tmp_path / "kb")},
@@ -214,15 +214,15 @@ tags: [kb-design]
 def test_on_page_markdown_links_collection_readme_to_dir_index(tmp_path: Path) -> None:
     notes = tmp_path / "kb" / "notes"
     readme = write(notes / "README.md", "# Notes\n")
-    mkdocs_hooks._generated_index_dirs.add(notes)
+    properdocs_hooks._generated_index_dirs.add(notes)
     try:
         page = SimpleNamespace(
             meta={},
             file=SimpleNamespace(abs_src_path=str(readme)),
         )
-        result = mkdocs_hooks.on_page_markdown("# Notes\n\nBody\n", page)
+        result = properdocs_hooks.on_page_markdown("# Notes\n\nBody\n", page)
     finally:
-        mkdocs_hooks._generated_index_dirs.discard(notes)
+        properdocs_hooks._generated_index_dirs.discard(notes)
 
     assert "[Complete file listing](./dir-index.md)" in result
 
@@ -239,6 +239,6 @@ def test_on_page_markdown_keeps_unindexed_tags_as_text(tmp_path: Path) -> None:
         file=SimpleNamespace(abs_src_path=str(note)),
     )
 
-    result = mkdocs_hooks.on_page_markdown("# Example\n\nBody\n", page)
+    result = properdocs_hooks.on_page_markdown("# Example\n\nBody\n", page)
 
     assert "**Tags:** context-engineering, [learning-theory](learning-theory-index.md)" in result

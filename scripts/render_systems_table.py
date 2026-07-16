@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Render the human-readable comparison table from systems.csv.
 
-Emits kb/agent-memory-systems/systems-table.md: a sortable (in the MkDocs HTML
+Emits kb/agent-memory-systems/systems-table.md: a sortable (in the ProperDocs HTML
 build) GFM table over the code-reviewed systems, plus a short summary of the
 dimensions. Generated, not hand-maintained -- rebuild after systems.csv changes:
 

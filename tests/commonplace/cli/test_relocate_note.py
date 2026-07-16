@@ -77,7 +77,7 @@ Target: [concept](./definitions/concept.md)
     ]
 
 
-def test_update_mkdocs_config_adds_redirect_and_updates_targets() -> None:
+def test_update_properdocs_config_adds_redirect_and_updates_targets() -> None:
     content = """site_name: Commonplace
 plugins:
   - redirects:
@@ -88,7 +88,7 @@ nav:
   - Example: notes/old-name.md
 """
 
-    updated, changes = relocation.update_mkdocs_config(
+    updated, changes = relocation.update_properdocs_config(
         content,
         old_docs_path="notes/old-name.md",
         new_docs_path="notes/archive/new-name.md",
@@ -97,17 +97,17 @@ nav:
     assert "'notes/old-name.md': 'notes/archive/new-name.md'" in updated
     assert "'notes/older-name.md': 'notes/archive/new-name.md'" in updated
     assert "- Example: notes/archive/new-name.md" in updated
-    assert any("mkdocs redirect: notes/old-name.md -> notes/archive/new-name.md" == item for item in changes)
-    assert any("mkdocs redirect target: notes/older-name.md -> notes/archive/new-name.md" == item for item in changes)
+    assert any("properdocs redirect: notes/old-name.md -> notes/archive/new-name.md" == item for item in changes)
+    assert any("properdocs redirect target: notes/older-name.md -> notes/archive/new-name.md" == item for item in changes)
 
 
-def test_update_mkdocs_config_without_redirect_maps_rewrites_values_only() -> None:
+def test_update_properdocs_config_without_redirect_maps_rewrites_values_only() -> None:
     content = """site_name: Project
 nav:
   - Example: notes/old-name.md
 """
 
-    updated, changes = relocation.update_mkdocs_config(
+    updated, changes = relocation.update_properdocs_config(
         content,
         old_docs_path="notes/old-name.md",
         new_docs_path="notes/new-name.md",
@@ -115,10 +115,10 @@ nav:
 
     assert "- Example: notes/new-name.md" in updated
     assert "redirect" not in updated
-    assert changes == ["mkdocs value: notes/old-name.md -> notes/new-name.md"]
+    assert changes == ["properdocs value: notes/old-name.md -> notes/new-name.md"]
 
 
-def test_relocate_note_apply_works_without_mkdocs_config(tmp_path: Path) -> None:
+def test_relocate_note_apply_works_without_properdocs_config(tmp_path: Path) -> None:
     notes_root = tmp_path / "kb" / "notes"
     write(notes_root / "COLLECTION.md", "# Notes collection\n")
     old_note = write(notes_root / "old-note.md", "# Old note\n")
@@ -190,7 +190,7 @@ def test_relocate_note_apply_leaves_review_state_rows_unchanged_and_paths_derive
     write(notes_root / "COLLECTION.md", "# Notes collection\n")
     old_note = make_reviewable_note(notes_root / "old-note.md")
     make_gate(repo_root)
-    write(repo_root / "mkdocs.yml", "plugins:\n  - redirects:\n      redirect_maps:\n")
+    write(repo_root / "properdocs.yml", "plugins:\n  - redirects:\n      redirect_maps:\n")
     db_path = kb_root / "reports" / "commonplace-store.sqlite"
     review_pair_id = seed_accepted_review(repo_root, db_path, note_path="kb/notes/old-note.md")
     with review_db.connect(db_path) as conn:
@@ -260,7 +260,7 @@ See [concept](./definitions/concept.md)
 """,
     )
     write(notes_root / "definitions" / "concept.md", "# Concept\n")
-    write(repo_root / "mkdocs.yml", "plugins:\n  - redirects:\n      redirect_maps:\n")
+    write(repo_root / "properdocs.yml", "plugins:\n  - redirects:\n      redirect_maps:\n")
 
     result = relocation.relocate_note(
         root=repo_root,
@@ -297,7 +297,7 @@ See [doc](./document-classification.md).
 """,
     )
     write(
-        repo_root / "mkdocs.yml",
+        repo_root / "properdocs.yml",
         """site_name: Commonplace
 plugins:
   - redirects:
@@ -322,7 +322,7 @@ nav:
     relocated_text = destination.read_text(encoding="utf-8")
     assert "[note](../types/note.md)" in relocated_text
     assert "[doc](../reference/type-system.md)" in (notes_root / "reader.md").read_text(encoding="utf-8")
-    mkdocs_content = (repo_root / "mkdocs.yml").read_text(encoding="utf-8")
-    assert "'notes/document-classification.md': 'reference/type-system.md'" in mkdocs_content
-    assert "'notes/already-old.md': 'reference/type-system.md'" in mkdocs_content
-    assert "- Doc System: reference/type-system.md" in mkdocs_content
+    properdocs_content = (repo_root / "properdocs.yml").read_text(encoding="utf-8")
+    assert "'notes/document-classification.md': 'reference/type-system.md'" in properdocs_content
+    assert "'notes/already-old.md': 'reference/type-system.md'" in properdocs_content
+    assert "- Doc System: reference/type-system.md" in properdocs_content

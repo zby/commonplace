@@ -1,5 +1,5 @@
 ---
-description: Complete generated listings (the per-collection dir-index and the per-tag generated tail) retire from git and the agent read path and are regenerated at mkdocs build time for human readers, while agents discover via committed curated heads plus scoped rg; supersedes ADR 003's index-first connect discovery, and adds no new query command because scoped rg recovers what the retired index gave.
+description: Complete generated listings (the per-collection dir-index and the per-tag generated tail) retire from git and the agent read path and are regenerated at ProperDocs build time for human readers, while agents discover via committed curated heads plus scoped rg; supersedes ADR 003's index-first connect discovery, and adds no new query command because scoped rg recovers what the retired index gave.
 type: ../types/adr.md
 tags: []
 status: accepted
@@ -22,7 +22,7 @@ status: accepted
 Complete generated listings are build-time-only; the agent read path is curated heads plus scoped rg.
 
 1. Retire complete generated listings from git and the agent read path — both the per-collection `dir-index.md` and the per-tag `## Other tagged notes` tail.
-2. Regenerate them at mkdocs build time for human readers, where browser scroll and find restore sublinear access. One source of truth (note frontmatter), two materializations.
+2. Regenerate them at ProperDocs build time for human readers, where browser scroll and find restore sublinear access. One source of truth (note frontmatter), two materializations.
 3. Keep curated heads committed at every scope: directory `README.md` / `COLLECTION.md`, and the editorial body of each tag index. The tag index is the tag's README; its generated tail is the detachable part.
 4. Agents discover via curated heads plus scoped `rg`; add no new query command, because scoped rg recovers the operative part of the retired index. Documented recipes: by tag, `rg -l '^tags:.*\bTAG\b' kb/notes/ --glob '*.md' | xargs -r rg -N --no-heading '^description:\s*' -r ''` (the `xargs -r` guard prevents an empty match from falling back to a whole-repo search); by keyword, `rg '^description:' <scoped path>`. Codifying these into a `commonplace-*` command is deferred until a recurring failure justifies it.
 5. Colocation is conditional on weight: a small tag keeps its short generated list colocated under the curated head; a popular tag detaches it, because a curated index is an agent read surface and must stay context-feasible. *(Refined by [ADR 026](./026-tag-readme-type-with-completeness-and-coverage-marks.md): nothing generated is committed at any size — weight became the type contract on the committed curated head instead of a colocation dial.)*
@@ -39,7 +39,7 @@ Harder / migration:
 - `git rm` plus gitignore the ~50 committed `dir-index.md` files; strip the committed generated tail from tag indexes.
 - `cp-skill-connect` standard discovery is rewritten to drop complete-index reads (curated heads plus scoped rg; broad scans reserved for deep mode).
 - Reference sweep: `navigation.md`, `CLAUDE.md` Key Indexes, and any README or curated index that links to a `dir-index.md`.
-- The mkdocs build becomes responsible for human-facing inventories.
+- The ProperDocs build becomes responsible for human-facing inventories.
 
 Risks / watch:
 - Scoped rg has a footgun: a tag that matches zero files makes `xargs` run rg with no path argument, which searches the whole repo. Mitigated by `xargs -r`; recurring trips would be the signal to codify a command.
@@ -47,7 +47,7 @@ Risks / watch:
 - Description quality stays load-bearing (inherited from 003).
 
 Deferred (mechanism, not direction):
-- mkdocs generation mechanism: a `commonplace-refresh-indexes --for-build` mode the hook calls, or a dedicated plugin (must emit both the directory inventory and the per-tag listing).
+- ProperDocs generation mechanism: a `commonplace-refresh-indexes --for-build` mode the hook calls, or a dedicated plugin (must emit both the directory inventory and the per-tag listing).
 - Curated-index weight reporting plus soft/hard thresholds (bytes vs entry count; scope).
 - Whether curated indexes must declare focused-routing vs archival, or whether "curated = focused" suffices.
 

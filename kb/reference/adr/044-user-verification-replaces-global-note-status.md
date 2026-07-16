@@ -28,7 +28,7 @@ The only valid value is `true`. Presence means a human user explicitly attests t
 
 Creation, conversion, validation, and review never add verification. A substantive edit removes it. An existing attestation may survive only a mechanical change covered by an explicit human-authorized trivial-change workflow. Git history is the initial audit trail; verifier identity, time, and content hashes are deferred until a demonstrated need exists.
 
-The review selector uses `--user-verified` and reads committed frontmatter exactly. There is no `--current` alias and no derivation from review freshness. MkDocs renders a User verified label from that field, while continuing to render intentional specialized `status` values. ADR status remains `accepted`, `superseded`, or `deprecated`; review-job execution status is unchanged.
+The review selector uses `--user-verified` and reads committed frontmatter exactly. There is no `--current` alias and no derivation from review freshness. ProperDocs renders a User verified label from that field, while continuing to render intentional specialized `status` values. ADR status remains `accepted`, `superseded`, or `deprecated`; review-job execution status is unchanged.
 
 Hypotheses carry their conjectural force in titles or prose. Retired and replaced artifacts carry supersession in prose, links, filenames, or a coherent type-local field. The former `current` cohort is not automatically converted: prior lifecycle metadata is not proof of human attestation.
 

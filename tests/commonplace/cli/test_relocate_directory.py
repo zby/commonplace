@@ -90,7 +90,7 @@ def test_relocate_directory_dry_run(tmp_path: Path) -> None:
     write(source_dir / "bar.md", "# Bar\n")
     write(tmp_path / "kb" / "notes" / "definitions" / "d.md", "# D\n")
     write(tmp_path / "kb" / "notes" / "outer.md", "# Outer\n\n[foo](./related-systems/foo.md)\n")
-    write(tmp_path / "mkdocs.yml", """site_name: X
+    write(tmp_path / "properdocs.yml", """site_name: X
 plugins:
   - redirects:
       redirect_maps:
@@ -120,7 +120,7 @@ def test_relocate_directory_apply_moves_and_rewrites(tmp_path: Path) -> None:
     write(source_dir / "bar.md", "# Bar\n")
     write(tmp_path / "kb" / "notes" / "definitions" / "d.md", "# D\n")
     write(tmp_path / "kb" / "notes" / "outer.md", "# Outer\n\n[foo](./related-systems/foo.md)\n")
-    write(tmp_path / "mkdocs.yml", """site_name: X
+    write(tmp_path / "properdocs.yml", """site_name: X
 plugins:
   - redirects:
       redirect_maps:
@@ -155,10 +155,10 @@ plugins:
     outer_content = (tmp_path / "kb" / "notes" / "outer.md").read_text()
     assert "[foo](../agent-memory-systems/foo.md)" in outer_content
 
-    # mkdocs has exactly ONE new redirect (plus the pre-existing stale one)
-    mkdocs_content = (tmp_path / "mkdocs.yml").read_text()
-    assert "'notes/related-systems/foo.md': 'agent-memory-systems/foo.md'" in mkdocs_content
-    assert "'notes/stale.md': 'notes/new.md'" in mkdocs_content
+    # ProperDocs has exactly ONE new redirect (plus the pre-existing stale one)
+    properdocs_content = (tmp_path / "properdocs.yml").read_text()
+    assert "'notes/related-systems/foo.md': 'agent-memory-systems/foo.md'" in properdocs_content
+    assert "'notes/stale.md': 'notes/new.md'" in properdocs_content
 
 
 def test_relocate_directory_moves_hidden_payload_without_inspecting_it(
@@ -289,7 +289,7 @@ def test_relocate_directory_rejects_existing_destination(tmp_path: Path) -> None
     source_dir.mkdir(parents=True)
     write(source_dir / "foo.md", "x")
     (tmp_path / "kb" / "agent-memory-systems").mkdir()
-    write(tmp_path / "mkdocs.yml", """plugins:
+    write(tmp_path / "properdocs.yml", """plugins:
   - redirects:
       redirect_maps: {}
 """)

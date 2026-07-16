@@ -85,7 +85,7 @@ def is_relative_markdown_target(target: str) -> bool:
 
 
 class _RedirectMaps:
-    """The parsed `redirect_maps:` section of an mkdocs config.
+    """The parsed `redirect_maps:` section of a ProperDocs config.
 
     `lines` is the config with the whole section collapsed to its single
     header line at `header_index`; `render` expands it back with the current
@@ -133,7 +133,7 @@ class _RedirectMaps:
     def add(self, old_docs_path: str, new_docs_path: str, changes: list[str]) -> None:
         if self.redirects.get(old_docs_path) != new_docs_path:
             self.redirects[old_docs_path] = new_docs_path
-            changes.append(f"mkdocs redirect: {old_docs_path} -> {new_docs_path}")
+            changes.append(f"properdocs redirect: {old_docs_path} -> {new_docs_path}")
 
     def render(self) -> str:
         rebuilt = list(self.lines)
@@ -153,7 +153,7 @@ class _RedirectMaps:
         return new_content
 
 
-def update_mkdocs_config(
+def update_properdocs_config(
     content: str,
     old_docs_path: str,
     new_docs_path: str,
@@ -162,7 +162,7 @@ def update_mkdocs_config(
 
     A config without a `redirect_maps:` section still gets its values
     rewritten; the redirect entry is simply skipped, so projects that use
-    mkdocs without the redirects plugin can relocate notes.
+    ProperDocs without the redirects plugin can relocate notes.
     """
     changes: list[str] = []
     maps = _RedirectMaps(content)
@@ -176,14 +176,14 @@ def update_mkdocs_config(
             line,
         )
         if updated_line != line:
-            changes.append(f"mkdocs value: {old_docs_path} -> {new_docs_path}")
+            changes.append(f"properdocs value: {old_docs_path} -> {new_docs_path}")
             maps.lines[index] = updated_line
 
     if maps.parsed:
         for key, value in list(maps.redirects.items()):
             if value == old_docs_path and key != old_docs_path:
                 maps.redirects[key] = new_docs_path
-                changes.append(f"mkdocs redirect target: {key} -> {new_docs_path}")
+                changes.append(f"properdocs redirect target: {key} -> {new_docs_path}")
         maps.add(old_docs_path, new_docs_path, changes)
 
     return maps.render(), changes
@@ -289,10 +289,10 @@ def add_single_redirect(
     old_docs_path: str,
     new_docs_path: str,
 ) -> tuple[str, list[str]]:
-    """Add or update a single redirect entry in mkdocs config."""
+    """Add or update a single redirect entry in ProperDocs config."""
     maps = _RedirectMaps(content)
     if not maps.parsed:
-        raise ValueError("No redirect_maps section found in mkdocs config")
+        raise ValueError("No redirect_maps section found in ProperDocs config")
     changes: list[str] = []
     maps.add(old_docs_path, new_docs_path, changes)
     return maps.render(), changes
@@ -309,7 +309,7 @@ def relocate_directory(
 ) -> int:
     repo_root = root.resolve()
     kb_root = project_kb_root(repo_root)
-    mkdocs_config = repo_root / "mkdocs.yml"
+    properdocs_config = repo_root / "properdocs.yml"
 
     source = resolve_directory(source_arg, repo_root=repo_root, kb_root=kb_root)
 
@@ -350,12 +350,12 @@ def relocate_directory(
             markdown_updates[md_file] = (target, updated, changes)
 
     # Optional single redirect entry
-    mkdocs_changes: list[str] = []
-    mkdocs_updated = None
+    properdocs_changes: list[str] = []
+    properdocs_updated = None
     if redirect_from and redirect_to:
-        mkdocs_original = mkdocs_config.read_text(encoding="utf-8")
-        mkdocs_updated, mkdocs_changes = add_single_redirect(
-            mkdocs_original, redirect_from, redirect_to
+        properdocs_original = properdocs_config.read_text(encoding="utf-8")
+        properdocs_updated, properdocs_changes = add_single_redirect(
+            properdocs_original, redirect_from, redirect_to
         )
 
     # Report
@@ -372,12 +372,12 @@ def relocate_directory(
     else:
         print("Markdown files to update: 0")
 
-    if mkdocs_changes:
-        print("MkDocs updates:")
-        for change in mkdocs_changes:
+    if properdocs_changes:
+        print("ProperDocs updates:")
+        for change in properdocs_changes:
             print(f"- {change}")
     else:
-        print("MkDocs updates: none")
+        print("ProperDocs updates: none")
 
     if not apply:
         print("\nThis was a dry run. Pass --apply to execute.")
@@ -389,9 +389,9 @@ def relocate_directory(
     for _, (target, updated, _changes) in markdown_updates.items():
         target.write_text(updated, encoding="utf-8")
 
-    # mkdocs config
-    if mkdocs_updated is not None:
-        mkdocs_config.write_text(mkdocs_updated, encoding="utf-8")
+    # ProperDocs config
+    if properdocs_updated is not None:
+        properdocs_config.write_text(properdocs_updated, encoding="utf-8")
 
     print("\nDone.")
     return 0
@@ -407,7 +407,7 @@ def relocate_note(
 ) -> int:
     repo_root = root.resolve()
     kb_root = project_kb_root(repo_root)
-    mkdocs_config = repo_root / "mkdocs.yml"
+    properdocs_config = repo_root / "properdocs.yml"
 
     source = resolve_note(note_arg, root=repo_root)
     destination = resolve_destination_path(
@@ -442,12 +442,12 @@ def relocate_note(
         if changes:
             markdown_updates[md_file] = (updated, changes)
 
-    # Projects without an mkdocs site have nothing to update here.
-    mkdocs_updated = None
-    mkdocs_changes: list[str] = []
-    if mkdocs_config.is_file():
-        mkdocs_updated, mkdocs_changes = update_mkdocs_config(
-            mkdocs_config.read_text(encoding="utf-8"),
+    # Projects without a ProperDocs site have nothing to update here.
+    properdocs_updated = None
+    properdocs_changes: list[str] = []
+    if properdocs_config.is_file():
+        properdocs_updated, properdocs_changes = update_properdocs_config(
+            properdocs_config.read_text(encoding="utf-8"),
             old_docs_path=old_docs_path,
             new_docs_path=new_docs_path,
         )
@@ -466,12 +466,12 @@ def relocate_note(
     else:
         print("Markdown files to update: 0")
 
-    if mkdocs_changes:
-        print("MkDocs updates:")
-        for change in mkdocs_changes:
+    if properdocs_changes:
+        print("ProperDocs updates:")
+        for change in properdocs_changes:
             print(f"- {change}")
     else:
-        print("MkDocs updates: none")
+        print("ProperDocs updates: none")
 
     if not apply:
         print("\nThis was a dry run. Pass --apply to execute.")
@@ -481,7 +481,7 @@ def relocate_note(
     for path, (updated, _changes) in markdown_updates.items():
         target = destination if path.resolve() == source else path
         target.write_text(updated, encoding="utf-8")
-    if mkdocs_updated is not None:
-        mkdocs_config.write_text(mkdocs_updated, encoding="utf-8")
+    if properdocs_updated is not None:
+        properdocs_config.write_text(properdocs_updated, encoding="utf-8")
     print("\nDone.")
     return 0
