@@ -45,5 +45,6 @@ Relevant Notes:
 - [Self-improving system](./definitions/self-improving-system.md) — extends: distinguishes bare autonomy from warranted autonomy
 - [False-positive generation is filtered; false-positive acceptance becomes operative](./false-positive-generation-is-filtered-before-retention.md) — extends: why unattended evaluation has the more consequential false-positive failure
 - [Gödel machines are a proof-governed case of reflective self-modification](./goedel-machines-are-a-proof-governed-case-of-self-modification.md) — exemplifies: warranted autonomy bounded by a proof requirement
+- [Reach assessment](./definitions/reach-assessment.md) — contrasts: a different sense of "reach" — what an oracle's acceptance can establish here, versus whether a candidate's claimed generalization is genuine there
 - [Oracle-strength spectrum](./oracle-strength-spectrum.md) — extends: grades the verification surfaces that determine oracle reach
 - [Commonplace as a reflective system](../reference/commonplace-as-a-reflective-system.md) — evidence: a pathway-mixed system whose autonomy profile aligns with heterogeneous oracle reach
