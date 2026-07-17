@@ -60,7 +60,7 @@ wins.
    link to it, or name its path in the durable ingest report. Summarize its
    findings and link only durable KB artifacts or source snapshots.
 
-   Distill, do not transcribe: connect casts a wide candidate net by design.
+   Select, do not transcribe: connect casts a wide candidate net by design.
    Drop weak, speculative, or duplicate edges and keep only settled, durable
    judgments about this source's role. Write `Connections Found` as compact
    prose naming that role (for example: anchor, technical basis, counterpoint,

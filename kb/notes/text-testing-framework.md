@@ -3,7 +3,7 @@
 Full framework for automated testing of text artifacts, received 2026-02-21.
 Saved as reference for when we start building concrete checks.
 
-See [automated-tests-for-text](./automated-tests-for-text.md) for the distilled observation.
+See [automated-tests-for-text](./automated-tests-for-text.md) for the condensed observation.
 
 ---
 

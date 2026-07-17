@@ -2,7 +2,7 @@
 description: Constraining narrows interpretation and extraction produces focused use-shaped artifacts; both can trade generality for reliability, speed, or cost when task fit is good
 type: kb/types/note.md
 traits: [title-as-claim]
-tags: [learning-theory, constraining, distillation]
+tags: [learning-theory, constraining]
 ---
 
 # Constraining and extraction can trade generality for reliability, speed, or cost

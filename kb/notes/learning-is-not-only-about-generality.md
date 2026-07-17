@@ -30,9 +30,9 @@ Argyris's [single-loop vs double-loop learning](https://infed.org/dir/welcome/ch
 
 ## The compound — reliability, speed, cost
 
-Capacity has a second cluster of dimensions that tend to move together: **reliability** (how consistently it works), **speed** (how fast), and **cost** (how cheaply). These form a compound because they often improve simultaneously — [codification](./definitions/codification.md) is the clearest example, where moving from LLM to deterministic code improves all three at once. But the compound isn't exclusive to codification: conventions improve reliability, caching improves speed, distilled skills reduce cost.
+Capacity has a second cluster of dimensions that tend to move together: **reliability** (how consistently it works), **speed** (how fast), and **cost** (how cheaply). These form a compound because they often improve simultaneously — [codification](./definitions/codification.md) is the clearest example, where moving from LLM to deterministic code improves all three at once. But the compound isn't exclusive to codification: conventions improve reliability, caching improves speed, derived skills reduce cost.
 
-The generality-vs-compound trade-off is the primary dynamic: [constraining and distillation both trade generality for compound gains](./constraining-and-extraction-both-trade-generality-for-reliability.md). Learning cuts across Argyris's loops — it can be single-loop (codifying one check into a script) or double-loop (deciding that [claim notes should use Toulmin-derived sections](./claim-notes-should-use-toulmin-derived-sections-for-structured.md)).
+The generality-vs-compound trade-off is the primary dynamic: [constraining and extraction both trade generality for compound gains](./constraining-and-extraction-both-trade-generality-for-reliability.md). Learning cuts across Argyris's loops — it can be single-loop (codifying one check into a script) or double-loop (deciding that [claim notes should use Toulmin-derived sections](./claim-notes-should-use-toulmin-derived-sections-for-structured.md)).
 
 ## Other dimensions
 
@@ -48,9 +48,9 @@ Generality and the compound don't exhaust what matters. A verified claim is more
 
 Relevant Notes:
 
-- [constraining and distillation both trade generality for compound](./constraining-and-extraction-both-trade-generality-for-reliability.md) — extends: the two mechanisms that operate on the generality-vs-compound trade-off defined here
+- [constraining and extraction both trade generality for compound](./constraining-and-extraction-both-trade-generality-for-reliability.md) — extends: the two mechanisms that operate on the generality-vs-compound trade-off defined here
 - [constraining](./definitions/constraining.md) — one mechanism: constrains the interpretation space, trading generality for compound
-- [distillation](./definitions/distillation.md) — the other mechanism: targeted extraction from reasoning under context budget constraints
+- [theory and methodology form a two-layer execution system](./theory-and-methodology-form-a-two-layer-execution-system.md) — the other mechanism: working use-shaped artifacts out from reasoning under context budget constraints
 - [codification](./definitions/codification.md) — the far end of constraining where the compound gain is largest
 - [the verifiability gradient](./verifiability-gradient.md) — structures the compound dimension
 - [deploy-time learning](./deploy-time-learning-is-the-missing-middle.md) — frames where the gradient-moving happens on the system-adaptation timescale

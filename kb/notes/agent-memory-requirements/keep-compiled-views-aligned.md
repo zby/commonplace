@@ -9,7 +9,7 @@ tags: [agent-memory, context-engineering]
 
 Memory systems often create derived surfaces: a note produces a cue, a policy produces a checklist, a convention produces a lint rule, a guide produces an `AGENTS.md` excerpt, or a trace-extracted observation produces a generated reminder. These surfaces put knowledge where it can act, but they become dangerous when they turn into independent sources of truth.
 
-The system should distinguish retained surfaces by lineage, behavioral authority, and reconstruction cost: durable authored memory, raw evidence, generated navigation views, operational reports, trust ledgers, compiled behavior views, and external authority surfaces. A rebuildable index should not become a policy. A temporal review judgment should not be hidden where staleness checks cannot read it. A ticket, report, dashboard, or source file may remain the true authority even when the memory system keeps a distilled view of it.
+The system should distinguish retained surfaces by lineage, behavioral authority, and reconstruction cost: durable authored memory, raw evidence, generated navigation views, operational reports, trust ledgers, compiled behavior views, and external authority surfaces. A rebuildable index should not become a policy. A temporal review judgment should not be hidden where staleness checks cannot read it. A ticket, report, dashboard, or source file may remain the true authority even when the memory system keeps a condensed view of it.
 
 ## Source-Of-Truth Rules
 

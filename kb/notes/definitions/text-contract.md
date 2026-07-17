@@ -54,5 +54,5 @@ Relevant Notes:
 - [A knowledge base holds theories, descriptions, and prescriptions with asymmetric linking](../a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md) — foundation: the argument for the three default profiles' formulation constraint and maintenance asymmetry, revised to an attractor claim rather than an exhaustiveness claim
 - [ADR 042: register becomes a default profile under open-ended text contracts](../../reference/adr/042-register-becomes-a-default-profile-under-open-ended-text-contracts.md) — rationale: the decision that retired the closed taxonomy and opened the profile set
 - [Text contract profiles](../../reference/text-contract-profiles.md) — part-of: the catalogue of currently shipped profiles, which collections use each, and which ADR promoted it
-- [distillation](./distillation.md) — enables: distillation connects profiles through the theory → prescription → implementation → description chain
+- [theory and methodology form a two-layer execution system](../theory-and-methodology-form-a-two-layer-execution-system.md) — enables: working artifacts out from one another connects profiles through the theory → prescription → implementation → description chain
 - [constraining](./constraining.md) — co-equal mechanism: orthogonal to profiles but interacts — prescriptions are more constrained than theories

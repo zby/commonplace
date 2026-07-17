@@ -2,7 +2,7 @@
 description: Holistic rewrite shifts reconciliation from each consumer to the author, but only when the whole-picture narrative can fit within effective context and be refreshed before the narrative goes stale
 type: kb/types/note.md
 traits: [has-external-sources, title-as-claim]
-tags: [learning-theory, context-engineering, distillation]
+tags: [learning-theory, context-engineering, deploy-time-learning]
 ---
 
 # A compact, refreshable whole-picture narrative can replace infeasible fragment reconciliation

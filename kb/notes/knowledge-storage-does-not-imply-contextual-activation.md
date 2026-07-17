@@ -25,6 +25,8 @@ Activation can fail before knowledge reaches the context window — read-back fa
 
 Both failures produce the same practical result: a lesson that could have changed the outcome does not enter the active computation.
 
+The form of the loaded knowledge matters too. A compressed artifact derived from experience can look adequate while quietly losing behavioral influence: the [Faithful Self-Evolvers ingest](../sources/llm-agents-are-not-always-faithful-self-evolvers.ingest.md) found that condensed experience is often less active than the raw traces it replaced — the summary is present, read, and semantically plausible, yet steers the agent less than the material it condensed. Reshaping for a context budget can therefore trade away exactly the activation it was meant to buy.
+
 ## The Expert-Witness Pattern
 
 Models often behave like expert witnesses rather than advisors. An expert witness answers the question asked. An advisor raises the concern the questioner did not know to ask about. Current models are much better at the first than the second.
@@ -68,3 +70,4 @@ Relevant Notes:
 - [the-bug-that-shipped-2035319413474206122](https://x.com/KatanaLarp/status/2035319413474206122) — evidence: deployment-failure insights retrievable on probe but often absent in undirected review
 - [The Second Brain Trap ingest](../sources/the-second-brain-trap-2041486539067154753.ingest.md) — evidence: a first-person note-taking failure report that frames the problem as stored knowledge failing to activate in working context
 - [Agents Explore but Agents Ignore ingest](../sources/agents-explore-but-agents-ignore-llms-lack-environmental.ingest.md) — evidence: solution-injection experiments separate discovery from action, showing context-present solutions can remain unintegrated
+- [Faithful Self-Evolvers ingest](../sources/llm-agents-are-not-always-faithful-self-evolvers.ingest.md) — evidence: condensed experience can stay semantically plausible yet lose behavioral influence relative to the raw traces it replaced — an activation loss introduced by the reshaping itself

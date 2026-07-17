@@ -24,7 +24,7 @@ The operational core decomposes into four components within a single bounded cal
 
 **Maintenance** — keeping loaded context healthy over time. Compaction, observation masking, and the [workshop layer's](../a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) holistic-rewrite discipline prevent accumulated debris from [degrading reasoning](../context-efficiency-is-the-central-design-concern-in-agent-systems.md).
 
-[Distillation](./distillation.md) — reshaping recorded knowledge for a specific task and context budget — is the main operation these components perform, but not the only one. The [bounded-context orchestration model](../bounded-context-orchestration-model.md) formalizes the machinery as a `solve` loop where a symbolic scheduler drives routing, loading, and scoping for each bounded LLM call.
+Reshaping recorded knowledge for a specific task and context budget — producing derived views, summaries, and handoff artifacts — is the main operation these components perform, but not the only one. The [bounded-context orchestration model](../bounded-context-orchestration-model.md) formalizes the machinery as a `solve` loop where a symbolic scheduler drives routing, loading, and scoping for each bounded LLM call.
 
 ## Architectural scope beyond a single call
 
@@ -36,7 +36,7 @@ The operational core depends on decisions made before and after prompt assembly:
 
 **Session boundaries** — whether a system inherits transcript history by default or treats each call as a fresh assembly problem. [Session history should not be the default next context](../session-history-should-not-be-the-default-next-context.md) is context engineering at the boundary level.
 
-**Inter-agent communication** — when sub-agents return compressed artifacts instead of full transcripts, the boundary itself becomes a context-engineering primitive. Execution boundaries are natural sites for [distillation](./distillation.md).
+**Inter-agent communication** — when sub-agents return compressed artifacts instead of full transcripts, the boundary itself becomes a context-engineering primitive. Execution boundaries are natural sites for producing derived handoff artifacts.
 
 **Tool and interface design** — tool descriptions, instruction surfaces, and generated interfaces consume context budget too. [Frontloading](../frontloading-spares-execution-context.md) shifts interpretive cost out of the live context window.
 
@@ -58,7 +58,6 @@ Context engineering is not observability. Observability can inform context-engin
 
 Relevant Notes:
 
-- [distillation](./distillation.md) — the main operation context engineering performs: targeted transformation of recorded material for a bounded consumer
 - [context efficiency is the central design concern](../context-efficiency-is-the-central-design-concern-in-agent-systems.md) — grounds: if bounded context is the governing cost model, context engineering must be architectural rather than local to prompt assembly
 - [bounded-context orchestration model](../bounded-context-orchestration-model.md) — formalisation: the select/call loop that structures context engineering decisions
 - [instruction specificity should match loading frequency](../instruction-specificity-should-match-loading-frequency.md) — mechanism: the routing hierarchy (always-loaded → on-demand)

@@ -39,7 +39,7 @@ In a [properly scoped system](./llm-context-is-composed-without-scoping.md), eac
 
 ## Execution-boundary compression is a recurring design move
 
-Across several systems, the shared move is [compression at the execution boundary](./definitions/distillation.md):
+Across several systems, the shared move is compression at the execution boundary:
 
 - Sub-agents should expose only return values across frames, not internal conversations ([scoping note](./llm-context-is-composed-without-scoping.md))
 - When the caller does judgment-heavy selection before dispatch, the callee need not inherit the caller's search trace ([ad-hoc prompts](./ad-hoc-prompts-extend-the-system-without-schema-changes.md))
@@ -47,7 +47,7 @@ Across several systems, the shared move is [compression at the execution boundar
 - [Slate](https://randomlabs.ai/blog/slate) workers return compressed episodes rather than full tactical traces
 - [Conversation vs. prompt refinement](./conversation-vs-prompt-refinement-in-agent-to-agent-coordination.md) is a local case: conversation preserves the trace in-band, refinement compresses it into a cleaner handoff artifact, and forking preserves a selected trace prefix for multiple children
 
-Compression at the boundary produces the artifact; the selection step decides whether and how much of it to load into the next call. But the compression itself should be goal-oriented rather than uniform. A fixed strategy — "summarize what happened" — produces a general-purpose artifact that serves no consumer particularly well. Distillation targeted at a specific next stage can produce a much tighter result: a structured failure signal for a retry decision, a claim list for a synthesis step, a status line for a progress report. The same execution trace might warrant different compressions for different consumers.
+Compression at the boundary produces the artifact; the selection step decides whether and how much of it to load into the next call. But the compression itself should be goal-oriented rather than uniform. A fixed strategy — "summarize what happened" — produces a general-purpose artifact that serves no consumer particularly well. Compression targeted at a specific next stage can produce a much tighter result: a structured failure signal for a retry decision, a claim list for a synthesis step, a status line for a progress report. The same execution trace might warrant different compressions for different consumers.
 
 ## Tension: Slate's episodes sit between traces and artifacts
 
@@ -79,7 +79,7 @@ Relevant Notes:
 - [tool loop](./tool-loop-README.md) — foundation: the trace problem appears when bounded calls are repackaged into framework-owned sessions that hide progression and make history inheritance the path of least resistance
 - [conversation-vs-prompt-refinement-in-agent-to-agent-coordination](./conversation-vs-prompt-refinement-in-agent-to-agent-coordination.md) — special case: conversation preserves trace, prompt refinement compresses it into a cleaner handoff artifact
 - [ad hoc prompts extend the system without schema changes](./ad-hoc-prompts-extend-the-system-without-schema-changes.md) — exemplifies: the caller does judgment-heavy selection before dispatch, creating a clean handoff boundary
-- [distillation](./definitions/distillation.md) — mechanism: execution-boundary compression is distillation targeted at the next stage's needs
+- [theory and methodology form a two-layer execution system](./theory-and-methodology-form-a-two-layer-execution-system.md) — mechanism: execution-boundary compression is selection plus reshaping targeted at the next stage's needs
 - [agent orchestration occupies a multi-dimensional design space](./agent-orchestration-occupies-a-multi-dimensional-design-space.md) — extends: return artifact is a design dimension, and this note argues traces should usually not be that artifact
 - [codification and relaxing navigate the bitter lesson boundary](./codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) — tension: compressed trace artifacts may preserve more reusable learning signal than narrow result artifacts, even when they are less minimal as interfaces
 - [Spacebot](../agent-memory-systems/reviews/spacebot.md) — exemplifies: branches return scrubbed conclusions rather than full reasoning traces

@@ -7,11 +7,11 @@ tags: [agent-memory, context-engineering]
 
 # Preserve Evidence Without Making History The Next Context
 
-A memory system needs a capture substrate that keeps enough source material for later extraction, audit, debugging, and redistillation. But capture is not loading: the point is to preserve evidence without making history the acting agent's next context. Broad trace retention is useful because the future consumer is often unknown at capture time, while ordinary execution should still load only the material that earns its context budget.
+A memory system needs a capture substrate that keeps enough source material for later extraction, audit, debugging, and re-derivation of condensed artifacts. But capture is not loading: the point is to preserve evidence without making history the acting agent's next context. Broad trace retention is useful because the future consumer is often unknown at capture time, while ordinary execution should still load only the material that earns its context budget.
 
 Text-heavy traces are often cheap to retain: prompts, model outputs, tool calls, file diffs, command output, and small structured artifacts. Large media, datasets, telemetry firehoses, regulated material, and multi-user streams change the calculation. Payload form and volume control per-session storage cost; user scope and behavioral authority control aggregate cost and governance.
 
-[Session history should not be the default next context](../session-history-should-not-be-the-default-next-context.md) because persistence and loading are separate decisions. Store-everything is only a capture posture. Raw traces should usually remain outside the acting agent's ordinary context, loading only for provenance checks, dispute resolution, debugging, redistillation, or evaluation.
+[Session history should not be the default next context](../session-history-should-not-be-the-default-next-context.md) because persistence and loading are separate decisions. Store-everything is only a capture posture. Raw traces should usually remain outside the acting agent's ordinary context, loading only for provenance checks, dispute resolution, debugging, re-derivation, or evaluation.
 
 ## Session Lifecycle
 
@@ -21,7 +21,7 @@ Session lifecycle is part of this requirement, not just an implementation detail
 
 - Complete session traces with tool calls, timestamps, outputs, errors, and final artifacts.
 - Structured event logs that capture actions, decisions, errors, approvals, and produced artifacts without preserving every token.
-- Session checkpoints, commit records, retry handles, and archive directories that let follow-up work resume, audit, or redistill a bounded run.
+- Session checkpoints, commit records, retry handles, and archive directories that let follow-up work resume, audit, or re-derive artifacts from a bounded run.
 - Artifact provenance records that link durable notes, policies, decisions, tests, scripts, or plugins back to the sessions and sources that produced them.
 - Redacted trace stores where secret scrubbing and retention policy run before extraction or model inspection.
 - Selective capture in high-risk domains where privacy, legal retention, media payloads, or data volume make broad logging unacceptable.

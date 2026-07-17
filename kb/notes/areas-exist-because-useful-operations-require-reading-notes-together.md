@@ -99,6 +99,3 @@ Relevant Notes:
 - [quality signals for KB evaluation](./quality-signals-for-kb-evaluation.md) — extends: comparative reading yield as a potential quality signal
 - [brainstorming how to enrich web search](./brainstorming-how-to-enrich-web-search.md) — complements: /connect handles the cross-area connections that within-area operations don't reach
 
-Distilled into:
-
-- [COLLECTION.md](./COLLECTION.md) — area assignment rules, lifecycle split threshold, and areas field description

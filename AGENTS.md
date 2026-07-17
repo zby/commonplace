@@ -23,7 +23,7 @@ Agent-operated knowledge base methodology: how to structure, write, connect, val
 In scope:
 
 - Design decisions about KB methodology (type systems, linking, indexing, review)
-- Context engineering theory (distillation, constraining, codification)
+- Context engineering theory (constraining, codification, knowledge reshaping)
 - Operational patterns (writing workflows, validation, maintenance)
 - Evaluations and comparisons with external knowledge systems
 
@@ -46,9 +46,9 @@ Terms needed to understand the project's structure and everyday operations, alph
 - **Collection** — a `kb/` subtree whose root contains `COLLECTION.md`; that file is the local authoring and routing contract for artifacts in the subtree. See `kb/reference/definitions/collection.md`.
 - **Commonplace** — the name of this KB and framework. Capitalize it in prose; lowercase only in literal identifiers (`commonplace-*`, `llm-commonplace`, `src/commonplace/`, `kb/commonplace/`).
 - **Criterion** — the instruction text applied to a note in an assay. It occupies the persisted `criterion_path` side of a review pair; a gate is a closed-ended, verdict-kind criterion, while critique is an open-ended, report-kind criterion. See `kb/reference/README-REVIEW-SYSTEM.md#concepts`.
-- **Constraining** — narrowing the space of valid interpretations an artifact admits — from writing a convention up to committing to code. Orthogonal to distillation. See `kb/notes/definitions/constraining.md`.
+- **Constraining** — narrowing the space of valid interpretations an artifact admits — from writing a convention up to committing to code. See `kb/notes/definitions/constraining.md`.
 - **Context engineering** — getting the right knowledge into a bounded context at the right time: routing, loading, scoping, maintenance. See `kb/notes/definitions/context-engineering.md`.
-- **Distillation** — extracting a use-shaped artifact from a larger body of material for a particular consumer (notes from sources, instructions from notes). Distinct from ML knowledge distillation. See `kb/notes/definitions/distillation.md`.
+- **Discovery lifecycle** — the staged path by which an ampliative conjecture earns acceptance: observe, conjecture, derive consequences, test, accept, integrate. The compound is the technical term; bare "discovery" stays ordinary English. See `kb/notes/definitions/discovery-lifecycle.md`.
 - **Frontloading** — pre-computing parts of an instruction whose inputs are already known (at build, install, or session start) and inserting the result, so the consuming call's context carries the answer instead of the work. See `kb/notes/frontloading-spares-execution-context.md`.
 - **Freshness baseline** — the current snapshot-pinned applicability boundary for one registered target. In v1 review targets are `review-pair` keys `(note, criterion, model partition)` with `note` and `criterion` `file-text` inputs; a baseline preserves an evidence review pair while tracking the latest accepted input snapshots — it is not endorsement or global approval. See `kb/reference/README-REVIEW-SYSTEM.md#concepts` and `kb/reference/freshness-architecture.md`.
 - **Commonplace store** — the operational SQLite database (`kb/reports/commonplace-store.sqlite`; `COMMONPLACE_STORE`) holding artifact snapshots, freshness baselines, and review execution state. See `kb/reference/freshness-architecture.md`.

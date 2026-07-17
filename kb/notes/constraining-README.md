@@ -35,4 +35,3 @@ Making semantics more focused by narrowing the space of valid interpretations an
 ## Related Tags
 
 - [deploy-time-learning](./deploy-time-learning-README.md) — the framework constraining serves; the verifiability gradient locates constrained artifacts
-- [distillation](./distillation-README.md) — the orthogonal mechanism: extraction rather than narrowing

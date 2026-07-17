@@ -51,7 +51,7 @@ Dual-tagged with [LLM interpretation errors](./llm-interpretation-errors-README.
 
 - [llm-interpretation-errors](./llm-interpretation-errors-README.md) — error correction theory, oracle hardening, and reliability dimensions; explains *why* the scheduling architecture works
 - [tool-loop](./tool-loop-README.md) — the loop-exposure and hidden-scheduler cluster, including the observability failures of framework-owned loops
-- [learning-theory](./learning-theory-README.md) — how systems learn through constraining, codification, distillation; the computational model explains *what kind of programs* these mechanisms operate on
+- [learning-theory](./learning-theory-README.md) — how systems learn through constraining, codification, and source-derived reshaping; the computational model explains *what kind of programs* these mechanisms operate on
 - [tags](./tags-README.md) — practical architecture applying these computational properties; frontloading and indirection cost are PL concepts applied to KB instructions
 
 ---

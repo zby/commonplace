@@ -43,7 +43,7 @@ The immediate trigger: `kb/instructions/WRITING.md` sits at the top of the KB di
 
 Relevant Notes:
 
-- [skills derive from methodology](./skills-derive-from-methodology-through-distillation.md) — foundation: defines the source-to-procedure relationship this note proposes using as a directory boundary
+- [skills derive from methodology](./skills-derive-from-methodology.md) — foundation: defines the source-to-procedure relationship this note proposes using as a directory boundary
 - [skills are instructions plus routing and execution policy](./skills-are-instructions-plus-routing-and-execution-policy.md) — context: the existing instruction/note boundary that this principle would sharpen
 - [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — enables: the loading hierarchy that execution-shaped placement aligns with
 - [areas exist because useful operations require reading notes together](./areas-exist-because-useful-operations-require-reading-notes-together.md) — parallel: areas organize notes for comparative reading; execution form organizes artifacts for maintenance operations

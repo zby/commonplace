@@ -93,7 +93,7 @@ If the system has no reachable source code, stop and write a lightweight note in
    - Remove `user-verified` if present; archiving is a substantive lifecycle edit and the replacement banner carries the supersession fact.
    Do not read the archived `.replaced.*.md` file while writing the replacement.
 
-8. **Draft the review by delegation.** Use `kb/agent-memory-systems/types/agent-memory-system-review.md` as the worker's artifact contract for required sections and fields. Do not ask the worker to load the full [designing-agent-memory-systems](../../notes/designing-agent-memory-systems.md) note during ordinary review writing — its comparison lens is already distilled into the contract.
+8. **Draft the review by delegation.** Use `kb/agent-memory-systems/types/agent-memory-system-review.md` as the worker's artifact contract for required sections and fields. Do not ask the worker to load the full [designing-agent-memory-systems](../../notes/designing-agent-memory-systems.md) note during ordinary review writing — its comparison lens is already condensed into the contract.
 
    Before delegating: if the harness cannot launch a sub-agent or worker, stop after setup and report that delegated drafting is unavailable. Do not draft locally unless the user explicitly authorizes a local fallback for this run; if authorized, report `drafting was local, not delegated` as a workflow exception. This is a parent-only decision, made before any worker exists — a worker that has actually been launched is, by construction, the delegated drafting worker and never needs to reason about fallback authorization itself.
 

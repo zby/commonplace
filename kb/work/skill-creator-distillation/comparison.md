@@ -152,7 +152,7 @@ A third routing/interface axis may be needed for a full framework: packaging met
 
 ## Implications for Commonplace
 
-- The current note [skills derive from methodology through distillation](../../notes/skills-derive-from-methodology-through-distillation.md) is directionally right and already allows artifact-sourced skills, but does not treat evaluation traces, trigger tuning, and product constraints as equally central source material.
+- The current note [skills derive from methodology through distillation](../../notes/skills-derive-from-methodology.md) is directionally right and already allows artifact-sourced skills, but does not treat evaluation traces, trigger tuning, and product constraints as equally central source material.
 - A stronger formulation: skills can derive from methodology notes *or* directly from workshop evidence; the common operation is distillation from a larger operational substrate.
 - Skill creation itself looks like a missing workshop template. A good workshop packet would likely include:
   - source prompts/examples

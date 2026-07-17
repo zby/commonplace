@@ -22,7 +22,7 @@ The organizing framework of the learning-theory area: deployed systems adapt thr
 - [LLM learning phases fall between human learning modes](./llm-learning-phases-fall-between-human-learning-modes.md) — warns against literal human-LLM learning analogies
 - [in-context learning presupposes context engineering](./in-context-learning-presupposes-context-engineering.md) — "no continual learning needed" relocates the learning to the system layer rather than eliminating it
 - [choosing what to learn requires both validity and learning-value gates](./choosing-what-to-learn-requires-both-validity-and-learning-value-gates.md) — accumulation policy: true is necessary but not sufficient
-- [abstract an experience only when you can state where the lesson stops](./abstract-an-experience-only-when-you-can-state-the-boundary.md) — the abstract-vs-preserve decision: distill only when the lesson's boundary is statable, else keep the instance
+- [abstract an experience only when you can state where the lesson stops](./abstract-an-experience-only-when-you-can-state-the-boundary.md) — the abstract-vs-preserve decision: generalize only when the lesson's boundary is statable, else keep the instance
 
 ## Feedback and signal quality
 
@@ -34,5 +34,4 @@ The organizing framework of the learning-theory area: deployed systems adapt thr
 ## Related Tags
 
 - [constraining](./constraining-README.md) — the primary hardening mechanism inside the framework
-- [distillation](./distillation-README.md) — the extraction mechanism inside the framework
 - [discovery](./discovery-README.md) — the operation that produces the framework's highest-reach artifacts

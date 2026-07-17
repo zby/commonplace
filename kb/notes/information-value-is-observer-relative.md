@@ -2,7 +2,7 @@
 description: "Information value is observer-relative: prior knowledge, tools, compute, and goals determine extractable structure, grounding use-shaped reshaping and discovery."
 type: kb/types/note.md
 traits: [has-external-sources, title-as-claim]
-tags: [learning-theory, distillation, discovery]
+tags: [learning-theory, discovery]
 ---
 
 # Information value is observer-relative

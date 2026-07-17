@@ -22,7 +22,7 @@ The [undefined-terms review gate](../../instructions/review-gates/accessibility/
 
 Notes must be written so that an external reader can follow the argument without leaving the page. Specifically:
 
-1. **KB vocabulary terms require an inline gloss and a definition pointer on first mention.** The gloss orients the reader enough to keep reading; the pointer provides depth. Example: `distillation (directed context compression)`.
+1. **KB vocabulary terms require an inline gloss and a definition pointer on first mention.** The gloss orients the reader enough to keep reading; the pointer provides depth. Example: `constraining (narrowing the space of valid interpretations an artifact admits)`. (The original example used `distillation (directed context compression)`; that term was retired by [ADR 053](./053-retire-distillation-without-a-successor-term.md), but the rule is unchanged.)
 2. **The undefined-terms gate no longer exempts KB vocabulary.** These terms are now subject to the same first-mention test as any other technical term.
 3. **The WRITING.md checklist includes a KB vocabulary item** reminding authors that external readers lack CLAUDE.md context.
 
@@ -39,7 +39,7 @@ The general principle: authors write with full KB context loaded; readers arrive
 ### Harder
 
 - **Authoring cost increases** — every first mention of a KB term needs a gloss. This is intentional friction, like the link-relationship requirement ([ADR 009](./009-link-relationship-semantics.md)).
-- **Glosses may drift** from definitions — if the definition of "distillation" evolves, glosses scattered across notes may become stale. The definition notes remain authoritative; glosses are approximations.
+- **Glosses may drift** from definitions — if a definition evolves, glosses scattered across notes may become stale. The definition notes remain authoritative; glosses are approximations.
 - **Existing notes are non-compliant.** Retrofitting glosses across the KB is a gradual process, not a bulk operation. The review gate will surface violations as notes are reviewed.
 
 ---

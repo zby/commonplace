@@ -40,7 +40,7 @@ This KB's design choice is source-side records — the `Derived into:` / `Abstra
 
 Relevant Notes:
 
-- [Skills derive from methodology](./skills-derive-from-methodology-through-distillation.md) — grounds: the source-to-procedure relationship that produces artifacts needing lineage
+- [Skills derive from methodology](./skills-derive-from-methodology.md) — grounds: the source-to-procedure relationship that produces artifacts needing lineage
 - [Link graph plus timestamps enables make-like staleness detection](./link-graph-plus-timestamps-enables-make-like-staleness-detection.md) — extends: forward lineage pointers provide the dependency edges that use-shaped artifacts deliberately omit
 - [Frontloading spares execution context](./frontloading-spares-execution-context.md) — grounds: producing an LLM instruction from already-known source material can frontload selection and derivation; tracked lineage preserves the dependency the instruction no longer shows
 

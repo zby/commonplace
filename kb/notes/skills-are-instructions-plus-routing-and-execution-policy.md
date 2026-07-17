@@ -7,7 +7,7 @@ tags: []
 
 # Skills are instructions plus routing and execution policy
 
-Instructions and skills share the same medium (execution-oriented procedures in markdown), the same path from source reasoning to a task-facing procedure ([skills derive from methodology](./skills-derive-from-methodology-through-distillation.md)), and the same writing constraints (imperative, step-sequenced, behaviourally complete). The procedure is interchangeable — you can promote an instruction to a skill or demote a skill to an instruction without rewriting the body. What differs is the harness integration surface: what the runtime does with the file beyond reading it. Not every skill uses all three affordances — a minimal skill may only use discovery and invocation — but the skill format makes them available.
+Instructions and skills share the same medium (execution-oriented procedures in markdown), the same path from source reasoning to a task-facing procedure ([skills derive from methodology](./skills-derive-from-methodology.md)), and the same writing constraints (imperative, step-sequenced, behaviourally complete). The procedure is interchangeable — you can promote an instruction to a skill or demote a skill to an instruction without rewriting the body. What differs is the harness integration surface: what the runtime does with the file beyond reading it. Not every skill uses all three affordances — a minimal skill may only use discovery and invocation — but the skill format makes them available.
 
 ## Three things skills add
 
@@ -90,7 +90,7 @@ Summarizing portability:
 
 Relevant Notes:
 
-- [skills derive from methodology](./skills-derive-from-methodology-through-distillation.md) — foundation: the source-to-procedure relationship shared by skills and instructions
+- [skills derive from methodology](./skills-derive-from-methodology.md) — foundation: the source-to-procedure relationship shared by skills and instructions
 - [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — grounds: the loading hierarchy both participate in
 - [always-loaded context mechanisms in agent harnesses](./always-loaded-context-mechanisms-in-agent-harnesses.md) — context: the discovery surfaces through which both are found
 - [methodology enforcement is constraining](./methodology-enforcement-is-constraining.md) — context: instructions sit on the constraining gradient between ad-hoc notes and skills

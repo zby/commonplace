@@ -38,13 +38,13 @@ Judge the abstraction present in the artifact. Do not repair the claim while rev
 
 Title: "Retained artifacts must record the applicability envelope of derived content."
 
-The body argues about KB notes: the mechanism is note frontmatter, the evidence is two note reviews. Downgrading to "Notes must record where a distilled claim stops applying" leaves the argument unchanged, and the abstract title excludes nothing the concrete one allowed — asked what it adds, the note's scope section says it "also covers skills, schemas, and memory records". Coverage, not content.
+The body argues about KB notes: the mechanism is note frontmatter, the evidence is two note reviews. Downgrading to "Notes must record where a derived claim stops applying" leaves the argument unchanged, and the abstract title excludes nothing the concrete one allowed — asked what it adds, the note's scope section says it "also covers skills, schemas, and memory records". Coverage, not content.
 
 ## Example (pass)
 
-Title: "Distillation strips lineage, so the dependency record must live outside the artifact."
+Title: "Reshaping strips lineage, so the dependency record must live outside the artifact."
 
-"Artifact" is general and the argument earns it: the mechanism turns on distillation discarding its inputs — a property of the operation, not of the output format — and the note works both notes-from-sources and instructions-from-notes under the general term, so downgrading to "note" would demote the second instance to a special case. The general claim forbids storing lineage inside any distilled output, including the instruction case a note-scoped claim leaves open.
+"Artifact" is general and the argument earns it: the mechanism turns on the reshaping discarding its inputs — a property of the operation, not of the output format — and the note works both notes-from-sources and instructions-from-notes under the general term, so downgrading to "note" would demote the second instance to a special case. The general claim forbids storing lineage inside any reshaped output, including the instruction case a note-scoped claim leaves open.
 
 ---
 

@@ -145,7 +145,7 @@ Relevant Notes:
 - [automating-kb-learning-is-an-open-problem](./automating-kb-learning-is-an-open-problem.md) — the problem this note addresses: the learning loop needs quality gates, and this note proposes the composite signal that could serve as one
 - [oracle-strength-spectrum](../notes/oracle-strength-spectrum.md) — grounds the framing: each quality signal is a weak oracle, and the composite is an oracle-hardening strategy (manufacturing a soft oracle from many no-oracle signals)
 - [text-testing-framework](./text-testing-framework.md) — the test pyramid (deterministic / LLM rubric / corpus) maps onto the signal categories here; the framework provides the concrete testing infrastructure these signals would feed
-- [automated-tests-for-text](./automated-tests-for-text.md) — the distilled observation that text can be tested like software; this note extends that by asking which tests, combined, could drive automated improvement
+- [automated-tests-for-text](./automated-tests-for-text.md) — the condensed observation that text can be tested like software; this note extends that by asking which tests, combined, could drive automated improvement
 - [spec-mining-as-codification](../notes/spec-mining-as-codification.md) — the metamorphic relations section is spec mining applied to KB structure: extracting testable invariants from observed mutation behavior
 - [document-types-should-be-verifiable](./document-types-should-be-verifiable.md) — prerequisite: content quality proxies (frontmatter completeness, title-as-claim ratio) depend on the type system being trustworthy
 - [stale-indexes-are-worse-than-no-indexes](./stale-indexes-are-worse-than-no-indexes.md) — exemplifies why index coverage is a high-value signal: missing entries actively suppress search

@@ -9,7 +9,7 @@ tags: [agent-memory, context-engineering]
 
 Not all memory starts inside the current session. When authoritative or useful project knowledge already exists outside the memory system, the system should import external knowledge bases, documents, repositories, source snapshots, tickets, notes, or prior archives into its own internal form.
 
-Import is not copying. It is a [distillation](../definitions/distillation.md) (directed context compression) and [constraining](../definitions/constraining.md) (narrowing interpretation space) step that converts external material into artifacts that obey the receiving system's types, links, quality requirements, provenance rules, and retrieval surfaces.
+Import is not copying. It is a condensing (directed context compression) and [constraining](../definitions/constraining.md) (narrowing interpretation space) step that converts external material into artifacts that obey the receiving system's types, links, quality requirements, provenance rules, and retrieval surfaces.
 
 ## Methods
 

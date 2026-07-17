@@ -44,7 +44,7 @@ Do not:
 
 5. **Patch only ambiguous prose.** Add wording when the old review leaves a taxonomy-relevant mechanism unclear. Prefer short replacements in existing paragraphs over new sections. Leave fields implicit when they are obvious and not central to the review's comparison.
 
-6. **Handle trace-learning reviews carefully.** If the review has a trace-learning placement, ensure it distinguishes raw trace artifacts from distilled artifacts. Raw traces often have knowledge-artifact or evidence use; distilled rules, tools, prompts, validators, fine-tunes, or rankers often have system-definition-artifact use.
+6. **Handle trace-learning reviews carefully.** If the review has a trace-learning placement, ensure it distinguishes raw trace artifacts from the artifacts produced from them. Raw traces often have knowledge-artifact or evidence use; rules, tools, prompts, validators, fine-tunes, or rankers produced from traces often have system-definition-artifact use.
 
 7. **Update the trace-learning survey only when needed.** Edit `kb/agent-memory-systems/trace-learning-techniques-in-related-systems.md` only if the refresh changes survey placement, axis wording, or a cross-system claim.
 
@@ -62,5 +62,5 @@ Do not:
 - No active review still uses old taxonomy shorthand where the current fields are meant.
 - Reviews whose `last-checked` date is older than 30 days are reported with a staleness warning.
 - `last-checked` dates are unchanged unless source was re-read.
-- Trace-learning reviews distinguish raw trace storage from distilled behavior-changing artifacts when both exist.
+- Trace-learning reviews distinguish raw trace storage from behavior-changing artifacts produced from traces when both exist.
 - Validation reports no failures in the edited scope.

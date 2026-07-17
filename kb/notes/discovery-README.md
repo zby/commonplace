@@ -8,7 +8,7 @@ complete: true
 
 # discovery
 
-A third learning operation, distinct from both constraining and distillation: positing a new general concept and simultaneously recognizing existing particulars as instances of it. Discovery produces theories — the highest-[reach](./first-principles-reasoning-selects-for-explanatory-reach-over.md) items accumulation can store. A child of [learning-theory](./learning-theory-README.md).
+A learning operation distinct from constraining and from source-derived reshaping: positing a new general concept and simultaneously recognizing existing particulars as instances of it. Discovery produces theories — the highest-[reach](./first-principles-reasoning-selects-for-explanatory-reach-over.md) items accumulation can store. A child of [learning-theory](./learning-theory-README.md).
 
 ## The operation
 
@@ -25,5 +25,7 @@ A third learning operation, distinct from both constraining and distillation: po
 ## Conditions for discovery
 
 - [short composable notes maximize combinatorial discovery](./short-composable-notes-maximize-combinatorial-discovery.md) — the artifact-shape argument: small claims compose into more candidate generalizations
-- [information value is observer-relative](./information-value-is-observer-relative.md) — the gap discovery (and distillation) bridge: structure exists but is inaccessible to the bounded observer until transformed
+- [information value is observer-relative](./information-value-is-observer-relative.md) — the gap discovery (and consumer-directed reshaping) bridges: structure exists but is inaccessible to the bounded observer until transformed
+- [Epiplexity by example](./epiplexity-by-example-what-entropy-and-complexity-miss.md) — worked examples: encrypted messages, shuffled textbooks, CSPRNGs, and chess notation make observer-relative extractable structure concrete
+- [reverse-compression is when LLM output expands without adding information](./reverse-compression-is-when-llm-output-expands-without-adding.md) — the failure inverse: expansion that adds no extractable structure, where productive transformation makes structure accessible
 - [minimum viable vocabulary](./minimum-viable-vocabulary-is-the-naming-set-that-most-reduces.md) — naming as the discovery lever: the vocabulary that most reduces extraction cost for an observer entering a domain

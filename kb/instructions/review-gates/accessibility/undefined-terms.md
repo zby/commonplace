@@ -28,7 +28,7 @@ Active vocabulary terms declared in `AGENTS.md` are NOT exempt. Authors may know
 
 ## Example (fail — active vocabulary without gloss)
 
-"The skill is produced by distillation from the methodology notes."
+"The skill body needs constraining before it ships."
 
 ## Example (pass)
 
@@ -36,4 +36,4 @@ Active vocabulary terms declared in `AGENTS.md` are NOT exempt. Authors may know
 
 ## Example (pass — active vocabulary with gloss and link)
 
-`"The skill is produced by [distillation](./definitions/distillation.md) (directed context compression) from the methodology notes."`
+`"The skill body needs [constraining](./definitions/constraining.md) (narrowing the space of valid interpretations it admits) before it ships."`

@@ -2,12 +2,12 @@
 
 The theoretical register of the Commonplace KB: transferable claims, mechanisms, definitions, and synthesis about how agent-operated knowledge bases — LLM wikis — should be built and operated. This is the theory the rest of the repository runs on; the methodology these notes describe is what agents follow to maintain this wiki.
 
-The central thread is [deploy-time learning](./deploy-time-learning-is-the-missing-middle.md) — how deployed AI systems improve through structured knowledge that accumulates alongside the code — developed through the [constraining](./definitions/constraining.md), [distillation](./definitions/distillation.md), and discovery operations.
+The central thread is [deploy-time learning](./deploy-time-learning-is-the-missing-middle.md) — how deployed AI systems improve through structured knowledge that accumulates alongside the code — developed through [constraining](./definitions/constraining.md), source-derived reshaping, and the [discovery lifecycle](./definitions/discovery-lifecycle.md).
 
 ## Navigation
 
 - [tags index](./tags-README.md) — the top-level hub linking every tag README (foundations, evaluation, learning theory, links, and the rest), plus the workshop layer and open gaps.
-- [definitions/](./definitions/dir-index.md) — the project's core vocabulary (register, constraining, distillation, codification, and the rest), one term per file.
+- [definitions/](./definitions/dir-index.md) — the project's core vocabulary (register, constraining, codification, discovery lifecycle, and the rest), one term per file.
 
 ## How to read these notes
 

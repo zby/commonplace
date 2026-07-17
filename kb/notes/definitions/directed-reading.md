@@ -45,11 +45,11 @@ Directed reading is not directed editing. Directed-editing workflows also read t
 - Using a stable skill contract and also writing a one-off instruction note that merely restates the same procedure.
 - Letting a directed-reading report silently become committed KB state without an explicit promotion or editing step.
 
-## Relationship to distillation
+## Relationship to use-shaped production
 
-Directed reading is often the input-side phase of [distillation](./distillation.md): selected material is consumed under a task lens before it is transformed into a use-shaped artifact for a downstream consumer. This overlap is strong enough that the terms should not be used as rivals. If the only important fact is that recorded material was reshaped for a downstream consumer, call it distillation.
+Directed reading is often the input-side phase of producing a use-shaped artifact: selected material is consumed under a task lens before being reshaped for a downstream consumer. This overlap is strong enough that the notions should not be used as rivals. If the only important fact is that recorded material was reshaped for a downstream consumer, plain language — summarized, condensed, worked out from — suffices.
 
-Keep the term directed reading only when the reading contract matters independently: the source bounds, lens, relevance rules, or output contract need to be discussed before the resulting artifact exists. A review pass that reads a pull request through a safety lens and returns "ship / do not ship" is directed reading without much distillation. Reworking workshop material already understood by the author into a durable note can be distillation without a distinct directed-reading pass.
+Keep the term directed reading only when the reading contract matters independently: the source bounds, lens, relevance rules, or output contract need to be discussed before the resulting artifact exists. A review pass that reads a pull request through a safety lens and returns "ship / do not ship" is directed reading that produces no reshaped artifact. Reworking workshop material already understood by the author into a durable note can be reshaping without a distinct directed-reading pass.
 
 ## Relationship to context engineering
 
@@ -59,13 +59,12 @@ Keep the term directed reading only when the reading contract matters independen
 
 ## Status
 
-This note is a seedling and may turn out to be redundant. The `## Relationship to distillation` section narrows directed reading to "the input-side phase of distillation" and keeps the term only when the reading contract matters independently of the resulting artifact. If practice settles on calling these tasks [distillation](./distillation.md) directly and the independent-reading-contract case turns out to be rare, retire this note and redirect references to `distillation.md`.
+This note is a seedling and may turn out to be redundant. The `## Relationship to use-shaped production` section narrows directed reading to the input-side phase of producing a use-shaped artifact and keeps the term only when the reading contract matters independently of the resulting artifact. If the independent-reading-contract case turns out to be rare, retire this note in favour of plain reading-and-reshaping language.
 
 ---
 
 Relevant Notes:
 
-- [distillation](./distillation.md) - boundary: directed reading often creates a distillate, but the terms name different parts of the process
 - [context engineering](./context-engineering.md) - architectural frame: directed reading is a bounded-context consumption pattern
 - [frontloading spares execution context](../frontloading-spares-execution-context.md) - mechanism: pre-resolving paths, lens, context, and output shape keeps the reading pass focused
 - [ad hoc prompts extend the system without schema changes](../ad-hoc-prompts-extend-the-system-without-schema-changes.md) - application: one-off directed-reading prompts carry task-specific judgment without adding schema

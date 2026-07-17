@@ -40,14 +40,14 @@ The asymmetry is therefore characteristic rather than absolute. Theoretical arti
 
 ## One common path connects the profiles
 
-[Distillation](./definitions/distillation.md) and implementation often connect the profiles in a deliberately designed system:
+Derivation and implementation often connect the profiles in a deliberately designed system:
 
 ```
 theory  →  prescription  →  implementation  →  description
 (claim)    (procedure)      (working system)    (account of what exists)
 ```
 
-Theory explains why. A prescription distills that reasoning into executable guidance. Implementation encounters constraints the theory did not settle, and description records what was actually built. The description must remain faithful even when implementation deviates from the originating rationale.
+Theory explains why. A prescription condenses that reasoning into executable guidance. Implementation encounters constraints the theory did not settle, and description records what was actually built. The description must remain faithful even when implementation deviates from the originating rationale.
 
 This is one common path, not an origin law for descriptions. Existing systems are often described before anyone writes a theory about them; observations can revise theory; schema-first descriptions can direct implementation; and procedures can arise from local necessity without a general principle. These feedback and independent-origin paths are why the dependency edges, rather than the diagram, control maintenance.
 
@@ -93,7 +93,7 @@ Relevant Notes:
 
 - [First-principles reasoning selects for explanatory reach](./first-principles-reasoning-selects-for-explanatory-reach-over.md) — foundation: the reach concept that serves as the quality criterion for the theoretical register
 - [Why directories despite their costs](./why-directories-despite-their-costs.md) — extends: the three-register split provides a principled reason for directory-level separation beyond topic grouping
-- [Skills derive from methodology through distillation](./skills-derive-from-methodology-through-distillation.md) — exemplifies: methodology → skill is an instance of the theory → prescription distillation path
+- [Skills derive from methodology](./skills-derive-from-methodology.md) — exemplifies: methodology → skill is an instance of the theory → prescription derivation path
 - [Instructions are typed callables](./instructions-are-typed-callables.md) — extends: the instruction duality (prescriptive content, executable authority) is a specific case of treating documents as typed callables; the callable framing captures the operational-authority axis
 - [Text contract](./definitions/text-contract.md) — defined-in: the requirement and profile vocabulary that replaces "register" as the taxonomy name
 - [ADR 042: register becomes a default profile under open-ended text contracts](../reference/adr/042-register-becomes-a-default-profile-under-open-ended-text-contracts.md) — rationale: the decision that weakens this note's exhaustiveness claim to an attractor claim and opens the profile set

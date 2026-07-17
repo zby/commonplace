@@ -2,7 +2,7 @@
 description: "LLMs can inflate compact seeds into verbose artifacts without adding extractable structure; a KB resists this only when links add epiplexity"
 type: kb/types/note.md
 traits: [title-as-claim]
-tags: [learning-theory, distillation]
+tags: [learning-theory, discovery]
 ---
 
 # Reverse compression is when LLM output expands without adding information
@@ -41,8 +41,7 @@ Relevant Notes:
 
 - [vibe-noting](./vibe-noting.md) — context: the inflation failure mode this note names and analyzes
 - [information value is observer-relative](./information-value-is-observer-relative.md) — grounds: epiplexity formalizes what "adds information for a bounded observer" means
-- [distillation](./definitions/distillation.md) — contrasts: distillation compresses while preserving essential structure; reverse-compression expands while adding none
 - [Epiplexity paper](https://arxiv.org/html/2601.03220v1) — source: the formal measure of extractable structure for bounded observers
 - [SuperARC AIT benchmark](../sources/superarc-ait-benchmark-llm-compression-abstraction.ingest.md) — evidence: print-statement-only programs formally instantiate reverse-compression in code generation
 - [linking-theory](./linking-theory.md) — enables: the load-bearing vs decorative distinction is a core question for linking theory
-- [skills derive from methodology through distillation](./skills-derive-from-methodology-through-distillation.md) — contrasts: distillation is the productive inverse — compressing while preserving; reverse-compression is the failure mode — expanding while adding nothing
+- [skills derive from methodology](./skills-derive-from-methodology.md) — contrasts: skill derivation is the productive inverse — compressing while preserving; reverse-compression is the failure mode — expanding while adding nothing

@@ -60,7 +60,7 @@ Done when behavior-facing generated views are treated as rebuildable compiled ou
 
 Gap: broad session-trace capture, redaction, retention, and replay are not shipped as a memory substrate.
 
-Add trace capture only after eligibility policy is clear. The capture substrate should preserve enough evidence for audit, extraction, debugging, and redistillation without making raw history default context. Start with text-heavy sessions: prompts, model outputs, tool calls, command outputs, approvals, errors, produced artifacts, and final diffs. Add redaction and access rules before model-based extraction.
+Add trace capture only after eligibility policy is clear. The capture substrate should preserve enough evidence for audit, extraction, debugging, and later re-abstraction without making raw history default context. Start with text-heavy sessions: prompts, model outputs, tool calls, command outputs, approvals, errors, produced artifacts, and final diffs. Add redaction and access rules before model-based extraction.
 
 Done when Commonplace can point a candidate or durable artifact back to a retained session trace or trace excerpt under explicit retention, redaction, and loading policy.
 

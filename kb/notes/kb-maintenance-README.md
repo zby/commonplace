@@ -27,7 +27,7 @@ How an agent-operated KB stays healthy as it grows. Detection, operations, and t
 
 ## Operations
 
-- [maintenance-operations-catalogue-should-stage-distillation-into-instructions](./maintenance-operations-catalogue-should-stage-distillation-into.md) — staging catalogue for periodic operations before they are distilled into reusable procedures
+- [maintenance-operations-catalogue-should-stage-stable-procedures](./maintenance-operations-catalogue-should-stage-stable-procedures.md) — staging catalogue for periodic operations before they are turned into reusable procedures
 - [periodic-kb-hygiene-should-be-externally-triggered-not-embedded-in-routing](./periodic-kb-hygiene-should-be-externally-triggered-not-embedded-in.md) — periodic audits belong in externally triggered operations, not always-loaded routing docs
 - [gate-learning-from-accepted-edits](../reference/proposals/gate-learning-from-accepted-edits.md) — proposal: turn accepted edit diffs into review-gate candidates with a promotion/rollback lifecycle and budget-bounded loading; the oracle constraint is [an-accepted-edit-verifies-the-change-not-the-rule](./an-accepted-edit-verifies-the-change-not-the-rule.md)
 

@@ -26,7 +26,7 @@ Relevant Notes:
 - [Continual learning's open problem is behaviour, not knowledge](./continual-learning-open-problem-is-behaviour-not-knowledge.md) — foundation: this note is one concrete readable-artifact behaviour-change loop under the broader claim
 - [Axes of artifact analysis](./axes-of-artifact-analysis.md) — sharpens: constraining operates on one family of symbolic artifacts regardless of whether they live in repos or other storage substrates
 - [constraining](./definitions/constraining.md) — foundation: the general mechanism; this note argues it constitutes continuous learning during deployment
-- [constraining and distillation both trade generality for compound](./constraining-and-extraction-both-trade-generality-for-reliability.md) — foundation: the trade-off that constraining operates on
+- [constraining and extraction both trade generality for compound](./constraining-and-extraction-both-trade-generality-for-reliability.md) — foundation: the trade-off that constraining operates on
 - [learning is not only about generality](learning-is-not-only-about-generality.md) — foundation: Simon's definition of capacity change that grounds the claim
 - [automating KB learning is an open problem](./automating-kb-learning-is-an-open-problem.md) — applies: the vocabulary gap and automation challenge that follow from recognising constraining as continuous learning
 - [Professional developers don't vibe — they control](https://arxiv.org/html/2512.14012v1) — empirical evidence that developers naturally practice the constraining loop

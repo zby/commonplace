@@ -7,7 +7,7 @@ type: kb/types/instruction.md
 
 This is one opinionated recipe for turning a fresh `commonplace-init` workspace into a personal Second Brain — a knowledge base shaped around a specific operator, their projects, and their context.
 
-It is **not** the canonical Commonplace onboarding. Phases 1–3 use only Commonplace primitives (collections, registers, note types, distillation, the connect/validate skills). Phases 4–5 add Claude Code harness extensions (hooks, custom skills) that sit *alongside* Commonplace — adopt or skip them independently.
+It is **not** the canonical Commonplace onboarding. Phases 1–3 use only Commonplace primitives (collections, registers, note types, context summaries, the connect/validate skills). Phases 4–5 add Claude Code harness extensions (hooks, custom skills) that sit *alongside* Commonplace — adopt or skip them independently.
 
 Treat each phase as a gate: confirm it works before moving on. If a step fails, propose two alternatives rather than retrying.
 
@@ -45,7 +45,7 @@ A Second Brain usually needs more. Interview the operator about what else they w
 - People/contacts (descriptive — relationship context)
 - Project notes (descriptive, plus workshop layer for in-flight work)
 - Evaluations (evaluative — pitches, tools, opportunities)
-- Distilled context (theoretical or descriptive — strategic, role, historical summaries)
+- Condensed context (theoretical or descriptive — strategic, role, historical summaries)
 - Personal reference (descriptive — the operator's own systems, separate from Commonplace's)
 - Personal instructions (prescriptive — the operator's own procedures, separate from Commonplace's)
 
@@ -71,9 +71,9 @@ Bulk-import the operator's existing material into the collections designed in Ph
 
 **Verify Phase 2**: at least one note in each populated collection passes `cp-skill-validate`. The operator can find at least 80% of the things they remember via generated indexes and `rg`.
 
-## Phase 3 — Distill context summaries
+## Phase 3 — Condense context summaries
 
-Phase 3 is [distillation](../notes/definitions/distillation.md) in the Commonplace sense: directed compression whose purpose is the capacity change it produces in the consuming agent. The consumer here is *every future Claude Code session* on this workspace — the summaries should let it act competently with bounded context.
+Phase 3 is directed compression: condensing source material into summaries whose purpose is the capacity change they produce in the consuming agent. The consumer here is *every future Claude Code session* on this workspace — the summaries should let it act competently with bounded context.
 
 In the context collection designed in Phase 1 (commonly `kb/context/`), write:
 
@@ -133,4 +133,4 @@ Three feedback loops, separately useful:
 
 - The canonical Commonplace onboarding. Commonplace itself does not require a profile, context summaries, hooks, or learning loops.
 - A spec for Phases 4–5. The hook and skill bodies sketched there are illustrative; treat them as prompts for design, not finished code.
-- A justification of *why* these choices work. The reasoning lives in the methodology notes under `kb/notes/` (distillation, registers, workshop layer). This file is execution-only.
+- A justification of *why* these choices work. The reasoning lives in the methodology notes under `kb/notes/` (context summaries, registers, workshop layer). This file is execution-only.

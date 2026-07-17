@@ -9,7 +9,7 @@ Both are distilled procedures in the same medium. Both need a name and descripti
 ## Grounding theory
 
 - [Skills are instructions plus routing and execution policy](../../notes/skills-are-instructions-plus-routing-and-execution-policy.md) — revised claim (was "instructions are skills without automatic routing")
-- [Skills derive from methodology through distillation](../../notes/skills-derive-from-methodology-through-distillation.md) — the shared derivation process
+- [Skills derive from methodology through distillation](../../notes/skills-derive-from-methodology.md) — the shared derivation process
 - [Instruction specificity should match loading frequency](../../notes/instruction-specificity-should-match-loading-frequency.md) — the loading hierarchy both participate in
 - [Always-loaded context mechanisms](../../notes/always-loaded-context-mechanisms-in-agent-harnesses.md) — the surfaces through which both are discovered
 - [Contextual competence theory](../../notes/an-agentic-kb-maximizes-contextual-competence-through-discoverable.md) — evaluation criteria (discoverable, composable, trustworthy)

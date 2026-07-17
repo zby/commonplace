@@ -17,10 +17,9 @@ For current-state documentation about the live Commonplace system rather than tr
 - [Self-improving systems](./self-improving-systems-README.md) — evidence-responsive operative change to a system's own organization; reflective versus non-reflective self-improvement is the central distinction, and the stake is a conjectured sample-efficiency payoff: reflection may cut target data under structured shifts
 - [Architecture](./architecture-README.md) — how Commonplace is structured and installed: repo layout, control-plane design, file-based storage
 - [Evaluation](./evaluation-README.md) — what works, what doesn't, what needs testing
-- [Learning theory](./learning-theory-README.md) — how systems learn, verify, and improve; covered by seven child tags (enforced), so its README routes rather than enumerates:
+- [Learning theory](./learning-theory-README.md) — how systems learn, verify, and improve; covered by six child tags (enforced), so its README routes rather than enumerates:
   - [Deploy-time learning](./deploy-time-learning-README.md) — the framework: adaptation through durable inspectable artifacts
   - [Constraining](./constraining-README.md) — narrowing interpretation space, codification, relaxing
-  - [Distillation](./distillation-README.md) — targeted extraction of use-shaped artifacts
   - [Discovery](./discovery-README.md) — positing generals, recognizing instances; reach
   - [Artifact analysis](./artifact-analysis-README.md) — the four-field vocabulary for retained artifacts
   - [Agent memory](./agent-memory-README.md) — memory architecture and policy (also a top-level area)
@@ -39,7 +38,7 @@ For current-state documentation about the live Commonplace system rather than tr
 ## Workshop Layer
 
 - [a-functioning-kb-needs-a-workshop-layer-not-just-a-library](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — the library type system models durable knowledge but not work-in-motion
-- [evolving-understanding-needs-re-distillation-not-composition](./evolving-understanding-needs-holistic-rewrite-not-composition.md) — when a consumer needs the whole evolving picture, re-distill into a single narrative rather than composing notes
+- [evolving-understanding-needs-holistic-rewrite-not-composition](./evolving-understanding-needs-holistic-rewrite-not-composition.md) — when a consumer needs the whole evolving picture, rewrite it as a single narrative rather than composing notes
 
 ## Gaps
 

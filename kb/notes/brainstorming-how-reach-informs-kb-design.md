@@ -11,7 +11,7 @@ Deutsch's "reach" (*The Beginning of Infinity*): a good explanation applies far 
 
 ## Notes sit on a reach spectrum
 
-- **High reach** — constraining, distillation, context-efficiency — principles that apply across agent systems regardless of implementation
+- **High reach** — constraining, consumer-directed reshaping, context-efficiency — principles that apply across agent systems regardless of implementation
 - **Medium reach** — files-not-database, short composable notes, title-as-claim — principles that apply to a class of KBs (authored, agent-navigated) but not universally
 - **Low reach** — ADR 004 (tags not areas), ADR 002 (inline templates) — choices specific to this installation
 

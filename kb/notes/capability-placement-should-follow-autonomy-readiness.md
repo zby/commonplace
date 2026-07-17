@@ -36,5 +36,5 @@ Relevant Notes:
 
 - [agents-md-should-be-organized-as-a-control-plane](./agents-md-should-be-organized-as-a-control-plane.md) — parent framing: AGENTS.md is control-plane runtime context, not capability catalog space
 - [skills are instructions plus routing and execution policy](./skills-are-instructions-plus-routing-and-execution-policy.md) — defines the intermediate form between notes and skills
-- [maintenance operations catalogue](./maintenance-operations-catalogue-should-stage-distillation-into.md) — concrete staging area for operations before they become execution-oriented instructions
-- [skills derive from methodology](./skills-derive-from-methodology-through-distillation.md) — theoretical basis for promotion from reasoning artifacts to execution artifacts
+- [maintenance operations catalogue](./maintenance-operations-catalogue-should-stage-stable-procedures.md) — concrete staging area for operations before they become execution-oriented instructions
+- [skills derive from methodology](./skills-derive-from-methodology.md) — theoretical basis for promotion from reasoning artifacts to execution artifacts

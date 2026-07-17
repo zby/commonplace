@@ -69,7 +69,7 @@ Even single-pass "search, snapshot, connect, bridge, report" would validate whet
 
 - What's the right granularity for snapshotting? Full pages vs. extracted passages?
 - Should the temporary workspace use the same document types as the KB, or a lighter format? Since [skills are typed callables](./instructions-are-typed-callables.md), deep search's type signature would be something like `query + context → research-report + source-reviews` — a compound output that chains multiple existing skill signatures.
-- How does the iteration budget interact with the two learning mechanisms — is this [constraining](./definitions/constraining.md) (constraining search), [distillation](./definitions/distillation.md) (extracting procedure from exploration), or something else?
+- How does the iteration budget interact with the two learning mechanisms — is this [constraining](./definitions/constraining.md) (constraining search), derivation (extracting a procedure from exploration), or something else?
 - Can the extract/connect/review cycle be validated through enriched search before investing in the full [boiling cauldron](./automating-kb-learning-is-an-open-problem.md)?
 - How should the process handle search results that *contradict* existing KB content? The two value propositions are both additive (connect results to each other, connect to KB). Contradiction detection is a different operation — it challenges the KB rather than extending it.
 
@@ -82,7 +82,7 @@ Relevant Notes:
 - [a functioning KB needs a workshop layer](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — deep search results are workshop material needing extraction bridges
 - [linking-theory](./linking-theory.md) — link quality criteria inform how inter-result connections should be expressed
 - [quality signals for KB evaluation](./quality-signals-for-kb-evaluation.md) — centrality metrics for pruning search result graphs
-- [skills derive from methodology through distillation](./skills-derive-from-methodology-through-distillation.md) — deep search skill would distill from this methodology note
+- [skills derive from methodology](./skills-derive-from-methodology.md) — a deep search skill would be worked out from this methodology note
 - [oracle-strength spectrum](./oracle-strength-spectrum.md) — stopping criteria for the iteration loop map to oracle types of varying strength
 - [notes need quality scores to scale curation](./notes-need-quality-scores-to-scale-curation.md) — extends: deep search amplifies the candidate-explosion problem /connect faces at KB scale
 - [claw learning loops must improve action capacity not just retrieval](./claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) — exemplifies: deep search is active research capacity, not retrieval; the agent discovers what it doesn't know rather than looking up what it does

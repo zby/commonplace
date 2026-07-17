@@ -88,7 +88,7 @@ Each field blocks a different category mistake.
 | AgeMem memory policy | Model-artifact store; learned update from memory-operation trajectories | Distributed-parametric learned controller | Learning loop or controller selects memory operations |
 | Trajectory-informed memory | Memory store, DB, or file; derived from completed trajectories | Prose tips | Retrieved or loaded as task advice |
 | Commonplace notes | Repo; canonical library artifacts or derived notes from workshops/sources | Prose, with symbolic frontmatter where validators consume it | Retrieved as knowledge, loaded as guidance, or validated as typed artifacts depending on path |
-| Commonplace skills | Repo / skill directory; distilled from methodology notes | Mixed prose instructions, symbolic metadata, optional scripts | Invoked procedure with routing and execution policy |
+| Commonplace skills | Repo / skill directory; derived from methodology notes | Mixed prose instructions, symbolic metadata, optional scripts | Invoked procedure with routing and execution policy |
 | Commonplace validators | Repo / installed package; codified from conventions | Symbolic Python checks | Advisory or enforcing validation depending on command or hook |
 | Generated directory index | Repo; derived view over directory contents | Structured Markdown: prose labels plus symbolic frontmatter | Navigation aid; should refresh when sources change |
 | RAG corpus | Vector store; canonical or derived depending on ingestion | Prose records plus distributed-parametric embedding/ranking path | Retriever/ranker influences selection; selected records advise the model |

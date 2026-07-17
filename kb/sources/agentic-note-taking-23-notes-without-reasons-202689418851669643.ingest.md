@@ -34,7 +34,7 @@ This source is already one of the best-connected in the KB, with 8 files linking
 - [discovery-is-seeing-the-particular-as-an-instance-of-the-general](../notes/conjecture-is-seeing-the-particular-as-an-instance-of-the-general.md) — **extends**: the adjacency-vs-connection distinction maps to this note's recognition depth hierarchy; embedding adjacency is "shared feature" level, curated links require deeper recognition.
 - [links](../notes/links-README.md) — **reference material**: practitioner validation of propositional link semantics.
 - [tags](../notes/tags-README.md) — **reference material**: practitioner validation of propositional links over embedding adjacency.
-- [skills-derive-from-methodology-through-distillation](../notes/skills-derive-from-methodology-through-distillation.md) — **exemplifies**: the /connect skill's articulation test is a concrete instance of what the source demands.
+- [skills-derive-from-methodology-through-distillation](../notes/skills-derive-from-methodology.md) — **exemplifies**: the /connect skill's articulation test is a concrete instance of what the source demands.
 
 **New connections found (5 unimplemented):**
 - [agents-navigate-by-deciding-what-to-read-next](../notes/agents-navigate-by-deciding-what-to-read-next.md) — **validates (negative case)**: the source provides the clearest external articulation of what breaks when pointers lack context. When embedding similarity scores replace "since [X]" links, the agent cannot estimate relevance before following.

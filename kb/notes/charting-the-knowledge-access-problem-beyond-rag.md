@@ -48,9 +48,9 @@ That distinction matters because "creating new information" covers several diffe
 
 This symbolic/semantic split is not incidental. It is close to the KB's central architectural move: keep bookkeeping, filtering, aggregation, and orchestration symbolic where possible, and reserve LLM calls for semantic judgment. [Bounded-context orchestration model](./bounded-context-orchestration-model.md) states this explicitly as symbolic steps outside context and bounded agent calls for semantic work. On that framing, some queries should stay mostly symbolic end-to-end, while others need a symbolic retrieval stage that prepares inputs for a semantic call.
 
-**Synthesis** — some questions are not "which page contains the answer?" but "which set of pages must be reconciled to produce the answer?" This is different from landing on the right document. Once a question requires comparison, contradiction resolution, or a whole-picture narrative, the problem becomes one of prompt assembly or pre-[distillation](./definitions/distillation.md), not just retrieval. [Evolving understanding needs holistic rewrite, not composition](./evolving-understanding-needs-holistic-rewrite-not-composition.md) is one case of this broader pattern.
+**Synthesis** — some questions are not "which page contains the answer?" but "which set of pages must be reconciled to produce the answer?" This is different from landing on the right document. Once a question requires comparison, contradiction resolution, or a whole-picture narrative, the problem becomes one of prompt assembly or prior synthesis, not just retrieval. [Evolving understanding needs holistic rewrite, not composition](./evolving-understanding-needs-holistic-rewrite-not-composition.md) is one case of this broader pattern.
 
-**Maintenance** — any navigation aid can go stale. A table of contents, index, abstract, or graph edge is valuable only while it still predicts what the target contains. This is why [stale indexes are worse than no indexes](./stale-indexes-are-worse-than-no-indexes.md). The more a system depends on pointers and distillates, the more it needs maintenance loops that keep them trustworthy.
+**Maintenance** — any navigation aid can go stale. A table of contents, index, abstract, or graph edge is valuable only while it still predicts what the target contains. This is why [stale indexes are worse than no indexes](./stale-indexes-are-worse-than-no-indexes.md). The more a system depends on pointers and derived views, the more it needs maintenance loops that keep them trustworthy.
 
 ## Why the RAG framing is too narrow
 
@@ -69,11 +69,11 @@ A filesystem interface can outperform naive RAG not because files are magical, b
 
 The bounded-context reason for this is easy to miss. Since [agent context is constrained by soft degradation, not hard token limits](./agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md), access strategies should be compared by how they manage degradation for a task shape, not by whether they match a preferred storage metaphor.
 
-## Distillation as navigation infrastructure
+## Precomputed views as navigation infrastructure
 
-A table of contents is [distillation](./definitions/distillation.md) for the task of search. So are abstracts, descriptions, index entries, overviews, and maybe graph neighborhood summaries. They compress a larger body so the agent can decide whether to descend.
+A table of contents is a derived view built for the task of search. So are abstracts, descriptions, index entries, overviews, and maybe graph neighborhood summaries. They compress a larger body so the agent can decide whether to descend.
 
-This suggests that good knowledge systems may need multiple distillates of the same source, each aimed at a different navigation or synthesis task:
+This suggests that good knowledge systems may need multiple precomputed views of the same source, each aimed at a different navigation or synthesis task:
 
 - title: fastest coarse relevance check
 - description: search-result discrimination
@@ -96,7 +96,7 @@ Libraries solved analogous problems long before computers. They did not rely on 
 
 The broader pattern may be older and wider than libraries. [Soft-bound traditions as sources for context engineering strategies](./soft-bound-traditions-as-sources-for-context-engineering-strategies.md) identifies recurring responses wherever a bounded processor cannot consume everything at once: selection pressure, compression, progressive formalization, and modularity. Library systems, technical writing, hypertext, and faceted classification all look like members of this family.
 
-What seems new in agent systems is not the existence of these layers but the hard bounded-context constraint. For an LLM, bad organization is not just inconvenient. It directly competes with the task for limited reasoning budget. That makes [context engineering](./definitions/context-engineering.md) the umbrella problem and makes [distillation](./definitions/distillation.md) part of the access architecture, not just a summarization afterthought.
+What seems new in agent systems is not the existence of these layers but the hard bounded-context constraint. For an LLM, bad organization is not just inconvenient. It directly competes with the task for limited reasoning budget. That makes [context engineering](./definitions/context-engineering.md) the umbrella problem and makes derived views part of the access architecture, not just a summarization afterthought.
 
 ## Open questions
 
@@ -106,7 +106,7 @@ What seems new in agent systems is not the existence of these layers but the har
 - Which query classes should stay symbolic end-to-end, and which should hand off to semantic processing?
 - When does a question cross from retrieval into synthesis, and can that boundary be detected automatically?
 - What is the right division of labor between discovery-optimized library structures and synthesis-optimized workshop artifacts?
-- What kinds of distillates are worth maintaining by hand, and which should be generated?
+- What kinds of precomputed views are worth maintaining by hand, and which should be generated?
 - When does graph structure earn its maintenance cost over indexes plus links?
 - Can a system measure whether its pointers actually improve read/skip decisions, rather than only final answer accuracy?
 
@@ -116,7 +116,6 @@ Relevant Notes:
 
 - [agent memory needs discoverable, composable, trusted knowledge under bounded context](./agent-memory-needs-discoverable-composable-trusted-knowledge-under.md) — broadens the success criterion from answer-finding to contextual competence
 - [context engineering](./definitions/context-engineering.md) — frames the umbrella problem as routing, loading, scoping, and maintenance under bounded context
-- [distillation](./definitions/distillation.md) — treats TOCs, abstracts, and synthesized overviews as task-targeted compressions rather than generic summaries
 - [agents navigate by deciding what to read next](./agents-navigate-by-deciding-what-to-read-next.md) — grounds the pointer-design part of the problem
 - [link-following and search impose different metadata requirements](./link-following-and-search-impose-different-metadata-requirements.md) — names one navigation split this note broadens into a larger task taxonomy
 - [a knowledge base should support fluid resolution-switching](./a-knowledge-base-should-support-fluid-resolution-switching.md) — extends the navigation question from retrieval accuracy to movement between abstraction levels

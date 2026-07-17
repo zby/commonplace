@@ -13,7 +13,7 @@ Imagine unbounded context plus a capable LLM. All facts load at once, multi-hop 
 
 Most of it wouldn't. Tips are compressed lessons from prior trajectories; the LLM could re-derive them from raw traces. Playbooks are abstractions over successful sequences; they'd get reconstructed case-by-case. Even the "what kind of agent" core melts: user preferences become facts — "the user prefers concise answers," "the user is a senior Go developer" — and get retrieved like any other datum. In practice there is no separate policy store for values; the values live as data about the user.
 
-Under this view, **heuristic system-definition artifacts are mostly crystallized reasoning**: pre-compiled shortcuts for what the LLM would derive if it had infinite context and infinite time. [Distillation](./definitions/distillation.md) is the operator that produces them, because distillation compresses prior reasoning into task-ready artifacts. Under unbounded context, distillation stops being *necessary* — deferred reasoning at read-time is available. It may still pay as an optimization (shorter reads are faster and cheaper), but the class itself no longer depends on it.
+Under this view, **heuristic system-definition artifacts are mostly crystallized reasoning**: pre-compiled shortcuts for what the LLM would derive if it had infinite context and infinite time. They are produced by working the reasoning out in advance and fixing the result at write time — condensing prior reasoning into a task-ready artifact. Under unbounded context, that advance work stops being *necessary* — deferred reasoning at read-time is available. It may still pay as an optimization (shorter reads are faster and cheaper), but the class itself no longer depends on it.
 
 The "heuristic" qualifier matters because not every policy-like artifact exists to save reasoning. Authority-bearing constraints — permissions, safety rules, scoping boundaries, interface contracts, coordination commitments — have force as explicit commitments, not as compressed reasoning. An unbounded model might know the facts behind them, but the artifact itself carries binding authority the facts don't. The crystallization claim is strongest for tips, playbooks, skills, and decision rules; weaker for authority-bearing constraints, which the thought experiment leaves untouched.
 
@@ -30,7 +30,7 @@ The mutative-vs-additive asymmetry isn't a deep ontological fact about "policy v
 
 [Codification](./definitions/codification.md) has a compound motivation, and only part of it is independent of context.
 
-**The scarcity part.** Map-reduce over a 10TB dataset decomposes a problem that doesn't fit in a single LLM pass into bounded operations composed by an interpreter. The LLM writes the map function (one bounded reasoning episode); the interpreter runs it across shards. This answers the same question prose distillation does — "what do we do when the work doesn't fit the window?" — with a more powerful move: decompose across a deterministic substrate rather than compress into a shorter artifact. Under unbounded context this motivation softens: one LLM pass could in principle handle the whole dataset.
+**The scarcity part.** Map-reduce over a 10TB dataset decomposes a problem that doesn't fit in a single LLM pass into bounded operations composed by an interpreter. The LLM writes the map function (one bounded reasoning episode); the interpreter runs it across shards. This answers the same question prose compression does — "what do we do when the work doesn't fit the window?" — with a more powerful move: decompose across a deterministic substrate rather than compress into a shorter artifact. Under unbounded context this motivation softens: one LLM pass could in principle handle the whole dataset.
 
 **The structural part.** The rest of what codification buys is [constraining's reliability/speed/cost/verifiability compound](./definitions/constraining.md) pushed to its strongest form — and that compound is independent of context budget. Deterministic code is cheaper than reasoning at any scale, formal semantics enable exact checks that read-time re-derivation cannot replicate, and code runs the same way every invocation while reasoning drifts. These survive the thought experiment intact.
 
@@ -52,7 +52,6 @@ What the diagnostic does show:
 Relevant Notes:
 
 - [Axes of artifact analysis](./axes-of-artifact-analysis.md) — foundation: the behavioral-authority field this note reframes as write-time vs read-time fixation
-- [Distillation](./definitions/distillation.md) — operator: the compression step that produces crystallized reasoning
 - [Constraining](./definitions/constraining.md) — operator: narrows interpretation, trading generality for reliability/speed/cost/verifiability
 - [Codification](./definitions/codification.md) — phase transition: prose → symbolic, where crystallization changes computational regime
 - [Continual learning's open problem is behaviour, not knowledge](./continual-learning-open-problem-is-behaviour-not-knowledge.md) — applies: the mutative/additive asymmetry falls out of write-time vs read-time reasoning

@@ -6,7 +6,7 @@ tags: [learning-theory, constraining]
 
 # Constraining
 
-Constraining is making semantics more focused: narrowing the space of valid interpretations a text or symbolic artifact admits. In this KB, it names one of two co-equal deploy-time learning mechanisms, alongside [distillation](./distillation.md). A constrained artifact is not merely easier to find, shorter, clearer, or more useful; it leaves future consumers with fewer legitimate ways to read it.
+Constraining is making semantics more focused: narrowing the space of valid interpretations a text or symbolic artifact admits. In this KB, it names a core deploy-time learning mechanism. A constrained artifact is not merely easier to find, shorter, clearer, or more useful; it leaves future consumers with fewer legitimate ways to read it.
 
 At the light end, a definition, convention, or structured section rules out some readings while leaving several valid ones. At the heavy end, commitment collapses the space to one interpretation: a stored output, schema, validator, route table, or deterministic function. These cases use different media and different levels of force, but they count as constraining for the same reason: they reduce semantic latitude. Reliability, speed, cost control, and reviewability may follow, but they are consequences rather than the definition.
 
@@ -42,7 +42,7 @@ Many constraints never need to codify. A definition note can focus a term's mean
 
 ## Exclusions
 
-Constraining is not [distillation](./distillation.md). Distillation asks whether an artifact was transformed from recorded source material for a bounded consumer; constraining asks how much interpretation space the artifact leaves open.
+Constraining is not use-shaping. Whether an artifact was worked out from recorded source material for a bounded consumer is a lineage question, carried by the `derived-from` / `abstracted-from` labels; constraining asks how much interpretation space the artifact leaves open.
 
 Constraining is not retrieval or navigation. A description field, index entry, or backlink may help an agent find the right artifact, but it is constraining only when it also narrows what the artifact means.
 
@@ -52,7 +52,7 @@ Constraining is not automatically an improvement. A constraint can freeze the wr
 
 ## Misuse Cases
 
-- Calling every improvement constraining. If the change adds information without narrowing future interpretation, it may be accumulation, retrieval support, or distillation instead.
+- Calling every improvement constraining. If the change adds information without narrowing future interpretation, it may be accumulation, retrieval support, or source-derived reshaping instead.
 - Treating constraining as synonymous with codification. Codification is only the far end where interpretation moves to a symbolic artifact with formal semantics or assigned consequences.
 - Counting workflow affordances as constraints because they make an operation easier. Ease is not enough; the change must rule out interpretations.
 
@@ -60,18 +60,18 @@ Constraining is not automatically an improvement. A constraint can freeze the wr
 
 Relaxing is the reverse term: replacing a constrained component with a more general-purpose one so interpretation space reopens. The pair names direction of semantic change: constraining narrows valid readings, relaxing admits more readings again.
 
-## Relationship to distillation
+## Relationship to use-shaping
 
-Constraining and distillation are orthogonal — they operate on different dimensions of the same artifacts:
+Constraining and use-shaping are orthogonal — they operate on different dimensions of the same artifacts:
 
-| | Not distilled | Distilled |
+| | Not use-shaped | Use-shaped (worked out from a source) |
 |---|---|---|
-| **Not constrained** | Raw capture (text file, session notes) | Use-shaped but still semantically loose (draft skill, rough note) |
-| **Constrained** | Committed but not transformed from a source (stored output, frozen config) | Use-shaped and semantically focused (validated skill, codified script) |
+| **Not constrained** | Raw capture (text file, session notes) | Reshaped for a consumer but still semantically loose (draft skill, rough note) |
+| **Constrained** | Committed but not transformed from a source (stored output, frozen config) | Reshaped and semantically focused (validated skill, codified script) |
 
-You can constrain without distilling (store an LLM output — commit to one interpretation without transforming recorded source material). You can distil without constraining (write a task-shaped skill that remains natural language and underspecified). Strong artifacts often combine both operations.
+You can constrain without reshaping from a source (store an LLM output — commit to one interpretation without transforming recorded source material). You can reshape without constraining (write a task-shaped skill that remains natural language and underspecified). Strong artifacts often combine both operations.
 
-Constraining asks: *how constrained is this artifact?* Distillation asks: *was this artifact transformed from recorded source material for a particular consumer?*
+Constraining asks: *how constrained is this artifact?* The lineage question asks: *was this artifact worked out from recorded source material for a particular consumer?*
 
 ## Prior Analogues
 
@@ -82,7 +82,7 @@ Several fields have nearby ideas: gradual typing narrows program meanings, forma
 Relevant Notes:
 
 - [codification](./codification.md) — the far end of the constraining spectrum: constraining that crosses a medium boundary
-- [distillation](./distillation.md) — co-equal mechanism: targeted transformation shaped by consumer and use; orthogonal to constraining
+- [theory and methodology form a two-layer execution system](../theory-and-methodology-form-a-two-layer-execution-system.md) — contrasts: the maintenance regimes for content worked out from a source, orthogonal to how constrained the artifact is
 - [agentic systems interpret underspecified instructions](../agentic-systems-interpret-underspecified-instructions.md) — foundation: the underspecification framework that constraining operates on
 - [storing LLM outputs is constraining](../storing-llm-outputs-is-constraining.md) — the simplest instance: committing to one interpretation by keeping a specific output
 - [methodology enforcement is constraining](../methodology-enforcement-is-constraining.md) — applies: the instruction → skill → hook → script gradient is constraining applied to methodology
