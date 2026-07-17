@@ -1,19 +1,19 @@
 ---
-description: Hunch that procedural artifacts distilled for execution belong in kb/instructions/ — the directory boundary is "distilled into a procedure", not "compressed" or "frequently loaded"
+description: Hunch that artifacts shaped as executable procedures belong in kb/instructions/ — the directory boundary is execution form, not compression or loading frequency
 type: kb/types/note.md
 traits: []
 tags: []
 ---
 
-# Distillation status determines directory placement
+# Execution shaping determines directory placement
 
-The `kb/instructions/` directory collects procedures distilled for execution. The `kb/notes/` directory collects discursive reasoning. This note proposes sharpening that boundary into an organizational principle: if an artifact has been distilled *into a procedure* — reasoning stripped, steps sequenced, optimized for an agent that needs to act — it belongs in `instructions/`. The criterion is not "compressed" or "frequently loaded" but specifically "distilled into an executable procedure."
+The `kb/instructions/` directory collects procedures shaped for execution. The `kb/notes/` directory collects discursive reasoning. This note proposes sharpening that boundary into an organizational principle: if an artifact has been turned *into a procedure* — reasoning stripped, steps sequenced, optimized for an agent that needs to act — it belongs in `instructions/`. The criterion is not "compressed" or "frequently loaded" but specifically "shaped as an executable procedure."
 
-The immediate trigger: `kb/instructions/WRITING.md` sits at the top of the KB directory as a writing guide. It is a procedure — checklists, templates, imperative steps extracted from methodology notes. An agent loading WRITING.md is executing a procedure (how to write a note), not reasoning about knowledge design. By the procedural-distillation criterion, it belongs in `kb/instructions/`.
+The immediate trigger: `kb/instructions/WRITING.md` sits at the top of the KB directory as a writing guide. It is a procedure — checklists, templates, imperative steps extracted from methodology notes. An agent loading WRITING.md is executing a procedure (how to write a note), not reasoning about knowledge design. By the execution-shaping criterion, it belongs in `kb/instructions/`.
 
 ## Why this might work
 
-**Maintenance becomes directory-scoped.** If all procedural distillations live in one place, you can audit them as a set: are they current relative to their source notes? Are they compressed enough? Do they overlap? Today, procedural artifacts are scattered (WRITING.md at `kb/`, skills in `instructions/` subdirectories).
+**Maintenance becomes directory-scoped.** If all execution-oriented procedures live in one place, you can audit them as a set: are they current relative to their source notes? Are they concise enough? Do they overlap? Today, procedural artifacts are scattered (WRITING.md at `kb/`, skills in `instructions/` subdirectories).
 
 **The boundary is legible.** "Is this a procedure an agent executes, or reasoning an agent deliberates with?" is a question agents and humans can answer quickly. It maps directly to the reading mode: follow steps vs. build understanding.
 
@@ -29,7 +29,7 @@ The immediate trigger: `kb/instructions/WRITING.md` sits at the top of the KB di
 
 **Disconfirming evidence** (any of these would weaken the principle):
 
-- Some artifacts are genuinely mixed — partly distilled procedure, partly discursive reasoning — and the boundary forces an awkward split
+- Some artifacts are genuinely mixed — partly executable procedure, partly discursive reasoning — and the boundary forces an awkward split
 - The `instructions/` directory becomes too large or heterogeneous to audit as a set (undermining the maintenance benefit)
 - The prominence loss from moving WRITING.md out of `kb/` causes agents to miss it despite CLAUDE.md routing
 
@@ -37,13 +37,13 @@ The immediate trigger: `kb/instructions/WRITING.md` sits at the top of the KB di
 
 - Should this apply retroactively to all existing artifacts, or only to new ones?
 - Does the skill/instruction distinction (automatic routing vs. manual invocation) still matter as a sub-boundary within `instructions/`, or does it collapse into a single collection?
-- How does this interact with the [constraining gradient](./methodology-enforcement-is-constraining.md)? Distillation and constraining are different operations — does the directory boundary conflate them?
+- How does this interact with the [constraining gradient](./methodology-enforcement-is-constraining.md)? Shaping a procedure for execution and constraining it are different operations — does the directory boundary conflate them?
 
 ---
 
 Relevant Notes:
 
-- [skills derive from methodology through distillation](./skills-derive-from-methodology-through-distillation.md) — foundation: defines the distillation relationship this note proposes using as a directory boundary
+- [skills derive from methodology](./skills-derive-from-methodology-through-distillation.md) — foundation: defines the source-to-procedure relationship this note proposes using as a directory boundary
 - [skills are instructions plus routing and execution policy](./skills-are-instructions-plus-routing-and-execution-policy.md) — context: the existing instruction/note boundary that this principle would sharpen
-- [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — enables: the loading hierarchy that distillation-based placement aligns with
-- [areas exist because useful operations require reading notes together](./areas-exist-because-useful-operations-require-reading-notes-together.md) — parallel: areas organize notes for comparative reading; distillation status organizes artifacts for maintenance operations
+- [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — enables: the loading hierarchy that execution-shaped placement aligns with
+- [areas exist because useful operations require reading notes together](./areas-exist-because-useful-operations-require-reading-notes-together.md) — parallel: areas organize notes for comparative reading; execution form organizes artifacts for maintenance operations

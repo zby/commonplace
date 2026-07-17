@@ -1,22 +1,22 @@
 ---
-description: Catalogue of periodic KB maintenance operations and distillation status, used as a staging ground before promotion into kb/instructions procedures
+description: Catalogue of periodic KB maintenance operations and readiness status, used as a staging ground before promotion into kb/instructions procedures
 type: kb/types/note.md
 traits: [has-implementation, title-as-claim]
 tags: [kb-maintenance]
 ---
 
-# Maintenance operations catalogue should stage distillation into instructions
+# Maintenance operations catalogue should stage stable procedures for instructions
 
-Periodic operations start as manual procedures. A catalogue keeps them visible, comparable, and editable while they are still being learned. Once an operation is stable enough, it should be [distilled](./definitions/distillation.md) into `kb/instructions/` as an execution-oriented procedure.
+Periodic operations start as manual procedures. A catalogue keeps them visible, comparable, and editable while they are still being learned. Once an operation is stable enough, it should be rewritten in `kb/instructions/` as an execution-oriented procedure.
 
 This note is that staging ground.
 
-## Distillation pipeline
+## Promotion pipeline
 
 1. Capture the operation here after first useful use.
 2. Re-run in varied contexts and tighten ambiguous steps.
 3. Mark as ready when inputs, outputs, and decision points are stable.
-4. Distill into `kb/instructions/` and link back from this catalogue.
+4. Rewrite as an execution-oriented procedure in `kb/instructions/` and link back from this catalogue.
 
 ## Catalogue
 
@@ -24,7 +24,7 @@ This note is that staging ground.
 
 - Trigger: heartbeat run, user request, or pre-release hygiene pass
 - Output: list of notes with no inbound links
-- Distillation status: staging
+- Procedure status: staging
 
 ```bash
 for f in kb/notes/*.md; do
@@ -37,7 +37,7 @@ done
 
 - Trigger: periodic cleanup before curation/connect sweeps
 - Output: files without frontmatter that may need promotion from `text` to `note`
-- Distillation status: staging
+- Procedure status: staging
 
 ```bash
 rg -L "^---" kb/notes/*.md
@@ -48,7 +48,7 @@ rg -L "^---" kb/notes/*.md
 - Trigger: after major edits, before promoting status, or on explicit review request
 - Input: a target note path
 - Output: contradiction/tension/redundancy findings and improvement actions
-- Distillation status: staging
+- Procedure status: staging
 
 Procedure:
 

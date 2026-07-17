@@ -7,7 +7,7 @@ tags: []
 
 # Skills are instructions plus routing and execution policy
 
-Instructions and skills share the same medium (distilled procedures in markdown), the same derivation process ([distillation from methodology](./skills-derive-from-methodology-through-distillation.md)), and the same writing constraints (imperative, step-sequenced, behaviourally complete). The procedure is interchangeable — you can promote an instruction to a skill or demote a skill to an instruction without rewriting the body. What differs is the harness integration surface: what the runtime does with the file beyond reading it. Not every skill uses all three affordances — a minimal skill may only use discovery and invocation — but the skill format makes them available.
+Instructions and skills share the same medium (execution-oriented procedures in markdown), the same path from source reasoning to a task-facing procedure ([skills derive from methodology](./skills-derive-from-methodology-through-distillation.md)), and the same writing constraints (imperative, step-sequenced, behaviourally complete). The procedure is interchangeable — you can promote an instruction to a skill or demote a skill to an instruction without rewriting the body. What differs is the harness integration surface: what the runtime does with the file beyond reading it. Not every skill uses all three affordances — a minimal skill may only use discovery and invocation — but the skill format makes them available.
 
 ## Three things skills add
 
@@ -44,11 +44,11 @@ Instructions have none of these. They are passive content — the agent reads th
 The procedure itself is identical regardless of packaging:
 
 - **Writing constraints** — imperative voice, step-sequenced, behaviourally complete, minimal reasoning, explicit scope boundaries, frontloaded for zero-context agents
-- **Distillation process** — manual operation → notice stable core → extract and parameterize
+- **Procedure formation** — manual operation → notice stable core → extract and parameterize
 - **Directory signal** — both live in `kb/instructions/`; promotion to a skill adds a subdirectory, SKILL.md frontmatter, and a symlink into `.claude/skills/`
 - **Quality standard** — same execution-optimization requirements whether or not the procedure has routing
 
-Instructions are not notes. Notes are for reasoning — an agent building understanding. Instructions are for execution — an agent that needs to act. They get their own directory (`kb/instructions/`) because the directory tells the agent what kind of reading the document demands. [Ad hoc instruction notes](./ad-hoc-prompts-extend-the-system-without-schema-changes.md) are a further distinction: one-off, written for a specific situation, not expected to be reused. Instructions in `kb/instructions/` are reusable procedures distilled from repeated operations. [Methodology notes](./agent-statelessness-makes-routing-architectural-not-learned.md) sit on the other side — they carry the reasoning instructions are distilled from.
+Instructions are not notes. Notes are for reasoning — an agent building understanding. Instructions are for execution — an agent that needs to act. They get their own directory (`kb/instructions/`) because the directory tells the agent what kind of reading the document demands. [Ad hoc instruction notes](./ad-hoc-prompts-extend-the-system-without-schema-changes.md) are a further distinction: one-off, written for a specific situation, not expected to be reused. Instructions in `kb/instructions/` are reusable procedures extracted from repeated operations and shaped for execution. [Methodology notes](./agent-statelessness-makes-routing-architectural-not-learned.md) sit on the other side — they carry the reasoning from which instructions are worked out.
 
 ## Cross-platform convergence and divergence
 
@@ -90,10 +90,10 @@ Summarizing portability:
 
 Relevant Notes:
 
-- [skills derive from methodology through distillation](./skills-derive-from-methodology-through-distillation.md) — foundation: the distillation process that produces both skills and instructions
+- [skills derive from methodology](./skills-derive-from-methodology-through-distillation.md) — foundation: the source-to-procedure relationship shared by skills and instructions
 - [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — grounds: the loading hierarchy both participate in
 - [always-loaded context mechanisms in agent harnesses](./always-loaded-context-mechanisms-in-agent-harnesses.md) — context: the discovery surfaces through which both are found
 - [methodology enforcement is constraining](./methodology-enforcement-is-constraining.md) — context: instructions sit on the constraining gradient between ad-hoc notes and skills
-- [ad hoc prompts extend the system without schema changes](./ad-hoc-prompts-extend-the-system-without-schema-changes.md) — distinguishes: ad hoc notes are one-off; instructions are reusable distilled procedures
+- [ad hoc prompts extend the system without schema changes](./ad-hoc-prompts-extend-the-system-without-schema-changes.md) — distinguishes: ad hoc notes are one-off; instructions are reusable execution-oriented procedures
 - [agent statelessness makes routing architectural](./agent-statelessness-makes-routing-architectural-not-learned.md) — motivates: the source/compiled split applies to instructions the same way it applies to skills
 - [instructions are typed callables](./instructions-are-typed-callables.md) — extends: instructions, like skills, have implicit type signatures
