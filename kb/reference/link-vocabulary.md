@@ -125,7 +125,7 @@ Derived into:
 
 The downstream artifact carries no backlinks to its sources by default. Its reader is the consumer it was shaped for — not always an executor (a paper, a reference doc), but the executor case is demanding and common enough to set the default: provenance links dilute focus and add indirection cost exactly where the artifact must work unassisted. The forward pointer sits where change happens — editing a source note surfaces "these downstream artifacts may now need attention" with zero hops: for derived artifacts, recheck or re-derive; for abstracted artifacts, re-examine whether the generalization still holds. The reverse query ("what informed this artifact?") is rare and runs as a search: `rg "<artifact-name>" kb/notes/`.
 
-Rationale: [artifacts produced from sources need the lineage recorded at the source](../notes/distilled-artifacts-need-source-tracking.md).
+Rationale: [artifacts produced from sources need the lineage recorded at the source](../notes/artifacts-produced-from-sources-need-lineage-recorded-at-the-source.md).
 
 **Migration status.** `Distilled into:` is retired — write no new instances. Existing `Distilled into:` footers and pre-existing `derived-from` edges predate this boundary; they are classified into the new labels during the vocabulary-migration passes. Until reclassified, treat them as unclassified lineage — carrying neither regime's semantics.
 

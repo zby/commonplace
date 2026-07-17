@@ -39,7 +39,7 @@ Eight connections identified:
 
 6. **[agentic-systems-interpret-underspecified-instructions](../notes/agentic-systems-interpret-underspecified-instructions.md)** -- extends: prompt robustness findings are empirical evidence that semantic underspecification (not execution noise) is the deeper issue -- models break under paraphrase because the instruction interpretation space is fragile, not because of stochastic execution.
 
-7. **[constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost](../notes/constraining-and-distillation-both-trade-generality-for-reliability.md)** -- grounds: the four reliability dimensions operationalise the "compound" (reliability/speed/cost) that constraining and distillation trade generality for.
+7. **[constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost](../notes/constraining-and-extraction-both-trade-generality-for-reliability.md)** -- grounds: the four reliability dimensions operationalise the "compound" (reliability/speed/cost) that constraining and distillation trade generality for.
 
 8. **[storing-llm-outputs-is-constraining](../notes/storing-llm-outputs-is-constraining.md)** -- exemplifies: the consistency dimension quantifies exactly what output constraining prevents -- 50x cost swings and outcome variance on identical inputs.
 

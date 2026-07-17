@@ -9,7 +9,7 @@ tags: [document-system, foundations]
 
 A knowledge base's structural layer — types, tags, indexes, schemas, link vocabulary, routing contracts — can be shaped to fit the questions currently asked of it. The fit is worth something: routing gets cheaper, validation sharper, and an agent can infer a writing goal from one word. But the fit is to a *question set*, and question sets drift. Structure justified by today's task holds no value for tomorrow's, and it does not disappear when the task that motivated it does.
 
-The damage is **fit, not loss**. A tag taxonomy discards no content; a type spec deletes nothing; an index removes no note. That is why the distillation result does not cover this case: a lossy summary can be repaired by keeping the source, but a structural layer *is* the source — correctly preserved, wrongly shaped. Nothing is missing. The access path is simply built for a question nobody asks anymore.
+The damage is **fit, not loss**. A tag taxonomy discards no content; a type spec deletes nothing; an index removes no note. That is why the retained-source repair ([theory and methodology form a two-layer execution system](./theory-and-methodology-form-a-two-layer-execution-system.md)) does not cover this case: a lossy summary can be repaired by falling back to the source it was shaped from, but a structural layer *is* the source — correctly preserved, wrongly shaped. Nothing is missing. The access path is simply built for a question nobody asks anymore.
 
 ## The bill comes due before export
 
@@ -67,7 +67,7 @@ Relevant Notes:
 - [First principles are inherited constraints, not design choices](./first-principles-are-inherited-constraints-not-design-choices.md) — grounds: the membership test separating structure that survives drift from structure that does not
 - [A universal knowledge framework demotes content taxonomies to defaults and keeps answerability](./a-universal-knowledge-framework-demotes-content-taxonomies-to-defaults.md) — contradicts: agrees on the policy but draws the burden at export; this note argues drift brings it forward to the single-purpose instance
 - [Scenario decomposition drives architecture](./scenario-decomposition-drives-architecture.md) — contrasts: deriving structure from current scenarios is right; hardening it on that basis is the cost named here
-- [Constraining and distillation both trade generality for reliability](./constraining-and-distillation-both-trade-generality-for-reliability.md) — grounds: the underlying trade, applied here to the structural layer and across time rather than to artifacts at a moment of good task fit
+- [Constraining and extraction both trade generality for reliability](./constraining-and-extraction-both-trade-generality-for-reliability.md) — grounds: the underlying trade, applied here to the structural layer and across time rather than to artifacts at a moment of good task fit
 - [Orchestration strategies and run state have opposite persistence](./orchestration-strategies-and-run-state-have-opposite-persistence.md) — mechanism: supplies cross-task reuse value as the quantity task-fitting spends
 - [Files, not a database](./files-not-database.md) — contrasts: premature schema commitment is the ignorance failure (queries not yet known); this is the confidence failure (today's queries known too well)
 - [Short composable notes maximize combinatorial discovery](./short-composable-notes-maximize-combinatorial-discovery.md) — contrasts: the library/workshop split protects note granularity from task-shaping but leaves the structural layer unprotected

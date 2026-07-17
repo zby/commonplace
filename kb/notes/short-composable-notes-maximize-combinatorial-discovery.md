@@ -41,7 +41,7 @@ The structure emerged from the *juxtaposition* of independent perspectives. A si
 
 ## Tension with argument coherence
 
-Some arguments genuinely need space — the reasoning from premises to conclusion loses force when atomized. [Evolving understanding needs re-distillation not composition](./evolving-understanding-needs-re-distillation-not-composition.md) — when a consumer needs the whole picture, re-distilling into a single narrative beats composing fragments.
+Some arguments genuinely need space — the reasoning from premises to conclusion loses force when atomized. [Evolving understanding needs holistic rewrite, not composition](./evolving-understanding-needs-holistic-rewrite-not-composition.md) — when a consumer needs the whole picture, reconciling into a single narrative beats composing fragments.
 
 The resolution: coherent narratives are workshop artifacts, not library artifacts. The library stores premises and conclusions as separate composable notes. The workshop assembles them into narratives for a specific purpose. When the narrative expires, the atomic notes remain.
 
@@ -53,5 +53,5 @@ Relevant Notes:
 - [discovery is seeing the particular as an instance of the general](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) — grounds: discovery requires co-presence of multiple particulars
 - [agent memory needs discoverable, composable, trusted knowledge under bounded context](./agent-memory-needs-discoverable-composable-trusted-knowledge-under.md) — extends: composability as one of three memory properties; short notes compose better
 - [a functioning KB needs a workshop layer not just a library](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — enables: workshops are where longer synthesized views live
-- [evolving understanding needs re-distillation not composition](./evolving-understanding-needs-re-distillation-not-composition.md) — tension: some consumers need narrative coherence; resolved by placing narratives in workshops
+- [evolving understanding needs holistic rewrite, not composition](./evolving-understanding-needs-holistic-rewrite-not-composition.md) — tension: some consumers need narrative coherence; resolved by placing narratives in workshops
 - [a knowledge base should support fluid resolution-switching](./a-knowledge-base-should-support-fluid-resolution-switching.md) — extends: title-level scanning for breadth, full loading for depth

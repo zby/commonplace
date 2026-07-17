@@ -35,7 +35,7 @@ The same lens organizes the mechanisms the field has surfaced — each turns on 
 
 ## When you can't state the boundary, preserve the instance
 
-The complement of the rule is a positive instruction, not a discard. A rare fact's worth is [its retrievability, not its transfer](./memory-management-policy-is-learnable-but-oracle-dependent.md): preserved verbatim and findable, it pays off in the narrow context it came from. And even after a lesson is abstracted, the [source stays for edge cases the abstracted rule cannot cover](./constraining-and-distillation-both-trade-generality-for-reliability.md) — which argues for keeping the instance whenever the boundary is in doubt. Over-eager abstraction is the expensive error: a verbatim instance that turns out generalizable can be abstracted later, but an over-generalized lesson silently misfires until something forces the boundary into view.
+The complement of the rule is a positive instruction, not a discard. A rare fact's worth is [its retrievability, not its transfer](./memory-management-policy-is-learnable-but-oracle-dependent.md): preserved verbatim and findable, it pays off in the narrow context it came from. And even after a lesson is abstracted, the [source stays for edge cases the abstracted rule cannot cover](./constraining-and-extraction-both-trade-generality-for-reliability.md) — which argues for keeping the instance whenever the boundary is in doubt. Over-eager abstraction is the expensive error: a verbatim instance that turns out generalizable can be abstracted later, but an over-generalized lesson silently misfires until something forces the boundary into view.
 
 ## Scope
 
@@ -56,7 +56,7 @@ Relevant Notes:
 - [first-principles reasoning selects for explanatory reach over adaptive fit](./first-principles-reasoning-selects-for-explanatory-reach-over.md) — grounds: the negative test (predict where it fails) is the boundary test this note applies to memory formation
 - [learning is not only about generality](./learning-is-not-only-about-generality.md) — extends: a fact is low-reach by design, so the abstract-or-preserve choice only bites where reach is plausibly on offer
 - [memory management policy is learnable but oracle-dependent](./memory-management-policy-is-learnable-but-oracle-dependent.md) — evidence: a preserved fact's value is its retrievability, not its transfer — the long-tail half of the decision
-- [the generality-for-reliability tradeoff](./constraining-and-distillation-both-trade-generality-for-reliability.md) — extends: the abstracted lesson keeps its source for edge cases it cannot cover
+- [the generality-for-reliability tradeoff](./constraining-and-extraction-both-trade-generality-for-reliability.md) — extends: the abstracted lesson keeps its source for edge cases it cannot cover
 - [trace-learning techniques in related systems](../agent-memory-systems/trace-learning-techniques-in-related-systems.md) — see-also: the field marks "reach vs local patch" as open; this note offers a discriminator, not a closure
 - [diagnostic richness constrains outer-loop learning quality](./diagnostic-richness-constrains-outer-loop-learning-quality.md) — grounds: that inspectable failure evidence carries the boundary the directive component supplies
 - [choosing what to learn requires both validity and learning-value gates](./choosing-what-to-learn-requires-both-validity-and-learning-value-gates.md) — extends: boundary-statability is a concrete criterion for that note's validity gate

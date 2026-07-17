@@ -63,7 +63,7 @@ Adopt as a framework procedure when, measured against running `cp-skill-revise-a
 ## Open questions
 
 - The convergence-vs-search reframing is a transferable claim, not a system-specific constraint — per the proposals contract it should be **promoted to a theory note in `kb/notes/`** (something like *"automated refinement is a search over a fixed source bundle, not convergence of a single artifact"*) and cited here via `rationale`, rather than living only in this proposal's opening.
-- Does the bundle object subsume re-distillation? [Evolving understanding needs re-distillation, not composition](../../notes/evolving-understanding-needs-re-distillation-not-composition.md) already argues that updating a settled note means re-running distillation from sources — which is exactly `refine : bundle → noteset` applied to an existing note plus new sources. Is automated refinement just re-distillation with a tournament bolted on?
+- Does the bundle object subsume holistic rewriting? [Evolving understanding needs holistic rewrite, not composition](../../notes/evolving-understanding-needs-holistic-rewrite-not-composition.md) already argues that updating a settled note means re-reconciling from sources — which is exactly `refine : bundle → noteset` applied to an existing note plus new sources. Is automated refinement just the holistic rewrite with a tournament bolted on?
 - Minimal set-judge: can per-note Borda plus a single scalar redundancy penalty match a holistic set judge, or does coverage need its own decorrelated judge?
 - Where do sources that *enter mid-run* attach (a refinement that pulls in a new source while running)? Does that re-open the "fixed" bundle, and does the incumbent set reset?
 
@@ -72,8 +72,8 @@ Adopt as a framework procedure when, measured against running `cp-skill-revise-a
 Relevant Notes:
 
 - [a functioning KB needs a workshop layer, not just a library](../../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — rationale: the workshop is the bundle object — a consumed working set that emits library artifacts and carries no graph identity until it closes
-- [distillation](../../notes/definitions/distillation.md) — rationale: `bundle → note set` is a distillation; the loop is an automated, tournament-judged distiller
-- [evolving understanding needs re-distillation, not composition](../../notes/evolving-understanding-needs-re-distillation-not-composition.md) — rationale: updating a settled note is re-distilling from sources — the same bundle→noteset operation applied to an existing note
+- [theory and methodology form a two-layer execution system](../../notes/theory-and-methodology-form-a-two-layer-execution-system.md) — rationale: `bundle → note set` produces a use-shaped artifact from retained sources; the loop is an automated, tournament-judged producer of it
+- [evolving understanding needs holistic rewrite, not composition](../../notes/evolving-understanding-needs-holistic-rewrite-not-composition.md) — rationale: updating a settled note is re-reconciling from sources — the same bundle→noteset operation applied to an existing note
 - [an accepted edit verifies the change, not the rule](../../notes/an-accepted-edit-verifies-the-change-not-the-rule.md) — rationale: the human-accept oracle that the promotion gate and incumbent-set comparison rest on
 - [error correction works above chance with decorrelated checks](../../notes/error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — rationale: set-valued judging can use decorrelated per-axis judges (coverage, non-redundancy, reach) instead of one holistic score
 - [LLM generation relaxes a goal it can't satisfy and hides the constraint a human writer stalls on](../../notes/llm-generation-relaxes-goals-where-human-writing-stalls.md) — rationale: the judges are subject to the fluency-smoothing they police; recovery needs a separate check with teeth, not the generator's own confidence

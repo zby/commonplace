@@ -57,7 +57,7 @@ The practical consequence is that "compress once and discard the originals" is s
 Relevant Notes:
 
 - [distillation](../../notes/definitions/distillation.md) — foundation: this theorem formalizes why distillation must be targeted to a consumer-task pair rather than treated as lossless compression
-- [evolving understanding needs re-distillation not composition](../../notes/evolving-understanding-needs-re-distillation-not-composition.md) — consequence: when downstream needs change, the right response is re-distillation, not faith that one old summary preserved every future distinction
+- [evolving understanding needs re-distillation not composition](../../notes/evolving-understanding-needs-holistic-rewrite-not-composition.md) — consequence: when downstream needs change, the right response is re-distillation, not faith that one old summary preserved every future distinction
 - [bounded-context orchestration model](../../notes/bounded-context-orchestration-model.md) — context: compaction of symbolic state is a summary map, so the theorem identifies the structural limit of "summarize K and keep going"
 - [LLM-mediated schedulers are a degraded variant of the clean model](../../notes/llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) — instance: conversation compaction is precisely the kind of bounded summary this theorem says cannot be universally sufficient
 - [exact retrieval over semantically opaque items requires linear inspection](./exact-retrieval-over-semantically-opaque-items-requires-linear.md) — parallel lower bound: one rules out universal compression, the other rules out universal pruning without semantic inspection

@@ -30,7 +30,7 @@ Every note carrying `learning-theory` also carries at least one of these child t
 - [learning is not only about generality](./learning-is-not-only-about-generality.md) — accumulation with reach as its key property; Simon's definition grounds the decomposition
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — the underspecification foundation: spec-to-program projection and the constrain/relax cycle
 - [the verifiability gradient](./verifiability-gradient.md) — the ladder deploy-time artifacts sit on
-- [constraining and distillation both trade generality for reliability, speed, and cost](./constraining-and-distillation-both-trade-generality-for-reliability.md) — how the two transforming mechanisms relate
+- [constraining and distillation both trade generality for reliability, speed, and cost](./constraining-and-extraction-both-trade-generality-for-reliability.md) — how the two transforming mechanisms relate
 - [discovery is seeing the particular as an instance of the general](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) — the third operation, and why recognition is its hard problem
 
 ## Related Tags

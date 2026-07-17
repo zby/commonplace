@@ -53,5 +53,5 @@ Working links:
 - [receiving-vocabulary-draft.md](./receiving-vocabulary-draft.md) - applies this as an acceptance test for Wave 0.
 - [derivation-selection-vocabulary.md](./derivation-selection-vocabulary.md) - grounds the split into selection, derivation, discovery, and authored commitment.
 - [distillation-usage-audit.md](./distillation-usage-audit.md) - evidence that the old term bundled multiple regimes.
-- [distilled-artifacts-need-source-tracking](../../notes/distilled-artifacts-need-source-tracking.md) - grounds the lineage side of the trap.
+- [distilled-artifacts-need-source-tracking](../../notes/artifacts-produced-from-sources-need-lineage-recorded-at-the-source.md) - grounds the lineage side of the trap.
 - [a derived copy of recomputable truth must be checked or absent](../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) - grounds the stale trusted-copy side of the trap.

@@ -62,6 +62,6 @@ Working links:
 - [spec mining as codification](../../notes/spec-mining-as-codification.md) — extends: this workshop generalizes its methodology-level aside into the primary structure
 - [codification and relaxing navigate the bitter lesson boundary](../../notes/codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) — contrasts: same promote/demote dynamics, but with the LLM (not a retained theory artifact) as the general layer
 - [methodology enforcement is constraining](../../notes/methodology-enforcement-is-constraining.md) — instance: the instruction → skill → script trajectory is the symbolic-crossing special case of promotion
-- [constraining and distillation both trade generality for reliability](../../notes/constraining-and-distillation-both-trade-generality-for-reliability.md) — grounds: the trade the fast path makes
+- [constraining and distillation both trade generality for reliability](../../notes/constraining-and-extraction-both-trade-generality-for-reliability.md) — grounds: the trade the fast path makes
 - [first-principles reasoning selects for explanatory reach](../../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md) — grounds: reach is what the theory layer contributes; the passage's "the theory is the reach"
 - [distillation](../../notes/definitions/distillation.md) — defined-in: the currently-promoted definition for the operator that produces the methodology; the [vocabulary thread](./derivation-selection-vocabulary.md)'s direction is to rename this to derivation

@@ -39,7 +39,7 @@ For current-state documentation about the live Commonplace system rather than tr
 ## Workshop Layer
 
 - [a-functioning-kb-needs-a-workshop-layer-not-just-a-library](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — the library type system models durable knowledge but not work-in-motion
-- [evolving-understanding-needs-re-distillation-not-composition](./evolving-understanding-needs-re-distillation-not-composition.md) — when a consumer needs the whole evolving picture, re-distill into a single narrative rather than composing notes
+- [evolving-understanding-needs-re-distillation-not-composition](./evolving-understanding-needs-holistic-rewrite-not-composition.md) — when a consumer needs the whole evolving picture, re-distill into a single narrative rather than composing notes
 
 ## Gaps
 

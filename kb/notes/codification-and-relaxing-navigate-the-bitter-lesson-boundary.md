@@ -11,7 +11,7 @@ The [fixed-artifact distinction](./fixed-artifacts-split-into-exact-specs-and-pr
 
 ## The trade-off depends on which regime you're in
 
-[Codification](./definitions/codification.md) encodes knowledge into repo artifacts — tests, specs, conventions — each at a different grade of verifiability. Each codification step [trades generality for compound gains in reliability, speed, and cost](./constraining-and-distillation-both-trade-generality-for-reliability.md). But every such artifact also encodes a decomposition of some larger problem, and the arithmetic/vision-feature boundary determines whether that trade-off has a real cost:
+[Codification](./definitions/codification.md) encodes knowledge into repo artifacts — tests, specs, conventions — each at a different grade of verifiability. Each codification step [trades generality for compound gains in reliability, speed, and cost](./constraining-and-extraction-both-trade-generality-for-reliability.md). But every such artifact also encodes a decomposition of some larger problem, and the arithmetic/vision-feature boundary determines whether that trade-off has a real cost:
 
 - **Arithmetic-regime decompositions**: the spec fully captures the subproblem, so codification is pure gain — reliability+speed+cost improve and there's no generality loss, because the spec exhausts the problem space and the solution is algorithmically determined.
 - **Vision-feature decompositions**: the spec is a plausible theory, so codification involves the real trade-off — you gain the compound but lose generality. When scale makes the general approach good enough on reliability+speed+cost, the generality loss isn't worth it anymore.
@@ -54,6 +54,6 @@ Relevant Notes:
 
 - [fixed artifacts split into exact specs and proxy theories](./fixed-artifacts-split-into-exact-specs-and-proxy-theories.md) — foundation: the exact-spec/proxy-theory distinction this note operationalizes
 - [the verifiability gradient](./verifiability-gradient.md) — the ladder across which codification sits at the far end
-- [constraining and distillation both trade generality for reliability, speed, and cost](./constraining-and-distillation-both-trade-generality-for-reliability.md) — the trade-off codification enacts
+- [constraining and distillation both trade generality for reliability, speed, and cost](./constraining-and-extraction-both-trade-generality-for-reliability.md) — the trade-off codification enacts
 - [spec mining as codification](./spec-mining-as-codification.md) — the bottom-up extraction method that avoids the vision-feature failure mode
 - [relaxing signals](./operational-signals-that-a-component-is-a-relaxing-candidate.md) — detects when codified components are encoding vision features

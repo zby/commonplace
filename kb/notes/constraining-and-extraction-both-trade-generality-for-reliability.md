@@ -1,0 +1,49 @@
+---
+description: Constraining narrows interpretation and extraction produces focused use-shaped artifacts; both can trade generality for reliability/speed/cost when task fit is good
+type: kb/types/note.md
+traits: [title-as-claim]
+tags: [learning-theory, constraining, distillation]
+---
+
+# Constraining and extraction both trade generality for reliability, speed, and cost
+
+[Capacity decomposes into generality and a reliability/speed/cost compound](./learning-is-not-only-about-generality.md). [Constraining](./definitions/constraining.md) (narrowing the space of valid interpretations) and **extraction** (producing a focused, use-shaped artifact from larger material) both operate on this trade-off, but through different operations.
+
+## The trade-off in action
+
+An LLM can multiply numbers. A calculator can multiply numbers. Within a specified numeric representation and supported input range, the calculator has more reliable, cheaper, and usually faster capacity for multiplication: it will not hallucinate 7×8=54, and it can run without an API call. But the LLM has more generality — it can also translate, summarise, write prose.
+
+Moving from the LLM to the calculator sacrifices generality for a gain in the reliability/speed/cost compound within that operation. These dimensions often improve together when the substrate changes from stochastic generation to deterministic code, but the gain depends on task fit and implementation limits.
+
+## How constraining trades generality for reliability/speed/cost
+
+[Constraining](./definitions/constraining.md) narrows the interpretation space. Each constraint reduces semantic latitude; when it fits the task, it can make the remaining operation more reliable, faster, cheaper, or easier to review.
+
+[Codification](./definitions/codification.md) — the far end of the constraining spectrum — is the clearest high-yield case for the reliability/speed/cost compound. Replacing an LLM validation check with a Python script doesn't change *what* gets checked — it changes how reliably the check runs inside its specified contract, how fast it usually runs, and its marginal cost once written. What you give up is generality: the script handles exactly what it handles, nothing more.
+
+But reliability/speed/cost gains are not exclusive to codification. Constraining short of codification (storing outputs, writing conventions) can also improve reliability and speed, just less dramatically. Across the constraining spectrum, successful constraints spend semantic latitude for narrower behavior — codification is just where the reliability/speed/cost gain can be largest because the medium itself changes.
+
+## How extraction trades generality for reliability/speed/cost
+
+Extraction reshapes a larger body of reasoning into a focused artifact shaped by a specific use case, context budget, or agent. The extracted artifact is narrower than the source (less generality) but operationally more efficient: less material to load, less selection work, and fewer opportunities for the agent to choose the wrong source fragment.
+
+A skill worked out from many methodology notes can fit in a single context window (speed, cost) and deliver a stable procedure (reliability). Extraction improves reliability by preselecting the relevant premises and ordering the steps; the agent no longer has to reconstruct the procedure from a larger note cluster each time. The methodology notes remain for edge cases the skill cannot cover — the fast-path-with-fallback arrangement of [theory and methodology form a two-layer execution system](./theory-and-methodology-form-a-two-layer-execution-system.md).
+
+## The mechanisms differ in operation
+
+| | Constraining | Extraction |
+|---|---|---|
+| **Operation** | Constrain — narrow the interpretation space | Extract — select and compress from a larger body |
+| **What changes** | The same artifact becomes more constrained | A new, focused artifact is produced from a larger source |
+| **Medium transition** | Ranges from none (conventions) to full (codification) | Typically none — stays in natural language |
+| **Reliability/speed/cost yield** | Highest at codification (substrate change) | Moderate — reliability from preselection, speed and cost from reduced context |
+
+Both directions are [capacity change](./learning-is-not-only-about-generality.md). The reverse — relaxing a constrained component, or loading the full source instead of the extracted artifact — trades reliability/speed/cost gains back for generality.
+
+---
+
+Relevant Notes:
+
+- [Learning is not only about generality](./learning-is-not-only-about-generality.md) — grounds: defines the capacity decomposition this note applies
+- [Fixed artifacts split into exact specs and proxy theories](./fixed-artifacts-split-into-exact-specs-and-proxy-theories.md) — grounds: distinguishes cases where narrowing can harden confidently from cases where relaxing may be needed
+- [Theory and methodology form a two-layer execution system](./theory-and-methodology-form-a-two-layer-execution-system.md) — extends: the retained-source fallback that makes extraction's generality loss recoverable — the fast path covers its region, the source answers the rest
