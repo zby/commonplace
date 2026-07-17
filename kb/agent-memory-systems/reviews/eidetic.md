@@ -61,7 +61,7 @@ The main tradeoff is safety versus immediacy. Eidetic's automatic trace loop can
 
 ### Borrowable Ideas
 
-**Self-referential discount as a ranking primitive.** Commonplace could mark agent-drafted or trace-derived candidate notes with lower retrieval/ranking priority until reviewed. Ready for generated indexes or future search, not for authored Markdown semantics alone.
+**Self-referential discount as a ranking primitive.** Commonplace could mark agent-drafted or trace-extracted candidate notes with lower retrieval/ranking priority until reviewed. Ready for generated indexes or future search, not for authored Markdown semantics alone.
 
 **Drift findings as retrieval penalties.** Broken links, stale verification dates, and confidence escalation are useful as machine-readable warnings that affect context assembly. Ready for validation/reporting; automatic down-ranking needs a serving layer.
 
@@ -89,7 +89,7 @@ The main tradeoff is safety versus immediacy. Eidetic's automatic trace loop can
 
 **Learning timing:** `online` `staged` — SessionStart read-back and indexing happen online at session start; Stop-hook extraction runs asynchronously at session end; vector/index rebuilds, lint, doctor, vault export, and manual promotion are staged operations.
 
-**Distilled form:** `prose` `symbolic` `parametric` — Trace-derived signals become prose bullets/history entries plus symbolic frontmatter, names, statuses, project paths, op-log entries, and index rows; later vector embedding turns those chunks into parametric retrieval state.
+**Distilled form:** `prose` `symbolic` `parametric` — Trace-extracted signals become prose bullets/history entries plus symbolic frontmatter, names, statuses, project paths, op-log entries, and index rows; later vector embedding turns those chunks into parametric retrieval state.
 
 Relative to the trace-learning survey, Eidetic is a trace-to-operational-memory system: transcripts produce low-trust knowledge artifacts that can later be pushed as context or pulled by search. It strengthens the survey's distinction between extraction and trust: the system learns from traces, but it deliberately discounts that lineage instead of pretending extracted memory is verified.
 
@@ -134,7 +134,7 @@ Relevant Notes:
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes Eidetic's stored cards, hook-pushed rules context, and pull search tools.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies to cards, generated context, indexes, drift rows, hooks, and vault projections as different operative parts.
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places Eidetic's transcript-to-signal loop in the trace-learning landscape.
-- [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - frames session-end signal extraction as learning from agent traces.
+- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - frames session-end signal extraction as learning from agent traces.
 - [Symbolic context engineering is bounded by symbol availability](../../notes/symbolic-context-engineering-is-bounded-by-symbol-availability.md) - explains why project slugs, card kinds, statuses, and detail ids make selection targetable.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies ordinary memory cards, search results, and signal cards as advisory retained knowledge.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies hooks, generated rules context, MCP schemas, validators, and ranking policy as behavior-shaping control surfaces.

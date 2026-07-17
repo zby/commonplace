@@ -8,7 +8,7 @@ tags: [trace-learning]
 
 # Voyager
 
-Voyager, from MineDojo, is a Minecraft research agent that uses LLM calls to choose tasks, write Mineflayer JavaScript, critique execution, and retain successful behaviors as an executable skill library. At the reviewed commit, the durable memory surfaces are checkpoint files: generated skill code and descriptions, `skills.json`, Chroma vector databases for skill and QA retrieval, curriculum task records, chest memory, and event traces. The strongest memory mechanism is not a prose note store but trace-derived promotion into reusable code.
+Voyager, from MineDojo, is a Minecraft research agent that uses LLM calls to choose tasks, write Mineflayer JavaScript, critique execution, and retain successful behaviors as an executable skill library. At the reviewed commit, the durable memory surfaces are checkpoint files: generated skill code and descriptions, `skills.json`, Chroma vector databases for skill and QA retrieval, curriculum task records, chest memory, and event traces. The strongest memory mechanism is not a prose note store but trace-extracted promotion into reusable code.
 
 **Repository:** https://github.com/MineDojo/Voyager
 
@@ -20,7 +20,7 @@ Voyager, from MineDojo, is a Minecraft research agent that uses LLM calls to cho
 
 **The central retained artifact is an executable skill library.** `SkillManager` creates `skill/code`, `skill/description`, and `skill/vectordb` under the checkpoint directory, stores successful program code and generated descriptions in `skills.json`, and persists a Chroma vector index for retrieval ([voyager/agents/skill.py](https://github.com/MineDojo/Voyager/blob/55e45a880755d0c8c66ca7fb5fe7962ac8974f89/voyager/agents/skill.py)). The bundled learned libraries show the same shape as JSON maps from skill names to JavaScript code plus description text ([skill_library/README.md](https://github.com/MineDojo/Voyager/blob/55e45a880755d0c8c66ca7fb5fe7962ac8974f89/skill_library/README.md), [skill_library/trial1/skill/skills.json](https://github.com/MineDojo/Voyager/blob/55e45a880755d0c8c66ca7fb5fe7962ac8974f89/skill_library/trial1/skill/skills.json)).
 
-**Successful action programs are promoted into future affordances.** The learning loop asks the action agent for JavaScript, executes it in Mineflayer, records environment events, asks the critic whether the task succeeded, and calls `skill_manager.add_new_skill(info)` only when `info["success"]` is true ([voyager/voyager.py](https://github.com/MineDojo/Voyager/blob/55e45a880755d0c8c66ca7fb5fe7962ac8974f89/voyager/voyager.py), [voyager/agents/action.py](https://github.com/MineDojo/Voyager/blob/55e45a880755d0c8c66ca7fb5fe7962ac8974f89/voyager/agents/action.py), [voyager/agents/critic.py](https://github.com/MineDojo/Voyager/blob/55e45a880755d0c8c66ca7fb5fe7962ac8974f89/voyager/agents/critic.py)). That makes the skill library trace-derived: it is created from attempted tasks, generated programs, execution feedback, and success judgments.
+**Successful action programs are promoted into future affordances.** The learning loop asks the action agent for JavaScript, executes it in Mineflayer, records environment events, asks the critic whether the task succeeded, and calls `skill_manager.add_new_skill(info)` only when `info["success"]` is true ([voyager/voyager.py](https://github.com/MineDojo/Voyager/blob/55e45a880755d0c8c66ca7fb5fe7962ac8974f89/voyager/voyager.py), [voyager/agents/action.py](https://github.com/MineDojo/Voyager/blob/55e45a880755d0c8c66ca7fb5fe7962ac8974f89/voyager/agents/action.py), [voyager/agents/critic.py](https://github.com/MineDojo/Voyager/blob/55e45a880755d0c8c66ca7fb5fe7962ac8974f89/voyager/agents/critic.py)). That makes the skill library trace-extracted: it is created from attempted tasks, generated programs, execution feedback, and success judgments.
 
 **Read-back happens through both prompt context and executable environment scope.** `retrieve_skills()` selects top-k skill descriptions by Chroma similarity and returns the saved code; `ActionAgent.render_system_message()` includes retrieved skills with authored control primitives in the action prompt ([voyager/agents/skill.py](https://github.com/MineDojo/Voyager/blob/55e45a880755d0c8c66ca7fb5fe7962ac8974f89/voyager/agents/skill.py), [voyager/agents/action.py](https://github.com/MineDojo/Voyager/blob/55e45a880755d0c8c66ca7fb5fe7962ac8974f89/voyager/agents/action.py)). During execution, `env.step(..., programs=self.skill_manager.programs)` also makes the full program library available to the Mineflayer side ([voyager/voyager.py](https://github.com/MineDojo/Voyager/blob/55e45a880755d0c8c66ca7fb5fe7962ac8974f89/voyager/voyager.py)).
 
@@ -63,9 +63,9 @@ Voyager also shows a useful split between authored base capabilities and learned
 
 **Description as retrieval handle for executable code.** Voyager retrieves over short generated descriptions while injecting executable code. Commonplace could use concise summaries as retrieval handles for larger instructions or tools, but the handle must stay aligned with the underlying artifact. Ready as an indexing pattern.
 
-**Separate authored primitives from learned compositions.** Commonplace should keep stable primitives under stronger review and let trace-derived candidates compose them in a weaker workshop layer first. Ready as a lifecycle rule.
+**Separate authored primitives from learned compositions.** Commonplace should keep stable primitives under stronger review and let trace-extracted candidates compose them in a weaker workshop layer first. Ready as a lifecycle rule.
 
-**Success-gated memory admission.** Voyager admits a skill only after the critic marks the task successful. Commonplace could require a task-specific gate before promoting trace-derived lessons, but LLM-only success checks should not be enough for high-authority artifacts. Needs concrete gate design.
+**Success-gated memory admission.** Voyager admits a skill only after the critic marks the task successful. Commonplace could require a task-specific gate before promoting trace-extracted lessons, but LLM-only success checks should not be enough for high-authority artifacts. Needs concrete gate design.
 
 **Checkpoint portability.** Voyager's `skill_library_dir` makes learned capability movable between worlds. Commonplace could package task-scoped workshop outputs for reuse in another project, but should preserve lineage and expiry metadata. Needs a project-transfer use case.
 
@@ -87,7 +87,7 @@ Voyager also shows a useful split between authored base capabilities and learned
 
 **Distilled form:** `prose` `symbolic` `parametric` — Raw observations and critiques become prose descriptions and QA answers; successful behaviors become symbolic JavaScript functions and JSON records; Chroma embeddings provide parametric retrieval state.
 
-**Survey placement.** Voyager is a strong trace-derived code-promotion system: traces do not merely create reminders, they create executable affordances. It strengthens the survey distinction between raw trace artifacts and distilled behavior-shaping artifacts, and it highlights the governance problem of promoting generated code without source-linked tests or invalidation metadata.
+**Survey placement.** Voyager is a strong trace-learning code-promotion system: traces do not merely create reminders, they create executable affordances. It strengthens the survey distinction between raw trace artifacts and distilled behavior-shaping artifacts, and it highlights the governance problem of promoting generated code without source-linked tests or invalidation metadata.
 
 ## Read-back
 
@@ -131,7 +131,7 @@ Relevant Notes:
 
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - applies: Voyager's skills matter because they are retrieved and injected into later action prompts, not merely stored in checkpoint files.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: Voyager requires separating file storage, vector indexes, generated code, prose descriptions, and execution authority.
-- [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - applies: Voyager turns task trajectories into reusable symbolic/prose/parametric artifacts.
+- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - applies: Voyager turns task trajectories into reusable symbolic/prose/parametric artifacts.
 - [Codification](../../notes/definitions/codification.md) - applies: successful action attempts cross from natural-language task context into executable JavaScript skills.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: prompts, control primitives, validators, and executable skills can carry instruction or execution force.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: QA answers, chest memory, and retrieved descriptions mostly advise rather than enforce.

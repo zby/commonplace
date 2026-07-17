@@ -9,7 +9,7 @@ tags: [document-system, context-engineering]
 
 A claim that cites a captured source can be no better grounded than the capture step left it. Fidelity is fixed at ingest and is **non-increasing** downstream: no citation syntax, no locator type, no review gate can promote a passage to a grade its capture did not preserve. The only operation that raises fidelity is re-capture.
 
-This is a claim about **fidelity**, not authority, and the two move in opposite directions — worth stating plainly, because [trace-derived memory earns authority per operation, not at capture](./trace-derived-memory-earns-authority-per-operation-not-at-capture.md) asserts the complement. *Authority* — how much weight a reader should give a claim — is earned by post-capture work: verify, distil, consult. *Fidelity* — what grade of provenance evidence a passage carries, whether the source's own words or somebody's restatement — is spent at capture and never replenished. The two compose: capture sets a ceiling, and post-capture operations earn authority beneath it. A heavily verified rule can still rest on a second-hand passage; a pristine verbatim quote can sit unverified indefinitely.
+This is a claim about **fidelity**, not authority, and the two move in opposite directions — worth stating plainly, because [trace-extracted memory earns authority per operation, not at capture](./trace-extracted-memory-earns-authority-per-operation-not-at-capture.md) asserts the complement. *Authority* — how much weight a reader should give a claim — is earned by post-capture work: verify, abstract, consult. *Fidelity* — what grade of provenance evidence a passage carries, whether the source's own words or somebody's restatement — is spent at capture and never replenished. The two compose: capture sets a ceiling, and post-capture operations earn authority beneath it. A heavily verified rule can still rest on a second-hand passage; a pristine verbatim quote can sit unverified indefinitely.
 
 ## Capture is layered because it is forced to be
 
@@ -49,7 +49,7 @@ Relevant Notes:
 - [History has one chance to become checkable](./history-has-one-chance-to-become-checkable.md)
 - [A derived copy of recomputable truth must be checked or absent](./a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md)
 - [First principles are inherited constraints, not design choices](./first-principles-are-inherited-constraints-not-design-choices.md)
-- [Trace-derived memory earns authority per operation, not at capture](./trace-derived-memory-earns-authority-per-operation-not-at-capture.md)
+- [Trace-extracted memory earns authority per operation, not at capture](./trace-extracted-memory-earns-authority-per-operation-not-at-capture.md)
 - [Structure inference needs capture at the decision surface](./structure-inference-needs-capture-at-the-decision-surface.md) — decision rationale rather than quote fidelity
 - [Distillation](./definitions/distillation.md)
 - [ADR 046 — Verbatim quotes are validated against their cited source](../reference/adr/046-verbatim-quotes-are-validated-against-their-cited-source.md)

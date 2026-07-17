@@ -88,4 +88,4 @@ Relevant Notes:
 - [AGENTS.md should be organized as a control plane](./agents-md-should-be-organized-as-a-control-plane.md) — extends: internal organization of the system prompt file surface
 - [Frontloading spares execution context](./frontloading-spares-execution-context.md) — grounds: the partial evaluation principle behind configuration injection
 - [Agent statelessness means the context engine should inject context automatically](./agent-statelessness-means-the-context-engine-should-inject-context.md) — extends: proposes an "on reference" layer within the loading hierarchy that would dynamically inject definitions, ADRs, and indexes alongside loaded documents
-- [Synapptic](../agent-memory-systems/reviews/synapptic.md) — exemplifies: one canonical trace-derived profile compiled into multiple assistant-specific always-loaded files
+- [Synapptic](../agent-memory-systems/reviews/synapptic.md) — exemplifies: one canonical trace-extracted profile compiled into multiple assistant-specific always-loaded files

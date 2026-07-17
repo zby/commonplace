@@ -96,7 +96,7 @@ The main tradeoff is hidden epistemic authority. Graphiti's LLM extraction and c
 
 **Scope and timing.** The durable scope is `group_id`; episode sequences can also be linked into sagas. The write that affects future action is not the raw message alone, but the derived graph state saved after extraction, resolution, embedding, and optional invalidation.
 
-**Survey fit.** Graphiti fits the trace-to-temporal-graph family: transcripts or interaction events become graph facts with provenance and validity windows. It strengthens the survey's point that trace-derived memory can be symbolic and temporal, not only vector/prose recall.
+**Survey fit.** Graphiti fits the trace-to-temporal-graph family: transcripts or interaction events become graph facts with provenance and validity windows. It strengthens the survey's point that trace-extracted memory can be symbolic and temporal, not only vector/prose recall.
 
 ## Read-back
 
@@ -126,7 +126,7 @@ The consumption authority is advisory unless the host application upgrades it. S
 - Whether contradiction resolution starts retaining rationale artifacts; that would make temporal invalidation more reviewable and more applicable to Commonplace.
 - Whether `group_id` evolves into richer ACL/governance state; that would affect the authority of cross-user or cross-project memory boundaries.
 - Whether community/saga summaries become a default read path; that would shift context efficiency toward hierarchical compaction rather than only top-k retrieval.
-- Whether tool/action traces are ingested as first-class episodes; that would broaden the trace-derived classification beyond conversation/message memory.
+- Whether tool/action traces are ingested as first-class episodes; that would broaden the trace-learning classification beyond conversation/message memory.
 
 ## Related Systems
 
@@ -137,6 +137,6 @@ Relevant Notes:
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: Graphiti extracts durable temporal graph facts from message/event episodes.
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Graphiti stores rich memory, but activation is explicit SDK/API/MCP pull unless a host adds its own hook.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: episodes, graph facts, embeddings, summaries, search configs, and MCP tools differ by substrate, form, lineage, and authority.
-- [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - exemplifies: message traces can be distilled into durable graph nodes and facts for later recall.
+- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: message traces can be distilled into durable graph nodes and facts for later recall.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: retrieved facts, entity summaries, episodes, and community summaries advise later actions.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - distinguishes: search configs, filters, schemas, queues, and MCP tool definitions route and constrain memory behavior.

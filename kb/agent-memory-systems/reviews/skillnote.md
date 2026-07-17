@@ -28,7 +28,7 @@ SkillNote, from `luna-prompts/skillnote`, is a self-hosted registry for `SKILL.m
 
 **Feedback becomes ranking and review signal, not automatic rewriting.** Skill calls, usage events, comments, and ratings are persisted and surfaced through analytics. The OpenClaw context-bundle endpoint sorts candidates by 30-day usage and rating before handing the bundle to an agent-side resolver, and low ratings or deprecation comments mark a skill as `needs_review`. The inspected code does not automatically rewrite a stored skill from the feedback; it changes visibility, review priority, and operator evidence ([backend/app/db/models/analytics_event.py](https://github.com/luna-prompts/skillnote/blob/7303ba7ab2098f9675e320fd68296458b4703752/backend/app/db/models/analytics_event.py), [backend/app/db/models/skill_usage_event.py](https://github.com/luna-prompts/skillnote/blob/7303ba7ab2098f9675e320fd68296458b4703752/backend/app/db/models/skill_usage_event.py), [backend/app/api/analytics.py](https://github.com/luna-prompts/skillnote/blob/7303ba7ab2098f9675e320fd68296458b4703752/backend/app/api/analytics.py), [backend/app/api/openclaw.py](https://github.com/luna-prompts/skillnote/blob/7303ba7ab2098f9675e320fd68296458b4703752/backend/app/api/openclaw.py), [backend/app/api/comments.py](https://github.com/luna-prompts/skillnote/blob/7303ba7ab2098f9675e320fd68296458b4703752/backend/app/api/comments.py)).
 
-**There is a trace-derived draft path, but promotion stays explicit.** The Claude `UserPromptSubmit` hook watches user prompts for explicit save phrases and convention markers. Explicit phrases inject guidance telling Claude to follow the `skill-push` flow; convention markers silently write `.skillnote/drafts/*.md` candidate notes with the matched evidence sentence, signal, timestamp, session id, and next-step instruction. The actual registry push still requires skill-push drafting, collection choice, review, and API write ([plugin/hooks-handlers/prompt-watch.sh](https://github.com/luna-prompts/skillnote/blob/7303ba7ab2098f9675e320fd68296458b4703752/plugin/hooks-handlers/prompt-watch.sh), [plugin/skills/skill-push/SKILL.md](https://github.com/luna-prompts/skillnote/blob/7303ba7ab2098f9675e320fd68296458b4703752/plugin/skills/skill-push/SKILL.md)).
+**There is a trace-extracted draft path, but promotion stays explicit.** The Claude `UserPromptSubmit` hook watches user prompts for explicit save phrases and convention markers. Explicit phrases inject guidance telling Claude to follow the `skill-push` flow; convention markers silently write `.skillnote/drafts/*.md` candidate notes with the matched evidence sentence, signal, timestamp, session id, and next-step instruction. The actual registry push still requires skill-push drafting, collection choice, review, and API write ([plugin/hooks-handlers/prompt-watch.sh](https://github.com/luna-prompts/skillnote/blob/7303ba7ab2098f9675e320fd68296458b4703752/plugin/hooks-handlers/prompt-watch.sh), [plugin/skills/skill-push/SKILL.md](https://github.com/luna-prompts/skillnote/blob/7303ba7ab2098f9675e320fd68296458b4703752/plugin/skills/skill-push/SKILL.md)).
 
 ## Artifact analysis
 
@@ -66,7 +66,7 @@ SkillNote and Commonplace share a local-file adoption bet: agents operate best w
 
 The most useful divergence is authority management. SkillNote is comfortable making a registry skill active in an agent's native instruction system once it belongs to a collection. Commonplace usually keeps most knowledge as advisory pull context until a type contract, instruction, validator, or command grants stronger authority.
 
-The trace-derived draft path is also more opportunistic than Commonplace's current review culture. SkillNote detects convention language and writes a draft candidate immediately, but requires explicit user/agent promotion before publication. That is a clean halfway state: cheap capture without pretending the capture is already a reviewed skill.
+The trace-extracted draft path is also more opportunistic than Commonplace's current review culture. SkillNote detects convention language and writes a draft candidate immediately, but requires explicit user/agent promotion before publication. That is a clean halfway state: cheap capture without pretending the capture is already a reviewed skill.
 
 ### Borrowable Ideas
 
@@ -102,7 +102,7 @@ The trace-derived draft path is also more opportunistic than Commonplace's curre
 
 **Scope and timing.** Prompt-derived candidates are project-local and pending; they become cross-agent only after a deliberate publication step. Usage/rating traces are cross-task registry evidence as soon as they are posted, but they affect ranking/review, not the skill body.
 
-**Survey placement.** SkillNote occupies a conservative trace-derived corner: online event capture produces draft candidates and feedback records, while durable system-definition authority still requires explicit skill publication. It strengthens the survey distinction between trace-derived candidate knowledge and promoted instructions.
+**Survey placement.** SkillNote occupies a conservative trace-learning corner: online event capture produces draft candidates and feedback records, while durable system-definition authority still requires explicit skill publication. It strengthens the survey distinction between trace-extracted candidate knowledge and promoted instructions.
 
 ## Read-back
 
@@ -132,7 +132,7 @@ The trace-derived draft path is also more opportunistic than Commonplace's curre
 
 **MCP support shifts SkillNote toward tool-discovery memory.** Unlike local sync, the MCP server can broadcast `tools/list_changed`, so the agent-facing catalog can refresh without file polling. That is a different read-back profile from Claude/OpenClaw native skill folders.
 
-**The strongest trace-derived mechanism is intentionally weak authority.** Prompt-watch captures candidate drafts, not published skills. That restraint matters: lexical convention detection is too noisy to grant instruction authority automatically.
+**The strongest trace-extracted mechanism is intentionally weak authority.** Prompt-watch captures candidate drafts, not published skills. That restraint matters: lexical convention detection is too noisy to grant instruction authority automatically.
 
 **Ratings are useful but easy to overtrust.** A low rating can mark a skill as needing review, and high usage can raise it in context-bundle sorting, but ratings remain agent self-report unless paired with outcome audits.
 
@@ -140,7 +140,7 @@ The trace-derived draft path is also more opportunistic than Commonplace's curre
 
 ## What to Watch
 
-- Whether prompt-derived drafts gain a reviewed promotion workflow with source prompt links, duplicates, rejection state, and expiry; that would make trace-derived skill learning more auditable.
+- Whether prompt-derived drafts gain a reviewed promotion workflow with source prompt links, duplicates, rejection state, and expiry; that would make trace-extracted skill learning more auditable.
 - Whether usage/ratings/comments start rewriting or repairing skill bodies automatically; that would change write-side classification from salience promotion toward evolve or synthesize.
 - Whether the OpenClaw context-bundle resolver becomes a shipped server-side ranker or embedding retriever; that would add inferred read-back stronger than today's usage/rating pre-sort.
 - Whether authentication and per-collection permissions land; without them, database-backed instruction authority is bounded to trusted local/LAN deployments.
@@ -150,7 +150,7 @@ Relevant Notes:
 
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: SkillNote storage becomes behavior-shaping only when adapters sync, expose, or read back active skills.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: registry rows, synced files, import metadata, ratings, comments, prompts, and MCP tools have different forms and authorities.
-- [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - relates: prompt-watch turns interaction traces into skill candidates while preserving manual promotion.
+- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - relates: prompt-watch turns interaction traces into skill candidates while preserving manual promotion.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: drafts, comments, ratings, and usage records provide evidence or advice before they become instructions.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: published and synced `SKILL.md` files can instruct agents through native skill systems.
 - [Symbolic context engineering is bounded by symbol availability](../../notes/symbolic-context-engineering-is-bounded-by-symbol-availability.md) - relates: SkillNote's targeting relies on slugs, collections, paths, tool names, and descriptions.

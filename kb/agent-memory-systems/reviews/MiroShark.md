@@ -22,7 +22,7 @@ MiroShark is a simulation platform that turns source material and a scenario int
 
 **Simulation preparation reads the graph into generated agents and runtime configuration.** `SimulationManager.prepare_simulation()` filters graph entities, generates Wonderwall profiles from those entities, and passes `graph_id`, document text, and entity records into `SimulationConfigGenerator.generate_config()`; the generator writes time, event, platform, market, and per-agent configuration JSON for the simulation ([simulation_manager.py](https://github.com/aaronjmars/MiroShark/blob/570cd00ea20682145a55b6c3c4f5fa20a73693a2/backend/app/services/simulation_manager.py), [simulation_config_generator.py](https://github.com/aaronjmars/MiroShark/blob/570cd00ea20682145a55b6c3c4f5fa20a73693a2/backend/app/services/simulation_config_generator.py)). This is read-back at preparation time: retained graph facts shape the generated agent population and the run envelope.
 
-**Agent actions can be written back into the graph as belief or observation edges.** `GraphMemoryUpdater` consumes simulation activity dictionaries, converts posts, likes, follows, comments, searches, and other actions into natural-language episode text, batches them by platform, and calls `storage.add_text()` with `source_type="agent"`, round-level source ids, `valid_at`, and `kind="belief"` for expressive actions or `kind="observation"` for other actions ([graph_memory_updater.py](https://github.com/aaronjmars/MiroShark/blob/570cd00ea20682145a55b6c3c4f5fa20a73693a2/backend/app/services/graph_memory_updater.py), [simulation.py](https://github.com/aaronjmars/MiroShark/blob/570cd00ea20682145a55b6c3c4f5fa20a73693a2/backend/app/api/simulation.py)). The stored artifact is trace-derived graph state, not just a transcript.
+**Agent actions can be written back into the graph as belief or observation edges.** `GraphMemoryUpdater` consumes simulation activity dictionaries, converts posts, likes, follows, comments, searches, and other actions into natural-language episode text, batches them by platform, and calls `storage.add_text()` with `source_type="agent"`, round-level source ids, `valid_at`, and `kind="belief"` for expressive actions or `kind="observation"` for other actions ([graph_memory_updater.py](https://github.com/aaronjmars/MiroShark/blob/570cd00ea20682145a55b6c3c4f5fa20a73693a2/backend/app/services/graph_memory_updater.py), [simulation.py](https://github.com/aaronjmars/MiroShark/blob/570cd00ea20682145a55b6c3c4f5fa20a73693a2/backend/app/api/simulation.py)). The stored artifact is trace-extracted graph state, not just a transcript.
 
 **Graph retrieval is hybrid and tool-shaped.** `SearchService` combines vector search, BM25 full-text search, graph-neighbor traversal, optional temporal and epistemic filters, result fusion, and optional reranking; `GraphToolsService` wraps that store as `quick_search`, `panorama_search`, `insight_forge`, `browse_clusters`, graph-structure tools, and agent interviews for the report agent ([search_service.py](https://github.com/aaronjmars/MiroShark/blob/570cd00ea20682145a55b6c3c4f5fa20a73693a2/backend/app/storage/search_service.py), [graph_tools.py](https://github.com/aaronjmars/MiroShark/blob/570cd00ea20682145a55b6c3c4f5fa20a73693a2/backend/app/services/graph_tools.py)). The same graph is also exposed through a stdio MCP server with tools for graph listing, graph search, community browsing, reports, sections, and reasoning traces ([mcp_server.py](https://github.com/aaronjmars/MiroShark/blob/570cd00ea20682145a55b6c3c4f5fa20a73693a2/backend/mcp_server.py), [mcp.py](https://github.com/aaronjmars/MiroShark/blob/570cd00ea20682145a55b6c3c4f5fa20a73693a2/backend/app/api/mcp.py)).
 
@@ -71,7 +71,7 @@ The main tradeoff is automatic authority. MiroShark can convert live simulated b
 
 **Separate surface catalogs from documentation.** Ready for public command/API surfaces. MiroShark's literal surface catalog gives integrators a stable discovery API without scraping docs; Commonplace could borrow the idea for CLI commands, skills, or generated review reports if consumers need machine-readable capability discovery.
 
-**Use trace-derived graph updates as evidence, not final authority.** Useful for workshops. A Commonplace analogue could convert agent review events into queryable evidence records while keeping promotion to notes, instructions, or validators behind review.
+**Use trace-extracted graph updates as evidence, not final authority.** Useful for workshops. A Commonplace analogue could convert agent review events into queryable evidence records while keeping promotion to notes, instructions, or validators behind review.
 
 **Expose clone/fork lineage for analyses.** Ready conceptually. MiroShark's lineage view is a good pattern for showing how a retained artifact branched from a prior run. Commonplace could use similar lineage for iterative reviews, replacement reviews, and generated note variants.
 
@@ -127,7 +127,7 @@ Other consumers include frontend users, public viewers, researchers downloading 
 
 ## Curiosity Pass
 
-**The graph memory update loop is synthetic-trace learning.** It records behavior produced by simulated agents, not observations of real users. That is still trace-derived, but the authority of the learned graph facts should be read as simulation evidence, not world truth.
+**The graph memory update loop is synthetic-trace learning.** It records behavior produced by simulated agents, not observations of real users. That is still trace-extracted, but the authority of the learned graph facts should be read as simulation evidence, not world truth.
 
 **Report reasoning traces are more auditable than most report agents.** The Neo4j `ReportSection` and `ReasoningStep` subgraph is a useful audit design because it preserves thoughts, tool calls, observations, and final section text in the same graph family as the facts being queried.
 
@@ -139,7 +139,7 @@ Other consumers include frontend users, public viewers, researchers downloading 
 
 ## What to Watch
 
-- Whether graph memory updates are enabled by default for simulations or remain an optional run flag; that determines whether trace-derived graph learning is routine or situational.
+- Whether graph memory updates are enabled by default for simulations or remain an optional run flag; that determines whether trace-extracted graph learning is routine or situational.
 - Whether future reports use stored reasoning traces as retrieval evidence, not only audit artifacts; that would make report traces part of future read-back rather than post-hoc observability.
 - Whether community summaries gain provenance fields listing member entity ids, source edge ids, and rebuild hashes; that would make the zoom-out layer easier to validate and invalidate.
 - Whether clone/reproduce/lineage exports are consumed by an agent workflow for automatic reruns or counterfactual planning; that would raise their behavioral authority from provenance surface to routing input.
@@ -147,7 +147,7 @@ Other consumers include frontend users, public viewers, researchers downloading 
 
 ## Bottom Line
 
-MiroShark is a graph-centered simulation memory system with unusually broad public provenance surfaces. Its most distinctive memory design is the loop from source/scenario material and simulated activity traces into Neo4j graph state, then back out through simulation preparation, report-agent retrieval, MCP tools, community summaries, and reproducible exports. For Commonplace, the strongest borrow is not the full simulation stack; it is the combination of trace-derived graph evidence, explicit lineage/reproduction surfaces, and audit-ready reasoning traces.
+MiroShark is a graph-centered simulation memory system with unusually broad public provenance surfaces. Its most distinctive memory design is the loop from source/scenario material and simulated activity traces into Neo4j graph state, then back out through simulation preparation, report-agent retrieval, MCP tools, community summaries, and reproducible exports. For Commonplace, the strongest borrow is not the full simulation stack; it is the combination of trace-extracted graph evidence, explicit lineage/reproduction surfaces, and audit-ready reasoning traces.
 
 Relevant Notes:
 
@@ -156,4 +156,4 @@ Relevant Notes:
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: graph edges, embeddings, generated configs, reports, reasoning traces, and export surfaces differ by substrate, form, lineage, and authority.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: graph facts, transcripts, reports, public exports, and stats are mostly evidence/context unless a downstream workflow gives them stronger force.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: generated simulation configs, profile prompts, route handlers, graph retrieval tools, and report-agent tool definitions shape behavior.
-- [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - exemplifies: runtime traces can become retained artifacts, but their promotion boundary must be explicit.
+- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: runtime traces can become retained artifacts, but their promotion boundary must be explicit.

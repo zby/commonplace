@@ -105,7 +105,7 @@ For the requested lens, the implementation does provide project-scoped active-wo
 
 **Distilled form:** `prose` `symbolic` - Session activity becomes prose purpose, decisions, learnings, summaries, and evidence notes plus symbolic task IDs, checkboxes, frontmatter, archive lines, and git tags.
 
-**Extraction.** Extraction is instruction-mediated. The kit does not parse raw Claude transcripts into memories; instead, the acting agent writes the active work state from the current session's actual artifacts, commits, command outputs, user approvals, and verifier findings. That is trace-derived operational memory, but not autonomous log mining.
+**Extraction.** Extraction is instruction-mediated. The kit does not parse raw Claude transcripts into memories; instead, the acting agent writes the active work state from the current session's actual artifacts, commits, command outputs, user approvals, and verifier findings. That is trace-extracted operational memory, but not autonomous log mining.
 
 **Scope and timing.** The active memory is per project and per workstream. It is updated online as work progresses and staged at explicit lifecycle moments. Closed work stays recoverable through git tags and an archive line, but it is deliberately removed from the active read set.
 
@@ -156,6 +156,6 @@ Relevant Notes:
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: state files, skills, hooks, agents, tests, and git tags carry different forms and authorities.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: workstream purpose, decisions, learnings, handoffs, and archive entries mostly serve as retained context.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: installed Claude instructions, skills, hook settings, verifier role, and lifecycle rules define behavior.
-- [Use trace-derived extraction](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - relates: the kit turns session/tool outcomes into durable active-work state and extracts learnings at closure.
+- [Use trace extraction](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - relates: the kit turns session/tool outcomes into durable active-work state and extracts learnings at closure.
 - [A functioning knowledge base needs a workshop layer, not just a library](../../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) - exemplifies: the kit implements a small workshop layer with active state, closure, archive, and extraction.
 - [Session history should not be the default next context](../../notes/session-history-should-not-be-the-default-next-context.md) - exemplifies: the kit stores work history in files while pushing only a compact active pointer at session start.

@@ -132,14 +132,14 @@ Generated wiki articles are the most knowledge-like derived artifacts. They coul
 
 - Whether Local Brain grows an MCP/server or assistant-memory integration that injects retrieved context into external coding agents. That would change read-back from app-local RAG to broader agent push.
 - Whether wiki articles gain source-span citations or staleness-driven invalidation tied to source document changes. That would make synthesized artifacts more reviewable.
-- Whether reading-history personalization moves from simple boosts/recommendations into durable preference models. That would strengthen the trace-derived classification and raise governance concerns.
+- Whether reading-history personalization moves from simple boosts/recommendations into durable preference models. That would strengthen the trace-learning classification and raise governance concerns.
 - Whether mining reads full document content instead of summaries for entity extraction. That would improve graph coverage but increase cost and noise.
 - Whether the system adds faithfulness tests for RAG answers, such as source-grounding audits or with/without context checks.
 
 Relevant Notes:
 
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes Local Brain's stored Markdown/SQLite/vector state from the specific RAG and conversation-history paths that activate it.
-- [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - contrasts with Local Brain's trace use: traces affect session context and ranking, not durable instructions.
+- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - contrasts with Local Brain's trace use: traces affect session context and ranking, not durable instructions.
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places Local Brain in trace-to-ranking/session-context rather than trace-to-policy.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - helps separate Local Brain's knowledge artifacts from ranking, routing, and learning surfaces.
 - [Behavioral authority](../../notes/definitions/behavioral-authority.md) - applies to the difference between advisory RAG context, retrieval ranking, and generated derived views.

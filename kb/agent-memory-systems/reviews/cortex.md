@@ -90,7 +90,7 @@ The strongest divergence is trust. Cortex can classify, link, infer, and retriev
 
 **Learning timing:** `online` — Query logging, read access counting, feedback recording, and threshold promotion happen during normal CLI/MCP/dashboard use; demotion through `adjust_tiers()` requires an explicit call path.
 
-**Distilled form:** `symbolic` — Trace-derived state is retained as query-log rows, config counters, timestamps, and tier values rather than prose lessons, tool rules, model weights, or adapters.
+**Distilled form:** `symbolic` — Trace-extracted state is retained as query-log rows, config counters, timestamps, and tier values rather than prose lessons, tool rules, model weights, or adapters.
 
 The qualifying raw traces are small and tool-level: query text with parameters and result ids, full-object reads, and positive feedback on object usefulness. Extraction is deterministic. Search writes a `query_log` row; read and feedback increment `access_count:{obj_id}`, update `last_access:{obj_id}`, and promote after ten accesses. `detect_miss()` recognizes a "searched, then read something outside the results" signal, and `update_weights()` can persist ranking weights, but I did not find code that automatically connects those methods into live reranking.
 
@@ -129,7 +129,7 @@ Authority at consumption depends on the tool result and host prompt. A retrieved
 Relevant Notes:
 
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Cortex stores and ranks memory, but accumulated memory is still pulled through tools rather than pushed before every action.
-- [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - compares: Cortex derives symbolic tier and audit state from tool traces, not prose lessons from conversations.
+- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - compares: Cortex derives symbolic tier and audit state from tool traces, not prose lessons from conversations.
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: Cortex belongs in the trace-to-ranking/lifecycle branch.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: database rows, graph triples, ontology rules, embeddings, logs, counters, and tool surfaces carry different forms and authorities.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: captured objects, query logs, dossiers, syntheses, and alerts advise future work when read.

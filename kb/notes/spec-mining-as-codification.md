@@ -16,7 +16,7 @@ tags: [learning-theory, constraining]
 3. Extract those regularities into deterministic artifacts: functions, schema rules, unit tests, checkers.
 4. Re-run with these constraints in place. The system becomes more reliable without weight updates.
 
-This is codification as compilation: the system distills stochastic regularities into deterministic code. The output is an [inspectable artifact](./inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md) — reviewable, testable, revertable artifacts rather than opaque weight updates. Inspectability is what makes mined specs falsifiable: you can test them under distribution shift and relax them back if they break.
+This is codification as compilation: the system mines stochastic regularities and codifies them into deterministic code. The output is an [inspectable artifact](./inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md) — reviewable, testable, revertable artifacts rather than opaque weight updates. Inspectability is what makes mined specs falsifiable: you can test them under distribution shift and relax them back if they break.
 
 The same pattern appears at the methodology level: the [maturation trajectory from instruction to script](./methodology-enforcement-is-constraining.md) is spec mining applied to methodology rather than system behavior. The codification trigger ("a pattern has emerged from repeated execution") is the same observation step.
 

@@ -83,7 +83,7 @@ The trace pipeline is also weaker but simpler than Commonplace's review workflow
 
 **Distilled form:** `prose` `symbolic` — Consolidated outputs are Markdown prose plus symbolic metadata, trace sources, ids, tags, scope, status, salience, and links. There is no parametric learned state in the inspected code.
 
-**Survey placement.** Smriti-MCP is a lightweight trace-derived memory system with manual/agent-mediated distillation: it strengthens the survey distinction between raw trace retention and distilled behavior-shaping memory, while showing a conservative design point where the package provides trace plumbing and provenance but leaves the summarizing oracle outside the memory server.
+**Survey placement.** Smriti-MCP is a lightweight trace-learning system with manual/agent-mediated distillation: it strengthens the survey distinction between raw trace retention and distilled behavior-shaping memory, while showing a conservative design point where the package provides trace plumbing and provenance but leaves the summarizing oracle outside the memory server.
 
 ## Read-back
 
@@ -117,7 +117,7 @@ Relevant Notes:
 
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes Smriti's durable Markdown store from its explicit pull-only MCP read-back.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - supports separating notes, frontmatter, trace logs, indexes, MCP schemas, and recall bundles by substrate, form, lineage, and authority.
-- [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - frames Smriti's trace log plus reviewed consolidation path as a conservative trace-learning loop.
+- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - frames Smriti's trace log plus reviewed consolidation path as a conservative trace-learning loop.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies ordinary memories, raw traces, snippets, indexes, and recall bundles as advisory retained knowledge.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - contrasts Smriti's MCP schemas, repair routines, and ranking policy with stronger instruction, validation, or enforcement artifacts.
 - [Symbolic context engineering is bounded by symbol availability](../../notes/symbolic-context-engineering-is-bounded-by-symbol-availability.md) - relates to Smriti's reliance on titles, aliases, tags, categories, scopes, wikilinks, and lexical terms as recall symbols.

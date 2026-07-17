@@ -62,7 +62,7 @@ Promotion path: Cognee has a clear ladder from session trace to durable memory. 
 
 Cognee is stronger as a deployable memory substrate: it has APIs, MCP tools, user/dataset permissioning, multiple backing stores, cloud routing, search modes, and session bridges. Commonplace is stronger as a reviewable knowledge corpus: the durable artifacts are inspectable Markdown with explicit types, citations, indexes, and semantic review.
 
-The sharpest tradeoff is authority. Cognee can make memory operational quickly by pushing retrieved context into LLM calls and by feeding trace-derived signals back into graph ranking. Commonplace keeps behavior-shaping artifacts slower and more reviewable: agents have to load or be instructed by files whose provenance is visible in git.
+The sharpest tradeoff is authority. Cognee can make memory operational quickly by pushing retrieved context into LLM calls and by feeding trace-extracted signals back into graph ranking. Commonplace keeps behavior-shaping artifacts slower and more reviewable: agents have to load or be instructed by files whose provenance is visible in git.
 
 ### Borrowable Ideas
 
@@ -86,7 +86,7 @@ The sharpest tradeoff is authority. Cognee can make memory operational quickly b
 
 **Trace source:** `session-logs` `tool-traces` `event-streams` — Cognee consumes session Q&A, feedback events, graph-element usage ids, agent trace steps with method parameters/returns/errors, skill-run tool traces, and usage/access events.
 
-**Learning scope:** `per-project` `cross-task` — Datasets and node sets scope graph memory; sessions scope short-term traces; persisted session and trace-derived graph entries can affect later tasks in the same dataset.
+**Learning scope:** `per-project` `cross-task` — Datasets and node sets scope graph memory; sessions scope short-term traces; persisted session and trace-extracted graph entries can affect later tasks in the same dataset.
 
 **Learning timing:** `online` `staged` — Decorator/session writes and session completion storage happen during operation; `improve()`, memify pipelines, global-context indexing, feedback-weight application, and graph-to-session sync are staged workflows.
 
@@ -133,7 +133,7 @@ The sharpest tradeoff is authority. Cognee can make memory operational quickly b
 ## What to Watch
 
 - Whether `agent_memory` integration expands beyond `LLMGateway`; that decides whether push memory is a general agent facility or only works for Cognee-mediated LLM calls.
-- Whether feedback and frequency weights become default influences in user-facing search; that would make trace-derived ranking more behaviorally central.
+- Whether feedback and frequency weights become default influences in user-facing search; that would make trace-extracted ranking more behaviorally central.
 - Whether global-context indexing becomes a default read path; that would change Cognee from local top-k graph recall toward hierarchical memory summaries.
 - Whether session trace promotion gains semantic review or evaluator gates; without that, `improve()` remains a durability/ranking bridge rather than a truth-maintenance mechanism.
 - Whether MCP hosts or external plugins add automatic prompt hooks; that would increase push read-back beyond the SDK decorator reviewed here.
@@ -144,4 +144,4 @@ Relevant Notes:
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: graph nodes, vector indexes, cache entries, feedback weights, skill bodies, and tool schemas carry different lineage and authority.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: graph triplets, summaries, Q&A entries, trace feedback, and recall results mostly advise as evidence or context.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: skill procedures, tool schemas, query routing, ACLs, and decorator/LLMGateway injection shape later behavior more strongly.
-- [Use trace-derived extraction](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - exemplifies: Cognee turns session Q&A, feedback, and tool traces into durable graph memory and ranking signals.
+- [Use trace extraction](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: Cognee turns session Q&A, feedback, and tool traces into durable graph memory and ranking signals.

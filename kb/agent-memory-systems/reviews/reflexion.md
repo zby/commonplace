@@ -133,7 +133,7 @@ Survey placement: Reflexion is the canonical trace-to-prose-advice example. It s
 Relevant Notes:
 
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: Reflexion turns failed trajectories and test feedback into task-local verbal advice for later attempts.
-- [Use trace-derived extraction](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - exemplifies: failed attempts are distilled into reusable but scoped memory artifacts.
+- [Use trace extraction](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: failed attempts are distilled into reusable but scoped memory artifacts.
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - applies: Reflexion's reflections matter because the harness inserts them before retry, not because they are merely logged.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: raw traces, prose reflections, JSON records, prompt templates, and tests carry different forms and authorities.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: logs and result records provide evidence and audit context.

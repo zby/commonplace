@@ -3,7 +3,7 @@ description: "SkillOpt paper showing validation-gated text-space optimization of
 source_snapshot: "skillopt-executive-strategy-self-evolving-agent-skills.md"
 ingested: "2026-05-28"
 type: kb/sources/types/ingest-report.md
-domains: [skill-optimization, deploy-time-learning, trace-derived-learning, readable-artifacts]
+domains: [skill-optimization, deploy-time-learning, trace-learning, readable-artifacts]
 ---
 
 # Ingest Report: SkillOpt: Executive Strategy for Self-Evolving Agent Skills
@@ -15,7 +15,7 @@ From: https://arxiv.org/html/2605.23904v2
 ## Classification
 
 Type: scientific-paper -- arXiv preprint with a proposed optimization method, benchmark evaluation, baselines, ablations, and limitations.
-Domains: skill-optimization, deploy-time-learning, trace-derived-learning, readable-artifacts
+Domains: skill-optimization, deploy-time-learning, trace-learning, readable-artifacts
 Author signal: multi-author research paper with benchmark tables and ablation/transfer studies, but not yet independently reproduced in this KB.
 
 ## Summary
@@ -29,7 +29,7 @@ SkillOpt treats an agent skill document as trainable external state. A separate 
 - [Continual learning open problem is behaviour, not knowledge](../notes/continual-learning-open-problem-is-behaviour-not-knowledge.md) -- **evidence**. The retained artifact changes future behavior through instruction authority, so the learned object is behavioral policy rather than passive knowledge.
 - [Diagnostic richness constrains outer-loop learning quality](../notes/diagnostic-richness-constrains-outer-loop-learning-quality.md) -- **evidence**. Rollout traces, success/failure contrast, rejected edits, and slow/meta updates supply more diagnostic state than a scalar score alone.
 - [The verifiability gradient](../notes/verifiability-gradient.md) -- **evidence**. SkillOpt's success depends on resettable, scored tasks and held-out validation; the paper's limitations mark subjective/open-ended domains as weaker targets.
-- [Use trace-derived extraction](../notes/agent-memory-requirements/use-trace-derived-extraction.md) -- **evidence**. The paper converts trajectories into a retained behavior-shaping text artifact, with held-out selection and edit rejection as signal-quality controls.
+- [Use trace extraction](../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) -- **evidence**. The paper converts trajectories into a retained behavior-shaping text artifact, with held-out selection and edit rejection as signal-quality controls.
 - [Trajectory-Informed Memory Generation for Enhanced Agentic Reasoning](trajectory-informed-memory-generation-self-improving-agents.ingest.md) -- **compares-with**. Both learn from execution trajectories; TIMG produces retrievable tips, while SkillOpt edits one portable skill document.
 - [Agent Workflow Memory](agent-workflow-memory.ingest.md) -- **compares-with**. Both induce procedural text from traces; SkillOpt adds bounded patches, rejected-edit memory, and explicit held-out selection.
 - [Skill Synthesis: Materializing Knowledge as Skills](skill-synthesis-materializing-knowledge-as-skills-2032179291031.ingest.md) -- **compares-with**. Skill Synthesis derives skills from source/domain corpora; SkillOpt optimizes skills from scored rollouts.

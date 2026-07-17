@@ -47,7 +47,7 @@ SkillX, from the `zjunlp/SkillX` repository, is a framework for constructing reu
 
 **Embedding indices.** Retrieval and clustering both build embeddings over plan/skill text using a local HTTP embedding service. These vectors are behavior-shaping ranking artifacts while in memory; they are regenerated from the JSON library rather than stored as canonical durable memory ([inference/embedding_service.py](https://github.com/zjunlp/SkillX/blob/0137cb8c2f9e69d5cc499e562dea789b2c5a8e35/inference/embedding_service.py), [clustering/embedding.py](https://github.com/zjunlp/SkillX/blob/0137cb8c2f9e69d5cc499e562dea789b2c5a8e35/clustering/embedding.py)).
 
-**Promotion path.** SkillX promotes experience through: successful trajectory -> optional tool-output summary -> plan extraction -> functional/atomic skill extraction -> filtering -> embedding clustering -> LLM merge -> `SkillLibrary.merge(...)` -> checkpoint/final JSON -> prompt-time retrieval. This is a real trace-derived promotion path, but it has weaker lineage than Commonplace-style source reviews because accepted records do not preserve stable source ids, exact source spans, or explicit invalidation rules for changed tool schemas.
+**Promotion path.** SkillX promotes experience through: successful trajectory -> optional tool-output summary -> plan extraction -> functional/atomic skill extraction -> filtering -> embedding clustering -> LLM merge -> `SkillLibrary.merge(...)` -> checkpoint/final JSON -> prompt-time retrieval. This is a real trace-extracted promotion path, but it has weaker lineage than Commonplace-style source reviews because accepted records do not preserve stable source ids, exact source spans, or explicit invalidation rules for changed tool schemas.
 
 ## Comparison with Our System
 
@@ -129,7 +129,7 @@ The second divergence is read-back authority. SkillX pushes retrieved plans and 
 
 Relevant Notes:
 
-- [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - applies: SkillX extracts durable plans and skills from successful agent trajectories.
+- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - applies: SkillX extracts durable plans and skills from successful agent trajectories.
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - frames: SkillX has an explicit prompt-time read-back path rather than passive storage.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: the review separates JSON libraries, prose plans, symbolic tool records, transient embeddings, and raw trajectories.
 - [Behavioral authority](../../notes/definitions/behavioral-authority.md) - frames: selected skills move from evidence to prompt instruction/routing authority.

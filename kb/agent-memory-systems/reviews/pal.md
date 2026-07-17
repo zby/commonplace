@@ -85,7 +85,7 @@ Pal's specialist team also exposes a tradeoff. Splitting Navigator, Researcher, 
 
 **Curation operations:** `consolidate` `evolve` `promote` — Compiler consolidates stored raw files into summaries and concept articles, evolves existing concept pages with new source-backed information, and promotes raw/imported material into wiki articles, index entries, state, and knowledge metadata. Linter reports contradictions, staleness, thin articles, or duplicates, but I did not find code that automatically invalidates or merges the affected articles.
 
-Pal is not tagged trace-learning in this review because the local repository configures Agno agentic memory and session history but does not expose a Pal-local trace parser, extraction prompt, merge policy, or durable trace-to-artifact pipeline. Agno-managed sessions and learned knowledge are retained behavior-shaping artifacts; the trace-derived extraction mechanism is owned by Agno rather than inspectable Pal code at this commit.
+Pal is not tagged trace-learning in this review because the local repository configures Agno agentic memory and session history but does not expose a Pal-local trace parser, extraction prompt, merge policy, or durable trace-to-artifact pipeline. Agno-managed sessions and learned knowledge are retained behavior-shaping artifacts; the trace extraction mechanism is owned by Agno rather than inspectable Pal code at this commit.
 
 ## Read-back
 

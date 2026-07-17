@@ -43,7 +43,7 @@ Virtual Context, from `virtual-context/virtual-context`, is a Python context-vir
 
 **Facts and fact links.** Storage substrate is `facts`, `fact_tags`, `fact_links`, and optional graph backends. Representational form is symbolic subject/verb/object/status/date/link records with prose `what` and link context. Lineage is LLM-extracted from raw conversation during compaction, then supersession/link-checked against existing facts ([virtual_context/types.py](https://github.com/virtual-context/virtual-context/blob/4acad1285455e61ad88db312dc909f1bbeeb2917/virtual_context/types.py), [virtual_context/ingest/supersession.py](https://github.com/virtual-context/virtual-context/blob/4acad1285455e61ad88db312dc909f1bbeeb2917/virtual_context/ingest/supersession.py)). Behavioral authority is knowledge when queried; routing/ranking when facts are preselected for a request; weak enforcement where superseded facts are hidden from default fact queries.
 
-**Proxy payload mutations, paging tools, and commands.** Storage substrate is package code plus runtime request bodies and engine state. Representational form is symbolic provider adapters, tool schemas, command regexes, request filters, and prompt-injection formats, plus prose tool descriptions. Lineage is authored system-definition code operating over trace-derived store contents. Behavioral authority is instruction, routing, enforcement, and ranking because these surfaces decide whether retained memory is injected, which raw turns are dropped or stubbed, and which paging tools the model can call.
+**Proxy payload mutations, paging tools, and commands.** Storage substrate is package code plus runtime request bodies and engine state. Representational form is symbolic provider adapters, tool schemas, command regexes, request filters, and prompt-injection formats, plus prose tool descriptions. Lineage is authored system-definition code operating over trace-extracted store contents. Behavioral authority is instruction, routing, enforcement, and ranking because these surfaces decide whether retained memory is injected, which raw turns are dropped or stubbed, and which paging tools the model can call.
 
 Promotion path: raw conversation/tool traces can become compacted segment summaries, tag summaries, structured facts, fact links, embeddings, paging hints, and prompt-injected memory. The path strengthens operational availability, but not epistemic authority in the Commonplace sense: summaries and facts are generated and regression-tested structurally, not promoted through source-cited semantic review.
 
@@ -67,7 +67,7 @@ The trust tradeoff is the main divergence. Virtual Context is better at live con
 
 **Use visible restore handles for compressed tool output.** Ready for runtime agents. Replacing bulky tool traces with explicit stubs plus a restore/search tool preserves lineage better than silent truncation.
 
-**Keep trace-derived artifacts in separate raw, compacted, and promoted layers.** Ready as a rule for Commonplace workshop workflows. Raw transcripts, distilled notes, and instruction-bearing artifacts should not share the same authority just because they came from the same session.
+**Keep trace-extracted artifacts in separate raw, compacted, and promoted layers.** Ready as a rule for Commonplace workshop workflows. Raw transcripts, distilled notes, and instruction-bearing artifacts should not share the same authority just because they came from the same session.
 
 **Borrow request-path ownership only for systems that actually need it.** Needs a concrete use case. A Commonplace daemon that rewrites every model call would add a lot of operational complexity; it makes sense only if agents need live prompt budgeting, tool-output restoration, or cross-client continuity.
 
@@ -132,7 +132,7 @@ Authority at consumption varies. Retrieved summaries, facts, quotes, and restore
 Relevant Notes:
 
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Virtual Context implements both durable storage and proxy-mediated read-back, including prompt-time push.
-- [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - exemplifies: Virtual Context derives summaries, facts, tags, embeddings, and restore handles from conversation and tool traces.
+- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: Virtual Context derives summaries, facts, tags, embeddings, and restore handles from conversation and tool traces.
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: Virtual Context belongs in the trace-to-working-memory family with engineered read-back.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: raw traces, summaries, facts, embeddings, tools, and proxy rules carry different storage, form, lineage, and authority.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: stored turns, summaries, facts, quotes, and restored tool outputs advise later reasoning when consumed.

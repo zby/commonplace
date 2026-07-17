@@ -150,4 +150,4 @@ Relevant Notes:
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: ByteRover requires separating topics, sidecar ranking signals, logs, hook instructions, and archive stubs by substrate, form, lineage, and authority.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: returned topics, query logs, curate logs, and archive stubs mostly advise as evidence or context.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: hook templates, MCP tool contracts, HTML validators, path guards, and ranking policies configure future behavior.
-- [Use trace-derived extraction](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - exemplifies: ByteRover turns task/file/query traces into curated topics, sidecar signals, and maintenance candidates.
+- [Use trace extraction](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: ByteRover turns task/file/query traces into curated topics, sidecar signals, and maintenance candidates.

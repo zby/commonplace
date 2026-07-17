@@ -138,7 +138,7 @@ The design tension is authority. Clude quickly turns traces into remembered beha
 
 - Whether local SQLite gains a full local dream/compaction worker; that would make the zero-setup path closer to the advertised cognitive architecture.
 - Whether generated prompt files get source hashes or regeneration metadata; without that, compiled memory views can drift from the live store.
-- Whether dream outputs gain review state or confidence gates before prompt export; that would make trace-derived procedural/self-model memories safer to treat as instruction.
+- Whether dream outputs gain review state or confidence gates before prompt export; that would make trace-extracted procedural/self-model memories safer to treat as instruction.
 - Whether hosted dreams expand from lightweight consolidation/procedural extraction into the full self-hosted dream cycle; that changes the authority of hosted memory.
 - Whether behavioral faithfulness tests are added for prompt-file push and recalled context; that would separate actual activation from successful retrieval.
 
@@ -149,4 +149,4 @@ Relevant Notes:
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: recalled memories, summaries, dream logs, dashboard views, and MemoryPack records mostly advise as evidence or context.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: MCP schemas, injected AGENTS/CLAUDE instructions, prompt exports, validation schemas, and ranking policies shape behavior with stronger force.
 - [Keep Lineage And Compiled Views From Drifting](../../notes/agent-memory-requirements/keep-compiled-views-aligned.md) - warns: generated prompt files and assistant instructions need source alignment because they can outlive the memory state that produced them.
-- [Use Trace-Derived Extraction As Meta-Learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - exemplifies: Clude turns action/session traces into semantic insights, procedural lessons, and self-model memories.
+- [Use Trace Extraction As Meta-Learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: Clude turns action/session traces into semantic insights, procedural lessons, and self-model memories.

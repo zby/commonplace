@@ -1,13 +1,13 @@
 ---
-description: "Trace-derived extraction is an after-the-fact learning path that must respect signal quality, review, and readable-artifact versus distributed-parametric learning boundaries"
+description: "Trace extraction is an after-the-fact learning path that must respect signal quality, review, and readable-artifact versus distributed-parametric learning boundaries"
 type: kb/types/note.md
 traits: [has-external-sources]
 tags: [agent-memory, context-engineering, learning-theory]
 ---
 
-# Use Trace-Derived Extraction As Meta-Learning
+# Use Trace Extraction As Meta-Learning
 
-Trace-derived extraction is the parallel path for memory that was not captured while understanding was live, or that only becomes visible across later traces. Session logs contain latent memory-creation opportunities, but those opportunities differ by oracle strength.
+Trace extraction is the parallel path for memory that was not captured while understanding was live, or that only becomes visible across later traces. Session logs contain latent memory-creation opportunities, but those opportunities differ by oracle strength.
 
 Corrections are strongest because the log contains both a negative and positive signal. Silent failures are weaker: the task appears completed, but the trace shows errors, retries, fallback paths, warning output, or weakened guarantees. Preferences are distributed over many accept/reject events. Procedures show up as recurring action sequences. Discoveries and broad syntheses have the weakest immediate oracle; their value often appears only through later reuse.
 

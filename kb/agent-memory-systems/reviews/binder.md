@@ -103,7 +103,7 @@ Authority at consumption depends on the host. A retrieved record is advisory kno
 
 **The transaction hash chain is a stronger idea than the current agent integrations require.** MCP tools could be used simply as CRUD, but the hash/previous lineage means Binder can support higher-trust workflows if agents include meaningful source/channel/message metadata.
 
-**Hooks make automation possible without making learning automatic.** A hook can append audit logs, notify systems, or run custom processors after commits, but that is an extension point rather than an implemented trace-derived memory loop.
+**Hooks make automation possible without making learning automatic.** A hook can append audit logs, notify systems, or run custom processors after commits, but that is an extension point rather than an implemented trace-extracted memory loop.
 
 **The LSP is an important memory interface.** Autocomplete, diagnostics, and save-sync are not retrieval in the LLM sense, but they make structured memory maintainable by humans and coding agents in the same editor workspace.
 
@@ -113,7 +113,7 @@ Authority at consumption depends on the host. A retrieved record is advisory kno
 - Whether MCP grows resource listings or prompt/context injection hooks beyond explicit tools; that would change the pull-only read-back verdict.
 - Whether transaction log compaction lands and how it preserves auditability; compaction is useful but could weaken lineage if old source/channel/message detail is lost.
 - Whether cross-device sync or encrypted backup changes the primary storage-substrate story from local SQLite to replicated/encrypted service objects.
-- Whether Binder adds a first-class agent-session capture workflow; that would determine whether it becomes trace-derived or remains explicit authored state.
+- Whether Binder adds a first-class agent-session capture workflow; that would determine whether it becomes trace-extracted or remains explicit authored state.
 
 Relevant Notes:
 

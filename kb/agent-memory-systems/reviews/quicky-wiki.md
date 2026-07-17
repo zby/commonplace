@@ -117,4 +117,4 @@ Relevant Notes:
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: config, quality weights, extraction prompts, FTS ranking, confidence formulas, decay, cascade propagation, and tool schemas shape future behavior.
 - [Context engineering](../../notes/definitions/context-engineering.md) - frames: Quicky Wiki's central agent-facing mechanism is selecting bounded claim context for explicit queries.
 - [Context efficiency is the central design concern in agent systems](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) - compares: ordinary questions use bounded FTS retrieval, while consensus mode loads the whole graph.
-- [Use trace-derived extraction](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - contrasts: Quicky Wiki uses extraction, but from documents and saved answers rather than operational traces.
+- [Use trace extraction](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - contrasts: Quicky Wiki uses extraction, but from documents and saved answers rather than operational traces.

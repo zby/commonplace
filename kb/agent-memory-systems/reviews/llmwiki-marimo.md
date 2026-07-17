@@ -74,7 +74,7 @@ The third difference is maintenance posture. Commonplace tends to surface review
 
 **Pair lint findings with targeted repair actions.** Needs careful policy. Commonplace already has validation and review gates; borrowing targeted repair for safe mechanical changes would help, but content-changing repairs should stay explicit because Commonplace's artifacts often carry system-definition authority.
 
-**Make optional trace reports inspectable without treating them as learning.** Ready for debugging workflows. llmwiki-marimo's trace sidecars and join map are useful observability, while the absence of trace-derived memory avoids silently upgrading diagnostics into authority.
+**Make optional trace reports inspectable without treating them as learning.** Ready for debugging workflows. llmwiki-marimo's trace sidecars and join map are useful observability, while the absence of trace-extracted memory avoids silently upgrading diagnostics into authority.
 
 ## Write side
 

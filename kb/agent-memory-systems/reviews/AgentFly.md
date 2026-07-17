@@ -51,7 +51,7 @@ AgentFly and Commonplace both treat retained artifacts as behavior-shaping conte
 
 AgentFly is stronger as a quick online-learning loop for benchmark agents. It can run a task, judge the result, append a case, and use the updated case pool for the next task in the same batch. Commonplace is stronger as a governed knowledge base: its artifacts carry frontmatter, type contracts, validation, replacement history, citations, and explicit review state.
 
-The clearest tradeoff is authority. AgentFly's read-back cases are powerful because they are injected before planning, but they are also brittle: positive and negative examples can steer the planner without provenance beyond the case row and judge label. Commonplace would not promote a trace-derived pattern into system-definition authority without source preservation and review.
+The clearest tradeoff is authority. AgentFly's read-back cases are powerful because they are injected before planning, but they are also brittle: positive and negative examples can steer the planner without provenance beyond the case row and judge label. Commonplace would not promote a trace-extracted pattern into system-definition authority without source preservation and review.
 
 ### Borrowable Ideas
 
@@ -116,7 +116,7 @@ The current memory implementation is benchmark-shaped. User personal memory, mem
 - Whether the repository wires automatic retraining or checkpoint refresh into the benchmark loop; that would move AgentFly from staged learning toward a tighter online selector-learning loop.
 - Whether memory compression is implemented over stored cases; that would add a real consolidation operation rather than only compact acquisition from traces.
 - Whether duplicate, contradictory, or stale cases are detected; without that, the case bank can accumulate misleading negative and positive examples.
-- Whether result traces become read-back material or training inputs beyond compact plans; that would change both context complexity and trace-derived classification.
+- Whether result traces become read-back material or training inputs beyond compact plans; that would change both context complexity and trace-learning classification.
 - Whether user personal memory is added as a separate store; that would shift the system from benchmark case reasoning toward a broader agent memory substrate.
 
 Relevant Notes:
@@ -124,6 +124,6 @@ Relevant Notes:
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes AgentFly's JSONL case bank from the host-client injection path that actually puts cases into planner context.
 - [Context efficiency is the central design concern in agent systems](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) - frames the top-k case-selection and compact-plan strategy as the central memory design tradeoff.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - supports separating case rows, training rows, result traces, prompt templates, and learned retriever weights.
-- [Use trace-derived extraction](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - frames judged task runs becoming compact cases and selector-training rows.
+- [Use trace extraction](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - frames judged task runs becoming compact cases and selector-training rows.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies the prompts, labels, retrieval policy, and trained selector when they steer future planning.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies prior task cases and result traces as evidence or advice before stronger authority is assigned.

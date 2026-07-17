@@ -95,7 +95,7 @@ The main tradeoff is power versus inspectability. GBrain can serve targeted cont
 
 **Scope and timing.** Online write hooks favor responsiveness: `put_page` returns while facts extraction can run queued, and MCP hot memory is cached for short sessions. Offline/staged paths favor stronger derivation: the cycle runs ordered phases after sync/extract state settles, and skillopt uses preflight, locks, benchmarks, validation, and held-out gates before mutation.
 
-**Survey fit.** GBrain is a broad trace-derived operational-memory system. It strengthens the survey claim that trace-learning is not one mechanism: the same codebase includes raw trace capture, hot-fact extraction, consolidation, synthesis, ranking feedback, and proposed skill mutation, each with different authority and review needs.
+**Survey fit.** GBrain is a broad trace-learning operational-memory system. It strengthens the survey claim that trace-learning is not one mechanism: the same codebase includes raw trace capture, hot-fact extraction, consolidation, synthesis, ranking feedback, and proposed skill mutation, each with different authority and review needs.
 
 ## Read-back
 
@@ -127,7 +127,7 @@ The main tradeoff is power versus inspectability. GBrain can serve targeted cont
 
 **The pushed `_meta` channel is a clean design boundary.** Injecting hot facts as metadata keeps the tool result text cleaner than silently splicing facts into every answer, though it depends on host agents actually reading `_meta`.
 
-**SkillOpt is the highest-authority learning path.** Most trace-derived artifacts advise retrieval or synthesis. SkillOpt can rewrite instructions that future agents follow, so its dirty-tree, bundled-skill, benchmark, held-out, and validation gates are more consequential than ordinary retrieval evals.
+**SkillOpt is the highest-authority learning path.** Most trace-extracted artifacts advise retrieval or synthesis. SkillOpt can rewrite instructions that future agents follow, so its dirty-tree, bundled-skill, benchmark, held-out, and validation gates are more consequential than ordinary retrieval evals.
 
 ## What to Watch
 
@@ -144,4 +144,4 @@ Relevant Notes:
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: GBrain's markdown, DB rows, embeddings, graph links, skills, and operation definitions carry different forms and authorities.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: pages, facts, takes, trajectories, and syntheses usually advise rather than enforce.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: operations, auth scopes, skills, schema packs, validators, queues, and ranking/indexing code govern future behavior.
-- [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - exemplifies: GBrain's hot facts, dream cycle, eval capture, and skillopt are trace-learning paths with different promotion thresholds.
+- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: GBrain's hot facts, dream cycle, eval capture, and skillopt are trace-learning paths with different promotion thresholds.

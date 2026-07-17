@@ -58,7 +58,7 @@ The cognitive-science framing does rhetorical rather than explanatory work. [llm
 
 System M is under-specified enough to risk unfalsifiability. It must select inputs, modulate rewards, switch between learning and inference, manage memory, and coordinate Systems A and B — but the paper does not say what signals make these choices correct, how those signals are learned, or what failure would look like. [automating-kb-learning-is-an-open-problem](../notes/automating-kb-learning-is-an-open-problem.md) is the relevant note: naming a control plane is much easier than building the oracle that tells it what to do.
 
-The paper also omits comparison against partial implementations. It does not engage artifact-based deploy-time learning, live RL systems like [OpenClaw-RL](./openclaw-rl-train-any-agent-simply-by-talking.ingest.md), or trace-derived memory systems that already learn from experience on narrower substrates. Without those comparisons, the paper cannot tell us whether its integrated architecture is necessary — only that it would be desirable if it worked.
+The paper also omits comparison against partial implementations. It does not engage artifact-based deploy-time learning, live RL systems like [OpenClaw-RL](./openclaw-rl-train-any-agent-simply-by-talking.ingest.md), or trace-learning systems that already learn from experience on narrower substrates. Without those comparisons, the paper cannot tell us whether its integrated architecture is necessary — only that it would be desirable if it worked.
 
 ## Recommended Next Action
 

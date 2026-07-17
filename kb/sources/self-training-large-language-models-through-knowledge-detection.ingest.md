@@ -4,7 +4,7 @@ author: Wei Jie Yeo, Teddy Ferdinan, Przemyslaw Kazienko, Ranjan Satapathy, Erik
 source_snapshot: self-training-large-language-models-through-knowledge-detection.md
 ingested: "2026-04-20"
 type: kb/sources/types/ingest-report.md
-domains: [learning-theory, continual-learning, oracle-theory, trace-derived-learning]
+domains: [learning-theory, continual-learning, oracle-theory, trace-learning]
 ---
 
 # Ingest: Self-training Large Language Models through Knowledge Detection
@@ -16,7 +16,7 @@ From: https://aclanthology.org/2024.findings-emnlp.883.pdf
 ## Classification
 
 Type: scientific-paper -- EMNLP Findings 2024 paper with a concrete training method, datasets, model comparisons, ablations, OOD forgetting checks, and citations.
-Domains: learning-theory, continual-learning, oracle-theory, trace-derived-learning
+Domains: learning-theory, continual-learning, oracle-theory, trace-learning
 Author: Wei Jie Yeo, Teddy Ferdinan, Przemyslaw Kazienko, Ranjan Satapathy, and Erik Cambria; academic NLP/AI researchers, including overlap with the already-ingested Into the Unknown line of work and a public Self-Training-LLM codebase reviewed in this KB.
 
 ## Summary
@@ -25,7 +25,7 @@ The paper proposes a self-training pipeline where an LLM generates or receives W
 
 ## Connections Found
 
-The connect report found a tight cluster around trace-derived weight learning, unknown-selection oracles, and continual-learning substrate choices. The strongest connection is the code-grounded [Self-Training-LLM review](../agent-memory-systems/reviews/Self-Training-LLM.md), which inspects the repository implementing this paper and reaches the same design lesson: the important abstraction is separating prompt/data validity from learning-target value. The paper also extends the prior [Into the Unknown ingest](./into-the-unknown-self-learning-large-language-models.ingest.md): that source framed Points in the Unknown and self-question/search/train loops, while this paper makes unknown detection operational inside DPO preference construction and adds forgetting evaluation. In the KB's learning-theory cluster, the source is a weight-side contrast to [Continual learning's open problem is behaviour, not knowledge](../notes/continual-learning-open-problem-is-behaviour-not-knowledge.md) and [Treat continual learning as substrate coevolution](../notes/treat-continual-learning-as-substrate-coevolution.md), because temporary readable traces are promoted into opaque model weights rather than durable repo artifacts. It also extends [Memory management policy is learnable but oracle-dependent](../notes/memory-management-policy-is-learnable-but-oracle-dependent.md) by showing a different learned-selection problem: not when to use memory, but which generated QA traces deserve training. The oracle notes, especially [Oracle strength spectrum](../notes/oracle-strength-spectrum.md) and [The boundary of automation is the boundary of verification](../notes/the-boundary-of-automation-is-the-boundary-of-verification.md), explain why the method works only where source documents and contradiction scoring provide a usable soft verifier.
+The connect report found a tight cluster around trace-extracted weight learning, unknown-selection oracles, and continual-learning substrate choices. The strongest connection is the code-grounded [Self-Training-LLM review](../agent-memory-systems/reviews/Self-Training-LLM.md), which inspects the repository implementing this paper and reaches the same design lesson: the important abstraction is separating prompt/data validity from learning-target value. The paper also extends the prior [Into the Unknown ingest](./into-the-unknown-self-learning-large-language-models.ingest.md): that source framed Points in the Unknown and self-question/search/train loops, while this paper makes unknown detection operational inside DPO preference construction and adds forgetting evaluation. In the KB's learning-theory cluster, the source is a weight-side contrast to [Continual learning's open problem is behaviour, not knowledge](../notes/continual-learning-open-problem-is-behaviour-not-knowledge.md) and [Treat continual learning as substrate coevolution](../notes/treat-continual-learning-as-substrate-coevolution.md), because temporary readable traces are promoted into opaque model weights rather than durable repo artifacts. It also extends [Memory management policy is learnable but oracle-dependent](../notes/memory-management-policy-is-learnable-but-oracle-dependent.md) by showing a different learned-selection problem: not when to use memory, but which generated QA traces deserve training. The oracle notes, especially [Oracle strength spectrum](../notes/oracle-strength-spectrum.md) and [The boundary of automation is the boundary of verification](../notes/the-boundary-of-automation-is-the-boundary-of-verification.md), explain why the method works only where source documents and contradiction scoring provide a usable soft verifier.
 
 ## Extractable Value
 

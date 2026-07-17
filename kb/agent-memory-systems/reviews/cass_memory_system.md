@@ -64,7 +64,7 @@ Promotion path: cass-memory has a real authority ladder. A raw session can becom
 
 cass-memory is stronger than Commonplace as an operational agent-memory product. It has a packaged CLI, machine-readable output, MCP tools, automatic session discovery, feedback loops, scoring decay, onboarding helpers, and hook installation. Commonplace is stronger as a durable review and methodology corpus: the source-of-truth artifacts are directly inspectable Markdown with collection contracts, source citations, and a review workflow designed for semantic fidelity.
 
-The sharpest design difference is the treatment of trace-derived state. cass-memory intentionally lets session traces affect future behavior through generated rules and feedback weights. Commonplace uses trace-derived inputs more cautiously: sources and reports can inform notes, but promoted artifacts remain reviewed prose or symbolic contracts. cass-memory's approach gives faster adaptation; Commonplace's approach gives more stable meaning and easier review.
+The sharpest design difference is the treatment of trace-extracted state. cass-memory intentionally lets session traces affect future behavior through generated rules and feedback weights. Commonplace uses trace-extracted inputs more cautiously: sources and reports can inform notes, but promoted artifacts remain reviewed prose or symbolic contracts. cass-memory's approach gives faster adaptation; Commonplace's approach gives more stable meaning and easier review.
 
 ### Borrowable Ideas
 
@@ -98,7 +98,7 @@ The sharpest design difference is the treatment of trace-derived state. cass-mem
 
 **Scope and timing.** The learning unit is usually a session or batch of sessions, with processed logs preventing repeat reflection. Cross-agent enrichment requires explicit config consent before attaching related sessions from other agents. Reflection and validation can use remote or local `cass` history, but the retained playbook remains file-backed.
 
-**Survey fit.** cass-memory is a strong trace-to-procedural-rule system: raw traces are not merely searchable evidence but can be distilled into ranked rules and anti-patterns. It also demonstrates a split authority model: trace-derived diaries and logs are knowledge artifacts, while accepted playbook bullets and trauma guards can become instruction or enforcement artifacts.
+**Survey fit.** cass-memory is a strong trace-to-procedural-rule system: raw traces are not merely searchable evidence but can be distilled into ranked rules and anti-patterns. It also demonstrates a split authority model: trace-extracted diaries and logs are knowledge artifacts, while accepted playbook bullets and trauma guards can become instruction or enforcement artifacts.
 
 ## Read-back
 
@@ -132,7 +132,7 @@ The sharpest design difference is the treatment of trace-derived state. cass-mem
 
 ## What to Watch
 
-- Whether `autoReflect` becomes an actually scheduled or hook-driven loop; that would make trace-derived writes more autonomous than the current command-triggered reflection path.
+- Whether `autoReflect` becomes an actually scheduled or hook-driven loop; that would make trace-extracted writes more autonomous than the current command-triggered reflection path.
 - Whether agents commonly install the skill/MCP/prompt export path; adoption determines whether the system is pull-first in practice or mostly prompt-pushed.
 - Whether validation gains stronger semantic review of rule truth; current evidence counts and LLM validation are useful but not equivalent to source-grounded review.
 - Whether remote `cass` history and cross-agent enrichment become common defaults; that would increase memory coverage and privacy risk at the same time.
@@ -144,4 +144,4 @@ Relevant Notes:
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: raw sessions, diary JSON, playbook bullets, embedding caches, logs, MCP schemas, and trauma guards have different authority despite sharing one product.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: diaries, history snippets, query results, and many playbook returns advise as evidence or context.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: exported prompt rules, MCP tool contracts, validators, scoring policies, and trauma guards shape or enforce later behavior.
-- [Use trace-derived extraction](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - exemplifies: cass-memory turns session logs and feedback traces into durable procedural rules, anti-patterns, and safety gates.
+- [Use trace extraction](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: cass-memory turns session logs and feedback traces into durable procedural rules, anti-patterns, and safety gates.

@@ -19,7 +19,7 @@ This seedling note names those cross-cutting operational axes. Its job is not to
 |---|---|---|
 | Storage substrate | Where does the artifact live? | Repo file, SQL row, vector record, graph edge, service-owned memory object |
 | Representational form | How is the operative part represented and consumed? | Distributed-parametric policy in weights, prose memory entry, symbolic test or schema |
-| Lineage | What source dependencies or derivations does it carry? | Trace-derived fact, generated cue, compiled prompt view, canonical workflow |
+| Lineage | What source dependencies or derivations does it carry? | Trace-extracted fact, generated cue, compiled prompt view, canonical workflow |
 | Behavioral authority | Who consumes it, through which channel, and with what force? | Reference advice, prompt instruction, validator enforcement, ranking influence, learning input |
 
 These fields are necessary because memory discussions often conflate them — [agent memory is a crosscutting concern, not a separable niche](./agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md) collects the recurring confusions, and [The fundamental split in agent memory is not storage format but who decides what to remember](../agent-memory-systems/agentic-memory-systems-comparative-review.md) shows substrate-first comparisons missing the more consequential fields. A vector store is a substrate, not a representational form. A prompt rule is usually prose-form but behavior-shaping only through a specific authority path. A Markdown file can advise when read as reference and instruct when loaded as standing context.
@@ -55,7 +55,7 @@ This also explains why [agent memory is a crosscutting concern, not a separable 
 
 Use this note as a router into the detailed requirement notes:
 
-- Capture and derivation: [raw accumulation does not create usable memory](./raw-accumulation-does-not-create-usable-memory.md) and [use trace-derived extraction as meta-learning](./agent-memory-requirements/use-trace-derived-extraction.md).
+- Capture and derivation: [raw accumulation does not create usable memory](./raw-accumulation-does-not-create-usable-memory.md) and [use trace extraction as meta-learning](./agent-memory-requirements/use-trace-extraction-as-meta-learning.md).
 - Activation: [Activate Behavior-Changing Memory Before The Mistake](./agent-memory-requirements/activate-behavior-changing-memory.md).
 - Authority: [Make Authority Explicit](./agent-memory-requirements/make-authority-explicit.md).
 - Lifecycle: [Retire, Redact, Supersede, And Relax Memory](./agent-memory-requirements/retire-redact-supersede-relax.md).

@@ -116,7 +116,7 @@ EchoWiki's automatic update loop is still relevant to Commonplace because it sho
 - Whether manual-edit conflict detection lands. That would make automatic `evolve` safer for human-maintained concept/entity pages.
 - Whether query/chat, search, embeddings, or graph retrieval are added over `wiki/`. That would change read-back from compiler-pushed briefs plus human pull into an active retrieval layer.
 - Whether concept/entity matching gains deterministic deduplication or invalidation. That would add curation operations beyond `evolve`.
-- Whether future versions compile agent session logs or tool traces into wiki rules, concepts, or instructions. That would be the point where trace-derived learning applies.
+- Whether future versions compile agent session logs or tool traces into wiki rules, concepts, or instructions. That would be the point where trace-learning applies.
 
 Relevant Notes:
 

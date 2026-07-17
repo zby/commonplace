@@ -3,7 +3,7 @@ description: MIA mixed-substrate deep-research agent memory paper — search tra
 source_snapshot: memory-intelligence-agent.md
 ingested: "2026-04-11"
 type: kb/sources/types/ingest-report.md
-domains: [agent-memory, trace-derived-learning, test-time-learning, reinforcement-learning]
+domains: [agent-memory, trace-learning, test-time-learning, reinforcement-learning]
 ---
 
 # Ingest: Memory Intelligence Agent
@@ -16,7 +16,7 @@ From: https://arxiv.org/html/2604.04503v2
 
 Type: scientific-paper — arXiv preprint with methodology, architecture, algorithm sketches, ablations, benchmark comparisons, and academic references.
 
-Domains: agent-memory, trace-derived-learning, test-time-learning, reinforcement-learning
+Domains: agent-memory, trace-learning, test-time-learning, reinforcement-learning
 
 Author: Jingyang Qiao, Weicheng Meng, Yu Cheng, Zhihang Lin, Zhizhong Zhang, Xin Tan, Jingyu Gong, Kun Shao, and Yuan Xie — multi-institution team from East China Normal University, Shanghai Innovation Institute, Harbin Institute of Technology, Xiamen University, Shanghai AI Laboratory, and an independent researcher; worth attending to because the paper directly targets deep-research-agent memory and reports linked code/model/dataset artifacts.
 

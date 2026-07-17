@@ -132,7 +132,7 @@ Another divergence is governance of executable memory. SkillWeaver overwrites fu
 Relevant Notes:
 
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - contrasts: SkillWeaver explicitly wires retained APIs into pre-action prompt/controller context.
-- [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - applies: successful browser trajectories become reusable procedures for later tasks.
+- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - applies: successful browser trajectories become reusable procedures for later tasks.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: SkillWeaver requires separating raw traces, generated code, metadata, semantic sidecars, and retrieval decisions.
 - [Behavioral authority](../../notes/definitions/behavioral-authority.md) - frames: generated APIs shift from evidence to instruction/execution authority when selected.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: Playwright APIs, validators, retrieval decisions, and controller actions configure future behavior.

@@ -144,7 +144,7 @@ Relevant Notes:
 
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: CrewAI distills task, kickoff, and feedback traces into scoped vector memory records.
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: CrewAI stores memory separately from the push/pull paths that bring it into context.
-- [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - exemplifies: CrewAI extracts reusable statements from runtime outputs before storing them.
+- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: CrewAI extracts reusable statements from runtime outputs before storing them.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: records, scopes, tools, prompt fragments, and consolidation plans differ by form, lineage, and authority.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - distinguishes: injected prompt memory, memory tools, scopes, and consolidation plans shape behavior more strongly than ordinary retrieved evidence.
 - [Behavioral authority](../../notes/definitions/behavioral-authority.md) - applies: the same retained fact can advise, instruct, route, rank, or drive mutation depending on the consumption path.

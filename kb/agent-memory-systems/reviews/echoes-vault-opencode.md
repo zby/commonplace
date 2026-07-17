@@ -67,7 +67,7 @@ EchoesVault has a stronger out-of-the-box session loop than Commonplace's genera
 
 **Write agency:** `manual` `automatic` - Humans or agents explicitly invoke slash commands and tools to create, update, append, and search memory; the plugin automatically creates vault directories, the default index, commands, and skills on load, and the `/echoes-end` command drives agent-mediated session distillation into durable files.
 
-**Curation operations:** `none` - The automatic path acquires and stores trace-derived summaries, pages, index edits, and scaffolding, but the inspected code does not automatically consolidate, deduplicate, evolve, synthesize across already-stored memories, invalidate, decay, or promote existing entries.
+**Curation operations:** `none` - The automatic path acquires and stores trace-extracted summaries, pages, index edits, and scaffolding, but the inspected code does not automatically consolidate, deduplicate, evolve, synthesize across already-stored memories, invalidate, decay, or promote existing entries.
 
 ### Trace-learning
 
@@ -103,7 +103,7 @@ At consumption, memory authority is mixed. Daily logs and pages are advisory kno
 
 **The start command is powerful but blunt.** Loading the last three logs plus the full index is a pragmatic continuity hack. It works best for small vaults and explains why the status command warns at 200 topics.
 
-**The plugin has two memory layers with different trust levels.** Daily logs are trace-derived and useful for continuity, while encyclopedia pages are supposed to be denser architectural facts. The code does not enforce that separation beyond paths and prompt wording.
+**The plugin has two memory layers with different trust levels.** Daily logs are trace-extracted and useful for continuity, while encyclopedia pages are supposed to be denser architectural facts. The code does not enforce that separation beyond paths and prompt wording.
 
 **Safe filenames are not the same as safe knowledge.** `sanitizeFilename` blocks path traversal for page names, and idempotent install avoids overwriting commands/skills, but semantic correctness still depends on the agent reading and writing responsibly.
 
@@ -111,7 +111,7 @@ At consumption, memory authority is mixed. Daily logs and pages are advisory kno
 
 - Whether EchoesVault adds real YAML/frontmatter validation for page writes; that would move OKF compliance from prompt pressure to code-level validation.
 - Whether `/echoes-start` gains indexed or ranked retrieval instead of full-index plus recent-log loading; that would change the context-efficiency story for larger vaults.
-- Whether the plugin starts reading OpenCode transcript files directly; that would make trace-derived extraction less dependent on the model's current context and could introduce a stronger extraction oracle.
+- Whether the plugin starts reading OpenCode transcript files directly; that would make trace extraction less dependent on the model's current context and could introduce a stronger extraction oracle.
 - Whether page updates preserve history or implement deprecation automatically; today deprecation over deletion is an instruction, not a write-side invariant.
 - Whether tests or fixtures are added for command generation and tool behavior; that would make the plugin's idempotence and memory-safety claims easier to trust.
 
@@ -119,7 +119,7 @@ Relevant Notes:
 
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes EchoesVault's stored files from slash-command push and search-tool pull.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - supports separating vault files, generated commands, generated skills, and tool schemas by substrate, form, lineage, and authority.
-- [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - frames `/echoes-end` and scratchpad notes as session-trace distillation into future memory.
+- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - frames `/echoes-end` and scratchpad notes as session-trace distillation into future memory.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies generated OpenCode commands, skills, and tool schemas as behavior-shaping artifacts.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies daily logs, pages, raw materials, and search results as remembered context rather than hard controls.
 - [Symbolic context engineering is bounded by symbol availability](../../notes/symbolic-context-engineering-is-bounded-by-symbol-availability.md) - relates to EchoesVault's reliance on filenames, index lines, wikilinks, dates, and keywords as retrieval symbols.

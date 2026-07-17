@@ -142,4 +142,4 @@ Relevant Notes:
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: safeguard files, command prose, hooks, git state, plans, audits, and sidecar indexes carry different authority.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: logs, comments, plans, feature records, and audit reports mostly serve as evidence and context.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: `CLAUDE.md`, slash commands, hooks, audit rules, and itemisation rules instruct or validate future behavior.
-- [Use trace-derived extraction](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - exemplifies: Context Guard turns session and tool traces into durable operational memory files.
+- [Use trace extraction](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: Context Guard turns session and tool traces into durable operational memory files.

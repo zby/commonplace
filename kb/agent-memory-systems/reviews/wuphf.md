@@ -83,7 +83,7 @@ The main risk is authority drift. WUPHF has many paths that can turn notes into 
 
 **Distilled form:** `prose` `symbolic` `parametric` — Distilled artifacts include prose briefs, wiki pages, learning descriptions, lint reports, and skills; symbolic JSONL facts, triplets, YAML, review state, and compiled skill metadata; and embedding-backed notebook clustering when enabled.
 
-**Survey fit.** WUPHF is a broad trace-to-KB and trace-to-skill system, but its strongest trace-derived claim is not automatic capture of all chat. It is the staged path from explicitly retained artifacts and notebook/workflow signals into facts, briefs, learning records, skill candidates, and reviewable/promotable team knowledge.
+**Survey fit.** WUPHF is a broad trace-to-KB and trace-to-skill system, but its strongest trace-extracted claim is not automatic capture of all chat. It is the staged path from explicitly retained artifacts and notebook/workflow signals into facts, briefs, learning records, skill candidates, and reviewable/promotable team knowledge.
 
 ## Read-back
 

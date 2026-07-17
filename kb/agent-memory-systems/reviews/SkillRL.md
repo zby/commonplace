@@ -8,7 +8,7 @@ tags: [trace-learning]
 
 # SkillRL
 
-SkillRL, from `aiming-lab/SkillRL`, is a VERL-derived reinforcement-learning stack for agents in ALFWorld, WebShop, and search environments. At the reviewed commit, its memory system is a trace-derived SkillBank: generated memories and concise JSON skills are distilled from rollout trajectories, rendered into "Retrieved Relevant Experience" prompt blocks at SFT and RL time, and optionally extended during training from failed trajectories. The README's broader framing about recursive skill-augmented RL is partly implemented; the code-grounded memory surface is the JSON SkillBank plus prompt injection and failure-triggered append-only skill updates.
+SkillRL, from `aiming-lab/SkillRL`, is a VERL-derived reinforcement-learning stack for agents in ALFWorld, WebShop, and search environments. At the reviewed commit, its memory system is a trace-extracted SkillBank: generated memories and concise JSON skills are distilled from rollout trajectories, rendered into "Retrieved Relevant Experience" prompt blocks at SFT and RL time, and optionally extended during training from failed trajectories. The README's broader framing about recursive skill-augmented RL is partly implemented; the code-grounded memory surface is the JSON SkillBank plus prompt injection and failure-triggered append-only skill updates.
 
 **Repository:** https://github.com/aiming-lab/SkillRL
 
@@ -57,7 +57,7 @@ The closest alignment is the raw-to-promoted boundary. SkillRL's `generated_memo
 
 The main divergence is read-back direction. SkillRL pushes selected skills into the model prompt, while Commonplace mostly expects agents to pull relevant files through `rg`, indexes, skills, and links. Push avoids making the acting agent search, but it hides relevance mistakes inside the prompt assembly layer.
 
-Another divergence is parametric absorption. SkillRL's SFT/RL path can turn trace-derived skills into model behavior. Commonplace treats retained knowledge as inspectable artifacts; using model weights as memory would weaken reviewability unless paired with evaluation probes and retained training lineage.
+Another divergence is parametric absorption. SkillRL's SFT/RL path can turn trace-extracted skills into model behavior. Commonplace treats retained knowledge as inspectable artifacts; using model weights as memory would weaken reviewability unless paired with evaluation probes and retained training lineage.
 
 ### Borrowable Ideas
 
@@ -129,7 +129,7 @@ Another divergence is parametric absorption. SkillRL's SFT/RL path can turn trac
 
 Relevant Notes:
 
-- [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - applies: SkillRL distills rollout traces into durable skills and training examples.
+- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - applies: SkillRL distills rollout traces into durable skills and training examples.
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - frames: SkillRL has an explicit push path from SkillBank storage into prompt context.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: the review separates raw memories, SkillBank JSON, retrieval state, SFT examples, and model weights.
 - [Behavioral authority](../../notes/definitions/behavioral-authority.md) - frames: skills move from evidence to prompt instruction and learning authority.

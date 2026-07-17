@@ -106,7 +106,7 @@ Context scope is bounded by command choice rather than semantic ranking. Query r
 - Whether v2 makes page schemas or collection definitions declarative. That would move Sparks from a fixed runtime contract toward Commonplace-style type and collection contracts.
 - Whether Sparks adds semantic search, embeddings, or full-text retrieval. That would change both representational form and read-back complexity.
 - Whether MCP integrations gain host-side automatic calls before agent turns. That would move read-back from pull toward push or both, but the host wiring would need code-grounded evidence.
-- Whether `brief` or ingest gains automatic synthesis. That would create a qualifying trace-derived or source-derived learning path rather than only deterministic gathering.
+- Whether `brief` or ingest gains automatic synthesis. That would create a qualifying trace-learning or source-derived learning path rather than only deterministic gathering.
 - Whether multi-user review, provenance spans, or semantic validation appear. Those would matter if Sparks' agent-authored wiki pages are expected to carry stronger authority than personal knowledge context.
 
 Relevant Notes:

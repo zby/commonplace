@@ -91,7 +91,7 @@ The major divergence is provenance. The curator prompt asks for tested and prove
 
 **Distilled form:** `prose` — The durable learned artifact is cheatsheet prose; embeddings rank traces for retrieval but are not the final distilled memory.
 
-Dynamic Cheatsheet is a clear trace-learning system because retained behavior-shaping prose is generated from prior solver trajectories. It demonstrates a low-infrastructure path to test-time learning, while also showing the trust problem: trace-derived authority can outrun provenance and validation.
+Dynamic Cheatsheet is a clear trace-learning system because retained behavior-shaping prose is generated from prior solver trajectories. It demonstrates a low-infrastructure path to test-time learning, while also showing the trust problem: trace-extracted authority can outrun provenance and validation.
 
 ## Read-back
 
@@ -121,7 +121,7 @@ At consumption time, the cheatsheet has instruction-like force because the gener
 
 ## What to Watch
 
-- Whether correctness results become curator inputs or acceptance gates. That would materially improve trace-derived memory quality.
+- Whether correctness results become curator inputs or acceptance gates. That would materially improve trace-extracted memory quality.
 - Whether cheatsheet entries gain item-level provenance, confidence, or invalidation metadata. That is the missing bridge from benchmark memory to reviewable knowledge artifacts.
 - Whether embedding generation becomes part of the repository workflow rather than precomputed CSV input. That would clarify retrieval lineage.
 - Whether prompt-level length requests become hard token budgets. That determines whether cumulative memory stays compact as runs grow.
@@ -134,4 +134,4 @@ Relevant Notes:
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: cheatsheets, prompt templates, embeddings, result traces, and evaluators differ by substrate, form, lineage, and authority.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: previous solutions and saved result traces are examples, evidence, and audit material.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: generator and curator prompts define how retained memory changes and how it influences later solver behavior.
-- [Use trace-derived extraction](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - exemplifies: raw solver trajectories are distilled into a durable behavior-shaping cheatsheet.
+- [Use trace extraction](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: raw solver trajectories are distilled into a durable behavior-shaping cheatsheet.

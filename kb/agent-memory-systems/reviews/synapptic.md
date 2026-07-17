@@ -67,7 +67,7 @@ The tradeoff is speed versus review. Synapptic's local file substrate and benchm
 
 **Guard effectiveness as a first-class field.** Ready now for review vocabulary. Commonplace could record whether a prescriptive instruction is untested, effective, redundant, or harmful for a model/harness, instead of treating all prose rules as equal once accepted.
 
-**Trace-derived candidates should start outside the library.** Ready for workshop workflows. Synapptic's observation/profile/archetype tiers map well to Commonplace's workshop-to-library promotion: raw traces and extracted candidate guards should live in work/report space until reviewed or benchmarked.
+**Trace-extracted candidates should start outside the library.** Ready for workshop workflows. Synapptic's observation/profile/archetype tiers map well to Commonplace's workshop-to-library promotion: raw traces and extracted candidate guards should live in work/report space until reviewed or benchmarked.
 
 **Profile-aware extraction as anti-duplication.** Needs a concrete extraction workflow. Passing high-confidence existing profile entries into a future extractor is a practical way to reduce repeated discoveries, but Commonplace would need source-span preservation so "skip known patterns" does not hide drift or contradictions.
 
@@ -131,7 +131,7 @@ The tradeoff is speed versus review. Synapptic's local file substrate and benchm
 
 ## What to Watch
 
-- Whether future versions preserve exact transcript-span provenance from each synthesized guard back to source JSONL records; that would make trace-derived prompt policy more reviewable.
+- Whether future versions preserve exact transcript-span provenance from each synthesized guard back to source JSONL records; that would make trace-extracted prompt policy more reviewable.
 - Whether the benchmark path moves from synthetic adversarial prompts to post-action audits of real sessions; that would test installed read-back rather than only prompt-comparison behavior.
 - Whether Synapptic adds per-request guard selection instead of always-loaded archetypes; that would change the read-back signal from coarse/project identifier toward inferred or identifier-based instance targeting.
 - Whether additional session sources beyond Claude Code are implemented; that would broaden trace lineage and change how project identity and transcript filtering should be trusted.
@@ -142,6 +142,6 @@ Relevant Notes:
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: Synapptic derives observations, profile entries, prompt-policy archetypes, and guard verdicts from session traces.
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Synapptic's profile state only changes behavior after synthesis and assistant memory/config read-back.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: observations, weighted profiles, archetypes, output files, benchmarks, and relay indexes have different substrates, forms, lineage, and authority.
-- [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - exemplifies: session failures and corrections become durable behavior guidance for later agents.
+- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: session failures and corrections become durable behavior guidance for later agents.
 - [System-definition artifacts are crystallized reasoning under context scarcity](../../notes/system-definition-artifacts-are-crystallized-reasoning-under-context.md) - frames: Synapptic turns repeated interaction evidence into compact prompt-policy rules.
 - [Frontloading spares execution context](../../notes/frontloading-spares-execution-context.md) - explains: Synapptic precomputes user-model context before future sessions instead of replaying transcripts.

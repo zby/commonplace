@@ -130,7 +130,7 @@ The strongest divergence is read-back. Commonplace expects agents to search and 
 ## What to Watch
 
 - Whether a local BM25/vector index or `wiki index --rebuild` becomes real; that would change read-back from mostly identifier/lexical pull to ranked retrieval.
-- Whether candidate policy promotion becomes automated; that would upgrade trace-derived examples from calibration evidence into direct system-definition authority.
+- Whether candidate policy promotion becomes automated; that would upgrade trace-extracted examples from calibration evidence into direct system-definition authority.
 - Whether hook-assisted session reanchoring gains behavior tests; that would turn the faithfulness verdict from plumbing-only to behavior-grounded.
 - Whether NotebookLM source maps cover all artifact and query paths reliably; unresolved `[[nlm:<uuid>]]` citations weaken the local provenance story.
 - Whether all automatic write paths are routed through the same validation/reporting contract as `apply_plan`; divergence there is the main governance risk.
@@ -141,4 +141,4 @@ Relevant Notes:
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: TheKnowledge's files, policies, examples, validators, hooks, source maps, and service notebooks carry different forms and authorities.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: raw sources, wiki pages, filter examples, logs, and source maps usually advise or provide evidence.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: gateway ops, validators, policies, skills, hooks, and scheduler definitions constrain later behavior.
-- [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - relates: filter decisions and operational events can be distilled into candidate policies and digest pages.
+- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - relates: filter decisions and operational events can be distilled into candidate policies and digest pages.

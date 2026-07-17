@@ -8,7 +8,7 @@ tags: [trace-learning]
 
 # Agent Skills for Context Engineering
 
-`muratcankoylan/Agent-Skills-for-Context-Engineering`, by Muratcan Koylan, is a Claude Code/Open Plugins skill marketplace for context engineering, harness engineering, evaluation, memory, filesystem context, and related agent-system design topics. At the reviewed commit it is not primarily a runtime memory server. Its standing memory surface is an authored skill corpus plus a repo-native `researcher/` operating system for turning external research, benchmarks, and reviewed mechanisms into future skill changes. It also ships a trace-derived example under `examples/interleaved-thinking/` that captures reasoning/tool traces, analyzes failures, optimizes prompts, and can generate reusable skills.
+`muratcankoylan/Agent-Skills-for-Context-Engineering`, by Muratcan Koylan, is a Claude Code/Open Plugins skill marketplace for context engineering, harness engineering, evaluation, memory, filesystem context, and related agent-system design topics. At the reviewed commit it is not primarily a runtime memory server. Its standing memory surface is an authored skill corpus plus a repo-native `researcher/` operating system for turning external research, benchmarks, and reviewed mechanisms into future skill changes. It also ships a trace-learning example under `examples/interleaved-thinking/` that captures reasoning/tool traces, analyzes failures, optimizes prompts, and can generate reusable skills.
 
 **Repository:** https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering
 
@@ -45,7 +45,7 @@ tags: [trace-learning]
 
 **Benchmark and router artifacts.** Storage substrate: router prompts, prompt fixtures, result reports, SDK runner code, and history JSONL under `researcher/benchmarks/` and `researcher/reports/`. Representational form: symbolic fixtures/results plus prose reports. Lineage: authored fixtures and generated benchmark outputs. Behavioral authority: ranking/evaluation evidence used to rewrite activation descriptions and harden the corpus; the README records measured top-1/top-3 outcomes and deltas ([`README.md`](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering/blob/25e1fa79a33f0985793bcab3c64dde8d020c5132/README.md), [`researcher/benchmarks/router/README.md`](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering/blob/25e1fa79a33f0985793bcab3c64dde8d020c5132/researcher/benchmarks/router/README.md)).
 
-**Trace-derived example artifacts.** Storage substrate: `examples/interleaved-thinking/optimization_artifacts/`, generated skill directories, and optional runtime output directories. Representational form: prose traces/reports, symbolic dataclass objects and JSON references, and generated prose skill files. Lineage: trace-extracted from reasoning blocks, tool calls, analyses, optimizations, and loop iterations. Behavioral authority: learning when converted into generated skills or optimized prompts; otherwise evidence/knowledge for debugging.
+**Trace-extracted example artifacts.** Storage substrate: `examples/interleaved-thinking/optimization_artifacts/`, generated skill directories, and optional runtime output directories. Representational form: prose traces/reports, symbolic dataclass objects and JSON references, and generated prose skill files. Lineage: trace-extracted from reasoning blocks, tool calls, analyses, optimizations, and loop iterations. Behavioral authority: learning when converted into generated skills or optimized prompts; otherwise evidence/knowledge for debugging.
 
 The system has a promotion path, but it is governance-first. Research evidence can become run artifacts, a skill proposal, a novelty result, validated readiness, promoted mechanism entries, claim provenance, corpus-index updates, and eventually revised skill instructions. The interleaved-thinking example has a separate trace-to-skill promotion path. Neither path automatically makes generated content high-authority without validation or human review.
 
@@ -89,7 +89,7 @@ Extraction is model-judged and pattern-oriented: `TraceAnalyzer` prompts M2.1 to
 
 **Distilled form:** `prose` `symbolic` - The durable outputs are optimized prompts, generated `SKILL.md` prose, JSON reference summaries, and pattern records. No parametric model update is implemented in this repository.
 
-Survey placement: this is a trace-derived skill-generation example, not the default static skill activation path. It strengthens the survey claim that trace learning often has a raw trace stage followed by a separate distillation stage, but it should be counted as example/tooling evidence rather than proof that the shipped marketplace continuously self-improves during ordinary use.
+Survey placement: this is a trace-learning skill-generation example, not the default static skill activation path. It strengthens the survey claim that trace learning often has a raw trace stage followed by a separate distillation stage, but it should be counted as example/tooling evidence rather than proof that the shipped marketplace continuously self-improves during ordinary use.
 
 ## Read-back
 
@@ -103,7 +103,7 @@ The pull path is nevertheless agent-shaped. `AGENTS.md` names durable workspace 
 
 **`AGENTS.md` is the clearest ordinary workspace memory.** It records learned preferences, workspace facts, and operating defaults that future agents may load as instruction. This is simpler than the researcher OS and more directly behavior-shaping, but its update discipline is social rather than strongly validated.
 
-**The trace-derived example is more ambitious than the core marketplace.** It has a true raw trace -> analysis -> prompt/skill distillation path. Because it lives under `examples/`, its existence should not be confused with the installed plugin's normal behavior.
+**The trace-learning example is more ambitious than the core marketplace.** It has a true raw trace -> analysis -> prompt/skill distillation path. Because it lives under `examples/`, its existence should not be confused with the installed plugin's normal behavior.
 
 **The continuous loop is intentionally conservative.** `loop_step.py` parks runs needing evaluation or model/human action. That limits autonomy, but it prevents the common failure mode where a self-improvement loop quietly weakens its own evaluators.
 
@@ -113,15 +113,15 @@ The pull path is nevertheless agent-shaped. `AGENTS.md` names durable workspace 
 
 - Whether the interleaved-thinking trace optimizer is promoted from example code into the main researcher OS or marketplace workflow; that would make trace-learning central rather than ancillary.
 - Whether `researcher/scripts/loop_step.py` gains a cost-gated judge adapter for `retrieved -> evaluated` or `proposed -> novelty_checked`; that would change the write agency from conservative staging to stronger automatic curation.
-- Whether generated skills are required to pass the same `validate_repo.py`, mechanism, claim, corpus-index, and activation-fixture gates before inclusion; that determines whether trace-derived skills become governed system-definition artifacts or just generated prose.
+- Whether generated skills are required to pass the same `validate_repo.py`, mechanism, claim, corpus-index, and activation-fixture gates before inclusion; that determines whether trace-extracted skills become governed system-definition artifacts or just generated prose.
 - Whether the plugin host exposes activation logs or feedback to the repository; that would create a real read/write loop from skill use back into skill routing.
 - Whether benchmark history begins to drive automatic description rewrites or promotion decisions; that would add automatic ranking-to-instruction feedback.
 
 Relevant Notes:
 
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - frames why static skill activation is not counted as memory read-back from accumulated state.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies to the split between skills, manifests, mechanisms, claims, run states, validators, and trace-derived generated skills.
+- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies to the split between skills, manifests, mechanisms, claims, run states, validators, and trace-extracted generated skills.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies source evidence, reports, traces, and benchmark results when they advise later maintainers.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies skills, manifests, validators, activation fixtures, and promoted mechanisms when they route or constrain future agents.
-- [Lineage](../../notes/definitions/lineage.md) - is central to the repository's source-to-skill workflow, claim provenance, ledgers, and trace-derived example.
+- [Lineage](../../notes/definitions/lineage.md) - is central to the repository's source-to-skill workflow, claim provenance, ledgers, and trace-extracted example.
 - [Context engineering](../../notes/definitions/context-engineering.md) - names the design problem this skill marketplace and researcher OS both target.

@@ -148,7 +148,7 @@ The main divergence is the canonical substrate. Commonplace makes the reviewable
 Relevant Notes:
 
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: Origin turns chat/session/work traces into atomic memories and sourced wiki pages.
-- [Use trace-derived extraction](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - exemplifies: Origin extracts future work context from prior sessions and imports.
+- [Use trace extraction](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: Origin extracts future work context from prior sessions and imports.
 - [Preserve evidence without loading history](../../notes/agent-memory-requirements/preserve-evidence-without-loading-history.md) - aligns: Origin distills traces into memories/pages while keeping source ids and session artifacts.
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - contrasts: Origin couples storage with `/brief` and `context` activation paths.
 - [Symbolic context engineering is bounded by symbol availability](../../notes/symbolic-context-engineering-is-bounded-by-symbol-availability.md) - applies: Origin's space, project, page, source id, and memory type filters need symbols before they can target context.

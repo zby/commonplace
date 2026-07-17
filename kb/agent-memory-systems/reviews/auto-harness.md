@@ -39,11 +39,11 @@ last-checked: "2026-06-04"
 
 **Program and benchmark supplements.** Storage substrate is Markdown files in `program_templates/` plus generated `PROGRAM.md`. Representational form is prose with symbolic command names, file roles, loop steps, and forbidden-action lists. Lineage is authored infrastructure copied by `prepare.py`. Behavioral authority is instruction: it tells the coding agent which files it owns, which traces it may read, how to gate, when to record, and when to stop.
 
-**Evolving agent file.** Storage substrate is `agent/agent.py`, copied from `agent/templates/{benchmark}.py` and then modified by the coding agent. Representational form is symbolic Python code plus embedded prompt prose. Lineage starts as authored template code and becomes trace-derived through iterative edits made after failure analysis. Behavioral authority is instruction and execution authority: benchmark runners import this file as the agent under evaluation.
+**Evolving agent file.** Storage substrate is `agent/agent.py`, copied from `agent/templates/{benchmark}.py` and then modified by the coding agent. Representational form is symbolic Python code plus embedded prompt prose. Lineage starts as authored template code and becomes trace-extracted through iterative edits made after failure analysis. Behavioral authority is instruction and execution authority: benchmark runners import this file as the agent under evaluation.
 
 **Raw train traces and results.** Storage substrate is `workspace/traces/latest/`, `workspace/traces/baseline/`, and `workspace/train_results.json`. Representational form is symbolic JSON containing prose conversations, tool calls, rewards, and benchmark metadata. Lineage is trace-extracted from train benchmark runs; test traces are not copied into the readable workspace path. Behavioral authority is knowledge and learning evidence for later failure analysis, not a direct runtime prompt for the benchmark agent.
 
-**Learnings log.** Storage substrate is `workspace/learnings.md`. Representational form is prose structured by iteration headings and fields such as what changed, pattern confirmed, what worked, and needs from human. Lineage is trace-derived distillation by the coding agent after each pass or failure. Behavioral authority is knowledge and soft instruction for subsequent iterations; the file can shape hypotheses but does not itself gate a change.
+**Learnings log.** Storage substrate is `workspace/learnings.md`. Representational form is prose structured by iteration headings and fields such as what changed, pattern confirmed, what worked, and needs from human. Lineage is trace-extracted distillation by the coding agent after each pass or failure. Behavioral authority is knowledge and soft instruction for subsequent iterations; the file can shape hypotheses but does not itself gate a change.
 
 **Regression suite and score history.** Storage substrate is `workspace/suite.json` and `workspace/results.tsv`. Representational form is symbolic task ids, thresholds, last results, scores, commits, and timestamps. Lineage is trace-extracted from benchmark outcomes and accepted iterations. Behavioral authority is validation and enforcement: `gating.py` reruns suite tasks, compares test score against prior best, and promotes newly fixed failures into the suite.
 
@@ -139,7 +139,7 @@ Auto Harness also exposes a useful anti-cheating pattern. It does not merely tel
 
 ## What to Watch
 
-- Whether future versions attach accepted `agent.py` changes to the specific failing trace ids and learnings entries that motivated them; that would make trace-derived code evolution auditable.
+- Whether future versions attach accepted `agent.py` changes to the specific failing trace ids and learnings entries that motivated them; that would make trace-extracted code evolution auditable.
 - Whether the harness adds automatic summarization or clustering of trace failures before the coding agent reads them; that would change context efficiency from path scoping to real consolidation.
 - Whether suite promotion gains richer metadata such as failure class, source iteration, or expected behavior; that would move `suite.json` from a task list toward a reviewable validation artifact.
 - Whether stochastic score handling appears, such as repeated gate runs, confidence intervals, or seed rotation; that would make the monotonic score gate less brittle.
@@ -150,6 +150,6 @@ Relevant Notes:
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: Auto Harness derives learnings, code changes, and regression obligations from benchmark traces and outcomes.
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: workspace files affect later action only when the coding agent or gate reads them.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: Auto Harness bundles traces, code, instructions, suite state, and gates with different forms and authorities.
-- [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - exemplifies: repeated task failures become future agent behavior through iterative edits and suite promotion.
+- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: repeated task failures become future agent behavior through iterative edits and suite promotion.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: traces, results, and learnings advise later diagnosis and editing.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: `PROGRAM.md`, `agent/agent.py`, `gating.py`, and `workspace/suite.json` carry instruction, execution, and validation force.

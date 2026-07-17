@@ -65,7 +65,7 @@ AWM is also much more push-oriented than Commonplace. Once a user or pipeline ch
 
 ### Borrowable Ideas
 
-**Use benchmark success as a write-side gate for trace-derived playbooks.** Ready for narrow workflows. Commonplace could allow a workshop to distill repeated validation-fix or review-triage traces only after a deterministic or reviewed success signal.
+**Use benchmark success as a write-side gate for trace-extracted playbooks.** Ready for narrow workflows. Commonplace could allow a workshop to distill repeated validation-fix or review-triage traces only after a deterministic or reviewed success signal.
 
 **Keep the distilled artifact as editable prose before codifying it.** Ready now. AWM's text workflows are easy to inspect and revise before they gain stronger authority. Commonplace should preserve that low-friction stage for operational playbooks before turning them into skills, validators, or commands.
 
@@ -135,7 +135,7 @@ AWM is also much more push-oriented than Commonplace. Once a user or pipeline ch
 
 ## What to Watch
 
-- Whether future AWM code attaches workflow blocks to source trajectory ids, success/evaluation records, model/prompt versions, and website versions; that would make trace-derived workflows auditable.
+- Whether future AWM code attaches workflow blocks to source trajectory ids, success/evaluation records, model/prompt versions, and website versions; that would make trace-extracted workflows auditable.
 - Whether the FAISS workflow retriever becomes part of the online inference path; that would change read-back from coarse file push toward instance-targeted inferred selection.
 - Whether workflow files gain entry-level suppression, expiry, or invalidation when a website UI changes; without that, stale workflow push remains the main design risk.
 - Whether AWM promotes common workflows into executable browser helpers or validators; that would move the retained artifact from prose advice toward symbolic system-definition authority.
@@ -146,6 +146,6 @@ Relevant Notes:
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: AWM distills web-agent trajectories into reusable prose workflows.
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: workflow files matter because the runners push them into future prompts.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: AWM bundles trace logs, workflow prose, retrieval indexes, prompts, and evaluation outputs under different forms and authorities.
-- [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - exemplifies: successful task traces are abstracted into future behavior guidance.
+- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: successful task traces are abstracted into future behavior guidance.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: workflow text and concrete examples mostly act as advisory context.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - contrasts: AWM's workflow files influence behavior but are not enforced validators or executable tools.

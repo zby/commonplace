@@ -9,7 +9,7 @@ Purpose: identify claims embedded in the synthesis note that could become standa
 The source note is doing two jobs at once:
 
 1. It proposes an architecture for agent memory: trace, observation, episode, library; role-split retrieval; typed cue indexes; extraction taxonomy.
-2. It contains several general claims about memory, activation, promotion, source-of-truth control, and trace-derived learning.
+2. It contains several general claims about memory, activation, promotion, source-of-truth control, and trace-learning.
 
 The architecture can remain a synthesis note. The extractable material is the set of claims that another note could cite without importing the full architecture. The strongest candidates are not "parts of the architecture"; they are mechanisms that apply across memory systems, KB maintenance, review systems, and agent runtime design.
 
@@ -314,7 +314,7 @@ This may be a revision to the source note's extraction taxonomy rather than a st
 
 Added grounding:
 
-[Oracle strength spectrum](../../notes/oracle-strength-spectrum.md) provides the primary vocabulary. [Trace-derived learning techniques in related systems](../../agent-memory-systems/trace-derived-learning-techniques-in-related-systems.md) supplies evidence that trace-mining systems converge on similar stages but stall at evaluation, trust, persistence, and retirement. [Memory management policy is learnable but oracle-dependent](../../notes/memory-management-policy-is-learnable-but-oracle-dependent.md) explains why learned extraction/promotion policies only close cleanly when the task supplies a strong oracle.
+[Oracle strength spectrum](../../notes/oracle-strength-spectrum.md) provides the primary vocabulary. [Trace-learning techniques in related systems](../../agent-memory-systems/trace-learning-techniques-in-related-systems.md) supplies evidence that trace-mining systems converge on similar stages but stall at evaluation, trust, persistence, and retirement. [Memory management policy is learnable but oracle-dependent](../../notes/memory-management-policy-is-learnable-but-oracle-dependent.md) explains why learned extraction/promotion policies only close cleanly when the task supplies a strong oracle.
 
 Quality risk:
 
@@ -323,7 +323,7 @@ The note could become a catalogue. It needs a sharp claim: extraction schemas an
 Suggested links:
 
 - `grounds`: [Oracle strength spectrum](../../notes/oracle-strength-spectrum.md)
-- `evidence`: [Trace-derived learning techniques in related systems](../../agent-memory-systems/trace-derived-learning-techniques-in-related-systems.md)
+- `evidence`: [Trace-learning techniques in related systems](../../agent-memory-systems/trace-learning-techniques-in-related-systems.md)
 - `grounds`: [Memory management policy is learnable but oracle-dependent](../../notes/memory-management-policy-is-learnable-but-oracle-dependent.md)
 - `extends`: [Automating KB learning is an open problem](../../notes/automating-kb-learning-is-an-open-problem.md)
 

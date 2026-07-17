@@ -32,7 +32,7 @@ The `agent-memory-system-review` type ([spec](../../agent-memory-systems/types/a
 
 - **151 reviews; 141 code-grounded** and admitted to the matrix.
 - **A 55-column matrix** ([`systems.csv`](../../agent-memory-systems/systems.csv)) built by **parsing the review prose**.
-- **Quantitative cross-corpus findings** with real *n*s ([comparative review](../../agent-memory-systems/agentic-memory-systems-comparative-review.md)): files/repo storage leads at 98/141 yet predicts little; 79/95 trace-derived systems push memory; automatic activation is largely shipped untested.
+- **Quantitative cross-corpus findings** with real *n*s ([comparative review](../../agent-memory-systems/agentic-memory-systems-comparative-review.md)): files/repo storage leads at 98/141 yet predicts little; 79/95 trace-learning systems push memory; automatic activation is largely shipped untested.
 
 It proves the *shape* works and that the domain surface is small. It does **not** prove the shape transfers. Only a second instance can do that.
 

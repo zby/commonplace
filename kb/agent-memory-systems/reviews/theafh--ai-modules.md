@@ -118,7 +118,7 @@ Authority at consumption depends on the file read. A wiki concept page is adviso
 
 **The trigger descriptions are broad.** The `wiki` skill activates whenever the user mentions the wiki, knowledge base, or research notes in many ways. That improves adoption, but it can load a large procedural surface for ordinary questions before the actual retained wiki content is even selected.
 
-**Session wrapup is trace-derived but approval-gated.** This is a useful middle ground: it avoids silently training on every conversation, but it also means learning depends on the user remembering to invoke wrapup and approve the proposal.
+**Session wrapup is trace-extracted but approval-gated.** This is a useful middle ground: it avoids silently training on every conversation, but it also means learning depends on the user remembering to invoke wrapup and approve the proposal.
 
 **Validation is mostly structural.** The wiki linter is substantial, and `wiki_auto_shaper` adds semantic audit instructions, but there is no retained per-claim review state comparable to Commonplace review gates. Contradictions are surfaced rather than resolved, which is the right direction but still leaves quality dependent on later human review.
 
@@ -126,7 +126,7 @@ Authority at consumption depends on the file read. A wiki concept page is adviso
 
 ## What to Watch
 
-- Whether `wiki_wrapup` starts persisting a raw session snapshot or source-message ids alongside approved pages; that would make trace-derived lineage auditable after the chat disappears.
+- Whether `wiki_wrapup` starts persisting a raw session snapshot or source-message ids alongside approved pages; that would make trace-extracted lineage auditable after the chat disappears.
 - Whether the wiki linter gains source-span or citation-resolution checks for generated pages; that would move wiki claims closer to Commonplace's code-grounded review discipline.
 - Whether deployment metadata records which host has which plugin version installed; without that, multi-vendor adoption can drift from the repo source of truth.
 - Whether `wiki_auto_shaper` grows a machine-readable review report; that would let autonomous repairs remain inspectable without reading every changed page.
@@ -135,7 +135,7 @@ Authority at consumption depends on the file read. A wiki concept page is adviso
 Relevant Notes:
 
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - applies: stored wiki files affect behavior only when the skill's orientation/search path brings them into context.
-- [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - applies: `wiki_wrapup` distills session traces into durable wiki candidates.
+- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - applies: `wiki_wrapup` distills session traces into durable wiki candidates.
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: `ai-modules` is an approval-gated session-to-wiki trace extraction system.
 - [Frontloading spares execution context](../../notes/frontloading-spares-execution-context.md) - aligns: wiki pages and changelog entries precompute source understanding so future sessions do not re-derive it from raw material.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: skills, manifests, wiki pages, raw sources, lints, logs, and deployment outputs carry different forms and authorities.

@@ -65,7 +65,7 @@ browzy is stronger on user-facing read-back ergonomics. It packages retrieval, b
 
 **Gap suggestions from retrieval misses.** browzy turns weak coverage into suggested additions. Commonplace could emit "missing note/source" suggestions from repeated failed searches or review-bundle gaps. Ready where the signal is deterministic; LLM-generated gap lists need review.
 
-**Crystallized insight drafts instead of silent promotion.** browzy writes candidate insights to `drafts/`, not directly into the wiki. Commonplace should keep that staging discipline for trace-derived notes. Ready now as a workshop pattern.
+**Crystallized insight drafts instead of silent promotion.** browzy writes candidate insights to `drafts/`, not directly into the wiki. Commonplace should keep that staging discipline for trace-extracted notes. Ready now as a workshop pattern.
 
 ## Write side
 
@@ -85,7 +85,7 @@ browzy is stronger on user-facing read-back ergonomics. It packages retrieval, b
 
 **Distilled form:** `prose` `symbolic` — Digests and draft insights are prose; their filenames, frontmatter, tags, source slugs, session metadata, and activity-log markers are symbolic.
 
-In the trace-derived-learning survey terms, browzy sits in the artifact-learning family: it distills session/Q&A traces into prose artifacts that may later be indexed and read back. It strengthens the claim that useful trace-learning often needs a staging layer; the implementation writes digests/drafts rather than silently changing authoritative wiki articles.
+In the trace-learning survey terms, browzy sits in the artifact-learning family: it distills session/Q&A traces into prose artifacts that may later be indexed and read back. It strengthens the claim that useful trace-learning often needs a staging layer; the implementation writes digests/drafts rather than silently changing authoritative wiki articles.
 
 ## Read-back
 
@@ -107,20 +107,20 @@ The system's strongest "compiled knowledge" claim is also its main risk. LLM com
 
 The query cache is operationally useful but not durable memory. It is an in-process LRU with TTL and generation invalidation on ingest, so it avoids repeat calls without changing the long-term knowledge base.
 
-The auto-compaction code summarizes older conversation turns, but the current CLI call discards the compaction result instead of storing it for future turns. Durable session digest generation is the real trace-derived memory path.
+The auto-compaction code summarizes older conversation turns, but the current CLI call discards the compaction result instead of storing it for future turns. Durable session digest generation is the real trace-extracted memory path.
 
 ## What to Watch
 
 - Whether compiled article faithfulness gets a verifier against raw sources; that would make browzy's automatic write path more trustworthy and more Commonplace-like.
 - Whether SQLite becomes more than a derived index, such as a canonical article/source store; that would change the substrate classification and repair story.
-- Whether insight drafts gain a review/apply workflow into the wiki; that would turn trace-derived drafts into a clearer promotion path.
+- Whether insight drafts gain a review/apply workflow into the wiki; that would turn trace-extracted drafts into a clearer promotion path.
 - Whether retrieval adds embeddings or LLM relevance judgment; that would change read-back signal from purely lexical/metadata inference to embedding or judgment inference.
 - Whether `/health` suggestions gain automatic fixes for duplicates, contradictions, or orphan articles; that would add stronger curation operations beyond advisory validation.
 
 Relevant Notes:
 
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes browzy's stored wiki from the query loop that actually injects selected context into a model call.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - supports separating raw sources, compiled wiki articles, SQLite indexes, schema prompts, and trace-derived drafts by substrate, form, lineage, and authority.
+- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - supports separating raw sources, compiled wiki articles, SQLite indexes, schema prompts, and trace-extracted drafts by substrate, form, lineage, and authority.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - describes the authority of schema files, prompts, ranking code, lint checks, and retrieval budgets.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - describes the evidence role of raw sources, wiki article content, logs, sessions, and digests.
-- [Use trace-derived extraction](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - frames browzy's session digests and insight drafts as trace-derived artifact learning with a staging boundary.
+- [Use trace extraction](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - frames browzy's session digests and insight drafts as trace-extracted artifact learning with a staging boundary.

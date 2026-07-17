@@ -72,7 +72,7 @@ The biggest tradeoff is authority speed. Compound Engineering can quickly move a
 
 **Treat generated prompt/instruction surfaces as compiled views.** Needs a concrete emitting workflow. If Commonplace produces host-specific instruction files, they should carry source lineage and regeneration rules rather than drifting independently.
 
-**Use session-history extraction as supplementary evidence, not primary truth.** Ready as a constraint. Compound Engineering's `ce-compound` labels session and auto-memory sourced content, which is a useful provenance discipline for trace-derived notes.
+**Use session-history extraction as supplementary evidence, not primary truth.** Ready as a constraint. Compound Engineering's `ce-compound` labels session and auto-memory sourced content, which is a useful provenance discipline for trace-extracted notes.
 
 ## Write side
 
@@ -126,12 +126,12 @@ The biggest tradeoff is authority speed. Compound Engineering can quickly move a
 
 **Temporary review artifacts are useful but not canonical.** `/tmp/compound-engineering/ce-code-review/` is a strong automation handoff surface, but it is outside the project repo. Long-term authority comes only when findings become commits, PR text, residual files, or solution docs.
 
-**Trace-derived outputs are readable, which helps governance.** The system does not hide learning in embeddings; the cost is that relevance and truth maintenance are mostly procedural rather than computed.
+**Trace-extracted outputs are readable, which helps governance.** The system does not hide learning in embeddings; the cost is that relevance and truth maintenance are mostly procedural rather than computed.
 
 ## What to Watch
 
 - Whether Codex native plugins gain custom-agent support; the current README says a separate Bun install is needed for Codex agents, and that gap determines how much conversion machinery remains necessary.
-- Whether `ce-sessions` outputs start feeding more workflows automatically; that would increase trace-derived read-back beyond optional compounding support.
+- Whether `ce-sessions` outputs start feeding more workflows automatically; that would increase trace-extracted read-back beyond optional compounding support.
 - Whether `docs/solutions/` gains stronger schema/index tooling; that would move it closer to Commonplace-style typed knowledge.
 - Whether product pulse reports become inputs to strategy or brainstorm by default; that would make operational telemetry a stronger memory source.
 - Whether review artifacts outside `/tmp` become first-class retained project files; that would change their authority from ephemeral QA handoff to durable project memory.
@@ -143,4 +143,4 @@ Relevant Notes:
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: strategy, plans, solution docs, concepts, pulse reports, session summaries, and review reports mostly advise as evidence or context.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: skills, agents, plugin manifests, workflow gates, validators, and instruction-file edits shape later behavior with stronger force.
 - [Keep Lineage And Compiled Views From Drifting](../../notes/agent-memory-requirements/keep-compiled-views-aligned.md) - warns: host-specific installed artifacts and instruction-file discoverability lines are compiled views over the plugin/project memory source.
-- [Use Trace-Derived Extraction As Meta-Learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - exemplifies: Compound Engineering turns session, conversation, diff, review, and telemetry traces into reusable project learnings.
+- [Use Trace Extraction As Meta-Learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: Compound Engineering turns session, conversation, diff, review, and telemetry traces into reusable project learnings.

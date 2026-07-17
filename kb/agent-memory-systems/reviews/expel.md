@@ -45,7 +45,7 @@ ExpeL, from LeapLabTHU's `ExpeL` repository, is the official implementation of t
 
 **Few-shot retrieval state.** `setup_vectorstore()` and `update_dynamic_prompt_components()` derive LangChain `Document` objects and a FAISS index from successful trajectories and static examples, but rebuild that index inside the prompt-update path rather than preserving it as a durable index file ([agent/expel.py](https://github.com/LeapLabTHU/ExpeL/blob/e41ec9a24823e7b560c561ab191441b56d9bcefc/agent/expel.py)). The retained artifact is the source trajectory/example text; the vector store has ranking authority for the current call.
 
-**Prompt templates and adapters.** Python prompt modules and Hydra configs define the base ReAct prompt, reflection prompt, critique prompt, rule-injection wording, parsing functions, retrieval strategy, buffer ratio, reranker, and token bounds ([prompts/templates/human.py](https://github.com/LeapLabTHU/ExpeL/blob/e41ec9a24823e7b560c561ab191441b56d9bcefc/prompts/templates/human.py), [prompts/__init__.py](https://github.com/LeapLabTHU/ExpeL/blob/e41ec9a24823e7b560c561ab191441b56d9bcefc/prompts/__init__.py), [configs/agent/expel.yaml](https://github.com/LeapLabTHU/ExpeL/blob/e41ec9a24823e7b560c561ab191441b56d9bcefc/configs/agent/expel.yaml)). These authored artifacts carry system-definition authority even before any trace-derived memory exists.
+**Prompt templates and adapters.** Python prompt modules and Hydra configs define the base ReAct prompt, reflection prompt, critique prompt, rule-injection wording, parsing functions, retrieval strategy, buffer ratio, reranker, and token bounds ([prompts/templates/human.py](https://github.com/LeapLabTHU/ExpeL/blob/e41ec9a24823e7b560c561ab191441b56d9bcefc/prompts/templates/human.py), [prompts/__init__.py](https://github.com/LeapLabTHU/ExpeL/blob/e41ec9a24823e7b560c561ab191441b56d9bcefc/prompts/__init__.py), [configs/agent/expel.yaml](https://github.com/LeapLabTHU/ExpeL/blob/e41ec9a24823e7b560c561ab191441b56d9bcefc/configs/agent/expel.yaml)). These authored artifacts carry system-definition authority even before any trace-extracted memory exists.
 
 Promotion path: task execution -> trajectory/reflection checkpoint -> LLM critique operations -> counted rule list -> prompt insertion; and successful trajectory -> embedded retrieval candidate -> selected few-shot -> prompt replacement. The first path turns trace evidence into distilled instruction. The second keeps raw examples but gives them ranking and prompt-example authority.
 
@@ -76,7 +76,7 @@ ExpeL is weaker on provenance and durable governance. A rule can be traced to an
 
 **Keep activation budgets at the insertion point.** ExpeL filters retrieved examples by token count before insertion. Commonplace should attach explicit token budgets, source paths, and expiry to any future push-memory injector.
 
-**Do not borrow pickle checkpoints as durable knowledge.** Pickle is convenient for reproducing experiments, but it is a poor inspectable substrate for a governed KB. Commonplace should prefer Markdown, JSON, SQLite, or other schema-visible records for trace-derived state.
+**Do not borrow pickle checkpoints as durable knowledge.** Pickle is convenient for reproducing experiments, but it is a poor inspectable substrate for a governed KB. Commonplace should prefer Markdown, JSON, SQLite, or other schema-visible records for trace-extracted state.
 
 ## Write side
 

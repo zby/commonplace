@@ -91,7 +91,7 @@ The main divergence is retrieval granularity. pi-self-learning selects memory at
 
 Extraction is LLM-mediated and JSON-gated. The reflection prompt asks for only mistakes and fixes, with different scope rules for project versus global storage. Failed reflection is non-blocking, and malformed output can be repaired before the extension writes memory.
 
-Survey placement: pi-self-learning is a trace-to-prose learning system with a file-native memory root and explicit pre-start injection. It strengthens the survey claim that trace-derived memory needs a promotion boundary: raw conversation logs are not replayed wholesale; extracted lessons are scored, rendered, and optionally redistilled before influencing future runs.
+Survey placement: pi-self-learning is a trace-to-prose learning system with a file-native memory root and explicit pre-start injection. It strengthens the survey claim that trace-extracted memory needs a promotion boundary: raw conversation logs are not replayed wholesale; extracted lessons are scored, rendered, and optionally redistilled before influencing future runs.
 
 ## Read-back
 
@@ -138,4 +138,4 @@ Relevant Notes:
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: daily logs, core index, rendered memory files, runtime notes, and system-prompt policy carry different forms and authorities.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: daily logs, monthly summaries, and memory files advise as evidence and context.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: hook registrations, ranking, context assembly, and strict memory policy configure future behavior.
-- [Use trace-derived extraction](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - exemplifies: pi-self-learning extracts reusable lessons from completed task traces.
+- [Use trace extraction](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: pi-self-learning extracts reusable lessons from completed task traces.

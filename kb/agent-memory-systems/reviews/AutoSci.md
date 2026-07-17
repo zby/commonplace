@@ -111,7 +111,7 @@ Discovery is a read-back mechanism as much as a recommendation feature. Venue mo
 - Whether `writers.yaml` becomes runtime enforcement; that would materially change the authority of skill-specific write permissions.
 - Whether `main` imports more of the paper-branch SciMem/SciFlow/SciDAG/SciEvolve implementation; the current review should not be treated as coverage of those claims.
 - Whether the wiki gains embeddings, vector search, or persistent learned rankers; that would add a parametric representational form and change read-back precision questions.
-- Whether AutoSci adds session-log or tool-trace mining; that would make the system trace-derived and should add the trace-derived section to this review.
+- Whether AutoSci adds session-log or tool-trace mining; that would make the system trace-extracted and should add the trace-extracted section to this review.
 - Whether populated example wikis or evaluations appear; they would let reviewers assess retrieval quality, duplicate control, and faithfulness rather than only structure.
 
 Relevant Notes:

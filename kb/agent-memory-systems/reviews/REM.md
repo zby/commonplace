@@ -8,7 +8,7 @@ last-checked: "2026-06-04"
 
 # REM
 
-REM, from satyammistari, is an open-source Recursive Episodic Memory service for AI agents. At the reviewed commit it is a multi-service memory stack: a Go API accepts episode writes and retrieval requests, Postgres stores structured episodes and intended semantic memories, Qdrant indexes episode and semantic-memory embeddings, Neo4j stores temporal episode links, Redis caches embeddings and publishes consolidation jobs, a Python worker parses and embeds content, and a Python SDK exposes API, LangChain, and AutoGen integration surfaces. The strongest implemented loop is trace-derived episode storage plus vector/graph retrieval; the recursive semantic consolidation path exists in worker code but is only partly wired through the Go API.
+REM, from satyammistari, is an open-source Recursive Episodic Memory service for AI agents. At the reviewed commit it is a multi-service memory stack: a Go API accepts episode writes and retrieval requests, Postgres stores structured episodes and intended semantic memories, Qdrant indexes episode and semantic-memory embeddings, Neo4j stores temporal episode links, Redis caches embeddings and publishes consolidation jobs, a Python worker parses and embeds content, and a Python SDK exposes API, LangChain, and AutoGen integration surfaces. The strongest implemented loop is trace-extracted episode storage plus vector/graph retrieval; the recursive semantic consolidation path exists in worker code but is only partly wired through the Go API.
 
 **Repository:** https://github.com/satyammistari/REM
 
@@ -143,4 +143,4 @@ Relevant Notes:
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: REM requires separating episodes, semantic facts, prompts, embeddings, graph links, SDK wrappers, and benchmarks by substrate, form, lineage, and authority.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: REM episodes, semantic facts, graph neighbors, and benchmark outputs mostly advise as evidence or context.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: REM parsing prompts, consolidation prompts, route handlers, retrieval scoring, SDK integrations, and validation code constrain future behavior.
-- [Use trace-derived extraction](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - exemplifies: REM turns task and conversation traces into retrievable episode records and intended semantic memories.
+- [Use trace extraction](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: REM turns task and conversation traces into retrievable episode records and intended semantic memories.

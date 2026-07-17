@@ -30,7 +30,7 @@ Do not:
 
 ## Steps
 
-1. **Select targets.** Prefer trace-derived and behavior-changing systems first. If no target list is supplied, start with reviews whose existing text mentions traces, lessons, rules, playbooks, skills, prompts, validators, learned policies, or benchmark-gated promotion.
+1. **Select targets.** Prefer trace-learning and behavior-changing systems first. If no target list is supplied, start with reviews whose existing text mentions traces, lessons, rules, playbooks, skills, prompts, validators, learned policies, or benchmark-gated promotion.
 
 2. **Read the current review.** Use only the active review file. Ignore archived `.replaced.*.md` files unless the user explicitly asks for historical comparison.
 
@@ -62,5 +62,5 @@ Do not:
 - No active review still uses old taxonomy shorthand where the current fields are meant.
 - Reviews whose `last-checked` date is older than 30 days are reported with a staleness warning.
 - `last-checked` dates are unchanged unless source was re-read.
-- Trace-derived reviews distinguish raw trace storage from distilled behavior-changing artifacts when both exist.
+- Trace-learning reviews distinguish raw trace storage from distilled behavior-changing artifacts when both exist.
 - Validation reports no failures in the edited scope.

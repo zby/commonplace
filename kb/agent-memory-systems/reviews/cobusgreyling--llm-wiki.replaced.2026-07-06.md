@@ -89,7 +89,7 @@ Read-back is still optimized for bounded context. BM25 returns ranked snippets; 
 
 **The security boundary is modest but explicit.** Page resolution rejects path traversal and MCP tools return structured error payloads for invalid inputs; that matters because these tools are meant to be called by agents ([links.py](https://github.com/cobusgreyling/llm-wiki/blob/a424e6875aa2d5736d9c0d03d7c28bdbe32892a5/src/llm_wiki/links.py), [test_links_security.py](https://github.com/cobusgreyling/llm-wiki/blob/a424e6875aa2d5736d9c0d03d7c28bdbe32892a5/tests/test_links_security.py), [test_mcp.py](https://github.com/cobusgreyling/llm-wiki/blob/a424e6875aa2d5736d9c0d03d7c28bdbe32892a5/tests/test_mcp.py)).
 
-**No trace-derived placement.** The repo has logs and answer filing, but I did not find durable lesson extraction from session logs, tool traces, or event streams. Query answers become knowledge artifacts when filed; they are not a trace-learning loop.
+**No trace-learning placement.** The repo has logs and answer filing, but I did not find durable lesson extraction from session logs, tool traces, or event streams. Query answers become knowledge artifacts when filed; they are not a trace-learning loop.
 
 ## What to Watch
 

@@ -63,7 +63,7 @@ ACE's read-back is also simpler. The generator gets the entire current playbook,
 
 **Delta updates instead of full rewrites.** ACE's curator prompt asks for missing additions only. Commonplace could borrow this for workshop-to-note revision: ask for minimal claim additions or corrections rather than regenerating a whole note. Ready for constrained revision workflows.
 
-**Trace logs as first-class lineage for learned artifacts.** ACE logs prompt, response, used bullets, correctness, and operation diffs. Commonplace could require any trace-derived note or instruction to link back to the run artifacts that caused it. Ready as a convention if trace-derived artifacts become common.
+**Trace logs as first-class lineage for learned artifacts.** ACE logs prompt, response, used bullets, correctness, and operation diffs. Commonplace could require any trace-extracted note or instruction to link back to the run artifacts that caused it. Ready as a convention if trace-extracted artifacts become common.
 
 **Optional semantic dedup as maintenance, not source of truth.** ACE's bullet analyzer uses embeddings only to identify candidate redundancy, then rewrites retained prose. Commonplace could use embedding similarity to propose duplicate-note or duplicate-claim reviews while keeping authored Markdown as the retained authority. Needs a review gate before acting automatically.
 
@@ -89,7 +89,7 @@ ACE's read-back is also simpler. The generator gets the entire current playbook,
 
 **Distillation trigger and policy.** The curator runs at `curator_frequency` in the single-sample loop or once per curator chunk in batched training. Its prompt asks for missing insights only and the implementation applies ADD operations into matching sections with new ids. Existing bullet counters are updated from reflector tags, and the optional analyzer performs similarity-based deduplication after curation ([ace/ace.py](https://github.com/ace-agent/ace/blob/bcb7cea0504afad6f55fec4845dd4864c9f9eee7/ace/ace.py), [ace/ace_batch.py](https://github.com/ace-agent/ace/blob/bcb7cea0504afad6f55fec4845dd4864c9f9eee7/ace/ace_batch.py), [ace/core/bulletpoint_analyzer.py](https://github.com/ace-agent/ace/blob/bcb7cea0504afad6f55fec4845dd4864c9f9eee7/ace/core/bulletpoint_analyzer.py)).
 
-**Survey placement.** ACE belongs in the strong trace-derived playbook family: it extracts lessons from task trajectories and turns them into future prompt material rather than merely indexing past conversations. It strengthens the survey distinction between raw trace retention and distilled behavior-shaping context. Its limitation is that distilled bullets have weak per-bullet provenance and no implemented invalidation path.
+**Survey placement.** ACE belongs in the strong trace-learning playbook family: it extracts lessons from task trajectories and turns them into future prompt material rather than merely indexing past conversations. It strengthens the survey distinction between raw trace retention and distilled behavior-shaping context. Its limitation is that distilled bullets have weak per-bullet provenance and no implemented invalidation path.
 
 ## Read-back
 
@@ -117,20 +117,20 @@ ACE's read-back is also simpler. The generator gets the entire current playbook,
 
 **Bullet counters are interpretable but underused as an access structure.** Helpful/harmful counts are visible to the generator and curator and included in stats, but they do not drive a deterministic selection policy before read-back. A future ACE variant could use them for ranking, pruning, or section-specific retrieval.
 
-**Trace-derived does not mean provenance-rich.** ACE has run-level logs and operation diffs, but generated bullets do not carry source sample ids or confidence fields in the retained line format. That keeps the playbook compact but makes later audit and invalidation harder.
+**Trace-extracted does not mean provenance-rich.** ACE has run-level logs and operation diffs, but generated bullets do not carry source sample ids or confidence fields in the retained line format. That keeps the playbook compact but makes later audit and invalidation harder.
 
 ## What to Watch
 
 - Whether `apply_curator_operations` implements UPDATE, MERGE, DELETE, or CREATE_META. That would move ACE from additive playbook growth toward stronger truth maintenance and consolidation.
 - Whether the generator read-back path adds top-k retrieval, section filtering, or counter-based ranking. That would change ACE from coarse push to targeted push or mixed pull/push.
-- Whether playbook bullets gain provenance fields linking them to samples, reflections, or operation logs. That would make trace-derived artifacts more reviewable and closer to Commonplace's evidence discipline.
+- Whether playbook bullets gain provenance fields linking them to samples, reflections, or operation logs. That would make trace-extracted artifacts more reviewable and closer to Commonplace's evidence discipline.
 - Whether the optional bullet analyzer becomes default or gains persisted embedding/index state. That would introduce a stronger parametric access layer rather than transient maintenance.
 - Whether ACE measures per-bullet ablations, not only whole-playbook performance. That would make helpful/harmful counters more than reflector-labeled usage metadata.
 
 Relevant Notes:
 
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - contrasts: ACE activates retained playbook memory by pushing it into every generator prompt.
-- [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - applies: ACE turns task trajectories and feedback into future playbook behavior.
+- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - applies: ACE turns task trajectories and feedback into future playbook behavior.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: ACE requires separating playbook text, logs, prompt contracts, curator operations, and best snapshots.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: playbook bullets advise future reasoning as retained knowledge.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: prompt templates, task processors, and curator machinery configure future behavior.

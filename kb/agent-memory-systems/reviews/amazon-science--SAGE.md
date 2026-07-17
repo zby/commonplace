@@ -45,7 +45,7 @@ Amazon Science SAGE is the `amazon-science/SAGE` implementation of Skill Augment
 
 **Expert transcript dataset and model checkpoints.** `lm_calls.jsonl` traces become an AppWorld SFT dataset, and SFT/GRPO outputs become model weights. These are less inspectable than JSONL skill functions but have stronger behavioral authority because they alter the policy that writes code and decides whether to use supplied skills.
 
-**Prompt templates, configs, and reward code.** The prompt templates define how skill text appears to the agent, configs select the retrieval method, and reward code decides when skill use contributes to training. These authored system-definition artifacts control how trace-derived memory gains future force.
+**Prompt templates, configs, and reward code.** The prompt templates define how skill text appears to the agent, configs select the retrieval method, and reward code decides when skill use contributes to training. These authored system-definition artifacts control how trace-extracted memory gains future force.
 
 Promotion path: AppWorld execution trace -> parsed function definition -> JSONL or in-memory skill record -> prompt insertion after execution check -> later skill call -> reward or evaluation signal -> SFT/GRPO model state. The path crosses from readable symbolic memory into distributed-parametric policy learning, while source-log provenance remains weak: function records do not preserve a source span, model version, verifier output, or prompt version beside each retained skill.
 
@@ -140,4 +140,4 @@ Relevant Notes:
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: SAGE spans JSONL skills, embeddings, datasets, prompts, reward code, and checkpoints.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: logs, datasets, and retained skill records are evidence until consumed by selectors, prompts, or training.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: skill functions, retrieval indexes, reward code, prompts, and checkpoints shape later behavior.
-- [Use trace-derived extraction](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - exemplifies: SAGE extracts reusable helper functions and learned policy state from agent trajectories.
+- [Use trace extraction](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: SAGE extracts reusable helper functions and learned policy state from agent trajectories.

@@ -3,7 +3,7 @@ description: "Jaya Gupta frames Palantir-style top-down ontology and workflow-fi
 source_snapshot: "palantir-competed-with-snowflake-before-llms.md"
 ingested: "2026-07-06"
 type: kb/sources/types/ingest-report.md
-domains: [agent-memory, trace-derived-learning, ontology, context-engineering]
+domains: [agent-memory, trace-learning, ontology, context-engineering]
 ---
 
 # Ingest: Palantir Ontology vs Decision Traces
@@ -15,7 +15,7 @@ From: https://x.com/JayaGup10/status/2006384049485484145
 ## Classification
 
 Type: conceptual-essay -- a single-author X post advancing an architectural framing, not an implementation report or evaluated system design.
-Domains: agent-memory, trace-derived-learning, ontology, context-engineering
+Domains: agent-memory, trace-learning, ontology, context-engineering
 Author: @JayaGup10 — Jaya Gupta, investor at Foundation Capital and co-author of the firm's ["context graphs" thesis](https://foundationcapital.com/ideas/context-graphs-ais-trillion-dollar-opportunity) that the post extends. The useful signal is the framing of ontology-first versus trace-first memory architecture; the post itself supplies no implementation evidence or evaluation, and the author has an investment thesis riding on the workflow-first side of the comparison.
 
 ## Summary
@@ -24,9 +24,9 @@ The post argues that pre-LLM enterprise data platforms optimized different surfa
 
 ## Connections Found
 
-Connection discovery found a tight trace-derived memory cluster. The source corroborates [Use Trace-Derived Extraction As Meta-Learning](../notes/agent-memory-requirements/use-trace-derived-extraction.md) because it treats ordinary decision activity as material from which reusable entities and relationships can later be learned. It also supports [Raw accumulation does not create usable memory](../notes/raw-accumulation-does-not-create-usable-memory.md): the post's distinction between state and legible "why" is exactly the ingress problem of adding handles, provenance, relationships, and scope. [Memory design adds operational axes to artifact analysis](../notes/memory-design-adds-operational-axes-to-artifact-analysis.md) is the best router for the full mechanism because the post touches capture, extraction/synthesis, activation, and authority at once.
+Connection discovery found a tight trace-extracted memory cluster. The source corroborates [Use Trace Extraction As Meta-Learning](../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) because it treats ordinary decision activity as material from which reusable entities and relationships can later be learned. It also supports [Raw accumulation does not create usable memory](../notes/raw-accumulation-does-not-create-usable-memory.md): the post's distinction between state and legible "why" is exactly the ingress problem of adding handles, provenance, relationships, and scope. [Memory design adds operational axes to artifact analysis](../notes/memory-design-adds-operational-axes-to-artifact-analysis.md) is the best router for the full mechanism because the post touches capture, extraction/synthesis, activation, and authority at once.
 
-The ontology side connects to [Symbolic context engineering is bounded by symbol availability](../notes/symbolic-context-engineering-is-bounded-by-symbol-availability.md): named entities, typed relationships, constraints, and interaction edges are the symbols that make traversal and prompt assembly cheap enough to rely on. The source's "write-time provenance" also belongs under [Lineage](../notes/definitions/lineage.md), while [Trace-derived memory earns authority per operation, not at capture](../notes/trace-derived-memory-earns-authority-per-operation-not-at-capture.md) is a useful caution: captured decision receipts are records, not trusted knowledge, until later verification, distillation, and activation operations earn that authority.
+The ontology side connects to [Symbolic context engineering is bounded by symbol availability](../notes/symbolic-context-engineering-is-bounded-by-symbol-availability.md): named entities, typed relationships, constraints, and interaction edges are the symbols that make traversal and prompt assembly cheap enough to rely on. The source's "write-time provenance" also belongs under [Lineage](../notes/definitions/lineage.md), while [Trace-extracted memory earns authority per operation, not at capture](../notes/trace-extracted-memory-earns-authority-per-operation-not-at-capture.md) is a useful caution: captured decision receipts are records, not trusted knowledge, until later verification, distillation, and activation operations earn that authority.
 
 For system comparisons, [Graphiti](../agent-memory-systems/reviews/graphiti.md) is the closest concrete temporal context-graph implementation: it turns episodes into entities, edges, provenance, validity windows, and retrieval surfaces. [Memory Scaling for AI Agents](databricks-memory-scaling-ai-agents.ingest.md) complicates the post's product framing by showing Databricks itself arguing for trace and organizational-memory scaling, so the useful comparison is architectural rather than competitive.
 
@@ -52,14 +52,14 @@ The post mixes an architectural argument with background claims about the three 
 - **"Months of use case discovery / embedded-team tax" — describes the classic forward-deployed-engineer model, not Palantir's current pitch.** Since 2023 Palantir's AIP Bootcamps advertise "zero to use case" in one to five days on customer data, with claimed ~75% conversion ([Palantir](https://www.palantir.com/platforms/aip/bootcamp/), [Palantir blog](https://blog.palantir.com/deploying-full-spectrum-ai-in-days-how-aip-bootcamps-work-21829ec8d560)). Full ontology build-out presumably still takes longer, but both of the post's poles now claim fast starts, which weakens the cost asymmetry the post leans on.
 - **The ontology characterization itself — accurate.** Foundry's Ontology (objects, typed relationships, actions) is real, central to AIP, and cited by Palantir itself as the moat.
 
-Net: the architectural distinction (prescribed-upfront vs. trace-derived world model) is sound and matches Palantir's actual design. The competitive and cost claims are a mix of relayed company rhetoric and thesis-serving simplification — do not cite this post for Palantir's market position, Snowflake/Databricks capabilities, or integration-cost comparisons.
+Net: the architectural distinction (prescribed-upfront vs. trace-extracted world model) is sound and matches Palantir's actual design. The competitive and cost claims are a mix of relayed company rhetoric and thesis-serving simplification — do not cite this post for Palantir's market position, Snowflake/Databricks capabilities, or integration-cost comparisons.
 
 ## Limitations (our opinion)
 
 This is a single X post, so the product claims should not be treated as evidence that Palantir has no competitors or that Snowflake and Databricks lack LLM-facing ontology strategies. The post gives no implementation path, benchmark, customer evidence, or extraction method for learning entities and relationships from decision traces.
 
-The decision-trace framing is promising but under-specified. It does not explain how to prevent noisy traces from becoming false structure, how to handle conflicting decisions, how access controls and deletion propagate into trace-extracted memory, or what oracle verifies that the inferred ontology improves action. Those gaps matter because trace-derived memory can look authoritative before it has earned authority.
+The decision-trace framing is promising but under-specified. It does not explain how to prevent noisy traces from becoming false structure, how to handle conflicting decisions, how access controls and deletion propagate into trace-extracted memory, or what oracle verifies that the inferred ontology improves action. Those gaps matter because trace-extracted memory can look authoritative before it has earned authority.
 
 ## Recommended Next Action
 
-Write a note titled "Trace-first ontologies are learned views, not starting schemas" connecting trace-derived extraction, lineage, raw accumulation, symbolic context engineering, and Graphiti. The note should argue that workflow-first decision traces are an ontology strategy whose authority depends on capture quality, extraction/synthesis policy, review, and activation rather than on upfront schema design alone.
+Write a note titled "Trace-first ontologies are learned views, not starting schemas" connecting trace extraction, lineage, raw accumulation, symbolic context engineering, and Graphiti. The note should argue that workflow-first decision traces are an ontology strategy whose authority depends on capture quality, extraction/synthesis policy, review, and activation rather than on upfront schema design alone.

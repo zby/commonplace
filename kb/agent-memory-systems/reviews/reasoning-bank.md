@@ -141,4 +141,4 @@ Relevant Notes:
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: JSONL memories, embedding caches, prompts, judges, trajectories, and handoff files carry different forms and authorities.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: raw trajectories, evaluator outputs, stored memory items, and caches are evidence until activated.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: prompts, judges, embedding rankers, and injected memory text configure learning or action.
-- [Use trace-derived extraction](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - exemplifies: ReasoningBank extracts reusable lessons from traces after outcome labeling.
+- [Use trace extraction](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: ReasoningBank extracts reusable lessons from traces after outcome labeling.

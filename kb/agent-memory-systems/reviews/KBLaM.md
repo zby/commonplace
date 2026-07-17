@@ -96,7 +96,7 @@ Context selection is partly host-controlled and partly model-internal. The host 
 
 **The code contains experiment infrastructure, not product governance.** Accuracy, Rouge, BERTScore, refusal checks, and attention dumps are useful research measures, but I did not find source-span preservation, claim status, reviewer acceptance, or invalidation history for individual KB entries.
 
-**The synthetic-data generator is an import/generation path, not trace-derived memory.** It uses model calls to create records and QA pairs, but the source is prompted synthetic content rather than traces of an agent's own sessions, tools, actions, or trajectories.
+**The synthetic-data generator is an import/generation path, not trace-learning memory.** It uses model calls to create records and QA pairs, but the source is prompted synthetic content rather than traces of an agent's own sessions, tools, actions, or trajectories.
 
 **Push capability is not the same as an agent memory policy.** KBLaM can make a model attend to KB tensors when the host passes them. It does not itself decide which remembered artifacts a future agent task deserves.
 
@@ -106,7 +106,7 @@ Context selection is partly host-controlled and partly model-internal. The host 
 - Whether dynamic sparsification is implemented for Phi-3 as well as Llama; the current sparsify path I found is in the Llama attention implementation.
 - Whether checkpoints or model cards define a stable source-to-weight lineage format; that would matter for invalidating or regenerating parametric memory when KB records change.
 - Whether evaluation grows per-record faithfulness tests or source-citation checks; that would make KBLaM more usable for governed knowledge rather than only benchmark QA.
-- Whether a deployment wrapper appears that continuously feeds user/session memory into KBLaM; that would raise trace-derived and agent-loop questions not present in the inspected code.
+- Whether a deployment wrapper appears that continuously feeds user/session memory into KBLaM; that would raise trace-extracted and agent-loop questions not present in the inspected code.
 
 Relevant Notes:
 

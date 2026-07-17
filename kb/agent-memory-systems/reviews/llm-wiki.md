@@ -113,7 +113,7 @@ LLM Wiki's context model is closer to Commonplace than database-backed memory sy
 
 **The strongest deterministic code is governance, not synthesis.** The Python helper can repair structure and source references, but article creation and semantic integration remain agent-mediated.
 
-**Trace-derived behavior is narrow but real.** `/wiki:ll` turns session experience into durable raw notes and optional article/rule updates, but this is not the same as mining every tool trace into future policy automatically.
+**Trace-extracted behavior is narrow but real.** `/wiki:ll` turns session experience into durable raw notes and optional article/rule updates, but this is not the same as mining every tool trace into future policy automatically.
 
 **Archive is a context-control feature.** Archived topic wikis are preserved but excluded from normal query/compile/research flows, which is a simple way to reduce accidental context bleed.
 
@@ -131,4 +131,4 @@ Relevant Notes:
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: LLM Wiki's raw files, compiled articles, indexes, command prompts, lint rules, and reports differ by substrate, form, lineage, and authority.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: raw sources, compiled articles, outputs, inventories, and reports mainly serve as evidence, reference, and context.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: skills, command prompts, lint rules, plugin manifests, and validation checks shape future agent behavior directly.
-- [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - exemplifies: `/wiki:ll` converts current-session errors, fixes, corrections, and discoveries into durable lessons.
+- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: `/wiki:ll` converts current-session errors, fixes, corrections, and discoveries into durable lessons.

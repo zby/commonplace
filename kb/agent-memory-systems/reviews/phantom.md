@@ -37,7 +37,7 @@ Phantom, from `ghostwright/phantom`, is a Bun/TypeScript AI co-worker that runs 
 
 **Vector memory entries.** Storage substrate: Qdrant collections named from `config/memory.yaml`. Representational form: prose payloads plus symbolic metadata and dense/sparse vectors. Lineage: session-end heuristic extraction in `src/memory/consolidation.ts` and explicit store calls. Behavioral authority: advisory knowledge when formatted into `# Your Memory`, ranking input through vector/BM25 search, and weak learning input when source episode ids back semantic facts.
 
-**Evolved config files.** Storage substrate: `phantom-config/` files and meta logs. Representational form: prose Markdown plus symbolic version/sentinel/diff metadata. Lineage: trace-derived batches of session summaries that pass the gate and are rewritten by the reflection subprocess. Behavioral authority: strong instruction when injected as Constitution, Communication Style, User Profile, Domain Knowledge, and Learned Strategies before the model call.
+**Evolved config files.** Storage substrate: `phantom-config/` files and meta logs. Representational form: prose Markdown plus symbolic version/sentinel/diff metadata. Lineage: trace-extracted batches of session summaries that pass the gate and are rewritten by the reflection subprocess. Behavioral authority: strong instruction when injected as Constitution, Communication Style, User Profile, Domain Knowledge, and Learned Strategies before the model call.
 
 **Evolution queue and logs.** Storage substrate: SQLite queue rows plus `meta/evolution-log.jsonl` and `metrics.json`. Representational form: symbolic JSON/SQL rows with prose reasons and summaries. Lineage: session summaries and gate decisions. Behavioral authority: learning and validation infrastructure; queue rows decide what the memory-manager subprocess sees, while logs make accepted changes auditable.
 
@@ -87,7 +87,7 @@ Phantom also exposes a useful warning about context scale. A 50,000-token memory
 
 **Distilled form:** `prose` `symbolic` `parametric` — Episodes, facts, procedures, evolved Markdown, corrections, principles, and learned strategies are prose; queue rows, version changes, sentinels, metrics, validity intervals, and dynamic tool definitions are symbolic; embeddings and sparse vectors are parametric.
 
-Survey position: Phantom is a strong trace-derived example because runtime traces can become both knowledge artifacts and prompt-level system-definition artifacts. Its differentiator is not only extraction, but the rollback/invariant envelope around agent-authored memory edits. The weak point is semantic faithfulness: the deterministic invariants protect scope, syntax, and obvious safety, not whether a learned principle is true.
+Survey position: Phantom is a strong trace-learning example because runtime traces can become both knowledge artifacts and prompt-level system-definition artifacts. Its differentiator is not only extraction, but the rollback/invariant envelope around agent-authored memory edits. The weak point is semantic faithfulness: the deterministic invariants protect scope, syntax, and obvious safety, not whether a learned principle is true.
 
 ## Read-back
 

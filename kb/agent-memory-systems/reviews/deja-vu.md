@@ -33,7 +33,7 @@ deja-vu, by Vladislav Shulcz, is a Go CLI and stdio MCP server that turns existi
 - **Storage substrate:** `files` — deja-vu's own retained store is a directory of binary records, bucket files, GOB manifests/session metadata, and optional JSONL sync batches. Claude and Codex source traces are files, and opencode's SQLite database is an external source substrate rather than deja-vu's index store.
 - **Representational form:** `prose` `symbolic` — Session text, snippets, context digests, share digests, and auto-recall bullets are prose; records, postings, manifests, session metadata, redaction counters, sync watermarks, MCP schemas, installer edits, and hook JSON are symbolic. There is no parametric retrieval state.
 - **Lineage:** `authored` `imported` `trace-extracted` — MCP/hook configuration entries are authored by installer commands; sync batches and imported records can be brought from another machine; the core index records, buckets, metadata, stats, and auto-recall digests are derived from agent session traces.
-- **Behavioral authority:** `knowledge` `instruction` `routing` `ranking` `learning` — Retrieved snippets and digests advise as knowledge artifacts; installed config tells host tools how to expose or call deja-vu; token buckets, project names, filters, and MCP schemas route access; count/recency scoring ranks recall; the trace-derived index is the learned memory surface that changes future read-back. I did not find enforcement gates or semantic validation of recalled claims.
+- **Behavioral authority:** `knowledge` `instruction` `routing` `ranking` `learning` — Retrieved snippets and digests advise as knowledge artifacts; installed config tells host tools how to expose or call deja-vu; token buckets, project names, filters, and MCP schemas route access; count/recency scoring ranks recall; the trace-extracted index is the learned memory surface that changes future read-back. I did not find enforcement gates or semantic validation of recalled claims.
 
 **Harness source traces.** Storage substrate: Claude/Codex JSONL files and the opencode SQLite database. Representational form: prose message text with symbolic session id, harness, project/path, role, and timestamps. Lineage: imported from external agent harness stores that pre-exist deja-vu. Behavioral authority: evidence for search, stats, redaction counts, context digests, sync exports, and auto-recall; the original logs remain outside deja-vu's control.
 
@@ -70,7 +70,7 @@ The sharpest divergence is authority. deja-vu makes prior traces easy to find an
 
 **Use project identifiers for cheap targeted push.** Needs a Commonplace use case. Project-scoped startup recall is weaker than semantic relevance, but it is cheap and explainable when the current path is a reliable symbol.
 
-**Do not confuse fast recall with curated memory.** Ready as a constraint. deja-vu's trace-derived memory is useful precisely because it stays at the evidence/retrieval layer rather than auto-promoting repeated snippets into rules.
+**Do not confuse fast recall with curated memory.** Ready as a constraint. deja-vu's trace-extracted memory is useful precisely because it stays at the evidence/retrieval layer rather than auto-promoting repeated snippets into rules.
 
 ## Write side
 
@@ -135,7 +135,7 @@ The privacy story is local by default, but sync is deliberately an escape hatch.
 Relevant Notes:
 
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes deja-vu's stored index from pull recall and the optional Claude startup push.
-- [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - contrasts with deja-vu's trace-derived recall, which does not promote traces into durable instructions.
+- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - contrasts with deja-vu's trace-extracted recall, which does not promote traces into durable instructions.
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places deja-vu in trace-to-search and trace-to-startup-context rather than trace-to-policy.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies recalled snippets, context digests, shares, and imported sessions as advisory evidence.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies installed MCP and hook configuration as behavior-shaping routing/instruction surfaces.

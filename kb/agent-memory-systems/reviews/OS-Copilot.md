@@ -129,4 +129,4 @@ Relevant Notes:
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: generated code, descriptions, embeddings, planner nodes, and courses carry different forms and authorities.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: course JSON and execution traces are evidence or task sources until promoted.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: prompts, generated tools, retrieval indexes, and planner graphs configure future behavior.
-- [Use trace-derived extraction](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - exemplifies: FRIDAY extracts reusable behavior from task traces after execution and judging.
+- [Use trace extraction](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: FRIDAY extracts reusable behavior from task traces after execution and judging.

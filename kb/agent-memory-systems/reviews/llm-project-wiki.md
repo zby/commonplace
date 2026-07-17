@@ -79,9 +79,9 @@ The strongest overlap is the compiled-source model: source snapshots feed distil
 
 **Extraction.** The oracle is the acting LLM's judgment that the wiki was insufficient for the current task. The prompt prescribes a one-sentence gap note and later ingest processing, but it does not ship code that parses transcripts or automatically ranks gaps.
 
-**Scope and timing.** Most wiki construction is imported-source distillation, not trace learning. The trace-derived part is narrow: task-time lookup failures become durable gap records and later wiki updates.
+**Scope and timing.** Most wiki construction is imported-source distillation, not trace learning. The trace-extracted part is narrow: task-time lookup failures become durable gap records and later wiki updates.
 
-**Survey fit.** `llm-project-wiki` is a prompt-level example of trace-derived repair, not a trace-mining platform. It strengthens the distinction between "compile source into a wiki" and "learn from future agent sessions where the compiled wiki fails."
+**Survey fit.** `llm-project-wiki` is a prompt-level example of trace-learning repair, not a trace-mining platform. It strengthens the distinction between "compile source into a wiki" and "learn from future agent sessions where the compiled wiki fails."
 
 ## Read-back
 
@@ -106,7 +106,7 @@ Selection and scope are bounded by the authored routing structures: Semantic Loo
 - Whether the repo gains generated sample vaults or tests; that would make it possible to evaluate whether the long setup prompt reliably produces the promised structure.
 - Whether `/wiki-ingest` becomes executable code rather than a Markdown command prompt; that would shift maintenance from model-followed procedure toward deterministic tooling.
 - Whether stale propagation expands beyond direct `source_file` grep to dependency-aware updates for concept, architecture, and decision pages.
-- Whether the gap log gains status, owner, source, and resolution metadata; that would make the trace-derived repair loop auditable rather than a loose task journal.
+- Whether the gap log gains status, owner, source, and resolution metadata; that would make the trace-learning repair loop auditable rather than a loose task journal.
 - Whether Obsidian Dataview health checks are complemented by CLI validation so non-Obsidian agents can enforce the same constraints.
 
 Relevant Notes:

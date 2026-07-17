@@ -134,7 +134,7 @@ Signal mapping:
 
 This makes the build order more defensible. Start with corrections because their oracle is strongest. Add silent failures because traces expose explicit runtime signals. Delay discoveries because they lack a reliable extraction oracle.
 
-[Trace-derived learning techniques in related systems](../../agent-memory-systems/trace-derived-learning-techniques-in-related-systems.md) provides the evidence base: systems repeatedly mine traces into tips, memories, playbooks, rules, observations, and sometimes code, but evaluation and retirement remain the open problem. The design study can cite that survey for the recurring stages: trigger, source format, extraction schema, promotion/storage, reinjection.
+[Trace-learning techniques in related systems](../../agent-memory-systems/trace-learning-techniques-in-related-systems.md) provides the evidence base: systems repeatedly mine traces into tips, memories, playbooks, rules, observations, and sometimes code, but evaluation and retirement remain the open problem. The design study can cite that survey for the recurring stages: trigger, source format, extraction schema, promotion/storage, reinjection.
 
 Recommended revision anchor:
 
@@ -246,7 +246,7 @@ The following claims are already strongly grounded and should be preserved:
 - **Store more than you load.** Grounded by context scarcity and session-history separation.
 - **Knowledge and system-definition roles require different machinery.** Grounded by artifact-role theory and continual-learning theory.
 - **Activation is not retrieval.** Grounded by the activation-gap note.
-- **Trace-derived extraction is plausible for corrections, preferences, procedures, and lessons.** Grounded by the related-systems trace-mining survey.
+- **Trace extraction is plausible for corrections, preferences, procedures, and lessons.** Grounded by the related-systems trace-mining survey.
 - **Promotion must be separate from extraction.** Grounded by oracle weakness, curation operations, and candidate/library separation.
 - **Procedures and repeated corrections can harden along a prose-to-symbolic gradient.** Grounded by constraining, codification, and spec mining.
 - **Search and navigation solve different problems.** Grounded by the comparative review and quality-signals work.

@@ -118,7 +118,7 @@ Relevant Notes:
 
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Memwiki stores a wiki, but only hook loading and explicit page reads activate it for an agent.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: protocol files, hot cache, wiki pages, raw sources, and slash-command instructions carry different authority.
-- [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - frames: Memwiki turns session experience into durable prose memory through agent-mediated extraction.
+- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - frames: Memwiki turns session experience into durable prose memory through agent-mediated extraction.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: wiki pages and raw-source syntheses are advisory remembered context.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: root hooks and `AGENTS.md` are behavior-shaping instruction and routing artifacts.
 - [Symbolic context engineering is bounded by symbol availability](../../notes/symbolic-context-engineering-is-bounded-by-symbol-availability.md) - relates: Memwiki depends on stable paths, filenames, page names, and slash-command strings as its routing symbols.

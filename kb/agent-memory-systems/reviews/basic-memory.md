@@ -35,7 +35,7 @@ Basic Memory, by Basic Machines, is a local-first knowledge graph and MCP server
 - **Storage substrate:** `files` — The primary retained memory surface is project-local Markdown files; SQLite or Postgres stores parsed entities, observations, relations, materialized note content, search rows, vector chunks, embeddings, project records, and cloud-routing/sync state as operational mirrors and access structures.
 - **Representational form:** `prose` `symbolic` `parametric` — Note bodies, observations, plugin briefs, skills, and checkpoint summaries are prose; frontmatter, schemas, relations, permalinks, project routing, tool annotations, filters, validation results, and hook scripts are symbolic; semantic embeddings are parametric retrieval state.
 - **Lineage:** `authored` `imported` `trace-extracted` — Humans and agents author Markdown through editors, MCP, CLI, and skills; importers ingest ChatGPT, Claude conversation/project exports, and memory JSON; sync/indexing derive graph/search state from files; Claude Code hooks can extract session checkpoints from JSONL transcripts.
-- **Behavioral authority:** `knowledge` `instruction` `routing` `validation` `ranking` `learning` — Notes and observations serve as knowledge artifacts; MCP resources, skills, output styles, and plugin briefs instruct agents; projects, permalinks, schemas, relations, and tool annotations route work; schema validation and sync conflict checks warn or reject in bounded cases; FTS/vector/hybrid scores rank read-back; trace-derived session notes and reflection skills provide learning material for later sessions.
+- **Behavioral authority:** `knowledge` `instruction` `routing` `validation` `ranking` `learning` — Notes and observations serve as knowledge artifacts; MCP resources, skills, output styles, and plugin briefs instruct agents; projects, permalinks, schemas, relations, and tool annotations route work; schema validation and sync conflict checks warn or reject in bounded cases; FTS/vector/hybrid scores rank read-back; trace-extracted session notes and reflection skills provide learning material for later sessions.
 
 **Markdown entities.** The central artifact is a Markdown file whose operative parts split cleanly: frontmatter controls title/type/tags/permalink/metadata, observation bullets become categorized facts, relation bullets and wikilinks become graph edges, and the body remains readable prose. This bundled object has knowledge authority when read by an agent, routing/ranking authority when parsed into indexes, and validation authority when a schema is resolved against it.
 
@@ -119,7 +119,7 @@ Session checkpoints are intentionally weakly governed. They preserve continuity,
 
 ## What to Watch
 
-- Whether PreCompact changes from extractive checkpoints to summarized or validated checkpoints; that would strengthen trace-derived synthesis and may introduce a new oracle.
+- Whether PreCompact changes from extractive checkpoints to summarized or validated checkpoints; that would strengthen trace-extracted synthesis and may introduce a new oracle.
 - Whether Basic Memory adds automatic consolidation, deduplication, decay, or contradiction handling over canonical notes; that would move write-side curation beyond synthesis.
 - Whether schema validation becomes enforceable per project or per note type; that would change schemas from advisory validation to stronger system-definition authority.
 - Whether host hooks start using semantic/vector search for pushed briefs rather than structured metadata filters; that would change the read-back signal from identifier-heavy to inferred/embedding.
@@ -129,7 +129,7 @@ Relevant Notes:
 
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes Basic Memory's stored Markdown graph from MCP pull tools and host hook push.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - supports separating Markdown notes, database mirrors, search/vector indexes, schemas, and plugin hooks.
-- [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - frames session checkpoints and reflection/capture skills as trace-learning material.
+- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - frames session checkpoints and reflection/capture skills as trace-learning material.
 - [Symbolic context engineering is bounded by symbol availability](../../notes/symbolic-context-engineering-is-bounded-by-symbol-availability.md) - explains why Basic Memory's typed frontmatter and project identifiers make pushed briefs more targetable.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies schemas, MCP tool annotations, output styles, and hooks as behavior-shaping control surfaces.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies ordinary notes, observations, relations, and session checkpoints as advisory remembered context.

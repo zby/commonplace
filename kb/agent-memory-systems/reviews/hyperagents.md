@@ -63,7 +63,7 @@ Commonplace is stronger at legibility and source-grounded governance. HyperAgent
 
 **Patch lineage as replayable memory.** Commonplace could use explicit patch-chain artifacts for any future automated maintenance loop, with each candidate mutation tied to the validation and review results that admitted it. Ready for narrow tooling experiments.
 
-**Separate trace evidence from promoted authority.** HyperAgents keeps chat histories, predictions, reports, and patches on different surfaces. Commonplace trace-derived workflows should preserve that split: logs are evidence, candidate edits are proposals, accepted notes/instructions are authority. Ready now.
+**Separate trace evidence from promoted authority.** HyperAgents keeps chat histories, predictions, reports, and patches on different surfaces. Commonplace trace-extracted workflows should preserve that split: logs are evidence, candidate edits are proposals, accepted notes/instructions are authority. Ready now.
 
 **Score-gated parent selection only transfers where the oracle is real.** HyperAgents can rank descendants because benchmark reports are cheap. Commonplace should borrow this only for operations with deterministic or reviewable success criteria, such as index regeneration, quote grounding, or schema validation.
 
@@ -87,7 +87,7 @@ Commonplace is stronger at legibility and source-grounded governance. HyperAgent
 
 **Extraction.** Extraction is mediated by the meta agent and benchmark oracle: the agent edits repository files; `run_meta_agent.py` captures the resulting diff; harnesses evaluate the patched agent; report files expose scores; metadata and selection policies decide whether the lineage remains selectable ([run_meta_agent.py](https://github.com/facebookresearch/Hyperagents/blob/59a68f672dfb92c74aeb7e61535d776fb36e172d/run_meta_agent.py), [generate_loop.py](https://github.com/facebookresearch/Hyperagents/blob/59a68f672dfb92c74aeb7e61535d776fb36e172d/generate_loop.py), [utils/gl_utils.py](https://github.com/facebookresearch/Hyperagents/blob/59a68f672dfb92c74aeb7e61535d776fb36e172d/utils/gl_utils.py)).
 
-**Survey fit.** HyperAgents belongs with trace-derived artifact-learning systems: it turns agent/evaluation traces into executable system-definition patches rather than prose memories, vector indexes, or parametric weights. It strengthens the split between raw trace retention and promoted authority.
+**Survey fit.** HyperAgents belongs with trace-learning artifact systems: it turns agent/evaluation traces into executable system-definition patches rather than prose memories, vector indexes, or parametric weights. It strengthens the split between raw trace retention and promoted authority.
 
 ## Read-back
 
@@ -95,7 +95,7 @@ Commonplace is stronger at legibility and source-grounded governance. HyperAgent
 
 **Read-back signal:** `identifier` — Parent ids, metadata patch paths, archive entries, domain/split keys, and saved prediction ids determine which retained lineage or output is loaded. Applying the whole selected lineage is broad scope, not a separate coarse trigger.
 
-**Faithfulness tested:** `no` — HyperAgents evaluates patched agents and ranks/selects candidates from reports, but I did not find a with/without lineage ablation or per-memory perturbation test proving that a particular replayed patch or trace-derived change caused the downstream behavior.
+**Faithfulness tested:** `no` — HyperAgents evaluates patched agents and ranks/selects candidates from reports, but I did not find a with/without lineage ablation or per-memory perturbation test proving that a particular replayed patch or trace-extracted change caused the downstream behavior.
 
 **Direction edge case.** Previous outputs are copied into the container and can be inspected as files, but the checked-in `MetaAgent.forward(...)` ignores the `eval_path` argument, so evaluation-history read-back is not reliably pushed into the prompt. Patch replay is the code-grounded read-back path.
 
@@ -118,7 +118,7 @@ Commonplace is stronger at legibility and source-grounded governance. HyperAgent
 ## What to Watch
 
 - Whether `MetaAgent.forward(...)` starts explicitly receiving and using the previous evaluation/archive path; that would strengthen trace read-back beyond patch replay.
-- Whether patch files gain provenance links to chat-history turns, report failures, or benchmark examples; that would make trace-derived code changes auditable.
+- Whether patch files gain provenance links to chat-history turns, report failures, or benchmark examples; that would make trace-extracted code changes auditable.
 - Whether parent selection begins using explicit diversity, novelty, or child-count logic in the editable selector path rather than random valid choice.
 - Whether evaluation adds lineage ablations, such as replayed-patch vs parent-patch baselines, to test faithfulness of pushed executable memory.
 - Whether the system narrows meta-agent edit authority with stronger file contracts; broad self-editing is useful for research but risky for KB-like maintenance.
@@ -128,6 +128,6 @@ Relevant Notes:
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: HyperAgents turns session/evaluation traces into executable patch lineages.
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: HyperAgents activates memory through code-state replay rather than semantic prompt retrieval.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: patches, reports, metadata, histories, and selectors carry different forms and authority.
-- [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - frames: HyperAgents uses benchmark feedback and agent traces as an outer-loop learning signal.
+- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - frames: HyperAgents uses benchmark feedback and agent traces as an outer-loop learning signal.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: generated patches and selection code configure future agent behavior.
 - [Behavioral authority](../../notes/definitions/behavioral-authority.md) - frames: replayed patches have stronger authority than advisory reports or chat histories.

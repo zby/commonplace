@@ -49,7 +49,7 @@ Continuity, by uziiuzair/Ooozzy, is a local-first Tauri/Next.js AI workspace whe
 
 **Org sync plugin and server.** Storage substrate: local memory DB, plugin sidecar runtime queues, and an org-server SQLite table. Representational form: prose memory content plus symbolic sync payloads, timestamps, versions, API auth, and search results. Lineage: imported/exported memories from local or remote stores. Behavioral authority: knowledge sharing and routing through `search_org_knowledge`; org memory can become instruction-like only when the plugin prompt or host agent chooses to use it.
 
-Promotion path: Continuity's strongest ladder is memory row -> learning signal -> synthesized narrative -> always-injected prompt context. That moves small authored or trace-derived observations toward broader advisory/instruction authority, with snapshot hashes and confidence fields for bookkeeping but no semantic review gate before prompt use.
+Promotion path: Continuity's strongest ladder is memory row -> learning signal -> synthesized narrative -> always-injected prompt context. That moves small authored or trace-extracted observations toward broader advisory/instruction authority, with snapshot hashes and confidence fields for bookkeeping but no semantic review gate before prompt use.
 
 ## Comparison with Our System
 
@@ -98,7 +98,7 @@ The main tradeoff is activation versus precision. Continuity makes stored memory
 
 **Scope and timing.** The durable learning unit is a row in `learnings`; the durable distilled unit is the latest row in `narratives` for a scope/project. Synthesis is skipped when the snapshot hash has not changed and no learnings are pending, and learnings are marked absorbed after a successful save.
 
-**Survey fit.** Continuity is a clean example of trace-derived memory where the raw trace artifacts are already structured observations, not full transcripts. Its design strengthens the distinction between a capture layer and a compiled behavior-shaping briefing.
+**Survey fit.** Continuity is a clean example of trace-extracted memory where the raw trace artifacts are already structured observations, not full transcripts. Its design strengthens the distinction between a capture layer and a compiled behavior-shaping briefing.
 
 ## Read-back
 
@@ -147,4 +147,4 @@ Relevant Notes:
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: memory rows, links, narratives, search results, and UI views mostly advise as evidence or context.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: preloaded memory prompt sections, workspace prompt rules, MCP schemas, plugin prompts, and validation schemas shape later behavior more strongly.
 - [Keep Lineage And Compiled Views From Drifting](../../notes/agent-memory-requirements/keep-compiled-views-aligned.md) - warns: Continuity narratives are compiled views over memories/learnings and need source alignment if their authority increases.
-- [Use Trace-Derived Extraction As Meta-Learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - exemplifies: Continuity distills learning signals and memories into a future-facing narrative briefing.
+- [Use Trace Extraction As Meta-Learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: Continuity distills learning signals and memories into a future-facing narrative briefing.

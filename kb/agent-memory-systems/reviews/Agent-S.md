@@ -28,7 +28,7 @@ Agent-S, from Simular AI's `simular-ai/Agent-S` repository, is a Python framewor
 
 **S3 moves the live agent toward task-local reflection and tool result reuse.** S3's worker creates a reflection agent, adds per-step reflections to the next generator message, optionally includes a `CODE AGENT RESULT` section from the grounding agent, and clears that result after injection ([gui_agents/s3/agents/worker.py](https://github.com/simular-ai/Agent-S/blob/73ea17225bae73ab45d077cc442978d3ff8e286a/gui_agents/s3/agents/worker.py)). This is memory-like within a task, but it is not durable cross-task retention in the package's live entry point.
 
-**BBON is trace-derived evaluation, not the normal read-back path.** OSWorld runners save screenshots, `traj.jsonl`, and `result.txt`; BBON scripts generate `fact_captions.jsonl` from screenshot/action transitions and use a comparative judge to select among result directories ([osworld_setup/s3/lib_run_single.py](https://github.com/simular-ai/Agent-S/blob/73ea17225bae73ab45d077cc442978d3ff8e286a/osworld_setup/s3/lib_run_single.py), [osworld_setup/s3/bbon/generate_facts.py](https://github.com/simular-ai/Agent-S/blob/73ea17225bae73ab45d077cc442978d3ff8e286a/osworld_setup/s3/bbon/generate_facts.py), [osworld_setup/s3/bbon/run_judge.py](https://github.com/simular-ai/Agent-S/blob/73ea17225bae73ab45d077cc442978d3ff8e286a/osworld_setup/s3/bbon/run_judge.py)). These traces shape evaluation and trajectory selection experiments, but the S3 runtime does not reload BBON results as future action memory.
+**BBON is trace-extracted evaluation, not the normal read-back path.** OSWorld runners save screenshots, `traj.jsonl`, and `result.txt`; BBON scripts generate `fact_captions.jsonl` from screenshot/action transitions and use a comparative judge to select among result directories ([osworld_setup/s3/lib_run_single.py](https://github.com/simular-ai/Agent-S/blob/73ea17225bae73ab45d077cc442978d3ff8e286a/osworld_setup/s3/lib_run_single.py), [osworld_setup/s3/bbon/generate_facts.py](https://github.com/simular-ai/Agent-S/blob/73ea17225bae73ab45d077cc442978d3ff8e286a/osworld_setup/s3/bbon/generate_facts.py), [osworld_setup/s3/bbon/run_judge.py](https://github.com/simular-ai/Agent-S/blob/73ea17225bae73ab45d077cc442978d3ff8e286a/osworld_setup/s3/bbon/run_judge.py)). These traces shape evaluation and trajectory selection experiments, but the S3 runtime does not reload BBON results as future action memory.
 
 ## Artifact analysis
 
@@ -55,7 +55,7 @@ Agent-S and Commonplace both treat previous agent work as material that should c
 
 Agent-S has a more direct trace-to-action loop. A completed GUI trajectory can become a future planning hint without an intermediate human-readable review stage. That is useful for repeated UI tasks, but it makes provenance and invalidation weak: the JSON summary does not retain stable source citations, score context, review status, or contradiction handling.
 
-Commonplace has stronger governance and weaker automatic recurrence. Its notes and indexes remain inspectable in git, and validation can reject malformed artifacts, but Commonplace does not automatically summarize every agent run into future advice. Borrowing from Agent-S would require a workshop or report layer that keeps the trace-derived candidate inspectable before promotion.
+Commonplace has stronger governance and weaker automatic recurrence. Its notes and indexes remain inspectable in git, and validation can reject malformed artifacts, but Commonplace does not automatically summarize every agent run into future advice. Borrowing from Agent-S would require a workshop or report layer that keeps the trace-extracted candidate inspectable before promotion.
 
 S3 is also a useful caution. The current installed path emphasizes task-local reflection, code-agent result reuse, and bounded message histories rather than cross-task memory. For Commonplace, that distinction matters: in-session reflection is valuable context engineering, but it is not a retained library artifact until something durable is written and made discoverable.
 
@@ -65,7 +65,7 @@ S3 is also a useful caution. The current installed path emphasizes task-local re
 
 **First-turn experience injection.** Agent-S limits retrieved experience to the beginning of planning or subtask execution. Commonplace could use the same trigger for workflow-specific reminders instead of repeatedly injecting the same note on every turn. Ready when the workflow has a clear task/subtask boundary.
 
-**Keep default knowledge distinct from learned experience.** Agent-S imports release KB assets and then continually appends learned summaries. Commonplace already has source notes versus generated reports; a trace-derived workflow should preserve that split explicitly. Ready as a design rule.
+**Keep default knowledge distinct from learned experience.** Agent-S imports release KB assets and then continually appends learned summaries. Commonplace already has source notes versus generated reports; a trace-extracted workflow should preserve that split explicitly. Ready as a design rule.
 
 **Do not borrow unreviewed JSON memories as authoritative notes.** Agent-S summaries are useful hints, but they lack citations, validation, and replacement semantics. In Commonplace they should enter as candidate observations or review artifacts before becoming notes or instructions.
 
@@ -91,7 +91,7 @@ S3 is also a useful caution. The current installed path emphasizes task-local re
 
 **Distillation trigger and policy.** Narrative memory is written when the CLI sees a done/fail action or `AgentS2.update_narrative_memory()` is called; episodic memory is written when a subtask boundary finalizes the prior subtask trajectory. The policy is append-if-key-missing, not merge, revise, or invalidate ([gui_agents/s2/agents/agent_s.py](https://github.com/simular-ai/Agent-S/blob/73ea17225bae73ab45d077cc442978d3ff8e286a/gui_agents/s2/agents/agent_s.py), [gui_agents/s2/core/knowledge.py](https://github.com/simular-ai/Agent-S/blob/73ea17225bae73ab45d077cc442978d3ff8e286a/gui_agents/s2/core/knowledge.py)).
 
-**Survey placement.** Agent-S strengthens the survey distinction between trace-derived knowledge artifacts and stronger system-definition artifacts. Its raw trajectories and summaries are retained knowledge artifacts with advisory prompt authority; they do not become validators, route tables, or fine-tuned model weights. S3/BBON adds a separate trace-derived evaluation path, but the evaluated traces do not feed back into the live S3 agent as memory.
+**Survey placement.** Agent-S strengthens the survey distinction between trace-extracted knowledge artifacts and stronger system-definition artifacts. Its raw trajectories and summaries are retained knowledge artifacts with advisory prompt authority; they do not become validators, route tables, or fine-tuned model weights. S3/BBON adds a separate trace-extracted evaluation path, but the evaluated traces do not feed back into the live S3 agent as memory.
 
 ## Read-back
 
@@ -135,7 +135,7 @@ Relevant Notes:
 
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - applies: S1/S2 move stored memories into prompt context, while S3 task-local traces alone do not constitute durable read-back.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: Agent-S requires separating local JSON memory, embedding access structures, prompts, runtime reflections, and BBON traces.
-- [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - applies: S1/S2 summarize trajectories into future advisory context.
+- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - applies: S1/S2 summarize trajectories into future advisory context.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: narrative and episodic summaries are advisory evidence/context, not enforced rules.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: procedural prompts, action formatters, and BBON evaluation scripts configure behavior or evaluation.
 - [Context engineering](../../notes/definitions/context-engineering.md) - frames: Agent-S combines small retrieved experience injection with bounded task-local trajectory context.

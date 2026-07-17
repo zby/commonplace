@@ -70,7 +70,7 @@ Gap: automated session-trace extraction is not implemented.
 
 Start with signal types that have visible oracles: explicit corrections, command failures, retries, fallback paths, warnings, weakened guarantees, accepted/rejected suggestions, and repeated tool sequences. Do not begin with broad discovery extraction.
 
-Done when trace-derived extraction can create low-authority candidates with source pointers, confidence, scope, and suggested destinations, and when those candidates enter the same queue as manually recorded observations.
+Done when trace extraction can create low-authority candidates with source pointers, confidence, scope, and suggested destinations, and when those candidates enter the same queue as manually recorded observations.
 
 ### 7. Add typed situation cues for activation
 

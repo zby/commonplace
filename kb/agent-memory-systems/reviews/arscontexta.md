@@ -138,7 +138,7 @@ Selection scope is project/vault-wide at push time. The orient hook caps some co
 - Whether setup writes a durable derivation manifest with enough claim-level provenance to audit why each generated file exists.
 - Whether validation grows from warning-only shell checks toward generated schemas that can deterministically enforce the kernel.
 - Whether qmd/search results begin driving startup read-back. That would move Ars Contexta from coarse push plus pull search toward targeted inferred push.
-- Whether `/remember --mine-sessions` gains deterministic transcript discovery/parsing for Claude Code JSONL or other host logs. That would strengthen the trace-derived classification.
+- Whether `/remember --mine-sessions` gains deterministic transcript discovery/parsing for Claude Code JSONL or other host logs. That would strengthen the trace-learning classification.
 - Whether generated systems add tests that compare agent behavior with and without pushed methodology/context. That would turn read-back faithfulness from assumed to measured.
 
 ## Bottom Line

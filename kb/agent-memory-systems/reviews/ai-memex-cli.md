@@ -137,7 +137,7 @@ The system deliberately avoids MCP. That simplifies portability across agents wi
 
 - Whether `memex context` adds task-inferred or query-inferred selection before rendering bootstrap context. That would move push read-back from coarse project recall toward targeted instance recall.
 - Whether semantic lint gets a reproducible review/audit record instead of only direct edits or a wiki page. That would strengthen governance over automated repair.
-- Whether session distillation gains stronger source-preserving summaries, source spans, or judge checks. That would make trace-derived wiki promotion safer.
+- Whether session distillation gains stronger source-preserving summaries, source spans, or judge checks. That would make trace-extracted wiki promotion safer.
 - Whether `qmd` or another semantic search backend becomes a first-class indexed dependency. Retrieval behavior would change materially from lexical/project-keyword selection to stronger ranking authority.
 - Whether autonomous `watch --daemon --heal` gets bounded budgets, review gates, or dry-run policies. Without that, it remains a useful but prompt-sensitive maintenance loop.
 
@@ -145,7 +145,7 @@ Relevant Notes:
 
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - frames why the vault alone is pull memory while `memex context` adds coarse push read-back.
 - [Symbolic context engineering is bounded by symbol availability](../../notes/symbolic-context-engineering-is-bounded-by-symbol-availability.md) - applies: ai-memex-cli's selection uses explicit scenes, types, paths, tags, keywords, and includes rather than hidden semantic activation.
-- [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - applies: session traces become raw Markdown and later wiki knowledge.
+- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - applies: session traces become raw Markdown and later wiki knowledge.
 - [Preserve evidence without making history the next context](../../notes/agent-memory-requirements/preserve-evidence-without-loading-history.md) - aligns: raw/session sources are preserved separately from selected wiki/context read-back.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: the system separates raw files, wiki pages, skills, prompts, context blocks, projections, lint reports, and session traces by substrate, form, lineage, and authority.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies raw sources, wiki pages, search results, and session files when consumed as evidence or context.

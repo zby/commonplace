@@ -28,7 +28,7 @@ MentisDB, from `cloudllm-ai/mentisdb`, is a Rust daemon and library for durable 
 
 **Skills are versioned behavior bundles beside memory chains.** `SkillRegistry` stores imported Markdown or JSON skill documents as immutable versions, tracks active/deprecated/revoked lifecycle state, supports search/read/upload/version/diff operations, and can require Ed25519 signatures for uploads from agents with registered keys ([src/skills.rs](https://github.com/cloudllm-ai/mentisdb/blob/204afbdceff3e3f69cb779e3c7a30002076f7f22/src/skills.rs), [src/server.rs](https://github.com/cloudllm-ai/mentisdb/blob/204afbdceff3e3f69cb779e3c7a30002076f7f22/src/server.rs)). This is the part of MentisDB most directly about system-definition artifacts, not just remembered facts.
 
-**LLM extraction is opt-in candidate generation.** The `llm` module sends free-form text to an OpenAI-compatible chat completion API, validates returned JSON into `ThoughtInput` records, and returns them for review/sign/append; the MCP tool description repeats that extracted records are not automatically appended ([src/llm.rs](https://github.com/cloudllm-ai/mentisdb/blob/204afbdceff3e3f69cb779e3c7a30002076f7f22/src/llm.rs), [src/server.rs](https://github.com/cloudllm-ai/mentisdb/blob/204afbdceff3e3f69cb779e3c7a30002076f7f22/src/server.rs), [docs/llm-extracted-memories-design.md](https://github.com/cloudllm-ai/mentisdb/blob/204afbdceff3e3f69cb779e3c7a30002076f7f22/docs/llm-extracted-memories-design.md)). That makes it trace-derived when the caller feeds agent traces and appends the reviewed output, but the durable write is a separate act.
+**LLM extraction is opt-in candidate generation.** The `llm` module sends free-form text to an OpenAI-compatible chat completion API, validates returned JSON into `ThoughtInput` records, and returns them for review/sign/append; the MCP tool description repeats that extracted records are not automatically appended ([src/llm.rs](https://github.com/cloudllm-ai/mentisdb/blob/204afbdceff3e3f69cb779e3c7a30002076f7f22/src/llm.rs), [src/server.rs](https://github.com/cloudllm-ai/mentisdb/blob/204afbdceff3e3f69cb779e3c7a30002076f7f22/src/server.rs), [docs/llm-extracted-memories-design.md](https://github.com/cloudllm-ai/mentisdb/blob/204afbdceff3e3f69cb779e3c7a30002076f7f22/docs/llm-extracted-memories-design.md)). That makes it trace-extracted when the caller feeds agent traces and appends the reviewed output, but the durable write is a separate act.
 
 ## Artifact analysis
 
@@ -45,7 +45,7 @@ MentisDB, from `cloudllm-ai/mentisdb`, is a Rust daemon and library for durable 
 
 **Remote service controls.** Bearer-token records, dashboard PIN settings, agent public keys, webhook records, TLS certs, and server configuration are system-definition artifacts. They do not become memory content, but they decide who can read/write, which agents can sign, which endpoints receive append notifications, and how remote clients reach the store ([src/auth.rs](https://github.com/cloudllm-ai/mentisdb/blob/204afbdceff3e3f69cb779e3c7a30002076f7f22/src/auth.rs), [src/dashboard.rs](https://github.com/cloudllm-ai/mentisdb/blob/204afbdceff3e3f69cb779e3c7a30002076f7f22/src/dashboard.rs), [src/webhooks.rs](https://github.com/cloudllm-ai/mentisdb/blob/204afbdceff3e3f69cb779e3c7a30002076f7f22/src/webhooks.rs)).
 
-**LLM extraction candidates.** Extracted `ThoughtInput` records are candidate artifacts until appended. Their prose content, type, importance, confidence, tags, and concepts come from an LLM oracle over supplied free-form text; the code validates schema and clamps scores but does not prove semantic truth. Once appended, they become ordinary chain thoughts with trace-derived lineage if the source text was an agent/session trace ([src/llm.rs](https://github.com/cloudllm-ai/mentisdb/blob/204afbdceff3e3f69cb779e3c7a30002076f7f22/src/llm.rs)).
+**LLM extraction candidates.** Extracted `ThoughtInput` records are candidate artifacts until appended. Their prose content, type, importance, confidence, tags, and concepts come from an LLM oracle over supplied free-form text; the code validates schema and clamps scores but does not prove semantic truth. Once appended, they become ordinary chain thoughts with trace-extracted lineage if the source text was an agent/session trace ([src/llm.rs](https://github.com/cloudllm-ai/mentisdb/blob/204afbdceff3e3f69cb779e3c7a30002076f7f22/src/llm.rs)).
 
 **Promotion path.** MentisDB promotes free-form operational experience into durable chain thoughts, summaries/checkpoints, graph relations, vector/search state, versioned skills, and optionally LLM-extracted typed candidates. The strongest promotion crossing authority boundaries is skill upload: learned operational guidance can become an instruction bundle, but signature/lifecycle checks are the visible guardrails.
 
@@ -73,7 +73,7 @@ The deepest divergence is source authority. MentisDB can preserve what an agent 
 
 **Context bundles over seed memories.** Ready as an experiment. A Commonplace bundle command could return a query hit plus direct backlinks, sources, and type metadata under a token budget.
 
-**LLM extraction as candidate generation only.** Ready as a policy. MentisDB's "return candidates, do not append automatically" is the right default for trace-derived memory that might later gain durable authority.
+**LLM extraction as candidate generation only.** Ready as a policy. MentisDB's "return candidates, do not append automatically" is the right default for trace-extracted memory that might later gain durable authority.
 
 **Do not borrow ambient writes without citation discipline.** MentisDB makes appending easy; Commonplace should keep source snapshots, citations, validation, and review gates before extracted runtime experience becomes library theory or instruction.
 
@@ -134,7 +134,7 @@ The deepest divergence is source authority. MentisDB can preserve what an agent 
 ## What to Watch
 
 - Whether LangChain memory becomes query-aware or bounded by tokenizer budgets; that would change the push path from coarse history replay to targeted read-back.
-- Whether `mentisdb_extract_memories` gains an optional append/review workflow; that would strengthen or weaken the staged trace-derived boundary depending on safeguards.
+- Whether `mentisdb_extract_memories` gains an optional append/review workflow; that would strengthen or weaken the staged trace-extracted boundary depending on safeguards.
 - Whether bearer-token settings become consistently documented for MCP and REST, since code enforces both when enabled.
 - Whether skill provenance checks become mandatory for more paths; that would make the skill registry a stronger system-definition substrate.
 - Whether context bundles get explicit token budgets and citation/provenance fields; that would make MentisDB easier to use for high-fidelity agent context.
@@ -146,4 +146,4 @@ Relevant Notes:
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: thoughts, relations, vector sidecars, skill versions, bearer-token records, and dashboard settings carry different forms and authorities.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: remembered thoughts, recent context, and context bundles mainly advise later work.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: skills, MCP tool contracts, bearer-token policy, signatures, and dashboard settings instruct or constrain behavior.
-- [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - relates: MentisDB has a staged extraction path from free-form traces to typed memory candidates.
+- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - relates: MentisDB has a staged extraction path from free-form traces to typed memory candidates.

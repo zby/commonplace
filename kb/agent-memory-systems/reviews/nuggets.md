@@ -146,4 +146,4 @@ Relevant Notes:
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: JSON facts, HRR runtime vectors, prompt injection, gateway schedules, and promoted `MEMORY.md` entries have different forms and authorities.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: recalled facts and prompt-injected nuggets mostly advise as evidence, context, or preference knowledge.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: promoted `MEMORY.md`, tool guidelines, and gateway prompt instructions can shape future behavior with instruction-like force.
-- [Use trace-derived extraction](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - exemplifies: Nuggets turns tool results, user inputs, compaction summaries, and recall events into retained memory and promotion signals.
+- [Use trace extraction](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: Nuggets turns tool results, user inputs, compaction summaries, and recall events into retained memory and promotion signals.

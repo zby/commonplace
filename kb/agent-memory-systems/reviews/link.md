@@ -144,4 +144,4 @@ Relevant Notes:
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: Link's wiki pages, memory pages, raw captures, indexes, skills, and operation journals carry different substrates, forms, lineages, and authorities.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: recalled memories, source pages, query packets, and graph context mostly advise later agents.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: `LINK.md`, validators, MCP tool descriptions, skills, schema markers, and operation journals configure or constrain behavior.
-- [Use trace-derived extraction](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - exemplifies: Link turns saved session traces into proposal candidates and accepted durable memory pages.
+- [Use trace extraction](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: Link turns saved session traces into proposal candidates and accepted durable memory pages.

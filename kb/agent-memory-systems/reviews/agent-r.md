@@ -8,7 +8,7 @@ tags: [trace-learning]
 
 # Agent-R
 
-Agent-R, from ByteDance Seed's `ByteDance-Seed/Agent-R` repository, is an iterative self-training framework for language-model agents in WebShop, SciWorld, and TextCraft-style environments. At the reviewed commit, it collects MCTS rollout trees, converts high- and low-value paths into revision training conversations, relies on external Xtuner training to turn those conversations into model weights, and evaluates by loading a checkpoint through vLLM. It is an agent-memory system only in the trace-derived, parametric-memory sense: past trajectories are retained in files and then distilled into model weights, not retrieved at runtime as a memory database.
+Agent-R, from ByteDance Seed's `ByteDance-Seed/Agent-R` repository, is an iterative self-training framework for language-model agents in WebShop, SciWorld, and TextCraft-style environments. At the reviewed commit, it collects MCTS rollout trees, converts high- and low-value paths into revision training conversations, relies on external Xtuner training to turn those conversations into model weights, and evaluates by loading a checkpoint through vLLM. It is an agent-memory system only in the trace-extracted, parametric-memory sense: past trajectories are retained in files and then distilled into model weights, not retrieved at runtime as a memory database.
 
 **Repository:** https://github.com/ByteDance-Seed/Agent-R
 
@@ -51,7 +51,7 @@ Agent-R, from ByteDance Seed's `ByteDance-Seed/Agent-R` repository, is an iterat
 
 Agent-R and Commonplace both treat past work as material that should change future agent behavior, but they put the retained authority in different places. Agent-R turns trajectories into model weights. Commonplace turns sources, analyses, and procedures into typed Markdown artifacts, generated indexes, validation rules, and review workflows. Agent-R has higher behavioral compression: a checkpoint can apply learned corrections without extra prompt tokens. Commonplace has higher auditability: retained claims remain inspectable, linkable, replaceable, and validated in git.
 
-The strongest divergence is read-back. Commonplace mostly depends on explicit retrieval through `rg`, indexes, links, and skills. Agent-R has no runtime retrieval layer at all; once trained, the learned trace-derived behavior is always present because the checkpoint is loaded. That avoids memory-selection misses but makes provenance, targeted recall, and invalidation much harder.
+The strongest divergence is read-back. Commonplace mostly depends on explicit retrieval through `rg`, indexes, links, and skills. Agent-R has no runtime retrieval layer at all; once trained, the learned trace-extracted behavior is always present because the checkpoint is loaded. That avoids memory-selection misses but makes provenance, targeted recall, and invalidation much harder.
 
 Agent-R's trace pipeline is also more automated than Commonplace's normal authoring loop. It can synthesize many correction examples from environment rollouts without human writing. The cost is that the learned artifact cannot be inspected as a set of durable lessons. Commonplace would need an intermediate artifact layer if it borrowed the trace-learning loop: traces should first become reviewable examples, rules, or candidate notes before gaining stronger authority.
 
@@ -61,7 +61,7 @@ Agent-R's trace pipeline is also more automated than Commonplace's normal author
 
 **First-error localization before synthesis.** Agent-R's verifier asks where a bad path first becomes bad, then splices from the adjacent good path. Commonplace could use the same idea in review QA: localize the first unsupported claim or wrong decision before rewriting a whole artifact. Ready for constrained review workflows.
 
-**Keep raw traces separate from distilled authority.** Agent-R has a clear raw-tree to revision-data to checkpoint chain. Commonplace should preserve that separation for any trace-derived workflow: logs are evidence, synthesized examples are candidates, accepted notes or instructions are the durable authority. Ready as a convention.
+**Keep raw traces separate from distilled authority.** Agent-R has a clear raw-tree to revision-data to checkpoint chain. Commonplace should preserve that separation for any trace-extracted workflow: logs are evidence, synthesized examples are candidates, accepted notes or instructions are the durable authority. Ready as a convention.
 
 **Do not borrow checkpoint-only memory for KB methodology.** Parametric compression is useful for agent policy learning, but it is a poor fit for Commonplace's goal of inspectable methodology. It needs measurable task loops and an audit surface before it should influence repository instructions.
 
@@ -85,7 +85,7 @@ Agent-R's trace pipeline is also more automated than Commonplace's normal author
 
 **Distillation trigger and policy.** The trigger is operator-run staged processing: collect MCTS files first, run `path_collection.py` over an input directory, then train with Xtuner as described in the README. The curation policy is value-thresholded and pairwise: high paths must exceed `ALPHA`, high/low pairs must differ by more than `BETA`, and the optional revision mechanism truncates at the first judged bad action.
 
-**Survey placement.** Agent-R belongs in the trace-derived self-training family, with a stronger parametric endpoint than systems that retain playbooks or notes. It strengthens the survey split between raw trace retention and distilled behavior-shaping artifacts: the raw MCTS trees are not the operative memory at evaluation time; the checkpoint is.
+**Survey placement.** Agent-R belongs in the trace-learning self-training family, with a stronger parametric endpoint than systems that retain playbooks or notes. It strengthens the survey split between raw trace retention and distilled behavior-shaping artifacts: the raw MCTS trees are not the operative memory at evaluation time; the checkpoint is.
 
 ## Read-back
 
@@ -93,7 +93,7 @@ Agent-R's trace pipeline is also more automated than Commonplace's normal author
 
 **Read-back signal:** `coarse` — Checkpoint read-back is always-on for every generation made by that loaded model. It is not targeted by task instance identifiers, lexical matching, embeddings, or an LLM relevance judgment at runtime.
 
-**Faithfulness tested:** `no` — The code writes evaluation results and labels output directories with `MODEL_TYPE`, but it does not implement a with/without-memory ablation, perturbation test, or post-action audit proving that a particular trace-derived correction caused a behavior change.
+**Faithfulness tested:** `no` — The code writes evaluation results and labels output directories with `MODEL_TYPE`, but it does not implement a with/without-memory ablation, perturbation test, or post-action audit proving that a particular trace-extracted correction caused a behavior change.
 
 **Direction edge case.** This is push only in the parametric-memory sense: no remembered text is inserted into the prompt. The system's memory read-back is checkpoint selection before invocation, not contextual activation through retrieved artifacts.
 
@@ -117,14 +117,14 @@ Agent-R's trace pipeline is also more automated than Commonplace's normal author
 
 - Whether the repository adds the referenced Xtuner config or trained checkpoints. That would make the parametric artifact and training recipe directly inspectable.
 - Whether evaluation gains explicit Agent-R vs raw ablation wiring beyond directory labels. That would strengthen the read-back faithfulness claim.
-- Whether revision examples gain stable provenance links back to tree node ids or source file paths. That would make trace-derived lessons easier to audit and invalidate.
+- Whether revision examples gain stable provenance links back to tree node ids or source file paths. That would make trace-extracted lessons easier to audit and invalidate.
 - Whether a runtime memory component is added. Any retrieval store, prompt injector, or online adaptation loop would materially change the read-back verdict.
 - Whether path processing adds deduplication, contradiction handling, or curriculum management across generated examples. That would move the write side beyond synthesis into richer curation.
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - contrasts: Agent-R has trace-derived retention, but no runtime retrieval or textual memory activation.
-- [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - applies: Agent-R turns trajectories into future behavior through self-training.
+- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - contrasts: Agent-R has trace-extracted retention, but no runtime retrieval or textual memory activation.
+- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - applies: Agent-R turns trajectories into future behavior through self-training.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: Agent-R requires separating raw trace files, synthesized training data, authored scripts, and parametric checkpoints.
 - [Lineage](../../notes/definitions/lineage.md) - frames: the useful audit question is how a checkpoint traces back to MCTS trees and revision examples.
 - [Behavioral authority](../../notes/definitions/behavioral-authority.md) - frames: checkpoint loading gives retained traces strong policy-level authority without textual context.

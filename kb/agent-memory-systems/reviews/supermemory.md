@@ -67,7 +67,7 @@ The main tradeoff is hosted power versus source-visible authority. Supermemory c
 
 **Use relation types that distinguish update, extension, and derivation.** Needs a concrete artifact family. Commonplace links already carry labels, but memory-like facts could benefit from explicit `updates` versus `extends` semantics when maintaining current operational state.
 
-**Do not borrow hosted opacity for high-authority artifacts.** The convenience of automatic extraction is useful for low-authority memory, but Commonplace should require source spans, review state, or validation before trace-derived material becomes instruction or enforcement.
+**Do not borrow hosted opacity for high-authority artifacts.** The convenience of automatic extraction is useful for low-authority memory, but Commonplace should require source spans, review state, or validation before trace-extracted material becomes instruction or enforcement.
 
 **Expose memory graph visualization as an inspection layer.** Needs a bounded use case. A visual graph over notes/reviews could help operators inspect clusters and stale relations, but it should remain a view over repo-native artifacts, not the source of truth.
 
@@ -143,4 +143,4 @@ Relevant Notes:
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: hosted memory entries, documents, graph relations, middleware prompts, and graph UI views carry different substrates, forms, lineage, and authority.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: profile facts, memory entries, document chunks, and graph views usually advise as context or evidence.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: MCP tool schemas, middleware injection code, zod validation schemas, search parameters, and relation/ranking policies configure future behavior.
-- [Use trace-derived extraction](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - exemplifies: Supermemory turns conversations, prompts, browser captures, and imported activity into retained profiles and memory graph entries.
+- [Use trace extraction](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: Supermemory turns conversations, prompts, browser captures, and imported activity into retained profiles and memory graph entries.

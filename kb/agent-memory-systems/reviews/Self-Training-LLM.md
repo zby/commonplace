@@ -79,7 +79,7 @@ The biggest tradeoff is auditability. The code keeps intermediate files and eval
 
 **Distilled form:** `parametric` — The final distilled artifact is model weights, optionally reached through LoRA/PEFT and merged back into the saved checkpoint.
 
-This strengthens the trace-learning survey's parametric-learning corner: the source trace is not an agent tool log, but sampled model behavior plus scoring traces. It also shows the auditability cost when trace-derived lessons are compiled into weights rather than retained as reviewable rules or notes.
+This strengthens the trace-learning survey's parametric-learning corner: the source trace is not an agent tool log, but sampled model behavior plus scoring traces. It also shows the auditability cost when trace-extracted lessons are compiled into weights rather than retained as reviewable rules or notes.
 
 ## Read-back
 
@@ -109,5 +109,5 @@ Relevant Notes:
 - [Retained artifact](../../notes/definitions/retained-artifact.md) - classifies trained checkpoints and generated datasets as retained state with future behavioral consequence.
 - [Representational form](../../notes/definitions/representational-form.md) - supports separating prose/source records, symbolic scores/configs, and parametric model weights.
 - [Lineage](../../notes/definitions/lineage.md) - frames the imported Wikipedia source, generated rollouts, selected preference records, and trained checkpoint lineage.
-- [Use trace-derived extraction](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - positions sampled answer rollouts and scoring traces as trace-learning inputs.
+- [Use trace extraction](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - positions sampled answer rollouts and scoring traces as trace-learning inputs.
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - explains why this system remains pull-only despite durable checkpoints and datasets.

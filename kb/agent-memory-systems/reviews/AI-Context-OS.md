@@ -41,13 +41,13 @@ AI-Context-OS, also branded MEMM, is a Tauri desktop app by alexdcd for turning 
 
 **Context scoring records.** `ScoreBreakdown`, `ScoredMemory`, `LoadedMemory`, and `UnloadedMemory` are transient symbolic artifacts produced per query. They decide what reaches the next model call, but they do not persist except where MCP observability logs the served/not-loaded result.
 
-**Observability and optimization artifacts.** SQLite `context_requests`, `memories_served`, and `memories_not_loaded` are raw trace records for context use. `OptimizationRecord` rows are distilled symbolic/prose suggestions such as compressing large L1 summaries, archiving unused memories, promoting low-importance memories that are frequently served, reviewing always-L2 memories, merging tag-overlap candidates, or nudging near-threshold memories ([src-tauri/src/core/optimizer.rs](https://github.com/alexdcd/AI-Context-OS/blob/f50f6ad42e7b2fbcc61697017b1dcbaf299f1ef5/src-tauri/src/core/optimizer.rs)). The promotion path is trace-derived suggestion to human/system action; the inspected code updates suggestion status but does not itself rewrite the target memory.
+**Observability and optimization artifacts.** SQLite `context_requests`, `memories_served`, and `memories_not_loaded` are raw trace records for context use. `OptimizationRecord` rows are distilled symbolic/prose suggestions such as compressing large L1 summaries, archiving unused memories, promoting low-importance memories that are frequently served, reviewing always-L2 memories, merging tag-overlap candidates, or nudging near-threshold memories ([src-tauri/src/core/optimizer.rs](https://github.com/alexdcd/AI-Context-OS/blob/f50f6ad42e7b2fbcc61697017b1dcbaf299f1ef5/src-tauri/src/core/optimizer.rs)). The promotion path is trace-extracted suggestion to human/system action; the inspected code updates suggestion status but does not itself rewrite the target memory.
 
 **Inbox proposals.** Inbox items and `IngestProposal` JSON files are a governed staging layer: heuristics or provider inference classify captured material as promote, route to sources, update, discard, or needs-review, and applying a proposal writes a memory/source file plus daily-log entry ([src-tauri/src/commands/inbox.rs](https://github.com/alexdcd/AI-Context-OS/blob/f50f6ad42e7b2fbcc61697017b1dcbaf299f1ef5/src-tauri/src/commands/inbox.rs)). This is a real promotion path from imported material to canonical Markdown, but it is proposal-mediated rather than autonomous memory curation.
 
 ## Comparison with Our System
 
-AI-Context-OS and Commonplace share a file-first premise: durable knowledge should remain inspectable, diffable, and usable without a metered vendor backend. Both systems also distinguish canonical artifacts from generated navigation surfaces. Commonplace puts more weight on typed library artifacts, validation, review gates, and methodology-level curation; AI-Context-OS puts more weight on desktop UX, live context assembly, MCP/chat serving, and trace-derived operational telemetry.
+AI-Context-OS and Commonplace share a file-first premise: durable knowledge should remain inspectable, diffable, and usable without a metered vendor backend. Both systems also distinguish canonical artifacts from generated navigation surfaces. Commonplace puts more weight on typed library artifacts, validation, review gates, and methodology-level curation; AI-Context-OS puts more weight on desktop UX, live context assembly, MCP/chat serving, and trace-extracted operational telemetry.
 
 The strongest divergence is authority. Commonplace's collection contracts, type specs, and validation commands are explicit governance over the KB. AI-Context-OS has protected-memory checks, folder contracts, conflict/decay/consolidation suggestions, and optimization records, but most governance remains advisory. That makes it friendlier as a user-facing app, but weaker as an enforced methodology substrate.
 
@@ -103,7 +103,7 @@ The system calls its heuristic tag/L0/ontology score "semantic"; the implementat
 
 The generated `claude.md` path is both a compatibility win and a potential authority hazard. It is a derived file that tells agents how to read and write the workspace; if edited manually, the code will overwrite it, so any durable policy belongs in canonical memories or app code.
 
-Trace-derived optimization is promising but conservative. The system notices usage patterns and writes pending suggestions; it does not close the loop by editing summaries, changing importance, merging notes, or deleting decayed memory automatically. That restraint is probably correct for an inspectable local memory app.
+Trace-extracted optimization is promising but conservative. The system notices usage patterns and writes pending suggestions; it does not close the loop by editing summaries, changing importance, merging notes, or deleting decayed memory automatically. That restraint is probably correct for an inspectable local memory app.
 
 ## What to Watch
 
@@ -119,4 +119,4 @@ Relevant Notes:
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - supports separating Markdown memories, generated adapters, scoring records, observability rows, and proposals by substrate, form, lineage, and authority.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - describes the authority carried by generated routers, rules, MCP tools, scoring policy, and validation checks.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - describes the evidence/context role of ordinary Markdown memories, sources, journal entries, and observability records.
-- [Use trace-derived extraction](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - frames AI-Context-OS's usage-derived optimization suggestions as a modest trace-learning loop rather than transcript-to-rule learning.
+- [Use trace extraction](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - frames AI-Context-OS's usage-derived optimization suggestions as a modest trace-learning loop rather than transcript-to-rule learning.

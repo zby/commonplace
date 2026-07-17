@@ -44,7 +44,7 @@ napkin, by Michaelliv, is a TypeScript CLI and SDK for operating a local Markdow
 
 **Bases and graph-like surfaces.** Storage substrate: `.base` YAML and Markdown/wiki-link files; the SQLite database for Base queries is in-memory. Representational form: symbolic YAML, formula/filter expressions, SQL translation, tags, links, backlinks, and embeds. Lineage: authored Base files and derived query views over current vault files. Behavioral authority: ranking, routing, and knowledge for human/agent inspection, not autonomous memory activation.
 
-Promotion path: Napkin can move from bare prose notes to more structured Markdown through frontmatter, tags, links, tasks, properties, Bases, canvases, and templates. It can also build derived overview/search surfaces from those files. It does not promote memories into semantic validators, enforced gates, learned rules, or automatic trace-derived skills.
+Promotion path: Napkin can move from bare prose notes to more structured Markdown through frontmatter, tags, links, tasks, properties, Bases, canvases, and templates. It can also build derived overview/search surfaces from those files. It does not promote memories into semantic validators, enforced gates, learned rules, or automatic trace-extracted skills.
 
 ## Comparison with Our System
 
@@ -103,7 +103,7 @@ At consumption, retrieved notes are advisory knowledge unless the host agent or 
 ## What to Watch
 
 - Whether the Pi `napkin-context` and `distill` extensions move into this repository or become part of the reviewed package; that would likely change trace-learning status and may change read-back from pull to push or both.
-- Whether a real `napkin distill` command is implemented; that would add automatic or agent-triggered consolidation and could create trace-derived or imported derived artifacts.
+- Whether a real `napkin distill` command is implemented; that would add automatic or agent-triggered consolidation and could create trace-extracted or imported derived artifacts.
 - Whether access-pattern tracking or promotion of frequently read facts is added; that would introduce automatic `promote` or `decay` operations not present now.
 - Whether search grows an embedding or hosted vector backend; that would add a parametric retained form and change the inspection/debugging story.
 - Whether Napkin adds typed note classes, status fields, or validation gates; that would move it closer to Commonplace's stronger artifact authority.

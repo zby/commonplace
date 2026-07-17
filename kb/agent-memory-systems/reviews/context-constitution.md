@@ -103,7 +103,7 @@ Authority at consumption depends on host injection path. Loaded as a system prom
 
 - Whether this repository adds concrete examples or schemas for MemFS layout; that would let Commonplace compare path conventions rather than only principles.
 - Whether Letta publishes the prompt assembler or memory-filesystem synchronization code tied to this Constitution; that would change read-back from documented affordance to implemented mechanism.
-- Whether compaction and reflection gain source-linked quality criteria; that would determine whether Letta's trace-derived summaries are reviewable artifacts or opaque host outputs.
+- Whether compaction and reflection gain source-linked quality criteria; that would determine whether Letta's trace-extracted summaries are reviewable artifacts or opaque host outputs.
 - Whether the Constitution grows explicit invalidation rules for outdated identity, memories, and system-prompt learnings; that is the missing governance layer for long-lived self-editing.
 - Whether the training use mentioned in the README gets a public artifact boundary; that would separate prompt-time instruction authority from model-weight learning authority.
 

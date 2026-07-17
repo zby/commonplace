@@ -1,5 +1,5 @@
 ---
-description: "LongCoT-mini RLM case study where trace-derived prompt tips, guardrails, and sub-answer checking improved graph-structured compositional reasoning"
+description: "LongCoT-mini RLM case study where trace-extracted prompt tips, guardrails, and sub-answer checking improved graph-structured compositional reasoning"
 source_snapshot: "mini-exercise-mismanaged-geniuses-longcot-rlm.md"
 ingested: "2026-06-25"
 type: kb/sources/types/ingest-report.md
@@ -20,7 +20,7 @@ Author: Alex Zhang and Omar Khattab. Khattab is already visible in this KB's DSP
 
 ## Summary
 
-The source argues that poor RLM performance on LongCoT-mini should not be read as evidence that RLMs cannot handle graph-structured compositional reasoning. Zhang reports that both Raymond Weitekamp's DSPy.RLM + Claude Sonnet 4.5 run and his own GPT-5.2 RLM run improved over base-model scores overall but badly underperformed on `MATH` and `CS`. Manual trace inspection suggested mundane harness-policy failures: brute-force attempts crashed the REPL, and sub-agent answers were not reliably checked. After asking Claude Code to inspect trajectories and write RLM tips, the reported LongCoT-mini score rose to 65.6%, with partial rewards above 70%. The takeaway is that RLM capability depends on the decomposition policy and process guidance that steer the recursive harness, and that trace-derived prompt tips can be a short-term bridge before training such behavior into the model.
+The source argues that poor RLM performance on LongCoT-mini should not be read as evidence that RLMs cannot handle graph-structured compositional reasoning. Zhang reports that both Raymond Weitekamp's DSPy.RLM + Claude Sonnet 4.5 run and his own GPT-5.2 RLM run improved over base-model scores overall but badly underperformed on `MATH` and `CS`. Manual trace inspection suggested mundane harness-policy failures: brute-force attempts crashed the REPL, and sub-agent answers were not reliably checked. After asking Claude Code to inspect trajectories and write RLM tips, the reported LongCoT-mini score rose to 65.6%, with partial rewards above 70%. The takeaway is that RLM capability depends on the decomposition policy and process guidance that steer the recursive harness, and that trace-extracted prompt tips can be a short-term bridge before training such behavior into the model.
 
 ## Connections Found
 
@@ -32,7 +32,7 @@ The closest source neighbors are the earlier [Mismanaged Geniuses Hypothesis](th
 
 1. **RLM performance is governed by decomposition-policy acquisition, not only scheduler substrate** -- The article strengthens the design-space note's decomposition-policy dimension: free-form RLM, typed RLM, prompt-steered RLM, and trained RLM differ in how the policy for choosing decompositions is acquired. [quick-win]
 
-2. **Trace-derived prompt tips are a practical intermediate substrate** -- The reported loop is lightweight deploy-time learning without durable governance: inspect trajectories, distill process guidance, inject it into the next RLM run. It is weaker than tested artifact promotion but stronger than ad hoc prompting, and it bridges MGH's "steer while generating trajectories, then remove priors" strategy. [experiment]
+2. **Trace-extracted prompt tips are a practical intermediate substrate** -- The reported loop is lightweight deploy-time learning without durable governance: inspect trajectories, distill process guidance, inject it into the next RLM run. It is weaker than tested artifact promotion but stronger than ad hoc prompting, and it bridges MGH's "steer while generating trajectories, then remove priors" strategy. [experiment]
 
 3. **Graph-structured decomposition needs answer checking, not just sub-agent launch** -- The failures were cases where the model launched or attempted sub-solves but did not verify the returned sub-answer or chose brute-force search. This is a concrete warning for any scheduler that treats sub-agent decomposition as sufficient. [quick-win]
 
@@ -54,4 +54,4 @@ The simpler account is harness engineering, not latent model genius. The result 
 
 ## Recommended Next Action
 
-Update [Agent orchestration occupies a multi-dimensional design space](../notes/agent-orchestration-occupies-a-multi-dimensional-design-space.md): under "Decomposition-policy artifact," add trace-derived prompt tips as a prose policy-acquisition point between hand-authored heuristics and trained distributed-parametric policy, citing this source alongside MGH and λ-RLM.
+Update [Agent orchestration occupies a multi-dimensional design space](../notes/agent-orchestration-occupies-a-multi-dimensional-design-space.md): under "Decomposition-policy artifact," add trace-extracted prompt tips as a prose policy-acquisition point between hand-authored heuristics and trained distributed-parametric policy, citing this source alongside MGH and λ-RLM.

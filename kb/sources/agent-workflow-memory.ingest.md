@@ -3,7 +3,7 @@ description: AWM paper showing web agents can learn reusable prompt workflows fr
 source_snapshot: agent-workflow-memory.md
 ingested: "2026-05-08"
 type: kb/sources/types/ingest-report.md
-domains: [agent-memory, trace-derived-learning, deploy-time-learning, web-agents]
+domains: [agent-memory, trace-learning, deploy-time-learning, web-agents]
 ---
 
 # Ingest: Agent Workflow Memory
@@ -15,7 +15,7 @@ From: https://arxiv.org/html/2409.07429v1
 ## Classification
 
 Type: scientific-paper -- arXiv preprint with a defined method, experimental setup, ablations, benchmark comparisons, and citations.
-Domains: agent-memory, trace-derived-learning, deploy-time-learning, web-agents
+Domains: agent-memory, trace-learning, deploy-time-learning, web-agents
 Author: Zora Zhiruo Wang, Jiayuan Mao, Daniel Fried, and Graham Neubig are CMU/MIT researchers working on LLM agents, web interaction, and tool use; the source is worth attention as a primary paper from the AWM authors.
 
 ## Summary

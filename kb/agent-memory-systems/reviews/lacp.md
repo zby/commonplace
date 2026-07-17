@@ -8,7 +8,7 @@ tags: [trace-learning]
 
 # LACP
 
-LACP, from 0xNyk's `0xNyk/lacp` repository, is a local-first agent harness for Claude, Codex, and related CLI agents. At the reviewed commit it combines policy-gated execution, hook-based Claude Code context injection, Obsidian-style knowledge storage, a trace-derived memory pipeline, an SMS self-memory module, hybrid sparse/dense retrieval indexes, and local verification gates. The review below treats retained memory separately from the shipped baseline instructions, context-mode files, and live safety/eval gates.
+LACP, from 0xNyk's `0xNyk/lacp` repository, is a local-first agent harness for Claude, Codex, and related CLI agents. At the reviewed commit it combines policy-gated execution, hook-based Claude Code context injection, Obsidian-style knowledge storage, a trace-extracted memory pipeline, an SMS self-memory module, hybrid sparse/dense retrieval indexes, and local verification gates. The review below treats retained memory separately from the shipped baseline instructions, context-mode files, and live safety/eval gates.
 
 **Source:** https://github.com/0xNyk/lacp
 
@@ -47,7 +47,7 @@ LACP, from 0xNyk's `0xNyk/lacp` repository, is a local-first agent harness for C
 
 **SMS artifacts.** Episodes, epochs, narratives, and self-model JSON persist under `~/.lacp/sms`; Stop hooks record episodes and update the self-model, while session-start builds a small context block from current focus, self-model, narrative, and recent significant episodes ([hooks/self_memory_system.py](https://github.com/0xNyk/lacp/blob/003eef16a583dbaa3fdd56e5efe393397f463f3f/hooks/self_memory_system.py), [hooks/stop_quality_gate.py](https://github.com/0xNyk/lacp/blob/003eef16a583dbaa3fdd56e5efe393397f463f3f/hooks/stop_quality_gate.py), [bin/lacp-sms](https://github.com/0xNyk/lacp/blob/003eef16a583dbaa3fdd56e5efe393397f463f3f/bin/lacp-sms)).
 
-The promotion path is real but mixed: staged trace signals can become inbox notes, registry items can become graph notes, clusters can become synthesis notes, and some memories can be marked stale/superseded or archived. LACP can therefore move material from trace-derived prose into symbolic/parametric access structures and stronger instruction/ranking surfaces, but manual review is still part of the advertised quality workflow ([docs/memory-quality-workflow.md](https://github.com/0xNyk/lacp/blob/003eef16a583dbaa3fdd56e5efe393397f463f3f/docs/memory-quality-workflow.md)).
+The promotion path is real but mixed: staged trace signals can become inbox notes, registry items can become graph notes, clusters can become synthesis notes, and some memories can be marked stale/superseded or archived. LACP can therefore move material from trace-extracted prose into symbolic/parametric access structures and stronger instruction/ranking surfaces, but manual review is still part of the advertised quality workflow ([docs/memory-quality-workflow.md](https://github.com/0xNyk/lacp/blob/003eef16a583dbaa3fdd56e5efe393397f463f3f/docs/memory-quality-workflow.md)).
 
 ## Comparison with Our System
 
@@ -83,7 +83,7 @@ LACP's automatic maintenance is more ambitious than Commonplace's current genera
 
 **Learning scope:** `per-project` `cross-task` - Handoff and Claude project memory are project-scoped; the knowledge-memory registry, research graph, RAG index, SMS root, and promotion/consolidation scripts can accumulate across tasks and sessions.
 
-**Learning timing:** `online` `staged` `offline` - Stop hooks write trace-derived state online; `brain-expand` promotes staged signals and synthesizes epochs in a staged workflow; RAG builds, promotion suggestions, consolidation, probes, and benchmark pipelines are offline maintenance.
+**Learning timing:** `online` `staged` `offline` - Stop hooks write trace-extracted state online; `brain-expand` promotes staged signals and synthesizes epochs in a staged workflow; RAG builds, promotion suggestions, consolidation, probes, and benchmark pipelines are offline maintenance.
 
 **Distilled form:** `prose` `symbolic` `parametric` - Distillation outputs include Markdown inbox/graph/synthesis notes, JSON registry state and graph edges, and sparse/dense vector indexes.
 
@@ -118,12 +118,12 @@ Authority at consumption is mixed. Session-start memory is advisory instruction/
 - Whether LACP adds prompt-time semantic selection before session-start or tool-use injection; that would change the read-back signal from mostly coarse/identifier to inferred.
 - Whether active recall probes grow into behavioral ablations for injected memory; that would change the faithfulness verdict.
 - Whether consolidation merge candidates are actually merged rather than previewed or synthesized around; that would sharpen the `dedup`/`consolidate` boundary.
-- Whether trace-derived SMS self-model claims gain review metadata or expiry; without that, identity-shaped memory can silently overfit.
+- Whether trace-extracted SMS self-model claims gain review metadata or expiry; without that, identity-shaped memory can silently overfit.
 - Whether LACP separates baseline context-mode instructions from learned memory in emitted `systemMessage` blocks; that would make authority easier to audit.
 
 ## Bottom Line
 
-LACP is a genuine trace-derived agent memory system embedded in a broader local control plane. Its most distinctive contribution is not one retrieval algorithm; it is the combination of hook-time memory push, staged trace capture, file-backed Obsidian/RAG memory, automatic graph maintenance, and live policy gates. For Commonplace, the borrowable parts are the session-start budget discipline, trace staging, and retrieval probes; the caution is to keep learned memory authority separate from configured enforcement.
+LACP is a genuine trace-learning agent memory system embedded in a broader local control plane. Its most distinctive contribution is not one retrieval algorithm; it is the combination of hook-time memory push, staged trace capture, file-backed Obsidian/RAG memory, automatic graph maintenance, and live policy gates. For Commonplace, the borrowable parts are the session-start budget discipline, trace staging, and retrieval probes; the caution is to keep learned memory authority separate from configured enforcement.
 
 Relevant Notes:
 

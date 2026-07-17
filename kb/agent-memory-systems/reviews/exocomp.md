@@ -46,7 +46,7 @@ Exocomp, from Cookie Engineer's `cookiengineer/exocomp`, is a self-hosted Go mul
 
 **Skills.** Playground skill packages combine Markdown frontmatter, prose instructions, allowed-tool/program metadata, and optional Go scripts. Loading a skill promotes its prose body into a system message for the current session; executing a script promotes its script metadata into controlled program execution only after the skill is loaded and runtime permissions pass ([source/tools/Skills.go](https://github.com/cookiengineer/exocomp/blob/eb7dc19d408a1e1ac55f847c07cbb8881808cfcc/source/tools/Skills.go), [source/types/Session.go](https://github.com/cookiengineer/exocomp/blob/eb7dc19d408a1e1ac55f847c07cbb8881808cfcc/source/types/Session.go)).
 
-**Promotion path.** Exocomp promotes human requests into planner tasks, planner tasks into specialist-agent prompts, architect output into requirement entries, tester output into bug entries, coder output into changelog and fixed-bug state, and loaded skills into additional system messages. The promotion is explicit and tool-mediated; it does not include source citations, semantic review, automatic relevance matching, or trace-derived lesson synthesis.
+**Promotion path.** Exocomp promotes human requests into planner tasks, planner tasks into specialist-agent prompts, architect output into requirement entries, tester output into bug entries, coder output into changelog and fixed-bug state, and loaded skills into additional system messages. The promotion is explicit and tool-mediated; it does not include source citations, semantic review, automatic relevance matching, or trace-extracted lesson synthesis.
 
 ## Comparison with Our System
 

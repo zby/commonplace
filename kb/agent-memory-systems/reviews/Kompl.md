@@ -77,9 +77,9 @@ The nearest Commonplace analogue is source snapshot -> extraction -> reviewed ar
 
 **Extraction.** The oracle is the chat synthesis call over retrieved wiki pages; Kompl then wraps the answer, question, and citations into a pending draft. This is narrower than systems that mine tool traces or repeated trajectories: the main compiler still learns from imported source material, not from agent execution logs.
 
-**Scope and timing.** The trace-derived artifact has no effect until approval runs the shared single-plan commit path. That approval promotes it from candidate draft into a wiki page with FTS, wikilink sync, optional alias backfill, and vector upsert.
+**Scope and timing.** The trace-extracted artifact has no effect until approval runs the shared single-plan commit path. That approval promotes it from candidate draft into a wiki page with FTS, wikilink sync, optional alias backfill, and vector upsert.
 
-**Survey fit.** Kompl splits the survey category: its primary source-to-wiki loop is imported-source distillation, while chat compounding is trace-derived candidate generation with human approval before durable wiki authority.
+**Survey fit.** Kompl splits the survey category: its primary source-to-wiki loop is imported-source distillation, while chat compounding is trace-extracted candidate generation with human approval before durable wiki authority.
 
 ## Read-back
 

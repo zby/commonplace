@@ -43,11 +43,11 @@ OpenViking, by Volcengine, is an open-source context database for AI agents. At 
 
 **Session archives.** `messages.jsonl`, `.abstract.md`, `.overview.md`, `.meta.json`, `.done`, and `.failed.json` under session history preserve the raw and summarized trace pipeline. Raw messages have evidence authority; summaries compress; done/failed markers have lifecycle authority because later commits wait for prior archive state; metadata records token and extraction counts.
 
-**Extracted memories and skills.** User memory templates cover profile, preferences, entities, and events; agent memory templates include tools, trajectories, experiences, skills, soul, and identity. The extracted files bundle prose content with symbolic fields, links, backlinks, operation modes, filename templates, embedding templates, and directory overview templates. Their lineage may be trace-derived, but their consumption may be advisory, instructional, or retrieval-ranking input depending on integration.
+**Extracted memories and skills.** User memory templates cover profile, preferences, entities, and events; agent memory templates include tools, trajectories, experiences, skills, soul, and identity. The extracted files bundle prose content with symbolic fields, links, backlinks, operation modes, filename templates, embedding templates, and directory overview templates. Their lineage may be trace-extracted, but their consumption may be advisory, instructional, or retrieval-ranking input depending on integration.
 
 **Integration artifacts.** MCP tool definitions, Claude/Codex hook configs, OpenClaw plugin code, OpenCode plugin code, and LangGraph middleware are system-definition artifacts. They decide when memory becomes input to an agent, what context is captured afterward, what is filtered from transcripts to avoid self-contamination, and which identity scope is used.
 
-Promotion path: source material or trace enters a `viking://` namespace; semantic processing and memory extraction create summaries, typed memories, links, overviews, and vectors; retrieval selects items; hooks or middleware can push selected artifacts into a future model call. The risky boundary is trace-derived extraction into agent memories or skills that later re-enter context without a repo-style review gate.
+Promotion path: source material or trace enters a `viking://` namespace; semantic processing and memory extraction create summaries, typed memories, links, overviews, and vectors; retrieval selects items; hooks or middleware can push selected artifacts into a future model call. The risky boundary is trace extraction into agent memories or skills that later re-enter context without a repo-style review gate.
 
 ## Comparison with Our System
 
@@ -55,7 +55,7 @@ Commonplace is a Git-backed methodology KB with typed Markdown artifacts, valida
 
 OpenViking is stronger at runtime activation. It wires memory into Claude Code, Codex, OpenClaw, OpenCode, MCP, HTTP, CLI, and LangGraph flows; captures session traces; extracts memories in the background; and can inject relevant context before a model call. Commonplace normally relies on explicit search, curated indexes, links, skills, and validations rather than automatic pre-action activation.
 
-Commonplace is stronger at inspectable acceptance. Collection contracts, type specs, review archives, source citations, deterministic validation, and semantic review runs make a durable artifact's authority visible in Git. OpenViking exposes diffs, archive markers, task status, metrics, and audit surfaces, but a trace-derived experience or session skill can become future context before a human review has accepted it.
+Commonplace is stronger at inspectable acceptance. Collection contracts, type specs, review archives, source citations, deterministic validation, and semantic review runs make a durable artifact's authority visible in Git. OpenViking exposes diffs, archive markers, task status, metrics, and audit surfaces, but a trace-extracted experience or session skill can become future context before a human review has accepted it.
 
 OpenViking's URI and tenant model is more dynamic than Commonplace's directory routing. A future Commonplace runtime layer would need the same question OpenViking asks explicitly: whose artifact is this, under which account/user/agent identity, and what authority is allowed on this read path?
 
@@ -65,13 +65,13 @@ OpenViking's URI and tenant model is more dynamic than Commonplace's directory r
 
 **Budgeted pre-action recall.** Needs a concrete runtime use case. The hook pattern of thresholding, reranking, deduping, token budgeting, and degrading to URI-only hints is useful for agent sessions, but should not be enabled broadly for dense KB notes.
 
-**Session archive diff and done/failed markers.** Ready for generated Commonplace operations. Durable extraction should leave a compact audit target plus lifecycle state, so reviewers can tell whether a trace-derived artifact is complete or blocked.
+**Session archive diff and done/failed markers.** Ready for generated Commonplace operations. Durable extraction should leave a compact audit target plus lifecycle state, so reviewers can tell whether a trace-extracted artifact is complete or blocked.
 
 **Namespace identity as part of an address.** Ready conceptually. Commonplace's directory paths encode collection authority, but agent-runtime reads should also carry actor, project, and consumer identity.
 
 **Separate raw trace, summary, memory, skill, and push path.** Ready now as vocabulary. OpenViking is a good example of why storage substrate alone does not classify authority: the same session can produce evidence, compressed context, advice, instructions, and retrieval indexes.
 
-**Do not borrow automatic high-authority promotion without a gate.** OpenViking's trace-derived experiences and session skills are powerful, but Commonplace should route similar outputs through review before they become instruction-like context.
+**Do not borrow automatic high-authority promotion without a gate.** OpenViking's trace-extracted experiences and session skills are powerful, but Commonplace should route similar outputs through review before they become instruction-like context.
 
 ## Write side
 
@@ -95,7 +95,7 @@ The extraction mechanism is LLM-mediated but schema-constrained. `SessionCompres
 
 The survey fit is trace -> archive -> working-memory summary -> typed user/agent memory or session skill -> sidecar/vector/index -> pull or push read-back. This is closer to long-term agent learning than to ordinary session compression because the extracted artifacts can be recalled across later tasks and injected before future actions.
 
-The main caveat is authority. OpenViking preserves useful lineage artifacts, but the core implementation does not make human approval a necessary step before a trace-derived memory, experience, or skill is eligible for later retrieval or injection.
+The main caveat is authority. OpenViking preserves useful lineage artifacts, but the core implementation does not make human approval a necessary step before a trace-extracted memory, experience, or skill is eligible for later retrieval or injection.
 
 ## Read-back
 
@@ -133,7 +133,7 @@ Session working memory is both useful and risky. It frontloads session compressi
 
 ## What to Watch
 
-- Whether trace-derived agent experiences and session skills gain explicit review or approval gates before push read-back can use them.
+- Whether trace-extracted agent experiences and session skills gain explicit review or approval gates before push read-back can use them.
 - Whether the benchmarks add reproducible with/without activation tests for injected memory, not just retrieval or task-score claims.
 - Whether generated sidecars and vectors reliably invalidate after resource updates, deletes, moves, and watch refreshes.
 - Whether profile/session-start injection stays within budgets for large real user memories, especially CJK-heavy profiles.
@@ -146,5 +146,5 @@ Relevant Notes:
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies to OpenViking's split between files, sidecars, vectors, session archives, hooks, and policies.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies retrieved resources, memories, summaries, and profile facts when they act as evidence or advice.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies hooks, middleware, skills, templates, namespace policy, and generated session skills when they shape behavior with stronger force.
-- [Use trace-derived extraction](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - connects to OpenViking's session archive and memory extraction pipeline.
+- [Use trace extraction](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - connects to OpenViking's session archive and memory extraction pipeline.
 - [Frontloading spares execution context](../../notes/frontloading-spares-execution-context.md) - explains OpenViking's sidecar summaries, session working memory, and pre-action recall budgets.

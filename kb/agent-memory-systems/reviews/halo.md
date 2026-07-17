@@ -8,7 +8,7 @@ last-checked: "2026-06-04"
 
 # HALO
 
-HALO, from Context Labs' `context-labs/halo` repository, is a trace-derived diagnostic loop for improving agent harnesses. The inspected revision contains a Python HALO Engine that reads OpenTelemetry-shaped JSONL traces with recursive root/subagent analysis, plus a new ElectroBun/Bun/React desktop app that stores local traces, sessions, imports, analysis runs, and model-provider settings in SQLite before exporting selected trace groups back to the engine.
+HALO, from Context Labs' `context-labs/halo` repository, is a trace-extracted diagnostic loop for improving agent harnesses. The inspected revision contains a Python HALO Engine that reads OpenTelemetry-shaped JSONL traces with recursive root/subagent analysis, plus a new ElectroBun/Bun/React desktop app that stores local traces, sessions, imports, analysis runs, and model-provider settings in SQLite before exporting selected trace groups back to the engine.
 
 **Repository:** https://github.com/context-labs/halo
 
@@ -33,7 +33,7 @@ HALO, from Context Labs' `context-labs/halo` repository, is a trace-derived diag
 - **Storage substrate:** `sqlite` — In the current full system, the standing retained trace/run store is the app's SQLite database (`data/halo-canvas.sqlite` by default), with file JSONL exports, `.engine-index.*` sidecars, result files, and optional telemetry JSONL as derived or bridge artifacts rather than the primary desktop store ([app/src/server/db/client.ts](https://github.com/context-labs/halo/blob/d59bb5dde1b074d1a33dc9f875bc051e36dc34e2/app/src/server/db/client.ts), [app/src/server/halo/exporter.ts](https://github.com/context-labs/halo/blob/d59bb5dde1b074d1a33dc9f875bc051e36dc34e2/app/src/server/halo/exporter.ts), [engine/traces/trace_index_builder.py](https://github.com/context-labs/halo/blob/d59bb5dde1b074d1a33dc9f875bc051e36dc34e2/engine/traces/trace_index_builder.py)).
 - **Representational form:** `prose` `symbolic` — Diagnostic reports, prompts, trace summaries, tool outputs, skill guidance, and final answers are prose; OTLP spans, SQLite rows, Drizzle schema, JSONL indexes, filters, run events, model-provider settings, CLI arguments, and tool schemas are symbolic. I did not find retained embeddings, weights, adapters, or vector indexes in this revision.
 - **Lineage:** `imported` `trace-extracted` `authored` — Local OTLP spans and Langfuse history are imported into the app; sidecar indexes, trace summaries, FTS rows, exported JSONL, engine event streams, and final analysis answers are derived from those traces; prompts, code, tool schemas, config, and the Claude skill are authored system-definition artifacts.
-- **Behavioral authority:** `knowledge` `instruction` `routing` `validation` `learning` — Stored traces, trace summaries, run events, and reports serve as evidence/knowledge; root/subagent prompts and the Claude skill instruct agents; filters, indexes, session grouping, queues, model-provider settings, and tool schemas route work; trace validation, schema checks, status fields, budgets, cancellation, and bridge status updates provide validation and guards; trace-derived reports become learning input for future harness edits.
+- **Behavioral authority:** `knowledge` `instruction` `routing` `validation` `learning` — Stored traces, trace summaries, run events, and reports serve as evidence/knowledge; root/subagent prompts and the Claude skill instruct agents; filters, indexes, session grouping, queues, model-provider settings, and tool schemas route work; trace validation, schema checks, status fields, budgets, cancellation, and bridge status updates provide validation and guards; trace-extracted reports become learning input for future harness edits.
 
 **Trace corpus and desktop records.** The app ingests OTLP JSON into normalized span rows, refreshes trace summaries, emits live events, and stores import/run metadata in SQLite ([app/src/server/telemetry/otlp.ts](https://github.com/context-labs/halo/blob/d59bb5dde1b074d1a33dc9f875bc051e36dc34e2/app/src/server/telemetry/otlp.ts), [app/src/server/telemetry/storage.ts](https://github.com/context-labs/halo/blob/d59bb5dde1b074d1a33dc9f875bc051e36dc34e2/app/src/server/telemetry/storage.ts)). These artifacts shape later analysis by deciding which traces are selectable, searchable, grouped into sessions, exported, and counted.
 
@@ -81,7 +81,7 @@ The desktop app narrows one previous gap with Commonplace: it now has a standing
 
 **Scope and timing.** The trace corpus can accumulate continuously in the desktop app through local OTLP ingest or Langfuse import, but analysis runs are explicit jobs over a selected group. The generated report can inform a future harness version, then the next trace batch closes the loop; the code does not automatically apply the harness change.
 
-**Survey fit.** HALO is a trace-derived diagnostic-learning system with human/coding-agent-mediated promotion. It strengthens the survey distinction between deriving knowledge from traces and automatically changing future behavior: HALO performs the former in code, while the behavior-changing patch remains outside the system.
+**Survey fit.** HALO is a trace-learning diagnostic system with human/coding-agent-mediated promotion. It strengthens the survey distinction between deriving knowledge from traces and automatically changing future behavior: HALO performs the former in code, while the behavior-changing patch remains outside the system.
 
 ## Read-back
 
@@ -105,7 +105,7 @@ Other consumers include the desktop user, the Bun run queue, live WebSocket subs
 
 ## What to Watch
 
-- Whether HALO adds an internal library of accepted findings, patches, or harness lessons; that would move it from trace-derived diagnosis toward durable agent memory.
+- Whether HALO adds an internal library of accepted findings, patches, or harness lessons; that would move it from trace-extracted diagnosis toward durable agent memory.
 - Whether future desktop releases add provenance spans or review state for individual report claims, not just final answers and run events.
 - Whether the local app exports/imports its SQLite trace/run store in a way that keeps reports reproducible across machines.
 - Whether the HALO loop gains automated patch proposal, application, or regression gating; that would raise its behavioral authority from advisory learning input to system-definition mutation.
@@ -115,5 +115,5 @@ Relevant Notes:
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: HALO derives diagnostic reports from session/tool/event traces and feeds them into a harness-improvement loop.
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: HALO stores traces and reports, but memory read-back is pull-only in the inspected code.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: HALO's SQLite rows, JSONL spans, sidecar indexes, prompts, and reports carry different forms and authorities.
-- [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - exemplifies: HALO uses execution traces to improve an agent harness through a mediated learning loop.
+- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: HALO uses execution traces to improve an agent harness through a mediated learning loop.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: HALO prompts, tool schemas, app schema, queues, and config records route and constrain later analysis.

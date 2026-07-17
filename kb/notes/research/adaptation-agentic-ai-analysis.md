@@ -51,7 +51,7 @@ This table is not a promotion ladder. The stronger surface is only stronger when
 The old version of this note treated the survey mainly as an `llm-do` feature sketch: log failures, track outcomes, analyze patterns, and suggest prompt edits. Those are still useful operations, but the artifact-analysis frame changes what the analyzer should output. It should not merely say "edit the prompt." It should classify the proposed retained change:
 
 - **Constrain** when the signal identifies a stable obligation with a strong enough oracle. Examples: add a schema when output shape is settled; add a path normalizer when tool failures are mechanical; codify an orchestration sequence when the same steps recur.
-- **Distill** when the signal carries reusable judgment but not exact procedure. Examples: write a note from repeated troubleshooting, refine a skill from accepted edits, extract a cue from trace-derived mistakes.
+- **Abstract** when the signal carries reusable judgment but not exact procedure. Examples: write a bounded lesson from repeated troubleshooting, generalize a rule from accepted edits, extract a cue from trace-extracted mistakes.
 - **Relax** when the codified artifact is a proxy theory showing brittleness. Examples: growing exception lists, frequent user overrides, process constraints that fail in integration, or validation rules whose failure conditions are hard to specify.
 
 Each action is an artifact move. It changes representational form, authority, lineage, or lifecycle. Storing an LLM output is itself a [constraining](../definitions/constraining.md) move because it commits one sampled interpretation as a retained artifact; storing a prompt tweak, skill rule, or generated cue has the same issue. The adaptation signal can justify the change, but it does not by itself choose the retained form.
@@ -86,7 +86,7 @@ Without those fields, endpoint improvement is ambiguous. A better task score cou
 
 ## Boundary
 
-This note is not the main comparison between the survey and the memory-requirements map. That job belongs to [The adaptation survey corroborates memory requirements but misses artifact governance](../agent-memory-requirements/adaptation-survey-corroborates-memory-requirements.md). This note keeps the narrower operational payload that existing backlinks need: data-driven triggers for when to constrain, distill, or relax, interpreted through the retained-artifact taxonomy rather than through `llm-do` feature brainstorming.
+This note is not the main comparison between the survey and the memory-requirements map. That job belongs to [The adaptation survey corroborates memory requirements but misses artifact governance](../agent-memory-requirements/adaptation-survey-corroborates-memory-requirements.md). This note keeps the narrower operational payload that existing backlinks need: data-driven triggers for when to constrain, abstract, derive, or relax, interpreted through the retained-artifact taxonomy rather than through `llm-do` feature brainstorming.
 
 ## Open questions
 

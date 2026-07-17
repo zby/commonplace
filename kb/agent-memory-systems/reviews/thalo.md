@@ -88,7 +88,7 @@ Other consumers include human authors, editors, CI jobs, GitHub PR reviewers, cu
 
 **"Synthesized understanding" is intentionally outside the core.** The README's synthesis story sounds like a memory system producing higher-level understanding, but the inspected code mostly packages deltas and prompts. The actual synthesis oracle is user-chosen.
 
-**The format can represent trace-derived memories, but Thalo does not create them by itself.** A user could define `conversation-message`, `conversation-summary`, or similar entities and import agent logs into Thalo. That would be a Thalo-backed trace-learning workflow, not evidence that this repository implements one.
+**The format can represent trace-extracted memories, but Thalo does not create them by itself.** A user could define `conversation-message`, `conversation-summary`, or similar entities and import agent logs into Thalo. That would be a Thalo-backed trace-learning workflow, not evidence that this repository implements one.
 
 **The strongest trust affordance is validation plus git history.** Thalo does not prove claims true, but it makes malformed structure, missing links, invalid fields, and changed synthesis inputs visible. That is a practical trust layer for agent-authored knowledge.
 
@@ -98,7 +98,7 @@ Other consumers include human authors, editors, CI jobs, GitHub PR reviewers, cu
 - Whether Thalo adds a standing retrieval layer beyond symbolic queries, such as lexical search, embeddings, or budgets; that would change the read-back comparison with Commonplace.
 - Whether action-generated PRs get per-claim provenance or source spans instead of only listing included entries; that would make synthesis review more auditable.
 - Whether custom validation rules become first-class project artifacts rather than scripts around the core checker; that would strengthen promotion from prose convention to system-definition enforcement.
-- Whether agent trace entities become part of the default templates or examples; that would create a clearer trace-derived use case, but only if paired with durable extraction and distillation code.
+- Whether agent trace entities become part of the default templates or examples; that would create a clearer trace-learning use case, but only if paired with durable extraction and distillation code.
 
 Relevant Notes:
 

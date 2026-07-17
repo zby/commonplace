@@ -43,7 +43,7 @@ Letta, from `letta-ai/letta`, is the open-source server behind Letta agents and 
 
 **Recall messages and summary messages.** Messages are durable conversation traces; compaction creates summary messages from older in-context messages and replaces the active context list with system + summary + retained recent messages ([agent.py](https://github.com/letta-ai/letta/blob/1131535716e8a31c9a437f8695e25ac98f203a24/letta/agent.py), [compact.py](https://github.com/letta-ai/letta/blob/1131535716e8a31c9a437f8695e25ac98f203a24/letta/services/summarizer/compact.py)). Raw messages are trace-extracted knowledge/audit artifacts; summaries are trace-extracted distilled prose that changes later context.
 
-**Sleeptime and document-sleeptime agents.** Sleeptime agents are separate agents linked to the foreground agent's shared blocks. They receive completed conversation transcripts or source-ingest tasks and use memory editing tools to update blocks ([sleeptime_multi_agent_v4.py](https://github.com/letta-ai/letta/blob/1131535716e8a31c9a437f8695e25ac98f203a24/letta/groups/sleeptime_multi_agent_v4.py), [sleeptime_doc_ingest.py](https://github.com/letta-ai/letta/blob/1131535716e8a31c9a437f8695e25ac98f203a24/letta/prompts/system_prompts/sleeptime_doc_ingest.py)). The durable outputs are block edits; the operative policy is authored prompt/tool instruction plus trace-derived block content.
+**Sleeptime and document-sleeptime agents.** Sleeptime agents are separate agents linked to the foreground agent's shared blocks. They receive completed conversation transcripts or source-ingest tasks and use memory editing tools to update blocks ([sleeptime_multi_agent_v4.py](https://github.com/letta-ai/letta/blob/1131535716e8a31c9a437f8695e25ac98f203a24/letta/groups/sleeptime_multi_agent_v4.py), [sleeptime_doc_ingest.py](https://github.com/letta-ai/letta/blob/1131535716e8a31c9a437f8695e25ac98f203a24/letta/prompts/system_prompts/sleeptime_doc_ingest.py)). The durable outputs are block edits; the operative policy is authored prompt/tool instruction plus trace-extracted block content.
 
 **Tools and tool rules.** Tools are durable system-definition artifacts: source code, schemas, names, types, requirements, metadata, execution settings, and optional embeddings decide what actions and search surfaces future agents can access. Tool updates are ordinary authored/API mutations unless a host workflow uses conversation evidence to generate or edit them.
 
@@ -95,7 +95,7 @@ The key design difference is read-back. Letta's core memory is designed to act w
 
 **Scope and timing.** The strongest trace-learning loop is not archival insertion; that can be ordinary authored memory. The qualifying loops are compaction and sleeptime because they create durable summaries or block edits from messages that have already occurred. Tool edits are durable and behavior-shaping, but in the inspected code they are ordinary API/tool-manager updates unless a separate workflow supplies a trace-extracted generation step.
 
-**Survey fit.** Letta belongs in the trace-to-core-memory family: raw conversational traces are distilled into prompt-visible blocks or summaries, and those artifacts can affect later actions without another retrieval call. It also illustrates the need to distinguish trace-derived write paths from ordinary memory editing tools that the foreground agent calls intentionally.
+**Survey fit.** Letta belongs in the trace-to-core-memory family: raw conversational traces are distilled into prompt-visible blocks or summaries, and those artifacts can affect later actions without another retrieval call. It also illustrates the need to distinguish trace-extracted write paths from ordinary memory editing tools that the foreground agent calls intentionally.
 
 ## Read-back
 
@@ -134,7 +134,7 @@ The key design difference is read-back. Letta's core memory is designed to act w
 - Whether git-backed memory expands from core blocks to messages, archival passages, tools, and summaries; that would shift Letta toward auditable repo memory rather than DB-first state.
 - Whether sleeptime outputs gain per-edit provenance linking block changes back to exact source messages, run IDs, prompts, and model settings.
 - Whether evaluations add behavioral ablations for pushed core memory, compaction summaries, and sleeptime edits rather than only structural prompt/search tests.
-- Whether tool-generation or tool-edit workflows become trace-derived and automated in the open-source server; that would raise tool definitions from authored system state to learned system-definition artifacts.
+- Whether tool-generation or tool-edit workflows become trace-extracted and automated in the open-source server; that would raise tool definitions from authored system state to learned system-definition artifacts.
 - Whether archival search gets stronger freshness, contradiction, and expiry semantics; current passages are persistent knowledge unless a caller edits or deletes them.
 
 Relevant Notes:
@@ -144,4 +144,4 @@ Relevant Notes:
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: Letta's blocks, messages, passages, tools, embeddings, and git files differ by substrate, form, lineage, and authority.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: archival passages, recall search results, source passages, and summaries mostly advise as context.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: system prompts, core-memory rendering, tool rules, schemas, read-only flags, and background memory policies.
-- [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - exemplifies: Letta's compaction and sleeptime loops turn traces into durable behavior-shaping memory.
+- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: Letta's compaction and sleeptime loops turn traces into durable behavior-shaping memory.

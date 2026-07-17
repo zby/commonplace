@@ -97,7 +97,7 @@ The nearest edge case is `AGENTS.md`: harnesses may load it automatically when w
 - Whether the planned assistant work items produce an actual help topic applet, Kitty TUI, or agent-backed documentation guide. That could move Archie from static agent affordances toward an explicit context-serving interface.
 - Whether the dev-environment scripts gain automated smoke tests for a deployed Archie instance. That would strengthen validation authority for repo-backed environment memory.
 - Whether package snapshots such as `/etc/pkglist.txt` become source-controlled manifests or typed inventory artifacts. That would change them from local operational snapshots into durable, reviewable system memory.
-- Whether task briefs begin deriving from real agent sessions with retained rationale and review state. That would create trace-derived artifacts, but it is not implemented at this commit.
+- Whether task briefs begin deriving from real agent sessions with retained rationale and review state. That would create trace-extracted artifacts, but it is not implemented at this commit.
 
 Relevant Notes:
 

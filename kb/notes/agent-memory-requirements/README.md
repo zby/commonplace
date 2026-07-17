@@ -16,7 +16,7 @@ The requirements are organized by operation, not by implementation layer. A syst
 1. [Create memory directly](./create-memory-directly.md) - write useful memory artifacts while understanding, provenance, and caveats are still live.
 2. [Import external knowledge into internal form](./import-external-knowledge.md) - transform existing project knowledge into typed, linked, trusted system artifacts.
 3. [Preserve evidence without loading history](./preserve-evidence-without-loading-history.md) - keep traces for extraction and audit without making history the default context.
-4. [Use trace-derived extraction as meta-learning](./use-trace-derived-extraction.md) - mine traces after the fact while respecting signal quality and review.
+4. [Use trace extraction as meta-learning](./use-trace-extraction-as-meta-learning.md) - mine traces after the fact while respecting signal quality and review.
 5. [Serve multiple consumers](./serve-multiple-consumers.md) - expose different surfaces for acting, scheduling, review, learning, governance, and active work.
 6. [Activate behavior-changing memory](./activate-behavior-changing-memory.md) - fire relevant lessons before repeated mistakes or high-risk actions.
 7. [Promote only when value exceeds cost](./promote-only-when-value-exceeds-cost.md) - move candidates into durable artifacts only when future value justifies maintenance.
