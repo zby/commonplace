@@ -4,6 +4,8 @@ First staging pass for the library-side `distill*` migration. Corpus: `kb/notes/
 
 This is not a full classification table. Its job is to find the notes where the control regime is already obvious enough to schedule an early wave, and to mark the notes that should not be touched by a quick rewrite.
 
+**Mapping to the [migration plan](./migration-plan.md)'s waves** (the two files cut the work differently — this file stages by obviousness, the plan by dependency): the "first semantic wave" below was Wave-1-shaped AMP content executed early (done, commit `80f47b41`); the "second semantic wave" below is the library subset of **plan Wave 2** — unblocked now that Wave 0 is complete, independent of plan Wave 1; the "deliberately not first-wave" list is **plan Wave 1** proper (entangled, review-gated — not batch work); the META section is **plan Wave 3**.
+
 ## Rule for the first pass
 
 An "obvious" case is one where the replacement term follows from the note's own argument without needing the promoted definition notes in hand:
