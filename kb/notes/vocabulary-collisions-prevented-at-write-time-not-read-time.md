@@ -72,6 +72,14 @@ The rule is not "eliminate polysemy." Polysemy is normal in natural language, an
 
 A predicate can receive a limited grammatical scope: the technical sense is licensed only where the word predicates an explicit subject in the same clause. `actionable` illustrates this in [actionable methodology](./definitions/actionable-methodology.md): "a methodology is **actionable** for an operator when…" The same word can describe a finding, edit, step, or piece of guidance in ordinary English. Under the linked definition's convention, those uses do not invoke the technical relation unless they enter the methodology-predicate frame and carry the definition link.
 
+A corpus check grounds both the risk and the escape. On 2026-07-18, a search for `actionable` across `kb/notes/`, `kb/reference/`, and `kb/instructions/` — excluding the definition note's own text and links to it, and this note — returned 36 matches, all ordinary uses: findings, edits, steps, guidance. The word has exactly the many-innocent-occurrences profile that makes capturing a bare common word dangerous, yet none of the 36 predicates `actionable` of a methodology, so none enters the technical frame. The count is a dated snapshot; re-running the search is the refresh:
+
+```bash
+grep -rn "actionable" kb/notes kb/reference kb/instructions --include="*.md" \
+  | grep -iv "actionable-methodology" \
+  | grep -v "vocabulary-collisions-prevented"
+```
+
 Grammar alone is weaker than a distinctive exact string. A clause-bound predicate depends on writer discipline. Writers must reserve the designated subject-predicate relation for the technical sense. They must avoid using the ordinary sense in that same frame. Every technical use must also carry the required link. No validator currently enforces these choices. An exact-string search cannot confirm them because each candidate clause needs semantic reading.
 
 That is why this note admits clausal binding only with a required definition link. The link does not prevent mis-predication. It makes the intended technical use visible and spot-checkable. Under this convention, an unlinked "actionable" has its ordinary reading; only the linked methodology-predicate frame invokes the technical relation. Grammar supplies limited scope, while the required link supplies the check. This is a proposed writing rule, not a claim that a validator already enforces it.
