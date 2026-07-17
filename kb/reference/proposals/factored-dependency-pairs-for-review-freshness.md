@@ -24,7 +24,7 @@ An accepted review is a build product and its inputs are prerequisites — [make
 Each new review dependency becomes its own `(note_path, dependency_path)` pair with the dependency document as the gate:
 
 - **`COLLECTION.md`-as-gate** — *adopted by [ADR 041](../adr/041-collection-conformance-reviews-use-collection-md-as-the-gate.md)*: a note's conformance to its collection's register and conventions. One pair per note, criterion side the collection's `COLLECTION.md`.
-- **Source-as-gate** — a derived note's consistency with the source snapshot it distills. This is the multi-source invalidation case: one pair per `(note, source)` edge, so each source invalidates independently with its own diff.
+- **Source-as-gate** — a derived note's consistency with the source snapshot from which it was worked out. This is the multi-source invalidation case: one pair per `(note, source)` edge, so each source invalidates independently with its own diff.
 
 Each factored pair reuses the entire freshness/ack/warn stack unchanged, exactly as type-conformance pairs do. Like the type spec, neither `COLLECTION.md` nor a source snapshot is written as a Failure mode / Test procedure, so each needs a mechanical wrapper (or an authored review section in the dependency document, which the hash then sees).
 
@@ -48,7 +48,7 @@ The force that factored pairs sharpen: cohort blast radius. A `COLLECTION.md` ed
 ## Adoption criteria
 
 - Adopt cohort-scoped ack when the first real type or collection edit stales more pairs than per-note acking comfortably clears. `COLLECTION.md`-as-gate raises the odds: one contract edit stales a whole collection.
-- Adopt source-as-gate when a note's consistency with a distilled source is first wanted as a reviewable judgment — a gate source plus a wrapper, no storage change. (`COLLECTION.md`-as-gate met its criterion and is adopted; see ADR 041.)
+- Adopt source-as-gate when a note's consistency with its source is first wanted as a reviewable judgment — a gate source plus a wrapper, no storage change. (`COLLECTION.md`-as-gate met its criterion and is adopted; see ADR 041.)
 - Adopt the N-ary input-set model only if a judgment appears that genuinely needs a third text in one prompt; the default answer to a new dependency is a new factored pair, not a wider input set.
 
 ---

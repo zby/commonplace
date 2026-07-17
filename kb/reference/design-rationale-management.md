@@ -24,7 +24,7 @@ Three nearby terms operate on different objects:
 | **Design rationale** | Records how constraints, assumptions, alternatives, evidence, and trade-offs support a decision—especially where the constraints leave more than one feasible choice. |
 | **[Constraining](../notes/definitions/constraining.md)** | Narrows the valid interpretations of a retained artifact. It is a deploy-time learning operation, not the name of the design methodology. |
 
-A design constraint can motivate [distillation](../notes/definitions/distillation.md)—extracting a use-shaped artifact from larger material—deferred commitment, local variation, or relaxation rather than constraining. Conversely, a freely chosen convention can constrain an artifact even though no inherited constraint required that convention. Commonplace therefore reserves *constraining* for the semantic operation [defined in the learning-theory vocabulary](../notes/definitions/constraining.md), while [first principles are inherited constraints, not design choices](../notes/first-principles-are-inherited-constraints-not-design-choices.md).
+A design constraint can motivate extracting a use-shaped artifact from larger material, deferred commitment, local variation, or relaxation rather than constraining. Conversely, a freely chosen convention can constrain an artifact even though no inherited constraint required that convention. Commonplace therefore reserves *constraining* for the semantic operation [defined in the learning-theory vocabulary](../notes/definitions/constraining.md), while [first principles are inherited constraints, not design choices](../notes/first-principles-are-inherited-constraints-not-design-choices.md).
 
 ## Repository representation
 
