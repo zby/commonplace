@@ -6,6 +6,7 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
+- [theory-methodology-derivation](./theory-methodology-derivation/README.md) — the two-layer theory↔methodology pattern (derived fast path, fallback to the generator, promotion by matching) and whether "derivation" should restructure the distillation vocabulary; framings from cognitive architectures, inductive bias, and effective theories in physics
 - [freshness-module-review](./freshness-module-review/README.md) — code review of `src/commonplace/freshness/`; the live finding is that `commonplace-freshness-accept` ships as a command that can never succeed, alongside latent CAS/normalization asymmetries and a selector that re-hashes each criterion once per note
 - [extensible-controlled-vocabularies](./extensible-controlled-vocabularies/README.md) — designing how a code-enforced closed enum becomes open-ended per installed KB while staying validator-checkable; the trigger case (snapshot `genre`, formerly ingest-report `source_type`) shipped with a severity-warn floor (ADR 045), the structured vocabulary-file layer and `source-tier` remain open
 - [authority-ranking](./authority-ranking/README.md) — testing whether source authority is a linear rank at all (partial order, domain-conditional, time-varying, non-additive under independence) and what consumers a ranking function actually has; framework-side companion to the epistack author-dossier casework
