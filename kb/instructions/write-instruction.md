@@ -1,5 +1,5 @@
 ---
-description: Create a new instruction in kb/instructions/ by distilling repeated manual operations into a reusable, execution-optimized procedure.
+description: Create a new instruction in kb/instructions/ by abstracting the stable core of repeated manual operations into a reusable, execution-optimized procedure.
 type: kb/types/instruction.md
 ---
 
@@ -7,13 +7,13 @@ type: kb/types/instruction.md
 
 An instruction is a reusable procedure that lives in `kb/instructions/`. It has the same format as a skill but is invoked manually rather than through automatic routing.
 
-Instructions are created through **distillation** — extracting a stable procedure from repeated manual operations. You do a task by hand several times, notice which steps recur and which vary, then write down the recurring steps as a procedure. The variable parts become parameters or decision points. The reasoning that produced the steps stays in methodology notes, not in the instruction.
+Instructions are created in two moves. First, **abstract the stable core**: do the task by hand several times, notice which steps recur and which vary, and conjecture the recurring steps as a procedure with its boundary — the repetition is the evidence that licenses the generalization. Second, where companion methodology notes exist, **work the procedure body out from them**: the written steps should be recoverable from the methodology plus the task, so a methodology change flags the instruction for rework. The variable parts become parameters or decision points. The reasoning that produced the steps stays in methodology notes, not in the instruction.
 
 Instructions must be **frontloaded** — self-contained enough for an agent with no prior context. Define terms inline. Don't assume the reader has loaded other KB documents. An instruction may be handed to a sub-agent that has nothing else in its context window.
 
 ## Prerequisites
 
-You should have performed the task manually at least twice in different contexts. If you haven't, do it manually first — you can't distill what you haven't done.
+You should have performed the task manually at least twice in different contexts. If you haven't, do it manually first — you can't abstract a stable core from repetitions that haven't happened.
 
 ## Steps
 
@@ -39,7 +39,7 @@ You should have performed the task manually at least twice in different contexts
 
 5. **Test the boundaries.** Add explicit scope boundaries — when does this instruction NOT apply? The agent won't sense this on its own. If the task falls outside scope, say what to do instead.
 
-6. **Write a companion note** (optional but recommended). A note in `kb/notes/` that describes the instruction, explains its rationale, links to the methodology it was distilled from, and links to the instruction file. This is what makes the instruction findable through normal KB search.
+6. **Write a companion note** (optional but recommended). A note in `kb/notes/` that describes the instruction, explains its rationale, carries a `derived-from` link to the methodology the procedure is worked out from, and links to the instruction file. This is what makes the instruction findable through normal KB search.
 
 ## Verify
 

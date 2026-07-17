@@ -126,3 +126,23 @@ These notes have `distill*` uses that are semantically important or mixed enough
 | Note | Current usage | Replacement direction |
 |---|---|---|
 | `claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md:30` | AWM "distils successful traces into workflow prose" (single-l) | Plain rewording of the external system's operation ("turns successful traces into workflow prose" / "extracts workflows from successful traces") — description of an ampliative loop, no strong claim to carry |
+
+## Third batch (reclassified from Wave 1, 2026-07-17; same execution contract)
+
+| Note | Current usage | Replacement direction |
+|---|---|---|
+| `minimum-viable-vocabulary-is-the-naming-set-that-most-reduces.md` | use-shaping talk (ln ~20, 22, 39); `distillation` tag stays for Wave 3 | Plain rewording: domain knowledge reshaped for a newcomer under a minimal context budget |
+| `information-value-is-observer-relative.md` | use-shaping talk (desc + ln ~37, 38, 42, 60) | Plain rewording: reshaping for a specific observer; description becomes "grounding use-shaped reshaping and discovery" |
+| `legal-drafting-solves-the-same-problem-as-context-engineering.md` | loose external analogy (ln ~47, 78) | Plain rewording: task-targeted compression; preserve the analogical looseness |
+
+## Fourth batch: confident lineage-footer conversions (same contract; label semantics in `kb/reference/link-vocabulary.md`)
+
+Convert the footer label only where the classification below is high/medium confidence; adjust the context phrase to match the label's semantics. Skip-and-log anything that reads mixed in situ. Do not touch the needs-read rows (they stay with the Wave 1 worksheet): `unified-calling-conventions`, `rlm-has-the-model-write…`, `session-history-should-not…`.
+
+| Source note | Footer target | New label |
+|---|---|---|
+| `areas-exist-because…` | COLLECTION.md rules | `Derived into:` (quick confirm in situ) |
+| `definitions/reach-assessment` | formal-systems split-out | `Derived into:` |
+| `first-principles-reasoning…` | review-explanatory-reach task | `Derived into:` |
+| `title-as-claim-exposes…` | COLLECTION.md checklist | `Derived into:` |
+| `discovery-is-seeing…` | cp-skill-connect | `Derived into:` (medium — confirm the skill content is worked out from the note) |
