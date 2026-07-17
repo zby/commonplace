@@ -1,5 +1,5 @@
 ---
-description: "Information value is observer-relative: prior knowledge, tools, compute, and goals determine extractable structure, grounding distillation and discovery."
+description: "Information value is observer-relative: prior knowledge, tools, compute, and goals determine extractable structure, grounding use-shaped reshaping and discovery."
 type: kb/types/note.md
 traits: [has-external-sources, title-as-claim]
 tags: [learning-theory, distillation, discovery]
@@ -34,12 +34,12 @@ Observer-relativity shapes inclusion decisions. A note's value depends on whethe
 
 Several KB conventions are optimizations for the agent observer:
 
-- **[Title as claim](./COLLECTION.md)** — a claim title lets the agent extract the main point without loading the note. This is a distillation targeting the lowest-cost reading: scanning titles in an index.
-- **Descriptions as retrieval filters** — the description field exists because the agent needs to decide relevance before reading the full note. A good description is a distillation for the "should I read this?" decision.
+- **[Title as claim](./COLLECTION.md)** — a claim title lets the agent extract the main point without loading the note. It is a precomputed view for the lowest-cost reading: scanning titles in an index.
+- **Descriptions as retrieval filters** — the description field exists because the agent needs to decide relevance before reading the full note. A good description reshapes the note for the "should I read this?" decision.
 - **[Short composable notes](./short-composable-notes-maximize-combinatorial-discovery.md)** — many short notes give more combinatorial coverage than few long ones for a reader with bounded context.
 - **[Progressive refinement](./definitions/constraining.md)** — each level (text → note → structured-claim) adds structure that makes the content more extractable. A structured claim with Evidence/Reasoning/Caveats is more accessible to an agent than the same argument in prose.
 
-More broadly, [distillation](./definitions/distillation.md) creates value by reshaping knowledge for a specific observer. In information-theoretic terms this is lossy compression — it discards information. But for the target reader, the distillate can be more valuable than the source because it makes previously unreachable structure accessible. Multiple distillations of the same source aren't redundant — each targets a different observer.
+More broadly, reshaping knowledge for a specific observer creates value. In information-theoretic terms this is lossy compression — it discards information. But for the target reader, the reshaped view can be more valuable than the source because it makes previously unreachable structure accessible. Multiple observer-shaped views of the same source aren't redundant — each targets a different observer.
 
 ### What observer-relativity doesn't help with
 
@@ -57,7 +57,7 @@ More broadly, [distillation](./definitions/distillation.md) creates value by res
 
 Relevant Notes:
 
-- [distillation](./definitions/distillation.md) — instance: restructuring that makes structure accessible to bounded observers
+- [theory and methodology form a two-layer execution system](./theory-and-methodology-form-a-two-layer-execution-system.md) — instance: a task-facing layer can make source structure more accessible to a bounded observer
 - [discovery is seeing the particular as an instance of the general](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) — instance: recognition cost scales with abstraction depth
 - [reverse-compression is the failure mode where LLM output expands without adding information](./reverse-compression-is-when-llm-output-expands-without-adding.md) — instance: expansion that adds tokens without making more structure accessible
 - [minimum viable vocabulary](./minimum-viable-vocabulary-is-the-naming-set-that-most-reduces.md) — instance: the vocabulary that maximally reduces extraction cost for a bounded observer
