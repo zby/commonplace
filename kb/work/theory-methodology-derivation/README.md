@@ -8,6 +8,10 @@ What is the general structure behind "a theory ships with a derived, action-shap
 
 Started 2026-07-17 from a conversation that began as a terminology check: an external passage used "crystallization" / "progressive crystallization", which is not current vocabulary ([source-passage.md](./source-passage.md) preserves it with the mapping to current terms). Unpacking the passage surfaced several connected threads that are explored here in separate files so each can move at its own pace.
 
+## Status (2026-07-17)
+
+The audit is done, the direction is decided (retire the term, no successor), and the first semantic wave — the obvious discovery/abstraction cluster, the original mistake — is applied and committed; see the [execution status](./migration-plan.md#execution-status-2026-07-17). The scope/collision reflection this workshop triggered has been promoted to the library as `kb/notes/vocabulary-collisions-prevented-at-write-time-not-read-time.md`. The open front is Wave 0's receiving surfaces: the two-layer structure note, the `Derived from:` label semantics, and the discovery-lifecycle amendment.
+
 ## Threads
 
 - [two-layer-theory-methodology.md](./two-layer-theory-methodology.md) — the core structure: a general theory and a derived methodology form a two-layer execution system with fallback and promotion semantics; spec mining and the maturation trajectory are its symbolic-crossing special cases

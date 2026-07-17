@@ -37,7 +37,7 @@ Residues found while checking the applied wave (2026-07-17): sweeps grep `distil
 
 ## Second semantic wave: obvious derivation / selection
 
-These are not the mistake. They are mostly use-shaped rewrites of existing reasoning, procedures, or traces for a bounded consumer. They should wait until the derivation/selection definitions exist, but they can be batched because the control regime is clear.
+These are not the mistake. They are mostly use-shaped rewrites of existing reasoning, procedures, or traces for a bounded consumer. Under the no-successor-term direction there are no derivation/selection definitions to wait for: they wait on Wave 0's structure note and label grammar instead, and then reword into **plain language**, citing the structure note (or carrying a `Derived from:`-style label) only where the strong recomputable-from-source semantics are actually claimed. The table's "Replacement direction" column predates that decision — read "reframe as derivation/selection" as "reword in plain English, with a citation or label where the cache/fallback semantics matter."
 
 | Note | Current usage | Replacement direction |
 |---|---|---|
@@ -94,8 +94,8 @@ These notes have `distill*` uses that are semantically important or mixed enough
 
 ## Proposed execution order
 
-1. Promote Wave 0 vocabulary: derivation, selection, and discovery lifecycle.
-2. Apply the first semantic wave: the obvious discovery / abstraction cluster.
-3. Apply the second semantic wave: the obvious derivation / selection cluster.
-4. Revisit the deliberately-not-first-wave notes with the new definitions available.
+1. ~~Apply the first semantic wave: the obvious discovery / abstraction cluster.~~ **Done** — commit `80f47b41`; residues noted above.
+2. Promote the Wave 0 receiving surfaces: the two-layer structure note, the link-label semantics in `link-vocabulary.md`, and the discovery-lifecycle amendment (no definition notes — no-successor-term direction).
+3. Apply the second semantic wave: plain-language rewording per the note above.
+4. Revisit the deliberately-not-first-wave notes with the receiving surfaces available.
 5. Only then do META, tags, filenames, and `Distilled into:` infrastructure.

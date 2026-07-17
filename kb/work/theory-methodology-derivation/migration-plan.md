@@ -11,6 +11,15 @@ Goal (operator-set; revised 2026-07-17): **retire "distillation" without a succe
 - "Distillation" survives only in: external systems' own command names, the ML-knowledge-distillation sense in sources, and historical ADR text.
 - Net vocabulary diff: 0, with a quality upgrade. `distillation` leaves the AGENTS.md vocabulary; `discovery lifecycle` enters (there is no existing `discovery` entry to amend). The incoming term is a greppable multi-word coinage, not a captured common word — the exposure class that produced the migration.
 
+## Execution status (2026-07-17)
+
+- **First semantic wave applied and committed** (`80f47b41`): the trace→rule ladder cluster renamed to abstraction vocabulary (the six notes plus `agent-memory-README.md`), with the note renames `trace-derived-memory-earns-authority…` → `trace-extracted-…` and `use-trace-derived-extraction` → `use-trace-extraction-as-meta-learning` and corpus-wide backlink fixes. Validation clean. Residues — and the lesson that sweep patterns must match single-l `distil` — recorded in [obvious-distillation-cases.md](./obvious-distillation-cases.md).
+- **Adjacent infrastructure committed** (`ca1ea328`, `5ed02f6a`): `trace-derived` retired in favor of the coined compounds `trace-extracted` (lineage) and `trace-learning` (loop tag, type-spec sections) across agent-memory-systems, `systems.csv`, the renderer, and tests — the naming rule applied to infrastructure vocabulary.
+- **Workshop self-references cleaned** (`8dd16304`): the threads no longer use "distillate"/"distillation" as operator vocabulary while arguing for its retirement.
+- **Theory promoted** (`e429e82e`): the scope/collision reflection is now the library note `vocabulary-collisions-prevented-at-write-time-not-read-time.md` — the uniqueness invariant and the multi-word-coinage rule are citable claims the remaining waves build on.
+- **Ordering note**: these Wave 1-shaped edits deliberately ran ahead of Wave 0, under the staging rule in [obvious-distillation-cases.md](./obvious-distillation-cases.md) — only cases whose replacement follows from the note's own argument, needing no receiving vocabulary.
+- **Next**: Wave 0 items 1–2 (structure note; label semantics in `link-vocabulary.md`), then item 3 (the discovery-lifecycle amendment); then the remaining Wave 1 entangled cases (the definition's instance list, the `distillation-is-transformation-not-selection` split, `write-instruction.md`'s two provenance stories, two-stage pipeline descriptions) and the re-scoped Wave 2.
+
 ## Waves
 
 Ordered so each wave makes the next one mechanical. Validate (`cp-skill-validate`) after each wave; commit waves separately.
