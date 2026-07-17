@@ -15,9 +15,6 @@ Working inventory for plan Wave 1, from a close read of the held-back files and 
 
 | File | Entanglement | Treatment | Gate |
 |---|---|---|---|
-| `memory-management-policy-is-learnable-but-oracle-dependent.md` | the audit's collision: "selection and distillation" as a load-bearing contrasting pair in claim 1 | Reword the pair as retention judgment (what to remember) vs context-shaping (what to load); the old verb triple becomes plain verbs with links | quick, claim-1 only |
-| `kb/instructions/write-instruction.md` | two provenance stories under one word: repeated-ops→procedure (abstraction; "can't distill what you haven't done" = recurrence evidence) vs procedure derived from methodology notes | Say both correctly and briefly (instruction register): abstract the stable core from repetition with its boundary, then work the procedure out from companion methodology where it exists; companion link becomes `derived-from`-shaped | light |
-| `semantic-review-catches-content-errors…` | recounts the old three-operation framework as discovered history | Historical wording — keep the old term as quoted history; no reclassification | no |
 
 **Reclassified out of Wave 1** (nothing entangled remains; append to the staging file's second wave after the current mechanical batch completes): `minimum-viable-vocabulary…`, `information-value-is-observer-relative.md`, `legal-drafting…`. **Deferred to Wave 3**: `soft-bound-traditions…` (lists the term with definition links that break on deletion).
 
@@ -32,22 +29,9 @@ Working inventory for plan Wave 1, from a close read of the held-back files and 
 
 Deletion itself is the Wave 3 ADR moment (large `defined-in` backlink surface).
 
-## Lineage-edge classification
+## Lineage-edge classification — executed (`4175dbb3`)
 
-**`Distilled into:` footers — 10 real instances** (plus META prose mentions in `links-README.md` and the source-tracking note, reworded with their files):
-
-| Source → target | Likely label | Confidence |
-|---|---|---|
-| `unified-calling-conventions` → rlm-tendril-llm-do synthesis | Abstracted into: | needs read |
-| `rlm-has-the-model-write…` → same | Abstracted into: | needs read |
-| `areas-exist-because…` → COLLECTION.md rules | Derived into: | quick confirm |
-| `definitions/reach-assessment` → formal-systems split-out | Derived into: | high |
-| `session-history-should-not…` → chat-history-model | Abstracted into: | needs read |
-| `discovery-is-seeing…` → cp-skill-connect | Derived into: | medium |
-| `first-principles-reasoning` → review-explanatory-reach task | Derived into: | high |
-| `title-as-claim-exposes…` → COLLECTION.md checklist | Derived into: | high |
-
-**`derived-from` edges — ~24 real edges; most must flip to `abstracted-from`.** The context phrases self-identify: "the concrete case this claim abstracts" (`compiling-coordination`), "this note generalizes from" (`full-identity-keys`), "first witnessed instance" (`orchestration-needs-privilege`), "the originating application, not independent evidence" (`directory-placement`), "the shipped instance whose generalization is this proposal's trigger" (two proposals + ADR 030), "source taxonomy this note translates" (`adaptation-agentic-ai-analysis`), plus `llm-generation-relaxes` ×2, `adversarial-loop` ×2, `structure-inference`, `active-work-state`, `goedel-machines`. Likely keepers as `derived-from` (definitional syntheses worked out from cited papers — needs read): `definitions/reflective-system` ×2, `definitions/self-improving-system`, `definitions/actionable-methodology` ×2, `reasoning-production` (or `evidence`).
+16 `derived-from` edges flipped to `abstracted-from` (self-identifying generalization lineage); three `Distilled into:` footers converted to `Abstracted into:` (the two persistence-boundaries synthesis feeds and the chat-history-model tradeoff). The four definitional syntheses keep `derived-from` (reflective-system ×2, self-improving-system, actionable-methodology ×2, reasoning-production — content worked out from the cited papers). Borderline calls classified abstracted-dominant per the bet doctrine: `goedel-machines` and `adaptation-agentic-ai-analysis` map their sources into KB frames the sources don't contain. The five confident `Derived into:` conversions are staged for the mechanical executor (staging file, fourth batch). Remaining semantic rewrites: `memory-management-policy` and `write-instruction` executed (`4c0c3cf8`); `semantic-review…` confirmed correct as quoted history.
 
 ## Execution notes
 
