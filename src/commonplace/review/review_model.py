@@ -42,6 +42,13 @@ MODEL_PARTITION_REGISTRY = {
         "gpt-5-5",
         "gpt-5-5-high",
     ),
+    "luna": (
+        "luna",
+        "luna-low",
+        "luna-medium",
+        "luna-high",
+        "luna-xhigh",
+    ),
 }
 
 
