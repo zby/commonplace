@@ -2,7 +2,9 @@
 
 Edits parked while the final Wave 1 review sweep runs (its baselines key on the swept files' current content; editing mid-sweep orphans them). Apply after the sweep's fixes are committed.
 
-## 1. Structure note: two physics additions (operator-approved 2026-07-17)
+## 1. Structure note: two physics additions (operator-approved 2026-07-17) — DONE 2026-07-18
+
+Both applied after the sweep landed, adapted to the note's post-fix hedged register (effective-theory instance into the analogy paragraph; physics–chemistry pair as a second illustration in the mixed-artifact caveat). Validation clean. Re-gating happens with the next sweep. Original drafts kept below for reference.
 
 Target: `kb/notes/theory-and-methodology-form-a-two-layer-execution-system.md`. Both keep the note's hedged register (illustration, not evidence). Re-gate after applying.
 
