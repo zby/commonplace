@@ -38,7 +38,8 @@ Scan `kb/reference/`, `kb/notes/`, `kb/agent-memory-systems/`, `kb/agentic-syste
 | `supersedes` / `superseded-by` | reference (ADR chains) | current or prior version |
 | `rationale` | notes | this design rests on this claim |
 | `defined-in` | notes/definitions | reader may not know the term |
-| `derived-from` | sources, agent-memory, agentic-systems | this design choice was abstracted from this external source/system |
+| `derived-from` | sources, agent-memory, agentic-systems | this design choice is worked out from this external source/system, adding nothing beyond it — see the lineage semantics in `link-vocabulary.md` |
+| `abstracted-from` | sources, agent-memory, agentic-systems | this design choice generalizes beyond this external source/system; the source is evidence, not a generator |
 | `evidence` | sources, agent-memory, agentic-systems | this external source/system corroborates the description |
 | `procedure` | instructions | for how to do this, see this instruction |
 | `see-also` | any | adjacent companion; use sparingly |

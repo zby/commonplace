@@ -49,7 +49,7 @@ Within [deploy-time learning](./deploy-time-learning-is-the-missing-middle.md), 
 
 ## Open Questions
 
-- Origin is a paraphrased tweet (URL not captured) observing that models exit the maturation path at different stages. The model-capability-determines-exit-stage framing is excluded as too liquid; if the source is captured it belongs as a `derived-from` edge to a source snapshot, not in the claim.
+- Origin is a paraphrased tweet (URL not captured) observing that models exit the maturation path at different stages. The model-capability-determines-exit-stage framing is excluded as too liquid; if the source is captured it belongs as an `abstracted-from` edge to a source snapshot, not in the claim.
 - Is verification coverage measurable in practice, or does "verified" itself need gradations (reproduced once vs. survived repeated reuse)?
 - Do the middle operations collapse for some claim types — e.g. preferences, where there is no diagnosis to verify, only an accumulation of accept/reject events?
 
