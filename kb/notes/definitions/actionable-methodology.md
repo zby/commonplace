@@ -42,11 +42,13 @@ Actionability implies neither that the methodology is correct nor that an interv
 - Calling a classification actionable because a resourceful operator could invent a use for it, even though the classification supplies no intervention-relevant mapping.
 - Treating actionability as an intrinsic property of prose, independent of an operator and setting.
 - Using **actionable theory** as a noun, as if actionability sorted artifacts into kinds rather than relating a methodology to an operator.
+- Predicating **actionable** of a methodology without linking to this definition. The bare word is common English with many unrelated ordinary uses (findings, edits, steps, guidance); the technical sense is licensed only where the occurrence links here, on "actionable" itself or on "methodology" in the same clause. An unlinked "actionable" is the ordinary word, not this relation.
 
 ---
 
 Relevant Notes:
 
+- [Vocabulary collisions are prevented at write time, not resolved at read time](../vocabulary-collisions-prevented-at-write-time-not-read-time.md) — grounds: this definition is the worked case for clausal binding, the scoping device admitted here only because every technical occurrence links back to this note
 - [Reflective system](./reflective-system.md) — extends: actionability concerns a methodology–operator–target relation; reflection adds a causally connected representation of the system itself
 - [A methodology governs its own extension only as far as it settles the meta-decisions it raises](../a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md) — extends: asks how far a methodology's own prescriptions stay governed when the system applies them to itself
 - [Gregor, Design Theory in Information Systems](../../sources/design-theory-in-information-systems-gregor-2002.ingest.md) — derived-from: establishes theory for design and action as articulated, prescriptive guidance for a class of artifacts or processes

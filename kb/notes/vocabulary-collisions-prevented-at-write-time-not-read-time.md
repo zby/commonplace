@@ -42,6 +42,7 @@ This ranks prose-level naming devices by binding strength:
 |---|---|---|
 | definition note + vocabulary entry | global, unenforced prose convention | drift |
 | "in this note, X means…" | locally declared, decays at the note boundary | citations strip the qualifier |
+| clausal binding + required link (`actionable`) | grammar-scoped, link-anchored | mis-predication is uncaught; an unlinked technical claim silently reverts to the ordinary reading |
 | coined compound token (`trace-learning`) | no scope needed — no collision possible | jargon opacity |
 | link label / field / tag in defined slot | positional, validator-enforced | none at the term level (misuse is a content error, catchable by gates) |
 
@@ -59,17 +60,25 @@ The rule in use: when this KB freed "derived" for ordinary English, the infrastr
 
 The cost is opacity to outsiders, which is why coined terms are banned from outward-facing copy. Inside the KB the trade is usually right: a compound that is *descriptive* almost self-defines and buys collision-freedom nearly for free. This supplies the cost side of the case that [the minimum viable vocabulary is the naming set that most reduces](./minimum-viable-vocabulary-is-the-naming-set-that-most-reduces.md): prose names are unscoped globals, so each one taxes the whole corpus, not just the notes that use it — and enforcement, keeping terms in their slots, is [methodology enforcement as constraining](./methodology-enforcement-is-constraining.md) applied to naming.
 
+## Clausal binding is a second scoping device, but only with a required link
+
+A predicate word can also be scoped by grammar instead of spelling: the technical sense fires only where the word predicates an explicit subject in the same clause. `actionable` works this way in [actionable methodology](./definitions/actionable-methodology.md) — "a methodology is **actionable** for an operator when…" — and stays free to mean ordinary English everywhere else, because ordinary uses never predicate it of a methodology. A corpus check of `kb/notes/`, `kb/reference/`, and `kb/instructions/` turns up 36 unrelated uses of "actionable" — findings, edits, steps, guidance — and not one predicates it of a methodology: the word has exactly the high-innocent-occurrence profile that makes capturing it dangerous, yet the definition survives because the technical reading requires a syntactic frame the ordinary occurrences never instantiate.
+
+Grammar alone is weaker than spelling, though. A coined compound is safe by an inherent property of the string — nothing else occupies it. A clausally-bound predicate is safe only while writers keep the discipline of predicating the technical sense of the right subject and never predicating the ordinary sense of that same subject; nothing but convention enforces either half, and grep cannot audit it the way it audits an exact string, since confirming the pattern holds means reading each clause.
+
+The condition that makes it admissible: every technical occurrence must also carry a link to the definition. This does not repair the grammar — a writer can still mis-predicate — but it converts an invisible convention into a visible, spot-checkable one: an unlinked "actionable" defaults to the ordinary reading, and a technical claim with no link is not a claim this KB recognizes. Every current technical occurrence already satisfies this (linked directly on the word, or via "methodology" earlier in the same clause), so the rule costs nothing retroactively. Clausal binding is therefore admitted only under this condition — grammar supplies the scope, the required link supplies the check.
+
 ## Boundary and caveats
 
 The rule is not "eliminate polysemy." Polysemy is normal in natural language and readers resolve it constantly; a KB that tried to eliminate it would fight its own medium. The problem is specifically **load-bearing polysemy**: senses whose misresolution changes what an agent does — which maintenance regime applies, what authority a claim carries, whether a fallback is licensed. The invariant is:
 
-> A load-bearing sense must be carried by a scoped surface (label, field, tag) or an empty-prior token (coined compound) — never by capturing a common word. And no term may carry two load-bearing senses anywhere in the corpus: collisions are prevented at write time, not resolved at read time.
+> A load-bearing sense must be carried by a scoped surface (label, field, tag), an empty-prior token (coined compound), or a clausally-bound predicate whose every technical occurrence links to its definition — never by capturing a common word outright. And no term may carry two load-bearing senses anywhere in the corpus: collisions are prevented at write time, not resolved at read time.
 
-Two further limits. Minimality still applies — compounds are cheap to keep apart, not cheap to *learn*; each is still a global the reader carries. And a compound with an existing community prior is safe only when the KB sense agrees with that prior; borrowing against the prior re-creates capture in miniature.
+Three further limits. Minimality still applies — compounds are cheap to keep apart, not cheap to *learn*; each is still a global the reader carries. A compound with an existing community prior is safe only when the KB sense agrees with that prior; borrowing against the prior re-creates capture in miniature. And clausal binding's required link is currently a writing convention, not a validator-enforced gate — nothing yet checks that every predication of a scoped word onto its subject actually carries the link; until such a check exists, this device is write-time discipline, not write-time enforcement in the stronger sense the rest of this note argues for.
 
 ## Open Questions
 
-- Should the one-term-one-sense invariant get write-time enforcement — extending a write skill's cheap duplicate check to a sense-collision check, or a naming-review gate? Prevention is only as good as the check that runs at write time.
+- Should the one-term-one-sense invariant get write-time enforcement — extending a write skill's cheap duplicate check to a sense-collision check, or a naming-review gate? Prevention is only as good as the check that runs at write time. The same gap applies to clausal binding specifically: nothing currently checks that a technical predication always carries its link.
 - Do definition notes need a health warning as a type? They can bind *concepts to explanations* safely (what is a term?) but bind *words to senses* only weakly; the definitions that have held are mostly coined-or-rare words, which may be why.
 - The philosophy-borrowing angle — formal languages were invented precisely because natural language lacks scope discipline (Frege's *Begriffsschrift*) — is probably cite-in-passing only.
 
@@ -82,4 +91,4 @@ Relevant Notes:
 - [minimum viable vocabulary is the naming set that most reduces](./minimum-viable-vocabulary-is-the-naming-set-that-most-reduces.md) — extends: supplies the cost mechanism (names as unscoped globals) to its payoff argument
 - [codification](./definitions/codification.md) — mechanism: moving a binding from prose to schema is the codification crossing applied to vocabulary itself
 - [methodology enforcement is constraining](./methodology-enforcement-is-constraining.md) — grounds: enforced positions are what give the symbolic layer its scope
-- [clausal binding scopes a captured predicate-word like a coinage](./evidence/clausal-binding-scopes-a-captured-predicate-word-like-a-coinage.md) — extends: a worked corpus case verifying the collision prior for a concrete term, and a second enforcement-friendly scoping mechanism beyond the multi-word coinage this note foregrounds
+- [actionable methodology](./definitions/actionable-methodology.md) — exemplifies: the worked case for clausal binding, admitted only because every technical occurrence links here
