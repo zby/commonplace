@@ -93,6 +93,11 @@ These notes have `distill*` uses that are semantically important or mixed enough
 - `task-fitted-structure-costs-cross-task-reuse.md` - uses distillation as a contrast case; only safe after the tradeoff note is rewritten.
 - `semantic-review-catches-content-errors-that-structural-validation.md` - discusses the old three-operation framework as a discovered error; may need historical wording rather than replacement.
 - `../reference/proposals/automated-note-refinement-as-search-over-source-bundle.md` - explicitly asks whether automated refinement subsumes re-distillation; hold until the `evolving-understanding` note and source-bundle proposal can share the new vocabulary.
+- `skills-derive-from-methodology-through-distillation.md` - skipped in the second semantic wave: its methodology case claims source fallback, but its judgment and raw-domain-artifact cases add substantive choices and generalizations that need an entangled rewrite.
+- `session-history-should-not-be-the-default-next-context.md` - skipped in the second semantic wave: the note explicitly leaves unresolved whether Slate-style compressed episodes are narrow handoffs or synthesis-bearing trace artifacts.
+- `charting-the-knowledge-access-problem-beyond-rag.md` - skipped in the second semantic wave: its navigation pointers are precomputed views, but the same vocabulary also covers contradiction-resolving synthesized narratives that can add substantive claims.
+- `epiplexity-by-example-what-entropy-and-complexity-miss.md` - skipped in the second semantic wave: its value claim combines rearrangement, compression, and observer-relative accessibility without fixing which transformation controls the resulting artifact.
+- `reverse-compression-is-when-llm-output-expands-without-adding.md` - skipped in the second semantic wave: its productive-inverse contrast inherits the old term's broad scope and does not choose between selection, source-derived reshaping, and structure-preserving compression.
 
 ## Execution order (current)
 
