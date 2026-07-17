@@ -14,7 +14,7 @@ The audit is done, the direction is decided (retire the term, no successor), and
 
 ## Threads
 
-- [two-layer-theory-methodology.md](./two-layer-theory-methodology.md) — the core structure: a general theory and a derived methodology form a two-layer execution system with fallback and promotion semantics; spec mining and the maturation trajectory are its symbolic-crossing special cases
+- two-layer-theory-methodology.md — promoted to [theory and methodology form a two-layer execution system](../../notes/theory-and-methodology-form-a-two-layer-execution-system.md); workshop draft removed, this note is now the canonical citable home the other threads point at
 - [derivation-selection-vocabulary.md](./derivation-selection-vocabulary.md) — the vocabulary proposal: derivation as entailment-preserving distillation; decompose distillation into consumer-directed selection + derivation, forcing the ampliative residue out to discovery; migration audit plan
 - [learning-as-derivation-caching.md](./learning-as-derivation-caching.md) — the learning framing: promotion is caching derivations (amortization, not capability acquisition); proceduralization in cognitive architectures is the exact analogue
 - [methodology-as-inductive-bias.md](./methodology-as-inductive-bias.md) — the ML framing: the methodology is a learned inductive bias; the exact-spec/proxy-theory split predicts which promotions are durable

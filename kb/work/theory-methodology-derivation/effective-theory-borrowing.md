@@ -4,7 +4,7 @@ Candidate borrowing for the [philosophy-borrowing](../philosophy-borrowing/READM
 
 ## The claim
 
-Physics' **effective theory** structure is the closest existing analogue to the [two-layer theory–methodology pattern](./two-layer-theory-methodology.md). An effective theory — thermodynamics over statistical mechanics, ray optics over wave optics — is a generator–derivative pair designed for action: derivable from the deeper theory, dramatically cheaper to apply, strictly less general, with a *known* breakdown boundary where you drop back to the fundamental layer. Physics ships both layers permanently because the domain of application is open-ended — the source passage's claim 2 exactly.
+Physics' **effective theory** structure is the closest existing analogue to the [two-layer theory–methodology pattern](../../notes/theory-and-methodology-form-a-two-layer-execution-system.md). An effective theory — thermodynamics over statistical mechanics, ray optics over wave optics — is a generator–derivative pair designed for action: derivable from the deeper theory, dramatically cheaper to apply, strictly less general, with a *known* breakdown boundary where you drop back to the fundamental layer. Physics ships both layers permanently because the domain of application is open-ended — the source passage's claim 2 exactly.
 
 Physics has no single word for the relation; it has a term cluster, each naming one aspect, and the cluster maps piecewise onto the pattern's moving parts:
 

@@ -4,7 +4,7 @@ How the two-layer structure is a form of learning, and what kind.
 
 ## Amortization, not acquisition
 
-In the [two-layer structure](./two-layer-theory-methodology.md), the theory can already handle every case — nothing new becomes *derivable* when a corner case is promoted into the methodology. What changes is the cost profile: an expensive re-derivation becomes a cheap lookup. Learning here is **amortization**. This fits [deploy-time learning](../../notes/deploy-time-learning-is-the-missing-middle.md) (adaptation through durable inspectable artifacts) but names a mechanism the current operation decomposition (accumulation, constraining, distillation, discovery) doesn't isolate: the artifact update adds no reach and narrows no interpretation — it caches a computation.
+In the [two-layer structure](../../notes/theory-and-methodology-form-a-two-layer-execution-system.md), the theory can already handle every case — nothing new becomes *derivable* when a corner case is promoted into the methodology. What changes is the cost profile: an expensive re-derivation becomes a cheap lookup. Learning here is **amortization**. This fits [deploy-time learning](../../notes/deploy-time-learning-is-the-missing-middle.md) (adaptation through durable inspectable artifacts) but names a mechanism the current operation decomposition (accumulation, constraining, distillation, discovery) doesn't isolate: the artifact update adds no reach and narrows no interpretation — it caches a computation.
 
 It also fits [learning is not only about generality](../../notes/learning-is-not-only-about-generality.md) exactly: promotion improves reliability, speed, and cost on the covered distribution while generality is held by the other layer.
 
