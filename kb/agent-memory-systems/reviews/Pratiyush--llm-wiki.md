@@ -2,7 +2,7 @@
 description: "Pratiyush llm-wiki review: local file-based transcript-to-wiki compiler with raw session capture, agent-authored wiki pages, static AI exports, MCP tools, and optional synthesis"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-04"
 ---
 
@@ -33,7 +33,7 @@ last-checked: "2026-06-04"
 - **Storage substrate:** `files` `repo` — Retained state lives in local files: `.jsonl` session stores outside the repo, converted `raw/sessions/*.md`, `wiki/**/*.md`, generated `site/`, `.llmwiki-state.json`, `.llmwiki-synth-state.json`, `.llmwiki-queue.json`, `.llmwiki-pending-prompts/`, package skills, slash commands, tests, and docs. Git can version the project and wiki, but there is no database or vector store in the core implementation.
 - **Representational form:** `prose` `symbolic` — Session bodies, wiki pages, synthesis prompts, navigation files, packaged skills, and docs are prose; frontmatter, state JSON, adapter registry names, lifecycle enums, lint rule outputs, MCP schemas, search indexes, JSON-LD, manifests, and pending sentinels are symbolic. The reviewed core does not retain embeddings or model weights.
 - **Lineage:** `authored` `imported` `trace-extracted` — Skills, slash commands, docs, seeds, lint rules, and user/agent-authored wiki pages are authored; Obsidian and other input adapters can import existing files; raw sessions and synthesized source pages are derived from agent transcripts, tool calls, model metadata, and session timing.
-- **Behavioral authority:** `knowledge` `instruction` `routing` `validation` `ranking` `learning` `enforcement` — Raw sessions, wiki pages, exports, and MCP query results serve as knowledge; packaged skills, slash commands, `CLAUDE.md`/`AGENTS.md`, and `.kiro/steering` instruct host agents; indexes, folder context, tags, adapters, queues, and state files route work; lint, lifecycle validity, redaction, path guards, raw overwrite guards, and candidate status validate or enforce boundaries; search indexes, MCP lexical scoring, facets, and confidence fields rank; conversion and synthesis are trace-derived learning from prior sessions.
+- **Behavioral authority:** `knowledge` `instruction` `routing` `validation` `ranking` `learning` `enforcement` — Raw sessions, wiki pages, exports, and MCP query results serve as knowledge; packaged skills, slash commands, `CLAUDE.md`/`AGENTS.md`, and `.kiro/steering` instruct host agents; indexes, folder context, tags, adapters, queues, and state files route work; lint, lifecycle validity, redaction, path guards, raw overwrite guards, and candidate status validate or enforce boundaries; search indexes, MCP lexical scoring, facets, and confidence fields rank; conversion and synthesis are trace-learning from prior sessions.
 
 **Raw session files.** These are Markdown evidence artifacts generated from JSONL records. They preserve transcript content in a redacted, truncated, metadata-rich form, with project, timestamps, model, tool counts, token totals, adapter tags, and source file lines used by later build, graph, search, and ingest paths ([llmwiki/convert.py](https://github.com/Pratiyush/llm-wiki/blob/06c30e2b0c9018b11463b4fa37de0d75248cde5c/llmwiki/convert.py)).
 
@@ -77,7 +77,7 @@ The main divergence is semantic authority. llm-wiki's packaged ingest/query skil
 
 **Curation operations:** `consolidate` — The optional synthesis pipeline turns an existing raw session page into a more compact wiki source page, and the agent-delegate backend stages the same consolidation through pending prompts. Other automatic changes I found are acquisition, access-structure rebuilds, state tracking, export generation, or guards, not content curation over existing memory.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `tool-traces` — The primary input is agent transcript JSONL: user/assistant turns, tool-use blocks, tool results, timestamps, model usage, session paths, and project/session metadata.
 
@@ -87,7 +87,7 @@ The main divergence is semantic authority. llm-wiki's packaged ingest/query skil
 
 **Distilled form:** `prose` `symbolic` — Distilled outputs include prose raw/session Markdown, synthesized source pages, wiki summaries, navigation files, and symbolic frontmatter, tags, state files, indexes, JSON exports, search chunks, and MCP schemas.
 
-**Extraction.** The converter is deterministic extraction and redaction from JSONL into Markdown; it computes message/tool/token metadata but does not infer high-level lessons. The optional synthesizer performs the semantic extraction: a backend reads a raw session body and metadata through a prompt template, then writes or stages a source page with tags. The strongest automatic trace-derived loop is therefore trace -> raw Markdown -> synthesized source page, not trace -> enforced rule.
+**Extraction.** The converter is deterministic extraction and redaction from JSONL into Markdown; it computes message/tool/token metadata but does not infer high-level lessons. The optional synthesizer performs the semantic extraction: a backend reads a raw session body and metadata through a prompt template, then writes or stages a source page with tags. The strongest automatic trace-learning loop is therefore trace -> raw Markdown -> synthesized source page, not trace -> enforced rule.
 
 **Scope and timing.** `llmwiki sync` can be run manually, from MCP with confirmation, or by an external SessionStart hook. Synthesis is a separate command and can use dummy, Ollama, or agent-delegate backends. The agent-delegate mode writes pending prompt files and placeholder pages first, then relies on the host agent to complete them later.
 
@@ -127,4 +127,4 @@ Relevant Notes:
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: raw sessions, wiki pages, skills, state files, indexes, and exports differ by substrate, form, lineage, and authority.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: raw sessions, wiki pages, and exports mostly act as evidence/reference/context.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: packaged skills, slash commands, lint rules, schemas, guards, and MCP tool definitions shape future behavior.
-- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - places: llm-wiki derives durable raw and synthesized wiki artifacts from agent session traces.
+- [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: llm-wiki derives durable raw and synthesized wiki artifacts from agent session traces.

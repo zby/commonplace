@@ -3,7 +3,7 @@ description: "SkillX review: trajectory-derived planning, functional, and atomic
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-05"
-tags: [trace-derived]
+tags: [trace-learning]
 ---
 
 # SkillX
@@ -77,7 +77,7 @@ The second divergence is read-back authority. SkillX pushes retrieved plans and 
 
 **Curation operations:** `consolidate` `dedup` `evolve` `promote` — Tool-output summarization and plan/skill distillation compact traces into shorter artifacts; DBSCAN groups similar skills before LLM merge; `SkillLibrary.merge(...)` can replace an existing same-name functional or atomic skill; filter results and successful extraction promote raw traces into reusable library entries. I did not find durable stale invalidation, decay, or synthesis across already stored memories beyond LLM-generated merged skill records.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `trajectories` `tool-traces` `session-logs` — The qualifying traces are task histories with assistant/tool turns, tool calls, environment feedback, rewards, failed trajectories when available, and exploration trajectories in optional expansion mode.
 

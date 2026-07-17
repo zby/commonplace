@@ -112,4 +112,4 @@ Relevant Notes:
 - [Context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) - grounds the context-scarcity pressure behind selective loading and framing
 - [Agent memory requirements](./agent-memory-requirements/README.md) - expands the derived requirements into one loadable note per need
 - [The adaptation survey corroborates memory requirements but misses artifact governance](./agent-memory-requirements/adaptation-survey-corroborates-memory-requirements.md) - compares this requirements map with an external agentic-adaptation taxonomy
-- [Trace-derived learning techniques in related systems](../agent-memory-systems/trace-derived-learning-techniques-in-related-systems.md) - surveys systems that mine traces into preferences, tips, rules, skills, playbooks, and policy updates
+- [Trace-learning techniques in related systems](../agent-memory-systems/trace-learning-techniques-in-related-systems.md) - surveys systems that mine traces into preferences, tips, rules, skills, playbooks, and policy updates

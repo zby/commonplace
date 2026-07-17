@@ -1,8 +1,8 @@
 ---
-description: "Synapptic review: trace-derived user-model builder that mines Claude transcripts into weighted profiles, benchmarked guards, and assistant memory files"
+description: "Synapptic review: trace-learning user-model builder that mines Claude transcripts into weighted profiles, benchmarked guards, and assistant memory files"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-05"
 ---
 
@@ -81,7 +81,7 @@ The tradeoff is speed versus review. Synapptic's local file substrate and benchm
 
 **Curation operations:** `dedup` `evolve` `decay` `promote` `consolidate` `synthesize` - Similar observations reinforce existing profile entries instead of creating endless duplicates; profile entries evolve through weight, evidence count, source list, project list, last-seen timestamp, and sometimes more-specific observation text; old entries decay by merge cycle and wall-clock age; mixed dimensions promote to global after recurrence across projects; synthesis consolidates profile entries into a compact archetype and can generate higher-level user archetype/known-weakness prose from the profile.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `tool-traces` - The primary traces are Claude Code project JSONL transcripts. The filter keeps direct user and assistant text and strips tool-use bodies, tool results, thinking blocks, system/progress records, and file-history snapshots; the optional relay can also persist request and response bodies plus token metrics.
 
@@ -95,7 +95,7 @@ The tradeoff is speed versus review. Synapptic's local file substrate and benchm
 
 **Scope and timing.** Synapptic is a personal/cross-project learning loop rather than a per-task retrieval memory. The important timing boundary is session close: a completed session can produce observations that affect later sessions through the generated archetype, but the current turn is not modified by extraction that happens after it.
 
-**Survey placement.** Synapptic belongs in the trace-to-prompt-policy family. It strengthens the trace-derived survey's distinction between acquisition and promotion: extraction creates observations from session traces, merge turns them into durable profile state, synthesis creates behavior-shaping prompt policy, and benchmark results provide an explicit quality signal before guards remain active.
+**Survey placement.** Synapptic belongs in the trace-to-prompt-policy family. It strengthens the trace-learning survey's distinction between acquisition and promotion: extraction creates observations from session traces, merge turns them into durable profile state, synthesis creates behavior-shaping prompt policy, and benchmark results provide an explicit quality signal before guards remain active.
 
 ## Read-back
 
@@ -139,7 +139,7 @@ The tradeoff is speed versus review. Synapptic's local file substrate and benchm
 
 Relevant Notes:
 
-- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - places: Synapptic derives observations, profile entries, prompt-policy archetypes, and guard verdicts from session traces.
+- [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: Synapptic derives observations, profile entries, prompt-policy archetypes, and guard verdicts from session traces.
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Synapptic's profile state only changes behavior after synthesis and assistant memory/config read-back.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: observations, weighted profiles, archetypes, output files, benchmarks, and relay indexes have different substrates, forms, lineage, and authority.
 - [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - exemplifies: session failures and corrections become durable behavior guidance for later agents.

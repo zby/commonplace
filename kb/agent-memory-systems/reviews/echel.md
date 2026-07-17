@@ -114,7 +114,7 @@ Echel's weaker point is semantic fragility. Its graph extractor keys on fixed he
 
 ## What to Watch
 
-- Whether cockpit chat starts proposing or applying wiki edits, tasks, decisions, evidence entries, or memory records. That would change the trace-derived learning verdict.
+- Whether cockpit chat starts proposing or applying wiki edits, tasks, decisions, evidence entries, or memory records. That would change the trace-learning verdict.
 - Whether graph extraction moves from fixed headings and bullets to typed frontmatter, schemas, or richer authored links. That would make graph-derived authority less fragile.
 - Whether work packets gain token budgets, provenance per included claim, or freshness checks. That would strengthen context efficiency and auditability.
 - Whether `.echel/memory_records.jsonl` starts feeding graph generation, packet assembly, contradiction handling, or readiness. That would turn it from a side query store into a central retained-artifact lane.

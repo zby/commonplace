@@ -2,7 +2,7 @@
 description: "cq review: Mozilla AI plugin and MCP store for structured agent knowledge units, review-gated sharing, and agent-led reflection"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-04"
 ---
 
@@ -60,7 +60,7 @@ Promotion path: cq's implemented ladder is session lesson or direct advice -> lo
 | Storage substrate | Local SQLite plus optional remote SQL API; plugin files for instructions | Git-tracked `kb/` collections plus generated reports/indexes |
 | Retrieval | Agent calls `query` with domains/context filters; bounded ranked JSON results | `rg`, indexes, authored links, skills, validation, and review reports |
 | Governance | Remote pending/approved/rejected review gate; confidence through confirm/flag | Collection/type contracts, schema validation, git diffs, citations, semantic review gates, replacement archives |
-| Trace-derived learning | Agent-led reflection/propose turns session events into KUs | Source-grounded writing and review workflows; trace-derived promotion is an explicit methodology concern |
+| Trace-learning | Agent-led reflection/propose turns session events into KUs | Source-grounded writing and review workflows; trace-derived promotion is an explicit methodology concern |
 
 cq and Commonplace share the belief that retained agent knowledge needs an activation path, but they optimize different artifact sizes. cq makes the path small and tool-shaped: query for a few KUs, verify the `action`, and feed back confirmation or flags. Commonplace uses larger artifacts with stronger authoring contracts, citations, and review state, so it trades cq's low-friction sharing for richer lineage and inspectability.
 
@@ -86,7 +86,7 @@ The key authority split is that cq's stored KUs are mostly knowledge artifacts, 
 
 **Curation operations:** `synthesize` `evolve` `invalidate` `promote` — Reflection and mid-task propose synthesize new KUs from session experience; confirm/flag evolves existing confidence and flag metadata; stale/incorrect/duplicate flags invalidate weakly by downweighting and recording a reason; remote review promotes pending units into the approved read-back set.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `tool-traces` — The raw signal is the current agent-visible session: user request, attempted actions, tool calls, failures, workarounds, and final solution. The Cursor hook can store a short failed-tool summary, but cq does not own a durable transcript database in this commit.
 
@@ -141,7 +141,7 @@ Because read-back is pull-only, there is no push read-back signal to classify an
 
 Relevant Notes:
 
-- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - extends: cq turns selected session/tool experience into durable, tagged knowledge units through agent-led reflection and propose flows.
+- [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - extends: cq turns selected session/tool experience into durable, tagged knowledge units through agent-led reflection and propose flows.
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - exemplifies: cq stores KUs, but later behavior changes only when an agent queries and uses returned guidance.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - defined-in: cq KUs are primarily advisory knowledge artifacts when consumed through query results.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - defined-in: the cq skill, MCP tool definitions, scoring code, review gate, and plugin manifest instruct, route, rank, or gate behavior.

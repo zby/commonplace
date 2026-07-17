@@ -2,7 +2,7 @@
 description: "OpenSage review: ADK agent framework with dynamic subagents, Skills, sandbox memory, Neo4j history/memory, plugins, and RL adapters"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-04"
 ---
 
@@ -83,7 +83,7 @@ The major divergence is governance. Commonplace makes durable claims source-grou
 
 **Curation operations:** `consolidate` `synthesize` `promote` — History and tool-response summarizers consolidate large trace windows/outputs; memory extraction and generated Skills can synthesize new retained artifacts from traces or workflows; selected outputs are promoted into memory graphs, summaries, Skill packages, evaluation artifacts, or RL samples.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `tool-traces` `event-streams` `trajectories` — OpenSage consumes ADK session events, tool calls/responses, plugin callback streams, message-board records, benchmark outputs, and RL rollouts.
 
@@ -93,13 +93,13 @@ The major divergence is governance. Commonplace makes durable claims source-grou
 
 **Distilled form:** `prose` `symbolic` `parametric` — Distillation produces summaries, warnings, plans, graph entities/relationships, indexes, Skill packages, embeddings, token/loss-mask arrays, rewards, and training-framework samples.
 
-**Trace source.** OpenSage qualifies as trace-derived because multiple durable artifacts derive from live agent traces: ADK events are logged to Neo4j, tool responses can become summaries or memory graph content, sandbox sessions are dumped to `/mem`, message-board JSONL is appended during ensemble work, benchmark runs export `session_trace.json`, and RL adapters convert rollouts into training payloads.
+**Trace source.** OpenSage qualifies as trace-learning because multiple durable artifacts derive from live agent traces: ADK events are logged to Neo4j, tool responses can become summaries or memory graph content, sandbox sessions are dumped to `/mem`, message-board JSONL is appended during ensemble work, benchmark runs export `session_trace.json`, and RL adapters convert rollouts into training payloads.
 
 **Extraction.** Extraction is layered. The memory observer uses length/exclusion filters plus an optional LLM `StorageDecider`; `MemoryUpdateController` then extracts entities, discovers relationships, and writes graph records. Summarization prompts produce prose summaries from tool responses or event windows. RL adapters use benchmark reward functions and tokenizer/model traces rather than a KB-style semantic review.
 
 **Scope and timing.** Online writes mostly occur after a tool call or when a history budget is exceeded, so they cannot change the action that just produced the trace but can affect later turns. Evaluation/RL artifacts are downstream of a benchmark run. Generated Skills are an explicit promotion path from repeated operational knowledge to reusable instruction/tool packages.
 
-**Survey fit.** OpenSage sits in the trace-to-graph, trace-to-summary, and trace-to-training branches of the trace-derived learning landscape. It strengthens the distinction between raw trace retention and distilled behavior-shaping artifacts: Neo4j history preserves raw-ish event records, Neo4j memory extracts searchable graph knowledge, and RL adapters produce training payloads without making learned weights part of the repo.
+**Survey fit.** OpenSage sits in the trace-to-graph, trace-to-summary, and trace-to-training branches of the trace-learning landscape. It strengthens the distinction between raw trace retention and distilled behavior-shaping artifacts: Neo4j history preserves raw-ish event records, Neo4j memory extracts searchable graph knowledge, and RL adapters produce training payloads without making learned weights part of the repo.
 
 ## Read-back
 
@@ -138,7 +138,7 @@ The RL adapters are behavior-learning infrastructure, not ordinary memory storag
 
 Relevant Notes:
 
-- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - places OpenSage's tool-output memory observer, history traces, summaries, message board, and RL adapters on the trace-derived learning landscape.
+- [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places OpenSage's tool-output memory observer, history traces, summaries, message board, and RL adapters on the trace-learning landscape.
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: OpenSage stores long-term memory and also has configured push paths through compaction and message-board diffs.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: OpenSage's Skills, sandbox files, Neo4j graphs, plugin outputs, message boards, and RL samples split by substrate, form, lineage, and authority.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: session traces, history records, graph search results, and file memory mostly advise future work.

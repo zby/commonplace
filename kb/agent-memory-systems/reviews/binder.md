@@ -33,7 +33,7 @@ Binder, from mpazik, is a local-first database and knowledge-graph workspace for
 
 - **Storage substrate:** `sqlite` — The primary retained state persists in `.binder/data/binder.db` as SQLite tables for records, config entities, and transactions; Markdown/YAML files and JSONL journals are synchronized projections and audit surfaces, not the primary lead substrate.
 - **Representational form:** `prose` `symbolic` — Richtext/plaintext fields and rendered Markdown carry prose, while schemas, field definitions, types, relation constraints, filters, navigation rules, views, transactions, and MCP/tool schemas are symbolic.
-- **Lineage:** `authored` — Humans, agents, CLI commands, MCP calls, editor saves, HTTP calls, scripts, imports, and hooks author explicit entity/config/transaction changes; Binder records transaction lineage but does not implement durable trace-derived learning from agent transcripts.
+- **Lineage:** `authored` — Humans, agents, CLI commands, MCP calls, editor saves, HTTP calls, scripts, imports, and hooks author explicit entity/config/transaction changes; Binder records transaction lineage but does not implement durable trace-learning from agent transcripts.
 - **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` — Records and rendered files act as knowledge artifacts; types, fields, navigation, views, LSP validation, config, hooks, and MCP/tool schemas shape instruction, enforcement, routing, and validation paths.
 
 **Record entities.** Storage substrate: SQLite `records` rows with identity columns and JSON field payloads. Representational form: mostly symbolic field/value records plus prose fields such as descriptions, details, and Markdown-rich text. Lineage: authored by CLI/MCP/HTTP/library calls or by reverse-synced file edits, then attributed through transactions. Behavioral authority: knowledge artifacts for agents, scripts, humans, and dashboards; relation fields and type fields can also route later retrieval.
@@ -85,7 +85,7 @@ Binder is stronger where the user needs an application data layer: task trackers
 
 **Curation operations:** `invalidate` `consolidate` — Rollback/undo/redo and moved projections supersede prior state while preserving transaction history; transaction squashing consolidates consecutive transactions into one equivalent transaction for history compaction.
 
-Binder does not qualify as trace-derived learning in the review sense. It can record an agent's authored records and transaction metadata, and hooks can run after every committed transaction, but the repository does not implement a durable raw-trace-to-distilled-memory loop over session logs, tool traces, event streams, or trajectories.
+Binder does not qualify as trace-learning in the review sense. It can record an agent's authored records and transaction metadata, and hooks can run after every committed transaction, but the repository does not implement a durable raw-trace-to-distilled-memory loop over session logs, tool traces, event streams, or trajectories.
 
 ## Read-back
 

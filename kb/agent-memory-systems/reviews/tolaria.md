@@ -70,7 +70,7 @@ The read-back model is also different. Commonplace generally relies on explicit 
 
 **Curation operations:** `none` — The inspected automatic writes are persistence, cache/index upkeep, UI refresh, title synchronization, config registration, transcript storage, and Git checkpointing. I did not find implemented automatic consolidation, deduplication, in-place semantic evolution, synthesis, invalidation history, decay, or salience promotion over existing vault memories under the review vocabulary.
 
-Tolaria does store and replay AI workspace conversation state, and it detects agent file writes so the vault view can refresh ([src/lib/aiAgentFileOperations.ts](https://github.com/refactoringhq/tolaria/blob/82b2ff2ac455334a255c7c2a2a1d2173083c6d59/src/lib/aiAgentFileOperations.ts)). That is useful operational state, but it is not trace-derived learning in the current review sense: I did not find a code path that mines session logs or tool traces into durable lessons, rules, playbooks, validators, rankers, or model updates. Accordingly this review omits the `trace-derived` tag.
+Tolaria does store and replay AI workspace conversation state, and it detects agent file writes so the vault view can refresh ([src/lib/aiAgentFileOperations.ts](https://github.com/refactoringhq/tolaria/blob/82b2ff2ac455334a255c7c2a2a1d2173083c6d59/src/lib/aiAgentFileOperations.ts)). That is useful operational state, but it is not trace-learning in the current review sense: I did not find a code path that mines session logs or tool traces into durable lessons, rules, playbooks, validators, rankers, or model updates. Accordingly this review omits the `trace-learning` tag.
 
 ## Read-back
 
@@ -100,7 +100,7 @@ Other consumers include the human user, the React note list/editor/sidebar, exte
 
 - Whether Tolaria adds a semantic/vector retrieval layer; that would change read-back signal from identifier/lexical toward inferred embedding or judgment.
 - Whether the MCP server grows first-class write/edit tools again; that would move more authority from CLI-agent file permissions into Tolaria's own tool surface.
-- Whether AI workspace transcripts gain an accepted-lessons or procedure-promotion workflow; that would make trace-derived learning relevant.
+- Whether AI workspace transcripts gain an accepted-lessons or procedure-promotion workflow; that would make trace-learning relevant.
 - Whether Type documents acquire validation rules or required fields; that would shift types from lenses toward enforceable collection contracts.
 - Whether AutoGit becomes a review/checkpoint policy with gates rather than a commit convenience; that would strengthen Git history as a governance artifact.
 

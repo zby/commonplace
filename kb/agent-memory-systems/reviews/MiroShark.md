@@ -1,9 +1,9 @@
 ---
-description: "MiroShark review: simulation knowledge graph with Neo4j graph memory, trace-derived agent activity edges, report-agent reasoning traces, and many public export surfaces"
+description: "MiroShark review: simulation knowledge graph with Neo4j graph memory, trace-learning agent activity edges, report-agent reasoning traces, and many public export surfaces"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-04"
-tags: [trace-derived]
+tags: [trace-learning]
 ---
 
 # MiroShark
@@ -83,7 +83,7 @@ The main tradeoff is automatic authority. MiroShark can convert live simulated b
 
 **Curation operations:** `dedup` `synthesize` `invalidate` `consolidate` — entity resolution merges extracted entity variants; NER/relation extraction, generated configs, reports, and community summaries synthesize retained artifacts; contradiction detection invalidates superseded edges while preserving history; community building consolidates graph neighborhoods into cluster summaries.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `tool-traces` `event-streams` `trajectories` — qualifying traces include simulation action logs, platform activity events, trajectory files, surface-request counters, report-agent thoughts/tool calls/observations, and report logs.
 
@@ -93,7 +93,7 @@ The main tradeoff is automatic authority. MiroShark can convert live simulated b
 
 **Distilled form:** `prose` `symbolic` `parametric` — traces become prose episode text, relation facts, reports, and summaries; symbolic graph nodes/edges/properties, JSON logs, lineage, counters, and exports; and embeddings over facts/entities/communities.
 
-**Trace source.** MiroShark qualifies as trace-derived. `GraphMemoryUpdater` records simulated agent behavior by converting activity events into natural-language episodes and extracting graph edges from them. `ReasoningTraceRecorder` records the report agent's ReACT thought/tool/observation/conclusion chain into Neo4j. Simulation trajectory and action files also feed transcript, roster, stats, report, and public analysis surfaces.
+**Trace source.** MiroShark qualifies as trace-learning. `GraphMemoryUpdater` records simulated agent behavior by converting activity events into natural-language episodes and extracting graph edges from them. `ReasoningTraceRecorder` records the report agent's ReACT thought/tool/observation/conclusion chain into Neo4j. Simulation trajectory and action files also feed transcript, roster, stats, report, and public analysis surfaces.
 
 **Extraction.** Extraction is mixed. Agent activities are deterministically formatted into episode text, then passed through the graph text ingestion path that runs NER/relation extraction, embeddings, entity resolution, contradiction detection, and Neo4j writes. Report traces are recorded structurally from the ReACT loop. Community summaries are LLM-mediated distillations over graph clusters. Surface counters are deterministic read-modify-write analytics over public route serves.
 
@@ -151,7 +151,7 @@ MiroShark is a graph-centered simulation memory system with unusually broad publ
 
 Relevant Notes:
 
-- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - places: MiroShark converts simulation actions and report-agent traces into durable graph/report artifacts.
+- [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: MiroShark converts simulation actions and report-agent traces into durable graph/report artifacts.
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: MiroShark has both stored graph memory and concrete read-back paths through preparation, reports, MCP, and APIs.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: graph edges, embeddings, generated configs, reports, reasoning traces, and export surfaces differ by substrate, form, lineage, and authority.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: graph facts, transcripts, reports, public exports, and stats are mostly evidence/context unless a downstream workflow gives them stronger force.

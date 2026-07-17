@@ -1,8 +1,8 @@
 ---
-description: "ExpeL review: trace-derived benchmark agent that distills task trajectories into rules and retrieves prior trials as few-shots"
+description: "ExpeL review: trace-learning benchmark agent that distills task trajectories into rules and retrieves prior trials as few-shots"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-04"
 ---
 
@@ -84,7 +84,7 @@ ExpeL is weaker on provenance and durable governance. A rule can be traced to an
 
 **Curation operations:** `dedup` `evolve` `synthesize` `promote` - Rule maintenance rejects duplicate additions, supports LLM-requested removal of duplicated/similar rules, edits existing rule text, synthesizes new general rules from multiple stored trajectories, and promotes/demotes rules by counters and sorted prompt order. I did not find retained-history invalidation, age-based decay, or automatic consolidation into summaries.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `trajectories` - The raw signal is benchmark task execution: task text, thoughts, actions, observations, success/failure outcome, reflections, and serialized agent state captured during training.
 
@@ -136,7 +136,7 @@ Other consumers are experiment scripts and humans reading logs, visualizations, 
 
 Relevant Notes:
 
-- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - places ExpeL's task trajectories, extracted rules, and retrieved examples in the trace-derived landscape.
+- [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places ExpeL's task trajectories, extracted rules, and retrieved examples in the trace-learning landscape.
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes ExpeL's stored logs from prompt-time rule and example read-back.
 - [Activate Behavior-Changing Memory Before The Mistake](../../notes/agent-memory-requirements/activate-behavior-changing-memory.md) - exemplifies pre-action insertion of behavior-shaping memory.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies to ExpeL's logs, checkpoints, trajectories, rules, vector ranking state, and prompt templates.

@@ -21,7 +21,7 @@ And wrapping around all three: memory serves [action capacity](./claw-learning-l
 
 ## The comparative review already shows this
 
-The comparative review's [current axes](../agent-memory-systems/agentic-memory-systems-comparative-review.md) span all three decomposed problems. Storage substrate is the storage problem. Lineage, write agency, trace-derived learning, and curation operations are the learning problem: who decides what to remember, from what evidence, and through which mutation operations. Read-back direction and signal are the retrieval/activation problem: whether remembered material is pulled, pushed, or targeted for the current task. The review is not really a "memory systems" comparison; it is a comparison of how systems manage knowledge persistence, activation, and learning, viewed through the memory lens.
+The comparative review's [current axes](../agent-memory-systems/agentic-memory-systems-comparative-review.md) span all three decomposed problems. Storage substrate is the storage problem. Lineage, write agency, trace-learning, and curation operations are the learning problem: who decides what to remember, from what evidence, and through which mutation operations. Read-back direction and signal are the retrieval/activation problem: whether remembered material is pulled, pushed, or targeted for the current task. The review is not really a "memory systems" comparison; it is a comparison of how systems manage knowledge persistence, activation, and learning, viewed through the memory lens.
 
 The systems themselves confirm the decomposition by specializing differently:
 

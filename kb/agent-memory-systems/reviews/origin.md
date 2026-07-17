@@ -2,7 +2,7 @@
 description: "Origin review: local AI-work memory daemon with sourced pages, hybrid retrieval, review gates, git-backed Markdown, and MCP/Claude Code read-back"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-04"
 ---
 
@@ -28,7 +28,7 @@ Origin, from `7xuanlu/origin`, is a local-first memory daemon for AI work sessio
 
 **Review before trust is implemented as state transitions.** The pre-store quality gate rejects short content, credential leaks, noise patterns, and near-duplicates before insertion; protected-memory topic matches become pending revisions or auto-supersede only under full-trust and high similarity; `/brief` surfaces pending revisions for accept/dismiss decisions ([crates/origin-core/src/quality_gate.rs](https://github.com/7xuanlu/origin/blob/0e3eafae2b8a5a5158afcd7a57a1355c1b311eeb/crates/origin-core/src/quality_gate.rs), [crates/origin-server/src/memory_routes.rs](https://github.com/7xuanlu/origin/blob/0e3eafae2b8a5a5158afcd7a57a1355c1b311eeb/crates/origin-server/src/memory_routes.rs), [plugin/skills/brief/SKILL.md](https://github.com/7xuanlu/origin/blob/0e3eafae2b8a5a5158afcd7a57a1355c1b311eeb/plugin/skills/brief/SKILL.md)).
 
-**The trace-derived path is plural.** `/handoff` asks the acting agent to infer decisions, lessons, gotchas, corrections, facts, open threads, and project status from conversation plus git state; chat import parses exports into memories; context-packaging logic can chunk capture streams into session summaries; distill and background enrichment promote those atoms into graph links, pages, summaries, and review state ([plugin/skills/handoff/SKILL.md](https://github.com/7xuanlu/origin/blob/0e3eafae2b8a5a5158afcd7a57a1355c1b311eeb/plugin/skills/handoff/SKILL.md), [crates/origin-core/src/importer.rs](https://github.com/7xuanlu/origin/blob/0e3eafae2b8a5a5158afcd7a57a1355c1b311eeb/crates/origin-core/src/importer.rs), [crates/origin-core/src/context_packager.rs](https://github.com/7xuanlu/origin/blob/0e3eafae2b8a5a5158afcd7a57a1355c1b311eeb/crates/origin-core/src/context_packager.rs)).
+**The trace-learning path is plural.** `/handoff` asks the acting agent to infer decisions, lessons, gotchas, corrections, facts, open threads, and project status from conversation plus git state; chat import parses exports into memories; context-packaging logic can chunk capture streams into session summaries; distill and background enrichment promote those atoms into graph links, pages, summaries, and review state ([plugin/skills/handoff/SKILL.md](https://github.com/7xuanlu/origin/blob/0e3eafae2b8a5a5158afcd7a57a1355c1b311eeb/plugin/skills/handoff/SKILL.md), [crates/origin-core/src/importer.rs](https://github.com/7xuanlu/origin/blob/0e3eafae2b8a5a5158afcd7a57a1355c1b311eeb/crates/origin-core/src/importer.rs), [crates/origin-core/src/context_packager.rs](https://github.com/7xuanlu/origin/blob/0e3eafae2b8a5a5158afcd7a57a1355c1b311eeb/crates/origin-core/src/context_packager.rs)).
 
 ## Artifact analysis
 
@@ -86,7 +86,7 @@ The main divergence is the canonical substrate. Commonplace makes the reviewable
 
 **Curation operations:** `consolidate` `dedup` `evolve` `synthesize` `invalidate` `decay` `promote` — Distillation consolidates clusters into pages/summary nodes; duplicate checks reject or merge overlapping material; enrichment evolves stored metadata, entities, titles, tags, and page links; synthesis can create page prose and graph/summary artifacts across stored memories; stale flags, supersession, protected-memory revisions, and relation supersede invalidate older state; recency/access confidence adjusts decay and salience; page/status/read-back tiers promote selected material into stronger future context.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `tool-traces` `event-streams` — `/handoff` consumes conversation and git state, chat import consumes exported conversations, activity/context packaging consumes capture streams, and server routes log store/read/refine/page actions.
 
@@ -96,13 +96,13 @@ The main divergence is the canonical substrate. Commonplace makes the reviewable
 
 **Distilled form:** `prose` `symbolic` `parametric` — Traces become prose memories/pages/status logs, symbolic metadata/graph/review state, and indexed embeddings/ranking inputs.
 
-**Trace source.** Origin qualifies as trace-derived because durable artifacts are derived from agent-work traces, not only from explicit user-authored notes. `/handoff` directs the agent to infer durable memories and status from the session, chat import turns conversation exports into memories, and the server records activity/access traces that feed later ranking, review, and onboarding state.
+**Trace source.** Origin qualifies as trace-learning because durable artifacts are derived from agent-work traces, not only from explicit user-authored notes. `/handoff` directs the agent to infer durable memories and status from the session, chat import turns conversation exports into memories, and the server records activity/access traces that feed later ranking, review, and onboarding state.
 
 **Extraction.** Extraction is layered. The store path writes a raw memory quickly, then async enrichment classifies, extracts structured fields, creates or links entities, enriches titles, and grows pages. `/handoff` relies on the active agent as the extraction oracle over conversation and git evidence. Distillation clusters memories and either daemon-synthesizes page bodies in background paths or returns pending clusters for the calling agent to synthesize through the skill.
 
 **Scope and timing.** Scope is explicit through space, project, agent, entity, memory type, page, source id, and session status path. Timing is mixed: online capture, async post-ingest reflection, offline import, staged session handoff, and background/user-triggered distillation.
 
-**Survey placement.** Origin belongs in both trace-to-memory-record and trace-to-sourced-wiki-page families on the trace-derived learning survey. It strengthens the raw/distilled split: imported chats and session traces become atomic memories first; pages and status files become higher-authority context only after curation and read-back assembly.
+**Survey placement.** Origin belongs in both trace-to-memory-record and trace-to-sourced-wiki-page families on the trace-learning survey. It strengthens the raw/distilled split: imported chats and session traces become atomic memories first; pages and status files become higher-authority context only after curation and read-back assembly.
 
 ## Read-back
 
@@ -134,7 +134,7 @@ The main divergence is the canonical substrate. Commonplace makes the reviewable
 
 **Review states are powerful but scattered.** Confirmation, stability, pending revision, stale pages, rejected memories, refinement proposals, user-edited locks, changelogs, access counts, and trust levels all express governance. Operators need a coherent workflow or these states can become invisible maintenance debt.
 
-**The trace-derived path is not fully daemon-deterministic.** Chat import and async enrichment are daemon paths, but `/handoff` extraction depends on an agent following skill instructions. That is still a system-definition artifact, but its quality is host-agent dependent.
+**The trace-learning path is not fully daemon-deterministic.** Chat import and async enrichment are daemon paths, but `/handoff` extraction depends on an agent following skill instructions. That is still a system-definition artifact, but its quality is host-agent dependent.
 
 ## What to Watch
 
@@ -147,7 +147,7 @@ The main divergence is the canonical substrate. Commonplace makes the reviewable
 
 Relevant Notes:
 
-- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - places: Origin turns chat/session/work traces into atomic memories and sourced wiki pages.
+- [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: Origin turns chat/session/work traces into atomic memories and sourced wiki pages.
 - [Use trace-derived extraction](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - exemplifies: Origin extracts future work context from prior sessions and imports.
 - [Preserve evidence without loading history](../../notes/agent-memory-requirements/preserve-evidence-without-loading-history.md) - aligns: Origin distills traces into memories/pages while keeping source ids and session artifacts.
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - contrasts: Origin couples storage with `/brief` and `context` activation paths.

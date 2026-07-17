@@ -2,7 +2,7 @@
 description: "Graphiti review: temporal graph memory with episode provenance, LLM extraction, fact invalidation, hybrid retrieval, MCP tools, and pull-only activation"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-04"
 ---
 
@@ -82,7 +82,7 @@ The main tradeoff is hidden epistemic authority. Graphiti's LLM extraction and c
 
 **Curation operations:** `consolidate` `dedup` `evolve` `invalidate` — Community and saga summaries consolidate stored graph material into shorter derived surfaces; node and edge resolution deduplicate extracted entities/facts against existing graph state; node summaries, attributes, embeddings, episode links, saga watermarks, and community summaries evolve existing entries; contradiction resolution invalidates older facts by setting `invalid_at` and `expired_at` while retaining history.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `event-streams` — `EpisodeType.message`, FastAPI `/messages`, and MCP `add_memory` can ingest conversation-style messages and interaction-derived memory events; Graphiti also ingests text/JSON application events, but it does not capture tool traces automatically in the reviewed code.
 
@@ -134,7 +134,7 @@ The consumption authority is advisory unless the host application upgrades it. S
 
 Relevant Notes:
 
-- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - places: Graphiti extracts durable temporal graph facts from message/event episodes.
+- [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: Graphiti extracts durable temporal graph facts from message/event episodes.
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Graphiti stores rich memory, but activation is explicit SDK/API/MCP pull unless a host adds its own hook.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: episodes, graph facts, embeddings, summaries, search configs, and MCP tools differ by substrate, form, lineage, and authority.
 - [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - exemplifies: message traces can be distilled into durable graph nodes and facts for later recall.

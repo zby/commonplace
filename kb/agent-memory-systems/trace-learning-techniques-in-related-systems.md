@@ -1,13 +1,13 @@
 ---
-description: Trace-derived learning systems compared on ingestion pattern, representational form, behavioral authority, artifact structure, and evidence tier across repo reviews and lightweight coverage
+description: Trace-learning systems compared on ingestion pattern, representational form, behavioral authority, artifact structure, and evidence tier across repo reviews and lightweight coverage
 type: kb/types/note.md
 traits: [has-comparison, has-implementation]
 tags: [learning-theory, observability]
 ---
 
-# Trace-derived learning techniques in related systems
+# Trace-learning techniques in related systems
 
-Trace-derived systems learn from CLI sessions, event streams, assistant turns, run trajectories, or next-state feedback. This note reviews what each system actually does, then draws out the axes that separate them: how they ingest traces (ingestion pattern), what representational form they promote into (distributed-parametric, prose, symbolic, or mixed), and what behavioral authority the result has (knowledge artifact consumed as evidence/advice vs system-definition artifact consumed with instruction, enforcement, routing, validation, evaluation, or learning force).
+Trace-learning systems learn from CLI sessions, event streams, assistant turns, run trajectories, or next-state feedback. This note reviews what each system actually does, then draws out the axes that separate them: how they ingest traces (ingestion pattern), what representational form they promote into (distributed-parametric, prose, symbolic, or mixed), and what behavioral authority the result has (knowledge artifact consumed as evidence/advice vs system-definition artifact consumed with instruction, enforcement, routing, validation, evaluation, or learning force).
 
 The review-backed code-inspected systems are Napkin, Pi Self-Learning, OpenViking, Operational Ontology Framework, Claude Workstream Kit, nao, MemoryOS, ClawVault, CrewAI Memory, cass-memory, deja-vu, Compound Engineering, WUPHF, REM, Autocontext, Meta-Harness, Agentic Harness Engineering, HALO, ARIS, Reflexion, Dynamic Cheatsheet, Agent Workflow Memory, ACE, ExpeL, ReasoningBank, G-Memory, AgentFly, Gnosis, Voyager, OS-Copilot, Tendril, SkillX, SkillRL, SkillWeaver, AriGraph, Amazon Science SAGE, Agent-R, Agent-S, and Self-Training-LLM (source paths noted in per-system reviews). OpenClaw-RL is a TODO for repo-backed review now that a repository exists; its current placement is based on source coverage. The lightweight systems — AgeMem and Trajectory-Informed Memory Generation — are included with lower confidence, based on local ingest notes rather than implementation inspection.
 
@@ -85,7 +85,7 @@ A local filesystem runner that learns from a deliberately thin task-result trace
 
 ## Claude Workstream Kit
 
-A repo-local active-work ledger for Claude Code, where trace-derived learning is operational state rather than reusable lesson memory.
+A repo-local active-work ledger for Claude Code, where trace-learning is operational state rather than reusable lesson memory.
 
 **Trigger.** Workstream updates happen through explicit lifecycle skills: create, work, handoff, and close. Session-start read-back happens through a hook that prints `ACTIVE.md`, active-workstream status, staleness signals, and handoff inbox counts.
 
@@ -183,11 +183,11 @@ The pure trace-to-recall case: existing agent session histories become a redacte
 
 **Promotion.** Redacted records, token buckets, GOB manifests/session metadata, sync JSONL batches, MCP recall results, `ctx` digests, and optional Claude startup context. These are knowledge/routing/ranking artifacts, not curated system-definition rules.
 
-**Scope.** Cross-harness and cross-task local recall with project-scoped push for Claude. It strengthens the weak-promotion branch of the survey: trace-derived memory can remain an access structure over prior sessions and still change later work through pull recall or coarse project startup context.
+**Scope.** Cross-harness and cross-task local recall with project-scoped push for Claude. It strengthens the weak-promotion branch of the survey: trace-extracted memory can remain an access structure over prior sessions and still change later work through pull recall or coarse project startup context.
 
 ## Compound Engineering
 
-A multi-host engineering workflow plugin where trace-derived learning is optional and project-local rather than a daemonized memory service.
+A multi-host engineering workflow plugin where trace-learning is optional and project-local rather than a daemonized memory service.
 
 **Trigger.** `ce-sessions` is invoked directly by the user or synchronously from `ce-compound` when an interactive Full run opts into session history. Lightweight and headless `ce-compound` runs skip session history.
 
@@ -201,7 +201,7 @@ A multi-host engineering workflow plugin where trace-derived learning is optiona
 
 ## WUPHF
 
-A local multi-agent office where trace-derived learning sits inside the broker/wiki runtime rather than a standalone memory daemon.
+A local multi-agent office where trace-learning sits inside the broker/wiki runtime rather than a standalone memory daemon.
 
 **Trigger.** Raw artifacts commit through the wiki artifact path, then extraction runs asynchronously through the wiki worker hook. Entity brief synthesis and playbook synthesis run at thresholds or on demand; playbook learning is triggered after enough recorded executions.
 
@@ -285,7 +285,7 @@ Code-inspected trace-analysis runtime for optimizing an agent harness from OpenT
 
 ## ARIS
 
-Markdown workflow harness whose trace-derived loop targets the skill system itself rather than task-domain memory.
+Markdown workflow harness whose trace-learning loop targets the skill system itself rather than task-domain memory.
 
 **Trigger.** Claude Code hooks call `tools/meta_opt/log_event.sh` on tool use, tool failure, user prompt submit, session start, and session end. `tools/meta_opt/check_ready.sh` prints a reminder after five skill invocations since the last optimization. `/meta-optimize` is still manually invoked; patch application is user-approved.
 
@@ -435,7 +435,7 @@ Doctrine-mediated live capture into repo-local prose memory.
 
 **Promotion.** Repo-local `.gnosis/entries.jsonl` records with ID, topics, text, related IDs, and timestamps. SQLite FTS5 is a disposable search projection in a per-repo cache.
 
-**Scope.** Per-repository, online during normal work. It is the lightest inspected trace-derived system: no hook, observer, transcript miner, or judge, but a real recurring capture loop through AGENTS instructions plus a CLI.
+**Scope.** Per-repository, online during normal work. It is the lightest inspected trace-learning system: no hook, observer, transcript miner, or judge, but a real recurring capture loop through AGENTS instructions plus a CLI.
 
 ## Voyager
 
@@ -611,13 +611,13 @@ With the per-system evidence in place, the two axes previewed in the introductio
 
 **Single-session extension.** Run inside an existing agent runtime, mine the current conversation, reuse the runtime's session representation, write back into markdown artifacts. Napkin and Pi Self-Learning fit here, though Napkin is even looser — it treats the session as an opaque file and delegates extraction to a subprocess agent.
 
-**Doctrine-mediated live capture.** Do not mine a stored log; instead, instruct the acting agent to identify durable session knowledge while working and write it through a small CLI. Gnosis is the clean case. It is trace-derived in the weak/manual sense: the raw signal is session context, but extraction happens through agent compliance with doctrine rather than a hook or offline miner.
+**Doctrine-mediated live capture.** Do not mine a stored log; instead, instruct the acting agent to identify durable session knowledge while working and write it through a small CLI. Gnosis is the clean case. It is trace-learning in the weak/manual sense: the raw signal is session context, but extraction happens through agent compliance with doctrine rather than a hook or offline miner.
 
 **Local filesystem runner.** Own a small execution cycle and artifact schema, but keep all learned state in project files rather than a service backend. Operational Ontology Framework fits here: it promotes task-output learnings into `_facts.md`, `_spec.md`, and handoff markdown, but the trace is much thinner than a transcript or typed tool log.
 
 **Cross-agent session aggregator.** Discover and mine session logs from multiple agent runtimes via an external search engine, normalize heterogeneous formats into a common representation, accumulate results in a shared playbook. cass-memory is the only inspected system in this category — it reads session files from Claude Code, Cursor, Codex, Aider, and Pi, normalizes them through `formatRawSession()`, and mines them through a two-phase diary-then-reflection pipeline. Unlike single-session extensions, it operates *after* sessions complete rather than during them, and unlike service backends, it does not own the session format.
 
-**Local trace recall index.** Discover existing session stores from several harnesses, preserve the original logs as authority, and build a redacted access structure for later lookup rather than mining lessons. deja-vu fits here: it indexes Claude, Codex, and opencode histories into a local lexical cache, then serves pull recall and optional project-scoped startup context. This category separates "trace-derived memory as search substrate" from systems that distill traces into playbooks or policies.
+**Local trace recall index.** Discover existing session stores from several harnesses, preserve the original logs as authority, and build a redacted access structure for later lookup rather than mining lessons. deja-vu fits here: it indexes Claude, Codex, and opencode histories into a local lexical cache, then serves pull recall and optional project-scoped startup context. This category separates "trace-extracted memory as search substrate" from systems that distill traces into playbooks or policies.
 
 **Framework-integrated runtime memory.** Live inside the agent framework, consume task/run outputs and optional human feedback at the framework hook boundary, and promote into the same memory store that later prompt assembly uses. CrewAI Memory is the clear case here. It is not an external service, and it is not an offline trajectory learner; its distinctive feature is tight integration with agent execution.
 
@@ -715,7 +715,7 @@ Trace richness constrains what can be learned. Tool calls, statuses, gates, scor
 - **Explicit mutation verbs on learned artifacts.** ExpeL's `ADD`/`EDIT`/`REMOVE`/`AGREE` and G-Memory's matching operations give the maintenance loop a visible contract.
 - **Critic-gated promotion.** Voyager only promotes successful programs — a strong filter that prevents accumulation of failed attempts.
 - **Bidirectional extraction from successes and failures.** ReasoningBank uses separate prompts for successful and failed trajectories, yielding different kinds of insights.
-- **Executable code as promotion target.** Voyager and OS-Copilot show that some trace-derived learnings should become callable programs, not just textual guidance.
+- **Executable code as promotion target.** Voyager and OS-Copilot show that some trace-learned artifacts should become callable programs, not just textual guidance.
 - **Name-gated generated tools.** Tendril adds a runtime pattern where generated code must first become a named registry artifact before it can execute.
 - **Executable APIs as memory.** SkillWeaver narrows the executable-code pattern further: a learned memory can be a domain-specific API over a repeated web surface, not only a one-off script.
 - **Scaffold-to-weight promotion.** Amazon Science SAGE uses generated functions as temporary symbolic memory, then rewards reuse so the behavior can compile into policy weights.
@@ -751,7 +751,7 @@ Relevant Notes:
 - [Axes of artifact analysis](../notes/axes-of-artifact-analysis.md) — sharpens: separates storage substrate, representational form, lineage, and behavioral authority, clarifying that service memory is usually a substrate choice rather than a form or authority family
 - [automating KB learning is an open problem](../notes/automating-kb-learning-is-an-open-problem.md) — sharpens: source-inspected systems now give concrete extraction and promotion loops for workshop artifacts and policy learning; the remaining bottleneck is still evaluation of higher-order mutations
 - [a functioning knowledge base needs a workshop layer, not just a library](../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — grounds the artifact-promotion side of this survey: several systems operationalize workshop-to-library bridges from session traces or run trajectories, even though the weight-learning cases extend beyond that note's domain
-- [Designing a Memory System for LLM-Based Agents](../notes/designing-agent-memory-systems.md) — rationale: turns the survey's repeated techniques into a needs map for direct-authored and trace-derived memory, including capture, activation, promotion, lifecycle, and evaluation
+- [Designing a Memory System for LLM-Based Agents](../notes/designing-agent-memory-systems.md) — rationale: turns the survey's repeated techniques into a needs map for direct-authored and trace-extracted memory, including capture, activation, promotion, lifecycle, and evaluation
 - [Napkin](./reviews/napkin.md) — source-inspected instance: forked-session distill via a subprocess agent and vault templates
 - [Pi Self-Learning](./reviews/pi-self-learning.md) — source-inspected instance: branch-event mining into strict `mistakes`/`fixes` JSON plus scored promotion
 - [OpenViking](./reviews/openviking.md) — source-inspected instance: typed session messages, commit-triggered extraction, and multi-tenant user/agent memory spaces

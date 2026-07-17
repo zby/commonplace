@@ -65,13 +65,13 @@ COLUMNS = [
     ("Storage", field("storage_substrate")),
     ("Read-back", field("read_back_direction")),
     ("Targeting", targeting),
-    ("Learns from traces", field("trace_derived")),
+    ("Learns from traces", field("trace_learning")),
     ("Enforces", yes_dash("auth_enforcement")),
 ]
 
 FRONTMATTER = """\
 ---
-description: "Generated comparison table for code-reviewed agent memory systems: one-line summaries plus storage, read-back, targeting, trace-derived learning, and enforcement."
+description: "Generated comparison table for code-reviewed agent memory systems: one-line summaries plus storage, read-back, targeting, trace-learning, and enforcement."
 type: kb/types/note.md
 traits: [has-comparison]
 tags: [agent-memory]

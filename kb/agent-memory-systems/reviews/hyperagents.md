@@ -1,8 +1,8 @@
 ---
-description: "HyperAgents review: self-improving agent harness where trace-derived benchmark feedback promotes executable patch lineages"
+description: "HyperAgents review: self-improving agent harness where trace-learning benchmark feedback promotes executable patch lineages"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-04"
 ---
 
@@ -75,7 +75,7 @@ Commonplace is stronger at legibility and source-grounded governance. HyperAgent
 
 **Curation operations:** `synthesize` `invalidate` `promote` — The meta agent synthesizes new code patches from the current repo state and run context; failed parent-agent runs can invalidate a parent by setting `valid_parent: false`; selected/evaluated patches are promoted into future behavior when their lineages are replayed into later containers. I did not find code-grounded evidence for durable memory deduplication, consolidation, decay, or in-place evolution of existing memory entries.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `tool-traces` `event-streams` `trajectories` — The raw signal includes meta-agent chat histories, task-agent chat histories, tool-mediated code edits, generated diffs, benchmark predictions, reports, environment/test outputs, generation logs, and archive trajectories.
 
@@ -125,7 +125,7 @@ Commonplace is stronger at legibility and source-grounded governance. HyperAgent
 
 Relevant Notes:
 
-- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - places: HyperAgents turns session/evaluation traces into executable patch lineages.
+- [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: HyperAgents turns session/evaluation traces into executable patch lineages.
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: HyperAgents activates memory through code-state replay rather than semantic prompt retrieval.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: patches, reports, metadata, histories, and selectors carry different forms and authority.
 - [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - frames: HyperAgents uses benchmark feedback and agent traces as an outer-loop learning signal.

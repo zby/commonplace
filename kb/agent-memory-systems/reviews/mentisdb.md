@@ -2,7 +2,7 @@
 description: "MentisDB review: append-only hash-chained agent memory with MCP/REST tools, skill registry, LLM extraction, and LangChain memory"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-04"
 ---
 
@@ -83,7 +83,7 @@ The deepest divergence is source authority. MentisDB can preserve what an agent 
 
 **Curation operations:** `dedup` — When `dedup_threshold` is configured, `append_thought` scans recent thoughts and adds a `Supersedes` relation to the most similar prior thought. `Corrects`, `Invalidates`, and `Supersedes` relations are retained and indexed so later queries can treat target thoughts as invalidated or superseded, but contradiction detection itself is caller-authored rather than automatic. Summary/checkpoint thoughts are authored append records, and extraction from new text is acquisition rather than curation over already-stored memory.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `tool-traces` `trajectories` — The extraction API accepts free-form text and the design docs frame the input as conversational text, raw agent text, logs, or reasoning traces; the tool itself does not require a specific trace envelope.
 
@@ -95,7 +95,7 @@ The deepest divergence is source authority. MentisDB can preserve what an agent 
 
 **Extraction.** `extract_memories_from_text` sends the source text to an OpenAI-compatible chat completion API with a low-temperature prompt for typed JSON memories, parses the returned `thoughts` array, validates thought types/content, clamps scores, and returns `ThoughtInput` values ([src/llm.rs](https://github.com/cloudllm-ai/mentisdb/blob/204afbdceff3e3f69cb779e3c7a30002076f7f22/src/llm.rs)). The oracle is the configured model plus prompt; code verifies schema shape, not truth.
 
-**Scope and timing.** This is not autonomous continual learning. The caller chooses what trace text to submit, receives candidates, and must decide whether to append them. That staged design reduces accidental authority transfer but means the trace-derived path is only as good as host discipline.
+**Scope and timing.** This is not autonomous continual learning. The caller chooses what trace text to submit, receives candidates, and must decide whether to append them. That staged design reduces accidental authority transfer but means the trace-learning path is only as good as host discipline.
 
 **Survey fit.** MentisDB belongs in the trace-to-structured-memory family with a review gate: traces can become typed memories, but the extraction service does not by itself make them durable or authoritative. It strengthens the distinction between extraction and store mutation.
 
@@ -142,7 +142,7 @@ The deepest divergence is source authority. MentisDB can preserve what an agent 
 Relevant Notes:
 
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: MentisDB stores durable chain memory, but MCP/REST read-back is mostly explicit pull.
-- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - relates: MentisDB's LLM extraction can turn agent/session text into typed memory candidates before append.
+- [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - relates: MentisDB's LLM extraction can turn agent/session text into typed memory candidates before append.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: thoughts, relations, vector sidecars, skill versions, bearer-token records, and dashboard settings carry different forms and authorities.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: remembered thoughts, recent context, and context bundles mainly advise later work.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: skills, MCP tool contracts, bearer-token policy, signatures, and dashboard settings instruct or constrain behavior.

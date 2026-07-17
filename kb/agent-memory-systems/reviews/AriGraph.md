@@ -3,7 +3,7 @@ description: "AriGraph review: in-run knowledge-graph world model with episodic 
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-04"
-tags: [trace-derived]
+tags: [trace-learning]
 ---
 
 # AriGraph
@@ -73,7 +73,7 @@ AriGraph is also a useful reminder that graph memory can have real routing autho
 
 **Curation operations:** `evolve` — New observations can cause the system to remove conflicting old triplets or theses and add newer graph facts. This is weak online evolution of the store, not full invalidation, because the implementation deletes old entries instead of retaining supersession history.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `tool-traces` `trajectories` — TextWorld observations, inventories, actions, locations, rewards, and histories feed graph updates; QA paragraphs feed `update_without_retrieve`; run logs preserve observed behavior after execution.
 
@@ -85,7 +85,7 @@ AriGraph is also a useful reminder that graph memory can have real routing autho
 
 **Distilled form:** `prose` `symbolic` `parametric` — Raw observations remain as episodic prose; extracted triplets/theses are symbolic; Contriever embeddings are parametric retrieval state over both graph facts and episodes.
 
-**Survey placement.** AriGraph is a strong example of trace-derived in-run learning: raw traces become symbolic and parametric memory that affects later actions in the same episode. It weakens any survey claim that trace-derived learning must be durable across sessions, but it strengthens the distinction between trace-derived knowledge artifacts and stronger reviewed system-definition artifacts.
+**Survey placement.** AriGraph is a strong example of trace-derived in-run learning: raw traces become symbolic and parametric memory that affects later actions in the same episode. It weakens any survey claim that trace-learning must be durable across sessions, but it strengthens the distinction between trace-derived knowledge artifacts and stronger reviewed system-definition artifacts.
 
 ## Read-back
 
@@ -127,7 +127,7 @@ Relevant Notes:
 
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - applies: AriGraph's graph matters because the pipeline reads it back into prompts, not merely because it stores facts.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - supports separating in-memory graph state, prose observations, embeddings, prompts, and evaluation logs.
-- [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - frames AriGraph's observation-to-graph loop as trace-derived learning.
+- [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - frames AriGraph's observation-to-graph loop as trace-learning.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies retrieved graph facts and episodic observations as advisory evidence/context.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - distinguishes authored prompts and pathfinding/routing code from ordinary graph facts.
 - [Lineage](../../notes/definitions/lineage.md) - highlights the review risk around extracted facts that lack source-span provenance or invalidation history.

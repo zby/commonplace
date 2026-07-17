@@ -1,8 +1,8 @@
 ---
-description: "Memori review: SDK and agent integrations with trace-derived augmentation, SQL/Rust storage, hybrid recall, and pre-call memory injection"
+description: "Memori review: SDK and agent integrations with trace-learning augmentation, SQL/Rust storage, hybrid recall, and pre-call memory injection"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-04"
 ---
 
@@ -81,7 +81,7 @@ The main tradeoff is authority visibility. Memori can insert extracted facts int
 
 **Curation operations:** `consolidate` `dedup` `promote` - Conversation summaries consolidate stored turn material into a shorter summary row; duplicate facts, triples, and process attributes are merged by uniqueness keys; repeated facts/triples/attributes increment `num_times` and refresh `date_last_time`, and retrieval loads recent/frequent fact rows first. Fact/triple extraction itself is acquisition from traces, not a curation operation on already-stored memory.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `tool-traces` `event-streams` - Qualifying traces include conversation messages, completed user/assistant turns, OpenClaw tool calls/results, Claude Code advanced-augmentation traces, session ids, project ids, and provider/model metadata.
 
@@ -140,7 +140,7 @@ The main tradeoff is authority visibility. Memori can insert extracted facts int
 Relevant Notes:
 
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Memori has both explicit recall tools and registered-client pre-call injection.
-- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - places: Memori turns conversation and agent traces into facts, triples, attributes, summaries, and embeddings.
+- [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: Memori turns conversation and agent traces into facts, triples, attributes, summaries, and embeddings.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: Memori's conversations, facts, triples, summaries, embeddings, hooks, and tools differ by substrate, form, lineage, and authority.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: recalled facts, summaries, and conversation history mostly advise later action.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: SDK hooks, storage schemas, source/signal validators, and integration tool definitions route or constrain memory behavior.

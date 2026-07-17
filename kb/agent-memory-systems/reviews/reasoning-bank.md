@@ -1,8 +1,8 @@
 ---
-description: "ReasoningBank review: trace-derived benchmark memories selected by embeddings and injected into WebArena and mini-SWE-agent prompts"
+description: "ReasoningBank review: trace-learning benchmark memories selected by embeddings and injected into WebArena and mini-SWE-agent prompts"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-04"
 ---
 
@@ -81,7 +81,7 @@ ReasoningBank also makes the activation boundary concrete. Stored JSONL memory i
 
 **Curation operations:** `promote` — A benchmark trace gains stronger future-action authority when evaluator or judge output routes it through a memory-induction prompt and the generated lesson is appended to the retained memory bank.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `tool-traces` `trajectories` — WebArena consumes step pickle files, thoughts, actions, task configs, result directories, and autoeval/ground-truth signals; mini-SWE-agent consumes saved message trajectories, command outputs, model predictions, and an LLM success/failure judgment.
 
@@ -136,7 +136,7 @@ Survey placement: ReasoningBank belongs in the trace-to-prose-reasoning-memory f
 
 Relevant Notes:
 
-- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - places: ReasoningBank distills successful and failed benchmark trajectories into prose reasoning memory.
+- [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: ReasoningBank distills successful and failed benchmark trajectories into prose reasoning memory.
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - applies: ReasoningBank separates stored JSONL memory from embedding-selected prompt injection.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: JSONL memories, embedding caches, prompts, judges, trajectories, and handoff files carry different forms and authorities.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: raw trajectories, evaluator outputs, stored memory items, and caches are evidence until activated.

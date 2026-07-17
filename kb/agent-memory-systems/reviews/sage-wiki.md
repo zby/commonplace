@@ -2,7 +2,7 @@
 description: "sage-wiki review: LLM-compiled wiki memory with SQLite search/vector/ontology state, MCP pull tools, session capture, and trust gates"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-04"
 ---
 
@@ -88,7 +88,7 @@ The interesting design contrast is how each system handles generated claims. sag
 
 **Curation operations:** `dedup` `evolve` `invalidate` `decay` `promote` — Concept dedup merges near-duplicate candidates into existing concepts/aliases before article writing; scribe updates existing ontology definitions when a new extracted definition differs. The broken-wikilink sweep evolves existing article text by removing invalid link markup. Trust source-change checks demote confirmed outputs to stale and de-index them. Tier demotion downshifts stale sources from full compile to lower-tier handling. Query-hit and on-demand policies promote sources to Tier 3, and trust promotion moves verified outputs into indexed search.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `event-streams` — `wiki_capture` consumes conversation excerpts supplied through MCP, while `sage-wiki scribe` consumes Claude Code session JSONL and keeps only user/assistant text after stripping thinking/tool blocks.
 
@@ -140,7 +140,7 @@ Authority at consumption is advisory context. Articles, captured learnings, onto
 
 Relevant Notes:
 
-- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - places: sage-wiki turns conversation captures and session logs into durable source files, learnings, and ontology rows.
+- [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: sage-wiki turns conversation captures and session logs into durable source files, learnings, and ontology rows.
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: sage-wiki stores and indexes memory, but agents receive it only through explicit search/query/read paths or by following generated instructions.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: sage-wiki requires separating Markdown articles, SQLite tables, embeddings, ontology edges, trust records, generated skills, and MCP tools by substrate/form/lineage/authority.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: compiled articles, captures, learnings, ontology entities, and confirmed outputs mostly advise as evidence or context.

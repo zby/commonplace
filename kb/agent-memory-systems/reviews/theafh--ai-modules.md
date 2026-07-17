@@ -2,7 +2,7 @@
 description: "ai-modules review: deployable multi-vendor skill/plugin bundle with Markdown wiki, session wrapup, task backlog, and linted file memory"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-04"
 ---
 
@@ -24,7 +24,7 @@ last-checked: "2026-06-04"
 
 **Schema and scripts make the file memory inspectable.** The wiki scaffold carries `SCHEMA.md`, `index.md`, `log.md`, `raw/`, typed page directories, and a linter that reads the page-type enum and tag taxonomy from the schema. Raw sources carry body-only `sha256` drift hashes, wiki pages carry `sources:` frontmatter and inline claim links, and lint reports frontmatter, links, taxonomy, stale raw content, oversized pages, index drift, and other health checks ([plugins/knowledge_management/skills/wiki/references/template_schema.md](https://github.com/theafh/ai-modules/blob/14f42f58a898f6ae335920d2fb462b39cf61e71b/plugins/knowledge_management/skills/wiki/references/template_schema.md), [plugins/knowledge_management/skills/wiki/scripts/lint.py](https://github.com/theafh/ai-modules/blob/14f42f58a898f6ae335920d2fb462b39cf61e71b/plugins/knowledge_management/skills/wiki/scripts/lint.py), [plugins/knowledge_management/skills/wiki/scripts/compute_sha256.py](https://github.com/theafh/ai-modules/blob/14f42f58a898f6ae335920d2fb462b39cf61e71b/plugins/knowledge_management/skills/wiki/scripts/compute_sha256.py)).
 
-**Trace-derived learning exists through session wrapup.** `wiki_wrapup` mines the visible chat session for durable claims, decisions, definitions, conventions, comparisons, workflows, and named entities; diffs them against the existing wiki; surfaces new pages, extensions, and contradictions; and only writes approved candidates through the base `wiki` skill ([plugins/knowledge_management/skills/wiki_wrapup/SKILL.md](https://github.com/theafh/ai-modules/blob/14f42f58a898f6ae335920d2fb462b39cf61e71b/plugins/knowledge_management/skills/wiki_wrapup/SKILL.md)). This is not autonomous online reinforcement learning, but it is durable extraction from agent-human session traces into retained prose and procedural memory.
+**Trace-learning exists through session wrapup.** `wiki_wrapup` mines the visible chat session for durable claims, decisions, definitions, conventions, comparisons, workflows, and named entities; diffs them against the existing wiki; surfaces new pages, extensions, and contradictions; and only writes approved candidates through the base `wiki` skill ([plugins/knowledge_management/skills/wiki_wrapup/SKILL.md](https://github.com/theafh/ai-modules/blob/14f42f58a898f6ae335920d2fb462b39cf61e71b/plugins/knowledge_management/skills/wiki_wrapup/SKILL.md)). This is not autonomous online reinforcement learning, but it is durable extraction from agent-human session traces into retained prose and procedural memory.
 
 **Context efficiency is orientation and routing, not embedding search.** Every wiki operation first resolves the wiki path, reads `SCHEMA.md`, `index.md`, and recent `log.md`, then reads selected pages or searches the tree for large wikis. Queries read the index, optionally run recursive search for 100+ page wikis, then read relevant pages and file only valuable syntheses back ([plugins/knowledge_management/skills/wiki/SKILL.md](https://github.com/theafh/ai-modules/blob/14f42f58a898f6ae335920d2fb462b39cf61e71b/plugins/knowledge_management/skills/wiki/SKILL.md)). Complexity control comes from page types, flat type folders, index summaries, page-size guidance, and deterministic lint; there is no top-k vector budget.
 
@@ -84,7 +84,7 @@ The main divergence is authority granularity. Commonplace's collection/type/revi
 
 **Curation operations:** `consolidate` `dedup` `synthesize` `invalidate` — `wiki_import` and `wiki_wrapup` consolidate raw/session material into candidate wiki pages, classify candidates as NEW/EXTEND/CONFIRM/CONFLICT to avoid duplicate writes, synthesize new pages and query answers, and mark contradictions with contested frontmatter rather than silently resolving them. The task skill also supports source-to-task conversion with a coverage pass, while changelog generation synthesizes commit history into day-grouped prose. I did not find automatic decay or salience promotion.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` — `wiki_wrapup` treats the visible chat session as the source and mines it for durable claims, decisions, definitions, conventions, comparisons, workflows, and named entities.
 
@@ -100,7 +100,7 @@ The main divergence is authority granularity. Commonplace's collection/type/revi
 
 **Scope and timing.** Learning is staged, not continuous. No code observes every tool call or action trajectory online. Instead, a user invokes wrapup near the end of a conversation, reviews the triage proposal, and approved writes route through the base wiki ingest/update flow, lint, and log entry.
 
-**Survey relation.** `ai-modules` strengthens the survey category where trace-derived learning is not an autonomous memory daemon: a human-visible session transcript is mined into proposed durable prose, then governance gates decide what survives. It also splits raw trace retention from distilled behavior authority; the visible session is evidence, while approved wiki pages or procedures are the retained artifacts that later change behavior.
+**Survey relation.** `ai-modules` strengthens the survey category where trace-learning is not an autonomous memory daemon: a human-visible session transcript is mined into proposed durable prose, then governance gates decide what survives. It also splits raw trace retention from distilled behavior authority; the visible session is evidence, while approved wiki pages or procedures are the retained artifacts that later change behavior.
 
 ## Read-back
 
@@ -136,7 +136,7 @@ Relevant Notes:
 
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - applies: stored wiki files affect behavior only when the skill's orientation/search path brings them into context.
 - [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - applies: `wiki_wrapup` distills session traces into durable wiki candidates.
-- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - places: `ai-modules` is an approval-gated session-to-wiki trace extraction system.
+- [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: `ai-modules` is an approval-gated session-to-wiki trace extraction system.
 - [Frontloading spares execution context](../../notes/frontloading-spares-execution-context.md) - aligns: wiki pages and changelog entries precompute source understanding so future sessions do not re-derive it from raw material.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: skills, manifests, wiki pages, raw sources, lints, logs, and deployment outputs carry different forms and authorities.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: wiki pages, tasks, raw sources, summaries, and changelogs can advise future work.

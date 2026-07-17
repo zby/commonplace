@@ -3,7 +3,7 @@ description: "Agent Skills for Context Engineering review: authored context-engi
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-04"
-tags: [trace-derived]
+tags: [trace-learning]
 ---
 
 # Agent Skills for Context Engineering
@@ -26,7 +26,7 @@ tags: [trace-derived]
 
 **The write path is gated rather than autonomous.** `research_loop.py` can initialize runs, record retrieval/evaluation/proposal states, run novelty checks, validate readiness, promote mechanisms, and close runs; promotion requires a reviewer and passing readiness unless explicitly overridden ([`researcher/scripts/research_loop.py`](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering/blob/25e1fa79a33f0985793bcab3c64dde8d020c5132/researcher/scripts/research_loop.py), [`researcher/scripts/validate_run.py`](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering/blob/25e1fa79a33f0985793bcab3c64dde8d020c5132/researcher/scripts/validate_run.py)). The continuous loop can fetch and stage work, but it parks runs that need evaluation or model/human action instead of silently mutating skill content ([`researcher/scripts/loop_step.py`](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering/blob/25e1fa79a33f0985793bcab3c64dde8d020c5132/researcher/scripts/loop_step.py)).
 
-**There is implemented trace-to-skill tooling, but it is example scope.** The interleaved-thinking example defines `ReasoningTrace`, `ThinkingBlock`, and `ToolCall` records, captures model thinking and tool results, analyzes failure patterns, optimizes prompts, saves iteration artifacts, and generates `SKILL.md` files with reference data ([`examples/interleaved-thinking/reasoning_trace_optimizer/models.py`](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering/blob/25e1fa79a33f0985793bcab3c64dde8d020c5132/examples/interleaved-thinking/reasoning_trace_optimizer/models.py), [`examples/interleaved-thinking/reasoning_trace_optimizer/capture.py`](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering/blob/25e1fa79a33f0985793bcab3c64dde8d020c5132/examples/interleaved-thinking/reasoning_trace_optimizer/capture.py), [`examples/interleaved-thinking/reasoning_trace_optimizer/skill_generator.py`](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering/blob/25e1fa79a33f0985793bcab3c64dde8d020c5132/examples/interleaved-thinking/reasoning_trace_optimizer/skill_generator.py)). The review treats this as real trace-derived learning machinery inside the repo, but not as the marketplace's normal activation path.
+**There is implemented trace-to-skill tooling, but it is example scope.** The interleaved-thinking example defines `ReasoningTrace`, `ThinkingBlock`, and `ToolCall` records, captures model thinking and tool results, analyzes failure patterns, optimizes prompts, saves iteration artifacts, and generates `SKILL.md` files with reference data ([`examples/interleaved-thinking/reasoning_trace_optimizer/models.py`](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering/blob/25e1fa79a33f0985793bcab3c64dde8d020c5132/examples/interleaved-thinking/reasoning_trace_optimizer/models.py), [`examples/interleaved-thinking/reasoning_trace_optimizer/capture.py`](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering/blob/25e1fa79a33f0985793bcab3c64dde8d020c5132/examples/interleaved-thinking/reasoning_trace_optimizer/capture.py), [`examples/interleaved-thinking/reasoning_trace_optimizer/skill_generator.py`](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering/blob/25e1fa79a33f0985793bcab3c64dde8d020c5132/examples/interleaved-thinking/reasoning_trace_optimizer/skill_generator.py)). The review treats this as real trace-learning machinery inside the repo, but not as the marketplace's normal activation path.
 
 ## Artifact analysis
 
@@ -77,7 +77,7 @@ The read-back story is different. Commonplace agents deliberately pull from `rg`
 
 **Curation operations:** `synthesize` `promote` - The implemented automatic paths synthesize new run/proposal/report/generated-skill artifacts from sources or traces, and promote reviewed mechanism proposals into the registry/ledgers. I found deterministic overlap checks and reviewer gates, but not automatic deduplication, decay, or invalidation of existing skills as a standing maintenance process.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `tool-traces` `session-logs` - The trace example captures thinking blocks, tool calls, tool results, final responses, and session metadata in `ReasoningTrace`; the optimizer loop saves per-iteration trace, analysis, optimization, and final prompt artifacts ([`examples/interleaved-thinking/reasoning_trace_optimizer/models.py`](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering/blob/25e1fa79a33f0985793bcab3c64dde8d020c5132/examples/interleaved-thinking/reasoning_trace_optimizer/models.py), [`examples/interleaved-thinking/reasoning_trace_optimizer/loop.py`](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering/blob/25e1fa79a33f0985793bcab3c64dde8d020c5132/examples/interleaved-thinking/reasoning_trace_optimizer/loop.py)).
 
@@ -111,7 +111,7 @@ The pull path is nevertheless agent-shaped. `AGENTS.md` names durable workspace 
 
 ## What to Watch
 
-- Whether the interleaved-thinking trace optimizer is promoted from example code into the main researcher OS or marketplace workflow; that would make trace-derived learning central rather than ancillary.
+- Whether the interleaved-thinking trace optimizer is promoted from example code into the main researcher OS or marketplace workflow; that would make trace-learning central rather than ancillary.
 - Whether `researcher/scripts/loop_step.py` gains a cost-gated judge adapter for `retrieved -> evaluated` or `proposed -> novelty_checked`; that would change the write agency from conservative staging to stronger automatic curation.
 - Whether generated skills are required to pass the same `validate_repo.py`, mechanism, claim, corpus-index, and activation-fixture gates before inclusion; that determines whether trace-derived skills become governed system-definition artifacts or just generated prose.
 - Whether the plugin host exposes activation logs or feedback to the repository; that would create a real read/write loop from skill use back into skill routing.

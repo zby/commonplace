@@ -1,9 +1,9 @@
 ---
-description: "LACP review: local control-plane agent harness with trace-derived Obsidian/SMS memory, hook-time context injection, RAG pull, and policy gates"
+description: "LACP review: local control-plane agent harness with trace-learning Obsidian/SMS memory, hook-time context injection, RAG pull, and policy gates"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-04"
-tags: [trace-derived]
+tags: [trace-learning]
 ---
 
 # LACP
@@ -75,7 +75,7 @@ LACP's automatic maintenance is more ambitious than Commonplace's current genera
 
 **Curation operations:** `consolidate` `dedup` `evolve` `synthesize` `invalidate` `decay` `promote` - `consolidate_research.py` creates canonical synthesis notes from clusters; `semantic_dedup` and normalized text ids merge duplicates; `sync_research_knowledge.py` updates existing categories, provenance, storage strength, edges, and `last_evolved`; Ollama-backed consolidation generates new insight text across clustered signals; contradiction/supersession paths mark losers stale or superseded; retrieval strength decays and consolidation can archive weak items; promotion scoring and `brain-promote` move items toward graph/permanent status.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `tool-traces` `event-streams` - LACP reads Claude transcript JSONL, last assistant messages, session ids, cwd, changed-file traces, hook contracts, daily session files, and inbox notes derived from agent activity.
 
@@ -87,7 +87,7 @@ LACP's automatic maintenance is more ambitious than Commonplace's current genera
 
 **Distilled form:** `prose` `symbolic` `parametric` - Distillation outputs include Markdown inbox/graph/synthesis notes, JSON registry state and graph edges, and sparse/dense vector indexes.
 
-On the trace-derived survey axes, LACP is a hybrid trace-to-memory control plane: it has online capture, staged promotion, local embedding/ranking, graph maintenance, and explicit retrieval probes. It supports the survey claim that trace learning needs a curation boundary; without the staging/promote/resolve layers, the regex extractor would be too noisy to carry authority.
+On the trace-learning survey axes, LACP is a hybrid trace-to-memory control plane: it has online capture, staged promotion, local embedding/ranking, graph maintenance, and explicit retrieval probes. It supports the survey claim that trace learning needs a curation boundary; without the staging/promote/resolve layers, the regex extractor would be too noisy to carry authority.
 
 ## Read-back
 

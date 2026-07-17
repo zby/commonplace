@@ -2,7 +2,7 @@
 description: "ClawVault review: deprecated markdown vault memory with graph/search context, OpenClaw prompt hooks, observer compression, facts, and maintenance workers"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-04"
 ---
 
@@ -84,7 +84,7 @@ The major divergence is authority. ClawVault can push memory into OpenClaw promp
 
 **Curation operations:** `consolidate` `dedup` `synthesize` `invalidate` `decay` `promote` — Observer compression consolidates messages into observations; observation dedup and task dedup remove duplicates; maintenance distillation can synthesize fact/decision/lesson files from inbox items; fact conflicts invalidate previous active facts with `validUntil`; reflection drops older low-priority observations; context profiles, importance, confidence, recency, and ranking promote or demote what gets read back.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `tool-traces` `event-streams` — The observer and plugin hooks consume session messages, reset/compaction/heartbeat events, prompt text, and hook payloads; raw transcript records and observed text become durable ledger, fact, note, and checkpoint artifacts.
 
@@ -94,13 +94,13 @@ The major divergence is authority. ClawVault can push memory into OpenClaw promp
 
 **Distilled form:** `prose` `symbolic` `parametric` — Session traces become prose observations and notes, symbolic facts/graphs/checkpoints/routes, and embedding/reranking state for retrieval.
 
-**Trace source.** ClawVault qualifies as trace-derived because durable retained artifacts are created from interaction traces, not merely user-authored notes. `Observer.processMessages()` optionally persists raw messages, buffers them until a token threshold, compresses them into observation Markdown, and routes the result; plugin lifecycle handlers call checkpointing, observer cron, and fact extraction on reset/compaction/heartbeat events ([src/observer/observer.ts](https://github.com/Versatly/clawvault/blob/bd702e9cce436bc3065827714cd576e8be20c375/src/observer/observer.ts), [src/plugin/hooks/session-lifecycle.ts](https://github.com/Versatly/clawvault/blob/bd702e9cce436bc3065827714cd576e8be20c375/src/plugin/hooks/session-lifecycle.ts), [src/plugin/hooks/observation.ts](https://github.com/Versatly/clawvault/blob/bd702e9cce436bc3065827714cd576e8be20c375/src/plugin/hooks/observation.ts)).
+**Trace source.** ClawVault qualifies as trace-learning because durable retained artifacts are created from interaction traces, not merely user-authored notes. `Observer.processMessages()` optionally persists raw messages, buffers them until a token threshold, compresses them into observation Markdown, and routes the result; plugin lifecycle handlers call checkpointing, observer cron, and fact extraction on reset/compaction/heartbeat events ([src/observer/observer.ts](https://github.com/Versatly/clawvault/blob/bd702e9cce436bc3065827714cd576e8be20c375/src/observer/observer.ts), [src/plugin/hooks/session-lifecycle.ts](https://github.com/Versatly/clawvault/blob/bd702e9cce436bc3065827714cd576e8be20c375/src/plugin/hooks/session-lifecycle.ts), [src/plugin/hooks/observation.ts](https://github.com/Versatly/clawvault/blob/bd702e9cce436bc3065827714cd576e8be20c375/src/plugin/hooks/observation.ts)).
 
 **Extraction.** Extraction is a mix of LLM compression, deterministic fallback heuristics, regex/rule facts, optional LLM fact extraction, routing rules, and maintenance worker heuristics/LLM calls. The oracle is therefore not one judge: it varies by provider availability, config, worker, and feature flag.
 
 **Scope and timing.** The trace-derived layer is vault-scoped and agent-aware when OpenClaw agent vault mappings are configured. Online paths update raw logs, observations, facts, checkpoints, and prompt context; staged paths turn inbox or observations into curated/distilled notes and reflections.
 
-**Survey fit.** ClawVault strengthens the trace-derived survey's raw-to-distilled split. Raw transcripts and hook payloads are weak knowledge artifacts; compressed observations, facts, handoffs, and injected rules have stronger downstream authority. The risky part is that some distilled outputs can enter prompt context without a semantic review step.
+**Survey fit.** ClawVault strengthens the trace-learning survey's raw-to-distilled split. Raw transcripts and hook payloads are weak knowledge artifacts; compressed observations, facts, handoffs, and injected rules have stronger downstream authority. The risky part is that some distilled outputs can enter prompt context without a semantic review step.
 
 ## Read-back
 

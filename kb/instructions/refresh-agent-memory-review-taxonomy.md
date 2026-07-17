@@ -19,7 +19,7 @@ Do:
 
 - clarify storage substrate, representational form, lineage, and behavioral authority where the existing review already contains enough evidence
 - replace stale shorthand such as role, substrate class, knowledge memory, or system-definition memory when it means an artifact-analysis field
-- keep edits local to review wording and the trace-derived survey when placement wording changes
+- keep edits local to review wording and the trace-learning survey when placement wording changes
 
 Do not:
 
@@ -44,9 +44,9 @@ Do not:
 
 5. **Patch only ambiguous prose.** Add wording when the old review leaves a taxonomy-relevant mechanism unclear. Prefer short replacements in existing paragraphs over new sections. Leave fields implicit when they are obvious and not central to the review's comparison.
 
-6. **Handle trace-derived reviews carefully.** If the review has a trace-derived placement, ensure it distinguishes raw trace artifacts from distilled artifacts. Raw traces often have knowledge-artifact or evidence use; distilled rules, tools, prompts, validators, fine-tunes, or rankers often have system-definition-artifact use.
+6. **Handle trace-learning reviews carefully.** If the review has a trace-learning placement, ensure it distinguishes raw trace artifacts from distilled artifacts. Raw traces often have knowledge-artifact or evidence use; distilled rules, tools, prompts, validators, fine-tunes, or rankers often have system-definition-artifact use.
 
-7. **Update the trace-derived survey only when needed.** Edit `kb/agent-memory-systems/trace-derived-learning-techniques-in-related-systems.md` only if the refresh changes survey placement, axis wording, or a cross-system claim.
+7. **Update the trace-learning survey only when needed.** Edit `kb/agent-memory-systems/trace-learning-techniques-in-related-systems.md` only if the refresh changes survey placement, axis wording, or a cross-system claim.
 
 8. **Validate.** Run the smallest validation scope that covers the edited reviews and instruction or survey files. For a few files, validate each file directly:
    ```bash

@@ -3,7 +3,7 @@ description: "Agentic Local Brain review: local PKM capture into Markdown, SQLit
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-04"
-tags: [trace-derived]
+tags: [trace-learning]
 ---
 
 # Agentic Local Brain
@@ -49,7 +49,7 @@ Agentic Local Brain, from `agent-creativity/agentic-local-brain`, is a local per
 
 **Generated wiki articles and categories.** Storage substrate: Markdown files under the wiki directory plus SQLite `wiki_articles` and `wiki_categories` rows. Representational form: prose articles/cards plus symbolic source-doc/entity/category metadata. Lineage: synthesized from topic clusters, source documents, and entity graphs. Behavioral authority: knowledge artifacts and navigation surfaces; they are stronger summaries than raw search hits but not automatically validated as true.
 
-**Promotion path.** Local Brain promotes imported/authored material into Markdown captures, then into SQLite rows, chunks, embeddings, mined graph/topic views, and optional wiki articles. The trace-derived path promotes interaction traces into conversation context or reading-history ranking, but not into durable agent instructions.
+**Promotion path.** Local Brain promotes imported/authored material into Markdown captures, then into SQLite rows, chunks, embeddings, mined graph/topic views, and optional wiki articles. The trace-learning path promotes interaction traces into conversation context or reading-history ranking, but not into durable agent instructions.
 
 ## Comparison with Our System
 
@@ -84,7 +84,7 @@ The biggest divergence is authority discipline. Local Brain will synthesize tags
 
 **Curation operations:** `consolidate` `dedup` `synthesize` `evolve` — smart extraction compresses documents into summaries/tags; duplicate hashes can skip already-collected content; topic/wiki compilation synthesizes derived articles/categories from multiple documents; topic centroid/document-count updates evolve existing topic records during incremental classification. Index/embedding rebuilds are access-structure upkeep, not counted as curation.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `event-streams` — RAG chat turns are stored as session conversations, and web item views/searches/RAG queries are stored as reading-history events.
 
@@ -96,7 +96,7 @@ The biggest divergence is authority discipline. Local Brain will synthesize tags
 
 **Extraction.** The conversation loop writes the user question and assistant answer after a pipeline run, then later formats recent turns into prompt text for the same session. The reading-history loop records `view`, `search`, and `rag_query` events; the enhanced RAG pipeline can boost recently viewed documents by `+0.1`, while the recommendation engine computes a time-decayed weighted average of recent document embeddings and ranks similar unread documents. The oracle is mechanical, not reflective: there is no LLM judge deciding that a trace should become a durable rule.
 
-**Survey placement.** Local Brain belongs in the trace-to-session-context and trace-to-ranking families, not the trace-to-instruction family. It weakens any broad claim that trace-derived systems must produce new prose rules: here the durable trace mostly changes prompt continuity and ranking/recommendation behavior.
+**Survey placement.** Local Brain belongs in the trace-to-session-context and trace-to-ranking families, not the trace-to-instruction family. It weakens any broad claim that trace-learning systems must produce new prose rules: here the durable trace mostly changes prompt continuity and ranking/recommendation behavior.
 
 ## Read-back
 
@@ -140,6 +140,6 @@ Relevant Notes:
 
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes Local Brain's stored Markdown/SQLite/vector state from the specific RAG and conversation-history paths that activate it.
 - [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - contrasts with Local Brain's trace use: traces affect session context and ranking, not durable instructions.
-- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - places Local Brain in trace-to-ranking/session-context rather than trace-to-policy.
+- [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places Local Brain in trace-to-ranking/session-context rather than trace-to-policy.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - helps separate Local Brain's knowledge artifacts from ranking, routing, and learning surfaces.
 - [Behavioral authority](../../notes/definitions/behavioral-authority.md) - applies to the difference between advisory RAG context, retrieval ranking, and generated derived views.

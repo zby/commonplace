@@ -3,7 +3,7 @@ description: "Ars Contexta review: Claude Code plugin deriving file-based agent 
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-04"
-tags: [trace-derived]
+tags: [trace-learning]
 ---
 
 # Ars Contexta
@@ -28,7 +28,7 @@ Ars Contexta, from `agenticnotetaking/arscontexta`, is a Claude Code plugin for 
 
 **The methodology graph is a retained design source.** The plugin ships `methodology/` research claims and reference files; `/ask` routes questions through research claims, guidance docs, examples, and structured references, using qmd tools when available ([skills/ask/SKILL.md](https://github.com/agenticnotetaking/arscontexta/blob/2acfd5cc4473c4d06c46be63df748e77e00e2746/skills/ask/SKILL.md), [methodology/index.md](https://github.com/agenticnotetaking/arscontexta/blob/2acfd5cc4473c4d06c46be63df748e77e00e2746/methodology/index.md), [reference/claim-map.md](https://github.com/agenticnotetaking/arscontexta/blob/2acfd5cc4473c4d06c46be63df748e77e00e2746/reference/claim-map.md)). That gives generated systems an inspectable lineage story, although the setup skill's actual reasoning remains an LLM execution rather than a replayable compiler.
 
-**Trace-derived learning exists as an operational self-improvement loop.** `/remember` captures explicit corrections, contextual corrections, and mined session patterns into `ops/methodology/` or `ops/observations/`; `/rethink` triages observations/tensions into promoted notes, implemented changes, methodology notes, archived items, or pending evidence ([skill-sources/remember/SKILL.md](https://github.com/agenticnotetaking/arscontexta/blob/2acfd5cc4473c4d06c46be63df748e77e00e2746/skill-sources/remember/SKILL.md), [skill-sources/rethink/SKILL.md](https://github.com/agenticnotetaking/arscontexta/blob/2acfd5cc4473c4d06c46be63df748e77e00e2746/skill-sources/rethink/SKILL.md)). The implementation is instruction-and-file driven rather than a deterministic transcript parser.
+**Trace-learning exists as an operational self-improvement loop.** `/remember` captures explicit corrections, contextual corrections, and mined session patterns into `ops/methodology/` or `ops/observations/`; `/rethink` triages observations/tensions into promoted notes, implemented changes, methodology notes, archived items, or pending evidence ([skill-sources/remember/SKILL.md](https://github.com/agenticnotetaking/arscontexta/blob/2acfd5cc4473c4d06c46be63df748e77e00e2746/skill-sources/remember/SKILL.md), [skill-sources/rethink/SKILL.md](https://github.com/agenticnotetaking/arscontexta/blob/2acfd5cc4473c4d06c46be63df748e77e00e2746/skill-sources/rethink/SKILL.md)). The implementation is instruction-and-file driven rather than a deterministic transcript parser.
 
 ## Artifact analysis
 
@@ -88,7 +88,7 @@ Ars Contexta also has more push read-back than Commonplace. A generated vault ca
 
 **Curation operations:** `dedup` `evolve` `synthesize` `invalidate` `promote` — `/remember` checks existing methodology and observations before writing, `/reweave` and `/reflect` update existing notes/MOCs, `/setup` and `/rethink` synthesize new system artifacts or proposals, contradiction handling can supersede or archive older guidance, and observations/tensions can be promoted into notes or implemented system changes.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `tool-traces` — The intended loop consumes current conversation corrections, stored session files under `ops/sessions/`, and hook/tool-event surfaces such as SessionStart and PostToolUse.
 
@@ -98,13 +98,13 @@ Ars Contexta also has more push read-back than Commonplace. A generated vault ca
 
 **Distilled form:** `prose` `symbolic` — Corrections become prose methodology notes or observations with symbolic YAML; mature findings can alter prose context files, templates, config, or skill instructions.
 
-**Trace source.** Ars Contexta qualifies as trace-derived learning because it defines durable artifacts derived from agent/user interaction traces. `/remember` can mine the current conversation for corrections or scan `ops/sessions/` for user corrections, repeated redirections, workflow breakdowns, agent confusion, undocumented decisions, and escalation patterns ([skill-sources/remember/SKILL.md](https://github.com/agenticnotetaking/arscontexta/blob/2acfd5cc4473c4d06c46be63df748e77e00e2746/skill-sources/remember/SKILL.md)). The plugin-level hook currently writes session identity/state at SessionStart, while the platform template describes Stop-event session capture; the strongest transcript-mining behavior is specified in the skill procedure rather than proved as a complete transcript-ingestion implementation ([hooks/scripts/session-orient.sh](https://github.com/agenticnotetaking/arscontexta/blob/2acfd5cc4473c4d06c46be63df748e77e00e2746/hooks/scripts/session-orient.sh), [platforms/claude-code/hooks/session-capture.sh.template](https://github.com/agenticnotetaking/arscontexta/blob/2acfd5cc4473c4d06c46be63df748e77e00e2746/platforms/claude-code/hooks/session-capture.sh.template)).
+**Trace source.** Ars Contexta qualifies as trace-learning because it defines durable artifacts derived from agent/user interaction traces. `/remember` can mine the current conversation for corrections or scan `ops/sessions/` for user corrections, repeated redirections, workflow breakdowns, agent confusion, undocumented decisions, and escalation patterns ([skill-sources/remember/SKILL.md](https://github.com/agenticnotetaking/arscontexta/blob/2acfd5cc4473c4d06c46be63df748e77e00e2746/skill-sources/remember/SKILL.md)). The plugin-level hook currently writes session identity/state at SessionStart, while the platform template describes Stop-event session capture; the strongest transcript-mining behavior is specified in the skill procedure rather than proved as a complete transcript-ingestion implementation ([hooks/scripts/session-orient.sh](https://github.com/agenticnotetaking/arscontexta/blob/2acfd5cc4473c4d06c46be63df748e77e00e2746/hooks/scripts/session-orient.sh), [platforms/claude-code/hooks/session-capture.sh.template](https://github.com/agenticnotetaking/arscontexta/blob/2acfd5cc4473c4d06c46be63df748e77e00e2746/platforms/claude-code/hooks/session-capture.sh.template)).
 
 **Extraction.** The extraction oracle is mostly LLM judgment under detailed skill instructions. `/remember` classifies friction into methodology notes or observations, deduplicates against existing files, and can mark sessions as mined. `/rethink` then reads pending observations/tensions, compares them with methodology and config, and classifies each as PROMOTE, IMPLEMENT, METHODOLOGY, ARCHIVE, or KEEP PENDING ([skill-sources/remember/SKILL.md](https://github.com/agenticnotetaking/arscontexta/blob/2acfd5cc4473c4d06c46be63df748e77e00e2746/skill-sources/remember/SKILL.md), [skill-sources/rethink/SKILL.md](https://github.com/agenticnotetaking/arscontexta/blob/2acfd5cc4473c4d06c46be63df748e77e00e2746/skill-sources/rethink/SKILL.md)).
 
 **Scope and timing.** The loop is vault-scoped and staged. Immediate corrections can become methodology notes during the current work. Stored session records can be mined offline. Accumulated observations and tensions trigger later rethink passes, which may promote insights, update methodology, implement config/context changes, or leave evidence pending.
 
-**Survey position.** On the trace-derived learning survey, Ars Contexta belongs in the operational-friction-to-methodology family. It strengthens the distinction between raw trace/state files, intermediate observation/tension evidence, and high-authority distilled context or methodology rules. It also shows a weak point: a trace-derived loop can be architecturally real even when much of the extraction and promotion policy is encoded as LLM skill procedure rather than deterministic code.
+**Survey position.** On the trace-learning survey, Ars Contexta belongs in the operational-friction-to-methodology family. It strengthens the distinction between raw trace/state files, intermediate observation/tension evidence, and high-authority distilled context or methodology rules. It also shows a weak point: a trace-learning loop can be architecturally real even when much of the extraction and promotion policy is encoded as LLM skill procedure rather than deterministic code.
 
 ## Read-back
 
@@ -148,7 +148,7 @@ Ars Contexta is an agent-native knowledge-system generator and operating layer. 
 Relevant Notes:
 
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - contrasts: Ars Contexta combines stored vault knowledge with coarse startup push and explicit pull commands.
-- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - places: Ars Contexta turns corrections and session evidence into methodology notes, observations, proposals, and system changes.
+- [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: Ars Contexta turns corrections and session evidence into methodology notes, observations, proposals, and system changes.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - grounds: the review separates generated notes, context files, hooks, skills, methodology graph, qmd indexes, and operational traces by substrate, form, lineage, and authority.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: ordinary notes, methodology claims, session files, observations, and search results when consumed as evidence or context.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: generated `CLAUDE.md`, skills, hooks, schemas, queue state, validation scripts, and promoted methodology rules.

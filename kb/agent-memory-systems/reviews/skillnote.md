@@ -2,7 +2,7 @@
 description: "SkillNote review: self-hosted SKILL.md registry with collections, imports, sync adapters, usage/rating feedback, and prompt-derived draft candidates"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-05"
 ---
 
@@ -86,7 +86,7 @@ The trace-derived draft path is also more opportunistic than Commonplace's curre
 
 **Curation operations:** `promote` — Usage counts, ratings, comments, deprecation warnings, and recent comments do not rewrite skill bodies, but they change salience and review state in analytics and OpenClaw context-bundle sorting. The inspected code does not automatically consolidate, deduplicate, evolve, synthesize, invalidate, or decay existing skill content.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `tool-traces` `event-streams` — SkillNote consumes Claude hook events, OpenClaw session JSONL reads, MCP `tools/call` events, explicit OpenClaw usage posts, agent comments/ratings, and `UserPromptSubmit` prompt text.
 
@@ -96,7 +96,7 @@ The trace-derived draft path is also more opportunistic than Commonplace's curre
 
 **Distilled form:** `prose` `symbolic` — Prompt-watch writes prose candidate notes with symbolic metadata; registry publication produces `SKILL.md` prose plus frontmatter, collection, version, and source fields.
 
-**Trace source.** The strongest trace-derived path is `prompt-watch.sh`: it reads the current user prompt from the Claude hook input, ignores subagent prompts, checks that SkillNote is active for the project, and detects explicit save phrases or convention markers. Separately, MCP middleware logs tool calls, OpenClaw's watcher scans session JSONL files for reads of `sn-*/SKILL.md`, and the plugin hooks prompt agents to rate skills after use.
+**Trace source.** The strongest trace-learning path is `prompt-watch.sh`: it reads the current user prompt from the Claude hook input, ignores subagent prompts, checks that SkillNote is active for the project, and detects explicit save phrases or convention markers. Separately, MCP middleware logs tool calls, OpenClaw's watcher scans session JSONL files for reads of `sn-*/SKILL.md`, and the plugin hooks prompt agents to rate skills after use.
 
 **Extraction.** Explicit save phrases do not create a registry skill; they inject additional context telling Claude to follow the skill-push workflow. Convention markers create a Markdown draft containing the matched evidence sentence, signal, timestamp, session id, and next step. The oracle is lexical pattern matching, not semantic judgment. Ratings and usage events are extracted from tool calls and agent posts, then used as analytics/ranking evidence.
 

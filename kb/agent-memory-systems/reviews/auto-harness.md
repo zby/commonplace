@@ -2,7 +2,7 @@
 description: "auto-harness review: benchmark-driven coding-agent loop that mines train traces, evolves agent.py, promotes evals, and gates changes"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-04"
 ---
 
@@ -85,7 +85,7 @@ Auto Harness also exposes a useful anti-cheating pattern. It does not merely tel
 
 **Curation operations:** `consolidate` `evolve` `synthesize` `promote` — The loop consolidates failure evidence into learnings, evolves `agent/agent.py` in place across iterations, synthesizes new prompt/tool/code hypotheses from traces, and promotes newly fixed failures into the regression suite. It does not implement durable contradiction invalidation, duplicate merging, or age-based decay.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `tool-traces` `trajectories` — Terminal-Bench saves full conversation messages and bash tool calls for train runs; BIRD-Interact saves dialogue history, tool trajectories, ADK events, final responses, and result metadata; benchmark outputs record task rewards and timeouts.
 
@@ -101,7 +101,7 @@ Auto Harness also exposes a useful anti-cheating pattern. It does not merely tel
 
 **Scope and timing.** The learning loop is project-local: one configured benchmark, one `agent/agent.py`, one workspace, and one score history. Timing is staged by explicit CLI calls rather than a background daemon. The system can iterate overnight, but each durable update happens at a visible boundary: benchmark output, gate result, commit, record row, and learnings entry.
 
-**Survey placement.** Auto Harness is a trace-to-code-and-eval-suite system. It strengthens the survey claim that trace-derived learning becomes safer when raw traces are separated from higher-authority distilled artifacts and when promotion has an external oracle. It also shows a higher-authority branch than prose playbooks: accepted learnings can become executable code and regression requirements.
+**Survey placement.** Auto Harness is a trace-to-code-and-eval-suite system. It strengthens the survey claim that trace-learning becomes safer when raw traces are separated from higher-authority distilled artifacts and when promotion has an external oracle. It also shows a higher-authority branch than prose playbooks: accepted learnings can become executable code and regression requirements.
 
 ## Read-back
 
@@ -147,7 +147,7 @@ Auto Harness also exposes a useful anti-cheating pattern. It does not merely tel
 
 Relevant Notes:
 
-- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - places: Auto Harness derives learnings, code changes, and regression obligations from benchmark traces and outcomes.
+- [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: Auto Harness derives learnings, code changes, and regression obligations from benchmark traces and outcomes.
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: workspace files affect later action only when the coding agent or gate reads them.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: Auto Harness bundles traces, code, instructions, suite state, and gates with different forms and authorities.
 - [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - exemplifies: repeated task failures become future agent behavior through iterative edits and suite promotion.

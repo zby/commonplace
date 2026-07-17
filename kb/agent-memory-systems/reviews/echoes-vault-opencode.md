@@ -3,7 +3,7 @@ description: "EchoesVault review: OpenCode plugin that bootstraps a Markdown/Obs
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-18"
-tags: [trace-derived]
+tags: [trace-learning]
 ---
 
 # EchoesVault / echoes-vault-opencode
@@ -69,7 +69,7 @@ EchoesVault has a stronger out-of-the-box session loop than Commonplace's genera
 
 **Curation operations:** `none` - The automatic path acquires and stores trace-derived summaries, pages, index edits, and scaffolding, but the inspected code does not automatically consolidate, deduplicate, evolve, synthesize across already-stored memories, invalidate, decay, or promote existing entries.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` - The source signal is the active OpenCode session as available to the agent when `/echoes-end` runs, plus optional intermediate scratchpad notes written during the session.
 
@@ -81,7 +81,7 @@ EchoesVault has a stronger out-of-the-box session loop than Commonplace's genera
 
 **Distilled form:** `prose` `symbolic` - The durable output is Markdown prose plus symbolic frontmatter, daily headings, filenames, wikilinks, and index entries.
 
-Relative to the trace-derived survey, EchoesVault is trace-to-knowledge and trace-to-instruction-context, not trace-to-enforcement. It makes session outcomes available to future agents through files and start commands, but it does not derive validators, rankers, route tables, or code changes from the traces.
+Relative to the trace-learning survey, EchoesVault is trace-to-knowledge and trace-to-instruction-context, not trace-to-enforcement. It makes session outcomes available to future agents through files and start commands, but it does not derive validators, rankers, route tables, or code changes from the traces.
 
 ## Read-back
 

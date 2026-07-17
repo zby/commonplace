@@ -2,7 +2,7 @@
 description: "GBrain review: Postgres/PGLite-backed agent brain with markdown write-through, hybrid retrieval, graph links, hot facts, skills, and dream-cycle maintenance"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-04"
 ---
 
@@ -79,7 +79,7 @@ The main tradeoff is power versus inspectability. GBrain can serve targeted cont
 
 **Curation operations:** `consolidate` `dedup` `evolve` `synthesize` `invalidate` `decay` `promote` — Consolidation clusters facts into takes; duplicate detection avoids repeated facts and sync imports; auto-link/timeline/facts extraction and emotional-weight recomputation evolve stored metadata; dream/pattern/concept/think paths synthesize new retained pages or claims; valid-until, supersession, soft-delete, and forget paths invalidate; purge removes expired deleted/archive rows; facts, atoms, and concepts are promoted into stronger or more salient artifacts.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `tool-traces` `event-streams` `trajectories` — GBrain consumes conversation turns, transcript files, MCP/search/query eval traces, subagent messages/tool executions, and timeline/trajectory rows.
 
@@ -95,7 +95,7 @@ The main tradeoff is power versus inspectability. GBrain can serve targeted cont
 
 **Scope and timing.** Online write hooks favor responsiveness: `put_page` returns while facts extraction can run queued, and MCP hot memory is cached for short sessions. Offline/staged paths favor stronger derivation: the cycle runs ordered phases after sync/extract state settles, and skillopt uses preflight, locks, benchmarks, validation, and held-out gates before mutation.
 
-**Survey fit.** GBrain is a broad trace-derived operational-memory system. It strengthens the survey claim that trace-derived learning is not one mechanism: the same codebase includes raw trace capture, hot-fact extraction, consolidation, synthesis, ranking feedback, and proposed skill mutation, each with different authority and review needs.
+**Survey fit.** GBrain is a broad trace-derived operational-memory system. It strengthens the survey claim that trace-learning is not one mechanism: the same codebase includes raw trace capture, hot-fact extraction, consolidation, synthesis, ranking feedback, and proposed skill mutation, each with different authority and review needs.
 
 ## Read-back
 
@@ -139,9 +139,9 @@ The main tradeoff is power versus inspectability. GBrain can serve targeted cont
 
 Relevant Notes:
 
-- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - places: GBrain derives facts, atoms, concepts, patterns, eval rows, and skill candidates from conversation/session/tool traces and retained evidence.
+- [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: GBrain derives facts, atoms, concepts, patterns, eval rows, and skill candidates from conversation/session/tool traces and retained evidence.
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: GBrain has both explicit pull retrieval and pushed hot-memory/trajectory context.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: GBrain's markdown, DB rows, embeddings, graph links, skills, and operation definitions carry different forms and authorities.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: pages, facts, takes, trajectories, and syntheses usually advise rather than enforce.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: operations, auth scopes, skills, schema packs, validators, queues, and ranking/indexing code govern future behavior.
-- [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - exemplifies: GBrain's hot facts, dream cycle, eval capture, and skillopt are trace-derived learning paths with different promotion thresholds.
+- [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - exemplifies: GBrain's hot facts, dream cycle, eval capture, and skillopt are trace-learning paths with different promotion thresholds.

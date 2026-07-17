@@ -2,7 +2,7 @@
 description: "Clude review: cognitive memory SDK and MCP server with SQLite/Supabase stores, hybrid recall, dream-cycle synthesis, memory packs, and prompt-file push surfaces"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-04"
 ---
 
@@ -86,7 +86,7 @@ The design tension is authority. Clude quickly turns traces into remembered beha
 
 **Curation operations:** `consolidate` `dedup` `evolve` `synthesize` `invalidate` `decay` `promote` — Dream consolidation and compaction create smaller higher-level memories; high-frequency `shiro_` writes are deduplicated; semantic tagging, access counts, link strengths, strategy importance, and memory updates evolve existing state; consolidation/reflection/action-learning synthesize new semantic/procedural/self-model entries; contradiction resolution marks weaker beliefs by accelerating decay and links a resolution; daily decay lowers retained salience; importance, access, knowledge-seed boosts, links, and prompt exports promote some memories into future context.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `tool-traces` `event-streams` — Stored episodic memories, action records, outcome records, MCP/API writes, chat/user interactions, social engagement measurements, and event-bus `memory:stored` signals feed durable memory changes.
 
@@ -100,7 +100,7 @@ The design tension is authority. Clude quickly turns traces into remembered beha
 
 **Scope and timing.** The dream scheduler can run every six hours, trigger from accumulated episodic importance, and apply daily decay. Hosted dreams are lighter and agent-scoped; self-hosted dreams include fuller compaction, reflection, contradiction resolution, learning, deep connection, and emergence phases.
 
-**Survey fit.** Clude strengthens the trace-derived survey's point that readable artifacts, symbolic metadata, and parametric retrieval often coexist. It also highlights a risk: generated procedural and self-model memories can be exported into prompt surfaces, so low-review trace extraction can become instruction-like authority through a compiled view.
+**Survey fit.** Clude strengthens the trace-learning survey's point that readable artifacts, symbolic metadata, and parametric retrieval often coexist. It also highlights a risk: generated procedural and self-model memories can be exported into prompt surfaces, so low-review trace extraction can become instruction-like authority through a compiled view.
 
 ## Read-back
 

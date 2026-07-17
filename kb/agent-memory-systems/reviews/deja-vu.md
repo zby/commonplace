@@ -2,7 +2,7 @@
 description: "deja-vu review: local lexical memory over Claude, Codex, and opencode traces with redacted file index, MCP recall, sync/share, and SessionStart auto-recall"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-07-15"
 ---
 
@@ -78,7 +78,7 @@ The sharpest divergence is authority. deja-vu makes prior traces easy to find an
 
 **Curation operations:** `none` — The automatic path acquires/imports traces, tokenizes them, redacts them, ranks them at read time, and deduplicates sync imports by record key. It does not consolidate, evolve, synthesize, invalidate, decay, or promote already-stored memory content.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` — Claude Code, Codex CLI, and opencode conversation histories are the raw trace sources. The code extracts text-bearing messages/parts, not a rich typed model of tool events.
 
@@ -92,7 +92,7 @@ The sharpest divergence is authority. deja-vu makes prior traces easy to find an
 
 **Scope and timing.** The learning unit is a session message record. Freshness is tied to source file size/mtime, index version, scope, and opencode updated timestamps; append-only changes can add records without a full rebuild, while removed or non-append changes rewrite affected state. Sync imports are retained inside the index and replayed across rebuilds because their source batch may no longer be present locally.
 
-**Survey placement.** deja-vu sits in the trace-to-search and trace-to-startup-context family. It strengthens the survey claim that trace-derived learning need not synthesize rules to be useful: exact prior sessions, redacted and cheaply ranked, can be enough to alter future work. It weakens any broad claim that "agent memory" must involve embeddings, summaries, or model calls.
+**Survey placement.** deja-vu sits in the trace-to-search and trace-to-startup-context family. It strengthens the survey claim that trace-learning need not synthesize rules to be useful: exact prior sessions, redacted and cheaply ranked, can be enough to alter future work. It weakens any broad claim that "agent memory" must involve embeddings, summaries, or model calls.
 
 ## Read-back
 
@@ -136,7 +136,7 @@ Relevant Notes:
 
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes deja-vu's stored index from pull recall and the optional Claude startup push.
 - [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - contrasts with deja-vu's trace-derived recall, which does not promote traces into durable instructions.
-- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - places deja-vu in trace-to-search and trace-to-startup-context rather than trace-to-policy.
+- [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places deja-vu in trace-to-search and trace-to-startup-context rather than trace-to-policy.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies recalled snippets, context digests, shares, and imported sessions as advisory evidence.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies installed MCP and hook configuration as behavior-shaping routing/instruction surfaces.
 - [Symbolic context engineering is bounded by symbol availability](../../notes/symbolic-context-engineering-is-bounded-by-symbol-availability.md) - explains why auto-recall's targeted push depends on project-name identifiers being available and reliable.

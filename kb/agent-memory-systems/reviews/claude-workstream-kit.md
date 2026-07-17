@@ -2,7 +2,7 @@
 description: "Claude Workstream Kit review: repo-local active-work memory for Claude Code with ACTIVE.md resume, workstream closure, gates, and verifier agents"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-12"
 ---
 
@@ -95,7 +95,7 @@ For the requested lens, the implementation does provide project-scoped active-wo
 
 **Curation operations:** `invalidate` `promote` - Closure invalidates the active workstream as current state by archiving/tagging it and removing its active directory, while learnings are promoted out of `.state/` into named durable files, handoffs, or explicit drops. The kit does not automatically deduplicate, consolidate, decay, or synthesize stored memories across workstreams.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `tool-traces` `event-streams` - The write path records active-session outcomes, user gates, command outputs, verifier results, git status/commits/tags, and handoff events into durable workstream files. It does not parse raw chat transcripts or session logs.
 

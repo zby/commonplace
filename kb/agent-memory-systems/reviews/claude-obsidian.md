@@ -2,7 +2,7 @@
 description: "claude-obsidian review: Obsidian vault memory with agent skills, hot cache, wiki ingestion, hybrid retrieval, locking, hooks, and methodology modes"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-04"
 ---
 
@@ -80,7 +80,7 @@ The strongest claude-obsidian idea for Commonplace is not "use Obsidian" in gene
 
 **Curation operations:** `consolidate` `synthesize` `promote` — `save` condenses a conversation into a permanent note; `wiki-fold` rolls log entries into extractive fold pages; `autoresearch` synthesizes source findings into concept/entity/source/question pages; `wiki/hot.md` promotes recent context into a short session-start cache. These operations are agent-instruction-driven rather than autonomous daemon behavior.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `tool-traces` `event-streams` — The system can save current conversations, append operation logs, update hot-cache state after significant interactions, route autoresearch/search/fetch results into pages, and derive retrieval chunks/indexes from the resulting wiki files.
 
@@ -90,7 +90,7 @@ The strongest claude-obsidian idea for Commonplace is not "use Obsidian" in gene
 
 **Distilled form:** `prose` `symbolic` `parametric` — Conversations and sources become prose Markdown pages with symbolic metadata and links; retrieval setup turns those pages into symbolic chunk/index records and optional embedding vectors.
 
-**Trace source.** claude-obsidian qualifies as trace-derived because session activity can become durable memory. The `save` skill explicitly files the current conversation, answer, or insight into a structured wiki note and updates index, log, and hot cache ([skills/save/SKILL.md](https://github.com/AgriciDaniel/claude-obsidian/blob/cb93ff6d82f9c35a08bf6010e7fac36dfddc827b/skills/save/SKILL.md)). The `wiki` and `wiki-query` skills require hot-cache reads and updates, while `autoresearch` turns web-search/fetch loops into filed source, concept, entity, and synthesis pages ([skills/wiki/SKILL.md](https://github.com/AgriciDaniel/claude-obsidian/blob/cb93ff6d82f9c35a08bf6010e7fac36dfddc827b/skills/wiki/SKILL.md), [skills/wiki-query/SKILL.md](https://github.com/AgriciDaniel/claude-obsidian/blob/cb93ff6d82f9c35a08bf6010e7fac36dfddc827b/skills/wiki-query/SKILL.md), [skills/autoresearch/SKILL.md](https://github.com/AgriciDaniel/claude-obsidian/blob/cb93ff6d82f9c35a08bf6010e7fac36dfddc827b/skills/autoresearch/SKILL.md)).
+**Trace source.** claude-obsidian qualifies as trace-learning because session activity can become durable memory. The `save` skill explicitly files the current conversation, answer, or insight into a structured wiki note and updates index, log, and hot cache ([skills/save/SKILL.md](https://github.com/AgriciDaniel/claude-obsidian/blob/cb93ff6d82f9c35a08bf6010e7fac36dfddc827b/skills/save/SKILL.md)). The `wiki` and `wiki-query` skills require hot-cache reads and updates, while `autoresearch` turns web-search/fetch loops into filed source, concept, entity, and synthesis pages ([skills/wiki/SKILL.md](https://github.com/AgriciDaniel/claude-obsidian/blob/cb93ff6d82f9c35a08bf6010e7fac36dfddc827b/skills/wiki/SKILL.md), [skills/wiki-query/SKILL.md](https://github.com/AgriciDaniel/claude-obsidian/blob/cb93ff6d82f9c35a08bf6010e7fac36dfddc827b/skills/wiki-query/SKILL.md), [skills/autoresearch/SKILL.md](https://github.com/AgriciDaniel/claude-obsidian/blob/cb93ff6d82f9c35a08bf6010e7fac36dfddc827b/skills/autoresearch/SKILL.md)).
 
 **Extraction.** The extraction oracle is usually the agent following skill instructions, not a separate scorer. The code-grounded automatic pieces are structural: route paths, allocate addresses, acquire locks, detect transport, chunk text, build BM25, cache embeddings, and run tests. Meaning-level extraction remains an LLM skill behavior.
 

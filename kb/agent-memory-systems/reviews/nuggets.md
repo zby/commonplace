@@ -2,7 +2,7 @@
 description: "Nuggets review: TypeScript HRR fact memory, Pi prompt injection, trace capture, hit-count promotion to MEMORY.md, and Telegram/WhatsApp gateway"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-04"
 ---
 
@@ -82,7 +82,7 @@ The useful comparison is the promotion ladder. Nuggets turns repeated pull use i
 
 **Curation operations:** `promote` `decay` — Hit-counted facts are promoted into Claude `MEMORY.md` after the recall threshold, and configured `maxFacts` capacity evicts the oldest facts when a nugget exceeds its limit. Other automatic writes are acquisition from traces rather than curation of existing stored memory.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `tool-traces` `event-streams` — The extension reconstructs state from session branch tool results, captures file paths from tool-result events, extracts preference phrases from user input events, stores recent user/task summaries before compaction, and updates recall hits from recall events.
 
@@ -92,7 +92,7 @@ The useful comparison is the promotion ladder. Nuggets turns repeated pull use i
 
 **Distilled form:** `prose` `symbolic` — Trace material becomes short prose facts with symbolic keys/kinds/hit metadata, and frequently recalled facts become Markdown memory entries.
 
-**Trace source.** Nuggets qualifies as trace-derived because it writes durable retained artifacts from agent/user traces, not only from explicit memory commands. `tool_result` events store read/edit/write file paths, `input` events store simple preferences, `session_before_compact` stores a short `_task` summary and recent tool file paths, and `session_compact` runs promotion ([.pi/extensions/nuggets.ts](https://github.com/NeoVertex1/nuggets/blob/714cab8a3b1fb843aa98dfb51584d2c07a6739f3/.pi/extensions/nuggets.ts)).
+**Trace source.** Nuggets qualifies as trace-learning because it writes durable retained artifacts from agent/user traces, not only from explicit memory commands. `tool_result` events store read/edit/write file paths, `input` events store simple preferences, `session_before_compact` stores a short `_task` summary and recent tool file paths, and `session_compact` runs promotion ([.pi/extensions/nuggets.ts](https://github.com/NeoVertex1/nuggets/blob/714cab8a3b1fb843aa98dfb51584d2c07a6739f3/.pi/extensions/nuggets.ts)).
 
 **Extraction.** The extraction oracle is mostly rule-based: regexes for preferences, event field names for file paths, the last few user messages for task summaries, and a numeric hit threshold for promotion. Meaning-level judgment is limited; there is no LLM judge deciding whether a captured fact is true or should be retained.
 

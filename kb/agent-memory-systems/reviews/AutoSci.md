@@ -78,7 +78,7 @@ The core tradeoff is flexibility versus enforceability. AutoSci can let Claude C
 
 **Curation operations:** `consolidate` `dedup` `evolve` `synthesize` — `compile-context` and `rebuild-open-questions` consolidate stored wiki content into compact derived views; `dedup-edges`, `dedup-citations`, `find-similar-concept`, and discovery's wiki filtering remove or prevent duplicate access records/candidates; `lint --fix`, lifecycle transitions, reverse-link repairs, and metadata updates evolve existing artifacts; `/ask --crystallize` and prompt-governed research skills can synthesize new output/concept/idea/method artifacts from existing wiki evidence. The deterministic core is strongest for graph/index/schema maintenance; semantic synthesis remains LLM-mediated.
 
-The automatic write path is not trace-derived learning in this review's sense. It imports scientific sources and compiles derived access structures, but I did not find a loop that consumes agent transcripts, session logs, tool traces, or repeated trajectories to create durable rules, wiki pages, validators, rankers, or weights.
+The automatic write path is not trace-learning in this review's sense. It imports scientific sources and compiles derived access structures, but I did not find a loop that consumes agent transcripts, session logs, tool traces, or repeated trajectories to create durable rules, wiki pages, validators, rankers, or weights.
 
 ## Read-back
 

@@ -2,7 +2,7 @@
 description: "Compound Engineering review: repo-file workflow memory with generated strategy, brainstorm, plan, solution, pulse, session-history, and review artifacts"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-04"
 ---
 
@@ -80,7 +80,7 @@ The biggest tradeoff is authority speed. Compound Engineering can quickly move a
 
 **Curation operations:** `consolidate` `dedup` `synthesize` `invalidate` `promote` — `ce-compound` consolidates solved-problem context into compact solution docs, detects high overlap so an existing doc can be updated instead of duplicating it, and synthesizes new docs from conversation/code/session evidence. `ce-compound-refresh` consolidates overlapping docs, replaces or deletes stale docs, and marks ambiguous cases stale in headless mode. Discoverability edits and workflow loading promote selected artifacts into future agent attention.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `tool-traces` `event-streams` — The system consumes conversation history and auto-memory blocks during compounding, Claude/Codex/Cursor session logs through `ce-sessions`, git diffs and PR metadata during review, issue/Slack/repo research traces in research workflows, and analytics/tracing/payment/database event streams in product pulse.
 
@@ -90,7 +90,7 @@ The biggest tradeoff is authority speed. Compound Engineering can quickly move a
 
 **Distilled form:** `prose` `symbolic` — Traces become prose solution docs, strategy sections, pulse reports, review explanations, and concept definitions, with symbolic frontmatter, categories, IDs, JSON findings, file paths, git refs, and validation metadata.
 
-**Extraction.** The clearest trace-derived loop is `ce-compound` plus `ce-sessions`: session files are discovered, metadata-filtered, skeletonized into scratch files, synthesized by a session historian, and folded into the final solution document only when relevant. The workflow treats session history and auto memory as supplementary evidence, while current conversation and verified fixes take priority.
+**Extraction.** The clearest trace-learning loop is `ce-compound` plus `ce-sessions`: session files are discovered, metadata-filtered, skeletonized into scratch files, synthesized by a session historian, and folded into the final solution document only when relevant. The workflow treats session history and auto memory as supplementary evidence, while current conversation and verified fixes take priority.
 
 **Scope and timing.** The raw trace unit is a prior agent session, current conversation, git diff, PR discussion, or product telemetry window. The durable unit is a project file such as a solution learning, concept entry, strategy update, plan, pulse report, PR residual section, or instruction-file discoverability line.
 

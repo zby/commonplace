@@ -2,7 +2,7 @@
 description: "Letta review: stateful agent server with core memory blocks, archival and recall tools, compaction, sleeptime memory agents, and optional git-backed memory"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-04"
 ---
 
@@ -81,7 +81,7 @@ The key design difference is read-back. Letta's core memory is designed to act w
 
 **Curation operations:** `consolidate` `evolve` — Compaction summarizes older in-context messages into one retained summary message; sleeptime and document-sleeptime agents rewrite existing memory blocks from new conversation/source evidence. Index/embedding refreshes and ordinary passage/tool inserts are access upkeep or acquisition, not curation operations.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `tool-traces` `event-streams` — Letta stores conversation messages, tool calls/returns, steps, runs, provider traces, compaction events, and foreground-response transcripts used by sleeptime agents.
 
@@ -93,7 +93,7 @@ The key design difference is read-back. Letta's core memory is designed to act w
 
 **Extraction.** Compaction uses configured summarizer modes to turn old in-context messages into a packed summary message with optional compaction stats. Sleeptime uses a background agent prompt as the oracle: it reads a transcript, decides whether memory edits are warranted, and applies precise or broad memory editing tools. Voice sleeptime similarly stores older dialogue and rewrites the human memory block under a required tool-call sequence ([voice_sleeptime.py](https://github.com/letta-ai/letta/blob/1131535716e8a31c9a437f8695e25ac98f203a24/letta/prompts/system_prompts/voice_sleeptime.py)).
 
-**Scope and timing.** The strongest trace-derived loop is not archival insertion; that can be ordinary authored memory. The qualifying loops are compaction and sleeptime because they create durable summaries or block edits from messages that have already occurred. Tool edits are durable and behavior-shaping, but in the inspected code they are ordinary API/tool-manager updates unless a separate workflow supplies a trace-extracted generation step.
+**Scope and timing.** The strongest trace-learning loop is not archival insertion; that can be ordinary authored memory. The qualifying loops are compaction and sleeptime because they create durable summaries or block edits from messages that have already occurred. Tool edits are durable and behavior-shaping, but in the inspected code they are ordinary API/tool-manager updates unless a separate workflow supplies a trace-extracted generation step.
 
 **Survey fit.** Letta belongs in the trace-to-core-memory family: raw conversational traces are distilled into prompt-visible blocks or summaries, and those artifacts can affect later actions without another retrieval call. It also illustrates the need to distinguish trace-derived write paths from ordinary memory editing tools that the foreground agent calls intentionally.
 
@@ -139,7 +139,7 @@ The key design difference is read-back. Letta's core memory is designed to act w
 
 Relevant Notes:
 
-- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - places: Letta derives summaries and sleeptime memory edits from conversation/session traces.
+- [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: Letta derives summaries and sleeptime memory edits from conversation/session traces.
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Letta's core blocks are pushed into context, while archival and recall stores require explicit search tools.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: Letta's blocks, messages, passages, tools, embeddings, and git files differ by substrate, form, lineage, and authority.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: archival passages, recall search results, source passages, and summaries mostly advise as context.

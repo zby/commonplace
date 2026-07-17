@@ -2,7 +2,7 @@
 description: "byterover-cli review: local context-tree memory with HTML topic curation, BM25/runtime-signal retrieval, MCP hooks, review logs, dream pruning, and ByteRover cloud sync"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-04"
 ---
 
@@ -86,7 +86,7 @@ The biggest design split is authority. ByteRover deliberately makes the calling 
 
 **Curation operations:** `decay` `promote` — Runtime scoring down-weights stale material through recency/importance decay and promotes or demotes maturity tiers from access/update signals. Dream pruning can archive explicitly selected low-importance or stale topics, but link/merge/synthesis are candidate surfaces rather than automatic store-changing writes.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `tool-traces` `event-streams` — Query and curate task lifecycles, tool results, MCP calls, access-hit events, file references, task histories, and curation session inputs feed durable logs, sidecar signals, and sometimes generated topic content.
 
@@ -96,13 +96,13 @@ The biggest design split is authority. ByteRover deliberately makes the calling 
 
 **Distilled form:** `prose` `symbolic` — Curate transforms task/file/user context into prose topics embedded in symbolic `<bv-topic>` structure; access and update traces become symbolic ranking and maturity signals.
 
-**Trace source.** ByteRover qualifies as trace-derived because task inputs and agent activity become durable retained artifacts. `CurateExecutor` preloads file references, compacts large context, injects task variables and precomputed recon results into an agent session, then writes the agent's final `<bv-topic>` output through the HTML writer ([curate-executor.ts](https://github.com/campfirein/byterover-cli/blob/faf456d6bb47cb441b61c73051a581f4488868af/src/server/infra/executor/curate-executor.ts)). Query and curation lifecycle hooks persist task-level logs, matched documents, timing, operations, responses, and review metadata ([query-log-handler.ts](https://github.com/campfirein/byterover-cli/blob/faf456d6bb47cb441b61c73051a581f4488868af/src/server/infra/process/query-log-handler.ts), [curate-log-handler.ts](https://github.com/campfirein/byterover-cli/blob/faf456d6bb47cb441b61c73051a581f4488868af/src/server/infra/process/curate-log-handler.ts)).
+**Trace source.** ByteRover qualifies as trace-learning because task inputs and agent activity become durable retained artifacts. `CurateExecutor` preloads file references, compacts large context, injects task variables and precomputed recon results into an agent session, then writes the agent's final `<bv-topic>` output through the HTML writer ([curate-executor.ts](https://github.com/campfirein/byterover-cli/blob/faf456d6bb47cb441b61c73051a581f4488868af/src/server/infra/executor/curate-executor.ts)). Query and curation lifecycle hooks persist task-level logs, matched documents, timing, operations, responses, and review metadata ([query-log-handler.ts](https://github.com/campfirein/byterover-cli/blob/faf456d6bb47cb441b61c73051a581f4488868af/src/server/infra/process/query-log-handler.ts), [curate-log-handler.ts](https://github.com/campfirein/byterover-cli/blob/faf456d6bb47cb441b61c73051a581f4488868af/src/server/infra/process/curate-log-handler.ts)).
 
 **Extraction.** Extraction is mixed. Tool-mode MCP curation has the calling agent author the HTML directly, while ByteRover validates and writes it; in-daemon curation runs an agent session over task context and asks for a final topic document; search access traces are automatically condensed into access counts and importance bumps; dream scans derive maintenance candidates from topic contents, links, mtimes, search results, and sidecar signals.
 
 **Scope and timing.** The durable shared layer is per project/worktree, with optional cloud sync and version-control. Timing is online for access/update sidecar bumps and task logs, staged for `brv curate` sessions, review decisions, dream finalization, and VC push/pull.
 
-**Survey fit.** ByteRover belongs in the trace-to-project-KB and trace-to-ranking-signal families. It strengthens the survey claim that trace-derived learning often has two authority levels: raw task/use traces become logs and signals, while only a curated or agent-authored distillation becomes the memory content that later agents read.
+**Survey fit.** ByteRover belongs in the trace-to-project-KB and trace-to-ranking-signal families. It strengthens the survey claim that trace-learning often has two authority levels: raw task/use traces become logs and signals, while only a curated or agent-authored distillation becomes the memory content that later agents read.
 
 ## Read-back
 

@@ -3,7 +3,7 @@ description: "Eidetic review: Claude Code Markdown memory with hook-pushed conte
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-18"
-tags: [trace-derived]
+tags: [trace-learning]
 ---
 
 # Eidetic
@@ -79,7 +79,7 @@ The main tradeoff is safety versus immediacy. Eidetic's automatic trace loop can
 
 **Curation operations:** `consolidate` `dedup` `evolve` `promote` — Signal compounding appends new trace evidence into an existing card instead of creating a duplicate; promotion reuses same-slug cards and appends `## Update`; generated context consolidates ranked memory into a smaller rules/context surface; drift checks and indexing evolve derived state around existing cards; promotion changes a good answer from transient chat output into a typed memory card.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `tool-traces` — `session-signals.sh` reads the Claude Code transcript path from hook JSON, extracts recent user/assistant transcript lines, sends a bounded prompt to Claude or Codex, filters only `Decision:/Rule:/Worked:/Failed:/Knowledge:` lines, and pipes them to `compound.py`. `lifecycle_signals.py` separately records bounded metadata-only PostToolUse and PostToolUseFailure events for writes, edits, bash commands, and tool failures.
 
@@ -91,7 +91,7 @@ The main tradeoff is safety versus immediacy. Eidetic's automatic trace loop can
 
 **Distilled form:** `prose` `symbolic` `parametric` — Trace-derived signals become prose bullets/history entries plus symbolic frontmatter, names, statuses, project paths, op-log entries, and index rows; later vector embedding turns those chunks into parametric retrieval state.
 
-Relative to the trace-derived survey, Eidetic is a trace-to-operational-memory system: transcripts produce low-trust knowledge artifacts that can later be pushed as context or pulled by search. It strengthens the survey's distinction between extraction and trust: the system learns from traces, but it deliberately discounts that lineage instead of pretending extracted memory is verified.
+Relative to the trace-learning survey, Eidetic is a trace-to-operational-memory system: transcripts produce low-trust knowledge artifacts that can later be pushed as context or pulled by search. It strengthens the survey's distinction between extraction and trust: the system learns from traces, but it deliberately discounts that lineage instead of pretending extracted memory is verified.
 
 ## Read-back
 
@@ -124,7 +124,7 @@ The generated rules-file push is powerful and risky. It solves the "memory exist
 ## What to Watch
 
 - Whether v6 implements typed supersession and contradiction detection; that would move Eidetic from ranking penalties toward real truth-maintenance authority.
-- Whether lifecycle JSONL events become an input to synthesis, decay, or project-state updates; that would broaden trace-derived learning beyond transcript signal extraction.
+- Whether lifecycle JSONL events become an input to synthesis, decay, or project-state updates; that would broaden trace-learning beyond transcript signal extraction.
 - Whether importers become implemented code rather than schema/readiness paths; that would make `imported` lineage a real acquisition channel with provenance spans.
 - Whether the hook-pushed context starts using semantic/vector selection rather than mostly project/type/recency/ranking assembly; that would increase inferred push and context-dilution risk.
 - Whether faithfulness tests appear for injected rules/context; that would make Eidetic one of the few systems testing activation rather than only storage and retrieval mechanics.
@@ -133,7 +133,7 @@ Relevant Notes:
 
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes Eidetic's stored cards, hook-pushed rules context, and pull search tools.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies to cards, generated context, indexes, drift rows, hooks, and vault projections as different operative parts.
-- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - places Eidetic's transcript-to-signal loop in the trace-derived landscape.
+- [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places Eidetic's transcript-to-signal loop in the trace-learning landscape.
 - [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - frames session-end signal extraction as learning from agent traces.
 - [Symbolic context engineering is bounded by symbol availability](../../notes/symbolic-context-engineering-is-bounded-by-symbol-availability.md) - explains why project slugs, card kinds, statuses, and detail ids make selection targetable.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies ordinary memory cards, search results, and signal cards as advisory retained knowledge.

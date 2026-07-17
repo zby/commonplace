@@ -2,7 +2,7 @@
 description: "Amazon SAGE review: AppWorld rollouts become reusable Python skills, retrieval state, SFT data, and GRPO reward signal"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-04"
 ---
 
@@ -81,7 +81,7 @@ The sharp tradeoff is speed of authority. SAGE can turn a successful generated f
 
 **Curation operations:** `dedup` `promote` — function-name replacement removes duplicate retained skills during extraction/merge, and successful traces can be promoted into reusable skill records, read-back indexes, SFT data, and model checkpoints.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `tool-traces` `trajectories` — raw signal includes AppWorld code-generation turns, environment execution outputs, task success/evaluation, `lm_calls.jsonl` message logs, and paired-subtask skill-use traces.
 
@@ -93,7 +93,7 @@ The sharp tradeoff is speed of authority. SAGE can turn a successful generated f
 
 Extraction is mostly syntactic plus outcome-gated. Function extraction parses generated Python and keeps top-level definitions; expert-data extraction reads final logged model calls from successful or partial scenario runs; GRPO uses task reward plus a skill-use bonus as the oracle for policy updates. The raw trace remains evidence, while extracted functions and learned weights gain future behavior-shaping authority.
 
-Survey placement: SAGE belongs in both trace-to-tool and trace-to-policy territory on the [trace-derived learning survey](../trace-derived-learning-techniques-in-related-systems.md). It strengthens the survey's raw/distilled split: logs and rollouts are not the memory that later acts; extracted functions, retrieval state, and policy weights are.
+Survey placement: SAGE belongs in both trace-to-tool and trace-to-policy territory on the [trace-learning survey](../trace-learning-techniques-in-related-systems.md). It strengthens the survey's raw/distilled split: logs and rollouts are not the memory that later acts; extracted functions, retrieval state, and policy weights are.
 
 ## Read-back
 
@@ -135,7 +135,7 @@ Survey placement: SAGE belongs in both trace-to-tool and trace-to-policy territo
 
 Relevant Notes:
 
-- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - places: SAGE turns AppWorld trajectories into skill functions, SFT data, reward signal, and policy weights.
+- [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: SAGE turns AppWorld trajectories into skill functions, SFT data, reward signal, and policy weights.
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: SAGE's skill library matters because the runner inserts selected functions into prompts.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: SAGE spans JSONL skills, embeddings, datasets, prompts, reward code, and checkpoints.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: logs, datasets, and retained skill records are evidence until consumed by selectors, prompts, or training.

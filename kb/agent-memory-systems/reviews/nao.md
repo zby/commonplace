@@ -1,9 +1,9 @@
 ---
-description: "nao review: analytics-agent context builder with file-backed project context, SQL guardrails, stories, and pushed trace-derived user memory"
+description: "nao review: analytics-agent context builder with file-backed project context, SQL guardrails, stories, and pushed trace-learning user memory"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-04"
-tags: [trace-derived]
+tags: [trace-learning]
 ---
 
 # nao
@@ -69,7 +69,7 @@ nao's analytics context builder is closer to Commonplace than its user-memory ta
 
 **Curation operations:** `evolve` `invalidate` — The memory extractor can return a replacement with `supersedes_id`; persistence inserts the new memory and marks the old row's `supersededBy`, so existing remembered behavior is evolved through replacement while stale rows are invalidated from active read-back. Story edits produce new versions, but those are authored create/update/replace operations rather than automatic memory curation.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` — The qualifying trace is the chat message history passed to `safeScheduleMemoryExtraction`: recent user and assistant messages, with the last user message receiving a larger character budget, plus the current list of existing memories.
 
@@ -81,7 +81,7 @@ nao's analytics context builder is closer to Commonplace than its user-memory ta
 
 **Distilled form:** `prose` `symbolic` — The durable output is prose memory content plus symbolic category, user id, source chat id, timestamps, and supersession links.
 
-Relative to the trace-derived survey, nao is a trace-to-user-profile and trace-to-user-instruction system. It learns compact prompt material from conversation traces, not validators, route tables, skills, embeddings, or fine-tuned weights. The notable design choice is conservative extraction prompting plus active prompt injection, which makes the write side cautious but the read-back authority comparatively strong.
+Relative to the trace-learning survey, nao is a trace-to-user-profile and trace-to-user-instruction system. It learns compact prompt material from conversation traces, not validators, route tables, skills, embeddings, or fine-tuned weights. The notable design choice is conservative extraction prompting plus active prompt injection, which makes the write side cautious but the read-back authority comparatively strong.
 
 ## Read-back
 
@@ -115,7 +115,7 @@ The Slack reply policy is intentionally conservative in mention mode. That matte
 - Whether story folders, favorites, or shared stories become agent-searchable memory rather than UI organization; that would change story read-back from requested/chat-local to broader pull or push recall.
 - Whether memory injection becomes relevance-filtered by the current task; that would change the read-back signal from coarse to inferred or identifier-based targeting.
 - Whether SQL filtering moves from regex heuristics to dialect-aware parsing; that would strengthen enforcement authority for analytics agents.
-- Whether Slack thread mode starts summarizing or extracting memories from external conversations; that would broaden trace-derived learning beyond in-app chat traces.
+- Whether Slack thread mode starts summarizing or extracting memories from external conversations; that would broaden trace-learning beyond in-app chat traces.
 
 Relevant Notes:
 

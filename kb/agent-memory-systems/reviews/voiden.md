@@ -74,7 +74,7 @@ The agent surface is narrower than a memory system but useful. Voiden does not p
 
 **Curation operations:** `none` — The automatic paths I found are acquisition, serialization, execution-log capture, retention pruning, cache invalidation, and generated-instruction composition. I did not find automatic consolidation, deduplication, evolution, synthesis, invalidation, decay, or promotion of memory already in the store under the review vocabulary.
 
-History capture is trace extraction, but not trace-derived learning under the current review contract. The stored traces are request/response evidence, and the code provides UI/history consumption plus retention controls. It does not distill those traces into future prompt instructions, validators, route policies, embeddings, or edited workspace artifacts.
+History capture is trace extraction, but not trace-learning under the current review contract. The stored traces are request/response evidence, and the code provides UI/history consumption plus retention controls. It does not distill those traces into future prompt instructions, validators, route policies, embeddings, or edited workspace artifacts.
 
 ## Read-back
 
@@ -102,7 +102,7 @@ Other consumers include the desktop user, the Electron renderer, request pipelin
 
 ## What to Watch
 
-- Whether history gains a reviewed promotion path into assertions, docs, scripts, or reusable request blocks; that would turn request traces from evidence into trace-derived learning.
+- Whether history gains a reviewed promotion path into assertions, docs, scripts, or reusable request blocks; that would turn request traces from evidence into trace-learning.
 - Whether imported OpenAPI/Postman artifacts retain source pointers and regeneration metadata at the block level; that would make invalidation and re-import safer.
 - Whether installed skills start including project-specific summaries or workspace indexes; that would change read-back from baseline instruction availability toward project memory push.
 - Whether extension manifests become enforceable capability contracts rather than descriptive metadata; that would raise plugin governance closer to Commonplace type validation.

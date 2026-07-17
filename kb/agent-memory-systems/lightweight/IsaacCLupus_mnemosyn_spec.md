@@ -3,7 +3,7 @@ description: "Lightweight doc-grounded coverage of Mnemosyne, a spec-first local
 type: ../types/agent-memory-system-review.md
 source-tier: doc-grounded
 traits: [has-comparison, has-external-sources]
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-18"
 ---
 
@@ -53,7 +53,7 @@ The key divergence is implementation authority. Commonplace's methodology is its
 
 **Curation operations:** `synthesize` `promote` `decay` — The claimed system writes cited synthesis pages from retrieved knowledge, promotes drafts/proposed memories through approval into published or committed locations, and decays or archives conversation/memory state through the Phase 2 conversation-memory design. Treat these as specified operations, not verified implementation behavior.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `tool-traces` — The docs specify conversation rows, receipts, agent ids, intents, routes, phase logs, and user profile extraction from conversations.
 

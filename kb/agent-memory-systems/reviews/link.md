@@ -2,7 +2,7 @@
 description: "Link review: local Markdown wiki memory with raw captures, reviewed memory pages, bounded query packets, MCP/CLI skills, validation, and local viewer"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-18"
 ---
 
@@ -24,7 +24,7 @@ Link, by Gowtham S, is a local agent-memory layer that stores raw sources and st
 
 **Context efficiency is budgeted packet construction.** `query_link()` does not answer the user; it returns a compact context packet combining relevant memories, ranked wiki search results, and graph-neighborhood pages under small/medium/large budgets, with trimmed primary/neighbor text, estimated tokens, `has_more` flags, and follow-up tool suggestions ([mcp_package/link_core/query.py](https://github.com/gowtham0992/link/blob/a1aaa55050a0c9db221771e4424ab4f7a56b3e2a/mcp_package/link_core/query.py)). Search uses exact/title/alias/tag/TLDR/full-text scoring plus an optional in-memory SQLite FTS index rebuilt from Markdown, while `get_context()` expands from the best page to inbound and forward wikilinks rather than dumping the whole wiki ([mcp_package/link_core/search.py](https://github.com/gowtham0992/link/blob/a1aaa55050a0c9db221771e4424ab4f7a56b3e2a/mcp_package/link_core/search.py), [mcp_package/link_core/wiki.py](https://github.com/gowtham0992/link/blob/a1aaa55050a0c9db221771e4424ab4f7a56b3e2a/mcp_package/link_core/wiki.py)).
 
-**Trace capture is review-first.** `capture_session()` saves long chat/session notes as raw Markdown under `raw/memory-captures/` and returns proposals, but its MCP docstring states that it does not create durable memory pages; `accept_capture()` later recomputes proposals from the saved capture and writes only the selected item through the duplicate/conflict-safe memory creation path ([mcp_package/link_core/capture.py](https://github.com/gowtham0992/link/blob/a1aaa55050a0c9db221771e4424ab4f7a56b3e2a/mcp_package/link_core/capture.py), [mcp_package/link_mcp/server.py](https://github.com/gowtham0992/link/blob/a1aaa55050a0c9db221771e4424ab4f7a56b3e2a/mcp_package/link_mcp/server.py)). That makes the trace-derived loop durable but approval-gated.
+**Trace capture is review-first.** `capture_session()` saves long chat/session notes as raw Markdown under `raw/memory-captures/` and returns proposals, but its MCP docstring states that it does not create durable memory pages; `accept_capture()` later recomputes proposals from the saved capture and writes only the selected item through the duplicate/conflict-safe memory creation path ([mcp_package/link_core/capture.py](https://github.com/gowtham0992/link/blob/a1aaa55050a0c9db221771e4424ab4f7a56b3e2a/mcp_package/link_core/capture.py), [mcp_package/link_mcp/server.py](https://github.com/gowtham0992/link/blob/a1aaa55050a0c9db221771e4424ab4f7a56b3e2a/mcp_package/link_mcp/server.py)). That makes the trace-learning loop durable but approval-gated.
 
 **Trust is mostly structural and provenance-oriented.** Link validates required paths, frontmatter fields, page-directory type alignment, required sections, dead wikilinks, backlinks freshness, review dates, expiry dates, and secret-looking values; readiness also checks schema markers, pending operation journals, memory counts, and validation state ([mcp_package/link_core/validation.py](https://github.com/gowtham0992/link/blob/a1aaa55050a0c9db221771e4424ab4f7a56b3e2a/mcp_package/link_core/validation.py), [mcp_package/link_core/status.py](https://github.com/gowtham0992/link/blob/a1aaa55050a0c9db221771e4424ab4f7a56b3e2a/mcp_package/link_core/status.py), [mcp_package/link_core/operations.py](https://github.com/gowtham0992/link/blob/a1aaa55050a0c9db221771e4424ab4f7a56b3e2a/mcp_package/link_core/operations.py)). The code verifies shape and lifecycle, not whether a remembered claim is semantically true.
 
@@ -84,7 +84,7 @@ The main divergence is granularity of authority. Link's memory pages can strongl
 
 **Curation operations:** `none` — Link performs duplicate/conflict detection, review-state changes, expiry/stale filtering, archive/forget lifecycle changes, and access-structure rebuilds, but I did not find an automatic operation that consolidates, deduplicates, evolves, synthesizes, invalidates, decays, or promotes already-stored memory without an explicit caller action.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` — `capture_session()` stores chat/session notes as raw capture files, and `propose_memories()`/`accept_capture()` can extract durable memory candidates from those notes.
 
@@ -122,7 +122,7 @@ The main divergence is granularity of authority. Link's memory pages can strongl
 
 **The name hides a fairly complete lifecycle system.** Link is not only a search wrapper over Markdown; it has raw capture, review inbox, operation journals, schema migration, validation, local backup, visibility checks, and team-sync guidance.
 
-**The trace-derived loop is intentionally conservative.** The extraction code uses cues and confidence scores, then asks for approval or update, rather than letting a summarizer continuously rewrite memory. That lowers autonomy but makes provenance and consent easier to audit.
+**The trace-learning loop is intentionally conservative.** The extraction code uses cues and confidence scores, then asks for approval or update, rather than letting a summarizer continuously rewrite memory. That lowers autonomy but makes provenance and consent easier to audit.
 
 **The review state affects trust more than retrieval.** Reviewed memories get a ranking boost and pending memories trigger guidance, but unreviewed active memories can still be recalled. Operators should not confuse "pending review surfaced" with "pending review excluded."
 
@@ -134,7 +134,7 @@ The main divergence is granularity of authority. Link's memory pages can strongl
 
 - Whether Link adds automatic prompt hooks that call `memory_brief` or `query_link` before every agent invocation; that would make read-back more clearly push rather than instruction-mediated.
 - Whether memory review becomes a hard recall gate for high-impact preferences or decisions; that would change review status from guidance/ranking into enforcement.
-- Whether proposal extraction moves from deterministic cue matching to LLM judgment; that would change the trace-derived oracle and likely require stronger provenance and review controls.
+- Whether proposal extraction moves from deterministic cue matching to LLM judgment; that would change the trace-learning oracle and likely require stronger provenance and review controls.
 - Whether Link adds automatic consolidation or contradiction repair over existing memories; that would introduce real curation operations beyond acquisition and explicit lifecycle edits.
 - Whether team-sync workflows start enforcing visibility through Git hooks or command gates rather than read-only guidance.
 

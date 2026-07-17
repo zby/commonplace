@@ -2,7 +2,7 @@
 description: "DocMason review: repo-native private-document KB with provenance, governed ask, deterministic retrieval, and interaction-memory promotion"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-04"
 ---
 
@@ -47,7 +47,7 @@ DocMason, from JetXu-LLM's `DocMason` repository, is a repo-native local applica
 
 **Interaction-derived memories.** Raw host activity begins as JSONL mirrors, native ledger entries, attachments, and reconciled interaction entries under `runtime/interaction-ingest/`; durable promoted memories are generated under `knowledge_base/<target>/interaction/<interaction-memory-id>/` with manifests, extracted turn text, structures, copied attachments, `interaction_context.json`, `knowledge.json`, `summary.md`, affordances, and work items ([src/docmason/hooks.py](https://github.com/JetXu-LLM/DocMason/blob/b3e3e0ea0937309b4218f7ebf77bf72641fc1a5b/src/docmason/hooks.py), [src/docmason/interaction.py](https://github.com/JetXu-LLM/DocMason/blob/b3e3e0ea0937309b4218f7ebf77bf72641fc1a5b/src/docmason/interaction.py)). The lineage is preserved through conversation IDs, turn IDs, native turn IDs, interaction IDs, input digests, fingerprints, and promoted-entry markers. The authority remains deliberately lower than source evidence through `source_family = interaction-memory`, `trust_tier = interaction`, memory semantics, and retrieval policy.
 
-**Promotion path.** DocMason's core promotion path is source or trace material -> staging artifacts -> validation -> published KB -> retrieval/trace records -> governed answer support. The trace-derived path is host interaction entry -> grouped interaction memory directory -> semantic/trust metadata -> published retrieval/trace participation -> answer-time advisory context. It does not train a model or write opaque vector state; promotion stays file-native and inspectable.
+**Promotion path.** DocMason's core promotion path is source or trace material -> staging artifacts -> validation -> published KB -> retrieval/trace records -> governed answer support. The trace-learning path is host interaction entry -> grouped interaction memory directory -> semantic/trust metadata -> published retrieval/trace participation -> answer-time advisory context. It does not train a model or write opaque vector state; promotion stays file-native and inspectable.
 
 ## Comparison with Our System
 
@@ -57,7 +57,7 @@ DocMason, from JetXu-LLM's `DocMason` repository, is a repo-native local applica
 | Canonical substrate | Repo workspace plus private `original_doc/`, generated `knowledge_base/current/`, and local `runtime/` | Git-tracked `kb/` collections, type specs, validation, indexes, sources, reviews, and instructions |
 | Ingestion | Compiles Office/PDF/text/email into manifests, units, render/structure/artifact evidence, retrieval, and trace | Authors or snapshots markdown artifacts, then validates collection/type contracts |
 | Read path | Canonical `ask`, retrieve, trace, warm-start evidence, interaction-memory policy, and compact projections | `rg`, indexes, skills, reports, authored links, and explicit review/workflow commands |
-| Trace-derived learning | Promotes host interactions into lower-trust interaction memories and retrieval/trace inputs | Uses review/workshop artifacts; no automatic conversation-to-library promotion by default |
+| Trace-learning | Promotes host interactions into lower-trust interaction memories and retrieval/trace inputs | Uses review/workshop artifacts; no automatic conversation-to-library promotion by default |
 | Governance | Strong runtime gates for answer legality, sync, support contracts, source scope, and provenance | Strong artifact contracts, schema validation, review gates, and git-native lifecycle |
 
 DocMason and Commonplace share a filesystem-first instinct, but DocMason is a product runtime for private corpora while Commonplace is a methodology library and framework. DocMason deliberately keeps much of its durable operational state ignored and local. Commonplace makes most durable knowledge artifacts git-native and reviewable by default.
@@ -86,7 +86,7 @@ The main divergence is that DocMason gives the answer runtime more power. Canoni
 
 **Curation operations:** `promote` — DocMason promotes pending interaction entries into published interaction memories, marks entries as promoted after successful publish, and carries promoted memories into retrieval/trace surfaces. It also validates, rebuilds, publishes, and repairs derived access structures, but those are provenance/access-structure upkeep rather than semantic curation operations such as deduplication, decay, or in-place evolution.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `tool-traces` `event-streams` — Claude hooks capture session starts/ends, user prompts, selected tool uses, stop events, and diagnostics; native reconciliation helpers also derive entries from Codex and Claude transcript state.
 
@@ -145,7 +145,7 @@ The main divergence is that DocMason gives the answer runtime more power. Canoni
 
 Relevant Notes:
 
-- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - extends: DocMason promotes host interaction traces into lower-trust published interaction memories.
+- [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - extends: DocMason promotes host interaction traces into lower-trust published interaction memories.
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - exemplifies: DocMason combines storage with canonical ask read-back, retrieval, trace, and answer-state gates.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: source corpus, published KB, runtime logs, interaction memories, skills, adapters, validation, and trace artifacts differ by substrate, form, lineage, and authority.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - distinguishes: source documents, extracted evidence, summaries, logs, traces, and interaction memories mostly serve as evidence, context, or audit material.

@@ -3,7 +3,7 @@ description: "Lightweight doc-grounded coverage of Schmidhuber's incremental sel
 type: ../types/agent-memory-system-review.md
 source-tier: doc-grounded
 traits: [has-comparison, has-external-sources]
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-02"
 ---
 
@@ -53,14 +53,14 @@ The useful comparison is promotion discipline. Schmidhuber collapses "is this tr
 
 **Curation operations:** `evolve` `invalidate` `promote` — self-modification evolves the existing policy distribution, the rollback stack invalidates changes that no longer qualify, and payoff-per-time gates promote candidate modifications into retained policy state.
 
-### Trace-derived learning
+### Trace-learning
 
-The paper warrants `trace-derived` placement because it reports durable policy updates derived from system-life action/reward history.
+The paper warrants `trace-learning` placement because it reports durable policy updates derived from system-life action/reward history.
 
 - **Trace source** — a lifelong sequence of instructions, self-modification programs, environmental interactions, reward events, and elapsed time.
 - **Extraction** — self-modification programs propose probability changes; the unmodifiable top-level strategy uses payoff-per-time as the retention oracle and restores old distributions when a modification stops qualifying.
 - **Scope and timing** — online, within a single system life; no resettable episode boundary is assumed, and the reported experiments use toy environments to illustrate operation rather than broad empirical scaling.
-- **Survey placement** — a historical trajectory-to-policy case for the [trace-derived learning survey](../trace-derived-learning-techniques-in-related-systems.md), lower-confidence for modern agent-memory comparison because the evidence is a paper snapshot, not inspectable source.
+- **Survey placement** — a historical trajectory-to-policy case for the [trace-learning survey](../trace-learning-techniques-in-related-systems.md), lower-confidence for modern agent-memory comparison because the evidence is a paper snapshot, not inspectable source.
 
 ## Read-back
 
@@ -80,7 +80,7 @@ The paper warrants `trace-derived` placement because it reports durable policy u
 
 ## Relevant Notes
 
-- [trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) — compares-with: places this paper as a lower-confidence historical trajectory-to-policy case
+- [trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) — compares-with: places this paper as a lower-confidence historical trajectory-to-policy case
 - [Self-Training-LLM](../reviews/Self-Training-LLM.md) — compares-with: both promote experience into model-side behavior rather than a readable KB artifact, but Self-Training-LLM is repo-inspected and dataset-driven
 - [Meta-Harness](../reviews/meta-harness.md) — compares-with: a modern code-inspected system where benchmark-scored runs select improved harness variants rather than self-modifying instruction probabilities
 - [choosing what to learn requires both validity and learning value gates](../../notes/choosing-what-to-learn-requires-both-validity-and-learning-value-gates.md) — rationale: explains why KB promotion cannot collapse correctness and value into one payoff-per-time gate

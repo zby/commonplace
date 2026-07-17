@@ -2,7 +2,7 @@
 description: "cass-memory review: file-backed procedural memory for coding agents with cass session search, diary summaries, LLM reflection, scored playbook rules, MCP tools, and trauma guards"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-04"
 ---
 
@@ -84,7 +84,7 @@ The sharpest design difference is the treatment of trace-derived state. cass-mem
 
 **Curation operations:** `dedup` `evolve` `synthesize` `invalidate` `decay` `promote` — The curator reinforces exact or similar duplicate rules instead of adding copies; replaces existing bullet content; can create merged bullets; deprecates, retires, or inverts bad rules; score calculation applies half-life decay; and promotion/demotion changes maturity from candidate through proven or deprecated.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `tool-traces` `event-streams` — Raw agent session transcripts, `cass` search hits, context-use logs, outcome records, inline feedback comments, command-run usage events, and trauma scans feed durable state.
 

@@ -1,9 +1,9 @@
 ---
-description: "G-Memory review: trace-derived multi-agent memory with Chroma task storage, NetworkX task graph, JSON insights, and orchestrator-pushed examples/rules"
+description: "G-Memory review: trace-learning multi-agent memory with Chroma task storage, NetworkX task graph, JSON insights, and orchestrator-pushed examples/rules"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-04"
-tags: [trace-derived]
+tags: [trace-learning]
 ---
 
 # G-Memory
@@ -22,7 +22,7 @@ G-Memory, from bingreeky's `bingreeky/GMemory` repository, is a Python experimen
 
 **The hierarchy is implemented as Chroma plus file-backed graph and rule sidecars.** `GMemory.__post_init__()` creates a Chroma store under `persist_dir`, a `TaskLayer` with a pickled NetworkX graph, and an `InsightsManager` with an `insights.json` file and log ([mas/memory/mas_memory/GMemory.py](https://github.com/bingreeky/GMemory/blob/7b581c51d993bd600df14691d101d7e601040cc6/mas/memory/mas_memory/GMemory.py), [mas/utils.py](https://github.com/bingreeky/GMemory/blob/7b581c51d993bd600df14691d101d7e601040cc6/mas/utils.py)). The README's "Insight Graph, Query Graph, and Interaction Graph" framing maps in code to insight rules, task-similarity graph expansion, and the serialized per-task `StateChain` rather than to a single persisted graph database ([README.md](https://github.com/bingreeky/GMemory/blob/7b581c51d993bd600df14691d101d7e601040cc6/README.md)).
 
-**Writes distill trajectories before storing them.** `_extract_mas_message()` removes states with negative reward, rewrites successful trajectories as action/observation text, strips numbers from a clean trajectory, asks an LLM for key steps, and asks another LLM prompt for failure reasons on failed runs ([mas/memory/mas_memory/GMemory.py](https://github.com/bingreeky/GMemory/blob/7b581c51d993bd600df14691d101d7e601040cc6/mas/memory/mas_memory/GMemory.py), [mas/memory/mas_memory/prompt.py](https://github.com/bingreeky/GMemory/blob/7b581c51d993bd600df14691d101d7e601040cc6/mas/memory/mas_memory/prompt.py)). This is a real trace-derived learning path: the durable memory is not just raw logs, but logs plus LLM-extracted operational summaries.
+**Writes distill trajectories before storing them.** `_extract_mas_message()` removes states with negative reward, rewrites successful trajectories as action/observation text, strips numbers from a clean trajectory, asks an LLM for key steps, and asks another LLM prompt for failure reasons on failed runs ([mas/memory/mas_memory/GMemory.py](https://github.com/bingreeky/GMemory/blob/7b581c51d993bd600df14691d101d7e601040cc6/mas/memory/mas_memory/GMemory.py), [mas/memory/mas_memory/prompt.py](https://github.com/bingreeky/GMemory/blob/7b581c51d993bd600df14691d101d7e601040cc6/mas/memory/mas_memory/prompt.py)). This is a real trace-learning path: the durable memory is not just raw logs, but logs plus LLM-extracted operational summaries.
 
 **Insights are periodically synthesized and maintained.** Once the Chroma task count reaches `start_insights_threshold`, `add_memory()` calls `finetune_insights()` every `rounds_per_insights` tasks and `merge_insights()` every 20 tasks ([mas/memory/mas_memory/GMemory.py](https://github.com/bingreeky/GMemory/blob/7b581c51d993bd600df14691d101d7e601040cc6/mas/memory/mas_memory/GMemory.py)). The insight prompts support `ADD`, `EDIT`, `REMOVE`, and `AGREE`; the update code changes rule text, score, and positive/negative task correlations, while merge clusters tasks and asks an LLM to consolidate related rules ([mas/memory/mas_memory/GMemory.py](https://github.com/bingreeky/GMemory/blob/7b581c51d993bd600df14691d101d7e601040cc6/mas/memory/mas_memory/GMemory.py), [mas/memory/mas_memory/prompt.py](https://github.com/bingreeky/GMemory/blob/7b581c51d993bd600df14691d101d7e601040cc6/mas/memory/mas_memory/prompt.py)).
 
@@ -78,7 +78,7 @@ The strongest overlap is the idea that retained memory should be structured enou
 
 **Curation operations:** `consolidate` `dedup` `evolve` `synthesize` `promote` - `merge_insights()` consolidates clustered rule sets; `_merge_rules()` explicitly removes redundancy and combines similar rules; `_update_rules()` can edit existing rule text and correlations; LLM prompts can add new general rules from trajectory sets; `AGREE`, positive correlations, and `backward()` score increases promote rule salience. The code does not implement true invalidation with retained history or age/capacity decay.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `trajectories` - The raw signal is each completed MAS task: agent messages, action/observation steps, reward-bearing state transitions, final feedback, and success/failure label.
 
@@ -90,7 +90,7 @@ The strongest overlap is the idea that retained memory should be structured enou
 
 **Distilled form:** `prose` `symbolic` - Distilled outputs are prose key steps, failure reasons, and insight rules, plus symbolic scores and positive/negative task correlations.
 
-G-Memory supports the trace-derived survey claim that many systems split memory into raw episodes and distilled rules, but it also shows the governance gap: the distilled rules immediately shape future prompts without a separate review or validation tier.
+G-Memory supports the trace-learning survey claim that many systems split memory into raw episodes and distilled rules, but it also shows the governance gap: the distilled rules immediately shape future prompts without a separate review or validation tier.
 
 ## Read-back
 

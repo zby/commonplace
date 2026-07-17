@@ -3,7 +3,7 @@ description: "ai-memex-cli review: Git-backed Markdown vault, agent skill workfl
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-04"
-tags: [trace-derived]
+tags: [trace-learning]
 ---
 
 # ai-memex-cli
@@ -55,7 +55,7 @@ tags: [trace-derived]
 | Main substrate | `.llmwiki` Markdown vaults, raw/wiki split, generated prompts/skills/context blocks | Git-tracked Markdown collections, type specs, source snapshots, reviews, generated indexes |
 | Semantic writes | Delegated to host agents through prompts and installed skills | Written by agents under collection/type contracts, with deterministic validation and review workflows |
 | Retrieval | `memex search`, `inject`, `glob`, context digest blocks, lexical/qmd/project-keyword selection | `rg`, authored indexes, links, collection contracts, validation/review reports |
-| Trace use | Session files become raw Markdown and can be ingested into wiki pages | Trace-derived learning is analyzed and selectively used, not a default runtime capture loop |
+| Trace use | Session files become raw Markdown and can be ingested into wiki pages | Trace-learning is analyzed and selectively used, not a default runtime capture loop |
 | Governance | Mechanical lint, optional semantic lint agent, watch self-healing loop | Type schemas, collection contracts, semantic review gates, replacement archives, validation commands |
 | Activation | Pull search/query plus optional project bootstrap blocks that push vault digests into agent files | Mostly deliberate pull through search/index/link/skill workflows |
 
@@ -83,7 +83,7 @@ ai-memex-cli also has a clearer session-capture loop than Commonplace. It can re
 
 **Curation operations:** `consolidate` `synthesize` — session distillation can compress a conversation into a raw Markdown source, and ingest/semantic-lint prompts ask agents to synthesize source material, comparisons, overviews, syntheses, contradictions, cross-references, and unresolved lint reports into wiki pages.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` — The implemented trace path reads agent session files from configured session directories, including Claude Code/Codex/OpenCode/Gemini/Aider-style stores.
 
@@ -99,7 +99,7 @@ ai-memex-cli also has a clearer session-capture loop than Commonplace. It can re
 
 **Scope and timing.** Distillation is staged: first create a raw session source, then run ingest so an agent can extract decisions, final answers, best practices, snippets, and open questions into ordinary wiki pages. Watch mode can automate the subsequent ingest/lint loop, but it still depends on the configured host agent for semantic updates ([src/core/ingest-lint-loop.ts](https://github.com/zelixag/ai-memex-cli/blob/4adb274a33cbb9ff0f03a6aeeb9c8d2525a5ac3f/src/core/ingest-lint-loop.ts), [src/commands/watch.ts](https://github.com/zelixag/ai-memex-cli/blob/4adb274a33cbb9ff0f03a6aeeb9c8d2525a5ac3f/src/commands/watch.ts)).
 
-**Survey placement.** On the [trace-derived learning survey](../trace-derived-learning-techniques-in-related-systems.md), ai-memex-cli belongs in the trace-to-source-to-wiki family: traces become durable raw Markdown, then agent workflows synthesize wiki pages. It strengthens the survey split between raw trace preservation and distilled behavior-shaping artifacts because the first-stage session file is evidence, while the later wiki page or context block is what changes future behavior.
+**Survey placement.** On the [trace-learning survey](../trace-learning-techniques-in-related-systems.md), ai-memex-cli belongs in the trace-to-source-to-wiki family: traces become durable raw Markdown, then agent workflows synthesize wiki pages. It strengthens the survey split between raw trace preservation and distilled behavior-shaping artifacts because the first-stage session file is evidence, while the later wiki page or context block is what changes future behavior.
 
 ## Read-back
 

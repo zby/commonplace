@@ -1,9 +1,9 @@
 ---
-description: "browzy.ai review: terminal personal KB with Markdown/wiki files, SQLite FTS, LLM compilation, query-time context assembly, and trace-derived digests"
+description: "browzy.ai review: terminal personal KB with Markdown/wiki files, SQLite FTS, LLM compilation, query-time context assembly, and trace-learning digests"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-04"
-tags: [trace-derived]
+tags: [trace-learning]
 ---
 
 # browzy.ai
@@ -73,7 +73,7 @@ browzy is stronger on user-facing read-back ergonomics. It packages retrieval, b
 
 **Curation operations:** `consolidate` `evolve` `synthesize` — Session digest generation summarizes a prior session; compilation can update an existing article in light of a new source; compiler and crystallizer paths create new wiki/draft entries from sources or multi-article Q&A traces.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` — The CLI persists session messages, source-bearing assistant turns, session metadata, activity-log entries, and Q&A exchanges used by the crystallizer.
 
@@ -85,7 +85,7 @@ browzy is stronger on user-facing read-back ergonomics. It packages retrieval, b
 
 **Distilled form:** `prose` `symbolic` — Digests and draft insights are prose; their filenames, frontmatter, tags, source slugs, session metadata, and activity-log markers are symbolic.
 
-In the trace-derived-learning survey terms, browzy sits in the artifact-learning family: it distills session/Q&A traces into prose artifacts that may later be indexed and read back. It strengthens the claim that useful trace-derived learning often needs a staging layer; the implementation writes digests/drafts rather than silently changing authoritative wiki articles.
+In the trace-derived-learning survey terms, browzy sits in the artifact-learning family: it distills session/Q&A traces into prose artifacts that may later be indexed and read back. It strengthens the claim that useful trace-learning often needs a staging layer; the implementation writes digests/drafts rather than silently changing authoritative wiki articles.
 
 ## Read-back
 

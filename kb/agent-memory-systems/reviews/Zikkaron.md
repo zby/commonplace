@@ -1,9 +1,9 @@
 ---
-description: "Zikkaron review: Claude Code MCP memory with SQLite/FTS/vector storage, predictive write gating, trace-derived consolidation, hooks, and push/pull recall"
+description: "Zikkaron review: Claude Code MCP memory with SQLite/FTS/vector storage, predictive write gating, trace-learning consolidation, hooks, and push/pull recall"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-05"
-tags: [trace-derived]
+tags: [trace-learning]
 ---
 
 # Zikkaron
@@ -73,7 +73,7 @@ The README's benchmark claims are reported, not independently reproduced here. T
 
 **Curation operations:** `dedup` `evolve` `synthesize` `invalidate` `decay` `promote` — Similar memories can merge or be deleted as duplicates; reconsolidation updates or archives memories on retrieval mismatch; memify derives new co-occurrence claims; staleness and reconsolidation can mark stale/archive old state; thermodynamic decay cools memories and entities; heat boosts, useful ratings, decision auto-protection, anchors, and CLS promotion raise salience or tier.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `tool-traces` `event-streams` — Raw inputs include explicit remembered session content, sensory-buffer episodes, PostToolUse action rows, recall/access events, compaction checkpoints, project seeding scans, and hook-triggered session/prompt events.
 
@@ -127,7 +127,7 @@ Relevant Notes:
 
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes Zikkaron's SQLite memory store from its MCP and hook paths that actually serve memory into Claude's context.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - supports separating database rows, hook files, synced instructions, embeddings, action logs, and generated summaries by substrate, form, lineage, and authority.
-- [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - frames Zikkaron's action-log, episode, consolidation, and reconsolidation loops as trace-derived learning.
+- [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - frames Zikkaron's action-log, episode, consolidation, and reconsolidation loops as trace-learning.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - describes the authority carried by hook settings, synced CLAUDE.md instructions, rules, validators, and retrieval policy.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - describes the advisory role of ordinary stored memories, project context, checkpoints, and raw traces.
 - [Lineage](../../notes/definitions/lineage.md) - highlights the provenance risk around automatic compression, derivation, reconsolidation, and dream replay.

@@ -96,7 +96,7 @@ ReframeWeb's most novel idea relative to us is treating recency — including "r
 
 ## What to Watch
 
-- Whether the per-stage few-shot pools get a production writer that distills observed decisions into steering examples — that would turn the pipeline into genuine trace-derived learning and would require re-tagging this review `trace-derived`.
+- Whether the per-stage few-shot pools get a production writer that distills observed decisions into steering examples — that would turn the pipeline into genuine trace-learning and would require re-tagging this review `trace-learning`.
 - Whether substring matching is replaced by embeddings or a lexical index; the current tag+substring+recency model is the load-bearing retrieval design and its precision-or-silence behavior is a real limitation.
 - Whether any curation lands (dedup/invalidate over accumulating preference memories, or consolidation of transcripts) — today the store only grows.
 - Whether a faithfulness/ablation harness appears; the benchmarks score decisions but never test that injected memory changes the final output.

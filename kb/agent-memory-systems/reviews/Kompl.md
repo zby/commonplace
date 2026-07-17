@@ -2,7 +2,7 @@
 description: "Kompl review: SQLite-backed knowledge compiler that ingests sources into a generated wiki with provenance, FTS/vector retrieval, MCP tools, and chat-derived drafts"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-04"
 ---
 
@@ -65,9 +65,9 @@ The nearest Commonplace analogue is source snapshot -> extraction -> reviewed ar
 
 **Curation operations:** `dedup` `evolve` `synthesize` `invalidate` — Alias resolution, existing-page-title matching, within-session canonical dedup, and page-plan dedup avoid duplicate entities/concepts/pages; update plans and mention re-canonicalization evolve existing pages and metadata; comparison/overview pages and chat FAQ drafts synthesize new pages from multiple retained inputs; source delete/archive cleanup, orphan queued-session supersession, stale-session failure, and cancelled-session guards invalidate stale operational state, while contradiction triage logs conflicts without rewriting the contradicted page.
 
-### Trace-derived learning
+### Trace-learning
 
-**Trace source:** `session-logs` — The qualifying trace-derived path is chat compounding: a chat turn stores user/assistant messages, pages used, and citations, then creates a pending `query-generated` page draft when the answer used at least three pages ([app/src/app/api/chat/route.ts](https://github.com/tuirk/Kompl/blob/8f16a0bb43105591daf4f15ececb788f66434305/app/src/app/api/chat/route.ts)).
+**Trace source:** `session-logs` — The qualifying trace-learning path is chat compounding: a chat turn stores user/assistant messages, pages used, and citations, then creates a pending `query-generated` page draft when the answer used at least three pages ([app/src/app/api/chat/route.ts](https://github.com/tuirk/Kompl/blob/8f16a0bb43105591daf4f15ececb788f66434305/app/src/app/api/chat/route.ts)).
 
 **Learning scope:** `per-project` — The draft is scoped to the local wiki and cited page ids, not a cross-install memory.
 
@@ -121,4 +121,4 @@ Relevant Notes:
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: Kompl's pages, plans, provenance, aliases, FTS rows, vector records, and progress queues carry different forms and authorities.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: compiled pages and provenance primarily serve as evidence and reference.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: compile steps, page plans, settings, gates, indexes, and MCP schemas shape future behavior.
-- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - qualifies narrowly: Kompl derives pending query-generated drafts from chat session turns, while its main wiki compiler is imported-source based.
+- [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - qualifies narrowly: Kompl derives pending query-generated drafts from chat session turns, while its main wiki compiler is imported-source based.

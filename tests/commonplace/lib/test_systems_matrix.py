@@ -19,7 +19,7 @@ def test_zikkaron_fixture_full_new_format() -> None:
 
     assert row["system_name"] == "Zikkaron"
     assert row["storage_substrate"] == "sqlite"
-    assert row["trace_derived"] == "yes"
+    assert row["trace_learning"] == "yes"
 
     # representational form one-hot + derived component list
     assert (row["form_prose"], row["form_symbolic"], row["form_parametric"]) == ("1", "1", "1")
@@ -69,12 +69,12 @@ def test_pull_only_skips_push_and_keeps_universal_axes() -> None:
     assert row["rb_faithfulness_tested"] == ""
     # universal axes set
     assert row["form_prose"] == "1" and row["lin_authored"] == "1" and row["auth_knowledge"] == "1"
-    # trace axes blank (not trace-derived)
+    # trace axes blank (not trace-learning)
     assert row["ts_tool_traces"] == ""
     assert flags == []
 
 
-def test_trace_axes_only_apply_to_trace_derived() -> None:
+def test_trace_axes_only_apply_to_trace_learning() -> None:
     base = (
         "# Sys\n\n"
         "**Storage substrate:** `files` — x\n"
@@ -84,14 +84,14 @@ def test_trace_axes_only_apply_to_trace_derived() -> None:
         "**Write agency:** `manual` — x\n"
         "**Read-back:** `pull` — x\n"
     )
-    row, flags = parse(base)  # no trace-derived tag
+    row, flags = parse(base)  # no trace-learning tag
     assert row["ls_per_task"] == ""  # blank, not flagged
     assert not any("Trace source" in f for f in flags)
 
 
 def test_missing_applicable_tokens_are_flagged() -> None:
     text = (
-        "# Bare\ntags: [trace-derived]\n\n"
+        "# Bare\ntags: [trace-learning]\n\n"
         "**Storage substrate:** `files` — x\n"
         "**Read-back:** `push` — pushes stuff\n"
     )
@@ -108,7 +108,7 @@ def test_missing_applicable_tokens_are_flagged() -> None:
 
 def test_not_determinable_marks_applicable_axis_assessed_unknown() -> None:
     text = (
-        "# Pushy\ntags: [trace-derived]\n\n"
+        "# Pushy\ntags: [trace-learning]\n\n"
         "**Storage substrate:** `files` — x\n"
         "**Representational form:** `prose` — x\n"
         "**Lineage:** `authored` — x\n"

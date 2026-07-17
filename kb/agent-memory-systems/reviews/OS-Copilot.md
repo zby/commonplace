@@ -2,7 +2,7 @@
 description: "OS-Copilot review: FRIDAY promotes judged Python execution traces into Chroma-retrieved reusable tools for later planning and codegen"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-04"
 ---
 
@@ -79,7 +79,7 @@ The design tradeoff is authority without audit depth. OS-Copilot persists code a
 
 **Curation operations:** `promote` — a judged Python execution trace crosses from current-run code into retained reusable-tool memory only when the completion status and score threshold permit it.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `tool-traces` `trajectories` — raw signal comes from generated code, invocations, environment outputs/errors, current working directory, directory listings, prerequisite outputs, judge critiques, repairs, replanning, and self-learning lesson runs.
 
@@ -91,7 +91,7 @@ The design tradeoff is authority without audit depth. OS-Copilot persists code a
 
 Extraction is LLM-mediated and judge-gated. The executor generates Python code and an invocation, the environment executes it, the judge returns completion status and score, repair may rewrite the code, and only completed high-scoring Python subtasks are stored. The raw stage has temporary authority over repair and replanning; the distilled stage gains future planning and generation authority through retrieval.
 
-Survey placement: OS-Copilot is a trace-to-tool system. It strengthens the survey pattern that trace-derived learning becomes behaviorally important at the promotion boundary: raw logs matter because judged code is converted into durable executable tools and a retrieval index, not because the raw transcript is replayed.
+Survey placement: OS-Copilot is a trace-to-tool system. It strengthens the survey pattern that trace-learning becomes behaviorally important at the promotion boundary: raw logs matter because judged code is converted into durable executable tools and a retrieval index, not because the raw transcript is replayed.
 
 ## Read-back
 
@@ -124,7 +124,7 @@ Selection is top-k embedding similarity, with no provenance-aware filter, token 
 
 Relevant Notes:
 
-- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - places: OS-Copilot turns executed and judged task traces into reusable generated tools.
+- [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: OS-Copilot turns executed and judged task traces into reusable generated tools.
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: FRIDAY's Chroma store matters because the agent loop activates it before planning and generation.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: generated code, descriptions, embeddings, planner nodes, and courses carry different forms and authorities.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: course JSON and execution traces are evidence or task sources until promoted.

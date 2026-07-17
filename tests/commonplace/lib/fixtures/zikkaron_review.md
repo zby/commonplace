@@ -2,7 +2,7 @@
 description: "Zikkaron review: local Claude Code memory engine with SQLite/vector retrieval, trace capture, hook-based context injection, and compaction replay"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-02"
 ---
 
@@ -26,9 +26,9 @@ Zikkaron, from amanhij, is a local Python MCP server and hook package for Claude
 
 **Claude hooks turn stored memory into automatic read-back.** `install_hooks()` writes project `.claude/settings.json` entries for `PreCompact`, `SessionStart`, `PostToolUse`, and `UserPromptSubmit`, copying five hook scripts into `.claude/hooks/` ([server.py](https://github.com/amanhij/Zikkaron/blob/dda34a5d903d04ecb5517af214d437873c833302/zikkaron/server.py)). The `SessionStart` hook prints checkpoint, anchored facts, hot project memories, and recent actions to stdout; the `UserPromptSubmit` hook performs FTS/vector retrieval over the SQLite database and prints up to five memories within a 3,000-character budget, so memory reaches Claude's context without an explicit tool call ([session-start-context.py](https://github.com/amanhij/Zikkaron/blob/dda34a5d903d04ecb5517af214d437873c833302/zikkaron/hooks/session-start-context.py), [prompt-recall.py](https://github.com/amanhij/Zikkaron/blob/dda34a5d903d04ecb5517af214d437873c833302/zikkaron/hooks/prompt-recall.py)).
 
-**Trace capture is split between a hot path and a consolidation path.** The `PostToolUse` hook writes lightweight tool-call rows directly to `action_log`, skipping Zikkaron tools to avoid loops; `AstrocyteEngine._process_action_log()` later groups unprocessed actions by directory and 30-minute bucket and creates low-heat `_action_stream` memories for groups of at least three actions ([post-tool-capture.py](https://github.com/amanhij/Zikkaron/blob/dda34a5d903d04ecb5517af214d437873c833302/zikkaron/hooks/post-tool-capture.py), [consolidation.py](https://github.com/amanhij/Zikkaron/blob/dda34a5d903d04ecb5517af214d437873c833302/zikkaron/consolidation.py)). That is the clearest code-grounded trace-derived learning path.
+**Trace capture is split between a hot path and a consolidation path.** The `PostToolUse` hook writes lightweight tool-call rows directly to `action_log`, skipping Zikkaron tools to avoid loops; `AstrocyteEngine._process_action_log()` later groups unprocessed actions by directory and 30-minute bucket and creates low-heat `_action_stream` memories for groups of at least three actions ([post-tool-capture.py](https://github.com/amanhij/Zikkaron/blob/dda34a5d903d04ecb5517af214d437873c833302/zikkaron/hooks/post-tool-capture.py), [consolidation.py](https://github.com/amanhij/Zikkaron/blob/dda34a5d903d04ecb5517af214d437873c833302/zikkaron/consolidation.py)). That is the clearest code-grounded trace-learning path.
 
-**Project seeding gives a cold-start import path.** `seed_project` scans a project tree, parses common config formats, reads documentation, CI files, entry points, and component boundaries, generates `_seed` memories with differentiated heat, and replaces prior seed memories for the same directory on rerun ([seed.py](https://github.com/amanhij/Zikkaron/blob/dda34a5d903d04ecb5517af214d437873c833302/zikkaron/seed.py), [server.py](https://github.com/amanhij/Zikkaron/blob/dda34a5d903d04ecb5517af214d437873c833302/zikkaron/server.py)). This is source-derived project memory, not trace-derived agent learning.
+**Project seeding gives a cold-start import path.** `seed_project` scans a project tree, parses common config formats, reads documentation, CI files, entry points, and component boundaries, generates `_seed` memories with differentiated heat, and replaces prior seed memories for the same directory on rerun ([seed.py](https://github.com/amanhij/Zikkaron/blob/dda34a5d903d04ecb5517af214d437873c833302/zikkaron/seed.py), [server.py](https://github.com/amanhij/Zikkaron/blob/dda34a5d903d04ecb5517af214d437873c833302/zikkaron/server.py)). This is source-derived project memory, not trace-learning agent memory.
 
 ## Artifact analysis
 
@@ -84,14 +84,14 @@ Commonplace is stronger as a governed knowledge substrate. Its retained artifact
 
 **Curation operations:** `consolidate` `dedup` `evolve` `decay` `promote` — CLS consolidation abstracts episodic memories into semantic schemas and compresses by age; the curator merges/links near-duplicates; enrichment reconsolidates existing entries in place; heat decay and age compression evict cold memories; auto-protection and heat reweighting promote salience
 
-### Trace-derived learning
+### Trace-learning
 
 - **Trace source:** `session-logs` `tool-traces` `event-streams` — `PostToolUse` action rows, compaction/session traces, and hook event streams
 - **Learning scope:** `per-project` `cross-task` — directory/project-scoped action memories plus cross-task semantic schemas from consolidation
 - **Learning timing:** `online` `staged` — the action hook captures online; consolidation is staged until idle or explicit `consolidate_now`
 - **Distilled form:** `prose` `symbolic` `parametric` — compressed prose memories, symbolic schemas/rules, and embedding/HDC vectors
 
-**Trace source.** Zikkaron qualifies as trace-derived. The clearest trace source is Claude Code `PostToolUse` input: tool name, selected input summary, current directory, session id, and timestamp are stored in `action_log`. Compaction/session traces are captured through checkpoints, pre-compact drain, restore, and session-start context. Manual `remember` calls can also store task outcomes, but the code-grounded automatic trace path is the hook action stream.
+**Trace source.** Zikkaron qualifies as trace-learning. The clearest trace source is Claude Code `PostToolUse` input: tool name, selected input summary, current directory, session id, and timestamp are stored in `action_log`. Compaction/session traces are captured through checkpoints, pre-compact drain, restore, and session-start context. Manual `remember` calls can also store task outcomes, but the code-grounded automatic trace path is the hook action stream.
 
 **Extraction.** The hot path records only compact event summaries. During consolidation, unprocessed actions are grouped by directory and 30-minute window; groups with at least three actions become low-heat memories tagged `_action_stream` and `_auto`. Other extraction paths derive entities, relationships, semantic schemas, profiles, beliefs, and compression summaries from memory content using regexes, embeddings, clustering, enrichment engines, and heuristics rather than a human review oracle.
 
@@ -99,7 +99,7 @@ Commonplace is stronger as a governed knowledge substrate. Its retained artifact
 
 **Scope and timing.** Scope is per local database, directory, session id, time bucket, and hook-installation project. The action hook is online and cheap; consolidation is delayed until idle or explicit `consolidate_now`; session/prompt hooks read before action; compaction hooks drain before compaction and restore after compaction.
 
-**Survey placement.** Zikkaron belongs in the trace-to-summary-memory and trace-to-runtime-context families. It strengthens the survey split between raw trace capture and distilled behavior-shaping artifacts: raw tool rows do little by themselves, while grouped action memories, checkpoints, anchors, and hook-selected memories can shape future agent behavior. It also shows the governance risk of trace-derived systems whose automatic summaries can be injected without a review step.
+**Survey placement.** Zikkaron belongs in the trace-to-summary-memory and trace-to-runtime-context families. It strengthens the survey split between raw trace capture and distilled behavior-shaping artifacts: raw tool rows do little by themselves, while grouped action memories, checkpoints, anchors, and hook-selected memories can shape future agent behavior. It also shows the governance risk of trace-learning systems whose automatic summaries can be injected without a review step.
 
 ## Read-back
 
@@ -149,6 +149,6 @@ Relevant Notes:
 
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - contrasts: Zikkaron explicitly adds hook-based activation paths on top of stored memories.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: Zikkaron's memory rows, action logs, hook scripts, rules, and retrieval policies differ by substrate, form, lineage, and authority.
-- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - places: Zikkaron converts Claude tool/action traces into durable summary memories and hook-selected context.
+- [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: Zikkaron converts Claude tool/action traces into durable summary memories and hook-selected context.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - distinguishes: hooks, rules, gates, scoring policies, and consolidation code carry instruction, routing, ranking, and activation authority.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - distinguishes: stored memories and seed-derived project facts are evidence/advice until a read path gives them stronger prompt authority.

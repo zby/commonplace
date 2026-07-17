@@ -2,7 +2,7 @@
 description: "WeKnora review: enterprise RAG and agent platform with document chunks, wiki pages, graph memory, ReAct tools, and push plus pull read-back"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-05"
 ---
 
@@ -82,7 +82,7 @@ The key design divergence is authority visibility. WeKnora lets LLM extraction, 
 
 **Curation operations:** `consolidate` `dedup` `evolve` `invalidate` - Agent history consolidation summarizes older messages into a compact memory block; wiki summary/index pages and source-derived pages consolidate source documents; wiki pending ops and extracted entity/concept pages are deduplicated; wiki page content, links, source refs, chunk refs, versions, and memory graph relations evolve as documents or conversations arrive; delete/retract handling, archived wiki pages, tombstones, dead-link cleanup, and task dead letters invalidate stale derived surfaces while retaining operational history.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `event-streams` `tool-traces` - The durable conversation-memory path consumes user and assistant messages after a chat turn; streaming final-answer events trigger storage; the agent consolidator's prompt preserves tool execution results, although its summary is an in-context compaction rather than a durable graph write.
 
@@ -94,7 +94,7 @@ The key design divergence is authority visibility. WeKnora lets LLM extraction, 
 
 **Extraction.** The durable trace oracle is the configured chat model: `AddEpisode()` formats the conversation and requests JSON with summary, entities, and relationships; `RetrieveMemory()` asks the model for query keywords before Neo4j lookup. There is schema-shaped JSON parsing, but no evidence in the inspected code of behavioral ablation tests proving that injected memory improves answer faithfulness.
 
-**Scope and timing.** The memory graph is user-scoped and session-labeled; the wiki/task machinery is KB-scoped. The trace-derived loop is not a general tool-trace learner: tool results are summarized for context-window management, but I found no durable per-tool lesson, rule, skill, or validator generated from tool trajectories.
+**Scope and timing.** The memory graph is user-scoped and session-labeled; the wiki/task machinery is KB-scoped. The trace-learning loop is not a general tool-trace learner: tool results are summarized for context-window management, but I found no durable per-tool lesson, rule, skill, or validator generated from tool trajectories.
 
 **Survey fit.** WeKnora fits a hybrid service pattern: runtime traces can become a lightweight graph memory for later prompt injection, while imported documents become a heavier RAG/wiki substrate. It strengthens the survey distinction between durable trace memory and in-turn compaction: both use summaries, but only the Neo4j episode path persists across turns.
 
@@ -114,7 +114,7 @@ Context complexity is actively managed but still high. The system combines retri
 
 ## Curiosity Pass
 
-**"Memory" means several different things in this codebase.** There is durable Neo4j conversation memory, agent context-window consolidation, chat history loading, persisted rendered RAG context, wiki pages, and document chunks. Only the Neo4j episode path clearly qualifies as trace-derived durable memory; the others are RAG state, context compaction, or imported knowledge.
+**"Memory" means several different things in this codebase.** There is durable Neo4j conversation memory, agent context-window consolidation, chat history loading, persisted rendered RAG context, wiki pages, and document chunks. Only the Neo4j episode path clearly qualifies as trace-learning durable memory; the others are RAG state, context compaction, or imported knowledge.
 
 **The memory graph is narrower than the wiki/RAG platform.** It only retrieves for pure chat in the inspected pipeline assembly, not for the RAG path, and it retrieves summaries by LLM-extracted keywords matched against entity names. The richer document/wiki retrieval stack is separate.
 
@@ -129,13 +129,13 @@ Context complexity is actively managed but still high. The system combines retri
 - Whether memory retrieval is added to the RAG pipeline, not only pure chat. That would make the trace-memory layer more central to WeKnora's answer behavior.
 - Whether wiki generation gains reviewer-visible rationale, diff, or approval artifacts before updating durable pages. That would make it more borrowable for Commonplace.
 - Whether the CLI/MCP surfaces add versioned machine-readable schemas for all streamed events and retry commands. That would strengthen the agent-facing contract.
-- Whether trace memory starts retaining tool/action trajectories as durable lessons, skills, or validators. That would move WeKnora beyond conversation-episode recall into trace-derived system improvement.
+- Whether trace memory starts retaining tool/action trajectories as durable lessons, skills, or validators. That would move WeKnora beyond conversation-episode recall into trace-learning system improvement.
 - Whether read-back faithfulness gains explicit ablation or audit tests. Without that, context injection remains structurally implemented but behaviorally unproven.
 
 Relevant Notes:
 
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: WeKnora stores several knowledge surfaces, and only some are automatically pushed into model context.
-- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - places: WeKnora extracts conversation episodes into a durable graph memory and separately compacts agent history.
+- [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: WeKnora extracts conversation episodes into a durable graph memory and separately compacts agent history.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: WeKnora's DB rows, vector indexes, graph memory, wiki pages, tools, and task queues differ by substrate, form, lineage, and authority.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: chunks, wiki pages, graph episodes, and retrieved search results mostly advise later action as knowledge.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: pipelines, schemas, RBAC, tool registries, approval gates, prompts, and ranking configs route, validate, or enforce behavior.

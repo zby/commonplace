@@ -1,9 +1,9 @@
 ---
-description: "Autocontext review: iterative evaluation harness with trace-derived playbooks, hints, skills, tools, validators, runtime traces, and optional model distillation"
+description: "Autocontext review: iterative evaluation harness with trace-learning playbooks, hints, skills, tools, validators, runtime traces, and optional model distillation"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-04"
-tags: [trace-derived]
+tags: [trace-learning]
 ---
 
 # Autocontext
@@ -71,7 +71,7 @@ The most relevant design tradeoff is authority escalation. Autocontext can move 
 
 **Curation operations:** `consolidate` `dedup` `synthesize` `invalidate` `promote` — Coach and curator flows synthesize playbooks, hints, and lessons; curator consolidation deduplicates and caps lessons; playbook guards reject destructive shrinkage; rollback paths record dead ends; hint managers rank and rotate hints; mutation gates promote approved prompt/context/tool/completion changes into active harness state.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `tool-traces` `event-streams` `trajectories` — Autocontext consumes generation records, role outputs, scores, matches, replay JSON, staged validation results, runtime-session prompt/tool/command events, production traces, feedback rows, context-selection telemetry, and compaction events.
 
@@ -83,7 +83,7 @@ The most relevant design tradeoff is authority escalation. Autocontext can move 
 
 **Distilled form:** `prose` `symbolic` `parametric` — Distillation outputs include Markdown playbooks/skills/reports, JSON/JSONL records, validators, tools, mutation specs, manifests, datasets, and optional model checkpoints.
 
-Autocontext strengthens the trace-derived survey's claim that learning can be useful before fine-tuning: most behavior change comes from prose and symbolic artifacts re-entering prompts or gates. It also shows the governance hazard: fast trace-to-playbook learning needs explicit provenance if the result is meant to become durable knowledge rather than run-local optimization state.
+Autocontext strengthens the trace-learning survey's claim that learning can be useful before fine-tuning: most behavior change comes from prose and symbolic artifacts re-entering prompts or gates. It also shows the governance hazard: fast trace-to-playbook learning needs explicit provenance if the result is meant to become durable knowledge rather than run-local optimization state.
 
 ## Read-back
 

@@ -37,7 +37,7 @@ The connect report found a tight cluster around trace-derived weight learning, u
 
 4. **Unknown thresholds are model-capability dependent** -- Larger models pruned more examples and benefited from higher knowledge-filtering thresholds. This is a useful warning for any automated curation loop: promotion thresholds are not portable constants; they are policy parameters tied to the evaluator and generator. [experiment]
 
-5. **Batch trace-to-weights deserves its own trace-derived learning subtype** -- The source's traces are generated questions, source contexts, sampled answers, contradiction scores, and pairwise judgments. They are not live agent trajectories, but they still form a trace-derived learning loop ending in SFT/DPO checkpoints. This refines the taxonomy in [trace-derived learning techniques](../agent-memory-systems/trace-derived-learning-techniques-in-related-systems.md). [quick-win]
+5. **Batch trace-to-weights deserves its own trace-learning subtype** -- The source's traces are generated questions, source contexts, sampled answers, contradiction scores, and pairwise judgments. They are not live agent trajectories, but they still form a trace-learning loop ending in SFT/DPO checkpoints. This refines the taxonomy in [trace-learning techniques](../agent-memory-systems/trace-learning-techniques-in-related-systems.md). [quick-win]
 
 6. **Reading-comprehension pretraining stabilizes later preference learning** -- The SFT stage includes a reading-comprehension dataset so the model first learns to answer with source context before DPO tries to separate preferred from rejected answers. For artifact-learning loops, the analogue is teaching the system to use evidence before asking it to optimize preferences over outputs. [experiment]
 

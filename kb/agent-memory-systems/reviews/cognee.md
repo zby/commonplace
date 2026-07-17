@@ -1,8 +1,8 @@
 ---
-description: "Cognee review: graph/vector agent memory control plane with session cache, recall routing, trace-derived improve loops, MCP tools, and decorator push"
+description: "Cognee review: graph/vector agent memory control plane with session cache, recall routing, trace-learning improve loops, MCP tools, and decorator push"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-04"
 ---
 
@@ -82,7 +82,7 @@ The sharpest tradeoff is authority. Cognee can make memory operational quickly b
 
 **Curation operations:** `consolidate` `synthesize` `evolve` `promote` — Cognify and summary/global-context pipelines consolidate raw document chunks into summaries and graph context; LLM graph extraction and trace persistence synthesize new graph entries from documents or session traces; feedback and frequency pipelines evolve node/edge weights in place; `improve()` promotes session Q&A and trace feedback into permanent graph memory and can sync enriched graph knowledge back to sessions.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `tool-traces` `event-streams` — Cognee consumes session Q&A, feedback events, graph-element usage ids, agent trace steps with method parameters/returns/errors, skill-run tool traces, and usage/access events.
 

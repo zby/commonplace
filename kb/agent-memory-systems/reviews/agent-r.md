@@ -3,7 +3,7 @@ description: "Agent-R review: MCTS trace collection, revision-trajectory synthes
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-04"
-tags: [trace-derived]
+tags: [trace-learning]
 ---
 
 # Agent-R
@@ -53,7 +53,7 @@ Agent-R and Commonplace both treat past work as material that should change futu
 
 The strongest divergence is read-back. Commonplace mostly depends on explicit retrieval through `rg`, indexes, links, and skills. Agent-R has no runtime retrieval layer at all; once trained, the learned trace-derived behavior is always present because the checkpoint is loaded. That avoids memory-selection misses but makes provenance, targeted recall, and invalidation much harder.
 
-Agent-R's trace pipeline is also more automated than Commonplace's normal authoring loop. It can synthesize many correction examples from environment rollouts without human writing. The cost is that the learned artifact cannot be inspected as a set of durable lessons. Commonplace would need an intermediate artifact layer if it borrowed the trace-derived loop: traces should first become reviewable examples, rules, or candidate notes before gaining stronger authority.
+Agent-R's trace pipeline is also more automated than Commonplace's normal authoring loop. It can synthesize many correction examples from environment rollouts without human writing. The cost is that the learned artifact cannot be inspected as a set of durable lessons. Commonplace would need an intermediate artifact layer if it borrowed the trace-learning loop: traces should first become reviewable examples, rules, or candidate notes before gaining stronger authority.
 
 ### Borrowable Ideas
 
@@ -71,7 +71,7 @@ Agent-R's trace pipeline is also more automated than Commonplace's normal author
 
 **Curation operations:** `synthesize` `promote` — Agent-R generates new revision-training conversations from paired high- and low-value paths, then the staged training workflow promotes those examples into checkpoint-level behavioral authority. It filters and ranks paths with rewards and thresholds, but it does not implement durable memory deduplication, consolidation, invalidation, decay, or in-place evolution of a textual memory store.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `trajectories` `session-logs` — The raw signal is agent-environment trajectories: model responses, actions, observations, environment rewards, recent-action histories, terminal/disaster flags, and full conversation states saved in MCTS or evaluation outputs.
 

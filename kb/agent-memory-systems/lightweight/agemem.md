@@ -3,7 +3,7 @@ description: "Lightweight doc-grounded coverage of AgeMem — an RL-trained LTM/
 type: ../types/agent-memory-system-review.md
 source-tier: doc-grounded
 traits: [has-comparison, has-external-sources]
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-02"
 ---
 
@@ -46,7 +46,7 @@ AgeMem and Commonplace sit at opposite ends of the curation-agency axis. AgeMem 
 
 **Curation operations:** `evolve` — the reported `Update` action lets the policy modify existing long-term memories in response to the task trajectory; other operations are reported as tool actions but not described clearly enough to map to the curation vocabulary.
 
-### Trace-derived learning
+### Trace-learning
 
 AgeMem qualifies: it learns a durable artifact (the policy) from agent traces.
 
@@ -54,7 +54,7 @@ AgeMem qualifies: it learns a durable artifact (the policy) from agent traces.
 - **Extraction** — RL training with step-wise GRPO; the **oracle is task completion**, augmented by context-management and memory-management rewards. That oracle dependence [bounds where the approach transfers](../../notes/memory-management-policy-is-learnable-but-oracle-dependent.md): open-ended domains without a clear completion signal lack the training reward.
 - **Distilled form** — distributed-parametric (the policy in weights); the stored facts remain a separate prose/key-value store.
 - **Scope and timing** — cross-task policy; learned **offline** in training, then deployed (staged, not online).
-- **Survey placement** — a clean trajectory-to-weights case in the [trace-derived learning survey](../trace-derived-learning-techniques-in-related-systems.md), flagged lower-confidence because the runtime is not code-inspected.
+- **Survey placement** — a clean trajectory-to-weights case in the [trace-learning survey](../trace-learning-techniques-in-related-systems.md), flagged lower-confidence because the runtime is not code-inspected.
 
 ## Read-back
 
@@ -73,6 +73,6 @@ AgeMem qualifies: it learns a durable artifact (the policy) from agent traces.
 ## Relevant Notes
 
 - [memory management policy is learnable but oracle-dependent](../../notes/memory-management-policy-is-learnable-but-oracle-dependent.md) — primary analysis note: interprets AgeMem as learnable policy under a task-completion oracle
-- [trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) — cross-system placement: uses AgeMem as a lower-confidence source-ingested trajectory-to-weights case
+- [trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) — cross-system placement: uses AgeMem as a lower-confidence source-ingested trajectory-to-weights case
 - [AgeMem local snapshot](../../sources/agentic-memory-learning-unified-long-term-and-short-term-memory.md) — retained source snapshot for the arXiv paper
 - [AgeMem ingest](../../sources/agentic-memory-learning-unified-long-term-and-short-term.ingest.md) — source coverage: paper snapshot analysis and limitations

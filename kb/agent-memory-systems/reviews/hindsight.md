@@ -1,8 +1,8 @@
 ---
-description: "Hindsight review: service-backed agent memory with LLM fact extraction, observations, hybrid recall, integrations, hooks, transfer, and trace-derived learning"
+description: "Hindsight review: service-backed agent memory with LLM fact extraction, observations, hybrid recall, integrations, hooks, transfer, and trace-learning"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-04"
 ---
 
@@ -84,7 +84,7 @@ The central tradeoff is authority opacity. Hindsight can turn session traces int
 
 **Curation operations:** `consolidate` `dedup` `evolve` `synthesize` — Consolidation condenses groups of stored facts into observations; exact duplicate creates and repeated updates are suppressed or collapsed; existing observations and mental models are updated with new evidence/history; reflect/consolidation can synthesize new higher-level observations or model content from multiple stored memories.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `tool-traces` — Claude Code and Codex integrations read JSONL transcripts, optionally include tool calls, format the retained transcript, attach session metadata/tags, and submit it to retain. API users can also submit conversations, messages, documents, and application events as retained content.
 
@@ -136,7 +136,7 @@ Consumption authority depends on integration. API/SDK/MCP recall results are adv
 
 Relevant Notes:
 
-- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - places: Hindsight converts session transcripts and retained interaction content into facts, observations, mental models, and prompt-time recall.
+- [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: Hindsight converts session transcripts and retained interaction content into facts, observations, mental models, and prompt-time recall.
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Hindsight's store can be pull-only through the API, but specific integrations add push read-back.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: Hindsight bundles database rows, prompts, embeddings, links, directives, integrations, and traces under different authority paths.
 - [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - exemplifies: coding-agent transcripts and application events become learned observations for later tasks.

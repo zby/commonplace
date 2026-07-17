@@ -74,7 +74,7 @@ Stash is stronger than Commonplace at lightweight runtime continuity: a compatib
 
 **Curation operations:** `consolidate` `dedup` `evolve` `synthesize` `invalidate` `decay` `promote` — Consolidation reduces similar episodes into facts; vector duplicate checks skip already-known facts; goal notes, hypothesis confidence/status, and fact confidence/validity evolve in light of new evidence; pattern, causal, failure-pattern, and hypothesis evidence passes can create new inferred records across stored entries; contradiction replacement and low-confidence expiry invalidate old facts; decay down-weights stale facts; confirmed hypotheses become facts and raw episodes become higher-authority structured facts.
 
-Stash has non-trivial automatic maintenance, but I did not include a trace-derived learning subsection because the inspected code does not automatically create durable artifacts from session logs, tool traces, event streams, repeated trajectories, or rollouts. The raw inputs are episodes deliberately written through `remember`, failures/goals/hypotheses written through explicit tools, and inferred database records produced from those entries.
+Stash has non-trivial automatic maintenance, but I did not include a trace-learning subsection because the inspected code does not automatically create durable artifacts from session logs, tool traces, event streams, repeated trajectories, or rollouts. The raw inputs are episodes deliberately written through `remember`, failures/goals/hypotheses written through explicit tools, and inferred database records produced from those entries.
 
 ## Read-back
 
@@ -94,13 +94,13 @@ Other consumers include human users reading MCP/CLI JSON, the background consoli
 
 **The "knowledge graph" is table-shaped.** Relationships and causal links are stored in relational tables with ids and constraints, not a graph substrate. That is probably the right engineering choice for a small self-hosted service, but reviews should not overstate it as a full graph memory engine.
 
-**The trace-learning boundary is subtle.** The MCP prompt encourages end-of-session summaries and proactive memory writes, which can approximate trace distillation if a host agent writes summaries of its own work. The repository does not implement automatic capture from transcripts or tool traces, so the trace-derived tag would overclaim.
+**The trace-learning boundary is subtle.** The MCP prompt encourages end-of-session summaries and proactive memory writes, which can approximate trace distillation if a host agent writes summaries of its own work. The repository does not implement automatic capture from transcripts or tool traces, so the trace-learning tag would overclaim.
 
 **Context expiration is stored but not enforced on read.** `SetContext` writes an `expires_at`, but `GetContext` returns the row it finds without checking expiry in the inspected code ([internal/brain/context.go](https://github.com/alash3al/stash/blob/93601c1f4e0fb42df99d2de33567095020fb6d7e/internal/brain/context.go)). Host instructions say stale context should be cleared, so expiry currently looks advisory rather than enforced.
 
 ## What to Watch
 
-- Whether Stash adds automatic transcript, tool-call, or event-stream capture; that would change the trace-derived verdict and require a raw-trace/distilled-artifact split.
+- Whether Stash adds automatic transcript, tool-call, or event-stream capture; that would change the trace-learning verdict and require a raw-trace/distilled-artifact split.
 - Whether read-back becomes host-integrated push, such as session-start memory injection or situation-triggered recall middleware, rather than MCP tool pull.
 - Whether inferred facts and patterns gain stronger provenance displays, review state, or human approval before they influence future answers.
 - Whether context expiry is enforced in `GetContext` or cleanup paths; that would make working context less likely to leak stale handoffs.

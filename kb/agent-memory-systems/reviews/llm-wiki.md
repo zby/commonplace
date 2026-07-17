@@ -2,7 +2,7 @@
 description: "LLM Wiki review: portable agent plugin that compiles source files into topic wikis, queryable through index-guided reads, audits, linting, and session lessons"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-04"
 ---
 
@@ -73,7 +73,7 @@ LLM Wiki's context model is closer to Commonplace than database-backed memory sy
 
 **Curation operations:** `consolidate` `dedup` `synthesize` `invalidate` `promote` — Compilation consolidates raw sources into fewer synthesized articles; collection ingest and lint define deduplication keys, source-reference repair, and canonical placement; compile/research/collect produce new synthesized wiki articles or output catalogs from multiple sources; audit, archive, retract, stale-session warnings, source provenance checks, and coverage reports mark stale, archived, broken, or unresolved state; lessons, inventories, datasets, and approved outputs promote temporary observations or candidates into more durable wiki surfaces. These operations are mostly instruction-mediated agent workflows, with deterministic backing for lint/structure.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `event-streams` — `/wiki:ll` scans the current conversation for errors, fixes, user corrections, discoveries, configuration changes, and gotchas, then writes a structured raw lesson note. Research and audit also preserve `.session-events.jsonl`, `.session-checkpoint.json`, and session registry files for replay/resume/audit provenance ([ll.md](https://github.com/nvk/llm-wiki/blob/7e9bd0adf0eb91962856aa0e683a2d4822b90875/claude-plugin/commands/ll.md), [research-infrastructure.md](https://github.com/nvk/llm-wiki/blob/7e9bd0adf0eb91962856aa0e683a2d4822b90875/claude-plugin/skills/wiki-manager/references/research-infrastructure.md), [audit.md](https://github.com/nvk/llm-wiki/blob/7e9bd0adf0eb91962856aa0e683a2d4822b90875/claude-plugin/skills/wiki-manager/references/audit.md)).
 
@@ -85,7 +85,7 @@ LLM Wiki's context model is closer to Commonplace than database-backed memory sy
 
 **Extraction.** The oracle is the active agent following the command prompt: it identifies lesson-worthy patterns from the conversation, deduplicates them, writes structured Markdown, and may append a lesson rule to relevant wiki articles. The code does not implement an independent parser over transcripts; the trace-learning behavior is carried by the installed command/instruction artifact.
 
-**Scope and timing.** The trace-derived path is narrower than the source compiler. Most wiki knowledge comes from imported raw sources; session learning is specifically for "learned by doing" operational memory and session provenance.
+**Scope and timing.** The trace-learning path is narrower than the source compiler. Most wiki knowledge comes from imported raw sources; session learning is specifically for "learned by doing" operational memory and session provenance.
 
 **Survey fit.** LLM Wiki fits the trace-to-note family: session experience becomes durable prose knowledge, then can be compiled or proposed as instructions. It does not show automatic model-weight learning, embedding-ranker training, or autonomous long-run memory evolution.
 

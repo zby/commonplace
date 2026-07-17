@@ -1,9 +1,9 @@
 ---
-description: "Meta-Harness review: trace-derived harness search that uses logs, evaluations, proposer skills, and generated code to evolve memory and agent scaffolds"
+description: "Meta-Harness review: trace-learning harness search that uses logs, evaluations, proposer skills, and generated code to evolve memory and agent scaffolds"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-04"
-tags: [trace-derived]
+tags: [trace-learning]
 ---
 
 # Meta-Harness
@@ -71,7 +71,7 @@ The closest Commonplace analogue is not a note-writing workflow; it is a future 
 
 **Curation operations:** `synthesize` `promote` - The proposer synthesizes new harness artifacts from prior stored traces, results, and hypotheses; the benchmark/frontier logic promotes candidates by validation score, pass rate, context length, smoke-test success, and optional final evaluation.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `tool-traces` `event-streams` `trajectories` - Text classification records prediction traces, train/eval JSONL rows, prompt lengths, prompt hashes, memory states, validation/test results, frontier summaries, and Claude proposer sessions. Terminal-Bench records Harbor job trials, verifier rewards, agent metrics, costs, turns, trajectories, Claude proposer logs, and per-task frontier state.
 
@@ -83,7 +83,7 @@ The closest Commonplace analogue is not a note-writing workflow; it is a future 
 
 **Distilled form:** `prose` `symbolic` - The durable distilled artifacts are hypotheses, reports, skill-following proposer outputs, JSON manifests/summaries/frontiers, Python candidate harnesses, and prompt templates.
 
-On the trace-derived survey axes, Meta-Harness is a trace-to-system-definition optimizer. It is stronger than ordinary log summarization because the distilled artifact is executable harness code, but weaker as a general memory product because the release delegates much of the reasoning to Claude Code and domain-specific skills rather than exposing a reusable typed learning engine.
+On the trace-learning survey axes, Meta-Harness is a trace-to-system-definition optimizer. It is stronger than ordinary log summarization because the distilled artifact is executable harness code, but weaker as a general memory product because the release delegates much of the reasoning to Claude Code and domain-specific skills rather than exposing a reusable typed learning engine.
 
 ## Read-back
 

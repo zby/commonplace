@@ -1,8 +1,8 @@
 ---
-description: "REM review: episodic memory service with trace-derived episodes, vector/graph retrieval, LangChain injection, and partially wired consolidation"
+description: "REM review: episodic memory service with trace-learning episodes, vector/graph retrieval, LangChain injection, and partially wired consolidation"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-04"
 ---
 
@@ -80,7 +80,7 @@ The largest design difference is the authority boundary. REM can put remembered 
 
 **Curation operations:** `promote` — Retrieval increments existing episode counters and the reranker uses those counters as a bounded salience bonus. The worker contains consolidation/synthesis logic, but because the semantic POST and episode consolidated PATCH routes are not registered at this commit, I am not counting those as operational store-changing curation tokens.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `trajectories` — REM stores after-task episode descriptions and LangChain human/assistant turns as durable traces.
 
@@ -90,7 +90,7 @@ The largest design difference is the authority boundary. REM can put remembered 
 
 **Distilled form:** `prose` `symbolic` `parametric` — Durable outputs include prose traces/facts, symbolic metadata/counters/source ids/routes, and embeddings.
 
-**Trace source.** REM qualifies as trace-derived. The core trace is an agent episode written after a task or framework turn through `write()`, `save_context()`, or the episodes API. LangChain `save_context()` stores a combined human/assistant turn after model output; scheduled and triggered worker tasks fetch unconsolidated episodes for consolidation ([client.py](https://github.com/satyammistari/REM/blob/935e8be0a1fca5b23dbabfe16c48b562c1cd24cc/sdk/python/rem_memory/client.py), [langchain.py](https://github.com/satyammistari/REM/blob/935e8be0a1fca5b23dbabfe16c48b562c1cd24cc/sdk/python/rem_memory/integrations/langchain.py), [tasks.py](https://github.com/satyammistari/REM/blob/935e8be0a1fca5b23dbabfe16c48b562c1cd24cc/python-worker/workers/tasks.py)).
+**Trace source.** REM qualifies as trace-learning. The core trace is an agent episode written after a task or framework turn through `write()`, `save_context()`, or the episodes API. LangChain `save_context()` stores a combined human/assistant turn after model output; scheduled and triggered worker tasks fetch unconsolidated episodes for consolidation ([client.py](https://github.com/satyammistari/REM/blob/935e8be0a1fca5b23dbabfe16c48b562c1cd24cc/sdk/python/rem_memory/client.py), [langchain.py](https://github.com/satyammistari/REM/blob/935e8be0a1fca5b23dbabfe16c48b562c1cd24cc/sdk/python/rem_memory/integrations/langchain.py), [tasks.py](https://github.com/satyammistari/REM/blob/935e8be0a1fca5b23dbabfe16c48b562c1cd24cc/python-worker/workers/tasks.py)).
 
 **Extraction.** The raw episode first gets parsed into intent, entities, domain, emotion, and importance. The intended consolidation stage then groups unconsolidated episodes by domain and overlapping intent tokens, limits cluster size, prompts an LLM for one to five durable facts, and records confidence, fact type, domain, evidence count, and source episode ids. The extraction oracle is the configured OpenAI chat model plus authored parser/consolidation prompts; there is no reviewer acceptance gate in the code.
 
@@ -138,7 +138,7 @@ The largest design difference is the authority boundary. REM can put remembered 
 
 Relevant Notes:
 
-- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - places: REM derives parsed episodes and intended semantic facts from agent interaction traces.
+- [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: REM derives parsed episodes and intended semantic facts from agent interaction traces.
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: REM stores episodes in several substrates, but behavior changes only through retrieval and host injection.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: REM requires separating episodes, semantic facts, prompts, embeddings, graph links, SDK wrappers, and benchmarks by substrate, form, lineage, and authority.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: REM episodes, semantic facts, graph neighbors, and benchmark outputs mostly advise as evidence or context.

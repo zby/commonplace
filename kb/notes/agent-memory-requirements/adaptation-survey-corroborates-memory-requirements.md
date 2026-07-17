@@ -44,7 +44,7 @@ The practical conclusion is to use the survey as literature coverage and a taxon
 Relevant Notes:
 
 - [Designing a Memory System for LLM-Based Agents](../designing-agent-memory-systems.md) - foundation: the requirements map this comparison checks against the survey
-- [Use trace-derived extraction as meta-learning](./use-trace-derived-extraction.md) - extends: T2 and trace-derived systems provide examples of readable-artifact and distributed-parametric learning paths with different oracle needs
+- [Use trace-derived extraction as meta-learning](./use-trace-derived-extraction.md) - extends: T2 and trace-learning systems provide examples of readable-artifact and distributed-parametric learning paths with different oracle needs
 - [Make authority explicit](./make-authority-explicit.md) - sharpens: adaptation taxonomies do not answer who can write, promote, activate, enforce, revise, or retire memory
 - [Keep lineage and compiled views from drifting](./keep-compiled-views-aligned.md) - sharpens: learned memories and generated cues need source-of-truth and derivation rules that T1/T2 labels do not provide
 - [Evaluate memory by effects](./evaluate-memory-by-effects.md) - aligns: the survey's component-counterfactual and dynamics-aware evaluation agenda supports effect-based memory evaluation

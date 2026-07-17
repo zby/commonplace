@@ -3,7 +3,7 @@ description: "Agentic Harness Engineering review: trace-driven outer loop that d
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-05"
-tags: [trace-derived]
+tags: [trace-learning]
 ---
 
 # Agentic Harness Engineering
@@ -71,7 +71,7 @@ The strongest divergence is authority. AHE can automatically rewrite prompts, to
 
 **Curation operations:** `evolve` `promote` — The evolution agent modifies existing harness artifacts in light of newly derived trace/debugger evidence, and best-of-N can promote a winning variant into the main workspace. Rollback is available through snapshots and prompts, but the ordinary loop records harmful/ineffective verdicts rather than automatically invalidating every bad edit.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `tool-traces` `event-streams` `trajectories` — The loop consumes cleaned NexAU traces, runtime logs, verifier rewards/output, task-result transitions, score histories, change manifests, and evolve-agent traces.
 
@@ -83,7 +83,7 @@ The strongest divergence is authority. AHE can automatically rewrite prompts, to
 
 **Distilled form:** `prose` `symbolic` — Debugger reports, prompts, skills, and long-term memory are prose; configs, tool schemas, Python tools/middleware, manifests, scores, histories, and git snapshots are symbolic. I did not find a parametric distilled artifact in the reviewed code.
 
-This is a strong trace-derived learning system by Commonplace's survey standard: raw traces are not merely stored, but are transformed into behavior-shaping harness artifacts and later checked by an external benchmark. The main caveat is that the learned artifact is optimized for benchmark performance, not for general truth or maintainability.
+This is a strong trace-learning system by Commonplace's survey standard: raw traces are not merely stored, but are transformed into behavior-shaping harness artifacts and later checked by an external benchmark. The main caveat is that the learned artifact is optimized for benchmark performance, not for general truth or maintainability.
 
 ## Read-back
 
@@ -105,7 +105,7 @@ For the code agent being evaluated, read-back is simpler. The baseline `code_age
 
 **The falsification loop is stronger than the semantic extraction loop.** Benchmark flips can reject a bad harness change, but they cannot fully explain why a prose debugger report or LLM-authored root cause was right. AHE's safety comes from repeated external evaluation, not from guaranteed interpretation quality.
 
-**Trace-derived learning is bounded by diagnostic richness.** The system invests heavily in verifier context, pass/fail labels, per-task reports, and partial-pass comparison. That gives the evolution agent better evidence than raw scores alone, and it is the main reason the loop is more than blind prompt search.
+**Trace-learning is bounded by diagnostic richness.** The system invests heavily in verifier context, pass/fail labels, per-task reports, and partial-pass comparison. That gives the evolution agent better evidence than raw scores alone, and it is the main reason the loop is more than blind prompt search.
 
 **Best-of-N turns harness evolution into population search.** The implementation can run strategy-constrained variants and adopt a winner. That is useful, but it changes the memory story from one cumulative lineage to competing lineages, making attribution and rollback more important.
 

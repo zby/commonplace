@@ -1,9 +1,9 @@
 ---
-description: "MemoryOS review: hierarchical conversational memory with trace-derived summaries, profiles, knowledge extraction, vector retrieval, and pre-call prompt assembly"
+description: "MemoryOS review: hierarchical conversational memory with trace-learning summaries, profiles, knowledge extraction, vector retrieval, and pre-call prompt assembly"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-04"
-tags: [trace-derived]
+tags: [trace-learning]
 ---
 
 # MemoryOS
@@ -82,7 +82,7 @@ The second tradeoff is context discipline. MemoryOS separates context by tier an
 
 **Curation operations:** `consolidate` `evolve` `decay` — Short-term overflow condenses stored QA pairs into session summaries; insertion can append pages to an existing session and update heat/link metadata; bounded deques, LFU session eviction, knowledge capacity enforcement, and recency heat down-weighting remove or reduce older memory.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` — The source signal is stored user/assistant conversation pairs with timestamps. In the generation path, MemoryOS also writes its own generated response back into memory, making deployment conversations the continuing trace stream ([memoryos-pypi/memoryos.py](https://github.com/BAI-LAB/MemoryOS/blob/1d717060350931af33d1d0dc3d4e50a72c125a48/memoryos-pypi/memoryos.py)).
 
@@ -130,7 +130,7 @@ Selection is bounded by result counts rather than token budget. `Retriever` keep
 
 Relevant Notes:
 
-- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - compares: MemoryOS turns conversational traces into session summaries, profile records, knowledge entries, embeddings, and prompt-visible context.
+- [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - compares: MemoryOS turns conversational traces into session summaries, profile records, knowledge entries, embeddings, and prompt-visible context.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: MemoryOS's raw turns, summaries, profile, knowledge entries, vectors, and prompt packages require separate substrate, form, lineage, and authority labels.
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - contrasts: MemoryOS couples storage with a generation path that retrieves memory and assembles context before the model call.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: raw dialogue pages, summaries, profiles, and facts usually serve as evidence or advisory context.

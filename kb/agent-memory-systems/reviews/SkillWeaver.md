@@ -3,7 +3,7 @@ description: "SkillWeaver review: web-agent trajectories distilled into Playwrig
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-05"
-tags: [trace-derived]
+tags: [trace-learning]
 ---
 
 # SkillWeaver
@@ -77,7 +77,7 @@ Another divergence is governance of executable memory. SkillWeaver overwrites fu
 
 **Curation operations:** `evolve` `promote` — Existing functions can be replaced in place by exact name, incrementing version and resetting `test_count`; successful test tasks increment test counts and thereby promote functions into verified visibility. The system does not implement durable deduplication, consolidation, contradiction invalidation, decay, or cross-memory synthesis beyond generating/updating individual APIs from one attempt.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `trajectories` `tool-traces` `session-logs` — The raw signal is browser-agent task execution: accessibility-tree states, screenshots, generated Playwright code, executed actions, stdout, exceptions, recovery annotations, final states, and success-check judgments.
 

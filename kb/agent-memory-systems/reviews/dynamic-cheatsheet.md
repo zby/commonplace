@@ -1,9 +1,9 @@
 ---
-description: "Dynamic Cheatsheet review: trace-derived test-time prompt memory with LLM cheatsheet curation, embedding retrieval, and automatic solver read-back"
+description: "Dynamic Cheatsheet review: trace-learning test-time prompt memory with LLM cheatsheet curation, embedding retrieval, and automatic solver read-back"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-04"
-tags: [trace-derived]
+tags: [trace-learning]
 ---
 
 # Dynamic Cheatsheet
@@ -79,7 +79,7 @@ The major divergence is provenance. The curator prompt asks for tested and prove
 
 **Curation operations:** `consolidate` `dedup` `evolve` `promote` — The curator is instructed to compress old and new material into a compact cheatsheet, remove redundancy, refine existing entries, and use usage counts to prioritize frequently useful strategies. These operations are prompt-mediated rather than independently validated by code.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `trajectories` — Sequential benchmark runs produce ordered examples with prompts, solver outputs, extracted answers, current/new cheatsheets, targets, correctness checks, and prior output lists.
 
@@ -91,7 +91,7 @@ The major divergence is provenance. The curator prompt asks for tested and prove
 
 **Distilled form:** `prose` — The durable learned artifact is cheatsheet prose; embeddings rank traces for retrieval but are not the final distilled memory.
 
-Dynamic Cheatsheet is a clear trace-derived system because retained behavior-shaping prose is generated from prior solver trajectories. It demonstrates a low-infrastructure path to test-time learning, while also showing the trust problem: trace-derived authority can outrun provenance and validation.
+Dynamic Cheatsheet is a clear trace-learning system because retained behavior-shaping prose is generated from prior solver trajectories. It demonstrates a low-infrastructure path to test-time learning, while also showing the trust problem: trace-derived authority can outrun provenance and validation.
 
 ## Read-back
 
@@ -129,7 +129,7 @@ At consumption time, the cheatsheet has instruction-like force because the gener
 
 Relevant Notes:
 
-- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - places: Dynamic Cheatsheet turns sequential solver traces into prose prompt memory and embedding-selected prior-example packets.
+- [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: Dynamic Cheatsheet turns sequential solver traces into prose prompt memory and embedding-selected prior-example packets.
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Dynamic Cheatsheet stores traces and cheatsheets, then wires them into prompt read-back automatically.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: cheatsheets, prompt templates, embeddings, result traces, and evaluators differ by substrate, form, lineage, and authority.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: previous solutions and saved result traces are examples, evidence, and audit material.

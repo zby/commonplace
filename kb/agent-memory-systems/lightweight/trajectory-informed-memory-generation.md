@@ -3,7 +3,7 @@ description: "Lightweight doc-grounded coverage of Trajectory-Informed Memory Ge
 type: ../types/agent-memory-system-review.md
 source-tier: doc-grounded
 traits: [has-comparison, has-external-sources]
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-02"
 ---
 
@@ -51,15 +51,15 @@ The most direct divergence is read-back. Commonplace generally requires an agent
 
 **Curation operations:** `consolidate` `dedup` `synthesize` — subtask generalization and tip compression consolidate trajectory evidence, clustering and LLM merging remove redundant tips, and strategy/recovery/optimization tip generation synthesizes new operational advice from completed runs.
 
-### Trace-derived learning
+### Trace-learning
 
-Trajectory-Informed Memory Generation qualifies as trace-derived coverage because the sources document durable retained artifacts extracted from agent trajectories.
+Trajectory-Informed Memory Generation qualifies as trace-learning coverage because the sources document durable retained artifacts extracted from agent trajectories.
 
 - **Trace source** — completed AppWorld-style execution trajectories from a ReAct-like GPT-4 agent, including reasoning patterns, planning, validation, self-correction, failures, and inefficient successes.
 - **Extraction** — the reported analyzer identifies causal decision chains and produces strategy, recovery, and optimization tips. The practical oracle is task/scenario goal completion plus trajectory outcome class; the ingest flags this oracle dependency as the main transfer limit.
 - **Distilled form** — inspectable prose tips, with embeddings and metadata for retrieval. This is the readable-artifact counterpart to trajectory-to-weights systems such as AgeMem.
 - **Scope and timing** — staged learning across completed runs, then prompt-time reuse on held-out tasks. The paper reports AppWorld evaluation with the best configuration reaching +14.3 percentage points on scenario goal completion.
-- **Survey placement** — a lower-confidence, source-ingested trajectory-to-artifact case in the [trace-derived learning survey](../trace-derived-learning-techniques-in-related-systems.md); it strengthens the survey's readable-artifact-learning axis while leaving implementation details unverified.
+- **Survey placement** — a lower-confidence, source-ingested trajectory-to-artifact case in the [trace-learning survey](../trace-learning-techniques-in-related-systems.md); it strengthens the survey's readable-artifact-learning axis while leaving implementation details unverified.
 
 ## Read-back
 
@@ -85,7 +85,7 @@ Trajectory-Informed Memory Generation qualifies as trace-derived coverage becaus
 
 ## Relevant Notes
 
-- [trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) — cross-system placement: uses the system as a lower-confidence trajectory-to-artifact case
+- [trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) — cross-system placement: uses the system as a lower-confidence trajectory-to-artifact case
 - [memory management policy is learnable but oracle-dependent](../../notes/memory-management-policy-is-learnable-but-oracle-dependent.md) — contrast: same trajectory/oracle family as AgeMem, different promotion substrate
 - [automated synthesis is missing good oracles](../../notes/automated-synthesis-is-missing-good-oracles.md) — connection: tip consolidation as a narrow case of automated synthesis under a task-completion oracle
 - [Trajectory-Informed Memory Generation ingest](../../sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md) — source coverage: paper snapshot analysis and limitations

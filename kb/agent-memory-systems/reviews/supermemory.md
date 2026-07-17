@@ -1,8 +1,8 @@
 ---
-description: "Supermemory review: hosted memory API with generated SDK contracts, profile/search injection middleware, MCP tools, browser capture, graph UI, and trace-derived memory"
+description: "Supermemory review: hosted memory API with generated SDK contracts, profile/search injection middleware, MCP tools, browser capture, graph UI, and trace-learning memory"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-05"
 ---
 
@@ -77,7 +77,7 @@ The main tradeoff is hosted power versus source-visible authority. Supermemory c
 
 **Curation operations:** `evolve` `synthesize` `invalidate` `decay` `promote` — Hosted docs/API contracts describe memory updates, extensions, derived memories, current/latest flags, forgetting, expiring memories, static/dynamic profiles, and preference strengthening. The local checkout exposes the fields and client calls, but not the full backend algorithms, so these operations are contract-level rather than fully implementation-verified here.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `tool-traces` `event-streams` — Framework middleware saves chat messages or conversations; OpenAI/Agent Framework wrappers can store conversations around model calls; MCP tools save explicit user/agent facts; browser content scripts capture prompts, highlighted pages, full page markdown, and Twitter bookmark streams.
 
@@ -87,13 +87,13 @@ The main tradeoff is hosted power versus source-visible authority. Supermemory c
 
 **Distilled form:** `prose` `symbolic` `parametric` — Outputs include prose memory facts, profile facts, summaries, and prompt blocks; symbolic relations, version flags, forget fields, metadata, project tags, and processing states; and embeddings/similarity/rerank signals for retrieval.
 
-**Trace source.** Supermemory qualifies as trace-derived because durable memory is explicitly built from conversation and tool-use surfaces, not only manually authored notes. Vercel middleware converts prompts and assistant responses into `/v4/conversations` messages; OpenAI middleware can save the conversation before/alongside the wrapped call; Python Agent Framework middleware creates background save tasks; browser code captures prompts and pages; MCP `memory` saves facts the assistant decides are worth remembering ([packages/tools/src/vercel/middleware.ts](https://github.com/supermemoryai/supermemory/blob/c5bf8ff1f75fc5de22d03ca4be2e03630daa9f77/packages/tools/src/vercel/middleware.ts), [packages/tools/src/openai/middleware.ts](https://github.com/supermemoryai/supermemory/blob/c5bf8ff1f75fc5de22d03ca4be2e03630daa9f77/packages/tools/src/openai/middleware.ts), [packages/agent-framework-python/src/supermemory_agent_framework/middleware.py](https://github.com/supermemoryai/supermemory/blob/c5bf8ff1f75fc5de22d03ca4be2e03630daa9f77/packages/agent-framework-python/src/supermemory_agent_framework/middleware.py), [apps/browser-extension/entrypoints/background.ts](https://github.com/supermemoryai/supermemory/blob/c5bf8ff1f75fc5de22d03ca4be2e03630daa9f77/apps/browser-extension/entrypoints/background.ts)).
+**Trace source.** Supermemory qualifies as trace-learning because durable memory is explicitly built from conversation and tool-use surfaces, not only manually authored notes. Vercel middleware converts prompts and assistant responses into `/v4/conversations` messages; OpenAI middleware can save the conversation before/alongside the wrapped call; Python Agent Framework middleware creates background save tasks; browser code captures prompts and pages; MCP `memory` saves facts the assistant decides are worth remembering ([packages/tools/src/vercel/middleware.ts](https://github.com/supermemoryai/supermemory/blob/c5bf8ff1f75fc5de22d03ca4be2e03630daa9f77/packages/tools/src/vercel/middleware.ts), [packages/tools/src/openai/middleware.ts](https://github.com/supermemoryai/supermemory/blob/c5bf8ff1f75fc5de22d03ca4be2e03630daa9f77/packages/tools/src/openai/middleware.ts), [packages/agent-framework-python/src/supermemory_agent_framework/middleware.py](https://github.com/supermemoryai/supermemory/blob/c5bf8ff1f75fc5de22d03ca4be2e03630daa9f77/packages/agent-framework-python/src/supermemory_agent_framework/middleware.py), [apps/browser-extension/entrypoints/background.ts](https://github.com/supermemoryai/supermemory/blob/c5bf8ff1f75fc5de22d03ca4be2e03630daa9f77/apps/browser-extension/entrypoints/background.ts)).
 
 **Extraction.** The extraction oracle is hosted. The docs claim automatic fact extraction, profile maintenance, relation creation, contradiction resolution, and forgetting; local code shows the API payloads and response fields that carry those products, but not the model prompts, graph update logic, or quality gates that decide which trace becomes memory.
 
 **Scope and timing.** Scope is mainly container/project based. Timing is online for wrapper injection and optional conversation save, staged for browser imports, connector syncs, and document processing. The visible `processingMetadata` and document status enums make processing phase explicit, which is useful even though the processing workers are not visible.
 
-**Survey fit.** Supermemory strengthens the trace-to-profile and trace-to-graph-memory families: raw conversations and imported user activity become lower-volume profile facts and related memory entries that future agents can receive without searching the original traces. It also highlights a recurring survey caveat: hosted trace-derived systems may expose enough API contract to classify the artifact but not enough implementation to audit extraction fidelity.
+**Survey fit.** Supermemory strengthens the trace-to-profile and trace-to-graph-memory families: raw conversations and imported user activity become lower-volume profile facts and related memory entries that future agents can receive without searching the original traces. It also highlights a recurring survey caveat: hosted trace-learning systems may expose enough API contract to classify the artifact but not enough implementation to audit extraction fidelity.
 
 ## Read-back
 

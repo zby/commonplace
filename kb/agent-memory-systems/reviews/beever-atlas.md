@@ -1,8 +1,8 @@
 ---
-description: "Beever Atlas review: chat-ingestion knowledge base with Weaviate facts, Neo4j graph memory, MongoDB wiki pages, MCP retrieval, and trace-derived wiki synthesis"
+description: "Beever Atlas review: chat-ingestion knowledge base with Weaviate facts, Neo4j graph memory, MongoDB wiki pages, MCP retrieval, and trace-learning wiki synthesis"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-04"
 ---
 
@@ -86,7 +86,7 @@ Atlas is also more complete as an application surface. It has auth, per-channel 
 
 **Curation operations:** `consolidate` `dedup` `evolve` `synthesize` `invalidate` `promote` — Atlas consolidates atomic facts into clusters, channel summaries, and wiki pages; deduplicates/reconciles entities and deterministic fact ids; evolves dirty wiki pages and cluster summaries when new facts arrive; synthesizes new topic/wiki/summary artifacts; carries contradiction/supersession fields and stale/dirty states; and promotes pending graph entities once relationships support them.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `event-streams` — The qualifying trace is team communication and imported content: platform messages, threads, attachments, links, sync events, file imports, and later QA history. The reviewed code does not show agent tool/action traces as the primary source.
 
@@ -102,7 +102,7 @@ Atlas is also more complete as an application surface. It has auth, per-channel 
 
 **Scope and timing.** The loop is project/team scoped rather than single-agent scoped. A channel can ingest many batches; the per-batch path clusters and routes touched facts, while `memory_settled` triggers LLM summary work only after the extraction queue drains. Wiki maintenance can run automatically after a debounce or mark pages dirty for manual draining.
 
-**Survey relation.** Atlas sits in the trace-to-readable-artifact family, closer to an organizational wiki builder than a personal agent-memory library. It strengthens the claim that trace-derived learning need not fine-tune a model: durable value can come from fact extraction, graph construction, and wiki synthesis. It also exposes the review problem for trace-derived wikis: polished generated prose needs source-aware governance or readers may over-trust it.
+**Survey relation.** Atlas sits in the trace-to-readable-artifact family, closer to an organizational wiki builder than a personal agent-memory library. It strengthens the claim that trace-learning need not fine-tune a model: durable value can come from fact extraction, graph construction, and wiki synthesis. It also exposes the review problem for trace-derived wikis: polished generated prose needs source-aware governance or readers may over-trust it.
 
 ## Read-back
 

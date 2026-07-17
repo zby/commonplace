@@ -1,8 +1,8 @@
 ---
-description: "Virtual Context review: proxy-owned context virtualization with trace-derived compaction, facts, paging tools, and prompt-time memory injection"
+description: "Virtual Context review: proxy-owned context virtualization with trace-learning compaction, facts, paging tools, and prompt-time memory injection"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-05"
 ---
 
@@ -79,7 +79,7 @@ The trust tradeoff is the main divergence. Virtual Context is better at live con
 
 **Curation operations:** `consolidate` `dedup` `evolve` `synthesize` `invalidate` `promote` — Compaction consolidates raw turns into segment summaries and tag rollups; exact duplicate facts can be marked superseded; existing fact/status fields and tag aliases can evolve; tag summaries and linked facts synthesize cross-turn/topic structure not present as one raw turn; supersession invalidates older facts without deleting the historical trace; planned facts can be promoted to completed and retrieved topics can be promoted in the working set.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `tool-traces` `event-streams` — Virtual Context consumes client message history, user/assistant turns, provider request/response streams, tool calls/results, media blocks, imported conversation exports, dashboard replay prompts, command events, and session/alias identity events.
 
@@ -133,7 +133,7 @@ Relevant Notes:
 
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Virtual Context implements both durable storage and proxy-mediated read-back, including prompt-time push.
 - [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - exemplifies: Virtual Context derives summaries, facts, tags, embeddings, and restore handles from conversation and tool traces.
-- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - places: Virtual Context belongs in the trace-to-working-memory family with engineered read-back.
+- [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: Virtual Context belongs in the trace-to-working-memory family with engineered read-back.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: raw traces, summaries, facts, embeddings, tools, and proxy rules carry different storage, form, lineage, and authority.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: stored turns, summaries, facts, quotes, and restored tool outputs advise later reasoning when consumed.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: proxy mutation, provider adapters, tool schemas, compaction fences, retrieval scoring, and command handlers shape behavior with stronger force.

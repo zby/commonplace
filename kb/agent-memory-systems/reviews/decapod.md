@@ -2,7 +2,7 @@
 description: "Decapod review: Rust repo-native governance kernel with SQLite stores, context capsules, trace lessons, proof gates, and pull-first memory reads"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-04"
 ---
 
@@ -84,7 +84,7 @@ The main useful contrast is authority. Decapod is willing to make a retained art
 
 **Curation operations:** `consolidate` `dedup` `synthesize` `invalidate` `decay` `promote` — LCM summaries consolidate originals; knowledge `merge_key` can merge duplicate active entries; worker runs synthesize lesson entries from task context; supersede/deprecate/dispute, proof baselines, and validation drift invalidate or block stale state; TTL decay marks expired knowledge stale; promotion ledgers and recency/ranking paths change salience or authority.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `tool-traces` `event-streams` — Decapod records todo/claim/worker events, LCM originals for messages/artifacts/tool results, retrieval feedback, proof and validation events, federation events, aptitude observations, state/provenance artifacts, and session-scoped mounts.
 
@@ -98,7 +98,7 @@ The main useful contrast is authority. Decapod is willing to make a retained art
 
 **Scope and timing.** Raw traces remain as ledger/database evidence. Derived lessons, summaries, graph nodes, proof baselines, and promotion events can shape later work, usually after an explicit command or worker-loop boundary rather than during the action that produced the trace.
 
-**Survey fit.** Decapod fits the trace-to-governance-artifact family. It strengthens the claim that trace-derived learning need not be vector memory: the useful outputs are lessons, summaries, graph nodes, proof baselines, promotion records, and validation diagnostics. It also highlights an authority boundary Commonplace should preserve: automatic lessons may advise, but stronger procedural authority should require explicit evidence and approval.
+**Survey fit.** Decapod fits the trace-to-governance-artifact family. It strengthens the claim that trace-learning need not be vector memory: the useful outputs are lessons, summaries, graph nodes, proof baselines, promotion records, and validation diagnostics. It also highlights an authority boundary Commonplace should preserve: automatic lessons may advise, but stronger procedural authority should require explicit evidence and approval.
 
 ## Read-back
 
@@ -123,7 +123,7 @@ Authority at consumption depends on which surface is read. A knowledge row, LCM 
 ## What to Watch
 
 - Whether first-party host integrations automatically invoke context, knowledge, or aptitude reads before model calls; that would change the read-back verdict from pull to push or both.
-- Whether worker-generated lessons gain citations, review state, or semantic validation before they affect later tasks; that would make trace-derived learning safer.
+- Whether worker-generated lessons gain citations, review state, or semantic validation before they affect later tasks; that would make trace-learning safer.
 - Whether non-noop internalization profiles land in the main repository and are tested against behavior or context-efficiency outcomes.
 - Whether context capsule selection gains stronger relevance signals while keeping source, policy, and hash inspectability.
 - Whether federation exports become a normal operator review surface for inferred lessons, decisions, and commitments rather than a secondary derived view.

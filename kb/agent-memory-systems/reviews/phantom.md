@@ -3,7 +3,7 @@ description: "Phantom review: VM co-worker with Qdrant memory, heuristic session
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-04"
-tags: [trace-derived]
+tags: [trace-learning]
 ---
 
 # Phantom
@@ -75,7 +75,7 @@ Phantom also exposes a useful warning about context scale. A 50,000-token memory
 
 **Curation operations:** `consolidate` `evolve` `invalidate` `decay` `promote` — The reflection subprocess can compact existing memory files; evolved config and semantic facts are modified in place; semantic contradictions mark older facts with `valid_until`; episode ranking down-weights stale memories through recency/decay; access-count reinforcement and repeated/session-derived reflection can raise salience or authority without changing the original trace.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `tool-traces` `event-streams` — Session summaries include user and assistant messages, tools, files tracked, outcome, cost, and timestamps; web chat also stores event-log and transcript surfaces; the memory system extracts episodes/facts from completed sessions, and the evolution queue batches session summaries.
 

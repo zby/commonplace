@@ -83,7 +83,7 @@ Engraph's write surface is also more operational. It has narrow section/frontmat
 
 **Write agency:** `manual` `automatic` — Users, hosts, and agents manually author and edit vault notes through Markdown editors, CLI, MCP, and HTTP. Engraph automatically indexes changed files, rebuilds chunks/embeddings/FTS/edges, extracts identity facts, records migration and correction logs, updates tag and folder state, and cleans incomplete or orphaned write/index artifacts.
 
-**Curation operations:** `promote` — The implemented feedback path promotes an observed user correction into future folder-choice state by logging the move and adjusting folder centroids. Index rebuilds, embedding refreshes, FTS updates, graph edge rebuilds, and health reports are access-structure or diagnostic upkeep rather than deduplication, consolidation, synthesis, invalidation, or trace-derived learning.
+**Curation operations:** `promote` — The implemented feedback path promotes an observed user correction into future folder-choice state by logging the move and adjusting folder centroids. Index rebuilds, embedding refreshes, FTS updates, graph edge rebuilds, and health reports are access-structure or diagnostic upkeep rather than deduplication, consolidation, synthesis, invalidation, or trace-learning.
 
 ## Read-back
 
@@ -107,7 +107,7 @@ Selection, scope, and complexity are mostly controlled by top-k, explicit tool c
 
 ## What to Watch
 
-- Whether timeline and mining become durable retained-artifact pipelines. That would change the lineage and possibly the trace-derived verdict if the inputs include agent/session/tool traces.
+- Whether timeline and mining become durable retained-artifact pipelines. That would change the lineage and possibly the trace-learning verdict if the inputs include agent/session/tool traces.
 - Whether stale-note detection and broader health rules become real validators rather than report fields. That would make Engraph closer to a governed KB layer.
 - Whether identity facts gain provenance, freshness, and approval controls before hosts treat them as session-start context.
 - Whether folder-choice feedback becomes inspectable and reversible enough for users to repair bad centroid updates.

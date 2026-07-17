@@ -2,7 +2,7 @@
 description: "SAGE review: consensus-governed local agent memory with MCP turn capture, hooks, hybrid recall, decay, and corroboration"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-04"
 ---
 
@@ -81,7 +81,7 @@ The important design contrast is authority granularity. SAGE can inject recent o
 
 **Curation operations:** `invalidate` `decay` `promote` — Challenges and failed quorum/validation paths can deprecate memories; confidence is automatically down-weighted over time except for open tasks; corroboration boosts future query-time confidence and therefore salience without changing the stored base score. Duplicate detection prevents some new writes but does not merge or rewrite existing stored entries, so I am not counting it as `dedup`.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `event-streams` `trajectories` — SAGE stores agent turn observations, end-of-task reflections, session lifecycle events, pipeline summaries, and task/backlog states; it does not automatically retain raw full transcripts.
 
@@ -91,7 +91,7 @@ The important design contrast is authority granularity. SAGE can inject recent o
 
 **Distilled form:** `prose` `symbolic` `parametric` — Durable outputs include prose memories/reflections, symbolic status/domain/access/confidence/task metadata, and embeddings/search indexes used for later selection.
 
-**Trace source.** SAGE qualifies as trace-derived because its central agent-facing tools ask the model to summarize each turn or completed task into durable memory. The skill contract explicitly says observations are written through `sage_turn` and `sage_remember`, and that raw transcripts are not automatically captured ([sage-memory/SKILL.md](https://github.com/l33tdawg/sage/blob/6abd18e7f00d259bdd2c3af800b12d05759d4fb6/sage-memory/SKILL.md)). The code then turns those summaries into signed memory submissions rather than treating them as ephemeral chat context ([internal/mcp/tools.go](https://github.com/l33tdawg/sage/blob/6abd18e7f00d259bdd2c3af800b12d05759d4fb6/internal/mcp/tools.go)).
+**Trace source.** SAGE qualifies as trace-learning because its central agent-facing tools ask the model to summarize each turn or completed task into durable memory. The skill contract explicitly says observations are written through `sage_turn` and `sage_remember`, and that raw transcripts are not automatically captured ([sage-memory/SKILL.md](https://github.com/l33tdawg/sage/blob/6abd18e7f00d259bdd2c3af800b12d05759d4fb6/sage-memory/SKILL.md)). The code then turns those summaries into signed memory submissions rather than treating them as ephemeral chat context ([internal/mcp/tools.go](https://github.com/l33tdawg/sage/blob/6abd18e7f00d259bdd2c3af800b12d05759d4fb6/internal/mcp/tools.go)).
 
 **Extraction.** The extraction oracle is mostly the acting agent plus authored tool instructions. The model decides what the observation, reflection, domain, type, and confidence should be; SAGE adds duplicate checks, low-value filters, embeddings, pre-validation, consensus voting, access control, confidence decay, and optional corroboration. This means SAGE learns from traces, but it does not independently infer deep lessons from raw transcripts unless the agent writes those lessons through the available tools.
 
@@ -143,7 +143,7 @@ The important design contrast is authority granularity. SAGE can inject recent o
 
 Relevant Notes:
 
-- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - places: SAGE turns turn summaries, reflections, and lifecycle events into governed memory records.
+- [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: SAGE turns turn summaries, reflections, and lifecycle events into governed memory records.
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: SAGE stores many committed records, but behavior changes through recall tools, hooks, and turn-cycle returns.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: SAGE mixes prose memories, symbolic consensus state, hooks, validation logic, and embedding-based selectors.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: committed memories are primarily evidence/context until read back through MCP or hooks.

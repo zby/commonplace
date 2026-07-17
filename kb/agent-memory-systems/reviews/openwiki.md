@@ -42,7 +42,7 @@ OpenWiki, from `langchain-ai/openwiki`, is a TypeScript CLI that runs a DeepAgen
 
 **Prompts and CLI/runtime code.** The OpenWiki system prompt is a high-authority prose system-definition artifact: it controls repository boundaries, file-writing scope, page count, source discovery, subagent use, root instruction-file edits, and update discipline. The CLI/parser/provider/env code is symbolic system definition around that prompt.
 
-**Checkpoints and traces.** The SQLite checkpointer and optional LangSmith tracing can preserve run traces, with LangSmith living outside the repo as a service diagnostic surface. The code does not expose a stable cross-run memory policy that promotes those traces into wiki edits, rules, validators, embeddings, or model updates. I therefore treat them as diagnostic/continuity surfaces, not trace-derived learning.
+**Checkpoints and traces.** The SQLite checkpointer and optional LangSmith tracing can preserve run traces, with LangSmith living outside the repo as a service diagnostic surface. The code does not expose a stable cross-run memory policy that promotes those traces into wiki edits, rules, validators, embeddings, or model updates. I therefore treat them as diagnostic/continuity surfaces, not trace-learning.
 
 **Promotion path.** OpenWiki's implemented path is repository source and Git evidence -> generated wiki pages -> root agent-file pointer -> future human/agent pull from the wiki. Update runs can revise the wiki from newer source changes, but there is no implemented promotion from a generated claim into a typed, validated, higher-authority artifact.
 
@@ -105,7 +105,7 @@ OpenWiki's update loop is the piece most directly relevant to Commonplace. It us
 - Whether OpenWiki adds a retrieval or context-compiler surface over `openwiki/`. That would change read-back from map-based pull/coarse push to ranked or inferred context assembly.
 - Whether generated pages gain schemas, provenance requirements, or validation. That would move OpenWiki closer to a typed KB rather than generated docs.
 - Whether the AGENTS/CLAUDE insertion becomes deterministic host code instead of prompt-only agent behavior. That would make the activation hook easier to verify.
-- Whether checkpoints or LangSmith traces are later distilled into docs, rules, rankings, or model updates. That would create a real trace-derived learning path.
+- Whether checkpoints or LangSmith traces are later distilled into docs, rules, rankings, or model updates. That would create a real trace-learning path.
 - Whether scheduled update PRs run documentation-specific checks before opening. That would upgrade update quality from prompt discipline to enforceable governance.
 
 Relevant Notes:

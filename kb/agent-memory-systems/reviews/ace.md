@@ -1,9 +1,9 @@
 ---
-description: "ACE review: trace-derived playbook evolution, reflector-scored bullets, curator additions, optional deduplication, and coarse prompt read-back"
+description: "ACE review: trace-learning playbook evolution, reflector-scored bullets, curator additions, optional deduplication, and coarse prompt read-back"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-04"
-tags: [trace-derived]
+tags: [trace-learning]
 ---
 
 # ACE
@@ -75,7 +75,7 @@ ACE's read-back is also simpler. The generator gets the entire current playbook,
 
 **Curation operations:** `evolve` `synthesize` `dedup` `promote` — Counter updates evolve existing bullets in place; curator ADD operations synthesize new bullets from reflections; optional analyzer deduplicates or merges similar bullets; validation accuracy can promote one snapshot to `best_playbook`.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `trajectories` `session-logs` — ACE consumes per-sample task trajectories: generator responses, bullet ids, predicted answers, target comparison or environment feedback, reflector diagnoses, and logged LLM calls.
 

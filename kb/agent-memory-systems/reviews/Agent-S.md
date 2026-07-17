@@ -3,7 +3,7 @@ description: "Agent-S review: GUI agent framework with S1/S2 JSON experience mem
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-04"
-tags: [trace-derived]
+tags: [trace-learning]
 ---
 
 # Agent-S
@@ -77,7 +77,7 @@ S3 is also a useful caution. The current installed path emphasizes task-local re
 
 **Curation operations:** `synthesize` `promote` — S1/S2 synthesize new prose memory entries from trajectory text and promote them into prompt-affecting JSON memory through embedding retrieval. BBON synthesizes fact captions and promotes result directories into comparative selections. The code does not implement durable deduplication, contradiction invalidation, age decay, or in-place evolution of existing memory entries.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `tool-traces` `trajectories` — S1/S2 consume task/subtask trajectory strings composed from reflections, executor plans, statuses, and action results; OSWorld/S3 evaluation saves screenshots, action records, rewards, and results in `traj.jsonl` and companion files.
 

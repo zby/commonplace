@@ -3,7 +3,7 @@ description: "AgentFly/Memento review: planner-executor agent with JSONL case-ba
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-04"
-tags: [trace-derived]
+tags: [trace-learning]
 ---
 
 # AgentFly
@@ -26,7 +26,7 @@ AgentFly, branded as Memento in the inspected repository, is an Agent-on-the-Fly
 
 **The parametric path learns a retriever, not an executor model.** `train_memory_retriever.py` trains a SimCSE-backed classifier over `(retrieved case prompt, current query) -> truth_label`, saving `best.pt` and `last.pt` checkpoints when invoked ([memory/train_memory_retriever.py](https://github.com/Agent-on-the-Fly/AgentFly/blob/42fbbcac63dd58ed6856c0761357345a58e4f032/memory/train_memory_retriever.py)). The LLM weights are unchanged; the learned artifact is a read-back ranking model that decides which cases become in-context examples.
 
-**Trace-derived learning is benchmark-loop mediated.** The main automatic write paths run inside benchmark scripts: they judge answers with an LLM, append result JSONL rows, append compact memory entries, append retrieved-case training rows in the parametric variant, and reload the memory pool for later tasks ([client/no_parametric_cbr.py](https://github.com/Agent-on-the-Fly/AgentFly/blob/42fbbcac63dd58ed6856c0761357345a58e4f032/client/no_parametric_cbr.py), [client/parametric_memory_cbr.py](https://github.com/Agent-on-the-Fly/AgentFly/blob/42fbbcac63dd58ed6856c0761357345a58e4f032/client/parametric_memory_cbr.py)). The implementation supports continual accumulation in those evaluation loops, but the inspected source does not implement autonomous compression, deduplication, contradiction handling, or personal preference memory; those are README TODOs ([README.md](https://github.com/Agent-on-the-Fly/AgentFly/blob/42fbbcac63dd58ed6856c0761357345a58e4f032/README.md)).
+**Trace-learning is benchmark-loop mediated.** The main automatic write paths run inside benchmark scripts: they judge answers with an LLM, append result JSONL rows, append compact memory entries, append retrieved-case training rows in the parametric variant, and reload the memory pool for later tasks ([client/no_parametric_cbr.py](https://github.com/Agent-on-the-Fly/AgentFly/blob/42fbbcac63dd58ed6856c0761357345a58e4f032/client/no_parametric_cbr.py), [client/parametric_memory_cbr.py](https://github.com/Agent-on-the-Fly/AgentFly/blob/42fbbcac63dd58ed6856c0761357345a58e4f032/client/parametric_memory_cbr.py)). The implementation supports continual accumulation in those evaluation loops, but the inspected source does not implement autonomous compression, deduplication, contradiction handling, or personal preference memory; those are README TODOs ([README.md](https://github.com/Agent-on-the-Fly/AgentFly/blob/42fbbcac63dd58ed6856c0761357345a58e4f032/README.md)).
 
 ## Artifact analysis
 
@@ -71,7 +71,7 @@ The clearest tradeoff is authority. AgentFly's read-back cases are powerful beca
 
 **Curation operations:** `promote` — Reward/case labels, retrieved-case truth labels, and the trained retriever change which existing cases receive read-back salience. The code does not implement automatic deduplication, consolidation, in-place evolution, contradiction invalidation, age decay, or cleanup over stored cases.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `trajectories` `tool-traces` — The result records retain plan output, meta-planner cycles, executor steps, tool calls, answer judgement, rationale, and reward; the compact memory writes mostly consume the query, plan, and judged success/failure rather than the full trace body.
 
@@ -83,7 +83,7 @@ The clearest tradeoff is authority. AgentFly's read-back cases are powerful beca
 
 **Distilled form:** `prose` `symbolic` `parametric` — The first distilled artifacts are prose/symbolic case rows and labels; the optional second-stage artifact is a trained neural retriever checkpoint.
 
-On the survey axes, AgentFly is trace-derived learning with a compact case-bank output and an optional weight-learning read-back policy. It strengthens the distinction between learning LLM task behavior and fine-tuning the LLM itself: the learned weights, when present, belong to a retrieval selector, not to the planner or executor model.
+On the survey axes, AgentFly is trace-learning with a compact case-bank output and an optional weight-learning read-back policy. It strengthens the distinction between learning LLM task behavior and fine-tuning the LLM itself: the learned weights, when present, belong to a retrieval selector, not to the planner or executor model.
 
 ## Read-back
 

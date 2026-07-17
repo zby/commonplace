@@ -2,7 +2,7 @@
 description: "CrewAI Memory review: unified vector memory with LLM extraction, scoped recall, task/HITL learning, tools, and pre-task prompt injection"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-04"
 ---
 
@@ -84,7 +84,7 @@ The main tradeoff is hidden mutation authority. CrewAI lets an LLM infer fields 
 
 **Curation operations:** `consolidate` `dedup` `evolve` `synthesize` `promote` — Batch encoding drops near-exact duplicates, consolidation can update/delete existing records, extraction synthesizes discrete memories from larger outputs, task/kickoff/HITL outputs are promoted into durable records, and recall touches `last_accessed` in place.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `event-streams` — Crew tasks, standalone agent kickoff inputs/results, and flow human-feedback events provide the raw signal; memory events expose operational query/save/retrieval activity.
 
@@ -142,7 +142,7 @@ The main tradeoff is hidden mutation authority. CrewAI lets an LLM infer fields 
 
 Relevant Notes:
 
-- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - places: CrewAI distills task, kickoff, and feedback traces into scoped vector memory records.
+- [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: CrewAI distills task, kickoff, and feedback traces into scoped vector memory records.
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: CrewAI stores memory separately from the push/pull paths that bring it into context.
 - [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - exemplifies: CrewAI extracts reusable statements from runtime outputs before storing them.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: records, scopes, tools, prompt fragments, and consolidation plans differ by form, lineage, and authority.

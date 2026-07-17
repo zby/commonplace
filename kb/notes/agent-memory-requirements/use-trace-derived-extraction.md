@@ -42,5 +42,5 @@ Extraction needs an evolution operation, not only creation. New memory may updat
 
 Relevant Notes:
 
-- [Trace-derived learning techniques in related systems](../../agent-memory-systems/trace-derived-learning-techniques-in-related-systems.md) - surveys trace-mining systems across artifacts, policies, and procedures
+- [Trace-learning techniques in related systems](../../agent-memory-systems/trace-learning-techniques-in-related-systems.md) - surveys trace-mining systems across artifacts, policies, and procedures
 - [Codification and relaxing navigate the bitter lesson boundary](../codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) - frames when learned policy can replace artifact-side control

@@ -3,7 +3,7 @@ description: "Basic Memory review: local-first Markdown knowledge graph with SQL
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-04"
-tags: [trace-derived]
+tags: [trace-learning]
 ---
 
 # Basic Memory
@@ -75,7 +75,7 @@ The main tradeoff is authority. Basic Memory makes it easy for an agent to write
 
 **Curation operations:** `synthesize` — The core app mostly performs access-structure maintenance, not content curation. The qualifying curation path is in the agent packages: Claude Code PreCompact creates a new session checkpoint from transcript material, and the reflection/capture skills instruct agents to synthesize or rewrite memory notes from recent activity when invoked ([plugins/claude-code/hooks/pre-compact.sh](https://github.com/basicmachines-co/basic-memory/blob/fc2ee07076eb397b09db7b2681e5213002df0d70/plugins/claude-code/hooks/pre-compact.sh), [skills/memory-capture/SKILL.md](https://github.com/basicmachines-co/basic-memory/blob/fc2ee07076eb397b09db7b2681e5213002df0d70/skills/memory-capture/SKILL.md), [skills/memory-reflect/SKILL.md](https://github.com/basicmachines-co/basic-memory/blob/fc2ee07076eb397b09db7b2681e5213002df0d70/skills/memory-reflect/SKILL.md)).
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` — The implemented Claude Code PreCompact hook reads the host hook payload and the Claude transcript JSONL path, filters user/assistant turns, and writes a `type: session` note containing an extractive summary, recent user messages, observations, and session metadata.
 
@@ -87,7 +87,7 @@ The main tradeoff is authority. Basic Memory makes it easy for an agent to write
 
 **Distilled form:** `prose` `symbolic` — The durable output is a Markdown session note with prose summary/recent-thread text plus symbolic frontmatter, tags, observations, project, cwd, and session id fields.
 
-Relative to the trace-derived survey, Basic Memory is strongest as trace-to-knowledge rather than trace-to-enforcement. It turns session traces into future advisory context and structured recall targets; it does not automatically derive validators, route tables, fine-tuned weights, or hard policy from the transcript.
+Relative to the trace-learning survey, Basic Memory is strongest as trace-to-knowledge rather than trace-to-enforcement. It turns session traces into future advisory context and structured recall targets; it does not automatically derive validators, route tables, fine-tuned weights, or hard policy from the transcript.
 
 ## Read-back
 
@@ -109,7 +109,7 @@ Other consumers matter. Humans can edit the same Markdown files, inspect sync/se
 
 The README's local-first framing is accurate for the OSS core, but the reviewed repository also includes cloud routing, cloud API support, and hosted-product messaging. For architecture comparison, the important distinction is not local versus cloud; it is canonical Markdown plus database/search mirrors versus opaque service memory.
 
-Basic Memory has two different "memory" stories in one repo: a general MCP knowledge graph and host-specific bridge packages. The trace-derived learning classification comes from the latter, especially Claude Code PreCompact, not from the core sync/index/search engine.
+Basic Memory has two different "memory" stories in one repo: a general MCP knowledge graph and host-specific bridge packages. The trace-learning classification comes from the latter, especially Claude Code PreCompact, not from the core sync/index/search engine.
 
 The semantic-search feature is retrieval infrastructure, not semantic curation. Embeddings help find notes by similarity, but they do not decide what should be remembered, merged, invalidated, or trusted.
 
@@ -129,7 +129,7 @@ Relevant Notes:
 
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes Basic Memory's stored Markdown graph from MCP pull tools and host hook push.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - supports separating Markdown notes, database mirrors, search/vector indexes, schemas, and plugin hooks.
-- [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - frames session checkpoints and reflection/capture skills as trace-derived learning material.
+- [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - frames session checkpoints and reflection/capture skills as trace-learning material.
 - [Symbolic context engineering is bounded by symbol availability](../../notes/symbolic-context-engineering-is-bounded-by-symbol-availability.md) - explains why Basic Memory's typed frontmatter and project identifiers make pushed briefs more targetable.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies schemas, MCP tool annotations, output styles, and hooks as behavior-shaping control surfaces.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies ordinary notes, observations, relations, and session checkpoints as advisory remembered context.

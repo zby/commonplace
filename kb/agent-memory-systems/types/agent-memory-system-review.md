@@ -24,7 +24,7 @@ The section specs below distill [designing-agent-memory-systems](../../notes/des
 - `source-tier` — `code-grounded` (findings rest on inspected source; abandoned-but-readable code counts) or `doc-grounded` (no reachable source; findings rest on docs/papers, kept claim-level, filed under `lightweight/`, excluded from the matrix). Required — the **only** authority difference between reviews. Promote a `doc-grounded` review by flipping to `code-grounded` once source is read.
 - Do not add `user-verified`; creation and review generation cannot grant human attestation.
 - `last-checked: "{today}"`
-- `tags` — add `trace-derived` only when trace-learning applies (per the Write side rule below); otherwise omit `tags`. Collection membership comes from location, not a tag.
+- `tags` — add `trace-learning` only when the system learns from agent traces (per the Write side rule below); otherwise omit `tags`. Collection membership comes from location, not a tag.
 
 ## Citations
 
@@ -68,7 +68,7 @@ Identify the artifacts that actually shape the agent's later behavior — not ev
 
 - **Storage substrate** — where the retained state persists (files, repo, database, vector/graph store, prompt registry, model-artifact store, service object). Locates access, deletion, versioning, rollback.
 - **Representational form** — prose, symbolic, and/or distributed-parametric. Form sets the default inspection method: read prose, test/check symbolic, probe distributed-parametric. When several forms apply, list each component token; do not use a `mixed` token.
-- **Lineage** — whether this specific artifact was created directly or produced by transforming other material. `authored` (created fresh) and `imported` (brought in from an external source, unchanged) are direct. `trace-extracted` and `other-compiled` are both system-produced, differing only in what was transformed: raw execution traces (session logs, transcripts, tool/event traces — see Trace-derived learning) for the former, anything else already retained in the system (an index built from stored entries, a summary compiled from source notes) for the latter. Record what source change invalidates or regenerates the transformed artifact.
+- **Lineage** — whether this specific artifact was created directly or produced by transforming other material. `authored` (created fresh) and `imported` (brought in from an external source, unchanged) are direct. `trace-extracted` and `other-compiled` are both system-produced, differing only in what was transformed: raw execution traces (session logs, transcripts, tool/event traces — see Trace-learning) for the former, anything else already retained in the system (an index built from stored entries, a summary compiled from source notes) for the latter. Record what source change invalidates or regenerates the transformed artifact.
 - **Behavioral authority** — consumer, channel, and force: knowledge artifact (evidence / reference / context / advice) vs system-definition artifact (instruction, enforcement, routing, validation, evaluation, ranking, learning).
 
 **Extractable lead tokens.** So the cross-system comparison matrix can be built by parsing rather than hand-classification, open the artifact-analysis findings with backticked controlled-value tokens, written as part of the finding once you have reached it: `**Storage substrate:** \`graph\` — …`, `**Representational form:** \`prose\` \`symbolic\` — …`, `**Lineage:** \`authored\` — …`, and `**Behavioral authority:** \`knowledge\` \`routing\` — …`. Each token line is the lead of its own justifying sentence, so the value and its reasoning cannot drift apart. Vocabularies:
@@ -95,7 +95,7 @@ Write concrete alignments, divergences, and tradeoffs vs Commonplace. Close with
 The write side is everything that *changes* the store; the read side (below) only *serves* it. Two axes describe it:
 
 - **Agency** — does the store change by `manual` curation (a human authoring or editing through the write interface) or by `automatic` system operations (rule-driven, scheduled, or trace-learned)? A system can be both. Manual curation is **not a separate mechanism** — it is the authoring channel pointed at existing content, so record it here as agency only: its provenance is the Artifact-analysis Lineage `authored` value, and its quality is an *adoption-affordances* question (editability, diffability, links that survive a rename) handled in Core Ideas. The automatic side is where the system itself does something worth classifying.
-- **Operations** — which store-changing operations the system performs on memory **already in the store**, beyond trivial create/update/delete. *Acquisition* — creating an entry from raw material, whether extracting from a document (Lineage `imported`) or distilling from a trace (Lineage `trace-extracted`, and the `trace-derived` tag when it is a learning loop) — is **not** a curation operation, however sophisticated the extraction; record it on those axes. Each token below is a distinct design choice:
+- **Operations** — which store-changing operations the system performs on memory **already in the store**, beyond trivial create/update/delete. *Acquisition* — creating an entry from raw material, whether extracting from a document (Lineage `imported`) or distilling from a trace (Lineage `trace-extracted`, and the `trace-learning` tag when it is a learning loop) — is **not** a curation operation, however sophisticated the extraction; record it on those axes. Each token below is a distinct design choice:
   - `consolidate` — *reductive*: digest a group of stored entries (or an oversized entry) into a more compact, higher-level memory — a summary, rollup, or abstraction that says nothing the inputs didn't, only smaller. Reduces count or size.
   - `dedup` — detect and merge near-duplicate entries (redundancy removal, *not* abstraction).
   - `evolve` — automatically modify an *existing* entry in place — its content, links, or metadata — in light of newly arriving entries (A-MEM-style enrichment), without merging or deleting it.
@@ -111,13 +111,13 @@ Write the agency verdict and the automatic operations as lead tokens:
 - `**Write agency:**` `manual` · `automatic` — list all that apply.
 - `**Curation operations:**` — the automatic operations from the list above; omit when agency is manual-only.
 
-Every `## Write side` section carries the `**Write agency:**` verdict. Add `**Curation operations:**` and the `### Trace-derived learning` sub-section only when the system has a non-trivial automatic write or curation path (trace-learned or rule-based maintenance). A manual-curation-only system keeps just the agency verdict.
+Every `## Write side` section carries the `**Write agency:**` verdict. Add `**Curation operations:**` and the `### Trace-learning` sub-section only when the system has a non-trivial automatic write or curation path (trace-learned or rule-based maintenance). A manual-curation-only system keeps just the agency verdict.
 
 **When the system writes automatically but performs no curation** (its only automatic writes are *acquisition* — extraction, import, upload, indexing — with no operation over already-stored memory), write `**Curation operations:** \`none\`` with a one-line reason, *not* an omitted line. Omission is read as a retrofit gap and flagged; `none` records an assessed-absent verdict (every curation column set to `0`), keeping "verified no curation" distinct from "not assessed" (blank) and from "could not tell" (`not-determinable`). Use `none` only when agency includes `automatic`; a manual-only system still omits the line.
 
-### Trace-derived learning
+### Trace-learning
 
-When automatic writes are fed by agent traces, deepen the write side with the raw → distilled loop. **Add `trace-derived` to `tags`** and include this sub-section only when the code-grounded read finds a qualifying mechanism.
+When automatic writes are fed by agent traces, deepen the write side with the raw → distilled loop. **Add `trace-learning` to `tags`** and include this sub-section only when the code-grounded read finds a qualifying mechanism.
 
 A system qualifies when it creates, extracts, synthesizes, or learns durable retained artifacts from agent traces. Qualifying **traces:** session logs, transcripts, tool/action traces, event streams, repeated trajectories, rollouts. Qualifying **outputs:** prose (notes, rules, playbooks, lessons), symbolic units (schemas, scripts, tools), or distributed-parametric state (weights, embeddings, adapters, rankers, controllers).
 
@@ -127,7 +127,7 @@ Many systems run a two-stage loop: raw traces accumulate as knowledge artifacts 
 2. **Extraction** — what gets pulled out, and what oracle or judge decides what becomes signal.
 3. **Four fields** — record storage substrate, representational form, lineage, and behavioral authority for the raw and distilled stages in **Artifact analysis** rather than repeating them here.
 4. **Scope and timing** — per-task / per-project / cross-task, and online / offline / staged in cycles. Lead token values: `**Learning scope:**` `per-task` · `per-project` · `cross-task`; `**Learning timing:**` `online` · `offline` · `staged`; `**Distilled form:**` `prose` · `symbolic` · `parametric`.
-5. **Survey placement** — position on the [survey's axes](../trace-derived-learning-techniques-in-related-systems.md), and whether the system strengthens, weakens, or splits any survey claim.
+5. **Survey placement** — position on the [survey's axes](../trace-learning-techniques-in-related-systems.md), and whether the system strengthens, weakens, or splits any survey claim.
 
 ## Read-back
 
@@ -220,11 +220,11 @@ last-checked: "YYYY-MM-DD"
 
 **Write agency:** `{manual|automatic}` `{...}` — {how the store changes; manual = curation via the authoring channel, see Lineage + affordances}
 
-{Required heading + `**Write agency:**` verdict. Add `**Curation operations:** \`consolidate\` …` and the `### Trace-derived learning` sub-section only with a non-trivial automatic write/curation path; a manual-only system keeps just the heading and agency verdict. See Write side.}
+{Required heading + `**Write agency:**` verdict. Add `**Curation operations:** \`consolidate\` …` and the `### Trace-learning` sub-section only with a non-trivial automatic write/curation path; a manual-only system keeps just the heading and agency verdict. See Write side.}
 
-### Trace-derived learning
+### Trace-learning
 
-{Optional sub-section — qualifying trace-learning only; delete otherwise, and add `trace-derived` to `tags` when kept. Deepens Artifact analysis with the raw → distilled loop. Lead tokens: `**Trace source:**`, `**Learning scope:**`, `**Learning timing:**`, `**Distilled form:**`.}
+{Optional sub-section — qualifying trace-learning only; delete otherwise, and add `trace-learning` to `tags` when kept. Deepens Artifact analysis with the raw → distilled loop. Lead tokens: `**Trace source:**`, `**Learning scope:**`, `**Learning timing:**`, `**Distilled form:**`.}
 
 ## Read-back
 

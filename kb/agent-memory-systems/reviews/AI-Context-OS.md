@@ -1,9 +1,9 @@
 ---
-description: "AI-Context-OS review: filesystem-first Markdown memory with L0/L1/L2 context loading, generated adapters, MCP/chat read-back, and trace-derived optimization suggestions"
+description: "AI-Context-OS review: filesystem-first Markdown memory with L0/L1/L2 context loading, generated adapters, MCP/chat read-back, and trace-learning optimization suggestions"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-04"
-tags: [trace-derived]
+tags: [trace-learning]
 ---
 
 # AI-Context-OS
@@ -71,7 +71,7 @@ The strongest alignment is context-budget discipline. AI-Context-OS's L0/L1/L2 a
 
 **Curation operations:** `synthesize` — Automatic proposal and optimization paths create new derived records about what should be promoted, compressed, archived, merged, or reweighted. The inspected code does not automatically perform those edits on canonical memories; consolidation, decay, deduplication, and promotion mostly appear as suggestions or user-mediated proposal application.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `event-streams` `session-logs` — MCP context requests produce context-request, served-memory, and not-loaded rows; access recording updates `.cache/memory-usage.json`; MCP `log_session` and inbox/journal operations append JSONL operational events.
 
@@ -83,7 +83,7 @@ The strongest alignment is context-budget discipline. AI-Context-OS's L0/L1/L2 a
 
 **Distilled form:** `prose` `symbolic` — Suggestions are symbolic records with typed fields plus prose descriptions, evidence, impact, and estimated token savings.
 
-This is trace-derived learning, but a modest form: it learns maintenance pressure and ranking/summary hygiene from usage traces. It does not distill full agent transcripts into new rules, procedures, or validated memories.
+This is trace-learning, but a modest form: it learns maintenance pressure and ranking/summary hygiene from usage traces. It does not distill full agent transcripts into new rules, procedures, or validated memories.
 
 ## Read-back
 
@@ -119,4 +119,4 @@ Relevant Notes:
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - supports separating Markdown memories, generated adapters, scoring records, observability rows, and proposals by substrate, form, lineage, and authority.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - describes the authority carried by generated routers, rules, MCP tools, scoring policy, and validation checks.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - describes the evidence/context role of ordinary Markdown memories, sources, journal entries, and observability records.
-- [Use trace-derived extraction](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - frames AI-Context-OS's usage-derived optimization suggestions as a modest trace-derived loop rather than transcript-to-rule learning.
+- [Use trace-derived extraction](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - frames AI-Context-OS's usage-derived optimization suggestions as a modest trace-learning loop rather than transcript-to-rule learning.

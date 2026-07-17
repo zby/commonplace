@@ -2,7 +2,7 @@
 description: "Synto review: local LLM vault compiler that turns raw notes into reviewed Markdown wiki articles, SQLite identity state, agent packs, and MCP read tools"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-18"
 ---
 
@@ -75,7 +75,7 @@ Synto's database/file split is also different from Commonplace's git-first model
 
 **Curation operations:** `consolidate` `dedup` `evolve` `synthesize` `invalidate` `promote` — Compilation consolidates multiple source notes into one concept article; raw-note hashes, synthesis question hashes, aliases, and merge candidates provide deduplication pressure; re-ingest/recompile, alias normalization, concept occurrence attribution, and link repair evolve stored metadata or pages; query synthesis and concept compilation create new articles from existing retained sources; manual-edit detection, deferred compile states, blocked concepts, source hashes, and rejection records mark stale or unsafe update paths; verify/approve/status transitions, confidence thresholds, and pack/index generation promote drafts into stronger consumption surfaces.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `tool-traces` `event-streams` — Synto retains rejection events, compile runs, LLM cache hits, metric events, MCP audit rows, saved query/synthesis events, and source-access/backlog signals; it does not mine full chat transcripts or multi-step agent trajectories in the reviewed implementation.
 
@@ -85,7 +85,7 @@ Synto's database/file split is also different from Commonplace's git-first model
 
 **Distilled form:** `prose` `symbolic` — Rejection feedback is retained prose and injected into later prompts; block status, compile state, query/synthesis hashes, metrics, cache counters, audit rows, and backlog data are symbolic.
 
-The most important trace-derived loop is rejection feedback. `reject_draft()` deletes the draft, stores feedback and rejected body, resets the concept compile state to pending, and auto-blocks after the rejection cap; `compile_concepts()` later loads recent rejections and passes them into the concept write prompt ([src/synto/pipeline/compile.py](https://github.com/kytmanov/synto/blob/6b336034b1849443939dcc868feeac1af2fc8c35/src/synto/pipeline/compile.py), [src/synto/state.py](https://github.com/kytmanov/synto/blob/6b336034b1849443939dcc868feeac1af2fc8c35/src/synto/state.py)). That is not autonomous semantic learning, but it is durable feedback from a prior generation attempt shaping a later generated artifact.
+The most important trace-learning loop is rejection feedback. `reject_draft()` deletes the draft, stores feedback and rejected body, resets the concept compile state to pending, and auto-blocks after the rejection cap; `compile_concepts()` later loads recent rejections and passes them into the concept write prompt ([src/synto/pipeline/compile.py](https://github.com/kytmanov/synto/blob/6b336034b1849443939dcc868feeac1af2fc8c35/src/synto/pipeline/compile.py), [src/synto/state.py](https://github.com/kytmanov/synto/blob/6b336034b1849443939dcc868feeac1af2fc8c35/src/synto/state.py)). That is not autonomous semantic learning, but it is durable feedback from a prior generation attempt shaping a later generated artifact.
 
 MCP and metric traces are weaker learning signals. `serve.py` can audit tool usage and result counts, and `state.py` contains backlog/report helpers that map hashed resolved labels back to concepts; those traces guide coverage and maintenance, but I did not find code that automatically rewrites articles or reranks query selection from MCP audit rows alone. Synto therefore fits the survey branch where trace-derived state mostly guides compilation and maintenance, not model weights or always-on policy.
 
@@ -119,7 +119,7 @@ MCP and metric traces are weaker learning signals. `serve.py` can audit tool usa
 
 ## What to Watch
 
-- Whether MCP audit/backlog data starts automatically affecting query routing, article prioritization, or compile scheduling; that would strengthen the trace-derived learning claim beyond rejection feedback.
+- Whether MCP audit/backlog data starts automatically affecting query routing, article prioritization, or compile scheduling; that would strengthen the trace-learning claim beyond rejection feedback.
 - Whether pack export gains enough source-span provenance for agents to verify synthesized article claims without calling the live MCP server.
 - Whether the optional RAG hook in ingest becomes a shipped vector-backed retrieval path; that would change the representational-form and read-back classifications.
 - Whether `.synto/state.db` gains a git-trackable export/replay format for identity and curation state; without it, file rollback and database truth remain split.

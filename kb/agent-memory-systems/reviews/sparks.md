@@ -79,7 +79,7 @@ The main design tradeoff is fixed shape versus extensibility. Sparks gets a clea
 
 **Curation operations:** `invalidate` — The automatic write path changes derived state and access structures rather than semantically rewriting stored knowledge. The closest curation operation is invalidation: scan marks disappeared files as deleted without removing their manifest rows, lint flags stale pages when sources are newer than wiki updates, and ingest locks move from `in_progress` to completed or aborted. Collection regeneration and index rebuilds are deterministic derived-view upkeep, not semantic consolidation or synthesis.
 
-Sparks does not qualify for trace-derived learning in this review. It can process traces that a human or agent drops into raw files, and `brief` can gather recent activity for an agent to synthesize, but the binary itself does not distill session logs, tool traces, trajectories, or event streams into durable semantic memories. The semantic output is authored by the external agent and then mechanically tracked.
+Sparks does not qualify for trace-learning in this review. It can process traces that a human or agent drops into raw files, and `brief` can gather recent activity for an agent to synthesize, but the binary itself does not distill session logs, tool traces, trajectories, or event streams into durable semantic memories. The semantic output is authored by the external agent and then mechanically tracked.
 
 ## Read-back
 

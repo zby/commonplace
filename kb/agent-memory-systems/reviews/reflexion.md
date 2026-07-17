@@ -2,7 +2,7 @@
 description: "Reflexion review: benchmark agents turn failed trajectories and test feedback into task-local verbal lessons for later attempts"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-04"
 ---
 
@@ -78,7 +78,7 @@ The authority tradeoff is scope. Reflexion can automatically create and re-use a
 
 **Curation operations:** `promote` — A failed trace or failed implementation gains stronger future-action authority when the benchmark harness turns it into a retained prose reflection for a later attempt on the same instance.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `tool-traces` `trajectories` — HotPotQA scratchpads, AlfWorld/WebShop action-observation logs, programming implementations, test feedback, and benchmark success/failure states provide the raw signal.
 
@@ -132,7 +132,7 @@ Survey placement: Reflexion is the canonical trace-to-prose-advice example. It s
 
 Relevant Notes:
 
-- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - places: Reflexion turns failed trajectories and test feedback into task-local verbal advice for later attempts.
+- [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: Reflexion turns failed trajectories and test feedback into task-local verbal advice for later attempts.
 - [Use trace-derived extraction](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - exemplifies: failed attempts are distilled into reusable but scoped memory artifacts.
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - applies: Reflexion's reflections matter because the harness inserts them before retry, not because they are merely logged.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: raw traces, prose reflections, JSON records, prompt templates, and tests carry different forms and authorities.

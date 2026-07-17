@@ -1,8 +1,8 @@
 ---
-description: "ARIS review: Markdown skill harness for autonomous research with project research-wiki memory, review traces, and gated trace-derived skill optimization"
+description: "ARIS review: Markdown skill harness for autonomous research with project research-wiki memory, review traces, and gated trace-learning skill optimization"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-04"
 ---
 
@@ -57,7 +57,7 @@ Auto-claude-code-research-in-sleep, also called ARIS, is a research workflow har
 | Main substrate | Plain files: skills, wiki pages, JSONL traces, helper scripts | Plain files: notes, sources, reviews, indexes, schemas, instructions |
 | Main retained unit | SKILL.md workflow package plus project artifacts | Typed Markdown artifact under collection/type contracts |
 | Memory read-back | Query-pack loading, skill invocation, trace/meta reminders, explicit wiki commands | Search, links, indexes, skills, validation/review workflows |
-| Trace-derived learning | Usage logs and reviewer traces propose harness patches | Review reports and work logs can inform authored KB artifacts, but less automated |
+| Trace-learning | Usage logs and reviewer traces propose harness patches | Review reports and work logs can inform authored KB artifacts, but less automated |
 | Governance | Cross-model jury, helper gates, installers, provenance, run state | Schema validation, collection contracts, source-grounded review, generated indexes |
 
 ARIS and Commonplace share the file-first adoption story: a user can inspect, diff, copy, and patch the retained artifacts without adopting a service. They diverge in the unit of authority. Commonplace uses typed knowledge artifacts as the durable substrate and lets instructions/validators govern how agents consume them. ARIS starts from executable workflow instructions: the skill package is the thing that tells future agents what to do, while the wiki and traces feed those workflows.
@@ -84,7 +84,7 @@ The main tradeoff is semantic locality. ARIS's skill packages are portable and i
 
 **Curation operations:** `consolidate` `synthesize` `invalidate` `promote` — `rebuild_query_pack` consolidates wiki material into a bounded context pack; `/meta-optimize` synthesizes patch proposals from usage logs; `/result-to-claim` can mark claims invalidated and add invalidating edges; `/meta-apply` promotes a staged proposal into the skill corpus only after human invocation and a fresh cross-model jury.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `tool-traces` `event-streams` — ARIS logs Claude hook events, slash commands, skill invocations, tool failures, reviewer calls, and full reviewer prompt/response traces.
 
@@ -94,13 +94,13 @@ The main tradeoff is semantic locality. ARIS's skill packages are portable and i
 
 **Distilled form:** `prose` `symbolic` — Trace analysis produces prose reports and symbolic diffs/manifests; accepted changes become modified SKILL.md prose, helper contracts, defaults, or workflow rules.
 
-**Trace source.** The trace-derived loop is implemented around `.aris/meta/events.jsonl`, `.aris/traces/`, and hook helpers. `log_event.sh` records hook payloads into project and global JSONL files; `save_trace.sh` writes reviewer request/response artifacts and appends summary events; `check_ready.sh` injects a reminder after enough skill invocations accumulate.
+**Trace source.** The trace-learning loop is implemented around `.aris/meta/events.jsonl`, `.aris/traces/`, and hook helpers. `log_event.sh` records hook payloads into project and global JSONL files; `save_trace.sh` writes reviewer request/response artifacts and appends summary events; `check_ready.sh` injects a reminder after enough skill invocations accumulate.
 
 **Extraction.** `/meta-optimize` asks the agent to compute frequency, failure, convergence, and human-intervention patterns from the event log, then generate patch proposals. It explicitly screens rationales with `capture_filter.py` to avoid hardening transient operational failures into durable rules. The cross-model review inside `/meta-optimize` is advisory; `/meta-apply` reruns a fresh landing jury and records provenance before corpus mutation.
 
 **Scope and timing.** Scope is harness behavior, not paper content. The loop is offline and staged: traces accumulate during ordinary runs, a human or reminder triggers analysis, patches are staged under `.aris/meta/pending/`, and a separate human-invoked applier lands only jury-passed survivors.
 
-**Survey position.** ARIS belongs in the trace-to-instruction-artifact family. It strengthens the claim that trace-derived learning is safer when the learner can propose but not acquit its own changes. Its distinctive split is that the trace-derived artifact is initially advisory and only becomes system-definition material after a separate landing gate.
+**Survey position.** ARIS belongs in the trace-to-instruction-artifact family. It strengthens the claim that trace-learning is safer when the learner can propose but not acquit its own changes. Its distinctive split is that the trace-derived artifact is initially advisory and only becomes system-definition material after a separate landing gate.
 
 ## Read-back
 

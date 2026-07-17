@@ -2,7 +2,7 @@
 description: "Dense-Mem review: self-hosted MCP memory server with Neo4j evidence, typed claims, verifier gates, fact promotion, and tiered recall"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-04"
 ---
 
@@ -86,7 +86,7 @@ The deepest difference is where truth becomes machine state. Commonplace preserv
 
 **Curation operations:** `dedup` `synthesize` `invalidate` `promote` — Fragment and claim create paths use idempotency/content-hash or identity checks; community summaries synthesize grouped fact/claim triples into persisted summaries; retraction, supersession, disputed claims, confirmation rejection, rollback, and revalidation status invalidate or weaken retained state; validated claims promote into active facts and skill-pack imports can create or supersede graph entries under recorded decisions.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` — Dense-Mem consumes current conversation evidence and summarized historical conversations supplied by the host, not full transcripts, tool/action traces, event streams, or rollouts.
 
@@ -96,11 +96,11 @@ The deepest difference is where truth becomes machine state. Commonplace preserv
 
 **Distilled form:** `prose` `symbolic` `parametric` — Raw evidence becomes prose fragments, symbolic claims/facts/skill-pack items/community summaries, and persisted fragment embeddings used for later ranking.
 
-**Extraction.** Dense-Mem qualifies as trace-derived because the normal high-level memory path consumes current conversation evidence plus host-extracted typed claims, and the historical import path consumes summarized prior conversations. The raw trace boundary sits outside the server: Dense-Mem receives granular evidence strings and optional structured claims rather than owning a full transcript parser.
+**Extraction.** Dense-Mem qualifies as trace-learning because the normal high-level memory path consumes current conversation evidence plus host-extracted typed claims, and the historical import path consumes summarized prior conversations. The raw trace boundary sits outside the server: Dense-Mem receives granular evidence strings and optional structured claims rather than owning a full transcript parser.
 
 **Scope and timing.** The write path is online for ordinary chat-session memory and staged for historical or portable memory. Successful extraction can become an active fact immediately only when verification and promotion gates pass; conflicts become clarification tasks and require a later `confirm_memory` decision.
 
-**Survey fit.** Dense-Mem fits the trace-to-symbolic-memory branch of the trace-derived learning landscape. Its useful split is raw trace retention versus stronger distilled authority: fragments remain evidence, claims become validated candidates, and only gated facts become the durable top-tier memory returned ahead of lower-authority evidence.
+**Survey fit.** Dense-Mem fits the trace-to-symbolic-memory branch of the trace-learning landscape. Its useful split is raw trace retention versus stronger distilled authority: fragments remain evidence, claims become validated candidates, and only gated facts become the durable top-tier memory returned ahead of lower-authority evidence.
 
 ## Read-back
 
@@ -130,7 +130,7 @@ The read path is still substantial: active facts and validated claims are matche
 
 Relevant Notes:
 
-- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - positions Dense-Mem as trace-to-symbolic-memory rather than trace-to-weight learning.
+- [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - positions Dense-Mem as trace-to-symbolic-memory rather than trace-to-weight learning.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: Dense-Mem separates graph memory, provider outputs, control-plane state, tool contracts, and import artifacts by substrate, form, lineage, and authority.
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Dense-Mem stores governed memory, but retained content enters context through explicit recall/tool calls.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: fragments, claims, facts, and community summaries mostly advise or evidence future work when recalled.

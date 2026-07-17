@@ -78,7 +78,7 @@ The second divergence is automation evidence. Funes describes an agent-operated 
 
 **Curation operations:** `consolidate` `dedup` `synthesize` - At the protocol level, Funes instructs the Librarian to consolidate sources and concepts into summaries/topic maps, merge duplicate concepts rather than duplicate them, and generate syntheses and durable outputs from the wiki. Health checks can surface contradictions and stale material, but the reviewed checkout does not implement retained-history invalidation.
 
-Funes does not qualify as trace-derived learning under the current review contract. It can preserve pasted text, links, and source material, and the Librarian may write outputs from a work session, but I found no implemented durable derivation from session logs, tool traces, event streams, repeated trajectories, rollouts, model feedback, or usage telemetry. Its learning path is source import and agent-authored compilation, not trace-derived memory.
+Funes does not qualify as trace-learning under the current review contract. It can preserve pasted text, links, and source material, and the Librarian may write outputs from a work session, but I found no implemented durable derivation from session logs, tool traces, event streams, repeated trajectories, rollouts, model feedback, or usage telemetry. Its learning path is source import and agent-authored compilation, not trace-derived memory.
 
 ## Read-back
 

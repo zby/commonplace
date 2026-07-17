@@ -3,7 +3,7 @@ description: "WUPHF review: local multi-agent office with git-backed markdown wi
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-05"
-tags: [trace-derived]
+tags: [trace-learning]
 ---
 
 # WUPHF
@@ -71,7 +71,7 @@ The main risk is authority drift. WUPHF has many paths that can turn notes into 
 
 **Curation operations:** `dedup` `consolidate` `evolve` `synthesize` `invalidate` `decay` `promote` — Entity resolution and fact reinforcement dedup repeated extracted facts; entity synthesis and generated learning pages consolidate records into readable surfaces; fact mutation, brief synthesis, skill enhancement, and index reconciliation evolve existing artifacts; Stage B skill synthesis and entity briefs synthesize new prose from stored signals; lint resolution, `valid_until`, supersedes, archive tombstones, DLQ retirement, and review state invalidate stale or failed records; archival and effective-confidence scoring decay low-value memory; notebook promotion, skill proposal writing, and playbook compilation promote lower-authority material into stronger artifacts.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `tool-traces` — Qualifying traces include raw wiki artifacts such as chat/meeting/email/manual records, agent-authored notebook captures, playbook execution records, task/self-heal incidents, and repeated cross-agent notebook patterns. The old automatic fan-out from every message/task transition is explicitly disabled, so not every office event becomes durable memory automatically ([internal/team/auto_notebook_writer.go](https://github.com/nex-crm/wuphf/blob/fa7449550ce42c8f163a5f78388751a92937bfc6/internal/team/auto_notebook_writer.go), [internal/team/artifact_commit.go](https://github.com/nex-crm/wuphf/blob/fa7449550ce42c8f163a5f78388751a92937bfc6/internal/team/artifact_commit.go)).
 
@@ -123,7 +123,7 @@ Relevant Notes:
 
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: WUPHF stores rich memory, but only tool calls, prompt blocks, `/lookup`, and generated skills make it affect a future action.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: WUPHF's wiki pages, notebooks, fact logs, learning rows, skills, indexes, prompts, and review state carry different substrates, forms, lineage, and authority.
-- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - places: WUPHF extracts facts and skill candidates from retained artifacts, notebooks, and self-heal traces.
+- [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: WUPHF extracts facts and skill candidates from retained artifacts, notebooks, and self-heal traces.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: wiki articles, notebook entries, raw artifacts, citations, facts, and learnings mostly advise until read or promoted.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: prompt blocks, MCP tool schemas, compiled skills, lint rules, validators, and review workflows instruct, route, validate, rank, or enforce behavior.
 - [Symbolic context engineering is bounded by symbol availability](../../notes/symbolic-context-engineering-is-bounded-by-symbol-availability.md) - explains: WUPHF's targeted read-back relies on paths, slugs, task ids, scopes, query classes, and typed predicates being available as symbols or inferred from query text.

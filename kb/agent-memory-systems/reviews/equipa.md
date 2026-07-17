@@ -1,8 +1,8 @@
 ---
-description: "EQUIPA review: SQLite-backed agent orchestrator with trace-derived lessons, episodes, prompt variants, and prompt-time read-back"
+description: "EQUIPA review: SQLite-backed agent orchestrator with trace-learning lessons, episodes, prompt variants, and prompt-time read-back"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-04"
 ---
 
@@ -86,7 +86,7 @@ The main design difference is authority assignment. Commonplace tends to keep re
 
 **Curation operations:** `dedup` `synthesize` `invalidate` `decay` `promote` — Lesson retrieval deduplicates overlapping lessons; ForgeSmith/SIMBA/GEPA synthesize new lessons, rules, and prompt variants from stored traces; GEPA rollback and SIMBA pruning mark ineffective artifacts inactive or reverted; session TTL purges expired session state; Q-values, injection counts, effectiveness scores, and prompt A/B selection promote or demote memory salience. I did not find an automatic in-place `evolve` path for an existing lesson's semantic content beyond counters/status.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `tool-traces` `trajectories` — Raw signals include agent run telemetry, outputs, reviewer findings, episode reflections, action/tool logs, session state, injected-episode outcomes, and ForgeSmith/SIMBA/GEPA training inputs.
 
@@ -136,7 +136,7 @@ Authority at consumption is mostly advisory instruction. Injected lessons and ep
 
 Relevant Notes:
 
-- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - places: EQUIPA turns agent run traces into lessons, episodes, prompt variants, and ranking state.
+- [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: EQUIPA turns agent run traces into lessons, episodes, prompt variants, and ranking state.
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - applies: EQUIPA's distinctive move is prompt-time read-back rather than storage alone.
 - [Activate Behavior-Changing Memory Before The Mistake](../../notes/agent-memory-requirements/activate-behavior-changing-memory.md) - exemplifies: lessons and episodes are selected before the next worker action.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: EQUIPA's rows, prompt files, embeddings, graph edges, and sessions differ by substrate, form, lineage, and authority.

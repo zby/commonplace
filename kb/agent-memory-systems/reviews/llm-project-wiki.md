@@ -2,7 +2,7 @@
 description: "llm-project-wiki review: prompt-only Claude Code workflow that bootstraps an Obsidian project wiki, wiki-first rules, diff ingest, and gap audits"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-04"
 ---
 
@@ -67,9 +67,9 @@ The strongest overlap is the compiled-source model: source snapshots feed distil
 
 **Curation operations:** `evolve` `synthesize` `invalidate` — Diff ingest evolves existing wiki pages by updating only changed sections; bootstrap and gap resolution synthesize new overview/entity/concept/decision/status/reference pages from multiple project sources; code edits mark affected wiki pages `status: stale`, and Phase G repairs stale or broken vault state. There is no shipped deduplication, decay, recurrence promotion, or contradiction-maintenance implementation beyond prompt-specified link/orphan/gap audits.
 
-### Trace-derived learning
+### Trace-learning
 
-**Trace source:** `session-logs` — The qualifying trace-derived path is the future-work loop: when a question or task reveals that the wiki is insufficient, Claude appends a `[gap]` entry to `log.md`; the next `/wiki-ingest` reads open gaps and creates or updates the missing pages.
+**Trace source:** `session-logs` — The qualifying trace-learning path is the future-work loop: when a question or task reveals that the wiki is insufficient, Claude appends a `[gap]` entry to `log.md`; the next `/wiki-ingest` reads open gaps and creates or updates the missing pages.
 
 **Learning scope:** `per-project` — The generated wiki, gaps, stale markers, and command rules live in the target software project.
 
@@ -115,4 +115,4 @@ Relevant Notes:
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: setup prompts, generated wiki pages, source snapshots, rules, logs, and commands differ by substrate, form, lineage, and authority.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: compiled wiki pages advise future agents as reference context.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: setup prompt, `CLAUDE.md` / `GEMINI.md` rules, slash commands, schemas, and health checks shape future behavior.
-- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - qualifies narrowly: task-discovered wiki gaps become durable log entries and later page updates.
+- [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - qualifies narrowly: task-discovered wiki gaps become durable log entries and later page updates.

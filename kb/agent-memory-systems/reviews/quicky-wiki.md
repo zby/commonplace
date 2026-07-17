@@ -83,7 +83,7 @@ The trust tradeoff is important. Quicky Wiki has richer first-class confidence a
 
 **Curation operations:** `consolidate` `evolve` `invalidate` `decay` — page summary generation condenses stored claims into shorter page-level summaries; reinforcement, dashboard edits, and metadata updates evolve existing graph entries; challenges lower confidence and retain events; metabolism decay down-weights old claims. Chunk de-duplication and document-to-claim extraction are acquisition mechanics rather than curation operations over already-retained memory.
 
-Quicky Wiki is not trace-derived under the survey rule. Its durable artifacts derive from user-authored/imported documents, fetched URLs, dashboard edits, and optionally saved generated answers, not from agent session logs, tool/action traces, event streams, repeated trajectories, or rollouts.
+Quicky Wiki is not trace-learning under the survey rule. Its durable artifacts derive from user-authored/imported documents, fetched URLs, dashboard edits, and optionally saved generated answers, not from agent session logs, tool/action traces, event streams, repeated trajectories, or rollouts.
 
 ## Read-back
 

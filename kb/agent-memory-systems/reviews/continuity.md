@@ -2,7 +2,7 @@
 description: "Continuity review: local-first desktop AI workspace with shared SQLite memory, MCP tools, narrative synthesis, prompt push, and org sync"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-04"
 ---
 
@@ -84,7 +84,7 @@ The main tradeoff is activation versus precision. Continuity makes stored memory
 
 **Curation operations:** `consolidate` `synthesize` `evolve` `promote` — Narrative synthesis consolidates many memories and learnings into a compact briefing; it synthesizes a new or updated mental-model artifact; memory and narrative updates evolve existing rows by version/snapshot/confidence; absorbed learning signals and the latest narrative are promoted into the in-app assistant's future prompt context.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `event-streams` — Continuity records learning signals with source thread/message ids, schedules narrative synthesis after conversation activity, and lets plugins subscribe to memory-change events.
 

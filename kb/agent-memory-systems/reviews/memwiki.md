@@ -3,7 +3,7 @@ description: "Memwiki review: npm CLI protocol scaffold for AGENTS/hook files, h
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-18"
-tags: [trace-derived]
+tags: [trace-learning]
 ---
 
 # memwiki
@@ -69,7 +69,7 @@ Memwiki's strongest move is adoption. It can be dropped into an arbitrary projec
 
 **Curation operations:** `consolidate` `evolve` — `/memwiki-fold` tells the agent to condense older `log.md` entries, and the session-end/hot-cache protocol tells the agent to update existing current-state memory as work changes. There is no code-level deduplication, decay, contradiction handling, or promotion-by-recurrence.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `tool-traces` — The durable signal is the host agent's work session: what it learned, which bug it fixed, what decision it made, what current state remains, and what summary should be appended before context is lost. The repository does not expose a raw transcript parser; extraction happens through the agent following `AGENTS.md`.
 
@@ -81,7 +81,7 @@ Memwiki's strongest move is adoption. It can be dropped into an arbitrary projec
 
 **Distilled form:** `prose` `symbolic` — The retained output is Markdown prose plus symbolic filenames, links, headings, checkboxes, and command/path conventions.
 
-Memwiki fits the trace-to-prose-wiki family in the trace-derived survey. It strengthens the claim that low-friction trace learning can be packaged as host instructions, but it also shows the weakness of prose-only learning: the protocol can request updates, but it cannot prove they are faithful, complete, or later used.
+Memwiki fits the trace-to-prose-wiki family in the trace-learning survey. It strengthens the claim that low-friction trace learning can be packaged as host instructions, but it also shows the weakness of prose-only learning: the protocol can request updates, but it cannot prove they are faithful, complete, or later used.
 
 ## Read-back
 

@@ -1,8 +1,8 @@
 ---
-description: "Spacebot review: Rust team-agent harness with SQLite graph memory, LanceDB hybrid recall, pushed working context, trace-derived persistence, and skill injection"
+description: "Spacebot review: Rust team-agent harness with SQLite graph memory, LanceDB hybrid recall, pushed working context, trace-learning persistence, and skill injection"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-05"
 ---
 
@@ -53,7 +53,7 @@ Spacebot and Commonplace share the view that memory must be structured enough fo
 
 The largest design divergence is read-back. Commonplace mostly relies on deliberate agent navigation and validation; Spacebot pushes ambient working memory and knowledge synthesis into channel prompts while also supporting explicit recall. That makes Spacebot better suited to chat agents that need continuous awareness, but it also risks context dilution and faithfulness problems unless the generated context is evaluated.
 
-Spacebot's trace-derived path is also more automatic than Commonplace's ordinary note workflow. It periodically reviews conversation history and writes memories/events without a human editing the artifact. Commonplace would treat that as a high-authority ingestion path needing review, quote grounding, or validation before the distilled output changes durable methodology knowledge.
+Spacebot's trace-learning path is also more automatic than Commonplace's ordinary note workflow. It periodically reviews conversation history and writes memories/events without a human editing the artifact. Commonplace would treat that as a high-authority ingestion path needing review, quote grounding, or validation before the distilled output changes durable methodology knowledge.
 
 ### Borrowable Ideas
 
@@ -73,7 +73,7 @@ Spacebot's trace-derived path is also more automatic than Commonplace's ordinary
 
 **Curation operations:** `consolidate` `dedup` `decay` `promote` — Working-memory intraday/daily synthesis and knowledge synthesis consolidate events/memories/tasks into compact prose. Maintenance merges near-duplicate memories, rewires associations, and marks losers forgotten. Maintenance decays old or unaccessed memory importance and prunes low-importance old memories. Recent access can boost importance during decay calculations, making access history a promotion signal ([src/memory/maintenance.rs](https://github.com/spacedriveapp/spacebot/blob/ac52277404d3813045aa053b78c95810ab85e7c5/src/memory/maintenance.rs), [src/memory/store.rs](https://github.com/spacedriveapp/spacebot/blob/ac52277404d3813045aa053b78c95810ab85e7c5/src/memory/store.rs), [src/agent/maintenance.rs](https://github.com/spacedriveapp/spacebot/blob/ac52277404d3813045aa053b78c95810ab85e7c5/src/agent/maintenance.rs)). I did not find a built-in semantic truth-maintenance loop that automatically invalidates contradicted memories while retaining an explicit stale history beyond `updates`/`contradicts` edges and the forgotten flag.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `tool-traces` `event-streams` `trajectories` — Conversation messages, branch/worker outputs, memory-saved events, working-memory events, process runs, worker transcripts/tool-call counts, and prompt snapshots can all feed retained context or later synthesis ([migrations/20260211000002_conversations.sql](https://github.com/spacedriveapp/spacebot/blob/ac52277404d3813045aa053b78c95810ab85e7c5/migrations/20260211000002_conversations.sql), [migrations/20260213000003_process_runs.sql](https://github.com/spacedriveapp/spacebot/blob/ac52277404d3813045aa053b78c95810ab85e7c5/migrations/20260213000003_process_runs.sql), [src/agent/prompt_snapshot.rs](https://github.com/spacedriveapp/spacebot/blob/ac52277404d3813045aa053b78c95810ab85e7c5/src/agent/prompt_snapshot.rs)).
 
@@ -118,14 +118,14 @@ Other consumers include the human user through channel replies and UI/API surfac
 ## What to Watch
 
 - Whether Spacebot adds semantic verification for memory-persistence outputs, such as quote/source spans from the triggering conversation or contradiction checks before high-importance memories are injected.
-- Whether skill capture from experience becomes a dedicated, contract-checked loop rather than a general worker/tool capability; that would make skills a trace-derived system-definition artifact with stronger lineage.
+- Whether skill capture from experience becomes a dedicated, contract-checked loop rather than a general worker/tool capability; that would make skills a trace-learning system-definition artifact with stronger lineage.
 - Whether knowledge synthesis gains per-claim provenance back to memory ids, tasks, or conversation spans; without it, pushed summaries are hard to audit.
 - Whether memory maintenance adds explicit invalidation history for contradictions, not just merge/forget/decay operations.
 - Whether prompt snapshots are used for read-back faithfulness tests; they provide the substrate for WITH/WITHOUT comparisons but the reviewed code does not show that evaluation loop.
 
 Relevant Notes:
 
-- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - places: Spacebot derives typed memories, temporal events, and summaries from conversation and process traces.
+- [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: Spacebot derives typed memories, temporal events, and summaries from conversation and process traces.
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Spacebot combines pushed memory context with explicit recall tools, so storage and activation are wired separately.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: Spacebot splits storage substrate, form, lineage, and authority across SQLite rows, LanceDB indexes, prompt templates, skills, and generated syntheses.
 - [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - exemplifies: the memory-persistence branch extracts durable memories and events from session traces.

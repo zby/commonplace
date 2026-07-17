@@ -1,9 +1,9 @@
 ---
-description: "Voyager review: Minecraft lifelong-learning agent with trace-derived executable skill libraries, Chroma retrieval, curriculum QA cache, and prompt pushback"
+description: "Voyager review: Minecraft lifelong-learning agent with trace-learning executable skill libraries, Chroma retrieval, curriculum QA cache, and prompt pushback"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-05"
-tags: [trace-derived]
+tags: [trace-learning]
 ---
 
 # Voyager
@@ -75,7 +75,7 @@ Voyager also shows a useful split between authored base capabilities and learned
 
 **Curation operations:** `synthesize` `promote` `dedup` `evolve` — Voyager synthesizes new executable skills and descriptions from successful rollout material, promotes them into the skill library after the critic success gate, deduplicates completed curriculum tasks, removes completed tasks from the failed-task list, and evolves an existing skill entry when a generated program reuses an existing function name. It does not retain explicit invalidation history, implement age decay, or consolidate multiple skills into higher-level summaries.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `tool-traces` `event-streams` `trajectories` — The action loop consumes generated code, execution errors, chat logs, environment observations, inventory state, critic feedback, and task success/failure; the recorder stores event traces under `ckpt/events`.
 

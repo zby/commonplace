@@ -106,7 +106,7 @@ Effective precision, recall, context dilution, and whether a host agent obeys th
 
 ## What to Watch
 
-- Whether `hyalo-tidy` becomes a Rust subcommand or scheduled workflow that writes durable summaries from git/session/Claude-memory signals; that would reopen the trace-derived learning decision.
+- Whether `hyalo-tidy` becomes a Rust subcommand or scheduled workflow that writes durable summaries from git/session/Claude-memory signals; that would reopen the trace-learning decision.
 - Whether generated Claude integration grows event hooks or automatic context assembly rather than static skills/rules and explicit command use; that would change the read-back verdict.
 - Whether `.hyalo-index` grows stronger provenance, invalidation, or locking guarantees; that would make it more directly borrowable as a Commonplace query cache.
 - Whether schemas add cross-file constraints or body-section semantics beyond current lint checks; that would move hyalo closer to Commonplace's collection/type contract model.

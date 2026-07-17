@@ -81,7 +81,7 @@ The read path is also less developed as context engineering. A-mem bounds result
 
 **Curation operations:** `evolve` — `process_memory()` can modify a new note's links/tags and existing neighbor memories' context/tags in light of a newly added note and its nearest neighbors.
 
-The automatic write path is not trace-derived under this collection's definition. A host could pass session logs or tool traces as note content, but the reviewed library does not itself consume session logs, tool traces, event streams, or trajectories, and it does not implement a raw-trace to distilled-artifact loop.
+The automatic write path is not trace-learning under this collection's definition. A host could pass session logs or tool traces as note content, but the reviewed library does not itself consume session logs, tool traces, event streams, or trajectories, and it does not implement a raw-trace to distilled-artifact loop.
 
 ## Read-back
 

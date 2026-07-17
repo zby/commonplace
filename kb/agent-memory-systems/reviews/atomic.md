@@ -83,7 +83,7 @@ The major design divergence is database-derived memory versus repo-native knowle
 
 **Curation operations:** `consolidate` `dedup` `evolve` `synthesize` `promote` — Wiki articles consolidate many tagged atoms into a summary; source URL checks and tag merges remove duplicates; wiki update/proposal paths evolve an existing article from newly selected chunks; wiki generation and scheduled reports synthesize new prose artifacts from existing atoms; accepted wiki proposals and report finding atoms promote derived drafts/findings into durable read surfaces. I did not find a general contradiction invalidation or age-based decay policy for atoms.
 
-The automatic write path is corpus-derived rather than trace-derived. It consumes authored/imported atom content, feed items, URLs, search results, tag scopes, schedules, and model outputs. It does not implement durable learning from session logs, tool/action traces, repeated agent trajectories, or rollouts, so this review does not carry the `trace-derived` tag.
+The automatic write path is corpus-derived rather than trace-derived. It consumes authored/imported atom content, feed items, URLs, search results, tag scopes, schedules, and model outputs. It does not implement durable learning from session logs, tool/action traces, repeated agent trajectories, or rollouts, so this review does not carry the `trace-learning` tag.
 
 ## Read-back
 

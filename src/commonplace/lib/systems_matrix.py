@@ -80,7 +80,7 @@ ONEHOT_AXES = {
         "df_prose": "prose", "df_symbolic": "symbolic", "df_parametric": "parametric"},
 }
 
-# Axes applicable only to push/both read-back, to trace-derived systems, and to
+# Axes applicable only to push/both read-back, to trace-learning systems, and to
 # systems with automatic write agency, respectively.
 PUSH_AXES = {"Read-back signal"}
 TRACE_AXES = {"Trace source", "Learning scope", "Learning timing", "Distilled form"}
@@ -98,8 +98,8 @@ COLUMNS = [
     # write side
     *ONEHOT_AXES["Write agency"],
     *ONEHOT_AXES["Curation operations"],
-    # trace-derived learning
-    "trace_derived",
+    # trace-learning
+    "trace_learning",
     *ONEHOT_AXES["Trace source"],
     *ONEHOT_AXES["Distilled form"],
     *ONEHOT_AXES["Learning scope"],
@@ -119,7 +119,7 @@ PARSED = {
     "storage_substrate", "representational_form",
     "read_back_direction", "read_back_notes", "rb_pull", "rb_push",
     "rb_faithfulness_tested",
-    "trace_derived",
+    "trace_learning",
     *_PARSED_ONEHOT,
 }
 JOINED = {"public_repo", "clone_path"}
@@ -230,8 +230,8 @@ def parse_review_text(text: str, review_file: str, source_tier: str) -> tuple[di
     mt = _TAGS.search(text)
     if mt:
         tags = {t.strip() for t in mt.group(1).split(",") if t.strip()}
-    trace_derived = "trace-derived" in tags
-    row["trace_derived"] = "yes" if trace_derived else "no"
+    trace_learning = "trace-learning" in tags
+    row["trace_learning"] = "yes" if trace_learning else "no"
     # Targeting (coarse vs instance) lives in the Read-back signal one-hots; there is
     # no separate push_engineered flag — an `instance` signal *is* a targeted push.
 
@@ -278,7 +278,7 @@ def parse_review_text(text: str, review_file: str, source_tier: str) -> tuple[di
         if label in PUSH_AXES:
             applicable = is_push
         elif label in TRACE_AXES:
-            applicable = trace_derived
+            applicable = trace_learning
         elif label in AUTOMATIC_AXES:
             applicable = row.get("wa_automatic") == "1"
         _onehot(label, cols, text, applicable, row, flags)

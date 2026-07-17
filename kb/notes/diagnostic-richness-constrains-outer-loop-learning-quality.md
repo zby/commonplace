@@ -24,7 +24,7 @@ For KB and harness-learning loops, the design implication is direct: keep select
 Relevant Notes:
 
 - [oracle strength spectrum](./oracle-strength-spectrum.md) — contrasts: oracle strength names candidate selection quality, while diagnostic richness names proposal evidence quality
-- [Trace-derived learning techniques in related systems](../agent-memory-systems/trace-derived-learning-techniques-in-related-systems.md) — evidence: survey paragraph and Meta-Harness ablation ground the diagnostic-richness axis
+- [Trace-learning techniques in related systems](../agent-memory-systems/trace-learning-techniques-in-related-systems.md) — evidence: survey paragraph and Meta-Harness ablation ground the diagnostic-richness axis
 - [Ingest: Meta-Harness: End-to-End Optimization of Model Harnesses](../sources/meta-harness-end-to-end-optimization-of-model-harnesses.ingest.md) — evidence: local digest of the paper and its diagnostic-richness synthesis opportunity
 - [Meta-Harness](../agent-memory-systems/reviews/meta-harness.md) — evidence: raw trace access improved proposer performance over scores-only and scores-plus-summary variants
 - [Agentic Harness Engineering](../agent-memory-systems/reviews/agentic-harness-engineering.md) — exemplifies: root-cause reports compress traces while keeping raw evidence available for audit

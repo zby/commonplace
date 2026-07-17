@@ -79,7 +79,7 @@ The main divergence is authority. In Commonplace, a note, instruction, or type s
 
 **Curation operations:** `consolidate` `evolve` `decay` `promote` — `closure_ea` consolidates non-DNA entries by merging nearby alive entries and pruning weak ones; genome `correct`, `learn_response`, `credit_response`, and `distribute_credit` evolve stored values in place; buffers age out and BKT-dead entries are pruned; response clusters can promote into a higher-level genome during consolidation. Database repair and index rebuilds are access/integrity upkeep rather than semantic curation.
 
-The automatic writes are over rows, carriers, indexes, histories, and geometric memory, not agent transcripts. I did not find a qualifying raw-agent-trace to distilled-memory loop, so the review does not use the `trace-derived` tag or a `Trace-derived learning` subsection.
+The automatic writes are over rows, carriers, indexes, histories, and geometric memory, not agent transcripts. I did not find a qualifying raw-agent-trace to distilled-memory loop, so the review does not use the `trace-learning` tag or a `Trace-learning` subsection.
 
 ## Read-back
 

@@ -3,7 +3,7 @@ description: "MemPalace review: local-first ChromaDB/SQLite memory palace with t
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-04"
-tags: [trace-derived]
+tags: [trace-learning]
 ---
 
 # MemPalace
@@ -75,7 +75,7 @@ The main design divergence is that MemPalace keeps raw memory cheap to capture a
 
 **Curation operations:** `dedup` `invalidate` `decay` `promote` — The standalone deduplicator detects near-duplicate drawers within source groups and deletes weaker duplicates; KG invalidation sets `valid_to` for stale facts; connection dynamics decay tunnel/hall strength over time; potentiation increases connection strength and stability on co-access. These are implemented operations over retained state, though not all are always-on background jobs ([mempalace/dedup.py](https://github.com/milla-jovovich/mempalace/blob/db1fbe888b59514a66c43e745f095d762b9bf276/mempalace/dedup.py), [mempalace/knowledge_graph.py](https://github.com/milla-jovovich/mempalace/blob/db1fbe888b59514a66c43e745f095d762b9bf276/mempalace/knowledge_graph.py), [mempalace/dynamics.py](https://github.com/milla-jovovich/mempalace/blob/db1fbe888b59514a66c43e745f095d762b9bf276/mempalace/dynamics.py)).
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `tool-traces` — Conversation mining accepts Claude Code, ChatGPT, Slack, Codex, and other transcript formats; the sweeper parses Claude JSONL user/assistant records and preserves tool-use/tool-result blocks in flattened message content; stop and precompact hooks locate the active transcript and mine it into the palace ([mempalace/convo_miner.py](https://github.com/milla-jovovich/mempalace/blob/db1fbe888b59514a66c43e745f095d762b9bf276/mempalace/convo_miner.py), [mempalace/sweeper.py](https://github.com/milla-jovovich/mempalace/blob/db1fbe888b59514a66c43e745f095d762b9bf276/mempalace/sweeper.py), [mempalace/hooks_cli.py](https://github.com/milla-jovovich/mempalace/blob/db1fbe888b59514a66c43e745f095d762b9bf276/mempalace/hooks_cli.py)).
 
@@ -113,7 +113,7 @@ The stop and precompact hooks should be read as write-side maintenance, not read
 
 - Whether the session-start hook begins injecting wake-up memory automatically; that would strengthen the push side and make read-back quality tests more important.
 - Whether generated closet pointers gain confidence, source-span, or review metadata; that would clarify when a pointer can be trusted beyond ranking.
-- Whether trace-derived general extraction starts writing KG facts or durable rules automatically; that would move MemPalace from trace recall toward trace-derived system-definition learning.
+- Whether trace-derived general extraction starts writing KG facts or durable rules automatically; that would move MemPalace from trace recall toward trace-learning system-definition learning.
 - Whether dedup, decay, and potentiation become scheduled maintenance rather than callable utilities; that would change the write-side agency and curation picture.
 - Whether benchmark results expand from retrieval recall to downstream agent behavior with and without MemPalace context; that would test whether retrieved memory is actually used.
 

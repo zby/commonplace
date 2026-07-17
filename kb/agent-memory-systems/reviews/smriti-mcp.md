@@ -3,7 +3,7 @@ description: "Smriti-MCP review: MCP markdown memory server with file-backed not
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-18"
-tags: [trace-derived]
+tags: [trace-learning]
 ---
 
 # Smriti-MCP
@@ -71,7 +71,7 @@ The trace pipeline is also weaker but simpler than Commonplace's review workflow
 
 **Curation operations:** `evolve` `promote` — `remember` can append a new observation to a strongly matching existing memory, `rebuild_memory` can add or normalize wikilinks and frontmatter, and `mark_accessed` changes access count, timestamp, and salience; explicit update, consolidation, and supersession tools can replace or supersede memories, but those are caller-directed writes rather than autonomous curation. Salience and access count promote recalled memories for later ranking.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `event-streams` — The trace source is not an automatically captured shell or tool transcript; it is an MCP/API event stream that clients call through `record_trace`, `remember`, and `consolidate_memory`.
 
@@ -109,7 +109,7 @@ At consumption, recalled content is advisory knowledge. The MCP server's own ins
 
 - Whether Smriti adds automatic host hooks or prompt-time recall; that would change read-back from pull-only to push or both and would require signal/faithfulness analysis.
 - Whether embeddings are implemented from the roadmap; that would add a parametric access structure and a less directly inspectable ranking layer.
-- Whether `suggest_consolidation` grows an internal summarizer or judge; that would strengthen trace-derived learning but would also require provenance and quality controls.
+- Whether `suggest_consolidation` grows an internal summarizer or judge; that would strengthen trace-learning but would also require provenance and quality controls.
 - Whether health review gains automatic deduplication, stale invalidation, or oversized-note consolidation; those would add stronger curation operations over already-stored memories.
 - Whether the package adds typed memory classes with validation beyond flexible metadata; that would move it closer to Commonplace-style artifact contracts.
 
@@ -117,7 +117,7 @@ Relevant Notes:
 
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes Smriti's durable Markdown store from its explicit pull-only MCP read-back.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - supports separating notes, frontmatter, trace logs, indexes, MCP schemas, and recall bundles by substrate, form, lineage, and authority.
-- [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - frames Smriti's trace log plus reviewed consolidation path as a conservative trace-derived learning loop.
+- [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - frames Smriti's trace log plus reviewed consolidation path as a conservative trace-learning loop.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies ordinary memories, raw traces, snippets, indexes, and recall bundles as advisory retained knowledge.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - contrasts Smriti's MCP schemas, repair routines, and ranking policy with stronger instruction, validation, or enforcement artifacts.
 - [Symbolic context engineering is bounded by symbol availability](../../notes/symbolic-context-engineering-is-bounded-by-symbol-availability.md) - relates to Smriti's reliance on titles, aliases, tags, categories, scopes, wikilinks, and lexical terms as recall symbols.

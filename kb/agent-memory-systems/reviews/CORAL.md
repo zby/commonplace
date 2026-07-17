@@ -2,7 +2,7 @@
 description: "CORAL review: filesystem multi-agent coding hub with shared notes, skills, attempts, roles, eval feedback, heartbeat prompts, and worktree isolation"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-04"
 ---
 
@@ -82,7 +82,7 @@ The main divergence is that CORAL treats memory as run-local coordination for ag
 
 **Curation operations:** `promote` — CORAL automatically promotes attention by classifying attempts as improved/baseline/regressed, maintaining leaderboards and personal bests, advancing plateau streaks, and triggering heartbeat prompts. It does not automatically merge duplicate notes, summarize transcripts, or evolve stored prose in place; those are delegated to agents through prompts and skills.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `tool-traces` `event-streams` — CORAL records agent stream logs, eval submissions, git commits, grader events, score/status transitions, checkpoint hashes, shared-state writes, process exits, stall events, and heartbeat-triggering eval counts.
 

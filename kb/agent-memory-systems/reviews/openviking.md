@@ -2,7 +2,7 @@
 description: "OpenViking review: context database with viking:// files, session-derived memory, hierarchical retrieval, hooks, MCP, and LangGraph injection"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-04"
 ---
 
@@ -79,7 +79,7 @@ OpenViking's URI and tenant model is more dynamic than Commonplace's directory r
 
 **Curation operations:** `consolidate` `evolve` `invalidate` `promote` — Session working memory consolidates archives into overview/abstract forms; memory merge operations can update existing files in place; archive failure markers and supersession-style delete/update operations invalidate or replace prior material; vector rows, active counts, directory overviews, and session skills can promote material into more discoverable or more behavior-shaping paths.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `tool-traces` `event-streams` `trajectories` — Session messages, tool calls/results, context parts, externalized tool outputs, hook transcripts, active context usage records, and trajectory/experience memory templates feed extraction.
 
@@ -89,7 +89,7 @@ OpenViking's URI and tenant model is more dynamic than Commonplace's directory r
 
 **Distilled form:** `prose` `symbolic` `parametric` — The outputs include prose summaries and memories, symbolic templates/fields/links/diffs/operation records/skills, and embeddings used for later retrieval.
 
-The trace-derived path is implemented in the session commit pipeline. Phase 1 snapshots and archives messages; Phase 2 hydrates tool outputs, generates archive summaries, calls long-term and agent-memory extraction, writes links and active-count updates, waits for request-scoped queue work, merges metadata, and writes `.done` last ([openviking/session/session.py](https://github.com/volcengine/OpenViking/blob/f627a09662cee5a5494eea99853b355c09b659c4/openviking/session/session.py)).
+The trace-learning path is implemented in the session commit pipeline. Phase 1 snapshots and archives messages; Phase 2 hydrates tool outputs, generates archive summaries, calls long-term and agent-memory extraction, writes links and active-count updates, waits for request-scoped queue work, merges metadata, and writes `.done` last ([openviking/session/session.py](https://github.com/volcengine/OpenViking/blob/f627a09662cee5a5494eea99853b355c09b659c4/openviking/session/session.py)).
 
 The extraction mechanism is LLM-mediated but schema-constrained. `SessionCompressorV2` creates an `ExtractLoop` with a session extract context provider and a memory type registry; the updater applies resolved operations, preserves system-managed fields, merges links/backlinks, vectorizes changed memory files, and regenerates directory overviews ([openviking/session/compressor_v2.py](https://github.com/volcengine/OpenViking/blob/f627a09662cee5a5494eea99853b355c09b659c4/openviking/session/compressor_v2.py), [openviking/session/memory/memory_updater.py](https://github.com/volcengine/OpenViking/blob/f627a09662cee5a5494eea99853b355c09b659c4/openviking/session/memory/memory_updater.py)).
 

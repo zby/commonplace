@@ -3,7 +3,7 @@ description: "SkillRL review: trajectory-derived SkillBank JSON, prompt-time ski
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-30"
-tags: [trace-derived]
+tags: [trace-learning]
 ---
 
 # SkillRL
@@ -77,7 +77,7 @@ Another divergence is parametric absorption. SkillRL's SFT/RL path can turn trac
 
 **Curation operations:** `consolidate` `promote` — Aggregation compacts many generated memory records and planning patterns into fewer general/category skills and common mistakes; generated memories and failure traces are promoted into prompt-facing SkillBank entries, SFT examples, and possibly policy weights. I did not find semantic deduplication, in-place skill evolution, stale invalidation, decay, or durable cross-skill synthesis over already accepted skills.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `trajectories` `tool-traces` `session-logs` — The qualifying traces are environment rollouts: observations, actions, admissible actions, search/information turns, rewards, success/failure labels, decoded prompts/responses, and per-task success metrics.
 
@@ -136,4 +136,4 @@ Relevant Notes:
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: prompt templates, retrieval rules, trainer update gates, and SkillBank entries shape later behavior.
 - [Symbolic context engineering is bounded by symbol availability](../../notes/symbolic-context-engineering-is-bounded-by-symbol-availability.md) - compares: template retrieval depends on detectable task/category symbols, while embedding mode falls back to inferred similarity.
 - [Oracle strength spectrum](../../notes/oracle-strength-spectrum.md) - applies: reward labels, LLM extraction, validation success rates, and policy improvements provide different strengths of evidence.
-- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - places: SkillRL is a trace-to-skill and trace-to-policy system.
+- [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: SkillRL is a trace-to-skill and trace-to-policy system.

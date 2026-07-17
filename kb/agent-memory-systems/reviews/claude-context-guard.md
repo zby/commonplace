@@ -2,7 +2,7 @@
 description: "Claude Context Guard review: Claude Code slash-command memory using project safeguard files, audits, pagination, hooks, and itemised code indexes"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-04"
 ---
 
@@ -80,7 +80,7 @@ The main design split is authority depth. Context Guard's safeguards are operati
 
 **Curation operations:** `decay` `invalidate` - Pagination moves older or actioned material out of the current startup set, while superseded decisions, actioned comments, clean resume states, stale sidecar entries, and orphaned work checks mark prior state as no longer current without deleting the underlying history.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `tool-traces` `event-streams` - The durable files are updated from conversation/session history, user comments, plan files, git logs/status/diffs, command invocations, save/end/audit runs, and Claude Code hook events.
 

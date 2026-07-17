@@ -1,5 +1,5 @@
 ---
-description: "148 code-grounded reviews: files/repo storage leads; trace-derived learning and push read-back travel together; push is rarely behavior-tested; full lifecycle curation is rare."
+description: "148 code-grounded reviews: files/repo storage leads; trace-learning and push read-back travel together; push is rarely behavior-tested; full lifecycle curation is rare."
 type: kb/types/note.md
 traits: [has-comparison]
 tags: [agent-memory]
@@ -15,9 +15,9 @@ Files-family substrates — plain `files` plus `repo` — lead at **104 of 148 s
 
 ## Capture and push usually travel together
 
-Whether a system learns automatically and whether it injects memory unasked turn out to be tightly coupled: **81 of 97 trace-derived systems (84%)** push memory, and **35 of 51 pull-only systems (69%)** are not trace-derived. So the collection splits into two camps — an **automatic camp** (81 of 148 — learns from traces and pushes) and a **curated pull-only camp** (35 of 148 — does not mine traces and waits to be asked).
+Whether a system learns automatically and whether it injects memory unasked turn out to be tightly coupled: **81 of 97 trace-learning systems (84%)** push memory, and **35 of 51 pull-only systems (69%)** are not trace-derived. So the collection splits into two camps — an **automatic camp** (81 of 148 — learns from traces and pushes) and a **curated pull-only camp** (35 of 148 — does not mine traces and waits to be asked).
 
-This finding uses the stricter `trace_derived` learning field, not the broader `lin_trace_extracted` lineage field. Lineage says that some retained artifact came from traces; learning says the system automatically distills traces into durable behavior-shaping memory. The gap is meaningful: in the file/repo slice, **74 of 104** systems retain trace-extracted artifacts, but only **62 of 104** have a qualifying trace-derived learning path. The rest keep traces as evidence, recovery state, continuity, or debugging material rather than as distilled lessons, rules, skills, validators, embeddings, adapters, rankers, or other learned memory.
+This finding uses the stricter `trace_learning` learning field, not the broader `lin_trace_extracted` lineage field. Lineage says that some retained artifact came from traces; learning says the system automatically distills traces into durable behavior-shaping memory. The gap is meaningful: in the file/repo slice, **74 of 104** systems retain trace-extracted artifacts, but only **62 of 104** have a qualifying trace-learning path. The rest keep traces as evidence, recovery state, continuity, or debugging material rather than as distilled lessons, rules, skills, validators, embeddings, adapters, rankers, or other learned memory.
 
 The instructive exception is not graph storage in general but one visible pull-only graph pattern. [Graphiti](./reviews/graphiti.md), [Cortex](./reviews/cortex.md), and [dense-mem](./reviews/dense-mem.md) — three graph-memory systems — all capture automatically yet stay strictly pull-only. A graph is expensive to build and cheap to query, so they can afford to wait for an explicit lookup rather than guess what to push. Other graph-backed systems do push, which narrows the lesson: automatic capture does not force automatic activation when the retained structure has a strong query interface.
 
@@ -37,4 +37,4 @@ Relevant Notes:
 
 - [knowledge-storage-does-not-imply-contextual-activation](../notes/knowledge-storage-does-not-imply-contextual-activation.md) - grounds: the read-back / activation distinction the second and third findings rest on
 - [agent-memory-is-a-crosscutting-concern-not-a-separable-niche](../notes/agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md) - see-also: why the dividing axes span storage, retrieval, and learning at once
-- [trace-derived-learning-techniques-in-related-systems](./trace-derived-learning-techniques-in-related-systems.md) - see-also: the focused survey of the automatic camp this matrix quantifies
+- [trace-learning-techniques-in-related-systems](./trace-learning-techniques-in-related-systems.md) - see-also: the focused survey of the automatic camp this matrix quantifies

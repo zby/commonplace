@@ -79,7 +79,7 @@ Tracecraft's session mirror is valuable evidence capture, but it deliberately st
 
 **Write agency:** `manual` `automatic` - Agents and users manually write memory, messages, claims, completions, and artifacts through CLI calls; automatic command paths register agents during init, append `.tracecraft.json` to `.gitignore`, tail harness sessions, redact copied bytes, upload session parts, update session metadata, and advance local mirror cursor state.
 
-**Curation operations:** `none` — Tracecraft does not perform the review contract's curation operations on existing stored memory. It overwrites simple key-value entries, updates status/meta records, and appends new trace parts, but I did not find automatic deduplication, consolidation, evolution, synthesis, invalidation, decay, or salience promotion over retained memories. Session mirroring is acquisition/preservation of traces, not trace-derived learning into new behavior-shaping artifacts.
+**Curation operations:** `none` — Tracecraft does not perform the review contract's curation operations on existing stored memory. It overwrites simple key-value entries, updates status/meta records, and appends new trace parts, but I did not find automatic deduplication, consolidation, evolution, synthesis, invalidation, decay, or salience promotion over retained memories. Session mirroring is acquisition/preservation of traces, not trace-learning into new behavior-shaping artifacts.
 
 ## Read-back
 
@@ -106,7 +106,7 @@ Authority at consumption is mostly advisory context, except for coordination com
 ## What to Watch
 
 - Whether the planned replay surface ships and merges session traces with coordination events; that would turn Tracecraft from a coordination CLI into a run-inspection system with stronger Commonplace relevance ([plans/TRACES_V1_PLAN.md](https://github.com/Arrmlet/tracecraft/blob/7d77daaaf17d3f18b7718e3ddfc8ee2576446adc/plans/TRACES_V1_PLAN.md)).
-- Whether session traces gain summarization, lessons, or policy extraction; that would change the review from raw trace storage to qualifying trace-derived learning.
+- Whether session traces gain summarization, lessons, or policy extraction; that would change the review from raw trace storage to qualifying trace-learning.
 - Whether TTL/heartbeat refresh, stale claim handling, or claim release policies land; those would strengthen operational enforcement for long-running multi-agent work.
 - Whether HuggingFace conditional writes get a stronger compare-and-set mechanism; today Tracecraft's atomic-claim story is strongest on S3-compatible backends.
 - Whether an agent-facing plugin or hook begins automatically injecting inbox, memory, or handoff content before prompts; that would change read-back from pull-only to push or both.

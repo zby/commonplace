@@ -2,7 +2,7 @@
 description: "Agent Workflow Memory review: web-agent workflow files induced from successful traces and pushed into WebArena/Mind2Web prompts"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-04"
 ---
 
@@ -81,7 +81,7 @@ AWM is also much more push-oriented than Commonplace. Once a user or pipeline ch
 
 **Curation operations:** `consolidate` `dedup` `synthesize` — Induction consolidates multi-step trajectories into shorter common workflows, WebArena deduplicates candidates by task template and abstract action sequence, and the LLM prompt path synthesizes new prose subroutines across selected examples. The code does not implement contradiction invalidation, decay, or durable promotion tiers.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `tool-traces` `trajectories` — The write path consumes WebArena experiment logs, action traces, result summaries, auto-evaluation records, Mind2Web result JSON, and annotated task trajectories.
 
@@ -97,7 +97,7 @@ AWM is also much more push-oriented than Commonplace. Once a user or pipeline ch
 
 **Scope and timing.** The retained memory normally lives at website granularity, e.g. `workflow/shopping.txt` or `workflow/aa.txt`. Online Mind2Web learning updates the file after previous batches; WebArena stages updates after evaluation. The workflow file can then be reused for later tasks, but the code does not maintain entry-level version history or invalidation metadata.
 
-**Survey placement.** AWM is a trace-to-prose-workflow system. It strengthens the survey split between raw traces as evidence and distilled playbooks as behavior-shaping artifacts. It also shows the weak-governance corner of trace-derived learning: useful workflows can be generated cheaply, but without source spans or per-entry review their authority should remain prompt-level advice, not enforcement.
+**Survey placement.** AWM is a trace-to-prose-workflow system. It strengthens the survey split between raw traces as evidence and distilled playbooks as behavior-shaping artifacts. It also shows the weak-governance corner of trace-learning: useful workflows can be generated cheaply, but without source spans or per-entry review their authority should remain prompt-level advice, not enforcement.
 
 ## Read-back
 
@@ -143,7 +143,7 @@ AWM is also much more push-oriented than Commonplace. Once a user or pipeline ch
 
 Relevant Notes:
 
-- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - places: AWM distills web-agent trajectories into reusable prose workflows.
+- [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: AWM distills web-agent trajectories into reusable prose workflows.
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: workflow files matter because the runners push them into future prompts.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: AWM bundles trace logs, workflow prose, retrieval indexes, prompts, and evaluation outputs under different forms and authorities.
 - [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - exemplifies: successful task traces are abstracted into future behavior guidance.

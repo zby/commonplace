@@ -1,8 +1,8 @@
 ---
-description: "xMemory review: trace-derived hierarchical agent memory with JSONL stores, Chroma/BM25 search, semantic themes, graph files, and pull-only retrieval"
+description: "xMemory review: trace-learning hierarchical agent memory with JSONL stores, Chroma/BM25 search, semantic themes, graph files, and pull-only retrieval"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-05"
 ---
 
@@ -75,7 +75,7 @@ The main design divergence is what counts as durable knowledge. xMemory's durabl
 
 **Curation operations:** `dedup` `consolidate` `evolve` `promote` - Semantic writes skip near-duplicates by vector similarity; episodes and theme summaries consolidate lower-level traces/statements into shorter prose units; existing themes evolve through appended semantic ids, recomputed centroids, summaries, neighbors, and split/merge operations; semantic statements are promoted into theme membership, kNN neighborhoods, and graph nodes. Extraction from newly arriving messages is acquisition from traces, not itself a curation operation on already-stored memory.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `event-streams` `trajectories` - xMemory consumes ordered role/content/timestamp message streams and stores them as episodes and source traces. It does not require tool-call traces in the core library, though evaluation data can include multimodal/search metadata in message content ([evaluation/locomo/add.py](https://github.com/HU-xiaobai/xMemory/blob/375ae1495095aa14a39eb169f83737f4779391c6/evaluation/locomo/add.py)).
 
@@ -121,7 +121,7 @@ Other consumers include the evaluation scripts, graph visualization tooling, any
 
 Relevant Notes:
 
-- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - places: xMemory derives episodes, semantic memories, themes, and graph structure from conversation traces.
+- [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: xMemory derives episodes, semantic memories, themes, and graph structure from conversation traces.
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: xMemory stores memory but exposes pull retrieval rather than automatic agent activation in the inspected code.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: xMemory's JSONL records, Chroma indexes, themes, graph files, and evaluation prompts carry different forms and authorities.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: episodes, semantic statements, and theme summaries advise later answering.

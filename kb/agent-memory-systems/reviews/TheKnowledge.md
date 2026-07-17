@@ -2,7 +2,7 @@
 description: "TheKnowledge review: file-first LLM wiki gateway with citation-grounded Markdown, NotebookLM synthesis, MCP tools, and policy distillation"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-05"
 ---
 
@@ -28,7 +28,7 @@ TheKnowledge, from `badwally/TheKnowledge`, is a personal research knowledge bas
 
 **NotebookLM is treated as a mediated synthesis engine, not the source of truth.** `wiki query` requires a persistent domain notebook, sends the question through `NlmClient`, resolves NotebookLM citation ids through a source map, rewrites `[N]` markers to wiki source links, and files the answer as a synthesis page through the gateway ([src/gateway/ops/query.py](https://github.com/badwally/TheKnowledge/blob/c573953baf79695a0fd065e0309689803b3f2e86/src/gateway/ops/query.py), [src/gateway/nlm_client.py](https://github.com/badwally/TheKnowledge/blob/c573953baf79695a0fd065e0309689803b3f2e86/src/gateway/nlm_client.py), [src/gateway/research/source_map.py](https://github.com/badwally/TheKnowledge/blob/c573953baf79695a0fd065e0309689803b3f2e86/src/gateway/research/source_map.py)). External synthesis must come back into the filesystem with citations.
 
-**Curation traces feed candidate policy learning.** Filter decisions and user corrections accumulate as per-domain examples; later filter calls select those examples for calibration, and `finetune.distill_prompt` can distill the example bank into a candidate policy version without overwriting the live policy ([src/gateway/filter/examples.py](https://github.com/badwally/TheKnowledge/blob/c573953baf79695a0fd065e0309689803b3f2e86/src/gateway/filter/examples.py), [src/gateway/filter/semantic.py](https://github.com/badwally/TheKnowledge/blob/c573953baf79695a0fd065e0309689803b3f2e86/src/gateway/filter/semantic.py), [src/gateway/ops/filter_correct.py](https://github.com/badwally/TheKnowledge/blob/c573953baf79695a0fd065e0309689803b3f2e86/src/gateway/ops/filter_correct.py), [src/gateway/ops/finetune.py](https://github.com/badwally/TheKnowledge/blob/c573953baf79695a0fd065e0309689803b3f2e86/src/gateway/ops/finetune.py)). This is a staged trace-derived loop, with review/promotion left outside the automatic path.
+**Curation traces feed candidate policy learning.** Filter decisions and user corrections accumulate as per-domain examples; later filter calls select those examples for calibration, and `finetune.distill_prompt` can distill the example bank into a candidate policy version without overwriting the live policy ([src/gateway/filter/examples.py](https://github.com/badwally/TheKnowledge/blob/c573953baf79695a0fd065e0309689803b3f2e86/src/gateway/filter/examples.py), [src/gateway/filter/semantic.py](https://github.com/badwally/TheKnowledge/blob/c573953baf79695a0fd065e0309689803b3f2e86/src/gateway/filter/semantic.py), [src/gateway/ops/filter_correct.py](https://github.com/badwally/TheKnowledge/blob/c573953baf79695a0fd065e0309689803b3f2e86/src/gateway/ops/filter_correct.py), [src/gateway/ops/finetune.py](https://github.com/badwally/TheKnowledge/blob/c573953baf79695a0fd065e0309689803b3f2e86/src/gateway/ops/finetune.py)). This is a staged trace-learning loop, with review/promotion left outside the automatic path.
 
 ## Artifact analysis
 
@@ -81,7 +81,7 @@ The strongest divergence is read-back. Commonplace expects agents to search and 
 
 **Curation operations:** `consolidate` `dedup` `synthesize` `invalidate` `promote` - NotebookLM and daily-domain digest paths consolidate selected sources into shorter synthesis pages; ingest and research materialization use content hashes, URLs, source ids, and source maps to avoid duplicate source/citation state; research analysis, query filing, and policy distillation synthesize new retained pages or candidate policies; finalization/abandon/supersedence/retraction/stale checks invalidate or downgrade artifacts; source-to-wiki, draft-to-final, session-to-persistent-notebook, and example-to-candidate-policy paths promote artifacts to stronger roles.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `event-streams` `tool-traces` - Qualifying traces include gateway logs, filesystem event bus records, watcher/poller events, filter decisions and corrections, evaluation runs, scheduler job outcomes, and agent activity events. These are operational traces, not user conversation transcripts as the primary substrate.
 
@@ -123,7 +123,7 @@ The strongest divergence is read-back. Commonplace expects agents to search and 
 
 **NotebookLM is both powerful and partly opaque.** The gateway gives it provenance boundaries, but relevance/ranking inside NotebookLM is not inspectable from code. Treat filed synthesis pages as service-derived artifacts with local citation repair, not as locally reproducible derivations.
 
-**Trace-derived learning is conservative.** The policy loop stops at candidate YAML and optional calibration metrics; this is weaker than autonomous skill mutation but better aligned with reviewable KB operation.
+**Trace-learning is conservative.** The policy loop stops at candidate YAML and optional calibration metrics; this is weaker than autonomous skill mutation but better aligned with reviewable KB operation.
 
 **Some automatic paths bypass the full plan validator shape.** Daily digests and some agent/triage helpers write files or frontmatter directly with locks or plain writes. They are still gateway code, but not every path gets the same `apply_plan` validation and reporting surface.
 

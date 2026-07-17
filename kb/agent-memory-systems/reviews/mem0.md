@@ -2,7 +2,7 @@
 description: "Mem0 review: memory SDK/server/platform with additive trace extraction, hybrid retrieval, agent plugins, hooks, and pushed context injection"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-04"
 ---
 
@@ -77,7 +77,7 @@ The important design divergence is authority. Mem0 optimizes for continuous pers
 
 **Curation operations:** `dedup` `consolidate` `decay` - The SDK and import scripts skip exact or unchanged duplicates by hash/content checks; dream skills can merge near-duplicates into a more complete replacement; session-state and summary captures set expiration dates, and dream can prune stale memories under retention policy. Automatic truth-maintenance is weaker than older Mem0 descriptions suggest: default inferred add is ADD-only, and contradiction resolution requires the dream/reviewer protocol or manual tool use.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `tool-traces` `event-streams` - Qualifying traces include conversation transcripts, assistant outputs, tool-use blocks, file paths touched, Bash command output, compaction summaries, session ids, project ids, and OpenClaw agent-end messages.
 
@@ -139,4 +139,4 @@ Relevant Notes:
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: Mem0's memory records, embeddings, entity links, hooks, skills, and local files carry different substrates, forms, lineage, and authority.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: retrieved memory records and project-profile imports mostly serve as evidence or advisory context.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: hooks, skill protocols, metadata enforcement, write blockers, and recall policies shape future behavior.
-- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - places: Mem0 derives durable memories and summaries from session traces, tool traces, compaction events, and agent-end messages.
+- [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: Mem0 derives durable memories and summaries from session traces, tool traces, compaction events, and agent-end messages.

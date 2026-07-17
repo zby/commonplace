@@ -3,7 +3,7 @@ description: "Self-Training-LLM review: offline synthetic Wikipedia QA generatio
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-04"
-tags: [trace-derived]
+tags: [trace-learning]
 ---
 
 # Self-Training-LLM
@@ -67,7 +67,7 @@ The biggest tradeoff is auditability. The code keeps intermediate files and eval
 
 **Curation operations:** `promote` — The system promotes selected generated traces into stronger behavior-shaping artifacts: questions and answers become SFT rows, unknown/hallucinated sampled answers become DPO preference pairs, and those datasets become model checkpoints. I did not find implemented consolidation, deduplication, stale invalidation, decay, or synthesis across already stored memory; acquisition and training dominate the write side.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `trajectories` — The qualifying traces are generated answer rollouts: greedy answers, sampled answers with generation details, sampled gold answers for question filtering, and baseline/post-training response pairs.
 
@@ -79,7 +79,7 @@ The biggest tradeoff is auditability. The code keeps intermediate files and eval
 
 **Distilled form:** `parametric` — The final distilled artifact is model weights, optionally reached through LoRA/PEFT and merged back into the saved checkpoint.
 
-This strengthens the trace-derived survey's parametric-learning corner: the source trace is not an agent tool log, but sampled model behavior plus scoring traces. It also shows the auditability cost when trace-derived lessons are compiled into weights rather than retained as reviewable rules or notes.
+This strengthens the trace-learning survey's parametric-learning corner: the source trace is not an agent tool log, but sampled model behavior plus scoring traces. It also shows the auditability cost when trace-derived lessons are compiled into weights rather than retained as reviewable rules or notes.
 
 ## Read-back
 
@@ -109,5 +109,5 @@ Relevant Notes:
 - [Retained artifact](../../notes/definitions/retained-artifact.md) - classifies trained checkpoints and generated datasets as retained state with future behavioral consequence.
 - [Representational form](../../notes/definitions/representational-form.md) - supports separating prose/source records, symbolic scores/configs, and parametric model weights.
 - [Lineage](../../notes/definitions/lineage.md) - frames the imported Wikipedia source, generated rollouts, selected preference records, and trained checkpoint lineage.
-- [Use trace-derived extraction](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - positions sampled answer rollouts and scoring traces as trace-derived learning inputs.
+- [Use trace-derived extraction](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - positions sampled answer rollouts and scoring traces as trace-learning inputs.
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - explains why this system remains pull-only despite durable checkpoints and datasets.

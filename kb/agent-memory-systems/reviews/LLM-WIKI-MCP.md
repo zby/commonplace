@@ -2,7 +2,7 @@
 description: "LLM-WIKI-MCP review: local Markdown wiki with SQLite FTS, MCP/CLI retrieval, Ollama ask, provenance ingest, sidecar notes, and ask-history memory"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-18"
 ---
 
@@ -75,7 +75,7 @@ The tradeoff is semantic governance. LLM-WIKI-MCP has useful structural guards a
 
 **Curation operations:** `consolidate` `evolve` - History compression condenses older exact ask turns into a Markdown rolling memory, sidecar note iteration summarizes existing pages and candidate links, and repair can evolve existing pages by fixing links, adding orphan links to the index, or adding retrieval scaffolds. Source ingest is acquisition, and SQLite reindex/export generation is access-structure upkeep, so neither counts as curation over already-stored memory.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `tool-traces` `event-streams` - The implemented trace inputs are ask prompt/response records, selected tools/sources, token estimates, LLM metrics, and runtime execution events stored in local vault files.
 
@@ -89,7 +89,7 @@ The tradeoff is semantic governance. LLM-WIKI-MCP has useful structural guards a
 
 **Scope and timing.** Recent/compressed history is read into later ask prompts through `release_recent_history_markdown()`, `release_recursive_context_with_memory()`, and the final `release_agentic_ask()` path. The system also records runtime events and metrics for self-access, but those are diagnostics rather than learned behavioral rules.
 
-**Survey placement.** LLM-WIKI-MCP belongs in the trace-to-local-memory family: runtime interaction traces become durable local prose/symbolic artifacts and later prompt context. It strengthens the survey claim that trace-derived learning often starts as retained transcripts and summaries before it becomes enforceable policy; this implementation stops at continuity memory and diagnostics rather than promotion into stronger system-definition artifacts.
+**Survey placement.** LLM-WIKI-MCP belongs in the trace-to-local-memory family: runtime interaction traces become durable local prose/symbolic artifacts and later prompt context. It strengthens the survey claim that trace-learning often starts as retained transcripts and summaries before it becomes enforceable policy; this implementation stops at continuity memory and diagnostics rather than promotion into stronger system-definition artifacts.
 
 ## Read-back
 
@@ -111,7 +111,7 @@ The tradeoff is semantic governance. LLM-WIKI-MCP has useful structural guards a
 
 **The release file has an accretive shape.** `context_api.py` contains repeated definitions with later overrides; the final behavior is discoverable, but a reviewer has to read the tail of the file to know which helper is live. That is a maintenance risk for an agent-facing API.
 
-**The strongest memory loop is conversation continuity, not wiki learning.** The trace-derived path stores and compresses ask turns, while source ingest mostly copies/extracts document content into pages. Durable semantic learning still depends on human or agent edits to the wiki.
+**The strongest memory loop is conversation continuity, not wiki learning.** The trace-learning path stores and compresses ask turns, while source ingest mostly copies/extracts document content into pages. Durable semantic learning still depends on human or agent edits to the wiki.
 
 **Sidecar notes are a good authority compromise.** They let the system add generated retrieval help without silently editing canonical pages. The cost is that search can start privileging generated terms whose quality is not independently reviewed.
 
@@ -134,4 +134,4 @@ Relevant Notes:
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: imported source pages, wiki pages, sidecar notes, exports, and history mostly serve as evidence/reference/context.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: CLI/MCP tool definitions, agent prompts, config, lint/repair rules, and provenance guards shape later behavior.
 - [Symbolic context engineering is bounded by symbol availability](../../notes/symbolic-context-engineering-is-bounded-by-symbol-availability.md) - explains: LLM-WIKI-MCP's targeted retrieval depends on page titles, terms, source names, links, and tool-selected focus pages being available as symbols.
-- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - places: LLM-WIKI-MCP derives local continuity memory and diagnostics from ask/session traces, but does not promote those traces into enforced rules.
+- [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: LLM-WIKI-MCP derives local continuity memory and diagnostics from ask/session traces, but does not promote those traces into enforced rules.

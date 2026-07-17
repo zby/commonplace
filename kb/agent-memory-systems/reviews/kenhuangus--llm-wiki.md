@@ -1,8 +1,8 @@
 ---
-description: "LLM Wiki review: local-first Obsidian/wiki compiler with source monitors, LLM extraction and integration, BM25 search, autonomous maintenance loops, and weak trace-derived prompt-optimization scaffolding"
+description: "LLM Wiki review: local-first Obsidian/wiki compiler with source monitors, LLM extraction and integration, BM25 search, autonomous maintenance loops, and weak trace-learning prompt-optimization scaffolding"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-04"
 ---
 
@@ -75,9 +75,9 @@ Read-back differs too. LLM Wiki has ordinary pull search and UI reads, but its s
 
 **Curation operations:** `evolve` `synthesize` `invalidate` `promote` — Integration evolves existing wiki pages by merging new claims and incrementing source counts; newsletter and paper agents synthesize new higher-level Markdown artifacts from existing wiki pages; lint and retrospective validation mark pages as `conflict` and write validation reports; source count/confidence reinforcement, CVSS priority handling, and critical-alert paths promote salience without necessarily changing page prose.
 
-### Trace-derived learning
+### Trace-learning
 
-**Trace source:** `event-streams` `tool-traces` — The qualifying trace-derived path is operational rather than conversational: extraction successes/failures, integration outcomes, prompt experiments, research hypotheses, daemon processing counts, log entries, and git/history events are retained as metrics rows, experiment logs, and operation logs.
+**Trace source:** `event-streams` `tool-traces` — The qualifying trace-learning path is operational rather than conversational: extraction successes/failures, integration outcomes, prompt experiments, research hypotheses, daemon processing counts, log entries, and git/history events are retained as metrics rows, experiment logs, and operation logs.
 
 **Learning scope:** `per-project` — The retained traces and generated experiments apply to this local wiki/repo, not a cross-install model or shared service.
 
@@ -87,9 +87,9 @@ Read-back differs too. LLM Wiki has ordinary pull search and UI reads, but its s
 
 **Extraction.** `PromptOptimizer` reads recent extraction failures from `metrics.db`, chooses an improvement hypothesis, asks the LLM to modify a prompt, evaluates on the fixed eval set, records the decision in SQLite and `wiki/experiments.md`, and optionally commits or resets git state ([tools/prompt_optimizer.py](https://github.com/kenhuangus/llm-wiki/blob/d2bd485921f6c7b6071afbb389f44ab8e4e83c69/tools/prompt_optimizer.py), [tools/metrics_collector.py](https://github.com/kenhuangus/llm-wiki/blob/d2bd485921f6c7b6071afbb389f44ab8e4e83c69/tools/metrics_collector.py)). The important caveat is that the generated prompt is not actually written into `prompts.py`, so the intended trace-to-prompt loop is incomplete at this commit.
 
-**Scope and timing.** The trace-derived loop is best understood as scaffolded meta-learning. The system does retain traces and can derive experiment records from them; it does not yet prove durable behavioral improvement because the generated prompt edit is not applied to the prompt registry.
+**Scope and timing.** The trace-learning loop is best understood as scaffolded meta-learning. The system does retain traces and can derive experiment records from them; it does not yet prove durable behavioral improvement because the generated prompt edit is not applied to the prompt registry.
 
-**Survey fit.** LLM Wiki weakly fits the trace-to-system-definition family: operational traces are meant to drive prompt changes, but the current code mostly produces audit and experiment artifacts. Its stronger implemented learning path is imported-source distillation into wiki pages, which is not trace-derived under the agent-trace definition.
+**Survey fit.** LLM Wiki weakly fits the trace-to-system-definition family: operational traces are meant to drive prompt changes, but the current code mostly produces audit and experiment artifacts. Its stronger implemented learning path is imported-source distillation into wiki pages, which is not trace-learning under the agent-trace definition.
 
 ## Read-back
 
@@ -134,4 +134,4 @@ Relevant Notes:
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: source snapshots, wiki pages, newsletters, search results, and generated papers mostly serve as evidence or context.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: AGENTS.md, prompts, daemon schedules, schemas, status fields, validation logic, queue priorities, and API routes shape future behavior.
 - [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - qualifies narrowly: metrics and operation traces feed the prompt/research experiment loops, though prompt edits are not yet persisted.
-- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - places: LLM Wiki is a weak trace-derived meta-learning case and a stronger imported-source distillation system.
+- [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: LLM Wiki is a weak trace-derived meta-learning case and a stronger imported-source distillation system.

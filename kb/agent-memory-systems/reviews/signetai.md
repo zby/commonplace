@@ -2,7 +2,7 @@
 description: "Signet AI review: local-first daemon memory with SQLite, FTS/vector/graph recall, hook injection, transcript lineage, and guarded repair paths"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-05"
 ---
 
@@ -83,7 +83,7 @@ The deepest design difference is authority. Signet lets runtime state become pro
 
 **Curation operations:** `dedup` `evolve` `invalidate` `decay` `promote` — Content hashes deduplicate scoped memories and chunks; modify/repair and dream promotion can update or supersede existing memory/attribute state; forget soft-deletes and recover/hard-delete retention implement invalidation; rehearsal/importance/retention paths downweight or purge stale state; dream promotion converts high-confidence prose preferences into structured attributes. The native extraction worker has a write gate for candidate facts, but I did not find it inserting gated ADD proposals into `memories`.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `tool-traces` `event-streams` — Hook routes consume session starts, prompts, remembers, recalls, session ends, compactions, checkpoints, and transcripts; MCP feedback records relevance judgments; canonical transcript and compaction artifacts feed later summaries/projections.
 

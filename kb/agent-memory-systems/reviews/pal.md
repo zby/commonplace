@@ -85,7 +85,7 @@ Pal's specialist team also exposes a tradeoff. Splitting Navigator, Researcher, 
 
 **Curation operations:** `consolidate` `evolve` `promote` — Compiler consolidates stored raw files into summaries and concept articles, evolves existing concept pages with new source-backed information, and promotes raw/imported material into wiki articles, index entries, state, and knowledge metadata. Linter reports contradictions, staleness, thin articles, or duplicates, but I did not find code that automatically invalidates or merges the affected articles.
 
-Pal is not tagged trace-derived in this review because the local repository configures Agno agentic memory and session history but does not expose a Pal-local trace parser, extraction prompt, merge policy, or durable trace-to-artifact pipeline. Agno-managed sessions and learned knowledge are retained behavior-shaping artifacts; the trace-derived extraction mechanism is owned by Agno rather than inspectable Pal code at this commit.
+Pal is not tagged trace-learning in this review because the local repository configures Agno agentic memory and session history but does not expose a Pal-local trace parser, extraction prompt, merge policy, or durable trace-to-artifact pipeline. Agno-managed sessions and learned knowledge are retained behavior-shaping artifacts; the trace-derived extraction mechanism is owned by Agno rather than inspectable Pal code at this commit.
 
 ## Read-back
 
@@ -121,7 +121,7 @@ Pal is not tagged trace-derived in this review because the local repository conf
 
 ## What to Watch
 
-- Whether Pal adds local learning extraction code with source session ids, extraction prompts, merge policy, confidence, invalidation, and review gates; that would change the trace-derived decision.
+- Whether Pal adds local learning extraction code with source session ids, extraction prompts, merge policy, confidence, invalidation, and review gates; that would change the trace-learning decision.
 - Whether Agno learnings expose enough lineage in Pal to audit a `Correction:` or `Retrieval:` record back to the interaction that produced it.
 - Whether `pal_knowledge` gets stale-entry repair for files, SQL schemas, sources, discoveries, wiki articles, and live integrations.
 - Whether wiki compilation gains source-grounding tests for concept articles, not just routing and knowledge evals.

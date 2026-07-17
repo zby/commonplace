@@ -2,7 +2,7 @@
 description: "Cortex review: local RDF/SQLite cognitive knowledge service with ontology, hybrid retrieval, MCP tools, reasoning, and access-derived tier learning"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-04"
 ---
 
@@ -82,7 +82,7 @@ The strongest divergence is trust. Cortex can classify, link, infer, and retriev
 
 **Curation operations:** `evolve` `synthesize` `invalidate` `decay` `promote` — The pipeline evolves existing object metadata, summaries, tags, entities, relationships, tier, and pipeline stage; synthesis presenters generate cross-document narrative views and captured `synthesis` objects can be retained; `supersedes`/contradiction/staleness reasoning can mark or surface invalidation pressure without deleting history; recency and tier adjustment down-weight or demote older/reflex memories; repeated access and explicit feedback promote objects to `reflex`.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `tool-traces` `event-streams` — Cortex consumes search calls, read calls, and explicit relevance feedback events; it does not consume full chat transcripts or action trajectories in the reviewed implementation.
 
@@ -120,7 +120,7 @@ Authority at consumption depends on the tool result and host prompt. A retrieved
 
 ## What to Watch
 
-- Whether `detect_miss()` and persisted retrieval weights become wired into actual feedback-driven reranking; that would make the trace-derived loop more than access-tier promotion.
+- Whether `detect_miss()` and persisted retrieval weights become wired into actual feedback-driven reranking; that would make the trace-learning loop more than access-tier promotion.
 - Whether `reflex` starts affecting prompt assembly or automatic memory injection; that would change the read-back verdict from pull-only to push or both.
 - Whether semantic contradiction detection becomes implemented rather than comment-level; that would strengthen Cortex's graph-intelligence claim.
 - Whether MCP capture gains source/proof fields or review states for agent-supplied classifications; without that, classification lineage remains weak.
@@ -130,7 +130,7 @@ Relevant Notes:
 
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Cortex stores and ranks memory, but accumulated memory is still pulled through tools rather than pushed before every action.
 - [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - compares: Cortex derives symbolic tier and audit state from tool traces, not prose lessons from conversations.
-- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - places: Cortex belongs in the trace-to-ranking/lifecycle branch.
+- [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: Cortex belongs in the trace-to-ranking/lifecycle branch.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: database rows, graph triples, ontology rules, embeddings, logs, counters, and tool surfaces carry different forms and authorities.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: captured objects, query logs, dossiers, syntheses, and alerts advise future work when read.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: ontology, SPARQL rules, retrieval indexes, tiers, MCP schemas, and service boundaries shape or validate behavior.

@@ -75,7 +75,7 @@ The second divergence is evidence reviewability. Commonplace can be reviewed fro
 
 ## Write side
 
-**Write agency:** `manual` — In the inspected repository, retained artifacts change by authored repository edits or by a downstream adopter manually filling templates. I found no implemented automatic write, curation, promotion, invalidation, consolidation, decay, synthesis, or trace-derived learning loop.
+**Write agency:** `manual` — In the inspected repository, retained artifacts change by authored repository edits or by a downstream adopter manually filling templates. I found no implemented automatic write, curation, promotion, invalidation, consolidation, decay, synthesis, or trace-learning loop.
 
 ## Read-back
 

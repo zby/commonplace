@@ -1,8 +1,8 @@
 ---
-description: "HALO review: trace-derived agent-harness optimizer with SQLite desktop trace store, JSONL trace indexes, recursive trace agents, and local analysis runs"
+description: "HALO review: trace-learning agent-harness optimizer with SQLite desktop trace store, JSONL trace indexes, recursive trace agents, and local analysis runs"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-04"
 ---
 
@@ -57,7 +57,7 @@ The desktop app narrows one previous gap with Commonplace: it now has a standing
 
 **Oversized-read refusal with recommendations.** HALO's `TraceStore` does not blindly return huge trace payloads; it returns an oversized summary and points the agent toward search/span tools. Commonplace could use the same pattern for source snapshots, large review bundles, or generated reports.
 
-**Report-as-learning-input discipline.** The Claude skill's separation between HALO diagnosis and code mutation is a useful guardrail: trace evidence should become a proposed change only after repo verification. Ready now as wording for trace-derived review procedures.
+**Report-as-learning-input discipline.** The Claude skill's separation between HALO diagnosis and code mutation is a useful guardrail: trace evidence should become a proposed change only after repo verification. Ready now as wording for trace-learning review procedures.
 
 **Desktop-local trace persistence.** SQLite plus JSONL exports is a pragmatic bridge between live telemetry and agent-readable files. Commonplace could use this only with a concrete workflow, because the current repo-first KB does not need a standing event database for ordinary notes.
 
@@ -67,7 +67,7 @@ The desktop app narrows one previous gap with Commonplace: it now has a standing
 
 **Curation operations:** `none` — The inspected automatic writes are acquisition, indexing, summarization, export, logging, and run-result persistence. I did not find code that automatically consolidates, deduplicates, evolves, synthesizes, invalidates, decays, or promotes memory already in HALO's store under the review vocabulary; the harness-edit promotion happens outside HALO.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `tool-traces` `event-streams` `trajectories` — HALO consumes OpenTelemetry/OpenInference span streams containing agent, LLM, tool, chain, guardrail, status, timing, token, input, output, and session fields.
 
@@ -112,7 +112,7 @@ Other consumers include the desktop user, the Bun run queue, live WebSocket subs
 
 Relevant Notes:
 
-- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - places: HALO derives diagnostic reports from session/tool/event traces and feeds them into a harness-improvement loop.
+- [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: HALO derives diagnostic reports from session/tool/event traces and feeds them into a harness-improvement loop.
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: HALO stores traces and reports, but memory read-back is pull-only in the inspected code.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: HALO's SQLite rows, JSONL spans, sidecar indexes, prompts, and reports carry different forms and authorities.
 - [Use trace-derived extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - exemplifies: HALO uses execution traces to improve an agent harness through a mediated learning loop.

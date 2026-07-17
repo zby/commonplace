@@ -76,7 +76,7 @@ Semiont's event-sourced rebuild story is stronger than Commonplace's current gen
 
 **Curation operations:** `evolve` — When a generated resource carries `generatedFrom`, Stower automatically emits a `mark:update-body` that adds the new resource as a `SpecificResource` body on the source annotation. That evolves an existing annotation in light of a newly created resource. Other automatic work found in the code is acquisition or access-structure maintenance: AI detection creates new annotations from source content, Smelter rebuilds embeddings, and GraphDBConsumer updates derived graph state.
 
-Semiont does not qualify as trace-derived learning under the Commonplace review rule. It stores events about knowledge work and lets AI workers create annotations, but the inspected durable artifacts are derived from source documents and user/agent commands, not from session logs, tool traces, or trajectories distilled into new rules or learned policies.
+Semiont does not qualify as trace-learning under the Commonplace review rule. It stores events about knowledge work and lets AI workers create annotations, but the inspected durable artifacts are derived from source documents and user/agent commands, not from session logs, tool traces, or trajectories distilled into new rules or learned policies.
 
 ## Read-back
 
@@ -99,7 +99,7 @@ The strongest Commonplace-relevant idea is not vectors; it is the unresolved-ref
 ## What to Watch
 
 - Whether Semiont adds agent hooks that automatically gather or inject KB context before arbitrary model calls; that would change read-back from pull to both.
-- Whether AI workers begin learning from collaboration/event traces rather than only source documents; that would require a trace-derived learning reclassification.
+- Whether AI workers begin learning from collaboration/event traces rather than only source documents; that would require a trace-learning reclassification.
 - Whether generated resources and bindings become autonomous multi-step curation loops; that would expand write-side operations beyond the current narrow auto-bind evolution.
 - Whether graph/vector projections gain independent durable authority; that would weaken the current clean event-log source-of-truth story.
 - Whether evaluations add per-decision read-back ablations or post-action audits; that would strengthen faithfulness claims for gathered and matched context.

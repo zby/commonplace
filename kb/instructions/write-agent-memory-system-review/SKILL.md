@@ -88,7 +88,7 @@ If the system has no reachable source code, stop and write a lightweight note in
    If that target path already exists (a same-day rerun already archived one), do not overwrite it: append a numeric suffix starting at `2` and increment until the path is free — `{note_path%.md}.replaced.{YYYY-MM-DD}.2.md`, then `.3.md`, and so on.
 
    Then mark the archived file:
-   - Set `tags: []` (clearing any `trace-derived` tag).
+   - Set `tags: []` (clearing any `trace-learning` tag).
    - Add after the title: `> Replaced {YYYY-MM-DD}. See [{name}](./{name}.md) for the current review.`
    - Remove `user-verified` if present; archiving is a substantive lifecycle edit and the replacement banner carries the supersession fact.
    Do not read the archived `.replaced.*.md` file while writing the replacement.
@@ -122,7 +122,7 @@ If the system has no reachable source code, stop and write a lightweight note in
 
    If any input above is missing, stop and report which. Verify source_dir is readable (e.g. test -d); if it isn't, stop and report. Never update last-checked without actually reading source_dir.
 
-   Ground the review in primary sources in source_dir — README, architecture/design docs, CLAUDE.md/AGENTS.md, package manifests, and the core source files implementing the central claims. Where the implementation clarifies or contradicts the README, report what the code does and note the divergence. Decide trace-derived status from implementation evidence and either include both the placement section and the trace-derived tag, or omit both.
+   Ground the review in primary sources in source_dir — README, architecture/design docs, CLAUDE.md/AGENTS.md, package manifests, and the core source files implementing the central claims. Where the implementation clarifies or contradicts the README, report what the code does and note the divergence. Decide trace-learning status from implementation evidence and either include both the placement section and the trace-learning tag, or omit both.
 
    Do not add `user-verified`; drafting and semantic review cannot grant human attestation.
 
@@ -131,9 +131,9 @@ If the system has no reachable source code, stop and write a lightweight note in
    Then run: commonplace-validate {note_path}
    Fix any structural or description-quality issues it reports and re-run until clean — you own this file, so fix it directly rather than reporting it back.
 
-   Do not edit indexes, archived reviews, the trace-derived survey, checkout state, or any file other than note_path. Do not run any commonplace-* command other than commonplace-validate on note_path. Do not spawn further agents unless a proper sub-agent/worker tool is available to you; if you need one and none is available, pause and report the blocker — never run codex, codex exec, claude, or another agent CLI as a substitute.
+   Do not edit indexes, archived reviews, the trace-learning survey, checkout state, or any file other than note_path. Do not run any commonplace-* command other than commonplace-validate on note_path. Do not spawn further agents unless a proper sub-agent/worker tool is available to you; if you need one and none is available, pause and report the blocker — never run codex, codex exec, claude, or another agent CLI as a substitute.
 
-   Report: your commonplace-validate result and whether trace-derived learning applies.
+   Report: your commonplace-validate result and whether trace-learning applies.
    ```
 
    The parent owns checkout, archive moves, curated index edits, taxonomy QA, semantic QA, and the final report — none of that is the worker's concern. After verifying the worker-owned draft and validation result, close, terminate, or release the drafting worker; do not retain it for semantic QA or any follow-up task.
@@ -143,9 +143,9 @@ If the system has no reachable source code, stop and write a lightweight note in
    - the repo adds a genuinely new cross-system pattern worth a line in `## Patterns Across Systems`.
    Keep the edit minimal and specific.
 
-10. **Update the trace-derived survey if needed.** If the review's trace-derived placement adds meaningfully to the survey, update `kb/agent-memory-systems/trace-derived-learning-techniques-in-related-systems.md`.
+10. **Update the trace-learning survey if needed.** If the review's trace-learning placement adds meaningfully to the survey, update `kb/agent-memory-systems/trace-learning-techniques-in-related-systems.md`.
 
-11. **Run taxonomy QA.** Re-read the drafted review and check whether it makes the artifact contract clear where relevant. Work from the type contract's artifact-analysis field list (plus its trace-derived split, when the system learns from traces) — the contract is authoritative for which fields exist and what each means; do not QA against a remembered list. For each contract field, ask: does the review make that mechanism clear where it affects the comparison? Do not force a rigid section into every review; add or revise prose only when the existing text leaves a mechanism ambiguous.
+11. **Run taxonomy QA.** Re-read the drafted review and check whether it makes the artifact contract clear where relevant. Work from the type contract's artifact-analysis field list (plus its trace-learning split, when the system learns from traces) — the contract is authoritative for which fields exist and what each means; do not QA against a remembered list. For each contract field, ask: does the review make that mechanism clear where it affects the comparison? Do not force a rigid section into every review; add or revise prose only when the existing text leaves a mechanism ambiguous.
 
    If a field is absent because the reviewed system has no distinctive mechanism there, leave it absent. If the absence hides an important tradeoff, fix the review before semantic QA.
 
@@ -168,7 +168,7 @@ Report:
 - review path
 - whether drafting was delegated
 - whether the curated index changed
-- whether `trace-derived-learning-techniques-in-related-systems.md` changed
+- whether `trace-learning-techniques-in-related-systems.md` changed
 - taxonomy QA outcome
 - semantic gate bundle outcome
 - final `commonplace-validate` result

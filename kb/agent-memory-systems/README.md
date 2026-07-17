@@ -47,7 +47,7 @@ Cross-cutting reads:
   
 - [Comparison](./agentic-memory-systems-comparative-review.md) — the current synthesis across 148 code-reviewed systems
   
-- [Trace-derived learning techniques in related systems](./trace-derived-learning-techniques-in-related-systems.md) — broadens the comparison to artifact-learning and weight-learning systems fed by live traces
+- [Trace-learning techniques in related systems](./trace-learning-techniques-in-related-systems.md) — broadens the comparison to artifact-learning and weight-learning systems fed by live traces
   
 - [Thalo type comparison](./thalo-type-comparison.md) — detailed type mapping against the Commonplace document types
   
@@ -62,7 +62,7 @@ Cross-cutting reads:
 
 - Backticked **lead tokens** written in the review body where the finding is reached — `storage_substrate` (`files`/`repo`/`sqlite`/`rdbms`/`vector`/`graph`/`kv`/`in-memory`/`prompt-registry`/`model-weights`/`service-object`), `representational_form` (`prose`/`symbolic`/`parametric`), `read_back_direction` (`pull`/`push`/`both`), `Read-back signal`, write agency, curation operations, and trace-derived sub-fields. The token leads its own justifying sentence, so value and reasoning can't drift. The convention lives in the [review type spec](./types/agent-memory-system-review.md).
 - `lin_trace_extracted` from the authored `Lineage` tokens: at least one retained artifact comes from traces, such as session logs, execution histories, child-agent reports, request/response history, trajectories, recovery state, or stored interaction history.
-- `trace_derived` from the review's `trace-derived` frontmatter tag: a stricter learning field for automatic writes fed by agent traces that produce durable behavior-shaping memory. `trace_derived` is a subset of `lin_trace_extracted`; systems can retain traces for evidence, recovery, continuity, or debugging without distilling them into lessons, rules, skills, validators, embeddings, adapters, rankers, or other learned memory.
+- `trace_learning` from the review's `trace-learning` frontmatter tag: a stricter learning field for automatic writes fed by agent traces that produce durable behavior-shaping memory. `trace_learning` is a subset of `lin_trace_extracted`; systems can retain traces for evidence, recovery, continuity, or debugging without distilling them into lessons, rules, skills, validators, embeddings, adapters, rankers, or other learned memory.
 
 The ASISAS-2026 paper's frozen corpus and Karpathy-gist sample split are deposited separately at DOI `10.5281/zenodo.20759081`, pinned to Commonplace `v0.1.0` (`e957a7b`). This living survey keeps growing and does not maintain that historical sample-origin column.
 
@@ -70,7 +70,7 @@ Remaining columns are hand-classified candidates the script lists but leaves emp
 
 **Consumption rule:** a human comparison table is for *choosing* a system, so it covers **code-based reviews only**. Lightweight reviews (doc-only or spec-only, lower authority) stay outside the generated code-grounded matrix and table until promoted to an inspected implementation review.
 
-Current mature chooser fields are `storage_substrate`, `representational_form`, `trace_derived`, `read_back_direction`, and the `Read-back signal` one-hots. Pushing shipped static documentation is baseline context, not memory read-back. For system choice, the useful distinction is whether retained memory is pull-only, coarse-pushed, identifier-targeted, or inferred from the current content.
+Current mature chooser fields are `storage_substrate`, `representational_form`, `trace_learning`, `read_back_direction`, and the `Read-back signal` one-hots. Pushing shipped static documentation is baseline context, not memory read-back. For system choice, the useful distinction is whether retained memory is pull-only, coarse-pushed, identifier-targeted, or inferred from the current content.
 
 ## Patterns Across Systems
 Most systems here (ours, Ars Contexta, Thalo, ClawVault, Agent-Skills) independently converge on:
@@ -81,7 +81,7 @@ Most systems here (ours, Ars Contexta, Thalo, ClawVault, Agent-Skills) independe
   
 - **Start simple** — architectural reduction outperforms over-engineering
   
-- **Trace-derived learning** — [trace-derived learning techniques in related systems](./trace-derived-learning-techniques-in-related-systems.md) broadens the comparison beyond pi-adjacent session mining to include artifact-learning and weight-learning systems fed by live traces and trajectories
+- **Trace-learning** — [trace-learning techniques in related systems](./trace-learning-techniques-in-related-systems.md) broadens the comparison beyond pi-adjacent session mining to include artifact-learning and weight-learning systems fed by live traces and trajectories
   
 
 The divergences are more revealing:

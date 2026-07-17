@@ -2,7 +2,7 @@
 description: "pi-self-learning review: pi extension that reflects completed agent sessions into git-backed daily, core, and long-term memory files"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
-tags: [trace-derived]
+tags: [trace-learning]
 last-checked: "2026-06-04"
 ---
 
@@ -79,7 +79,7 @@ The main divergence is retrieval granularity. pi-self-learning selects memory at
 
 **Curation operations:** `consolidate` `dedup` `evolve` `promote` — Monthly summaries consolidate daily files; redistill can rewrite existing core records and merge duplicate normalized keys; the core index increments hits/scores and renders top-ranked items into `CORE.md`.
 
-### Trace-derived learning
+### Trace-learning
 
 **Trace source:** `session-logs` `tool-traces` `event-streams` — The extension consumes recent session branch messages, serialized conversation text, assistant abort markers, and tool-result permission/block/cancel signals.
 
@@ -133,7 +133,7 @@ Survey placement: pi-self-learning is a trace-to-prose learning system with a fi
 
 Relevant Notes:
 
-- [Trace-derived learning techniques in related systems](../trace-derived-learning-techniques-in-related-systems.md) - places: pi-self-learning extracts durable lessons from agent-session traces and pushes them into future runs.
+- [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: pi-self-learning extracts durable lessons from agent-session traces and pushes them into future runs.
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: pi-self-learning's memory matters because `before_agent_start` activates retained files before the model call.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: daily logs, core index, rendered memory files, runtime notes, and system-prompt policy carry different forms and authorities.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: daily logs, monthly summaries, and memory files advise as evidence and context.
