@@ -1,0 +1,78 @@
+# The freshness schema as a starting skeleton
+
+First pass. Recaps what the shipped store already gives for free, then runs the gap list against two checklists: the four capabilities [files-not-database.md](../../notes/files-not-database.md) says a database migration has to replace (versioning, browsing, agent access, infrastructure), and the obligations [reflective-system.md](../../notes/definitions/reflective-system.md) / [self-improving-system.md](../../notes/definitions/self-improving-system.md) impose on any system that wants to claim the properties this workshop is named after.
+
+## What's already there
+
+From [freshness-architecture.md](../../reference/freshness-architecture.md) and [storage-architecture.md](../../reference/storage-architecture.md):
+
+| table | current role | what it gives a DB-native design for free |
+|---|---|---|
+| `artifact_snapshots` | path-keyed `file-text` versions: exact UTF-8 text, SHA-256, capture time | proves the "store exact content, hash-addressed, in SQLite" primitive already works and performs at Commonplace's current scale |
+| `freshness_baselines` | one current row per `(target_kind, target_key_json)` with monotonic `revision` | the "current pointer per identity" pattern — the seed of a mutable-HEAD-over-immutable-versions model |
+| `freshness_inputs` | accepted input roles for a target, each FK to a snapshot | a working dependency-edge shape: target → role-labeled inputs, each independently versioned |
+| `review_jobs`, `review_pairs` | review execution and outcome state | shows edge-state (note × criterion × model_partition) living entirely in relational tables, prose findings referenced by path, not duplicated |
+| `review_freshness_evidence` | review-only bridge retaining the evidence pair | a worked example of a target-kind-specific extension bolted onto generic tables without forking the freshness core |
+
+This is real evidence the relational substrate is *viable* for a slice of Commonplace's state. It is also evidence of what it was built for: `artifact_snapshots` captures a version **only when something registers it as an accepted input** — on review completion or explicit `commonplace-freshness-accept`, not on every edit. A file can be rewritten a dozen times between two accepted baselines and the intermediate states are simply gone; only the working tree (git) has them. That is the load-bearing gap: freshness is a cache of *the versions that mattered for staleness checking*, not a version history of the content.
+
+## Gap 1 — content identity and full versioning
+
+Files-not-database.md's first capability: "Git gives branching, diffing, and history for free." The freshness schema gives none of this today, deliberately — it isn't its job.
+
+- **Identity is path, and path is fragile.** `freshness_inputs` and `review_pairs` key on `note_path`/`gate_path`. Relocation requires rekeying (`relocation.py`, flagged as a 703-line god-module partly *because* of this). [review-lineage-storage-case.md](../src-architecture-alternatives/review-lineage-storage-case.md) already asks the open question directly: "Should note identity be path-hash based, or should Commonplace introduce stable artifact ids?" A DB-native design that will never have git to fall back on for rename tracking has to answer this, not defer it — path can be a mutable attribute on a stable-ID row, the way most content-management schemas do it.
+- **No write-time versioning.** Every edit needs a row, not just accepted ones — otherwise there is no diff, no blame, no "what did this look like an hour ago." That means an append-only content-version table (`content_versions`: id, artifact_id, parent_version_id, text, hash, author/model, timestamp) with `artifact_snapshots`-style accepted baselines becoming a *labeled subset* of that history (something like a `head` or `accepted` pointer into it), not the only recorded state.
+- **No diff or branch primitive.** SQLite gives neither for free. A DB-native design either computes diffs on read (text diff over two stored versions — cheap, no storage cost) or accepts that "branching" (parallel draft lines) needs its own parent-pointer DAG over `content_versions`, which is exactly git's commit graph reimplemented in a table. Worth being honest that this is git's object model, minus git.
+
+## Gap 2 — structure, collections, and the type registry
+
+Currently the filesystem *is* the hierarchy: directories are collections, `COLLECTION.md` is a file, `kb/types/*.md` are files resolved by collection-relative path lookup.
+
+- **Collection membership** needs an explicit tree or materialized-path table (`collections`: id, parent_id, path, contract_version_id) rather than directory nesting. The [collection-as-artifact-freshness proposal](../../reference/proposals/collection-as-artifact-freshness.md)'s `collection-text` encoding (deterministic UTF-8 render of a directory's members, hashed) is a useful *input* to this — it already treats "what's the current member set" as a versionable quantity — but it renders *from* files; a DB-native version would compute the same digest from a live membership query instead.
+- **Type/schema registry.** `type:` frontmatter currently points at a file path, resolved with collection-local-then-global fallback (`type_resolver.py`). DB-native needs a `types` table with its own version history — and since types constrain what every other row's structure looks like, the type registry is himself content, versioned the same way as everything else, not a privileged out-of-band schema. This is where the reflective-system obligation (below) bites hardest: the self-representation has to include the representation-format itself.
+- **Frontmatter fields** (description, traits, tags, status) become either normalized columns or a JSON column per artifact row, with `traits` implying variable applicable fields per type — closer to a document-with-schema-validation shape than a flat relational one.
+
+## Gap 3 — links and tags as first-class edges
+
+This is the sharpest theoretical fork. [many-to-many-edge-state-is-where-files-yield-to-a-database.md](../../notes/many-to-many-edge-state-is-where-files-yield-to-a-database.md) argues Commonplace should keep *static* links as authored prose and only move *churning* edge-state (like review verdicts) into a store. A DB-native design has no such asymmetry available — there's no "authored prose" tier to fall back on, so every link (`extends`, `contradicts`, `defined-in`, tag membership, `type:` pointers) becomes a table row whether or not it churns.
+
+That forces the open question the note itself leaves unresolved: *"Every authored link is a latent dependency edge... which link and edge types carry the highest disruption probability, and which warrant automatic maintenance rather than on-demand rechecking?"* A DB-native design can't dodge this by leaving low-churn links in markdown — it has to either (a) treat all edges uniformly (one `edges` table: source_id, target_id, label, direction, created_at) and accept that most rows are read far more than they're invalidated, or (b) actually implement the graded-maintenance idea the note gestures at: cheap edges get no freshness tracking at all (a link is valid until something notices otherwise), expensive/churning edges get the full freshness-baseline treatment already built for review. (b) is likely right, and it means the freshness core's `target_kind` abstraction generalizes cleanly — a `link-validity` target_kind alongside `review-pair`.
+
+## Gap 4 — browsing and agent access
+
+Files-not-database.md's second and third capabilities, both currently unmet by SQLite alone: "Files render in any editor or on GitHub with zero setup" and "Agents use Read/Write/Grep — tools they already have."
+
+- A DB-native KB needs either a rendering layer (something ProperDocs-shaped that reads the DB instead of files, so a human can still browse without a client) or accepts that browsing becomes a build/export step, functionally re-creating the "derived index" pattern `files-not-database.md` already uses for search — except now *everything* is derived, including the readable form of the primary content, which inverts today's relationship (files are source, indexes are derived) rather than merely adding a store alongside files.
+- Agent access needs a query/mutation API standing in for Read/Grep/Edit. `rg`-shaped substring search over content still works (`LIKE`/FTS5 in SQLite), but structural navigation (walk this directory, follow this link) becomes query code instead of a tool call, and every skill/agent instruction that currently says "read this file" needs an equivalent "fetch this row by id/path" primitive with the same low ceremony. This is the cost `files-not-database.md` calls "an API layer or DB client on every interaction" — a DB-native design should treat minimizing that ceremony (e.g. a thin CLI that still feels like `cat`/`grep`) as a first-class requirement, not an afterthought, since it's exactly what made files cheap for agents in the first place.
+
+## Gap 5 — workshop/task lifecycle state
+
+Not a database problem specifically — [a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md](../../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) already documents that Commonplace's task/workshop layer has *no* schema today even in the file-based system (no type, no validation, ad-hoc templates). But it's worth naming here because a DB-native design gets it closer to free: state machines, directional dependencies (`blocks`/`blocked-by`), and expiration are exactly the shape a relational schema handles well, and the note's own open question — "would validated state machines help agents, or just add ceremony?" — is more answerable once the storage substrate stops being the limiting factor. A DB-native design should include a `workshop_items` table (state, valid-transition enum, dependency edges to other items) as a genuine improvement over the file-based status quo, not just parity with it.
+
+## Gap 6 — reflective-system completeness
+
+[reflective-system.md](../../notes/definitions/reflective-system.md) requires five things stated explicitly for any reflectivity claim: a declared system boundary, the represented aspects, a self-representation exposing them, processes inside the boundary that can act through it, and a causal connection in both directions.
+
+- The **type registry from Gap 2** *is* the self-representation candidate — it's the artifact that says how the system's own content must be shaped. For the reflectivity claim to hold, the causal connection has to be real and bidirectional in the schema, exactly as it already is for Commonplace's `tag-readme` type (see [commonplace-as-a-reflective-system.md](../../reference/commonplace-as-a-reflective-system.md)): a validator that reads the types table and rejects content violating it (representation → system), and a mechanism by which a strain in practice revises a type row (system → representation). A DB-native schema that stores types as inert reference data with no validator reading them live is self-*description*, not reflection, per that note's own misuse-case list.
+- Because the type registry is versioned content like everything else (Gap 2), the schema has a bootstrapping question the file-based system answers trivially (a type spec is just another markdown file, JSON-Schema-validated by a fixed bootstrap validator) that a DB-native design has to answer explicitly: what validates the schema for the `types` table's own rows, and is that validator itself represented in the DB or does it stay outside the boundary as a fixed kernel? [reflective-system.md](../../notes/definitions/reflective-system.md) explicitly allows "an unrepresented or unmodifiable kernel" — this is where a DB-native design should locate one, honestly, rather than chase infinite regress.
+
+## Gap 7 — self-improving-system completeness
+
+[self-improving-system.md](../../notes/definitions/self-improving-system.md) only strictly requires evidence-responsive operative change toward a declared objective — the write-time versioning in Gap 1 plus a validator/review objective (already shipped) arguably clears this bar on its own. But if the target is specifically *reflective* self-improvement at the same pathway granularity Commonplace claims (agent-assisted candidate framing, codified evaluation, autonomous retention — see [commonplace-as-a-reflective-system.md](../../reference/commonplace-as-a-reflective-system.md)'s three-row table), the schema needs to distinguish three things that Gap 1's plain version history collapses into one:
+
+- a **candidate** — a proposed content version that is not yet operative (mirrors a draft PR / unmerged branch tip);
+- an **evaluation** — already well-modeled by `review_pairs` (decision, rationale, evidence) but currently only fires *after* something is written as if final; a proposal-selection loop wants evaluation addressable against a candidate that was never operative, so rejected candidates don't need to be reverted, just never promoted;
+- **retention** — the act of promoting a candidate to the accepted/current version, which is exactly what `freshness_baselines`' revision-bump already does for review targets, generalized to ordinary content.
+
+This is the proposal-selection improvement loop's search/evaluation/retention triad, and the useful finding is that Gap 1 (write-time versioning) and the existing review-pair machinery already supply evaluation and retention in embryonic form — the actual gap is narrower than it first looks: a `candidates` table (unreviewed, non-current content versions) sitting alongside `content_versions`, with promotion as the only path from one to the other.
+
+## Where this leaves the schema
+
+The freshness store's shape — snapshot table + baseline-with-revision table + role-labeled input table, generalized by `target_kind` — turns out to generalize further than it was built for: Gaps 1, 3, and 7 are all instances of the same pattern (versioned content / current pointer / accepted-input edges), just applied to ordinary content instead of only review pairs. The gaps that don't fit that pattern are Gap 4 (browsing/agent-access ergonomics, which is an interface problem, not a schema problem) and Gap 6's bootstrap question (which is a boundary-declaration problem, not a schema problem). That suggests the next working file should try drafting one generalized schema — content, types, and links all as `(artifact, version, accepted-baseline)` triples over the same core tables — rather than bespoke tables per artifact class, and see where it breaks.
+
+## Open questions carried forward
+
+- Stable artifact IDs vs. path-as-identity — already open in [review-lineage-storage-case.md](../src-architecture-alternatives/review-lineage-storage-case.md); a DB-native design can't defer this the way the file-based system currently does.
+- Uniform vs. graded edge tracking (Gap 3) — does the many-to-many-edge note's asymmetry collapse entirely once files are gone, or does a cheaper "unwatched edge" tier still make sense inside a DB-native design for edges nobody needs invalidated eagerly?
+- Where the reflective kernel boundary sits (Gap 6) — what part of the validator/bootstrap machinery is allowed to be unrepresented, and does moving more of it into represented rows change the reflectivity claim's strength or just its bootstrapping risk?
+- Whether "browsing" (Gap 4) is better solved by a generated read-only file export (files as a *derived* view over the DB, inverting today's relationship) or a dedicated app — each has a different maintenance cost worth costing out before drafting the schema.

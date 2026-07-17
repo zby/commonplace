@@ -6,6 +6,7 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
+- [db-native-reflective-system](./db-native-reflective-system/README.md) — what a complete DB-native content/type/link/review schema would need for a hypothetical Commonplace-like reflective self-improving system, starting from the freshness store as a skeleton; does not re-litigate Commonplace's own files-over-database decision
 - [theory-methodology-derivation](./theory-methodology-derivation/README.md) — the two-layer theory↔methodology pattern (derived fast path, fallback to the generator, promotion by matching) and whether "derivation" should restructure the distillation vocabulary; framings from cognitive architectures, inductive bias, and effective theories in physics
 - [freshness-module-review](./freshness-module-review/README.md) — code review of `src/commonplace/freshness/`; the live finding is that `commonplace-freshness-accept` ships as a command that can never succeed, alongside latent CAS/normalization asymmetries and a selector that re-hashes each criterion once per note
 - [extensible-controlled-vocabularies](./extensible-controlled-vocabularies/README.md) — designing how a code-enforced closed enum becomes open-ended per installed KB while staying validator-checkable; the trigger case (snapshot `genre`, formerly ingest-report `source_type`) shipped with a severity-warn floor (ADR 045), the structured vocabulary-file layer and `source-tier` remain open
