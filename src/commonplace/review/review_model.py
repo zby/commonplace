@@ -49,6 +49,13 @@ MODEL_PARTITION_REGISTRY = {
         "luna-high",
         "luna-xhigh",
     ),
+    "sol": (
+        "sol",
+        "sol-low",
+        "sol-medium",
+        "sol-high",
+        "sol-xhigh",
+    ),
 }
 
 

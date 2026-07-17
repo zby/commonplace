@@ -16,6 +16,7 @@ def test_normalize_model_partition_collapses_registered_aliases() -> None:
     assert normalize_model_partition("gpt-5.4-high") == "codex"
     assert normalize_model_partition("gpt-5.5-high") == "codex-5.5"
     assert normalize_model_partition("luna") == "luna"
+    assert normalize_model_partition("sol") == "sol"
 
 
 def test_build_model_partition_collapses_effort_for_registered_models() -> None:
@@ -23,4 +24,5 @@ def test_build_model_partition_collapses_effort_for_registered_models() -> None:
     assert build_model_partition("gpt-5.4", "xhigh") == "codex"
     assert build_model_partition("gpt-5.5", "high") == "codex-5.5"
     assert build_model_partition("luna", "high") == "luna"
+    assert build_model_partition("sol", "high") == "sol"
     assert build_model_partition("unknown-model", "high") == "unknown-model-high"
