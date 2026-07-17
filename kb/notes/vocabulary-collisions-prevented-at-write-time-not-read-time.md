@@ -82,3 +82,4 @@ Relevant Notes:
 - [minimum viable vocabulary is the naming set that most reduces](./minimum-viable-vocabulary-is-the-naming-set-that-most-reduces.md) — extends: supplies the cost mechanism (names as unscoped globals) to its payoff argument
 - [codification](./definitions/codification.md) — mechanism: moving a binding from prose to schema is the codification crossing applied to vocabulary itself
 - [methodology enforcement is constraining](./methodology-enforcement-is-constraining.md) — grounds: enforced positions are what give the symbolic layer its scope
+- [clausal binding scopes a captured predicate-word like a coinage](./evidence/clausal-binding-scopes-a-captured-predicate-word-like-a-coinage.md) — extends: a worked corpus case verifying the collision prior for a concrete term, and a second enforcement-friendly scoping mechanism beyond the multi-word coinage this note foregrounds

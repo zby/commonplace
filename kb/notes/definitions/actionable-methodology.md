@@ -1,19 +1,14 @@
 ---
-description: "Definition — a methodology supplies an intervention-relevant mapping; it is actionable only relative to an operator, available operations, a target system, and a stated setting"
+description: "Definition — actionable is a relation a methodology stands in, not a property of an artifact: it holds only relative to an operator, available operations, a target system, and a stated setting"
 type: kb/types/definition.md
 tags: [foundations]
 ---
 
 # Actionable methodology
 
-A **methodology** is a theory that supplies a mapping from represented conditions to a prescription, exclusion, ranking, or evaluation criterion — guidance that could change what someone does. A methodology is **actionable** for a particular operator, in a stated setting, when that operator can use the mapping to choose among available interventions in a target system.
+**Actionable** is the term this note defines. **Methodology** keeps its ordinary sense — guidance that maps represented conditions to a prescription, exclusion, ranking, or evaluation criterion, close to what information-systems scholar Shirley Gregor calls a Type V theory. A theory that only describes or explains, supplying nothing that discriminates among interventions, is not a methodology in that ordinary sense, however true it is; Commonplace does not additionally stipulate this as a technical condition, since the word already carries it.
 
-Two conditions, and they fail independently:
-
-1. **The mapping** — intrinsic to the artifact. A theory that only describes or explains, supplying nothing that discriminates among interventions, is not a methodology however true it is.
-2. **The operational relation** — extrinsic, and indexed to an operator and a setting. A methodology nobody can apply here and now is still a methodology; it is simply not actionable in that setting.
-
-Commonplace uses **methodology** as the noun and **actionable** as a predicate on it. There is no separate thing called an "actionable theory": actionability is a relation a methodology stands in, not a kind of artifact.
+A methodology is **actionable** for a particular operator, in a stated setting, when that operator can use its mapping to choose among available interventions in a target system. This is the operator-relative predicate Commonplace adds: a methodology nobody can apply here and now is still a methodology; it is simply not actionable in that setting. Actionability is a relation a methodology stands in, not a kind of artifact — there is no separate thing called an "actionable theory."
 
 ## The relation requires four elements
 
@@ -26,17 +21,17 @@ The operator may be a person, an organization, a trained model, deterministic so
 
 ## Scope
 
-The noun starts from information-systems scholar Shirley Gregor's **theory for design and action**. Type V theory “says how to do something” by prescribing methods, techniques, or principles for constructing an artifact ([Gregor 2006, printed pp. 619–620; PDF pp. 10–11](../../sources/the-nature-of-theory-in-information-systems-gregor-2006.ingest.md)). Type V is close to what this KB calls a methodology: Gregor classifies theory by its prescriptive purpose, and membership does not require a currently capable or authorized operator.
+The ordinary sense of methodology used here starts from information-systems scholar Shirley Gregor's **theory for design and action**. Type V theory “says how to do something” by prescribing methods, techniques, or principles for constructing an artifact ([Gregor 2006, printed pp. 619–620; PDF pp. 10–11](../../sources/the-nature-of-theory-in-information-systems-gregor-2006.ingest.md)); membership does not require a currently capable or authorized operator.
 
-**Actionable** adds the operational relation Gregor's taxonomy does not carry. A design-and-action theory sitting unread in a paper remains prescriptive — it satisfies condition 1 — but it is not actionable in a particular setting unless an operator can use its mapping through available operations on the target. Theory type and situated actionability therefore answer different questions; actionability is not a proposed sixth type in Gregor's taxonomy.
+**Actionable** adds the operational relation Gregor's taxonomy does not carry. A design-and-action theory sitting unread in a paper remains prescriptive — it is still a methodology — but it is not actionable in a particular setting unless an operator can use its mapping through available operations on the target. Theory type and situated actionability therefore answer different questions; actionability is not a proposed sixth type in Gregor's taxonomy.
 
-The two conditions come apart in both directions. A software-architecture methodology can be actionable for a developer before the developer acts on it: it maps architectural conditions to component and interface choices, and the developer has the access and authority to make those changes. If the developer loses repository access, it remains a methodology but is no longer actionable for that developer in that setting — condition 1 holds, condition 2 fails. Conversely, repository access alone actions nothing if the theory supplies no intervention-relevant mapping for the software system — condition 2 holds, condition 1 fails.
+Prescriptiveness and actionability come apart in both directions. A software-architecture methodology can be actionable for a developer before the developer acts on it: it maps architectural conditions to component and interface choices, and the developer has the access and authority to make those changes. If the developer loses repository access, it remains a methodology but is no longer actionable for that developer in that setting — it is still prescriptive, but the operational relation fails. Conversely, repository access alone actions nothing if the theory supplies no intervention-relevant mapping for the software system — the relation's other elements hold, but there is nothing to act on.
 
 Evaluation contributes to actionability only when its result can affect the selection, retention, or modification of an intervention. Retrospective analysis with no path into action may be informative, but it is not actionable in this sense.
 
 ## Exclusions
 
-Do not use **methodology** as a synonym for practical-sounding advice, or **actionable** as a compliment. The mapping, operator, available operations, target, and setting must be identifiable.
+**Actionable** is not a compliment: the mapping, operator, available operations, target, and setting must be identifiable, or the word is doing no work. **Methodology** is not a synonym for practical-sounding advice — a theory that only describes or explains is not a methodology, however true it is.
 
 Actionability implies neither that the methodology is correct nor that an intervention will succeed. Gregor's “if acted upon” causal expectation remains conditional on the actor and setting ([Gregor 2006, printed p. 619; PDF p. 10](../../sources/the-nature-of-theory-in-information-systems-gregor-2006.ingest.md)).
 
