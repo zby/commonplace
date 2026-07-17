@@ -19,6 +19,7 @@ SITE_ASSETS = [
     "javascripts/tablesort-init.js",
     "javascripts/giscus-comments.js",
     "stylesheets/giscus.css",
+    "stylesheets/link-markers.css",
 ]
 
 
