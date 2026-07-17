@@ -52,19 +52,7 @@ Order of work: (1) boundary split — rewrite the distillation definition to exc
 
 ## Ord's polation triple grades the ampliative side
 
-Operator observation: the split maps onto Toby Ord's [interpolation / extrapolation / hyperpolation](../../sources/interpolation-extrapolation-hyperpolation.md) carving of function generalisation — x in the convex hull of the data; in the affine hull but outside the convex hull; off the data's subspace entirely. The carving is mutually exclusive and jointly exhaustive, which is exactly the property a vocabulary split wants. Read with the source's claims as the data and "claim space" as the domain:
-
-- **Derivation ≈ autopolation/interpolation.** The output stays inside the source's entailment closure — no new commitments. It may be *far in representational form* (theory → procedure) while being zero distance in content; distance-in-form vs distance-in-content is a distinction the current vocabulary blurs and this frame makes explicit.
-- **Routine induction ≈ extrapolation.** The rule extends along dimensions the source instances already have — "more cases like these." The boundary clause required by [abstract-an-experience](../../notes/abstract-an-experience-only-when-you-can-state-the-boundary.md) *is* the declared extrapolation range.
-- **Discovery proper ≈ hyperpolation.** The output lies off the source's subspace — a new dimension. The discovery note's hardest case, generative similarity, "requires *inventing the dimension along which the comparison becomes visible*" — Ord's definition almost verbatim. Ord also flags "the whole is simpler than the slice" as the condition for good hyperpolation, which matches the KB's naming-amortizes-discovery-cost and reach criteria: the posited general must be simpler than the particulars it explains.
-
-What this buys:
-
-1. **A principled answer to the routing question.** The ampliative operation is one thing, graded by where the output lies relative to the source manifold — extrapolation at the routine end, hyperpolation at the insight end. That is the internal structure discovery's three-depths table already has (shared structure ≈ extrapolation; generative model ≈ hyperpolation), which supports extending discovery (option a) rather than adding a term: the polation axis becomes discovery's grading, and routine induction is its shallow, extrapolative end.
-2. **A sharper bet doctrine.** Ord notes all three polations are the *same* Bayesian method — prior over functions, update on data — differing only in where the queried point lies. So the classification bet is a bet about where an artifact's claims sit relative to its source, and the verification burden scales with off-manifold distance: hyperpolation is the least well-posed (Ord), and the discovery note's own caution — a generative model can be "compellingly wrong" (phlogiston) — is that fact restated.
-3. **The threads meet at abduction.** Ord explicitly proposes hyperpolation as a mathematical model of abduction — and Peirce's abduction is already a [philosophy-borrowing](../philosophy-borrowing/README.md) candidate for note promotion. The two borrowings are one borrowing.
-
-Caveat: the transfer is the qualitative carving (within / beyond-along-existing-dimensions / off-subspace), not the geometry — claim space has no literal convex hull, and entailment closure is not one. Ord himself applies the triple informally outside mathematics, so this is a licensed use, but a definition note leaning on it should say the space is metaphorical.
+Split out to its own thread: [the polation structure of generalization](./polation-structure-of-generalization.md). Upshot for this thread: derivation ≈ interpolation, routine induction ≈ extrapolation, discovery proper ≈ hyperpolation; the carving settles the routing question toward extending discovery (the polation axis is its internal grading, routine induction its shallow end) and formalizes the bet doctrine (classification is a bet about where an artifact's claims sit relative to its source, with verification burden scaling off-manifold).
 
 ---
 
