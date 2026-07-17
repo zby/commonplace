@@ -25,7 +25,7 @@ The source argues that automated skill optimization only works after manual comp
 
 ## Extractable Value
 1. [quick-win] Add a phase gate to evaluation workflows: require explicit completion of comprehension -> specification -> generalization before running optimization loops; this has high reach because it explains why optimization can improve the wrong target.
-2. [experiment] Treat judge creation as spec mining: derive criteria from observed failures, then calibrate on a hand-labeled mini set before trusting autonomous runs; high reach because it operationalizes verifier construction rather than tool-specific tuning.
+2. [experiment] Treat judge creation as spec mining: mine criteria from observed failures, then calibrate on a hand-labeled mini set before trusting autonomous runs; high reach because it operationalizes verifier construction rather than tool-specific tuning.
 3. [quick-win] Introduce a "manual read quota" (for example, read and annotate N outputs before each judge revision) as a hard precondition; high reach because it directly protects against fantasy objectives across domains.
 4. [experiment] Keep tuple-based synthetic input generation, but only after failure-taxonomy grounding; medium reach because coverage improvements transfer broadly, while the exact tuple schema is context-bound.
 5. [just-a-reference] Use this source as external evidence for the oracle bottleneck argument in automation notes; low-to-medium reach because it is a single-team observational report.

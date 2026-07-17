@@ -1,5 +1,5 @@
 ---
-description: "Context Constitution review: authored Letta agent context-management doctrine with documented MemFS, system-prompt learning, progressive disclosure, compaction, and reflection affordances but no local harness implementation"
+description: "Context Constitution review: authored Letta context doctrine with MemFS, prompt learning, compaction, reflection affordances, and no local harness implementation"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-04"
@@ -31,7 +31,7 @@ Context Constitution, from letta-ai, is an authored policy repository for Letta 
 
 - **Storage substrate:** `files` — The primary retained behavior-shaping state is authored Markdown in a GitHub repository; secondary substrates are only described in prose, including Letta memory blocks, MemFS projections, message databases, and model-training use.
 - **Representational form:** `prose` `symbolic` — The Constitution and affordances are prose instructions and principles; repository paths, Markdown headings, `/system`, `/skills`, references, Git commits, and the whitespace workflow are symbolic structure. I found no parametric artifact in this checkout.
-- **Lineage:** `authored` — The repository's reviewed artifacts are human-authored public documents and a simple CI workflow. The docs discuss experience-derived memory, message history, reflection, and training use, but this checkout does not derive durable artifacts from agent traces.
+- **Lineage:** `authored` — The repository's reviewed artifacts are human-authored public documents and a simple CI workflow. The docs discuss experience-based memory, message history, reflection, and training use, but this checkout does not create durable artifacts from agent traces.
 - **Behavioral authority:** `instruction` `validation` `knowledge` — The Constitution has instruction authority when loaded into prompting or agent guidance; the whitespace workflow has narrow validation authority over Markdown formatting; the README and affordances document also serve as knowledge artifacts for humans or agents learning the Letta context model.
 
 **Constitution document.** Storage substrate: repository file `constitution/CONSTITUTION.md`. Representational form: prose with a hierarchical section structure. Lineage: authored doctrine. Behavioral authority: instruction when used in prompting, and knowledge when read as a public explanation of Letta's memory philosophy.
@@ -95,7 +95,7 @@ Authority at consumption depends on host injection path. Loaded as a system prom
 
 **Message storage is explicitly not enough.** The docs say all messages are stored and retrievable, but the Constitution's examples emphasize references, summaries, and indexes that make later retrieval likely. That matches Commonplace's distinction between storage and contextual activation.
 
-**Compaction is described as a retained summary, not just truncation.** The affordances document says the compaction summary remains in the in-context buffer and can reference files or prior messages. If implemented, that would be a behavior-shaping derived view, but the derivation policy and quality controls are not visible here.
+**Compaction is described as a retained summary, not just truncation.** The affordances document says the compaction summary remains in the in-context buffer and can reference files or prior messages. If implemented, that would be a behavior-shaping summary view, but the summarization policy and quality controls are not visible here.
 
 **The whitespace workflow is the only checked invariant.** For a repository that describes high-authority prompt and memory management, the local CI intentionally remains minimal.
 

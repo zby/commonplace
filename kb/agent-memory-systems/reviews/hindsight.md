@@ -57,7 +57,7 @@ Promotion path: Hindsight has a strong automatic promotion path from raw documen
 |---|---|---|
 | Primary purpose | Runtime memory service for agents and applications | Git-native methodology KB for agents and maintainers |
 | Source of truth | Bank-scoped relational schema with derived indexes and traces | Typed Markdown artifacts with git history, validation, and review |
-| Write path | API/SDK/MCP/hooks retain content; LLM extraction and consolidation derive facts/observations | Authored edits, source snapshots, validation, review gates, generated indexes |
+| Write path | API/SDK/MCP/hooks retain content; LLM extraction and consolidation produce facts/observations | Authored edits, source snapshots, validation, review gates, generated indexes |
 | Read-back | Explicit recall/reflect plus push integrations that inject recalled memory | Mostly pull through `rg`, indexes, links, skills, and loaded instructions |
 | Learning | Trace/document extraction, observation consolidation, mental-model refresh | Human/agent-authored notes plus review, validation, and explicit promotion |
 | Governance | Schema, operation validators, audit logs, LLM traces, webhooks, transfer | Collection contracts, type specs, citations, git diffs, semantic review gates |

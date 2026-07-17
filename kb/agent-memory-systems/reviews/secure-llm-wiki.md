@@ -52,7 +52,7 @@ Promotion path: Secure LLM-Wiki has a strong candidate-to-active path: untrusted
 | Read path | Trust/status-filtered all-claims context block or printed context | Explicit search, indexes, links, skills, reports, and validation-driven navigation |
 | Security emphasis | Prevent untrusted source text from becoming trusted persistent memory | Preserve fidelity, routing discipline, reviewability, and artifact validity across agent work |
 
-Secure LLM-Wiki is closer to a security gate around knowledge acquisition than to Commonplace's broad library/workshop system. Its most relevant contribution is making the write boundary explicit: every imported source-derived claim has provenance, trust, review, and gate state before it can become active memory. Commonplace already has source capture and validation, but not a separate quarantine lane for source-derived claims before promotion into knowledge artifacts.
+Secure LLM-Wiki is closer to a security gate around knowledge acquisition than to Commonplace's broad library/workshop system. Its most relevant contribution is making the write boundary explicit: every imported source-grounded claim has provenance, trust, review, and gate state before it can become active memory. Commonplace already has source capture and validation, but not a separate quarantine lane for source-grounded claims before promotion into knowledge artifacts.
 
 The main tradeoff is granularity. Secure LLM-Wiki's atomic claims are easy to gate and filter, but the system does not preserve rich page-level argument structure, link semantics, or collection-local conventions. Commonplace's artifacts carry more meaning per file, but that also makes automatic gate decisions harder: a note can contain many claims, roles, links, and caveats.
 

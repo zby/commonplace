@@ -29,7 +29,7 @@ Claim-level (no code inspected):
 
 - **Storage substrate:** `vector` — the paper snapshot reports stored tip entries with vector embeddings for semantic search plus structured metadata for filtering. The concrete database or persistence implementation is not locally verified.
 - **Representational form:** `prose` — the central behavior-shaping artifact is an inspectable natural-language tip. Embeddings support retrieval, but they are an index over the prose rather than the promoted memory itself.
-- **Lineage** — **trace-extracted**: tips derive from completed execution trajectories through trajectory analysis, subtask generalization, clustering, and LLM-based consolidation. Changes in the task distribution, the trajectory analyzer, or the success/failure oracle would invalidate the learned tip set.
+- **Lineage** — **trace-extracted**: tips are extracted and generalized from completed execution trajectories through trajectory analysis, subtask generalization, clustering, and LLM-based consolidation. Changes in the task distribution, the trajectory analyzer, or the success/failure oracle would invalidate the learned tip set.
 - **Behavioral authority** — tips are **system-definition artifacts** when injected as prompt guidelines for future runs; the stored tip library is also a knowledge artifact for inspection, but its behavior-shaping force arrives through prompt-time advice.
 
 ## Comparison with Our System

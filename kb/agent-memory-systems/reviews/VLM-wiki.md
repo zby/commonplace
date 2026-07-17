@@ -105,7 +105,7 @@ Selection scope is page-level and symbol-driven by category, title, tags, relate
 - Whether VLM-wiki adds a real integration command that turns raw analyses into wiki articles, updates `wiki/index.md`, appends `wiki/log.md`, and preserves source links; that would move the write path from prompt convention toward codified maintenance.
 - Whether query support gains search, ranking, token budgets, or page-level retrieval modes; that would change read-back from manual/index pull toward a more engineered context surface.
 - Whether pattern discovery gets an explicit evidence threshold and review workflow; without that, generated life-pattern pages should remain low-authority reflections.
-- Whether multimodal outputs carry model, prompt, timestamp, raw media path, and confidence/provenance fields consistently; this determines whether VLM-derived claims can be audited.
+- Whether multimodal outputs carry model, prompt, timestamp, raw media path, and confidence/provenance fields consistently; this determines whether VLM-generated claims can be audited.
 - Whether audio transcription and video summarization become implemented rather than instructed behavior; that would broaden the acquisition surface beyond images and frame extraction.
 
 Relevant Notes:

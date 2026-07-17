@@ -62,9 +62,9 @@ This is genuinely enforced — you cannot reach VERIFIED status without passing 
 
 ## 3. The Co-Player System Is Genuinely Novel
 
-The `coplayer.rs` module was the biggest positive surprise. The report doesn't mention it at all, but it implements something interesting: **per-agent reliability tracking with policy derivation.**
+The `coplayer.rs` module was the biggest positive surprise. The report doesn't mention it at all, but it implements something interesting: **per-agent reliability tracking with policy synthesis.**
 
-Decapod scans the trace log to build a reliability profile for each agent (success rate, total ops, common operations). It then derives deterministic policy constraints: unknown agents get mandatory handshakes and 100-line diff limits; high-reliability agents get 500-line limits; low-reliability agents are forbidden from broad refactors and must provide extra proofs. The critical invariant is that policies only tighten — no agent, regardless of track record, can skip validation gates.
+Decapod scans the trace log to build a reliability profile for each agent (success rate, total ops, common operations). It then maps that profile into deterministic policy constraints: unknown agents get mandatory handshakes and 100-line diff limits; high-reliability agents get 500-line limits; low-reliability agents are forbidden from broad refactors and must provide extra proofs. The critical invariant is that policies only tighten — no agent, regardless of track record, can skip validation gates.
 
 This is a real mechanism for adaptive trust that the report missed entirely. It maps to an interesting design principle: the system starts maximally restrictive and relaxes constraints only as evidence accumulates, but never below a hard floor.
 

@@ -8,7 +8,7 @@ tags: [trace-derived]
 
 # G-Memory
 
-G-Memory, from bingreeky's `bingreeky/GMemory` repository, is a Python experiment implementation of "G-Memory: Tracing Hierarchical Memory for Multi-Agent Systems." At the reviewed commit, it provides a multi-agent task runner for ALFWorld, FEVER, PDDL, and SciWorld-style tasks, plus a `g-memory` memory module that records completed task trajectories, stores task records in Chroma, maintains a NetworkX task graph, derives reusable insight rules with LLM prompts, and injects retrieved successes and insights into later MAS prompts.
+G-Memory, from bingreeky's `bingreeky/GMemory` repository, is a Python experiment implementation of "G-Memory: Tracing Hierarchical Memory for Multi-Agent Systems." At the reviewed commit, it provides a multi-agent task runner for ALFWorld, FEVER, PDDL, and SciWorld-style tasks, plus a `g-memory` memory module that records completed task trajectories, stores task records in Chroma, maintains a NetworkX task graph, synthesizes reusable insight rules with LLM prompts, and injects retrieved successes and insights into later MAS prompts.
 
 **Repository:** https://github.com/bingreeky/GMemory
 
@@ -18,7 +18,7 @@ G-Memory, from bingreeky's `bingreeky/GMemory` repository, is a Python experimen
 
 ## Core Ideas
 
-**Task executions become the durable memory unit.** The MAS workflows call `init_task_context()` before a task, append agent messages and environment steps during execution, and call `save_task_context()` after final feedback; `GMemory.add_memory()` then stores a `MASMessage` as Chroma metadata with the task name as document content ([mas/memory/mas_memory/memory_base.py](https://github.com/bingreeky/GMemory/blob/7b581c51d993bd600df14691d101d7e601040cc6/mas/memory/mas_memory/memory_base.py), [mas/memory/mas_memory/GMemory.py](https://github.com/bingreeky/GMemory/blob/7b581c51d993bd600df14691d101d7e601040cc6/mas/memory/mas_memory/GMemory.py), [mas/memory/common.py](https://github.com/bingreeky/GMemory/blob/7b581c51d993bd600df14691d101d7e601040cc6/mas/memory/common.py)). The retained trace includes task text, trajectory text, success/failure label, extra LLM-derived fields, and serialized state graphs.
+**Task executions become the durable memory unit.** The MAS workflows call `init_task_context()` before a task, append agent messages and environment steps during execution, and call `save_task_context()` after final feedback; `GMemory.add_memory()` then stores a `MASMessage` as Chroma metadata with the task name as document content ([mas/memory/mas_memory/memory_base.py](https://github.com/bingreeky/GMemory/blob/7b581c51d993bd600df14691d101d7e601040cc6/mas/memory/mas_memory/memory_base.py), [mas/memory/mas_memory/GMemory.py](https://github.com/bingreeky/GMemory/blob/7b581c51d993bd600df14691d101d7e601040cc6/mas/memory/mas_memory/GMemory.py), [mas/memory/common.py](https://github.com/bingreeky/GMemory/blob/7b581c51d993bd600df14691d101d7e601040cc6/mas/memory/common.py)). The retained trace includes task text, trajectory text, success/failure label, extra LLM-extracted fields, and serialized state graphs.
 
 **The hierarchy is implemented as Chroma plus file-backed graph and rule sidecars.** `GMemory.__post_init__()` creates a Chroma store under `persist_dir`, a `TaskLayer` with a pickled NetworkX graph, and an `InsightsManager` with an `insights.json` file and log ([mas/memory/mas_memory/GMemory.py](https://github.com/bingreeky/GMemory/blob/7b581c51d993bd600df14691d101d7e601040cc6/mas/memory/mas_memory/GMemory.py), [mas/utils.py](https://github.com/bingreeky/GMemory/blob/7b581c51d993bd600df14691d101d7e601040cc6/mas/utils.py)). The README's "Insight Graph, Query Graph, and Interaction Graph" framing maps in code to insight rules, task-similarity graph expansion, and the serialized per-task `StateChain` rather than to a single persisted graph database ([README.md](https://github.com/bingreeky/GMemory/blob/7b581c51d993bd600df14691d101d7e601040cc6/README.md)).
 
@@ -34,14 +34,14 @@ G-Memory, from bingreeky's `bingreeky/GMemory` repository, is a Python experimen
 
 - **Storage substrate:** `vector` - The central retained task store is a Chroma vector store under the configured `persist_dir`, with a pickled NetworkX task graph, `insights.json`, and logs as sidecars in the same working directory.
 - **Representational form:** `prose` `symbolic` `parametric` - Task trajectories, key steps, failure reasons, and insight rules are prose; labels, scores, correlations, serialized state graphs, JSON records, prompt contracts, and graph edges are symbolic; sentence-transformer embeddings and Chroma similarity are parametric retrieval state.
-- **Lineage:** `trace-extracted` `authored` - The main memory entries and insight rules are derived from MAS trajectories and reward-labeled task outcomes, while prompts, configs, graph construction code, and formatting templates are authored package artifacts.
+- **Lineage:** `trace-extracted` `authored` - The main memory entries and insight rules are extracted or synthesized from MAS trajectories and reward-labeled task outcomes, while prompts, configs, graph construction code, and formatting templates are authored package artifacts.
 - **Behavioral authority:** `knowledge` `routing` `ranking` `learning` - Retrieved trajectories and insight rules advise later agents as prompt context; the task graph routes query expansion; Chroma similarity and LLM relevance scores rank results; insight update operations learn and revise rule state from accumulated trajectories.
 
 **`MASMessage` task records.** Storage substrate: Chroma documents under `persist_dir`, with `task_main` as page content and serialized `MASMessage` fields in metadata. Representational form: prose task descriptions/trajectories plus symbolic labels, extra fields, and state-chain JSON. Lineage: trace-extracted from each run, then sparsified and enriched by LLM prompts before insertion. Behavioral authority: knowledge artifact when retrieved as successful or failed examples; weak instruction surface when the formatted example appears in an agent prompt.
 
 **Task graph.** Storage substrate: `task_layer_graph.pkl` in the memory working directory. Representational form: symbolic NetworkX graph with weighted task-similarity edges and optional cluster ids. Lineage: derived from stored task names, Chroma similarity search, and FINCH clustering. Behavioral authority: routing artifact for k-hop expansion during retrieval and for grouping tasks before insight merge.
 
-**Insight rules.** Storage substrate: `insights.json` plus an `insights.log` trace of prompts and responses. Representational form: prose rule text with symbolic score, positive correlation tasks, and negative correlation tasks. Lineage: trace-extracted and LLM-derived from successful and failed trajectories; later edited, agreed, removed, merged, or reward-adjusted by automatic operations. Behavioral authority: prompt-level advice injected into later tasks, with role-specific projection available when enabled.
+**Insight rules.** Storage substrate: `insights.json` plus an `insights.log` trace of prompts and responses. Representational form: prose rule text with symbolic score, positive correlation tasks, and negative correlation tasks. Lineage: trace-extracted and LLM-synthesized from successful and failed trajectories; later edited, agreed, removed, merged, or reward-adjusted by automatic operations. Behavioral authority: prompt-level advice injected into later tasks, with role-specific projection available when enabled.
 
 **Chroma and LLM ranking path.** Storage substrate: Chroma collection files under `persist_dir`. Representational form: parametric embeddings over task names plus symbolic metadata filters for success/failure labels. Lineage: regenerated or extended from inserted task records. Behavioral authority: ranking, because it determines which prior tasks seed graph expansion, example recall, insight lookup, and LLM relevance reranking.
 
@@ -64,13 +64,13 @@ The strongest overlap is the idea that retained memory should be structured enou
 
 ### Borrowable Ideas
 
-**Keep trace capture separate from distilled guidance.** A Commonplace analogue would retain raw task traces in a workshop or report layer, then derive reviewed notes or instructions from them. Ready now as a workflow pattern, but not as automatic library mutation.
+**Keep trace capture separate from distilled guidance.** A Commonplace analogue would retain raw task traces in a workshop or report layer, then distill and review notes or instructions from them. Ready now as a workflow pattern, but not as automatic library mutation.
 
 **Use reward-labeled failures as first-class evidence.** G-Memory stores failed runs and asks for failure reasons, then uses them in comparative rule generation. Commonplace could borrow this for review gates or workflow retrospectives where failures are currently too easy to discard. Needs a concrete recurring evaluation loop.
 
 **Let graph neighborhoods expand retrieval after a lexical or embedding hit.** The task graph shows a simple two-stage route: find similar tasks, then include local neighbors. Commonplace could use authored links or generated related-note indexes similarly, but only with visible lineage and reviewable ranking.
 
-**Do not borrow unreviewed rule authority.** G-Memory's LLM-generated rules can be edited and scored automatically, then injected into future prompts. In Commonplace, that should remain a suggestion or derived report until accepted by a human/agent review workflow and validated as an instruction artifact.
+**Do not borrow unreviewed rule authority.** G-Memory's LLM-generated rules can be edited and scored automatically, then injected into future prompts. In Commonplace, that should remain a suggestion or review report until accepted by a human/agent review workflow and validated as an instruction artifact.
 
 ## Write side
 

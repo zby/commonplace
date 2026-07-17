@@ -130,7 +130,7 @@ Quality and faithfulness are not established by code inspection. The code can sh
 
 - Whether the v2 `wiki_proposed_edits` path becomes a real agent write-through surface. That would add a stronger manual/automatic promotion and review question for generated wiki changes.
 - Whether Atlas adds faithfulness or ablation tests for wiki/fact/graph read-back. That would materially improve confidence that retrieved memory changes answers rather than merely appearing in context.
-- Whether contradiction handling moves from fact fields and detector services into visible wiki invalidation. That would clarify how stale or superseded trace-derived claims are retired.
+- Whether contradiction handling moves from fact fields and detector services into visible wiki invalidation. That would clarify how stale or superseded trace-extracted claims are retired.
 - Whether MCP gains write tools beyond guarded sync/refresh. That would change the behavioral-authority analysis from read-only memory service toward agent-editable KB.
 - Whether wiki pages expose source-confidence and extraction lineage more directly. That would make generated pages safer as long-lived organizational memory.
 

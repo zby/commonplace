@@ -34,7 +34,7 @@ last-checked: "2026-06-04"
 
 - **Storage substrate:** `files` `repo` `in-memory` — Durable memory persists as Markdown and JSON files under the resolved memory root; optional git initialization and commits preserve memory history; `RUNTIME_NOTES` carries short recent notes only in process memory between starts.
 - **Representational form:** `prose` `symbolic` — Daily entries, monthly summaries, `CORE.md`, and `long-term-memory.md` are prose; configuration, branch runtime overrides, strict JSON reflection outputs, `core/index.json` records, command definitions, and hook registrations are symbolic. There is no vector index or model-weight update in the inspected repository.
-- **Lineage:** `authored` `trace-extracted` — Settings and extension code are authored; daily entries and core records are trace-extracted from serialized branch messages, tool-result interruption signals, and LLM reflection outputs. Redistilled entries remain derived from earlier core records.
+- **Lineage:** `authored` `trace-extracted` — Settings and extension code are authored; daily entries and core records are trace-extracted from serialized branch messages, tool-result interruption signals, and LLM reflection outputs. Redistilled entries are reworked from earlier core records.
 - **Behavioral authority:** `knowledge` `instruction` `ranking` `learning` — Memory files advise as knowledge when injected; strict/advisory memory policy can instruct the agent; `core/index.json` scores and recency ranking decide what appears in `CORE.md`; the task-end reflection loop learns from previous agent work.
 
 **Daily journal entries.** The raw durable trace layer is `daily/YYYY-MM-DD.md`, appended with "What went wrong" and "How it was fixed" sections generated from the current branch conversation. It is trace-extracted prose with knowledge authority and source value for monthly summaries or later inspection.
@@ -138,4 +138,4 @@ Relevant Notes:
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: daily logs, core index, rendered memory files, runtime notes, and system-prompt policy carry different forms and authorities.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: daily logs, monthly summaries, and memory files advise as evidence and context.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: hook registrations, ranking, context assembly, and strict memory policy configure future behavior.
-- [Use trace-derived extraction](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - exemplifies: pi-self-learning derives reusable lessons from completed task traces.
+- [Use trace-derived extraction](../../notes/agent-memory-requirements/use-trace-derived-extraction.md) - exemplifies: pi-self-learning extracts reusable lessons from completed task traces.
