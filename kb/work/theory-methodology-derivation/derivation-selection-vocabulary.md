@@ -50,6 +50,19 @@ One design question inside the split — where does the ampliative traffic go? [
 
 Order of work: (1) boundary split — rewrite the distillation definition to exclude ampliative steps, move its AMP instances out, settle the discovery-vs-abstraction routing question, relabel or annotate the trace→rule ladder's "Distill" rung; (2) ship the bet doctrine with the split as its classification rule; (3) only then revisit the derivation/selection rename over what remains.
 
+## Discovery is a lifecycle, not an act (operator refinement of the routing)
+
+Routing the ampliative traffic to "discovery" is awkward in one respect: formulating a hypothesis is only *part* of a discovery — it still needs testing. Sometimes the examples are already at hand and promotion is effectively instant (the discovery note's co-arising structure: positing the general and recognizing the instances happen together, because the instances were pre-accumulated). But often it is a long process: conjecture now, evidence later.
+
+Peirce — already the abduction candidate in [philosophy-borrowing](../philosophy-borrowing/README.md) — dissolves this cleanly, because his full inference scheme is a pipeline: **abduction** (posit the hypothesis) → **deduction** (derive its testable consequences) → **induction** (test them against cases). Two things follow:
+
+1. The ampliative *act* is abduction/conjecture; "discovery" properly names the lifecycle's success state, reached only after testing. The instant-promotion case is the degenerate lifecycle where conjecture and test collapse because the evidence pre-exists.
+2. The middle stage of Peirce's pipeline is *derivation* — this workshop's term. Testing a conjecture requires deriving its consequences. So the vocabulary's two operations aren't just siblings; they compose: discovery consumes derivation as its verification step.
+
+The KB already implements the lifecycle view operationally: [trace-derived memory earns authority per operation, not at capture](../../notes/trace-derived-memory-earns-authority-per-operation-not-at-capture.md) — the hypothesis is captured immediately, its discovery-status is earned later, per test. And the bet doctrine generalizes: all three bets in this workshop (correctness, coverage, classification) are conjectures with named adjudicators — discoveries-in-progress with different test harnesses.
+
+Implication for Wave 0 of the [migration plan](./migration-plan.md): the discovery amendment should define discovery as a staged lifecycle (conjecture → derived consequences → test → acceptance), with the polation axis grading the conjecture's distance and the instant case as pre-accumulated evidence. AMP traffic routes to the *conjecture stage*, not to the honorific.
+
 ## Ord's polation triple grades the ampliative side
 
 Split out to its own thread: [the polation structure of generalization](./polation-structure-of-generalization.md). Upshot for this thread: derivation ≈ interpolation, routine induction ≈ extrapolation, discovery proper ≈ hyperpolation; the carving settles the routing question toward extending discovery (the polation axis is its internal grading, routine induction its shallow end) and formalizes the bet doctrine (classification is a bet about where an artifact's claims sit relative to its source, with verification burden scaling off-manifold).
