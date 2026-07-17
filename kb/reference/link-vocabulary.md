@@ -69,7 +69,8 @@ Inference relations. Commonly used for outbound links to theoretical destination
 | `contrasts` | symmetric | wants to see the neighbouring-shape distinction |
 | `rationale` | asymmetric (descriptive/prescriptive → theoretical) | wants the claim this design/rule rests on |
 | `evidence` | asymmetric (theoretical → descriptive) | wants corroborating observation |
-| `derived-from` | asymmetric (theoretical → descriptive) | wants abstraction provenance |
+| `derived-from` | asymmetric | wants the source this was worked out from; asserts no claims beyond it (lineage semantics below) |
+| `abstracted-from` | asymmetric (general → evidence) | wants the instances this generalization came from; the claim exceeds them (lineage semantics below) |
 
 ### Descriptive-shaped labels
 
@@ -104,19 +105,29 @@ Usable from any source to any destination.
 | `defined-in` | reader doesn't know the term; target is under `kb/notes/definitions/` |
 | `see-also` | reader might benefit but author can't name a specific need; escape hatch — use only after ruling out a more specific label |
 
-## Distillation tracking (`Distilled into:`)
+## Lineage semantics (derived vs abstracted)
 
-When an artifact is distilled from one or more source notes — a skill from methodology notes, a `COLLECTION.md` rule from a design note, a reference doc from a workshop conclusion — the dependency is recorded at the **source**, in a dedicated footer section below `Relevant Notes:`:
+Two lineage relations with different maintenance semantics replace the retired `Distilled into:` footer. These labelled edges are the one place the distinction is formally made — prose can describe an artifact's origin loosely, but only a labelled edge asserts which maintenance regime governs it (rationale: [vocabulary collisions are prevented at write time, not resolved at read time](../notes/vocabulary-collisions-prevented-at-write-time-not-read-time.md)).
+
+**Derived** — `derived-from` (labelled link) and `Derived into:` (footer section at the source). The edge asserts that the artifact's substantive claims are recoverable from the source plus its declared consumer goal — nothing added. That makes the artifact a recomputable copy with the maintenance regime stated in [theory and methodology form a two-layer execution system](../notes/theory-and-methodology-form-a-two-layer-execution-system.md): checkable by re-deriving and comparing, stale-until-rechecked when the source revises, with checkability graded by the source's coherence.
+
+**Abstracted** — `abstracted-from` and `Abstracted into:`. The edge asserts that the artifact posits claims beyond the source — instances generalized into a rule, observations into a pattern. The source is evidence, not a generator: the artifact's authority is earned by later testing, not inherited from the source, and when the source changes the generalization is re-examined, not recomputed.
+
+The classifying question: could another agent reconstruct the artifact's substantive claims from the source plus stated premises? Yes → derived; no → abstracted. A mixed artifact is labelled by its dominant regime — an explicit, revisable call; the mixed case is real (see the structure note's caveat: part of a methodology is native to its own level of description and belongs to neither pure regime).
+
+Recording direction is unchanged from the retired footer: the dependency is recorded at the **source**, in a dedicated footer section below `Relevant Notes:`:
 
 ```markdown
-Distilled into:
+Derived into:
 
 - [cp-skill-write SKILL.md](../instructions/cp-skill-write/SKILL.md) — the duplicate-check rule
 ```
 
-The distilled artifact itself carries no backlinks to its sources by default. Its reader is the consumer the distillation was shaped for — not always an executor (a paper, a reference doc), but the executor case is demanding and common enough to set the default: provenance links dilute focus and add indirection cost exactly where the artifact must work unassisted. The forward pointer sits where change happens — editing a source note surfaces "these downstream artifacts may now be stale" with zero hops. The reverse query ("what informed this artifact?") is rare and runs as a search: `rg "<artifact-name>" kb/notes/`.
+The downstream artifact carries no backlinks to its sources by default. Its reader is the consumer it was shaped for — not always an executor (a paper, a reference doc), but the executor case is demanding and common enough to set the default: provenance links dilute focus and add indirection cost exactly where the artifact must work unassisted. The forward pointer sits where change happens — editing a source note surfaces "these downstream artifacts may now need attention" with zero hops: for derived artifacts, recheck or re-derive; for abstracted artifacts, re-examine whether the generalization still holds. The reverse query ("what informed this artifact?") is rare and runs as a search: `rg "<artifact-name>" kb/notes/`.
 
-Rationale: [distilled artifacts need source tracking at the source](../notes/distilled-artifacts-need-source-tracking.md).
+Rationale: [artifacts produced from sources need the lineage recorded at the source](../notes/distilled-artifacts-need-source-tracking.md).
+
+**Migration status.** `Distilled into:` is retired — write no new instances. Existing `Distilled into:` footers and pre-existing `derived-from` edges predate this boundary; they are classified into the new labels during the vocabulary-migration passes. Until reclassified, treat them as unclassified lineage — carrying neither regime's semantics.
 
 ## Limits
 
@@ -139,4 +150,6 @@ Relevant Notes:
 - [ADR 009 — link relationship semantics](./adr/009-link-relationship-semantics.md) — rationale: the original theoretical vocabulary whose core labels seed this catalogue
 - [ADR 020 — theoretical-default additions (contrasts, mechanism)](./adr/020-theoretical-default-contrasts-mechanism.md) — rationale: the audit outcomes adding `mechanism` and `contrasts` and stating directional asymmetry
 - [Links encode conditional possibilities, not obligations](../notes/links-encode-conditional-possibilities-not-obligations.md) — rationale: the reader-need theory behind the label test
+- [Theory and methodology form a two-layer execution system](../notes/theory-and-methodology-form-a-two-layer-execution-system.md) — rationale: the maintenance regime the derived side of the lineage semantics asserts
+- [Vocabulary collisions are prevented at write time, not resolved at read time](../notes/vocabulary-collisions-prevented-at-write-time-not-read-time.md) — rationale: why the derived/abstracted boundary is drawn at labelled edges rather than in prose
 - [Register](../notes/definitions/text-contract.md) — defined-in: content-mode groupings used to organise the catalogue

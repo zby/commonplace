@@ -91,6 +91,6 @@ The collection's `COLLECTION.md` authorises labels per destination and names the
 
 **Filenames** are lowercase, hyphenated, `.md`, derived from `# Title`, max 70 chars.
 
-**Distillation tracking**: when distilling from notes into a focused artifact, add `Distilled into:` in each source note's footer. The distilled artifact does not link back.
+**Lineage tracking**: when a focused artifact is produced from notes, record the dependency in each source note's footer — `Derived into:` when the artifact adds no substantive claims beyond that source (it could be re-derived from it), `Abstracted into:` when it generalizes beyond the source. Semantics: [link-vocabulary.md](../../reference/link-vocabulary.md). The produced artifact does not link back.
 
 **Renames**: never rename manually. Use `commonplace-relocate-note` to update backlinks.
