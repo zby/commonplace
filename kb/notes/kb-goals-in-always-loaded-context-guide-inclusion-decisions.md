@@ -61,3 +61,4 @@ Relevant Notes:
 - [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — grounds: goals must be always-loaded because the inclusion question arises every session
 - [generate instructions at build time](./generate-instructions-at-build-time.md) — enables: the structural sections of the fragment are generated; only goals require human input
 - [raw accumulation does not create usable memory](./raw-accumulation-does-not-create-usable-memory.md) — grounds: goals complement artifact-quality and ingress constraints but do not replace them
+- [Open-domain memory retention needs a declared output spec](./open-domain-memory-retention-needs-a-declared-output-spec.md) — exemplifies: this note's inclusion-criterion argument is the KB-authoring special case of the general claim that only a declared output spec makes "what to store" answerable in an open domain
