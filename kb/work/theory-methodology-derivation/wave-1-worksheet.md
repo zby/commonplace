@@ -9,18 +9,15 @@ Working inventory for plan Wave 1, from a close read of the held-back files and 
 
 - **`a-derived-copy…` fixed and gated** (`b35ea92c`): framing sentence split per the operator's correction — dependence and staleness machinery universal, copy identity and re-derive repair derived-only, judgment fidelity-or-support; "dependent" used as ordinary English umbrella, no coinage. Full gate battery ran: 39 pairs, 9 jobs, `claude-opus-4.8` partition — 38 pass, 1 warn (`sentence/clause-packing` on the new sentence), fixed by splitting; fix report in `kb/reports/fixes/`. Two side-findings for later: the collection-conformance pass flagged that the notes COLLECTION.md label table doesn't enumerate `kb/types/` as an `evidence` destination (table gap, not a violation); the `sentence-split` fix strategy is new, propose for the taxonomy on recurrence.
 
+- **Retitle trio executed and renamed** (`f7aac9e6`): the tradeoff note ("Constraining and extraction…"), the lineage note ("Artifacts produced from sources need lineage recorded at the source" — first carrier of the `Derived into:` footer), and "Evolving understanding needs holistic rewrite, not composition"; follow-ons `task-fitted-structure` and the note-refinement proposal reworded; renames via `commonplace-relocate-note` with corpus-wide backlink rewrites and redirects. Gate run was cut short by the session limit after 29 all-bundle pairs on the tradeoff note — 4 warns, all fixed (framing mismatch in the table, two stock phrases, footer capitalization, missing `title-as-claim` trait). The other two notes gate at the next sweep under their new paths. **Sequencing lesson: rename before gating** — baselines key on `note_path`, so a post-gate rename orphans them; for remaining rewrites, relocate first, then gate.
+
 ## Semantic rewrites (review-gated unless noted)
 
 | File | Entanglement | Treatment | Gate |
 |---|---|---|---|
-| `constraining-and-distillation-both-trade-generality-for-reliability.md` | title carries the term; foundational, heavily inbound-linked; its ln 30 states the two-layer structure avant la lettre | Retitle in place (inbound anchors already neutralized to "the generality-for-reliability tradeoff" — natural title); rewrite body plainly; the fast-path/fallback passage cites the structure note instead of restating it | yes |
-| `distilled-artifacts-need-source-tracking.md` | documents the lineage convention that link-vocabulary just changed under it | Retitle ("use-shaped artifacts need lineage recorded at the source" — the anchor link-vocabulary already uses); present the derived/abstracted pair with their different downstream implications; its own footer becomes `Derived into:` → link-vocabulary | light |
-| `evolving-understanding-needs-re-distillation-not-composition.md` | title term; "re-distillation" is the claim's own name for its operation | Retitle to its own gloss ("holistic rewrite, not composition"); rewrite-on-change rule cites the structure note (stale-until-rechecked); filename rename coordinates with Wave 3 | light |
 | `memory-management-policy-is-learnable-but-oracle-dependent.md` | the audit's collision: "selection and distillation" as a load-bearing contrasting pair in claim 1 | Reword the pair as retention judgment (what to remember) vs context-shaping (what to load); the old verb triple becomes plain verbs with links | quick, claim-1 only |
 | `kb/instructions/write-instruction.md` | two provenance stories under one word: repeated-ops→procedure (abstraction; "can't distill what you haven't done" = recurrence evidence) vs procedure derived from methodology notes | Say both correctly and briefly (instruction register): abstract the stable core from repetition with its boundary, then work the procedure out from companion methodology where it exists; companion link becomes `derived-from`-shaped | light |
-| `task-fitted-structure-costs-cross-task-reuse.md` | invokes the tradeoff note's "distillation result" as contrast | After the tradeoff retitle: cite the structure note's retained-source semantics plainly; neutral anchor | no |
 | `semantic-review-catches-content-errors…` | recounts the old three-operation framework as discovered history | Historical wording — keep the old term as quoted history; no reclassification | no |
-| `kb/reference/proposals/automated-note-refinement…` | asks whether refinement subsumes "re-distillation" | Follows the evolving-understanding retitle mechanically; proposal register tolerates lag | no |
 
 **Reclassified out of Wave 1** (nothing entangled remains; append to the staging file's second wave after the current mechanical batch completes): `minimum-viable-vocabulary…`, `information-value-is-observer-relative.md`, `legal-drafting…`. **Deferred to Wave 3**: `soft-bound-traditions…` (lists the term with definition links that break on deletion).
 
@@ -45,7 +42,6 @@ Deletion itself is the Wave 3 ADR moment (large `defined-in` backlink surface).
 | `rlm-has-the-model-write…` → same | Abstracted into: | needs read |
 | `areas-exist-because…` → COLLECTION.md rules | Derived into: | quick confirm |
 | `definitions/reach-assessment` → formal-systems split-out | Derived into: | high |
-| `distilled-artifacts-need-source-tracking` → link-vocabulary | Derived into: | high |
 | `session-history-should-not…` → chat-history-model | Abstracted into: | needs read |
 | `discovery-is-seeing…` → cp-skill-connect | Derived into: | medium |
 | `first-principles-reasoning` → review-explanatory-reach task | Derived into: | high |
