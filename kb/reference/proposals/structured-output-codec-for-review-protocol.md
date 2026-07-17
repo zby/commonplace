@@ -47,7 +47,7 @@ Adopt when a harness medium the project actually uses for reviews exposes schema
 
 Relevant Notes:
 
-- [Claude Code dynamic workflows](../../agentic-systems/claude-code-dynamic-workflows.md) — derived-from: the schema-validated `agent()` option whose generalization is this proposal's trigger
+- [Claude Code dynamic workflows](../../agentic-systems/claude-code-dynamic-workflows.md) — abstracted-from: the schema-validated `agent()` option whose generalization is this proposal's trigger
 - [029-review execution unified on (note, gate) pairs](../adr/029-review-execution-unified-on-note-gate-pairs.md) — see-also: established the single grammar and `ParsedJobOutput` boundary a second codec would plug into
 - [035-review jobs finalize all-or-nothing with derived artifacts](../adr/035-review-jobs-finalize-all-or-nothing-with-derived-artifacts.md) — see-also: current decision carrying forward the medium-pluggability seams (parent-owned dispatch, superseding [ADR 030](../adr/030-harness-facing-seams-batch-endpoints-and-runner-adapters.md) via [ADR 034](../adr/034-queued-review-jobs-and-execution-provenance.md)) codec selection would ride on
 - [gate learning from accepted edits](./gate-learning-from-accepted-edits.md) — see-also: per-gate statistics would benefit from machine-readable findings, one of the free choices here

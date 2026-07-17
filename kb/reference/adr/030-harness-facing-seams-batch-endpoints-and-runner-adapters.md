@@ -43,4 +43,4 @@ Relevant Notes:
 - [review architecture](../review-architecture.md) — part-of: the subsystem these seams expose
 - [029-review execution unified on (note, gate) pairs](./029-review-execution-unified-on-note-gate-pairs.md) — see-also: the pair protocol these endpoints surface to external executors
 - [035-review jobs finalize all-or-nothing with derived artifacts](./035-review-jobs-finalize-all-or-nothing-with-derived-artifacts.md) — supersedes-in-part: removes claim and partial salvage from the live workflow
-- [Claude Code dynamic workflows](../../agentic-systems/claude-code-dynamic-workflows.md) — derived-from: the harness orchestration model (script coordinates, agents execute, deterministic endpoints at the edges) these seams are shaped for
+- [Claude Code dynamic workflows](../../agentic-systems/claude-code-dynamic-workflows.md) — abstracted-from: the harness orchestration model (script coordinates, agents execute, deterministic endpoints at the edges) these seams are shaped for

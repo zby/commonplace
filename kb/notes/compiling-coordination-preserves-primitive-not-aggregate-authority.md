@@ -54,7 +54,7 @@ This reframes the [system-definition artifact](./system-definition-artifacts-are
 
 Relevant Notes:
 
-- [Claude Code dynamic workflows](../agentic-systems/claude-code-dynamic-workflows.md) — derived-from: the shipped sandboxed-script-over-agents system whose "the script coordinates, agents act" division is the concrete case this claim abstracts
+- [Claude Code dynamic workflows](../agentic-systems/claude-code-dynamic-workflows.md) — abstracted-from: the shipped sandboxed-script-over-agents system whose "the script coordinates, agents act" division is the concrete case this claim abstracts
 - [bounded-context orchestration model](./bounded-context-orchestration-model.md) — grounds: the choose-next-step / perform-call decomposition; the coordination being compiled is the choose-next-step logic
 - [any symbolic program with LLM calls is a select/call program](./any-symbolic-program-with-llm-calls-is-a-select-call-program.md) — grounds: formalizes why a workflow script's JavaScript control flow and local variables instantiate the same select/call shape as the prompt-driven strategy
 - [LLM frameworks should keep the tool loop optional](./llm-frameworks-should-keep-the-tool-loop-optional.md) — grounds: places Claude Code dynamic workflows in the tool-loop exposure problem, where returning `agent()` calls let an external artifact own the next-call selection policy

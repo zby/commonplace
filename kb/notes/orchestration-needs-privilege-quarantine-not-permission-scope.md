@@ -37,7 +37,7 @@ Quarantine moves the trust boundary from the tool call to the agent role, but it
 
 Relevant Notes:
 
-- [A harness for every task — dynamic workflows](../sources/a-harness-for-every-task-dynamic-workflows.md) — derived-from: the triage use case's quarantine description is the pattern's first witnessed instance
+- [A harness for every task — dynamic workflows](../sources/a-harness-for-every-task-dynamic-workflows.md) — abstracted-from: the triage use case's quarantine description is the pattern's first witnessed instance
 - [GBrain](../agentic-systems/gbrain.md) — evidence: independently reaches the same read/act privilege split, with the host agent itself classified untrusted at the API boundary
 - [Compiling a coordination strategy preserves primitive authority but expands aggregate authority](./compiling-coordination-preserves-primitive-not-aggregate-authority.md) — see-also: a related but distinct enforcement gap — per-call scoping fails to bound aggregate call volume there, and fails to track diffuse single-call provenance here
 - [The four-field record exposes an efficiency, security, and sovereignty risk triad](./the-four-field-record-exposes-an-efficiency-security-and-sovereignty.md) — extends: quarantine is one architectural answer to that record's standing security-risk question, available when the untrusted-exposed role is known in advance

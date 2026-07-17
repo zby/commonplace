@@ -35,7 +35,7 @@ This is a genuine trade-off, not a deficiency. The repo-as-learning-substrate ap
 Relevant Notes:
 
 - [@neural_avb: Recursive Language Models — what finally gave me the 'aha' moment](https://x.com/neural_avb/status/2035040781074145412) — grounds: concrete practitioner walkthrough of the REPL mechanism, symbolic variable return, and scaffold-level truncation that this note abstracts ([ingest](https://x.com/neural_avb/status/2035040781074145412))
-- Distilled into: [RLM, Tendril, and llm-do place symbolic work at different persistence boundaries](./rlm-tendril-and-llm-do-place-symbolic-work-at-different-persistence.md)
+- Abstracted into: [RLM, Tendril, and llm-do place symbolic work at different persistence boundaries](./rlm-tendril-and-llm-do-place-symbolic-work-at-different-persistence.md)
 - [Bounded-context orchestration model](./bounded-context-orchestration-model.md) — foundation: the select/call loop with explicit state update that RLM's code expresses
 - [LLM-mediated schedulers are a degraded variant of the clean model](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) — contrast: what happens when the LLM is the scheduler instead of writing it
 - [Ephemeral computation prevents accumulation](./ephemeral-computation-prevents-accumulation.md) — explains: why RLM's scheduler code is discarded and what that costs

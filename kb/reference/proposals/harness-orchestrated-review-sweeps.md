@@ -49,6 +49,6 @@ Adopt as framework methodology when a second harness ships a comparable scriptab
 
 Relevant Notes:
 
-- [Claude Code dynamic workflows](../../agentic-systems/claude-code-dynamic-workflows.md) — derived-from: the single shipped instance of the orchestration surface this design targets
+- [Claude Code dynamic workflows](../../agentic-systems/claude-code-dynamic-workflows.md) — abstracted-from: the single shipped instance of the orchestration surface this design targets
 - [030-harness-facing seams: batch endpoints and runner adapters](../adr/030-harness-facing-seams-batch-endpoints-and-runner-adapters.md) — see-also: the shipped endpoints this design composes; the experiment validating them
 - [structured-output codec for the review protocol](./structured-output-codec-for-review-protocol.md) — see-also: the output-encoding decision this medium puts on the table

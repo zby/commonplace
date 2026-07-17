@@ -27,6 +27,6 @@ This is a claim about the **wire protocol** for batched call/response exchanges 
 
 Relevant Notes:
 
-- [029 - Review execution unified on (note, gate) pairs](../reference/adr/029-review-execution-unified-on-note-gate-pairs.md) — derived-from: the review-execution decision this note generalizes from, where a `note_path :: gate_id` key let note-packed and gate-packed jobs share one grammar, renderer, and parser
+- [029 - Review execution unified on (note, gate) pairs](../reference/adr/029-review-execution-unified-on-note-gate-pairs.md) — abstracted-from: the review-execution decision this note generalizes from, where a `note_path :: gate_id` key let note-packed and gate-packed jobs share one grammar, renderer, and parser
 - [Decomposition heuristics for bounded-context scheduling](./decomposition-heuristics-for-bounded-context-scheduling.md) — see-also: adjacent heuristics for what a scheduler exposes to a bounded call; this note is about the wire format for the response, not the content-selection choice
 - [Agent orchestration occupies a multi-dimensional design space](./agent-orchestration-occupies-a-multi-dimensional-design-space.md) — see-also: the same "don't collapse independent axes into one taxonomy" move, applied to a batch protocol's grouping strategy instead of orchestration architecture

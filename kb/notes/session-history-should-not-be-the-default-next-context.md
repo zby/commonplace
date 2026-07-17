@@ -85,6 +85,6 @@ Relevant Notes:
 - [Spacebot](../agent-memory-systems/reviews/spacebot.md) — exemplifies: branches return scrubbed conclusions rather than full reasoning traces
 - [Ingest: Slate: Moving Beyond ReAct and RLM](https://randomlabs.ai/blog/slate) — exemplifies: episodes are compressed return artifacts, not tactical transcripts
 
-Distilled into:
+Abstracted into:
 
 - [the chat-history model trades context efficiency for implementation simplicity](./the-chat-history-model-trades-context-efficiency-for-implementation.md) — higher-level architectural tradeoff extracted from this mechanism-level note

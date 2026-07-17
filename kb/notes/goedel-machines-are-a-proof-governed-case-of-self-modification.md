@@ -56,4 +56,4 @@ Relevant Notes:
 - [Reach assessment](./definitions/reach-assessment.md) — exemplifies: the proof-gated acceptance rule is the worked proof-route case for a symbolic self-rewrite utility claim
 - [Formal symbolic systems assess reach only through causal and proof obligations](./formal-systems-can-assess-reach-through-causal-and-proof-obligations.md) — exemplifies: supplies the conditional placement of Gödel machines in symbolic reach assessment
 - [A methodology governs its own extension only as far as it settles the meta-decisions it raises](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md) — extends: gated goal change demonstrates that an acceptance rule can govern rewrites of itself, while exposing the price
-- [Schmidhuber, Gödel Machines](../sources/goedel-machines-schmidhuber.ingest.md) — derived-from: the primary paper, its theorems, and its stated limitations
+- [Schmidhuber, Gödel Machines](../sources/goedel-machines-schmidhuber.ingest.md) — abstracted-from: the primary paper, its theorems, and its stated limitations

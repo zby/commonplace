@@ -98,7 +98,7 @@ This note is not the main comparison between the survey and the memory-requireme
 
 Relevant Notes:
 
-- [Adaptation of Agentic AI ingest](../../sources/adaptation-of-agentic-ai-survey-post-training-memory-skills.ingest.md) - derived-from: source taxonomy whose signal/locus frame this note translates into retained-artifact decisions
+- [Adaptation of Agentic AI ingest](../../sources/adaptation-of-agentic-ai-survey-post-training-memory-skills.ingest.md) - abstracted-from: source taxonomy whose signal/locus frame this note translates into retained-artifact decisions
 - [Axes of artifact analysis](../axes-of-artifact-analysis.md) - grounds: supplies the storage substrate, representational form, lineage, and behavioral-authority fields that decide what the retained learning surface is
 - [Where It Lives Is Not What It Is ingest](../../sources/where-it-lives-architectural-vocabulary-retained-adaptation.ingest.md) - see-also: external-facing statement of the same artifact-analysis vocabulary; cited for framing, not independent corroboration
 - [The adaptation survey corroborates memory requirements but misses artifact governance](../agent-memory-requirements/adaptation-survey-corroborates-memory-requirements.md) - contrasts: covers the memory-requirements comparison; this note covers operational signal-to-artifact translation
