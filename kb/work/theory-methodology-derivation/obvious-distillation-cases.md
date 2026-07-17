@@ -35,7 +35,7 @@ Small linked surface to update with this cluster:
 
 - `agent-memory-README.md` - its "verification, distillation, and consultation" summary should follow the renamed trace ladder.
 
-Residues found while checking the applied wave (2026-07-17): sweeps grep `distill` and miss the single-l spelling — `a-citation-cannot-assert-more-fidelity-than-its-capture-preserved.md` had "verify, distil, consult" (fixed to "verify, abstract, consult" with the ladder rename); `claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md:30` still says AWM "distils successful traces into workflow prose" — trace→rule AMP usage, add to the Wave 1/2 list and use `distil` (single-l) in future sweep patterns.
+Residues found while checking the applied wave (2026-07-17): sweeps grep `distill` and miss the single-l spelling — `a-citation-cannot-assert-more-fidelity-than-its-capture-preserved.md` had "verify, distil, consult" (fixed with the ladder rename); the surviving case is integrated as a straggler row in the second-wave scope below. Future sweeps use the single-l `distil` pattern.
 
 ## Second semantic wave: obvious derivation / selection
 
@@ -94,10 +94,30 @@ These notes have `distill*` uses that are semantically important or mixed enough
 - `semantic-review-catches-content-errors-that-structural-validation.md` - discusses the old three-operation framework as a discovered error; may need historical wording rather than replacement.
 - `../reference/proposals/automated-note-refinement-as-search-over-source-bundle.md` - explicitly asks whether automated refinement subsumes re-distillation; hold until the `evolving-understanding` note and source-bundle proposal can share the new vocabulary.
 
-## Proposed execution order
+## Execution order (current)
 
-1. ~~Apply the first semantic wave: the obvious discovery / abstraction cluster.~~ **Done** — commit `80f47b41`; residues noted above.
-2. Promote the Wave 0 receiving surfaces: the two-layer structure note, the link-label semantics in `link-vocabulary.md`, and the discovery-lifecycle amendment (no definition notes — no-successor-term direction).
-3. Apply the second semantic wave: plain-language rewording per the note above.
-4. Revisit the deliberately-not-first-wave notes with the receiving surfaces available.
-5. Only then do META, tags, filenames, and `Distilled into:` infrastructure.
+1. ~~Apply the first semantic wave: the obvious discovery / abstraction cluster.~~ **Done** — commit `80f47b41`; residues integrated as stragglers below.
+2. ~~Promote the Wave 0 receiving surfaces.~~ **Done** — structure note `7e9a63c8`, label semantics `0dc7fb4c`, discovery lifecycle `7ac83249`; Wave 0 is complete.
+3. **Apply the second semantic wave** (plan Wave 2's obvious library subset) under the execution contract below. Decided: this runs independently of plan Wave 1 — it depended only on Wave 0.
+4. The deliberately-not-first-wave notes are plan Wave 1: entangled, review-gated, not batch work — out of scope for this file's executor.
+5. META, tags, filenames, and `Distilled into:` footers are plan Wave 3 / Wave 1 classification — untouched here.
+
+## Execution contract for the second wave
+
+**Authority**: [migration-plan.md](./migration-plan.md) is canonical; this file is the staging inventory for its Wave 2 obvious library subset. On any conflict, the plan wins.
+
+**Scope**: exactly the rows of the second-wave table plus the stragglers list. Do not touch the deliberately-not-first-wave notes, tag fields, filenames, `Distilled into:` footers, or any file in the META list.
+
+**Rewording rule**: plain English — there is no successor technical term. Where a passage genuinely claims the strong semantics (the artifact is recomputable from a retained source; stale when the source changes), cite `kb/notes/theory-and-methodology-form-a-two-layer-execution-system.md` or use the `derived-from` / `Derived into:` labels per `kb/reference/link-vocabulary.md`. Where the passage just describes use-shaping, ordinary words (reshape, work out, compile, condense, extract) suffice. "Derive/derived" in ordinary English is fine and claims nothing.
+
+**Judgment latitude**: rows hedged with "likely / unless / where needed" get the classifying question from the link grammar — could another agent reconstruct the passage's substantive claims from the stated source? If a row turns out mixed or non-obvious in situ, **skip it and log it** under the deliberately-not-first-wave list with one line of reasoning; never force a classification to finish a batch.
+
+**Procedure**: work in batches of a few notes; run `commonplace-validate notes` (plus `reference` for the two reference-collection rows) after each batch; commit each batch separately, staging explicit paths (never `git add -A`). No renames in this wave.
+
+**Completion sweep**: after the last batch, `rg -in 'distil' <touched files>` must show only link paths to not-yet-renamed files (behind neutral anchor text). Sweep with the single-l pattern — `distill` misses British spellings, which is how the stragglers below survived the first wave.
+
+## Stragglers (found post-first-wave; execute with the second wave)
+
+| Note | Current usage | Replacement direction |
+|---|---|---|
+| `claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md:30` | AWM "distils successful traces into workflow prose" (single-l) | Plain rewording of the external system's operation ("turns successful traces into workflow prose" / "extracts workflows from successful traces") — description of an ampliative loop, no strong claim to carry |
