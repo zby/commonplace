@@ -30,6 +30,15 @@ The sweep's fix pass generalized away the concrete corpus check from the clausal
 - **AGENTS.md vocabulary**: remove the Distillation entry; `discovery lifecycle` already has its definition note — check whether it gets a vocabulary line (net 0) or not (net −1).
 - **ADR**: draft in this workshop (next step), promote once Wave 1 fixes are committed.
 
-## 4. Carried from closed threads
+## 4. Reframe the insight note as the conjecture phase (operator direction 2026-07-17)
+
+`discovery-is-seeing-the-particular-as-an-instance-of-the-general.md` should be just the abduction part — its content (dual structure, three depths, recognition cost, examples) is conjecture-phase material, not a characterization of discovery as a whole, and its current title binds bare "discovery" to the insight act, which the lifecycle definition forbids.
+
+- **Retitle**: "Conjecture is seeing the particular as an instance of the general"; rename via `commonplace-relocate-note` (~31 inbound links incl. `kb/index.md`, `discovery-README.md`, `learning-theory-README.md`, nine source ingests). Rename before gating.
+- **Body**: reframe opening around the conjecture phase of the [discovery lifecycle](../../notes/definitions/discovery-lifecycle.md); the three-depths table is the conjecture's internal grading (aligns with the polation table: shared structure ≈ extrapolation, generative model ≈ hyperpolation); Fleming becomes the clean lifecycle case (conjecture opens, test/acceptance stabilizes) instead of a "boundary of the claim". Widens the claim to routine conjecture (failures→gate) at shallow depth — deliberate.
+- **Lifecycle note** (in-sweep, so blocked): rewrite its "degenerate case" section — instant insight = a conjecture whose evidence is pre-accumulated so the test collapses, not a telescoped whole lifecycle; repoint its Relevant Notes link to the retitled note as the conjecture-phase description.
+- The note's legacy `Distilled into:` footer (cp-skill-connect) is one of the pending footer classifications — classify during the same edit.
+
+## 5. Carried from closed threads
 
 - Polation thread open questions, dropped unless someone picks them up: (a) polation distance as a review-time gate signal ("are this note's claims entailed / extrapolated / off-manifold relative to its cited sources?") — would make the dominance bet checkable; (b) Ord's flexible-vs-strict polation as a frame for quote-fidelity vs gloss in source handling.
