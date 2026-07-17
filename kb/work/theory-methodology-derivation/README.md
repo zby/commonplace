@@ -10,7 +10,7 @@ Started 2026-07-17 from a conversation that began as a terminology check: an ext
 
 ## Status (2026-07-17)
 
-The audit is done, the direction is decided (retire the term, no successor), and the first semantic wave — the obvious discovery/abstraction cluster, the original mistake — is applied and committed; see the [execution status](./migration-plan.md#execution-status-2026-07-17). The scope/collision reflection this workshop triggered has been promoted to the library as `kb/notes/vocabulary-collisions-prevented-at-write-time-not-read-time.md`. The open front is Wave 0's receiving surfaces: the two-layer structure note, the `Derived from:` label semantics, and the discovery-lifecycle amendment.
+The audit is done, the direction is decided (retire the term, no successor), and the first semantic wave — the obvious discovery/abstraction cluster, the original mistake — is applied and committed; see the [execution status](./migration-plan.md#execution-status-2026-07-17). The scope/collision reflection this workshop triggered has been promoted to the library as `kb/notes/vocabulary-collisions-prevented-at-write-time-not-read-time.md`. The two-layer structure note is promoted (`kb/notes/theory-and-methodology-form-a-two-layer-execution-system.md`, all ten hard-case rows classifying cleanly against it). The open front is the rest of Wave 0's receiving surfaces: the `Derived from:` label semantics and the discovery-lifecycle amendment.
 
 ## Threads
 
