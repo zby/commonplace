@@ -17,9 +17,12 @@ MODEL_PARTITION_REGISTRY = {
         "claude-fable-5",
     ),
     "claude-sonnet": (
-        "sonnet",
         "claude-sonnet-4-6",
         "claude-sonnet-4-20250514",
+    ),
+    "claude-sonnet-5": (
+        "sonnet",
+        "claude-sonnet-5",
     ),
     "codex": (
         "gpt-5",

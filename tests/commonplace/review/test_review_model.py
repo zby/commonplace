@@ -10,7 +10,9 @@ def test_normalize_model_partition_collapses_registered_aliases() -> None:
     assert normalize_model_partition("claude-opus-4.8") == "claude-opus-4.8"
     assert normalize_model_partition("claude-opus-4.8[1m]") == "claude-opus-4.8"
     assert normalize_model_partition("claude-fable-5") == "claude-opus-4.8"
-    assert normalize_model_partition("sonnet") == "claude-sonnet"
+    assert normalize_model_partition("sonnet") == "claude-sonnet-5"
+    assert normalize_model_partition("claude-sonnet-5") == "claude-sonnet-5"
+    assert normalize_model_partition("claude-sonnet-4-6") == "claude-sonnet"
     assert normalize_model_partition("gpt-5.4-high") == "codex"
     assert normalize_model_partition("gpt-5.5-high") == "codex-5.5"
 
