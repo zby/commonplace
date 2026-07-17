@@ -57,7 +57,7 @@ Relevant Notes:
 - [SuperARC AIT benchmark](../sources/superarc-ait-benchmark-llm-compression-abstraction.ingest.md) — evidence: integer-vs-binary sequence performance is suggestive for cue sensitivity and algorithmic-compression reach, but not load-bearing here
 - [First principles are inherited constraints, not design choices](./first-principles-are-inherited-constraints-not-design-choices.md) — contrasts: defines which constraints count as first principles; this note explains what first-principles filtering is for
 
-Distilled into:
+Derived into:
 
-- [review-explanatory-reach](../tasks/recurring/review-explanatory-reach.md) — the four-part negative test (vary / reach / criticize / fit)
-- [COLLECTION.md](./COLLECTION.md) — the "Tests for reach" block in the register section
+- [review-explanatory-reach](../tasks/recurring/review-explanatory-reach.md) — the four-part negative test restated as a recurring review procedure
+- [COLLECTION.md](./COLLECTION.md) — the four-part negative test condensed into the "Tests for reach" authoring block

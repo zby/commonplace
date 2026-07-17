@@ -22,6 +22,6 @@ Relevant Notes:
 - [Discovery is seeing the particular as an instance of the general](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) — exemplifies: its maturation path is a list of claims extracted for individual challenge
 - [Mechanistic constraints make Popperian KB recommendations actionable](./mechanistic-constraints-make-popperian-kb-recommendations-actionable.md) — grounds: the Popperian framing that recommendations must be falsifiable to be useful
 
-Distilled into:
+Derived into:
 
-- [COLLECTION.md](./COLLECTION.md) — the title-as-claim checklist item operationalizes this principle
+- [COLLECTION.md](./COLLECTION.md) — the claim-title principle restated as an authoring checklist

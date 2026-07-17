@@ -65,7 +65,7 @@ Relevant Notes:
 - [Reflection buys addressability](../reflection-buys-addressability.md) — extends: addressability makes a bad change findable; reach assessment is what would make finding it as bad reliable
 - [Reflection makes retained lessons second-order: a lesson can reject or rescope a prior commitment](../reflection-makes-retained-lessons-second-order.md) — extends: rejection and rescoping are structural operations reflection enables; reach assessment is what would make exercising them reliable
 
-Distilled into:
+Derived into:
 
-- [Formal symbolic systems assess reach only through causal and proof obligations](../formal-systems-can-assess-reach-through-causal-and-proof-obligations.md) — the symbolic causal/proof route split out from this definition
-- [World models assess reach through action-conditioned prediction](../world-models-assess-reach-through-action-conditioned-prediction.md) — the distributed-parametric world-model route split out from this definition
+- [Formal symbolic systems assess reach only through causal and proof obligations](../formal-systems-can-assess-reach-through-causal-and-proof-obligations.md) — the causal and proof routes worked out from this definition's representational-form split
+- [World models assess reach through action-conditioned prediction](../world-models-assess-reach-through-action-conditioned-prediction.md) — the distributed-parametric route worked out from this definition's representational-form split

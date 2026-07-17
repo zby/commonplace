@@ -98,6 +98,8 @@ These notes have `distill*` uses that are semantically important or mixed enough
 - `charting-the-knowledge-access-problem-beyond-rag.md` - skipped in the second semantic wave: its navigation pointers are precomputed views, but the same vocabulary also covers contradiction-resolving synthesized narratives that can add substantive claims.
 - `epiplexity-by-example-what-entropy-and-complexity-miss.md` - skipped in the second semantic wave: its value claim combines rearrangement, compression, and observer-relative accessibility without fixing which transformation controls the resulting artifact.
 - `reverse-compression-is-when-llm-output-expands-without-adding.md` - skipped in the second semantic wave: its productive-inverse contrast inherits the old term's broad scope and does not choose between selection, source-derived reshaping, and structure-preserving compression.
+- `areas-exist-because-useful-operations-require-reading-notes-together.md` - skipped in the fourth batch: current `COLLECTION.md` no longer contains the area assignment, split-threshold, or `areas:` rules named by the legacy footer.
+- `discovery-is-seeing-the-particular-as-an-instance-of-the-general.md` - skipped in the fourth batch: current `cp-skill-connect` no longer contains the Phase 5 abstraction-opportunity logging attributed by the legacy footer.
 
 ## Execution order (current)
 
