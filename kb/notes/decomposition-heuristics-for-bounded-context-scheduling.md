@@ -88,7 +88,7 @@ Sources:
 Relevant Notes:
 
 - [context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — cost model: context is the scarce resource these rules optimise over
-- [distillation](./definitions/distillation.md) (directed context compression) — mechanism: saved intermediate items are often distillations shaped for later reuse
+- [theory and methodology form a two-layer execution system](./theory-and-methodology-form-a-two-layer-execution-system.md) — mechanism: saved intermediate items are often task-facing views worked out from fuller state for later reuse
 - [solve low-degree-of-freedom subproblems first to avoid blocking better designs](./solve-low-degree-of-freedom-subproblems-first-to-avoid-blocking.md) — extends: general ordering heuristic that explains why constraint-setting should happen before flexible synthesis choices
 - [topology, isolation, and verification form a causal chain for reliable agent scaling](./topology-isolation-and-verification-form-a-causal-chain-for-reliable.md) — extends: "exploit clean frames recursively" implements the topology → isolation step of a proposed causal chain
 - [the boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — frames: verification cost is a separate constraint from context fit, especially when decomposed work is delegated or automated

@@ -17,7 +17,7 @@ The framework-design consequence of this diagnosis is developed in [tool loop](.
 
 Three responses restore the separation to increasing degrees:
 
-1. **Compaction.** Keep summaries and conclusions rather than raw results in the conversation, applying [distillation](./definitions/distillation.md) to the scheduler's own state. This reduces degradation but does not eliminate it.
+1. **Compaction.** Keep summaries and conclusions rather than raw results in the conversation, condensing the scheduler's own state around what later steps need. This reduces degradation but does not eliminate it.
 
 2. **Externalisation.** Write intermediate state to files and re-read selectively. This moves scheduler state out of the conversation and into exact symbolic state outside the LLM context — partially recovering the clean model.
 
@@ -32,6 +32,6 @@ Each recovery moves the system closer to the clean model — bookkeeping, recurs
 Relevant Notes:
 
 - [symbolic scheduling over bounded LLM calls is the right model for agent orchestration](./bounded-context-orchestration-model.md) — foundation: the clean model that LLM-mediated scheduling degrades from
-- [distillation](./definitions/distillation.md) — mechanism: compaction is distillation applied to the scheduler's own conversation state
+- [session history should not be the default next context](./session-history-should-not-be-the-default-next-context.md) — mechanism: compaction reshapes conversation state into a handoff artifact for the next stage
 - [context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — cost model: the degradation is a context-efficiency problem within the scheduler itself
 - [The Anatomy of an Agent Harness (Vtrivedy10, 2026)](https://x.com/Vtrivedy10/status/2031408954517971368) — exemplifies: the Ralph Loop pattern combines externalisation and compaction to sustain long-horizon agent work across multiple clean context windows

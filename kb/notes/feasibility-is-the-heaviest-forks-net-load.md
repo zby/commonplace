@@ -20,7 +20,7 @@ A fork's *load* is more than its token count. It is how heavily the window taxes
 
 ## A fork's net load is what decomposition leaves on it
 
-Splitting an operation across sibling forks is only one direction of decomposition. A parent can also absorb part of a fork's work and hand down a leaner task. [Frontloading](./frontloading-spares-execution-context.md) is exactly this move: the parent — or an earlier build- or install-time step — performs the derivation and gives the fork the result, so the fork receives an answer instead of the procedure for reaching it. [Distillation](./definitions/distillation.md) pushes the sifting of raw material up the same way; [navigation by description](./agents-navigate-by-deciding-what-to-read-next.md) lets a fork shed an irrelevant body before it competes with the task.
+Splitting an operation across sibling forks is only one direction of decomposition. A parent can also absorb part of a fork's work and hand down a leaner task. [Frontloading](./frontloading-spares-execution-context.md) is exactly this move: the parent — or an earlier build- or install-time step — performs the derivation and gives the fork the result, so the fork receives an answer instead of the procedure for reaching it. Preselecting and condensing raw material around the fork's task pushes the same work upward; [navigation by description](./agents-navigate-by-deciding-what-to-read-next.md) lets a fork shed an irrelevant body before it competes with the task.
 
 What is left on the fork is its *net* load — the residual after work has been pushed off it, across to siblings or up to the parent. Measure that residual by what the fork *realizes*, not by the size of the instruction. A pointer — "read file X, derive Y" — is short, yet executing it eventually drags all of file X and the derivation into the window; frontloading hands over the result instead, so the fork loads neither the sources nor the steps. The saving falls largely on the complexity dimension.
 
@@ -35,5 +35,5 @@ Relevant Notes:
 - [LLM context is composed without scoping](./llm-context-is-composed-without-scoping.md) — grounds: sub-agent forks are the independent scoped frames that make the ceiling per-agent
 - [frontloading spares execution context](./frontloading-spares-execution-context.md) — mechanism: a sparing lever that lowers a fork's net load
 - [agents navigate by deciding what to read next](./agents-navigate-by-deciding-what-to-read-next.md) — mechanism: sparing by declining to load a body
-- [distillation](./definitions/distillation.md) — mechanism: sparing by use-shaped compression
+- [session history should not be the default next context](./session-history-should-not-be-the-default-next-context.md) — mechanism: sparing by shaping a handoff for its next consumer
 - [symbolic scheduling over bounded LLM calls](./bounded-context-orchestration-model.md) — extends: decomposition into bounded forks is the orchestration model this feasibility claim operates within

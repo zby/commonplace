@@ -94,7 +94,7 @@ Relevant Notes:
 - [decomposition heuristics for bounded-context scheduling](./decomposition-heuristics-for-bounded-context-scheduling.md) — consequence: practical heuristics that follow from the model
 - [LLM-mediated schedulers are a degraded variant of the clean model](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) — consequence: what happens when the scheduler is itself bounded
 - [tool loop](./tool-loop-README.md) — consequence: extracts the main architectural implication of the model for real implementations
-- [distillation](./definitions/distillation.md) — mechanism: compaction of K is distillation targeting the orchestrator's context budget
+- [theory and methodology form a two-layer execution system](./theory-and-methodology-form-a-two-layer-execution-system.md) — mechanism: a compact task-facing view of `K` is worked out for the orchestrator's bounded context while fuller state remains available
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — complicates: the goal, the halt/continue decision, and the sub-agent's interpretation are all underspecified
 - [a functioning KB needs a workshop layer](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — context: the loop's externalisation response is the workshop pattern
 - [agent runtimes decompose into scheduler context engine and execution substrate](./agent-runtimes-decompose-into-scheduler-context-engine-and-execution.md) — component view: names the scheduler as one part of a larger runtime decomposition
