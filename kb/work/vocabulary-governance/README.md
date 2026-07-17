@@ -14,6 +14,8 @@ Part of the workshop has landed:
 
 The unresolved part is collection and type scope: how a KB should declare collection-local vocabulary, type-specific terminology, imports, collisions, and validation expectations without hardcoding this repo's terms into framework skills.
 
+A constraint on that design arrived from the distillation migration and is now a library note: [vocabulary collisions are prevented at write time, not resolved at read time](../../notes/vocabulary-collisions-prevented-at-write-time-not-read-time.md) (promoted 2026-07-17 from this workshop's [prose-has-no-scope.md](./prose-has-no-scope.md), which retains the evidence pointers and open policy items). Prose offers no read-time scoping and context assembly is concatenation without a linker, so two senses of one term merge silently whenever notes co-load — and the sub-agent isolation remedy cannot apply to library artifacts that exist to be co-loaded. Consequence for the candidate model: imports, qualified names, and shadowing have no prose implementation; collision *handling* must mean collision *prevention* — a one-term-one-sense invariant across all vocabulary sources that can co-load, with multi-word coinages as the collision-free naming path.
+
 ## Question
 
 How should commonplace support both a shared baseline vocabulary and user- or collection-specific vocabularies without hardcoding this repo's terms into the shipped write machinery?

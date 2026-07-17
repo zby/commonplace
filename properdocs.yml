@@ -74,6 +74,7 @@ plugins:
         'notes/traversal-improves-the-graph.md': 'notes/traversal-improvements-should-be-deferred-via-logging-to-avoid-mid-task-context-switching.md'
         'notes/type-system-index.md': 'notes/type-system-README.md'
         'notes/underspecification-and-indeterminism-make-programming-practices-harder-in-distinct-ways-when-applied-to-prompting.md': 'notes/underspecification-and-indeterminism-complicate-programming-for-prompts-in-distinct-ways.md'
+        'notes/vocabulary-collisions-are-prevented-at-write-time-not-resolved-at-read-time.md': 'notes/vocabulary-collisions-prevented-at-write-time-not-read-time.md'
         'reference/proposals/anchored-validation-checks-with-declared-dependencies.md': 'reference/adr/050-validation-runs-share-parsed-artifacts-and-collection-indexes.md'
         'reference/proposals/artifact-anchored-validation-over-a-run-scoped-context.md': 'reference/adr/050-validation-runs-share-parsed-artifacts-and-collection-indexes.md'
         'reference/proposals/one-validation-algorithm-over-declared-scopes.md': 'reference/adr/050-validation-runs-share-parsed-artifacts-and-collection-indexes.md'
