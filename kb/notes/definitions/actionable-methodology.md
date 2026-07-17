@@ -48,7 +48,7 @@ Actionability implies neither that the methodology is correct nor that an interv
 
 Relevant Notes:
 
-- [Vocabulary collisions are prevented at write time, not resolved at read time](../vocabulary-collisions-prevented-at-write-time-not-read-time.md) — grounds: this definition is the worked case for clausal binding, the scoping device admitted here only because every technical occurrence links back to this note
+- [Collisions among load-bearing technical senses should be prevented or visibly scoped at write time](../vocabulary-collisions-prevented-at-write-time-not-read-time.md) — grounds: this definition is the worked case for clausal binding, the scoping device admitted here only because every technical occurrence links back to this note
 - [Reflective system](./reflective-system.md) — extends: actionability concerns a methodology–operator–target relation; reflection adds a causally connected representation of the system itself
 - [A methodology governs its own extension only as far as it settles the meta-decisions it raises](../a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md) — extends: asks how far a methodology's own prescriptions stay governed when the system applies them to itself
 - [Gregor, Design Theory in Information Systems](../../sources/design-theory-in-information-systems-gregor-2002.ingest.md) — derived-from: establishes theory for design and action as articulated, prescriptive guidance for a class of artifacts or processes

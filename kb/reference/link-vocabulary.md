@@ -125,7 +125,7 @@ Derived into:
 
 The downstream artifact carries no backlinks to its sources by default. Its reader is the consumer it was shaped for — not always an executor (a paper, a reference doc), but the executor case is demanding and common enough to set the default: provenance links dilute focus and add indirection cost exactly where the artifact must work unassisted. The forward pointer sits where change happens — editing a source note surfaces "these downstream artifacts may now need attention" with zero hops: for derived artifacts, recheck or re-derive; for abstracted artifacts, re-examine whether the generalization still holds. The reverse query ("what informed this artifact?") is rare and runs as a search: `rg "<artifact-name>" kb/notes/`.
 
-Rationale: [artifacts produced from sources need the lineage recorded at the source](../notes/artifacts-produced-from-sources-need-lineage-recorded-at-the-source.md).
+Rationale: [source changes should surface downstream review targets, while reverse lineage can remain searchable](../notes/artifacts-produced-from-sources-need-lineage-recorded-at-the-source.md).
 
 **Migration status.** `Distilled into:` is retired — write no new instances. Existing `Distilled into:` footers and pre-existing `derived-from` edges predate this boundary; they are classified into the new labels during the vocabulary-migration passes. Until reclassified, treat them as unclassified lineage — carrying neither regime's semantics.
 
@@ -151,5 +151,5 @@ Relevant Notes:
 - [ADR 020 — theoretical-default additions (contrasts, mechanism)](./adr/020-theoretical-default-contrasts-mechanism.md) — rationale: the audit outcomes adding `mechanism` and `contrasts` and stating directional asymmetry
 - [Links encode conditional possibilities, not obligations](../notes/links-encode-conditional-possibilities-not-obligations.md) — rationale: the reader-need theory behind the label test
 - [Theory and methodology form a two-layer execution system](../notes/theory-and-methodology-form-a-two-layer-execution-system.md) — rationale: the maintenance regime the derived side of the lineage semantics asserts
-- [Vocabulary collisions are prevented at write time, not resolved at read time](../notes/vocabulary-collisions-prevented-at-write-time-not-read-time.md) — rationale: why the derived/abstracted boundary is drawn at labelled edges rather than in prose
+- [Collisions among load-bearing technical senses should be prevented or visibly scoped at write time](../notes/vocabulary-collisions-prevented-at-write-time-not-read-time.md) — rationale: why the derived/abstracted boundary is drawn at labelled edges rather than in prose
 - [Register](../notes/definitions/text-contract.md) — defined-in: content-mode groupings used to organise the catalogue

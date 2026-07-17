@@ -36,7 +36,7 @@ Our link semantics (extends, grounds, contradicts, exemplifies) are lighter than
 
 - [inbound-and-outbound-links-serve-asymmetric-reader-needs](./inbound-and-outbound-links-serve-asymmetric-reader-needs.md) — outbound shows what a note rests on, inbound what rests on it: four read-time orientation needs, computed not authored; the surfacing design space is [backlink-surfacing](../reference/proposals/backlink-surfacing.md)
 - [link-strength-is-encoded-in-position-and-prose](./link-strength-is-encoded-in-position-and-prose.md) — inline premise links carry more weight than footer links; position and prose encode commitment level, creating a weighted graph
-- [distilled-artifacts-need-source-tracking-at-the-source](./artifacts-produced-from-sources-need-lineage-recorded-at-the-source.md) — distilled artifacts shouldn't link back to sources (focus), but sources should link forward via "Distilled into:" so source changes trigger staleness review
+- [source changes should surface downstream review targets, while reverse lineage can remain searchable](./artifacts-produced-from-sources-need-lineage-recorded-at-the-source.md) — when an upstream change is recognized, a forward lineage view should surface dependent artifacts for review; the record itself need not live at the source
 
 ## Decisions
 

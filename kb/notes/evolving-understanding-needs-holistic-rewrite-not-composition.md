@@ -1,60 +1,63 @@
 ---
-description: When understanding evolves, reconciling fragments into a coherent picture can exceed effective context; a pre-reconciled narrative, rewritten holistically on change, keeps the whole picture within feasible bounds
+description: Holistic rewrite shifts reconciliation from each consumer to the author, but only when the whole-picture narrative can fit within effective context and be refreshed before the narrative goes stale
 type: kb/types/note.md
 traits: [has-external-sources, title-as-claim]
 tags: [learning-theory, context-engineering, distillation]
 ---
 
-# Evolving understanding needs holistic rewrite, not composition
+# A compact, refreshable whole-picture narrative can replace infeasible fragment reconciliation
 
-A note graph distributes knowledge across composable fragments — each note makes one claim, links provide traversal. This works for durable knowledge: the consumer picks what to load, coherence is local to each note.
+A note graph distributes knowledge across composable fragments: each note makes one claim, and links provide traversal. This works when a consumer can select a relevant slice or reconcile the needed fragments within the context available for its task. A different delivery form becomes useful when the consumer needs a coherent whole and fragment reconciliation would consume more effective context than the task can spare.
 
-When understanding is evolving and a consumer needs the whole picture — current beliefs, tried approaches, ongoing strategy — fragment reconciliation may not be feasible. Loading many notes, identifying which are current, and assembling a coherent view competes for [context budget](./context-efficiency-is-the-central-design-concern-in-agent-systems.md). The cost falls on two dimensions: volume (loading N fragments) and complexity (discriminating current from stale, resolving tensions). As fragment count grows, reconciliation can exceed effective context — making the operation infeasible, not merely expensive.
+Rapid change can produce this case because revisions add currency decisions (decisions about which fragments or claims remain current), but evolution is not necessary. A stable, highly interdependent set can impose similar loading and coherence work. The claim here is qualitative: more relevant material, unresolved currency, or interdependence can make consumer-side reconciliation infeasible within a bounded [context budget](./context-efficiency-is-the-central-design-concern-in-agent-systems.md).
 
-A pre-reconciled narrative sidesteps this. The author — human or agent — performs reconciliation once and produces a single document sized for effective context: accumulated understanding is the source, the consumer needing the current picture is the target, and the narrative is the use-shaped artifact. When understanding changes, you rewrite holistically rather than let fragments diverge until reconciliation breaks — the narrative is a dependent artifact of the understanding it summarizes, stale until reworked when that understanding moves ([theory and methodology form a two-layer execution system](./theory-and-methodology-form-a-two-layer-execution-system.md) states the maintenance regime).
+If the current picture can be faithfully compressed into one document and refreshed at the required cadence, a pre-reconciled narrative moves that work to its author. The author rewrites the narrative as a coherent whole when understanding changes instead of letting fragments diverge. The narrative is a dependent artifact of the understanding it summarizes. When that understanding changes, the narrative becomes stale and remains so until it is reworked; [theory and methodology form a two-layer execution system](./theory-and-methodology-form-a-two-layer-execution-system.md) describes this maintenance regime.
 
-## Why composition is expensive here
+If neither fragment reconciliation nor a faithful, timely rewrite is feasible, the whole-picture task falls outside this pattern. It must be narrowed, decomposed, or served by another representation.
 
-At least three properties of evolving understanding push fragment-based reconciliation toward the effective context boundary:
+## Why fragment reconciliation can become infeasible
 
-1. **The whole picture must be loaded at once** — before addressing their actual task, a consumer must load many notes, infer currency, and reconstruct connections. Each fragment competes for the same context budget as the task itself.
+Three proposed pressures explain why a whole-picture task may exceed effective context:
 
-2. **Discrimination complexity grows with change rate** — when new evidence contradicts earlier understanding, notes get added or revised individually. The consumer must then discriminate current from stale across the whole set. The faster understanding evolves, the harder this becomes: a note may be mostly current but wrong on one point corrected by a later note — a signal easy to miss.
+1. **Material competes with task context** — before addressing the task, a consumer must bring enough of the relevant set into context, infer currency, and reconstruct connections. Loading that material leaves less context for the task itself.
 
-3. **Coherence requires simultaneous loading** — each note can be internally coherent while the set is collectively inconsistent. Resolving this requires holding all relevant notes in context at once and reconciling tensions between them. This is where the feasibility constraint bites hardest: reconciliation demands context proportional to the number and interdependence of fragments.
+2. **Change adds currency decisions** — new evidence may supersede only part of an earlier note. Frequent change can leave more local corrections for a consumer to find and apply across the relevant set.
+
+3. **Interdependence adds coordination work** — each note can be internally coherent while the set is collectively inconsistent. Closely coupled claims may need to be compared together before the consumer can resolve their tensions.
 
 ## The general pattern
 
 The pattern applies when:
-- Knowledge is accumulating from ongoing work, not static
-- A consumer needs the whole picture to act, not just a slice
-- Value is consumed (informs current action) rather than accumulated (builds a long-term graph)
+
+- A consumer needs a coherent whole to act, not just a slice
+- Reconciling the relevant fragments within the available context is not feasible
+- A faithful narrative can fit effective context and be refreshed before it becomes misleading
 
 Examples: onboarding documents tracking a changing system, investigation summaries during incident response, evolving design rationales during architecture exploration, theory documents during engineering campaigns.
 
-The lifecycle is workshop, not library — the narrative lives and dies with the period of active evolution. When understanding stabilizes, insights should be [extracted into durable notes](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md), a second reshaping into a different form for a different consumer.
+Rapidly evolving working knowledge is an important case, not a requirement. In that case, the narrative's lifecycle is [workshop](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) rather than library: it serves current action and lives only for the period of active evolution. When understanding stabilizes, insights should be extracted into durable notes, a second reshaping into a different form for a different consumer.
 
-## Evidence: theorist
+## Illustration: theorist
 
-The [theorist](https://github.com/blader/theorist) skill (MIT, blader, 2026) implements this pattern as `THEORY.MD`: a single narrative, holistically rewritten rather than appended, capped at 200 lines to enforce concision. It updates when understanding shifts, not when code changes. When earlier understanding is superseded, the document records the shift ("initially X, but Y revealed Z") rather than preserving the old version — it always reads as a present-tense narrative.
+The [theorist](https://github.com/blader/theorist) repository contains a skill authored under the repository owner's GitHub username, `blader`. Version 1.3.0 of its `SKILL.md` is dated 2026-02-28, and the repository uses the MIT License.
 
-Theorist is illustrative rather than confirmatory: it demonstrates the pattern's mechanics but offers no controlled evidence that holistic rewriting outperforms composition. The strongest signal is indirect — teams using theory docs report easier mid-project onboarding, because there is one document to read instead of a trail of notes and chat history. Whether this holds at scale or for agent consumers remains open.
+The skill prescribes one repo-root `THEORY.MD`, holistic rewrites rather than appended logs, and updates triggered by changes in understanding rather than code churn. It caps the document at roughly 200 lines and tells the agent to record superseded views briefly as pivots.
+
+The repository verifies these implementation mechanics, not their effects. It supplies no controlled comparison with composition, so it does not establish better onboarding or agent performance.
 
 ## Open questions
 
 - Can agents perform holistic rewrite reliably, or does it require human judgment about what's still true?
 - What's the right extraction bridge when the evolution period ends? The narrative's insights need to become durable notes, but extraction is itself a reshaping step that could lose context.
 - How does a size constraint interact with scope? Forced concision is the use-shaping doing its work — but complex situations may resist compression into a single document.
-- When does the rewrite cost exceed the reconciliation cost it prevents? If fragments are few and stable, a consumer can reconcile within effective context. The threshold depends on fragment count, change rate, and interdependence.
+- In which situations is consumer-side reconciliation still cheaper than maintaining a narrative? A few mostly stable fragments are an obvious candidate, but the tradeoffs have not been measured.
+- What representation serves a whole-picture task when neither fragment reconciliation nor holistic rewrite is feasible?
 
 ---
 
 Relevant Notes:
 
-- [theory and methodology form a two-layer execution system](./theory-and-methodology-form-a-two-layer-execution-system.md) — grounds: the narrative is a dependent fast-path artifact over accumulated understanding; holistic rewrite is its stale-until-reworked maintenance
-- [context efficiency is the central design concern](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — foundation: the bounded context that makes fragment reconciliation infeasible past a threshold
-- [agent context is constrained by soft degradation, not hard token limits](./agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md) — grounds: reconciliation complexity reduces effective context, so the feasibility boundary depends on the task, not just fragment count
-- [A functioning knowledge base needs a workshop layer, not just a library](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — the narrative's lifecycle is workshop, not library; extraction into durable notes is a second reshaping step
-- [Short composable notes maximize combinatorial discovery](./short-composable-notes-maximize-combinatorial-discovery.md) — tension: composition maximizes combinatorial discovery but reconciliation can exceed effective context when the consumer needs a coherent whole
-- [Storing LLM outputs is constraining](./storing-llm-outputs-is-constraining.md) — contrast: storing constrains by freezing; holistic rewriting is the opposite, rewriting to maintain coherence
-- [Augment bidirectional spec](https://x.com/augmentcode/status/2025993446633492725) — extends: distributes the holistic-rewrite burden between human review and agent-generated updates
+- [Agent context is constrained by soft degradation, not hard token limits](./agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md) — grounds: reconciliation work reduces effective context, so feasibility depends on the whole task rather than fragment count alone
+- [Short composable notes maximize combinatorial discovery](./short-composable-notes-maximize-combinatorial-discovery.md) — contrasts: composition aids discovery, while a pre-reconciled narrative aids whole-picture consumption
+- [Storing LLM outputs is constraining](./storing-llm-outputs-is-constraining.md) — contrasts: storing freezes an output, while holistic rewriting maintains a current view
+- [What spec-driven development gets wrong](../sources/what-spec-driven-development-gets-wrong-2025993446633492725.md) — evidence: Augment Code, an AI coding-tool company, describes human-reviewed agent updates to a living specification

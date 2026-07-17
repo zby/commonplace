@@ -1,50 +1,48 @@
 ---
-description: "Use-shaping strips lineage from the artifact by design, so the dependency record must live somewhere else — and reach whoever edits a source at the moment of editing; where it lives (source footers, a link database) is a design choice judged against that requirement"
+description: "Source-dependent artifacts need lineage signals when an upstream change may render those artifacts stale, regardless of where the lineage record is stored"
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [links]
 ---
 
-# Artifacts produced from sources need lineage recorded at the source
+# Source changes should surface downstream review targets, while reverse lineage can remain searchable
 
-Use-shaping produces an artifact for one consumer: an instruction guides an agent, a skill body runs a workflow, a checklist enforces a policy, a paper presents an argument. The shaping strips lineage by design — the consumer needs the artifact's content, not the reasoning that produced it. The executor is only one kind of consumer, but it is the most demanding and the most common: for a reader who must act on the artifact unassisted, inline provenance dilutes focus and adds [indirection cost](./indirection-is-costly-in-llm-instructions.md) — which is why the default for use-shaped artifacts is no source backlinks at all, not just for instructions. A well-shaped artifact is deliberately silent about where it came from.
+Use-shaping produces an artifact for a particular consumer: an instruction guides an agent, a skill body runs a workflow, a checklist enforces a policy, a paper presents an argument. What belongs in the shaped artifact depends on that consumer. When the consumer's task does not include inspecting provenance, source links can dilute focus, so placement policy may keep maintenance lineage out of consumer-visible content. In LLM instructions in particular, pointers the executor must resolve add [indirection cost](./indirection-is-costly-in-llm-instructions.md). Papers, legal analyses, audit records, and evidence-backed recommendations are boundary cases when citations are part of the consumer's warrant: use-shaping then preserves that provenance, while the artifact still needs maintenance lineage.
 
-But the artifact stays dependent on its sources — whether its content is worked out from them or generalizes beyond them. Sources keep evolving — a methodology claim is revised, a design decision reversed — and each source edit silently puts every downstream artifact at risk. Without a dependency record, a source change names nothing: there is no worklist for staleness review, and the drift is discovered only when a stale artifact misleads someone.
+Whether or not provenance is visible to the consumer, the artifact stays dependent on its sources — whether its content is worked out from them or generalizes beyond them. A maintained source may be edited; an immutable or externally owned source may publish a successor that the workflow detects or adopts. Either event can put downstream artifacts at risk. Without a dependency record, an upstream change names no downstream worklist, making staleness review easier to miss.
 
-So the dependency record must exist — somewhere other than the artifact, whose focus is the point. The requirement any tracking design must satisfy comes from the asymmetry of the two lineage queries. The forward query — *what depends on what I just changed?* — must reach the editor **at edit time**, because its job is to interrupt: an answer the editor has to go looking for is an answer they will not look for. The reverse query — *what informed this artifact?* — is a deliberate, rare investigation that can afford a search. Whatever the design, the stored record must serve the path that has to interrupt; search can serve the path that can wait.
+The dependency record must therefore exist, but it need not be stored at the source or outside the artifact's hidden metadata. It only needs to stay out of consumer-visible content when the consumer does not need it. This note proposes an interruption-first criterion for workflows that cannot rely on maintainers to run a separate search: the lineage view should surface downstream targets when the workflow recognizes an upstream change. For locally controlled sources, that moment is edit time. For external or versioned sources, it is when a new version is detected or adopted.
+
+The criterion follows from the asymmetry of two lineage queries. The forward query — *what depends on what just changed?* — should reach the maintainer as part of the change workflow because a separate lookup makes downstream review easier to miss. The reverse query — *what informed this artifact?* — is usually a deliberate investigation that can afford a search. A suitable design serves the path that should interrupt and may leave search to the path that can wait.
 
 ## Where the record lives is a design choice
 
-Judged against that requirement:
+Under that criterion:
 
-- **Source-side records** — a lineage pointer (`Derived into:` / `Abstracted into:`) in each source — satisfy the interrupt requirement with zero machinery: the pointer is in the file the editor already has open. The cost is lineage scattered across sources, with no global view.
-- **A dedicated lineage-link database** holds the whole graph in one place, serving global queries (all downstream artifacts of a subtree, orphans, coverage) and scaling past what footers can carry — but it satisfies the interrupt requirement only if some edit-time surface consults it: a hook, a validator, an editor integration. A record without that surface is lineage nobody sees at the moment that matters.
-- **Artifact-side records** — the artifact listing its sources in metadata hidden from its consumer — serve the reverse query cheaply and can be indexed into a forward view, but unindexed they fail the interrupt requirement outright, and they put provenance maintenance back on the artifact the shaping was keeping clean.
+- **Source-side records**
+  - **Benefit:** For locally editable sources, a lineage pointer (`Derived into:` / `Abstracted into:`) is visible in the file the editor already has open, without a separate lookup integration.
+  - **Limitation:** Lineage is scattered across sources and provides no global view by itself.
+- **A dedicated lineage-link database**
+  - **Capability:** The whole graph can serve global queries (all downstream artifacts of a subtree, artifacts with no relevant lineage links, coverage) and scale past what footers can carry.
+  - **Requirement:** A change-handling surface must consult it, such as a hook, validator, editor integration, or external-source update workflow. Without that surface, the record does not interrupt the maintainer.
+- **Artifact-side records**
+  - **Capability:** Source metadata hidden from the consumer serves the reverse query cheaply and can be indexed into a forward view.
+  - **Requirement:** Without a forward index and change-handling surface, the metadata does not produce the interruption-first signal.
+  - **Cost:** Provenance maintenance remains attached to the artifact, even though the metadata stays outside consumer-visible content.
 
 The designs compose: source-side pointers as the human-visible interrupt, derived into a database for global queries — at which point the database is itself a derived copy that must be [checked or absent](./a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md).
 
-## Two audiences, one direction of flow
+Under the interruption-first model, the consumer-facing artifact carries the content needed for use while a lineage view gives maintainers downstream targets when the workflow recognizes an upstream change. What the subsequent review *is* depends on the lineage regime: a derived artifact (content worked out from the source) is stale until re-derived and compared; an abstracted rule (content exceeding its instances) is re-opened for support rather than invalidated. Where the derivation is mechanical, [the check is free and the regime flips to enforce-or-omit](./a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md).
 
-| | Use-shaped artifact | Lineage record |
-|---|---|---|
-| **Reader** | The consumer the artifact was shaped for (most demandingly: an executor) | Maintainer changing the knowledge |
-| **Carries** | Content only — focus is the point | Forward pointers from each source to its downstream artifacts |
-| **Staleness signal** | None it could act on | Fires at edit time, where change originates |
-
-Staleness detection flows in the direction of change: source changes → the editor sees the downstream targets → reviews them. What that review *is* depends on the lineage regime: a derived artifact (content worked out from the source) is stale until re-derived and compared; an abstracted rule (content exceeding its instances) is re-opened for support rather than invalidated. Where the derivation is mechanical, [the check is free and the regime flips to enforce-or-omit](./a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md).
-
-This KB's design choice is source-side records — the `Derived into:` / `Abstracted into:` footer sections with `rg` as the reverse query — with the two labels' semantics documented in [link-vocabulary.md](../reference/link-vocabulary.md). At repo scale the zero-machinery option wins; a link database becomes worth its surface when global queries or cross-repo lineage appear.
+This KB's design choice is source-side records — the `Derived into:` / `Abstracted into:` footer sections with the ripgrep (`rg`) text-search command serving reverse queries — with the two labels' semantics documented in [link-vocabulary.md](../reference/link-vocabulary.md). For this repository, source-side pointers avoid an additional change-time integration. A lineage database becomes worth integrating when global queries or cross-repo lineage justify that surface.
 
 ---
 
 Relevant Notes:
 
-- [skills derive from methodology](./skills-derive-from-methodology-through-distillation.md) — grounds: the source-to-procedure relationship that produces artifacts needing lineage
-- [link graph plus timestamps enables make-like staleness detection](./link-graph-plus-timestamps-enables-make-like-staleness-detection.md) — extends: forward lineage pointers provide the dependency edges that use-shaped artifacts deliberately omit
-- [indirection is costly in LLM instructions](./indirection-is-costly-in-llm-instructions.md) — grounds: why the artifact side must stay lineage-free
-- [frontloading spares execution context](./frontloading-spares-execution-context.md) — grounds: use-shaping is a form of frontloading; tracked lineage preserves the dependency structure the frontloaded artifact no longer shows
-- [A derived copy of recomputable truth must be checked or absent](./a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — extends: the deterministic special case — when the derivation is mechanical the staleness check is free, and managed review flips to enforce-or-omit
-- [link-vocabulary.md](../reference/link-vocabulary.md) — evidence: the shipped source-side lineage-footer convention, this KB's design choice within the space
+- [Skills derive from methodology](./skills-derive-from-methodology-through-distillation.md) — grounds: the source-to-procedure relationship that produces artifacts needing lineage
+- [Link graph plus timestamps enables make-like staleness detection](./link-graph-plus-timestamps-enables-make-like-staleness-detection.md) — extends: forward lineage pointers provide the dependency edges that use-shaped artifacts deliberately omit
+- [Frontloading spares execution context](./frontloading-spares-execution-context.md) — grounds: producing an LLM instruction from already-known source material can frontload selection and derivation; tracked lineage preserves the dependency the instruction no longer shows
 
 Derived into:
 
