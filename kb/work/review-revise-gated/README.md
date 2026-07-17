@@ -78,3 +78,22 @@ See `run-08/scores.md` for per-change scoring and `run-08/gate-noise-audit.md` f
 **Competing findings create wrong-direction risk.** The completeness-boundary-cases gate correctly detects taxonomy gaps but recommends expansion when compression is the right fix. The gate now includes guidance to consider compression before recommending expansion.
 
 **Detection ceiling: 14/16. Revision ceiling: ~12/16.** The two undetected items (S2, S3) are editorial judgments that resist gate formulation. Iteration (reviewing revised output again) can recover 1 additional hit, as demonstrated in early runs.
+
+## Gate audit merge
+
+The former `review-gates-audit` workshop is merged here as the reduction path for the current gate set. Its evidence combined the gate inventory, review-store execution history, the manual-import parser repair, and `run-08/gate-noise-audit.md`.
+
+Use two evidence tiers when judging gate quality:
+
+- **Current behavior:** trust bundled-run rows and controlled workshop runs.
+- **Older history:** reparse full-review markdown before measuring; treat repaired `manual-import` `unknown` rows as low-confidence history.
+
+Reduction plan:
+
+1. Retire `prose/anthropomorphic-framing` and `prose/confidence-miscalibration` unless a stronger corpus proves unique value.
+2. Merge `sentence/misleading-link-text` with `sentence/concept-attribution` into one link-target-mismatch family, keeping identity claims as a sub-check.
+3. Merge `complexity/claim-to-section-ratio`, `complexity/framework-decoration`, and `complexity/could-be-a-paragraph` into one structure-exceeds-substance gate with separate prompts for sections, frameworks, and whole-note compression.
+4. Keep `prose/redundant-restatement` and `prose/bridge-paragraph-duplication` separate; the split improved detection.
+5. Rewrite before trusting: `semantic/completeness-boundary-cases` needs "compress before expand" guidance, `structural/general-before-specific` needs a sharper exemplar-vs-tension rule, and `accessibility/unidentified-references` needs an explicit rule for whether links identify proper nouns.
+
+The audit's evaluation rule is: do not ask only which gates warn least. Ask whether a gate creates unique, correct, actionable findings, using issue yield, stability on repeated inputs, unique contribution in the benchmark, and edit usefulness in accepted revisions.

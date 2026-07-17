@@ -29,6 +29,7 @@ The goal is theorem sketches and proof outlines suitable for academic collaborat
 - [No universal distillation preserves all task-relevant structure](./no-universal-distillation-preserves-all-task-relevant-structure.md)
 - [Adaptive dependencies force width, reopening, or sequential rounds](./adaptive-dependencies-force-width-reopening-or-sequential-rounds.md)
 - [Few calls require width and long chains require verification](./few-calls-require-width-and-long-chains-require-verification.md)
+- [Archive readability toy model](./archive-readability-toy-model.md)
 
 ## Sketch abstracts
 
@@ -43,3 +44,7 @@ Practical consequence: some workflows are inherently serial. When the task has r
 Target statement shape: reducing call count pushes burden onto prompt width or onto more lossy intermediate summaries, while increasing chain depth compounds error and omission risk. So decomposition should be analyzable as an explicit cost/reliability frontier rather than a vague engineering heuristic.
 
 Practical consequence: there is no free decomposition. Short pipelines need broad context windows or stronger compression artifacts; long pipelines need verification stages, redundancy, or local re-checks. In practice this means planner designs should expose the cost/reliability trade explicitly and insert verifier passes where the chain would otherwise accumulate unbounded drift.
+
+### Archive readability toy model
+
+The prompt-bottleneck sketch now lives here as the archive-readability toy model. It isolates two first-order costs in bounded-context archive use: pointer tax (`N * p / M` calls to classify flat pointers) and compression sufficiency (`R * a * s <= M` for one-shot synthesis, or a summary tree only when bounded sufficient summaries exist). The practical theorem shape is that archive size is not the primitive bottleneck; navigation pointer cost and the existence of task-sufficient compressed intermediates are.
