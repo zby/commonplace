@@ -1,0 +1,41 @@
+# Lessons from the distillation retirement — surprises only
+
+Written 2026-07-18, after Waves 0–3 landed (`593c60af`). This records only what we did not predict; the plan itself (audit → receiving surfaces → entangled splits → mechanical rename → META) worked as designed and is not re-narrated. Trace evidence cited from review jobs, fix reports, the worksheet's execution notes, and the batch agents' reports.
+
+## Surprises
+
+**1. The scoped surfaces were the sticky ones.** The collision theory says prose lacks scope while links, labels, tags, and filenames have it. The migration found the dual: the surfaces with scope also have the most inertia. Prose reworded easily; what accumulated at the end were link anchor texts still asserting the old titles (19 for the conjecture rename alone), filenames lagging long-migrated titles, tag lines, label grammar, and gate examples. `commonplace-relocate-note` rewrites paths but never anchor text, so every rename left citations *preserving the retired binding* — the known failure "a citation strips the qualifier" has a mirror form, "a citation keeps the dead qualifier," and tooling only handles the path half.
+
+**2. The routing layer itself carried the collision.** Both `kb/notes/COLLECTION.md` and `kb/reference/COLLECTION.md` glossed `derived-from` as "abstracted from" — the exact surface introduced to police the derived/abstracted boundary was instructing writers to mis-label across it (fixed in `9e252b41`). The audit had looked for the collision in prose; the sharpest instance was in the enforcement surface.
+
+**3. Gate-driven fixing erodes concrete evidence toward hedged abstraction.** The final sweep's fix pass rewrote the collisions note into "proposed risk model" register and deleted its dated corpus check (the 36-occurrence grep) — twice; the operator had to order a date-stamped restore both times. Gates select against overclaim, and a concrete dated number pattern-matches to overclaim, so unattended fix passes systematically trade evidence for hedges. The same pass also retitled two notes away from their filenames (the structure note's H1 no longer matches `theory-and-methodology-form-a-two-layer-execution-system.md`), re-creating title/filename drift one wave after we cleaned it.
+
+**4. The theory note was convicted under its own law.** Review job 6707 flagged `vocabulary-collisions-…` for conflating "prose has no scope" with "prose has no *enforceable* scope" — the note's own clausal-binding section demonstrates that grammar does scope, weakly. Job 6702 could not tell whether the note was normative or descriptive. The note that defines sense-precision overclaimed its own central term, and it was the review machinery, not a reader, that caught it.
+
+**5. Freshness keys made execution order architectural.** Review baselines key on `note_path`, so a rename after a gate run orphans the fresh evidence (worksheet lesson, learned the expensive way on the retitle trio). "Rename before gating" is not a style preference; in a freshness-tracked KB, the order of mechanical operations decides whether review compute survives.
+
+**6. Parallel executors produced phantom findings.** Batch C reported the elicitation note still containing "Distill updates" after batch B had already fixed it — a stale read across concurrently running agents, reported as a live finding. Separately, the fix-batch commit raced Codex's own commit and ended up with a message describing changes that landed in the *other* commit (`a9ee6734` vs `2ee2aa6c`). Traces now contain assertions that were true at read time and false at commit time; any later archaeology must treat concurrent-window trace claims as snapshots, not facts.
+
+**7. Spelling variants nearly escaped.** Early sweep patterns matched `distill` and missed single-l `distil`/`redistil` forms (worksheet lesson). A lexical migration is only as complete as its regex, and the regex needs the morphology, not the lemma.
+
+**8. An earlier retitle wave left garbled anchors that nobody noticed until this one.** Batch A found anchor text reading "constraining and distillation both trade generality for compound" — truncated mid-phrase from "compound gains in reliability, speed, and cost" during the earlier tradeoff-note retitle. At least three anchors still carry the truncation (`constraining-during-deployment…:29`, `learning-is-not-only…:51`, and the "generality-vs-compound trade-off" phrasing in `automating-kb-learning…:57`). Anchor-text truncation is a third staleness mode besides path breakage and dead bindings — and nothing checks it. **Follow-up: fix these three; consider whether the connect/validate tooling should compare anchor text against target titles.**
+
+**9. Tag retirement doubled as a forced classification pass.** Removing `distillation` from `covered_by` made seven member notes declare which regime they actually belong to — decisions the audit had never made at note level. The validator then refused to validate until the to-be-deleted definition itself was re-covered or gone: enforcement would not let the old term's home survive its own retirement. A `covered_by` mark turns out to be a cheap classification oracle, not just navigation.
+
+**10. The term was already generating live review noise before the migration.** The run-08 gate-noise audit shows `grounding-alignment` oscillating WARN/INFO across four runs on whether execution-boundary compression "counts as" distillation — reviewers disagreeing at the exact DER/AMP boundary the word failed to mark. We treated the audit's 464-instance classification as the evidence for the split; the review system had been quietly paying the cost per-run all along. Term-induced verdict instability may be a detectable signal for the *next* drifting term, cheaper than a corpus audit.
+
+## Signs of confusion found in traces
+
+- Job 6707 (collisions note): the scoping conflation — the migration's own theory note flagged for the migration's own failure mode.
+- Job 6702 (collisions note): "unclear whether the note states a normative design requirement or describes the repository's current mechanism."
+- Run-08 gate-noise audit: WARN/INFO instability on distillation-vs-compression, plus `broken-link-path` firing four times on a mis-rooted `./distillation.md` link.
+- Batch C's phantom finding on the already-fixed elicitation note (stale concurrent read).
+- The `a9ee6734` commit message describing work that landed in `2ee2aa6c` (commit race).
+- Garbled truncated anchors ("trade generality for compound") surviving from the earlier retitle wave.
+- Batch B's flag on `false-positive-generation…`: library prose quoting the *deferred* agent-memory-systems type-spec's "distillation step" — the deferred surface bleeds its vocabulary back into library notes through quotation, and will keep doing so until that type-spec migrates.
+
+## Candidates worth promoting (operator call)
+
+- The anchor-text staleness mode (surprise 8) — possibly a note or a validator/gate feature request; it generalizes beyond this migration.
+- Verdict instability as a drifting-term detector (surprise 10) — a cheap early-warning signal the review system already produces for free.
+- The evidence-erosion failure mode of unattended gate-fix passes (surprise 3) — arguably a fix-system constraint ("don't delete dated evidence; qualify it").
