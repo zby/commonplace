@@ -1,6 +1,6 @@
 # Distillation usage audit
 
-Evidence for the [vocabulary thread](./derivation-selection-vocabulary.md)'s decision: can "distillation" be decomposed into consumer-directed **selection** + **derivation** (entailment-preserving transformation), with the ampliative residue routed to **discovery**?
+Evidence for the vocabulary thread's decision (thread since closed; the decided direction lives in the [migration plan](./migration-plan.md)): can "distillation" be decomposed into consumer-directed **selection** + **derivation** (entailment-preserving transformation), with the ampliative residue routed to **discovery**?
 
 ## Method
 
@@ -35,7 +35,7 @@ Reading the substantive (non-META) 248 instances:
 
 4. **Two direct term collisions.** `memory-management-policy-is-learnable-but-oracle-dependent.md:54` already uses "selection and distillation" as a *contrasting pair* (LTM=selection, STM=distillation). And the lineage-mechanisms workshop's stable term "ad-hoc distillation" self-defines as "selects sources, **packages judgment**" — selection plus *authored* additions, which are neither entailed nor generalized from the source. The two-primitive decomposition has no slot for authored commitment; nearest existing homes are accumulation (new authored claims) or constraining (commitment), and the gap should be named in the definition work.
 
-5. **Derivation must be defined as graded.** Even clear DER cases are re-verified by judgment, not mechanical recomputation: `distilled-artifacts-need-source-tracking.md` treats staleness review as judgment, and `a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md` explicitly separates mechanically-recomputable copies from judgment-checked ones. The entailment ideal (and its matching/cache payoffs) degrades with source coherence — consistent with the [vocabulary thread](./derivation-selection-vocabulary.md)'s caveat.
+5. **Derivation must be defined as graded.** Even clear DER cases are re-verified by judgment, not mechanical recomputation: `distilled-artifacts-need-source-tracking.md` treats staleness review as judgment, and `a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md` explicitly separates mechanically-recomputable copies from judgment-checked ones. The entailment ideal (and its matching/cache payoffs) degrades with source coherence — the gradedness caveat now stated in the [structure note](../../notes/theory-and-methodology-form-a-two-layer-execution-system.md)'s maintenance regimes.
 
 6. **Prescriptive-side tension already visible.** `kb/instructions/write-instruction.md` defines instruction-writing as distillation of "repeated manual operations → stable procedure" (AMP: "you can't distill what you haven't done") while its own step 6 frames the instruction as distilled *from methodology notes* (DER). The two provenance stories coexist under one word. Similarly, `kb/work/review-revise-gated/run-08/gate-noise-audit.md` records reviewers disputing whether execution-boundary compression counts as distillation at all — live boundary friction with the current term.
 

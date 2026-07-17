@@ -5,7 +5,7 @@
 ## Evidence (kb/work links the note cannot carry)
 
 - [distillation-usage-audit.md](../theory-methodology-derivation/distillation-usage-audit.md) — the 464-instance sweep: scope leakage observed at corpus scale, and the cost benchmark for checking a captured common word (semantic audit) vs a coined compound (lexical search)
-- [distillation-control-trap.md](../theory-methodology-derivation/distillation-control-trap.md) — the operational cost of one misresolved sense: an artifact borrowing a maintenance regime its control story doesn't support
+- the distillation control trap (thread closed 2026-07-17; its control-regime diagnostic is now the classifying question in `kb/reference/link-vocabulary.md`) — the operational cost of one misresolved sense: an artifact borrowing a maintenance regime its control story doesn't support
 - [migration-plan.md](../theory-methodology-derivation/migration-plan.md) — the thread's conclusions enacted: minimality constraint, no-successor-term end state, and the naming decisions below
 
 ## Decisions this thread produced
