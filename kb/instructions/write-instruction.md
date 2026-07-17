@@ -9,7 +9,7 @@ An instruction is a reusable procedure that lives in `kb/instructions/`. It has 
 
 Instructions are created in two moves. First, **abstract the stable core**: do the task by hand several times, notice which steps recur and which vary, and conjecture the recurring steps as a procedure with its boundary — the repetition is the evidence that licenses the generalization. Second, where companion methodology notes exist, **work the procedure body out from them**: the written steps should be recoverable from the methodology plus the task, so a methodology change flags the instruction for rework. The variable parts become parameters or decision points. The reasoning that produced the steps stays in methodology notes, not in the instruction.
 
-Instructions must be **frontloaded** — self-contained enough for an agent with no prior context. Define terms inline. Don't assume the reader has loaded other KB documents. An instruction may be handed to a sub-agent that has nothing else in its context window.
+Instructions must be [**frontloaded**](../notes/frontloading-spares-execution-context.md) — self-contained enough for an agent with no prior context. Define terms inline. Don't assume the reader has loaded other KB documents. An instruction may be handed to a sub-agent that has nothing else in its context window.
 
 ## Prerequisites
 
@@ -17,7 +17,7 @@ You should have performed the task manually at least twice in different contexts
 
 ## Steps
 
-1. **Identify the stable core.** Review what you did across instances. Which steps recurred? Which parts varied by context? The recurring steps are the procedure. The varying parts become parameters or decision points.
+1. **Identify the stable core.** Review what you did across instances. Which steps recurred? Which parts varied by context? The recurring steps are the procedure; the intro's two moves say what happens to the rest.
 
 2. **Draft the procedure.** Write it as a sequence of imperative steps. Use "do X" not "X is important because." Include:
    - What to check before starting (prerequisites)
@@ -51,4 +51,10 @@ You should have performed the task manually at least twice in different contexts
 
 ## Promotion to skill
 
-If the instruction proves useful enough to warrant automatic routing: create a subdirectory `kb/instructions/<name>/`, move the instruction there as `SKILL.md`, add the skill frontmatter fields (`name`, `allowed-tools`, `context`, `model`), add `<name>` to the promoted skill list in `src/commonplace/cli/init_project.py`, and update the control-plane routing table in `CLAUDE.md` or `AGENTS.md`. `commonplace-init` will then copy that instruction directory into the runtime skill surfaces (`.claude/skills/` and `.agents/skills/`) with the `commonplace-` prefix.
+If the instruction proves useful enough to warrant automatic routing:
+
+1. Create `kb/instructions/<name>/` and move the instruction there as `SKILL.md`.
+2. Add the skill frontmatter fields (`name`, `allowed-tools`, `context`, `model`).
+3. Add `<name>` to the promoted skill list in `src/commonplace/cli/init_project.py`.
+4. Update the control-plane routing table in `CLAUDE.md` or `AGENTS.md`.
+ `commonplace-init` will then copy that instruction directory into the runtime skill surfaces (`.claude/skills/` and `.agents/skills/`) with the `commonplace-` prefix.
