@@ -1,0 +1,59 @@
+# Wave 1 worksheet: the entangled cases
+
+Working inventory for plan Wave 1, from a close read of the held-back files and the lineage-edge sweeps (2026-07-17). Authority: [migration-plan.md](./migration-plan.md). Coordination: the mechanical second wave (plan Wave 2 subset) is being executed separately from [obvious-distillation-cases.md](./obvious-distillation-cases.md) — do not touch its files from here.
+
+## Already executed
+
+- **`distillation-is-transformation-not-selection.md` retired** (`757d6daa`, operator decision). Its polemic target dissolved with the term; anti-mere-selection lives in the structure note, the condition-clause mechanism is inline in `abstract-an-experience`, substrate persistence in the structure note and `a-derived-copy…`. Backlinks repointed (two ingests cited it for ampliative evidence and now support `abstract-an-experience`); ADR 021's path mention is a syntax example, left as history.
+- **COLLECTION.md gloss bug fixed** (`9e252b41`): both `kb/notes/COLLECTION.md` and `kb/reference/COLLECTION.md` glossed `derived-from` as "abstracted from" — writers were being instructed to mis-label. `abstracted-from` is now authorized alongside the corrected `derived-from` in both. One mislabel-in-waiting in `trace-extracted-memory…` open questions fixed with it.
+
+## Semantic rewrites (review-gated unless noted)
+
+| File | Entanglement | Treatment | Gate |
+|---|---|---|---|
+| `constraining-and-distillation-both-trade-generality-for-reliability.md` | title carries the term; foundational, heavily inbound-linked; its ln 30 states the two-layer structure avant la lettre | Retitle in place (inbound anchors already neutralized to "the generality-for-reliability tradeoff" — natural title); rewrite body plainly; the fast-path/fallback passage cites the structure note instead of restating it | yes |
+| `a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md` | ln 20 "**every** distilled artifact is a derived copy of its sources" is **false under the new scheme** — an abstracted rule is not a recomputable copy of its trace. Real claim error surfaced by the migration | Scope the sentence to the derived side; abstracted artifacts governed by testing instead; neutral anchor at ln 68 | yes |
+| `distilled-artifacts-need-source-tracking.md` | documents the lineage convention that link-vocabulary just changed under it | Retitle ("use-shaped artifacts need lineage recorded at the source" — the anchor link-vocabulary already uses); present the derived/abstracted pair with their different downstream implications; its own footer becomes `Derived into:` → link-vocabulary | light |
+| `evolving-understanding-needs-re-distillation-not-composition.md` | title term; "re-distillation" is the claim's own name for its operation | Retitle to its own gloss ("holistic rewrite, not composition"); rewrite-on-change rule cites the structure note (stale-until-rechecked); filename rename coordinates with Wave 3 | light |
+| `memory-management-policy-is-learnable-but-oracle-dependent.md` | the audit's collision: "selection and distillation" as a load-bearing contrasting pair in claim 1 | Reword the pair as retention judgment (what to remember) vs context-shaping (what to load); the old verb triple becomes plain verbs with links | quick, claim-1 only |
+| `kb/instructions/write-instruction.md` | two provenance stories under one word: repeated-ops→procedure (abstraction; "can't distill what you haven't done" = recurrence evidence) vs procedure derived from methodology notes | Say both correctly and briefly (instruction register): abstract the stable core from repetition with its boundary, then work the procedure out from companion methodology where it exists; companion link becomes `derived-from`-shaped | light |
+| `task-fitted-structure-costs-cross-task-reuse.md` | invokes the tradeoff note's "distillation result" as contrast | After the tradeoff retitle: cite the structure note's retained-source semantics plainly; neutral anchor | no |
+| `semantic-review-catches-content-errors…` | recounts the old three-operation framework as discovered history | Historical wording — keep the old term as quoted history; no reclassification | no |
+| `kb/reference/proposals/automated-note-refinement…` | asks whether refinement subsumes "re-distillation" | Follows the evolving-understanding retitle mechanically; proposal register tolerates lag | no |
+
+**Reclassified out of Wave 1** (nothing entangled remains; append to the staging file's second wave after the current mechanical batch completes): `minimum-viable-vocabulary…`, `information-value-is-observer-relative.md`, `legal-drafting…`. **Deferred to Wave 3**: `soft-bound-traditions…` (lists the term with definition links that break on deletion).
+
+## The definition's salvage map (input to Wave 3 deletion)
+
+`definitions/distillation.md` instance classification: methodology→skill derived; article→summary, caller-context→prompt, observations→summary derived/selection; workshop→note mixed; repeated-failures→gate and "notice patterns, then write" ampliative — the definition's own Scope list still teaches the boundary leak. Salvage before deletion:
+
+- use-shaping / "distillate doesn't replace source" — already covered by the structure note; drop.
+- the Faithful-Self-Evolvers behavioral-influence caveat — **needs a home**; the previously natural successor was the retired transformation note. Candidates: `knowledge-storage-does-not-imply-contextual-activation` or `claw-learning-loops…`. Decide at Wave 3.
+- the constraining-orthogonality 2×2 — a line in `definitions/constraining.md`.
+- ML-knowledge-distillation instance — excluded by the structure note; drop.
+
+Deletion itself is the Wave 3 ADR moment (large `defined-in` backlink surface).
+
+## Lineage-edge classification
+
+**`Distilled into:` footers — 10 real instances** (plus META prose mentions in `links-README.md` and the source-tracking note, reworded with their files):
+
+| Source → target | Likely label | Confidence |
+|---|---|---|
+| `unified-calling-conventions` → rlm-tendril-llm-do synthesis | Abstracted into: | needs read |
+| `rlm-has-the-model-write…` → same | Abstracted into: | needs read |
+| `areas-exist-because…` → COLLECTION.md rules | Derived into: | quick confirm |
+| `definitions/reach-assessment` → formal-systems split-out | Derived into: | high |
+| `distilled-artifacts-need-source-tracking` → link-vocabulary | Derived into: | high |
+| `session-history-should-not…` → chat-history-model | Abstracted into: | needs read |
+| `discovery-is-seeing…` → cp-skill-connect | Derived into: | medium |
+| `first-principles-reasoning` → review-explanatory-reach task | Derived into: | high |
+| `title-as-claim-exposes…` → COLLECTION.md checklist | Derived into: | high |
+
+**`derived-from` edges — ~24 real edges; most must flip to `abstracted-from`.** The context phrases self-identify: "the concrete case this claim abstracts" (`compiling-coordination`), "this note generalizes from" (`full-identity-keys`), "first witnessed instance" (`orchestration-needs-privilege`), "the originating application, not independent evidence" (`directory-placement`), "the shipped instance whose generalization is this proposal's trigger" (two proposals + ADR 030), "source taxonomy this note translates" (`adaptation-agentic-ai-analysis`), plus `llm-generation-relaxes` ×2, `adversarial-loop` ×2, `structure-inference`, `active-work-state`, `goedel-machines`. Likely keepers as `derived-from` (definitional syntheses worked out from cited papers — needs read): `definitions/reflective-system` ×2, `definitions/self-improving-system`, `definitions/actionable-methodology` ×2, `reasoning-production` (or `evidence`).
+
+## Execution notes
+
+- Review gates per `kb/reference/README-REVIEW-SYSTEM.md` for the gated rows; batch the ungated edge flips separately.
+- Validate per collection after each batch; separate commits with explicit paths.
+- The edge flips are near-mechanical once the needs-read rows are settled: one read each, then label + context-phrase edits.
