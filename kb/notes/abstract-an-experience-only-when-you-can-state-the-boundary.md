@@ -35,7 +35,7 @@ The same lens organizes the mechanisms the field has surfaced — each turns on 
 
 ## When you can't state the boundary, preserve the instance
 
-The complement of the rule is a positive instruction, not a discard. A rare fact's worth is [its retrievability, not its transfer](./memory-management-policy-is-learnable-but-oracle-dependent.md): preserved verbatim and findable, it pays off in the narrow context it came from. And even after a lesson is abstracted, the [source stays for edge cases the abstracted rule cannot cover](./constraining-and-distillation-both-trade-generality-for-reliability.md) — which argues, with [the bias toward trace retention](./distillation-is-transformation-not-selection.md), for keeping the instance whenever the boundary is in doubt. Over-eager abstraction is the expensive error: a verbatim instance that turns out generalizable can be abstracted later, but an over-generalized lesson silently misfires until something forces the boundary into view.
+The complement of the rule is a positive instruction, not a discard. A rare fact's worth is [its retrievability, not its transfer](./memory-management-policy-is-learnable-but-oracle-dependent.md): preserved verbatim and findable, it pays off in the narrow context it came from. And even after a lesson is abstracted, the [source stays for edge cases the abstracted rule cannot cover](./constraining-and-distillation-both-trade-generality-for-reliability.md) — which argues for keeping the instance whenever the boundary is in doubt. Over-eager abstraction is the expensive error: a verbatim instance that turns out generalizable can be abstracted later, but an over-generalized lesson silently misfires until something forces the boundary into view.
 
 ## Scope
 

@@ -39,7 +39,6 @@ This is not an argument against input-driven capture. The two are complementary:
 
 Relevant Notes:
 
-- [Distillation is transformation, not selection](./distillation-is-transformation-not-selection.md) — contrasts: that note addresses what shape an already-selected item takes; this note addresses the earlier decision of whether an item is worth selecting at all
 - [Raw accumulation does not create usable memory](./raw-accumulation-does-not-create-usable-memory.md) — contrasts: ingress work makes captured material usable after admission; this note addresses the admission criterion that has to be settled before ingress applies
 - [Designing a Memory System for LLM-Based Agents](./designing-agent-memory-systems.md) — extends: applies the effects-first design principle at the granularity of a single retention decision, rather than overall system architecture
 - [Context engineering](./definitions/context-engineering.md) — defined-in: knowledge lifecycle (what enters storage in the first place) is one of the architectural determinants named there
