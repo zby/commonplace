@@ -19,7 +19,7 @@ The failure is invisible from inside the generating loop, because [an LLM's conf
 
 ## Naming is the opposite move with the same surface
 
-Telling agents to avoid abstraction cannot work, because the productive move looks identical. When a user offers a vague thought and the agent finds the word for it, universality and precision rise *together*: the vagueness was noise, not scope. The right name does not merely cover what the fumbling description covered — it excludes cases the fumbling description left open. That is [seeing the particular as an instance of the general](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md), and it is the same operation running the other way.
+Telling agents to avoid abstraction cannot work, because the productive move looks identical. When a user offers a vague thought and the agent finds the word for it, universality and precision rise *together*: the vagueness was noise, not scope. The right name does not merely cover what the fumbling description covered — it excludes cases the fumbling description left open. That is [seeing the particular as an instance of the general](./conjecture-is-seeing-the-particular-as-an-instance-of-the-general.md), and it is the same operation running the other way.
 
 So the two are not points on a spectrum with a correct dose in between. Any rule of the form "abstract, but not too much" treats them as one move and cannot separate them.
 
@@ -55,7 +55,7 @@ Relevant Notes:
 
 - [abstract an experience only when you can state the boundary](./abstract-an-experience-only-when-you-can-state-the-boundary.md) — extends: the boundary test applied to claim vocabulary rather than to episode compression
 - [first-principles reasoning selects for explanatory reach over adaptive fit](./first-principles-reasoning-selects-for-explanatory-reach-over.md) — grounds: an abstraction that cannot say what it excludes has fit, not reach
-- [discovery is seeing the particular as an instance of the general](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) — contrasts: the productive direction, where universality and precision rise together
+- [conjecture is seeing the particular as an instance of the general](./conjecture-is-seeing-the-particular-as-an-instance-of-the-general.md) — contrasts: the productive direction, where universality and precision rise together
 - [llm generation confidence tracks typicality not soundness](./llm-generation-confidence-tracks-typicality-not-soundness.md) — mechanism: why hedged abstract prose feels rigorous to the generator exactly when it is empty
 - [reverse compression is when LLM output expands without adding information](./reverse-compression-is-when-llm-output-expands-without-adding.md) — contrasts: measures prose volume against what a bounded reader can extract; this note measures claim vocabulary against what the claim forbids, so a short, link-dense note can still be hollow
 - [title as claim exposes commitments enabling Popperian maintenance](./title-as-claim-exposes-commitments-enabling-popperian-maintenance.md) — enables: a claim title is where an unearned abstraction is cheapest to catch

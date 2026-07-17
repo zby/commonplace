@@ -38,7 +38,7 @@ The `/connect` discovery found 7 connections, all clustering tightly around the 
 
 - **[first-principles-reasoning-selects-for-explanatory-reach-over-adaptive-fit](../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md)** — grounds: "research taste" in Deutsch's vocabulary is selecting for explanatory reach. The hyperparameter-sweeping agent does adaptive work; the researcher's cross-domain portability is a direct statement of the reach property.
 
-- **[discovery-is-seeing-the-particular-as-an-instance-of-the-general](../notes/discovery-is-seeing-the-particular-as-an-instance-of-the-general.md)** — grounds: the coin-flipping expert recognizes which problems are tractable by seeing particular research questions as instances of general tractability patterns. Naming amortizes discovery cost, explaining taste's portability.
+- **[discovery-is-seeing-the-particular-as-an-instance-of-the-general](../notes/conjecture-is-seeing-the-particular-as-an-instance-of-the-general.md)** — grounds: the coin-flipping expert recognizes which problems are tractable by seeing particular research questions as instances of general tractability patterns. Naming amortizes discovery cost, explaining taste's portability.
 
 - **[memory-management-policy-is-learnable-but-oracle-dependent](../notes/memory-management-policy-is-learnable-but-oracle-dependent.md)** — extends: AgeMem succeeds where research taste fails, precisely because task completion is a clear oracle and research outcomes aren't.
 

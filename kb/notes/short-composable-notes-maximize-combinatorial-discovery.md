@@ -6,7 +6,7 @@ tags: [learning-theory, foundations, discovery]
 
 # Short composable notes maximize combinatorial discovery
 
-The library layer (`kb/notes/`) exists for co-loading. [Discovery](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) — seeing shared structure across particulars — requires co-presence: you can't find that three notes share unnamed structure if only one fits in context. Under [bounded context](./context-efficiency-is-the-central-design-concern-in-agent-systems.md), the number of notes that fit determines the surface area for cross-cutting connections. Short, atomic notes maximize that surface area.
+The library layer (`kb/notes/`) exists for co-loading. [Discovery](./conjecture-is-seeing-the-particular-as-an-instance-of-the-general.md) — seeing shared structure across particulars — requires co-presence: you can't find that three notes share unnamed structure if only one fits in context. Under [bounded context](./context-efficiency-is-the-central-design-concern-in-agent-systems.md), the number of notes that fit determines the surface area for cross-cutting connections. Short, atomic notes maximize that surface area.
 
 The gain is probabilistic, not mechanical — not every pair yields a discovery. What matters is breadth of *independent* perspectives. Notes from distant domains are more likely to reveal shared structure than additional notes within the same topic. The library should be optimized for this: many small, independently authored claims that can be loaded together in varied combinations.
 
@@ -50,7 +50,7 @@ The resolution: coherent narratives are workshop artifacts, not library artifact
 Relevant Notes:
 
 - [context efficiency is the central design concern](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — grounds: bounded context makes co-loading capacity the scarce resource
-- [discovery is seeing the particular as an instance of the general](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) — grounds: discovery requires co-presence of multiple particulars
+- [conjecture is seeing the particular as an instance of the general](./conjecture-is-seeing-the-particular-as-an-instance-of-the-general.md) — grounds: discovery requires co-presence of multiple particulars
 - [agent memory needs discoverable, composable, trusted knowledge under bounded context](./agent-memory-needs-discoverable-composable-trusted-knowledge-under.md) — extends: composability as one of three memory properties; short notes compose better
 - [a functioning KB needs a workshop layer not just a library](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — enables: workshops are where longer synthesized views live
 - [evolving understanding needs holistic rewrite, not composition](./evolving-understanding-needs-holistic-rewrite-not-composition.md) — tension: some consumers need narrative coherence; resolved by placing narratives in workshops

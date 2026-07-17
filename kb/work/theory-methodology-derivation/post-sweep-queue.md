@@ -32,7 +32,9 @@ The sweep's fix pass generalized away the concrete corpus check from the clausal
 - **AGENTS.md vocabulary**: remove the Distillation entry; `discovery lifecycle` already has its definition note — check whether it gets a vocabulary line (net 0) or not (net −1).
 - **ADR**: draft in this workshop (next step), promote once Wave 1 fixes are committed.
 
-## 4. Reframe the insight note as the conjecture phase (operator direction 2026-07-17)
+## 4. Reframe the insight note as the conjecture phase (operator direction 2026-07-17) — DONE 2026-07-18
+
+Executed: renamed to `conjecture-is-seeing-the-particular-as-an-instance-of-the-general.md` (34 files' links rewritten, properdocs redirect added); body reframed with the co-arising claim explicitly depth-graded (recognition precedes positing at the shallow end, full co-arising only at the generative-model end — avoiding the overclaim a bare title swap would have inherited); three-depths table tied to the lifecycle's polation axis; Darwin/Fleming examples recast in lifecycle phases; the `Distilled into:` footer classified as `Derived into:`; the lifecycle note's routing rule now hands off to this note for the conjecture phase's internal structure (its old "degenerate case" section had already been replaced by the sweep's compatible "Compressed cases do not skip testing"). Nineteen inbound anchor texts updated from the old title; the `kb/index.md` / tag-README "discovery as operation" framing sentences left for Wave 3 (entangled with the `distillation` vocabulary entry). Validation clean on the note, the lifecycle definition, and both tag heads. Original plan kept below.
 
 `discovery-is-seeing-the-particular-as-an-instance-of-the-general.md` should be just the abduction part — its content (dual structure, three depths, recognition cost, examples) is conjecture-phase material, not a characterization of discovery as a whole, and its current title binds bare "discovery" to the insight act, which the lifecycle definition forbids.
 

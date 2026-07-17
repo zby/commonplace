@@ -31,7 +31,7 @@ Concrete symptoms of poor resolution-switching:
 
 ## Connection to discovery
 
-The [discovery note](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) describes three depths of abstraction in connection: shared feature, shared structure, and shared generative model. Resolution-switching is the navigation skill that makes discovery possible — you can only see the particular as an instance of the general if you can move between the two levels. A KB that traps you at one level suppresses discovery.
+The [discovery note](./conjecture-is-seeing-the-particular-as-an-instance-of-the-general.md) describes three depths of abstraction in connection: shared feature, shared structure, and shared generative model. Resolution-switching is the navigation skill that makes discovery possible — you can only see the particular as an instance of the general if you can move between the two levels. A KB that traps you at one level suppresses discovery.
 
 ## Open questions
 
@@ -48,7 +48,7 @@ Relevant Notes:
 - [agents navigate by deciding what to read next](./agents-navigate-by-deciding-what-to-read-next.md) — operationalises: every read/skip decision is a resolution-switching decision — follow to zoom in, skip to stay broad
 - [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — exemplifies: the loading hierarchy is a resolution gradient from always-loaded broad context to on-demand narrow detail
 - [link strength is encoded in position and prose](./link-strength-is-encoded-in-position-and-prose.md) — extends: link semantics encode zoom direction — "since" zooms into foundations, "extends" zooms out to generalizations
-- [discovery is seeing the particular as an instance of the general](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) — grounds: resolution-switching is the navigation skill that makes discovery possible; three abstraction depths define how deep the zoom goes
+- [conjecture is seeing the particular as an instance of the general](./conjecture-is-seeing-the-particular-as-an-instance-of-the-general.md) — grounds: resolution-switching is the navigation skill that makes discovery possible; three abstraction depths define how deep the zoom goes
 - [charting the knowledge-access problem beyond RAG](./charting-the-knowledge-access-problem-beyond-rag.md) — extends: resolution-switching is one part of the broader access problem alongside substrate choice, synthesis, and maintenance
 
 Source:

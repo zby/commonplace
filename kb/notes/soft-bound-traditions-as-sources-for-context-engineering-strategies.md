@@ -105,4 +105,4 @@ Relevant Notes:
 - [title as claim enables traversal as reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — instance: propositional titles for bounded scanners
 - [information value is observer-relative](./information-value-is-observer-relative.md) — grounds: observer-relativity that makes adaptation necessary
 - [first-principles reasoning selects for explanatory reach](./first-principles-reasoning-selects-for-explanatory-reach-over.md) — test: if the shared structure has reach, results transfer; if not, the pattern is superficial
-- [discovery is seeing the particular as an instance of the general](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) — meta: this catalog is itself an application of the discovery operation
+- [conjecture is seeing the particular as an instance of the general](./conjecture-is-seeing-the-particular-as-an-instance-of-the-general.md) — meta: this catalog is itself an application of the discovery operation

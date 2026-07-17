@@ -10,7 +10,7 @@ covered_by: [deploy-time-learning, constraining, distillation, discovery, artifa
 
 How systems learn, verify, and improve. These notes define learning mechanisms, verification gradients, and memory architecture that KB design draws on but that aren't KB-specific — they apply to any system that adapts through durable artifacts.
 
-The area is organized around [deploy-time learning](./deploy-time-learning-is-the-missing-middle.md) as the unifying framework. **Accumulation** — adding knowledge to the store — is the most basic learning operation, with [reach](./first-principles-reasoning-selects-for-explanatory-reach-over.md) as its key property: facts sit at the low end, theories at the high end. Two orthogonal mechanisms ([constraining](./definitions/constraining.md) and [distillation](./definitions/distillation.md)) transform accumulated knowledge; a third operation ([discovery](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md)) produces the high-reach theories that are accumulation's most valuable items.
+The area is organized around [deploy-time learning](./deploy-time-learning-is-the-missing-middle.md) as the unifying framework. **Accumulation** — adding knowledge to the store — is the most basic learning operation, with [reach](./first-principles-reasoning-selects-for-explanatory-reach-over.md) as its key property: facts sit at the low end, theories at the high end. Two orthogonal mechanisms ([constraining](./definitions/constraining.md) and [distillation](./definitions/distillation.md)) transform accumulated knowledge; a third operation ([discovery](./conjecture-is-seeing-the-particular-as-an-instance-of-the-general.md)) produces the high-reach theories that are accumulation's most valuable items.
 
 ## The kinds of notes under this tag
 
@@ -31,7 +31,7 @@ Every note carrying `learning-theory` also carries at least one of these child t
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — the underspecification foundation: spec-to-program projection and the constrain/relax cycle
 - [the verifiability gradient](./verifiability-gradient.md) — the ladder deploy-time artifacts sit on
 - [constraining and distillation both trade generality for reliability, speed, and cost](./constraining-and-extraction-both-trade-generality-for-reliability.md) — how the two transforming mechanisms relate
-- [discovery is seeing the particular as an instance of the general](./discovery-is-seeing-the-particular-as-an-instance-of-the-general.md) — the third operation, and why recognition is its hard problem
+- [conjecture is seeing the particular as an instance of the general](./conjecture-is-seeing-the-particular-as-an-instance-of-the-general.md) — the third operation, and why recognition is its hard problem
 
 ## Related Tags
 

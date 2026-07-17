@@ -23,7 +23,7 @@ From testing, acceptance proceeds to integration, revision returns to conjecture
 
 ## Scope
 
-**The routing rule.** An artifact that advances an ampliative claim enters at the *conjecture* phase. An untested generalization never inherits accepted status from the sentence that states it. The recurring authoring decision this vocabulary supports is whether to retain and cite an artifact as a candidate or as an accepted rule.
+**The routing rule.** An artifact that advances an ampliative claim enters at the *conjecture* phase. An untested generalization never inherits accepted status from the sentence that states it. The recurring authoring decision this vocabulary supports is whether to retain and cite an artifact as a candidate or as an accepted rule. The conjecture phase's internal structure — its posit-and-recognize duality and its depth grading — is described in [conjecture is seeing the particular as an instance of the general](../conjecture-is-seeing-the-particular-as-an-instance-of-the-general.md).
 
 The linked [trace-extraction ladder](../trace-extracted-memory-earns-authority-per-operation-not-at-capture.md) is a separate framework with different units. Its Abstract rung generalizes a fact that has already been verified, so the Abstract rung cannot be identified with this lifecycle's untested conjecture phase. A trace-learning workflow supplies concrete acceptance checks through the [validity and learning-value gates](../choosing-what-to-learn-requires-both-validity-and-learning-value-gates.md): the rule must be trustworthy enough to learn from and worth retaining. [Boundary-statability](../abstract-an-experience-only-when-you-can-state-the-boundary.md) checks its scope within that application. This note therefore places a successfully abstracted trace rule closer to the acceptance branch, but those trace-promotion checks do not define acceptance for every discovery lifecycle.
 
@@ -31,7 +31,7 @@ The linked [trace-extraction ladder](../trace-extracted-memory-earns-authority-p
 
 This note borrows only the qualitative direction: between known cases, beyond known cases along represented dimensions, or toward an unrepresented dimension, mechanism, or generative model. All three may be ampliative. A polation category says nothing about entailment or lifecycle status, and a knowledge base's claim space has no literal hull.
 
-**Compressed cases do not skip testing.** In the [instant-insight picture](../discovery-is-seeing-the-particular-as-an-instance-of-the-general.md), prior evidence can make observation and conjecture appear simultaneous, but acceptance still requires that evidence to test the conjecture. Under the separate polation analogy, an instant-insight conjecture is hyperpolative only if it introduces an unrepresented dimension or generative model; that proposed mapping still needs worked cases.
+**Compressed cases do not skip testing.** In the [instant-insight picture](../conjecture-is-seeing-the-particular-as-an-instance-of-the-general.md), prior evidence can make observation and conjecture appear simultaneous, but acceptance still requires that evidence to test the conjecture. Under the separate polation analogy, an instant-insight conjecture is hyperpolative only if it introduces an unrepresented dimension or generative model; that proposed mapping still needs worked cases.
 
 ## Exclusions
 
