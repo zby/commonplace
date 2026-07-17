@@ -1,0 +1,34 @@
+---
+source: https://x.com/jerryjliu0/status/2077537847951945742
+captured: 2026-07-17T11:22:55.473932+00:00
+capture: xdk
+genre: practitioner-report
+type: kb/sources/types/snapshot.md
+tags: [x-article]
+status_id: 2077537847951945742
+conversation_id: 2077537847951945742
+post_count: 1
+---
+
+# The Best Model Routing is Task Specific
+
+Author: @jerryjliu0
+Post: https://x.com/jerryjliu0/status/2077537847951945742
+Created: 2026-07-15T23:36:36.000Z
+
+Model routing is so hot right now. In the last few weeks OpenRouter shipped Fusion, a compound model that fans your prompt out to a panel of frontier models and synthesizes one answer; Cognition shipped Devin Fusion, a harness that runs a frontier model and a cheap "sidekick" in parallel and switches between them with classifiers; Factory shipped a router that holds ~99% of Claude Opus 4.7's pass rate on Terminal-Bench 2 at 20% lower cost; even Vercel now ships routing rules in its AI gateway. The pitch is always the same: nobody wants to pay frontier prices for every token.
+I think the trend is real. To add on to this, I do think that the best routing is deeply task-specific, and the more narrowly you focus on a single workflow, the more alpha there is to exploit in terms of both accuracy and cost. You don't need frontier intelligence for every task — but figuring out which model clears the bar for which task, subject to your cost/latency constraints, is a problem only someone obsessed with that task can solve.
+Model intelligence is jagged, and what counts as "good enough" (and what you'd pay for the last few points of accuracy) depends entirely on the task. A router that doesn't know your task is guessing at both.
+The cost story, and why a generic router falls short
+Frontier models are too expensive to run on every token at scale — a model like Fable can burn $600 an hour of inference at volume, and most work doesn't need that horsepower. The curve helps: near the top, cost drops sharply while quality barely moves, because the first work to leave the frontier model is the work a cheaper one handles just as well. Factory runs on that flat stretch and pulls out 20-25% of the cost while pass rate holds; Cognition's Devin Fusion, which declares "the age of using one model for all of your work is coming to an end," holds Fable 5-level performance at 35% lower cost, with 88% of its users' merged PRs now coming straight from the router.
+OpenRouter is genuinely great at this, and I said as much when Fusion launched. But Fusion is an ensemble built to maximize quality on hard, open-ended questions where you'll pay for several completions because being wrong is expensive. Task-specific routing answers a different question: given this specific input, what's the cheapest path that maximizes this task's quality bar? A generic gateway can route across providers and fall back when an endpoint degrades, but it can't know that page 3 of your scanned loan file is a dense table that needs a specialized vision model while pages 1-2 are plain text you should pull with cheap direct extraction. It has no model of your inputs, because it isn't in the business of any one task.
+The teams routing well go one workflow deep
+The coding agents are just the loudest example. Look at the teams shipping serious vertical AI products and you see the same pattern: each routes inside a single workflow, and each has gone deep enough on its task to know which model clears the bar.
+Harvey, in legal, is the cleanest case. Their multi-model system breaks a request into sub-tasks, picks a model for each, and synthesizes — "no single model is the best at everything," so they route high-volume Vault work to faster models like Sonnet 4.6 and Gemini 3 Flash where latency matters and quality is good enough, and they're post-training their own open models to hit near-frontier legal performance for less.
+Decagon does the same in support, and Jesse Zhang's framing is the sharpest version of the argument I've read: when a use case is new you want the smartest general model, but "once the use case is fully built out... general intelligence is overhead," and you want "the smallest, fastest model fine-tuned to do your specific thing extremely well." Decagon now runs ~90% of its workloads on fine-tuned open models.
+Neither is reaching for a single model and hoping. Each is hillclimbing one task with a mix of models it understands deeply, and that understanding is the thing a generic router can't buy. It's the most concrete version of Sarah Guo's "Untrainable": the difficulty model and the eval that grades it are private ground truth, earned from real volume, that a smarter frontier model next quarter doesn't hand you. That's where the alpha is, and it compounds.
+Documents: the gap is big, and it stays big
+A lot of people assumed that frontier models would eat document parsing entirely. It didn't. On ParseBench, the benchmark we open-sourced, frontier VLMs are great at visual understanding and terrible at layout — GPT-5-mini and Haiku score below 10% on visual grounding while specialized parsers land at 55-80%, and no single method tops all five dimensions. Gemini gains ~5 points going from minimal to high thinking at 4x the cost, and you burn vision tokens on text-heavy pages that never needed a VLM.
+The right architecture for document OCR involves  in conjunction that are carefully tuned for the specific data domain and task distribution. LlamaParse contains this under the hood: an agentic harness that auto-routes each page between frontier and specialized models with a self-improving document-complexity model, custom document engines that cut vision tokens 50-90% where text is all there is, specialized VLMs post-trained for tables and charts, and an agentic judge that validates the output. On the cost-accuracy plane it sits on the frontier — our agentic mode leads at 84.9% and wins 4 of 5 dimensions, our cost-effective mode lands near the top at roughly a third of a cent per page. The gap holds because we improve as the models improve: every better frontier or open-weight model is just another option the harness can route to. The frontier model is one input to our system; our system is not one feature of the frontier model.
+Two layers, different jobs
+The two layers settle into different roles. Generic gateways like OpenRouter own broad, provider-level routing and ensembling (which models are up, which are cheapest this minute, when to convene a panel for a hard general question). The task-specific layer is where the excess returns live, and they accrue to whoever goes deepest on a workflow: software engineering to Factory and Cognition, legal to Harvey, support to Decagon. For documents, we intend it to be us. If you're routing frontier and open-source VLMs to squeeze every point of document accuracy out of every cent, come build with us.
