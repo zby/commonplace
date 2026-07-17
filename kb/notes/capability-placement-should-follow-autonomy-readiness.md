@@ -24,7 +24,7 @@ AGENTS.md may still contain minimal routing pointers ("for X, read Y") when omis
 ## Migration path
 
 1. Capture an operation in notes/catalogues during exploration.
-2. Distill stable procedure into `kb/instructions/`.
+2. Turn the stable procedure into an execution-oriented instruction in `kb/instructions/`.
 3. Promote to skill only after repeated successful autonomous execution.
 4. Remove obsolete pointers once agent runtime discovery is sufficient.
 
@@ -36,5 +36,5 @@ Relevant Notes:
 
 - [agents-md-should-be-organized-as-a-control-plane](./agents-md-should-be-organized-as-a-control-plane.md) — parent framing: AGENTS.md is control-plane runtime context, not capability catalog space
 - [skills are instructions plus routing and execution policy](./skills-are-instructions-plus-routing-and-execution-policy.md) — defines the intermediate form between notes and skills
-- [maintenance-operations-catalogue-should-stage-distillation-into-instructions](./maintenance-operations-catalogue-should-stage-distillation-into.md) — concrete staging area for operations before they are distilled
-- [skills-derive-from-methodology-through-distillation](./skills-derive-from-methodology-through-distillation.md) — theoretical basis for promotion from reasoning artifacts to execution artifacts
+- [maintenance operations catalogue](./maintenance-operations-catalogue-should-stage-distillation-into.md) — concrete staging area for operations before they become execution-oriented instructions
+- [skills derive from methodology](./skills-derive-from-methodology-through-distillation.md) — theoretical basis for promotion from reasoning artifacts to execution artifacts

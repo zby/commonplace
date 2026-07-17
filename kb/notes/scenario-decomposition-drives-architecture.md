@@ -61,9 +61,9 @@ The decomposition reveals a layered structure that matches the [instruction spec
 
 ## Escalation discoverability is a statelessness problem
 
-The hardest gap the decomposition exposes is escalation discoverability. In any system where operational instructions have been distilled from deeper methodology, the agent has no signal that it's in a case the distilled procedures don't cover. Since [agent statelessness makes routing architectural](./agent-statelessness-makes-routing-architectural-not-learned.md), there's no "something feels off" intuition — the agent follows the procedure and may produce a suboptimal result without ever realising that deeper reasoning would have helped.
+The hardest gap the decomposition exposes is escalation discoverability. In any system where operational instructions have been [worked out from deeper methodology](./theory-and-methodology-form-a-two-layer-execution-system.md), the agent has no signal that it's in a case the procedures don't cover. Since [agent statelessness makes routing architectural](./agent-statelessness-makes-routing-architectural-not-learned.md), there's no "something feels off" intuition — the agent follows the procedure and may produce a suboptimal result without ever realising that deeper reasoning would have helped.
 
-The control-plane file can tell the agent the escalation path exists, but it cannot guarantee the agent recognises an edge case. This is a design problem, not a training problem, and it falls out of the decomposition because the decomposition makes the distilled-vs-methodology boundary explicit for every step.
+The control-plane file can tell the agent the escalation path exists, but it cannot guarantee the agent recognises an edge case. This is a design problem, not a training problem, and it falls out of the decomposition because the decomposition makes the procedure–methodology boundary explicit for every step.
 
 ## What the method is good for
 
@@ -83,6 +83,6 @@ Relevant Notes:
 - [Instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — confirms: the loading hierarchy (always-loaded → on-demand → methodology fallback) maps directly onto the step frequency patterns in the decomposition
 - [Always-loaded context mechanisms in agent harnesses](./always-loaded-context-mechanisms-in-agent-harnesses.md) — extends: different always-loaded surfaces have different affordances and map onto different scenario patterns
 - [agents-navigate-by-deciding-what-to-read-next](./agents-navigate-by-deciding-what-to-read-next.md) — foundation: the "find related notes" step works well precisely because navigation hints (descriptions, titles) are optimised for agent read/skip decisions
-- [skills-derive-from-methodology-through-distillation](./skills-derive-from-methodology-through-distillation.md) — grounds: the escalation path is the distillation gap in action — when the distillate doesn't cover the case, the agent needs the source
+- [skills derive from methodology](./skills-derive-from-methodology-through-distillation.md) — grounds: the escalation path is the coverage gap in action — when the procedure doesn't cover the case, the agent needs the source
 - [agent statelessness makes routing architectural](./agent-statelessness-makes-routing-architectural-not-learned.md) — constrains: the agent has no intuition for when it's in a gap case, making escalation discoverability a design problem rather than a training problem
 - [Task-fitted structure costs cross-task reuse](./task-fitted-structure-costs-cross-task-reuse.md) — contrasts: deriving structure from current scenarios is right, but hardening it on that basis spends cross-task reuse as the scenario set drifts

@@ -101,7 +101,7 @@ Guidance should move across artifacts as it matures:
 1. Methodology note captures reasoning and tradeoffs.
 2. AGENTS.md may hold a minimal invariant or routing pointer.
 3. Repeated operations accumulate in a maintenance/instructions staging area.
-4. Stable procedures are distilled into `kb/instructions/` or promoted to skills.
+4. Stable procedures are rewritten as execution-oriented instructions in `kb/instructions/` or promoted to skills.
 5. Deterministic high-frequency checks can codify into scripts/hooks.
 
 This keeps AGENTS.md stable and short while the system still learns.
@@ -132,7 +132,7 @@ Relevant Notes:
 - [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — foundation: matches instruction specificity to loading frequency, the primary placement rule used here
 - [agent-statelessness-makes-routing-architectural-not-learned](./agent-statelessness-makes-routing-architectural-not-learned.md) — grounds why always-loaded routing is permanent infrastructure, not optional convenience
 - [periodic-kb-hygiene-should-be-externally-triggered-not-embedded-in-routing](./periodic-kb-hygiene-should-be-externally-triggered-not-embedded-in.md) — exemplifies exclusion: periodic operations should be external to routing docs
-- [maintenance-operations-catalogue-should-stage-distillation-into-instructions](./maintenance-operations-catalogue-should-stage-distillation-into.md) — operational extension: where externally triggered operations are staged before distillation
+- [maintenance operations catalogue](./maintenance-operations-catalogue-should-stage-distillation-into.md) — operational extension: where externally triggered operations are staged before becoming reusable instructions
 - [capability-placement-should-follow-autonomy-readiness](./capability-placement-should-follow-autonomy-readiness.md) — isolates the separate decision rule for where capabilities belong (skills vs instructions vs notes)
 - [skills are instructions plus routing and execution policy](./skills-are-instructions-plus-routing-and-execution-policy.md) — target form for mature procedures that do not need always-loaded routing
 - [methodology-enforcement-is-constraining](./methodology-enforcement-is-constraining.md) — lifecycle framing for how guidance hardens from notes into deterministic enforcement
