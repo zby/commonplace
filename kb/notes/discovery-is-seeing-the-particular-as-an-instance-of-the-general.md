@@ -1,5 +1,5 @@
 ---
-description: Proposes that discovery has a dual structure — positing a new general concept while recognizing existing particulars as instances of it — and that similarity-based connections vary by abstraction depth (shared feature → shared structure → generative model), not link kind. Scoped to similarity connections; contrastive and causal links are a different axis.
+description: "Discovery posits a general concept while recognizing particulars as instances; similarity links vary by abstraction depth from shared feature to generative model."
 type: kb/types/note.md
 traits: [has-external-sources, title-as-claim]
 tags: [learning-theory, discovery]
@@ -39,7 +39,15 @@ Recognition cost scales with depth:
 
 The mathematical tradition offers a partial solution: **develop vocabulary for naming structures**. Once a structure has a name, recognizing new instances becomes cheap. The naming amortizes the discovery cost. In a knowledge system, this means the highest-value act isn't linking two notes that share a mechanism — it's **creating a new note that names the mechanism**.
 
-Extended examples (Darwin, Fleming, lemma extraction) and unprocessed observations are in [discovery examples](../work/discovery-examples.md).
+## Worked examples
+
+**Mathematical lemma extraction** is the clean case. A mathematician notices that two apparently unrelated proofs make the same move and extracts that common structure as a lemma. The lemma becomes a new graph node; both theorems can now link to it, and later theorems can recognize the same structure cheaply. Category theory pushes the same move further: it makes deep structural similarity nameable across domains that looked unrelated at the surface.
+
+**Darwin's theory of natural selection** shows the generative-model depth. Variation, overproduction, heritability, and environmental pressure were separately familiar observations. Darwin's discovery was seeing them as premises of one abstract machine: any population with those properties adapts over time. The empirical work identified the right axioms; the discovery was the general model that made multiple particulars instances of the same process.
+
+**Fleming's penicillin discovery** is the stretched case. A mold-contaminated plate with a bacterial inhibition zone first suggested a shared feature: this substance kills bacteria. The broader antimicrobial category did not fully co-arise in one step; it matured through later extraction, purification, and clinical development. The case is useful because it marks the boundary of the dual-structure claim: sometimes the particular opens a direction and the general stabilizes only after sustained work.
+
+**Luhmann-style linking** clarifies the KB implication. The important distinction is not topical versus mechanistic linking. Topic and mechanism are both similarity judgments at different abstraction depths. Luhmann's stronger move was judgment-based linking instead of category filing: this note connects to that note for this articulated reason. That reason may be topical, structural, analogical, contrastive, or causal; the value comes from recognizing and naming the connection rather than filing both notes under a preexisting bucket.
 
 ---
 

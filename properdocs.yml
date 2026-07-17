@@ -45,7 +45,7 @@ plugins:
         'notes/distilled-artifacts-need-source-tracking-at-the-source.md': 'notes/distilled-artifacts-need-source-tracking.md'
         'notes/document-classification.md': 'reference/available-types.md'
         'notes/document-system-index.md': 'notes/document-system-README.md'
-        'notes/epiplexity-eli5.md': 'work/information-measures/epiplexity-eli5.md'
+        'notes/epiplexity-eli5.md': 'notes/epiplexity-by-example-what-entropy-and-complexity-miss.md'
         'notes/evaluation-index.md': 'notes/evaluation-README.md'
         'notes/execution-traces-are-observational-byproducts-not-default-handoff-artifacts.md': 'notes/session-history-should-not-be-the-default-next-context.md'
         'notes/execution-traces-may-be-worth-storing-but-should-not-be-default-next-context.md': 'notes/session-history-should-not-be-the-default-next-context.md'
@@ -83,6 +83,7 @@ plugins:
         'sources/before-llms-palantir-was-competing-with-snowflake-and-databricks-po-2006384049485484145.md': 'sources/palantir-competed-with-snowflake-before-llms.md'
         'sources/large-language-model-agents-are-not-always-faithful-self-evolvers.ingest.md': 'sources/llm-agents-are-not-always-faithful-self-evolvers.ingest.md'
         'sources/large-language-model-agents-are-not-always-faithful-self-evolvers.md': 'sources/llm-agents-are-not-always-faithful-self-evolvers.md'
+        'work/information-measures/epiplexity-eli5.md': 'notes/epiplexity-by-example-what-entropy-and-complexity-miss.md'
 # nav is generated dynamically by src/commonplace/docs/properdocs_hooks.py:on_config
 # from kb/<collection>/README.md files. To add a collection to the nav, create
 # its README.md.

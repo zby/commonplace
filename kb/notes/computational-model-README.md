@@ -57,4 +57,4 @@ Dual-tagged with [LLM interpretation errors](./llm-interpretation-errors-README.
 ---
 
 Agent Notes:
-- 2026-03-10: the Scheduling & Orchestration cluster plus the Multi-Agent Aggregation note form the core of a [paper outline](../work/paper-bounded-context-orchestration/outline-v2.md) presenting the scheduling model for an academic audience.
+- 2026-03-10: the Scheduling & Orchestration cluster plus the Multi-Agent Aggregation note formed the core of a paper-outline workshop presenting the scheduling model for an academic audience; that workshop was local scratch, not a durable citation target.

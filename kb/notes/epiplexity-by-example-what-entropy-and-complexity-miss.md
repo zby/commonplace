@@ -2,12 +2,12 @@
 description: ELI5 explanation of epiplexity through encrypted messages, shuffled textbooks, CSPRNGs, and chess notation — contrasting surprise, shortest description, and observer-relative usable structure
 type: kb/types/note.md
 traits: [has-external-sources]
-tags: [learning-theory]
+tags: [learning-theory, distillation]
 ---
 
 # Epiplexity by example: what entropy and complexity miss
 
-**Entropy asks how surprising the symbols are. Complexity asks how short the best exact recipe is. [Epiplexity](../../notes/information-value-is-observer-relative.md) asks how much structure *this observer* can actually extract with the tools and time they have.**
+**Entropy asks how surprising the symbols are. Complexity asks how short the best exact recipe is. [Epiplexity](./information-value-is-observer-relative.md) asks how much structure *this observer* can actually extract with the tools and time they have.**
 
 Think of a locked box. Entropy and complexity describe the contents as an object. Epiplexity asks: can *this* observer open the box, and if they can, how much pattern can they recover from what is inside? "Observer" means the full toolkit — intelligence, side information, prior knowledge, keys, decompressors, domain expertise, and time.
 
@@ -106,7 +106,7 @@ Take an introductory physics textbook. Randomly shuffle all paragraphs.
 
 Same data. Same entropy. Same complexity. Different extractable structure depending on arrangement and observer. The ordering is a *deterministic* transformation — it adds no information in the classical sense. But it dramatically changes what a bounded reader can learn.
 
-This is why [distillation](../../notes/definitions/distillation.md) creates value: rearranging and compressing knowledge can raise epiplexity for the target reader even while reducing token count.
+This is why [distillation](./definitions/distillation.md) creates value: rearranging and compressing knowledge can raise epiplexity for the target reader even while reducing token count.
 
 ## Example 3: CSPRNG vs compressed file
 
@@ -145,14 +145,14 @@ Same string. Same entropy. Same Kolmogorov complexity. Four levels of extractabl
 
 Entropy measures randomness. Complexity measures shortest description. Neither tells you what a particular observer can *do* with the data. Epiplexity fills that gap: structure that is both present in the data and accessible to the observer within their budget.
 
-This is why the same note in a KB can have different value for different readers, why [context arrangement matters](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) even when the tokens are identical, and why [reverse-compression](../../notes/reverse-compression-is-when-llm-output-expands-without-adding.md) — expanding text without adding extractable structure — is a real failure mode even when the expanded text is correct.
+This is why the same note in a KB can have different value for different readers, why [context arrangement matters](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) even when the tokens are identical, and why [reverse-compression](./reverse-compression-is-when-llm-output-expands-without-adding.md) — expanding text without adding extractable structure — is a real failure mode even when the expanded text is correct.
 
 ---
 
 Relevant Notes:
 
-- [information value is observer-relative](../../notes/information-value-is-observer-relative.md) — grounds: epiplexity formalizes the observer-dependence of information value; this note provides concrete examples for that formalization
-- [Epiplexity paper](../../sources/from-entropy-to-epiplexity-rethinking-information-computational.ingest.md) — source: Finzi et al. define epiplexity and prove CSPRNGs have zero epiplexity for bounded observers
-- [distillation](../../notes/definitions/distillation.md) — exemplifies: shuffled ordering shows why distillation can raise extractable structure for bounded observers
-- [context efficiency is the central design concern](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) — extends: identical tokens can differ in usable structure depending on observer and arrangement
-- [reverse-compression](../../notes/reverse-compression-is-when-llm-output-expands-without-adding.md) — extends: output that grows without raising extractable structure
+- [information value is observer-relative](./information-value-is-observer-relative.md) — grounds: epiplexity formalizes the observer-dependence of information value; this note provides concrete examples for that formalization
+- [Epiplexity paper](../sources/from-entropy-to-epiplexity-rethinking-information-computational.ingest.md) — source: Finzi et al. define epiplexity and prove CSPRNGs have zero epiplexity for bounded observers
+- [distillation](./definitions/distillation.md) — exemplifies: shuffled ordering shows why distillation can raise extractable structure for bounded observers
+- [context efficiency is the central design concern](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — extends: identical tokens can differ in usable structure depending on observer and arrangement
+- [reverse-compression](./reverse-compression-is-when-llm-output-expands-without-adding.md) — extends: output that grows without raising extractable structure

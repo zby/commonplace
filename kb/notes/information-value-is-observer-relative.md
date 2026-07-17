@@ -1,5 +1,5 @@
 ---
-description: The value of information depends on the observer — prior knowledge, computational capacity, tools, and goals determine what they can extract. Grounds distillation, discovery, and context arrangement as observer-relative operations.
+description: "Information value is observer-relative: prior knowledge, tools, compute, and goals determine extractable structure, grounding distillation and discovery."
 type: kb/types/note.md
 traits: [has-external-sources, title-as-claim]
 tags: [learning-theory, distillation, discovery]
@@ -63,4 +63,4 @@ Relevant Notes:
 - [minimum viable vocabulary](./minimum-viable-vocabulary-is-the-naming-set-that-most-reduces.md) — instance: the vocabulary that maximally reduces extraction cost for a bounded observer
 - [structure activates higher-quality training distributions](./structure-activates-higher-quality-training-distributions.md) — instance: structured templates make structure accessible to autoregressive generation
 - [Epiplexity paper](https://arxiv.org/html/2601.03220v1) — related formalization: epiplexity captures the pattern-extraction aspect (learnable structure a bounded model extracts from sequential data) but does not cover fact-level observer-relativity
-- [epiplexity-eli5](../work/information-measures/epiplexity-eli5.md) — examples: encrypted messages, shuffled textbooks, and chess notation illustrating observer-relative structure
+- [Epiplexity by example](./epiplexity-by-example-what-entropy-and-complexity-miss.md) — examples: encrypted messages, shuffled textbooks, and chess notation illustrating observer-relative structure
