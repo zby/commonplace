@@ -81,3 +81,7 @@ Relevant Notes:
 - [claim notes should use Toulmin-derived sections](./claim-notes-should-use-toulmin-derived-sections-for-structured.md) — example source: the Toulmin structure became the skill's articulation test
 - [Toulmin Argument (Purdue OWL)](https://owl.purdue.edu/owl/general_writing/academic_writing/historical_perspectives_on_argumentation/toulmin_argument.html) — source: the formal argumentation framework referenced as methodology input to the /connect skill
 - [Skill Synthesis (Cramer)](https://x.com/zeeg/status/2032179291031806408) — counterexample: skills produced directly from domain artifacts (commit history, patches) without an intermediate theory layer — abstracted lineage, not derivation from a retained generator
+
+Operationalized into:
+
+- [/connect skill](../instructions/cp-skill-connect/SKILL.md) — this methodology note's procedures are worked into the skill's operational sequence

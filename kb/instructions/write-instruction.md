@@ -39,7 +39,9 @@ You should have performed the task manually at least twice in different contexts
 
 5. **Test the boundaries.** Add explicit scope boundaries — when does this instruction NOT apply? The agent won't sense this on its own. If the task falls outside scope, say what to do instead.
 
-6. **Write a companion note** (optional but recommended). A note in `kb/notes/` that describes the instruction, explains its rationale, carries a `derived-from` link to the methodology the procedure is worked out from, and links to the instruction file. This is what makes the instruction findable through normal KB search.
+6. **Write a companion note** (optional but recommended). Write a note in `kb/notes/` that describes the instruction, explains its rationale, and links to the instruction file. Keep its two possible source relationships separate:
+   - The stable core is generalized from repeated manual operations. If those source instances are retained and their collection authorizes the edge, record `Abstracted into:` at the source.
+   - Where methodology notes shape the procedure body, record `Operationalized into:` in each methodology source note, pointing to the instruction. Do not collapse either relationship into a target-side `derived-from` link.
 
 ## Verify
 
