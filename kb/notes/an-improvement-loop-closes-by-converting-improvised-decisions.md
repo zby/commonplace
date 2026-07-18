@@ -60,3 +60,8 @@ Relevant Notes:
 - [Admitting a human into the boundary trades reflectivity for autonomy](./admitting-a-human-into-the-boundary-trades-reflectivity-for-autonomy.md) — contrasts: the boundary-convention dispute the graded property is robust to
 - [Self-improving system](./definitions/self-improving-system.md) — defined-in: the base category and its pathway-relative autonomy grading
 - [Commonplace as a partially autonomous, reflective self-improving system](../reference/commonplace-as-a-reflective-system.md) — evidence: one pathway observed part-way up the displacement ladder
+- [The tag-readme trace read as a self-improving loop](../reference/tag-readme-trace-as-self-improving-loop.md) — evidence: the specific trace behind the ladder sentence, showing which half of each loop function runs in code and which stays human
+- [Oracle-strength spectrum](./oracle-strength-spectrum.md) — mechanism: the operational content of "harden one oracle" — the gradient a check climbs as it becomes cheaply verifiable
+- [LLM-executed methodologies are metacircular interpreters, not compilers](./llm-executed-methodologies-are-metacircular-interpreters.md) — mechanism: the same displacement read as interpretation-to-codification — prose rules re-interpreted each session until stable paths cross into validators and commands
+- [Codification](./definitions/codification.md) — defined-in: the prose-to-symbolic crossing at the machine-mediated extreme of conversion
+- [The boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — contrasts: the same frontier stated statically — automation stalls where verification is expensive; here the frontier moves as conversions harden oracles
