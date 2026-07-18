@@ -61,6 +61,10 @@ Terms needed to understand the project's structure and everyday operations, alph
 - **Text contract** — the binding requirement a collection's `COLLECTION.md` declares: quality goal, title/description conventions, attribution requirements, maintenance semantics, and link grammar. A **profile** is a named, proven bundle of these features a collection may adopt, extend, or replace — theoretical, descriptive, and prescriptive are the shipped defaults; the set is open, guarded by worked-case-first promotion. See `kb/notes/definitions/text-contract.md` and the [profile catalogue](./kb/reference/text-contract-profiles.md).
 - **Workshop** — a named workspace for work-in-flight documents, under `kb/work/<workshop-name>/`. Value is consumed rather than accumulated: a finished workshop produces library artifacts (notes, ADRs) and is deleted. See `kb/notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md`.
 
+### Prose and registered identifiers
+
+Use ordinary spaced phrases in prose (`adapted from`, `derived from`). Registered hyphenated identifiers (`adapted-from`, `operationalized-from`, `derived-from`, `abstracted-from`) name formal relations when used in a declared position such as a collection-authorized link label; they may also be mentioned as vocabulary names in documentation. Formal semantics attach to the identifier in the declared slot; the spaced phrase remains ordinary prose and does not itself assert a formal edge. See [link vocabulary](./kb/reference/link-vocabulary.md).
+
 ## Development
 
 - **Use `python3`** for stdlib-only throwaway tooling; if the code is expected to be reused, save it to `scripts/` instead of discarding it (see `scripts/README.md`) — genuinely one-shot code stays a heredoc. Commonplace runtime code lives in the Python package as `commonplace-*` commands.

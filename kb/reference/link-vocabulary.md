@@ -96,6 +96,13 @@ Operational relations. Commonly used for outbound links to prescriptive destinat
 | `applies-when` | branch condition tells them to go elsewhere |
 | `operates-on` | (prescriptive → descriptive) wants to know what system the procedure acts on |
 
+### Lineage-shaped labels
+
+| label | reader-need |
+|---|---|
+| `adapted-from` | wants the material source worked up into this target for a use the source did not natively serve; no claim-preservation or generalization guarantee |
+| `operationalized-from` | wants the methodology or source worked into an executable shape whose ordering, defaults, or stopping conditions are target-added; no substantive claims beyond the source |
+
 ### Universal / weak
 
 Usable from any source to any destination.
@@ -105,19 +112,45 @@ Usable from any source to any destination.
 | `defined-in` | reader doesn't know the term; target is under `kb/notes/definitions/` |
 | `see-also` | reader might benefit but author can't name a specific need; escape hatch — use only after ruling out a more specific label |
 
-## Lineage semantics (derived vs abstracted)
+## Lineage semantics
 
-Two lineage relations with different maintenance semantics replace the retired `Distilled into:` footer. These labelled edges are the one place the distinction is formally made — prose can describe an artifact's origin loosely, but only a labelled edge asserts which maintenance regime governs it (rationale: [vocabulary collisions are prevented at write time, not resolved at read time](../notes/vocabulary-collisions-prevented-at-write-time-not-read-time.md)).
+Four lineage relations with different maintenance semantics replace the retired `Distilled into:` footer. These labelled edges are the one place the distinction is formally made — prose can describe an artifact's origin loosely, but only a labelled edge asserts which maintenance regime governs it (rationale: [vocabulary collisions are prevented at write time, not resolved at read time](../notes/vocabulary-collisions-prevented-at-write-time-not-read-time.md)). `operationalized-from` is a narrower authoring-time alternative to `adapted-from` for the same edge, not a child relation to stack with it.
+
+**Adapted** — `adapted-from` and `Adapted into:`. The edge asserts that the target's specific content — its selection, structure, or wording — was substantially worked up from the source's specific content for a use the source did not natively serve. It does not assert completeness, entailment, generalization beyond the source, or mechanical reproducibility.
+
+If the source were removed or materially changed, the target's actual content would need judgmental rewriting, not merely a change to its rationale. A source change therefore flags a fit recheck; it does not authorize automatic recomputation or a fresh-evidence retest.
+
+Record this edge at the source in a dedicated `Adapted into:` footer, using the same forward-pointer and context-phrase convention as the other lineage footers. Do not use it when the source only motivated, corroborated, or inspired an independently authored target; use `rationale`, `evidence`, `grounds`, or `see-also` instead.
+
+**Operationalized** — `operationalized-from` and `Operationalized into:`. The edge narrows the adapted test: the target adds ordering, defaults, or stopping conditions the source does not fix, while adding no substantive claims beyond it. It is currently authorized for the `kb/notes/` methodology → `kb/instructions/` procedure pairing; the truth condition is portable, but a new source pairing needs its source collection's authorization before a footer is written.
+
+This is an authoring-time alternative to `adapted-from` for one relationship, never a second edge stacked on the same source and target. Its maintenance consequence is the same as adaptation: a source change flags a judgmental recheck rather than a recomputation. Record it at the source in an `Operationalized into:` footer with a reader-need context phrase.
 
 **Derived** — `derived-from` (labelled link) and `Derived into:` (footer section at the source). The edge asserts that the artifact's substantive claims are recoverable from the source plus its declared consumer goal — nothing added. That makes the artifact a recomputable copy with the maintenance regime stated in [theory and methodology form a two-layer execution system](../notes/theory-and-methodology-form-a-two-layer-execution-system.md): checkable by re-deriving and comparing, stale-until-rechecked when the source revises, with checkability graded by the source's coherence.
 
 **Abstracted** — `abstracted-from` and `Abstracted into:`. The edge asserts that the artifact posits claims beyond the source — instances generalized into a rule, observations into a pattern. The source is evidence, not a generator: the artifact's authority is earned by later testing, not inherited from the source, and when the source changes the generalization is re-examined, not recomputed.
 
-The classifying question: could another agent reconstruct the artifact's substantive claims from the source plus stated premises? Yes → derived; no → abstracted. A mixed artifact is labelled by its dominant regime — an explicit, revisable call; the mixed case is real (see the structure note's caveat: part of a methodology is native to its own level of description and belongs to neither pure regime).
+The classifying sequence is:
+
+1. If the target would be unchanged when the source changes because the source only motivated or corroborated it, use a non-lineage label.
+2. If the target's substantive claims are reconstructible from the source plus stated premises, use `derived-from` where the source collection authorizes that pairing.
+3. If the target generalizes beyond the source, use `abstracted-from`.
+4. If the target is an executable shape that adds operational choices without substantive claims, use `operationalized-from` where authorized.
+5. Otherwise, if the source materially shaped the target's use-shaped content, use `adapted-from` where authorized.
+
+A mixed artifact is labelled by its dominant regime — an explicit, revisable call; the mixed case is real (see the structure note's caveat: part of a methodology is native to its own level of description and belongs to neither pure regime).
 
 Recording direction is unchanged from the retired footer: the dependency is recorded at the **source**, in a dedicated footer section below `Relevant Notes:`:
 
 ```markdown
+Adapted into:
+
+- [descriptive review](../reference/review.md) — the source material was reshaped for the review's descriptive contract
+
+Operationalized into:
+
+- [procedure](../instructions/procedure.md) — the methodology was worked into executable ordering and stopping conditions
+
 Derived into:
 
 - [cp-skill-write SKILL.md](../instructions/cp-skill-write/SKILL.md) — the duplicate-check rule
@@ -127,7 +160,7 @@ The downstream artifact carries no backlinks to its sources by default. Its read
 
 Rationale: [source changes should surface downstream review targets, while reverse lineage can remain searchable](../notes/artifacts-produced-from-sources-need-lineage-recorded-at-the-source.md).
 
-**Migration status.** `Distilled into:` is retired — write no new instances. Existing `Distilled into:` footers and pre-existing `derived-from` edges predate this boundary; they are classified into the new labels during the vocabulary-migration passes. Until reclassified, treat them as unclassified lineage — carrying neither regime's semantics.
+**Migration status.** `Distilled into:` is retired — write no new instances. Existing `Distilled into:` footers and pre-existing `derived-from` edges predate this boundary; they are classified into the new labels during the vocabulary-migration passes. Until reclassified, treat them as unclassified lineage — carrying neither regime's semantics. `derived-from` is tested per source-to-destination pairing against its reconstructibility condition; it is not banned merely because a source or target uses a descriptive, prescriptive, or generated register. A pairing remains eligible when the target is genuinely mechanically reconstructible and the source collection authorizes it.
 
 ## Limits
 
