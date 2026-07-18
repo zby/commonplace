@@ -50,13 +50,9 @@ The relation must remain distinguishable from mere citation, inspiration, eviden
 
 ## Decisions to finish
 
-- Write the exact truth conditions and reader need for `adapted-from`, including what makes a source a **material input** rather than background influence.
-- Decide whether specific labels are subrelations of `adapted-from`, alternatives that replace it at authoring time, or both. Avoid recording redundant parent and child edges unless a concrete consumer needs both.
-- Decide which additional relations have earned names now. `operationalized-from` and `generated-from` have live cases; a complete transformation taxonomy is out of scope.
-- Define the weakest honest maintenance consequence of `adapted-from` and keep it separate from the stronger recomputation regime of `derived-from`.
-- Decide how source-side inverse lineage is represented. Current `Derived into:` headings are reader-facing phrases without the proposed formal hyphenated cue; determine whether they remain renderings of a canonical relation or become registered inverse identifiers such as `derived-into` and `adapted-into`.
-- Decide where narrow `derived-from` is authorized. Its claim-closure test should not be silently imposed on collections whose governing correctness condition is descriptive fidelity, prescriptive executability, or stance-neutral attribution.
 - Determine the minimum always-loaded wording for `AGENTS.md` and the disposition of `AGENTS.md.template` without hardcoding this repository's methodology vocabulary into every consuming KB.
+
+The rest of this list is locked in [vocabulary-spec.md](./vocabulary-spec.md): `adapted-from`'s truth conditions and maintenance consequence, `operationalized-from` minted as an authoring-time alternative for methodology→procedure (not a stacked child edge), `generated-from` deferred for lack of a live stored case, `derived-from` narrowed to theory-to-theory only, and `Adapted into:` / `Operationalized into:` as registered footer headings matching the existing pattern.
 
 ## Migration audit
 
