@@ -56,6 +56,12 @@ Use the outbound section's triggers, latitude cues, and direction hints to set p
 In order of cost:
 
 - **Curated heads.** Read the destination's `README.md` and, when the source carries `tags:`, the matching `<tag>-README.md` pages — their editorial groupings and context phrases capture routing signal a flat listing misses. If a tag-README declares `complete: true`, it links every note carrying that tag — **skip the by-tag rg for that tag** and record the skip in the discovery trace.
+- **Full titles listing.** Generate the complete claim-title surface for the destination collection once, fresh (nothing is stored, so nothing can go stale) — titles are claims in this KB, so this is the cheapest complete recall surface for candidate discovery, roughly a quarter of the description listing's size:
+
+  ```bash
+  rg -N --no-heading -m1 '^# ' kb/<destination>/ --glob '*.md'
+  ```
+
 - **Scoped `rg` description listing.** Enumerate candidates at path + description resolution without loading a complete index:
 
   ```bash
