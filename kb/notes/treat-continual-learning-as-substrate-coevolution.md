@@ -52,6 +52,6 @@ Relevant Notes:
 - [Axes of artifact analysis](./axes-of-artifact-analysis.md) — foundation: defines the prose/symbolic/distributed-parametric split used throughout this note
 - [The readable-artifact loop is the tractable unit for continual learning](./readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md) — practical plan: the prose+symbolic pair is the tractable first slice
 - [In-context learning presupposes context engineering](./in-context-learning-presupposes-context-engineering.md) — extends: the context-engineering buildout is itself part of the joint loop
-- [Codification and relaxing navigate the bitter lesson boundary](./codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) — operators: codify, relax, constrain, and condense are artifact-side update operators
+- [Codification and relaxing navigate the bitter lesson boundary](./codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) — operators: codify, relax, constrain, and adapt are artifact-side update operators
 - [Meta-Harness](../agent-memory-systems/reviews/meta-harness.md) — evidence: a fixed-weight proposer mutates harness code and context/memory logic from raw traces — a readable-artifact loop in practice
 - [Ingest: Meta-Harness: End-to-End Optimization of Model Harnesses](https://yoonholee.com/meta-harness/paper.pdf) — evidence: raw execution traces outperform scores-only or summarized feedback in automated harness search

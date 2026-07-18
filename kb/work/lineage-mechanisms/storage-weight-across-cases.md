@@ -48,13 +48,13 @@ Each case scored on the two things that matter: the **lineage structure** (tree 
 | Friction / connect report | tree (one note → one report) | disposable | gitignored candidate | none (disposable) |
 | Full-pass report packet | star (one pass → initial and closing reports) | retained while actionable, then disposable | gitignored pass directory | artifact-local / disposable |
 | Generated index | tree (frontmatter → listing) | recomputable | build output / curated head | validator-checked, no state |
-| Ad-hoc distillation | star (many inputs → one packet) | static | workshop / prompt file | frontmatter on promotion |
+| Adapted-from artifact | star (many inputs → one packet) | static | workshop / prompt file | frontmatter on promotion |
 | Merge-back event | star (many inputs → one owned event) | append-once | commit + canonical artifact | commit history now; shared ledger only if queried |
 | `compares-with` among sources | many-to-many mesh | **static** | authored links | links (no store) |
 
 The shape is stark. **Review is still the only current row in the operational-DB tier**, even after critique joined it, because critique reused the existing note/criterion mesh rather than creating a second one. The closure calibration briefly tested a hand-written shared-event surface, then retired it because no real carry or continuing consumer justified retention. The same table should guide further investigations; it is not evidence that review will remain unique. Three patterns cover the present non-review cases:
 
-- **Trees and stars stay in files.** Ingests, source reviews, connect/friction reports, ad-hoc distillations, full-pass packets, and merge-back all have a natural owner artifact for each fact — the derived file, pass, or event target. Frontmatter pointers and intentional commits express them directly at current volume. No edge is orphaned.
+- **Trees and stars stay in files.** Ingests, source reviews, connect/friction reports, adapted-from artifacts, full-pass packets, and merge-back all have a natural owner artifact for each fact — the derived file, pass, or event target. Frontmatter pointers and intentional commits express them directly at current volume. No edge is orphaned.
 - **Churn without a mesh → regenerate, don't store.** Connect reports and generated indexes change constantly, but each is a tree rebuilt from current inputs; nothing queries per-edge state. Generated indexes get a deterministic validator instead ([`a-derived-copy-of-recomputable-truth-must-be-checked-or-absent`](../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md)).
 - **Mesh without churn → links.** `compares-with` is genuinely many-to-many, but its edge state is static, so authored links carry it. It never needs a store.
 
@@ -70,14 +70,14 @@ The universal part is **not** a universal store. It is a single lineage-event vo
 - role (source, derived view, generated index, canonical, archival — from [`axes-of-artifact-analysis`](../../notes/axes-of-artifact-analysis.md));
 - source dependencies + their versions/revisions;
 - producer metadata when a model/tool generated the derivation (model partition, runner, prompt/generator version as needed);
-- derivation event kind (capture, distill, generate, merge-back, ack, retire);
-- freshness rule (what source change invalidates this, and whether refresh is regenerate, re-distill, or review).
+- derivation event kind (capture, adapt, generate, merge-back, ack, retire);
+- freshness rule (what source change invalidates this, and whether refresh is regenerate, rework, or review).
 
 **Three storage weights:**
 
 | weight | carrier | when | cases |
 |---|---|---|---|
-| **1. In-artifact** (default) | frontmatter pointers + prose | lineage is low-churn and read on demand | snapshots, ingests, source reviews, ad-hoc distillations, promoted notes |
+| **1. In-artifact** (default) | frontmatter pointers + prose | lineage is low-churn and read on demand | snapshots, ingests, source reviews, adapted-from artifacts, promoted notes |
 | **2. Shared event surface** | structured commit convention first; append-only `JSONL`/ledger only when queried | events must be auditable across classes independently of the artifact file | future high-volume merge-back / promotion / retirement events |
 | **3. Operational store** | edge-file directory, SQLite, or generated index over a ledger | a keyed selector runs repeatedly over high-churn mutable current-state on many-to-many edges | review now; future swept cue/source, compiled-view/source, or dependency-maintenance meshes |
 

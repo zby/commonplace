@@ -29,8 +29,8 @@ The key implication is that lineage is not "where did this file come from?" in a
 | Unanchored open-ended reports | Composition friction and connect write gitignored reports without acceptance/freshness state. Compression also remains outside the review DB. | They create advisory analysis that may guide edits but does not create canonical review state. | Their staleness is procedural: rerun against final bytes when the workflow needs closure. Exact freshness would require a new anchored criterion or another lineage mechanism. |
 | Full-pass closure evidence | Each pass retains `initial/` and `closing/` reports under a pass ID, reassesses the final note once, and routes residual findings to Open items. | The retained reports make the final-state judgment inspectable while review acceptance owns freshness for anchored assays. | The calibration is summarized in [full-improvement-pass closure](../../reference/full-improvement-pass-closure.md). Its temporary controls and observation JSONL were retired; no durable cross-class event service was justified. |
 | Generated indexes | Complete generated listings are build-time-only for the site; agents use committed curated heads plus scoped `rg`. | The generated listing is a derived view over frontmatter and should not become a committed source of truth. | Curated heads remain committed and can still drift; optional marks such as `complete`/`covered_by` are validator-checked. |
-| Ad-hoc distillations | Prompts, source packets, and workshop notes can package selected sources plus caller judgment before a type, schema, command, or skill exists. | They are derived artifacts even when untyped and ephemeral; if retained or reused, lineage needs to say what they compressed and what judgment they frontloaded. | Need a boundary between discardable prompt, reusable workshop artifact, promoted instruction, promoted skill, and report type. |
-| Distillation tracking | `Distilled into:` lives at the source side, not usually in the distilled artifact. | Source edits surface downstream distillates at edit time; reverse provenance is a deliberate search. | This works for source-note -> distillate. It is less clear for source snapshot -> ingest -> note, source -> source, or external work derived from internal vocabulary. |
+| Adapted-from artifacts | Prompts, source packets, and workshop notes can package selected sources plus caller judgment before a type, schema, command, or skill exists. | They are adapted artifacts even when untyped and ephemeral; if retained or reused, lineage needs to say what they reshaped and what judgment they frontloaded. | Need a boundary between discardable prompt, reusable workshop artifact, promoted instruction, promoted skill, and report type. |
+| Source-side lineage tracking | `Derived into:`, `Abstracted into:`, `Adapted into:`, or `Operationalized into:` lives at the source side, not usually in the downstream artifact. | Source edits surface downstream artifacts at edit time; reverse provenance is a deliberate search. | This works for source-note -> downstream artifact. It is less clear for source snapshot -> ingest -> note, source -> source, or external work adapted from internal vocabulary. |
 | Checked derived copies | Recomputable derived truth must be checked by a validator or omitted. | Mechanical lineage can be machine-followable rather than human-visible. | Only applies where derivation is deterministic and cheap to re-check; most prose/source lineage remains judgmental. |
 | Source link labels | `kb/sources/COLLECTION.md` authorizes `evidence`, `derived-from`, `rationale`, `compares-with`, `defined-in`, and `see-also`. | Sources have an authored outbound surface, mostly through ingest reports and source reviews. | Several triage cases need contrast or parallel-mechanism relations that are not evidence, derivation, rationale, or source-to-source `compares-with`. |
 
@@ -57,7 +57,7 @@ Many operations already split into source gathering and typed report generation:
 | Connect | read source artifact, collection rules, indexes, searches, link neighborhoods | `.connect.md` report, using `kb/reports/types/connect-report.md` | future writer authors links, index entries, or maintenance work |
 | Review assay | select stale or requested note/criterion pair(s), create result-kind-homogeneous jobs, run an agent, finalize all-or-nothing | job-owned markdown artifacts plus DB completion state, snapshots, and current acceptance | verdict decisions feed warn/fix; critique reports feed editorial work without becoming decisions |
 | Full-pass closure | retain initial reports, transform the note, rerun all methods once on final bytes | pass-scoped initial and closing reports plus the reconciled packet | edited note, current anchored review evidence, and residual Open items; calibration summarized in reference |
-| Ad-hoc distillation | gather sources, examples, current theory, and caller judgment for a task-local boundary | one-off prompt, source packet, workshop draft, or temporary synthesis | later note, instruction, skill, report type, or discarded working context |
+| Adapted-from artifact | gather sources, examples, current theory, and caller judgment for a task-local boundary | one-off prompt, source packet, workshop draft, or temporary synthesis | later note, instruction, skill, report type, or discarded working context |
 | Generated navigation | scan frontmatter and tag membership | build-time generated listings for the site | no committed generated listing; curated heads stay authored |
 
 This suggests a useful design separation:
@@ -79,11 +79,11 @@ The review subsystem shows why this may require relational edge-state, not only 
 
 Lineage is one artifact-analysis axis, independent of substrate and form. A repo file can be canonical source, derived view, generated index, compiled view, or archival evidence. A database row can be canonical state. A generated Markdown report can be a disposable view or a promoted summary depending on authority and persistence.
 
-### Distillation strips provenance
+### Use-shaped artifacts suppress provenance
 
-`distilled-artifacts-need-source-tracking.md` argues that shaped artifacts often suppress provenance by design. The dependency record should live where it interrupts source edits, usually source-side `Distilled into:` pointers at current scale.
+[`Artifacts produced from sources need lineage recorded at the source`](../../notes/artifacts-produced-from-sources-need-lineage-recorded-at-the-source.md) argues that shaped artifacts often suppress provenance by design. The dependency record should live where it interrupts source edits, usually source-side lineage pointers at current scale.
 
-This theory directly applies to skills, instructions, and reference artifacts distilled from notes. It does not yet fully handle external-source chains where the "source" is captured material, the ingest is analysis, and the promoted note may be a synthesis across multiple sources.
+This theory directly applies to skills, instructions, and reference artifacts worked out from notes. It does not yet fully handle external-source chains where the "source" is captured material, the ingest is analysis, and the promoted note may be a synthesis across multiple sources.
 
 ### Frontloaded artifacts need validity windows
 
@@ -91,7 +91,7 @@ This theory directly applies to skills, instructions, and reference artifacts di
 
 ### Ad-hoc prompts are pre-typed derivations
 
-`ad-hoc-prompts-extend-the-system-without-schema-changes.md` treats ad-hoc prompts as low-friction system extensions. They let the caller package what matters before a type signature, schema, or skill exists. For lineage, the key point is that the prompt may be temporary, but the distillation it performs is real: it selects sources, packages judgment, fixes a task boundary, and may later be extracted into a skill or instruction.
+`ad-hoc-prompts-extend-the-system-without-schema-changes.md` treats ad-hoc prompts as low-friction system extensions. They let the caller package what matters before a type signature, schema, or skill exists. For lineage, the key point is that the prompt may be temporary, but the adaptation it performs is real: it selects sources, packages judgment, fixes a task boundary, and may later be extracted into a skill or instruction.
 
 ### External git-backed reviews preserve handles, not snapshots
 
@@ -103,7 +103,7 @@ This theory directly applies to skills, instructions, and reference artifacts di
 
 ### Managed staleness for judgmental derivations
 
-`link-graph-plus-timestamps-enables-make-like-staleness-detection.md` and `evolving-understanding-needs-re-distillation-not-composition.md` cover the judgmental case: source changes should trigger review or re-distillation, not automatic patching.
+`link-graph-plus-timestamps-enables-make-like-staleness-detection.md` and `evolving-understanding-needs-holistic-rewrite-not-composition.md` cover the judgmental case: source changes should trigger review or rework, not automatic patching.
 
 ### Compiled views need source-of-truth rules
 
@@ -143,7 +143,7 @@ Question: should `kb/sources/COLLECTION.md` add `contrasts` and `parallels` for 
 
 ### 3. Inverse lineage is underspecified
 
-The Where-it-lives case reverses the usual direction. If an external paper was distilled from internal KB vocabulary, a note-to-paper `derived-from` edge is wrong. But the paper can still be evidence of externalization, publication, or category fit.
+The Where-it-lives case reverses the usual direction. If an external paper was adapted from internal KB vocabulary, a note-to-paper `derived-from` edge is wrong. But the paper can still be evidence of externalization, publication, or category fit.
 
 Question: do we need a label such as `externalized-as`, `published-as`, or `derived-into`, or is this a source-note in the source's ingest prose rather than a library edge?
 
@@ -171,11 +171,11 @@ Agent-memory-system reviews show that source preservation cannot mean "always sn
 
 Question: what metadata makes an external git-backed source sufficiently reviewable, and when should Commonplace still create a snapshot or ingest?
 
-### 8. Ad-hoc distillation needs a promotion boundary
+### 8. Adapted-from artifacts need a promotion boundary
 
-Ad-hoc prompts and source packets deliberately avoid schema work, but the moment one is retained, reused, or used to hand work to another agent, it has already become derived material. The lineage need appears before the formal type appears.
+One-off prompts and source packets deliberately avoid schema work, but the moment one is retained, reused, or used to hand work to another agent, it has already become an adapted-from artifact. The lineage need appears before the formal type appears.
 
-Question: what minimal lineage should a retained ad-hoc distillation carry, and when does repetition force promotion into a typed report, instruction, or skill?
+Question: what minimal lineage should a retained adapted-from artifact carry, and when does repetition force promotion into a typed report, instruction, or skill?
 
 ### 9. Git retention needs automation-centered rules
 

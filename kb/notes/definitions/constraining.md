@@ -42,7 +42,7 @@ Many constraints never need to codify. A definition note can focus a term's mean
 
 ## Exclusions
 
-Constraining is not use-shaping. Whether an artifact was worked out from recorded source material for a bounded consumer is a lineage question, carried by the `derived-from` / `abstracted-from` labels; constraining asks how much interpretation space the artifact leaves open.
+Constraining is not use-shaping. Whether an artifact was worked out from recorded source material for a bounded consumer is a lineage question, carried by the `adapted-from`, `operationalized-from`, `derived-from`, or `abstracted-from` labels; constraining asks how much interpretation space the artifact leaves open.
 
 Constraining is not retrieval or navigation. A description field, index entry, or backlink may help an agent find the right artifact, but it is constraining only when it also narrows what the artifact means.
 
@@ -64,14 +64,14 @@ Relaxing is the reverse term: replacing a constrained component with a more gene
 
 Constraining and use-shaping are orthogonal — they operate on different dimensions of the same artifacts:
 
-| | Not use-shaped | Use-shaped (worked out from a source) |
+| | Not use-shaped | Use-shaped (source material reshaped for a consumer) |
 |---|---|---|
 | **Not constrained** | Raw capture (text file, session notes) | Reshaped for a consumer but still semantically loose (draft skill, rough note) |
 | **Constrained** | Committed but not transformed from a source (stored output, frozen config) | Reshaped and semantically focused (validated skill, codified script) |
 
 You can constrain without reshaping from a source (store an LLM output — commit to one interpretation without transforming recorded source material). You can reshape without constraining (write a task-shaped skill that remains natural language and underspecified). Strong artifacts often combine both operations.
 
-Constraining asks: *how constrained is this artifact?* The lineage question asks: *was this artifact worked out from recorded source material for a particular consumer?*
+Constraining asks: *how constrained is this artifact?* The lineage question asks: *was this artifact adapted from recorded source material for a particular consumer?*
 
 ## Prior Analogues
 

@@ -52,7 +52,7 @@ To absorb discoveries and prevent ossification, checklists need a maintenance lo
 1. **Seed** from incidents, failure analyses, and known failure literature.
 2. **Enforce** probes in mandatory review pass(es).
 3. **Log misses** — problems that escaped because no probe existed, or probe wording was too weak.
-4. **Condense updates** into new or rewritten probes.
+4. **Abstract updates** into new or rewritten probes.
 5. **Prune stale probes** that no longer discriminate in practice.
 
 This lifecycle is what distinguishes a maintained question-generation system from a static checklist. Without it, checklists decay: they cover yesterday's failures while tomorrow's slip through.

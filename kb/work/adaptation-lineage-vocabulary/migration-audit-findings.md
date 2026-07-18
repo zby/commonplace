@@ -13,7 +13,7 @@ Commit `593c60af` mechanically swapped `distill(ation)` → `condense/condensing
 
 This is the exact recurrence ADR 053's Consequences section warned about ("the control trap can recur under any future attractive label") — it happened inside the same migration, unreviewed, because "condense" reads as ordinary English and slipped past the write-time uniqueness check.
 
-Related: commit `f7aac9e6` separately coined **"Extraction"** as a capitalized, defined successor term (own comparison-table row) for the SEL-dominant sense of old distillation, then propagated it across 70+ generated backlink footers corpus-wide. Same underlying gap — a real operation lost its name and something informal filled the slot — different word, different commit, same unreconciled state. Neither "extraction" nor "condense" is in ADR 053, the migration plan's four-part decision, or AGENTS.md's vocabulary list.
+Related: the audit report attributed to commit `f7aac9e6` a separate **"Extraction"** successor term (own comparison-table row) for the SEL-dominant sense of old distillation, plus a corpus-wide backlink propagation. The §4 investigation below could not reproduce a corresponding 70+ generated footer surface. The confirmed part is the same underlying gap — a real operation lost its name and informal replacements filled the slot — and neither "extraction" nor "condense" is in ADR 053, the migration plan's four-part decision, or AGENTS.md's vocabulary list.
 
 ## Finding 2 — the same operation classified inconsistently across files
 
@@ -22,13 +22,23 @@ Two cases where structurally identical content got opposite DER/AMP treatment be
 1. **Trace re-extraction language.** `kb/notes/agent-memory-requirements/preserve-evidence-without-loading-history.md:305,311,320` and `serve-multiple-consumers.md:333`: "redistillation" of raw session traces into reusable artifacts → **"re-derivation"** (asserts strong entailment-preservation). But `kb/reference/commonplace-agent-memory-gap-plan.md:1822`, same concept → **"re-abstraction"** (correctly ampliative).
 2. **Probe-generation from logged failures.** `kb/notes/elicitation-requires-maintained-question-generation-systems.md:1016`, checklist step "Distill updates" → **"Condense updates"** — but the step is instance→rule generalization (AMP), not compression. The cross-reference to the identical lifecycle step in `kb/notes/open-domain-memory-retention-needs-a-declared-output-spec.md:1261` → "...log-misses/**abstract**/prune..." (correct AMP treatment).
 
+### Finding 2 disposition
+
+The long-form anchors cited above were already shortened or moved by the subsequent migration, so the live corpus did not contain the literal `redistillation` passages at those line numbers. The remaining live uses in `preserve-evidence-without-loading-history.md` and `serve-multiple-consumers.md` describe reconstructing summaries or other use-shaped trace products, not generalizing a verified instance into a rule; they now use **reconstruction**. The reference gap plan already reserves **re-abstraction** for trace-to-rule generalization, and the live probe checklist now says **Abstract updates**, matching the existing `abstract` wording in the parallel output-spec note.
+
 ## Finding 3 — the migration's flagship "derive" case may itself be judgment, not derivation
 
 `kb/notes/skills-derive-from-methodology.md` (replacing `skills-derive-from-methodology-through-distillation.md`) is cited from ~15 other notes as the paradigm case of entailment-preserving reshaping. Its own body states the skill "adds no substantive claims the methodology does not already support" (the derivation bar) — then two paragraphs later: "A different person reading the same methodology would produce a meaningfully different skill... the process requires judgment." Output that varies meaningfully by author is the third, ungoverned case (selects sources, packages judgment) — see Finding 4 — not strict derivation. This note argues itself into the DER bucket while its own evidence sits closer to the third case.
 
 ## Finding 4 — the original "ad-hoc distillation" term survives untouched and untracked
 
-`kb/work/lineage-mechanisms/` (README.md, current-practices-and-theory.md, model-provenance.md, storage-weight-across-cases.md, general-lineage-refresh-state-design.md) still defines and uses "ad-hoc distillation" as a stable term meaning "selects sources, packages judgment" — this is exactly the third operation this workshop needs to name (candidate: `adapted-from`). It was never migrated, renamed, or flagged in ADR 053's Consequences/deferred list (which only names the agent-memory-systems type-spec, kb/sources, and the crystallized-reasoning coinage as deferred). Treat as untracked deferral, not settled ground.
+`kb/work/lineage-mechanisms/` (README.md, current-practices-and-theory.md, model-provenance.md, storage-weight-across-cases.md, general-lineage-refresh-state-design.md) defined and used "ad-hoc distillation" as a stable term meaning "selects sources, packages judgment" — this was exactly the third operation this workshop needed to name. The six corpus sites are now classified as `adapted-from` artifacts or source shaping. It was never migrated, renamed, or flagged in ADR 053's Consequences/deferred list (which only names the agent-memory-systems type-spec, kb/sources, and the crystallized-reasoning coinage as deferred); the §4 pass closes that untracked deferral.
+
+### Extraction-backlink investigation
+
+The reported 70+ generated "Extraction" backlink footers could not be reproduced in the current corpus. A search for footer-shaped `Extraction:`, `Extracted from:`, and extraction-labelled backlink lines under `kb/` found no such authored footer surface. The only current `Extraction` occurrences are ordinary prose headings or descriptions in notes, source analyses, and agent-memory-system reviews; none is a registered lineage footer.
+
+The cited commit `f7aac9e6` is also not evidence of a hidden generator: its stat is 40 changed files, and its additions are rename/backlink maintenance around the `constraining-and-extraction-both-trade-generality-for-reliability.md` note, not a generated `Extraction` footer batch. No emitter for that footer pattern exists in `scripts/`, `src/`, or `kb/instructions/`. The current `cp-skill-connect` contract explicitly writes only a gitignored connect report and does not author links or footers. There is therefore no generator fix to make in this workshop's scope; retain the claim as an unreproduced historical report rather than adding a speculative cleanup or a new vocabulary surface.
 
 ## Lower-confidence, worth a second look
 

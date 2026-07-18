@@ -24,7 +24,7 @@ The operational core decomposes into four components within a single bounded cal
 
 **Maintenance** — keeping loaded context healthy over time. Compaction, observation masking, and the [workshop layer's](../a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) holistic-rewrite discipline prevent accumulated debris from [degrading reasoning](../context-efficiency-is-the-central-design-concern-in-agent-systems.md).
 
-Reshaping recorded knowledge for a specific task and context budget — producing derived views, summaries, and handoff artifacts — is the main operation these components perform, but not the only one. The [bounded-context orchestration model](../bounded-context-orchestration-model.md) formalizes the machinery as a `solve` loop where a symbolic scheduler drives routing, loading, and scoping for each bounded LLM call.
+Reshaping recorded knowledge for a specific task and context budget — producing adapted or derived views, summaries, and handoff artifacts — is the main operation these components perform, but not the only one. The [bounded-context orchestration model](../bounded-context-orchestration-model.md) formalizes the machinery as a `solve` loop where a symbolic scheduler drives routing, loading, and scoping for each bounded LLM call.
 
 ## Architectural scope beyond a single call
 

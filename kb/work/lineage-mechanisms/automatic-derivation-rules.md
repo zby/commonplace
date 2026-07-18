@@ -32,7 +32,7 @@ The candidate edge-state surface for any future many-to-many dependency mesh wou
 
 - artifact path, type, and version/hash;
 - source dependencies and source versions;
-- generated reports or ad-hoc distillations that informed an update;
+- generated reports or adapted-from source packets that informed an update;
 - accepted merge-back or promotion events;
 - stale selectors and refresh reasons;
 - regeneration commands or responsible producers;
@@ -107,14 +107,14 @@ Derivative content needs an update mechanism before automation scales:
 | derivative class | update mechanism |
 |---|---|
 | Cheap report instance | Regenerate from current inputs; old instance can disappear. |
-| Durable analysis derived from source | Re-run or re-distill when source revision, snapshot, or relevant KB context changes; preserve old analysis only if it remains historically useful. |
+| Durable analysis derived from source | Re-run or rework when source revision, snapshot, or relevant KB context changes; preserve old analysis only if it remains historically useful. |
 | Canonical artifact changed by merge-back | Detect stale source/report dependencies, regenerate candidates, apply a new merge-back edit, validate, and record the update event. |
 | Review freshness state | Compare current note/criterion/model inputs to accepted DB lineage; rerun or acknowledge. Verdict pairs carry decisions; report pairs carry current evidence without endorsement. |
 | Deterministic generated view | Rebuild and validate; do not hand-edit. |
 | Behavior-facing compiled view | Regenerate from authoritative sources or mark stale; direct edits must either flow back to source or stay candidate-stage. |
-| Ad-hoc distillation | If reused, promote into a typed report, instruction, skill, or workshop artifact with lineage; otherwise discard. |
+| Adapted-from artifact | If reused, promote into a typed report, instruction, skill, or workshop artifact with lineage; otherwise discard. |
 
-For judgmental derivatives, update usually means re-distillation, not patching. The new artifact may be better and still not reproduce the old one. That is acceptable if the system preserves the source or a stable pointer to it and records enough lineage to explain why regeneration was triggered.
+For judgmental derivatives, update usually means rework, not patching. The new artifact may be better and still not reproduce the old one. That is acceptable if the system preserves the source or a stable pointer to it and records enough lineage to explain why regeneration was triggered.
 
 ## Automation Boundary
 

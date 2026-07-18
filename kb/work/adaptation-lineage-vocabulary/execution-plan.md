@@ -17,8 +17,10 @@ Checkpoint, not new work: `vocabulary-spec.md` is final, including recording dir
   
 - Add the semi-technical-prose-vs-registered-identifier convention to `AGENTS.md` (currently absent), and resolve `AGENTS.md.template`'s disposition — the one item carried over from the workshop's original decisions list.
   
-## 4. Correct all classified corpus sites
+## 4. Correct all classified corpus sites — done
 Gated on §3 landing (each fix applies now-authorized vocabulary, not vocabulary nobody may write yet). Four dispatchable units, not one per site — but keep the semantic/mechanical split, since it's information the delegate command needs, not just plan bookkeeping.
+
+All four units are complete. The methodology→procedure pair was corrected in the first pass; the remaining semantic corpus sites, lower-judgment corrections, stale conjecture footer, and the reported `Extraction`-footer investigation are recorded in the working tree. No generator fix was made because the reported footer surface could not be reproduced and no emitter was found.
 
 **[Delegatable — one command]** Single coherent pass: `kb/notes/skills-derive-from-methodology.md` + `kb/instructions/write-instruction.md:42` describe the same pairing rule and must stay mutually consistent — reclassify both together from `derived-from` to `operationalized-from`. Neither note's content needs rewriting, only the label and footer heading.
 

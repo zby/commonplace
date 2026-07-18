@@ -22,7 +22,7 @@ Retrieval surfaces should also be allowed to say "the evidence is weak." Returni
 - Evidence-sufficiency signals that report weak coverage, low agreement, low diversity, or low confidence before the agent overuses a thin retrieval result.
 - Retrospective episodes for "what happened when we tried this?" questions.
 - Active [workshops](../a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) or work-surface artifacts for current state, unresolved alternatives, task queues, experiments, and discussion threads.
-- Trace excerpts for audit and re-derivation when compressed memory is insufficient.
+- Trace excerpts for audit and reconstruction when compressed memory is insufficient.
 
 ## Failure Modes
 

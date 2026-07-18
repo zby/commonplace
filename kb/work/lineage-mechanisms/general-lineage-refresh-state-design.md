@@ -74,7 +74,7 @@ Examples:
 | agent-memory-system review | review file path, external repo URL, reviewed revision, optional model | source is an external git repository, not a KB snapshot |
 | generated index | index path, index contract | deterministic copy of library state should be checked or rebuilt |
 | merge-back event | canonical artifact path, source report/event ids | canonical artifact was revised from previous version plus generated evidence |
-| ad-hoc distillation | retained packet path or id, source set, prompt/spec | retained one-off source shaping may later need promotion or refresh |
+| adapted-from artifact | retained packet path or id, source set, prompt/spec | retained one-off source shaping may later need promotion or refresh |
 
 The target key should be stable enough for lookup, but not pretend every target has the same shape. Store target keys as structured data, not concatenated strings. Review's `(note_path, criterion_path, model_partition)` key is the first path-keyed target-kind schema, not the universal schema. `criterion_path` is the criterion document's repo-relative path; shorthands such as `prose/source-residue` are display or CLI conveniences, not the persisted identity.
 
@@ -89,7 +89,7 @@ Core event fields:
 | `target_kind` / `target_key` | what freshness target this event updates |
 | `event_kind` | `full-refresh`, `ack`, `merge-back`, `manual-override`, `migration-import`, `retire` |
 | `output_ref` | file path, DB row, external revision, or null for pure ack |
-| `operation_kind` | review, connect, source-ingest, index-build, merge-back, ad-hoc-distillation |
+| `operation_kind` | review, connect, source-ingest, index-build, merge-back, adapt |
 | `producer` | command, skill, agent, migration, or human operator |
 | `model_partition` | declared model-side partition when the target or event is model-specific |
 | `producer_model` | optional literal observed model, when available after execution |

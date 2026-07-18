@@ -31,7 +31,7 @@ A single prompt edit looks small, but a library of tips, schemas, tools, and tes
 
 ## Mechanisms
 
-Two operators drive the updates: [constraining](./definitions/constraining.md) (narrowing the interpretation space) and condensing (re-compressing prior reasoning into task-ready artifacts). [Codification](./definitions/codification.md), the far end of constraining, is where prompts undergo a phase transition into deterministic code. Both are reversible: commitments tighten along [the verifiability gradient](./verifiability-gradient.md) when cross-run patterns make them safe, and loosen when new evidence shows them wrong. A system that can only tighten ratchets itself into brittleness.
+Two operators drive the updates: [constraining](./definitions/constraining.md) (narrowing the interpretation space) and adaptation (reshaping prior reasoning into task-ready artifacts). [Codification](./definitions/codification.md), the far end of constraining, is where prompts undergo a phase transition into deterministic code. Both are reversible: commitments tighten along [the verifiability gradient](./verifiability-gradient.md) when cross-run patterns make them safe, and loosen when new evidence shows them wrong. A system that can only tighten ratchets itself into brittleness.
 
 ## Co-evolving prose and code
 

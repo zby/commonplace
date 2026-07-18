@@ -61,6 +61,6 @@ Relevant Notes:
 - [information value is observer-relative](./information-value-is-observer-relative.md) — grounds: the recognition cost hierarchy maps to computational bounds on structure extraction
 - [minimum viable vocabulary](./minimum-viable-vocabulary-is-the-naming-set-that-most-reduces.md) — grounds: MVV reframes "naming amortizes discovery cost" as an optimization problem
 
-Derived into:
+Operationalized into:
 
-- [/connect skill](../instructions/cp-skill-connect/SKILL.md) — the "name the mechanism" insight is operationalized as abstraction opportunity logging in Phase 5 reflection
+- [/connect skill](../instructions/cp-skill-connect/SKILL.md) — the recognition claim is operationalized as the skill's articulation test for a specific connection reason

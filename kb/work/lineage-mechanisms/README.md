@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Design the general lineage mechanism for Commonplace's growing set of derived materials: source ingests, connect reports, critique reports, review outputs, generated indexes, compiled views, skills, cue surfaces, source-to-source comparisons, agent-memory-system reviews over external repositories, ad-hoc distillations, merge-back edits, and future automatic derivations.
+Design the general lineage mechanism for Commonplace's growing set of derived materials: source ingests, connect reports, critique reports, review outputs, generated indexes, compiled views, skills, cue surfaces, source-to-source comparisons, agent-memory-system reviews over external repositories, adapted-from artifacts, merge-back edits, and future automatic derivations.
 
 The critical requirement is automation. Commonplace should become more bitter-lesson-compatible by letting agents generate, check, refresh, route, and merge more derived material automatically. The lineage mechanism is the substrate that makes that safe: it records what a retained artifact depends on, what role it plays, when it is stale, whether it can be regenerated, whether it belongs in git, and why source material remains necessary even when a derivative is more useful for a specific consumer.
 
@@ -16,7 +16,7 @@ In scope:
 - storage-weight rules for lineage state: frontmatter/prose, commit history or a shared event surface, edge files, generated indexes, or database;
 - git-retention rules for sources, report contracts, cheap generated reports, durable analyses, deterministic views, high-churn state, and merge-back provenance;
 - model-provenance policy for one-shot derivatives, generated reports, reviews, durable source analyses, and canonical notes revised through many events;
-- ad-hoc distillation and source-preservation rules;
+- adapted-from source shaping and source-preservation rules;
 - source/linking policy follow-up for contrast, parallel-mechanism, inverse-lineage, and source-to-source comparison cases.
 
 Out of scope:
@@ -59,9 +59,9 @@ Close this workshop by extracting durable artifacts for these decisions:
 - an explicit storage-weight rule based on the many-to-many/churning-edge predicate;
 - a retention policy for which automatic derivations are committed, gitignored, stored in a state store, summarized into durable artifacts, or discarded after merge-back;
 - a model-provenance rule for derivative artifacts and derivation events, without turning canonical notes into "last edited by model" records;
-- a merge-back lineage model for note edits driven by connect reports, reviews, critique reports, source ingests, or ad-hoc distillations;
+- a merge-back lineage model for note edits driven by connect reports, reviews, critique reports, source ingests, or adapted-from source shaping;
 - a source-preservation rule for snapshots, external git-backed sources, reviewed revisions, citations, and cases where the derivative cannot replace the source;
-- an ad-hoc distillation rule for one-off prompts, source packets, and workshop artifacts that may later be reused, promoted, or extracted into skills;
+- an adapted-from rule for one-off prompts, source packets, and workshop artifacts that may later be reused, promoted, or extracted into skills;
 - updates or proposals for `kb/sources/COLLECTION.md`, `kb/reference/link-vocabulary.md`, or report-type contracts if the transferred cases require new link labels or promotion expectations.
 
 ## Transferred Case Backlog
