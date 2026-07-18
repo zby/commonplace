@@ -151,5 +151,5 @@ Relevant Notes:
 - [ADR 020 — theoretical-default additions (contrasts, mechanism)](./adr/020-theoretical-default-contrasts-mechanism.md) — rationale: the audit outcomes adding `mechanism` and `contrasts` and stating directional asymmetry
 - [Links encode conditional possibilities, not obligations](../notes/links-encode-conditional-possibilities-not-obligations.md) — rationale: the reader-need theory behind the label test
 - [Theory and methodology form a two-layer execution system](../notes/theory-and-methodology-form-a-two-layer-execution-system.md) — rationale: the maintenance regime the derived side of the lineage semantics asserts
-- [Collisions among load-bearing technical senses should be prevented or visibly scoped at write time](../notes/vocabulary-collisions-prevented-at-write-time-not-read-time.md) — rationale: why the derived/abstracted boundary is drawn at labelled edges rather than in prose
+- [Load-bearing vocabulary collisions should be prevented or visibly scoped at write time](../notes/vocabulary-collisions-prevented-at-write-time-not-read-time.md) — rationale: why the derived/abstracted boundary is drawn at labelled edges rather than in prose
 - [Register](../notes/definitions/text-contract.md) — defined-in: content-mode groupings used to organise the catalogue

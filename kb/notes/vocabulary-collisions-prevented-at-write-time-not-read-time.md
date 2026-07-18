@@ -5,7 +5,7 @@ traits: [title-as-claim]
 tags: [computational-model]
 ---
 
-# Collisions among load-bearing technical senses should be prevented or visibly scoped at write time
+# Load-bearing vocabulary collisions should be prevented or visibly scoped at write time
 
 The difficulty of using technical terms in a knowledge base comes from prose offering no reliable, mechanically enforced namespace for an unqualified technical sense. In the risk model proposed here, a technical sense is **load-bearing** when misresolving it changes what an agent does, which maintenance regime applies, what authority a claim carries, or whether a fallback is licensed. Symbolic systems keep identifiers apart with scope: two `map`s in different namespaces need not collide because formal position participates in resolving meaning. Prose can delimit readings through grammar and context, but those cues are conventional and fallible. In that model, a lexical technical sense without a visible clause frame or schema position therefore binds *globally and weakly*:
 
