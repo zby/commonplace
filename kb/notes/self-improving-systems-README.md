@@ -10,7 +10,7 @@ complete: true
 
 A [self-improving system](./definitions/self-improving-system.md) makes operative changes to its own behavior-determining organization in response to evidence about an improvement objective. The definition is deliberately broad — a weight-level learner qualifies, and so does a dev team. The distinction that carries the design information is whether the improvement pathway is **reflective** — routed through a self-representation — or not. Most systems in [agent-memory-systems](../agent-memory-systems/README.md) mine their traces for lessons and load them into later runs — a bid at the reflective kind that succeeds only when the loaded lessons function as a representation of the system's own behavior, not just accumulated knowledge.
 
-The cluster's stake is a trajectory claim, not a payoff claim: [the contested thesis is that the loop is closing](./the-contested-self-improvement-thesis-is-that-the-loop-is-closing.md) — the human share of the improvement pathway shrinking over time — while the sample-efficiency payoff, conditional on closure, is the comparatively intuitive half. The trajectory is hard to observe directly because autonomy gains are spent as expanded scope at roughly fixed human time.
+The cluster's stake is a trajectory claim, not a payoff claim: [the contested thesis is that the loop is closing](./the-contested-self-improvement-thesis-is-that-the-loop-is-closing.md) — the human share of the improvement pathway shrinking over time — while the sample-efficiency payoff, conditional on the loop closing, is the comparatively intuitive half. The trajectory is hard to observe directly because autonomy gains are spent as expanded scope at roughly fixed human time.
 
 ## Why reflection might pay
 
