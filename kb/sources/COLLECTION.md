@@ -32,7 +32,7 @@ The ingest skill picks the snapshot backend by URL (GitHub API for issues/PRs, X
 
 ## Outbound links
 
-**Snapshots are immutable.** Don't add, edit, or annotate after capture — whatever links the original content carried stay as captured, and we never author new ones into a snapshot. Running connect on a snapshot still works (connect never mutates its target) and is useful: the report's authoring signal is reverse-edge — which library notes (typically in `kb/notes/`) should add `evidence` or `derived-from` links pointing at this snapshot.
+**Snapshots are immutable.** Don't add, edit, or annotate after capture — whatever links the original content carried stay as captured, and we never author new ones into a snapshot. Running connect on a snapshot still works (connect never mutates its target) and is useful: the report's authoring signal is reverse-edge — which library notes (typically in `kb/notes/`) should add `evidence` or `abstracted-from` links pointing at this snapshot.
 
 **Ingest reports and source reviews** carry the active outbound surface — the analysis cites where the source lands in the rest of the KB. Inline for strongest commitment, with a connective word that fits (e.g. `as in [title](path)`); footer for labelled — `- [title](path) — label: context phrase`.
 
@@ -43,7 +43,7 @@ Scan `kb/notes/`, `kb/reference/`, `kb/agent-memory-systems/`, `kb/agentic-syste
 | label | destinations | reader-need |
 |---|---|---|
 | `evidence` | notes | this source corroborates the claim |
-| `derived-from` | notes | this claim was abstracted from this source |
+| `abstracted-from` | notes | this claim was abstracted from this source |
 | `rationale` | notes | this design or rule rests on this claim |
 | `compares-with` | sources, agent-memory, agentic-systems | this source covers a similar/parallel system |
 | `defined-in` | notes/definitions | reader may not know the term |

@@ -31,7 +31,7 @@ Scan `kb/notes/`, `kb/reference/`, `kb/agent-memory-systems/`, `kb/agentic-syste
 | label | destinations | reader-need / when to use |
 |---|---|---|
 | `extends`, `grounds`, `mechanism`, `contradicts`, `contrasts` | notes | theoretical-shaped (see `kb/reference/link-vocabulary.md`) |
-| `evidence`, `derived-from` | reference, agent-memory, agentic-systems, sources | this artifact corroborates / the workshop was abstracted from this |
+| `evidence`, `abstracted-from` | reference, agent-memory, agentic-systems, sources | this artifact corroborates / the workshop was abstracted from this |
 | `rationale` | notes | this design or rule rests on this claim |
 | `defined-in` | notes/definitions | reader may not know the term |
 | `draws-on`, `tests`, `depends-on`, `produces`, `supersedes` | any | working-state labels — use whichever fits the workshop's progress |
