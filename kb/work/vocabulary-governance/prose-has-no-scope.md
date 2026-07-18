@@ -21,5 +21,5 @@
 ## Open policy work (this workshop)
 
 - Where to encode the naming rule: the vocabulary-policy output of this workshop, `cp-skill-write`'s naming guidance, or both.
-- Write-time enforcement of the uniqueness invariant: extend `cp-skill-write`'s cheap duplicate check to a sense-collision check, or add a naming-review gate.
+- Write-time enforcement of the uniqueness invariant: the candidate mechanisms (reserved-term registry, slot-escape lint, coinage collision screen, naming-review gate, clausal-binding link check) are now collected in [write-time vocabulary collision controls](../../reference/proposals/write-time-vocabulary-collision-controls.md); this workshop keeps the policy question of where the controls read their term list from.
 - Whether collection-local vocabulary is compatible with the invariant at all (safe only for terms that cannot co-load with a colliding sense, or are coined so collision is impossible).
