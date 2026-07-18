@@ -52,6 +52,7 @@ Relevant Notes:
 - [spec-mining-as-codification](./spec-mining-as-codification.md) — enables: the manufacturing step for building oracles where none exist
 - [error-correction-works-above-chance-oracles-with-decorrelated-checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — enables: amplifying weak oracles into useful ones
 - [fixed artifacts split into exact specs and proxy theories](./fixed-artifacts-split-into-exact-specs-and-proxy-theories.md) — foundation: the binary distinction this note refines — exact-spec artifacts have stronger verification surfaces than proxy theories
+- [An improvement loop closes by converting improvised decisions into governed machinery](./an-improvement-loop-closes-by-converting-improvised-decisions.md) — contrasts: the dynamic reading of this boundary — in a self-improving loop the frontier moves as per-decision conversions harden oracles and settle meta-decisions
 - [Tam et al. — "When code is free"](https://x.com/amytam01/status/2031072399731675269) — evidence: labor-economics argument that engineering automates (hard oracle) while research taste resists (no oracle)
 - [Amodei interview](https://www.dwarkesh.com/p/dario-amodei-2) — evidence: frontier-lab CEO's confidence split tracks oracle strength, not capability
 - [in-toto: Providing farm-to-table guarantees for bits and bytes](../sources/in-toto-farm-to-table-guarantees.md) — evidence: supply-chain trust decisions become automatable when the chain is represented as signed, hash-checkable metadata with cheap final verification
