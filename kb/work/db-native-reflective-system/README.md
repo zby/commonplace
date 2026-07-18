@@ -47,6 +47,7 @@ Out of scope:
 
 - [README.md](./README.md) — this framing
 - [freshness-schema-as-starting-skeleton.md](./freshness-schema-as-starting-skeleton.md) — first pass: what the shipped freshness/review tables already give for free, and the gap list against the two completeness checklists
+- [generalized-schema-draft.md](./generalized-schema-draft.md) — second pass: one candidate schema (artifact / versioned content / current head / opt-in-tracked edge) drafted against the gap list, with what doesn't fit named explicitly (browsing/agent access, diff storage, rename tracking, the type-registry bootstrap seam)
 
 ## What closes the workshop
 
