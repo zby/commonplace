@@ -8,7 +8,7 @@ complete: true
 
 # Self-improving systems
 
-A [self-improving system](./definitions/self-improving-system.md) makes operative changes to its own behavior-determining organization in response to evidence about an improvement objective. The definition is deliberately broad — a weight-level learner qualifies, and so does a dev team. The design information is in whether an improvement pathway is **reflective** — routed through a self-representation — or not. Most systems in [agent-memory-systems](../agent-memory-systems/README.md) mine their traces for lessons and load them into later runs — a bid at the reflective kind that succeeds only when the loaded lessons function as a representation of the system's own behavior, not just accumulated knowledge. The sections below follow the cluster's argument in order: the loop, what reflection adds to it, the closing-loop thesis, and the gradings that place a system.
+A [self-improving system](./definitions/self-improving-system.md) makes operative changes to its own behavior-determining organization in response to evidence about an improvement objective — a deliberately broad category: a weight-level learner qualifies, and so does a dev team. This cluster studies how reflective improvement loops — those routed through a self-representation — become progressively more closed: how decisions in search, evaluation, and retention move from improvised human intervention into representations, procedures, and checks the system can operate itself. The sections follow that argument in order. (Most systems in [agent-memory-systems](../agent-memory-systems/README.md) mine traces for lessons — a bid at the reflective kind that succeeds only when the loaded lessons function as a representation of the system's own behavior.)
 
 ## The improvement loop
 
@@ -35,7 +35,7 @@ Since membership is cheap, a system is placed by [three independent gradings](./
 - **Coverage** — [reflective coverage is graded across representational forms](./reflective-coverage-is-graded-across-representational-forms.md).
 - **Closure** — [a methodology governs its own extension only as far as it settles the meta-decisions it raises](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md).
 
-Autonomy — how much of a pathway runs without a person — is worth reporting but is not a fourth placement: under Commonplace's strictly computational boundary a reflective pathway is thereby autonomous, [since admitting a human into the boundary would only trade that precision for a separate axis](./admitting-a-human-into-the-boundary-trades-reflectivity-for-autonomy.md); non-reflective pathways are graded human-inclusive or autonomous directly. What costs is **warrant**, trusting what an unattended loop accepts: [warranted autonomy is bounded by oracle domain](./warranted-autonomy-is-bounded-by-oracle-domain.md).
+Autonomy — how much of a pathway runs without a person — is reported per pathway, not tracked as a fourth grading: under the cluster's strictly computational boundary a reflective pathway is autonomous by definition, [since admitting a human into the boundary would only trade that precision for a separate axis](./admitting-a-human-into-the-boundary-trades-reflectivity-for-autonomy.md). The practical limit on unattended operation is oracle reach: [warranted autonomy is bounded by oracle domain](./warranted-autonomy-is-bounded-by-oracle-domain.md).
 
 ## Example placements
 
@@ -46,7 +46,7 @@ Autonomy — how much of a pathway runs without a person — is worth reporting 
 
 Read every claim at its stated strength: the definitions are stipulated and revisable, the closing-loop thesis and its payoffs are hypotheses, and whether they hold is the open empirical question the cluster sharpens.
 
-## Further notes under the tag
+## Supporting notes — definitions, boundary cases, qualifications
 
 - [Measuring autonomy well enough to see it improve is an open problem](./measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md) — the per-function grading tells you where a system sits, but not whether it is getting more autonomous or how it compares to a differently-decomposed system.
 - [Behavior-determining organization](./definitions/behavior-determining-organization.md), [operative change](./definitions/operative-change.md), [evidence bearing on an improvement objective](./definitions/evidence-bearing-on-an-improvement-objective.md) — the definition's three base terms.
