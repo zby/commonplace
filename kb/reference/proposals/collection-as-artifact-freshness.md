@@ -73,7 +73,7 @@ One target per casebook (lhc, eggs, COVID):
 
 ## Relation to document-set specs
 
-The [bulk-operations workshop](../../work/bulk-operations/README.md) frames the more general problem. Structures bigger than a single document need a **document-set spec**: membership rule, member types, cross-member obligations, derived views, set-level validation, and lineage to the corpus so a diff yields a targeted refresh list. Bulk operations consume that spec through select → shard → execute → validate → close.
+The bulk-operations workshop frames the more general problem. Structures bigger than a single document need a **document-set spec**: membership rule, member types, cross-member obligations, derived views, set-level validation, and lineage to the corpus so a diff yields a targeted refresh list. Bulk operations consume that spec through select → shard → execute → validate → close.
 
 This proposal is deliberately narrower. `collection-text` answers only whether the *set of files* in a collection directory changed since last acceptance. `collection-maintenance` registers a coarse casebook tripwire — not which downstream artifacts are obligated to track that membership (for example which `.ingest.md` files must keep `Connections Found` current). Epistack ingest decay is a set-level obligation failure; a document-set spec would encode and validate the obligation; collection freshness only signals that casebook maintenance may be due.
 

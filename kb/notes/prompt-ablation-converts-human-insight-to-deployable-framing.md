@@ -31,7 +31,7 @@ When a human reviewer catches something an agent missed, the finding is oracle-s
 
 The experiment uses the human's finding as a hard oracle — a clear, verifiable target — to evaluate a soft question: which prompt framing elicits the right reasoning? Without the known target, there's no scoring criterion. Without mechanism analysis, there's a score but no transferable understanding. This is the [oracle-strength spectrum](./oracle-strength-spectrum.md) applied to experimental design: a hard oracle making a soft question answerable.
 
-The conversion from human insight to agent framing is inherently lossy. The human's reasoning may be oracle-strength ("what discriminative power could this verifier have?") while the agent's successful path is a weaker approximation ("what's the simpler alternative?"). The [curiosity-prompts experiment](../work/curiosity-prompts/experiment-report.md) showed this: cost/benefit reliably reached the target finding (2/2) but through a less powerful reasoning path than the human used. The deployed framing trades depth for reliability — good enough, not equivalent.
+The conversion from human insight to agent framing is inherently lossy. The human's reasoning may be oracle-strength ("what discriminative power could this verifier have?") while the agent's successful path is a weaker approximation ("what's the simpler alternative?"). The curiosity-prompts experiment showed this: cost/benefit reliably reached the target finding (2/2) but through a less powerful reasoning path than the human used. The deployed framing trades depth for reliability — good enough, not equivalent.
 
 ## Design constraints
 
@@ -62,4 +62,3 @@ Relevant Notes:
 
 - [oracle-strength-spectrum](./oracle-strength-spectrum.md) — grounds: the experiment pattern uses a hard oracle (known finding) to evaluate a soft question (which framing works?)
 - [unit-testing-llm-instructions-requires-mocking-the-tool-boundary](./unit-testing-llm-instructions-requires-mocking-the-tool-boundary.md) — complements: tests skill execution via tool mocking; this note tests prompt framings via ablation against known targets
-- [curiosity-prompts experiment](../work/curiosity-prompts/experiment-report.md) — worked example: 6 framings tested against a known Decapod finding

@@ -73,7 +73,7 @@ Letting a type opt out of link health or verbatim-quote resolution would be a kn
 
 ## Open
 
-[ADR 050](./adr/050-validation-runs-share-parsed-artifacts-and-collection-indexes.md) gives referential checks a shared execution context: one validation run caches parsed artifacts and collection tag indexes and builds the authored-link graph once. It does not give Markdown elements a shared positioned representation. Link health and verbatim-quote resolution remain separate hand-written passes; they share one notion of code (`note_parser.blank_fenced_code_blocks`), but `ParsedDocument.links` is still a tuple of URLs with no spans, so the quote checker carries its own link regex. A third positioned referential check could still mean a third parser. Tracked in [kb-graph-loader](../work/kb-graph-loader/README.md): a `LoadedNote` carrying *positioned* elements is what would retire those private parsers.
+[ADR 050](./adr/050-validation-runs-share-parsed-artifacts-and-collection-indexes.md) gives referential checks a shared execution context: one validation run caches parsed artifacts and collection tag indexes and builds the authored-link graph once. It does not give Markdown elements a shared positioned representation. Link health and verbatim-quote resolution remain separate hand-written passes; they share one notion of code (`note_parser.blank_fenced_code_blocks`), but `ParsedDocument.links` is still a tuple of URLs with no spans, so the quote checker carries its own link regex. A third positioned referential check could still mean a third parser. Tracked in the kb-graph-loader workshop: a `LoadedNote` carrying *positioned* elements is what would retire those private parsers.
 
 ---
 
