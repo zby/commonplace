@@ -48,7 +48,7 @@ Draft scheme, workshop register. The aim is one frame in which every error-catch
 
 ## Open questions
 
-- Is catch-rate *decay* per gate actually observable in the store yet (enough longitudinal data per gate), or does absorption tracking need more history?
+- Is catch-rate *decay* per gate actually observable in the store yet (enough longitudinal data per gate), or does absorption tracking need more history? *Partially answered 2026-07-18 ([gate-stats](./gate-stats.md)): absorption is visible in shape within the codex partition (75% → 7% across the sweep-and-fix cycle) but per-gate decay needs more history, and any trend query must condition on partition — reviewer variance across partitions (luna 34.3% vs sol 13.8% on identical text) is first-order.*
 - What is the trigger vocabulary for conversational-correction capture — can a session-end sweep classify correction events reliably, and at what false-positive cost (per claim D, the harvester itself needs an exhaust check)?
 - Does the fresh-context-critique-for-reports idea earn a gate, or is it an operator habit not worth codifying (the quality bar cuts both ways)?
 - Which of the missing/proposed rows earn proposals now versus a named deferral — the grid makes the gaps visible; it does not rank them.

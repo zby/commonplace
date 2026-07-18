@@ -11,6 +11,7 @@ Started 2026-07-18 from the distillation-migration retrospective ([rename-lesson
 ## Threads
 
 - [systematisation.md](./systematisation.md) — the draft scheme: two axes (lens breadth × detection site), the technique catalogue with economics, the governing claims, and the gaps the grid exposes
+- [gate-stats.md](./gate-stats.md) — first execution of the telemetry row (2026-07-18): the activation gap quantified (29.6% first-encounter catch, 67% peak, mechanical lenses catch 2–3× judgment lenses), the fix loop's 79% one-cycle resolution, within-partition absorption after the April sweep, the luna/sol 2.5× reviewer-variance finding, and three coverage-bet failures awaiting adjudication
 
 ## What closes this workshop
 
