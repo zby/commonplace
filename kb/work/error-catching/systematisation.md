@@ -1,0 +1,53 @@
+# A systematisation of error-catching techniques
+
+Draft scheme, workshop register. The aim is one frame in which every error-catching technique the system uses (or should use) has a place, explicit economics, and a named oracle — so that gaps are visible as empty cells rather than as unfelt absences.
+
+## Governing claims
+
+**A. Author self-check is the floor, and it is low.** Write-time attention is on the content, so even trivially-known rules get violated in fresh writing — the expert-witness pattern of [knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) operating on the writer. The gate catch-rate data quantifies it: `undefined-terms` fires on 67% of encounters, `clause-packing` on 59%, across a corpus written by models that state both rules correctly when probed (store stats, 2026-07-18, 9,286 verdicts). Every technique below exists because self-spotting cannot be the trigger; "notice when you make a mistake" presupposes the capacity whose absence is the problem.
+
+**B. Detection is a two-layer execution system.** The predefined-detector catalogue (validators, gates) is the fast path: cheap, narrow, covering the known region of mistake-space. A high-reach general detector — today the human operator, weakly assisted by open-ended critique — is the retained generator layer, catching corner cases outside every predefined lens. Per [theory and methodology form a two-layer execution system](../../notes/theory-and-methodology-form-a-two-layer-execution-system.md): the mistake distribution is open-ended, so the fast path never converges to coverage and the general layer ships permanently; recurrence is the promotion signal (mistake class noticed → recurs → becomes a gate — the fix-strategy taxonomy's "3+ instances" rule is this doctrine verbatim); each promoted detector carries a coverage bet adjudicated by its catch rate; and the promotion criterion is testable — a mistake class is absorbed when its gate's catch rate on new writing decays toward zero, and a gate at 0% for its lifetime (`title-as-claim`, 0/66) is a failing coverage bet.
+
+**C. Detection cost is asymmetric: mistakes are dense and silent, corrections are sparse and loud.** Detecting a novel mistake in a trace is expensive (it requires reach). Detecting that *the operator just corrected the agent* is nearly free — a correction is a syntactically loud, sparse event, and the general-layer detection it records already happened at zero marginal cost in the flow of work. So the cheap automation target is never "find mistakes" but "capture detections that already occurred" and count recurrence.
+
+**D. Improvement processes emit second-order exhaust.** Every first-order loop observed in the migration produced its own new error class: gate-driven fixing eroded dated evidence, renames orphaned freshness baselines, parallel executors emitted phantom findings, a mechanical retitle pass garbled its own output anchors. Detectors are therefore needed one level up from whatever loop is being automated, and automating a loop without its second-order consumer increases exhaust while removing the human who was catching it.
+
+**E. Oracle strength bounds every cell.** Per [the boundary of automation is the boundary of verification](../../notes/the-boundary-of-automation-is-the-boundary-of-verification.md) and the [oracle-strength spectrum](../../notes/oracle-strength-spectrum.md): a technique automates only as far as its oracle reaches, and [warranted autonomy is bounded by oracle domain](../../notes/warranted-autonomy-is-bounded-by-oracle-domain.md) — which is why the strongest-oracle techniques (deterministic checks) run unattended, while acceptance decisions concentrate where the oracle is the human.
+
+## The two axes
+
+- **Lens breadth**: from a predefined single distinction (a gate is a focused-attention allocator for exactly one) to open-ended reach (nothing pre-decided about what counts as wrong).
+- **Detection site**: where the detecting work runs — write-time (before/at commit), scheduled review (snapshot-anchored passes), event harvest (consuming detections produced by the flow of work), use adjudication (errors surfacing as measured consequences).
+
+## The catalogue, placed
+
+| Technique | Lens | Site | Oracle | Economics | Status |
+|---|---|---|---|---|---|
+| Deterministic validators (schema, link health, `covered_by`/`complete` marks) | closed | write-time | mechanical | ~free per run; catches only what is codified | shipped |
+| Derived-copy checks ([checked or absent](../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md)) | closed | write-time | mechanical | free; the recomputable-copy discipline | shipped |
+| Review gates (closed-ended assays) | closed | scheduled | LLM judgment | cheap per pair; value proven by catch rates on "obvious" rules (15–67%) | shipped |
+| Type/collection conformance pairs | closed (contract as lens) | scheduled | LLM judgment | criterion-side staleness ties detection to contract edits | shipped |
+| Semantic review generally ([what structural validation cannot catch](../../notes/semantic-review-catches-content-errors-that-structural-validation.md)) | closed-per-gate | scheduled | LLM judgment | the fast path's judgment tier | shipped |
+| Open-ended critique assay | open | scheduled | LLM judgment | weak per-issue activation — the same expert-witness gap gates were built to bypass; currently the only automated reach instrument | shipped, opt-in |
+| Composition-friction gate | open-ish | scheduled | LLM judgment | routes attention without entering baselines | shipped |
+| Fresh-context operator read | open | event (flow of work) | human | highest reach; unpolluted context is part of the power, not just human judgment; not discardable (claim B) | permanent |
+| Correction harvesting | n/a (capture, not detection) | event harvest | human (already exercised) | cheap: corrections are sparse and loud; feeds promotion (claim C) | **missing** — conversational-correction variant of [gate learning from accepted edits](../../reference/proposals/gate-learning-from-accepted-edits.md), which mines the accepted-diff signal and already designs the candidate/quarantine/retire lifecycle both variants need |
+| Telemetry aggregation (catch-rate stats, verdict-instability sweeps) | closed queries over the detector system itself | scheduled | mechanical over judgment-outputs | store queries; adjudicates coverage bets, flags drifting terms (WARN/INFO oscillation), retires dead gates | **missing** — data accumulating since 2026-03 with no consumer until asked |
+| Self-application rule (run a newly promoted rule on its introducing documents and enforcement surfaces) | closed | write-time, at promotion | LLM judgment | one-shot per promotion; would have caught the COLLECTION.md gloss instructing writers to mis-label | **missing** |
+| Second-order guards (evidence-erosion check on fix passes; well-formedness check on mechanical edit output) | closed | write-time, on the improving pass's output | mixed | cheap; required by claim D before any loop is automated | **missing** |
+| Use adjudication (fallback rates, relaxing signals, downstream damage) | open by nature | use | behavior over time | slowest and most expensive in consequences; the only detector for what nobody noticed | partially shipped (conceptual metrics, mostly uninstrumented) |
+
+## What the grid exposes
+
+1. **The open-lens column is thin and expensive.** Between the weak critique assay and the irreplaceable operator there is nothing. The cheap partial substitute suggested by the migration experience: fresh-context critique of *decision-bearing artifacts* at commit time (reports, plans — the one workshop genre worth reviewing), exploiting that part of the operator's power is just an unpolluted context.
+2. **The capture step is the cheapest missing piece.** Claim C says the input pipeline to promotion can be automated without automating noticing. Two signal sources, one lifecycle: accepted-edit diffs (existing proposal) and conversational corrections (this workshop's addition).
+3. **The detector system has no detector.** Telemetry aggregation is the second-order consumer for the review system itself — coverage-bet adjudication, absorption tracking (catch-rate decay), drifting-term alarms. All queries over data already persisted.
+4. **Nothing guards the guards' side effects.** Claim D's exhaust classes each need a named check before their generating loops run unattended; [false-positive generation is filtered before retention](../../notes/false-positive-generation-is-filtered-before-retention.md) gives the general form — evaluation is the terminal filter, and it must cover the improver's own output.
+5. **The maintained-vs-opportunistic tension dissolves in the two-layer frame.** The gate-learning proposal's open question — does review converge toward a maintained registry or stay open-ended by design — is claim B restated: the registry is the fast path and *should* converge only over the recurrent region; opportunistic single-aspect lenses are general-layer probes and should stay open-ended. The hybrid it sketches is not a compromise but the predicted architecture.
+
+## Open questions
+
+- Is catch-rate *decay* per gate actually observable in the store yet (enough longitudinal data per gate), or does absorption tracking need more history?
+- What is the trigger vocabulary for conversational-correction capture — can a session-end sweep classify correction events reliably, and at what false-positive cost (per claim D, the harvester itself needs an exhaust check)?
+- Does the fresh-context-critique-for-reports idea earn a gate, or is it an operator habit not worth codifying (the quality bar cuts both ways)?
+- Which of the four missing rows earn proposals now versus a named deferral — the grid makes the gaps visible; it does not rank them.
