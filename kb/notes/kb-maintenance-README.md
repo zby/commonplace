@@ -18,7 +18,7 @@ How an agent-operated KB stays healthy as it grows. Detection, operations, and t
 ## Detection
 
 - [quality-signals-for-kb-evaluation](./quality-signals-for-kb-evaluation.md) — composite oracle from graph-topology, content-proxy, and LLM-hybrid signals; the evaluation layer the learning loop needs
-- [notes-need-quality-scores-to-scale-curation](./notes-need-quality-scores-to-scale-curation.md) — note quality scores (status, type, inbound links, recency) filter /connect candidates as the KB grows
+- [notes-need-quality-scores-to-scale-curation](./notes-need-quality-scores-to-scale-curation.md) — recomputable note scores (type, inbound links, review vetting, recency) filter /connect candidates and truncate budget-bounded listings as the KB grows
 - [semantic-review-catches-content-errors-that-structural-validation-cannot](./semantic-review-catches-content-errors-that-structural-validation.md) — four semantic checks (enumeration completeness, grounding alignment, boundary-case coverage, internal consistency) that require LLM adversarial reading
 - [link-graph-plus-timestamps-enables-make-like-staleness-detection](./link-graph-plus-timestamps-enables-make-like-staleness-detection.md) — existing links encode dependencies; comparing note and target timestamps flags staleness without new annotation
 - [stale-indexes-are-worse-than-no-indexes](./stale-indexes-are-worse-than-no-indexes.md) — a missing index entry suppresses search entirely; absence of an index degrades to search, presence of a stale index prevents it

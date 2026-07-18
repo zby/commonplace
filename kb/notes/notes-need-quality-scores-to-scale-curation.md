@@ -19,6 +19,8 @@ The fix is a quality score per note that lets /connect filter and rank candidate
 
 **Inbound link count** is a social proof signal. A note that many other notes link to has been repeatedly judged worth connecting to. This is the graph-topology version of citation count. But it must be weighted by [link strength](./link-strength-is-encoded-in-position-and-prose.md) — ten footer "related" links count less than three inline "since [X]" premise links.
 
+**Review vetting** is a use-shaped signal that did not exist when this note was first written: the review store now holds thousands of gate verdicts, so "does this note have fresh baselines, and what is its pass/warn mix" is a quality dimension that costs no authoring at all — it is a byproduct of review operation.
+
 **Recency** matters differently per content type. A source snapshot from yesterday is more relevant than one from six months ago. A design principle note doesn't decay — older often means more refined. Type-dependent recency decay captures this: different content types age at different rates.
 
 | Content type | Recency decay | Why |
@@ -34,6 +36,8 @@ The fix is a quality score per note that lets /connect filter and rank candidate
 
 **Retrieval ranking.** When qmd returns semantic search results, scores rerank them so the best notes surface first.
 
+**Budget-bounded titles listings.** The complete claim-title listing — generated fresh at invocation as /connect's cheapest full-recall surface, and a candidate for other loading moments — stays loadable whole only while the corpus is small. Past that, the score is what truncates it: rank titles by the composite, cut at a token budget, and the same mechanism serves three hundred notes (budget covers everything, today's behavior unchanged) or thirty thousand (top slice). The truncation must reserve an exploration slice for low-degree and recent notes, because a listing filtered purely by inbound links starves exactly the orphans connect exists to integrate.
+
 **Quality signals.** The [quality signals](./quality-signals-for-kb-evaluation.md) note identifies graph-topology and content-proxy signals. Note scores are the composite of those signals — a single number that summarises "how valuable is this note as a link target?"
 
 ## Implementation spectrum
@@ -48,9 +52,9 @@ The right point on this spectrum depends on when /connect starts struggling. We'
 
 ## Open questions
 
-- Should scores be visible in frontmatter, or computed on demand? Visible scores are queryable but add maintenance burden. Computed scores are always fresh but need tooling.
+- ~~Should scores be visible in frontmatter, or computed on demand?~~ Settled by the mark doctrine: computed on demand, never persisted-and-trusted. An authored score field is a hand-maintained copy of a judgment — the forbidden middle, [since a derived copy of recomputable truth must be checked or absent](./a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md). The removal of the `status` field was this doctrine applied: it was the one scoring input that could not be recomputed from ground truth.
 - How do you bootstrap scores for new notes? A fresh note with no inbound links scores low, but it might be exactly the right link target. Some grace period or "new note bonus" might be needed.
-- Does filtering by score create a rich-get-richer problem? Well-connected notes get more connections, new notes get ignored. This is the scaling version of the orphan detection problem.
+- Does filtering by score create a rich-get-richer problem? Well-connected notes get more connections, new notes get ignored. This is the scaling version of the orphan detection problem. The exploration slice in budget-bounded listings is the current answer in design: reserve part of any truncated surface for low-degree and recent notes regardless of score.
 
 ---
 
