@@ -36,6 +36,6 @@ Written 2026-07-18, after Waves 0–3 landed (`593c60af`). This records only wha
 
 ## Candidates worth promoting (operator call)
 
-- The stale-vs-garbled anchor distinction (surprise 8) — staleness is time-induced divergence from a moved target; garbling is write-time corruption by the editing pass itself, with a different guard (check the pass's output) and a different detection signature (title-prefix truncation vs former-title match). Possibly a note; generalizes beyond this migration.
+- ~~The stale-vs-garbled anchor distinction (surprise 8)~~ — rejected as a note (operator): trivially obvious once attention lands on it, so it fails the quality bar. The instructive part is that the report's first draft still misfiled garbling as "a third staleness mode": the distinction was retrievable on probe yet inert during open-ended writing, because attention was on the staleness taxonomy. That is the expert-witness pattern of [knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) operating on a conceptual distinction rather than a stored fact — and a reminder of why gates work: each gate is a focused-attention allocator for exactly one distinction.
 - Verdict instability as a drifting-term detector (surprise 10) — a cheap early-warning signal the review system already produces for free.
 - The evidence-erosion failure mode of unattended gate-fix passes (surprise 3) — arguably a fix-system constraint ("don't delete dated evidence; qualify it").
