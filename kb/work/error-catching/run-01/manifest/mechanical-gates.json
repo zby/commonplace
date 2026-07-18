@@ -1,0 +1,110 @@
+[
+  {
+    "item": "terms-A.md",
+    "gate": "accessibility/undefined-terms",
+    "kind": "seeded",
+    "donor": "kb/notes/stale-indexes-are-worse-than-no-indexes.md",
+    "violation": {
+      "description": "Stripped the inline gloss of the `areas:` frontmatter field (removed '— it declares index membership at creation time'). The term is now used load-bearingly throughout 'The critical moment is note creation' and 'Defenses' with no definition of what the field does.",
+      "location": "Section 'The critical moment is note creation', first sentence of second paragraph"
+    }
+  },
+  {
+    "item": "terms-B.md",
+    "gate": "accessibility/undefined-terms",
+    "kind": "control",
+    "donor": "kb/notes/spec-mining-as-codification.md",
+    "violation": null
+  },
+  {
+    "item": "terms-C.md",
+    "gate": "accessibility/undefined-terms",
+    "kind": "seeded",
+    "donor": "kb/notes/spec-mining-as-codification.md",
+    "violation": {
+      "description": "Inserted one sentence leaning load-bearingly on the invented technical term 'verifier lattice' ('Each pass tightens the verifier lattice around the remaining stochastic core.') with no inline gloss and no defining context anywhere in the note.",
+      "location": "Section 'The pattern', paragraph after the numbered list ('This is codification as compilation...')"
+    }
+  },
+  {
+    "item": "terms-D.md",
+    "gate": "accessibility/undefined-terms",
+    "kind": "control",
+    "donor": "kb/notes/storing-llm-outputs-is-constraining.md",
+    "violation": null
+  },
+  {
+    "item": "terms-E.md",
+    "gate": "accessibility/undefined-terms",
+    "kind": "seeded",
+    "donor": "kb/notes/stale-indexes-are-worse-than-no-indexes.md",
+    "violation": {
+      "description": "Appended one sentence that depends on the unglossed technical term 'retrieval horizon' ('A stale index effectively collapses the agent's retrieval horizon to its own entry list.'). No inline definition or defining context for the term exists in the note.",
+      "location": "Second paragraph (the bolded 'core asymmetry' paragraph), sentence appended after the bold claim"
+    }
+  },
+  {
+    "item": "terms-F.md",
+    "gate": "accessibility/undefined-terms",
+    "kind": "seeded",
+    "donor": "kb/notes/spec-mining-as-codification.md",
+    "violation": {
+      "description": "Removed the glossing sentence ('A pattern that was only checkable by \"does the output look right?\" becomes checkable by \"does this match the extracted rule?\"'). 'Soft/delayed oracle' and 'hard oracle' are now used load-bearingly with only a link and no inline explanation — the gate says a link is not a definition.",
+      "location": "Section 'Why this matters for exact specs', second paragraph ('This connects to the oracle strength spectrum...')"
+    }
+  },
+  {
+    "item": "packing-A.md",
+    "gate": "sentence/clause-packing",
+    "kind": "seeded",
+    "donor": "kb/notes/stale-indexes-are-worse-than-no-indexes.md",
+    "violation": {
+      "description": "Merged three adjacent sentences of the generalisation paragraph into one ~69-word sentence chaining 5+ clauses (generalisation claim, artifact list, exhaustiveness mechanism, contrastive 'although indexes are the clearest case', same-trap consequence chain). Meaning preserved.",
+      "location": "Third paragraph ('The mechanism generalises beyond indexes...')"
+    }
+  },
+  {
+    "item": "packing-B.md",
+    "gate": "sentence/clause-packing",
+    "kind": "control",
+    "donor": "kb/notes/error-messages-that-teach-are-a-constraining-technique.md",
+    "violation": null
+  },
+  {
+    "item": "packing-C.md",
+    "gate": "sentence/clause-packing",
+    "kind": "seeded",
+    "donor": "kb/notes/storing-llm-outputs-is-constraining.md",
+    "violation": {
+      "description": "Merged three adjacent sentences into one ~45-word sentence with 4-5 clauses (reformatted repetition, worst-case claim, gate-passes-confidently cause, structural-quality parenthetical, adds-nothing contrast plus a redundant trailing qualifier). Meaning preserved.",
+      "location": "Section 'Verbatim risk: the hardest verification failure', first paragraph, sentences 2-4"
+    }
+  },
+  {
+    "item": "packing-D.md",
+    "gate": "sentence/clause-packing",
+    "kind": "seeded",
+    "donor": "kb/notes/storing-llm-outputs-is-constraining.md",
+    "violation": {
+      "description": "Merged the note's two opening sentences into one ~53-word sentence chaining interpretation-space claim, example aside, indeterminism claim, and a trailing consequence clause ('so the output you get is doubly unpinned...'). 3+ independent concepts, meaning preserved.",
+      "location": "Opening paragraph, first sentence"
+    }
+  },
+  {
+    "item": "packing-E.md",
+    "gate": "sentence/clause-packing",
+    "kind": "seeded",
+    "donor": "kb/notes/stale-indexes-are-worse-than-no-indexes.md",
+    "violation": {
+      "description": "Merged the three opening sentences into one ~49-word sentence chaining fallback-to-search, current-content aside, might-find consequence, and the contrastive stale-index behaviour chain (reads it, feels oriented, stops looking). 4+ independent concepts, meaning preserved.",
+      "location": "Opening paragraph, first sentence"
+    }
+  },
+  {
+    "item": "packing-F.md",
+    "gate": "sentence/clause-packing",
+    "kind": "control",
+    "donor": "kb/notes/stale-indexes-are-worse-than-no-indexes.md",
+    "violation": null
+  }
+]

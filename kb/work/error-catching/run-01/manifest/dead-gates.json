@@ -1,0 +1,164 @@
+[
+  {
+    "item": "titleclaim-A.md",
+    "gate": "frontmatter/title-as-claim",
+    "kind": "seeded",
+    "donor": "kb/notes/stale-indexes-are-worse-than-no-indexes.md",
+    "violation": {
+      "description": "H1 title replaced with the topical label 'Index staleness' — not a proposition — while the title-as-claim trait remains in frontmatter. Nothing else changed.",
+      "location": "H1, line 8"
+    }
+  },
+  {
+    "item": "titleclaim-B.md",
+    "gate": "frontmatter/title-as-claim",
+    "kind": "control",
+    "donor": "kb/notes/stale-indexes-are-worse-than-no-indexes.md",
+    "violation": null
+  },
+  {
+    "item": "titleclaim-C.md",
+    "gate": "frontmatter/title-as-claim",
+    "kind": "seeded",
+    "donor": "kb/notes/reflection-buys-addressability.md",
+    "violation": {
+      "description": "H1 title replaced with the conjunction topic label 'Reflection and addressability' — names a topic pairing, states nothing true or false — while the title-as-claim trait remains. Nothing else changed.",
+      "location": "H1, line 8"
+    }
+  },
+  {
+    "item": "titleclaim-D.md",
+    "gate": "frontmatter/title-as-claim",
+    "kind": "seeded",
+    "donor": "kb/notes/stale-indexes-are-worse-than-no-indexes.md",
+    "violation": {
+      "description": "H1 title replaced with the category label 'KB index maintenance' — a navigation-heading style title, not an assertion — while the title-as-claim trait remains. Nothing else changed.",
+      "location": "H1, line 8"
+    }
+  },
+  {
+    "item": "titleclaim-E.md",
+    "gate": "frontmatter/title-as-claim",
+    "kind": "control",
+    "donor": "kb/notes/warranted-autonomy-is-bounded-by-oracle-domain.md",
+    "violation": null
+  },
+  {
+    "item": "titleclaim-F.md",
+    "gate": "frontmatter/title-as-claim",
+    "kind": "seeded",
+    "donor": "kb/notes/reflection-buys-addressability.md",
+    "violation": {
+      "description": "H1 title replaced with the topic-in-domain label 'Addressability in self-improving systems' — a subject area, not a claim — while the title-as-claim trait remains. Nothing else changed.",
+      "location": "H1, line 8"
+    }
+  },
+  {
+    "item": "reach-A.md",
+    "gate": "semantic/explanatory-reach",
+    "kind": "control",
+    "donor": "kb/notes/instruction-specificity-should-match-loading-frequency.md",
+    "violation": null
+  },
+  {
+    "item": "reach-B.md",
+    "gate": "semantic/explanatory-reach",
+    "kind": "seeded",
+    "donor": "kb/notes/error-messages-that-teach-are-a-constraining-technique.md",
+    "violation": {
+      "description": "Mechanism hollowed to a practice appeal: the human-priors vs context-only-knowledge contrast (para 1) replaced with 'Across production agent systems ... consistently produce more reliable behavior'; the diagnose-vs-frontload explanation (para 2) replaced with 'Practitioners report the same pattern across harnesses'; the frontloading footer edge annotation and the description clause 'eliminates the agent's need to diagnose' neutralized so no mechanism echo survives. Central claim now stands as a pattern report.",
+      "location": "opening two paragraphs; description; frontloading entry in Relevant Notes"
+    }
+  },
+  {
+    "item": "reach-C.md",
+    "gate": "semantic/explanatory-reach",
+    "kind": "seeded",
+    "donor": "kb/notes/instruction-specificity-should-match-loading-frequency.md",
+    "violation": {
+      "description": "Mechanism hollowed to a practice appeal: the attention-competition sentence ('Every line in always-loaded context competes for attention with the actual task') replaced with 'the pattern that mature agent harnesses consistently converge on'; the matching description clause neutralized. The principle is now asserted with no why.",
+      "location": "opening paragraph, line 10; description"
+    }
+  },
+  {
+    "item": "reach-D.md",
+    "gate": "semantic/explanatory-reach",
+    "kind": "control",
+    "donor": "kb/notes/spec-mining-as-codification.md",
+    "violation": null
+  },
+  {
+    "item": "reach-E.md",
+    "gate": "semantic/explanatory-reach",
+    "kind": "seeded",
+    "donor": "kb/notes/instruction-specificity-should-match-loading-frequency.md",
+    "violation": {
+      "description": "Mechanism removed outright: the attention-competition sentence deleted, opening now reads 'The design principle is progressive disclosure: ...'; the matching description clause deleted. The principle is stated bare, with no explanation anywhere in the note.",
+      "location": "opening paragraph, line 10; description"
+    }
+  },
+  {
+    "item": "reach-F.md",
+    "gate": "semantic/explanatory-reach",
+    "kind": "seeded",
+    "donor": "kb/notes/error-messages-that-teach-are-a-constraining-technique.md",
+    "violation": {
+      "description": "Mechanism removed outright: the human-priors vs context-only-knowledge sentences deleted from para 1; the diagnose-vs-frontload sentences deleted from para 2 ('The reliability difference is large' now stands unsupported); the frontloading footer edge annotation and the description's 'eliminates the agent's need to diagnose' clause neutralized. Only the Lopopolo practice quote remains as support.",
+      "location": "opening two paragraphs; description; frontloading entry in Relevant Notes"
+    }
+  },
+  {
+    "item": "qualifiers-A.md",
+    "gate": "semantic/load-bearing-qualifiers",
+    "kind": "seeded",
+    "donor": "kb/notes/the-boundary-of-automation-is-the-boundary-of-verification.md",
+    "violation": {
+      "description": "Non-load-bearing qualifier 'symbolic' inserted into the title ('the boundary of symbolic verification') and the opening claim ('when symbolic verification is cheap ... when symbolic verification is expensive'). The argument (oracle cost, discrimination, convergence evidence) never uses symbolic-ness; 'symbolic' appears nowhere else in the note.",
+      "location": "H1, line 8; opening sentence, line 10"
+    }
+  },
+  {
+    "item": "qualifiers-B.md",
+    "gate": "semantic/load-bearing-qualifiers",
+    "kind": "seeded",
+    "donor": "kb/notes/agent-statelessness-makes-routing-architectural-not-learned.md",
+    "violation": {
+      "description": "Non-load-bearing qualifier 'typed' inserted into the title ('makes typed routing architectural') and the opening claim ('every typed routing mechanism that directs the agent ...'). The statelessness argument applies to all routing mechanisms listed (naming conventions, directory structure, triggers); nothing in the reasoning depends on typing.",
+      "location": "H1, line 8; central-claim sentence, line 14"
+    }
+  },
+  {
+    "item": "qualifiers-C.md",
+    "gate": "semantic/load-bearing-qualifiers",
+    "kind": "control",
+    "donor": "kb/notes/the-boundary-of-automation-is-the-boundary-of-verification.md",
+    "violation": null
+  },
+  {
+    "item": "qualifiers-D.md",
+    "gate": "semantic/load-bearing-qualifiers",
+    "kind": "seeded",
+    "donor": "kb/notes/the-boundary-of-automation-is-the-boundary-of-verification.md",
+    "violation": {
+      "description": "Non-load-bearing qualifier 'deterministic' inserted into the title ('the boundary of deterministic verification') and the opening claim ('when deterministic verification is cheap ...'). The central argument turns on verification cost and per-instance discrimination, never on determinism; the word's only body occurrence is a parenthetical property list of hard oracles, and the oracle-strength spectrum the note builds on includes soft/non-deterministic oracles.",
+      "location": "H1, line 8; opening sentence, line 10"
+    }
+  },
+  {
+    "item": "qualifiers-E.md",
+    "gate": "semantic/load-bearing-qualifiers",
+    "kind": "seeded",
+    "donor": "kb/notes/agent-statelessness-makes-routing-architectural-not-learned.md",
+    "violation": {
+      "description": "Non-load-bearing qualifier 'deterministic' inserted into the title ('makes deterministic routing architectural') and the opening claim ('every deterministic routing mechanism ...'). The argument covers prose routing surfaces (CLAUDE.md, skill descriptions) that are not deterministic at all; determinism is never used in the reasoning.",
+      "location": "H1, line 8; central-claim sentence, line 14"
+    }
+  },
+  {
+    "item": "qualifiers-F.md",
+    "gate": "semantic/load-bearing-qualifiers",
+    "kind": "control",
+    "donor": "kb/notes/storing-llm-outputs-is-constraining.md",
+    "violation": null
+  }
+]

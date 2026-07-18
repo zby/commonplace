@@ -12,6 +12,7 @@ Started 2026-07-18 from the distillation-migration retrospective ([rename-lesson
 
 - [systematisation.md](./systematisation.md) — the draft scheme: two axes (lens breadth × detection site), the technique catalogue with economics, the governing claims, and the gaps the grid exposes
 - [gate-stats.md](./gate-stats.md) — first execution of the telemetry row (2026-07-18): the activation gap quantified (29.6% first-encounter catch, 67% peak, mechanical lenses catch 2–3× judgment lenses), the fix loop's 79% one-cycle resolution, within-partition absorption after the April sweep, the luna/sol 2.5× reviewer-variance finding, and three coverage-bet failures awaiting adjudication
+- [calibration-run-01.md](./calibration-run-01.md) — seeded-violation calibration (2026-07-18): 8 gates × (4 seeds + 2 controls), blind reviewers; 30/30 valid seeds caught, zero clear false positives — recall is not the bottleneck, catch rate ≈ incidence, `title-as-claim` adjudicated absorbed-not-blind; two new second-order guards surfaced (seeder self-check; verdict-block content binding). Raw artifacts under `run-01/`
 
 ## What closes this workshop
 

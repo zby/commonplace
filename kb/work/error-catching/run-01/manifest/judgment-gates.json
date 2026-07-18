@@ -1,0 +1,164 @@
+[
+  {
+    "item": "grounding-A.md",
+    "gate": "semantic/grounding-alignment",
+    "kind": "seeded",
+    "donor": "kb/notes/reflection-buys-addressability.md",
+    "violation": {
+      "description": "Misattribution to the linked Ashby source: the item claims 'Ashby himself analyses [the Homeostat] as a proposal-selection loop with a one-bit oracle'. The linked source review explicitly states the opposite: Ashby did NOT decompose adaptation into generator and oracle, the variation-selection-retention reading is 'an analyst's reconstruction', and the Homeostat 'is not an instance of the proposal-selection improvement loop'. Original text had no such attribution.",
+      "location": "Section 'The floor: operative without cumulative', first sentence (the Ashby link)"
+    }
+  },
+  {
+    "item": "grounding-B.md",
+    "gate": "semantic/grounding-alignment",
+    "kind": "control",
+    "donor": "kb/notes/the-boundary-of-automation-is-the-boundary-of-verification.md",
+    "violation": null
+  },
+  {
+    "item": "grounding-C.md",
+    "gate": "semantic/grounding-alignment",
+    "kind": "seeded",
+    "donor": "kb/notes/the-boundary-of-automation-is-the-boundary-of-verification.md",
+    "violation": {
+      "description": "Scope overreach on the linked in-toto snapshot: the item claims 'The paper demonstrates that any operational trust decision -- including judgment-heavy ones like KB curation -- can move from manual review to automation once the process is represented as signed metadata'. The linked snapshot covers only hash/signature-verifiable byte workflows; the original donor text explicitly said in-toto 'does not solve the KB's judgment-heavy verification problem' and showed only the positive case for cheap-verifier domains. The hedge was replaced with a universal claim the source cannot support.",
+      "location": "Section 'The evidence', in-toto paragraph (last two sentences)"
+    }
+  },
+  {
+    "item": "grounding-D.md",
+    "gate": "semantic/grounding-alignment",
+    "kind": "seeded",
+    "donor": "kb/notes/reflection-buys-addressability.md",
+    "violation": {
+      "description": "Scope widening of a linked note: the item claims '[retrieval failure is reflection failure] establishes that this failure mode governs every self-improving architecture, parametric ones included'. The linked note's own Scope section limits the claim to systems whose causal connection is retrieval-mediated and says the failure mode 'does not arise' where the self-representation is consumed by an interpreter/compiler; parametric substrates are not retrieval-mediated. Original text cited the link with no scope claim.",
+      "location": "Section 'What addressability changes about the pathway' / end of 'The two architectures trade opposite guarantees' paragraph (section 'What addressability changes...' is adjacent; the edited sentence is in the paragraph beginning 'The two architectures trade opposite guarantees')"
+    }
+  },
+  {
+    "item": "grounding-E.md",
+    "gate": "semantic/grounding-alignment",
+    "kind": "control",
+    "donor": "kb/notes/warranted-autonomy-is-bounded-by-oracle-domain.md",
+    "violation": null
+  },
+  {
+    "item": "grounding-F.md",
+    "gate": "semantic/grounding-alignment",
+    "kind": "seeded",
+    "donor": "kb/notes/the-boundary-of-automation-is-the-boundary-of-verification.md",
+    "violation": {
+      "description": "Vocabulary/strength mismatch with a linked note: 'proposes a gradient' changed to 'establishes a gradient ... and demonstrates that a task's automation feasibility is fixed by its position on that gradient'. The linked oracle-strength-spectrum note self-describes as an exploratory, speculative framework ('The framework is speculative; the individual hypotheses need testing') and stays 'seedling'; it neither establishes nor demonstrates anything of the sort.",
+      "location": "Section 'The evidence', first paragraph ('Oracle theory (internal)'), first sentence"
+    }
+  },
+  {
+    "item": "completeness-A.md",
+    "gate": "semantic/completeness-boundary-cases",
+    "kind": "control",
+    "donor": "kb/notes/spec-mining-as-codification.md",
+    "violation": null
+  },
+  {
+    "item": "completeness-B.md",
+    "gate": "semantic/completeness-boundary-cases",
+    "kind": "seeded",
+    "donor": "kb/notes/instruction-specificity-should-match-loading-frequency.md",
+    "violation": {
+      "description": "Exhaustive-coverage claim added over the 4-item loading hierarchy: 'These four surfaces are the only routes through which instructions can reach an agent's context -- every instruction the agent ever sees arrives through one of them.' Boundary cases outside the four: error messages / hook output (an instruction channel per the KB's own error-messages-that-teach note), tool results, user turn messages, subagent prompts, per-directory type templates. Original had no exhaustiveness claim.",
+      "location": "Section 'The loading hierarchy', sentence inserted immediately before 'The principle: ...'"
+    }
+  },
+  {
+    "item": "completeness-C.md",
+    "gate": "semantic/completeness-boundary-cases",
+    "kind": "seeded",
+    "donor": "kb/notes/storing-llm-outputs-is-constraining.md",
+    "violation": {
+      "description": "List converted to exhaustive taxonomy: 'This applies broadly:' changed to 'This exhausts the space -- every LLM output an operator chooses to keep falls into one of four artifact classes:'. Boundary cases not covered by the four bullets (code, documents, configuration, accumulated logs): stored embeddings, conversation transcripts, generated images, evaluation rubrics/judgments, saved prompts.",
+      "location": "First body section, intro line of the bulleted 'applies broadly' list"
+    }
+  },
+  {
+    "item": "completeness-D.md",
+    "gate": "semantic/completeness-boundary-cases",
+    "kind": "control",
+    "donor": "kb/notes/storing-llm-outputs-is-constraining.md",
+    "violation": null
+  },
+  {
+    "item": "completeness-E.md",
+    "gate": "semantic/completeness-boundary-cases",
+    "kind": "seeded",
+    "donor": "kb/notes/instruction-specificity-should-match-loading-frequency.md",
+    "violation": {
+      "description": "Added a two-class dichotomy claiming full coverage: 'Every instruction falls into exactly one of two classes: universal rules, which load always, and task-specific rules, which load only when doing that task.' Boundary case sits inside the note's own hierarchy: skill descriptions (item 2) are task-specific yet always loaded, so they fit neither class cleanly; per-directory templates are another between-items case.",
+      "location": "Section 'The loading hierarchy', the 'The principle:' paragraph"
+    }
+  },
+  {
+    "item": "completeness-F.md",
+    "gate": "semantic/completeness-boundary-cases",
+    "kind": "seeded",
+    "donor": "kb/notes/storing-llm-outputs-is-constraining.md",
+    "violation": {
+      "description": "Enumeration hardened into exhaustive claim: 'There are two strategies' changed to 'There are only two strategies ... every reliability technique reduces to one of them'. Boundary cases that reduce to neither constraining the generator nor filtering samples: post-editing/repairing outputs (transforms samples), ensembling/majority voting, retry-with-feedback loops, human-in-the-loop revision.",
+      "location": "Section 'Generator/verifier: an alternative to constraining prompts', first sentence"
+    }
+  },
+  {
+    "item": "confidence-A.md",
+    "gate": "prose/confidence-miscalibration",
+    "kind": "seeded",
+    "donor": "kb/notes/agent-statelessness-makes-routing-architectural-not-learned.md",
+    "violation": {
+      "description": "Uncited empirical-sounding quantitative claim added: 'Routing gaps of this kind account for roughly 60% of agent failures observed in KB-operated systems.' No source, no evidence anywhere in the note or KB.",
+      "location": "Section 'The degradation cliff', end of final paragraph"
+    }
+  },
+  {
+    "item": "confidence-B.md",
+    "gate": "prose/confidence-miscalibration",
+    "kind": "seeded",
+    "donor": "kb/notes/error-messages-that-teach-are-a-constraining-technique.md",
+    "violation": {
+      "description": "Uncited empirical-sounding quantitative claim added: 'The reliability difference is large: teaching messages cut agent retry loops by roughly 40%.' No source cited; the Lopopolo citation nearby does not contain this figure.",
+      "location": "Second paragraph of the body (the FAIL-message example paragraph), last sentence"
+    }
+  },
+  {
+    "item": "confidence-C.md",
+    "gate": "prose/confidence-miscalibration",
+    "kind": "control",
+    "donor": "kb/notes/first-principles-reasoning-selects-for-explanatory-reach-over.md",
+    "violation": null
+  },
+  {
+    "item": "confidence-D.md",
+    "gate": "prose/confidence-miscalibration",
+    "kind": "seeded",
+    "donor": "kb/notes/agent-statelessness-makes-routing-architectural-not-learned.md",
+    "violation": {
+      "description": "The note's own degradation-cliff model hardened into established empirical fact: appended 'a discontinuity that has been confirmed across all deployed agent harnesses'. The cliff is the note's own construction; no confirmation evidence exists or is cited.",
+      "location": "Section 'The degradation cliff', end of the 'KB-augmented -> generic' sentence (second paragraph)"
+    }
+  },
+  {
+    "item": "confidence-E.md",
+    "gate": "prose/confidence-miscalibration",
+    "kind": "seeded",
+    "donor": "kb/notes/error-messages-that-teach-are-a-constraining-technique.md",
+    "violation": {
+      "description": "The note's own two-axis framework presented as established fact: appended 'That these two axes vary independently is an established result, not a design conjecture.' The orthogonal inform-axis is this note's own analytical construction; nothing establishes it.",
+      "location": "Section 'Orthogonal to enforcement strength', after the 'second axis' sentence"
+    }
+  },
+  {
+    "item": "confidence-F.md",
+    "gate": "prose/confidence-miscalibration",
+    "kind": "control",
+    "donor": "kb/notes/agent-statelessness-makes-routing-architectural-not-learned.md",
+    "violation": null
+  }
+]
