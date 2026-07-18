@@ -7,7 +7,7 @@ tags: [foundations, self-improving-systems]
 
 # A closing improvement loop relocates human effort to the frontier instead of reducing it
 
-The naive test of a closing improvement loop is falling human hours: if [the loop closes as improvised decisions become governed machinery](./an-improvement-loop-closes-by-converting-improvised-decisions.md), the human should be needed less, so total time spent on the system should drop. In an open-ended improvement system, that is usually not what happens. The observed pattern runs the other way around:
+The naive test of a closing improvement loop is falling human hours: if [the loop closes as improvised decisions become governed machinery](./an-improvement-loop-closes-by-converting-improvised-decisions.md), the human should be needed less and less. In an open-ended improvement system, that is usually not what happens. The observed pattern runs the other way around:
 
 1. a class of routine work becomes automated;
 2. the system can therefore process more material or attempt harder improvements;
