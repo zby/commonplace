@@ -14,9 +14,9 @@ The output of §1 of [execution-plan.md](./execution-plan.md). Sections 3 and 4 
 
 ## `operationalized-from` (minted alternative, not a stacked child)
 
-Scoped specifically to methodology notes → procedures, skills, checklists, and gates. An authoring-time *alternative* to `adapted-from` for this one pairing — never record both edges for the same relationship.
+**Truth condition (portable, not pairing-defined).** Narrows `adapted-from`'s test: the target adds ordering, defaults, or stopping conditions the source doesn't fix, while adding no substantive claims beyond it. The test itself names no collections — it applies wherever a source is worked into an executable/operational shape, not only methodology → procedure. (This is what `skills-derive-from-methodology.md` already argues about itself in its second half — "a different person would produce a meaningfully different skill" — the note's reasoning was right, the label was wrong.)
 
-**Truth condition.** Narrows `adapted-from`'s test: the target adds ordering, defaults, or stopping conditions the methodology itself doesn't fix, while adding no substantive claims beyond it. (This is what `skills-derive-from-methodology.md` already argues about itself in its second half — "a different person would produce a meaningfully different skill" — the note's reasoning was right, the label was wrong.)
+**Current authorization (pairing-scoped, evidence-gated, not a definitional limit).** Today only `kb/notes/` methodology notes → `kb/instructions/` procedures, skills, checklists, and gates is authorized in `COLLECTION.md`, because that's the only pairing with live corpus evidence (Finding 3 and its ~15 citing notes). An authoring-time *alternative* to `adapted-from` for this pairing — never record both edges for the same relationship. If a structurally identical case shows up in a different pairing later, the truth condition already covers it; extending authorization needs only a new `COLLECTION.md` entry, not a new relation name — same architecture as `derived-from`'s per-pairing authorization below, not a special case.
 
 **Maintenance consequence.** Same as `adapted-from` — flag for recheck, not recompute.
 
