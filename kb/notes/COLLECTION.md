@@ -51,7 +51,7 @@ Exceptions to claim titles: multi-claim specs, definitions, indexes, and explora
 
 Forward-authored, asymmetric unless marked symmetric; backlinks are computed. Inline for strongest commitment, with a connective word that fits the argument (e.g. `since [title](path)`, `because [title](path)`, `but [title](path)`, `as in [title](path)`). Footer for labelled — `- [title](path) — label: context phrase`.
 
-Scan `kb/notes/`, `kb/reference/`, `kb/agent-memory-systems/`, `kb/sources/`, and `kb/instructions/` for link targets. Do not link into `kb/work/` (workshop layer — value is consumed, not imported). Most links land within `kb/notes/` — the densest path. Outbound edges to `kb/instructions/` are rare; the usual direction is inverse (`instruction → note` via `rationale`). Edges to `kb/sources/` carry the snapshot the claim was abstracted from or that corroborates it.
+Scan `kb/notes/`, `kb/reference/`, `kb/agent-memory-systems/`, `kb/sources/`, and `kb/instructions/` for link targets. Do not link into `kb/work/` (workshop layer — value is consumed, not imported). Most links land within `kb/notes/` — the densest path. Outbound edges to `kb/instructions/` are rare — the usual direction is inverse (`instruction → note` via `rationale`) — except `operationalized-from`, recorded as an `Operationalized into:` footer at this collection's methodology note when a procedure in `kb/instructions/` adds ordering, defaults, or stopping conditions the methodology doesn't itself fix; see the lineage semantics in `kb/reference/link-vocabulary.md`. Edges to `kb/sources/` carry the snapshot the claim was abstracted from or that corroborates it.
 
 **Labels:**
 
@@ -68,6 +68,7 @@ Scan `kb/notes/`, `kb/reference/`, `kb/agent-memory-systems/`, `kb/sources/`, an
 | `evidence` | asym | reference, agent-memory, agentic-systems, sources | this observation corroborates the claim |
 | `derived-from` | asym | reference, agent-memory, agentic-systems, sources | claim is worked out from this source, adding nothing beyond it — see the lineage semantics in `kb/reference/link-vocabulary.md` |
 | `abstracted-from` | asym | reference, agent-memory, agentic-systems, sources | claim generalizes beyond this source; the source is evidence, authority is earned by testing |
+| `operationalized-from` | asym | instructions | procedure adds ordering, defaults, or stopping conditions this methodology note doesn't itself fix; not claim-preserving — see lineage semantics in `kb/reference/link-vocabulary.md` |
 | `see-also` | asym | reference, agent-memory, agentic-systems, sources, instructions | adjacent companion; use sparingly |
 
 ## Types
