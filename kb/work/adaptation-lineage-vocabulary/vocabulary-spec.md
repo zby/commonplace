@@ -61,10 +61,16 @@ These rows are corpus-evidence defaults for `COLLECTION.md` to authorize, not re
 
 ## Corpus consequences (feeds execution-plan §4)
 
-Evidence recording for the four still-unaudited commits (`b35ea92c`, `c7cc78f4`, `4c0c3cf8`, `b0b775c7`) uses the multi-axis method now, not a DER/AMP binary: for each changed passage, record source/target artifact contracts, the operation performed (selection, compression, synthesis, operationalization, generation), and the epistemic relation (reconstructible / generalized / authored / mixed) — assign a candidate label against this spec only after those axes are recorded. This is a correction to execution-plan §2's original instructions, not a re-audit of the five already-completed commits (those findings stand as evidence of mismatches under the pre-existing binary vocabulary).
+Evidence recording for the four still-unaudited commits (`b35ea92c`, `c7cc78f4`, `4c0c3cf8`, `b0b775c7`) used the multi-axis method, not a DER/AMP binary — recorded in `migration-audit-findings.md`'s "Multi-axis audit of the four remaining commits" section. Mapped against this spec:
 
-**Single coherent pass, not independent edits:**
-- `kb/notes/skills-derive-from-methodology.md` and `kb/instructions/write-instruction.md:42` describe the same pairing rule and must stay mutually consistent — reclassify both together, from `derived-from` to `operationalized-from`. Neither note's content needs rewriting, only the lineage label and footer heading.
+- `b35ea92c` — pure theory-to-theory (`kb/notes/` internal). Governed by the pre-existing `derived-from`/`abstracted-from` split, not this workshop's new relations. No action.
+- `b0b775c7` — a workshop worksheet, not a durable artifact or a lineage edge. No action.
+- `4c0c3cf8` — refines the `write-instruction.md` fix below: the audit splits its provenance into two distinct stories, not one mislabeled edge.
+- `c7cc78f4` — confirms the conjecture-note site below is a double issue (staleness + lineage label), not just staleness.
+
+**Single coherent pass, not independent edits — revised per the `4c0c3cf8` audit:**
+- `kb/notes/skills-derive-from-methodology.md` — single-story case, reclassify from `derived-from` to `operationalized-from`. Content doesn't need rewriting, only the label and footer heading.
+- `kb/instructions/write-instruction.md:42` — **not** a blind label swap. The audit shows the instruction-writing procedure has two distinct source relationships that a single `derived-from` link currently collapses: "abstracting a stable core from repetitions" (repeated task instances → generalized rule, textbook `abstracted-from`) and "working the procedure body out from methodology" (`operationalized-from`). The fix should make both explicit — likely two lineage claims, not one relabeled claim — and should stay consistent with `skills-derive-from-methodology.md`'s simpler single-story case where the two genuinely overlap.
 
 **Semantic judgment required, not mechanical find-replace:**
 - `kb/work/lineage-mechanisms/`'s "ad-hoc distillation" passages explicitly package judgment about which term fits — resolve each passage to `adapted-from` or `operationalized-from` (methodology → procedure cases) individually, not by a blanket substitution.
