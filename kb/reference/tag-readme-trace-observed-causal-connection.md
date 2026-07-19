@@ -43,7 +43,7 @@ Both directions are therefore on record: a change in the system forced a revisio
 
 Relevant Notes:
 
-- [Commonplace as a partially autonomous, reflective self-improving system](./commonplace-as-a-reflective-system.md) — part-of: the classification this trace is the evidence for
+- [Commonplace as a reflective self-improving system](./commonplace-as-a-reflective-system.md) — part-of: the classification and allocation profile this trace supports
 - [The tag-readme trace read as a self-improving loop](./tag-readme-trace-as-self-improving-loop.md) — see-also: the same trace read as an improvement loop
 - [Where change candidates come from in Commonplace](./where-change-candidates-come-from-in-commonplace.md) — part-of: surveys the wider set of candidate-forming mechanisms the agent's drafting work here is one instance of
 - [Reflective system](../notes/definitions/reflective-system.md) — rationale: the causal-connection obligation this trace instantiates

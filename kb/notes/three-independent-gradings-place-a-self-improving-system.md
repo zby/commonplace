@@ -13,7 +13,7 @@ Membership in the [self-improving system](./definitions/self-improving-system.md
 - **Coverage — what is represented?** Claimed per representational form and operation depth, [since reflective coverage is graded across representational forms](./reflective-coverage-is-graded-across-representational-forms.md). Zero end: no behavior-bearing form is represented, as with the plain gradient learner. Free nonzero end: some behavior-bearing form represented somewhere. Costly end: coverage of every form the behavior spans, and of the mappings between them.
 - **Closure — what does the methodology settle?** [A methodology governs its own extension only as far as it settles the meta-decisions it raises](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md). Free end: decisions improvised as they arise. Costly end: each meta-decision a change raises has a governed answer.
 
-[Autonomy](./definitions/self-improving-system.md) — who performs a pathway — is a fourth, independent thing worth reporting for any given system, but it does not need its own placement scheme here. The base definition already grades autonomy pathway by pathway against a declared boundary. The human-boundary note shows why counting established humans as internal reflective components would make reflection cheap; it does not make autonomy derivable from reflection. So autonomy is reported with that boundary-relative grading when needed, not tracked as a fourth axis alongside these three.
+[Autonomy](./definitions/self-improving-system.md) — who performs each pathway function — is a separate profile, not a fourth axis. Human inclusion makes reflective membership cheap, so the profile reports human, computational, and joint allocation instead.
 
 ## The gradings move independently
 
@@ -38,5 +38,5 @@ Relevant Notes:
 - [Reflection buys addressability](./reflection-buys-addressability.md) — grounds: the retention-form axis and its costly end
 - [Reflective coverage is graded across representational forms](./reflective-coverage-is-graded-across-representational-forms.md) — grounds: the coverage axis
 - [A methodology governs its own extension only as far as it settles the meta-decisions it raises](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md) — grounds: the closure axis
-- [Admitting a human into the boundary trades reflectivity for autonomy](./admitting-a-human-into-the-boundary-trades-reflectivity-for-autonomy.md) — grounds: why human-inclusive reflection makes reflection cheap while leaving autonomy boundary-relative
+- [Admitting a human into the boundary moves reflective discrimination to computational allocation](./admitting-a-human-into-the-boundary-moves-reflective-discrimination-to-computational-allocation.md) — grounds: why human-inclusive reflection makes membership cheap while leaving actor allocation informative
 - [Gödel machines are a proof-governed case of reflective self-modification](./goedel-machines-are-a-proof-governed-case-of-self-modification.md) — exemplifies: an extreme where warrant and closure appear to tie together

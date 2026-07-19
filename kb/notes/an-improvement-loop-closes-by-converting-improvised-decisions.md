@@ -38,7 +38,7 @@ Payoff hypotheses, not definitional consequences: lower marginal human mediation
 ## Vocabulary and scope
 
 - Three senses now live near "closed" in this cluster and must not be conflated: a loop instance **closes** (binary — the three functions complete and the change becomes operative); a methodology is **closed under its own recommendations** (an axis of the placement scheme, and one face of conversion here); and a loop is **more or less closed** (this note's graded property over whole cycles).
-- The property survives either boundary convention: grade each decision as machine-mediated, externally supplied, or jointly performed, and nothing depends on whether "reflective" is defined to admit established human roles, [a move Commonplace's definition separately declines](./admitting-a-human-into-the-boundary-trades-reflectivity-for-autonomy.md).
+- The property is reported inside a declared frame by grading each decision as computational, human, or joint. Reflective membership does not determine that allocation, [because admitting a human moves the discriminating work to the allocation profile](./admitting-a-human-into-the-boundary-moves-reflective-discrimination-to-computational-allocation.md).
 - The graded property is defined here, but measuring it inherits the open commensurability problem: [measuring autonomy well enough to see it improve is an open problem](./measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md). The thesis gives that measurement problem its purpose — showing the intervention frontier moving outward — without solving it.
 
 ## Open Questions
@@ -59,9 +59,9 @@ Relevant Notes:
 - [Reflection may improve sample efficiency under structured shifts](./reflection-may-improve-sample-efficiency-under-structured-shifts.md) — extends: one payoff hypothesis of a closing loop, sharpened into a test design
 - [A closing improvement loop relocates human effort to the frontier instead of reducing it](./a-closing-loop-relocates-human-effort-to-the-frontier.md) — extends: the human-side consequence, and the measures that replace total hours
 - [Measuring autonomy well enough to see it improve is an open problem](./measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md) — contrasts: the commensurability problem any measurement of closedness inherits
-- [Admitting a human into the boundary trades reflectivity for autonomy](./admitting-a-human-into-the-boundary-trades-reflectivity-for-autonomy.md) — contrasts: the boundary-convention dispute the graded property is robust to
+- [Admitting a human into the boundary moves reflective discrimination to computational allocation](./admitting-a-human-into-the-boundary-moves-reflective-discrimination-to-computational-allocation.md) — grounds: why the graded property is read from actor allocation rather than reflective membership
 - [Self-improving system](./definitions/self-improving-system.md) — defined-in: the base category and its pathway-relative autonomy grading
-- [Commonplace as a partially autonomous, reflective self-improving system](../reference/commonplace-as-a-reflective-system.md) — evidence: one pathway observed part-way up the displacement ladder
+- [Commonplace as a reflective self-improving system](../reference/commonplace-as-a-reflective-system.md) — evidence: one human-inclusive pathway observed part-way up the computational displacement ladder
 - [The tag-readme trace read as a self-improving loop](../reference/tag-readme-trace-as-self-improving-loop.md) — evidence: the specific trace behind the running example, showing which half of each loop function runs in code and which stays human
 - [Oracle-strength spectrum](./oracle-strength-spectrum.md) — mechanism: the operational content of "harden one oracle" — the gradient a check climbs as it becomes cheaply verifiable
 - [LLM-executed methodologies are metacircular interpreters, not compilers](./llm-executed-methodologies-are-metacircular-interpreters.md) — mechanism: the same displacement read as interpretation-to-codification — prose rules re-interpreted each session until stable paths cross into validators and commands

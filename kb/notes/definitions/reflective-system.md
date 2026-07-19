@@ -8,7 +8,7 @@ tags: [foundations, computational-model, self-improving-systems]
 
 A **reflective system** contains a causally connected representation of itself that is available to its own processes, such that operations mediated through that representation can affect the system's subsequent behavior.
 
-The structural core is the established term in computational reflection: a system that reasons about itself in a causally connected way, through structures that represent selected aspects of it — its **self-representation**. Commonplace generalizes the criteria to an explicitly declared computational boundary. Where that generalization outruns its sources is recorded under [Provenance](#provenance-and-departures) below.
+The structural core is the established term in computational reflection: a system that reasons about itself in a causally connected way, through structures that represent selected aspects of it — its **self-representation**. Commonplace applies the criteria relative to an explicitly declared boundary without prescribing whether human actors are included. Departures from the source literature are recorded under [Provenance](#provenance-and-departures).
 
 Changing the boundary alone does not satisfy the definition. The representation must be available inside the boundary *as a representation of that same system*, not merely as telemetry or a control signal correlated with its state.
 

@@ -18,7 +18,7 @@ Reflectivity is read off the architecture and graded, not declared: weights bind
 - **Coverage** — [reflective coverage is graded across representational forms](./reflective-coverage-is-graded-across-representational-forms.md) — pinning a model is real but selection-grade coverage of the parametric form.
 - **Closure** — [a methodology governs its own extension only as far as it settles the meta-decisions it raises](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md).
 
-Autonomy — who runs a pathway — is worth reporting but is not a fourth placement: under Commonplace's strictly computational boundary a reflective pathway is thereby autonomous, [since admitting a human into the boundary would only trade that precision for a separate axis](./admitting-a-human-into-the-boundary-trades-reflectivity-for-autonomy.md); non-reflective pathways are graded human-inclusive or autonomous directly. What costs is **warrant**, trusting what an unattended loop accepts: [warranted autonomy is bounded by oracle domain](./warranted-autonomy-is-bounded-by-oracle-domain.md).
+Autonomy reports whether each pathway function is human, computational, or joint. Human inclusion makes reflective membership cheap, so [allocation carries the comparison](./admitting-a-human-into-the-boundary-moves-reflective-discrimination-to-computational-allocation.md); **warrant** asks which unattended decisions can be trusted, [bounded by oracle domain](./warranted-autonomy-is-bounded-by-oracle-domain.md).
 
 ## The improvement loop
 
@@ -42,13 +42,14 @@ Autonomy — who runs a pathway — is worth reporting but is not a fourth place
 - [Ashby's Homeostat](../sources/ashby-design-for-a-brain-ultrastability.md) — the floor: non-reflective, fully autonomous, nothing accumulates.
 - Parametric self-improvers (self-play, fine-tuning on own trajectories) — compounding without addressability; the dominant paradigm and comparison baseline.
 - The [Gödel machine](./goedel-machines-are-a-proof-governed-case-of-self-modification.md) — reflective, autonomous, proof-gated: the strongest oracle, paid for in domain.
-- [Commonplace itself](../reference/commonplace-as-a-reflective-system.md) — pathway-mixed: reflective and autonomous where a validator or agent consults an explicit self-representation, human-inclusive where a maintainer notices what's worth fixing.
+- [Commonplace itself](../reference/commonplace-as-a-reflective-system.md) — human-inclusive and reflective, with computational closure varying by pathway.
 
 Read every claim at its stated strength: definitions are stipulated and revisable; the closing-loop thesis and payoffs are open hypotheses.
 
 ## Further notes under the tag
 
 - [Measuring autonomy well enough to see it improve is an open problem](./measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md) — the per-function grading locates a system but cannot yet show it becoming more autonomous.
+- [Where change candidates come from in Commonplace](../reference/where-change-candidates-come-from-in-commonplace.md) — the observed search surface and its allocation across maintainers, agents, commands, and reports.
 - [Behavior-determining organization](./definitions/behavior-determining-organization.md), [operative change](./definitions/operative-change.md), [evidence bearing on an improvement objective](./definitions/evidence-bearing-on-an-improvement-objective.md) — the definition's three base terms.
 - [The definition classifies its boundary cases without ad hoc exceptions](./the-self-improving-system-definition-classifies-its-boundary-cases.md) — nine inclusion tests, from gradient learning to accidental self-modification.
 - [Improving an agentic system crosses the prose-symbolic boundary](./improving-an-agentic-system-crosses-the-prose-symbolic-boundary.md) — reliability gains move behavior between prose and code; the [agent-memory-system reviews](../agent-memory-systems/types/agent-memory-system-review.md) and [comparison matrix](../agent-memory-systems/systems-table.md) run on this vocabulary.
