@@ -44,7 +44,7 @@ Autonomy — who runs a pathway — is worth reporting but is not a fourth place
 - The [Gödel machine](./goedel-machines-are-a-proof-governed-case-of-self-modification.md) — reflective, autonomous, proof-gated: the strongest oracle, paid for in domain.
 - [Commonplace itself](../reference/commonplace-as-a-reflective-system.md) — pathway-mixed: reflective and autonomous where a validator or agent consults an explicit self-representation, human-inclusive where a maintainer notices what's worth fixing.
 
-Read every claim at its stated strength: the definitions are stipulated and revisable; the closing-loop thesis and its payoffs are open hypotheses.
+Read every claim at its stated strength: definitions are stipulated and revisable; the closing-loop thesis and payoffs are open hypotheses.
 
 ## Further notes under the tag
 
