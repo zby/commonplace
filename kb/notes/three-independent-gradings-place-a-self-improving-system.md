@@ -28,6 +28,7 @@ This is also why the definition keeps every axis out of membership: the reflecti
 ## Open Questions
 
 - Whether the three axes are exhaustive, or further independent gradings (e.g. over search reach) await naming.
+- Whether the axes are minimal: the addressable grade of retention form restates per-component operation depth — coverage of the retention store as a component — leaving only the operative/cumulative boundary (compounding, a process outcome no coverage reading distinguishes) as retention form's own content. If so, the axes' independence is partly an artifact of assessing coverage over other components, and the honest scheme may be compounding + coverage-including-retention + closure.
 
 ---
 

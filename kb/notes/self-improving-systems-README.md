@@ -8,13 +8,13 @@ complete: true
 
 # Self-improving systems
 
-A [self-improving system](./definitions/self-improving-system.md) makes operative changes to its own behavior-determining organization in response to evidence about an improvement objective. The definition is deliberately broad, so even a dev team qualifies: people who revise their system's code and conventions in response to its failures count, once the declared boundary includes them. Where that boundary lies is the analyst's choice. A change pathway is **reflective** if it routes through a representation of the system's own behavior that the system can read and edit — a lessons file, a policy document. It is non-reflective if it ends in what nothing inside the system can read — a weight update. Most systems in [agent-memory-systems](../agent-memory-systems/README.md) mine their traces for lessons and load them into later runs. Whether that qualifies as a reflective pathway is again a boundary choice: are the lessons data the system consults, or part of its [system definition](./definitions/system-definition-artifact.md)?
+A [self-improving system](./definitions/self-improving-system.md) makes operative changes to its own behavior-determining organization in response to evidence about an improvement objective. The definition is deliberately broad, so even a dev team qualifies: people who revise their system's code and conventions in response to its failures count once the boundary includes them. Where that boundary lies is the analyst's choice. A change pathway is **reflective** if it routes through a representation of the system's own behavior that the system can read and edit — a lessons file, a policy document. It is non-reflective if it ends in what nothing inside the system can read — a weight update. Most systems in [agent-memory-systems](../agent-memory-systems/README.md) mine their traces for lessons and load them into later runs. The boundary choice there settles whether that is self-change at all: lessons consulted as data fall outside the organization; lessons that are part of the [system definition](./definitions/system-definition-artifact.md) make the pathway reflective self-improvement, since loading a lesson reads it.
 
 ## The three gradings
 
-The boundary choice above settles only *membership* — whether the lessons are part of the system at all. Reflectivity is read off the architecture and graded, not declared: weights bind with maximal [behavioral authority](./definitions/behavioral-authority.md), yet nothing inside reads them — authority and addressability are separate fields. Since membership is cheap, a system is placed by [three independent gradings](./three-independent-gradings-place-a-self-improving-system.md) — statically they locate a system; dynamically they are the faces of the conversion by which the loop closes:
+Reflectivity is read off the architecture and graded, not declared: weights bind with maximal [behavioral authority](./definitions/behavioral-authority.md), yet nothing inside reads them — authority and addressability are separate fields. The design information is in [three independent gradings](./three-independent-gradings-place-a-self-improving-system.md) — statically they locate a system; dynamically, the faces of the conversion by which the loop closes:
 
-- **Retention form** — operative, cumulative, or addressable; the machinery is the [reflective system](./definitions/reflective-system.md)'s causally connected self-map. Weights hold the cumulative-but-opaque grade; probes try to retrofit addressability onto it.
+- **Retention form** — addressability is the informative grade: retention the loop can read, [since reflection buys addressability](./reflection-buys-addressability.md), through the [reflective system](./definitions/reflective-system.md)'s causally connected self-map; retention that merely steers or compounds is the footnote. Weights compound without addressability; probes try to retrofit it.
 - **Coverage** — [reflective coverage is graded across representational forms](./reflective-coverage-is-graded-across-representational-forms.md) — pinning a model is real but selection-grade coverage of the parametric form.
 - **Closure** — [a methodology governs its own extension only as far as it settles the meta-decisions it raises](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md).
 
@@ -40,11 +40,11 @@ Autonomy — who runs a pathway — is worth reporting but is not a fourth place
 ## Example placements
 
 - [Ashby's Homeostat](../sources/ashby-design-for-a-brain-ultrastability.md) — the floor: non-reflective, fully autonomous, nothing accumulates.
-- Parametric self-improvers (self-play policies, agents fine-tuned on their own trajectories) — compounding without addressability; the dominant paradigm and the conjecture's comparison baseline.
+- Parametric self-improvers (self-play, fine-tuning on own trajectories) — compounding without addressability; the dominant paradigm and comparison baseline.
 - The [Gödel machine](./goedel-machines-are-a-proof-governed-case-of-self-modification.md) — reflective, autonomous, proof-gated: the strongest oracle, paid for in domain.
 - [Commonplace itself](../reference/commonplace-as-a-reflective-system.md) — pathway-mixed: reflective and autonomous where a validator or agent consults an explicit self-representation, human-inclusive where a maintainer notices what's worth fixing.
 
-Read every claim at its stated strength: the definitions are stipulated and revisable; the closing-loop thesis and its payoffs are open hypotheses.
+Read every claim at its stated strength: definitions are stipulated and revisable; the closing-loop thesis and payoffs are open hypotheses.
 
 ## Further notes under the tag
 
@@ -52,7 +52,7 @@ Read every claim at its stated strength: the definitions are stipulated and revi
 - [Behavior-determining organization](./definitions/behavior-determining-organization.md), [operative change](./definitions/operative-change.md), [evidence bearing on an improvement objective](./definitions/evidence-bearing-on-an-improvement-objective.md) — the definition's three base terms.
 - [The definition classifies its boundary cases without ad hoc exceptions](./the-self-improving-system-definition-classifies-its-boundary-cases.md) — nine inclusion tests, from gradient learning to accidental self-modification.
 - [Improving an agentic system crosses the prose-symbolic boundary](./improving-an-agentic-system-crosses-the-prose-symbolic-boundary.md) — reliability gains move behavior between prose and code; the [agent-memory-system reviews](../agent-memory-systems/types/agent-memory-system-review.md) and [comparison matrix](../agent-memory-systems/systems-table.md) run on this vocabulary.
-- [Reach assessment](./definitions/reach-assessment.md) — the semantic judgment reflectivity's structural requirements do not supply; the sample-efficiency conjecture and second-order rescoping both depend on it.
+- [Reach assessment](./definitions/reach-assessment.md) — the semantic judgment reflectivity's structural requirements do not supply; second-order rescoping depends on it.
 - [Formal symbolic systems assess reach only through causal and proof obligations](./formal-systems-can-assess-reach-through-causal-and-proof-obligations.md) — reach assessment isn't LLM-exclusive: proof search and causal inference give symbolic systems a formal route to it.
 
 ## Related Tags
