@@ -12,7 +12,7 @@ A [self-improving system](./definitions/self-improving-system.md) makes operativ
 
 ## The three gradings
 
-Reflectivity is read off the architecture and graded, not declared: weights bind with maximal [behavioral authority](./definitions/behavioral-authority.md), yet nothing inside reads them — authority and addressability are separate fields. Since membership is cheap, a system is placed by [three independent gradings](./three-independent-gradings-place-a-self-improving-system.md) — statically they locate a system; dynamically they are the faces of the conversion by which the loop closes:
+Reflectivity is read off the architecture and graded, not declared: weights bind with maximal [behavioral authority](./definitions/behavioral-authority.md), yet nothing inside reads them — authority and addressability are separate fields. The design information is in [three independent gradings](./three-independent-gradings-place-a-self-improving-system.md) — statically they locate a system; dynamically they are the faces of the conversion by which the loop closes:
 
 - **Retention form** — operative, cumulative, or addressable; the machinery is the [reflective system](./definitions/reflective-system.md)'s causally connected self-map. Weights hold the cumulative-but-opaque grade; probes try to retrofit addressability onto it.
 - **Coverage** — [reflective coverage is graded across representational forms](./reflective-coverage-is-graded-across-representational-forms.md) — pinning a model is real but selection-grade coverage of the parametric form.
