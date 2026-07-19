@@ -14,7 +14,7 @@ A [self-improving system](./definitions/self-improving-system.md) makes operativ
 
 Reflectivity is read off the architecture and graded, not declared: weights bind with maximal [behavioral authority](./definitions/behavioral-authority.md), yet nothing inside reads them — authority and addressability are separate fields. The design information is in [three independent gradings](./three-independent-gradings-place-a-self-improving-system.md) — statically they locate a system; dynamically they are the faces of the conversion by which the loop closes:
 
-- **Retention form** — operative, cumulative, or addressable; the machinery is the [reflective system](./definitions/reflective-system.md)'s causally connected self-map. Weights hold the cumulative-but-opaque grade; probes try to retrofit addressability onto it.
+- **Retention form** — operative, cumulative, or addressable, the grades [reflection buys addressability](./reflection-buys-addressability.md) draws; the machinery is the [reflective system](./definitions/reflective-system.md)'s causally connected self-map. Weights hold the cumulative-but-opaque grade; probes try to retrofit addressability.
 - **Coverage** — [reflective coverage is graded across representational forms](./reflective-coverage-is-graded-across-representational-forms.md) — pinning a model is real but selection-grade coverage of the parametric form.
 - **Closure** — [a methodology governs its own extension only as far as it settles the meta-decisions it raises](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md).
 
@@ -40,7 +40,7 @@ Autonomy — who runs a pathway — is worth reporting but is not a fourth place
 ## Example placements
 
 - [Ashby's Homeostat](../sources/ashby-design-for-a-brain-ultrastability.md) — the floor: non-reflective, fully autonomous, nothing accumulates.
-- Parametric self-improvers (self-play policies, agents fine-tuned on their own trajectories) — compounding without addressability; the dominant paradigm and the conjecture's comparison baseline.
+- Parametric self-improvers (self-play, fine-tuning on own trajectories) — compounding without addressability; the dominant paradigm and comparison baseline.
 - The [Gödel machine](./goedel-machines-are-a-proof-governed-case-of-self-modification.md) — reflective, autonomous, proof-gated: the strongest oracle, paid for in domain.
 - [Commonplace itself](../reference/commonplace-as-a-reflective-system.md) — pathway-mixed: reflective and autonomous where a validator or agent consults an explicit self-representation, human-inclusive where a maintainer notices what's worth fixing.
 
