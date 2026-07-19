@@ -35,6 +35,7 @@ Autonomy — who runs a pathway — is worth reporting but is not a fourth place
 
 - [An improvement loop closes by converting improvised decisions into governed machinery](./an-improvement-loop-closes-by-converting-improvised-decisions.md) — the organizing thesis: a loop is more closed the fewer decisions per cycle need improvised human supply; partial closure is the predicted state.
 - [A closing improvement loop relocates human effort to the frontier instead of reducing it](./a-closing-loop-relocates-human-effort-to-the-frontier.md) — the human side: measure improvements per human judgment, not total hours.
+- [Boundary closure, methodological closure, and machine autonomy vary independently](./boundary-closure-methodological-closure-and-machine-autonomy.md) — the boundary-topological reading: closing the loop is the improvement functions migrating across the human–machine boundary into the computational subsystem.
 - [Reflection may improve sample efficiency under structured shifts](./reflection-may-improve-sample-efficiency-under-structured-shifts.md) — one payoff hypothesis, sharpened into a prediction and a test design.
 
 ## Example placements
