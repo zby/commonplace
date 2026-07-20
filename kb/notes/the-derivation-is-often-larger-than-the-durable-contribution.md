@@ -1,5 +1,5 @@
 ---
-description: "Why an authoring agent may need a familiar framework to discover a connection even when future consumers need only the recognition rule or local consequence"
+description: "Why an authoring agent may need a familiar framework to discover a connection when consumers need only the recognition rule; the default is minimal prose plus a framework link, grown on demand"
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [context-engineering]
@@ -17,9 +17,17 @@ When discovery applies a familiar framework to an unfamiliar case, the durable c
 
 > When **this observable condition** occurs, treat **this apparent task** as **this named kind of problem**, and use the corresponding framework to **perform this operation**.
 
-The framework name addresses knowledge the consumer can reconstruct; the condition, mapping, and operation preserve what it did not reliably supply. Repeating the framework adds value only when it provides needed accessibility, disambiguation, warrant, or fidelity.
+The framework name addresses knowledge the consumer can reconstruct; the condition, mapping, and operation preserve what it did not reliably supply. Repeating the framework adds value only when it supplies something the name cannot: accessibility, disambiguation, warrant, or fidelity.
 
-The derivation must also remain when it is itself evidence, when the consumer cannot reconstruct it, or when a particular version or interpretation has authority. Participating in discovery does not make every part of the reasoning path part of the discovery, but neither does reconstructability make warrant or exactness expendable.
+By that same measure, the derivation itself must remain wherever it carries one of those values — when it is evidence the consumer must be able to check, when the consumer cannot reconstruct it, or when a particular version or interpretation has authority. Stripping a derivation always trades away auditability: a claim without its reasoning must be taken on trust. Participating in discovery does not make every part of the reasoning path part of the discovery, but reconstructability alone does not make warrant or exactness expendable.
+
+## Minimal by default, grown on demand
+
+Reconstructability is not the only reason to compress. A note records one case, and what the case contributes is the recognition — the cue, the mapping, the local fact. The framework behind it is shared across many notes, so it belongs in an artifact of its own, linked rather than re-taught inline, since [short composable notes maximize combinatorial discovery](./short-composable-notes-maximize-combinatorial-discovery.md). The write-time default is therefore minimal prose with a link standing where the framework recap would have gone: the graph carries the reconstructable load structurally, so no single note has to.
+
+Minimal means minimal background, not minimal anchor. The dangerous compression cuts in the wrong direction: it drops the condition, mapping, or local fact — the case's actual contribution — while framework prose survives, or it drops the framework link entirely. The link matters because [knowledge storage does not imply contextual activation](./knowledge-storage-does-not-imply-contextual-activation.md): the name and cue are what trigger the consumer's reconstruction, and without them it fails silently. The anchor — framework name, link, and recognition condition — costs one line and is non-negotiable; the tutorial is what gets cut.
+
+The default is also the cheaper one to correct. Adding a missing warrant or example when a consumer demonstrably misses it — a failed behavioral test, a real miss in use — is cheap and targeted. Trimming a bloated note later is expensive: it means re-deriving the boundary between scaffolding and load-bearing material, the judgment the behavioral test below exists to settle. And at write time the consumer population is unknown: over-retention bakes in an assumption about a weak reader who may never arrive, while minimal-plus-linked defers the decision to read time, when the actual consumer is present. Grow on demand, not on imagination.
 
 ## Examples
 
@@ -53,3 +61,4 @@ Relevant Notes:
 - [Knowledge storage does not imply contextual activation](./knowledge-storage-does-not-imply-contextual-activation.md) — grounds: retrievable knowledge may still require a situation-specific cue before it affects action
 - [System-definition artifacts are crystallized reasoning under context scarcity](./system-definition-artifacts-are-crystallized-reasoning-under-context.md) — mechanism: generic guidance can be reconstructed at read time while the artifact carries the task-specific result of prior reasoning
 - [Conjecture is seeing the particular as an instance of the general](./conjecture-is-seeing-the-particular-as-an-instance-of-the-general.md) — mechanism: the discovery may be the instance relation rather than either already-known endpoint
+- [Short composable notes maximize combinatorial discovery](./short-composable-notes-maximize-combinatorial-discovery.md) — grounds: shared frameworks live as their own composable artifacts, so each note carries only its case's contribution
