@@ -7,7 +7,7 @@ tags: [foundations, computational-model, self-improving-systems]
 
 # Commonplace as a reflective self-improving system
 
-Under the human-inclusive frame below, Commonplace is a reflective [self-improving system](../notes/definitions/self-improving-system.md): its human and computational processes inspect and change operative representations of its own organization. The informative result is not bare membership but the allocation of improvement functions among those processes.
+Under the human-inclusive frame below, Commonplace is a reflective [self-improving system](../notes/definitions/self-improving-system.md): its human and computational processes inspect and change operative representations of its own organization. This note reports the pathway's reflective coverage, improvement dynamics, governance, and actor allocation rather than stopping at membership.
 
 The evidence is the `tag-readme` change introduced by ADR 026. [The causal-connection trace](./tag-readme-trace-observed-causal-connection.md) follows it commit by commit; [the improvement-loop reading](./tag-readme-trace-as-self-improving-loop.md) contains the full function mapping. This note states the resulting classification.
 
@@ -17,11 +17,13 @@ Commonplace here includes the repository and its operative artifacts; the softwa
 
 Commonplace represents its artifact types and contracts (`kb/types/`), routing and organization (`COLLECTION.md` files and navigation), maintenance and review procedures, and design rationale (`kb/reference/adr/`). The self-representing artifacts are those that describe Commonplace with operative force: type specifications, collection contracts, instructions, ADRs, schemas, and review criteria. Both agents and maintainers can inspect and revise them; validators, renderers, commands, and later agents act through the accepted representations.
 
-## Causal connection
+## Causal connection and cumulativity
 
 Causal connection separates a reflective system from a merely documented one. The tag-readme trace shows both directions. A strain in operation — an `index` head grown too large to support its completeness claim — prompted revision of Commonplace's self-representation. [ADR 026](./adr/026-tag-readme-type-with-completeness-and-coverage-marks.md) split the type and made `complete` an enforced mark, carrying the decision into prose, schema, validation, and rendering.
 
 The revised representation then changed later behavior. The validator rejects artifacts it previously accepted; agents may skip a search when a validated completeness mark warrants doing so; and the symbolic check caught a member that the documented search recipe had missed, causing the prose recipe to be corrected. A change in operation revised the self-representation, and operations mediated through the revised representation changed subsequent behavior.
+
+The pathway is cumulative across episodes because later changes begin from and reason through operative artifacts retained by earlier ones. That dynamic is distinct from the causal connection, which makes the retention reflectively addressable.
 
 ## Function allocation and closure
 
@@ -43,7 +45,7 @@ The trace therefore earns modification depth on parts of the prose and symbolic 
 
 ## What the classification does not claim
 
-The trace establishes neither whole-pathway computational closure nor improvement beyond the adopted criterion. Human inclusion also makes reflective membership cheap, so the discriminating information is allocation, coverage, methodological closure, and warrant, [not the bare label](../notes/admitting-a-human-into-the-boundary-moves-reflective-discrimination-to-computational-allocation.md). Comparing that profile over time or across differently decomposed systems remains [an open measurement problem](../notes/measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md).
+The trace establishes neither whole-pathway computational closure nor improvement beyond the adopted criterion. Human inclusion makes membership cheap; comparison must use [the pathway profile](../notes/a-self-improving-system-needs-a-profile-not-a-ladder.md), whose comparison across time or differently decomposed systems remains [an open measurement problem](../notes/measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md).
 
 ---
 
@@ -55,6 +57,7 @@ Relevant Notes:
 - [Reflective system](../notes/definitions/reflective-system.md) — defined-in: the boundary-parametric causal self-representation criterion discharged here
 - [Self-improving system](../notes/definitions/self-improving-system.md) — defined-in: the evidence-responsive operative self-change criterion and pathway-relative reflective distinction
 - [Admitting a human into the boundary moves reflective discrimination to computational allocation](../notes/admitting-a-human-into-the-boundary-moves-reflective-discrimination-to-computational-allocation.md) — rationale: why the human-inclusive reflective attribution is paired with a computational allocation profile
+- [A self-improving system needs a profile, not a ladder](../notes/a-self-improving-system-needs-a-profile-not-a-ladder.md) — rationale: keeps reflective structure, dynamics, governance, and allocation distinct in the classification
 - [Reflective coverage is graded across representational forms](../notes/reflective-coverage-is-graded-across-representational-forms.md) — rationale: the coverage criterion this system meets unevenly
 - [Warranted autonomy is bounded by oracle domain](../notes/warranted-autonomy-is-bounded-by-oracle-domain.md) — rationale: why moving a function to a computational component does not by itself warrant the decision
 - [A methodology governs its own extension only as far as it settles the meta-decisions it raises](../notes/a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md) — rationale: the methodological-closure property assessed separately from reflectivity

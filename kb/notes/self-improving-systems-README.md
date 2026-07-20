@@ -1,5 +1,5 @@
 ---
-description: "Curated head for the self-improving-systems tag — evidence-responsive operative change; the stake: the improvement loop closes as improvised decisions become governed machinery"
+description: "Curated head for the self-improving-systems tag — evidence-responsive operative self-change profiled by reflective structure, dynamics, governance, and actor allocation"
 type: kb/types/tag-readme.md
 index_source: tag
 index_key: self-improving-systems
@@ -8,17 +8,16 @@ complete: true
 
 # Self-improving systems
 
-A [self-improving system](./definitions/self-improving-system.md) makes operative changes to its own behavior-determining organization in response to evidence about an improvement objective. The definition is deliberately broad, so even a dev team qualifies: people who revise their system's code and conventions in response to its failures count once the boundary includes them. Where that boundary lies is the analyst's choice. A change pathway is **reflective** if it routes through a representation of the system's own behavior that the system can read and edit — a lessons file, a policy document. It is non-reflective if it ends in what nothing inside the system can read — a weight update. Most systems in [agent-memory-systems](../agent-memory-systems/README.md) mine their traces for lessons and load them into later runs. The boundary choice there settles whether that is self-change at all: lessons consulted as data fall outside the organization; lessons that are part of the [system definition](./definitions/system-definition-artifact.md) make the pathway reflective self-improvement, since loading a lesson reads it.
+A [self-improving system](./definitions/self-improving-system.md) makes operative changes to its own behavior-determining organization in response to evidence about an improvement objective. Read every attribution against a declared frame: including maintainers can make a development system a human-inclusive member. A pathway is **reflective** when change is mediated through an editable representation of the affected organization, such as a lessons file or policy; it is non-reflective when change lands in a substrate nothing inside can read as a representation, such as weights. For [agent-memory systems](../agent-memory-systems/README.md), retained lessons count as reflective self-change only when they are loaded as part of the [system definition](./definitions/system-definition-artifact.md), rather than consulted as external data.
 
-## The three gradings
+## Profile the pathway, not the label
 
-Reflectivity is read off the architecture and graded, not declared: weights bind with maximal [behavioral authority](./definitions/behavioral-authority.md), yet nothing inside reads them — authority and addressability are separate fields. The design information is in [three independent gradings](./three-independent-gradings-place-a-self-improving-system.md) — statically they locate a system; dynamically, the faces of the conversion by which the loop closes:
+Membership only starts the description. [The pathway then needs a four-part profile rather than a ladder](./a-self-improving-system-needs-a-profile-not-a-ladder.md):
 
-- **Retention form** — addressability is the informative grade: retention the loop can read, [since reflection buys addressability](./reflection-buys-addressability.md), through the [reflective system](./definitions/reflective-system.md)'s causally connected self-map; retention that merely steers or compounds is the footnote. Weights compound without addressability; probes try to retrofit it.
-- **Coverage** — [reflective coverage is graded across representational forms](./reflective-coverage-is-graded-across-representational-forms.md) — pinning a model is real but selection-grade coverage of the parametric form.
-- **Closure** — [a methodology governs its own extension only as far as it settles the meta-decisions it raises](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md).
-
-Autonomy reports whether each pathway function is human, computational, or joint. Human inclusion makes reflective membership cheap, so [allocation carries the comparison](./admitting-a-human-into-the-boundary-moves-reflective-discrimination-to-computational-allocation.md); **warrant** asks which unattended decisions can be trusted, [bounded by oracle domain](./warranted-autonomy-is-bounded-by-oracle-domain.md).
+- **Reflective structure** — [coverage breadth across behavior-bearing forms and operation depth over each](./reflective-coverage-is-graded-across-representational-forms.md). Addressability is the resulting operation profile over retained commitments; opaque weights can still have maximal [behavioral authority](./definitions/behavioral-authority.md).
+- **Improvement dynamics** — whether later episodes build on earlier changes. This is independent of reflection: [opaque weights can compound, while an addressable lesson may never be retrieved](./reflection-buys-addressability.md).
+- **Governance** — [which consequential decisions the methodology settles](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md), and [which of those decisions are warranted](./warranted-autonomy-is-bounded-by-oracle-domain.md).
+- **Actor allocation** — which functions are human, computational, or joint. Because human inclusion makes reflective membership cheap, [allocation carries the comparison](./admitting-a-human-into-the-boundary-moves-reflective-discrimination-to-computational-allocation.md). Computational closure is its no-human endpoint, not a grade of reflectivity.
 
 ## The improvement loop
 
@@ -27,28 +26,28 @@ Autonomy reports whether each pathway function is human, computational, or joint
 
 ## Reflection makes the loop editable
 
-1. Retained lessons become **addressable** — later rounds can read, criticize, and selectively revise them: [reflection buys addressability](./reflection-buys-addressability.md).
-2. An addressable lesson is **second-order** — it can reject a prior commitment outright, where a gradient can only nudge it: [reflection makes retained lessons second-order](./reflection-makes-retained-lessons-second-order.md).
-3. The standing discount — a lesson that never surfaces contributes nothing: [retrieval failure is reflection failure](./retrieval-failure-is-reflection-failure.md).
+- Retained lessons become **addressable** — later rounds can read, criticize, and selectively revise them: [reflection buys addressability](./reflection-buys-addressability.md).
+- An addressable lesson is **second-order** — it can reject a prior commitment outright, where a gradient can only nudge it: [reflection makes retained lessons second-order](./reflection-makes-retained-lessons-second-order.md).
+- The standing discount — a lesson that never surfaces contributes nothing: [retrieval failure is reflection failure](./retrieval-failure-is-reflection-failure.md).
+- One payoff hypothesis is that [reflection may improve sample efficiency under structured shifts](./reflection-may-improve-sample-efficiency-under-structured-shifts.md).
 
-## Closing the loop
+## Governance and computational allocation
 
-- [An improvement loop closes by converting improvised decisions into governed machinery](./an-improvement-loop-closes-by-converting-improvised-decisions.md) — the organizing thesis: a loop is more closed the fewer decisions per cycle need improvised human supply; partial closure is the predicted state.
-- [A closing improvement loop relocates human effort to the frontier instead of reducing it](./a-closing-loop-relocates-human-effort-to-the-frontier.md) — the human side: measure improvements per human judgment, not total hours.
-- [Reflection may improve sample efficiency under structured shifts](./reflection-may-improve-sample-efficiency-under-structured-shifts.md) — one payoff hypothesis, sharpened into a prediction and a test design.
+- [Methodological and computational closure track different changes](./methodological-and-computational-closure-track-different-changes.md) — settled methodology can still be human-executed, while an unattended model can still improvise; executable, warranted criteria are what let both properties advance together.
+- [Increasing computational autonomy relocates human effort to the frontier instead of reducing it](./increasing-computational-autonomy-relocates-human-effort-to-the-frontier.md) — the human side: measure improvements per human judgment, not total hours.
 
 ## Example placements
 
-- [Ashby's Homeostat](../sources/ashby-design-for-a-brain-ultrastability.md) — the floor: non-reflective, fully autonomous, nothing accumulates.
-- Parametric self-improvers (self-play, fine-tuning on own trajectories) — compounding without addressability; the dominant paradigm and comparison baseline.
-- The [Gödel machine](./goedel-machines-are-a-proof-governed-case-of-self-modification.md) — reflective, autonomous, proof-gated: the strongest oracle, paid for in domain.
-- [Commonplace itself](../reference/commonplace-as-a-reflective-system.md) — human-inclusive and reflective, with computational closure varying by pathway.
+- [Ashby's Homeostat](../sources/ashby-design-for-a-brain-ultrastability.md) — operative, non-reflective, computationally autonomous, and non-cumulative under the current reading.
+- Parametric self-improvers (self-play, fine-tuning on their own trajectories) — cumulative and computationally autonomous, but non-reflective because retained weights remain opaque.
+- The [Gödel machine](./goedel-machines-are-a-proof-governed-case-of-self-modification.md) — reflective and computationally autonomous, with methodological closure and warrant bounded by what its proof system can establish.
+- [Commonplace itself](../reference/commonplace-as-a-reflective-system.md) — human-inclusive, reflective, and cumulative, with governance and actor allocation varying by decision.
 
-Read every claim at its stated strength: definitions are stipulated and revisable; the closing-loop thesis and payoffs are open hypotheses.
+Read every claim at its stated strength: definitions are stipulated and revisable; payoff claims are open hypotheses.
 
 ## Further notes under the tag
 
-- [Measuring autonomy well enough to see it improve is an open problem](./measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md) — the per-function grading locates a system but cannot yet show it becoming more autonomous.
+- [Measuring autonomy well enough to see it improve is an open problem](./measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md) — a per-function profile locates a system but cannot yet show it becoming more autonomous.
 - [Where change candidates come from in Commonplace](../reference/where-change-candidates-come-from-in-commonplace.md) — the observed search surface and its allocation across maintainers, agents, commands, and reports.
 - [Behavior-determining organization](./definitions/behavior-determining-organization.md), [operative change](./definitions/operative-change.md), [evidence bearing on an improvement objective](./definitions/evidence-bearing-on-an-improvement-objective.md) — the definition's three base terms.
 - [The definition classifies its boundary cases without ad hoc exceptions](./the-self-improving-system-definition-classifies-its-boundary-cases.md) — nine inclusion tests, from gradient learning to accidental self-modification.
@@ -59,5 +58,5 @@ Read every claim at its stated strength: definitions are stipulated and revisabl
 ## Related Tags
 
 - [foundations](./foundations-README.md) — the broader core theory this sits inside
-- [constraining](./constraining-README.md) — closure is a constraining property of methodology-as-input
+- [constraining](./constraining-README.md) — methodological closure is a constraining property of methodology-as-input
 - [computational-model](./computational-model-README.md) — reflection and intercession as computational concepts generalized to socio-technical boundaries

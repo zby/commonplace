@@ -9,13 +9,13 @@ tags: [foundations, computational-model, self-improving-systems]
 
 What does routing an improvement pathway through a self-representation — making the self-improvement [reflective rather than non-reflective](./definitions/self-improving-system.md) — actually add? The tempting answer — compounding, improvement building on improvement — claims too much, because compounding is available without reflection. Reflection's distinctive affordance is stronger, more direct **addressability**: retention that later rounds of improvement can *read*, not merely run on.
 
-The claim sharpens by grading retention. A [self-improving system](./definitions/self-improving-system.md)'s changes must be operative at all — persisting, with behavioral authority; the two further grades are where architectures diverge.
+The claim sharpens by separating three properties:
 
 - **Operative** retention steers: the retained change persists and affects later behavior.
-- **Cumulative** retention compounds: later improvement rounds build on what earlier rounds retained.
-- **Addressable** retention is knowledge: processes inside the boundary can inspect the retained change, say what it claims, criticize it, revise it selectively, and carry it to a problem other than the one it came from.
+- **Cumulative** retention compounds: later improvement rounds build on what earlier rounds retained. This is a property of improvement dynamics across episodes.
+- **Addressable** retention is knowledge: processes inside the boundary can inspect the retained change, say what it claims, criticize it, revise it selectively, and carry it to a problem other than the one it came from. This is an affordance of reflective coverage over retained commitments.
 
-All three grades are occupied, and the middle one is what breaks the equation of reflection with compounding.
+Operativity is required for [self-improving membership](./definitions/self-improving-system.md); cumulativity and addressability can then vary independently. Their separation is what breaks the equation of reflection with compounding.
 
 ## The floor: operative without cumulative
 
@@ -25,13 +25,11 @@ All three grades are occupied, and the middle one is what breaks the equation of
 
 A parametric learner — a policy improved by self-play, an agent fine-tuned on its own trajectories — retains improvement in its weights, and its pathway is cumulative by construction: the retained weights *parameterize everything the system does next*, so each round of improvement starts from everything the pathway has kept. Improvement genuinely builds on improvement. This is why a definition that requires reflection for self-improvement fails against the field's central cases.
 
-Nor are those cases exotic. Retention in opaque weights is now the dominant paradigm of learning, reaching down from frontier models to a learning thermostat whose occupancy model is a small network rather than a legible schedule. The cumulative-but-opaque grade is the deployed default, not a corner case — which is what makes the grade boundary worth naming at all.
+Nor are those cases exotic. Retention in opaque weights is now the dominant paradigm of learning, reaching down from frontier models to a learning thermostat whose occupancy model is a small network rather than a legible schedule. Cumulative-but-opaque retention is the deployed default, not a corner case — which is what makes the distinction worth naming at all.
 
 But the weights are the system, not a map of it. Nothing inside the pathway can read a weight update, state what it claims, or explain why it was accepted. The honest form of the contrast is comparative, not categorical: opaque retention is not beyond intervention — a bad update can be trained over, rolled back wholesale, probed from outside, steered against — but every one of those handles is indirect, operating on the substrate or the process rather than on the retained change *as an object*.
 
 > Non-reflective retention usually provides weaker and more indirect addressability; reflective retention makes the changed object explicit within the system's own operative representation.
-
-So the parametric pathway compounds along the single gradient it climbs, and what it lacks is not the ability to change — it is a handle on each change.
 
 ## What addressability changes about the pathway
 
@@ -39,9 +37,9 @@ Route retention through a readable self-representation and the retained change l
 
 The two architectures trade opposite guarantees. Parametric compounding is automatic but opaque: the wire is the substrate itself, so nothing can fail to "find" the retained change — and nothing can audit it. Reflective compounding is criticizable but best-effort: the wire is discovery over artifacts, so a retained change compounds only if a later round actually reads it — [retrieval failure is reflection failure](./retrieval-failure-is-reflection-failure.md). Addressability is the *possibility* of compounding as knowledge, not a guarantee of it.
 
-## What reflection may buy — expected advantages, not definitional truths
+## Expected advantages
 
-The definitional content of this note stops at the comparative claim above. What follows is what addressability is *expected* to enable — hypotheses to be tested against built systems, not truths to be inherited from the definition:
+Addressability is expected to enable:
 
 - **Selective revision** — a bad change found and corrected in place, without retraining or wholesale rollback.
 - **Explanation** — a change that can be read can carry rationale, and can be explained to a person or another process.
@@ -50,13 +48,14 @@ The definitional content of this note stops at the comparative claim above. What
 - **Criticism and rollback** — per-change and targeted, because [acceptance is an improvement claim](./definitions/self-improving-system.md) that an addressable change leaves open to later audit.
 - **Improvement of the improvement process itself** — an explicit evaluator, criterion, or update rule is [organization](./definitions/behavior-determining-organization.md) like any other, so a reflective pathway can be turned on its own machinery.
 
-Whether reflective pathways actually improve faster, more reliably, or more safely than non-reflective ones is an open empirical question, and nothing above settles it. The comparative claim is about what the architecture makes available, not about what it delivers. Delivering on selective revision and criticism specifically needs [reach assessment](./definitions/reach-assessment.md): addressability makes a bad change findable, but finding it as bad still requires judging its claimed scope, which addressability does not itself supply.
+Whether reflective pathways improve faster, more reliably, or more safely remains empirical. Selective revision and criticism also require [reach assessment](./definitions/reach-assessment.md): addressability makes a change findable, but judging it as bad still requires assessing its claimed scope.
 
 ## Scope
 
-- Addressability is graded, not binary, [since reflective coverage is graded across representational forms](./reflective-coverage-is-graded-across-representational-forms.md): prose is addressable to any reader, symbolic artifacts to interpreters and readers, parametric substrates only to external probing. Interpretability research is best read as an attempt to retrofit addressability onto a cumulative-but-opaque form.
-- The grades do not form a strict ladder above operative. Cumulative does not imply addressable (weights), and an addressable artifact contributes nothing until something reads it — actual compounding through a representation is a retrieval outcome, not a structural one.
-- An earlier formulation of this argument — "a setting does not admit compounding at all" — lived inside the [self-improving system](./definitions/self-improving-system.md) definition and overclaimed; the parametric middle grade is the correction, and moving the argument out of the definition is what made it correctable.
+- Addressability has an operation profile rather than a single grade, [since reflective coverage is reported per representational form and operation](./reflective-coverage-is-graded-across-representational-forms.md). A commitment may be retrievable but not selectively revisable, or revisable but not transferable. Interpretability research can be read as an attempt to add such operations over cumulative-but-opaque parametric retention.
+- **TODO:** Map retrieve, interpret, criticize, revise, rescope, and transfer onto the coverage operations with worked cases. Mechanical modification without interpretation suggests that addressability may not follow from “depth” as directly as this note currently claims.
+- **TODO:** Resolve the operative-but-non-cumulative case. A lesson that is never retrieved may fail the operative membership condition, while a one-shot policy that affects behavior but is discarded before the next improvement episode may be a cleaner counterexample.
+- An earlier formulation of this argument — "a setting does not admit compounding at all" — lived inside the [self-improving system](./definitions/self-improving-system.md) definition and overclaimed; separating cumulativity from reflective addressability is the correction, and moving the argument out of the definition is what made it correctable.
 
 ## Open Questions
 
@@ -70,7 +69,8 @@ Relevant Notes:
 - [Self-improving system](./definitions/self-improving-system.md) — defined-in: the category whose reflective/non-reflective central distinction this thesis motivates
 - [Reflective system](./definitions/reflective-system.md) — defined-in: the causally connected self-representation that addressable retention runs through
 - [Reach assessment](./definitions/reach-assessment.md) — extends: the judgment capability that would make selective revision and criticism deliver, not just become possible
-- [A proposal-selection improvement loop requires search, evaluation, and operative retention](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — grounds: operative retention as the loop's baseline, which the further grades build on
+- [A proposal-selection improvement loop requires search, evaluation, and operative retention](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — grounds: operative retention as the loop's baseline, kept separate from cumulativity and reflective addressability
 - [Retrieval failure is reflection failure](./retrieval-failure-is-reflection-failure.md) — extends: why addressable retention compounds only best-effort, through the discovery wire
 - [Reflective coverage is graded across representational forms](./reflective-coverage-is-graded-across-representational-forms.md) — extends: addressability assessed per representational form and operation depth
+- [A self-improving system needs a profile, not a ladder](./a-self-improving-system-needs-a-profile-not-a-ladder.md) — extends: places addressability under reflective structure while keeping cumulativity among improvement dynamics
 - [Ashby, Design for a Brain — ultrastability](../sources/ashby-design-for-a-brain-ultrastability.md) — evidence: the floor case — retention that steers without compounding, because nothing can read what was kept
