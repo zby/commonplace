@@ -30,6 +30,16 @@ The idea is well-established in other fields. What's specific to our context is 
 
 Observer-relativity shapes inclusion decisions. A note's value depends on whether the agent can connect it to what it already has in context — an isolated fact is worth less than a design principle that links to five other notes, because the principle creates extraction opportunities across sessions. This is why [KB goals](./kb-goals-in-always-loaded-context-guide-inclusion-decisions.md) matter: they define what the observer is trying to do, which determines what counts as valuable.
 
+Observer-relativity also determines resolution. The minimum required content of retained prose is the gap between what its target use requires and what its intended consumers can reliably contribute from parametric knowledge, loaded context, live inspection, tools, or reasoning. The gap may be:
+
+- **Substance** the consumer lacks: facts, observations, arguments, or methods.
+- **A connection the consumer will not reliably make:** a relation, recognition condition, or operation that activates otherwise familiar knowledge.
+- **What reconstruction cannot preserve:** warrant, provenance, exact wording or membership, a governing version, or an authoritative local choice.
+
+Reconstructability and activation are separate tests because [knowledge storage does not imply contextual activation](./knowledge-storage-does-not-imply-contextual-activation.md). A model may explain a framework perfectly when asked yet fail to recognize the present situation as an instance of it. When its name reliably activates the framework, the artifact can retain the problem mapping rather than a tutorial; when exactness, evidence, or authority matters, the full content must remain or be reliably loadable.
+
+For agent consumers, test resolution behaviorally: compare a bare name, a name plus recognition condition, and fuller content, then retain the least detail that preserves the intended effect. The result depends on the consumer population. A cue that resolves for one model may fail for another, while a compact agent-facing note may be opaque to a first-time human. Self-containedness therefore means supplying what intended consumers need, not reproducing everything relevant to the topic.
+
 ### How to present
 
 Several KB conventions are optimizations for the agent observer:

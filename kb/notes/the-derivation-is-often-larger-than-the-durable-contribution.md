@@ -1,0 +1,55 @@
+---
+description: "Why an authoring agent may need a familiar framework to discover a connection even when future consumers need only the recognition rule or local consequence"
+type: kb/types/note.md
+traits: [title-as-claim]
+tags: [context-engineering]
+---
+
+# The derivation is often larger than the durable contribution
+
+An authoring agent may use a large body of familiar knowledge to discover a small durable contribution. Because that knowledge was active during generation, the agent tends to reproduce it in the resulting artifact. But a future consumer with access to the same parametric knowledge can reconstruct the background; what changed was the recognition that a particular problem is an instance of it.
+
+Derivation size is therefore a poor guide to retained size. The reasoning path explains how the author reached the contribution, but only the parts future consumers cannot reliably reconstruct or activate must survive. Which parts those are remains [observer-relative](./information-value-is-observer-relative.md).
+
+## Recognition can be the durable contribution
+
+When discovery applies a familiar framework to an unfamiliar case, the durable contribution may be only:
+
+> When **this observable condition** occurs, treat **this apparent task** as **this named kind of problem**, and use the corresponding framework to **perform this operation**.
+
+The framework name addresses knowledge the consumer can reconstruct; the condition, mapping, and operation preserve what it did not reliably supply. Repeating the framework adds value only when it provides needed accessibility, disambiguation, warrant, or fidelity.
+
+The derivation must also remain when it is itself evidence, when the consumer cannot reconstruct it, or when a particular version or interpretation has authority. Participating in discovery does not make every part of the reasoning path part of the discovery, but neither does reconstructability make warrant or exactness expendable.
+
+## Examples
+
+### Cue only: heterogeneous parts activate ontology
+
+Suppose a description of a reflective system puts software components, functional roles, processes, retained artifacts, and levels of description into one list of "parts." A capable agent already knows ontology. The useful note preserves the diagnostic connection:
+
+> When proposed parts do not all stand in the same relation to the whole, treat the task as ontology design: distinguish entity kinds and parthood relations before enumerating components.
+
+Ontology was needed to derive the rule, but consumers that can reconstruct it from the name do not need the tutorial repeated.
+
+### Cue plus local fact: a timeout activates idempotency
+
+Suppose a service charges a card and times out before acknowledging success. A software agent already knows idempotency, but it cannot infer the system-specific ordering. The project note should retain both the cue—treat retries as an idempotency problem—and the local fact that the irreversible action precedes acknowledgement. Generic distributed-systems guidance can be reconstructed; the duplicate-charge risk and relevant operation boundary cannot.
+
+### Relation only: two systems share a mechanism
+
+Suppose two systems use different terminology but both precompute a stable part of a later reasoning task and insert the result into a bounded call. The consumer may know both systems and understand partial evaluation without recognizing the relation between them. The note should retain the comparison, shared mechanism, and consequences, not teach either system or partial evaluation again. The contribution is the edge, not either endpoint.
+
+## Test the retained boundary behaviorally
+
+For an agent consumer, semantic inspection cannot establish whether a framework name is an adequate address. Compare representative behavior with the name alone, the name plus a recognition condition, and the fuller derivation. If a smaller form preserves the contribution's effect, the removed material was derivation scaffolding; if behavior degrades, the missing explanation, example, or warrant belongs in the retained result.
+
+The boundary varies with the model, task, and consumer population. The test establishes a validity window, not a timeless compression.
+
+---
+
+Relevant Notes:
+
+- [Information value is observer-relative](./information-value-is-observer-relative.md) — grounds: consumer knowledge, capacity, tools, and goals determine which parts of a derivation add value when retained
+- [Knowledge storage does not imply contextual activation](./knowledge-storage-does-not-imply-contextual-activation.md) — grounds: retrievable knowledge may still require a situation-specific cue before it affects action
+- [System-definition artifacts are crystallized reasoning under context scarcity](./system-definition-artifacts-are-crystallized-reasoning-under-context.md) — mechanism: generic guidance can be reconstructed at read time while the artifact carries the task-specific result of prior reasoning
+- [Conjecture is seeing the particular as an instance of the general](./conjecture-is-seeing-the-particular-as-an-instance-of-the-general.md) — mechanism: the discovery may be the instance relation rather than either already-known endpoint
