@@ -35,6 +35,8 @@ The following neighboring terms mark different capabilities:
 
 Intercession is a capability within reflection, but not every reflective architecture permits it.
 
+No artifact authority family is required. A representation consumed as evidence or advice can mediate reflective change when it participates in the causal path into the represented organization; a nominal [system-definition artifact](./system-definition-artifact.md) that is not a self-representation cannot. The criterion is causal connection through a representation of the affected aspect, made precise by the consumer, channel, and force in [behavioral authority](./behavioral-authority.md).
+
 ## Retrieval-mediated causal connection
 
 The causal connection need not be an interpreter or a compiler. Where the self-representation is a body of retained artifacts, it can run through **discovery**: a process searches the artifacts, finds the ones bearing on what it is doing, and derives its behavior from what it found. Retrieval is then the wire the representation acts along, and it is best-effort where a compiler is exhaustive — so [retrieval failure is reflection failure](../retrieval-failure-is-reflection-failure.md), which develops what that costs and how the wire is strengthened.
@@ -49,7 +51,7 @@ Reflection is also not **adaptation**, and this is the misreading the term invit
 
 *Adaptation without reflection.* Conversely, a system can improve itself with no self-representation at all. Ashby's Homeostat jogs its parameters to random values whenever its essential variables leave viable limits, holds the configuration that restores them, and so adapts — viability-driven, evidence-responsive change to its own organization ([Ashby 1960, chapters 7–8](../../sources/ashby-design-for-a-brain-ultrastability.md)). It is still not reflective, because nothing in it *represents* that organization. What it retains is a setting rather than a map, and [what that costs is addressability](../reflection-buys-addressability.md).
 
-The two properties are orthogonal: reflection is structural, adaptation is a process, and each is available without the other. A [self-improving system](./self-improving-system.md) requires only operative change responsive to evidence bearing on an improvement objective; whether a given change is routed through a self-representation is what makes that pathway's self-improvement **reflective** rather than non-reflective — the central, pathway-relative distinction of the self-improving vocabulary — and reflection is the cheap half of it.
+The two properties are orthogonal: reflection is structural, adaptation is a process, and each is available without the other. [Self-improving-system membership](./self-improving-system.md) is defined separately; this note owns only whether a named pathway routes change through a self-representation.
 
 ## Misuse Cases
 

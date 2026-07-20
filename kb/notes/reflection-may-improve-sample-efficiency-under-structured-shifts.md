@@ -72,7 +72,7 @@ The directional prediction, in sample-efficiency terms: **for task families shar
 Relevant Notes:
 
 - [Reflection buys addressability](./reflection-buys-addressability.md) — grounds: supplies the reuse-and-transfer affordance this note sharpens into a conditional target-data hypothesis
-- [Reflection makes retained lessons second-order: a lesson can reject or rescope a prior commitment](./reflection-makes-retained-lessons-second-order.md) — mechanism: the operations by which a single target observation can trigger a rejection or rescoping instead of a gradient nudge
+- [Reflection makes retained lessons second-order: a lesson can reject or rescope a prior commitment](./reflection-makes-retained-lessons-second-order.md) — mechanism: explicit operations on a represented prior commitment
 - [Retrieval failure is reflection failure](./retrieval-failure-is-reflection-failure.md) — mechanism: the retrieval entry in the explicit pathway's ledger
 - [Codification](./definitions/codification.md) — defined-in: the prose-to-symbolic crossing the explicit pathway's ledger names as its first cost
 - [Warranted autonomy is bounded by oracle domain](./warranted-autonomy-is-bounded-by-oracle-domain.md) — mechanism: why criticism, among the validation routes, is the one bounded by oracle domain
@@ -81,5 +81,5 @@ Relevant Notes:
 - [Reflective system](./definitions/reflective-system.md) — defined-in: the causally connected self-representation a retained hypothesis must participate in for the conjecture to bear on reflection
 - [Reach assessment](./definitions/reach-assessment.md) — defined-in: the evaluator capability the conjecture assumes but reflectivity does not supply
 - [Gödel machines are a proof-governed case of reflective self-modification](./goedel-machines-are-a-proof-governed-case-of-self-modification.md) — evidence: the closest formal instance of the target system, unimplemented
-- [Admitting a human into the boundary moves reflective discrimination to computational allocation](./admitting-a-human-into-the-boundary-moves-reflective-discrimination-to-computational-allocation.md) — grounds: why Commonplace's reflective membership does not establish the computational closure the proposed test needs
+- [Methodological and computational closure track different changes](./methodological-and-computational-closure-track-different-changes.md) — grounds: why Commonplace's reflective membership does not establish the computational closure the proposed test needs
 - [Commonplace as a reflective self-improving system](../reference/commonplace-as-a-reflective-system.md) — evidence: the closest running instance of the target system, with human, joint, and computational functions explicitly located

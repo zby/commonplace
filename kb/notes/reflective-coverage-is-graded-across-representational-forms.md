@@ -7,7 +7,7 @@ tags: [foundations, computational-model, constraining, self-improving-systems]
 
 # Reflective coverage is graded across representational forms
 
-A [reflective system](./definitions/reflective-system.md)'s behavior can be carried by several kinds of artifact at once. Its [system-definition artifacts](./definitions/system-definition-artifact.md) — the artifacts it consumes with binding force — may take any [representational form](./definitions/representational-form.md): prose interpreted by models and humans, symbolic structures with formal consumers, distributed-parametric state such as model weights. Where they span forms, reflective reach must span them too: a behavior bound by an artifact whose form the self-representation does not cover is outside that reach, however thoroughly the other forms are covered.
+A [reflective system](./definitions/reflective-system.md)'s [behavior-determining organization](./definitions/behavior-determining-organization.md) can span several [representational forms](./definitions/representational-form.md): prose interpreted by models and humans, symbolic structures with formal consumers, and distributed-parametric state such as model weights. Reflective coverage follows the represented causal path, not an artifact's authority label. Where behavior spans forms, a form the self-representation does not cover remains outside reflective reach however thoroughly the others are covered.
 
 That need cannot be assessed all-or-nothing. **Reflective coverage** is relative to the declared aspects and operations, and it grades — by which forms the self-representation spans, and by what the system can do to each covered component.
 
@@ -18,7 +18,7 @@ That need cannot be assessed all-or-nothing. **Reflective coverage** is relative
 1. **Observation** — the component can be read or probed, and what is learned is available inside the boundary.
 2. **Selection** — the system can swap one sealed component for another without seeing inside either. A skill pinning `model: opus` selects among sealed alternatives and reaches nothing finer.
 3. **Configuration** — the component exposes parameters the system can set, within an interface it did not author. Commonplace's skill frontmatter does this to the harness: `allowed-tools: Read, Write, Grep, Glob, Bash, Skill` and `context: fork` set the tool surface and context regime for a skill run, through a schema the harness owns. The system can set those fields and cannot inspect or edit the machinery that honours them.
-4. **Modification** — the substrate itself can be edited from inside the boundary. Editing `kb/types/tag-readme.md` changes what the validator enforces, because the spec's own path is the validator's dispatch key.
+4. **Modification** — the substrate itself can be edited from inside the boundary. The [Commonplace reference case](../reference/commonplace-as-a-reflective-system.md) traces one prose-and-symbolic instance.
 
 **The four are ordered but not nested**, and the difference matters when a claim is being made. Deeper reach does not confer shallower reach: selection operates over components it cannot observe — that is what makes them sealed — and configuration through a vendor's schema grants no ability to swap the vendor out. So a coverage claim states which operations hold over a given component, not a single number. The ordering is useful for saying what a lever *does not* reach; it is not a licence to infer the lower rungs from the higher one.
 
@@ -30,11 +30,15 @@ Nor does either dimension imply the other, or any form inherit from another. The
 
 Two corollaries. The obvious evidence is not evidence: that one agent can edit both Markdown and Python establishes neither that those artifacts form a self-representation nor that changes to them reach later operation through a causally connected path. And depth describes a design without ranking it — a fixed mapping held at shallow depth can be the correct choice, as the kernel-boundary discussion below shows. Each covered form brings its own verification obligation besides: read prose, test symbolic artifacts, probe parametric ones behaviorally.
 
+## Coverage does not subsume addressability
+
+Coverage records represented aspects, components, forms, and structurally available operations. [Addressability](./reflection-buys-addressability.md) records what the system can do with a retained change *as a commitment*: retrieve, interpret, criticize, revise, rescope, or transfer it. Coverage of the relevant component is necessary for those operations, but not sufficient. A process can mechanically observe or modify bytes without interpreting the commitment they encode. Report the two profiles separately rather than treating operation depth as proof of addressability.
+
 ## Mapping coverage is not mapping modifiability
 
 Three properties must remain distinct. **Mapping coverage** asks whether a supported observation or intervention is reliably realized across the boundary. **Mapping inspectability** asks whether the system can examine how the transfer works. **Mapping modifiability** asks whether the system can change it. A trusted compiler may sit in an unmodifiable kernel and still preserve full reflective coverage of a desired-state aspect — provided the declared interface exposes its semantics and its relevant failures.
 
-The properties come apart in practice. Commonplace's type-spec-to-validator mapping is unusually well covered: the validator dispatches on the spec's own path (`@type_rule("kb/types/tag-readme.md")`), so a prose spec and the code enforcing it cannot drift silently — the specification file *is* the enforcement key. That is high mapping coverage bought by a naming convention, not by making the dispatch mechanism modifiable. Most other prose-to-code relationships in the same repository have no such binding, and there the mapping is uncovered: the prose can change with nothing to notice that the code no longer matches.
+The properties come apart in practice. A trusted compiler may preserve a fully covered transfer while remaining unmodifiable; a modifiable glue script may expose no reliable account of what it transfers. The [Commonplace reference case](../reference/commonplace-as-a-reflective-system.md) applies the distinction to its prose-to-validator mapping rather than making that repository-specific trace part of the general claim.
 
 The demand rises only when a system claims to inspect or adapt the transfer itself. Then the mapping must enter the self-representation: its interface, authority rule, rationale-to-implementation lineage, [codification](./definitions/codification.md) boundary, or consistency mechanism. Declaring a terminal kernel keeps this from becoming an infinite demand to represent every mechanism that represents another mechanism.
 
@@ -80,7 +84,7 @@ Relevant Notes:
 
 - [Reflective system](./definitions/reflective-system.md) — grounds: supplies the aspect-relative causal self-representation criterion
 - [Representational form](./definitions/representational-form.md) — defined-in: the prose / symbolic / distributed-parametric axis coverage grades over
-- [System-definition artifact](./definitions/system-definition-artifact.md) — defined-in: the binding artifacts whose forms a coverage claim must span
+- [Behavior-determining organization](./definitions/behavior-determining-organization.md) — defined-in: the represented organization whose components and forms a coverage claim spans
 - [Lineage](./definitions/lineage.md) — defined-in: records dependencies that require invalidation, regeneration, retirement, or review across representations
 - [Behavioral authority](./definitions/behavioral-authority.md) — defined-in: identifies the consumer, channel, and force by which one representation governs behavior
 - [Improving an agentic system crosses the prose-symbolic boundary](./improving-an-agentic-system-crosses-the-prose-symbolic-boundary.md) — extends: why single-form coverage is insufficient for agentic systems — the reliability-improving changes are the crossings

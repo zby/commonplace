@@ -15,12 +15,18 @@ An improvement pathway can stop depending on improvised judgment without stoppin
 
 Computational closure and machine autonomy therefore read the same actor allocation: human, computational, or joint for each pathway function. “More computationally autonomous” describes movement in that allocation; “more computationally closed” describes the resulting reduction in functions that still require a human decision.
 
+## Human-inclusive boundaries make allocation load-bearing
+
+A [reflective system](./definitions/reflective-system.md) may include established human processes. Put a maintainer with a standing causal role inside the boundary of a maintained system with readable source, and reflective attribution becomes cheap: the maintainer inspects the source as a representation, edits it, and the build carries the edit into operation. The attribution can be true while saying little about machine performance.
+
+Actor allocation restores the missing discrimination. Under a fixed human-inclusive boundary, report each consequential function as human, computational, or joint; computational closure is the no-human endpoint of that profile. Do not replace the profile with a percentage: functions differ in decomposition, authority, and stakes, and cross-system comparison remains [an open measurement problem](./measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md).
+
 ## Four concrete combinations
 
 | Improvement decision | Methodologically closed? | Computationally closed? | Why |
 |---|---:|---:|---|
 | A maintainer manually applies an exact checklist before accepting a patch | Yes | No | The criterion is settled, but a human supplies the verdict. |
-| A validator accepts a tag-README only when its links exactly cover tag membership | Yes | Yes | The criterion and its execution are both explicit and computational. |
+| A validator accepts an artifact only when an exact structural predicate holds | Yes | Yes | The criterion and its execution are both explicit and computational. |
 | An unattended coding agent is told to inspect failures and “improve the repository” using its own judgment | No | Yes | No human intervenes, but consequential choices remain improvised. |
 | A maintainer and agent jointly judge a theory note against “is this good?” | No | No | The criterion is unsettled and a human participates in the verdict. |
 
@@ -38,7 +44,7 @@ A recurring human decision becomes easier to allocate computationally after its 
 
 These are engineering dependencies, not definitions of one another. A settled gate can remain human-executed; an agent can read explicit commitments yet improvise how to apply them; and a computational procedure can encode a poor proxy. Moving evaluation to a model changes allocation without establishing that its acceptances are trustworthy.
 
-Commonplace's completeness mark from ADR 026 shows the three-part conversion. Its rationale and mark are retained in readable artifacts, the criterion is settled as exact tag membership, and the validator recomputes it and routes failures to a standing repair path. Completeness checking is therefore both methodologically and computationally closed. Choosing the artifact split was neither: a maintainer supplied that design judgment.
+The [Commonplace reference case](../reference/commonplace-as-a-reflective-system.md) applies this conversion to ADR 026 and keeps the trace-specific facts in one place.
 
 ## Reflection is a separate question
 
@@ -55,6 +61,7 @@ The properties reinforce each other when the represented object is the improveme
 
 ## Open Questions
 
+- When an initial human instruction makes a downstream agent-performed function joint rather than computational; counting every instruction hides agent performance, while counting none hides decision content supplied up front.
 - Whether objective-setting can become methodologically closed without freezing the improvement objective rather than improving it.
 - How much representational explicitness computational internalization requires when learned components can execute a decision without exposing its criterion.
 - How to distinguish a computational implementation of a settled method from a proxy that silently changes what the method decides.
@@ -67,9 +74,9 @@ Relevant Notes:
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — grounds: supplies the pathway functions over which both properties are reported
 - [Reflection buys addressability](./reflection-buys-addressability.md) — mechanism: makes retained inputs and criteria available to later deciding processes
 - [A methodology governs its own extension only as far as it settles the meta-decisions it raises](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md) — grounds: supplies the methodological reading of closure
-- [Admitting a human into the boundary moves reflective discrimination to computational allocation](./admitting-a-human-into-the-boundary-moves-reflective-discrimination-to-computational-allocation.md) — grounds: supplies the computational reading and its equivalence to actor allocation
+- [Reflective system](./definitions/reflective-system.md) — grounds: the boundary-relative criterion that makes human-inclusive reflection possible
+- [Measuring autonomy well enough to see it improve is an open problem](./measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md) — extends: explains why allocation remains a profile rather than a percentage
 - [Warranted autonomy is bounded by oracle domain](./warranted-autonomy-is-bounded-by-oracle-domain.md) — grounds: explains why computational allocation does not by itself justify unattended action
 - [Increasing computational autonomy relocates human effort to the frontier instead of reducing it](./increasing-computational-autonomy-relocates-human-effort-to-the-frontier.md) — extends: states the human-side consequence when computational allocation advances
 - [Commonplace as a reflective system](../reference/commonplace-as-a-reflective-system.md) — evidence: applies both closure readings to one observed improvement pathway
-- [The tag-readme trace read as a self-improving loop](../reference/tag-readme-trace-as-self-improving-loop.md) — evidence: gives the function-level trace behind the running example
 - [The boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — contrasts: states why computational allocation stalls where warranted checking is expensive

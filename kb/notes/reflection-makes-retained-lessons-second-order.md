@@ -1,5 +1,5 @@
 ---
-description: "Without reflection a lesson changes generalization only marginally and commitment scope stays global; reflection lets a lesson operate on prior commitments — rejecting or rescoping them"
+description: "Reflection lets a retained lesson target a prior commitment explicitly — rejecting, revising, or rescoping it — while non-reflective correction acts indirectly through the substrate"
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [foundations, self-improving-systems]
@@ -7,13 +7,11 @@ tags: [foundations, self-improving-systems]
 
 # Reflection makes retained lessons second-order: a lesson can reject or rescope a prior commitment
 
-Retained lessons are **learned inductive commitments** — they shape how the system generalizes from future evidence — and **reach** is the scope over which a commitment operates, normally wider than the evidence that produced it. What reflection changes is the *order* at which a new lesson can act. Without reflection, a lesson can only join the commitments: it composes with what is already retained and shifts generalization marginally, and nothing in the pathway can operate on a commitment already held. With reflection over its theories, a lesson can be **about** a prior commitment — rejecting it outright or changing its scope — so a single lesson can restructure how the system generalizes rather than nudge it. And the scope half is the sharpest edge: without reflection a commitment's scope is always global, because there is no boundary anything could redraw.
+Retained lessons are **learned inductive commitments**: they shape how the system generalizes from future evidence. Reflection changes which objects a new lesson can target. When a prior commitment and its applicability conditions are represented and addressable, a later lesson can operate on that commitment explicitly — rejecting, revising, or rescoping it. Without that addressable object, correction still occurs, including large or abrupt parametric updates, but only indirectly through operations on the substrate.
 
-## First-order retention: accumulation without operations on commitments
+## Indirect correction without an addressable commitment
 
-In a non-reflective pathway, evidence determines an update and the update composes with the substrate. A parametric learner that has internalized a wrong theory has exactly one lever against it: more evidence pushing the other way. The old commitment is never rejected — it is counter-weighted, its influence diluted gradient step by gradient step, and it persists latently under the suppression (which is why counter-trained behavior can resurface off the counter-training distribution). Each lesson acts additively on the whole function. The change to generalization is real but marginal per lesson, and structural change is available only as the accumulated limit of many first-order updates — retraining, in effect.
-
-The qualifier matters: *marginally* is a claim about the operations available to a single lesson, not a bound on total change. Enough first-order lessons can transform a system completely. What the pathway lacks is any move by which one lesson does to a commitment what evidence did to the system — single out the commitment and act on it.
+A non-reflective pathway can transform behavior through gradients, parameter replacement, model editing, or other substrate-level updates. Those changes need not be small, additive, or globally uniform; learned context-sensitivity can make their effects conditional. What the pathway lacks is an internal operation whose target is the prior commitment *as a represented commitment*. “Reject this rule” and “narrow its stated applicability boundary” are unavailable unless some representation exposes that rule and boundary to the system's own processes.
 
 ## Second-order retention: lessons about commitments
 
@@ -25,21 +23,18 @@ Route retention through a [causally connected self-representation](./definitions
 
 A worked instance: a system retains the commitment "skip integration tests when only documentation files changed," formed after several doc-only PRs proved harmless without them. Rejection discards the commitment outright the first time a doc-only PR breaks a build that reads one of those files as config — every future doc-only PR goes back through the full suite. Rescoping narrows the boundary instead: "skip integration tests when only documentation files changed, except files under build-tooling paths." Revision leaves the boundary alone and corrects the prescription itself: "skip integration tests, but still run the docs-lint check." Same retained artifact, three different single-step operations on it — a first-order pathway has none of them; it can only accumulate more evidence about when doc-only changes are safe.
 
-These are discontinuous changes to how the system generalizes: the effect of one second-order lesson is proportional to the reach of the commitment it operates on, not to the evidential weight of the episode that produced it. One counterexample retained as a rejection undoes a theory that a thousand first-order updates could only slowly dilute. This is the mechanism behind selective revision and targeted rollback, listed as expected advantages of reflective pathways — and it is why the [conjectured sample-efficiency advantage](./reflection-may-improve-sample-efficiency-under-structured-shifts.md) is plausible at all: fewer target observations are needed when one of them can legitimately trigger a rescoping instead of a gradient nudge.
+These operations can change behavior across the commitment's reach in one explicit revision. That supplies a mechanism for selective correction and targeted rollback; whether it improves target-data efficiency is the downstream, conditional conjecture in [reflection may improve sample efficiency under structured shifts](./reflection-may-improve-sample-efficiency-under-structured-shifts.md).
 
-## Without reflection, scope is global
+## Rescoping requires represented scope
 
-Rescoping deserves its own claim because scope is where the two pathways differ categorically, not just in degree. An opaque commitment carries no represented applicability boundary: it operates wherever the substrate brings it to bear, global by default, gated only by whatever context-sensitivity training happened to install — a gating that exists but that nothing can inspect or redraw. There is no scope to change; narrowing an opaque commitment's operation means retraining its substrate. A reflective commitment inverts this: its artifact can state a boundary, retrieval already bounds where it loads, and a later lesson can rewrite the stated scope directly.
-
-The inversion runs both ways and should be stated fairly: parametric commitments are global-by-default and unboundable; artifact commitments are bounded-by-default — they operate only where retrieval surfaces them — and scopable. Which default is the liability depends on the commitment being right.
+Opaque commitments can have highly conditional effective scope, but that scope is not necessarily exposed as a separately inspectable boundary. A reflective artifact can state applicability conditions, retrieval can restrict where it loads, and a later lesson can rewrite the represented boundary directly. The distinction is addressability of scope, not global versus local behavior.
 
 One dependency from the aspect-bounded nature of reflection: rejection requires only that the commitment's *content* be addressable, but rescoping requires its *scope* to be a represented aspect — a system that retains legible rules without stated boundaries can discard a theory yet cannot narrow one. Second-order retention is therefore graded by the same aspects reflection exposes.
 
 ## Scope
 
 - The claim is about available operations, not outcomes. A second-order lesson is itself a commitment and can be wrong: a mistaken rejection discards a good theory with all its reach, so the same lever that makes correction cheap makes damage cheap. Nothing here says second-order changes are more often correct — acceptance remains an improvement claim, not evidence of improvement. What would make them more often correct is [reach assessment](./definitions/reach-assessment.md) on the evaluator's part, which reflection's structural operations do not supply by themselves.
-- Parametric pathways can approximate second-order effects from outside the pathway — machine unlearning, targeted fine-tuning, activation steering — but these are indirect handles on the substrate, not operations by the system's own lessons on its own commitments; they are attempts to retrofit exactly the affordance this note locates in reflection.
-- "Global" scope describes the absence of a revisable boundary, not uniform influence: an opaque commitment's effective operation is modulated by learned context-sensitivity. The point is that this modulation is not addressable — it cannot be read, stated, or redrawn.
+- Parametric pathways can produce analogous behavioral effects through machine unlearning, targeted fine-tuning, activation steering, or model editing. The distinction claimed here is whether the system's own retained lesson targets a represented commitment, not whether non-reflective machinery can achieve the same outcome.
 
 ## Open Questions
 
@@ -55,5 +50,5 @@ Relevant Notes:
 - [Reach assessment](./definitions/reach-assessment.md) — extends: the evaluator capability that would make second-order operations more often correct, not just cheaper
 - [Reflection may improve sample efficiency under structured shifts](./reflection-may-improve-sample-efficiency-under-structured-shifts.md) — extends: stakes the statistical payoff this note supplies the mechanism for
 - [Reflective system](./definitions/reflective-system.md) — defined-in: the causally connected, aspect-bounded self-representation whose represented aspects determine which second-order operations are available
-- [Retrieval failure is reflection failure](./retrieval-failure-is-reflection-failure.md) — mechanism: the retrieval wire that makes artifact commitments bounded-by-default where parametric ones are global-by-default
+- [Retrieval failure is reflection failure](./retrieval-failure-is-reflection-failure.md) — mechanism: the retrieval wire through which represented applicability conditions reach later operation
 - [False-positive generation is filtered; false-positive acceptance becomes operative](./false-positive-generation-is-filtered-before-retention.md) — contrasts: a wrong second-order lesson is the acceptance failure at its most expensive, discarding or misbounding a commitment with all its reach

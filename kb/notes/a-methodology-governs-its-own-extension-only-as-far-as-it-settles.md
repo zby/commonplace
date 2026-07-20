@@ -41,15 +41,9 @@ Carrying out a recommendation forces the system to settle:
 
 This is what a methodology's verification and authority machinery — typed artifacts, validators, review gates, routing contracts — is *for*: it raises the ceiling on how far the system can extend itself from the methodology alone.
 
-## A worked case: the `complete` mark
+## Worked application
 
-Commonplace's [ADR 026](../reference/adr/026-tag-readme-type-with-completeness-and-coverage-marks.md) carries out one recommendation — *a tag head may claim it links every note carrying the tag* — and settles all three axes, which is what makes it a closure rather than an improvisation.
-
-- **Form.** The methodology supplied the criterion, not the answer: a completeness claim is worthless unless machine-enforced, [since stale indexes are worse than no indexes](./stale-indexes-are-worse-than-no-indexes.md). That decided the crossing into symbolic form — a frontmatter field plus a schema — rather than leaving prose to be trusted.
-- **Verification.** The oracle was named with the artifact: the validator checks membership using the same query the documented `rg` recipe uses. The check is what the mark *means*, so the mark could not have shipped unenforced.
-- **Authority and retention.** The mark acquires a consumer (`cp-skill-connect` skips the by-tag sweep when it is present), a channel (the validator, run on the head), and a force (a missing member fails validation). The failure message even names the instruction that fixes it, closing the loop back into the maintenance path.
-
-Because all three were settled, the extension proceeded without anyone improvising. And the case locates the frontier precisely: nothing in the methodology prescribed *noticing* that the `index` type was doing two jobs at once, or that an unenforced completeness claim is a trap. That came from a person. Closure held over the recommendation and ran out at search — which is the distinction the next section draws.
+The [Commonplace reference case](../reference/commonplace-as-a-reflective-system.md) applies all three axes to ADR 026: form, verification, and authority were settled for the completeness mark, while noticing the design problem and choosing the type split remained improvised. The example lives there so this note owns the criterion rather than a second telling of the trace.
 
 ## Closure under recommendations is not search closure
 
@@ -61,7 +55,7 @@ The three axes above belong to closure under recommendations because the recomme
 
 - **Closure is a direction, not a binary.** No real methodology settles every extension decision it could face. The claim is that methodology-governed self-extension scales with how much it settles, and stalls at the first consequential meta-decision it leaves open — the self-extension frontier.
 - **The counter worth taking seriously.** A capable agent brings general competence and can improvise the decisions a methodology omits. Where that improvisation is reliable, closure buys less. The claim's force therefore tracks how *consequential and divergence-prone* the omitted decisions are — high for what-to-codify, how-to-verify, and what-grants-force; low for cosmetic choices.
-- **Whether Commonplace is closed is a separate assessment.** This note supplies the criterion, not the verdict. One recommendation traced end-to-end shows the axes can be settled; it does not show they usually are, and [Commonplace as a reflective system](../reference/commonplace-as-a-reflective-system.md) establishes only the weaker structural property, leaving closure unassessed. The full per-axis assessment is open work for the reference layer.
+- **Whether Commonplace is closed is a separate assessment.** This note supplies the criterion; the [reference case](../reference/commonplace-as-a-reflective-system.md) applies it to one pathway, not the whole system.
 - **Closure explains production, not retention.** Why the codified artifact is then kept rather than re-derived each session is a separate argument — a persisted symbolic artifact is deterministic and inspectable, and in agent systems [the prescription and the code it becomes are the same retained thing](./a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md) at different points on the constraining gradient.
 
 ---
@@ -74,5 +68,4 @@ Relevant Notes:
 - [Behavioral authority](./definitions/behavioral-authority.md) — enables: names the consumer, channel, and force the authority axis demands
 - [Reflective coverage is graded across representational forms](./reflective-coverage-is-graded-across-representational-forms.md) — extends: the representational-form axis widens to the mappings between forms when a recommendation spans them
 - [the boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — mechanism: why the verification axis is the ceiling
-- [Stale indexes are worse than no indexes](./stale-indexes-are-worse-than-no-indexes.md) — grounds: the criterion that settled the form axis in the worked case — an unenforced completeness claim is a trap, not a weaker version of the enforced one
-- [ADR 026: tag-readme type with completeness and coverage marks](../reference/adr/026-tag-readme-type-with-completeness-and-coverage-marks.md) — evidence: the worked case, where form, verification, and authority were all settled and the frontier fell at search
+- [Commonplace as a reflective system](../reference/commonplace-as-a-reflective-system.md) — evidence: applies the three closure axes to the centralized ADR 026 trace

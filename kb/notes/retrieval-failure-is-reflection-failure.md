@@ -15,7 +15,7 @@ That proviso is load-bearing, and it puts retrieval *inside* the reflective arch
 
 The sharpest case is a membership claim that is asserted rather than enforced, [since stale indexes are worse than no indexes](./stale-indexes-are-worse-than-no-indexes.md). A head that says *this lists every note with the tag* tells an exhaustive consumer to stop looking. If members are missing, the claim cuts the wire precisely where a process was relying on it — and the process cannot tell, because the whole point of trusting the claim was to skip the check that would have caught it.
 
-This is why Commonplace's `complete` and `covered_by` marks are validator-enforced or absent, never written as prose. The unenforced prose version of a completeness claim is not a weaker version of the same thing; it is the trap the enforced version exists to prevent.
+The [Commonplace reference case](../reference/commonplace-as-a-reflective-system.md) shows this failure being converted from an asserted completeness claim into an enforced one.
 
 ## Best-effort, not by construction
 
@@ -23,7 +23,7 @@ Retrieval-mediated connection is weaker than procedural reflection in one specif
 
 A system can strengthen the wire — enforcing a membership claim rather than asserting it, adding a field that makes an artifact findable, correcting a search recipe observed to miss a member. It cannot assume the wire holds by construction, and the difference shows up as a class of silent failure that procedural reflection does not have.
 
-Commonplace has run the strengthening loop at least once and can show the seam. Adopting `covered_by` on the `learning-theory` head, the new symbolic check caught a member the documented `rg` recipe had missed — a note using block-style YAML tags, invisible to the prose pattern. The recipe in `kb/reference/navigation.md` was then corrected. The wire had been broken for exactly as long as the blind spot existed, and nothing but a stronger check revealed it.
+The same [reference case](../reference/commonplace-as-a-reflective-system.md) records the stronger check exposing and repairing a blind spot in the prose retrieval recipe.
 
 ## Scope
 
@@ -37,5 +37,4 @@ Relevant Notes:
 - [Reflective system](./definitions/reflective-system.md) — grounds: supplies the causal-connection criterion this note shows retrieval realizing, and failing
 - [Stale indexes are worse than no indexes](./stale-indexes-are-worse-than-no-indexes.md) — mechanism: why a trusted-but-incomplete membership claim is the sharpest form of the failure
 - [Behavioral authority](./definitions/behavioral-authority.md) — extends: the consumer, channel, and force that must hold after an artifact is found
-- [Improving an agentic system crosses the prose-symbolic boundary](./improving-an-agentic-system-crosses-the-prose-symbolic-boundary.md) — evidence: reads this note's `covered_by` trace as the symbolic-to-prose direction of a crossing
 - [Commonplace as a reflective system](../reference/commonplace-as-a-reflective-system.md) — evidence: the observed trace where a symbolic check corrected the prose search recipe that had been missing a member
