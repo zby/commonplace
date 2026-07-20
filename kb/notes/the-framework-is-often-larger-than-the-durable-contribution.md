@@ -1,25 +1,25 @@
 ---
-description: "Why an authoring agent may need a familiar framework to discover a connection when consumers need only the recognition rule; the default is minimal prose plus a framework link, grown on demand"
+description: "Agents reproduce active framework content, but the durable contribution is usually the recognition that the situation fits the framework; default to minimal prose plus a framework link"
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [context-engineering]
 ---
 
-# The derivation is often larger than the durable contribution
+# The framework is often larger than the durable contribution
 
-An authoring agent may use a large body of familiar knowledge to discover a small durable contribution. Because that knowledge was active during generation, the agent tends to reproduce it in the resulting artifact. But a future consumer with access to the same parametric knowledge can reconstruct the background; what changed was the recognition that a particular problem is an instance of it.
+An agent writing about a situation that fits a familiar framework has that framework active — loaded into context or activated in weights — and active knowledge tends to leak into the artifact. The strongest case is discovery: an authoring agent uses a large body of familiar knowledge to derive a small contribution and reproduces the derivation. But no derivation is required; an agent that merely names framework X tends to pad the artifact with X's details. Either way, a future consumer with access to the same parametric knowledge can reconstruct the framework; what changed was the recognition that this situation is an instance of it.
 
-Derivation size is therefore a poor guide to retained size. The reasoning path explains how the author reached the contribution, but only the parts future consumers cannot reliably reconstruct or activate must survive. Which parts those are remains [observer-relative](./information-value-is-observer-relative.md).
+The size of what was active during writing is therefore a poor guide to retained size. The framework content explains what the author drew on, but only the parts future consumers cannot reliably reconstruct or activate must survive. Which parts those are remains [observer-relative](./information-value-is-observer-relative.md).
 
 ## Recognition can be the durable contribution
 
-When discovery applies a familiar framework to an unfamiliar case, the durable contribution may be only:
+When an artifact applies a familiar framework to a particular case, the durable contribution may be only:
 
 > When **this observable condition** occurs, treat **this apparent task** as **this named kind of problem**, and use the corresponding framework to **perform this operation**.
 
 The framework name addresses knowledge the consumer can reconstruct; the condition, mapping, and operation preserve what it did not reliably supply. Repeating the framework adds value only when it supplies something the name cannot: accessibility, disambiguation, warrant, or fidelity.
 
-By that same measure, the derivation itself must remain wherever it carries one of those values — when it is evidence the consumer must be able to check, when the consumer cannot reconstruct it, or when a particular version or interpretation has authority. Stripping a derivation always trades away auditability: a claim without its reasoning must be taken on trust. Participating in discovery does not make every part of the reasoning path part of the discovery, but reconstructability alone does not make warrant or exactness expendable.
+By that same measure, framework content — or the derivation that produced the contribution — must remain wherever it carries one of those values — when it is evidence the consumer must be able to check, when the consumer cannot reconstruct it, or when a particular version or interpretation has authority. Stripping a derivation always trades away auditability: a claim without its reasoning must be taken on trust. Participating in discovery does not make every part of the reasoning path part of the discovery, but reconstructability alone does not make warrant or exactness expendable.
 
 ## Minimal by default, grown on demand
 
@@ -49,7 +49,7 @@ Suppose two systems use different terminology but both precompute a stable part 
 
 ## Test the retained boundary behaviorally
 
-For an agent consumer, semantic inspection cannot establish whether a framework name is an adequate address. Compare representative behavior with the name alone, the name plus a recognition condition, and the fuller derivation. If a smaller form preserves the contribution's effect, the removed material was derivation scaffolding; if behavior degrades, the missing explanation, example, or warrant belongs in the retained result.
+For an agent consumer, semantic inspection cannot establish whether a framework name is an adequate address. Compare representative behavior with the name alone, the name plus a recognition condition, and the fuller framework restatement or derivation. If a smaller form preserves the contribution's effect, the removed material was scaffolding; if behavior degrades, the missing explanation, example, or warrant belongs in the retained result.
 
 The boundary varies with the model, task, and consumer population. The test establishes a validity window, not a timeless compression.
 
