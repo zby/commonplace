@@ -68,6 +68,8 @@ How a change is *produced* and how it *reaches the substrate* are different ques
 
 The examples mark the cells; they are not yet canonical placements. What the crossing exposes is that the dimensions are analytically distinct: an evolutionary strategy runs a full generate-and-select loop over a substrate nothing inside it can read, and the memory-appending agent is gateless while writing into the most readable substrate there is. Neither dimension entails the other — and the mechanisms combine: one system's pathways may differ cell by cell, and a single pathway may chain them, as when direct gradient updates feed checkpoint selection.
 
+Whether action selection is model-mediated is independent of both dimensions. Self-improvement changes the intervention target, not the action-selection architecture: where [an action model participates](../an-action-model-matters-only-through-its-consumption-path.md), its action domain includes the system's own behavior-determining organization, and reflection [makes that organization part of the represented action environment](../reflection-makes-own-organization-part-of-the-action-environment.md).
+
 ## What responsiveness establishes
 
 Aiming at the objective is all that membership requires, and aiming establishes less than it seems to:
@@ -122,6 +124,7 @@ Relevant Notes:
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](../a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — extends: the named subtype where the improvement criterion is implemented as an evaluator, and the three functions that architecture requires
 - [A self-improving system needs a profile, not a ladder](../a-self-improving-system-needs-a-profile-not-a-ladder.md) — extends: keeps membership distinct from reflective structure, improvement dynamics, governance, and actor allocation
 - [Reflection buys addressability](../reflection-buys-addressability.md) — extends: the thesis behind the central distinction — what routing a change through a readable self-representation adds, and what compounds without it
+- [An action model matters only through its consumption path](../an-action-model-matters-only-through-its-consumption-path.md) — grounds: locates model mediation at the general level of agentic action rather than making ontology a self-improvement requirement
 - [Reflective system](./reflective-system.md) — grounds: the causally connected self-representation, and the intercession capability, that reflective self-improvement routes through
 - [Admitting a human into the boundary moves reflective discrimination to computational allocation](../admitting-a-human-into-the-boundary-moves-reflective-discrimination-to-computational-allocation.md) — extends: why human-inclusive reflective membership makes a separate computational-allocation profile necessary
 - [False-positive generation is filtered; false-positive acceptance becomes operative](../false-positive-generation-is-filtered-before-retention.md) — extends: the subtype's asymmetry — why false-positive acceptance is the dangerous evaluation failure

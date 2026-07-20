@@ -29,6 +29,7 @@ The vocabulary for analyzing retained artifacts: where behavior-shaping state pe
 
 ## Applications
 
+- [an action model matters only through its consumption path](./an-action-model-matters-only-through-its-consumption-path.md) — applies operative parts and behavioral authority to the difference between direct and model-mediated agentic action
 - [system-definition artifacts are crystallized reasoning under context pressure](./system-definition-artifacts-are-crystallized-reasoning-under-context.md) — why system-definition artifacts exist at all: reasoning crystallized so it need not be redone in-context
 - [design proposals differ from claims in kind, not confidence](./design-proposals-differ-from-claims-in-kind-not-confidence.md) — applies artifact analysis to proposal placement: free-parameter design artifacts are evaluated by usefulness, not truth
 - [prose has no reliable dereference, so a declared fact must be reinforced where it applies](./prose-has-no-dereference-reinforce-facts-at-point-of-use.md) — applies representational form to single-source-of-truth: prose lacks symbolic dereference, so agent-facing facts need checked denormalization at point of use

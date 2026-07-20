@@ -8,7 +8,7 @@ complete: true
 
 # Self-improving systems
 
-A [self-improving system](./definitions/self-improving-system.md) makes operative changes to its own behavior-determining organization in response to evidence about an improvement objective. Read every attribution against a declared frame: including maintainers can make a development system a human-inclusive member. A pathway is **reflective** when change is mediated through an editable representation of the affected organization, such as a lessons file or policy; it is non-reflective when change lands in a substrate nothing inside can read as a representation, such as weights. For [agent-memory systems](../agent-memory-systems/README.md), retained lessons count as reflective self-change only when they are loaded as part of the [system definition](./definitions/system-definition-artifact.md), rather than consulted as external data.
+A [self-improving system](./definitions/self-improving-system.md) makes operative changes to its own behavior-determining organization in response to evidence about an improvement objective. Read every attribution against a declared frame: including maintainers can make a development system a human-inclusive member. A pathway is [**reflective**](./definitions/reflective-system.md) when change is mediated through an editable representation of the affected organization, such as a lessons file or policy; it is non-reflective when change lands in a substrate nothing inside can read as a representation, such as weights. For [agent-memory systems](../agent-memory-systems/README.md), retained lessons count as reflective self-change only when they are loaded as part of the [system definition](./definitions/system-definition-artifact.md), rather than consulted as external data.
 
 ## Profile the pathway, not the label
 
@@ -27,6 +27,7 @@ Membership only starts the description. [The pathway then needs a four-part prof
 ## Reflection makes the loop editable
 
 - Retained lessons become **addressable** — later rounds can read, criticize, and selectively revise them: [reflection buys addressability](./reflection-buys-addressability.md).
+- When diagnosis or planning uses an action model, reflection [puts the system's own organization inside the represented action environment](./reflection-makes-own-organization-part-of-the-action-environment.md).
 - An addressable lesson is **second-order** — it can reject a prior commitment outright, where a gradient can only nudge it: [reflection makes retained lessons second-order](./reflection-makes-retained-lessons-second-order.md).
 - The standing discount — a lesson that never surfaces contributes nothing: [retrieval failure is reflection failure](./retrieval-failure-is-reflection-failure.md).
 - One payoff hypothesis is that [reflection may improve sample efficiency under structured shifts](./reflection-may-improve-sample-efficiency-under-structured-shifts.md).

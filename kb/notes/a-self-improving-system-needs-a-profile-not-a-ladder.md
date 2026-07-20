@@ -15,6 +15,8 @@ Once membership is established, four parts describe the pathway without forcing 
 
 **What does the self-representation cover, and what can processes inside the declared frame do with each covered component?** [Reflective coverage has two dimensions](./reflective-coverage-is-graded-across-representational-forms.md): breadth across behavior-determining components and representational forms, and operation depth over each component.
 
+Where improvement is model-mediated, reflection turns coverage into a self-modeling question: [which parts and relations must become machine-operable](./reflection-makes-own-organization-part-of-the-action-environment.md) before the process can locate a failure or map a novel task onto its capabilities and limitations without human interpretation?
+
 Addressability is not a third coordinate alongside coverage. It is the operation profile that sufficient coverage affords over retained commitments: later processes may retrieve, inspect, criticize, revise, rescope, or transfer them. Those operations must be named separately rather than collapsed into a scalar, [since reflection buys addressability](./reflection-buys-addressability.md) without guaranteeing every possible use of it.
 
 **Example.** A Commonplace agent can read and edit a tag-README specification, giving it observation and modification over that prose component. A skill can also select a named model while the model's weights remain sealed. Both are real reflective levers, but they cover different components with different operations.
@@ -71,4 +73,5 @@ Relevant Notes:
 - [A methodology governs its own extension only as far as it settles the meta-decisions it raises](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md) — grounds: methodological closure as a governance property
 - [Admitting a human into the boundary moves reflective discrimination to computational allocation](./admitting-a-human-into-the-boundary-moves-reflective-discrimination-to-computational-allocation.md) — grounds: the actor-allocation profile and its computational-closure reading
 - [Warranted autonomy is bounded by oracle domain](./warranted-autonomy-is-bounded-by-oracle-domain.md) — contrasts: allocation and methodological settlement do not establish trustworthiness
+- [Reflection puts a system's own organization inside its action environment](./reflection-makes-own-organization-part-of-the-action-environment.md) — extends: applies model-mediated action to the coverage autonomous reflective work requires
 - [Commonplace as a reflective system](../reference/commonplace-as-a-reflective-system.md) — evidence: applies the profile to one observed human-inclusive pathway
