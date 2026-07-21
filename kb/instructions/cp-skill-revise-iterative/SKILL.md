@@ -1,6 +1,6 @@
 ---
 name: cp-skill-revise-iterative
-description: Iteratively revise a note for flow, readability, and cohesion using non-interactive Claude calls. Each pass produces a numbered copy; the outer agent reviews for semantic fidelity and significance before continuing. Triggers on "/cp-skill-revise-iterative [note]".
+description: "Demoted, not auto-loaded — invoke explicitly. Iteratively revises a note for flow, readability, and cohesion via non-interactive Claude calls; each pass is a numbered copy the outer agent reviews for fidelity before continuing. Triggers on \"/cp-skill-revise-iterative [note]\"."
 type: kb/types/instruction.md
 user-invocable: true
 allowed-tools: Read, Edit, Bash, Glob, Grep
@@ -10,6 +10,8 @@ model: opus
 ---
 
 ## EXECUTE NOW
+
+**Demoted.** No longer in `promoted_skills` (see `src/commonplace/scaffold_manifest.py`) — the per-pass cost wasn't earning back enough revision quality. `commonplace-init` no longer auto-installs this into `.claude/skills/` or `.agents/skills/` for new projects, and the harness doesn't auto-load it here. Invoke it explicitly when you want this revision path.
 
 **Target: $ARGUMENTS** (exactly one note path or filename — if empty, ask which note)
 
