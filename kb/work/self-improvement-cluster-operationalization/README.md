@@ -27,6 +27,10 @@ The library already holds the theory of what this workshop is doing. [Methodolog
 
 Wiring and maintenance are settled vocabulary, not new design: the digest is judgment-dependent derived prose, so it takes the **managed-staleness** regime, and the [link grammar](../../reference/link-vocabulary.md#lineage-semantics) already authorizes exactly this edge — `operationalized-from` for the `kb/notes/` methodology → `kb/instructions/` procedure pairing, recorded at the source in an `Operationalized into:` footer, a source change flagging a judgmental recheck. That is also the phase-0 discipline going forward: theory revisions create no derived-artifact debt today (no derived layer exists yet), but once the digest exists, every later cluster revision owes it the structure note's **correspondence check**. The eventual mechanical support is already named too: [where change candidates come from](../../reference/where-change-candidates-come-from-in-commonplace.md) flags theory-to-implementation lineage as what a wider freshness substrate would need to cover.
 
+## External-theory delegation (2026-07-21, decision pending)
+
+The maintainer's direction — delegate to established theories wherever they suffice, keep only the Commonplace-specific kernel local — is assessed against the cluster's current state in [external-delegation-assessment](./external-delegation-assessment.md), which dispositions an external (ChatGPT) delegation proposal item by item. Headline: the stance is already the recorded conservative-extension stance; the open decisions are the goal revision extending it to the methodology layer (recommended), PDSA/MAPE-K as digest-phase hosts (adopt the no-duplication commitment now, bind the host only after a worked case), and an assurance-case/GSN inheritance candidate for warrant recording.
+
 ## Sequencing (fixed by the maintainer)
 
 - **Phase 0 — close ambiguities and contradictions.** Work the ledger below. Items may be resolved in the library notes directly, parked explicitly as open questions, or split out; what they may not do is stay silently ambiguous into phase 1.
