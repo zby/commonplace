@@ -44,7 +44,7 @@ Addressability is expected to enable:
 - **Criticism and rollback** — per-change and targeted, because [acceptance is an improvement claim](./definitions/self-improving-system.md) that an addressable change leaves open to later audit.
 - **Improvement of the improvement process itself** — an explicit evaluator, criterion, or update rule is [organization](./definitions/behavior-determining-organization.md) like any other, so a reflective pathway can be turned on its own machinery.
 
-Whether reflective pathways improve faster, more reliably, or more safely remains empirical. Selective revision and criticism also require [reach assessment](./definitions/reach-assessment.md): addressability makes a change findable, but judging it as bad still requires assessing its claimed scope.
+Whether reflective pathways improve faster, more reliably, or more safely remains empirical. Selective revision and criticism also require [reach-assessment](./definitions/reach-assessment.md): addressability makes a change findable, but judging it as bad still requires assessing its claimed scope.
 
 ## Scope
 
@@ -64,7 +64,7 @@ Relevant Notes:
 
 - [Self-improving system](./definitions/self-improving-system.md) — defined-in: the category whose reflective/non-reflective central distinction this thesis motivates
 - [Reflective system](./definitions/reflective-system.md) — defined-in: the causally connected self-representation that addressable retention runs through
-- [Reach assessment](./definitions/reach-assessment.md) — extends: the judgment capability that would make selective revision and criticism deliver, not just become possible
+- [Reach-assessment](./definitions/reach-assessment.md) — extends: the judgment capability that would make selective revision and criticism deliver, not just become possible
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — grounds: operative retention as the loop's baseline, kept separate from cumulativity and reflective addressability
 - [Retrieval failure is reflection failure](./retrieval-failure-is-reflection-failure.md) — extends: why addressable retention compounds only best-effort, through the discovery wire
 - [Reflective coverage is graded across representational forms](./reflective-coverage-is-graded-across-representational-forms.md) — extends: addressability assessed per representational form and operation depth

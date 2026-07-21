@@ -13,7 +13,7 @@ Warranted evaluation autonomy extends only to the candidates the available oracl
 
 ## Strength, strictness, and domain
 
-Oracle strength concerns how reliably a check discriminates relative to the objective and what its result establishes. **Strictness** concerns how much evidence the gate demands before accepting. **Domain** is the range of candidates the oracle's strength, at whatever strictness is set, suffices to warrant — distinct from a claim's own [explanatory reach](./definitions/reach-assessment.md) and from how far [search can explore](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md), two other senses of "reach" this cluster uses for different things. Increasing strictness under a fixed oracle usually narrows acceptance: uncertain candidates are rejected or deferred so the remaining acceptances carry more assurance.
+Oracle strength concerns how reliably a check discriminates relative to the objective and what its result establishes. **Strictness** concerns how much evidence the gate demands before accepting. **Domain** is the range of candidates the oracle's strength, at whatever strictness is set, suffices to warrant — distinct from a claim's own [explanatory-reach](./first-principles-reasoning-selects-for-explanatory-reach-over.md) and from a generator's [search range](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md), the cluster's two other limit vocabularies. Increasing strictness under a fixed oracle usually narrows acceptance: uncertain candidates are rejected or deferred so the remaining acceptances carry more assurance.
 
 Strengthening discrimination can instead expand the warranted domain. A better verifier may reject bad candidates the old one passed while also accepting good candidates the old one could not distinguish from bad ones. Test suites, proofs, model judges, and human judgment therefore do not form nested acceptance sets; they establish different things over overlapping domains.
 
@@ -45,6 +45,6 @@ Relevant Notes:
 - [Self-improving system](./definitions/self-improving-system.md) — extends: distinguishes bare autonomy from warranted autonomy
 - [False-positive generation is filtered; false-positive acceptance becomes operative](./false-positive-generation-is-filtered-before-retention.md) — extends: why unattended evaluation has the more consequential false-positive failure
 - [Gödel machines are a proof-governed case of reflective self-modification](./goedel-machines-are-a-proof-governed-case-of-self-modification.md) — exemplifies: warranted autonomy bounded by a proof requirement
-- [Reach assessment](./definitions/reach-assessment.md) — contrasts: a different sense of "reach" — what an oracle's acceptance can establish here, versus whether a candidate's claimed generalization is genuine there
+- [Reach-assessment](./definitions/reach-assessment.md) — contrasts: oracle domain bounds what unattended acceptance can establish; reach-assessment judges whether a candidate's claimed generalization is genuine
 - [Oracle-strength spectrum](./oracle-strength-spectrum.md) — extends: grades the verification surfaces that determine oracle domain
 - [Commonplace as a reflective system](../reference/commonplace-as-a-reflective-system.md) — evidence: a pathway-mixed system whose autonomy profile aligns with heterogeneous oracle domain

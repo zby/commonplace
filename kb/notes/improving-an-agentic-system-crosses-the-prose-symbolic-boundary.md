@@ -46,3 +46,4 @@ Relevant Notes:
 - [A methodology governs its own extension only as far as it settles the meta-decisions it raises](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md) — extends: the representational-form meta-decision a recommendation raises is, by this claim, the decision most improvements must settle
 - [Codification](./definitions/codification.md) — defined-in: the prose-to-symbolic crossing
 - [Commonplace as a reflective system](../reference/commonplace-as-a-reflective-system.md) — evidence: the observed trace where one decision crossed into four forms and a symbolic check corrected the prose recipe
+- [Methodology with incomplete coverage and its live theory fallback form a two-layer execution system](./theory-and-methodology-form-a-two-layer-execution-system.md) — contrasts: an orthogonal axis of improvement movement — theory-to-methodology promotion can stay prose-to-prose, and only its codification special case crosses the form boundary

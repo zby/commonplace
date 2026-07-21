@@ -17,13 +17,13 @@ A non-reflective pathway can transform behavior through gradients, parameter rep
 
 Route retention through a [causally connected self-representation](./definitions/reflective-system.md) and prior commitments become addressable objects, [since reflection buys addressability](./reflection-buys-addressability.md). Then a new lesson can be retained *as an operation on a commitment* rather than alongside it:
 
-- **Rejection** — the theory is discarded, and its entire reach goes with it in one step: every future episode it would have governed is re-opened at once.
+- **Rejection** — the theory is discarded, and its entire explanatory-reach goes with it in one step: every future episode it would have governed is re-opened at once.
 - **Rescoping** — the theory survives with its applicability boundary redrawn: "this holds" becomes "this holds for cases like these", or a boundary found too tight is widened.
 - **Revision** — the content itself is corrected in place, keeping the commitment's identity and history.
 
 A worked instance: a system retains the commitment "skip integration tests when only documentation files changed," formed after several doc-only PRs proved harmless without them. Rejection discards the commitment outright the first time a doc-only PR breaks a build that reads one of those files as config — every future doc-only PR goes back through the full suite. Rescoping narrows the boundary instead: "skip integration tests when only documentation files changed, except files under build-tooling paths." Revision leaves the boundary alone and corrects the prescription itself: "skip integration tests, but still run the docs-lint check." Same retained artifact, three different single-step operations on it — a first-order pathway has none of them; it can only accumulate more evidence about when doc-only changes are safe.
 
-These operations can change behavior across the commitment's reach in one explicit revision. That supplies a mechanism for selective correction and targeted rollback; whether it improves target-data efficiency is the downstream, conditional conjecture in [reflection may improve sample efficiency under structured shifts](./reflection-may-improve-sample-efficiency-under-structured-shifts.md).
+These operations can change behavior across the commitment's explanatory-reach in one explicit revision. That supplies a mechanism for selective correction and targeted rollback; whether it improves target-data efficiency is the downstream, conditional conjecture in [reflection may improve sample efficiency under structured shifts](./reflection-may-improve-sample-efficiency-under-structured-shifts.md).
 
 ## Rescoping requires represented scope
 
@@ -33,7 +33,7 @@ One dependency from the aspect-bounded nature of reflection: rejection requires 
 
 ## Scope
 
-- The claim is about available operations, not outcomes. A second-order lesson is itself a commitment and can be wrong: a mistaken rejection discards a good theory with all its reach, so the same lever that makes correction cheap makes damage cheap. Nothing here says second-order changes are more often correct — acceptance remains an improvement claim, not evidence of improvement. What would make them more often correct is [reach assessment](./definitions/reach-assessment.md) on the evaluator's part, which reflection's structural operations do not supply by themselves.
+- The claim is about available operations, not outcomes. A second-order lesson is itself a commitment and can be wrong: a mistaken rejection discards a good theory with all its explanatory-reach, so the same lever that makes correction cheap makes damage cheap. Nothing here says second-order changes are more often correct — acceptance remains an improvement claim, not evidence of improvement. What would make them more often correct is [reach-assessment](./definitions/reach-assessment.md) on the evaluator's part, which reflection's structural operations do not supply by themselves.
 - Parametric pathways can produce analogous behavioral effects through machine unlearning, targeted fine-tuning, activation steering, or model editing. The distinction claimed here is whether the system's own retained lesson targets a represented commitment, not whether non-reflective machinery can achieve the same outcome.
 
 ## Open Questions
@@ -47,8 +47,8 @@ One dependency from the aspect-bounded nature of reflection: rejection requires 
 Relevant Notes:
 
 - [Reflection buys addressability](./reflection-buys-addressability.md) — grounds: addressable retention is what makes a prior commitment an operable object; this note develops the selective-revision advantage into the first-order/second-order distinction
-- [Reach assessment](./definitions/reach-assessment.md) — extends: the evaluator capability that would make second-order operations more often correct, not just cheaper
+- [Reach-assessment](./definitions/reach-assessment.md) — extends: the evaluator capability that would make second-order operations more often correct, not just cheaper
 - [Reflection may improve sample efficiency under structured shifts](./reflection-may-improve-sample-efficiency-under-structured-shifts.md) — extends: stakes the statistical payoff this note supplies the mechanism for
 - [Reflective system](./definitions/reflective-system.md) — defined-in: the causally connected, aspect-bounded self-representation whose represented aspects determine which second-order operations are available
 - [Retrieval failure is reflection failure](./retrieval-failure-is-reflection-failure.md) — mechanism: the retrieval wire through which represented applicability conditions reach later operation
-- [False-positive generation is filtered; false-positive acceptance becomes operative](./false-positive-generation-is-filtered-before-retention.md) — contrasts: a wrong second-order lesson is the acceptance failure at its most expensive, discarding or misbounding a commitment with all its reach
+- [False-positive generation is filtered; false-positive acceptance becomes operative](./false-positive-generation-is-filtered-before-retention.md) — contrasts: a wrong second-order lesson is the acceptance failure at its most expensive, discarding or misbounding a commitment with all its explanatory-reach

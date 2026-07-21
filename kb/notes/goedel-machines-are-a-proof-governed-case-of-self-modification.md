@@ -31,7 +31,7 @@ The Global Optimality Theorem builds waiting into the comparison: continuing the
 
 The cost is stated in the paper: a Gödel machine "must ignore those self-improvements whose effectiveness it cannot prove" (printed p. 5; PDF p. 6). And the guarantee is only as good as the formalization, whose consistency is assumed rather than proved: sound axioms and a faithful utility function make a valid proof a rigorous conditional guarantee, while a wrong formalization lets a valid proof license a harmful change. Axiomatization moves judgment upstream into model specification; it does not eliminate it.
 
-Fallible empirical evaluators have the opposite risk profile: they may accept changes that do not help, but they can reach changes no available proof can license. Neither regime dominates without assumptions about model adequacy, proof reach, and the cost of each kind of error.
+Fallible empirical evaluators have the opposite risk profile: they may accept changes that do not help, but they can reach changes no available proof can license. Neither regime dominates without assumptions about model adequacy, proof surface, and the cost of each kind of error.
 
 ## Acceptance evidence varies across systems
 
@@ -42,7 +42,7 @@ The axis separates two dimensions a single [oracle-strength spectrum](./oracle-s
 ## What this comparison does not license
 
 - **Proof is added to reflection; it does not define it.** A [reflective system](./definitions/reflective-system.md) requires a causally connected self-representation, not formal verification or successful improvement. The Gödel machine occupies one proof-governed corner of the design space, not the endpoint of a maturity ladder.
-- **The Gödel-machine paper is not causal-inference literature.** It shows a proof-gated host architecture. Causal reach assessment would require causal calculus, discovery assumptions, and intervention or counterfactual objectives inside the axioms and utility function; those are not supplied by Schmidhuber's construction.
+- **The Gödel-machine paper is not causal-inference literature.** It shows a proof-gated host architecture. Causal reach-assessment would require causal calculus, discovery assumptions, and intervention or counterfactual objectives inside the axioms and utility function; those are not supplied by Schmidhuber's construction.
 - **The paper describes a construction, not a running system.** It reports no implementation and no experiments, so it supports architectural conclusions, not empirical performance claims.
 
 ---
@@ -53,7 +53,7 @@ Relevant Notes:
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — grounds: the decomposition the architecture is mapped onto above
 - [Warranted autonomy is bounded by oracle domain](./warranted-autonomy-is-bounded-by-oracle-domain.md) — exemplifies: warranted autonomy bounded by provability under the formalization
 - [Reflective system](./definitions/reflective-system.md) — contrasts: reflection requires a causally connected self-representation, not a proof gate; the proof is added to reflection, not constitutive of it
-- [Reach assessment](./definitions/reach-assessment.md) — exemplifies: the proof-gated acceptance rule is the worked proof-route case for a symbolic self-rewrite utility claim
-- [Formal symbolic systems assess reach only through causal and proof obligations](./formal-systems-can-assess-reach-through-causal-and-proof-obligations.md) — exemplifies: supplies the conditional placement of Gödel machines in symbolic reach assessment
+- [Reach-assessment](./definitions/reach-assessment.md) — exemplifies: the proof-gated acceptance rule is the worked proof-route case for a symbolic self-rewrite utility claim
+- [Formal symbolic systems assess reach only through causal and proof obligations](./formal-systems-can-assess-reach-through-causal-and-proof-obligations.md) — exemplifies: supplies the conditional placement of Gödel machines in symbolic reach-assessment
 - [A methodology governs its own extension only as far as it settles the meta-decisions it raises](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md) — extends: gated goal change demonstrates that an acceptance rule can govern rewrites of itself, while exposing the price
 - [Schmidhuber, Gödel Machines](../sources/goedel-machines-schmidhuber.ingest.md) — abstracted-from: the primary paper, its theorems, and its stated limitations
