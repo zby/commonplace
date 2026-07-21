@@ -36,9 +36,7 @@ Observer-relativity also determines resolution. The minimum required content of 
 - **A connection the consumer will not reliably make:** a relation, recognition condition, or operation that activates otherwise familiar knowledge.
 - **What reconstruction cannot preserve:** warrant, provenance, exact wording or membership, a governing version, or an authoritative local choice.
 
-Reconstructability and activation are separate tests because [knowledge storage does not imply contextual activation](./knowledge-storage-does-not-imply-contextual-activation.md). A model may explain a framework perfectly when asked yet fail to recognize the present situation as an instance of it. When its name reliably activates the framework, the artifact can retain the problem mapping rather than a tutorial; when exactness, evidence, or authority matters, the full content must remain or be reliably loadable.
-
-For agent consumers, test resolution behaviorally: compare a bare name, a name plus recognition condition, and fuller content, then retain the least detail that preserves the intended effect. The result depends on the consumer population. A cue that resolves for one model may fail for another, while a compact agent-facing note may be opaque to a first-time human. Self-containedness therefore means supplying what intended consumers need, not reproducing everything relevant to the topic.
+Reconstructability and activation are separate tests because [knowledge storage does not imply contextual activation](./knowledge-storage-does-not-imply-contextual-activation.md) — a model may explain a framework perfectly when asked yet fail to recognize the present situation as an instance of it. Where the boundary falls — when a framework name plus a recognition condition suffices, and when tutorial, warrant, or exact content must remain — is developed in [the framework is often larger than the durable contribution](./the-framework-is-often-larger-than-the-durable-contribution.md), together with a behavioral test for it. The result depends on the consumer population: a cue that resolves for one model may fail for another, and a compact agent-facing note may be opaque to a first-time human. Self-containedness therefore means supplying what intended consumers need, not reproducing everything relevant to the topic.
 
 ### How to present
 
@@ -67,6 +65,7 @@ More broadly, reshaping knowledge for a specific observer creates value. In info
 
 Relevant Notes:
 
+- [the framework is often larger than the durable contribution](./the-framework-is-often-larger-than-the-durable-contribution.md) — extends: develops the resolution question for the framework-activation case, with the recognition rule and the behavioral boundary test
 - [theory and methodology form a two-layer execution system](./theory-and-methodology-form-a-two-layer-execution-system.md) — instance: a task-facing layer can make source structure more accessible to a bounded observer
 - [conjecture is seeing the particular as an instance of the general](./conjecture-is-seeing-the-particular-as-an-instance-of-the-general.md) — instance: recognition cost scales with abstraction depth
 - [reverse-compression is the failure mode where LLM output expands without adding information](./reverse-compression-is-when-llm-output-expands-without-adding.md) — instance: expansion that adds tokens without making more structure accessible
