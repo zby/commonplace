@@ -25,7 +25,7 @@ The precise claim is:
 
 > False-positive generation is filtered before retention; false-positive acceptance becomes operative.
 
-That is what makes "make the evaluator stronger" no answer to a weak generator, and it is why the two functions cannot be traded against each other. It also means the consequence below ranks what to automate *among the errors the loop can see*. Omission errors are the reason automating search is not free either — a generator with narrow reach costs improvements no one will ever miss.
+That is what makes "make the evaluator stronger" no answer to a weak generator, and it is why the two functions cannot be traded against each other. It also means the consequence below ranks what to automate *among the errors the loop can see*. Omission errors are the reason automating search is not free either — a generator with narrow range costs improvements no one will ever miss.
 
 ## The consequence: automate search first
 

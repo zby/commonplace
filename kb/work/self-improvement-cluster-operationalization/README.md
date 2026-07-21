@@ -26,13 +26,16 @@ Paths 2 and 3 already exist in weak form; path 1 does not exist at all. Which mi
 
 Grows as application surfaces more; shrink it by resolving in the library, not here.
 
-- **Three senses of "reach"** — oracle domain, explanatory reach, search reach — carried by one word; `warranted-autonomy` disambiguates locally, but application-time confusion is likely.
 - **`warn` outcome vs. the loop's evaluation criterion** — the loop note requires rejection to be an event distinct from the arrival of the next candidate; where does the review system's `warn` sit — rejection, deferred acceptance, or something the theory lacks a slot for?
 - **Canonical frame** — the declared boundary exists only inside [Commonplace as a reflective system](../../reference/commonplace-as-a-reflective-system.md); repeated applications will re-derive and silently diverge without a reusable anchor.
 - **Operation-depth ontology** — open TODO in [reflective coverage](../../notes/reflective-coverage-is-graded-across-representational-forms.md): ordered list vs. capability profile/partial order.
 - **Closure-note TODOs** — tacit-but-stable human expertise as retained methodology; literal boundary closure vs. the human-dependency-only reading ([closure note](../../notes/methodological-and-computational-closure-track-different-changes.md)).
 - **Stub note** — [reflection puts a system's own organization inside its action environment](../../notes/reflection-makes-own-organization-part-of-the-action-environment.md) is mostly open questions; decide whether to run the self-ontology investigation or fold it into the coverage note's open questions.
 - **Cumulativity's environment-mediated exclusion** — now stated in the [profile note](../../notes/a-self-improving-system-needs-a-profile-not-a-ladder.md); verify the stated form survives contact with real cases in phase 1.
+
+### Resolved
+
+- **Three senses of "reach"** (2026-07-21) — `explanatory-reach` and `reach-assessment` registered as rare compounds carrying the main sense; registration paragraph lives in [reach-assessment](../../notes/definitions/reach-assessment.md) (retitled to the hyphenated form). The search sense renamed to **search range**; the one oracle-side leak ("proof reach") renamed to **proof surface**. Deliberate residue: the two route-note titles and the first-principles title keep spaced "reach" (title quotes lag by convention; rename only if a title-level collision ever bites), and frozen fixtures under `kb/work/error-catching/` plus source-ingest link texts were left untouched.
 
 ## What closes the workshop
 

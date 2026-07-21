@@ -28,11 +28,11 @@ Search brings an unrealized change under consideration. It may include:
 
 At minimum, search must produce a candidate from a space in which other possible changes remain unrealized. It need not compare several candidates at once or operate autonomously. A maintainer may choose the problem, a model may draft a candidate, and a script may enumerate alternatives within one declared socio-technical loop. Assigning those functions establishes the loop's boundary; it does not make the loop reflective.
 
-Search reach and evaluation strength are independent limits:
+Search range and evaluation strength are independent limits:
 
 > Evaluation cannot select a candidate that search never reaches.
 
-A strong verifier can improve judgments within a narrow generator's reach, but it cannot expand that reach. [Automating KB learning is an open problem](./automating-kb-learning-is-an-open-problem.md) gives one concrete search space—extract, split, synthesize, relink, regroup, reformulate, retire—whose judgment-heavy parts remain substantially human-driven.
+A strong verifier can improve judgments within a narrow generator's range, but it cannot expand that range. [Automating KB learning is an open problem](./automating-kb-learning-is-an-open-problem.md) gives one concrete search space—extract, split, synthesize, relink, regroup, reformulate, retire—whose judgment-heavy parts remain substantially human-driven.
 
 ## Evaluation determines which changes may remain operative
 
@@ -78,7 +78,7 @@ The status claimed here matches how the neighboring self-adaptive-systems field 
 
 ## Open Questions
 
-- Whether search reach can be measured or bounded for a socio-technical loop in the way oracle strength can be graded.
+- Whether search range can be measured or bounded for a socio-technical loop in the way oracle strength can be graded.
 - Whether a fallible evaluator can govern changes to its own acceptance criteria without either an external criterion or the axiomatization that buys formal closure.
 
 ---

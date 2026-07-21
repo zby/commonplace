@@ -60,8 +60,8 @@ Read every claim at its stated strength: definitions are stipulated and revisabl
 - [Behavior-determining organization](./definitions/behavior-determining-organization.md), [operative change](./definitions/operative-change.md), [evidence bearing on an improvement objective](./definitions/evidence-bearing-on-an-improvement-objective.md) — the definition's three base terms. All three rest on [behavioral authority](./definitions/behavioral-authority.md): consumer, channel, force.
 - [The definition classifies its boundary cases without ad hoc exceptions](./the-self-improving-system-definition-classifies-its-boundary-cases.md) — ten cases, from gradient learning to accidental self-modification.
 - [Improving an agentic system crosses the prose-symbolic boundary](./improving-an-agentic-system-crosses-the-prose-symbolic-boundary.md) — reliability gains move behavior between prose and code; the [agent-memory-system reviews](../agent-memory-systems/types/agent-memory-system-review.md) and [comparison matrix](../agent-memory-systems/systems-table.md) run on this vocabulary.
-- [Reach assessment](./definitions/reach-assessment.md) — the semantic judgment reflectivity's structural requirements do not supply; second-order rescoping depends on it.
-- [Formal symbolic systems assess reach only through causal and proof obligations](./formal-systems-can-assess-reach-through-causal-and-proof-obligations.md) — reach assessment isn't LLM-exclusive: proof and causal inference give symbolic systems a route.
+- [Reach-assessment](./definitions/reach-assessment.md) — the semantic judgment reflectivity's structural requirements do not supply; second-order rescoping depends on it.
+- [Formal symbolic systems assess reach only through causal and proof obligations](./formal-systems-can-assess-reach-through-causal-and-proof-obligations.md) — reach-assessment isn't LLM-exclusive: proof and causal inference give symbolic systems a route.
 - [World models assess reach through action-conditioned prediction](./world-models-assess-reach-through-action-conditioned-prediction.md) — the distributed-parametric reach-assessment route.
 
 ## Related Tags
