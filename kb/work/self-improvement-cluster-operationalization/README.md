@@ -26,7 +26,7 @@ Paths 2 and 3 already exist in weak form; path 1 does not exist at all. Which mi
 
 Grows as application surfaces more; shrink it by resolving in the library, not here.
 
-- **`warn` outcome vs. the loop's evaluation criterion** — the loop note requires rejection to be an event distinct from the arrival of the next candidate; where does the review system's `warn` sit — rejection, deferred acceptance, or something the theory lacks a slot for?
+- **`warn` outcome vs. the loop's evaluation criterion** — analyzed in [warn-outcome-vs-loop-evaluation](./warn-outcome-vs-loop-evaluation.md): by the loop note's own test, gates as currently consumed are not evaluation; two candidate resolutions (reclassify gates as search vs. extend the theory with retain-with-obligation), decided by an empirical check on the fix reports that must run on a machine with the local review data.
 - **Canonical frame** — the declared boundary exists only inside [Commonplace as a reflective system](../../reference/commonplace-as-a-reflective-system.md); repeated applications will re-derive and silently diverge without a reusable anchor.
 - **Operation-depth ontology** — open TODO in [reflective coverage](../../notes/reflective-coverage-is-graded-across-representational-forms.md): ordered list vs. capability profile/partial order.
 - **Closure-note TODOs** — tacit-but-stable human expertise as retained methodology; literal boundary closure vs. the human-dependency-only reading ([closure note](../../notes/methodological-and-computational-closure-track-different-changes.md)).
