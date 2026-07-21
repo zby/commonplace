@@ -39,15 +39,21 @@ Holding the later episode's evidence fixed is a deliberate exclusion, not an ove
 
 **Examples.** Online gradient descent is cumulative but opaque: the retained weights are the point at which the next gradient is evaluated and the base to which it is applied. A clean reflective counterexample is a controller whose runtime reads an editable `current-policy` file, while its improvement routine responds to a viability violation by overwriting the whole file with the next policy from a fixed randomized table, without reading the incumbent or recording prior trials. Each policy is reflectively represented and operative between resets, but no result informs its successor.
 
+[Self-Improving Algorithms](../sources/self-improving-algorithms.md) supplies a concrete non-reflective cumulative case: a training phase learns task-relative distribution structure, then a stationary regime retains the tuned data structures as the operative basis for later inputs. Its actor allocation is computational, its objective is expected running time under a declared input distribution, and distribution shift marks the boundary where recalibration is required. The example strengthens the distinction between cumulative retention and reflective addressability: learned structure compounds without becoming an inspectable self-representation.
+
 Ashby's Homeostat is the non-reflective version of that counterexample. Its retained setting controls behavior and whether reorganization is triggered, but once triggered the next values are unrelated to the incumbent and the problem. Holding the violation and random-table position fixed, replacing the incumbent would not change its successor. The Homeostat is therefore operative and non-cumulative: the trigger uses fresh failure evidence, while the update carries no improvement-relevant information from earlier retained settings.
 
 ### Governance
 
 **Which consequential decisions does the retained methodology settle?** Report [methodological closure](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md) where a represented methodology issues recommendations and raises meta-decisions; otherwise mark it not applicable rather than treating a determinate update rule as a closed methodology. [Warrant](./warranted-autonomy-is-bounded-by-oracle-domain.md) remains separate from procedural settlement.
 
+When the pathway is compared with self-adaptive-systems literature, uncertainty, context, system state, and the distinction between domain goals and adaptation goals are useful profile fields, not replacement membership criteria. The systematic review by [Petrovska, Erjiage, and Kugele](../sources/defining-self-adaptive-systems-systematic-literature-review.md) shows why: formal definitions in that field omit or conflate these dimensions, and MAPE-K-style structure does not settle what counts as self-improvement.
+
 ### Actor allocation
 
 **Who performs each improvement function?** Record human, computational, or joint allocation under the declared frame. [The closure owner](./methodological-and-computational-closure-track-different-changes.md) defines computational closure as the no-human endpoint of that allocation, explains why human-inclusive reflectivity makes the profile load-bearing, and keeps literal subsystem closure as an open boundary question.
+
+For a human-inclusive pathway, an optional allocation sub-profile can record which actor performs information acquisition, analysis, decision/action selection, and action implementation. [Parasuraman, Sheridan, and Wickens](../sources/model-types-levels-human-interaction-automation.md) provide the useful four-function form and show why allocation must be evaluated by performance consequences, reliability, and consequence costs. This is a form inheritance, not a within-function autonomy ladder: the improvement functions here are search, evaluation, and retention rather than task-performance stages, and actor allocation does not establish warrant.
 
 ### The properties can move independently
 
