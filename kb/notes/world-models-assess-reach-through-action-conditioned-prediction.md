@@ -2,7 +2,7 @@
 description: "Learned world models can assess reach when action-conditioned predictions are tested across the interventions or shifts a commitment claims"
 type: kb/types/note.md
 traits: [title-as-claim, has-comparison, has-external-sources]
-tags: [foundations, computational-model]
+tags: [foundations, computational-model, self-improving-systems]
 ---
 
 # World models assess reach through action-conditioned prediction

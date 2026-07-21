@@ -40,7 +40,7 @@ Reflective structure crosses update architecture. A pathway is [**reflective**](
 ### Governance and computational allocation
 
 - [Methodological and computational closure track different changes](./methodological-and-computational-closure-track-different-changes.md) — settled methodology can still be human-executed, while an unattended model can still improvise; executable, warranted criteria are what let both properties advance together.
-- [Increasing computational autonomy relocates human effort to the frontier instead of reducing it](./increasing-computational-autonomy-relocates-human-effort-to-the-frontier.md) — the human side: measure improvements per human judgment, not total hours.
+- [Increasing computational autonomy relocates human effort to the frontier instead of reducing it](./increasing-computational-autonomy-relocates-human-effort.md) — the human side: measure improvements per human judgment, not total hours.
 
 Completing particular reflective proposal-selection pathways while separately advancing both closure properties is an engineering direction, not the ontology.
 
@@ -57,11 +57,12 @@ Read every claim at its stated strength: definitions are stipulated and revisabl
 
 - [Measuring autonomy well enough to see it improve is an open problem](./measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md) — a per-function profile locates a system but cannot yet show it becoming more autonomous.
 - [Where change candidates come from in Commonplace](../reference/where-change-candidates-come-from-in-commonplace.md) — the observed search surface and its allocation across maintainers, agents, commands, and reports.
-- [Behavior-determining organization](./definitions/behavior-determining-organization.md), [operative change](./definitions/operative-change.md), [evidence bearing on an improvement objective](./definitions/evidence-bearing-on-an-improvement-objective.md) — the definition's three base terms.
+- [Behavior-determining organization](./definitions/behavior-determining-organization.md), [operative change](./definitions/operative-change.md), [evidence bearing on an improvement objective](./definitions/evidence-bearing-on-an-improvement-objective.md) — the definition's three base terms. All three rest on [behavioral authority](./definitions/behavioral-authority.md): consumer, channel, force.
 - [The definition classifies its boundary cases without ad hoc exceptions](./the-self-improving-system-definition-classifies-its-boundary-cases.md) — ten cases, from gradient learning to accidental self-modification.
 - [Improving an agentic system crosses the prose-symbolic boundary](./improving-an-agentic-system-crosses-the-prose-symbolic-boundary.md) — reliability gains move behavior between prose and code; the [agent-memory-system reviews](../agent-memory-systems/types/agent-memory-system-review.md) and [comparison matrix](../agent-memory-systems/systems-table.md) run on this vocabulary.
 - [Reach assessment](./definitions/reach-assessment.md) — the semantic judgment reflectivity's structural requirements do not supply; second-order rescoping depends on it.
-- [Formal symbolic systems assess reach only through causal and proof obligations](./formal-systems-can-assess-reach-through-causal-and-proof-obligations.md) — reach assessment isn't LLM-exclusive: proof search and causal inference give symbolic systems a formal route to it.
+- [Formal symbolic systems assess reach only through causal and proof obligations](./formal-systems-can-assess-reach-through-causal-and-proof-obligations.md) — reach assessment isn't LLM-exclusive: proof and causal inference give symbolic systems a route.
+- [World models assess reach through action-conditioned prediction](./world-models-assess-reach-through-action-conditioned-prediction.md) — the distributed-parametric reach-assessment route.
 
 ## Related Tags
 

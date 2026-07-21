@@ -77,6 +77,6 @@ Relevant Notes:
 - [Reflective system](./definitions/reflective-system.md) — grounds: the boundary-relative criterion that makes human-inclusive reflection possible
 - [Measuring autonomy well enough to see it improve is an open problem](./measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md) — extends: explains why allocation remains a profile rather than a percentage
 - [Warranted autonomy is bounded by oracle domain](./warranted-autonomy-is-bounded-by-oracle-domain.md) — grounds: explains why computational allocation does not by itself justify unattended action
-- [Increasing computational autonomy relocates human effort to the frontier instead of reducing it](./increasing-computational-autonomy-relocates-human-effort-to-the-frontier.md) — extends: states the human-side consequence when computational allocation advances
+- [Increasing computational autonomy relocates human effort to the frontier instead of reducing it](./increasing-computational-autonomy-relocates-human-effort.md) — extends: states the human-side consequence when computational allocation advances
 - [Commonplace as a reflective system](../reference/commonplace-as-a-reflective-system.md) — evidence: applies both closure readings to one observed improvement pathway
 - [The boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — contrasts: states why computational allocation stalls where warranted checking is expensive
