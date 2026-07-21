@@ -57,7 +57,7 @@ The boundary varies with the model, task, and consumer population. The test esta
 
 Relevant Notes:
 
-- [Information value is observer-relative](./information-value-is-observer-relative.md) — grounds: consumer knowledge, capacity, tools, and goals determine which parts of a derivation add value when retained
+- [Information value is observer-relative](./information-value-is-observer-relative.md) — grounds: consumer knowledge, capacity, tools, and goals determine which parts of the active framework add value when retained
 - [Knowledge storage does not imply contextual activation](./knowledge-storage-does-not-imply-contextual-activation.md) — grounds: retrievable knowledge may still require a situation-specific cue before it affects action
 - [System-definition artifacts are crystallized reasoning under context scarcity](./system-definition-artifacts-are-crystallized-reasoning-under-context.md) — mechanism: generic guidance can be reconstructed at read time while the artifact carries the task-specific result of prior reasoning
 - [Conjecture is seeing the particular as an instance of the general](./conjecture-is-seeing-the-particular-as-an-instance-of-the-general.md) — mechanism: the discovery may be the instance relation rather than either already-known endpoint
