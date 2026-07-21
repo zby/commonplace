@@ -12,6 +12,8 @@ A **self-improving system** makes operative changes to its own behavior-determin
 
 *Operative* means the change affects subsequent operation over the relevant horizon, through a consumer, a channel, and a force — [operative change](./operative-change.md), which does not require permanence; a transient compensation, or a change nothing ever acts on, does not qualify.
 
+*Makes* is read over a declared assessment horizon, like operativity: a system is self-improving over that horizon when evidence-responsive operative self-change occurs within it. The dispositional attribution — the system *has* a standing improvement pathway, currently exercised or not — is also available, but it is a different claim and must be marked as such; a pathway nothing has exercised over the relevant horizon supports only the dispositional reading. Tense, like boundary, is declared rather than fixed by the definition.
+
 ## Evidence-responsiveness does not require a gate
 
 *Responsive to evidence* is defined in [evidence bearing on an improvement objective](./evidence-bearing-on-an-improvement-objective.md). There must be a loss, reward, error, viability bound, test, judgment, or other criterion for the evidence to bear on; otherwise the change is merely caused, not improvement-directed.
@@ -42,9 +44,12 @@ Classify the remaining questions elsewhere:
 
 - Treating the proposal-selection improvement loop as the definition rather than a named subtype, which re-smuggles an architecture into semantics.
 - Reporting an autonomy grade without declaring the boundary it was assessed against.
+- Reading a dormant improvement pathway as current self-improvement — the dispositional claim (*has* a pathway) and the horizon claim (evidence-responsive change is occurring over this horizon) are different attributions.
 - Treating a helpful change to an external product as self-improvement of the tool that produced it.
 
 ## Provenance and departures
+
+One departure is semantic rather than a retired restriction: the predicate is frame-indexed. The bearer of the property is a bounded system — a system under a declared boundary — not a substrate simpliciter, so an attribution is elliptical until the boundary is named. Established classification practice reads category membership frame-independently; the fine-tuning-pipeline case in [the boundary cases](../the-self-improving-system-definition-classifies-its-boundary-cases.md) is why that reading fails here — the same substrate is being improved under one boundary and self-improving under another.
 
 Two earlier restrictions were retired because they excluded central cases. Requiring self-representation excluded parametric learners; the substantive benefit of reflection now belongs to [reflection buys addressability](../reflection-buys-addressability.md). Requiring reject-capable evaluation excluded direct gradient- and viability-driven adaptation; proposal-selection now names that narrower architecture.
 

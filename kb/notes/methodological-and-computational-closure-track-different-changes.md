@@ -15,6 +15,8 @@ An improvement pathway can stop depending on improvised judgment without stoppin
 
 Computational closure and machine autonomy therefore read the same actor allocation: human, computational, or joint for each pathway function. “More computationally autonomous” describes movement in that allocation; “more computationally closed” describes the resulting reduction in functions that still require a human decision.
 
+Neither reading is the cybernetic sense. **Organizational closure** — the recursive regeneration of a network of component interactions in the autopoiesis tradition — is a different property, already excluded from this cluster's vocabulary in the [reflective-system exclusions](./definitions/reflective-system.md#exclusions); nothing here asserts or requires it.
+
 ## Human-inclusive boundaries make allocation load-bearing
 
 A [reflective system](./definitions/reflective-system.md) may include established human processes. Put a maintainer with a standing causal role inside the boundary of a maintained system with readable source, and reflective attribution becomes cheap: the maintainer inspects the source as a representation, edits it, and the build carries the edit into operation. The attribution can be true while saying little about machine performance.
