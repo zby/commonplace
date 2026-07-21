@@ -53,7 +53,7 @@ One departure is semantic rather than a retired restriction: the predicate is fr
 
 Two earlier restrictions were retired because they excluded central cases. Requiring self-representation excluded parametric learners; the substantive benefit of reflection now belongs to [reflection buys addressability](../reflection-buys-addressability.md). Requiring reject-capable evaluation excluded direct gradient- and viability-driven adaptation; proposal-selection now names that narrower architecture.
 
-This architecture-neutral choice is consistent with uses of “self-improving” for gateless self-tuning algorithms ([Ailon et al. 2011](https://arxiv.org/abs/0907.0884)) and with self-adaptive-systems literature treating feedback-loop models as engineering reference models rather than definitions ([Weyns 2019](https://people.cs.kuleuven.be/~danny.weyns/papers/2017HSE.pdf); [Petrovska, Erjiage, and Kugele 2025](https://arxiv.org/abs/2505.17798)). It is Commonplace's explication, not a claimed field consensus.
+This architecture-neutral choice is consistent with uses of “self-improving” for gateless self-tuning algorithms ([Ailon et al. 2011](../../sources/self-improving-algorithms.md)) and with self-adaptive-systems literature treating feedback-loop models as engineering reference models rather than definitions ([Weyns](../../sources/weyns-software-engineering-self-adaptive-systems-tour.md); [Petrovska, Erjiage, and Kugele 2025](../../sources/defining-self-adaptive-systems-systematic-literature-review.md)). It is Commonplace's explication, not a claimed field consensus.
 
 ---
 
