@@ -1,6 +1,6 @@
 ---
 name: cp-skill-revise-iterative
-description: Iteratively revise a note for flow and cohesion, retaining numbered candidates and checking semantic fidelity before each continuation.
+description: Explicit-invocation instruction for iteratively revising a note for flow and cohesion while retaining numbered candidates and checking semantic fidelity before each continuation.
 type: kb/types/instruction.md
 user-invocable: true
 allowed-tools: Read, Edit, Bash, Glob, Grep
@@ -10,6 +10,8 @@ model: opus
 ---
 
 ## EXECUTE NOW
+
+**Demoted.** No longer in `promoted_skills` (see `src/commonplace/scaffold_manifest.py`) — the per-pass cost wasn't earning back enough revision quality. `commonplace-init` no longer auto-installs this into `.claude/skills/` or `.agents/skills/` for new projects, and the harness doesn't auto-load it here. Invoke it explicitly when you want this revision path.
 
 **Target: $ARGUMENTS** (exactly one note path or filename — if empty, ask which note)
 
