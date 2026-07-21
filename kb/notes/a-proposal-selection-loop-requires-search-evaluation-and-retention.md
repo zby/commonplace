@@ -54,7 +54,7 @@ In each case, search ran and evaluation passed, but the proposal-selection loop 
 
 Artifact labels do not decide whether retention is operative. A knowledge artifact consumed as evidence or advice can affect later behavior, while a nominal system-definition artifact with no consumer cannot. The test is the [behavioral-authority](./definitions/behavioral-authority.md) path: consumer, channel, and force relative to the objective and declared horizon.
 
-For self-improvement, the accepted change must reach the system's own [behavior-determining organization](./definitions/behavior-determining-organization.md). Promotion into instruction, enforcement, or configuration is one way to strengthen that path, and may itself run as another proposal-selection instance, but it is not universally required for reflective or operative change.
+For self-improvement, the accepted change must reach the system's own [behavior-determining organization](./definitions/behavior-determining-organization.md). Promotion into instruction, enforcement, or configuration is one way to strengthen that path, and may itself run as another proposal-selection instance — [the two-layer execution system](./theory-and-methodology-form-a-two-layer-execution-system.md) develops that promotion architecture, with recurrence as the trigger, pre-promotion verification as the gate, and methodology growth plus a coverage-test update as retention — but it is not universally required for reflective or operative change.
 
 ## Repetition does not establish cumulativity
 
@@ -96,3 +96,4 @@ Relevant Notes:
 - [Reflection buys addressability](./reflection-buys-addressability.md) — extends: what routing the loop through a self-representation adds to bare retention
 - [Ashby, Design for a Brain — ultrastability](../sources/ashby-design-for-a-brain-ultrastability.md) — evidence: the contrast case just outside the subtype — its one evidence-responsive transition collapses rejection into generation, while its functional reconstruction marks the floor of each function
 - [Behavioral authority](./definitions/behavioral-authority.md) — grounds: the consumer/channel/force vocabulary the two force families specialize
+- [Methodology with incomplete coverage and its live theory fallback form a two-layer execution system](./theory-and-methodology-form-a-two-layer-execution-system.md) — mechanism: the developed architecture of retention-strengthening promotion — recurrence as trigger, verification as reject-capable gate, coverage-test update as retention
