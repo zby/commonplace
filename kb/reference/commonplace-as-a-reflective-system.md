@@ -13,7 +13,7 @@ The evidence is the `tag-readme` change introduced by ADR 026. [The causal-conne
 
 ## The frame
 
-Commonplace here includes the repository and its operative artifacts; the software and agents that consume them; and designated maintainers acting in their established improvement roles. Arbitrary contributors, readers, advisers, the model provider and its weights, inference infrastructure, and hosting remain outside. Within the frame, the repository, commands, validators, review store, and agents are the computational components; designated maintainers are the human components. The partition reports allocation without changing membership or reflectivity.
+The boundary is declared once in [the declared Commonplace frame](./commonplace-declared-frame.md) and used here unchanged: the repository, its operative artifacts, the software and agents that consume them, and designated maintainers in their improvement roles are inside; contributors, readers, advisers, the model provider and its weights, inference infrastructure, and hosting are outside. The computational/human partition reports allocation without changing membership or reflectivity.
 
 Commonplace represents its artifact types and contracts (`kb/types/`), routing and organization (`COLLECTION.md` files and navigation), maintenance and review procedures, and design rationale (`kb/reference/adr/`). An artifact participates in the self-representation when it describes that organization and lies on a causal path into later operation, whether consumed as advice, instruction, configuration, or enforcement. Agents and maintainers can inspect and revise these artifacts; validators, renderers, commands, and later agents act through them.
 
@@ -53,6 +53,7 @@ The trace establishes neither whole-pathway computational closure nor improvemen
 
 Relevant Notes:
 
+- [The declared Commonplace frame](./commonplace-declared-frame.md) — part-of: the canonical boundary declaration this classification is assessed under
 - [The tag-readme change as an observed causal-connection trace](./tag-readme-trace-observed-causal-connection.md) — contains: the full observed trace behind the causal-connection claim
 - [The tag-readme trace read as a self-improving loop](./tag-readme-trace-as-self-improving-loop.md) — contains: the full search, evaluation, and retention mapping behind the allocation profile
 - [Where change candidates come from in Commonplace](./where-change-candidates-come-from-in-commonplace.md) — part-of: surveys the wider set of noticing and candidate-forming mechanisms
