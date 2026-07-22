@@ -2,6 +2,8 @@
 
 Ledger item from the [workshop framing](./README.md), analyzed 2026-07-21. The analysis is complete; the deciding evidence is local-only (`kb/reports/fixes/`, the commonplace store), so **the empirical check at the bottom must run on a machine that has the review data**. Nothing here is resolved until it does.
 
+**Parked 2026-07-22.** The check is postponed rather than blocking: phase 0's rule forbids only *silent* ambiguity, and this item is now explicitly held open with both candidate readings and the decision rule written down. Until the check runs, phase 1 treats the review-system and fix-pipeline artifacts as conditional — audited under both readings or deferred — while every other artifact's audit proceeds normally.
+
 ## The collision
 
 The [proposal-selection loop note](../../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) sets a strict criterion for evaluation: the verdict must control an operation *distinct from producing the next candidate* — select, discard, block, roll back — and it explicitly excludes the near-miss: "a conditional trigger whose only effect is to launch the next variation is not [an evaluator] either." Rejection and merely-changing-again must be different events in the mechanism. (This clause is what keeps the Homeostat outside the subtype.)
