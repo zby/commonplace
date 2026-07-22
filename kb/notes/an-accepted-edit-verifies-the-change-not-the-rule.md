@@ -1,7 +1,7 @@
 ---
 description: "Human acceptance of an edit is a strong oracle for 'this change was wanted here' but a weak oracle for 'this generalizes' — mining rules from accepted edits inherits instance-level verification while the generalization step stays oracle-poor"
 type: kb/types/note.md
-traits: [title-as-claim]
+traits: [title-as-claim, has-external-sources]
 tags: [learning-theory, agent-memory]
 ---
 
@@ -33,3 +33,4 @@ Relevant Notes:
 - [oracle-strength-spectrum](./oracle-strength-spectrum.md) — grounds: the instance/rule asymmetry is a position change on the oracle-strength spectrum within one learning loop
 - [automating-kb-learning-is-an-open-problem](./automating-kb-learning-is-an-open-problem.md) — extends: locates the open problem precisely at the generalization step, even when instance oracles are strong
 - [Gate learning from accepted edits](../reference/proposals/gate-learning-from-accepted-edits.md) — see-also: the Commonplace design that takes this asymmetry as its central constraint
+- [Moen, Foundation and History of the PDSA Cycle](../sources/foundation-and-history-of-the-pdsa-cycle.md) — evidence: decades-old corroboration from quality improvement — one improving test is not enough; predicting improvement under future conditions is a separate judgment the test never performed

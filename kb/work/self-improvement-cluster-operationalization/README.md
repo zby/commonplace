@@ -4,6 +4,8 @@
 
 Turn the [self-improving-systems cluster](../../notes/self-improving-systems-README.md) into methodology that guides Commonplace's own changes, while keeping it good research — the maintainer's working premise is that these are the same program, because every ambiguity or contradiction left in the theory surfaces as a failure at application time.
 
+**Delegation stance (adopted by the maintainer, 2026-07-22, per [external-delegation-assessment](./external-delegation-assessment.md) §3a):** use the cluster as an ontology and a Commonplace-specific overlay on established improvement methodologies; do not construct a standalone improvement methodology. Local guidance states only what the established host cannot: the operativity test, the reflective/addressability profile, and the warrant boundary.
+
 The trigger finding (full-cluster review, 2026-07-21): the cluster currently fails its own operativity test. In its own vocabulary, it has no reliable consumer, channel, or force into actual change decisions — nothing loads it when someone modifies a skill, validator, type spec, or collection contract, and the shipped review system (the repo's most developed evaluation machinery) is never read through the cluster's loop vocabulary. Hygiene defects found in the same review were fixed directly (world-models tagging gap, misattributed profile citation, explanatory-reach link, cumulativity-test exclusion left implicit, slug-length failure).
 
 ## Three authority paths

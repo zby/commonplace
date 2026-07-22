@@ -53,4 +53,5 @@ This note borrows only the qualitative direction: between known cases, beyond kn
 Relevant Notes:
 
 - [Charles Sanders Peirce (Stanford Encyclopedia of Philosophy)](https://plato.stanford.edu/entries/peirce/) — evidence: abduction, deduction, and induction as phases of inquiry
+- [Moen, Foundation and History of the PDSA Cycle](../../sources/foundation-and-history-of-the-pdsa-cycle.md) — evidence: an independent applied tradition (Shewhart–Deming quality improvement) converging on the same conjecture–consequence–test loop — prediction and theory in Plan, observation compared against prediction in Study
 - [Scientific Discovery (Stanford Encyclopedia of Philosophy)](https://plato.stanford.edu/entries/scientific-discovery/) — evidence: discovery as process versus product, and the hypothesis-generation / testable-consequence focus
