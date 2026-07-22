@@ -3,7 +3,7 @@ source: https://qicentral.rcpch.ac.uk/wp-content/uploads/sites/9/2021/10/Moen-an
 description: Moen and Norman's concise correction of common myths about the Deming cycle and the historical distinction between PDCA and PDSA.
 captured: 2026-07-22
 capture: user-supplied-pdf-to-markdown
-genre: scientific-paper
+genre: conceptual-essay
 type: kb/sources/types/snapshot.md
 ---
 
