@@ -15,7 +15,7 @@ When such a representation persists for later loops, it is a [retained artifact]
 
 A workflow may directly prescribe action; a validator may exclude actions; a policy may map state to action; an action model supports inference about the situation or interventions. One artifact can combine several of these operative parts, and one agentic system can use model-mediated selection for one pathway while directly executing another. The distinction therefore belongs to an action pathway, not to the system as a whole.
 
-A representation reconstructed inside one context window can mediate the current action without being a retained artifact; persistence matters only when later loops can consume it. Self-improvement is a narrower application of the same architecture: the intervention changes the agentic system's own behavior-determining organization. In a reflective pathway, [that organization enters the represented action environment](./reflection-makes-own-organization-part-of-the-action-environment.md).
+A representation reconstructed inside one context window can mediate the current action without being a retained artifact; persistence matters only when later loops can consume it. Self-improvement is a narrower application of the same architecture: the intervention changes the agentic system's own behavior-determining organization. In a reflective pathway, [that organization enters the represented action environment](./reflective-coverage-is-graded-across-representational-forms.md).
 
 ---
 
@@ -25,4 +25,4 @@ Relevant Notes:
 - [Behavioral authority](./definitions/behavioral-authority.md) — grounds: distinguishes a stored representation from one that actually influences action
 - [Representational form](./definitions/representational-form.md) — grounds: separates prose, symbolic, distributed-parametric, and mixed action models
 - [World models assess reach through action-conditioned prediction](./world-models-assess-reach-through-action-conditioned-prediction.md) — extends: develops the learned predictive route through candidate-action consequences
-- [Reflection puts a system's own organization inside its action environment](./reflection-makes-own-organization-part-of-the-action-environment.md) — extends: applies the action-model argument when the intervention target is the system itself
+- [Reflective coverage is graded across representational forms](./reflective-coverage-is-graded-across-representational-forms.md) — extends: its open questions apply the action-model argument when the intervention target is the system itself

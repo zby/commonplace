@@ -78,11 +78,20 @@ Combining prose and code does not increase computational universality. The stron
 
 Joint adaptation, movement between forms, and shared callable interfaces may support that coverage, but none of them establishes it without a causally connected self-representation. What this note supplies is a vocabulary and a graded coverage criterion. It does not, by itself, classify Commonplace or any other system.
 
+## Open Questions
+
+Reflection makes the system's own organization one of its possible intervention targets — when action is model-mediated, part of the represented environment the process must reason about, [since an action model matters only through its consumption path](./an-action-model-matters-only-through-its-consumption-path.md). Appending an explicit lesson needs no comprehensive self-model, but autonomous diagnosis and planning must distinguish enough of the system's artifacts, processes, dependencies, capabilities, and limitations to tell which component a problem belongs to — making every file editable is insufficient. Which distinctions must become explicit and machine-operable for that work remains open:
+
+- Which distinctions about the system must be retained rather than reconstructed by a model on each task?
+- How should a retained self-model separate the system from hosted models, runtimes, tools, and other dependencies?
+- What evidence would show that an agent used the retained self-model to catch a bug, recognize a limitation, or interpret a genuinely new task?
+
 ---
 
 Relevant Notes:
 
 - [Reflective system](./definitions/reflective-system.md) — grounds: supplies the aspect-relative causal self-representation criterion
+- [An action model matters only through its consumption path](./an-action-model-matters-only-through-its-consumption-path.md) — grounds: the model-mediated action case whose self-directed instance raises the open self-modeling questions
 - [Representational form](./definitions/representational-form.md) — defined-in: the prose / symbolic / distributed-parametric axis coverage grades over
 - [Behavior-determining organization](./definitions/behavior-determining-organization.md) — defined-in: the represented organization whose components and forms a coverage claim spans
 - [Lineage](./definitions/lineage.md) — defined-in: records dependencies that require invalidation, regeneration, retirement, or review across representations
