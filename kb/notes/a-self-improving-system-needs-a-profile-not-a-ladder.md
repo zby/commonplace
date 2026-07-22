@@ -25,7 +25,7 @@ After membership and update architecture are stated, four further parts describe
 
 **What does the self-representation cover, and what can processes inside the declared frame do with each covered component?** [Reflective coverage has two dimensions](./reflective-coverage-is-graded-across-representational-forms.md): breadth across behavior-determining components and representational forms, and operation depth over each component.
 
-Where improvement is model-mediated, reflection turns coverage into a self-modeling question: [which parts and relations must become machine-operable](./reflection-makes-own-organization-part-of-the-action-environment.md) before the process can locate a failure or map a novel task onto its capabilities and limitations without human interpretation?
+Where improvement is model-mediated, reflection turns coverage into a self-modeling question, carried in the coverage note's open questions: which parts and relations must become machine-operable before the process can locate a failure or map a novel task onto its capabilities and limitations without human interpretation?
 
 Coverage and addressability are related but separate profiles within reflective structure. Coverage records represented aspects, forms, and structurally available operations. [Addressability](./reflection-buys-addressability.md) records what processes can do with a retained change as a commitment — retrieve, interpret, criticize, revise, rescope, or transfer it. Coverage of the component is necessary but not sufficient: mechanical observation or modification does not establish interpretation.
 
@@ -81,5 +81,4 @@ Relevant Notes:
 - [A methodology governs its own extension only as far as it settles the meta-decisions it raises](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md) — grounds: methodological closure as a governance property
 - [Methodological and computational closure track different changes](./methodological-and-computational-closure-track-different-changes.md) — grounds: the governance and actor-allocation readings, including the human-boundary consequence
 - [Warranted autonomy is bounded by oracle domain](./warranted-autonomy-is-bounded-by-oracle-domain.md) — contrasts: allocation and methodological settlement do not establish trustworthiness
-- [Reflection puts a system's own organization inside its action environment](./reflection-makes-own-organization-part-of-the-action-environment.md) — extends: applies model-mediated action to the coverage autonomous reflective work requires
 - [Commonplace as a reflective system](../reference/commonplace-as-a-reflective-system.md) — evidence: applies the profile to one observed human-inclusive pathway

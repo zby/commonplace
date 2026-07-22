@@ -32,7 +32,6 @@ After membership and update architecture, [profile the pathway rather than placi
 Reflective structure crosses update architecture. A pathway is [**reflective**](./definitions/reflective-system.md) when change passes through a causally connected representation of the affected organization; otherwise it is non-reflective. The representation may be consumed as evidence, advice, instruction, or enforcement: authority family alone does not decide reflection.
 
 - Retained lessons become **addressable** — later rounds can read, criticize, and selectively revise them: [reflection buys addressability](./reflection-buys-addressability.md).
-- When diagnosis or planning uses an action model, reflection [puts the system's own organization inside the represented action environment](./reflection-makes-own-organization-part-of-the-action-environment.md).
 - An addressable lesson can explicitly reject, revise, or rescope a represented prior commitment; [non-reflective correction acts indirectly on the substrate](./reflection-makes-retained-lessons-second-order.md).
 - The standing discount — a lesson that never surfaces contributes nothing: [retrieval failure is reflection failure](./retrieval-failure-is-reflection-failure.md).
 - One downstream payoff hypothesis is that [reflection may improve sample efficiency under structured shifts](./reflection-may-improve-sample-efficiency-under-structured-shifts.md).
