@@ -9,11 +9,13 @@ tags: [llm-interpretation-errors]
 
 Tasks become automatable when verification is cheap and resist automation when verification is expensive — regardless of raw model capability. This is not an observation about current limitations. It's a structural claim: generation without verification produces output, not automation. Where automation stalls, the bottleneck is typically oracle construction, not generation.
 
-Four sources arrive at this claim through different reasoning, from different domains, using different vocabulary. They are not fully independent — the oracle-theory notes already cite Tam et al. and Rabanser et al. — but the reasoning paths are distinct enough that the convergence is informative.
+Five sources arrive at this claim through different reasoning, from different domains, using different vocabulary. They are not fully independent — the oracle-theory notes already cite Tam et al. and Rabanser et al. — but the reasoning paths are distinct enough that the convergence is informative.
 
 ## The evidence
 
 **Oracle theory (internal).** The [oracle-strength spectrum](./oracle-strength-spectrum.md) proposes a gradient from hard oracles (exact, cheap, deterministic) to no oracle (vibes). The [augmentation-automation boundary](./the-augmentation-automation-boundary-is-discrimination-not-accuracy.md) identifies the mechanism: crossing from augmentation to automation requires per-instance discrimination (knowing *this* output is wrong), not aggregate accuracy. [Rabanser et al.](https://arxiv.org/pdf/2602.16666) find that calibration improves across model generations but discrimination trends are mixed — improving on some benchmarks, worsening on others — suggesting self-assessment is not reliably scaling, which favors external oracles. The [MAKER system](https://arxiv.org/abs/2511.09030) demonstrates the endpoint: zero errors over a million steps, achieved entirely through external hard oracles, with no reliance on model self-knowledge.
+
+**Human factors (Bainbridge).** [Ironies of Automation](../sources/ironies-of-automation.md) (1983) reached the same structure four decades earlier: an operator asked to monitor a system installed *because it outperforms the human* "has been given an impossible task" — real-time verification of the superior system's decisions is exactly what the human cannot supply. The residue automation leaves behind is the work past verification.
 
 **Labor economics (Tam et al.).** [When code is free, research is all that matters](https://x.com/amytam01/status/2031072399731675269) argues that AI commoditizes engineering (which has tests, specs, benchmarks — hard oracles in our vocabulary, though Tam doesn't use that term) while research taste resists automation because problem selection has no ground truth. Tam argues market pricing reflects this — quant firms paying $600k for "research taste" — though this could also reflect tournament dynamics or talent scarcity rather than oracle strength per se. Karpathy's autoresearch automates hyperparameter sweeps (verifiable) but not problem selection (unverifiable) — the boundary runs through a single tool.
 
@@ -25,7 +27,7 @@ Four sources arrive at this claim through different reasoning, from different do
 
 Any single source is explainable without the framework. Amodei's confidence split could be mere selection bias (he has benchmarks for coding, not for novels). Tam's labor-economics argument could be an investor thesis dressed up as analysis. The oracle-strength spectrum could be an internally consistent theory that happens not to be true. in-toto could be dismissed as a special property of cryptographic byte workflows.
 
-But four sources — theory, market economics, supply-side capability predictions, and supply-chain security engineering — arriving at the same structural claim through different reasoning is harder to explain away than any single source. The convergence makes this a candidate for a general principle rather than a domain-specific observation, though the shared citations between the sources temper the evidential weight.
+But five sources — theory, market economics, supply-side capability predictions, supply-chain security engineering, and 1980s human-factors research — arriving at the same structural claim through different reasoning is harder to explain away than any single source. The convergence makes this a candidate for a general principle rather than a domain-specific observation, though the shared citations between the sources temper the evidential weight.
 
 ## The practical implication
 
@@ -56,4 +58,5 @@ Relevant Notes:
 - [Tam et al. — "When code is free"](https://x.com/amytam01/status/2031072399731675269) — evidence: labor-economics argument that engineering automates (hard oracle) while research taste resists (no oracle)
 - [Amodei interview](https://www.dwarkesh.com/p/dario-amodei-2) — evidence: frontier-lab CEO's confidence split tracks oracle strength, not capability
 - [in-toto: Providing farm-to-table guarantees for bits and bytes](../sources/in-toto-farm-to-table-guarantees.md) — evidence: supply-chain trust decisions become automatable when the chain is represented as signed, hash-checkable metadata with cheap final verification
+- [Bainbridge, Ironies of Automation](../sources/ironies-of-automation.md) — evidence: the monitoring irony is a historically prior, independent arrival at the claim — a human cannot verify in real time a system installed because it outperforms the human
 - [Rabanser et al. reliability study](https://arxiv.org/pdf/2602.16666) — evidence: calibration improves but discrimination trends are mixed across benchmarks, suggesting self-assessment is not reliably scaling

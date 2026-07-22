@@ -27,7 +27,7 @@ The proposal's "what should remain local" list (frame-indexed membership, operat
 
 ## 3. The genuinely new decisions
 
-### 3a. Goal revision (maintainer's call; recommended)
+### 3a. Goal revision (adopted 2026-07-22; wording now in the README's Goal)
 
 Extending the conservative-extension stance to the methodology layer is cheap, consistent, and YAGNI-shaped: where PDSA already supplies trial/observation/adoption procedure, local guidance should say only what PDSA cannot — whether the change targets the system's own behavior-determining organization, and whether adoption became operative through a consumer, channel, and force. Draft wording, adapting the proposal's:
 
@@ -57,8 +57,8 @@ The one delegation target the evaluation did not consider. The fit is real: [war
 
 ## 5. Work items (if the maintainer adopts §3a–b)
 
-- Revise this README's Goal per §3a (maintainer sign-off; one paragraph).
-- Snapshot + ingest, from a machine with open egress (this session's policy 403s all candidate hosts — search works, fetch does not; candidate URLs found by web search 2026-07-21, none yet verified by fetch):
+- ~~Revise this README's Goal per §3a~~ — done 2026-07-22.
+- ~~Snapshot + ingest~~ — done 2026-07-22 (Bainbridge, Kephart & Chess, and the three Moen/Norman PDSA papers ingested; see [literature-offload-analysis](./literature-offload-analysis.md) for what they let us delegate). Argyris and GSN remain unfetched, blocked on their respective decisions below. Originally: from a machine with open egress (this session's policy 403s all candidate hosts — search works, fetch does not; candidate URLs found by web search 2026-07-21, none yet verified by fetch):
   - **Bainbridge 1983, "Ironies of Automation"** (Automatica 19(6), 775–779; DOI `10.1016/0005-1098(83)90046-8`): `https://static1.squarespace.com/static/644321e78cd2dd37613af33e/t/6694873f71612132a84371c7/1721009983702/Ironies+of+Automation_Bainbridge_1983.pdf` (direct PDF).
   - **Kephart & Chess 2003, "The Vision of Autonomic Computing"** (IEEE Computer 36(1), 41–50; DOI `10.1109/MC.2003.1160055`) — MAPE-K's origin, currently reached only through the Weyns tour: `https://jmvidal.cse.sc.edu/library/kephart03a.pdf` (university-hosted PDF).
   - **PDSA/Model-for-Improvement** (Langley et al.'s *Improvement Guide* is canonical but paywalled; Moen & Norman are the open-access route): `https://deming.org/wp-content/uploads/2020/06/PDSA_History_Ron_Moen.pdf` ("Foundation and History of the PDSA Cycle"); `https://uploads.teachablecdn.com/attachments/aYpoH9SdSDO0k3KYVRRj_NA01MoenNormanFullpaper.pdf` ("Evolution of the PDCA Cycle", Moen & Norman full paper); `https://qicentral.rcpch.ac.uk/wp-content/uploads/sites/9/2021/10/Moen-and-Norman-on-Deming-circling-back-ph556x.pdf` ("Circling Back", Quality Progress 2010) — ingest one, cite the others.

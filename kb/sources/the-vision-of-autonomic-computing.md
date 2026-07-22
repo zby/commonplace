@@ -3,7 +3,7 @@ source: https://jmvidal.cse.sc.edu/library/kephart03a.pdf
 description: Kephart and Chess's original autonomic-computing vision, including the managed-element and autonomic-manager architecture behind MAPE-K.
 captured: 2026-07-22
 capture: user-supplied-pdf-to-markdown
-genre: scientific-paper
+genre: conceptual-essay
 type: kb/sources/types/snapshot.md
 ---
 

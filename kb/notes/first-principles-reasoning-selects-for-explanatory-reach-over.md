@@ -56,6 +56,7 @@ Relevant Notes:
 - [systematic prompt variation serves verification and diagnosis, not explanatory-reach testing](./systematic-prompt-variation-serves-verification-and-diagnosis-not.md) — contrasts: reach testing varies an explanation's premises, not an LLM prompt surface
 - [SuperARC AIT benchmark](../sources/superarc-ait-benchmark-llm-compression-abstraction.ingest.md) — evidence: integer-vs-binary sequence performance is suggestive for cue sensitivity and algorithmic-compression reach, but not load-bearing here
 - [First principles are inherited constraints, not design choices](./first-principles-are-inherited-constraints-not-design-choices.md) — contrasts: defines which constraints count as first principles; this note explains what first-principles filtering is for
+- [Moen, Foundation and History of the PDSA Cycle](../sources/foundation-and-history-of-the-pdsa-cycle.md) — evidence: the reach-over-fit polarity restated from improvement science — a change that improved during one test must still be predicted to improve under the different conditions ahead
 
 Derived into:
 
