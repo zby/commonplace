@@ -34,7 +34,7 @@ Reflective structure crosses update architecture. A pathway is [**reflective**](
 - Retained lessons become **addressable** — later rounds can read, criticize, and selectively revise them: [reflection buys addressability](./reflection-buys-addressability.md).
 - An addressable lesson can explicitly reject, revise, or rescope a represented prior commitment; [non-reflective correction acts indirectly on the substrate](./reflection-makes-retained-lessons-second-order.md).
 - The standing discount — a lesson that never surfaces contributes nothing: [retrieval failure is reflection failure](./retrieval-failure-is-reflection-failure.md).
-- One downstream payoff hypothesis is that [reflection may improve sample efficiency under structured shifts](./reflection-may-improve-sample-efficiency-under-structured-shifts.md).
+- Downstream payoff hypotheses include [improved sample efficiency under structured shifts](./reflection-may-improve-sample-efficiency-under-structured-shifts.md) and [lower oversight cost when the retained rationale is faithful](./reflection-may-lower-oversight-cost-when-its-rationale-is-faithful.md).
 
 ### Governance and computational allocation
 
