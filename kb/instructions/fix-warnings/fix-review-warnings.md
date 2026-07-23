@@ -26,10 +26,11 @@ For each actionable finding from the current baseline-backed `warn` review pairs
 
 1. **Read the recommendation** in the review finding. It tells you what to fix and usually how.
 2. **Read enough context** around the flagged passage to understand the argument, the evidence relationship, and the flow.
-3. **Decide**: can this be fixed by changing framing/accuracy without changing the note's argument?
-   - **Yes** → apply the fix. Prefer the smallest edit that resolves the warning.
-   - **No** → defer. Report it as needing human review with a reason.
-4. **Classify the fix** using a named strategy from the taxonomy. If no existing strategy fits, classify as `new-pattern` and describe the pattern briefly.
+3. **Decide** which disposition the evidence supports:
+   - **Fixed** — the finding applies and can be resolved by changing framing or accuracy without changing the note's argument. Apply the smallest edit that resolves it.
+   - **Rejected** — the finding is spurious, factually mistaken, or inapplicable to the passage. Leave the note unchanged and record the evidence or reasoning for rejection.
+   - **Deferred** — the finding may be valid, but resolving it would change the argument or requires a substantive human decision. Leave the note unchanged and record why it cannot be settled in this pass.
+4. **Classify each applied fix** using a named strategy from the taxonomy. If no existing strategy fits, classify it as `new-pattern` and describe the pattern briefly. Use `—` for rejected or deferred findings because no fix strategy was applied.
 
 After all fixes:
 
@@ -57,17 +58,22 @@ Write the fix report to `kb/reports/fixes/{note-stem}.fix-report.md`.
 |---|-------|----------|---------|--------|
 | 1 | Source residue | stale-paths | Updated `docs/sources/` → `kb/sources/` | fixed |
 | 2 | Confidence miscalibration | hedge-own-framework | Added "we propose" to taxonomy assertion | fixed |
-| 3 | Grounding | — | Claim vs source tension is substantive, not framing | deferred |
+| 3 | Grounding | — | Source supports the existing scoped claim; warning overstates it | rejected |
+| 4 | Grounding | — | Claim vs source tension is substantive, not framing | deferred |
 
 ### Warning-to-fix mapping
 For each fix, quote or paraphrase the review warning that triggered it, so the fix can be audited against the original finding.
 
 - **#1 (Source residue):** "The note refers to `docs/sources/` but the actual path is `kb/sources/`."
 - **#2 (Confidence miscalibration):** "The taxonomy is the note's own construction presented as established fact."
-- **#3 (Grounding):** "The note uses the source to support context primacy, but the source argues for a broader view."
+- **#3 (Grounding):** "The source does not support the note's scoped claim."
+- **#4 (Grounding):** "The note uses the source to support context primacy, but the source argues for a broader view."
+
+### Rejected findings
+- **#3 (Grounding):** The cited passage explicitly supports the scoped claim; no note change is warranted.
 
 ### Deferred items
-- **#3 (Grounding):** Resolving this requires deciding whether to narrow the claim or reframe the source usage — human judgment needed.
+- **#4 (Grounding):** Resolving this requires deciding whether to narrow the claim or reframe the source usage — human judgment needed.
 
 ### New patterns
 - (none, or describe any fix that didn't fit an existing taxonomy strategy)

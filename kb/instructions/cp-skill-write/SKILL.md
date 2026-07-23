@@ -1,6 +1,6 @@
 ---
 name: cp-skill-write
-description: Write a single KB note — apply the target collection's conventions and path-valued type-spec, commit only in-hand links plus a cheap duplicate check, validate, then hand graph discovery to cp-skill-connect.
+description: Write one KB note under its collection and type contracts, validate it, and hand broader graph discovery to cp-skill-connect.
 type: kb/types/instruction.md
 user-invocable: true
 allowed-tools: Read, Write, Grep, Glob, Bash, Skill

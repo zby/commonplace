@@ -52,7 +52,7 @@ tags: []
 **Rules:**
 - Do not add `user-verified` — conversion structures the note but cannot grant human attestation.
 - `description` must add information beyond the title. See [note base type](../../types/note.md) for quality criteria.
-- `traits` is always `[]` — trait assignment is semantic work, done later by the `cp-skill-validate` skill or human review.
+- `traits` is always `[]` — trait assignment is semantic work, done later by a writer or human reviewer; deterministic validation does not infer traits.
 - `tags` is always `[]` — tag assignment is semantic work, done later by the `cp-skill-connect` skill or human review.
 - Do NOT modify the body content. Conversion adds structure, not editorial changes.
 
@@ -60,7 +60,7 @@ tags: []
 
 After adding frontmatter, check whether the filename matches the `# Title` heading.
 
-The filename should match the title — whether the title itself is good is a semantic question for the `cp-skill-validate` skill.
+The filename should match the title. Whether the title itself is good is a semantic question for a human or a frontmatter review assay; deterministic validation checks only its structural limits.
 
 **Decide whether to rename:**
 - If the current filename is already a good slug of the `# Title` — keep it
@@ -97,7 +97,7 @@ tags: []
 
 Next steps:
 - Run the `cp-skill-connect` skill on `new-filename.md` — find connections
-- Run the `cp-skill-validate` skill on `new-filename.md` — check quality
+- Run the `cp-skill-validate` skill on `new-filename.md` — check deterministic structure and references
 - Optionally ask the user to verify the artifact after review; only the human may add `user-verified: true`
 ===
 ```
