@@ -88,6 +88,19 @@ Two same-day ingests from @Vtrivedy10 (LangChain) — [open continual learning](
 
 **Implication for the article:** timing is favorable and the flag-plant core (A) is confirmed. Mainstream now practices reflective self-improvement without the name and without the retention/governance half; the article can cite these posts as the concrete unnamed practice, and the evaluator/retention question (candidate B) is aimed at exactly the hole in their loop. The window to name the category is open and closing.
 
+### Second convergence check: Tu's 3×3 matrix (2026-07-23)
+
+[The What & When of Self-Evolving Agents](../../sources/the-what-and-when-of-self-evolving-agents.ingest.md) (Xinming Tu) is the nearest mainstream neighbor yet — a taxonomy essay, not a tool post. It sorts self-evolution by update substrate (files / harness / weights) × persistence horizon, states operativity nearly verbatim ("experience becomes learning only when it leaves state that changes a later action"), refuses a single autonomy ladder ("the matrix shows possibility, not obligation"), and carries retrieval-quality and governance caveats per cell. It also cites Weng, the Gao survey, and Liu's taxonomy — the naming race in this space is now visibly underway.
+
+Still a step behind, in four places:
+
+1. **The substrate axis is read as a cost gradient, not an addressability asymmetry.** "Outward is cheap, instant, reversible; inward is expensive, slow, durable" — and the consolidation path (artifact → harness → weights) treats weights as the maturity destination without pricing what the final promotion forfeits: per-change auditability. That unpriced loss is now our sharpest differentiation.
+2. **No membership criterion.** Cells classify *where* an update lands, not *whether* it is improvement-directed; the ingest's limitations section makes the same point ("naming a system in a cell does not demonstrate...").
+3. **Evaluation and retention governance appear as per-cell caveats**, not as architectural components — our proposal-selection vocabulary makes reject-capable evaluation and operative retention load-bearing.
+4. **The file/harness boundary he calls "porous" is our codification axis.** Where the essay has a fuzzy boundary note, the KB has theory: the prose→symbolic crossing and the discovery/loading/routing conditions are exactly constraining and authority-path territory.
+
+**Action taken:** the draft article now engages the taxonomy directly — one paragraph in "Two architectures" placing the readable/opaque line against the finer substrate cut (a memory file and a harness script sit on the same side), and one sentence pricing the consolidation story in the addressability section.
+
 ## Open decisions for the operator
 
 1. **Confirm core A** (or redirect to B/D as the opener).
