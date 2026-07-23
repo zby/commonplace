@@ -69,6 +69,25 @@ What this drops from the current draft (and where it goes): the full membership 
 
 Credibility guardrail worth keeping from the KB's own restraint: do **not** claim reflective pathways improve faster or more safely — the KB records that as an open empirical question, and saying so out loud is itself differentiating in a hype-saturated feed.
 
+## Convergence check: the viv/LangChain posts (2026-07-23)
+
+Two same-day ingests from @Vtrivedy10 (LangChain) — [open continual learning](../../sources/open-continual-learning-2080310986850840656.ingest.md) and [Towards Automating Eval Engineering](../../sources/towards-automating-eval-engineering-2079976006644072796.ingest.md) — test the operator's read that mainstream is close but a step behind. The read holds, and it sharpens the article's timing case.
+
+**Where mainstream has converged on our territory:**
+
+- **Continual learning is now framed as artifact updates, not weight updates.** The loop is traces → evals → skills/prompts/harness changes. That *is* the reflective pathway — improvement routed through readable artifacts — being sold to a mass practitioner audience without a name for it.
+- **Reject-capable evaluation is entering the loop.** Harbor verifiers as fixed targets, and — genuinely sophisticated — inspecting the *verifier's* trajectory to catch reward hacking. That is our "evaluation becomes load-bearing" point, plus a first instinct toward turning the improvement machinery on itself.
+- **Human judgment placed explicitly in the loop.** "Interviewing the user beats one-shot generation" is [evaluation automation is phase-gated by comprehension](../../notes/evaluation-automation-is-phase-gated-by-comprehension.md) discovered independently.
+
+**Where we are still a step ahead:**
+
+1. **Retention is the missing third leg.** Both posts stop at "improve the agent." Neither says how an accepted change becomes durable, what artifact absorbs it, who consumes it through what channel with what force, or how it is rolled back — both ingests' limitations sections flag exactly this. Our proposal-selection vocabulary (search, reject-capable evaluation, **operative retention**) names what their loop is missing.
+2. **The two architectures are blurred.** "Evals are training data for agents ... through harness engineering or fine-tuning" treats prompt edits and weight updates as interchangeable against a fixed target. Our sharpest claim is precisely that these are different architectures with opposite failure profiles — addressable-but-best-effort vs. compounding-but-opaque.
+3. **No boundary or membership discipline.** "Fitting agents" with no declared boundary means their loop can't say *what* is improving. The membership test and pathway profile do that work.
+4. **Skills' authority path left open.** "Open skills start the flywheel," but nothing on routing, review policy, or retrieval — the retrieval-failure-is-reflection-failure tax is invisible to them so far.
+
+**Implication for the article:** timing is favorable and the flag-plant core (A) is confirmed. Mainstream now practices reflective self-improvement without the name and without the retention/governance half; the article can cite these posts as the concrete unnamed practice, and the evaluator/retention question (candidate B) is aimed at exactly the hole in their loop. The window to name the category is open and closing.
+
 ## Open decisions for the operator
 
 1. **Confirm core A** (or redirect to B/D as the opener).
