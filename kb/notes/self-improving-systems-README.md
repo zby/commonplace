@@ -40,6 +40,7 @@ Reflective structure crosses update architecture. A pathway is [**reflective**](
 
 - [Methodological and computational closure track different changes](./methodological-and-computational-closure-track-different-changes.md) — settled methodology can still be human-executed, while an unattended model can still improvise; executable, warranted criteria are what let both properties advance together.
 - [Increasing computational autonomy relocates human effort to the frontier instead of reducing it](./increasing-computational-autonomy-relocates-human-effort.md) — the human side: measure improvements per human judgment, not total hours.
+- [Only explicit retention is durable, writable, and addressable](./only-explicit-retention-is-durable-writable-and-addressable.md) — no tacit channel, human or parametric, can carry settled methodology.
 
 Completing particular reflective proposal-selection pathways while separately advancing both closure properties is an engineering direction, not the ontology.
 
