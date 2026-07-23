@@ -1,5 +1,5 @@
 ---
-description: "Conjecture, distinct from legibility: a faithful rationale retained with a change can cut the behavioral probing an overseer needs to judge it; a fluent but unfaithful one invites confident error"
+description: "Conjecture: a retained rationale can lower oversight probing when sufficiently faithful to the decision; an accepted, decision-relevant mismatch can instead invite confident error"
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [foundations, self-improving-systems, evaluation]
@@ -13,7 +13,7 @@ The conjecture, narrowed to what could be measured and could be wrong: **a retai
 
 ## The condition is faithfulness, not legibility
 
-Legibility — the rationale can be read — is what addressability guarantees. **Faithfulness** — the rationale is true of the change — is what the saving needs, and the two come apart exactly where oversight matters most. A rationale that reads cleanly but does not correspond to why the change was made, or to what it relies on, is worse than none: it invites the overseer to close the decision by reading, and to close it *confidently wrong*. A self-reported rationale is a claim about the change, not a transcript of it. The neighboring gap has already been observed in this KB's captured evidence: [self-evolving agents' behavior is often not causally grounded in the retained artifacts they purport to use](../sources/llm-agents-are-not-always-faithful-self-evolvers.md) — purported and operative roles of an artifact can diverge, and a rationale is exactly such an artifact.
+Legibility — the rationale can be read — is what addressability guarantees. **Faithfulness** — how accurately the rationale tracks the change's actual basis and decision-relevant dependencies — is what the saving needs, and the two come apart exactly where oversight matters most. The required degree is relative to the decision; this claim does not require a globally exact transcript. [Jacovi and Goldberg distinguish faithfulness from plausibility](../sources/towards-faithfully-interpretable-nlp-systems.ingest.md): an explanation may convince a reader without accurately representing the process behind a decision. A rationale that reads cleanly but misstates something material to the decision can be worse than none when the overseer accepts it: it invites the overseer to close the decision by reading, and to close it *confidently wrong*. A self-reported rationale is a claim about the change, not a transcript of it. [Turpin et al. show the behavioral failure](../sources/language-models-dont-always-say-what-they-think.ingest.md): controlled input features can systematically shift an answer while the model's fluent chain-of-thought omits the intervened feature. The neighboring gap has already been observed in this KB's captured evidence: [self-evolving agents' behavior is often not causally grounded in the retained artifacts they purport to use](../sources/llm-agents-are-not-always-faithful-self-evolvers.md) — purported and operative roles of an artifact can diverge, and a rationale is exactly such an artifact.
 
 ## What is distinct is a native rationale, not having one at all
 
@@ -25,12 +25,13 @@ The claim is a probe-count claim; producing the rationale, keeping it faithful a
 
 ## What would test it
 
-Take retained changes whose ground-truth quality is known, some subtly bad in ways behavior does not advertise, and compare an overseer's probe count and decision accuracy with a faithful rationale, with a fluent but unfaithful one, and with probing alone. The directional prediction: **a faithful rationale reaches correct decisions with fewer probes; an unfaithful one also cuts probes — while degrading accuracy and inflating confident errors, doing worse than no rationale at all.**
+Take retained changes whose ground-truth quality is known, some subtly bad in ways behavior does not advertise, and compare an overseer's probe count and decision accuracy with a sufficiently faithful rationale, with a fluent rationale containing a decision-relevant mismatch, and with probing alone. Record whether the overseer accepts, detects, or disregards each rationale. The directional prediction: **a sufficiently faithful rationale reaches correct decisions with fewer probes; an accepted rationale that is unfaithful in a decision-relevant way may also cut probes, but by degrading accuracy and inflating confident errors relative to no rationale.**
 
 ## Scope
 
 - This is the oversight sibling of the [target-data payoff](./reflection-may-improve-sample-efficiency-under-structured-shifts.md): both narrow one bullet of the addressability affordance to a measurable claim, and both turn on a condition addressability does not itself supply — there, a structured shift the commitment's reach covers; here, a faithful rationale the overseer can assess.
 - The claim is about oversight cost, not about whether the change is good. A faithful rationale for a bad change lets the overseer *reject* it cheaply; faithfulness makes the decision reliable, not favorable.
+- The cited studies establish the faithfulness–plausibility distinction and an intervention-based failure mode for model explanations and chain-of-thought. They do not directly test native rationales retained with changes, human probe counts, or oversight accuracy; applying their result here is a hypothesis this note's proposed experiment must test.
 
 ## Open Questions
 
@@ -49,4 +50,6 @@ Relevant Notes:
 - [Warranted autonomy is bounded by oracle domain](./warranted-autonomy-is-bounded-by-oracle-domain.md) — grounds: the domain over which an overseer can warrant a decision from a rationale bounds where the saving is real
 - [False-positive generation is filtered; false-positive acceptance becomes operative](./false-positive-generation-is-filtered-before-retention.md) — mechanism: accepting a change on an unassessed rationale is the false-positive acceptance this payoff must avoid
 - [Reflective system](./definitions/reflective-system.md) — defined-in: the causally connected self-representation the retained rationale must be part of for the payoff to bear on reflection
+- [Towards Faithfully Interpretable NLP Systems](../sources/towards-faithfully-interpretable-nlp-systems.ingest.md) — abstracted-from: generalizes the faithfulness/plausibility distinction and the warning that utility or readability does not establish faithfulness to retained-change oversight
+- [Language Models Don't Always Say What They Think](../sources/language-models-dont-always-say-what-they-think.ingest.md) — evidence: controlled biasing interventions show fluent chain-of-thought can omit an intervened feature whose presence shifted an answer
 - [LLM agents are not always faithful self-evolvers](../sources/llm-agents-are-not-always-faithful-self-evolvers.md) — evidence: observed divergence between the artifacts a self-evolving agent purports to use and what causally grounds its behavior

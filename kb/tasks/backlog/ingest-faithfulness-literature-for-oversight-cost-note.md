@@ -1,7 +1,7 @@
 # Ingest faithfulness literature and restore citations in the oversight-cost note
 
 ## Status
-ready for implementation
+complete
 
 ## Prerequisites
 - [ ] none
@@ -25,13 +25,13 @@ The two external papers that anchor the faithful-vs-plausible distinction are ca
 - Follow-ups: consider whether the Jacovi-Goldberg graded-faithfulness point (they argue against a binary notion) should soften the note's binary faithful/unfaithful phrasing.
 
 ## Tasks
-- [ ] Ingest Jacovi and Goldberg (2020) via `cp-skill-ingest`
-- [ ] Ingest Turpin et al. (2023) via `cp-skill-ingest`
-- [ ] Restore the two citations in the oversight-cost note's faithfulness section, linking the ingests
-- [ ] Run `cp-skill-connect` on the note afterward
+- [x] Ingest Jacovi and Goldberg (2020) via `cp-skill-ingest`
+- [x] Ingest Turpin et al. (2023) via `cp-skill-ingest`
+- [x] Restore the two citations in the oversight-cost note's faithfulness section, linking the ingests
+- [x] Run `cp-skill-connect` on the note afterward
 
 ## Current State
-Not started. Links found and verified; no snapshots captured yet.
+Complete. Both papers are captured as cleaned, metadata-stamped snapshots and validated ingest reports. The oversight-cost note cites the Jacovi-Goldberg ingest for the faithful/plausible distinction and the Turpin et al. ingest for controlled behavioral evidence. A post-connect report for the note records the source edges, reverse-edge candidates, and the graded-faithfulness caveat.
 
 ## Notes
 - arXiv was unreachable from the remote session that created this task (proxy 403 on arxiv.org and export.arxiv.org); if that recurs, use the ACL Anthology page for Jacovi-Goldberg or run the ingest from an environment with arXiv access.
