@@ -1,7 +1,0 @@
-# The core tension to design around
-
-The competition wants AI workflows that produce **trustworthy knowledge bases grounded in real cases** — making the *provenance, structure, and assessment* of knowledge transparent and traversable, across the LHC/black-hole safety and egg/cholesterol nutrition cases. The sibling repo's own goal statement: expose "what is known, what is contested, what depends on what, and where the gaps are — *without adjudicating truth*."
-
-That last clause points opposite to Commonplace-as-built. Commonplace is optimized to distill **transferable, committed methodology** for agents: `title-as-claim`, "do I still believe this?", the whole Popperian maintenance loop assumes the KB *takes positions and defends them*. Casework instead needs a mode that **represents contestation faithfully and refuses to average it away**. [Mechanistic constraints make Popperian KB recommendations actionable](../../notes/mechanistic-constraints-make-popperian-kb-recommendations-actionable.md) warns why this matters: contradictions loaded into one context "aren't flagged; they're silently averaged." A casebook's value is keeping the disagreement structurally distinct instead of letting the model launder it into one confident answer.
-
-So the highest-leverage additions are not gadgets but a **register and a type surface for stance-neutral evidence maps**, plus provenance strong enough to survive review. The idea documents linked from the workshop README are organized by the competition's three layers.
