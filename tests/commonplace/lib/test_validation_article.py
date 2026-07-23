@@ -45,25 +45,17 @@ type: kb/types/note.md
     return tmp_path / "kb" / "articles"
 
 
-def article(
-    path: Path,
-    *,
-    status: str = "draft",
-    source_notes: list[str] | None = None,
-    extra: str = "",
-) -> Path:
-    notes = source_notes if source_notes is not None else ["kb/notes/existing-note.md"]
-    rendered_notes = "\n".join(f"  - {note}" for note in notes)
+def article(path: Path, *, source_notes: list[str] | None = None) -> Path:
+    lineage = ""
+    if source_notes is not None:
+        rendered = "\n".join(f"  - {note}" for note in source_notes)
+        lineage = f"source_notes:\n{rendered}\n"
     return write(
         path,
         f"""---
 description: "an outward-facing article used by the validation tests of the article type"
 type: kb/articles/types/article.md
-status: {status}
-byline: Test Author
-source_notes:
-{rendered_notes}
-{extra}---
+{lineage}---
 
 # A test article
 
@@ -72,9 +64,22 @@ Reader-facing prose.
     )
 
 
-def test_draft_with_resolving_source_notes_passes(tmp_path: Path) -> None:
+def test_minimal_article_passes(tmp_path: Path) -> None:
+    # The article type is deliberately nearly empty: description and type
+    # alone make a valid article; constraints accrue with collected failure
+    # modes.
     articles = setup_repo(tmp_path)
     path = article(articles / "test-article.md")
+    results = validate_note(path, repo_root=tmp_path)
+    assert not results.fails
+
+
+def test_resolving_source_notes_pass(tmp_path: Path) -> None:
+    articles = setup_repo(tmp_path)
+    path = article(
+        articles / "test-article.md",
+        source_notes=["kb/notes/existing-note.md"],
+    )
     results = validate_note(path, repo_root=tmp_path)
     assert not results.fails
     assert any("source_notes: all 1 paths resolve" in p for p in results.passes)
@@ -90,53 +95,3 @@ def test_unresolved_source_note_fails(tmp_path: Path) -> None:
     assert any(
         "source_notes" in f and "kb/notes/missing-note.md" in f for f in results.fails
     )
-
-
-def test_published_without_date_fails_schema(tmp_path: Path) -> None:
-    articles = setup_repo(tmp_path)
-    path = article(articles / "test-article.md", status="published")
-    results = validate_note(path, repo_root=tmp_path)
-    assert any("publication date" in f for f in results.fails)
-
-
-def test_published_with_date_passes(tmp_path: Path) -> None:
-    articles = setup_repo(tmp_path)
-    path = article(
-        articles / "test-article.md",
-        status="published",
-        extra='published: "2026-07-23"\n',
-    )
-    results = validate_note(path, repo_root=tmp_path)
-    assert not results.fails
-
-
-def test_superseded_requires_successor(tmp_path: Path) -> None:
-    articles = setup_repo(tmp_path)
-    path = article(
-        articles / "test-article.md",
-        status="superseded",
-        extra='published: "2026-07-23"\n',
-    )
-    results = validate_note(path, repo_root=tmp_path)
-    assert any("must name its successor" in f for f in results.fails)
-
-
-def test_missing_byline_fails_schema(tmp_path: Path) -> None:
-    articles = setup_repo(tmp_path)
-    path = write(
-        articles / "test-article.md",
-        """---
-description: "an outward-facing article used by the validation tests of the article type"
-type: kb/articles/types/article.md
-status: draft
-source_notes:
-  - kb/notes/existing-note.md
----
-
-# A test article
-
-Reader-facing prose.
-""",
-    )
-    results = validate_note(path, repo_root=tmp_path)
-    assert any("byline" in f for f in results.fails)
