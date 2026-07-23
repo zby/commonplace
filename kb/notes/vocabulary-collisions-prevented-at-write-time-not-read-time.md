@@ -1,7 +1,7 @@
 ---
-description: "Unqualified technical senses have no reliable, enforceable namespace in prose; schema positions, rare compounds, and linked clause frames make each technical use checkable at write time"
+description: "Unqualified technical senses have no reliable namespace in prose; schema slots, rare compounds, and linked clause frames scope them at write time; audits and remediation recover when prevention fails"
 type: kb/types/note.md
-traits: [title-as-claim]
+traits: [title-as-claim, has-external-sources]
 tags: [computational-model]
 ---
 
@@ -28,7 +28,7 @@ Three candidate remedies offer different levels of assurance. Reader vigilance �
 
 Retrieval-time disambiguation looks like a fourth remedy: treat the collision as word-sense disambiguation and let the composer assemble context in which each occurrence resolves correctly. But it decomposes into the first two. Where the retriever resolves senses from declared markers, it is symbolic disambiguation executed mechanically — stronger than leaving declarations to readers, but the declarations must still exist and travel with every excerpt, so writing them is write-time scoping by another name. Where it resolves senses semantically, it is reader vigilance moved into the pipeline: the same silent inference, weakest exactly here. Classic word-sense disambiguation leans on sense inventories a model's priors already know, but a KB's load-bearing senses are local coinages defined in single notes — an excerpt that drops the qualifier leaves only the bare word, and the prior pulls toward the common reading. The assurance a retrieval solution adds is precisely its symbolic, write-time ingredient; the semantic remainder inherits the failure profile of the reader it replaced.
 
-Session-level isolation does not substitute for this, and neither does a retriever that simply keeps colliding notes apart — that only relocates the same move earlier in the pipeline: if a task needs both artifacts, separating them defeats the composition the task requires. Body-composability needs either a collision-free vocabulary or visible, checkable scope for the technical use, and collection-local vocabulary is reliably safe only when a colliding sense cannot co-load — which a cross-linked KB makes hard to guarantee.
+Session-level isolation does not substitute for this, and neither does a retriever that simply keeps colliding notes apart — that only relocates the same move earlier in the pipeline: if a task needs both artifacts, separating them defeats the composition the task requires. The both-notes-needed case rules out *separation*, not co-loading: annotating both notes with sense-distinguishing markers — provenance metadata, sense qualifiers — does make the co-load safe. But that is not a rival remedy; it is visible scope executed as metadata. The markers must be authored before any task needs them and must travel with every excerpt, so the strategy lands exactly where this note already places the burden: at write time. Body-composability needs either a collision-free vocabulary or visible, checkable scope for the technical use, and collection-local vocabulary is reliably safe only when a colliding sense cannot co-load — which a cross-linked KB makes hard to guarantee.
 
 ## Devices rank by binding strength
 
@@ -46,7 +46,7 @@ The two strongest rows compose. A rare hyphenated compound occupying a validator
 
 ### Rare compounds make the collision check lexical
 
-The practical default for new internal technical terms is a compound of two or more words. A coinage creates no formal scope; its value is that it changes the *kind* of check collision control requires. Auditing whether a common word already carries a technical sense demands semantic classification of many occurrences; for a rare exact string, `rg` lists the few uses directly, turning most of the audit into a cheap lexical screen with semantic reading reserved for the residue. The component words also constrain each other's reading, offering a partial gloss before the definition loads, and an unfamiliar compound imports fewer established associations than a redefined common word. `Trace-learning` and **discovery lifecycle** carry their technical senses on the searchable compound rather than the common bare words `learning` and `discovery`.
+The practical default for new internal technical terms is a compound of two or more words. A coinage creates no formal scope; its value is that it changes the *kind* of check collision control requires. Auditing whether a common word already carries a technical sense demands semantic classification of many occurrences; for a rare exact string, `rg` lists the few uses directly, turning most of the audit into a cheap lexical screen with semantic reading reserved for the residue. The component words also constrain each other's reading, offering a partial gloss before the definition loads, and an unfamiliar compound imports fewer established associations than a redefined common word. Fewer is not none: no string is semantically neutral ground — even pseudowords, orthographically legal non-words, elicit form-based meanings that humans and language models converge on ([de Varda et al., 2024](https://aclanthology.org/2024.cl-4.4/)). A coinage does not open a blank namespace entry to be trivially overwritten; it trades a strong established prior for a weak form-driven one. The pre-definition gloss is therefore unavoidable, which is why the component words must be chosen to point it toward the technical sense — they will point somewhere regardless. `Trace-learning` and **discovery lifecycle** carry their technical senses on the searchable compound rather than the common bare words `learning` and `discovery`.
 
 Borrowed terms follow the same risk logic: [context engineering](./definitions/context-engineering.md) is a low-risk borrowing because the local sense aligns with established use, while `distillation` was high-risk because its machine-learning association fails to mark the boundary the KB needed. The cost of coinage is opacity to outsiders — coined terms are banned from outward-facing copy — and each coinage is still a global name every reader carries: the cost side of [the minimum viable vocabulary is the naming set that most reduces](./minimum-viable-vocabulary-is-the-naming-set-that-most-reduces.md).
 
@@ -62,13 +62,25 @@ The rule is not "eliminate polysemy" — polysemy is normal in natural language,
 
 Today the invariant is held by writer discipline and manual audits. The candidate mechanical controls — a reserved-term registry, a coinage collision screen in the write path, a naming-review gate, slot-escape linting, and a clausal-binding link check — are collected as a design object in [write-time vocabulary collision controls](../reference/proposals/write-time-vocabulary-collision-controls.md).
 
+## Prevention fails sometimes, so the invariant owes a recovery path
+
+Write-time prevention is a control, not a guarantee. Writers scope terms under incomplete information: the colliding sense may not exist yet when a term is chosen, or the fact that would disambiguate may be missing at authoring time. Some misresolutions will therefore ship despite the invariant, and since [enforcement without structured recovery is incomplete](./enforcement-without-structured-recovery-is-incomplete.md), the invariant owes two contingencies beyond prevention:
+
+- **Detection** — a way to attribute a downstream problem to sense misresolution. This is the hard half: by this note's own argument the failure is silent, so detection cannot wait for an error signal. The proven instrument is the corpus audit — sweep a suspect term's occurrences and classify each against its declared sense. A cheaper per-artifact probe — re-deriving a suspect conclusion with each technical term's intended sense spelled out, to see whether the derivation survives — is plausible but untested.
+- **Remediation** — once a misresolving term is identified, determine what disambiguating information is missing and put it in place: promote the sense to a stronger device in the ranking, split the senses across distinct terms, or retire the word entirely and rescope its former traffic.
+
+The `distillation` retirement ([ADR 053](../reference/adr/053-retire-distillation-without-a-successor-term.md)) is a worked instance of the full loop: a 464-occurrence audit detected two load-bearing senses with opposite maintenance regimes sharing one word, and remediation retired the term, moved the boundary into lineage link labels, and routed the ampliative traffic to a coined compound — while the definition note that was supposed to hold the binding had existed, impotently, throughout the drift.
+
 ## Open Questions
 
 - Do definition notes need a health warning as a type? They can bind *concepts to explanations* safely (what is a term?) but bind *words to senses* only weakly.
 - Which of the proposed enforcement mechanisms earns adoption first — and does the deterministic subset (registry uniqueness, slot-escape linting) deliver enough of the invariant to defer the semantic gates?
+- Detection of shipped misresolutions currently rides expensive corpus audits triggered by suspicion. Is there a cheaper standing signal — a review criterion, a co-load-time check — that flags sense misresolution before a full audit is warranted?
 
 ---
 
 Relevant Notes:
 
 - [Prose has no reliable dereference, so a declared fact must be reinforced where it applies](./prose-has-no-dereference-reinforce-facts-at-point-of-use.md) — contrasts: sibling "prose lacks a formal-language operation" claim (no resolution vs. no reliable namespace)
+- [Enforcement without structured recovery is incomplete](./enforcement-without-structured-recovery-is-incomplete.md) — grounds: the general claim behind the recovery section — detection and blocking without a structured post-failure path leave correction ad hoc
+- [Meaning Beyond Lexicality: Capturing Pseudoword Definitions with Language Models (de Varda et al., 2024)](https://aclanthology.org/2024.cl-4.4/) — evidence: even pseudowords elicit convergent form-based meanings from humans and language models, so no coinage lands on semantically neutral ground
