@@ -73,6 +73,30 @@ Use ordinary spaced phrases in prose (`adapted from`, `derived from`). Registere
 - **No backwards compatibility** — with no external consumers, always prioritize cleaner design over keeping old behavior alive. If backcompat code is ever needed, mark it with `# BACKCOMPAT: <reason> - remove after <condition>`.
 - **Tests**: `pytest` — all tests must pass.
 
+### Native Windows source checkout
+
+This repository is operated directly from its checkout; do not run `commonplace-init` here. Set up the editable package from the repository root in PowerShell:
+
+```powershell
+$env:UV_CACHE_DIR = Join-Path (Get-Location) ".uv-cache"
+uv venv
+uv pip install -e .
+```
+
+A human working in one persistent PowerShell session may activate the venv with `.\.venv\Scripts\Activate.ps1`. Activation changes only that process and its children; desktop agent runtimes and agent tool calls may start fresh shells that do not inherit it.
+
+In a fresh Windows shell, try a `commonplace-*` command by bare name once. If it is not found and the matching executable exists under `.venv\Scripts`, invoke the executable directly instead of repeatedly retrying activation or wrapping the command in `uv run`:
+
+```powershell
+& .\.venv\Scripts\commonplace-validate.exe kb\reference\commands.md
+```
+
+The same rule applies to every package entry point: `commonplace-foo` maps to `.venv\Scripts\commonplace-foo.exe`. Before reporting an installation failure, distinguish a missing executable from a missing `PATH` entry with `Test-Path .\.venv\Scripts\commonplace-foo.exe`.
+
+`pytest` is installed with Commonplace because deterministic verification is part of operating this reflective system. In a fresh agent shell, run it as `& .\.venv\Scripts\pytest.exe`; for example, `& .\.venv\Scripts\pytest.exe tests\commonplace\lib\test_frontmatter.py -q`. If a sandboxed Windows session cannot write `.pytest_cache`, add `-p no:cacheprovider`; do not treat that cache-only warning as a test failure.
+
+The source checkout's `.agents/skills/` and `.claude/skills/` projections are committed relative symlinks. A Windows checkout without symlink support may materialize them as plain files. If a `cp-skill-*` skill is not discoverable, read and follow its canonical `kb/instructions/<skill>/SKILL.md` directly; do not run `commonplace-init` to repair a source checkout.
+
 ## Git
 
 - **Never `git add -A`** — review `git status` and stage specific files.
@@ -132,7 +156,7 @@ The `cp-skill-*` family (`cp-skill-write`, `cp-skill-validate`, `cp-skill-connec
 
 ### Commands
 
-The `llm-commonplace` package provides `commonplace-*` CLI commands for validation, snapshots, note operations, and the review system — reference in [commands.md](./kb/reference/commands.md). Call them and `pytest` by bare name: direnv puts `.venv/bin` on `PATH`, so never prepend `.venv/bin/` or wrap in `direnv exec` or `uv run`. If a bare call genuinely fails, run `cp-skill-health-check`.
+The `llm-commonplace` package provides `commonplace-*` CLI commands for validation, snapshots, note operations, and the review system — reference in [commands.md](./kb/reference/commands.md). On Linux/macOS, call them and `pytest` by bare name: direnv puts `.venv/bin` on `PATH`, so never prepend `.venv/bin/` or wrap in `direnv exec` or `uv run`. On native Windows, follow the source-checkout fallback above: use the matching `.venv\Scripts\<command>.exe` when a bare command is unavailable, including `.venv\Scripts\pytest.exe` for tests. If neither the bare command nor the platform-specific venv executable exists or runs, use `cp-skill-health-check`.
 
 For review work (single-note review, triage, ack, or sweep), read `kb/reference/README-REVIEW-SYSTEM.md`.
 For fixing review warnings, read `kb/instructions/FIX-SYSTEM.md`.

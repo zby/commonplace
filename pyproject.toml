@@ -20,7 +20,7 @@ classifiers = [
     "Topic :: Software Development :: Documentation",
     "Topic :: Text Processing :: Markup :: Markdown",
 ]
-dependencies = ["jsonschema>=4.25.0", "PyYAML>=6.0.0", "referencing>=0.31.0"]
+dependencies = ["jsonschema>=4.25.0", "PyYAML>=6.0.0", "pytest", "referencing>=0.31.0"]
 
 [project.urls]
 Documentation = "https://zby.github.io/commonplace/"
@@ -52,7 +52,7 @@ commonplace-warn-selector = "commonplace.cli.review.warn_selector:main"
 commonplace-x-snapshot = "commonplace.cli.x_snapshot:main"
 
 [dependency-groups]
-dev = ["pytest", "ruff"]
+dev = ["ruff"]
 
 [tool.ruff]
 include = ["src/**/*.py", "tests/**/*.py"]

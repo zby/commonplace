@@ -2,10 +2,6 @@ version = 1
 revision = 3
 requires-python = ">=3.11"
 
-[options]
-exclude-newer = "0001-01-01T00:00:00Z" # This has no effect and is included for backwards compatibility when using relative exclude-newer values.
-exclude-newer-span = "P7D"
-
 [[package]]
 name = "annotated-types"
 version = "0.7.0"
@@ -223,10 +219,11 @@ wheels = [
 
 [[package]]
 name = "llm-commonplace"
-version = "0.1.2"
+version = "0.1.3"
 source = { editable = "." }
 dependencies = [
     { name = "jsonschema" },
+    { name = "pytest" },
     { name = "pyyaml" },
     { name = "referencing" },
 ]
@@ -252,7 +249,6 @@ snapshot = [
 
 [package.dev-dependencies]
 dev = [
-    { name = "pytest" },
     { name = "ruff" },
 ]
 
@@ -265,6 +261,7 @@ requires-dist = [
     { name = "properdocs", marker = "extra == 'docs'" },
     { name = "properdocs-theme-mkdocs", marker = "extra == 'all'" },
     { name = "properdocs-theme-mkdocs", marker = "extra == 'docs'" },
+    { name = "pytest" },
     { name = "python-dotenv", marker = "extra == 'all'" },
     { name = "python-dotenv", marker = "extra == 'snapshot'" },
     { name = "pyyaml", specifier = ">=6.0.0" },
@@ -276,10 +273,7 @@ requires-dist = [
 provides-extras = ["docs", "snapshot", "all"]
 
 [package.metadata.requires-dev]
-dev = [
-    { name = "pytest" },
-    { name = "ruff" },
-]
+dev = [{ name = "ruff" }]
 
 [[package]]
 name = "markdown"
