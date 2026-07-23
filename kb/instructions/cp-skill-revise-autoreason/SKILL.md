@@ -13,7 +13,7 @@ model: opus
 
 **Target: $ARGUMENTS** (exactly one note path or filename - if empty, ask which note)
 
-**Experimental.** This is the conservative note-revision adaptation of AutoReason, based on `related-systems/autoreason/`. Use it when you want to test the tournament workflow; prefer `cp-skill-revise-iterative` for the established revision path.
+**Experimental.** This is the conservative note-revision adaptation of AutoReason, based on `related-systems/autoreason/`. Use it when you want to test the tournament workflow. `cp-skill-revise-iterative` is demoted to an explicit-invocation instruction — invoke it directly (`kb/instructions/cp-skill-revise-iterative/`) when you want the established prose-revision path instead.
 
 This skill defaults to prose-preserving revision, but it may produce a separate substantive-revision sidecar when the revisions reveal that claim, evidence, source, or argument changes are actually needed. Keep that sidecar out of the B/AB blind tournament and never auto-apply it.
 
