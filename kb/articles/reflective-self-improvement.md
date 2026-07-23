@@ -14,7 +14,7 @@ source_notes:
 
 # Reflective self-improvement
 
-Your agent stack is taking notes on itself. A memory file gains a lesson after a failed run. An instruction file accumulates rules that every future session obeys. A team mines production traces into evals and turns recurring failures into skills. The practice goes by many names — memory, skills, continual learning, self-evolving agents — and it usually carries an implicit apology: this is what you do when you can't fine-tune.
+An agent should take notes on itself. A lesson in a memory file after a failed run. A rule in an instruction file that every future session obeys. Recurring failures distilled into evals, then into skills. Where teams already work this way it goes by many names — memory, skills, continual learning, self-evolving agents — and usually with an implicit apology: this is what you do when you can't fine-tune.
 
 The apology has it backwards. Improvement routed through artifacts the system can read is not a budget substitute for training. It is a different architecture of self-improvement, with a name older than the hype cycle — *reflection*, in the computational sense — and it deserves its full name: **reflective self-improvement**. The whole argument in one line: reflection buys addressability, and retrieval is the tax.
 
