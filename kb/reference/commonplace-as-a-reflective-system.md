@@ -23,7 +23,7 @@ The tag-readme trace is the cluster's canonical telling of the example. Causal c
 
 The revised representation then changed later behavior. The validator rejects artifacts it previously accepted; agents may skip a search when a validated completeness mark warrants doing so; and the symbolic check caught a member that the documented search recipe had missed, causing the prose recipe to be corrected. A change in operation revised the self-representation, and operations mediated through the revised representation changed subsequent behavior. The enforced `complete` and `covered_by` fields also strengthened the retrieval wire.
 
-Coverage remains uneven across representational forms, [as reflective coverage must be graded per form and operation depth](../notes/reflective-coverage-is-graded-across-representational-forms.md):
+Coverage remains uneven across representational forms, [as reflective coverage must be graded per form and operation profile](../notes/reflective-coverage-is-graded-across-representational-forms.md):
 
 - **Prose reasoning revising formal artifacts** — shown: ADR 026 became a schema and validator.
 - **Symbolic execution revising prose** — shown once when validation exposed the incomplete search recipe.

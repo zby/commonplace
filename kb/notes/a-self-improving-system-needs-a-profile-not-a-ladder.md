@@ -23,7 +23,7 @@ After membership and update architecture are stated, four further parts describe
 
 ### Reflective structure
 
-**What does the self-representation cover, and what can processes inside the declared frame do with each covered component?** [Reflective coverage has two dimensions](./reflective-coverage-is-graded-across-representational-forms.md): breadth across behavior-determining components and representational forms, and operation depth over each component.
+**What does the self-representation cover, and what can processes inside the declared frame do with each covered component?** [Reflective coverage has two dimensions](./reflective-coverage-is-graded-across-representational-forms.md): breadth across behavior-determining components and representational forms, and the operation profile over each component.
 
 Where improvement is model-mediated, reflection turns coverage into a self-modeling question, carried in the coverage note's open questions: which parts and relations must become machine-operable before the process can locate a failure or map a novel task onto its capabilities and limitations without human interpretation?
 

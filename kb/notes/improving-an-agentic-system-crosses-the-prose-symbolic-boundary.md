@@ -29,7 +29,7 @@ Changes confined to one form exist, and some of them matter: a code-only bug fix
 
 ## Consequence for reflective coverage
 
-[Since reflective coverage is graded across representational forms](./reflective-coverage-is-graded-across-representational-forms.md), the question is which grades suffice, and for agentic systems the answer follows from where the improving changes live. Prose-only coverage lets the system revise what it recommends but not what it enforces, so accepted recommendations accumulate as advice. Symbolic-only coverage lets it adjust what it enforces but not why, so enforcement loses its path back to intent. Either way the improving change lands outside the self-representation, so it reaches later behavior without passing through anything the system represents about itself — and nothing in the loop governs it. Governed self-extension in an agentic system therefore needs modification-depth coverage of both forms, and of the mappings between them.
+[Since reflective coverage is graded across representational forms](./reflective-coverage-is-graded-across-representational-forms.md), the question is which grades suffice, and for agentic systems the answer follows from where the improving changes live. Prose-only coverage lets the system revise what it recommends but not what it enforces, so accepted recommendations accumulate as advice. Symbolic-only coverage lets it adjust what it enforces but not why, so enforcement loses its path back to intent. Either way the improving change lands outside the self-representation, so it reaches later behavior without passing through anything the system represents about itself — and nothing in the loop governs it. Governed self-extension in an agentic system therefore needs modification-grade coverage of both forms, and of the mappings between them.
 
 ## Scope
 
@@ -41,7 +41,7 @@ Changes confined to one form exist, and some of them matter: a code-only bug fix
 
 Relevant Notes:
 
-- [Reflective coverage is graded across representational forms](./reflective-coverage-is-graded-across-representational-forms.md) — grounds: supplies the form and operation-depth vocabulary this claim selects sufficient grades from
+- [Reflective coverage is graded across representational forms](./reflective-coverage-is-graded-across-representational-forms.md) — grounds: supplies the form and operation-profile vocabulary this claim selects sufficient grades from
 - [Scheduler-LLM separation exploits an error-correction asymmetry](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — mechanism: the error profile that sorts bookkeeping into code and judgment into prose
 - [A methodology governs its own extension only as far as it settles the meta-decisions it raises](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md) — extends: the representational-form meta-decision a recommendation raises is, by this claim, the decision most improvements must settle
 - [Codification](./definitions/codification.md) — defined-in: the prose-to-symbolic crossing
