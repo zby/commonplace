@@ -8,6 +8,8 @@ Editorial (expository) [profile](../notes/definitions/text-contract.md): outward
 
 **Quality goal: clarity plus a clear onward path.** An article must stand on its own for a reader with no KB context, and leave that reader knowing where in the KB to go next. Self-containment is the floor, not the ceiling: an article that reads well but strands its reader has failed the contract. The onward path is an editorial obligation, not a claim about conversion or analytics.
 
+**Spreadability is an editorial obligation.** In the sense of Jenkins, Ford, and Green, give readers material worth carrying into their own communities and make its circulation easy. The editing agent chooses the techniques that fit the piece; the contract does not prescribe a checklist or promise that an article will spread.
+
 **Orientation: every article is an entry point into the KB.** Its job is to lead the reader in, not to replace what the KB establishes.
 
 ## Reader-only body
