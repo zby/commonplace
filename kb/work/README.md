@@ -6,6 +6,7 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
+- [first-article-brainstorm](./first-article-brainstorm/README.md) — deciding the first outward article's core spreadable content; diagnosis of the current vocabulary-tour draft, "reflective self-improvement" as anchor phrase, candidate cores and a recommended shape
 - [self-improvement-cluster-operationalization](./self-improvement-cluster-operationalization/README.md) — turning the self-improving-systems cluster into methodology that guides Commonplace's own changes: close the theory's ambiguities first, then audit existing instructions and behavioral-authority artifacts (code, type specs, validators, contracts) against it; also decides the authority-path mix (wired, user-invoked, link-mediated)
 - [connect-report-mining](./connect-report-mining/README.md) — mining the 45 connect reports from the last two weeks plus `kb/log.md` for recurring synthesis/gap patterns no single connect run surfaces
 - [chatbot-goal-state](./chatbot-goal-state/README.md) — whether the computational-model notes need a second shape besides the goal-fixed tool loop, for conversations where the human's later messages revise the goal itself rather than supplying tool output; benchmark-construction implications are a downstream thread
