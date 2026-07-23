@@ -602,6 +602,33 @@ def validate_tag_readme(
             )
 
 
+@type_rule("kb/articles/types/article.md")
+def validate_article(
+    results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
+) -> None:
+    """Enforce the article type's lineage contract: every source_notes path
+    resolves to a file under the repo root. Field shape is the schema's job."""
+    fm = parsed.document.frontmatter or {}
+    source_notes = fm.get("source_notes")
+    if not isinstance(source_notes, list) or not source_notes:
+        return
+
+    missing = [
+        entry
+        for entry in source_notes
+        if not isinstance(entry, str) or not (run.repo_root / entry).is_file()
+    ]
+    if missing:
+        results.fails.append(
+            f"source_notes: {len(missing)} of {len(source_notes)} paths do not "
+            f"resolve from the repo root: {', '.join(map(str, missing))}"
+        )
+    else:
+        results.passes.append(
+            f"source_notes: all {len(source_notes)} paths resolve"
+        )
+
+
 @type_rule(FULL_PASS_REPORT_TYPE)
 def validate_full_pass_report(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
