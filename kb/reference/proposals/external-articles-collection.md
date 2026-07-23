@@ -47,12 +47,12 @@ Today an author who needs to publish from the KB has two bad options. Misuse `kb
 
 Push equals live: the moment an article file lands on `main`, it renders at its URL. So the procedure that makes an article "published" is editorial, and the options — not mutually exclusive — are:
 
-1. **Directory as status.** Drafts live in a `kb/work/` workshop and move into `kb/articles/` only at publication. The collection contains only published (and later superseded/withdrawn) articles; presence in the directory *is* the status. Cheapest option; reuses the existing workshop convention for in-flight work; the article's advertised URL comes into existence at publication, which suits a dated post. Cost: no in-collection drafting, and the draft still renders at its workshop URL (framed as work-in-flight by its location).
-2. **Draft in place, excluded from the build.** Drafts sit in `kb/articles/` (validated by the article type from day one) under a path or pattern listed in `exclude_docs` — e.g. `articles/drafts/**`. The draft is visible in the repo but absent from the site and its search index until moved.
+1. **Directory as status.** Drafts live in a `kb/work/` workshop and move into `kb/articles/` only at publication. The collection contains only published (and later superseded/withdrawn) articles; presence in the directory *is* the status. Reuses the existing workshop convention for in-flight work, but has a structural flaw for this collection: `kb/work/` enforces no quality goals. A workshop draft is written outside the article type and the editorial contract, so everything the collection exists to enforce — schema, reader-only body, review — binds only retroactively, at promotion. The draft also still renders at its workshop URL.
+2. **Draft in place, excluded from the build.** Drafts sit inside the collection under a path listed in `exclude_docs` — e.g. `kb/articles/drafts/` with one `articles/drafts/**` glob. The collection contract, article type, and validation bind from the first commit, because a `drafts/` subdirectory is still inside the `COLLECTION.md` subtree; the draft is visible in the repo but absent from the site and its search index until moved to the collection root.
 3. **Draft in place, rendered but unlisted.** The collection README lists only `status: published` articles. Weakest as a lone mechanism: the search plugin indexes drafts, and nothing on the page itself marks them — it only works combined with option 4.
 4. **Status rendered on the page.** The metadata badge already renders `status` under the title; the remaining work is presentation — CSS in the site's existing `extra_css` to color-code it (e.g. draft amber, superseded/withdrawn flagged with a pointer to the successor), or a hook extension that promotes non-`published` states from a badge line to a banner. Some form of this is needed in *any* design, because a superseded or withdrawn dated page must say so on the page itself, not only in an index.
 
-The real choice is between 1 and 2 for draft handling (3 alone is leaky), with 4 required regardless. The worked case below picks 1 + 4.
+The real choice is between 1 and 2 for draft handling (3 alone is leaky), with 4 required regardless. Option 2 wins on the decisive criterion: drafting must happen where the quality goals are enforced, and only the collection enforces them — a draft that spends its life outside the contract meets the contract by accident. The worked case below picks 2 + 4.
 
 ## Forces
 
@@ -65,7 +65,7 @@ The real choice is between 1 and 2 for draft handling (3 alone is leaky), with 4
 
 ## Free choices
 
-- Draft handling: directory-as-status (option 1) versus build-exclusion (option 2), after the worked case tests option 1.
+- Draft-exclusion mechanism: a fixed `drafts/` path in `exclude_docs` versus a build hook that excludes any article with `status: draft`, after the worked case tests the path convention.
 - Status presentation: badge coloring versus banner promotion, the color semantics, and whether draft state ever renders at all.
 - Whether the collection README lists superseded and withdrawn articles or only published ones.
 - Whether living landing pages later join the collection under the same contract, and whether the site's existing landing pages adopt it.
@@ -85,13 +85,13 @@ The real choice is between 1 and 2 for draft handling (3 alone is leaky), with 4
 
 A test configuration, not a shipped-system decision:
 
-- **First post: reflective self-improving systems** — the KB's home territory. Distil what the [self-improving-systems cluster](../../notes/self-improving-systems-README.md) establishes into one dated post for researchers and builders: what it means for a system to operate on its own methodology, and what Commonplace's worked experience says about making that loop governable. Draft it in a `kb/work/` workshop.
-- Create `kb/articles/` with a `COLLECTION.md` (editorial profile draft) and a collection-local `article` type requiring `status`, byline, publish date, and `source_notes` with resolving paths.
-- Publish by moving the finished draft into `kb/articles/`, setting `status: published` and the date, and adding it to the collection README (which also puts `Articles` in the site nav). The post is live at its Pages URL when the push deploys.
+- Create `kb/articles/` first, with a `COLLECTION.md` (editorial profile draft), a collection-local `article` type requiring `status`, byline, publish date, and `source_notes` with resolving paths, and a `drafts/` subdirectory covered by one `exclude_docs` glob (`articles/drafts/**`).
+- **First post: reflective self-improving systems** — the KB's home territory. Distil what the [self-improving-systems cluster](../../notes/self-improving-systems-README.md) establishes into one dated post for researchers and builders: what it means for a system to operate on its own methodology, and what Commonplace's worked experience says about making that loop governable. Draft it in `kb/articles/drafts/` with `status: draft`, so the contract, type, and validation bind from the first commit while nothing renders.
+- Publish by moving the finished draft from `drafts/` to the collection root, setting `status: published` and the date, and adding it to the collection README (which also puts `Articles` in the site nav). The post is live at its Pages URL when the push deploys.
 - Render status visibly. The v1 floor is the existing metadata badge showing `status`; color-coding via `extra_css` is polish that can land with the same change or after.
 - Treat the published body as frozen: any correction in the exercise is made as a status annotation or a superseding note, to prove the mechanism.
 
-The case succeeds when the post is live at its URL with a reader-only body, a visible status, a working onward path into the KB, and validated `source_notes` — and when a deliberate edit to one source note is discoverable by search and triaged into "follow-up or leave" without anyone proposing to rewrite the dated body. Only after that should the design decide draft-in-place versus workshop drafting as the standing rule, whether landing pages join, and whether the profile merits promotion.
+The case succeeds when the post is live at its URL with a reader-only body, a visible status, a working onward path into the KB, and validated `source_notes` — and when a deliberate edit to one source note is discoverable by search and triaged into "follow-up or leave" without anyone proposing to rewrite the dated body. Only after that should the design decide whether the fixed `drafts/` path remains the standing rule or a status-driven exclusion hook replaces it, whether landing pages join, and whether the profile merits promotion.
 
 ## Rationale
 
