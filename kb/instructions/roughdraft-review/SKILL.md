@@ -1,6 +1,6 @@
 ---
 name: roughdraft-review
-description: Open a Markdown file in Roughdraft for the user to review, wait for Done Reviewing, then respond to the CriticMarkup feedback. Use when the user wants to review, comment on, or annotate a Markdown file (they may call the tool "rd"), and when presenting a plan — write the plan to disk and offer it for review this way.
+description: Open a Markdown file in Roughdraft, wait for the user's CriticMarkup review, then apply or respond to the feedback.
 type: kb/types/instruction.md
 user-invocable: true
 ---

@@ -1,7 +1,7 @@
 ---
 gate_id: sentence/concept-attribution
 name: Concept attribution
-description: 'The prose claims that a concept in this note IS a concept from a linked note, but the linked note defines or discusses that concept differently. The reader who follows the link will find a mismatch between what the prose promised and what the target says.'
+description: 'The prose identifies a concept with one from a linked note, but the target defines or uses that concept differently.'
 type: kb/types/review-gate.md
 lens: sentence
 watches: [body]

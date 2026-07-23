@@ -1,7 +1,7 @@
 ---
 gate_id: semantic/explication-quality
 name: Explication quality
-description: 'The note names a term but does not actually sharpen it. The instructions call for *explication* in Carnap''s sense — replacing a vague, overloaded, or borrowed term with a precise one that serves KB work — but a reader finishes the note with the same ambiguity they started with. Either the definition restates the ordinary meaning, the sharpening is invisible (no contrast with prior use, no boundary), or the note buries the operational meaning under philosophical survey.'
+description: 'A definition names a term without sharpening its ordinary meaning, boundary, contrasts, or operational use for the KB.'
 type: kb/types/review-gate.md
 lens: semantic
 watches: [body]

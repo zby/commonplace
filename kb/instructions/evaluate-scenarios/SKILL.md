@@ -1,6 +1,6 @@
 ---
 name: evaluate-scenarios
-description: Decompose each scenario into clean-context forks, measure framework-overhead bytes and hops per fork, and report a feasibility signal (heaviest fork's net load) and a cost signal (overhead summed across forks). Use to measure the operational overhead the framework imposes per agent.
+description: Measure framework overhead by decomposing scenarios into clean-context forks and reporting per-fork load plus aggregate cost.
 type: kb/types/instruction.md
 user-invocable: true
 allowed-tools: Read, Grep, Glob, Bash

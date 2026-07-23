@@ -35,6 +35,7 @@ Multiple sub-agents can run in parallel since each note's fixes are independent.
 
 After sub-agents complete, report:
 - **Fixed by strategy:** count of fixes per taxonomy strategy name
+- **Rejected:** findings judged spurious or inapplicable, with evidence
 - **Deferred:** items needing human review with reasons
 - **New patterns:** any `new-pattern` classifications
 
