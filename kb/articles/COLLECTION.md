@@ -2,7 +2,9 @@
 
 Editorial [profile](../notes/definitions/text-contract.md): outward-facing articles distilled from the KB, published on the [documentation site](../reference/documentation-site.md) for readers outside the project. Worked case of the [external articles collection proposal](../reference/proposals/external-articles-collection.md); not yet promoted to the shared [profile catalogue](../reference/text-contract-profiles.md).
 
-**Audience and quality goal.** Highly technical readers with no KB context. An article must stand on its own and leave the reader knowing where in the KB to go next — self-containment is the floor, the onward path is the obligation. Give readers material worth carrying into their own communities; which techniques serve that is the author's call.
+**Audience and quality goal.** Highly technical readers with no KB context. An article must stand on its own and leave the reader knowing where in the KB to go next — self-containment is the floor, the onward path is the obligation.
+
+**Spreadability is an editorial obligation.** In the sense of Jenkins, Ford, and Green, give readers material worth carrying into their own communities and make its circulation easy. Which techniques serve that is the author's call.
 
 **Reader-only body.** Agent-facing structure lives in frontmatter; the body is prose for the reader — no footer link tables, link labels, or graph-traversal glosses. In-prose relative links into `kb/` are deliberate invitations to go deeper, and a closing "where to go next" section is welcome.
 
