@@ -40,15 +40,7 @@ The trade is symmetrical. Weights compound automatically but opaquely: nothing c
 
 Commonplace — the knowledge base this article is published from — [retains its own methodology as readable artifacts and improves through them](../reference/commonplace-as-a-reflective-system.md). One traced episode: an index page outgrew what its completeness claim could support; the strain became a recorded decision; the decision became validator code; and the validator then rejected artifacts the old process had accepted — including a case the prose search recipe had missed, which corrected the prose. Operation revised the self-representation, and the revised representation changed operation. The trace is in the commit history, checkable against the definitions.
 
-## Two questions for your loop
-
-The name earns its keep by making two questions askable of any improvement loop shipping today.
-
-**Where can the loop say no?** Once improvement flows through candidate changes rather than being directly determined the way a gradient is, the pathway needs [search, evaluation with the power to reject, and retention](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — and evaluation is load-bearing, because a false positive that passes it becomes part of the system.
-
-**Which artifact absorbs the accepted change?** Until a loop can point at the artifact that retains the change and the process that reads it, its improvement claim cannot be audited — there is no *it* to point at.
-
-If your loop has answers, it is a reflective self-improving system, whatever it says on the tin. Now you have the name.
+If your agent stack keeps notes it also reads, you are already running one of these — whatever it says on the tin. Now you have the name, and the [two questions](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) it makes askable: where can your loop say no, and which artifact absorbs the accepted change?
 
 ## Where to go next
 
