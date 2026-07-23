@@ -1,5 +1,5 @@
 ---
-description: "First outward article: plants the flag on reflective self-improvement — short SUCCESs-shaped form; reflection buys addressability, retrieval is the tax, two questions for any improvement loop"
+description: "First outward article: reflective self-improvement as bootstrapping — agents analyze their own prompts and code, the loop closes through readable artifacts; Commonplace as the systematic framework"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
@@ -14,34 +14,20 @@ source_notes:
 
 # Reflective self-improvement
 
-Your agent stack is taking notes on itself. A memory file gains a lesson after a failed run. An instruction file accumulates rules that every future session obeys. A team mines production traces into evals and turns recurring failures into skills. The practice goes by many names — memory, skills, continual learning, self-evolving agents — and it usually carries an implicit apology: this is what you do when you can't fine-tune.
+Your agent can read its own source. Not metaphorically: the prompts that steer it, the instruction files it obeys, the skills it loads, the code of its validators — all plain text, sitting in a repository the agent itself can open, search, and criticize. That makes possible something software never had before: a system that improves itself by analyzing and rewriting its own definition. The name for this is **reflective self-improvement**, and Commonplace is a framework for doing it systematically.
 
-The apology has it backwards. Improvement routed through artifacts the system can read is not a budget substitute for training. It is a different architecture of self-improvement, with a name older than the hype cycle — *reflection*, in the computational sense — and it deserves its full name: **reflective self-improvement**. The whole argument in one line: reflection buys addressability, and retrieval is the tax.
+## The bootstrap
 
-## Where does the retained change live?
+Compilers crossed this threshold decades ago. Once a language can compile itself, every improvement to the compiler is written in the language it improves — the system pulls itself up through artifacts it both produces and consumes. Agents have just crossed the same line. An agent can analyze its own instructions and code well enough to find what is wrong with them and propose better ones, and the improved artifacts define the next run. The loop closes without touching a single weight.
 
-Call a system [self-improving](../notes/definitions/self-improving-system.md) when it makes operative changes to its own behavior-determining organization — parameters, prompts, memory, rules, tools — and those changes respond to evidence about how well it does. Grant that, and one fork matters more than any other: *where does the retained change live?*
+This is not "the model reflects on its mistakes" — transient self-critique inside one session. It is *reflection* in the older, computational sense: [a system containing a causally connected representation of itself](../notes/definitions/reflective-system.md). And routing improvement through readable artifacts buys what fine-tuning cannot: [addressability](../notes/reflection-buys-addressability.md). Nothing can read a weight update, check it against other commitments, or roll it back alone. A lesson retained as an artifact can be inspected, explained, revised, or deleted — one at a time. The tax is symmetrical: a retained lesson counts only if a later run finds it, so [retrieval failure is reflection failure](../notes/retrieval-failure-is-reflection-failure.md).
 
-Fine-tune on your agent's trajectories and the change lands in weights. Nothing represents the change; the weights simply *are* the system, altered. Let the change land in a memory file, a skill library, a knowledge base, and the improvement runs through a representation of the system that the system itself reads — which is the established definition of a [reflective system](../notes/definitions/reflective-system.md), from the literature on computational reflection.
+## What separates a bootstrap from a junk drawer
 
-One thing this is not: "the model reflects on its mistakes." Reflexion-style self-critique is transient reasoning inside a single episode. Reflection here is structural — the retained change passes through something the system can read, whether or not anything ever thinks about it.
+Most agent memory today is a text file that accretes. Rules pile up, contradict each other, and quietly stop surfacing. What makes the loop compound instead of rot is structure: contracts for what counts as a claim, validation that runs as code, review that can say no, navigation that makes retrieval reliable. Commonplace is that structure — a framework for agent-operated knowledge bases, with typed artifacts, validators, review gates, and curated indexes.
 
-## What you actually get
-
-The usual pitch for agent memory is compounding: lessons build on lessons. But compounding was never reflection's contribution. Parametric learning compounds by construction — today's weights are the base of tomorrow's update. Improvement building on improvement is the dominant paradigm of machine learning, and there is no self-representation anywhere in it.
-
-What weights cannot give you is a handle on the individual lesson. Nothing can read a weight update, state what it claims, check it against other commitments, or roll it back alone. Route retention through readable artifacts and every retained lesson becomes a commitment you can inspect, explain, audit, revise, or delete one at a time — [reflection buys addressability](../notes/reflection-buys-addressability.md). Whether addressable loops improve *faster* than parametric ones is an open empirical question; the asymmetry in what you can audit is not. If you need to govern what your system is becoming — and you do — addressability is the argument.
-
-## The tax
-
-The trade is symmetrical. Weights compound automatically but opaquely: nothing can fail to *find* the retained change, and nothing can audit it. Artifacts are auditable but best-effort: a lesson counts only if a later run actually finds and uses it. A retained lesson that never surfaces is not a weaker improvement — it is a dead one. [Retrieval failure is reflection failure](../notes/retrieval-failure-is-reflection-failure.md). Instrument how lessons get found with the same care you instrument how they get written.
-
-## We run one, in public
-
-Commonplace — the knowledge base this article is published from — [retains its own methodology as readable artifacts and improves through them](../reference/commonplace-as-a-reflective-system.md). One traced episode: an index page outgrew what its completeness claim could support; the strain became a recorded decision; the decision became validator code; and the validator then rejected artifacts the old process had accepted — including a case the prose search recipe had missed, which corrected the prose. Operation revised the self-representation, and the revised representation changed operation. The trace is in the commit history, checkable against the definitions.
-
-If your agent stack keeps notes it also reads, you are already running one of these — whatever it says on the tin. Now you have the name, and the [two questions](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) it makes askable: where can your loop say no, and which artifact absorbs the accepted change?
+And it practices what it sells: [Commonplace retains its own methodology as a Commonplace knowledge base and improves through it](../reference/commonplace-as-a-reflective-system.md). One traced episode: an index page outgrew its completeness claim; the strain became a recorded decision; the decision became validator code; and the validator then caught a case the prose search recipe had missed — which corrected the prose. Operation revised the system's definition, and the revised definition changed operation. The whole trail is in the commit history, checkable against the definitions.
 
 ## Where to go next
 
-The [self-improving-systems cluster](../notes/self-improving-systems-README.md) is the curated map; the [membership definition](../notes/definitions/self-improving-system.md) carries ten boundary cases; [reflection buys addressability](../notes/reflection-buys-addressability.md) develops the central claim with its open questions attached; and the [self-classification](../reference/commonplace-as-a-reflective-system.md) links the commit-level trace.
+If your agent stack keeps notes it also reads, you are already running one of these — loosely. [Two questions](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) measure how loosely: where can your loop say no, and which artifact absorbs the accepted change? The [self-improving-systems cluster](../notes/self-improving-systems-README.md) maps the theory, and [the repository](https://github.com/zby/commonplace) is the framework itself, bootstrapping in public.
