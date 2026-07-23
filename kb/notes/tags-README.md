@@ -13,14 +13,14 @@ For current-state documentation about the live Commonplace system rather than tr
 
 ## Tag Indexes
 
-- [Foundations](./foundations-README.md) — core theory: contextual competence, bounded context, reach, design methodology, composability
+- [Foundations](./foundations-README.md) — core theory: contextual competence, bounded context, explanatory-reach, design methodology, composability
 - [Self-improving systems](./self-improving-systems-README.md) — evidence-responsive operative change to a system's own organization; reflective versus non-reflective self-improvement is the central distinction, and the stake is a conjectured sample-efficiency payoff: reflection may cut target data under structured shifts
 - [Architecture](./architecture-README.md) — how Commonplace is structured and installed: repo layout, control-plane design, file-based storage
 - [Evaluation](./evaluation-README.md) — what works, what doesn't, what needs testing
 - [Learning theory](./learning-theory-README.md) — how systems learn, verify, and improve; covered by six child tags (enforced), so its README routes rather than enumerates:
   - [Deploy-time learning](./deploy-time-learning-README.md) — the framework: adaptation through durable inspectable artifacts
   - [Constraining](./constraining-README.md) — narrowing interpretation space, codification, relaxing
-  - [Discovery](./discovery-README.md) — positing generals, recognizing instances; reach
+  - [Discovery](./discovery-README.md) — positing generals, recognizing instances; explanatory-reach
   - [Artifact analysis](./artifact-analysis-README.md) — the four-field vocabulary for retained artifacts
   - [Agent memory](./agent-memory-README.md) — memory architecture and policy (also a top-level area)
 - [Document system](./document-system-README.md) — document types, writing conventions, and validation rules for structured notes

@@ -19,7 +19,7 @@ Retrieval cannot fully repair failed ingress. A good search layer can surface a 
 
 The learning operations around a KB are therefore memory-creation operations, not only maintenance. **Constraining** narrows interpretation space by moving material into types, schemas, validators, or executable checks. **Adaptation** reshapes diffuse material into focused artifacts that can be loaded and reused. **Discovery** names a general pattern that lets existing particulars compose. **Pruning** removes material whose continued presence reduces trust or discoverability. Accumulation supplies the raw material; these operations decide whether it becomes usable memory.
 
-Reach affects the value of what enters, but it does not remove the ingress requirement. A low-reach fact can be useful when it has a clear scope and retrieval path. A high-reach theory can become harmful if its boundary, provenance, or downstream implications are unclear. The point is not that every memory must be general. The point is that whatever is accumulated must cross an ingress boundary that preserves how future agents should find it, combine it, and rely on it.
+Explanatory-reach affects the value of what enters, but it does not remove the ingress requirement. A fact with low explanatory-reach can be useful when it has a clear scope and retrieval path. A theory with high explanatory-reach can become harmful if its boundary, provenance, or downstream implications are unclear. The point is not that every memory must be general. The point is that whatever is accumulated must cross an ingress boundary that preserves how future agents should find it, combine it, and rely on it.
 
 ---
 
@@ -30,5 +30,5 @@ Relevant Notes:
 - [Knowledge storage does not imply contextual activation](./knowledge-storage-does-not-imply-contextual-activation.md) — grounds: stored material has not helped unless it reaches context with enough framing to affect behavior
 - [Constraining and extraction both trade generality for reliability, speed, and cost](./constraining-and-extraction-both-trade-generality-for-reliability.md) — mechanism: explains two ingress operations that turn raw material into more reliable or cheaper memory artifacts
 - [Conjecture is seeing the particular as an instance of the general](./conjecture-is-seeing-the-particular-as-an-instance-of-the-general.md) — mechanism: explains how naming a pattern lets accumulated particulars compose
-- [First-principles reasoning selects for explanatory reach over adaptive fit](./first-principles-reasoning-selects-for-explanatory-reach-over.md) — qualifies: reach changes the value of accumulated knowledge without replacing the need for ingress structure
+- [First-principles reasoning selects for explanatory-reach over adaptive fit](./first-principles-reasoning-selects-for-explanatory-reach-over.md) — qualifies: explanatory-reach changes the value of accumulated knowledge without replacing the need for ingress structure
 - [Title as claim enables traversal as reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — exemplifies: claim titles are ingress handles that make memory both discoverable and composable

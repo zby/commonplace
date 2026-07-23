@@ -31,7 +31,7 @@ Universality cannot discriminate, since both moves raise it. Content can:
 
 Naming can always answer. Defensive abstraction never can, because not ruling things out was the point of the move. The failure has a positive signature too: pressed for what the new wording forbids, the agent volunteers what it now *covers*. Coverage is not content.
 
-This is the [boundary test](./abstract-an-experience-only-when-you-can-state-the-boundary.md) applied to a claim's vocabulary rather than to an episode — there, whether an abstraction can say where it stops; here, whether it can say what it excludes. An abstraction that can say neither has [adaptive fit rather than reach](./first-principles-reasoning-selects-for-explanatory-reach-over.md).
+This is the [boundary test](./abstract-an-experience-only-when-you-can-state-the-boundary.md) applied to a claim's vocabulary rather than to an episode — there, whether an abstraction can say where it stops; here, whether it can say what it excludes. An abstraction that can say neither has [adaptive fit rather than explanatory-reach](./first-principles-reasoning-selects-for-explanatory-reach-over.md).
 
 ## Unreadability is a symptom, not a price
 
@@ -47,14 +47,14 @@ The failure compounds because it is diffuse: generality smeared across every nou
 
 ## Scope
 
-The claim is about abstraction adopted *defensively*, against a counterexample the author does not want to concede. Generality reached by argument is untouched: a claim that covers three substrates because its mechanism does not depend on the substrate has earned its vocabulary, and the forbids-test will confirm it. Nor is concreteness a default virtue — a note that stays concrete when its argument supports more fails the reach standard from the other side. The trade is symmetric; only the defensive motive marks the bad direction.
+The claim is about abstraction adopted *defensively*, against a counterexample the author does not want to concede. Generality reached by argument is untouched: a claim that covers three substrates because its mechanism does not depend on the substrate has earned its vocabulary, and the forbids-test will confirm it. Nor is concreteness a default virtue — a note that stays concrete when its argument supports more fails the explanatory-reach standard from the other side. The trade is symmetric; only the defensive motive marks the bad direction.
 
 ---
 
 Relevant Notes:
 
 - [abstract an experience only when you can state the boundary](./abstract-an-experience-only-when-you-can-state-the-boundary.md) — extends: the boundary test applied to claim vocabulary rather than to episode compression
-- [first-principles reasoning selects for explanatory reach over adaptive fit](./first-principles-reasoning-selects-for-explanatory-reach-over.md) — grounds: an abstraction that cannot say what it excludes has fit, not reach
+- [first-principles reasoning selects for explanatory-reach over adaptive fit](./first-principles-reasoning-selects-for-explanatory-reach-over.md) — grounds: an abstraction that cannot say what it excludes has fit, not explanatory-reach
 - [conjecture is seeing the particular as an instance of the general](./conjecture-is-seeing-the-particular-as-an-instance-of-the-general.md) — contrasts: the productive direction, where universality and precision rise together
 - [llm generation confidence tracks typicality not soundness](./llm-generation-confidence-tracks-typicality-not-soundness.md) — mechanism: why hedged abstract prose feels rigorous to the generator exactly when it is empty
 - [reverse compression is when LLM output expands without adding information](./reverse-compression-is-when-llm-output-expands-without-adding.md) — contrasts: measures prose volume against what a bounded reader can extract; this note measures claim vocabulary against what the claim forbids, so a short, link-dense note can still be hollow

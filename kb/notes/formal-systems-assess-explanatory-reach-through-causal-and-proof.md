@@ -5,7 +5,7 @@ traits: [title-as-claim, has-comparison, has-external-sources]
 tags: [foundations, computational-model, self-improving-systems]
 ---
 
-# Formal symbolic systems assess reach only through causal and proof obligations
+# Formal symbolic systems assess explanatory-reach only through causal and proof obligations
 
 [Reach-assessment](./definitions/reach-assessment.md) is not intrinsically an LLM-only or prose-only capability. A formal symbolic system can contribute to reach-assessment only when the candidate commitment's claimed generality has been translated into an obligation the system can check. That obligation might be a causal mechanism that should survive interventions or environment shifts, an identifiable causal effect under stated assumptions, or a theorem over a formally specified domain.
 
