@@ -1,12 +1,13 @@
 ---
-description: "Curated head for the self-improving-systems tag — membership, update architecture, and the four-part pathway profile"
+description: "Curated head for the self-improving-systems tag — membership, update architecture, and the four-part pathway profile; selective picks"
 type: kb/types/tag-readme.md
 index_source: tag
 index_key: self-improving-systems
-complete: true
 ---
 
 # Self-improving systems
+
+Selective head: the membership definition, the update architectures, and the four-part pathway profile, with the load-bearing note per claim. Full tag membership comes from the by-tag sweep (`kb/reference/navigation.md`).
 
 ## Membership
 
@@ -53,16 +54,11 @@ Completing particular reflective proposal-selection pathways while separately ad
 
 Read every claim at its stated strength: definitions are stipulated and revisable; payoff claims are open hypotheses.
 
-## Further notes under the tag
+## Base vocabulary and boundary cases
 
-- [Measuring autonomy well enough to see it improve is an open problem](./measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md) — a per-function profile locates a system but cannot yet show it becoming more autonomous.
-- [Where change candidates come from in Commonplace](../reference/where-change-candidates-come-from-in-commonplace.md) — the observed search surface and its allocation across maintainers, agents, commands, and reports.
 - [Behavior-determining organization](./definitions/behavior-determining-organization.md), [operative change](./definitions/operative-change.md), [evidence bearing on an improvement objective](./definitions/evidence-bearing-on-an-improvement-objective.md) — the definition's three base terms. All three rest on [behavioral authority](./definitions/behavioral-authority.md): consumer, channel, force.
 - [The definition classifies its boundary cases without ad hoc exceptions](./the-self-improving-system-definition-classifies-its-boundary-cases.md) — ten cases, from gradient learning to accidental self-modification.
-- [Improving an agentic system crosses the prose-symbolic boundary](./improving-an-agentic-system-crosses-the-prose-symbolic-boundary.md) — reliability gains move behavior between prose and code; the [agent-memory-system reviews](../agent-memory-systems/types/agent-memory-system-review.md) and [comparison matrix](../agent-memory-systems/systems-table.md) run on this vocabulary.
-- [Reach-assessment](./definitions/reach-assessment.md) — the semantic judgment reflectivity's structural requirements do not supply; second-order rescoping depends on it.
-- [Formal symbolic systems assess reach only through causal and proof obligations](./formal-systems-can-assess-reach-through-causal-and-proof-obligations.md) — reach-assessment isn't LLM-exclusive: proof and causal inference give symbolic systems a route.
-- [World models assess reach through action-conditioned prediction](./world-models-assess-reach-through-action-conditioned-prediction.md) — the distributed-parametric reach-assessment route.
+- [Measuring autonomy well enough to see it improve is an open problem](./measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md) — a per-function profile locates a system but cannot yet show it becoming more autonomous.
 
 ## Related Tags
 
