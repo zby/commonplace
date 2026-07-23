@@ -14,6 +14,8 @@ For each surface, the audit asked:
 
 The detailed coverage record is in [artifact-inventory](./artifact-inventory.md). The three analytic reports are [authority-and-authoring](./authority-and-authoring.md), [review-and-fix-loop](./review-and-fix-loop.md), and [validation-freshness-and-code](./validation-freshness-and-code.md).
 
+A second, independently executed per-artifact pass (seven group files in this directory) ran concurrently on a separate checkout with the same theory tests; [parallel-audit-reconciliation](./parallel-audit-reconciliation.md) reconciles the two — corroborations of F1/F2/F10, dispositioned deltas this report did not cover, one tension with F9, and the axis-factoring resolution.
+
 ## Outcome
 
 The operational layer is structurally stronger than the workshop's trigger finding suggested, but the trigger finding stands: the self-improvement cluster itself has no change-time retrieval wire. Existing validators, review selection, freshness tracking, and mutation commands form useful mechanisms; they do not cause the cluster's operativity, profile, or warrant tests to be consulted when those mechanisms change.

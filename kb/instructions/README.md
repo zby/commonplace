@@ -28,7 +28,7 @@ When writing or editing a promoted skill:
 To promote an instruction into a runtime skill:
 
 1. Put it in `kb/instructions/<name>/SKILL.md`
-2. Add `<name>` to the promoted skill list in `src/commonplace/cli/init_project.py`
+2. Add `<name>` to `MANIFEST.promoted_skills` in `src/commonplace/scaffold_manifest.py`
 3. Keep any auxiliary files in the same directory so `commonplace-init` copies them with the skill
 
-Not every instruction subdirectory is promoted. Local-only skills stay in `kb/instructions/<name>/SKILL.md` and may be symlinked directly into this repo's `.claude/skills/` and `.agents/skills/` surfaces without adding them to `PROMOTED_SKILLS`. The explicit list in `commonplace-init` is the source of truth for what gets copied into runtime skill surfaces.
+Not every instruction subdirectory is promoted. Local-only skills stay in `kb/instructions/<name>/SKILL.md` and may be symlinked directly into this repo's `.claude/skills/` and `.agents/skills/` surfaces without adding them to `PROMOTED_SKILLS`. The explicit `MANIFEST.promoted_skills` list consumed by `commonplace-init` is the source of truth for what gets copied into runtime skill surfaces.

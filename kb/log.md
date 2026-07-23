@@ -6,6 +6,8 @@ Format: `- CATEGORY: path/or/subject: observation`
 
 Use a short uppercase category prefix that names why the item belongs in the log, such as `ABSTRACTION`, `SYNTHESIS`, `DUPLICATION`, `CONTRADICTION`, or `FIX`. Use a file path when one artifact is the clear target; otherwise use a bracketed subject list.
 
+When an entry looks like it wants to become a note, evaluate it with `kb/instructions/evaluate-log-entry-for-note-creation.md` before promoting it.
+
 - ABSTRACTION: [agents-md-should-be-organized-as-a-control-plane, context-engineering, why-ai-systems-dont-learn-and-what-to-do-about-it source] share unnamed structure: control-plane abstractions recur at repository, prompt, and learning-architecture levels, but the transfer conditions between those levels are not yet named
 - SYNTHESIS: [three-space-agent-memory-maps-to-tulving-taxonomy (content-type axis), multi-agent-memory-computer-architecture-perspective source (hierarchy-level axis)] — two independent decompositions of agent memory from different traditions (cognitive science vs computer architecture) that together predict a two-axis taxonomy: content type x hierarchy level
 - SYNTHESIS: [superarc source (recursive compression), esolang-bench source (code generation OOD), pathway-sudoku source (constraint satisfaction), ebrahimi induction-bias source (state tracking)] — four sources now converge on "LLMs score near zero on well-specified problems that strip training-distribution shortcuts"; SuperARC adds a fourth independent domain with the strongest methodology (AIT-grounded, mathematically proven equivalence between compression and prediction)

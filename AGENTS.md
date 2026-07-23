@@ -93,7 +93,7 @@ In a fresh Windows shell, try a `commonplace-*` command by bare name once. If it
 
 The same rule applies to every package entry point: `commonplace-foo` maps to `.venv\Scripts\commonplace-foo.exe`. Before reporting an installation failure, distinguish a missing executable from a missing `PATH` entry with `Test-Path .\.venv\Scripts\commonplace-foo.exe`.
 
-`pytest` is installed with Commonplace because deterministic verification is part of operating this reflective system. In a fresh agent shell, run it as `& .\.venv\Scripts\pytest.exe`; for example, `& .\.venv\Scripts\pytest.exe tests\commonplace\lib\test_frontmatter.py -q`. If a sandboxed Windows session cannot write `.pytest_cache`, add `-p no:cacheprovider`; do not treat that cache-only warning as a test failure.
+`pytest` is installed with Commonplace because deterministic verification is part of operating this [reflective system](./kb/reference/commonplace-as-a-reflective-system.md). In a fresh agent shell, run it as `& .\.venv\Scripts\pytest.exe`; for example, `& .\.venv\Scripts\pytest.exe tests\commonplace\lib\test_frontmatter.py -q`. If a sandboxed Windows session cannot write `.pytest_cache`, add `-p no:cacheprovider`; do not treat that cache-only warning as a test failure.
 
 The source checkout's `.agents/skills/` and `.claude/skills/` projections are committed relative symlinks. A Windows checkout without symlink support may materialize them as plain files. If a `cp-skill-*` skill is not discoverable, read and follow its canonical `kb/instructions/<skill>/SKILL.md` directly; do not run `commonplace-init` to repair a source checkout.
 
