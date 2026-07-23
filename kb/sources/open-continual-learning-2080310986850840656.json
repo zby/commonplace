@@ -1,0 +1,167 @@
+{
+  "source": "https://x.com/Vtrivedy10/status/2080310986850840656",
+  "captured": "2026-07-23T16:40:15.915587+00:00",
+  "family": "x-post",
+  "status_id": "2080310986850840656",
+  "conversation_id": "2080310986850840656",
+  "target_post": {
+    "attachments": null,
+    "author_id": "1222786244",
+    "community_id": null,
+    "context_annotations": null,
+    "conversation_id": "2080310986850840656",
+    "created_at": "2026-07-23T15:16:04.000Z",
+    "display_text_range": null,
+    "edit_controls": null,
+    "edit_history_tweet_ids": [
+      "2080310986850840656"
+    ],
+    "entities": {
+      "annotations": null,
+      "cashtags": null,
+      "hashtags": null,
+      "mentions": null,
+      "urls": [
+        {
+          "end": 306,
+          "start": 283,
+          "display_url": "pic.x.com/l8uRBNG9QM",
+          "expanded_url": "https://x.com/Vtrivedy10/status/2080310986850840656/photo/1",
+          "media_key": "3_2080310984174911488",
+          "url": "https://t.co/l8uRBNG9QM"
+        },
+        {
+          "end": 330,
+          "start": 307,
+          "display_url": "x.com/vtrivedy10/sta\u2026",
+          "expanded_url": "https://twitter.com/vtrivedy10/status/2079976006644072796",
+          "url": "https://t.co/JIBzo9ZDbI"
+        }
+      ]
+    },
+    "geo": null,
+    "id": "2080310986850840656",
+    "in_reply_to_user_id": null,
+    "lang": null,
+    "matched_media_notes": null,
+    "non_public_metrics": null,
+    "note_request_suggestions": null,
+    "note_tweet": {
+      "entities": null,
+      "text": "open continual learning that you fully control\n\nmost of the world\u2019s high quality knowledge is distributed across your company\u2019s data and minds\n\ncontinuously improving on your tasks comes from:\n1. interviewing experts to mine domain knowledge & understand what matters to them\n2. converting that data into evals/envs\n3. fitting agents on those tasks to adopt that behavior\n4. collect more traces & loop\n\nobservability & CL are a deeply coupled cycle of data collection, curation, and integration into agent behavior\n\nmost people\u2019s agent data isn\u2019t being used to improve their agents, but we want to change that\n\nopen skills help everyone start the flywheel of converting data into hill climbing"
+    },
+    "organic_metrics": null,
+    "paid_partnership": null,
+    "possibly_sensitive": null,
+    "promoted_metrics": null,
+    "public_metrics": null,
+    "referenced_tweets": [
+      {
+        "id": "2079976006644072796",
+        "type": "quoted"
+      }
+    ],
+    "reply_settings": null,
+    "scopes": null,
+    "source": null,
+    "suggested_source_links": null,
+    "suggested_source_links_with_counts": null,
+    "text": "open continual learning that you fully control\n\nmost of the world\u2019s high quality knowledge is distributed across your company\u2019s data and minds\n\ncontinuously improving on your tasks comes from:\n1. interviewing experts to mine domain knowledge &amp; understand what matters to them\n2. https://t.co/l8uRBNG9QM https://t.co/JIBzo9ZDbI",
+    "username": null,
+    "withheld": null
+  },
+  "posts": [
+    {
+      "attachments": null,
+      "author_id": "1222786244",
+      "community_id": null,
+      "context_annotations": null,
+      "conversation_id": "2080310986850840656",
+      "created_at": "2026-07-23T15:16:04.000Z",
+      "display_text_range": null,
+      "edit_controls": null,
+      "edit_history_tweet_ids": [
+        "2080310986850840656"
+      ],
+      "entities": {
+        "annotations": null,
+        "cashtags": null,
+        "hashtags": null,
+        "mentions": null,
+        "urls": [
+          {
+            "end": 306,
+            "start": 283,
+            "display_url": "pic.x.com/l8uRBNG9QM",
+            "expanded_url": "https://x.com/Vtrivedy10/status/2080310986850840656/photo/1",
+            "media_key": "3_2080310984174911488",
+            "url": "https://t.co/l8uRBNG9QM"
+          },
+          {
+            "end": 330,
+            "start": 307,
+            "display_url": "x.com/vtrivedy10/sta\u2026",
+            "expanded_url": "https://twitter.com/vtrivedy10/status/2079976006644072796",
+            "url": "https://t.co/JIBzo9ZDbI"
+          }
+        ]
+      },
+      "geo": null,
+      "id": "2080310986850840656",
+      "in_reply_to_user_id": null,
+      "lang": null,
+      "matched_media_notes": null,
+      "non_public_metrics": null,
+      "note_request_suggestions": null,
+      "note_tweet": {
+        "entities": null,
+        "text": "open continual learning that you fully control\n\nmost of the world\u2019s high quality knowledge is distributed across your company\u2019s data and minds\n\ncontinuously improving on your tasks comes from:\n1. interviewing experts to mine domain knowledge & understand what matters to them\n2. converting that data into evals/envs\n3. fitting agents on those tasks to adopt that behavior\n4. collect more traces & loop\n\nobservability & CL are a deeply coupled cycle of data collection, curation, and integration into agent behavior\n\nmost people\u2019s agent data isn\u2019t being used to improve their agents, but we want to change that\n\nopen skills help everyone start the flywheel of converting data into hill climbing"
+      },
+      "organic_metrics": null,
+      "paid_partnership": null,
+      "possibly_sensitive": null,
+      "promoted_metrics": null,
+      "public_metrics": null,
+      "referenced_tweets": [
+        {
+          "id": "2079976006644072796",
+          "type": "quoted"
+        }
+      ],
+      "reply_settings": null,
+      "scopes": null,
+      "source": null,
+      "suggested_source_links": null,
+      "suggested_source_links_with_counts": null,
+      "text": "open continual learning that you fully control\n\nmost of the world\u2019s high quality knowledge is distributed across your company\u2019s data and minds\n\ncontinuously improving on your tasks comes from:\n1. interviewing experts to mine domain knowledge &amp; understand what matters to them\n2. https://t.co/l8uRBNG9QM https://t.co/JIBzo9ZDbI",
+      "username": null,
+      "withheld": null
+    }
+  ],
+  "users": {
+    "1222786244": {
+      "id": "1222786244",
+      "name": "Viv",
+      "username": "Vtrivedy10",
+      "affiliation": null,
+      "connection_status": null,
+      "created_at": null,
+      "description": null,
+      "entities": null,
+      "location": null,
+      "most_recent_tweet_id": null,
+      "pinned_tweet_id": null,
+      "profile_banner_url": null,
+      "profile_image_url": null,
+      "protected": null,
+      "public_metrics": null,
+      "receives_your_dm": null,
+      "subscription_type": null,
+      "url": null,
+      "verified": null,
+      "verified_type": null,
+      "withheld": null
+    }
+  },
+  "thread_fetch_error": null
+}
