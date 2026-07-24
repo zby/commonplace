@@ -1,5 +1,5 @@
 ---
-description: "Universal frameworks should keep closed first-order content taxonomies as guarded defaults until heterogeneous worked cases establish their reach; declared contracts and answerability remain universal"
+description: "Universal frameworks should keep closed first-order content taxonomies as guarded defaults until heterogeneous worked cases establish their explanatory-reach; declared contracts and answerability remain universal"
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [document-system, foundations]

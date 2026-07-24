@@ -35,7 +35,7 @@ Commonplace ships three collections that are already register-anchored:
 
 | Path | Register | Quality goal |
 |---|---|---|
-| `kb/notes/` | theoretical | reach |
+| `kb/notes/` | theoretical | explanatory-reach |
 | `kb/reference/` | descriptive | accuracy |
 | `kb/instructions/` | prescriptive | executability |
 

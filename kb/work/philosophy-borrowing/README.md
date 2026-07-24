@@ -23,7 +23,7 @@ This workshop keeps that adoption bar. It considers only the three most promisin
 - [Claim notes should use Toulmin-derived sections for structured argument](../../notes/claim-notes-should-use-toulmin-derived-sections-for-structured.md) — existing Toulmin borrowing
 - [Constraining](../../notes/definitions/constraining.md) — current home of the Carnap explication reference
 - [Document types should be verifiable](../../notes/document-types-should-be-verifiable.md) — type semantics the speech-act candidate may sharpen
-- [Brainstorming: how reach informs KB design](../../notes/brainstorming-how-reach-informs-kb-design.md) — maintenance risk from high-reach revisions, relevant to Quine
+- [Brainstorming: how reach informs KB design](../../notes/brainstorming-how-explanatory-reach-informs-kb-design.md) — maintenance risk from high-reach revisions, relevant to Quine
 
 ## Candidate artifacts
 

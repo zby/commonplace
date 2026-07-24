@@ -1,5 +1,5 @@
 ---
-description: Core theory the rest of the KB builds on — contextual competence, bounded context, reach, design methodology, composability
+description: Core theory the rest of the KB builds on — contextual competence, bounded context, explanatory-reach, design methodology, composability
 type: kb/types/tag-readme.md
 index_source: tag
 index_key: foundations

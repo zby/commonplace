@@ -24,5 +24,5 @@ Relevant Notes:
 - [Axes of artifact analysis](./axes-of-artifact-analysis.md) — grounds: supplies the four-field record for a retained action model's operative part and consumption path
 - [Behavioral authority](./definitions/behavioral-authority.md) — grounds: distinguishes a stored representation from one that actually influences action
 - [Representational form](./definitions/representational-form.md) — grounds: separates prose, symbolic, distributed-parametric, and mixed action models
-- [World models assess reach through action-conditioned prediction](./world-models-assess-reach-through-action-conditioned-prediction.md) — extends: develops the learned predictive route through candidate-action consequences
+- [World models assess explanatory-reach through action-conditioned prediction](./world-models-assess-explanatory-reach-through-action-conditioned.md) — extends: develops the learned predictive route through candidate-action consequences
 - [Reflective coverage is graded across representational forms](./reflective-coverage-is-graded-across-representational-forms.md) — extends: its open questions apply the action-model argument when the intervention target is the system itself

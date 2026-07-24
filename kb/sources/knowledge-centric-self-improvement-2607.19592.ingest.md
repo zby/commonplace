@@ -1,0 +1,61 @@
+---
+description: "Controlled knowledge-centric self-improvement protocol in which stateless agents curate a shared knowledge base through task forums, cross-task forums, and scoped distillation"
+source_snapshot: "kb/sources/knowledge-centric-self-improvement-2607.19592.md"
+ingested: "2026-07-24"
+type: kb/sources/types/ingest-report.md
+domains: [knowledge-centric-learning, deploy-time-learning, agent-memory, self-improvement]
+---
+
+# Ingest: Knowledge-Centric Self-Improvement
+
+Source: kb/sources/knowledge-centric-self-improvement-2607.19592.md  
+Captured: 2026-07-24  
+From: https://arxiv.org/abs/2607.19592
+
+## Classification
+
+Genre: scientific-paper -- arXiv preprint with a defined curation protocol, benchmark setup, agent-centric and prompt-optimization baselines, cross-LLM tests, and held-out transfer experiments.  
+Domains: knowledge-centric-learning, deploy-time-learning, agent-memory, self-improvement  
+Author: Xuefei (Julie) Wang, Lauren Hyoseo Yoon, Chengrui Qu, Amanda Zichang Wang, Atharva Sehgal, Eric Mazumdar, and Yisong Yue (Caltech); the source is a current research preprint with public code at [recursive-knowledge/KSI](https://github.com/recursive-knowledge/KSI), not a peer-reviewed final publication.
+
+## Summary
+
+The paper proposes knowledge-centric self-improvement: keep task-solving agents generic and disposable, and make a shared curated knowledge base the persistent object of improvement. Each attempt contributes structured evidence to a task-level forum; a cross-task forum tests which claims transfer beyond their originating task; and distillation retains scoped, actionable, evidence-grounded guidance for later agents. Across Polyglot, SWE-bench Pro, ARC-AGI-1, ARC-AGI-2, and Terminal-Bench 2, the authors report higher solve rates and lower costs than several agent-centric or prompt-optimization baselines using the same general task-solving models. A separate held-out transfer experiment freezes the distilled artifact and gives it to recipient agents with no new forum or distillation; positive transfer across Polyglot and ARC-AGI-1, including across LLM families, is the paper's strongest evidence that the external artifact—not only a persistent agent or adaptation run—carries reusable value.
+
+## Connections Found
+
+This is the strongest empirical source currently connected to [Automating KB learning is an open problem](../notes/automating-kb-learning-is-an-open-problem.md): it demonstrates a bounded, benchmarkable slice of extraction, discussion, distillation, and reuse while leaving open-ended KB judgment unsolved. Its forum and distillation gates give [Choosing what to learn requires both validity and learning-value gates](../notes/choosing-what-to-learn-requires-both-validity-and-learning-value-gates.md) a concrete implementation, and its scoped transfer claims instantiate [Abstract an experience into a lesson only when you can state where the lesson stops](../notes/abstract-an-experience-only-when-you-can-state-the-boundary.md). The external artifact changes later solve behaviour, supporting [Continual learning's open problem is behaviour, not knowledge](../notes/continual-learning-open-problem-is-behaviour-not-knowledge.md) and [Deploy-time learning is the missing middle](../notes/deploy-time-learning-is-the-missing-middle.md). It also complements the taxonomy in [The What & When of Self-Evolving Agents](the-what-and-when-of-self-evolving-agents.ingest.md) and provides an outcome-level test for [Claw learning loops must improve action capacity, not just retrieval](../notes/claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md). The causal faithfulness paper [Large Language Model Agents Are Not Always Faithful Self-Evolvers](llm-agents-are-not-always-faithful-self-evolvers.ingest.md) remains an important counterpoint: this paper shows outcome gains from a curation protocol, but does not fully establish which individual retained claims caused each decision.
+
+The self-improving-systems cluster can also profile the protocol directly, which makes it the ontology's strongest external instance. Under a boundary containing the disposable agents, forums, and distiller, it passes the [self-improving-system](../notes/definitions/self-improving-system.md) membership test — the distilled bundles are behavior-determining organization consumed as guidance by later agents, and changes to them respond to solve outcomes and peer challenge — through a [proposal-selection](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) architecture whose forum and distillation stages can reject a claim before retention. On the [pathway profile](../notes/a-self-improving-system-needs-a-profile-not-a-ladder.md): retention is cumulative across generations, since each generation's attempts and distillation consume prior bundles and cited posts; addressability is the demonstrated strength — Appendix C traces a claim cited by id, challenged, split into two scoped claims, and its falsified branch retained as a rejection, exercising computationally the operations [reflection buys addressability](../notes/reflection-buys-addressability.md) names; reflective coverage stops at the retained claims, with agents, prompts, and the curation protocol itself fixed outside the loop; actor allocation is computational at every improvement function; and [warranted autonomy](../notes/warranted-autonomy-is-bounded-by-oracle-domain.md) rests on strong benchmark oracles for the pass/fail evidence but only LLM debate for transfer-worthiness. The held-out transfer experiment exercises addressable retention's transfer operation end-to-end, turning a payoff the cluster deliberately leaves empirical into a first measured positive case.
+
+Two structural claims classify the protocol as well. For [improving an agentic system crosses the prose-symbolic boundary](../notes/improving-an-agentic-system-crosses-the-prose-symbolic-boundary.md) it is the first external classification: every improving change stays in prose, and the loop works because its symbolic half — benchmark verification — is supplied externally, fixed, and already adequate, so the enforcement line never needs to move; the settings the authors leave untested (open-ended knowledge work, ambiguous goals, slow feedback) are exactly those where it would. For [Topology, isolation, and verification form a causal chain for reliable agent scaling](../notes/topology-isolation-and-verification-form-a-causal-chain-for-reliable.md) it instantiates all three mechanisms: stateless agents supply isolation by construction, the curation ladder is the topology, and forum challenge plus that same external verification supplies the filtering — with one instructive wrinkle: mutable state does cross agent boundaries through the shared knowledge base, but only via writes that survive challenge and distillation, so the isolation requirement is met by gating shared state through verification rather than forbidding it.
+
+## Extractable Value
+
+1. **External knowledge can be the persistent improvement substrate.** The protocol keeps agents stateless across tasks while retaining typed attempts, forum posts, and distilled bundles; this is a concrete positive case for the KB's claim that deploy-time learning can live in inspectable artifacts rather than model weights or a continuously specialized agent. [quick-win]
+
+2. **The curation loop has three distinct abstraction and selection stages.** Task-level discussion preserves local evidence and disagreement, cross-task discussion tests recurrence and transfer, and distillation writes the reusable artifact. This gives automated KB learning an explicit architecture rather than a generic “summarize the trace” operation. [deep-dive]
+
+3. **The main Haiku 4.5 results are strong across multiple task families.** The paper reports 86.7% on ARC-AGI-1 at $76, 82.7% on ARC-AGI-2 at $80, 68.0% on Polyglot at $126, and 64.0% on SWE-bench Pro at $208; on Terminal-Bench 2 it reports 43.8% ± 3.4, above the listed 37.6% Meta-Harness comparator. These figures are evidence that the protocol can improve end-task outcomes, not merely memory retrieval. [just-a-reference]
+
+4. **Knowledge curation beats matched-budget prompt optimization in the reported comparisons.** On ARC-AGI-1 the paper reports 86.7% versus GEPA's 44% and OpenEvolve's 54%; on Polyglot it reports 68.0% versus 36% and 46%. The comparison isolates a useful design distinction: refining a reusable knowledge artifact can outperform refining a reusable solver prompt under the tested budgets. [just-a-reference]
+
+5. **Frozen knowledge transfers beyond the producing run.** On 20 held-out difficult tasks, the frozen generation-10 artifact improves zero-shot solve rates on both Polyglot and ARC-AGI-1 in every donor–recipient pairing, including cross-family transfer between GPT-5.4-mini and Haiku 4.5. This is the paper's clearest evidence for portability, while the reported ARC cross-family variance means the magnitude should be treated as indicative rather than precise. [experiment]
+
+6. **Promotion requires scoped claims, not undifferentiated summaries.** The paper's typed posts distinguish transferable insights, confirmed constraints, rejected hypotheses, and failure modes; distillation is instructed to retain the condition under which advice applies. This operationalizes the KB's boundary and validity-gate concerns and offers a schema to inspect in future automated curation work. [quick-win]
+
+## Limitations (our opinion)
+
+The source is a v1 preprint and the snapshot is a user-supplied PDF-to-Markdown conversion. The conversion preserves much of the paper but contains split words, layout fragments, extracted tables, code-style blocks, and mojibake; fine-grained quotations and exact table interpretation should be checked against the original PDF or arXiv HTML.
+
+The empirical scope is controlled but narrow: five benchmark families, 50-task improvement pools, 10 generations, and two LLM families. The held-out transfer set contains 20 tasks selected from cases that both recipient models initially failed, so it tests transfer on difficult tasks rather than ordinary population performance. The paper does not show that the protocol works for open-ended knowledge work, ambiguous goals, slow feedback, multi-party preferences, or long-horizon tasks with substantial subtask decomposition.
+
+The “knowledge-only” isolation is useful but not complete. Agents still receive benchmark-specific prompts, tools, task-conditioned adapters, and a fixed execution scaffold; in the transfer experiment the adapter determines how much shared knowledge reaches the recipient. The forum and distillation phases also spend model calls and tokens, so the lower reported task-solving cost should not be interpreted as zero-cost curation or as a complete lifecycle cost analysis.
+
+Baseline comparisons require care. Some baselines are single runs while the paper's entries average three seeds, and the Terminal-Bench Meta-Harness comparator combines a Claude Opus 4.6 proposer with a Haiku 4.5 base agent. The paper demonstrates that the protocol works under its evaluation design, but it does not isolate the contribution of each forum stage, the typed schema, the distiller, the task-conditioned adapter, or the removal of already-solved tasks through a full ablation matrix.
+
+Finally, solve-rate gains establish end-to-end utility but not causal faithfulness of individual retained claims. The paper shows that frozen bundles help recipients, while [Large Language Model Agents Are Not Always Faithful Self-Evolvers](llm-agents-are-not-always-faithful-self-evolvers.ingest.md) shows why a separate intervention is needed to establish whether condensed experience is actually used rather than merely present.
+
+## Recommended Next Action
+
+Update [Automating KB learning is an open problem](../notes/automating-kb-learning-is-an-open-problem.md) with a bounded positive case for knowledge-centric curation: add the task-forum → cross-task-forum → distillation protocol, the held-out transfer result, and the paper's scoped-claim schema, while preserving the note's distinction between benchmarked curation and general automated KB judgment.

@@ -33,7 +33,7 @@ A design constraint can motivate extracting a use-shaped artifact from larger ma
 | Active exploration | `kb/work/` | Evidence, competing framings, experiments, and provisional decisions that have not earned library status |
 | Finished but undecided design | [`kb/reference/proposals/`](./proposals/README.md) | Problem, option space, forces, free choices, current-state assumptions, and adoption criteria |
 | Implemented decision | [Architecture decision record (ADR)](./types/adr.md) | Required context, decision, and consequences; richer records may also retain alternatives and evidence |
-| Local operating contract | `COLLECTION.md` and collection-local type specs | The constraints proven for one collection without claiming framework-wide reach |
+| Local operating contract | `COLLECTION.md` and collection-local type specs | The constraints proven for one collection without claiming framework-wide explanatory-reach |
 | Shared reusable design | Global types, [text-contract profiles](../notes/definitions/text-contract.md), instructions, validators, and package code | A commitment promoted after its scope and enforcement shape became clear |
 | Rejected or displaced design | Rejected proposal options, ADR consequences, supersession links, and git history | Explicitly authored reasons; git history remains an archival fallback rather than a semantic rationale relation |
 
@@ -45,7 +45,7 @@ Two shipped decisions illustrate the intended discipline, not a repository-wide 
 
 Casework in the sibling `epistack-casebooks` project, undertaken for the [2026 Epistemic Case Study Competition](../sources/epistemic-case-study-competition.md), exposed rationale management as a unifying description of Commonplace's distributed practice. The casework suggests a compounding risk: when the retained artifact does not distinguish inherited constraints, local requirements, and free choices, a later investigator may find transfer assessment harder—not a demonstrated rule that reuse becomes unsafe without that distinction.
 
-For Commonplace, **design rationale management for evolving knowledge infrastructure** is therefore a useful name for distributed repository practice rather than an enforced traceability protocol or a contract-defined minimum above opportunistic documentation. In intended practice, constraint discovery identifies what bounds a decision; rationale records what those constraints do and do not determine; worked cases may test whether the rationale has reach; and constraining may give selected commitments the warranted degree of semantic or mechanical force when authors and validators actually apply it. Where later recovery matters, authors must still carry or link that rationale explicitly; no provenance mechanism reconnects a commitment to its constraints, alternatives, and evidence automatically.
+For Commonplace, **design rationale management for evolving knowledge infrastructure** is therefore a useful name for distributed repository practice rather than an enforced traceability protocol or a contract-defined minimum above opportunistic documentation. In intended practice, constraint discovery identifies what bounds a decision; rationale records what those constraints do and do not determine; worked cases may test whether the rationale has explanatory-reach; and constraining may give selected commitments the warranted degree of semantic or mechanical force when authors and validators actually apply it. Where later recovery matters, authors must still carry or link that rationale explicitly; no provenance mechanism reconnects a commitment to its constraints, alternatives, and evidence automatically.
 
 ## Open questions
 
@@ -57,5 +57,5 @@ For Commonplace, **design rationale management for evolving knowledge infrastruc
 Relevant Notes:
 
 - [Design proposals differ from claims in kind, not confidence](../notes/design-proposals-differ-from-claims-in-kind-not-confidence.md) — rationale: explains why free design parameters need a proposal surface judged by forces and usefulness rather than truth alone
-- [First-principles reasoning selects for explanatory reach over adaptive fit](../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md) — rationale: supplies the rival-practice and transfer tests used to judge whether a rationale reaches beyond its originating case
+- [First-principles reasoning selects for explanatory-reach over adaptive fit](../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md) — rationale: supplies the rival-practice and transfer tests used to judge whether a rationale reaches beyond its originating case
 - [Progressive constraining commits only after patterns stabilize](../notes/progressive-constraining-commits-only-after-patterns-stabilize.md) — rationale: explains why some rationale should remain provisional until repeated behavior supports a stronger commitment

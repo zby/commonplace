@@ -1,6 +1,6 @@
-# Review: Explanatory Reach
+# Review: Explanatory-reach
 
-Audit KB notes against the explanatory reach test from [first-principles reasoning selects for explanatory reach over adaptive fit](../../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md). Identify notes that are merely adaptive (record what works without explaining why) and flag them for deepening.
+Audit KB notes against the explanatory-reach test from [first-principles reasoning selects for explanatory-reach over adaptive fit](../../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md). Identify notes that are merely adaptive (record what works without explaining why) and flag them for deepening.
 
 This file is a stable runbook. Do not edit it per run; only change it when scope or process changes.
 
@@ -19,13 +19,13 @@ For each note in scope, apply the four-part test:
 
 3. **Can it be criticized?** Is there a specific way the explanation could be wrong, not just incomplete? Notes that are purely definitional or taxonomic will fail this — that's fine, flag them as a different kind (framework note, not explanatory note) rather than as deficient.
 
-4. **Does observed fit discipline the explanation?** Can the note account for where the pattern actually works, fails, or costs too much to maintain? An explanation that never touches observed fit has verbal reach without operational grip.
+4. **Does observed fit discipline the explanation?** Can the note account for where the pattern actually works, fails, or costs too much to maintain? An explanation that never touches observed fit has verbal explanatory-reach without operational grip.
 
 ## Classification
 
 For each note, assign one of:
 
-- **explanatory** — passes the four tests; captures mechanism with reach
+- **explanatory** — passes the four tests; captures mechanism with explanatory-reach
 - **adaptive** — records a pattern that works without explaining why; candidate for deepening
 - **framework** — definitional, taxonomic, or structural; not expected to be explanatory (indexes, type definitions, methodology)
 - **mixed** — has explanatory sections and adaptive sections; flag which parts could be deepened
@@ -36,5 +36,5 @@ Record findings in `kb/tasks/recurring/review-explanatory-reach-log.md`.
 Append one dated section per run (e.g. `## 2026-03-07`) with:
 - Notes reviewed (count and list)
 - Classification breakdown
-- Top candidates for deepening (adaptive notes where adding mechanism would increase reach)
+- Top candidates for deepening (adaptive notes where adding mechanism would increase explanatory-reach)
 - Any notes reclassified from previous runs

@@ -19,7 +19,7 @@ tags: [world-models, predictive-modeling, robotics]
 
 ## Relevance to the KB
 
-This source is the cleanest grounding for [World models assess reach through action-conditioned prediction](../notes/world-models-assess-reach-through-action-conditioned-prediction.md). It gives the missing third route next to prose semantic judgment and [formal symbolic reach assessment](../notes/formal-systems-can-assess-reach-through-causal-and-proof-obligations.md): a distributed-parametric artifact can support reach assessment when its action-conditioned predictions are evaluated across the intervention or shift class the commitment claims to cover.
+This source is the cleanest grounding for [World models assess reach through action-conditioned prediction](../notes/world-models-assess-explanatory-reach-through-action-conditioned.md). It gives the missing third route next to prose semantic judgment and [formal symbolic reach assessment](../notes/formal-systems-assess-explanatory-reach-through-causal-and-proof.md): a distributed-parametric artifact can support reach assessment when its action-conditioned predictions are evaluated across the intervention or shift class the commitment claims to cover.
 
 ## Limitations
 

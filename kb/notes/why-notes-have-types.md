@@ -26,7 +26,7 @@ Different knowledge domains need different document structures. [Directory-scope
 
 ## Content-layer identification
 
-Types also help identify which content layer an artifact belongs to. The layer is not always encoded by the type name alone: a `note` in `kb/notes/` is theoretical, a `note` in `kb/reference/` is descriptive, and an `instruction` is prescriptive. But the `type:` field plus the collection-local type path gives tools and readers enough information to infer the relevant quality goal: reach for theory, fidelity and economy for description, executability and precision for prescription.
+Types also help identify which content layer an artifact belongs to. The layer is not always encoded by the type name alone: a `note` in `kb/notes/` is theoretical, a `note` in `kb/reference/` is descriptive, and an `instruction` is prescriptive. But the `type:` field plus the collection-local type path gives tools and readers enough information to infer the relevant quality goal: explanatory-reach for theory, fidelity and economy for description, executability and precision for prescription.
 
 This connects the type system to [theories, descriptions, and prescriptions with asymmetric linking](./a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md). Once the content layer is deducible from collection and type, validation and review can become layer-specific without adding a separate `register:` field everywhere.
 

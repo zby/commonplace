@@ -104,5 +104,5 @@ Relevant Notes:
 - [deploy-time learning](./deploy-time-learning-is-the-missing-middle.md) — instance: system-level adaptation through artifacts; roots in organizational learning, knowledge creation
 - [title as claim enables traversal as reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — instance: propositional titles for bounded scanners
 - [information value is observer-relative](./information-value-is-observer-relative.md) — grounds: observer-relativity that makes adaptation necessary
-- [first-principles reasoning selects for explanatory reach](./first-principles-reasoning-selects-for-explanatory-reach-over.md) — test: if the shared structure has reach, results transfer; if not, the pattern is superficial
+- [first-principles reasoning selects for explanatory-reach](./first-principles-reasoning-selects-for-explanatory-reach-over.md) — test: if the shared structure has explanatory-reach, results transfer; if not, the pattern is superficial
 - [conjecture is seeing the particular as an instance of the general](./conjecture-is-seeing-the-particular-as-an-instance-of-the-general.md) — meta: this catalog is itself an application of the discovery operation

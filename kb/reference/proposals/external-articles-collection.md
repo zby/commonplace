@@ -25,9 +25,9 @@ What remains genuinely open — and is the main design question below — is the
 
 ## Problem
 
-An outward-facing article is a document a technical reader — a researcher or builder — reads without prior KB context, and whose job is to hand that reader a way in. It synthesises what several notes established into continuous prose for an audience that will not read a footer link table or a retrieval-filter description, and it must provide a clear, worthwhile onward path into the KB. None of the shipped profiles fit: their quality goals (reach, fidelity + economy, executability) are calibrated for a consumer who can traverse the graph and load adjacent artifacts on demand.
+An outward-facing article is a document a technical reader — a researcher or builder — reads without prior KB context, and whose job is to hand that reader a way in. It synthesises what several notes established into continuous prose for an audience that will not read a footer link table or a retrieval-filter description, and it must provide a clear, worthwhile onward path into the KB. None of the shipped profiles fit: their quality goals (explanatory-reach, fidelity + economy, executability) are calibrated for a consumer who can traverse the graph and load adjacent artifacts on demand.
 
-Today an author who needs to publish from the KB has two bad options. Misuse `kb/notes/`: wrong contract (claim-as-title and reach, not audience-facing self-contained prose), and the note's agent-facing conventions leak into anything derived from it. Or draft in a workshop and publish nowhere durable: the piece loses its lineage back to the notes it distils, and the workshop lifecycle guarantees the deliverable has no home.
+Today an author who needs to publish from the KB has two bad options. Misuse `kb/notes/`: wrong contract (claim-as-title and explanatory-reach, not audience-facing self-contained prose), and the note's agent-facing conventions leak into anything derived from it. Or draft in a workshop and publish nowhere durable: the piece loses its lineage back to the notes it distils, and the workshop lifecycle guarantees the deliverable has no home.
 
 ## Design
 
