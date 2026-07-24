@@ -47,6 +47,8 @@ Maintenance: the paragraphs carry `rationale` edges into the cluster rather than
 
 Still open in this decision: whether the residue justifies extending the link grammar's `operationalized-from` authorization or a thin `AGENTS.md` line, and the ADR-instrumentation and proposals-contract wires (candidates named in the audit's F1 disposition, not yet built). Record the completed mix as an ADR at workshop closure.
 
+The Force-and-warrant section's re-review obligation was exercised on its own introducing change (2026-07-24): the type-spec edit changes the criterion side of every gate's type-conformance pair, so all 38 gates under `kb/instructions/review-gates/` were re-read against the new contract. Outcome: 38/38 conform — the corpus was already detector-shaped, with no blocking, acceptance, or retention-authority language; no gate edits required. Three borderline fix-imperative phrasings noted and cleared (`prose/proportion-mismatch`, `prose/source-residue`, `semantic/load-bearing-qualifiers`) — revisit only if the contract is later tightened to forbid imperative fix directives inside tests. No freshness migration applied: this checkout carries no `commonplace-store.sqlite`, so there are no baselines to acknowledge (audit evidence boundary).
+
 ## Sequencing (fixed by the maintainer)
 
 - **Phase 0 — close ambiguities and contradictions.** Work the ledger below. Items may be resolved in the library notes directly, parked explicitly as open questions, or split out; what they may not do is stay silently ambiguous into phase 1.
