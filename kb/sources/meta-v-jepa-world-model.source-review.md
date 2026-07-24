@@ -18,7 +18,7 @@ tags: [world-models, predictive-modeling]
 
 ## Relevance to the KB
 
-This source grounds the distributed-parametric side of [reach assessment](../notes/definitions/reach-assessment.md). It shows a non-symbolic route where the candidate artifact is a learned latent predictor: the model's possible reach is in whether its representations and predictions continue to work across new videos, tasks, and physical situations. It supports [World models assess reach through action-conditioned prediction](../notes/world-models-assess-reach-through-action-conditioned-prediction.md) as evidence that LeCun's "world model" framing is about predictive structure useful for adaptation and planning, not about theorem proving or explicit causal graphs.
+This source grounds the distributed-parametric side of [reach assessment](../notes/definitions/reach-assessment.md). It shows a non-symbolic route where the candidate artifact is a learned latent predictor: the model's possible reach is in whether its representations and predictions continue to work across new videos, tasks, and physical situations. It supports [World models assess reach through action-conditioned prediction](../notes/world-models-assess-explanatory-reach-through-action-conditioned.md) as evidence that LeCun's "world model" framing is about predictive structure useful for adaptation and planning, not about theorem proving or explicit causal graphs.
 
 ## Limitations
 

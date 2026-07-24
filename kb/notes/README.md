@@ -15,7 +15,7 @@ Titles are assertions, not topics, so following a link reads as a chain of reaso
 
 ## What belongs here
 
-A claim earns a note when it changes how someone would build or operate a knowledge base. Pure pattern-recording without explanation belongs in `kb/log.md`, not here. For the full authoring contract — register, the reach quality bar, title and link conventions, and types — see [COLLECTION.md](./COLLECTION.md).
+A claim earns a note when it changes how someone would build or operate a knowledge base. Pure pattern-recording without explanation belongs in `kb/log.md`, not here. For the full authoring contract — register, the explanatory-reach quality bar, title and link conventions, and types — see [COLLECTION.md](./COLLECTION.md).
 
 ## Not the right collection?
 

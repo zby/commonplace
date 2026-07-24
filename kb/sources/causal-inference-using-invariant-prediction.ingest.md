@@ -24,7 +24,7 @@ The paper asks what distinguishes causal prediction from non-causal prediction u
 
 ## Connections Found
 
-This source directly supports [reach assessment](../notes/definitions/reach-assessment.md) and [Formal symbolic systems assess reach only through causal and proof obligations](../notes/formal-systems-can-assess-reach-through-causal-and-proof-obligations.md): it gives a specific formal signal for assessing whether a proposed causal commitment reaches beyond the distribution that fitted it. It also grounds the structured-shift premise in [Reflection may improve sample efficiency under structured shifts](../notes/reflection-may-improve-sample-efficiency-under-structured-shifts.md), because it makes "stable mechanism across environments" statistically explicit.
+This source directly supports [reach assessment](../notes/definitions/reach-assessment.md) and [Formal symbolic systems assess reach only through causal and proof obligations](../notes/formal-systems-assess-explanatory-reach-through-causal-and-proof.md): it gives a specific formal signal for assessing whether a proposed causal commitment reaches beyond the distribution that fitted it. It also grounds the structured-shift premise in [Reflection may improve sample efficiency under structured shifts](../notes/reflection-may-improve-sample-efficiency-under-structured-shifts.md), because it makes "stable mechanism across environments" statistically explicit.
 
 ## Extractable Value
 
@@ -39,4 +39,4 @@ The method is assumption-dependent and environment-dependent. It is strongest wh
 
 ## Recommended Next Action
 
-Use this source as the strongest grounding for the invariance example in [Formal symbolic systems assess reach only through causal and proof obligations](../notes/formal-systems-can-assess-reach-through-causal-and-proof-obligations.md), and consider a later narrow update to [Reflection may improve sample efficiency under structured shifts](../notes/reflection-may-improve-sample-efficiency-under-structured-shifts.md) to cite the local ingest instead of only the external arXiv link.
+Use this source as the strongest grounding for the invariance example in [Formal symbolic systems assess reach only through causal and proof obligations](../notes/formal-systems-assess-explanatory-reach-through-causal-and-proof.md), and consider a later narrow update to [Reflection may improve sample efficiency under structured shifts](../notes/reflection-may-improve-sample-efficiency-under-structured-shifts.md) to cite the local ingest instead of only the external arXiv link.

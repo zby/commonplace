@@ -24,7 +24,7 @@ The paper presents `causal-learn`, a Python library for causal discovery. Its re
 
 ## Connections Found
 
-This source is a technical basis for [reach assessment](../notes/definitions/reach-assessment.md) and [Formal symbolic systems assess reach only through causal and proof obligations](../notes/formal-systems-can-assess-reach-through-causal-and-proof-obligations.md). It supplies the concrete "causal theories from observations under assumptions" part of the causal route. It also compares with [DoWhy's assumptions paper](./dowhy-expressing-and-validating-causal-assumptions.ingest.md), which covers assumption declaration and validation after or alongside graph discovery, and with [invariant prediction](./causal-inference-using-invariant-prediction.ingest.md), which gives one specific invariance-based discovery strategy.
+This source is a technical basis for [reach assessment](../notes/definitions/reach-assessment.md) and [Formal symbolic systems assess reach only through causal and proof obligations](../notes/formal-systems-assess-explanatory-reach-through-causal-and-proof.md). It supplies the concrete "causal theories from observations under assumptions" part of the causal route. It also compares with [DoWhy's assumptions paper](./dowhy-expressing-and-validating-causal-assumptions.ingest.md), which covers assumption declaration and validation after or alongside graph discovery, and with [invariant prediction](./causal-inference-using-invariant-prediction.ingest.md), which gives one specific invariance-based discovery strategy.
 
 ## Extractable Value
 
@@ -39,4 +39,4 @@ As a scientific/software paper, it is strongest as method and implementation cov
 
 ## Recommended Next Action
 
-Keep this as the primary source citation for the observational-causal-discovery clause in [Formal symbolic systems assess reach only through causal and proof obligations](../notes/formal-systems-can-assess-reach-through-causal-and-proof-obligations.md); do not promote a separate note unless the KB later needs a taxonomy of causal-discovery algorithms.
+Keep this as the primary source citation for the observational-causal-discovery clause in [Formal symbolic systems assess reach only through causal and proof obligations](../notes/formal-systems-assess-explanatory-reach-through-causal-and-proof.md); do not promote a separate note unless the KB later needs a taxonomy of causal-discovery algorithms.

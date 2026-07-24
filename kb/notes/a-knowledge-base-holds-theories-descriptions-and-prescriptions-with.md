@@ -11,7 +11,7 @@ Many knowledge bases repeatedly need three default text-contract profiles, each 
 
 | Default profile | What it does | Quality priority | Context-efficiency strategy | Example query |
 |---|---|---|---|---|
-| **Theory** | Makes transferable claims about what is true | [Reach](./first-principles-reasoning-selects-for-explanatory-reach-over.md) | One claim covers many situations — compress *across* contexts | "Why is X a good idea?" |
+| **Theory** | Makes transferable claims about what is true | [Explanatory-reach](./first-principles-reasoning-selects-for-explanatory-reach-over.md) | One claim covers many situations — compress *across* contexts | "Why is X a good idea?" |
 | **Description** | Accounts for what exists in a particular system | Fidelity + economy | One account covers the system in minimum tokens — compress *within* a single context | "How does X work here?" |
 | **Prescription** | Directs what to do or not do | Executability + precision | One instruction says exactly what to do — compress to what's *actionable* | "How do I do X?" |
 
@@ -68,7 +68,7 @@ These roles cross-cut content. A generated review report is descriptive; an inde
 
 Commonplace's existing collections instantiate the three defaults:
 
-- `kb/notes/` → theoretical register (transferable claims, [title-as-claim](./title-as-claim-enables-traversal-as-reasoning.md), optimized for reach)
+- `kb/notes/` → theoretical register (transferable claims, [title-as-claim](./title-as-claim-enables-traversal-as-reasoning.md), optimized for explanatory-reach)
 - `kb/reference/` → descriptive register (how the shipped system works, topical titles, optimized for fidelity)
 - `kb/instructions/` → prescriptive register (procedures and conventions, imperative titles, optimized for executability)
 - `kb/agent-memory-systems/` → another descriptive collection for an external landscape
@@ -91,7 +91,7 @@ This separation emerged from practical pressure: `kb/reference/` was created bec
 
 Relevant Notes:
 
-- [First-principles reasoning selects for explanatory reach](./first-principles-reasoning-selects-for-explanatory-reach-over.md) — foundation: the reach concept that serves as the quality criterion for the theoretical register
+- [First-principles reasoning selects for explanatory-reach](./first-principles-reasoning-selects-for-explanatory-reach-over.md) — foundation: the explanatory-reach concept that serves as the quality criterion for the theoretical register
 - [Why directories despite their costs](./why-directories-despite-their-costs.md) — extends: the three-register split provides a principled reason for directory-level separation beyond topic grouping
 - [Skills derive from methodology](./skills-derive-from-methodology.md) — exemplifies: methodology → skill is an instance of the theory → prescription derivation path
 - [Instructions are typed callables](./instructions-are-typed-callables.md) — extends: the instruction duality (prescriptive content, executable authority) is a specific case of treating documents as typed callables; the callable framing captures the operational-authority axis

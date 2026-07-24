@@ -78,7 +78,7 @@ We don't encode "assume loaded" in the vocabulary yet — too fragile, depends o
 
 **Link** when:
 - Only some readers need the content (conditional on task, skill, prior knowledge).
-- The content stands as its own unit with its own reach.
+- The content stands as its own unit with its own explanatory-reach.
 - The host document's argument survives without the linked content.
 
 If the host argument doesn't survive without the linked content, don't link — restructure so both are in the same document, or fold one into the other. *Required* content isn't linked; it's co-located.

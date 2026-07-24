@@ -1,20 +1,20 @@
 # Writing conventions for kb/notes/ (theoretical profile)
 
-## Text contract and reach
+## Text contract and explanatory-reach
 
 Theoretical [profile](./definitions/text-contract.md): transferable claims about what is true — mechanisms, principles, arguments that should hold across systems.
 
-Quality goal is **reach** — the most general formulation the argument supports, with boundaries mapped. A note with reach compresses many situations into one explanation.
+Quality goal is **explanatory-reach** — the most general formulation the argument supports, with boundaries mapped. A note with explanatory-reach compresses many situations into one explanation.
 
-Tests for reach:
+Tests for explanatory-reach:
 - Change one premise — can you predict the change in the conclusion?
 - Would the insight apply in a different domain?
 - Could someone say exactly how it's wrong, not just that it's incomplete?
 - Does it account for where the pattern actually works and fails, not just why it should?
 
-Notes that only record "X works" are adaptive — useful but brittle. Explaining *why* X works gives reach. Reach is a direction, not a gate.
+Notes that only record "X works" are adaptive — useful but brittle. Explaining *why* X works gives explanatory-reach. Explanatory-reach is a direction, not a gate.
 
-Apply reach to claim formulation:
+Apply explanatory-reach to claim formulation:
 - State the claim under the weakest assumptions the argument actually uses.
 - Treat qualifiers in the title, description, opening claim, and main proof as obligations. If a qualifier does not change the reasoning when removed, drop it from the claim or move it to an application, corollary, or scope note.
 - Keep real boundaries explicit. A boundary belongs in the claim when the argument depends on it; otherwise it belongs in `## Scope`, `## Caveats`, or a nearby narrower application note.

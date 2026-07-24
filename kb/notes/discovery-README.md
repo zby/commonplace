@@ -1,5 +1,5 @@
 ---
-description: "Curated head for the discovery tag — positing a general concept and recognizing particulars as its instances; reach as the value of what discovery produces"
+description: "Curated head for the discovery tag — positing a general concept and recognizing particulars as its instances; explanatory-reach as the value of what discovery produces"
 type: kb/types/tag-readme.md
 index_source: tag
 index_key: discovery
@@ -8,7 +8,7 @@ complete: true
 
 # discovery
 
-A learning operation distinct from constraining and from source-derived reshaping: positing a new general concept and simultaneously recognizing existing particulars as instances of it. Discovery produces theories — the highest-[reach](./first-principles-reasoning-selects-for-explanatory-reach-over.md) items accumulation can store. A child of [learning-theory](./learning-theory-README.md).
+A learning operation distinct from constraining and from source-derived reshaping: positing a new general concept and simultaneously recognizing existing particulars as instances of it. Discovery produces theories — the highest-[explanatory-reach](./first-principles-reasoning-selects-for-explanatory-reach-over.md) items accumulation can store. A child of [learning-theory](./learning-theory-README.md).
 
 ## The operation
 
@@ -19,8 +19,8 @@ A learning operation distinct from constraining and from source-derived reshapin
 
 ## Reach — what discovery produces
 
-- [first-principles reasoning selects for explanatory reach](./first-principles-reasoning-selects-for-explanatory-reach-over.md) — Deutsch's adaptive-vs-explanatory distinction: explanatory knowledge transfers because it captures why, not just what works
-- [brainstorming: how reach informs KB design](./brainstorming-how-reach-informs-kb-design.md) — working notes applying the reach concept to KB design decisions
+- [first-principles reasoning selects for explanatory-reach](./first-principles-reasoning-selects-for-explanatory-reach-over.md) — Deutsch's adaptive-vs-explanatory distinction: explanatory knowledge transfers because it captures why, not just what works
+- [brainstorming: how explanatory-reach informs KB design](./brainstorming-how-explanatory-reach-informs-kb-design.md) — working notes applying the explanatory-reach concept to KB design decisions
 
 ## Conditions for discovery
 

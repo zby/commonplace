@@ -18,7 +18,7 @@ The organizing framework of the learning-theory area: deployed systems adapt thr
 
 ## Learning fundamentals
 
-- [learning is not only about generality](./learning-is-not-only-about-generality.md) — accumulation as the basic operation, with reach as its key property; capacity decomposes into generality vs a reliability/speed/cost compound
+- [learning is not only about generality](./learning-is-not-only-about-generality.md) — accumulation as the basic operation, with explanatory-reach as its key property; capacity decomposes into generality vs a reliability/speed/cost compound
 - [LLM learning phases fall between human learning modes](./llm-learning-phases-fall-between-human-learning-modes.md) — warns against literal human-LLM learning analogies
 - [in-context learning presupposes context engineering](./in-context-learning-presupposes-context-engineering.md) — "no continual learning needed" relocates the learning to the system layer rather than eliminating it
 - [choosing what to learn requires both validity and learning-value gates](./choosing-what-to-learn-requires-both-validity-and-learning-value-gates.md) — accumulation policy: true is necessary but not sufficient
@@ -34,4 +34,4 @@ The organizing framework of the learning-theory area: deployed systems adapt thr
 ## Related Tags
 
 - [constraining](./constraining-README.md) — the primary hardening mechanism inside the framework
-- [discovery](./discovery-README.md) — the operation that produces the framework's highest-reach artifacts
+- [discovery](./discovery-README.md) — the operation that produces the framework's highest-explanatory-reach artifacts

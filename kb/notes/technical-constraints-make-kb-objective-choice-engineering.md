@@ -35,7 +35,7 @@ The surviving objective is not monolithic. It is specialized down a three-level 
 
 - **Global KB goals set the loss.** The always-loaded control-plane goals — purpose, scope, quality bar — are the top-level objective every session optimizes against, and they decide inclusion before anything else does, since [KB goals in always-loaded context guide inclusion decisions](./kb-goals-in-always-loaded-context-guide-inclusion-decisions.md). This is the domain filter: it deletes off-scope material however well-written.
 
-- **COLLECTION.md text contracts specialize the loss per collection.** Each writable collection declares a quality goal in its [text contract](./definitions/text-contract.md) — the local objective its writers and reviewers treat as decisive. `kb/notes/` optimizes reach; `kb/reference/` optimizes fidelity and economy; `kb/instructions/` optimizes executability and precision. Same global goal, different residual loss per subtree.
+- **COLLECTION.md text contracts specialize the loss per collection.** Each writable collection declares a quality goal in its [text contract](./definitions/text-contract.md) — the local objective its writers and reviewers treat as decisive. `kb/notes/` optimizes explanatory-reach; `kb/reference/` optimizes fidelity and economy; `kb/instructions/` optimizes executability and precision. Same global goal, different residual loss per subtree.
 
 - **Profiles are named, proven objective-function bundles.** A [profile](./definitions/text-contract.md) is a pre-packaged objective a collection adopts, extends, or replaces wholesale — theoretical, descriptive, prescriptive are the shipped defaults, and the set is open and worked-case-gated. A profile is exactly what an optimization framework calls a loss template: a bundle of orientation, quality goal, and link grammar that has been shown to travel together (see [a knowledge base holds theories, descriptions, and prescriptions with asymmetric linking](./a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md)).
 
@@ -62,7 +62,7 @@ That the profile with the weakest oracle (theoretical) carries the KB's most val
 ## Open Questions
 
 - Is the model's fixed lexicon a genuinely independent constraint, or a facet of the bounded-context/consumer commitment already covered by inheritance?
-- Can the theoretical profile's "widest judges" ever be hardened into a real oracle, or is reach permanently a no-oracle objective — in which case the KB's central objective is structurally the one it can never fully automate?
+- Can the theoretical profile's "widest judges" ever be hardened into a real oracle, or is explanatory-reach permanently a no-oracle objective — in which case the KB's central objective is structurally the one it can never fully automate?
 
 ---
 

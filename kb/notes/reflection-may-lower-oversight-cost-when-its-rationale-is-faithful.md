@@ -29,7 +29,7 @@ Take retained changes whose ground-truth quality is known, some subtly bad in wa
 
 ## Scope
 
-- This is the oversight sibling of the [target-data payoff](./reflection-may-improve-sample-efficiency-under-structured-shifts.md): both narrow one bullet of the addressability affordance to a measurable claim, and both turn on a condition addressability does not itself supply — there, a structured shift the commitment's reach covers; here, a faithful rationale the overseer can assess.
+- This is the oversight sibling of the [target-data payoff](./reflection-may-improve-sample-efficiency-under-structured-shifts.md): both narrow one bullet of the addressability affordance to a measurable claim, and both turn on a condition addressability does not itself supply — there, a structured shift the commitment's explanatory-reach covers; here, a faithful rationale the overseer can assess.
 - The claim is about oversight cost, not about whether the change is good. A faithful rationale for a bad change lets the overseer *reject* it cheaply; faithfulness makes the decision reliable, not favorable.
 - The cited studies establish the faithfulness–plausibility distinction and an intervention-based failure mode for model explanations and chain-of-thought. They do not directly test native rationales retained with changes, human probe counts, or oversight accuracy; applying their result here is a hypothesis this note's proposed experiment must test.
 
