@@ -16,7 +16,7 @@ Tests for precision:
 
 **Reasoning constraint.** Cut explanations of *why* each step exists from the instruction body. If worth preserving, record in a theory note and link via `rationale` (for meta-readers only). Keep only enough reasoning for edge cases and decisions.
 
-**Instruction duality.** These docs are both content and working system — changing an instruction changes agent behaviour immediately. Treat edits as deployments, not documentation updates.
+**Instruction duality.** These docs are both content and working system — changing an instruction changes agent behaviour immediately. Treat edits as deployments, not documentation updates: before changing one, name what consumes it and through which channel (the type spec's Operativity section states the test); the edit is live for the next agent that loads the text, with no separate release step. The same duality means an instruction nothing loads is inert — it deploys to no one, and nothing will report that (rationale: [operative change](../notes/definitions/operative-change.md)).
 
 ## Title and description conventions
 
