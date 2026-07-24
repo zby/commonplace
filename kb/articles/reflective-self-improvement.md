@@ -16,7 +16,7 @@ source_notes:
 
 # Reflective self-improvement
 
-Your agent can read its own source. Not metaphorically: the prompts that steer it, the instruction files it obeys, the skills it loads, the code of its validators — all plain text, sitting in a repository the agent itself can open, search, and criticize. Software that acts on a representation of itself is not new — *computational reflection* has a decades-old literature. What is new is the surface: with LLM agents, natural language itself became operative, so a system that keeps its definition in prose can [improve itself](../notes/definitions/self-improving-system.md) by analyzing and rewriting that definition. The name for this is **reflective self-improvement**, and Commonplace is a framework for doing it systematically.
+Your agent can read its own source. Not metaphorically: the prompts that steer it, the instruction files it obeys, the skills it loads, the code of its validators — all plain text, sitting in a repository the agent itself can open, search, and criticize. Software that acts on a representation of itself is not new — *computational reflection* has a decades-old literature. Prose that steers behavior is not new either: legal codes and operating procedures have always been operative, through human readers. What is new is who does the reading: with LLM agents, part of the interpretation, criticism, and rewriting moves inside the computational boundary, so a system that keeps its definition in prose can [improve itself](../notes/definitions/self-improving-system.md) by analyzing and rewriting that definition. The name for this is **reflective self-improvement**, and Commonplace is a framework for doing it systematically.
 
 ## The bootstrap, with the author inside
 
