@@ -5,47 +5,12 @@ allOf:
     properties:
       frontmatter:
         type: object
-        required:
-          - description
-          - type
-          - status
-          - byline
-          - source_notes
         properties:
           type:
             const: kb/articles/types/article.md
-          status:
-            enum: [draft, published, superseded, withdrawn]
-          byline:
-            type: string
-            minLength: 1
           source_notes:
             type: array
-            minItems: 1
             items:
               type: string
               pattern: '^kb/.+\.md$'
-          published:
-            type: string
-            format: date
-          superseded_by:
-            type: string
-            pattern: '^kb/articles/.+\.md$'
         additionalProperties: true
-        allOf:
-          - if:
-              properties:
-                status:
-                  enum: [published, superseded, withdrawn]
-              required: [status]
-            then:
-              required: [published]
-              description: a non-draft article must carry its publication date
-          - if:
-              properties:
-                status:
-                  const: superseded
-              required: [status]
-            then:
-              required: [superseded_by]
-              description: a superseded article must name its successor
