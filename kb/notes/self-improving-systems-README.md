@@ -50,6 +50,7 @@ Completing particular reflective proposal-selection pathways while separately ad
 - [Ashby's Homeostat](../sources/ashby-design-for-a-brain-ultrastability.md) — operative, non-reflective, computationally autonomous, and non-cumulative under the informational-dependence criterion.
 - Parametric self-improvers (self-play, fine-tuning on their own trajectories) — cumulative and computationally autonomous, but non-reflective because retained weights remain opaque.
 - The [Gödel machine](./goedel-machines-are-a-proof-governed-case-of-self-modification.md) — reflective and computationally autonomous, with methodological closure and warrant bounded by what its proof system can establish.
+- [Knowledge-Centric Self-Improvement](../sources/knowledge-centric-self-improvement-2607.19592.ingest.md) — disposable agents around a curated knowledge base: proposal-selection, computationally autonomous, cumulative across generations, reflective coverage confined to the retained claims, and warrant bounded by its benchmark oracles.
 - [Commonplace itself](../reference/commonplace-as-a-reflective-system.md) — human-inclusive, reflective, and cumulative, with governance and actor allocation varying by decision.
 
 Read every claim at its stated strength: definitions are stipulated and revisable; payoff claims are open hypotheses.
