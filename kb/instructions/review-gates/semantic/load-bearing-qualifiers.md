@@ -11,7 +11,7 @@ requires_trait: title-as-claim
 
 ## Failure mode
 
-A claim is narrower than its argument requires because a qualifier, precondition, or scope restriction appears in the title, description, opening claim, or proof without doing work in the reasoning. The note may still be true, but its reach is artificially limited: readers inherit an unnecessary assumption, downstream notes cite the narrower form, and later cleanup has to rename or rewrite the claim.
+A claim is narrower than its argument requires because a qualifier, precondition, or scope restriction appears in the title, description, opening claim, or proof without doing work in the reasoning. The note may still be true, but its explanatory-reach is artificially limited: readers inherit an unnecessary assumption, downstream notes cite the narrower form, and later cleanup has to rename or rewrite the claim.
 
 One common version is **usage-fit narrowing**: the note states a claim in the exact shape needed by one downstream use even though the reasoning proves a broader claim. A broader theorem can serve a special case; the special-case condition should become a corollary, consequence, scope note, or application paragraph, not an unnecessary assumption in the central claim.
 

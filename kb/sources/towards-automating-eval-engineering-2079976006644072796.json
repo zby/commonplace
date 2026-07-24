@@ -1,0 +1,1035 @@
+{
+  "source": "https://x.com/Vtrivedy10/status/2079976006644072796",
+  "captured": "2026-07-23T16:45:02.869267+00:00",
+  "family": "x-article",
+  "status_id": "2079976006644072796",
+  "conversation_id": "2079976006644072796",
+  "target_post": {
+    "attachments": null,
+    "author_id": "1222786244",
+    "community_id": null,
+    "context_annotations": null,
+    "conversation_id": "2079976006644072796",
+    "created_at": "2026-07-22T17:04:58.000Z",
+    "display_text_range": null,
+    "edit_controls": null,
+    "edit_history_tweet_ids": [
+      "2079976006644072796"
+    ],
+    "entities": {
+      "annotations": null,
+      "cashtags": null,
+      "hashtags": null,
+      "mentions": null,
+      "urls": [
+        {
+          "end": 23,
+          "start": 0,
+          "display_url": "x.com/i/article/2079\u2026",
+          "expanded_url": "http://x.com/i/article/2079797742168150017",
+          "status": 500,
+          "unwound_url": "https://x.com/i/article/2079797742168150017",
+          "url": "https://t.co/Eb1h1RFPie"
+        }
+      ]
+    },
+    "geo": null,
+    "id": "2079976006644072796",
+    "in_reply_to_user_id": null,
+    "lang": null,
+    "matched_media_notes": null,
+    "non_public_metrics": null,
+    "note_request_suggestions": null,
+    "note_tweet": null,
+    "organic_metrics": null,
+    "paid_partnership": null,
+    "possibly_sensitive": null,
+    "promoted_metrics": null,
+    "public_metrics": null,
+    "referenced_tweets": null,
+    "reply_settings": null,
+    "scopes": null,
+    "source": null,
+    "suggested_source_links": null,
+    "suggested_source_links_with_counts": null,
+    "text": "https://t.co/Eb1h1RFPie",
+    "username": null,
+    "withheld": null,
+    "article": {
+      "cover_media": "3_2079964931756019712",
+      "entities": {
+        "code": [
+          {
+            "code": "evals/<task-id>/\n\u251c\u2500\u2500 task.toml\n\u251c\u2500\u2500 instruction.md\n\u251c\u2500\u2500 environment/\n\u2514\u2500\u2500 tests/",
+            "content": "```markdown\nevals/<task-id>/\n\u251c\u2500\u2500 task.toml\n\u251c\u2500\u2500 instruction.md\n\u251c\u2500\u2500 environment/\n\u2514\u2500\u2500 tests/\n```",
+            "language": "markdown"
+          }
+        ],
+        "urls": [
+          {
+            "text": "https://www.harborframework.com/docs/tasks"
+          },
+          {
+            "text": "https://www.langchain.com/blog/improving-agents-is-a-data-mining-problem"
+          },
+          {
+            "text": "https://docs.langchain.com/langsmith/langsmith-cli"
+          },
+          {
+            "text": "https://github.com/harbor-framework/harbor"
+          },
+          {
+            "text": "https://github.com/langchain-ai/chat-langchain"
+          },
+          {
+            "text": "https://github.com/langchain-ai/langchain-skills/tree/main/config/skills/eval-engineering"
+          }
+        ]
+      },
+      "media_entities": [
+        "3_2079798551492579328"
+      ],
+      "plain_text": "Today we\u2019re releasing our Eval Engineering Skill, a skill that helps coding agents build evals using context from a repository and agent traces.\nThe skill inspects how an agent is structured, mines patterns from traces if available, and proposes abilities to test.\nThe skill is designed to interview the user who can give feedback on proposals and iteratively approve each eval.  The end product is a set of executable evals in Harbor format.\nBuilding the Environment & Task\nThe skill first reads the repository and maps the agent surface including prompts, models, tools, skills, hooks, etc. It also identifies the data and services that back those behaviors such such as API calls.\nUsers can also point the agent to traces which can be retrieved using tools like the langsmith-cli.  Traces show how tools behave in practice such as their arguments, results, and errors. These observed contracts help the skill reproduce relevant production behavior in a controlled environment.\nCrawling the repo and traces gives the agent knowledge of a which abilities are important for the agent as it proposes eval tasks. We found that interviewing the user, leads to much better eval acceptance than one-shot generation.  The user chooses from the proposed eval directions, and gives guidance on questions such as which tools & dependencies should run live or need to be simulated.  For example, tool calls that incur costs or require writes to production can be simulated instead of being run on every eval invocation.\nWe tested this flow on our documentation Q&A agent, chat-langchain.  For this agent, the environment required a data corpus exposed through agent search tools modeled on the production agent. The tasks included realistic documentation question pulled from real traces and a verifier that checked the answer using a golden answer string and cited documents.\n \nEval Design is iterative\nWe found that while agents are sometimes able to one-shot evals, the best evals came from users providing feedback and specifying which capabilities were worth measuring in agents. Coding agents & skills provide a natural interface where domain knowledge on how to build a good eval are encoded and users can iterate over them over time.\nFor example, we found that when building verifiers, the first verifier was rarely the final one. A useful way to improve it was to run the eval and inspect both sides of the result:\nthe agent trajectory, including its messages, tool calls, and actions.\nthe verifier trajectory, evidence, reasoning, and final score.\nThis helped reveal if the task or verifier design was measuring what we cared about or if it could be reward hacked where agents could take shortcuts.  These shortcuts could include overciting irrelevant sources to receive full credit on the eval, claim an action it never took, exploit exposed answer material, or satisfy a proxy without completing the task. Observing the traces for how agents solve problems often reveal the source of these failures. The task, environment, and verifier can then be revised and run again.\nEvals are in Harbor format\nThe skill builds evals as Harbor tasks:\nAn Instruction: the message given to the agent at start describing the task\nAn environment: given as a Dockerfile containing the setup for the task such as what tools to install or what data to populate in the filesystem\nA verifier that scores whether the agent completed the task correctly.\nThe skill builds these components together as a Harbor task:\n \nHarbor runs the agent in the environment and records its trajectory, artifacts, reward, and errors. The same eval can then run against different models, prompts, tools, and agent versions.\nWhy this matters\nContinual learning can be thought of as a continuous data mining problem where production data is used to build evals that improve agents over time. Teams mine traces to find recurring user requests, errors, failed tool calls, and incorrect state changes. which become evals so the same behavior can be measured and prevented in the future.\nEvals are training data for agents. Teams can fit agent behavior to them through harness engineering such as changing prompts & tools or fine-tuning. The eval provides a fixed target for deciding whether those changes improved the intended capability.\nContainerized evals make this process faster. The task and environment remain stable while the agent configuration changes, so builders can swap models, tools, prompts, or complete agent versions and compare results directly. Multiple configurations can run in parallel.\nReproducible environments are critical to that signal. When an eval mirrors the relevant tools, data, permissions, state, and failure modes from production, builders get a stable testbed that is still representative of how the agent operates. They can experiment quickly without relying on changing production systems or writing to production state.\nThe resulting loop is:\nmine traces -> identify a failure -> build an eval -> improve the agent -> rerun\nTry it today\nThe Eval Engineering Skill is available in the langchain-ai/langchain-skills repository.\nInstall the skill in Codex or Claude Code, open the repository containing the agent you want to evaluate, point to agent to a set of traces if available, and start with a simple prompt:\nWe\u2019re looking forward to expanding this skill and building tooling to make it easier to automatically build evals and fit agents to them autonomously.",
+      "preview_text": "Today we\u2019re releasing our Eval Engineering Skill, a skill that helps coding agents build evals using context from a repository and agent traces.\nThe skill inspects how an agent is structured, mines",
+      "title": "Towards Automating Eval Engineering"
+    }
+  },
+  "posts": [
+    {
+      "attachments": null,
+      "author_id": "1222786244",
+      "community_id": null,
+      "context_annotations": null,
+      "conversation_id": "2079976006644072796",
+      "created_at": "2026-07-22T17:04:58.000Z",
+      "display_text_range": null,
+      "edit_controls": null,
+      "edit_history_tweet_ids": [
+        "2079976006644072796"
+      ],
+      "entities": {
+        "annotations": null,
+        "cashtags": null,
+        "hashtags": null,
+        "mentions": null,
+        "urls": [
+          {
+            "end": 23,
+            "start": 0,
+            "display_url": "x.com/i/article/2079\u2026",
+            "expanded_url": "http://x.com/i/article/2079797742168150017",
+            "status": 500,
+            "unwound_url": "https://x.com/i/article/2079797742168150017",
+            "url": "https://t.co/Eb1h1RFPie"
+          }
+        ]
+      },
+      "geo": null,
+      "id": "2079976006644072796",
+      "in_reply_to_user_id": null,
+      "lang": null,
+      "matched_media_notes": null,
+      "non_public_metrics": null,
+      "note_request_suggestions": null,
+      "note_tweet": null,
+      "organic_metrics": null,
+      "paid_partnership": null,
+      "possibly_sensitive": null,
+      "promoted_metrics": null,
+      "public_metrics": null,
+      "referenced_tweets": null,
+      "reply_settings": null,
+      "scopes": null,
+      "source": null,
+      "suggested_source_links": null,
+      "suggested_source_links_with_counts": null,
+      "text": "https://t.co/Eb1h1RFPie",
+      "username": null,
+      "withheld": null,
+      "article": {
+        "cover_media": "3_2079964931756019712",
+        "entities": {
+          "code": [
+            {
+              "code": "evals/<task-id>/\n\u251c\u2500\u2500 task.toml\n\u251c\u2500\u2500 instruction.md\n\u251c\u2500\u2500 environment/\n\u2514\u2500\u2500 tests/",
+              "content": "```markdown\nevals/<task-id>/\n\u251c\u2500\u2500 task.toml\n\u251c\u2500\u2500 instruction.md\n\u251c\u2500\u2500 environment/\n\u2514\u2500\u2500 tests/\n```",
+              "language": "markdown"
+            }
+          ],
+          "urls": [
+            {
+              "text": "https://www.harborframework.com/docs/tasks"
+            },
+            {
+              "text": "https://www.langchain.com/blog/improving-agents-is-a-data-mining-problem"
+            },
+            {
+              "text": "https://docs.langchain.com/langsmith/langsmith-cli"
+            },
+            {
+              "text": "https://github.com/harbor-framework/harbor"
+            },
+            {
+              "text": "https://github.com/langchain-ai/chat-langchain"
+            },
+            {
+              "text": "https://github.com/langchain-ai/langchain-skills/tree/main/config/skills/eval-engineering"
+            }
+          ]
+        },
+        "media_entities": [
+          "3_2079798551492579328"
+        ],
+        "plain_text": "Today we\u2019re releasing our Eval Engineering Skill, a skill that helps coding agents build evals using context from a repository and agent traces.\nThe skill inspects how an agent is structured, mines patterns from traces if available, and proposes abilities to test.\nThe skill is designed to interview the user who can give feedback on proposals and iteratively approve each eval.  The end product is a set of executable evals in Harbor format.\nBuilding the Environment & Task\nThe skill first reads the repository and maps the agent surface including prompts, models, tools, skills, hooks, etc. It also identifies the data and services that back those behaviors such such as API calls.\nUsers can also point the agent to traces which can be retrieved using tools like the langsmith-cli.  Traces show how tools behave in practice such as their arguments, results, and errors. These observed contracts help the skill reproduce relevant production behavior in a controlled environment.\nCrawling the repo and traces gives the agent knowledge of a which abilities are important for the agent as it proposes eval tasks. We found that interviewing the user, leads to much better eval acceptance than one-shot generation.  The user chooses from the proposed eval directions, and gives guidance on questions such as which tools & dependencies should run live or need to be simulated.  For example, tool calls that incur costs or require writes to production can be simulated instead of being run on every eval invocation.\nWe tested this flow on our documentation Q&A agent, chat-langchain.  For this agent, the environment required a data corpus exposed through agent search tools modeled on the production agent. The tasks included realistic documentation question pulled from real traces and a verifier that checked the answer using a golden answer string and cited documents.\n \nEval Design is iterative\nWe found that while agents are sometimes able to one-shot evals, the best evals came from users providing feedback and specifying which capabilities were worth measuring in agents. Coding agents & skills provide a natural interface where domain knowledge on how to build a good eval are encoded and users can iterate over them over time.\nFor example, we found that when building verifiers, the first verifier was rarely the final one. A useful way to improve it was to run the eval and inspect both sides of the result:\nthe agent trajectory, including its messages, tool calls, and actions.\nthe verifier trajectory, evidence, reasoning, and final score.\nThis helped reveal if the task or verifier design was measuring what we cared about or if it could be reward hacked where agents could take shortcuts.  These shortcuts could include overciting irrelevant sources to receive full credit on the eval, claim an action it never took, exploit exposed answer material, or satisfy a proxy without completing the task. Observing the traces for how agents solve problems often reveal the source of these failures. The task, environment, and verifier can then be revised and run again.\nEvals are in Harbor format\nThe skill builds evals as Harbor tasks:\nAn Instruction: the message given to the agent at start describing the task\nAn environment: given as a Dockerfile containing the setup for the task such as what tools to install or what data to populate in the filesystem\nA verifier that scores whether the agent completed the task correctly.\nThe skill builds these components together as a Harbor task:\n \nHarbor runs the agent in the environment and records its trajectory, artifacts, reward, and errors. The same eval can then run against different models, prompts, tools, and agent versions.\nWhy this matters\nContinual learning can be thought of as a continuous data mining problem where production data is used to build evals that improve agents over time. Teams mine traces to find recurring user requests, errors, failed tool calls, and incorrect state changes. which become evals so the same behavior can be measured and prevented in the future.\nEvals are training data for agents. Teams can fit agent behavior to them through harness engineering such as changing prompts & tools or fine-tuning. The eval provides a fixed target for deciding whether those changes improved the intended capability.\nContainerized evals make this process faster. The task and environment remain stable while the agent configuration changes, so builders can swap models, tools, prompts, or complete agent versions and compare results directly. Multiple configurations can run in parallel.\nReproducible environments are critical to that signal. When an eval mirrors the relevant tools, data, permissions, state, and failure modes from production, builders get a stable testbed that is still representative of how the agent operates. They can experiment quickly without relying on changing production systems or writing to production state.\nThe resulting loop is:\nmine traces -> identify a failure -> build an eval -> improve the agent -> rerun\nTry it today\nThe Eval Engineering Skill is available in the langchain-ai/langchain-skills repository.\nInstall the skill in Codex or Claude Code, open the repository containing the agent you want to evaluate, point to agent to a set of traces if available, and start with a simple prompt:\nWe\u2019re looking forward to expanding this skill and building tooling to make it easier to automatically build evals and fit agents to them autonomously.",
+        "preview_text": "Today we\u2019re releasing our Eval Engineering Skill, a skill that helps coding agents build evals using context from a repository and agent traces.\nThe skill inspects how an agent is structured, mines",
+        "title": "Towards Automating Eval Engineering"
+      }
+    },
+    {
+      "attachments": null,
+      "author_id": "1222786244",
+      "community_id": null,
+      "context_annotations": null,
+      "conversation_id": "2079976006644072796",
+      "created_at": "2026-07-22T17:47:34.000Z",
+      "display_text_range": null,
+      "edit_controls": null,
+      "edit_history_tweet_ids": [
+        "2079986727620321281"
+      ],
+      "entities": {
+        "annotations": null,
+        "cashtags": null,
+        "hashtags": null,
+        "mentions": [
+          {
+            "end": 11,
+            "start": 0,
+            "id": "1814730351765291008",
+            "username": "novasarc01"
+          },
+          {
+            "end": 20,
+            "start": 12,
+            "id": "3382720905",
+            "username": "xeophon"
+          }
+        ],
+        "urls": [
+          {
+            "end": 55,
+            "start": 32,
+            "display_url": "pic.x.com/9JT1cJagu8",
+            "expanded_url": "https://x.com/Vtrivedy10/status/2079986727620321281/photo/1",
+            "media_key": "16_2079986717935718400",
+            "url": "https://t.co/9JT1cJagu8"
+          }
+        ]
+      },
+      "geo": null,
+      "id": "2079986727620321281",
+      "in_reply_to_user_id": "1814730351765291008",
+      "lang": null,
+      "matched_media_notes": null,
+      "non_public_metrics": null,
+      "note_request_suggestions": null,
+      "note_tweet": null,
+      "organic_metrics": null,
+      "paid_partnership": null,
+      "possibly_sensitive": null,
+      "promoted_metrics": null,
+      "public_metrics": null,
+      "referenced_tweets": [
+        {
+          "id": "2079985901284008062",
+          "type": "replied_to"
+        }
+      ],
+      "reply_settings": null,
+      "scopes": null,
+      "source": null,
+      "suggested_source_links": null,
+      "suggested_source_links_with_counts": null,
+      "text": "@novasarc01 @xeophon impossible https://t.co/9JT1cJagu8",
+      "username": null,
+      "withheld": null
+    },
+    {
+      "attachments": null,
+      "author_id": "1222786244",
+      "community_id": null,
+      "context_annotations": null,
+      "conversation_id": "2079976006644072796",
+      "created_at": "2026-07-22T19:02:47.000Z",
+      "display_text_range": null,
+      "edit_controls": null,
+      "edit_history_tweet_ids": [
+        "2080005655897743399"
+      ],
+      "entities": {
+        "annotations": null,
+        "cashtags": null,
+        "hashtags": null,
+        "mentions": [
+          {
+            "end": 8,
+            "start": 0,
+            "id": "3382720905",
+            "username": "xeophon"
+          },
+          {
+            "end": 20,
+            "start": 9,
+            "id": "1814730351765291008",
+            "username": "novasarc01"
+          }
+        ],
+        "urls": null
+      },
+      "geo": null,
+      "id": "2080005655897743399",
+      "in_reply_to_user_id": "3382720905",
+      "lang": null,
+      "matched_media_notes": null,
+      "non_public_metrics": null,
+      "note_request_suggestions": null,
+      "note_tweet": null,
+      "organic_metrics": null,
+      "paid_partnership": null,
+      "possibly_sensitive": null,
+      "promoted_metrics": null,
+      "public_metrics": null,
+      "referenced_tweets": [
+        {
+          "id": "2079991954436149255",
+          "type": "replied_to"
+        }
+      ],
+      "reply_settings": null,
+      "scopes": null,
+      "source": null,
+      "suggested_source_links": null,
+      "suggested_source_links_with_counts": null,
+      "text": "@xeophon @novasarc01 but what could be more fun on a Sunday morning than Traces, Envs, and football \ud83e\uddd0",
+      "username": null,
+      "withheld": null
+    },
+    {
+      "attachments": null,
+      "author_id": "1222786244",
+      "community_id": null,
+      "context_annotations": null,
+      "conversation_id": "2079976006644072796",
+      "created_at": "2026-07-22T19:19:51.000Z",
+      "display_text_range": null,
+      "edit_controls": null,
+      "edit_history_tweet_ids": [
+        "2080009951456457200"
+      ],
+      "entities": {
+        "annotations": null,
+        "cashtags": null,
+        "hashtags": null,
+        "mentions": [
+          {
+            "end": 8,
+            "start": 0,
+            "id": "1681456803832561664",
+            "username": "GitMaxd"
+          }
+        ],
+        "urls": null
+      },
+      "geo": null,
+      "id": "2080009951456457200",
+      "in_reply_to_user_id": "1681456803832561664",
+      "lang": null,
+      "matched_media_notes": null,
+      "non_public_metrics": null,
+      "note_request_suggestions": null,
+      "note_tweet": null,
+      "organic_metrics": null,
+      "paid_partnership": null,
+      "possibly_sensitive": null,
+      "promoted_metrics": null,
+      "public_metrics": null,
+      "referenced_tweets": [
+        {
+          "id": "2080009611940429972",
+          "type": "replied_to"
+        }
+      ],
+      "reply_settings": null,
+      "scopes": null,
+      "source": null,
+      "suggested_source_links": null,
+      "suggested_source_links_with_counts": null,
+      "text": "@GitMaxd yeah haha we\u2019re big fans of Harbor format!  also forces us humans to explicitly interact with both task and verifier design -&gt; verifier design is hard :)",
+      "username": null,
+      "withheld": null
+    },
+    {
+      "attachments": null,
+      "author_id": "1222786244",
+      "community_id": null,
+      "context_annotations": null,
+      "conversation_id": "2079976006644072796",
+      "created_at": "2026-07-22T21:02:14.000Z",
+      "display_text_range": null,
+      "edit_controls": null,
+      "edit_history_tweet_ids": [
+        "2080035717061722370"
+      ],
+      "entities": {
+        "annotations": null,
+        "cashtags": null,
+        "hashtags": null,
+        "mentions": [
+          {
+            "end": 10,
+            "start": 0,
+            "id": "416403447",
+            "username": "htahir111"
+          },
+          {
+            "end": 20,
+            "start": 11,
+            "id": "3064259332",
+            "username": "willccbb"
+          }
+        ],
+        "urls": [
+          {
+            "end": 323,
+            "start": 300,
+            "display_url": "pic.x.com/3GRqOWyIoX",
+            "expanded_url": "https://x.com/Vtrivedy10/status/2080035717061722370/photo/1",
+            "media_key": "3_2080035713500770304",
+            "url": "https://t.co/3GRqOWyIoX"
+          }
+        ]
+      },
+      "geo": null,
+      "id": "2080035717061722370",
+      "in_reply_to_user_id": "416403447",
+      "lang": null,
+      "matched_media_notes": null,
+      "non_public_metrics": null,
+      "note_request_suggestions": null,
+      "note_tweet": null,
+      "organic_metrics": null,
+      "paid_partnership": null,
+      "possibly_sensitive": null,
+      "promoted_metrics": null,
+      "public_metrics": null,
+      "referenced_tweets": [
+        {
+          "id": "2080031469133529175",
+          "type": "replied_to"
+        }
+      ],
+      "reply_settings": null,
+      "scopes": null,
+      "source": null,
+      "suggested_source_links": null,
+      "suggested_source_links_with_counts": null,
+      "text": "@htahir111 @willccbb love harbor format and of course everything prime for DX!  PI has an integration with harbor, will prob add reference in the skill later for common providers - more coming on extending this to the \u201cwhat next\u201d which includes post-training\n\npic from their latest verifiers v1 blog https://t.co/3GRqOWyIoX",
+      "username": null,
+      "withheld": null
+    },
+    {
+      "attachments": null,
+      "author_id": "1222786244",
+      "community_id": null,
+      "context_annotations": null,
+      "conversation_id": "2079976006644072796",
+      "created_at": "2026-07-22T21:17:52.000Z",
+      "display_text_range": null,
+      "edit_controls": null,
+      "edit_history_tweet_ids": [
+        "2080039651071689013"
+      ],
+      "entities": {
+        "annotations": null,
+        "cashtags": null,
+        "hashtags": null,
+        "mentions": [
+          {
+            "end": 9,
+            "start": 0,
+            "id": "1689423238173007873",
+            "username": "mattlam_"
+          }
+        ],
+        "urls": null
+      },
+      "geo": null,
+      "id": "2080039651071689013",
+      "in_reply_to_user_id": "1689423238173007873",
+      "lang": null,
+      "matched_media_notes": null,
+      "non_public_metrics": null,
+      "note_request_suggestions": null,
+      "note_tweet": {
+        "entities": null,
+        "text": "awesome, would love feedback as you do, will be actively extending this set of skills!\n\na ton!  some stuff currently in testing:\n- faithfully simulating users in environments using traces to calibrate (comes up in many agent tasks)\n\n- better synthetic data generation for creating an environment, basically collecting more data on how to structure simulated data such that eval env and prod env aren\u2019t too diverged"
+      },
+      "organic_metrics": null,
+      "paid_partnership": null,
+      "possibly_sensitive": null,
+      "promoted_metrics": null,
+      "public_metrics": null,
+      "referenced_tweets": [
+        {
+          "id": "2080033724402655554",
+          "type": "replied_to"
+        }
+      ],
+      "reply_settings": null,
+      "scopes": null,
+      "source": null,
+      "suggested_source_links": null,
+      "suggested_source_links_with_counts": null,
+      "text": "@mattlam_ awesome, would love feedback as you do, will be actively extending this set of skills!\n\na ton!  some stuff currently in testing:\n- faithfully simulating users in environments using traces to calibrate (comes up in many agent tasks)\n\n- better synthetic data generation for creating",
+      "username": null,
+      "withheld": null
+    },
+    {
+      "attachments": null,
+      "author_id": "1222786244",
+      "community_id": null,
+      "context_annotations": null,
+      "conversation_id": "2079976006644072796",
+      "created_at": "2026-07-23T13:07:28.000Z",
+      "display_text_range": null,
+      "edit_controls": null,
+      "edit_history_tweet_ids": [
+        "2080278624142274848"
+      ],
+      "entities": {
+        "annotations": null,
+        "cashtags": null,
+        "hashtags": null,
+        "mentions": [
+          {
+            "end": 15,
+            "start": 0,
+            "id": "201984214",
+            "username": "michaelcapizzi"
+          },
+          {
+            "end": 26,
+            "start": 16,
+            "id": "2728439146",
+            "username": "hwchase17"
+          }
+        ],
+        "urls": null
+      },
+      "geo": null,
+      "id": "2080278624142274848",
+      "in_reply_to_user_id": "201984214",
+      "lang": null,
+      "matched_media_notes": null,
+      "non_public_metrics": null,
+      "note_request_suggestions": null,
+      "note_tweet": null,
+      "organic_metrics": null,
+      "paid_partnership": null,
+      "possibly_sensitive": null,
+      "promoted_metrics": null,
+      "public_metrics": null,
+      "referenced_tweets": [
+        {
+          "id": "2080269455377215612",
+          "type": "replied_to"
+        }
+      ],
+      "reply_settings": null,
+      "scopes": null,
+      "source": null,
+      "suggested_source_links": null,
+      "suggested_source_links_with_counts": null,
+      "text": "@michaelcapizzi @hwchase17 simulated users of pre-spec\u2019d responses, will be adding to the skill thx for the note!",
+      "username": null,
+      "withheld": null
+    },
+    {
+      "attachments": null,
+      "author_id": "1222786244",
+      "community_id": null,
+      "context_annotations": null,
+      "conversation_id": "2079976006644072796",
+      "created_at": "2026-07-23T13:35:17.000Z",
+      "display_text_range": null,
+      "edit_controls": null,
+      "edit_history_tweet_ids": [
+        "2080285624565649829"
+      ],
+      "entities": {
+        "annotations": null,
+        "cashtags": null,
+        "hashtags": null,
+        "mentions": [
+          {
+            "end": 11,
+            "start": 0,
+            "id": "25326200",
+            "username": "davefobare"
+          },
+          {
+            "end": 22,
+            "start": 12,
+            "id": "2728439146",
+            "username": "hwchase17"
+          }
+        ],
+        "urls": null
+      },
+      "geo": null,
+      "id": "2080285624565649829",
+      "in_reply_to_user_id": "25326200",
+      "lang": null,
+      "matched_media_notes": null,
+      "non_public_metrics": null,
+      "note_request_suggestions": null,
+      "note_tweet": null,
+      "organic_metrics": null,
+      "paid_partnership": null,
+      "possibly_sensitive": null,
+      "promoted_metrics": null,
+      "public_metrics": null,
+      "referenced_tweets": [
+        {
+          "id": "2080069252518674870",
+          "type": "replied_to"
+        }
+      ],
+      "reply_settings": null,
+      "scopes": null,
+      "source": null,
+      "suggested_source_links": null,
+      "suggested_source_links_with_counts": null,
+      "text": "@davefobare @hwchase17 this is a good start\n\u201c\u201d\u201d\nUse the eval-engineering skill to create an eval with me. Inspect the agent first, propose a few abilities worth testing, recommend one and then we can build it together\u201d\u201d\u201d",
+      "username": null,
+      "withheld": null
+    }
+  ],
+  "users": {
+    "1222786244": {
+      "id": "1222786244",
+      "name": "Viv",
+      "username": "Vtrivedy10",
+      "affiliation": null,
+      "connection_status": null,
+      "created_at": null,
+      "description": null,
+      "entities": null,
+      "location": null,
+      "most_recent_tweet_id": null,
+      "pinned_tweet_id": null,
+      "profile_banner_url": null,
+      "profile_image_url": null,
+      "protected": null,
+      "public_metrics": null,
+      "receives_your_dm": null,
+      "subscription_type": null,
+      "url": null,
+      "verified": null,
+      "verified_type": null,
+      "withheld": null
+    },
+    "2066765229791567873": {
+      "id": "2066765229791567873",
+      "name": "Sathish",
+      "username": "FanofAITech",
+      "affiliation": null,
+      "connection_status": null,
+      "created_at": null,
+      "description": null,
+      "entities": null,
+      "location": null,
+      "most_recent_tweet_id": null,
+      "pinned_tweet_id": null,
+      "profile_banner_url": null,
+      "profile_image_url": null,
+      "protected": null,
+      "public_metrics": null,
+      "receives_your_dm": null,
+      "subscription_type": null,
+      "url": null,
+      "verified": null,
+      "verified_type": null,
+      "withheld": null
+    },
+    "35493205": {
+      "id": "35493205",
+      "name": "Pralhad Kamath",
+      "username": "pro_kamath",
+      "affiliation": null,
+      "connection_status": null,
+      "created_at": null,
+      "description": null,
+      "entities": null,
+      "location": null,
+      "most_recent_tweet_id": null,
+      "pinned_tweet_id": null,
+      "profile_banner_url": null,
+      "profile_image_url": null,
+      "protected": null,
+      "public_metrics": null,
+      "receives_your_dm": null,
+      "subscription_type": null,
+      "url": null,
+      "verified": null,
+      "verified_type": null,
+      "withheld": null
+    },
+    "25326200": {
+      "id": "25326200",
+      "name": "Dave Fobare",
+      "username": "davefobare",
+      "affiliation": null,
+      "connection_status": null,
+      "created_at": null,
+      "description": null,
+      "entities": null,
+      "location": null,
+      "most_recent_tweet_id": null,
+      "pinned_tweet_id": null,
+      "profile_banner_url": null,
+      "profile_image_url": null,
+      "protected": null,
+      "public_metrics": null,
+      "receives_your_dm": null,
+      "subscription_type": null,
+      "url": null,
+      "verified": null,
+      "verified_type": null,
+      "withheld": null
+    },
+    "201984214": {
+      "id": "201984214",
+      "name": "Michael Capizzi",
+      "username": "michaelcapizzi",
+      "affiliation": null,
+      "connection_status": null,
+      "created_at": null,
+      "description": null,
+      "entities": null,
+      "location": null,
+      "most_recent_tweet_id": null,
+      "pinned_tweet_id": null,
+      "profile_banner_url": null,
+      "profile_image_url": null,
+      "protected": null,
+      "public_metrics": null,
+      "receives_your_dm": null,
+      "subscription_type": null,
+      "url": null,
+      "verified": null,
+      "verified_type": null,
+      "withheld": null
+    },
+    "2079922423219224576": {
+      "id": "2079922423219224576",
+      "name": "Wren \ud83e\udd16 (an AI agent)",
+      "username": "wrentheagent",
+      "affiliation": null,
+      "connection_status": null,
+      "created_at": null,
+      "description": null,
+      "entities": null,
+      "location": null,
+      "most_recent_tweet_id": null,
+      "pinned_tweet_id": null,
+      "profile_banner_url": null,
+      "profile_image_url": null,
+      "protected": null,
+      "public_metrics": null,
+      "receives_your_dm": null,
+      "subscription_type": null,
+      "url": null,
+      "verified": null,
+      "verified_type": null,
+      "withheld": null
+    },
+    "1720665183188922368": {
+      "id": "1720665183188922368",
+      "name": "Grok",
+      "username": "grok",
+      "affiliation": null,
+      "connection_status": null,
+      "created_at": null,
+      "description": null,
+      "entities": null,
+      "location": null,
+      "most_recent_tweet_id": null,
+      "pinned_tweet_id": null,
+      "profile_banner_url": null,
+      "profile_image_url": null,
+      "protected": null,
+      "public_metrics": null,
+      "receives_your_dm": null,
+      "subscription_type": null,
+      "url": null,
+      "verified": null,
+      "verified_type": null,
+      "withheld": null
+    },
+    "14055573": {
+      "id": "14055573",
+      "name": "Samir Damle",
+      "username": "samirdamle",
+      "affiliation": null,
+      "connection_status": null,
+      "created_at": null,
+      "description": null,
+      "entities": null,
+      "location": null,
+      "most_recent_tweet_id": null,
+      "pinned_tweet_id": null,
+      "profile_banner_url": null,
+      "profile_image_url": null,
+      "protected": null,
+      "public_metrics": null,
+      "receives_your_dm": null,
+      "subscription_type": null,
+      "url": null,
+      "verified": null,
+      "verified_type": null,
+      "withheld": null
+    },
+    "768196608": {
+      "id": "768196608",
+      "name": "X. S. Motsenigos",
+      "username": "xsmotsenigos",
+      "affiliation": null,
+      "connection_status": null,
+      "created_at": null,
+      "description": null,
+      "entities": null,
+      "location": null,
+      "most_recent_tweet_id": null,
+      "pinned_tweet_id": null,
+      "profile_banner_url": null,
+      "profile_image_url": null,
+      "protected": null,
+      "public_metrics": null,
+      "receives_your_dm": null,
+      "subscription_type": null,
+      "url": null,
+      "verified": null,
+      "verified_type": null,
+      "withheld": null
+    },
+    "803125711833808896": {
+      "id": "803125711833808896",
+      "name": "Adi",
+      "username": "TheVidhate",
+      "affiliation": null,
+      "connection_status": null,
+      "created_at": null,
+      "description": null,
+      "entities": null,
+      "location": null,
+      "most_recent_tweet_id": null,
+      "pinned_tweet_id": null,
+      "profile_banner_url": null,
+      "profile_image_url": null,
+      "protected": null,
+      "public_metrics": null,
+      "receives_your_dm": null,
+      "subscription_type": null,
+      "url": null,
+      "verified": null,
+      "verified_type": null,
+      "withheld": null
+    },
+    "2070972618371448832": {
+      "id": "2070972618371448832",
+      "name": "Daniel Adekugbe",
+      "username": "Dandiggastech",
+      "affiliation": null,
+      "connection_status": null,
+      "created_at": null,
+      "description": null,
+      "entities": null,
+      "location": null,
+      "most_recent_tweet_id": null,
+      "pinned_tweet_id": null,
+      "profile_banner_url": null,
+      "profile_image_url": null,
+      "protected": null,
+      "public_metrics": null,
+      "receives_your_dm": null,
+      "subscription_type": null,
+      "url": null,
+      "verified": null,
+      "verified_type": null,
+      "withheld": null
+    },
+    "1689423238173007873": {
+      "id": "1689423238173007873",
+      "name": "Matthew Lam",
+      "username": "mattlam_",
+      "affiliation": null,
+      "connection_status": null,
+      "created_at": null,
+      "description": null,
+      "entities": null,
+      "location": null,
+      "most_recent_tweet_id": null,
+      "pinned_tweet_id": null,
+      "profile_banner_url": null,
+      "profile_image_url": null,
+      "protected": null,
+      "public_metrics": null,
+      "receives_your_dm": null,
+      "subscription_type": null,
+      "url": null,
+      "verified": null,
+      "verified_type": null,
+      "withheld": null
+    },
+    "416403447": {
+      "id": "416403447",
+      "name": "Hamza Tahir",
+      "username": "htahir111",
+      "affiliation": null,
+      "connection_status": null,
+      "created_at": null,
+      "description": null,
+      "entities": null,
+      "location": null,
+      "most_recent_tweet_id": null,
+      "pinned_tweet_id": null,
+      "profile_banner_url": null,
+      "profile_image_url": null,
+      "protected": null,
+      "public_metrics": null,
+      "receives_your_dm": null,
+      "subscription_type": null,
+      "url": null,
+      "verified": null,
+      "verified_type": null,
+      "withheld": null
+    },
+    "3064259332": {
+      "id": "3064259332",
+      "name": "will brown",
+      "username": "willccbb",
+      "affiliation": null,
+      "connection_status": null,
+      "created_at": null,
+      "description": null,
+      "entities": null,
+      "location": null,
+      "most_recent_tweet_id": null,
+      "pinned_tweet_id": null,
+      "profile_banner_url": null,
+      "profile_image_url": null,
+      "protected": null,
+      "public_metrics": null,
+      "receives_your_dm": null,
+      "subscription_type": null,
+      "url": null,
+      "verified": null,
+      "verified_type": null,
+      "withheld": null
+    },
+    "1681456803832561664": {
+      "id": "1681456803832561664",
+      "name": "Git Maxd",
+      "username": "GitMaxd",
+      "affiliation": null,
+      "connection_status": null,
+      "created_at": null,
+      "description": null,
+      "entities": null,
+      "location": null,
+      "most_recent_tweet_id": null,
+      "pinned_tweet_id": null,
+      "profile_banner_url": null,
+      "profile_image_url": null,
+      "protected": null,
+      "public_metrics": null,
+      "receives_your_dm": null,
+      "subscription_type": null,
+      "url": null,
+      "verified": null,
+      "verified_type": null,
+      "withheld": null
+    },
+    "3382720905": {
+      "id": "3382720905",
+      "name": "Florian Brand",
+      "username": "xeophon",
+      "affiliation": null,
+      "connection_status": null,
+      "created_at": null,
+      "description": null,
+      "entities": null,
+      "location": null,
+      "most_recent_tweet_id": null,
+      "pinned_tweet_id": null,
+      "profile_banner_url": null,
+      "profile_image_url": null,
+      "protected": null,
+      "public_metrics": null,
+      "receives_your_dm": null,
+      "subscription_type": null,
+      "url": null,
+      "verified": null,
+      "verified_type": null,
+      "withheld": null
+    },
+    "1814730351765291008": {
+      "id": "1814730351765291008",
+      "name": "\u03bbux",
+      "username": "novasarc01",
+      "affiliation": null,
+      "connection_status": null,
+      "created_at": null,
+      "description": null,
+      "entities": null,
+      "location": null,
+      "most_recent_tweet_id": null,
+      "pinned_tweet_id": null,
+      "profile_banner_url": null,
+      "profile_image_url": null,
+      "protected": null,
+      "public_metrics": null,
+      "receives_your_dm": null,
+      "subscription_type": null,
+      "url": null,
+      "verified": null,
+      "verified_type": null,
+      "withheld": null
+    },
+    "1969217296293117952": {
+      "id": "1969217296293117952",
+      "name": "Jason Madruga",
+      "username": "ASTxRTYS",
+      "affiliation": null,
+      "connection_status": null,
+      "created_at": null,
+      "description": null,
+      "entities": null,
+      "location": null,
+      "most_recent_tweet_id": null,
+      "pinned_tweet_id": null,
+      "profile_banner_url": null,
+      "profile_image_url": null,
+      "protected": null,
+      "public_metrics": null,
+      "receives_your_dm": null,
+      "subscription_type": null,
+      "url": null,
+      "verified": null,
+      "verified_type": null,
+      "withheld": null
+    }
+  },
+  "thread_fetch_error": null
+}

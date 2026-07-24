@@ -1,5 +1,5 @@
 ---
-description: Decomposition, scoping, and verification may form a strict dependency chain (topology → isolation → verification) rather than independent design choices — tests the simpler account that decomposition alone implies the other two
+description: Topology, isolation, and verification may form a strict dependency chain rather than independent design choices — tested against the simpler account that good decomposition implies the other two
 type: kb/types/note.md
 tags: [computational-model, llm-interpretation-errors]
 ---
@@ -27,6 +27,8 @@ Several existing notes contain evidence consistent with the dependency ordering,
 - **Scheduler-LLM separation** ([seedling](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md)): Already develops two-thirds of the chain — symbolic substrates eliminate error for bookkeeping (topology + isolation), leaving semantic error correction for bounded calls. Tu's two-channel failure model (global drift = depth-driven, residual leaf errors = work-driven) offers a different decomposition of the same phenomenon.
 
 - **Kim et al.'s error amplification** ([synthesis is not error correction](./synthesis-is-not-error-correction.md)): 17.2× amplification when agents solve the same task with outputs merged, not voted. Consistent with the chain, but all three mechanisms are absent (no task decomposition, no scoping, synthesis instead of voting), so the evidence cannot isolate which missing mechanism is responsible.
+
+- **Knowledge-Centric Self-Improvement** ([ingest](../sources/knowledge-centric-self-improvement-2607.19592.ingest.md)): all three mechanisms instantiated in the knowledge-curation dimension, with measured gains. Stateless disposable agents give isolation by construction; the task-forum → cross-task-forum → distillation ladder is the topology; peer challenge plus benchmark oracles supply verification. Its motivating critique of persistent-agent improvement — lessons dilute and conflict as one agent absorbs them — echoes the contamination failure the chain predicts for flat accumulation. It also complicates prediction 1 below: the protocol shares mutable state across its isolated agents (the knowledge base), yet every write passes through challenge and distillation before later agents consume it — shared state gated by verification, a configuration the predictions do not cover.
 
 ## The simpler account: decomposition with two corollaries
 
@@ -69,3 +71,4 @@ Relevant Notes:
 - [scheduler-LLM separation exploits an error-correction asymmetry](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — extends: Tu's two-channel model provides an alternative decomposition that now supports keeping the note as a seedling rather than a pure speculation
 - [decomposition heuristics for bounded-context scheduling](./decomposition-heuristics-for-bounded-context-scheduling.md) — exemplifies: "exploit clean frames recursively" implements the topology → isolation step
 - [synthesis is not error correction](./synthesis-is-not-error-correction.md) — grounds: the voting/synthesis distinction explains why verification requires atomic units from isolation rather than merged outputs
+- [Knowledge-Centric Self-Improvement ingest](../sources/knowledge-centric-self-improvement-2607.19592.ingest.md) — evidence: a measured system instantiating all three mechanisms in the knowledge-curation dimension, whose verification-gated shared store sits outside the note's distinguishing predictions

@@ -67,6 +67,6 @@ Relevant Notes:
 - [Reach-assessment](./definitions/reach-assessment.md) — extends: the judgment capability that would make selective revision and criticism deliver, not just become possible
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — grounds: operative retention as the loop's baseline, kept separate from cumulativity and reflective addressability
 - [Retrieval failure is reflection failure](./retrieval-failure-is-reflection-failure.md) — extends: why addressable retention compounds only best-effort, through the discovery wire
-- [Reflective coverage is graded across representational forms](./reflective-coverage-is-graded-across-representational-forms.md) — extends: addressability assessed per representational form and operation depth
+- [Reflective coverage is graded across representational forms](./reflective-coverage-is-graded-across-representational-forms.md) — extends: addressability assessed per representational form and operation profile
 - [A self-improving system needs a profile, not a ladder](./a-self-improving-system-needs-a-profile-not-a-ladder.md) — extends: places addressability under reflective structure while keeping cumulativity among improvement dynamics
 - [Ashby, Design for a Brain — ultrastability](../sources/ashby-design-for-a-brain-ultrastability.md) — evidence: the floor case — an operative incumbent whose random successor carries no improvement-relevant information from it

@@ -147,7 +147,7 @@ the File Manifest.
 - Prompts, benchmarks, or datasets worth reusing
 - Claims in the README that the code does NOT support (trustworthiness gap)
 
-Assess reach — does the finding transfer beyond this specific benchmark, model set, or domain? Flag low-reach items.
+Assess explanatory-reach — does the finding transfer beyond this specific benchmark, model set, or domain? Flag low-explanatory-reach items.
 
 **Limitations (our opinion)** — code-repository checks:
 

@@ -23,7 +23,7 @@ The shipped collections:
 
 | Collection | Register | Quality goal |
 |---|---|---|
-| `kb/notes/` | theoretical | reach |
+| `kb/notes/` | theoretical | explanatory-reach |
 | `kb/reference/` | descriptive | fidelity + economy |
 | `kb/instructions/` | prescriptive | executability + precision |
 | `kb/agent-memory-systems/` | descriptive (with root-level analysis exceptions) | fidelity + economy |

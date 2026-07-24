@@ -63,5 +63,5 @@ Relevant Notes:
 - [The verifiability gradient](./verifiability-gradient.md) — the ladder codification sits at the far end of
 - [Deploy-time learning is the missing middle](./deploy-time-learning-is-the-missing-middle.md) — frames the timescale at which these placements adapt
 - [Constraining and extraction both trade generality for reliability, speed, and cost](./constraining-and-extraction-both-trade-generality-for-reliability.md) — the trade-off codification enacts
-- [Ephemerality is safe where embedded operational knowledge has low reach](./ephemerality-is-safe-where-embedded-operational-knowledge-has-low.md) — extends: adds reach as the criterion that determines when the ephemeral/accumulating fork matters
+- [Ephemerality is safe where embedded operational knowledge has low explanatory-reach](./ephemerality-is-safe-where-embedded-operational-knowledge-has-low.md) — extends: adds explanatory-reach as the criterion that determines when the ephemeral/accumulating fork matters
 - [The Flawed Ephemeral Software Hypothesis (Kirsch)](https://www.blackhc.net/essays/future_of_software/) — grounds: names the concrete production pressures that make accumulated artifacts beat continual re-derivation

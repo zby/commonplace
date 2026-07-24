@@ -76,7 +76,7 @@ Relevant Notes:
 - [Behavioral authority](./behavioral-authority.md) — enables: names the consumer, channel, and force that make a self-representation operative
 - [Retrieval failure is reflection failure](../retrieval-failure-is-reflection-failure.md) — extends: develops the retrieval-mediated causal connection, and the best-effort weakness that comes with it
 - [Reach-assessment](./reach-assessment.md) — contrasts: the semantic judgment capability reflectivity's structural requirements do not entail
-- [Reflective coverage is graded across representational forms](../reflective-coverage-is-graded-across-representational-forms.md) — extends: when behavior spans heterogeneous forms, coverage must be claimed per form and operation depth
+- [Reflective coverage is graded across representational forms](../reflective-coverage-is-graded-across-representational-forms.md) — extends: when behavior spans heterogeneous forms, coverage must be claimed per form and operation profile
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](../a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — extends: reflection supplies one causal path into the loop, but not the search, evaluation, or operative retention the loop needs
 - [A methodology governs its own extension only as far as it settles the meta-decisions it raises](../a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md) — contrasts: closure under recommendations is a stronger self-extension property than reflection
 - [Smith, Reflection and Semantics in Lisp](../../sources/smith-reflection-and-semantics-in-lisp-1984.ingest.md) — derived-from: supplies the earlier embedded-self-theory and bidirectional-causality lineage

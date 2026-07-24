@@ -10,7 +10,7 @@ Nothing published yet.
 
 ## In draft
 
-- [What makes a system self-improving — and what reflection adds](./what-makes-a-system-self-improving.md) — the self-improving-systems vocabulary: membership, update architectures, reflection, addressability, and the pathway profile.
+- [Reflective self-improvement](./reflective-self-improvement.md) — names the architecture agent builders are already using: improvement routed through readable artifacts buys addressability, not compounding, taxed by retrieval.
 
 ---
 

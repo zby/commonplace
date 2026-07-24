@@ -42,11 +42,11 @@ Only the per-installation rows require human input. The default rows ship with t
 
 **Quality bar** — When is a piece of knowledge worth a note vs. a log entry vs. nothing? A writing guide says how to write well; this subsection says when to write at all. Domain-specific standards: "a design decision is worth a note when it affects more than one endpoint; single-endpoint details belong in code comments."
 
-## Relation to reach
+## Relation to explanatory-reach
 
-The KB Goals section is not a replacement for the [reach criterion](./first-principles-reasoning-selects-for-explanatory-reach-over.md). Reach is a quality criterion — knowledge with explanatory depth that transfers to new situations. Goals are the domain filter — *which* situations this KB cares about transferring to. A note can have high reach but be out of scope (a brilliant insight about compiler optimization in a KB about payment architecture), or low reach but in scope (a specific failure case that the team needs to remember).
+The KB Goals section is not a replacement for the [explanatory-reach criterion](./first-principles-reasoning-selects-for-explanatory-reach-over.md). Explanatory-reach is a quality criterion — knowledge with explanatory depth that transfers to new situations. Goals are the domain filter — *which* situations this KB cares about transferring to. A note can have high explanatory-reach but be out of scope (a brilliant insight about compiler optimization in a KB about payment architecture), or low explanatory-reach but in scope (a specific failure case that the team needs to remember).
 
-Both filters apply. Goals first (is this in scope?), then reach (is this worth the context it costs?).
+Both filters apply. Goals first (is this in scope?), then explanatory-reach (is this worth the context it costs?).
 
 ## Goal revision
 

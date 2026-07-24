@@ -1,6 +1,6 @@
 ---
 name: cp-skill-health-check
-description: Run a Commonplace health check when agents, skills, or commonplace-* commands do not work correctly. Diagnoses project layout, promoted skill discovery, direnv/PATH state, package commands, and common launch-environment failures.
+description: Diagnose Commonplace project layout, promoted-skill discovery, command paths, package commands, and launch-environment failures.
 type: kb/types/instruction.md
 user-invocable: true
 allowed-tools: Read, Grep, Glob, Bash
@@ -71,7 +71,7 @@ find .claude/skills .agents/skills -maxdepth 1 -type l ! -exec test -e {} \; -pr
 
 The per-skill `test -e` loop is the authoritative signal for whether each expected skill resolves (`test -e` follows symlinks). Treat the `find -L` listing as a cross-check for unexpected or extra skills, not the primary verdict.
 
-The expected promoted set is the `cp-skill-*` directories in the skill source tree the loop derives from. In the Commonplace source repo, the installer's `PROMOTED_SKILLS` list in `src/commonplace/cli/init_project.py` is the authoritative manifest; if the loop's derived set and that list disagree, report the difference as a finding.
+The expected promoted set is the `cp-skill-*` directories in the skill source tree the loop derives from. In the Commonplace source repo, `MANIFEST.promoted_skills` in `src/commonplace/scaffold_manifest.py` is the authoritative manifest; if the loop's derived set and that tuple disagree, report the difference as a finding.
 
 Interpretation:
 - No `.claude/skills/` or `.agents/skills/` entries: `commonplace-init` likely did not run, the runtime is looking at a different project root, or the active runtime uses a different skill-discovery surface.
