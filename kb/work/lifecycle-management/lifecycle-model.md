@@ -67,4 +67,4 @@ Unchanged from the README: a lifecycle map naming each stage and its valid trans
 
 Abstracted into:
 
-- [A derived artifact is a cache only if its derivation is a function](../../notes/a-derived-artifact-is-a-cache-only-if-its-derivation-is-a-function.md) — the "one refinement the analogy needs" section above, generalized: the discriminator restated as determinacy of derivation rather than lossiness, the committer generalized past LLM output to human acceptance and attestation, and the maintenance split derived rather than observed. The second worked case is the ADR 025 / ADR 056 disposal contrast.
+- [Commitment, not derivation, creates new ground truth](../../notes/commitment-not-derivation-creates-new-ground-truth.md) — the "one refinement the analogy needs" section above, generalized and restated in the KB's narrow derivation vocabulary: the discriminator is what a production adds beyond its source rather than lossiness, the committer is generalized past LLM output to human acceptance and attestation, and the maintenance split is derived rather than observed. The second worked case is the ADR 025 / ADR 056 disposal contrast.
