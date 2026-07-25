@@ -8,7 +8,6 @@ source_notes:
   - kb/notes/definitions/reflective-system.md
   - kb/notes/definitions/reach-assessment.md
   - kb/notes/reflection-buys-addressability.md
-  - kb/notes/reflection-may-lower-oversight-cost-when-its-rationale-is-faithful.md
   - kb/notes/reflection-may-improve-sample-efficiency-under-structured-shifts.md
   - kb/notes/retrieval-failure-is-reflection-failure.md
   - kb/notes/first-principles-reasoning-selects-for-explanatory-reach-over.md
@@ -26,7 +25,7 @@ The nearest precedent is the self-hosting compiler — and the differences are t
 
 This is *reflection* in the older, computational sense — [a system containing a causally connected representation of itself](../notes/definitions/reflective-system.md) — not "the model reflects on its mistakes." It also buys what fine-tuning cannot: [addressability](../notes/reflection-buys-addressability.md). A lesson retained as an artifact can be inspected, explained, revised, or deleted one at a time: find last month's "always pin the dependency versions," ask what incident produced it, tighten it or retire it. A weight update can be trained over, rolled back wholesale, or steered against from outside — never addressed one lesson at a time.
 
-Two more payoffs follow, held with different confidence. The first is the one safety-minded readers should care about: the loop is legible. Self-improvement in weights hands oversight a tensor delta — behavior can be measured before and after, but the change itself cannot be read. Self-improvement in artifacts hands oversight a plain-text diff that carries its own rationale, so an overseer can hope to decide about a change by reading it rather than by probing its behavior. [That saving has a condition](../notes/reflection-may-lower-oversight-cost-when-its-rationale-is-faithful.md): the rationale must be faithful to what actually drove the change — a fluent reason that misstates its basis invites the overseer to close the decision confidently wrong, which probing would not have. The second payoff is [openly a conjecture: sample efficiency](../notes/reflection-may-improve-sample-efficiency-under-structured-shifts.md). A retained theory that captures structure surviving a task shift may adapt the system with fewer new target observations than retraining or fine-tuning would need — a directional prediction with a proposed test, not a result.
+Two more payoffs follow, held with different confidence. The first is the one safety-minded readers should care about: the loop is legible. Self-improvement in weights hands oversight a tensor delta — behavior can be measured before and after, but the change itself cannot be read. Self-improvement in artifacts hands oversight the change and the rule it lands in, both in plain text, so an overseer outside the system can read what was adopted rather than only measure what it does. The second payoff is [openly a conjecture: sample efficiency](../notes/reflection-may-improve-sample-efficiency-under-structured-shifts.md). A retained theory that captures structure surviving a task shift may adapt the system with fewer new target observations than retraining or fine-tuning would need — a directional prediction with a proposed test, not a result.
 
 ## What the compiler had and the agent loses
 
