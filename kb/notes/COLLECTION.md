@@ -83,7 +83,7 @@ Scan `kb/notes/`, `kb/reference/`, `kb/agent-memory-systems/`, `kb/sources/`, an
 
 ## What does NOT belong here
 
-- Unadopted system designs → `kb/reference/proposals/` (`design-proposal` trait), unless recast as an existential claim per above
+- Unadopted system designs → `kb/reference/proposals/` (`design-proposal` type), unless recast as an existential claim per above
 - Descriptions of how a specific system works → `kb/reference/` or `kb/agent-memory-systems/`
 - Procedures and how-to guidance → `kb/instructions/`
 - Raw captures without frontmatter → `text` type, any collection
