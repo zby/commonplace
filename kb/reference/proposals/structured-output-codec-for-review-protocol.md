@@ -1,7 +1,6 @@
 ---
 description: "Proposal: make review output a pluggable codec, with sentinel markdown today and schema-validated structured output when harnesses expose it"
-type: kb/types/note.md
-traits: [design-proposal]
+type: ../types/design-proposal.md
 tags: [kb-maintenance]
 ---
 

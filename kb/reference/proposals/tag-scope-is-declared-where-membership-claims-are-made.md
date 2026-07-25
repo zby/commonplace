@@ -1,7 +1,6 @@
 ---
 description: "Proposal: attach tag scope to membership claims (marks, sweep recipes) rather than to the tag string — options: formalized collection scope, repo scope, or a declared per-README dual scope"
-type: kb/types/note.md
-traits: [design-proposal]
+type: ../types/design-proposal.md
 tags: [kb-maintenance, document-system]
 ---
 

@@ -1,7 +1,6 @@
 ---
 description: "Proposal: admit new review dependencies as factored (note, dependency) pairs with the dependency as the gate — source-as-gate and a cohort-scoped ack remain; COLLECTION.md-as-gate adopted (ADR 041)"
-type: kb/types/note.md
-traits: [design-proposal]
+type: ../types/design-proposal.md
 tags: [kb-maintenance, observability]
 ---
 

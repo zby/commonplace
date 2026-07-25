@@ -1,7 +1,6 @@
 ---
 description: "Proposal: a ReviewConfig object owned by commonplace.review, consolidating the review subsystem's project-shape constants (scan roots, gates root, artifact root, db path) with per-project override — deliberately not a global ProjectConfig, so the experimental db-backed review subsystem stays decoupled from the stable core"
-type: kb/types/note.md
-traits: [design-proposal]
+type: ../types/design-proposal.md
 tags: [kb-maintenance]
 ---
 
