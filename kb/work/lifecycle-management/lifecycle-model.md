@@ -57,8 +57,14 @@ Two decisions during implementation that the discussion had not settled:
 - **Source snapshot retirement.** `kb/sources/` has no exit for a wrong or dead capture.
 - **ADR archiving.** Designed in the survey, deliberately unbuilt: superseded and deprecated ADRs are eligible immediately, accepted ones once inbound frontier citations go cold. No cohort exists yet.
 - **Enforcement.** The archive boundary is deterministically checkable but is checked by hand (`rg`) today. It would be the KB's first genuinely mechanical lifecycle rule; nothing else here — banners, status fields, extraction completeness — is checkable without judgment.
-- **Whether any of this generalizes.** Candidate promotions to `kb/notes/`, each needing a second worked case first: the recomputable-cache versus committed-compression distinction (the strongest candidate); tiers-as-coordinates; and the workshop deletion bet — that the residue's expected retrieval value does not cover its standing search cost. The [disposal survey](./disposal-and-retirement-survey.md) carries these in full — the tier axes, the cache-mechanism correspondences, and the ADR-archiving sketch — and is the file to mine when a second case arrives.
+- **Whether any of this generalizes.** Candidate promotions to `kb/notes/`, each needing a second worked case first: ~~the recomputable-cache versus committed-compression distinction (the strongest candidate)~~ — **promoted 2026-07-25**, see the abstraction below; tiers-as-coordinates; and the workshop deletion bet — that the residue's expected retrieval value does not cover its standing search cost. The [disposal survey](./disposal-and-retirement-survey.md) carries these in full — the tier axes, the cache-mechanism correspondences, and the ADR-archiving sketch — and is the file to mine when a second case arrives.
 
 ## What would close the workshop
 
 Unchanged from the README: a lifecycle map naming each stage and its valid transitions, plus an updated `kb/work/COLLECTION.md` closure section. This session supplied the disposal half for one artifact kind and the framing for the rest; the map still needs note retirement and at least one more worked case before its claims are safe to promote.
+
+---
+
+Abstracted into:
+
+- [A derived artifact is a cache only if its derivation is a function](../../notes/a-derived-artifact-is-a-cache-only-if-its-derivation-is-a-function.md) — the "one refinement the analogy needs" section above, generalized: the discriminator restated as determinacy of derivation rather than lossiness, the committer generalized past LLM output to human acceptance and attestation, and the maintenance split derived rather than observed. The second worked case is the ADR 025 / ADR 056 disposal contrast.
