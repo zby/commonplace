@@ -26,6 +26,7 @@ The shipped Commonplace scaffold installs global type specs under `kb/types/` an
 | Type | Path | Use |
 |---|---|---|
 | `adr` | `kb/reference/types/adr.md` | Architecture decision records. |
+| `design-proposal` | `kb/reference/types/design-proposal.md` | Finished but unadopted designs under `kb/reference/proposals/`. |
 | `structured-claim` | `kb/notes/types/structured-claim.md` | Developed arguments with Evidence and Reasoning sections. |
 | `agent-memory-system-review` | `kb/agent-memory-systems/types/agent-memory-system-review.md` | Code-grounded external system reviews. |
 | `snapshot` | `kb/sources/types/snapshot.md` | Captured external source copies. |

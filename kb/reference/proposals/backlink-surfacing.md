@@ -1,7 +1,6 @@
 ---
 description: "Proposal: how Commonplace could surface inbound links — build-time web rendering for humans, on-demand inversion for agents, curated symmetric labels for tension; committed generated footers and full manual bidirectionality are foreclosed"
-type: kb/types/note.md
-traits: [design-proposal]
+type: ../types/design-proposal.md
 tags: [links]
 ---
 

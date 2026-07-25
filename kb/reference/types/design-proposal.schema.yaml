@@ -1,0 +1,21 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+allOf:
+  - $ref: "../../types/note-base.schema.yaml"
+  - type: object
+    properties:
+      frontmatter:
+        type: object
+        required:
+          - description
+          - type
+        properties:
+          type:
+            const: kb/reference/types/design-proposal.md
+          description:
+            pattern: '^Proposal\b'
+          status: false
+        additionalProperties: true
+      headings:
+        type: array
+        contains:
+          pattern: '^## Current state \(as of \d{4}-\d{2}-\d{2}\)$'

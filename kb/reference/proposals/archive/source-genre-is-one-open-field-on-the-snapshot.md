@@ -1,7 +1,6 @@
 ---
-description: "Proposal: record source genre once as an open-vocabulary field on the snapshot, drop the ingest-report enum and genre-carrying tags, and unify two divergent vocabularies"
-type: kb/types/note.md
-traits: [design-proposal]
+description: "Proposal (adopted): record source genre once as an open-vocabulary field on the snapshot, drop the ingest-report enum and genre-carrying tags, and unify two divergent vocabularies"
+type: ../../types/design-proposal.md
 tags: [document-system]
 ---
 

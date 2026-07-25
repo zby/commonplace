@@ -1,7 +1,6 @@
 ---
 description: "Proposal: warn readers of unreviewed notes with a standardized top-of-note banner derived from review-state, kept consistent with the canonical status by a validator check"
-type: kb/types/note.md
-traits: [design-proposal]
+type: ../types/design-proposal.md
 tags: [kb-maintenance]
 ---
 

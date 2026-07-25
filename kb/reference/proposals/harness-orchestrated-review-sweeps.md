@@ -1,7 +1,6 @@
 ---
 description: "Proposal: run review sweeps through harness sub-agent orchestration once comparable surfaces exist in more than one harness"
-type: kb/types/note.md
-traits: [design-proposal]
+type: ../types/design-proposal.md
 tags: [kb-maintenance]
 ---
 

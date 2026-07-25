@@ -1,7 +1,7 @@
 ---
 description: "Proposal: compare blinded output-only and trajectory-aware judges on transforming agent workflows before adding trajectory evaluation to closure"
-type: kb/types/note.md
-traits: [design-proposal, has-external-sources]
+type: ../types/design-proposal.md
+traits: [has-external-sources]
 tags: [evaluation, agent-runtime]
 ---
 

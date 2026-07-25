@@ -1,7 +1,6 @@
 ---
 description: "Proposal: resolve execution channel at install time so an agent reads one literal procedure, extending build-time generation from paths to shell and command form"
-type: kb/types/note.md
-traits: [design-proposal]
+type: ../types/design-proposal.md
 tags: [architecture]
 ---
 
