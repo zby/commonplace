@@ -13,7 +13,7 @@ Tests for economy:
 
 **Fidelity constraint.** Describe the system as built, even when the implementation deviates from the theory that inspired it. If the system does X but the theory says Y, describe X and note the deviation — the `rationale` link may carry the qualifier.
 
-**Proposal exception.** Design proposals — finished but unadopted designs — live only under `proposals/` and carry the collection-local `design-proposal` type. A proposal describes a design object faithfully (problem, option space, forces, free choices marked), not shipped behavior; its description leads with "Proposal:" so a reader acting on reference docs never mistakes proposed for shipped. Conventions: [proposals/README.md](./proposals/README.md).
+**Proposal exception.** Design proposals — finished but unadopted designs — live only under `proposals/` and carry the collection-local `design-proposal` type. A proposal describes a design object faithfully (problem, option space, forces, free choices marked), not shipped behavior; its description leads with "Proposal:" so a reader acting on reference docs never mistakes proposed for shipped. Once adopted or retired, a proposal is extracted and moved to `proposals/archive/`, which nothing outside it links into (ADR 056). Conventions: [proposals/README.md](./proposals/README.md).
 
 ## Title and description conventions
 

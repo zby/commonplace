@@ -1,12 +1,12 @@
 ---
 description: "Proposal: split status semantics — lifecycle stays a structural enum; what commitment 'current' expresses (endorsed, attributed, captured) becomes contract-defined assertion force"
-type: ../types/design-proposal.md
+type: ../../types/design-proposal.md
 tags: [document-system]
 ---
 
 # Assertion force separate from lifecycle status
 
-> Retired by [ADR 044](../adr/044-user-verification-replaces-global-note-status.md). The implemented decision removes global note status instead of preserving a residual lifecycle enum; this document remains as design history.
+> **Archived** (see [archive README](./README.md)). Retired by [ADR 044](../../adr/044-user-verification-replaces-global-note-status.md), which removed global note status outright instead of preserving a residual lifecycle enum. That ADR's considered alternatives carry this design and why it lost, including the axis-decomposition self-critique below; what remains here is design texture — the dated current-state anchor and the epistack pressure case as it stood.
 
 The base note type defines `status` as a **commitment level** (`seedling`, `current`, `speculative`, `outdated`). That one field fuses two axes: **lifecycle** (how far along the artifact is — structural, genuinely global) and **assertion force** (what the KB's relation to the content is — first-person endorsement, today, everywhere). The fusion is invisible while every collection is first-person-committed, and breaks the moment one isn't: for an attributed claim ("Rootclaim asserts X"), `status: current` is ambiguous between "I still endorse X" and "this still accurately records what Rootclaim asserts" — different maintenance questions with different falsifiers. This proposal separates the axes: the enum stays structural in the type, and what commitment `current` expresses becomes a feature each collection's `COLLECTION.md` declares.
 
@@ -14,9 +14,9 @@ The base note type defines `status` as a **commitment level** (`seedling`, `curr
 
 - `kb/types/note.md` defines `status` as "Commitment level: `seedling`, `current`, `speculative`, or `outdated`" — endorsement semantics hardwired at the global type surface, one level above the collection contracts that own other text features (ADR 017).
 - Assertion force is currently encoded **implicitly by collection placement**: `kb/notes/` artifacts are endorsed ("do I still believe this?" maintenance, falsifier practice), `kb/sources/` artifacts are captured (answerable to their source, not endorsed). No artifact or contract states this; it is folklore that holds because every existing collection is first-person-committed.
-- The system already solved the mirror-image problem on the other side: [behavioral authority](../../notes/definitions/behavioral-authority.md) exists because "is this artifact active?" was ambiguous for system-definition artifacts, and the fix was to name consumer/channel/force explicitly. Knowledge artifacts have no analogous concept for who asserts the content and with what force.
+- The system already solved the mirror-image problem on the other side: [behavioral authority](../../../notes/definitions/behavioral-authority.md) exists because "is this artifact active?" was ambiguous for system-definition artifacts, and the fix was to name consumer/channel/force explicitly. Knowledge artifacts have no analogous concept for who asserts the content and with what force.
 - The pressure case is live: the epistack casework (sketched in the `epistack-framework-additions` workshop, deleted 2026-07-23 with the other epistack workshops; the casework itself lives in the sibling `epistack-casebooks` repo) plans a stance-neutral collection of *attributed* claims the KB explicitly does not endorse, where the fused field is ambiguous on every artifact. Its `claim` type sketch has already tripped over this once (a `contested`/`settled`/`open` status enum colliding with its own no-stance-fields rule).
-- This is the predicted fourth instance of the taxonomy demotion pattern — rationale: [a universal knowledge framework demotes content taxonomies to defaults and keeps answerability](../../notes/a-universal-knowledge-framework-demotes-content-taxonomies-to-defaults.md) names the status/endorsement fusion as "one answerability relation hardwired one level too high."
+- This is the predicted fourth instance of the taxonomy demotion pattern — rationale: [a universal knowledge framework demotes content taxonomies to defaults and keeps answerability](../../../notes/a-universal-knowledge-framework-demotes-content-taxonomies-to-defaults.md) names the status/endorsement fusion as "one answerability relation hardwired one level too high."
 - I checked the sibling repo directly (2026-07-09): all five casebook notes are still `status: seedling`. The trigger condition below exists — a non-endorsed collection is live — but hasn't fired: nobody has needed to mark a casebook note `current` yet, so the ambiguity is latent rather than forcing.
 
 ## Update 2026-07-09: status may be more than two axes
@@ -57,8 +57,8 @@ The 2026-07-09 update sharpens what "needs the distinction" should mean before l
 
 Relevant Notes:
 
-- [A universal knowledge framework demotes content taxonomies to defaults and keeps answerability](../../notes/a-universal-knowledge-framework-demotes-content-taxonomies-to-defaults.md) — rationale: assertion force is one answerability relation among several; hardwiring one at the type level is the fusion this proposal undoes
-- [Behavioral authority](../../notes/definitions/behavioral-authority.md) — rationale: the precedent — force belongs to the consumption path and contract, not to bytes; this proposal is its knowledge-artifact mirror
-- [ADR-017: COLLECTION.md is the register convention boundary](../adr/017-collection-md-is-the-register-convention-boundary.md) — part-of: the contract surface and the placement-carries-semantics trade-off this proposal reuses
-- [ADR 042: register becomes a default profile under open-ended text contracts](../adr/042-register-becomes-a-default-profile-under-open-ended-text-contracts.md) — see-also: implemented companion decision; both demote a fused global commitment to a contract-declared feature
-- [First principles are inherited constraints, not design choices](../../notes/first-principles-are-inherited-constraints-not-design-choices.md) — grounds: names status/lifecycle enum values as a demoting choice, not an inherited constraint, the premise the cube analysis builds on
+- [A universal knowledge framework demotes content taxonomies to defaults and keeps answerability](../../../notes/a-universal-knowledge-framework-demotes-content-taxonomies-to-defaults.md) — rationale: assertion force is one answerability relation among several; hardwiring one at the type level is the fusion this proposal undoes
+- [Behavioral authority](../../../notes/definitions/behavioral-authority.md) — rationale: the precedent — force belongs to the consumption path and contract, not to bytes; this proposal is its knowledge-artifact mirror
+- [ADR-017: COLLECTION.md is the register convention boundary](../../adr/017-collection-md-is-the-register-convention-boundary.md) — part-of: the contract surface and the placement-carries-semantics trade-off this proposal reuses
+- [ADR 042: register becomes a default profile under open-ended text contracts](../../adr/042-register-becomes-a-default-profile-under-open-ended-text-contracts.md) — see-also: implemented companion decision; both demote a fused global commitment to a contract-declared feature
+- [First principles are inherited constraints, not design choices](../../../notes/first-principles-are-inherited-constraints-not-design-choices.md) — grounds: names status/lifecycle enum values as a demoting choice, not an inherited constraint, the premise the cube analysis builds on
