@@ -1,5 +1,5 @@
 ---
-description: "Proposal (adopted): record source genre once as an open-vocabulary field on the snapshot, drop the ingest-report enum and genre-carrying tags, and unify two divergent vocabularies"
+description: "Proposal: record source genre once as an open-vocabulary field on the snapshot, drop the ingest-report enum and genre-carrying tags, and unify two divergent vocabularies"
 type: kb/types/note.md
 traits: [design-proposal]
 tags: [document-system]
@@ -7,11 +7,11 @@ tags: [document-system]
 
 # Source genre is one open-vocabulary field on the snapshot
 
-> Adopted by [ADR 045](../adr/045-source-genre-is-a-single-open-field-on-the-snapshot.md) (2026-07-12): field named `genre`, required on the snapshot, known values as a severity-warn enum; the report's `source_type` removed and rejected. This document remains as design history; the free choices it left open were resolved as recorded in the ADR.
+> **Archived** (see [archive README](./README.md)). Adopted by [ADR 045](../../adr/045-source-genre-is-a-single-open-field-on-the-snapshot.md) (2026-07-12): field named `genre`, required on the snapshot, known values as a severity-warn enum; the report's `source_type` removed and rejected. The decision, the options weighed, and the resolution of the free choices below all live in that ADR; what remains here is design texture — the dated current-state anchor and the measured corpus statistics behind the argument.
 
 Source genre — is this a scientific paper, a practitioner report, a court opinion — is currently recorded twice in `kb/sources/`, in two vocabularies that neither agree nor defer to each other, and neither is authoritative. Snapshot `tags` carry a mixed genre/platform label; the ingest-report carries a closed `source_type` enum. The same genre appears under different names on the two sides (`academic-paper` on snapshots, `scientific-paper` in reports), so a retrieval query keyed to either vocabulary misses roughly half the corpus, and the one distinction the ingest lens machinery actually consumes — practitioner-report versus conceptual-essay — is invisible at the snapshot level, where both collapse to `blog-post` or `x-article`.
 
-This proposal collapses the two into a single open-vocabulary genre field that lives on the snapshot, where the source artifact itself is the ground truth. It stays inside the boundary that [collections never own frontmatter semantics](../collections-never-own-frontmatter-semantics.md): the field's meaning is fixed and type-owned ("genre of the captured source"), and only its value list extends — the sanctioned value-set-extension operation, not meaning relativization.
+This proposal collapses the two into a single open-vocabulary genre field that lives on the snapshot, where the source artifact itself is the ground truth. It stays inside the boundary that [collections never own frontmatter semantics](../../collections-never-own-frontmatter-semantics.md): the field's meaning is fixed and type-owned ("genre of the captured source"), and only its value list extends — the sanctioned value-set-extension operation, not meaning relativization.
 
 ## Current state (as of 2026-07-12)
 
@@ -22,12 +22,12 @@ This proposal collapses the two into a single open-vocabulary genre field that l
 
 **The concrete breakage.** `academic-paper` (snapshot tags) and `scientific-paper` (report enum) name the same genre; a query on either misses the other's ~half of the corpus. And genre lives on the ingest-report — an analysis artifact that exists only once someone writes it — so an un-ingested snapshot is never classified at all.
 
-**Adjacent facts.** [ADR 044](../adr/044-user-verification-replaces-global-note-status.md) recently resolved the sibling problem of a fused global `status` field by deleting it rather than making its meaning collection-relative — the same shape of fix this proposal applies to genre. The extensible-controlled-vocabularies workshop is open, designing the open-list mechanism for exactly this `source_type` field, with two directions (A and B, below) still unevaluated.
+**Adjacent facts.** [ADR 044](../../adr/044-user-verification-replaces-global-note-status.md) recently resolved the sibling problem of a fused global `status` field by deleting it rather than making its meaning collection-relative — the same shape of fix this proposal applies to genre. The extensible-controlled-vocabularies workshop is open, designing the open-list mechanism for exactly this `source_type` field, with two directions (A and B, below) still unevaluated.
 
 ## The design
 
 1. **One field, on the snapshot.** A single genre field (working name `source_type`) moves to the snapshot schema. Genre is a property of the source, and the snapshot is the source artifact, so the snapshot is the ground truth. It is set at capture time by the capturing agent — a surface judgment — and ingestion may correct the snapshot's field if deeper reading disagrees, so the correction lands in the one authoritative place.
-2. **The ingest-report drops its `source_type` field.** The report's Classification section keeps its prose justification, and the Limitations Standards lens is selected by reading the paired snapshot's field — the ingest process opens the snapshot anyway. No duplicated field means no unchecked derived copy, per [a derived copy of recomputable truth must be checked or absent](../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md).
+2. **The ingest-report drops its `source_type` field.** The report's Classification section keeps its prose justification, and the Limitations Standards lens is selected by reading the paired snapshot's field — the ingest process opens the snapshot anyway. No duplicated field means no unchecked derived copy, per [a derived copy of recomputable truth must be checked or absent](../../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md).
 3. **Snapshot `tags` stop carrying genre.** Container/platform information (x-article, web-page, github-repo) is redundant with `capture` plus the URL plus platform metadata; `tags` return to topical duty or may be empty.
 4. **The vocabulary is open-ended with fixed per-value meaning.** Different installed KBs and caseworks need different genre lists — the epistack casework added court-opinion, news-article, and official-statement by PR against the framework schema. The field's meaning stays fixed and type-owned; only the value list extends. The concrete open-list mechanism is what the extensible-controlled-vocabularies workshop is designing: direction A (a vocabulary file under `kb/`, with the schema generated or looked up from it) or direction B (per-constraint severity: warn on out-of-list values, available today via the ADR 024 machinery with zero new code). B can be the enforcement floor while A supplies the documented default list.
 
@@ -63,10 +63,10 @@ Adopt together with the extensible-controlled-vocabularies workshop's mechanism 
 
 Relevant Notes:
 
-- [A derived copy of recomputable truth must be checked or absent](../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — rationale: the single-ground-truth rule behind dropping the report's copy of genre
-- [The collection–type split is asymmetric: collections never own frontmatter semantics](../collections-never-own-frontmatter-semantics.md) — part-of: the boundary this proposal stays inside — genre's value set extends while its meaning stays type-owned
-- [ADR 044: user verification replaces global note status](../adr/044-user-verification-replaces-global-note-status.md) — see-also: the sibling resolution of an adjacent fused-field problem, fixed by deleting the field rather than relativizing it
-- [ADR 024: schema severity is per-constraint, fail by default](../adr/024-schema-severity-is-per-constraint-fail-by-default.md) — see-also: the existing per-constraint severity machinery that makes open-vocabulary mechanism B available with no new code
-- [ADR 018: types are path references to instruction docs](../adr/018-types-are-path-references-to-instruction-docs.md) — see-also: the precedent for a per-value doc carrying a prose payload, if the Limitations lenses become per-genre docs
-- [Snapshot type spec](../../sources/types/snapshot.md) — see-also: the type that gains the genre field and whose "no analysis" boundary must be reframed
-- [Ingest-report type spec](../../sources/types/ingest-report.md) — see-also: the type that drops the `source_type` field and reads it from the paired snapshot for lens selection
+- [A derived copy of recomputable truth must be checked or absent](../../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — rationale: the single-ground-truth rule behind dropping the report's copy of genre
+- [The collection–type split is asymmetric: collections never own frontmatter semantics](../../collections-never-own-frontmatter-semantics.md) — part-of: the boundary this proposal stays inside — genre's value set extends while its meaning stays type-owned
+- [ADR 044: user verification replaces global note status](../../adr/044-user-verification-replaces-global-note-status.md) — see-also: the sibling resolution of an adjacent fused-field problem, fixed by deleting the field rather than relativizing it
+- [ADR 024: schema severity is per-constraint, fail by default](../../adr/024-schema-severity-is-per-constraint-fail-by-default.md) — see-also: the existing per-constraint severity machinery that makes open-vocabulary mechanism B available with no new code
+- [ADR 018: types are path references to instruction docs](../../adr/018-types-are-path-references-to-instruction-docs.md) — see-also: the precedent for a per-value doc carrying a prose payload, if the Limitations lenses become per-genre docs
+- [Snapshot type spec](../../../sources/types/snapshot.md) — see-also: the type that gains the genre field and whose "no analysis" boundary must be reframed
+- [Ingest-report type spec](../../../sources/types/ingest-report.md) — see-also: the type that drops the `source_type` field and reads it from the paired snapshot for lens selection

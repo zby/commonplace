@@ -32,12 +32,17 @@ The review selector uses `--user-verified` and reads committed frontmatter exact
 
 Hypotheses carry their conjectural force in titles or prose. Retired and replaced artifacts carry supersession in prose, links, filenames, or a coherent type-local field. The former `current` cohort is not automatically converted: prior lifecycle metadata is not proof of human attestation.
 
-Rejected alternatives:
+## Considered alternatives
 
-- Retaining a smaller lifecycle enum would preserve a global axis with no single coherent meaning.
-- Computing verification from review acceptance or freshness would collapse criterion-specific evidence into a universal claim.
-- Converting every former `current` note would manufacture human attestations.
-- Adding verifier identity, timestamps, or hashes now would expand the contract without an exercised requirement.
+*Retrofitted 2026-07-25 under [ADR 056](./056-adopted-and-retired-proposals-archive-out-of-the-frontier.md), absorbing the decision-relevant content of the proposal this decision retired.*
+
+- **Retaining a smaller lifecycle enum** — rejected: preserves a global axis with no single coherent meaning.
+- **Splitting the field into lifecycle plus contract-declared assertion force** — rejected. This was the developed alternative, worked out in the archived proposal "Assertion force separate from lifecycle status": keep a structural lifecycle enum in the type, and let each collection's `COLLECTION.md` declare what commitment `current` expresses (first-person endorsement, attribution, capture), so an attributed claim could be marked current without asserting belief in it. It failed on two counts. The residual "lifecycle" is not one clean axis either — the proposal's own later self-critique read `status` as a diagonal through maturity, currency, and endorsement, with a promotion flavor smeared into `seedling`, so the split leaves a fused field behind. And the motivating case needs endorsement to be *inapplicable*, not re-valued: a casebook note asserts nothing in its own voice, and redefining what a label means per collection cannot express an axis that does not apply. Axis decomposition with per-collection axis selection was the successor candidate; deleting the field achieves the same outcome without designing a mechanism ahead of a worked case, and a collection that later needs an explicit axis can define a type-local field.
+- **Computing verification from review acceptance or freshness** — rejected: collapses criterion-specific evidence into a universal claim.
+- **Converting every former `current` note** — rejected: manufactures human attestations.
+- **Adding verifier identity, timestamps, or hashes now** — rejected: expands the contract without an exercised requirement.
+
+Deciding forces: the field failed at the presentation boundary (file-only renderers could not distinguish human attestation from workflow acceptance); review acceptance and freshness are criterion-specific and cannot supply a universal verdict; and the fused axes were not mechanically checkable in any combination. Deletion was preferred to relativization on the same grounds the frontmatter-semantics boundary sets: a field's meaning stays type-owned, so a field that cannot hold one meaning globally should not exist globally.
 
 ## Consequences
 

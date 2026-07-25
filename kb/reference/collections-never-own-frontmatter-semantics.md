@@ -21,7 +21,7 @@ Keeping frontmatter semantics wholly inside the type spec is what makes a commit
 
 ## The pressure case that proved it
 
-The epistack casework produced two ideas that would each have breached this boundary. The retired proposal [assertion force separate from lifecycle status](./proposals/assertion-force-separate-from-lifecycle-status.md) had each collection's `COLLECTION.md` redefine what `status: current` asserts — endorsement here, attribution accuracy there — the same committed value with per-directory truth conditions. A sharper idea from the extensible-controlled-vocabularies workshop went further: let the contract declare which status *axes* apply at all, so a collection could drop the endorsement axis rather than re-value it. Both put frontmatter meaning under collection control.
+The epistack casework produced two ideas that would each have breached this boundary. The retired proposal "Assertion force separate from lifecycle status" (archived) had each collection's `COLLECTION.md` redefine what `status: current` asserts — endorsement here, attribution accuracy there — the same committed value with per-directory truth conditions. A sharper idea from the extensible-controlled-vocabularies workshop went further: let the contract declare which status *axes* apply at all, so a collection could drop the endorsement axis rather than re-value it. Both put frontmatter meaning under collection control.
 
 [ADR 044](./adr/044-user-verification-replaces-global-note-status.md) resolved the fork by deleting the global `status` field outright rather than making its semantics collection-relative — replacing it with an optional `user-verified` field whose meaning is fixed and type-owned. The boundary held by removing the field, not by relativizing it.
 
@@ -44,7 +44,6 @@ The two epistack ideas are instances of a recurring shape: a field whose meaning
 Relevant Notes:
 
 - [Collections and types](./collections-and-types.md) — part-of: the composition model this sharpens; states the two-surface split that this note shows is asymmetric
-- [ADR 044: user verification replaces global note status](./adr/044-user-verification-replaces-global-note-status.md) — implemented-by: the decision that held the boundary by deleting the field rather than relativizing its meaning
+- [ADR 044: user verification replaces global note status](./adr/044-user-verification-replaces-global-note-status.md) — implemented-by: the decision that held the boundary by deleting the field rather than relativizing its meaning; its considered alternatives carry the per-collection meaning-redefinition option this boundary rules out
 - [ADR 017: COLLECTION.md is the register convention boundary](./adr/017-collection-md-is-the-register-convention-boundary.md) — implemented-by: the precedent for carrying a per-collection distinction in placement and prose with no frontmatter field
-- [Assertion force separate from lifecycle status](./proposals/assertion-force-separate-from-lifecycle-status.md) — see-also: the retired proposal whose per-collection meaning-redefinition of `status` this boundary rules out
 - [ADR 042: register becomes a default profile under open-ended text contracts](./adr/042-register-becomes-a-default-profile-under-open-ended-text-contracts.md) — see-also: the sibling open-but-guarded value-set extension that stays on the text-contract side of this boundary
