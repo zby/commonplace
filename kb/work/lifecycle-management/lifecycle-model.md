@@ -42,6 +42,8 @@ Each of these came from the maintainer and changed the design; recording the seq
 
 ADR 056, plus the contracts it changed: `proposals/README.md` (archiving clause), `proposals/archive/README.md` (the archive-operating instruction — the one door through the boundary), `kb/reference/COLLECTION.md` (proposal exception), and `kb/reference/types/adr.md` (the considered-alternatives requirement and template).
 
+Landing in parallel, from a different line of work: the `design-proposal` trait became a collection-local type (`kb/reference/types/design-proposal.md`). It absorbed the archiving rules on its own surface and sanctioned the `Proposal (adopted):` description lead one of the two migrated proposals had already been carrying ad hoc — so an archived-and-adopted proposal stays distinguishable in a description sweep, which still reaches `archive/`.
+
 Worked migrations: ADR 045 absorbed the source-genre proposal's alternatives and resolved free choices; ADR 044 absorbed the assertion-force decomposition as a considered-and-rejected option; both proposals moved to the archive with inbound links re-pointed at the ADRs.
 
 Two decisions during implementation that the discussion had not settled:
@@ -55,7 +57,7 @@ Two decisions during implementation that the discussion had not settled:
 - **Source snapshot retirement.** `kb/sources/` has no exit for a wrong or dead capture.
 - **ADR archiving.** Designed in the survey, deliberately unbuilt: superseded and deprecated ADRs are eligible immediately, accepted ones once inbound frontier citations go cold. No cohort exists yet.
 - **Enforcement.** The archive boundary is deterministically checkable but is checked by hand (`rg`) today. It would be the KB's first genuinely mechanical lifecycle rule; nothing else here — banners, status fields, extraction completeness — is checkable without judgment.
-- **Whether any of this generalizes.** Candidate promotions to `kb/notes/`, each needing a second worked case first: the recomputable-cache versus committed-compression distinction (the strongest candidate); tiers-as-coordinates; and the workshop deletion bet — that the residue's expected retrieval value does not cover its standing search cost.
+- **Whether any of this generalizes.** Candidate promotions to `kb/notes/`, each needing a second worked case first: the recomputable-cache versus committed-compression distinction (the strongest candidate); tiers-as-coordinates; and the workshop deletion bet — that the residue's expected retrieval value does not cover its standing search cost. The [disposal survey](./disposal-and-retirement-survey.md) carries these in full — the tier axes, the cache-mechanism correspondences, and the ADR-archiving sketch — and is the file to mine when a second case arrives.
 
 ## What would close the workshop
 
