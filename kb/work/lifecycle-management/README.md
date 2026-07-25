@@ -50,7 +50,11 @@ We start from workshops because that is where we have the most active practice. 
 
 3. **Seedling maturation.** When does a seedling become current? Today this is intuitive. Is there an operable gate — number of inbound links, citation by a structured-claim, review pass, something else?
 
+   **Overtaken by [ADR 044](../../reference/adr/044-user-verification-replaces-global-note-status.md):** the global `status` enum — and with it seedling/current — was removed; optional committed user verification replaced it. The maturation question this workshop posed no longer has a field to answer for; what remains of it is owned by the verification and review-freshness contracts, not here.
+
 4. **Retirement protocol.** What signals a note is stale? What is the action — revise in place, mark deprecated, delete? How do inbound links get handled?
+
+   **Survey landed (2026-07-25):** [disposal-and-retirement-survey.md](./disposal-and-retirement-survey.md) widens this from notes to every artifact kind. Five disposal operations are in live use (delete-with-git-pointer, archive-in-place with status flip, archive-in-place with ad-hoc banner, DB-target retire, move-content-out-keep-residual), only some licensed by a contract where they occur. The live defect is `kb/reference/proposals/`: the contract names the adoption transition but no disposal operation, so adopted/retired proposals sit in a directory whose README promises "finished but unadopted" — one was deleted, two were banner-annotated ad hoc. The survey's working direction: match the operation to what cites the artifact afterwards — delete when nothing durable cites it, licensed archive-in-place (the ADR model) when durable artifacts cite it as history.
 
 5. **Extraction during a workshop.** Can durable claims be promoted mid-workshop without closing it? What convention keeps the workshop useful after partial extraction, and what stops it from becoming a permanent shadow library?
 
@@ -71,3 +75,5 @@ We start from workshops because that is where we have the most active practice. 
 ## What would close this workshop
 
 An updated life-cycle map (probably a note) naming each stage, its valid transitions, and its conventions, and an updated `kb/work/COLLECTION.md` closure section that reflects the richer set of pathways. The `agent-memory-design` landing is resolved (single-file promotion with `synthesis` trait) and can serve as one worked example in the map.
+
+Added 2026-07-25: a defined disposal clause for `kb/reference/proposals/` — an amendment to its README (and, since it amends ADR 028's contract, probably recorded as an ADR) that licenses the adopted/retired state the two existing banners already improvise, and updates the directory's "finished but unadopted" claim to match. The free choices are listed at the end of the disposal survey.
