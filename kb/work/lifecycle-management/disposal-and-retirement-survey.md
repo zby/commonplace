@@ -73,6 +73,25 @@ Two consequences:
 
 Open free choices for the proposals amendment: the adoption-time procedure (extraction checklist; the move; handling of existing inbound links — re-extract vs. inline, per the rule, not rewrite-and-keep); how an ADR refers to the proposal it adopted (title-only mention, or nothing); whether adopted-into-ADR and retired-as-YAGNI share one archive; whether archived files keep a banner pointing out to the superseding ADR (archive→frontier links are unproblematic — sinks may cite sources); whether the proposals README lists the archive beyond the working-with-archives instruction.
 
+### Working hypothesis: tiers are generated, not enumerated (2026-07-25)
+
+Maintainer conjecture: frontier and archive are only the first two categories — ADRs already sit oddly (frontier artifacts that are also storage of history, in converted, compressed form) — and more will come; "eventually it is like with cache."
+
+The cache analogy is not loose: several of its mechanisms are already built or already decided, under other names:
+
+- **Refill-on-miss = re-extraction.** When the frontier lacks something the archive has, the repair recomputes into the frontier rather than pointing at the backing store — which is exactly what the link-sink rule enforces. A cache holds copies, not pointers into RAM; the no-frontier→archive-links rule is that same discipline.
+- **Writeback-before-eviction = the extraction obligation.** Workshops and archived proposals are evicted only after their durable content is written back to the library.
+- **Invalidation = the freshness system.** Snapshot-pinned baselines over `(note, criterion)` pairs are cache-coherence machinery for derived judgments ([freshness architecture](../../reference/freshness-architecture.md)); [make-like staleness detection](../../notes/link-graph-plus-timestamps-enables-make-like-staleness-detection.md) is the same idea for the document graph.
+- **Coherent-or-absent = the marks doctrine.** A mark is defined as a cached recomputable value that must be enforced or omitted ([tag-readme](../../types/tag-readme.md), [a derived copy of recomputable truth must be checked or absent](../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md)).
+- **Derived fast path with fallback to the generator** — the [theory-methodology-derivation](../theory-methodology-derivation/README.md) workshop is designing this pattern for methodology itself.
+
+One refinement the analogy needs before it can carry the lifecycle map: there are **two different derived-artifact relations**, and only one of them is a cache.
+
+1. **Recomputable cache** — marks, generated indexes, arguably descriptions. Deterministically recomputable from ground truth; maintenance rule is checked-or-absent; staleness is repaired by recompute.
+2. **Committed compression** — ADRs, notes promoted from workshops. Lossy, judgment-laden, *not* recomputable: re-running the process would not reproduce them. At the moment of commitment they become the new ground truth; the raw material behind them demotes to provenance. An ADR is therefore not a cache of its proposal — it is the original record of the decision, whose *subject* is historical. That is why ADRs belong in the frontier while the proposal goes to the archive, and why their maintenance rule is supersession (a new decision) rather than invalidation-and-recompute.
+
+The proliferation worry resolves if new tiers are read as coordinates on named axes rather than as new kinds: **standing attention cost** (always-loaded → indexed → default-swept → on-demand → git-only), **link-graph role** (source, sink), and **relation to ground truth** (original, recomputable cache, committed compression). Under those axes, "frontier" and "archive" are just two frequently-occupied points, and an artifact like an ADR is unproblematic — original record, frontier attention tier. The KB has made exactly this move twice before when a closed taxonomy started sprouting members: registers became open profiles ([ADR 042](../../reference/adr/042-register-becomes-a-default-profile-under-open-ended-text-contracts.md)), the genre enum became an open field ([ADR 045](../../reference/adr/045-source-genre-is-a-single-open-field-on-the-snapshot.md)). Guardrail, same as those cases: worked-case-first — name a new tier only when an artifact actually earns it, and let the axes absorb the pressure until then.
+
 ## What this file feeds
 
 - Question 4's answer for the library kinds, and a new closure item: a disposal clause for `kb/reference/proposals/` (README amendment, possibly recorded as an ADR since it amends ADR 028's contract).
