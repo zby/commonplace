@@ -1,7 +1,6 @@
 ---
 description: "Proposal: learn review gates from accepted note edits, with candidate mining, usefulness tracking, lifecycle promotion, and budgeted loading. Atomic gates shipped; learning has not"
-type: kb/types/note.md
-traits: [design-proposal]
+type: ../types/design-proposal.md
 tags: [kb-maintenance]
 ---
 

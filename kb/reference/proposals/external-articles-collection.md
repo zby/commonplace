@@ -1,7 +1,6 @@
 ---
 description: "Proposal: outward-facing kb/articles/ — dated posts distilled from the KB for technical readers, published via the existing ProperDocs Pages pipeline; open: the draft-to-published procedure"
-type: kb/types/note.md
-traits: [design-proposal]
+type: ../types/design-proposal.md
 tags: [document-system, context-engineering]
 ---
 

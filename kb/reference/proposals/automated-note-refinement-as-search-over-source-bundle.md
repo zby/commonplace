@@ -1,7 +1,6 @@
 ---
 description: "Proposal: build the automated note-refinement loop on a source bundle that emits a set of notes, not a single identity-stable note — reframing non-convergence (split, drift, kill) as search outcomes"
-type: kb/types/note.md
-traits: [design-proposal]
+type: ../types/design-proposal.md
 tags: [kb-maintenance]
 ---
 
