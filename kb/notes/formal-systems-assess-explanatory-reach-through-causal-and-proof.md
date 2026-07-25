@@ -42,7 +42,7 @@ Relevant Notes:
 - [Reach-assessment](./definitions/reach-assessment.md) — defined-in: vocabulary this note develops into causal and proof obligations
 - [Representational form](./definitions/representational-form.md) — grounds: explains why prose, symbolic, and parametric commitments expose different review methods
 - [Gödel machines are a proof-governed case of reflective self-modification](./goedel-machines-are-a-proof-governed-case-of-self-modification.md) — exemplifies: proof-gated acceptance of a symbolic self-rewrite
-- [Reflection may improve sample efficiency under structured shifts](./reflection-may-improve-sample-efficiency-under-structured-shifts.md) — evidence: connects reusable causal mechanisms to transfer under structured shifts
+- [Semantically revising retained theories may improve sample efficiency under structured shifts](./semantically-revising-retained-theories-may-improve-sample-efficiency.md) — evidence: connects reusable causal mechanisms to transfer under structured shifts
 - [Warranted autonomy is bounded by oracle domain](./warranted-autonomy-is-bounded-by-oracle-domain.md) — grounds: formal guarantees remain bounded by the oracle or axiomatization that produces them
 - [Schmidhuber, Gödel Machines](../sources/goedel-machines-schmidhuber.ingest.md) — evidence: proof-gated host architecture and its unprovable-improvement limitation
 - [Causal inference using invariant prediction](../sources/causal-inference-using-invariant-prediction.ingest.md) — evidence: invariance across environments and interventions as a causal acceptance signal

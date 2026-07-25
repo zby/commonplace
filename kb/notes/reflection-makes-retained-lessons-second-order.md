@@ -23,7 +23,7 @@ Route retention through a [causally connected self-representation](./definitions
 
 A worked instance: a system retains the commitment "skip integration tests when only documentation files changed," formed after several doc-only PRs proved harmless without them. Rejection discards the commitment outright the first time a doc-only PR breaks a build that reads one of those files as config — every future doc-only PR goes back through the full suite. Rescoping narrows the boundary instead: "skip integration tests when only documentation files changed, except files under build-tooling paths." Revision leaves the boundary alone and corrects the prescription itself: "skip integration tests, but still run the docs-lint check." Same retained artifact, three different single-step operations on it — a first-order pathway has none of them; it can only accumulate more evidence about when doc-only changes are safe.
 
-These operations can change behavior across the commitment's explanatory-reach in one explicit revision. That supplies a mechanism for selective correction and targeted rollback; whether it improves target-data efficiency is the downstream, conditional conjecture in [reflection may improve sample efficiency under structured shifts](./reflection-may-improve-sample-efficiency-under-structured-shifts.md).
+These operations can change behavior across the commitment's explanatory-reach in one explicit revision. That supplies a mechanism for selective correction and targeted rollback; whether it improves target-data efficiency is the downstream, conditional conjecture in [semantically revising retained theories may improve sample efficiency under structured shifts](./semantically-revising-retained-theories-may-improve-sample-efficiency.md).
 
 ## Rescoping requires represented scope
 
@@ -48,7 +48,7 @@ Relevant Notes:
 
 - [Reflection buys addressability](./reflection-buys-addressability.md) — grounds: addressable retention is what makes a prior commitment an operable object; this note develops the selective-revision advantage into the first-order/second-order distinction
 - [Reach-assessment](./definitions/reach-assessment.md) — extends: the evaluator capability that would make second-order operations more often correct, not just cheaper
-- [Reflection may improve sample efficiency under structured shifts](./reflection-may-improve-sample-efficiency-under-structured-shifts.md) — extends: stakes the statistical payoff this note supplies the mechanism for
+- [Semantically revising retained theories may improve sample efficiency under structured shifts](./semantically-revising-retained-theories-may-improve-sample-efficiency.md) — extends: stakes the statistical payoff this note supplies the mechanism for
 - [Reflective system](./definitions/reflective-system.md) — defined-in: the causally connected, aspect-bounded self-representation whose represented aspects determine which second-order operations are available
 - [Retrieval failure is reflection failure](./retrieval-failure-is-reflection-failure.md) — mechanism: the retrieval wire through which represented applicability conditions reach later operation
 - [False-positive generation is filtered; false-positive acceptance becomes operative](./false-positive-generation-is-filtered-before-retention.md) — contrasts: a wrong second-order lesson is the acceptance failure at its most expensive, discarding or misbounding a commitment with all its explanatory-reach

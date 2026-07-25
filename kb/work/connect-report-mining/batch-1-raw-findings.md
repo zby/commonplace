@@ -10,7 +10,7 @@ Sources read (15 reports, full text):
 6. `kb/notes/full-identity-keys-decouple-a-batch-protocol-from-its-packing-axis.md`
 7. `kb/notes/open-domain-memory-retention-needs-a-declared-output-spec.md`
 8. `kb/notes/orchestration-needs-privilege-quarantine-not-permission-scope.md`
-9. `kb/notes/reflection-may-improve-sample-efficiency-under-structured-shifts.md`
+9. `kb/notes/semantically-revising-retained-theories-may-improve-sample-efficiency.md`
 10. `kb/notes/runtime-structure-determines-governance-control-surfaces.md`
 11. `kb/notes/skill-discovery-re-fires-in-every-sub-agent-context.md`
 12. `kb/notes/structure-inference-needs-capture-at-the-decision-surface.md`
@@ -62,4 +62,4 @@ Sources read (15 reports, full text):
 - `- ABSTRACTION: [connect reports for full-identity-keys-decouple-a-batch-protocol-from-its-packing-axis.md, orchestration-needs-privilege-quarantine-not-permission-scope.md, runtime-structure-determines-governance-control-surfaces.md, skill-discovery-re-fires-in-every-sub-agent-context.md, vocabulary-collisions-prevented-at-write-time-not-read-time.md] — 5 of 15 connect reports sampled independently flag kb/notes/computational-model-README.md as missing a just-written note; the selective/non-complete tag-README pattern is lagging note production on this tag specifically`
 - `- FIX: [kb/notes/COLLECTION.md, kb/reference/COLLECTION.md]: three separate connect reports (a-derived-copy-of-recomputable-truth-must-be-checked-or-absent, orchestration-needs-privilege-quarantine-not-permission-scope, search-mechanisms-in-commonplace) each independently hit a label-vocabulary gap — an unauthorised `complements` label in use, no notes→sources label for "similar-but-different" contrasts, and no reference-collection label for a doc that generalizes/refines a theory note's claim (plus two existing edges already misusing notes-collection labels on reference pairs)`
 - `- FIX: kb/notes/skill-discovery-re-fires-in-every-sub-agent-context.md: carries tags: [] and is therefore invisible to every tag-README and by-tag rg sweep despite being a normal structured-claim note; needs computational-model and/or architecture tags`
-- `- DUPLICATION: [semantic-engine.md source ingest, reflection-may-improve-sample-efficiency-under-structured-shifts.md]: two connect reports independently find load-bearing external material with no kb/sources/ snapshot (the Semantic Engine repo; 8 arXiv papers cited as bare URLs) — pattern of source-tracking lagging note authorship, not a one-off`
+- `- DUPLICATION: [semantic-engine.md source ingest, semantically-revising-retained-theories-may-improve-sample-efficiency.md]: two connect reports independently find load-bearing external material with no kb/sources/ snapshot (the Semantic Engine repo; 8 arXiv papers cited as bare URLs) — pattern of source-tracking lagging note authorship, not a one-off`

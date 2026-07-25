@@ -5,7 +5,7 @@ traits: [title-as-claim, has-external-sources]
 tags: [foundations, self-improving-systems]
 ---
 
-# Reflection may improve sample efficiency under structured shifts
+# Semantically revising retained theories may improve sample efficiency under structured shifts
 
 Four things have to stay apart for this conjecture to say anything. **Reflection** is structural and nothing more: a system is reflective when it changes through a causally connected [representation of itself](./definitions/reflective-system.md). A reflective architecture built on string matching satisfies every requirement and reasons about nothing. What reflection operates on is a retained **artifact**, and [since reflection buys addressability](./reflection-buys-addressability.md), an artifact inside the self-representation — or an operative part of one — can be located, inspected, criticized, and revised in place rather than merely run on. Addressability is the artifact's property, and in its full sense it already carries selective revisability.
 

@@ -29,7 +29,7 @@ Take retained changes whose ground-truth quality is known, some subtly bad in wa
 
 ## Scope
 
-- This is the oversight sibling of the [target-data payoff](./reflection-may-improve-sample-efficiency-under-structured-shifts.md): both narrow one bullet of the addressability affordance to a measurable claim, and both turn on a condition addressability does not itself supply — there, a structured shift the commitment's explanatory-reach covers; here, a faithful rationale the overseer can assess.
+- This is the oversight sibling of the [target-data payoff](./semantically-revising-retained-theories-may-improve-sample-efficiency.md): both narrow one bullet of the addressability affordance to a measurable claim, and both turn on a condition addressability does not itself supply — there, a structured shift the commitment's explanatory-reach covers; here, a faithful rationale the overseer can assess.
 - The claim is about oversight cost, not about whether the change is good. A faithful rationale for a bad change lets the overseer *reject* it cheaply; faithfulness makes the decision reliable, not favorable.
 - The cited studies establish the faithfulness–plausibility distinction and an intervention-based failure mode for model explanations and chain-of-thought. They do not directly test native rationales retained with changes, human probe counts, or oversight accuracy; applying their result here is a hypothesis this note's proposed experiment must test.
 
@@ -44,7 +44,7 @@ Take retained changes whose ground-truth quality is known, some subtly bad in wa
 Relevant Notes:
 
 - [Reflection buys addressability](./reflection-buys-addressability.md) — grounds: supplies the explanation affordance this note sharpens into a conditional oversight-cost hypothesis
-- [Reflection may improve sample efficiency under structured shifts](./reflection-may-improve-sample-efficiency-under-structured-shifts.md) — contrasts: the sibling payoff developed from the same addressability bullet list, narrowing reuse-and-transfer instead of explanation
+- [Semantically revising retained theories may improve sample efficiency under structured shifts](./semantically-revising-retained-theories-may-improve-sample-efficiency.md) — contrasts: the sibling payoff developed from the same addressability bullet list, narrowing reuse-and-transfer instead of explanation
 - [Reach-assessment](./definitions/reach-assessment.md) — grounds: the assessment capability the overseer needs to tell faithful rationale from plausible confabulation, which reading does not supply
 - [Retrieval failure is reflection failure](./retrieval-failure-is-reflection-failure.md) — mechanism: the retrieval clause — a rationale nothing surfaces to the overseer contributes nothing
 - [Warranted autonomy is bounded by oracle domain](./warranted-autonomy-is-bounded-by-oracle-domain.md) — grounds: the domain over which an overseer can warrant a decision from a rationale bounds where the saving is real
