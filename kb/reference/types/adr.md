@@ -26,6 +26,7 @@ Use an ADR for a concrete architectural decision that has been made and implemen
 - `Context` explains the pressure or problem that forces a choice.
 - `Decision` states the actual choice, not the surrounding debate.
 - `Consequences` should name what becomes easier, harder, riskier, or no longer possible as a result.
+- For decisions dated 2026-07-24 or later, the ADR must also name the decision's operativity path: what consumes the changed organization, through which channel, and with what force — in `Consequences`, or in `Decision` when the path is itself part of the choice. A decision without a named consumer is recorded but inert, and the record is where that should become visible. ADRs dated earlier predate this requirement and are not retrofitted.
 
 ## Template
 
@@ -54,3 +55,10 @@ status: accepted
 
 {Consequences}
 ```
+
+---
+
+Relevant Notes:
+
+- [Operative change](../../notes/definitions/operative-change.md) — rationale: the operativity-path requirement — a decided change reaches later behavior only through a consumer, channel, and force
+- [Where change candidates come from in Commonplace](../where-change-candidates-come-from-in-commonplace.md) — rationale: instrumented ADRs are the ongoing evidence stream for how the system's organization actually changes

@@ -29,6 +29,13 @@ A review gate is a closed-ended, verdict-kind quality assay. Each gate is one ma
 - Optional `## Example (pass)` and `## Example (fail)` blocks make the test concrete. Most existing gates carry at least one of each — copy their shape rather than reinventing it.
 - **The test must be self-contained.** Review freshness hashes only note text and criterion text, so a test that leans on prose living elsewhere (a type spec, a collection convention) carries a dependency that never invalidates acceptances. If the test needs contract language, quote it in the gate body — that converts the dependency into hashed criterion text, and editing the gate to track a moved contract fires `criterion-changed` through the normal path. Conformance to a type's contract as a whole is not a catalog gate's job: that is the type-conformance pair, whose criterion side is the type spec itself (ADR 038). A gate scoped by `requires_type` owns a sharper, named failure mode and should state its boundary with the conformance pair.
 
+## Force and warrant
+
+A gate is automated problem-noticing, not reject-capable evaluation. Its verdict generates disposition work — fix, reject, or defer, decided downstream — and commit or merge is what retains a change; FAIL is an escalation signal, not an operative blocker. Author the test as a detector for the named failure mode, not as an acceptance authority.
+
+- **Warrant boundary.** The model-judged test is warranted only for the failure mode the gate names, and that warrant is currently uncalibrated. Do not raise a gate's enforcement force (making its verdicts blocking, or auto-acting on them without disposition) before it meets the acceptance criteria in the [calibration proposal](../reference/proposals/calibrating-semantic-gates-against-labelled-fixtures.md).
+- **Judgment outside the freshness hash.** Review freshness hashes note text and criterion text only. Editing a gate's criterion prose fires `criterion-changed` through the normal path — but a change that shifts judgment without touching either hashed side (prompt rendering, process scaffolding, judging configuration) leaves accepted baselines silently standing. Such a change owes a deliberate re-review of the affected corpus until freshness can represent that dependency.
+
 ## Template
 
 ```markdown
