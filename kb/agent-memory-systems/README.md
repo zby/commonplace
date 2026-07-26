@@ -104,7 +104,7 @@ The divergences are more revealing:
   
 - **Cross-agent knowledge transfer** — most systems are single-agent or agent-agnostic; cass-memory is the first reviewed system to make cross-agent session mining a first-class feature, indexing logs from Claude Code, Cursor, Codex, Aider, and others into a shared playbook
   
-- **Runtime self-modification** — most frameworks have fixed agent topology defined at build time; OpenSage is the first reviewed system where agents can create subagents and scaffold new tools at runtime, though without quality gates on the created artifacts
+- **Runtime self-modification** — most frameworks have fixed agent topology defined at build time; OpenSage lets agents create subagents and scaffold new tools at runtime, though without quality gates on the created artifacts. Exo broadens the target to prompts, memory, tools, executor policy, and harness code while keeping canonical history in a protected substrate outside the rewound sandbox; its recovery boundary is stronger than its semantic promotion gates
   
 - **Self-referentiality** — only our KB is simultaneously a knowledge system and a knowledge base about knowledge systems
   
