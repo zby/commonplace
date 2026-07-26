@@ -83,7 +83,7 @@ By the criteria in [self-improving systems](../notes/self-improving-systems-READ
 
 ## What to watch
 
-- Cloning and migration are documented as not yet built, and both the canary path and the rewind-and-retry story lean on them.
+- Cloning and migration are documented as not yet built, and both the canary path and the rewind-and-retry story lean on them. The overview documents already describe them as shipped: the [README](https://github.com/exoharness/exo/blob/baa07f6785547080d99bd2a7d3eab6d76b984e35/README.md) says Exo "can clone itself, and even manage a lineage of clones," and `docs/RSI.md` says canonical state "maintains full lineage across clones" — while `SELF-CONTROL.md` marks area 7 "*(not yet built)*" and records that even sandbox cloning, its prerequisite, is missing. No clone or spawn tool is registered in `typescript/harness`. The capability tables are the load-bearing documents here; watch whether the gap closes or the overview claim simply stands.
 - Where the protected set settles. It is currently drawn by default policy rather than architecture, so the boundary can move in either direction — an agent granted harness access, or a substrate that grows as failures reveal what should not have been mutable.
 
 ---
