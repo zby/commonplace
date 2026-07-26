@@ -6,7 +6,13 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from commonplace.freshness.status import load_target_status, render_status_json, status_exit_code
+from commonplace.freshness.status import (
+    filter_missing_inputs,
+    load_target_status,
+    missing_input_paths,
+    render_status_json,
+    status_exit_code,
+)
 from commonplace.review.review_db import connect, ensure_db, resolve_db_path
 from commonplace.review.review_model import normalize_model_partition
 
@@ -19,6 +25,11 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser.add_argument("--json", action="store_true", help="Emit JSON status.")
     parser.add_argument("--diff", action="store_true", help="Include unified diffs for changed inputs.")
     parser.add_argument("--all", action="store_true", help="Include fresh targets in JSON output.")
+    parser.add_argument(
+        "--missing",
+        action="store_true",
+        help="Report only baselines referencing a deleted artifact; these need retirement, not re-review.",
+    )
     parser.add_argument(
         "--model-partition",
         help="Filter to one review model partition.",
@@ -47,6 +58,10 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     except (OSError, RuntimeError, ValueError) as exc:
         parser.error(str(exc))
 
+    missing_paths = missing_input_paths(status)
+    if args.missing:
+        status = filter_missing_inputs(status)
+
     if args.json:
         print(render_status_json(status, include_all=args.all))
     else:
@@ -63,6 +78,12 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
                 )
                 for changed in target.changed_inputs:
                     print(f"  {changed.input_role}: {changed.status}")
+        if missing_paths:
+            print()
+            print(f"deleted artifacts still referenced by baselines ({len(missing_paths)}):")
+            for path in missing_paths:
+                print(f"  {path}")
+            print("retire these baselines with commonplace-freshness-retire; re-review cannot clear them")
 
     return status_exit_code(status)
 

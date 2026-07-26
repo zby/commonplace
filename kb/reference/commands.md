@@ -158,10 +158,13 @@ The command accepts `queued` jobs, rejects `completed` and `failed`, reads the j
 
 Report repository-wide freshness for registered targets. v1 covers migrated `review-pair` targets only. JSON shapes and exit codes: [freshness-schemas.md](./freshness-schemas.md). Exit `0` when all selected targets are fresh, `1` when any input changed or is missing, `2` on misuse or store errors.
 
+`--missing` narrows the report to baselines whose input artifact no longer exists. These need `commonplace-freshness-retire`, not re-review — no edit can make a deleted artifact match its accepted snapshot again, so without the filter they sit in the stale set indistinguishable from artifacts that merely changed. The default report also names the distinct deleted paths and the remedy at the end of its output, so the condition is visible without knowing the flag. The JSON shape is unchanged; `--missing` only selects targets.
+
 ```bash
 commonplace-freshness-status --json
 commonplace-freshness-status --all --json --model-partition codex
 commonplace-freshness-status --json --diff
+commonplace-freshness-status --missing
 ```
 
 ### commonplace-freshness-accept

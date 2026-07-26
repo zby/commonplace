@@ -49,6 +49,40 @@ def _exit_class(targets: tuple[StaleTarget, ...] | list[StaleTarget]) -> str:
     return "fresh"
 
 
+def missing_input_targets(status: FreshnessStatus) -> tuple[StaleTarget, ...]:
+    """Targets whose baseline references an artifact that no longer exists.
+
+    These need baseline retirement, not re-review: no edit can make a deleted
+    artifact match its accepted snapshot again, so they would otherwise sit in
+    the stale set forever, indistinguishable from artifacts that merely changed.
+    """
+    return tuple(
+        target
+        for target in status.targets
+        if any(item.status == "input-missing" for item in target.changed_inputs)
+    )
+
+
+def missing_input_paths(status: FreshnessStatus) -> tuple[str, ...]:
+    """Distinct artifact paths referenced by baselines but absent from the tree."""
+    return tuple(
+        sorted(
+            {
+                item.artifact_path
+                for target in status.targets
+                for item in target.changed_inputs
+                if item.status == "input-missing"
+            }
+        )
+    )
+
+
+def filter_missing_inputs(status: FreshnessStatus) -> FreshnessStatus:
+    """Narrow a status to the retirement-eligible targets, recomputing exit class."""
+    targets = missing_input_targets(status)
+    return FreshnessStatus(targets=targets, exit_class=_exit_class(targets))
+
+
 def _attach_diffs(conn: sqlite3.Connection, *, repo_root: Path, target: StaleTarget) -> StaleTarget:
     changed: list[ChangedInput] = []
     for item in target.changed_inputs:
