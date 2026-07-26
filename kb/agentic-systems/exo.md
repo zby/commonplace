@@ -36,34 +36,34 @@ Exo characterises this honestly as existing "as practice and primitives rather t
 
 Every message, tool request and result, lifecycle change, and artifact write becomes a UUIDv7-ordered event file. Sandbox rewind restores filesystem state and deliberately leaves that log intact, so "an agent that breaks itself, rewinds, and tries again can see what it already tried, instead of repeating the same mistake in a loop."
 
-This is the most transferable idea in the system: separating the substrate that gets reverted from the record of the attempt that failed. A rollback that also erases the evidence converts a failed experiment into a repeatable one. The append-only property is API and storage discipline rather than cryptographic tamper-proofing.
+This is the most transferable idea in the system: separating the substrate that gets reverted from the record of the attempt that failed. A rollback that also erases the evidence converts a failed experiment into a repeatable one. The [memory-subsystem review](../agent-memory-systems/reviews/exo.md) develops the Commonplace version — keeping source snapshots and accepted review evidence outside any agent-authored projection that may be replaced. The append-only property here is API and storage discipline rather than cryptographic tamper-proofing.
 
 ## Control surfaces
 
 Beyond `guardian_action`: `snapshot_sandbox`, `rewind_sandbox`, and `list_sandbox_snapshots` for environment control; `schedule_sandbox_task` plus list/cancel/delete for the scheduler; `list_conversation_events` and `list_adapter_events` for introspection over its own history; `install_agent_tool`/`uninstall_agent_tool` and `shell` for capability extension.
 
-The turn loop bounds tool round-trips per turn via `maxToolRoundTrips`, but materialises all conversation events in order on every model round with no history window, token budget, or implemented compaction — a notable tension with the long-running ambition.
+The turn loop bounds tool round-trips per turn via `maxToolRoundTrips`, but materialises all conversation events in order on every model round with no history window, token budget, or implemented compaction — a notable tension with the long-running ambition, and the [memory-subsystem review](../agent-memory-systems/reviews/exo.md) works through what it costs.
 
 ## Where the acceptance gate stops
 
-The evaluation stage is genuinely reject-capable: a build failure or failing test blocks adoption. But its oracles are build success, test outcomes, and behaviour observed after restart, so a change that degrades the agent's judgment without breaking anything mechanical passes. Exo names the missing piece itself:
+The evaluation stage is genuinely reject-capable: a build failure or failing test blocks adoption. But its oracles are build success, test outcomes, and behaviour observed after restart, so a change that degrades the agent's judgment without breaking anything mechanical passes. The [memory-subsystem review](../agent-memory-systems/reviews/exo.md) traces the same shortfall per promotion target and finds the gradient runs the wrong way — the strongest promotions carry the lightest checks, with executable tools validated for module shape rather than for doing anything useful.
+
+Exo names the missing piece itself:
 
 > Gap worth closing eventually: a canary path — run the changed build against a cloned sandbox or forked conversation and compare behavior before adopting it on the live instance, instead of validating on the only copy of itself.
 
-Validating on the only copy of itself is precisely the position a self-hosting compiler is in, and the fixed-point check that partially covers the compiler has no analogue here.
+Validating on the only copy of itself is precisely the position a self-hosting compiler occupies. The compiler at least has a fixed-point check — recompile with itself, compare outputs — and Ken Thompson showed even that can be fooled. Here there is no analogue at all, which makes the canary less a refinement than the first tripwire.
 
 ## Placement
 
 By the criteria in [self-improving systems](../notes/self-improving-systems-README.md), Exo is a running instance of a combination the casebook otherwise lacks: reflective, cumulative, and computationally autonomous at once. Its self-representation is unusually literal — the source tree it edits is the organisation that determines its behaviour, and the wire from artifact to behaviour is rebuild-and-restart. Its warrant is bounded by build, test, and immediate-behaviour oracles.
 
-`docs/RSI.md` also stakes a position on the bitter lesson: "the hand-engineered harness is the next thing to fall, as models get smarter, they should have largely unfettered ability to modify their own harnesses rather than living inside one we froze for them." Exo is the systems bet that this is right about harnesses specifically — keep the minimum that cannot be given up, and let scale rewrite the rest.
+`docs/RSI.md` also stakes a position on the bitter lesson: "the hand-engineered harness is the next thing to fall, as models get smarter, they should have largely unfettered ability to modify their own harnesses rather than living inside one we froze for them." Read through [what scale actually selects against](../notes/bitter-lesson-selects-against-unearned-reach-not-against-structure.md), the architecture is a bet about *which* structure was earned: harness policy — how to assemble a prompt, which tools to expose, when to compact — is a set of design theories whose scope was asserted rather than tested, so Exo hands them to the agent. Canonical state, secrets, and sandbox lifecycle are kept because they have nothing left to be wrong about. Whether the protected set is drawn in the right place is the bet, and the default policy protecting `exoharness` is where it is currently drawn.
 
 ## What to watch
 
-- Whether the canary path lands, since it is the difference between validating a self-modification and merely surviving it.
-- Cloning and migration are documented as not yet built, and the rewind-and-retry story leans on them.
-- Whether unbounded conversation materialisation survives contact with genuinely long-running use.
-- Whether the default policy protecting `exoharness` holds, given the system permits lifting it.
+- Cloning and migration are documented as not yet built, and both the canary path and the rewind-and-retry story lean on them.
+- Where the protected set settles. It is currently drawn by default policy rather than architecture, so the boundary can move in either direction — an agent granted harness access, or a substrate that grows as failures reveal what should not have been mutable.
 
 ---
 

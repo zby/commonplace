@@ -118,6 +118,7 @@ Other consumers include the human through CLI/ExoChat history and diagnostics, t
 
 Relevant Notes:
 
+- [Exo as an agentic system](../../agentic-systems/exo.md) - part-of: the whole-system analysis this memory subsystem sits inside, covering the self-modification loop, host control surfaces, and where the acceptance gate stops.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - supplies the storage, form, lineage, and authority record used to separate Exo's traces, facts, skills, and executable policy.
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - defines why Exo's always-replayed history and memory are push while event/skill tools are pull.
 - [Context efficiency is the central design concern in agent systems](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) - frames Exo's bounded entries and progressive skills against its unbounded full-history replay.
