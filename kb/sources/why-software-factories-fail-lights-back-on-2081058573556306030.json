@@ -1,0 +1,854 @@
+{
+  "source": "https://x.com/dexhorthy/status/2081058573556306030",
+  "captured": "2026-07-26T07:26:05.314114+00:00",
+  "family": "x-article",
+  "status_id": "2081058573556306030",
+  "conversation_id": "2081058573556306030",
+  "target_post": {
+    "article": {
+      "cover_media": "3_2080409822877597696",
+      "entities": {
+        "mentions": [
+          {
+            "end": 30,
+            "start": 21,
+            "username": "calvinfo"
+          },
+          {
+            "end": 77,
+            "start": 64,
+            "username": "0xBlacklight"
+          },
+          {
+            "end": 87,
+            "start": 82,
+            "username": "swyx"
+          },
+          {
+            "end": 118,
+            "start": 104,
+            "username": "aiDotEngineer"
+          }
+        ],
+        "urls": [
+          {
+            "text": "https://www.youtube.com/watch?v=Ib5GBkD555M"
+          },
+          {
+            "text": "https://x.com/dexhorthy/status/2078592010852982977"
+          },
+          {
+            "text": "humanlayer.com"
+          },
+          {
+            "text": "refactoring.guru"
+          },
+          {
+            "text": "https://github.com/opendilab/awesome-RLVR"
+          },
+          {
+            "text": "https://hlyr.dev/wsff-live"
+          },
+          {
+            "text": "https://www.youtube.com/watch?v=q-ntX4DLW_c"
+          },
+          {
+            "text": "https://x.com/dillon_mulroy/status/2059985696148849025"
+          },
+          {
+            "text": "https://www.youtube.com/watch?v=wVl6ZjELpBk"
+          },
+          {
+            "text": "https://infoq.com/news/2026/01/ramp-coding-agent-platform/"
+          },
+          {
+            "text": "https://en.wikipedia.org/wiki/Mutation_testing"
+          },
+          {
+            "text": "https://www.arthropod.software/p/vibe-coding-our-way-to-disaster#:~:text=The%20methodology%20I%27ve%20outlined%20goes%20beyond%20productivity%20with%20AI%20tools.%20At%20its%20core%2C%20it%20maintains%20the%20discipline%20and%20thoughtfulness%20that%20creates%20maintainable%2C%20understandable%20systems.%20It%20recognizes%20that%20the%20hard%20work%20of%20thinking%20can%27t%20be%20outsourced%20to%20AI%2C%20only%20amplified%20by%20it."
+          },
+          {
+            "text": "mailto:founders@humanlayer.dev"
+          },
+          {
+            "text": "https://aider.chat/"
+          },
+          {
+            "text": "https://github.com/humanlayer/advanced-context-engineering-for-coding-agents/blob/main/wsff.md#front-loading-alignment"
+          },
+          {
+            "text": "https://www.youtube.com/watch?v=3MP8D-mdheA"
+          },
+          {
+            "text": "https://www.youtube.com/live/NKu3T9FUjmU?si=6BGnZLOkmuIPTjzh&t=2230"
+          },
+          {
+            "text": "https://hlyr.dev/qrspi-mlops"
+          },
+          {
+            "text": "https://www.youtube.com/watch?v=qgAny0sEdIk"
+          },
+          {
+            "text": "https://hlyr.dev/discord"
+          },
+          {
+            "text": "https://simonwillison.net/2026/Feb/7/software-factory/"
+          },
+          {
+            "text": "https://www.danshapiro.com/blog/2026/01/the-five-levels-from-spicy-autocomplete-to-the-software-factory/"
+          },
+          {
+            "text": "https://x.com/@swyx"
+          },
+          {
+            "text": "https://dodcio.defense.gov/Portals/0/Documents/Library/DevSecOpsReferenceDesign.pdf"
+          },
+          {
+            "text": "https://www.youtube.com/watch?v=am_oeAoUhew"
+          },
+          {
+            "text": "https://huggingface.co/datasets/SWE-bench/SWE-bench_Multilingual"
+          },
+          {
+            "text": "https://martinfowler.com/books/refactoring.html"
+          },
+          {
+            "text": "https://github.com/humanlayer/advanced-context-engineering-for-coding-agents/blob/main/ace-fca.md"
+          },
+          {
+            "text": "https://x.com/@calvinfo"
+          },
+          {
+            "text": "https://factory.strongdm.ai/"
+          },
+          {
+            "text": "https://basecamp.com/shapeup/3.2-chapter-11#integrate-one-slice"
+          },
+          {
+            "text": "https://www.youtube.com/watch?v=Zx_GOhGik0o"
+          },
+          {
+            "text": "https://cognition.com/blog/frontier-code"
+          },
+          {
+            "text": "https://web.stanford.edu/~ouster/cgi-bin/aposd.php"
+          },
+          {
+            "text": "https://x.com/addyosmani/status/2066595308629594363"
+          },
+          {
+            "text": "https://humanlayer.com/"
+          },
+          {
+            "text": "https://www.arthropod.software/p/vibe-coding-our-way-to-disaster"
+          },
+          {
+            "text": "https://www.latent.space/p/brex"
+          },
+          {
+            "text": "https://hlyr.dev/nva"
+          },
+          {
+            "text": "https://arxiv.org/abs/2405.15793"
+          },
+          {
+            "text": "https://deepswe.datacurve.ai/blog/deepswe"
+          },
+          {
+            "text": "https://garryslist.org/posts/boil-the-ocean"
+          },
+          {
+            "text": "https://www.youtube.com/watch?v=Zx_GOhGik0o"
+          },
+          {
+            "text": "http://homepages.cs.ncl.ac.uk/brian.randell/NATO/nato1968.PDF"
+          },
+          {
+            "text": "https://x.com/dexhorthy/status/2078592010852982977"
+          },
+          {
+            "text": "https://openai.com/index/harness-engineering/"
+          },
+          {
+            "text": "https://www.youtube.com/watch?v=Ib5GBkD555M"
+          },
+          {
+            "text": "https://www.ft.com/content/00c282de-ed14-4acd-a948-bc8d6bdb339d"
+          },
+          {
+            "text": "https://x.com/@0xBlacklight"
+          },
+          {
+            "text": "https://www.oreilly.com/library/view/clean-code-a/9780136083238/"
+          },
+          {
+            "text": "https://hlyr.dev/12fa"
+          },
+          {
+            "text": "https://www.youtube.com/watch?v=0LPBw3NO3Jc"
+          },
+          {
+            "text": "https://www.youtube.com/watch?v=c35YoMdnI78"
+          },
+          {
+            "text": "https://refactoring.guru/smells/shotgun-surgery"
+          },
+          {
+            "text": "https://codebuff.com/"
+          },
+          {
+            "text": "https://workos.com/blog/project-horizon"
+          },
+          {
+            "text": "https://hlyr.dev/ace"
+          },
+          {
+            "text": "https://www.youtube.com/live/NKu3T9FUjmU?si=6BGnZLOkmuIPTjzh&t=2230"
+          },
+          {
+            "text": "https://x.com/dexhorthy/status/2080697380379427275"
+          },
+          {
+            "text": "https://github.com/humanlayer/advanced-context-engineering-for-coding-agents/blob/main/side-quests/where-does-the-time-go.md"
+          },
+          {
+            "text": "https://x.com/@aiDotEngineer"
+          },
+          {
+            "text": "https://www.swe-marathon.org/"
+          },
+          {
+            "text": "https://x.com/dexhorthy/status/2080697380379427275"
+          },
+          {
+            "text": "https://www.youtube.com/watch?v=RjfbvDXpFls"
+          },
+          {
+            "text": "https://www.youtube.com/watch?v=X5mI1ZVxaIc"
+          },
+          {
+            "text": "https://github.com/humanlayer/advanced-context-engineering-for-coding-agents/blob/main/wsff.md#program-design"
+          },
+          {
+            "text": "https://www.youtube.com/watch?v=NKu3T9FUjmU"
+          },
+          {
+            "text": "https://www.faros.ai/research/ai-acceleration-whiplash"
+          },
+          {
+            "text": "https://cline.bot/"
+          },
+          {
+            "text": "https://x.com/dillon_mulroy/status/2059985696148849025"
+          },
+          {
+            "text": "https://stripe.dev/blog/minions-stripes-one-shot-end-to-end-coding-agents"
+          },
+          {
+            "text": "https://www.youtube.com/watch?v=Usufn8IQJgw"
+          }
+        ]
+      },
+      "media_entities": [
+        "3_2080410571338563584",
+        "13_2080414694515539968",
+        "3_2080411824756035584",
+        "3_2080411742476353536",
+        "13_2080414808147681280",
+        "3_2080414394463498241",
+        "3_2080414354860879872",
+        "3_2080414294307725312",
+        "3_2080414131518324736"
+      ],
+      "plain_text": "This is part two of Why Software Factories Fail\nThe talk version of this post is live on youtube: https://www.youtube.com/watch?v=Ib5GBkD555M\nTurning the lights back on\nIn part 1, I went deep on why models can't be trusted to maintain codebase quality over time. Why no amount of harness engineering or tokenmaxxing will solve a model-training and benchmarks problem. Why \"model as judge\" for code quality doesn't work as well as some folks want to tell you.\nFor now, the judge is you -- so we're gonna put the code review back.\n \nWe're gonna embrace that same thing we've been doing since before AI, which is to do a little bit of planning up front, to reduce the odds of a long and difficult review.\nWe're gonna find leverage, and we're gonna use AI to help with this, across 4 phases:\nProduct Requirements\nSystem Architecture\nProgram Design\nVertical Slices\nProduct review\nEverything starts with a product review: a short doc that pins down what we're building and why. The goal is to be able to take two sentences or a long voice note ramble and turn it into something semi-structured.\nFirst, we align on the problem to solve -- the actual user pain, in the user's terms. Second, what success looks like -- what can we read after shipping to decide the thing was worth building. Ideally this is a user outcome like \"can do XYZ workflow in less time\" or \"reaches onboarding milestone ABC earlier\". Sometimes it's lower level like an error rate or a latency number, sometimes just \"the support tickets about X stop.\"\nWe try to keep this pretty grounded in the product space, not the technical. As someone who lives with one foot in the product world and one foot in the tech, I often find myself drifting into the technical details here. When that happens, I try to just jot it down for later phases and get back to what the user actually experiences. If tech decisions are blocking product decisions, then we commit what we have and get into the architecture or do more prototype research on what's feasible\nAnd since most of this is about what the user sees, I don't describe it -- I mock it up. A rough HTML mockup of the actual screen settles an argument that three paragraphs would only prolong.\nHere's a real one in progress -- the doc pins down the feature with a JSON outline, then two rough HTML mockups of the actual screens:\nhttps://x.com/dexhorthy/status/2078592010852982977\nOf course, not everything gets a product review. A copy tweak, a one-off script, a bug with an obvious repro -- we still just oneshot those straight to the agent. This is for the changes where an agent misunderstanding our intent is expensive.\nFor this and all docs in the series, we do author-opt-in reviews. If you wanna save time during review, you pick the person who would review the PR, and run through the product/tech specs with them, either async via doc comments (we dogfood humanlayer for this, but you can just as easily do this in github/notion/plannotator/etc).\nSystem architecture\nOnce the product review is settled, we do system architecture. This is not particularly novel and is something even vibe coders are starting to swear by.\nIf you wanna save time during review, you pick the person who would review the PR, and run through the product/tech specs with them before you get to the coding part.\nIn this phase we align on how the services, endpoints, schemas, queues, and stores talk to each other, without getting into the details of program design. To maximize human<>agent communication bandwidth, we make heavy use of visualizations here - for example sequence diagrams:\n \nContract / endpoint shapes:\n \nData models and transformations:\n \nMermaid is fine here but it can sometimes be overkill and sometimes lure you into a false sense that you are aligned. Architecture is fairly high leverage and there's a lot of potentially-bad model tics that you can head off during this phase. But it is insufficient to produce high-quality code. For that we need program design.\nProgram design\nAfter architecture we do this thing that I think is criminally underemphasized in agentic coding: program design.\nMost people assume that once the architecture is right, the model can just cook. You can go ahead and do this, but you might not like what you get back.\nBut what I see working well is that before anyone (human or agent) writes the implementation, we go a level down from architecture into the shape of code: the types, the method signatures, the program layout, and the call stacks.\nThe first version of our program design skill sucked. It was hard to read, it was exhausting. We tried mermaid, which has its place, but what we actually love are light visualizations in pseudocode:\nCall-stack trees, for any orchestration or control-flow change. Use diff syntax when the interesting part is what's changing:\n \nDillon Mulroy talks about using call graphs as part of his planning process, and I think that's exactly right.\nFile-tree diffs - so you can stay in touch with the layout of your codebase and where stuff lives\n \nTypes and method signatures for the key new functions -- the stuff that's too internal for an architecture doc but that an agent might still get wrong\n \nNone of these take long to produce (the model drafts them, you argue with it), and every one of them is a decision you'd otherwise be making implicitly during code review -- at the most expensive possible time to change your mind.\nVertical slices\nNext we love doing what I call \"vertical slices\" - Matt Pocock and I had a\nchat about vertical slices or \"tracer bullets\" on a live stream back in January 2026 - this is also referred to as - tracer bullets\nModels love what I call \"horizontal plans\" - doing things in stack-order:\nDatabase Migrations\nService Layer\nAPI\nFrontend\n \nIn practice, what this means is there's no real way to \"touch\" the solution as you're going. You can test things with code, but for almost any feature I've ever built, reading the tests was a start but pulling something up in a browser, or hitting it with curl while I was working was always a frequent part of the workflow.\nBefore AI, it was rare for anyone to write 2000+ lines of code or even 500 lines of code without checking something along the way.\nIt took me a while to notice the difference in what I was used to - when I wrote code before AI, I would always start in the middle and work outwards. Vaguely:\nCreate API contract and serve mock data, test with curl\nCreate frontend to consume mock data, iterate+polish in browser\nWire API to services layer (services serves mock data/behavior)\nAdd database migrations, wire services to database\nAdd a bunch of business logic\nAdd a bunch of error handling\nAnd I'd be testing/iterating/polishing at each step.\n \nIf I care about the code a lot or skeptical about the model's ability to do good work in this part of the codebase, I'm reviewing the code at each step too. Checking 100-200 lines and resteering is a lot cheaper\nhere, I would.Most frontier models won't design a plan like this without human steering, and it's hard to generalize per codebase or even per task, so I prefer to stay in the loop here. Trust me. If I couldoutsource the thinking\n30 minutes of planning saves hours of review\nAnd so we have some steps that I would argue that humans need to be in the loop for, if you want to maintain a near-human level of quality without slaving over mountains of slop code trying to clean it up after the fact. (i.e. you actually wanna go fast)\nProduct Design\nSystem Architecture\nProgram Design\nVertical Slices\n). I would guess the distribution is roughly:Obviously we don't do this whole process for everything we ship (seethe 80/20 rule, below\n~40% of tasks get oneshot or oneshot w/ 1-2 rounds of light feedback\nfor medium tasks, we do product/system design all in one plan document, and don't bother breaking the work into phases\nfor large things, we do all the steps. we'll skip the product part for things where it doesn't make sense like big refactors.\nAnd in most cases, I'll send off a model to do 1-3 slices at a time, and review the code as I go. It's a lot easier to resteer early on, whether it's the internals or the actual functionality, than to end up on the other side of 2k+ lines of code with no idea what's broken.\nYou probably feel like you have too many pull requests\nYou don't have too many PRs. You have too many bad PRs.\nWe've all reviewed a lot of PRs that needed rework, since long before AI.\nBut a great PR is a joy to review. You're scrolling through every file, the code is clean, it follows all your decisions/discussions/hard-won opinions about how software should be.\nOn the other hand, if a Pull Request needs even 20% rework (and that's generous, I'd say most AI oneshot PRs trend closer to 50%), that's both an intellectual burden and an emotional burden on both the submitter and the reviewer. (Even if the submitter is an AI, someone probably kicked off this work or vibe polished the AI result or at the very least, cares about the outcome).\nTo spare you time (we're almost at the end), I rambled more about this in a side quest:\n\"where does the time go\"\na theory of constraints (2026 edition)\nIt's easy to be a little bummed by the core thesis here: \"for now we're stuck reading the code\".\nI was pretty excited for a world where we could just ask for things and let the models cook and not read the code and get beautiful production software that evolves over time and doesn't go to shit.\nBut what I've done my best to lay out here are nothing but constraints. Models are good at some things, not so good at others. How do you optimize your process in light of those constraints?\nModels are good at some things, not so good at others. How do you optimize your process in light of those constraints?\nIt is possible you are too busy trying to move 10-100x faster and trying to convince yourself code quality doesn't matter any more, when you could embrace the constraints and move 2-3x faster, safely.\nMy kind of closing advice here is basically:\nLearn the constraints well, develop intuition by working with models a lot\nOptimize systems within the arena of these constraints\nSeek leverage\nRead the dang code\nThat's it. If you wanna stay for the pitch, keep scrolling I guess. I hope this helps you avoid disaster or at least that you had fun watching some cute little animations.\nThanks for reading\n  -dex\nPS We're obsessed with this\nWe're building humanlayer.com, an agentic IDE and collaboration platform to help you move 2-3x faster while maintaining a human (or pretty-dang-close-to-human) level of code quality.\nWe're building towards two ideas: \"building blocks for your software factory\" and \"better verifiers for software maintainability\" (perhaps better models even).\nHumanLayer is free for small teams of up to 3 people, and if you want help getting started, you can come hang in our discord or drop us a line at founders@humanlayer.dev\nA quick shout out to @calvinfo for inspiration, to my cofounder @0xBlacklight, to @swyx and the team at @aiDotEngineer for giving me an arena to explore these ideas, and to all our incredible customers, investors, friends, and family cheering us on.\nIf you wanna learn more, I basically won't shut up about this, so you can find all the links from this post as well as a few other projections of the material into podcasts, long form whiteboard, etc, below.\nPPS Other resources\nPodcasts and Articles:\nDex and Gergely talk context engineering and software factories on The Pragmatic Engineer - July 2026\nDex and Matt Pocock talk evergreen ai coding advice (and ralph loops) - January 2026\nAI That Works Episodes:\nBenchmarks prove nothing\nProduct Specs for AI Coding\nLearning Tests for better backpressure\nApplying 12-factor agents principles to AI coding\nLinks from this post:\nWhy Software Factories Fail keynote \u2014 AI Engineer World's Fair 2026\nStrongDM's lights-off software factory\nOpenAI: Harness Engineering (Feb 2026)\nRyan Lopopolo on Symphony (talk, Apr 2026)\nMario at AI Engineer Europe: \"Building pi in a world of slop\"\nFT: Amazon outages from coding-agent mishaps\nMatt Pocock: codebases falling apart\nFaros AI: the AI acceleration whiplash report\nAdvanced Context Engineering for Coding Agents (talk 8/25)\nNo Vibes Allowed (talk 11/25)\nEverything We Got Wrong About RPI (talk 3/26)\nAwesome-RLVR - Reinforcement Learning resources\nAdvanced Context Engineering for Coding Agents (write-up)\n12-Factor Agents\nAddy Osmani on vibe-coding vs. maintenance\nNATO Software Engineering Conference, 1968\nDoD DevSecOps Reference Design (PDF)\nRamp's coding-agent platform\nStripe: Minions, one-shot end-to-end coding agents\nWorkOS: Project Horizon\nBrex (Latent Space)\nDan Shapiro: the five levels to the software factory\nSimon Willison on StrongDM's software factory\n\"Boil the ocean\"\nShotgun surgery (refactoring.guru)\nJohn Ousterhout \u2014 A Philosophy of Software Design\nRobert C. Martin \u2014 Clean Code\nMartin Fowler \u2014 Refactoring\naider\ncline\ncodebuff\nSWE-Agent paper (2024)\nOpenAI Codex talk (Nov)\nCalvin French-Owen \u2014 AI Council talk\nSWE-bench Multilingual (dataset)\nAIE Worlds Fair 2026 - The Great Loops Debate (\"the hype is outrunning the discipline\")\nSWE-Marathon (Abundant AI)\nDeepSWE (Datacurve)\nFrontier Code (Cognition)\nMutation testing (Wikipedia)\nDillon Mulroy on call graphs in planning\nDex \u00d7 Matt Pocock: vertical slices / tracer bullets (livestream, Jan 2026)\n\"The hard work of thinking can't be outsourced\" (Jake Nations)",
+      "preview_text": "This is part two of Why Software Factories Fail\nThe talk version of this post is live on youtube: https://www.youtube.com/watch?v=Ib5GBkD555M\nTurning the lights back on\nIn part 1, I went deep on why models can't be",
+      "title": "Why Software Factories Fail: Turning the lights back on"
+    },
+    "author_id": "820679805259550720",
+    "conversation_id": "2081058573556306030",
+    "created_at": "2026-07-25T16:46:42.000Z",
+    "edit_history_tweet_ids": [
+      "2081058573556306030"
+    ],
+    "entities": {
+      "urls": [
+        {
+          "display_url": "x.com/i/article/2080\u2026",
+          "end": 125,
+          "expanded_url": "http://x.com/i/article/2080408648560578560",
+          "start": 102,
+          "status": 500,
+          "unwound_url": "https://x.com/i/article/2080408648560578560",
+          "url": "https://t.co/NLkDvSTDhW"
+        }
+      ]
+    },
+    "id": "2081058573556306030",
+    "text": "part one of \"Why Software Factories Fail\" hit 250k views in under 24h - now you get to enjoy part two https://t.co/NLkDvSTDhW"
+  },
+  "posts": [
+    {
+      "article": {
+        "cover_media": "3_2080409822877597696",
+        "entities": {
+          "mentions": [
+            {
+              "end": 30,
+              "start": 21,
+              "username": "calvinfo"
+            },
+            {
+              "end": 77,
+              "start": 64,
+              "username": "0xBlacklight"
+            },
+            {
+              "end": 87,
+              "start": 82,
+              "username": "swyx"
+            },
+            {
+              "end": 118,
+              "start": 104,
+              "username": "aiDotEngineer"
+            }
+          ],
+          "urls": [
+            {
+              "text": "https://www.youtube.com/watch?v=Ib5GBkD555M"
+            },
+            {
+              "text": "https://x.com/dexhorthy/status/2078592010852982977"
+            },
+            {
+              "text": "humanlayer.com"
+            },
+            {
+              "text": "refactoring.guru"
+            },
+            {
+              "text": "https://github.com/opendilab/awesome-RLVR"
+            },
+            {
+              "text": "https://hlyr.dev/wsff-live"
+            },
+            {
+              "text": "https://www.youtube.com/watch?v=q-ntX4DLW_c"
+            },
+            {
+              "text": "https://x.com/dillon_mulroy/status/2059985696148849025"
+            },
+            {
+              "text": "https://www.youtube.com/watch?v=wVl6ZjELpBk"
+            },
+            {
+              "text": "https://infoq.com/news/2026/01/ramp-coding-agent-platform/"
+            },
+            {
+              "text": "https://en.wikipedia.org/wiki/Mutation_testing"
+            },
+            {
+              "text": "https://www.arthropod.software/p/vibe-coding-our-way-to-disaster#:~:text=The%20methodology%20I%27ve%20outlined%20goes%20beyond%20productivity%20with%20AI%20tools.%20At%20its%20core%2C%20it%20maintains%20the%20discipline%20and%20thoughtfulness%20that%20creates%20maintainable%2C%20understandable%20systems.%20It%20recognizes%20that%20the%20hard%20work%20of%20thinking%20can%27t%20be%20outsourced%20to%20AI%2C%20only%20amplified%20by%20it."
+            },
+            {
+              "text": "mailto:founders@humanlayer.dev"
+            },
+            {
+              "text": "https://aider.chat/"
+            },
+            {
+              "text": "https://github.com/humanlayer/advanced-context-engineering-for-coding-agents/blob/main/wsff.md#front-loading-alignment"
+            },
+            {
+              "text": "https://www.youtube.com/watch?v=3MP8D-mdheA"
+            },
+            {
+              "text": "https://www.youtube.com/live/NKu3T9FUjmU?si=6BGnZLOkmuIPTjzh&t=2230"
+            },
+            {
+              "text": "https://hlyr.dev/qrspi-mlops"
+            },
+            {
+              "text": "https://www.youtube.com/watch?v=qgAny0sEdIk"
+            },
+            {
+              "text": "https://hlyr.dev/discord"
+            },
+            {
+              "text": "https://simonwillison.net/2026/Feb/7/software-factory/"
+            },
+            {
+              "text": "https://www.danshapiro.com/blog/2026/01/the-five-levels-from-spicy-autocomplete-to-the-software-factory/"
+            },
+            {
+              "text": "https://x.com/@swyx"
+            },
+            {
+              "text": "https://dodcio.defense.gov/Portals/0/Documents/Library/DevSecOpsReferenceDesign.pdf"
+            },
+            {
+              "text": "https://www.youtube.com/watch?v=am_oeAoUhew"
+            },
+            {
+              "text": "https://huggingface.co/datasets/SWE-bench/SWE-bench_Multilingual"
+            },
+            {
+              "text": "https://martinfowler.com/books/refactoring.html"
+            },
+            {
+              "text": "https://github.com/humanlayer/advanced-context-engineering-for-coding-agents/blob/main/ace-fca.md"
+            },
+            {
+              "text": "https://x.com/@calvinfo"
+            },
+            {
+              "text": "https://factory.strongdm.ai/"
+            },
+            {
+              "text": "https://basecamp.com/shapeup/3.2-chapter-11#integrate-one-slice"
+            },
+            {
+              "text": "https://www.youtube.com/watch?v=Zx_GOhGik0o"
+            },
+            {
+              "text": "https://cognition.com/blog/frontier-code"
+            },
+            {
+              "text": "https://web.stanford.edu/~ouster/cgi-bin/aposd.php"
+            },
+            {
+              "text": "https://x.com/addyosmani/status/2066595308629594363"
+            },
+            {
+              "text": "https://humanlayer.com/"
+            },
+            {
+              "text": "https://www.arthropod.software/p/vibe-coding-our-way-to-disaster"
+            },
+            {
+              "text": "https://www.latent.space/p/brex"
+            },
+            {
+              "text": "https://hlyr.dev/nva"
+            },
+            {
+              "text": "https://arxiv.org/abs/2405.15793"
+            },
+            {
+              "text": "https://deepswe.datacurve.ai/blog/deepswe"
+            },
+            {
+              "text": "https://garryslist.org/posts/boil-the-ocean"
+            },
+            {
+              "text": "https://www.youtube.com/watch?v=Zx_GOhGik0o"
+            },
+            {
+              "text": "http://homepages.cs.ncl.ac.uk/brian.randell/NATO/nato1968.PDF"
+            },
+            {
+              "text": "https://x.com/dexhorthy/status/2078592010852982977"
+            },
+            {
+              "text": "https://openai.com/index/harness-engineering/"
+            },
+            {
+              "text": "https://www.youtube.com/watch?v=Ib5GBkD555M"
+            },
+            {
+              "text": "https://www.ft.com/content/00c282de-ed14-4acd-a948-bc8d6bdb339d"
+            },
+            {
+              "text": "https://x.com/@0xBlacklight"
+            },
+            {
+              "text": "https://www.oreilly.com/library/view/clean-code-a/9780136083238/"
+            },
+            {
+              "text": "https://hlyr.dev/12fa"
+            },
+            {
+              "text": "https://www.youtube.com/watch?v=0LPBw3NO3Jc"
+            },
+            {
+              "text": "https://www.youtube.com/watch?v=c35YoMdnI78"
+            },
+            {
+              "text": "https://refactoring.guru/smells/shotgun-surgery"
+            },
+            {
+              "text": "https://codebuff.com/"
+            },
+            {
+              "text": "https://workos.com/blog/project-horizon"
+            },
+            {
+              "text": "https://hlyr.dev/ace"
+            },
+            {
+              "text": "https://www.youtube.com/live/NKu3T9FUjmU?si=6BGnZLOkmuIPTjzh&t=2230"
+            },
+            {
+              "text": "https://x.com/dexhorthy/status/2080697380379427275"
+            },
+            {
+              "text": "https://github.com/humanlayer/advanced-context-engineering-for-coding-agents/blob/main/side-quests/where-does-the-time-go.md"
+            },
+            {
+              "text": "https://x.com/@aiDotEngineer"
+            },
+            {
+              "text": "https://www.swe-marathon.org/"
+            },
+            {
+              "text": "https://x.com/dexhorthy/status/2080697380379427275"
+            },
+            {
+              "text": "https://www.youtube.com/watch?v=RjfbvDXpFls"
+            },
+            {
+              "text": "https://www.youtube.com/watch?v=X5mI1ZVxaIc"
+            },
+            {
+              "text": "https://github.com/humanlayer/advanced-context-engineering-for-coding-agents/blob/main/wsff.md#program-design"
+            },
+            {
+              "text": "https://www.youtube.com/watch?v=NKu3T9FUjmU"
+            },
+            {
+              "text": "https://www.faros.ai/research/ai-acceleration-whiplash"
+            },
+            {
+              "text": "https://cline.bot/"
+            },
+            {
+              "text": "https://x.com/dillon_mulroy/status/2059985696148849025"
+            },
+            {
+              "text": "https://stripe.dev/blog/minions-stripes-one-shot-end-to-end-coding-agents"
+            },
+            {
+              "text": "https://www.youtube.com/watch?v=Usufn8IQJgw"
+            }
+          ]
+        },
+        "media_entities": [
+          "3_2080410571338563584",
+          "13_2080414694515539968",
+          "3_2080411824756035584",
+          "3_2080411742476353536",
+          "13_2080414808147681280",
+          "3_2080414394463498241",
+          "3_2080414354860879872",
+          "3_2080414294307725312",
+          "3_2080414131518324736"
+        ],
+        "plain_text": "This is part two of Why Software Factories Fail\nThe talk version of this post is live on youtube: https://www.youtube.com/watch?v=Ib5GBkD555M\nTurning the lights back on\nIn part 1, I went deep on why models can't be trusted to maintain codebase quality over time. Why no amount of harness engineering or tokenmaxxing will solve a model-training and benchmarks problem. Why \"model as judge\" for code quality doesn't work as well as some folks want to tell you.\nFor now, the judge is you -- so we're gonna put the code review back.\n \nWe're gonna embrace that same thing we've been doing since before AI, which is to do a little bit of planning up front, to reduce the odds of a long and difficult review.\nWe're gonna find leverage, and we're gonna use AI to help with this, across 4 phases:\nProduct Requirements\nSystem Architecture\nProgram Design\nVertical Slices\nProduct review\nEverything starts with a product review: a short doc that pins down what we're building and why. The goal is to be able to take two sentences or a long voice note ramble and turn it into something semi-structured.\nFirst, we align on the problem to solve -- the actual user pain, in the user's terms. Second, what success looks like -- what can we read after shipping to decide the thing was worth building. Ideally this is a user outcome like \"can do XYZ workflow in less time\" or \"reaches onboarding milestone ABC earlier\". Sometimes it's lower level like an error rate or a latency number, sometimes just \"the support tickets about X stop.\"\nWe try to keep this pretty grounded in the product space, not the technical. As someone who lives with one foot in the product world and one foot in the tech, I often find myself drifting into the technical details here. When that happens, I try to just jot it down for later phases and get back to what the user actually experiences. If tech decisions are blocking product decisions, then we commit what we have and get into the architecture or do more prototype research on what's feasible\nAnd since most of this is about what the user sees, I don't describe it -- I mock it up. A rough HTML mockup of the actual screen settles an argument that three paragraphs would only prolong.\nHere's a real one in progress -- the doc pins down the feature with a JSON outline, then two rough HTML mockups of the actual screens:\nhttps://x.com/dexhorthy/status/2078592010852982977\nOf course, not everything gets a product review. A copy tweak, a one-off script, a bug with an obvious repro -- we still just oneshot those straight to the agent. This is for the changes where an agent misunderstanding our intent is expensive.\nFor this and all docs in the series, we do author-opt-in reviews. If you wanna save time during review, you pick the person who would review the PR, and run through the product/tech specs with them, either async via doc comments (we dogfood humanlayer for this, but you can just as easily do this in github/notion/plannotator/etc).\nSystem architecture\nOnce the product review is settled, we do system architecture. This is not particularly novel and is something even vibe coders are starting to swear by.\nIf you wanna save time during review, you pick the person who would review the PR, and run through the product/tech specs with them before you get to the coding part.\nIn this phase we align on how the services, endpoints, schemas, queues, and stores talk to each other, without getting into the details of program design. To maximize human<>agent communication bandwidth, we make heavy use of visualizations here - for example sequence diagrams:\n \nContract / endpoint shapes:\n \nData models and transformations:\n \nMermaid is fine here but it can sometimes be overkill and sometimes lure you into a false sense that you are aligned. Architecture is fairly high leverage and there's a lot of potentially-bad model tics that you can head off during this phase. But it is insufficient to produce high-quality code. For that we need program design.\nProgram design\nAfter architecture we do this thing that I think is criminally underemphasized in agentic coding: program design.\nMost people assume that once the architecture is right, the model can just cook. You can go ahead and do this, but you might not like what you get back.\nBut what I see working well is that before anyone (human or agent) writes the implementation, we go a level down from architecture into the shape of code: the types, the method signatures, the program layout, and the call stacks.\nThe first version of our program design skill sucked. It was hard to read, it was exhausting. We tried mermaid, which has its place, but what we actually love are light visualizations in pseudocode:\nCall-stack trees, for any orchestration or control-flow change. Use diff syntax when the interesting part is what's changing:\n \nDillon Mulroy talks about using call graphs as part of his planning process, and I think that's exactly right.\nFile-tree diffs - so you can stay in touch with the layout of your codebase and where stuff lives\n \nTypes and method signatures for the key new functions -- the stuff that's too internal for an architecture doc but that an agent might still get wrong\n \nNone of these take long to produce (the model drafts them, you argue with it), and every one of them is a decision you'd otherwise be making implicitly during code review -- at the most expensive possible time to change your mind.\nVertical slices\nNext we love doing what I call \"vertical slices\" - Matt Pocock and I had a\nchat about vertical slices or \"tracer bullets\" on a live stream back in January 2026 - this is also referred to as - tracer bullets\nModels love what I call \"horizontal plans\" - doing things in stack-order:\nDatabase Migrations\nService Layer\nAPI\nFrontend\n \nIn practice, what this means is there's no real way to \"touch\" the solution as you're going. You can test things with code, but for almost any feature I've ever built, reading the tests was a start but pulling something up in a browser, or hitting it with curl while I was working was always a frequent part of the workflow.\nBefore AI, it was rare for anyone to write 2000+ lines of code or even 500 lines of code without checking something along the way.\nIt took me a while to notice the difference in what I was used to - when I wrote code before AI, I would always start in the middle and work outwards. Vaguely:\nCreate API contract and serve mock data, test with curl\nCreate frontend to consume mock data, iterate+polish in browser\nWire API to services layer (services serves mock data/behavior)\nAdd database migrations, wire services to database\nAdd a bunch of business logic\nAdd a bunch of error handling\nAnd I'd be testing/iterating/polishing at each step.\n \nIf I care about the code a lot or skeptical about the model's ability to do good work in this part of the codebase, I'm reviewing the code at each step too. Checking 100-200 lines and resteering is a lot cheaper\nhere, I would.Most frontier models won't design a plan like this without human steering, and it's hard to generalize per codebase or even per task, so I prefer to stay in the loop here. Trust me. If I couldoutsource the thinking\n30 minutes of planning saves hours of review\nAnd so we have some steps that I would argue that humans need to be in the loop for, if you want to maintain a near-human level of quality without slaving over mountains of slop code trying to clean it up after the fact. (i.e. you actually wanna go fast)\nProduct Design\nSystem Architecture\nProgram Design\nVertical Slices\n). I would guess the distribution is roughly:Obviously we don't do this whole process for everything we ship (seethe 80/20 rule, below\n~40% of tasks get oneshot or oneshot w/ 1-2 rounds of light feedback\nfor medium tasks, we do product/system design all in one plan document, and don't bother breaking the work into phases\nfor large things, we do all the steps. we'll skip the product part for things where it doesn't make sense like big refactors.\nAnd in most cases, I'll send off a model to do 1-3 slices at a time, and review the code as I go. It's a lot easier to resteer early on, whether it's the internals or the actual functionality, than to end up on the other side of 2k+ lines of code with no idea what's broken.\nYou probably feel like you have too many pull requests\nYou don't have too many PRs. You have too many bad PRs.\nWe've all reviewed a lot of PRs that needed rework, since long before AI.\nBut a great PR is a joy to review. You're scrolling through every file, the code is clean, it follows all your decisions/discussions/hard-won opinions about how software should be.\nOn the other hand, if a Pull Request needs even 20% rework (and that's generous, I'd say most AI oneshot PRs trend closer to 50%), that's both an intellectual burden and an emotional burden on both the submitter and the reviewer. (Even if the submitter is an AI, someone probably kicked off this work or vibe polished the AI result or at the very least, cares about the outcome).\nTo spare you time (we're almost at the end), I rambled more about this in a side quest:\n\"where does the time go\"\na theory of constraints (2026 edition)\nIt's easy to be a little bummed by the core thesis here: \"for now we're stuck reading the code\".\nI was pretty excited for a world where we could just ask for things and let the models cook and not read the code and get beautiful production software that evolves over time and doesn't go to shit.\nBut what I've done my best to lay out here are nothing but constraints. Models are good at some things, not so good at others. How do you optimize your process in light of those constraints?\nModels are good at some things, not so good at others. How do you optimize your process in light of those constraints?\nIt is possible you are too busy trying to move 10-100x faster and trying to convince yourself code quality doesn't matter any more, when you could embrace the constraints and move 2-3x faster, safely.\nMy kind of closing advice here is basically:\nLearn the constraints well, develop intuition by working with models a lot\nOptimize systems within the arena of these constraints\nSeek leverage\nRead the dang code\nThat's it. If you wanna stay for the pitch, keep scrolling I guess. I hope this helps you avoid disaster or at least that you had fun watching some cute little animations.\nThanks for reading\n  -dex\nPS We're obsessed with this\nWe're building humanlayer.com, an agentic IDE and collaboration platform to help you move 2-3x faster while maintaining a human (or pretty-dang-close-to-human) level of code quality.\nWe're building towards two ideas: \"building blocks for your software factory\" and \"better verifiers for software maintainability\" (perhaps better models even).\nHumanLayer is free for small teams of up to 3 people, and if you want help getting started, you can come hang in our discord or drop us a line at founders@humanlayer.dev\nA quick shout out to @calvinfo for inspiration, to my cofounder @0xBlacklight, to @swyx and the team at @aiDotEngineer for giving me an arena to explore these ideas, and to all our incredible customers, investors, friends, and family cheering us on.\nIf you wanna learn more, I basically won't shut up about this, so you can find all the links from this post as well as a few other projections of the material into podcasts, long form whiteboard, etc, below.\nPPS Other resources\nPodcasts and Articles:\nDex and Gergely talk context engineering and software factories on The Pragmatic Engineer - July 2026\nDex and Matt Pocock talk evergreen ai coding advice (and ralph loops) - January 2026\nAI That Works Episodes:\nBenchmarks prove nothing\nProduct Specs for AI Coding\nLearning Tests for better backpressure\nApplying 12-factor agents principles to AI coding\nLinks from this post:\nWhy Software Factories Fail keynote \u2014 AI Engineer World's Fair 2026\nStrongDM's lights-off software factory\nOpenAI: Harness Engineering (Feb 2026)\nRyan Lopopolo on Symphony (talk, Apr 2026)\nMario at AI Engineer Europe: \"Building pi in a world of slop\"\nFT: Amazon outages from coding-agent mishaps\nMatt Pocock: codebases falling apart\nFaros AI: the AI acceleration whiplash report\nAdvanced Context Engineering for Coding Agents (talk 8/25)\nNo Vibes Allowed (talk 11/25)\nEverything We Got Wrong About RPI (talk 3/26)\nAwesome-RLVR - Reinforcement Learning resources\nAdvanced Context Engineering for Coding Agents (write-up)\n12-Factor Agents\nAddy Osmani on vibe-coding vs. maintenance\nNATO Software Engineering Conference, 1968\nDoD DevSecOps Reference Design (PDF)\nRamp's coding-agent platform\nStripe: Minions, one-shot end-to-end coding agents\nWorkOS: Project Horizon\nBrex (Latent Space)\nDan Shapiro: the five levels to the software factory\nSimon Willison on StrongDM's software factory\n\"Boil the ocean\"\nShotgun surgery (refactoring.guru)\nJohn Ousterhout \u2014 A Philosophy of Software Design\nRobert C. Martin \u2014 Clean Code\nMartin Fowler \u2014 Refactoring\naider\ncline\ncodebuff\nSWE-Agent paper (2024)\nOpenAI Codex talk (Nov)\nCalvin French-Owen \u2014 AI Council talk\nSWE-bench Multilingual (dataset)\nAIE Worlds Fair 2026 - The Great Loops Debate (\"the hype is outrunning the discipline\")\nSWE-Marathon (Abundant AI)\nDeepSWE (Datacurve)\nFrontier Code (Cognition)\nMutation testing (Wikipedia)\nDillon Mulroy on call graphs in planning\nDex \u00d7 Matt Pocock: vertical slices / tracer bullets (livestream, Jan 2026)\n\"The hard work of thinking can't be outsourced\" (Jake Nations)",
+        "preview_text": "This is part two of Why Software Factories Fail\nThe talk version of this post is live on youtube: https://www.youtube.com/watch?v=Ib5GBkD555M\nTurning the lights back on\nIn part 1, I went deep on why models can't be",
+        "title": "Why Software Factories Fail: Turning the lights back on"
+      },
+      "author_id": "820679805259550720",
+      "conversation_id": "2081058573556306030",
+      "created_at": "2026-07-25T16:46:42.000Z",
+      "edit_history_tweet_ids": [
+        "2081058573556306030"
+      ],
+      "entities": {
+        "urls": [
+          {
+            "display_url": "x.com/i/article/2080\u2026",
+            "end": 125,
+            "expanded_url": "http://x.com/i/article/2080408648560578560",
+            "start": 102,
+            "status": 500,
+            "unwound_url": "https://x.com/i/article/2080408648560578560",
+            "url": "https://t.co/NLkDvSTDhW"
+          }
+        ]
+      },
+      "id": "2081058573556306030",
+      "text": "part one of \"Why Software Factories Fail\" hit 250k views in under 24h - now you get to enjoy part two https://t.co/NLkDvSTDhW"
+    },
+    {
+      "author_id": "820679805259550720",
+      "conversation_id": "2081058573556306030",
+      "created_at": "2026-07-25T20:25:05.000Z",
+      "edit_history_tweet_ids": [
+        "2081113530678575421"
+      ],
+      "entities": {
+        "mentions": [
+          {
+            "end": 12,
+            "id": "1412498091270455300",
+            "start": 0,
+            "username": "JoshPurtell"
+          }
+        ]
+      },
+      "id": "2081113530678575421",
+      "in_reply_to_user_id": "1412498091270455300",
+      "referenced_tweets": [
+        {
+          "id": "2081111140990325092",
+          "type": "replied_to"
+        }
+      ],
+      "text": "@JoshPurtell come to nyc. for the slices."
+    },
+    {
+      "author_id": "820679805259550720",
+      "conversation_id": "2081058573556306030",
+      "created_at": "2026-07-25T21:58:03.000Z",
+      "edit_history_tweet_ids": [
+        "2081136926711746755"
+      ],
+      "entities": {
+        "mentions": [
+          {
+            "end": 12,
+            "id": "3189258547",
+            "start": 0,
+            "username": "tunahorse21"
+          }
+        ]
+      },
+      "id": "2081136926711746755",
+      "in_reply_to_user_id": "3189258547",
+      "referenced_tweets": [
+        {
+          "id": "2081135008618528893",
+          "type": "replied_to"
+        }
+      ],
+      "text": "@tunahorse21 we all giant shouldering these days"
+    },
+    {
+      "author_id": "820679805259550720",
+      "conversation_id": "2081058573556306030",
+      "created_at": "2026-07-26T03:13:12.000Z",
+      "edit_history_tweet_ids": [
+        "2081216236424482976"
+      ],
+      "entities": {
+        "mentions": [
+          {
+            "end": 10,
+            "id": "1899632473203429376",
+            "start": 0,
+            "username": "modkin_mp"
+          }
+        ]
+      },
+      "id": "2081216236424482976",
+      "in_reply_to_user_id": "1899632473203429376",
+      "referenced_tweets": [
+        {
+          "id": "2081207901410955485",
+          "type": "replied_to"
+        }
+      ],
+      "text": "@modkin_mp software factories can build anything - but a lights off factory where you don\u2019t read the code is a ticking time bomb. If you have few users or not charging money, this is probably fine. If you are in critical systems, it\u2019s not"
+    },
+    {
+      "author_id": "820679805259550720",
+      "conversation_id": "2081058573556306030",
+      "created_at": "2026-07-26T03:42:15.000Z",
+      "edit_history_tweet_ids": [
+        "2081223545708023812"
+      ],
+      "entities": {
+        "mentions": [
+          {
+            "end": 12,
+            "id": "1180151986152464385",
+            "start": 0,
+            "username": "xxxxoooxoxo"
+          }
+        ]
+      },
+      "id": "2081223545708023812",
+      "in_reply_to_user_id": "1180151986152464385",
+      "referenced_tweets": [
+        {
+          "id": "2081143304729801097",
+          "type": "replied_to"
+        }
+      ],
+      "text": "@xxxxoooxoxo we out here"
+    },
+    {
+      "author_id": "820679805259550720",
+      "conversation_id": "2081058573556306030",
+      "created_at": "2026-07-26T04:18:15.000Z",
+      "edit_history_tweet_ids": [
+        "2081232604653814122"
+      ],
+      "entities": {
+        "mentions": [
+          {
+            "end": 10,
+            "id": "1899632473203429376",
+            "start": 0,
+            "username": "modkin_mp"
+          }
+        ]
+      },
+      "id": "2081232604653814122",
+      "in_reply_to_user_id": "1899632473203429376",
+      "note_tweet": {
+        "text": "it\u2019s not so much about the what but the how long / how big. If you can make a project that has users, makes money, and lasts and grows and adapts for 6-12 months without slowing down or needing to be rewritten, then I\u2019d be impressed. Even so, probably case by case man, and I think they may be some exceptions already. But a few exceptions don\u2019t mean it\u2019s a good way to be. Steph curry ruined the nba by being good at threes and everyone else deciding that\u2019s how to play but they don\u2019t match his talent so it\u2019s a clown show"
+      },
+      "referenced_tweets": [
+        {
+          "id": "2081217940720935106",
+          "type": "replied_to"
+        }
+      ],
+      "text": "@modkin_mp it\u2019s not so much about the what but the how long / how big. If you can make a project that has users, makes money, and lasts and grows and adapts for 6-12 months without slowing down or needing to be rewritten, then I\u2019d be impressed. Even so, probably case by case man, and I"
+    }
+  ],
+  "users": {
+    "820679805259550720": {
+      "id": "820679805259550720",
+      "name": "dex",
+      "username": "dexhorthy"
+    },
+    "14926752": {
+      "id": "14926752",
+      "name": "Luca G. Soave \u2728 | Full-Stack \u00d7 AI",
+      "username": "lgswitter"
+    },
+    "1899632473203429376": {
+      "id": "1899632473203429376",
+      "name": "Lo\u00efc Schneider",
+      "username": "modkin_mp"
+    },
+    "1678750416937287690": {
+      "id": "1678750416937287690",
+      "name": "Ilyich Vismara",
+      "username": "ilyichv_"
+    },
+    "2027570022047223809": {
+      "id": "2027570022047223809",
+      "name": "BecomeWorse",
+      "username": "Become_Worse"
+    },
+    "2031060352537079808": {
+      "id": "2031060352537079808",
+      "name": "Mandy Monday",
+      "username": "MandyMondayAI"
+    },
+    "2080924737224720384": {
+      "id": "2080924737224720384",
+      "name": "Thomas Karpiniec",
+      "username": "tkarpiniec"
+    },
+    "2071017382307356673": {
+      "id": "2071017382307356673",
+      "name": "\ud83d\udc49\ud83d\udc49\u5f00\u4e91\u4f53\u80b2\ud83d\udc48\ud83d\udc48",
+      "username": "nlajnacbuuant4"
+    },
+    "1180151986152464385": {
+      "id": "1180151986152464385",
+      "name": "ali",
+      "username": "xxxxoooxoxo"
+    },
+    "15475546": {
+      "id": "15475546",
+      "name": "Nate Codes",
+      "username": "Nateemerson"
+    },
+    "134990286": {
+      "id": "134990286",
+      "name": "Sivaram Raju",
+      "username": "sivaramraju"
+    },
+    "1992002213649244160": {
+      "id": "1992002213649244160",
+      "name": "Superflux AI",
+      "username": "SuperfluxSF"
+    },
+    "1720665183188922368": {
+      "id": "1720665183188922368",
+      "name": "Grok",
+      "username": "grok"
+    },
+    "1824296972385390592": {
+      "id": "1824296972385390592",
+      "name": "rbbydotdev",
+      "username": "rbbydotdev"
+    },
+    "206046069": {
+      "id": "206046069",
+      "name": "Arys Wisnu",
+      "username": "ARYSWISNU"
+    },
+    "1387850239617425413": {
+      "id": "1387850239617425413",
+      "name": "secemp",
+      "username": "secemp9"
+    },
+    "3189258547": {
+      "id": "3189258547",
+      "name": "tuna\ud83c\udf63",
+      "username": "tunahorse21"
+    },
+    "1412498091270455300": {
+      "id": "1412498091270455300",
+      "name": "Josh",
+      "username": "JoshPurtell"
+    },
+    "1817081845428719618": {
+      "id": "1817081845428719618",
+      "name": "MyComputerSpot",
+      "username": "mycomputerspot"
+    },
+    "7079062": {
+      "id": "7079062",
+      "name": "Christina @ATX",
+      "username": "truffle"
+    },
+    "1937443464": {
+      "id": "1937443464",
+      "name": "Omid",
+      "username": "omidsard"
+    },
+    "212418463": {
+      "id": "212418463",
+      "name": "Cyrus",
+      "username": "cyrusnewday"
+    },
+    "1387405573642018817": {
+      "id": "1387405573642018817",
+      "name": "Ferbin",
+      "username": "Ferbin08"
+    },
+    "65625922": {
+      "id": "65625922",
+      "name": "Abhinav Palash",
+      "username": "abhinavpalash"
+    },
+    "1708716943883255808": {
+      "id": "1708716943883255808",
+      "name": "gst45678",
+      "username": "GraemeStoc49584"
+    },
+    "1537964318": {
+      "id": "1537964318",
+      "name": "Saran",
+      "username": "saran_io"
+    },
+    "271705344": {
+      "id": "271705344",
+      "name": "fucory",
+      "username": "FUCORY"
+    },
+    "1293235812541198337": {
+      "id": "1293235812541198337",
+      "name": "echantech",
+      "username": "echantech1"
+    }
+  },
+  "thread_fetch_error": null
+}
