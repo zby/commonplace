@@ -26,6 +26,8 @@ After membership and update architecture, [profile the pathway rather than placi
 - **Governance** — [what the methodology settles](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md), and [which of those decisions are warranted](./warranted-autonomy-is-bounded-by-oracle-domain.md).
 - **Actor allocation** — human, computational, or joint per function; [allocation carries the comparison](./methodological-and-computational-closure-track-different-changes.md), and computational closure is its no-human endpoint, not a grade of reflectivity.
 
+The four vary independently: each property's note states the entailments it does not license, and the placements below show which combinations actually occur.
+
 ### What reflection adds
 
 A pathway is [**reflective**](./definitions/reflective-system.md) when change passes through a causally connected representation of the affected organization. Reflective structure crosses update architecture, and authority family — evidence, advice, instruction, enforcement — does not decide it.

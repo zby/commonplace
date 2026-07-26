@@ -57,7 +57,9 @@ Relevant Notes:
 - [Self-improving system](./definitions/self-improving-system.md) — defined-in: the membership test this note adds a third declared parameter to
 - [Evidence bearing on an improvement objective](./definitions/evidence-bearing-on-an-improvement-objective.md) — defined-in: the objective-indexing and causal-shaping clauses antecedence sharpens
 - [The definition classifies its boundary cases without ad hoc exceptions](./the-self-improving-system-definition-classifies-its-boundary-cases.md) — grounds: the precedent that a declared parameter changes the attribution rather than the substrate
-- [A self-improving system needs a profile, not a ladder](./a-self-improving-system-needs-a-profile-not-a-ladder.md) — grounds: the independence of the profile dimensions, which is why the profile cannot select a trade-off
+- [A self-improving system needs a profile, not a ladder](./a-self-improving-system-needs-a-profile-not-a-ladder.md) — grounds: the refusal of a single maturity grade over unlike properties, which this note distinguishes from the absence of an ordering
+- [Methodological and computational closure track different changes](./methodological-and-computational-closure-track-different-changes.md) — grounds: two dimensions moving in opposite directions under one change, the case that defeats aggregation
+- [Real self-improving systems occupy combinations no single rung captures](./real-self-improving-systems-occupy-combinations-no-rung-captures.md) — grounds: the combinations that actually occur, which is why no ordering follows from the profile
 - [Warranted autonomy is bounded by oracle domain](./warranted-autonomy-is-bounded-by-oracle-domain.md) — grounds: an existing objective-relative reading inside the cluster
 - [Measuring autonomy well enough to see it improve is an open problem](./measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md) — contrasts: comparison blocked by incommensurable decomposition, the obstacle that survives after indexing
 - [Ashby's Homeostat](../sources/ashby-design-for-a-brain-ultrastability.md) — evidence: an antecedent objective that the system neither declares nor stores

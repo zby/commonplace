@@ -17,6 +17,8 @@ A terminology note: the concept descends from Ashby's **adaptation** — his ult
 
 A [reflective system](./definitions/reflective-system.md) supplies one possible causal path into this loop. Through **intercession** — an operation that changes the system through its causally connected self-representation — it can modify a represented aspect of itself. Making that path available does not itself provide search, evaluation, or retention.
 
+The independence runs both ways. A directly determined update can land on a self-representation as readily as on an opaque substrate — evidence can revise an explicit policy or a recorded lesson with nothing rejectable anywhere in the path — so neither architecture is the general form of reflective improvement.
+
 ## Search determines what enters consideration
 
 Search brings an unrealized change under consideration. It may include:
