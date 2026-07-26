@@ -22,7 +22,7 @@ The trajectory runs in both directions, and can repeat at different levels of th
 
 ## Every codification is a bet
 
-Codification extracts a regularity and commits it to code. The bet is that what you extracted is genuinely part of the spec — load-bearing behavior that the system needs — rather than an accidental pattern that happens to hold on observed data.
+Codification extracts a regularity and commits it to code. The bet is that what you extracted is genuinely part of the spec — load-bearing behavior that the system needs — rather than an accidental pattern that happens to hold on observed data. That is the same property [scale selects on](./bitter-lesson-selects-against-unearned-reach-not-against-structure.md), seen from the author's side rather than the survivor's: a codification that commits an accident is a reach claim asserted from source-case fit, and relaxing is what happens to it later.
 
 In the arithmetic regime, the bet is safe: the spec IS the problem, and the solution is algorithmically determined. In the vision-feature regime, the bet is risky: the spec is a theory, and scale may reveal a better path. Most practical codification happens in the blurry zone between them, where you can't tell which regime you're in.
 
@@ -52,6 +52,7 @@ Sources:
 
 Relevant Notes:
 
+- [the bitter lesson selects against unearned reach, not against structure](./bitter-lesson-selects-against-unearned-reach-not-against-structure.md) — grounds: the mechanism behind the boundary this note navigates, which explains what determines the outcome without restoring the foresight this note denies
 - [fixed artifacts split into exact specs and proxy theories](./fixed-artifacts-split-into-exact-specs-and-proxy-theories.md) — foundation: the exact-spec/proxy-theory distinction this note operationalizes
 - [the verifiability gradient](./verifiability-gradient.md) — the ladder across which codification sits at the far end
 - [constraining and extraction can trade generality for reliability, speed, or cost](./constraining-and-extraction-both-trade-generality-for-reliability.md) — the trade-off codification enacts

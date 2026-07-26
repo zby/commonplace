@@ -1,5 +1,5 @@
 ---
-description: Behaviour change spans three representational forms — distributed-parametric, prose, and symbolic — so the coevolution question is how their improvement loops relate, not which is the real locus of learning
+description: Behaviour change spans distributed-parametric, prose, and symbolic forms, so the question is how their improvement loops relate — not which is the real locus of learning
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, deploy-time-learning]
@@ -15,7 +15,7 @@ Prose and symbolic cluster as the **readable artifacts** - inspectable, editable
 
 Computer vision provides the model. Before representation learning, features (SIFT, HOG) were hand-crafted and classifiers (SVMs) were learned — a clean separation that looked normal. Representation learning won by extending gradient descent across both, end-to-end. The general method didn't change; it covered more of the pipeline.
 
-The [bitter lesson](https://en.wikipedia.org/wiki/Bitter_lesson) extrapolates: general methods that leverage computation eat hand-crafted components. Applied today, mainstream research extends the opaque loop — RLHF, RLAIF, continual pretraining, online learning, fast adapters — hoping to subsume the hand-crafted prompts, tools, and evals that deployed systems depend on. This may or may not succeed; new architectures could close the tempo gap, or structural limits could keep large opaque updates on a slower cycle. This note takes no position on the outcome.
+The [bitter lesson](../sources/wikipedia-bitter-lesson.ingest.md) extrapolates: general methods that leverage computation eat hand-crafted components — or more precisely, [they eat the ones whose claimed scope was never earned](./bitter-lesson-selects-against-unearned-reach-not-against-structure.md), which is why tokenizers and test suites survive the same pressure that consumed SIFT. Applied today, mainstream research extends the opaque loop — RLHF, RLAIF, continual pretraining, online learning, fast adapters — hoping to subsume the hand-crafted prompts, tools, and evals that deployed systems depend on. This may or may not succeed; new architectures could close the tempo gap, or structural limits could keep large opaque updates on a slower cycle. This note takes no position on the outcome.
 
 ## Per-class loops today
 
