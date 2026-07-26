@@ -2,7 +2,7 @@
 description: "Between an improvement objective and its oracles sits a target level — a property pursued because it is held to serve the objective — whose linking claim no check in the loop evaluates"
 type: kb/types/note.md
 traits: [title-as-claim]
-tags: [foundations, self-improving-systems, evaluation]
+tags: [foundations, self-improving-systems]
 ---
 
 # A proximate target is checked for achievement, not for warrant
@@ -38,7 +38,7 @@ The tell is composition failure, transposed. For an artifact it is components th
 
 Reading that signal requires two things the pathway does not supply by default.
 
-**The linking claim has to be stated.** An unrecorded justification cannot be found false; the target simply persists as a settled commitment whose reason nobody holds. This is a design-rationale problem before it is an evaluation problem, and the rationale surfaces where the reason would live [do not enforce continuity from a shipped commitment back to what justified it](../reference/design-rationale-management.md).
+**The linking claim has to be stated, and stated faithfully.** An unrecorded justification cannot be found false; the target simply persists as a settled commitment whose reason nobody holds. This is a design-rationale problem before it is an evaluation problem, and the rationale surfaces where the reason would live [do not enforce continuity from a shipped commitment back to what justified it](../reference/design-rationale-management.md). Recording one is not sufficient either, [since a legible but unfaithful rationale makes the repair confidently wrong rather than merely uninformed](./selective-revision-needs-a-faithful-rationale-not-just-a-legible-one.md) — a plausible reason attached to a target that is not the reason it was adopted leaves the composition-failure signal unreadable in the same way as no reason at all.
 
 **The objective needs a reading independent of the target.** Where the only available measure of artifact quality is that artifacts carry rationale, the linking claim is unfalsifiable by construction — the proxy has been substituted for the thing, and the substitution is invisible because both are called the objective.
 
@@ -56,7 +56,7 @@ The consequence runs back into how architectures get compared. A profile of stru
 
 ## Open Questions
 
-- What makes a structural property a good proximate target *before* the outcome evidence arrives. Linking claims with [explanatory-reach](./first-principles-reasoning-selects-for-explanatory-reach-over.md) — ones that say why the property produces the outcome, and so predict where it would stop — are the obvious candidate, and that is a conjecture rather than a result.
+- What makes a structural property a good proximate target *before* the outcome evidence arrives. Linking claims with [explanatory-reach](./first-principles-reasoning-selects-for-explanatory-reach-over.md) — ones that say why the property produces the outcome, and so predict where it would stop — are the obvious candidate. The same discriminator is already argued one level down for retained lessons, [where an abstraction asserted without its condition clause is what over-generalization means](./abstract-an-experience-only-when-you-can-state-the-boundary.md); whether it survives the transfer from lessons to targets is the conjecture.
 - Whether calibration against delayed outcomes can reach the linking claim, or only ever reaches the criterion. Asking whether notes carrying rationale were the ones that supported better decisions is an ordinary empirical question; whether any pathway can afford to run it is a different one.
 - Whether a reflective pathway can hold its own linking claims addressably, which would make them revisable like any other retained theory rather than settled by the absence of a check.
 
@@ -71,4 +71,10 @@ Relevant Notes:
 - [Warranted autonomy is bounded by oracle domain](./warranted-autonomy-is-bounded-by-oracle-domain.md) — grounds: warrant as what a check establishes, the property an achievement check does not supply for its target
 - [First principles are inherited constraints, not design choices](./first-principles-are-inherited-constraints-not-design-choices.md) — contrasts: the inherited constraint a proximate target is mistaken for
 - [Reflection buys addressability](./reflection-buys-addressability.md) — grounds: the worked instance — addressability is pursued for expected advantages, which is a linking claim of exactly this shape
+- [Selective revision needs a faithful rationale, not just a legible one](./selective-revision-needs-a-faithful-rationale-not-just-a-legible-one.md) — extends: what stating a linking claim has to achieve, and why legibility alone leaves the repair confidently wrong
+- [Revising an improvement objective is licensed from outside it or is not improvement](./revising-an-improvement-objective-is-licensed-from-outside-it.md) — contrasts: its proxy-revision subtraction settles check replacement empirically against an unchanged objective; a target has no verdict stream for that comparison to run on
+- [Abstract an experience into a lesson only when you can state where the lesson stops](./abstract-an-experience-only-when-you-can-state-the-boundary.md) — grounds: the boundary-clause discriminator the first open question conjectures transfers from retained lessons to targets
+- [Brainstorming: maintainability oracles for agentic development](./brainstorming-maintainability-oracles-for-agentic-development.md) — extends: the same split reached independently in a code domain, with a two-test procedure and a leading/lagging calibration design
+- [Measuring autonomy well enough to see it improve is an open problem](./measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md) — extends: where ranking architectures is actually attempted, including a scope-weighted proxy under consideration with its linking claim unstated
 - [Design rationale management in Commonplace](../reference/design-rationale-management.md) — evidence: distributed rationale surfaces that retain justifications without enforcing continuity from a commitment back to them
+- [The tag-readme trace read as a self-improving loop](../reference/tag-readme-trace-as-self-improving-loop.md) — evidence: the split observed in a shipped case — the validator passing means the marks are consistent, not that the type split made the KB better

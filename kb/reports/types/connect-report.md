@@ -113,15 +113,15 @@ depth: standard
 
 ## Connections Found
 
-- [target](../../notes/target.md) -- **extends**: {specific reason why this connection exists}
+- [target](../../../notes/target.md) -- **extends**: {specific reason why this connection exists}
 
 ## Bidirectional Candidates
 
-- [target](../../notes/target.md) <-> source -- **contradicts**: {reason the return path is also useful}
+- [target](../../../notes/target.md) <-> source -- **contradicts**: {reason the return path is also useful}
 
 ## Reverse-edge Candidates
 
-- [other-source](../../notes/other-source.md) → source -- **evidence**: {note that should author a link TO this target under its own COLLECTION.md rules}
+- [other-source](../../../notes/other-source.md) → source -- **evidence**: {note that should author a link TO this target under its own COLLECTION.md rules}
 
 ## Off-authorisation Candidates
 
@@ -129,15 +129,15 @@ depth: standard
 
 ## Raw Text Candidates
 
-- [text-file](../../notes/text-file.md) -- potential **extends**: {reason this text is relevant}
+- [text-file](../../../notes/text-file.md) -- potential **extends**: {reason this text is relevant}
 
 ## Rejected Candidates
 
-- [rejected](../../notes/rejected.md) -- {reason rejected}
+- [rejected](../../../notes/rejected.md) -- {reason rejected}
 
 ## Index Membership
 
-- [index-name](../../notes/index-name.md) -- {what the source would contribute to this area}
+- [index-name](../../../notes/index-name.md) -- {what the source would contribute to this area}
 
 ## Synthesis Opportunities
 
