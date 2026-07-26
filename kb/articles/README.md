@@ -14,4 +14,4 @@ Nothing published yet.
 
 ---
 
-Authoring conventions live in [COLLECTION.md](./COLLECTION.md); the collection's design rationale is the [external articles collection proposal](../reference/proposals/external-articles-collection.md).
+Authoring and publication conventions live in [COLLECTION.md](./COLLECTION.md); [ADR 057](../reference/adr/057-articles-use-an-editorial-profile-and-excluded-drafts.md) records the design.

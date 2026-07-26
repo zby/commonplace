@@ -57,6 +57,21 @@ Used by: `kb/instructions/`. See its `COLLECTION.md`.
 
 ## Promoted profiles
 
+### Editorial / expository
+
+Exercised in this repository by `kb/articles/` and its near-complete first article, “Reflective self-improvement.” This profile serves technical readers arriving without project context while preserving a deliberate path into the KB.
+
+| | |
+|---|---|
+| Orientation | Self-standing exposition distilled from the KB for an external reader |
+| Quality goal | Technical depth without assumed KB context, plus a worthwhile onward path into the underlying knowledge |
+| Title convention | Reader-addressed headline, not claim-as-title |
+| Attribution | Byline and publication date; `source_notes` records internal lineage |
+| Maintenance | A published body is a frozen dated record; corrections use annotations, superseding articles, or withdrawal |
+| Link grammar | Reader-serving in-prose links into the KB; no agent-facing footer labels or traversal glosses in the body |
+
+Used by: `kb/articles/`. Promoted by [ADR 057](./adr/057-articles-use-an-editorial-profile-and-excluded-drafts.md).
+
 ### Dialectical / evidential
 
 Proven outside this repo, in the sibling `epistack-casebooks` project (`kb/lhc/notes/COLLECTION.md`), across five casebook notes over eight captured sources for an LHC/black-hole-fears case. Not yet adopted by any collection inside Commonplace itself — listed here so a future casebook-shaped collection, in this repo or another consuming project, can start from a proven bundle instead of re-deriving one.
