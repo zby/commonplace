@@ -54,6 +54,27 @@ Exo names the missing piece itself:
 
 Validating on the only copy of itself is precisely the position a self-hosting compiler occupies. The compiler at least has a fixed-point check — recompile with itself, compare outputs — and Ken Thompson showed even that can be fooled. Here there is no analogue at all, which makes the canary less a refinement than the first tripwire.
 
+## Recursive, autocatalytic, reflective
+
+`docs/RSI.md` opens by rejecting the loose use of "recursive self improvement" for what is really **autocatalysis** — a technology speeding its own development, as computers, the steam engine, and the Internet all did, and as an LLM writing GPU kernels for the next training run does. **Recursion** is reserved for the strong form: a complete version of a thing producing another complete version, "with minimal outside involvement."
+
+That axis is not ours. Their distinction is about the *production relation* — what the loop emits, and how much of the system it constitutes. [Reflective](../notes/definitions/reflective-system.md) is about the *change pathway* — whether change routes through a causally connected representation of the system available to the system's own processes. The two come apart at their own paradigm case:
+
+| | Not reflective | Reflective |
+|---|---|---|
+| **Autocatalytic** | a model writing kernels for the next training run | an agent mining its traces to speed one stage of its pipeline |
+| **Recursive** | the self-hosting compiler | Exo |
+
+The compiler regenerates itself completely and holds no representation of itself at all — it never analyses its own source, and every change through its history was searched for and judged by humans. So recursion in their sense does not imply reflection in ours, and reflection does not imply recursion: an agent that revises one of its own instruction files routes change through a self-representation without emitting a complete successor to anything.
+
+"Recursive" also bundles two things our vocabulary keeps apart. *Complete version* corresponds, within reflective systems, to total coverage of the behaviour-determining organization; *minimal outside involvement* is actor allocation, reported per function rather than as a score. Exo is unusual in scoring well on both at once, which is what makes it a clean placement rather than a partial one.
+
+Each vocabulary omits what the other carries. Theirs has no improvement criterion: read the definition literally and a system that regenerates itself into something worse is still recursive, which is why `SELF-CONTROL.md` has to reintroduce the requirement operationally as "self-modification needs a verification loop, or failed changes accumulate as corruption." Ours has no axis for completeness of regeneration — rebuilding an entire executor and editing one prompt sit in the same cell of the pathway profile.
+
+The deeper difference is which variable is the objective. Exo asks how to give the agent maximum freedom to evolve itself while supplying minimal scaffolding to do it safely: autonomy is maximized, safety is the floor. Commonplace inverts the control direction, [since warranted autonomy is bounded by oracle domain](../notes/warranted-autonomy-is-bounded-by-oracle-domain.md) — warrant is the constraint and autonomy is whatever warrant licenses. That single difference predicts where each system spends its effort, and it explains why Exo's acknowledged gap is an oracle gap — build and test oracles do not reach judgment quality, and no further harness engineering makes them.
+
+The comparison flatters Exo in one respect worth naming. Treating autonomy as a scalar to maximize makes its progress legible; [refusing the scalar](../notes/measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md) leaves Commonplace unable to demonstrate it is moving along the axis it claims to care about.
+
 ## Placement
 
 By the criteria in [self-improving systems](../notes/self-improving-systems-README.md), Exo is a running instance of a combination the casebook otherwise lacks: reflective, cumulative, and computationally autonomous at once. Its self-representation is unusually literal — the source tree it edits is the organisation that determines its behaviour, and the wire from artifact to behaviour is rebuild-and-restart. Its warrant is bounded by build, test, and immediate-behaviour oracles.
@@ -73,4 +94,6 @@ Relevant Notes:
 - [Theory-mediated self-improvement needs both interpretation and retention from one substrate](../notes/theory-mediated-self-improvement-needs-interpretation-and-retention.md) — rationale: the substrate conditions this system supplies, and the evaluation condition its acceptance gate leaves to the model
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — rationale: the three stages this loop is read against
 - [Warranted autonomy is bounded by oracle domain](../notes/warranted-autonomy-is-bounded-by-oracle-domain.md) — rationale: why build-and-test oracles bound which self-modifications this system can adopt unattended
-- [Reflective system](../notes/definitions/reflective-system.md) — see-also: the declared-boundary requirement Exo's harness/executor split satisfies
+- [Reflective system](../notes/definitions/reflective-system.md) — rationale: the change-pathway criterion their production-relation vocabulary does not track, and the declared-boundary requirement their harness/executor split satisfies
+- [Measuring autonomy well enough to see it improve is an open problem](../notes/measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md) — rationale: why their scalar reading of autonomy is legible where our per-function profile is not
+- [Increasing computational autonomy relocates human effort to the frontier](../notes/increasing-computational-autonomy-relocates-human-effort.md) — see-also: why raising autonomy is not, on our account, a path to removing the human
