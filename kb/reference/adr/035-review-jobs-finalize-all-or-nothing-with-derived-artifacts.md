@@ -71,6 +71,15 @@ Deferred:
 - schema-validated structured output;
 - deciding whether `MANIFEST.json` should shrink or remain as an inspection artifact.
 
+## Considered alternatives
+
+The later proposal **Harness-orchestrated review sweeps** supplied the operating-procedure option space for this decision's parent-owned dispatch seam. Its adopted outcome is the harness-neutral [`run-review-batches`](../../instructions/run-review-batches.md) instruction: the parent selects and creates jobs, schedules one hermetic review worker per returned job within the harness concurrency limit, finalizes each output, and verifies freshness. This procedure has now been exercised through both supported agent harnesses, so the proposal's portability trigger is met.
+
+- **A package-owned scheduler or runner adapter** was rejected. Concurrency, budgets, retries, and model calls are harness capabilities; duplicating them in Commonplace would add a weaker orchestration layer around deterministic endpoints that already compose.
+- **A saved vendor-specific workflow script** was rejected as the framework form. It would bind the procedure to one proprietary orchestration API and its argument, sandbox, and telemetry behavior. The instruction states roles and invariants that either harness can execute through its native worker surface.
+- **A coordinator worker running deterministic steps** was rejected as the default. The parent runs selection, creation, finalization, and verification directly; review workers perform judgment only and never mutate bookkeeping state. This preserves the hermetic-worker boundary and avoids spending model calls on deterministic coordination.
+- **Structured worker returns** remain deferred to the separate codec decision. Sentinel-delimited job output is still the portable medium, while runner/model/effort evidence is recorded at finalization when the harness can supply it.
+
 ## Consequences
 
 Easier:
