@@ -111,7 +111,9 @@ Thread 10 adds a fourth rung: present, mechanically covered, operable as a commi
 
 The strong reading contradicts [reflection buys addressability](../../notes/reflection-buys-addressability.md), which holds that compounding is available without reflection, that parametric learners genuinely self-improve, and that requiring reflection for membership "fails against the field's central cases." Do not pitch it. The defensible form is what the readable forms buy — addressability and verifiability — not membership in self-improvement. Related: [the readable-artifact loop](../../notes/readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md) already argues the prose+symbolic pair is the tractable unit.
 
-**10. Intercession over retained self-theory is conditionally necessary** *(note candidate)*
+**10. Synchronization of retained self-description** *(landed 2026-07-26 as [stale self-description conceals its own staleness](../../notes/stale-self-description-conceals-its-own-staleness.md))*
+
+Writing it found that the general requirement was already owned — [source lineage](../../notes/artifacts-produced-from-sources-need-lineage-recorded-at-the-source.md) for the dependency record and [stale indexes](../../notes/stale-indexes-are-worse-than-no-indexes.md) for the worse-than-absent asymmetry, which that note already generalizes to specs and architecture docs. The note therefore claims only what reflexivity adds: the detecting process consults the artifact that drifted (so the error conceals its own evidence), the trigger has no edit event because the referent moves through acts rather than writes, and load scales with autonomy.
 
 > A system that continues to consume claims about mutable aspects of itself needs a way to revalidate, revise, regenerate, supersede, or retire those claims when the relevant aspects change.
 
