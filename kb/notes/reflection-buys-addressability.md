@@ -12,10 +12,10 @@ What does routing an improvement pathway through a self-representation — makin
 The claim sharpens by separating three properties:
 
 - **Operative** retention steers: the retained change persists and affects later behavior.
-- **Cumulative** retention compounds according to the informational-dependence test owned by the [pathway profile](./a-self-improving-system-needs-a-profile-not-a-ladder.md).
+- **Cumulative** retention compounds according to an informational-dependence test that [counts only dependence through the retained result](./accumulation-counts-dependence-through-the-retained-result.md).
 - **Addressable** retention is knowledge: processes inside the boundary can inspect the retained change, say what it claims, criticize it, revise it selectively, and carry it to a problem other than the one it came from. This is an affordance of reflective coverage over retained commitments.
 
-Operativity is required for [self-improving membership](./definitions/self-improving-system.md); cumulativity and addressability can then vary independently. Their separation is what breaks the equation of reflection with compounding. Reflection does not remove the non-cumulative floor: a retained change can be operative and addressable even when a later improvement episode does not use it. The [pathway profile](./a-self-improving-system-needs-a-profile-not-a-ladder.md) owns that criterion and its counterexamples.
+Operativity is required for [self-improving membership](./definitions/self-improving-system.md); cumulativity and addressability can then vary independently. Their separation is what breaks the equation of reflection with compounding. Reflection does not remove the non-cumulative floor: a retained change can be operative and addressable even when a later improvement episode does not use it. [Accumulation counts dependence through the retained result](./accumulation-counts-dependence-through-the-retained-result.md) owns that criterion and its counterexamples.
 
 ## Compounding without a representation
 
@@ -69,4 +69,5 @@ Relevant Notes:
 - [Retrieval failure is reflection failure](./retrieval-failure-is-reflection-failure.md) — extends: why addressable retention compounds only best-effort, through the discovery wire
 - [Reflective coverage is graded across representational forms](./reflective-coverage-is-graded-across-representational-forms.md) — extends: addressability assessed per representational form and operation profile
 - [A self-improving system needs a profile, not a ladder](./a-self-improving-system-needs-a-profile-not-a-ladder.md) — extends: places addressability under reflective structure while keeping cumulativity among improvement dynamics
+- [Accumulation counts dependence through the retained result, not through the evidence it caused](./accumulation-counts-dependence-through-the-retained-result.md) — contrasts: the neighbouring property that compounds without being readable, and its criterion
 - [Ashby, Design for a Brain — ultrastability](../sources/ashby-design-for-a-brain-ultrastability.md) — evidence: the floor case — an operative incumbent whose random successor carries no improvement-relevant information from it

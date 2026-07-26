@@ -31,17 +31,7 @@ Coverage and addressability are related but separate profiles within reflective 
 
 ### Improvement dynamics
 
-**Does later improvement use what earlier improvement retained?** This is **cumulativity**, an informational dependence across episodes rather than a degree of reflection. A later episode builds on an earlier one when information introduced or selected by the earlier operative change shapes the later candidate, evaluation, update, or retained successor. The later episode may read or transform the retained state, compute an update at it, or apply a delta that preserves part of it.
-
-Merely beginning while the earlier state remains operative does not count. A practical test is to hold the later episode's new evidence and randomness fixed and substitute a different earlier retained result. If that substitution changes the later improvement because the result is consumed or preserved, the pathway is cumulative across those episodes. If the earlier result only governs behavior until an independently generated replacement overwrites it, it is operative but non-cumulative. Cumulativity is therefore assessed over named episodes or a stated horizon; a pathway may carry some earlier changes forward and discard others.
-
-Holding the later episode's evidence fixed is a deliberate exclusion, not an oversight. An earlier retained result also shapes which evidence later arises — an operative incumbent partly determines whether a violation fires at all — but dependence routed only through the evidence stream is the trigger consuming its input, and counting it would make every operative change cumulative through its consequences. The test asks whether the retained result itself is consumed or preserved, holding the evidence it caused fixed.
-
-**Examples.** Online gradient descent is cumulative but opaque: the retained weights are the point at which the next gradient is evaluated and the base to which it is applied. A clean reflective counterexample is a controller whose runtime reads an editable `current-policy` file, while its improvement routine responds to a viability violation by overwriting the whole file with the next policy from a fixed randomized table, without reading the incumbent or recording prior trials. Each policy is reflectively represented and operative between resets, but no result informs its successor.
-
-[Self-Improving Algorithms](../sources/self-improving-algorithms.md) supplies a concrete non-reflective cumulative case: a training phase learns task-relative distribution structure, then a stationary regime retains the tuned data structures as the operative basis for later inputs. Its actor allocation is computational, its objective is expected running time under a declared input distribution, and distribution shift marks the boundary where recalibration is required. The example strengthens the distinction between cumulative retention and reflective addressability: learned structure compounds without becoming an inspectable self-representation.
-
-Ashby's Homeostat is the non-reflective version of that counterexample. Its retained setting controls behavior and whether reorganization is triggered, but once triggered the next values are unrelated to the incumbent and the problem. Holding the violation and random-table position fixed, replacing the incumbent would not change its successor. The Homeostat is therefore operative and non-cumulative: the trigger uses fresh failure evidence, while the update carries no improvement-relevant information from earlier retained settings.
+**Does later improvement use what earlier improvement retained?** This is **cumulativity**, an informational dependence across episodes rather than a degree of reflection. [Accumulation counts dependence through the retained result, not through the evidence it caused](./accumulation-counts-dependence-through-the-retained-result.md) owns the criterion, its substitution test, and the placements that separate cumulative from merely operative retention.
 
 ### Governance
 
@@ -77,6 +67,7 @@ Relevant Notes:
 
 - [Self-improving system](./definitions/self-improving-system.md) — defined-in: supplies the membership conditions kept separate from the profile
 - [Reflective coverage is graded across representational forms](./reflective-coverage-is-graded-across-representational-forms.md) — grounds: the breadth-and-operation account of reflective structure
+- [Accumulation counts dependence through the retained result, not through the evidence it caused](./accumulation-counts-dependence-through-the-retained-result.md) — grounds: the cumulativity criterion and counterexamples reported under improvement dynamics
 - [Reflection buys addressability](./reflection-buys-addressability.md) — grounds: the commitment-operation profile kept distinct from structural coverage
 - [A methodology governs its own extension only as far as it settles the meta-decisions it raises](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md) — grounds: methodological closure as a governance property
 - [Methodological and computational closure track different changes](./methodological-and-computational-closure-track-different-changes.md) — grounds: the governance and actor-allocation readings, including the human-boundary consequence

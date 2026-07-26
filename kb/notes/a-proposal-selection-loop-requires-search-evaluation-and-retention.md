@@ -58,7 +58,7 @@ For self-improvement, the accepted change must reach the system's own [behavior-
 
 ## Repetition does not establish cumulativity
 
-A proposal-selection loop can repeat on a timer or fresh request without using anything retained by an earlier iteration. Whether later improvement consumes or preserves earlier improvement-relevant information is **cumulativity**, whose criterion and counterexamples belong to the [pathway profile](./a-self-improving-system-needs-a-profile-not-a-ladder.md). Retained rationale can provide that dependence when later search or evaluation actually consumes it; [design rationale management in Commonplace](../reference/design-rationale-management.md) documents that path.
+A proposal-selection loop can repeat on a timer or fresh request without using anything retained by an earlier iteration. Whether later improvement consumes or preserves earlier improvement-relevant information is **cumulativity**, whose criterion and counterexamples belong to [the informational-dependence test on the retained result](./accumulation-counts-dependence-through-the-retained-result.md). Retained rationale can provide that dependence when later search or evaluation actually consumes it; [design rationale management in Commonplace](../reference/design-rationale-management.md) documents that path.
 
 ## Boundary cases clarify the claim
 

@@ -24,7 +24,7 @@ Proposal-selection loop completion means supplying search, reject-capable evalua
 After membership and update architecture, [profile the pathway rather than placing it on a ladder](./a-self-improving-system-needs-a-profile-not-a-ladder.md):
 
 - **Reflective structure** — [coverage of represented aspects and forms](./reflective-coverage-is-graded-across-representational-forms.md), plus the separate [addressability profile](./reflection-buys-addressability.md) over retained commitments.
-- **Improvement dynamics** — [cumulativity](./a-self-improving-system-needs-a-profile-not-a-ladder.md#improvement-dynamics): whether later updates consume or preserve information retained by earlier ones rather than merely replacing an operative incumbent.
+- **Improvement dynamics** — [cumulativity](./accumulation-counts-dependence-through-the-retained-result.md): whether later updates consume or preserve what earlier ones retained, counting only dependence through the retained result itself.
 - **Governance** — [which consequential decisions the methodology settles](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md), and [which of those decisions are warranted](./warranted-autonomy-is-bounded-by-oracle-domain.md).
 - **Actor allocation** — which functions are human, computational, or joint. Because human inclusion makes reflective membership cheap, [allocation carries the comparison](./methodological-and-computational-closure-track-different-changes.md). Computational closure is its no-human endpoint, not a grade of reflectivity.
 
