@@ -19,15 +19,15 @@ Interpretation and retention are the pair that has to come from somewhere. A sys
 
 ## Self-directed theories arrive unformalized
 
-The two conditions could in principle be met separately and composed. In practice, what a system can say about its own operation resists the move that would make composition easy.
+Interpretation and retention could in principle be sourced separately and composed. In practice, what a system can say about its own operation resists the move that would make composition easy.
 
-Formal pathways get both conditions cheaply inside a supplied language: the theory space is specified, and the acceptance test is mechanical — DreamCoder retains an abstraction when it reduces description length, and proof-gated architectures retain a self-modification when a theorem discharges. [Formal symbolic systems assess explanatory-reach only through causal and proof obligations](./formal-systems-assess-explanatory-reach-through-causal-and-proof.md) traces what that costs: the language, variables, primitives, and acceptance test must be supplied in advance.
+A formal pathway gets both cheaply inside a supplied language, because [formalization buys a mechanical acceptance test](./theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md) — and pays for it with a language, variables, primitives, and acceptance criteria fixed in advance.
 
 Theories about a system's own operation are mostly not yet in such a language. "This retrieval step surfaces the wrong artifact when the query names a type rather than a topic" is a claim about the system, with real consequences and a real scope, and no formal apparatus receives it. So the mechanical acceptance test is unavailable exactly where the reflective case needs one, and condition 2 has to be discharged over prose.
 
 ## Only a semantic interpreter over retained text supplies both
 
-This is why the substrate matters rather than the architecture diagram. Purely parametric retention supplies neither condition for an individual theory: the shortfalls are documented and differently shaped — post-hoc editing reaches content without reaching scope, and an architecture-installed legible layer is correctable per inference without retaining the correction — but neither yields a self-directed theory that persists with its applicability conditions attached. Formal retention supplies both inside a language the reflective case rarely has.
+This is why the substrate matters rather than the architecture diagram. [Purely parametric retention exposes no scope](./theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md), and the documented partial routes out of that fail differently but fail alike here: neither yields a self-directed theory that persists with its applicability conditions attached. Formal retention supplies both conditions inside a language the reflective case rarely has.
 
 An LLM operating over retained text supplies both, and does so by division of labor: the weights are the semantic interpreter, competent over prose theories including prose about the system's own behavior; the retained artifact is the persistent, separately revisable object. Neither half is sufficient. A capable model with no retained artifact re-derives its theory each session — [and a theory nothing surfaces at the moment of need contributes nothing](./retrieval-failure-is-reflection-failure.md). A retained artifact with no interpreter is a table of rules that reasons about nothing.
 
