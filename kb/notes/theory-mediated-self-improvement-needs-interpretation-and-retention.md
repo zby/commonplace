@@ -35,7 +35,7 @@ So the conjecture reaches reflective self-improvement on LLM-plus-artifact subst
 
 ## The retention half is what scale might absorb
 
-The bitter lesson is not an objection to theory-mediated learning — a system that searches theory space and tests its candidates is search and learning, not hand-encoded prior knowledge. But it does bear on the division of labor above. If a sufficiently scaled model runs the same theory search implicitly in activations, with reach-assessment and revision happening inside a forward pass, then the retained artifact is scaffolding that compensates for a context window rather than a load-bearing part of the pathway. On that reading, condition 3 is a temporary engineering fact and the externalized theory disappears.
+The bitter lesson is not an objection to theory-mediated learning, [since what scale selects against is unearned reach rather than structure](./bitter-lesson-selects-against-unearned-reach-not-against-structure.md). But it does bear on the division of labor above. If a sufficiently scaled model runs the same theory search implicitly in activations, with reach-assessment and revision happening inside a forward pass, then the retained artifact is scaffolding that compensates for a context window rather than a load-bearing part of the pathway. On that reading, condition 3 is a temporary engineering fact and the externalized theory disappears.
 
 Nothing here rebuts that. What it predicts is where to look: the artifact earns its place only where persistence across sessions, selective rescoping of a *named* theory, and inspection by a process other than the one that formed it are doing work that a longer context would not do.
 
