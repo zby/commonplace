@@ -11,48 +11,39 @@ Selective head: the membership definition, the update architectures, and the fou
 
 ## Membership
 
-A [self-improving system](./definitions/self-improving-system.md) makes operative, evidence-responsive changes to its own behavior-determining organization. Read every attribution against a declared frame of boundary, horizon, and objective: including maintainers can make a development system a human-inclusive member, and [self-improvement is relative to a declared objective](./self-improvement-is-relative-to-a-declared-objective.md) — indexed in the attribution, antecedent in the pathway. Membership settles only the category; update architecture and pathway profile remain to be stated.
+A [self-improving system](./definitions/self-improving-system.md) makes operative, evidence-responsive changes to its own behavior-determining organization. Read every attribution against a declared frame of boundary, horizon, and objective: including maintainers can make a development system a human-inclusive member, and [self-improvement is relative to a declared objective](./self-improvement-is-relative-to-a-declared-objective.md) — indexed in the attribution, antecedent in the pathway. Membership settles only the category.
 
 ## Update architecture
 
-Evidence may **directly determine** an update that is always adopted, as gradients and viability triggers do, or flow through the [**proposal-selection** subtype](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md), where a candidate may be rejected before operative retention. A pathway may compose both mechanisms.
-
-Proposal-selection loop completion means supplying search, reject-capable evaluation, and operative retention; [false-positive acceptance then becomes operative](./false-positive-generation-is-filtered-before-retention.md). This is distinct from methodological closure and computational closure, which belong to the profile below.
+Evidence may **directly determine** an update that is always adopted, as gradients and viability triggers do, or flow through the [**proposal-selection** subtype](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md), where search, reject-capable evaluation, and operative retention let a candidate be rejected first — and where [false-positive acceptance becomes operative](./false-positive-generation-is-filtered-before-retention.md). A pathway may compose both.
 
 ## Pathway profile
 
 After membership and update architecture, [profile the pathway rather than placing it on a ladder](./a-self-improving-system-needs-a-profile-not-a-ladder.md):
 
 - **Reflective structure** — [coverage of represented aspects and forms](./reflective-coverage-is-graded-across-representational-forms.md), plus the separate [addressability profile](./reflection-buys-addressability.md) over retained commitments.
-- **Improvement dynamics** — [cumulativity](./accumulation-counts-dependence-through-the-retained-result.md): whether later updates consume or preserve what earlier ones retained, counting only dependence through the retained result itself.
-- **Governance** — [which consequential decisions the methodology settles](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md), and [which of those decisions are warranted](./warranted-autonomy-is-bounded-by-oracle-domain.md).
-- **Actor allocation** — which functions are human, computational, or joint. Because human inclusion makes reflective membership cheap, [allocation carries the comparison](./methodological-and-computational-closure-track-different-changes.md). Computational closure is its no-human endpoint, not a grade of reflectivity.
+- **Improvement dynamics** — [cumulativity](./accumulation-counts-dependence-through-the-retained-result.md): dependence through the retained result itself, not through the evidence it caused.
+- **Governance** — [what the methodology settles](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md), and [which of those decisions are warranted](./warranted-autonomy-is-bounded-by-oracle-domain.md).
+- **Actor allocation** — human, computational, or joint per function; [allocation carries the comparison](./methodological-and-computational-closure-track-different-changes.md), and computational closure is its no-human endpoint, not a grade of reflectivity.
 
 ### What reflection adds
 
-Reflective structure crosses update architecture. A pathway is [**reflective**](./definitions/reflective-system.md) when change passes through a causally connected representation of the affected organization; otherwise it is non-reflective. The representation may be consumed as evidence, advice, instruction, or enforcement: authority family alone does not decide reflection.
+A pathway is [**reflective**](./definitions/reflective-system.md) when change passes through a causally connected representation of the affected organization. Reflective structure crosses update architecture, and authority family — evidence, advice, instruction, enforcement — does not decide it.
 
-- Retained lessons become **addressable** — later rounds can read, criticize, and selectively revise them: [reflection buys addressability](./reflection-buys-addressability.md).
-- An addressable lesson can explicitly reject, revise, or rescope a represented prior commitment; [non-reflective correction acts indirectly on the substrate](./reflection-makes-retained-lessons-second-order.md).
-- The standing discount — a lesson that never surfaces contributes nothing: [retrieval failure is reflection failure](./retrieval-failure-is-reflection-failure.md).
-- Downstream payoff hypotheses include [fewer target observations after a structured shift, which reflection inherits only where one substrate both interprets and retains the theory](./theory-mediated-self-improvement-needs-interpretation-and-retention.md) and [revision that lands on the premise that actually broke, which needs the retained rationale to be faithful rather than merely readable](./selective-revision-needs-a-faithful-rationale-not-just-a-legible-one.md).
+- [Reflection buys addressability](./reflection-buys-addressability.md) — retention later rounds can read, criticize, and selectively revise.
+- [Reflection makes retained lessons second-order](./reflection-makes-retained-lessons-second-order.md) — an addressable lesson can reject or rescope a represented prior commitment.
+- [Retrieval failure is reflection failure](./retrieval-failure-is-reflection-failure.md) — the standing discount on a lesson that never surfaces.
+- Payoff hypotheses, still open: [theory-mediated sample efficiency](./theory-mediated-self-improvement-needs-interpretation-and-retention.md), and [selective revision needing a faithful rationale](./selective-revision-needs-a-faithful-rationale-not-just-a-legible-one.md).
 
 ### Governance and computational allocation
 
-- [Methodological and computational closure track different changes](./methodological-and-computational-closure-track-different-changes.md) — settled methodology can still be human-executed, while an unattended model can still improvise; executable, warranted criteria are what let both properties advance together.
-- [Increasing computational autonomy relocates human effort to the frontier instead of reducing it](./increasing-computational-autonomy-relocates-human-effort.md) — the human side: measure improvements per human judgment, not total hours.
-- [Only explicit retention is durable, writable, and addressable](./only-explicit-retention-is-durable-writable-and-addressable.md) — no tacit channel, human or parametric, can carry settled methodology.
+- [Methodological and computational closure track different changes](./methodological-and-computational-closure-track-different-changes.md) — settled method can be human-executed; an unattended model can improvise.
+- [Increasing computational autonomy relocates human effort to the frontier](./increasing-computational-autonomy-relocates-human-effort.md) — measure improvements per human judgment, not hours.
+- [Only explicit retention is durable, writable, and addressable](./only-explicit-retention-is-durable-writable-and-addressable.md) — no tacit channel carries settled methodology.
 
-## Example placements
+## Placements
 
-- [Ashby's Homeostat](../sources/ashby-design-for-a-brain-ultrastability.md) — operative, non-reflective, computationally autonomous, and non-cumulative under the informational-dependence criterion.
-- Parametric self-improvers (self-play, fine-tuning on their own trajectories) — cumulative and computationally autonomous, but non-reflective because retained weights remain opaque.
-- The [Gödel machine](./goedel-machines-are-a-proof-governed-case-of-self-modification.md) — reflective and computationally autonomous, with methodological closure and warrant bounded by what its proof system can establish.
-- [Knowledge-Centric Self-Improvement](../sources/knowledge-centric-self-improvement-2607.19592.ingest.md) — disposable agents around a curated knowledge base: proposal-selection, computationally autonomous, cumulative across generations, reflective coverage confined to the retained claims, and warrant bounded by its benchmark oracles.
-- [Exo](../agentic-systems/exo.md) — a running harness that edits, rebuilds, and restarts its own executor: reflective, cumulative, and computationally autonomous at once, with a protected substrate that preserves the event log across rewinds, and warrant bounded by build, test, and immediate-behaviour oracles.
-- [Commonplace itself](../reference/commonplace-as-a-reflective-system.md) — human-inclusive, reflective, and cumulative, with governance and actor allocation varying by decision.
-
-Read every claim at its stated strength: definitions are stipulated and revisable; payoff claims are open hypotheses.
+[Eight cases profiled across the four dimensions](./real-self-improving-systems-occupy-combinations-no-rung-captures.md) — from Ashby's Homeostat to Commonplace itself, including the [Gödel machine](./goedel-machines-are-a-proof-governed-case-of-self-modification.md) as the proof-governed limit. Read every claim at its stated strength: definitions are stipulated and revisable; payoff claims are open hypotheses.
 
 ## Base vocabulary and boundary cases
 

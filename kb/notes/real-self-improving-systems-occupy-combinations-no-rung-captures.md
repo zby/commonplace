@@ -1,0 +1,62 @@
+---
+description: "Casebook of eight placements on the pathway profile — Homeostat to Commonplace — showing that reflection, cumulativity, allocation, and warrant are realized in combinations no ordinal rung expresses"
+type: kb/types/note.md
+traits: [title-as-claim, synthesis, has-comparison, has-external-sources]
+tags: [foundations, self-improving-systems]
+---
+
+# Real self-improving systems occupy combinations no single rung captures
+
+The argument that improvement-pathway properties do not entail one another is made where each property is defined. This note supplies the other half: the combinations are not merely permitted by the ontology, they are the ones actually occupied by the systems it has to place. A scale that ordered these eight cases would have to rank a proof-governed rewriter against a randomized relay bank against a repository of human-reviewed prose, and each ordering it produced would contradict another.
+
+Every row is a reading under a declared boundary. Change the boundary and the reading changes — most visibly for Commonplace, which is a member at all only under a frame that includes its maintainers, [since attributions are elliptical until their parameters are named](./self-improvement-is-relative-to-a-declared-objective.md).
+
+## The placements
+
+| System | Update architecture | Reflective | Cumulative | Allocation | Warrant bounded by |
+|---|---|---|---|---|---|
+| [Ashby's Homeostat](../sources/ashby-design-for-a-brain-ultrastability.md) | direct, viability-driven | no | no | computational | nothing — retention is negative |
+| Parametric self-improvers | direct, gradient | no | yes | computational | training-time evaluation |
+| [Self-Improving Algorithms](../sources/self-improving-algorithms.md) | direct, staged | no | yes | computational | the declared input distribution |
+| [DreamCoder](../sources/dreamcoder-wake-sleep-bayesian-program-learning.ingest.md) | proposal-selection | partly | yes | computational | statistical program fit |
+| [Gödel machine](./goedel-machines-are-a-proof-governed-case-of-self-modification.md) | proposal-selection | yes | yes | computational | what its proof system establishes |
+| [Knowledge-Centric Self-Improvement](../sources/knowledge-centric-self-improvement-2607.19592.ingest.md) | proposal-selection | partly | yes | computational | benchmark oracles; debate for transfer |
+| [Exo](../agentic-systems/exo.md) | proposal-selection | yes | yes | computational | build, test, immediate behaviour |
+| [Commonplace](../reference/commonplace-as-a-reflective-system.md) | proposal-selection | yes | yes | joint, by decision | tests and validators; human judgment |
+
+## What the hard cases teach
+
+**The Homeostat is the floor, and it is not a low rung.** Operative, computationally autonomous, and non-cumulative at once: its retained setting steers behavior and determines whether reorganization fires, yet the successor comes from a random table and carries nothing of the incumbent. Any scale that reads autonomy as maturity puts a randomized relay bank above a human-reviewed repository.
+
+**Parametric learners break the equation of reflection with compounding.** They compound reliably through weights nothing inside them can read. This is the deployed default rather than a corner case, which is why an ontology that required reflection for membership would fail on the field's central systems.
+
+**Ailon et al. show cumulativity without either reflection or a gate.** A training phase learns task-relative distribution structure; a stationary regime then retains the tuned structures as the operative basis for later inputs. Its objective is expected running time under a declared input distribution, and distribution shift is the boundary where the retained structure stops being warranted.
+
+**DreamCoder and the Gödel machine differ in gate kind, not gate strength.** Both run reject-capable loops; one accepts on statistical program fit, the other only on proof. DreamCoder is also split internally — an inspectable symbolic library alongside an opaque recognition network — so its reflective coverage has to be reported per component rather than as a verdict about the system.
+
+**Knowledge-Centric Self-Improvement is the strongest external case for addressability.** Its appendix traces a claim cited by id, challenged, split into two scoped claims, with the falsified branch retained as a rejection — the read-criticize-revise operations exercised computationally, not just structurally available. Its warrant splits: benchmark oracles are strong for pass/fail, while transfer-worthiness rests only on model debate.
+
+**Exo and Commonplace share a profile and differ in allocation.** Both are reflective, cumulative proposal-selection pathways; Exo's self-representation is unusually literal, the source tree it edits being the organization that determines its behavior, with rebuild-and-restart as the wire from artifact to behavior. Exo is computational throughout, Commonplace joint and varying by decision. That single difference is what carries the comparison, and it is invisible to any measure that scores both as "self-improving."
+
+## Scope
+
+- Placements are readings, not measurements. Each depends on a declared boundary and horizon, and several rest on a single published description rather than on independent inspection.
+- "Partly" in the reflective column marks per-component coverage, not a midpoint on a scale — the point is that the verdict does not apply to the system as a whole.
+- The casebook establishes that the combinations occur. It does not establish that any of these systems improved, which is a separate question about outcomes against a declared objective.
+
+---
+
+Relevant Notes:
+
+- [A self-improving system needs a profile, not a ladder](./a-self-improving-system-needs-a-profile-not-a-ladder.md) — grounds: the four dimensions these placements are read against
+- [Self-improvement is relative to a declared objective](./self-improvement-is-relative-to-a-declared-objective.md) — grounds: why each row names its frame, and why no ordering follows from the profile alone
+- [Accumulation counts dependence through the retained result, not through the evidence it caused](./accumulation-counts-dependence-through-the-retained-result.md) — grounds: the cumulativity column's criterion
+- [Reflection buys addressability](./reflection-buys-addressability.md) — grounds: what the reflective column is worth, and what parametric compounding does without it
+- [Warranted autonomy is bounded by oracle domain](./warranted-autonomy-is-bounded-by-oracle-domain.md) — grounds: the warrant column, and why computational allocation does not fill it
+- [Measuring autonomy well enough to see it improve is an open problem](./measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md) — extends: why these rows still cannot be ordered even after the profile is fixed
+- [Ashby, Design for a Brain — ultrastability](../sources/ashby-design-for-a-brain-ultrastability.md) — evidence: the operative, non-cumulative, non-reflective floor
+- [Self-Improving Algorithms](../sources/self-improving-algorithms.md) — evidence: cumulative retention with no representation and no gate
+- [DreamCoder](../sources/dreamcoder-wake-sleep-bayesian-program-learning.ingest.md) — evidence: a statistical reject-capable gate, with coverage split across a symbolic library and an opaque network
+- [Knowledge-Centric Self-Improvement](../sources/knowledge-centric-self-improvement-2607.19592.ingest.md) — evidence: addressability operations exercised computationally, with warrant split by question
+- [Exo](../agentic-systems/exo.md) — evidence: reflective, cumulative, and computationally autonomous at once, over a literal source-tree self-representation
+- [Commonplace as a reflective system](../reference/commonplace-as-a-reflective-system.md) — evidence: the human-inclusive joint-allocation reading
