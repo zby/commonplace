@@ -24,7 +24,7 @@ The paper argues that automation changes human work and coordination rather than
 
 ## Connections Found
 
-The source supplies a concrete external precedent for [methodological and computational closure track different changes](../notes/methodological-and-computational-closure-track-different-changes.md): autonomy is reported per function and level, while evaluation criteria and human authority remain separate. It also grounds [warranted autonomy is bounded by oracle domain](../notes/warranted-autonomy-is-bounded-by-oracle-domain.md): moving a function toward automation is conditional on evidence about its failure costs and recovery, not on capability alone. No current note cites this specific human-factors matrix, so the connection is a transfer-of-vocabulary candidate rather than a settled Commonplace definition.
+The source supplies a concrete external precedent for [methodological and computational closure track different changes](../notes/methodological-and-computational-closure-track-different-changes.md): autonomy is reported per function and level, while evaluation criteria and human authority remain separate. It also grounds [warranted autonomy is bounded by oracle domain](../notes/warranted-autonomy-is-bounded-by-oracle-domain.md): moving a function toward automation is conditional on evidence about its failure costs and recovery, not on capability alone. That inheritance has since been taken up: the closure note above records the four-stage form with three declared departures, so the matrix is a cited precedent rather than an open transfer-of-vocabulary candidate — a design heuristic still, not a settled Commonplace definition.
 
 ## Extractable Value
 
