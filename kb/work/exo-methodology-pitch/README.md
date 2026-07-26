@@ -26,6 +26,8 @@ Three conditions bound how far the spine reaches:
 
 **The inversion, and why this is the spine rather than a thread:** the 156 code-grounded reviews in `kb/agent-memory-systems/reviews/` are evidence about *us*, not about them. If systems that never heard of Commonplace keep arriving at typed prose, declared contracts, and invalidation, we found something structural. If none do, we most likely codified a house style and argued for it afterwards — which arguments alone cannot catch, because an argument can encode our own situation invisibly. That survey outranks drafting the pitch.
 
+**Design it to find alternative satisfiers, not to count frequency.** Convergence has confounds — shared standards, shared engineering environment, a common local optimum — and its absence has innocent explanations: immature systems, structure hidden in code, or a system that accepts global rechecking instead of selective invalidation. A survey scanning for *our* mechanisms would systematically miss implicit satisfiers, which is not hypothetical: the Exo prose-partition error in thread 4 was exactly that failure, committed against a system already reviewed twice here. The stronger evidence is the intervention in thread 7; the survey's job is counterexamples and unfamiliar satisfiers.
+
 ## What would close it
 
 - The corpus survey run, and its verdict recorded either way — including the outcome where it finds no convergence and the candidate constraints are demoted to house style.
@@ -43,11 +45,15 @@ Out of scope: the improvement criterion itself. Set aside by the maintainer on 2
 
 State as of the conversation that opened this workshop (2026-07-26). All provisional — nothing here has been tested against anything but discussion.
 
+> **Read thread 11 first.** Several early threads reach for a structural deficiency in Exo and are refuted by the checkout. They are kept as record, corrected in place, not deleted. Thread 11 says why the pattern recurs and what to use instead.
+
 **1. Ontology before oracle** *(landed 2026-07-26 as [verification needs a typed target before it needs an oracle](../../notes/verification-needs-a-typed-target-before-it-needs-an-oracle.md); the first candidate constraint to test against the corpus)*
 
 Verifying a mutable layer requires an artifact ontology before it requires an oracle. Exo isolates the variable: strong oracles for code (build, tests, restart-and-observe) sitting next to a completely unverified prose layer. The blocker isn't that prose oracles are hard — it's that the prose was never partitioned into classes with contracts, so no check has a target to attach to. The absence *presents* as an oracle gap and isn't one. Composes with [the boundary of automation is the boundary of verification](../../notes/the-boundary-of-automation-is-the-boundary-of-verification.md) by adding that part of verification cost is ontological and comes due first.
 
-**2. Unbounded history against bounded context** *(note candidate)*
+**2. Distinguishing current commitments from historical events** *(note candidate; reframed 2026-07-26)*
+
+The original framing was unbounded history against bounded context. Keep the mechanism, but lead with the sharper problem: the hard part is not fitting the history into the window, it is telling which of its contents are *still in force*. A log is undifferentiated as to currency — an attempt, its reversal, and the conclusion drawn are all just events. Compaction is the obvious counter to the context version of the argument, and it is unimplemented in Exo (the executor owns the policy per `docs/spec.md`), but it does not touch the currency problem and is itself bounded by "no universal distillation" below.
 
 [Crystallized reasoning under context scarcity](../../notes/system-definition-artifacts-are-crystallized-reasoning-under-context.md) declines to argue whether scarcity actually stays binding: "there's reason to expect task complexity to scale alongside context ... but that's a separate argument this note doesn't make." This is that argument, in a form specific to long-running self-improving agents: history grows monotonically with operation, context grows at best linearly with engineering. Re-derivation cost scales with history; retrieving a distilled conclusion does not. Exo is the clean case — append-only log by design, "nothing can erase," multi-year ambition.
 
@@ -67,21 +73,29 @@ Sorting the counters to "the model is the knowledge layer" by whether scaling to
 - *Activation* — [knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md). Solid, but argues only for something-in-context; closes into thread 1 via "you can't route what you can't name."
 - *Availability* — infinite context cannot recover what was never recorded. Rejected alternatives and abandonment reasons are absent from the log, not compressed in it. An information claim, so scaling doesn't reach it.
 - *Commitment* — authority-bearing constraints bind as commitments, not compressed reasoning; survives the unbounded-context experiment by that note's own argument.
-- *Determinism* — re-derivation varies run to run; a committed conclusion doesn't.
+- *Stability* — re-derivation varies run to run; a committed conclusion fixes what was retained. Do not overstate this as determinism: the artifact stabilizes the retained content, while its downstream interpretation stays stochastic.
 
-**4. Exo has no knowledge layer**
+**4. No first-class maintained layer of explicit conclusions and rationale** *(corrected 2026-07-26 — the original "Exo has no knowledge layer" was false)*
 
-Its retained artifacts are events (what happened) and code/prompts (what to do). No artifact class for why. `SELF-CONTROL.md` and `RSI.md` are exactly that missing layer and are hand-written by humans, outside anything the improvement loop reads or maintains. Consequence: improvement accumulates as policy, never as understanding. May be a note or may just be evidence for threads 1–3.
+Exo has memory, todos, a local profile, skills, prompts, a self map, and an event log. What it lacks is a maintained layer of explicit conclusions *about itself* carrying scope, evidence, authority, and invalidation conditions. `SELF-CONTROL.md` and `RSI.md` hold the real theory and are human-written, outside anything the loop reads or maintains.
+
+Drop the earlier "improvement accumulates as policy, never as understanding" — skills and prompts can carry understanding. The accurate version: Exo does not distinguish rationale, evidence, policy, and self-description, and tracks no derivation between them. State this as an empirical characterization, not a verdict.
 
 **5. A loop can apply a contract but cannot warrant one**
 
-Sharpening of "building the scaffolding needs a human operator." The agent can autonomously apply a contract; establishing that a given ontology or oracle is the right one needs evidence the loop doesn't generate. Check for overlap before writing — [warranted autonomy](../../notes/warranted-autonomy-is-bounded-by-oracle-domain.md) and [methodological and computational closure](../../notes/methodological-and-computational-closure-track-different-changes.md) may already own it.
+Sharpening of "building the scaffolding needs a human operator." **Too categorical as first stated** — a loop broad enough to generate evidence about its own contracts can compare candidates and revise them, so "cannot warrant" is false in general. The live question is narrower: which evidence crosses into the boundary, and what acceptance process warrants a *particular* contract. Check for overlap before writing — [warranted autonomy](../../notes/warranted-autonomy-is-bounded-by-oracle-domain.md) and [methodological and computational closure](../../notes/methodological-and-computational-closure-track-different-changes.md) may already own what survives.
 
 **6. The relocation note** *(decided)*
 
 Rewriting [increasing computational autonomy relocates human effort](../../notes/increasing-computational-autonomy-relocates-human-effort.md) around the obstacle frame was considered and rejected: its payload is measurement ("measure improvements per human judgment, not human time"), and the bottleneck half is already owned by the boundary-of-verification note. Pending action if thread 1 lands: add one link naming what specifically sits at the frontier.
 
-**7. Pitch assembly and venue**
+**7. Pitch assembly and venue** *(now the practical centre)*
+
+**Positioning — adopt this and drop the diagnostic framing.** Commonplace is not scaffolding to add to Exo's protected substrate; it is a candidate for the mutable semantic layer Exo deliberately leaves open. `docs/spec.md` states the rationale itself: the exoharness is kept minimal "to maximize the space of behaviors that can evolve above it," with the executor owning memory, compaction, and prompt-assembly policy. So the proposal is a **replaceable, agent-editable semantic policy above the substrate** — and the agent must be free to alter, replace, or delete it. That is also the cleanest answer to the bitter lesson: the defensible invariant is that the system needs some way to maintain usable conclusions; our types and contracts are a hypothesis about how.
+
+**The experiment, which should replace diagnosis as the ask.** Give an Exo instance a small Commonplace-like collection plus operations to create, revise, supersede, and invalidate semantic artifacts over its own prompts, skills, memories, self map, and design claims. Compare against an equivalent instance reasoning directly over event history. Measure: recurrence of previously diagnosed mistakes; stale or contradictory self-descriptions after modification; ability to explain why a policy exists; semantic regressions caught before adoption; cost of reconstructing prior decisions; overhead the explicit layer imposes. This is falsifiable, and a capable model plus raw history performing equally well is a real result rather than a failed pitch.
+
+**Assembly notes**
 
 Assembles from [axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) (the spine — already applied to Exo once by the memory review), [system-definition artifact](../../notes/definitions/system-definition-artifact.md), [lineage](../../notes/definitions/lineage.md), and [codify and relax](../../notes/codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) as the answer to their bitter-lesson framing. Hooks available in their own material: the design principle that "a mutation path that bypasses the tools also bypasses the record," and skills as the one prose class they already accepted frontmatter and validation for. Concede up front that storage substrate is the field they've genuinely nailed. Venue undecided — GitHub discussion on their repo is the obvious candidate.
 
@@ -99,9 +113,9 @@ The strong reading contradicts [reflection buys addressability](../../notes/refl
 
 **10. Intercession over retained self-theory is conditionally necessary** *(note candidate)*
 
-> A self-modifying system that retains theories about itself must be able to modify those theories, because the referent moves. Retention without intercession guarantees the theory becomes false.
+> A system that continues to consume claims about mutable aspects of itself needs a way to revalidate, revise, regenerate, supersede, or retire those claims when the relevant aspects change.
 
-In a static system a prose theory is written once and stays true. In a self-modifying one the described system changes underneath the description, so a frozen theory does not merely go stale — it actively misdescribes while still being consumed. The necessity is generated by the system's own mutability, which is why it needs no amendment to [reflective system](../../notes/definitions/reflective-system.md) and does not collide with "intercession is a capability within reflection, but not every reflective architecture permits it."
+Corrected 2026-07-26. The first statement — "retention without intercession guarantees the theory becomes false" — overclaimed twice. Self-modification does not falsify every retained theory, only those about aspects that actually changed; and the requirement is **synchronization**, not specifically intercession over the same stored artifact, since regenerating or retiring it also satisfies it. The necessity is still generated by the system's own mutability, so it needs no amendment to [reflective system](../../notes/definitions/reflective-system.md) and does not collide with "intercession is a capability within reflection, but not every reflective architecture permits it."
 
 Derive it from availability and reliability, not from resource limits. *Availability*: the log holds attempts, not conclusions, and alternatives dismissed without being tried leave no trace at all. *Reliability*: re-derivation is a per-call gamble with variance while retention is done once and checkable — and a more autonomous system needs the theory more often, so re-derivation error compounds fastest exactly where Exo is aiming. That inversion turns their ambition into the argument's support.
 
@@ -109,7 +123,7 @@ Derive it from availability and reliability, not from resource limits. *Availabi
 
 **11. Caution: stop reaching for a structural deficiency** *(recurring near-miss)*
 
-Three separate attempts in the opening conversation tried to locate Exo's gap in reflective structure — not reflective on prose, no self-representation of policy, lacks intercession — and the checkout refuted each one. Exo is genuinely strong on reflective structure every time it is checked: self-representation, causal connection, intercession, coverage across both forms. The gap has never been structural. It is always semantic: what the system can *do* with a covered component beyond reading and writing it.
+Four attempts so far have tried to locate Exo's gap in missing structure — not reflective on prose, no knowledge layer, lacks intercession, prose unpartitioned — and the checkout refuted every one. The fourth is the instructive one: the prose-partition claim reached a committed note before an external reader caught it, and the evidence refuting it (`SELF-CONTROL.md`'s eight-row state table and its routing rules) had been sitting in a system reviewed twice in this KB. Exo is genuinely strong on reflective structure every time it is checked: self-representation, causal connection, intercession, coverage across both forms. The gap has never been structural. It is always semantic: what the system can *do* with a covered component beyond reading and writing it.
 
 The frame that gets this right is already in the [reflective system](../../notes/definitions/reflective-system.md) definition — the Smalltalk image, where "intercession is total" and yet "left alone, the image sits there for a decade and improves nothing ... **the programmer supplies the evidence-responsiveness**." Exo is a Smalltalk image for agents: maximal intercession, minimal everything else. Stated that way the disagreement is precise and not insulting — not "you are not reflective," but "you built a Smalltalk image for agents, and the open question is whether the model can occupy the seat the programmer used to."
 

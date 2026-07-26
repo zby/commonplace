@@ -11,6 +11,8 @@ An oracle is a check with a domain — the candidates it can assess with the req
 
 So a layer can be unverifiable for two quite different reasons, and they call for opposite work. Either no oracle exists that discriminates what matters, or no target class exists for an oracle to range over. The second is prior — not merely earlier in a sensible order, but a precondition for the first being well-posed.
 
+The claim concerns *reusable* verification. A check can always be aimed at one artifact — name the file, run the suite whenever it changes — and that check's domain is the singleton it names. What a class buys is coverage of instances that do not exist yet: a domain stated over a kind holds for the next member without anyone extending anything. Where a layer is edited continuously by the system it governs, per-artifact checks are precisely the ones that fall silently behind.
+
 ## Why the ontology cost is invisible
 
 In code the classification is free, which is why it goes unnoticed. The language supplies it: a file has a declared kind, a module has a boundary, a function has a signature, a record has fields. Every familiar check presupposes a partition the substrate already made — a compiler targets a translation unit, a test targets a named unit, a linter targets a syntax class, a type checker targets declarations. The ontology was paid for by the language designer and never appears on the project's ledger.
@@ -29,7 +31,11 @@ The cost scales with how mixed the layer is. Where a layer holds one kind of art
 
 What makes a prose layer resist verification is that it mixes consumption paths in one substrate: text injected into every call, text loaded on demand, text read only by humans, text consumed as binding policy, text consumed as reference. Under [artifact analysis](./axes-of-artifact-analysis.md) those differ in behavioral authority and therefore in what evidence would review them at all. On disk they are the same kind of thing, edited the same way. The ontology's job is to make the distinctions the checks depend on visible to the checks.
 
-[Exo](../agentic-systems/exo.md) isolates the variable, because both layers sit in one repository under one agent. Its code has real oracles — build, tests, restart-and-observe — reject-capable enough to block adoption. Its prose has none, while being the more behavior-determining half: a persona prompt that defines the agent, a self map injected into every turn, per-adapter setup prompts. The one prose class it does check is skills, which arrived from an external standard already carrying frontmatter and a required-field contract. The check attached where a class existed to attach it to, and the class came with the artifact kind rather than being retrofitted onto it.
+[Exo](../agentic-systems/exo.md) is the case to check, since both layers sit in one repository under one agent — and checking it carefully corrects the tempting version of the story. Its prose is not unclassified. Its self-control document partitions durable state into eight kinds by lifecycle, with routing rules sending user-specific memory to the local profile and behavioral changes to checked-in prompts; memory and todos have dedicated tools with enforced count and length caps; skills carry required frontmatter validated at install.
+
+What is striking is where the line falls. Every prose kind Exo declared has a check. Every kind it left undeclared has none — including the persona prompt that defines the agent, the self map injected into every turn, and the design documents holding its actual theory of itself. The checks landed exactly where there was a class to attach them to.
+
+The same case bounds the claim. Those checks are shape checks: field presence, length caps, lifecycle placement. Declaring a class supplies the attachment point, not the contract that would make a check semantic. Classification is what verification needs *first*, not what it needs *most*.
 
 ## Scope
 
