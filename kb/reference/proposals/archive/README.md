@@ -20,5 +20,6 @@ Contract: [`../README.md`](../README.md). Decision record: [ADR 056](../../adr/0
 
 ## Contents
 
+- [Harness-orchestrated review sweeps](./harness-orchestrated-review-sweeps.md) — adopted by ADR 035, 2026-07-01. Parent-owned, harness-neutral orchestration over deterministic job endpoints; the earlier Claude-only experiment and the instruction-versus-vendor-script choice are the texture behind the shipped procedure.
 - [Source genre is one open-vocabulary field on the snapshot](./source-genre-is-one-open-field-on-the-snapshot.md) — adopted by ADR 045, 2026-07-12. Genre unification across snapshots and ingest-reports; the open-vocabulary mechanism choice (a vocabulary file versus per-constraint severity) and the per-genre lens-home question are the texture behind that decision.
 - [Assertion force separate from lifecycle status](./assertion-force-separate-from-lifecycle-status.md) — retired by ADR 044, 2026-07-11. The proposal to split the fused `status` field into a structural lifecycle enum plus contract-declared assertion force, including its later axis-decomposition self-critique; ADR 044 deleted the field instead.

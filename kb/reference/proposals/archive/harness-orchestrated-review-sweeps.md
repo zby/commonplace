@@ -1,17 +1,19 @@
 ---
-description: "Proposal: run review sweeps through harness sub-agent orchestration once comparable surfaces exist in more than one harness"
-type: ../types/design-proposal.md
+description: "Proposal (adopted): run review sweeps through harness-neutral parent orchestration over deterministic job endpoints and hermetic review workers"
+type: ../../types/design-proposal.md
 tags: [kb-maintenance]
 ---
 
 # Harness-orchestrated review sweeps
 
+> **Archived** (see [archive README](./README.md)). Adopted by [ADR 035](../../adr/035-review-jobs-finalize-all-or-nothing-with-derived-artifacts.md): the harness-neutral [run-review-batches instruction](../../../instructions/run-review-batches.md) now carries the parent-owned orchestration procedure, and both supported agent harnesses provide the worker surface its adoption criterion required. ADR 035 retains the chosen form and rejected alternatives; what remains here is dated design texture from the earlier single-harness experiment.
+
 Review sweeps need fan-out: many (note, gate) pairs, packed into batches, executed in parallel, with per-batch failure isolation. Commonplace now leaves fan-out to the parent agent or harness: the package creates queued jobs and finalizes worker output, while the parent owns model calls, concurrency caps, budgets, and retries. Harnesses are beginning to ship sub-agent orchestration as a first-class feature — Claude Code's dynamic workflows expose `agent()`/`parallel()` under a model-authored script — which can perform that parent role with native progress display and isolation. This proposal holds the sweep-orchestration design for that medium. It is deliberately unadopted as a framework-specific script: the feature is single-vendor, and committing the framework's operating procedure to one harness's proprietary surface contradicts the portability goal that motivates it.
 
 ## Current state (as of 2026-07-01)
 
-- The execution seams exist and are validated. [ADR 035](../adr/035-review-jobs-finalize-all-or-nothing-with-derived-artifacts.md) defines queued jobs: selector JSON -> `commonplace-create-review-jobs --input ... --grouping {note,gate}` -> worker output -> `commonplace-finalize-review-job` with optional provenance flags. One experiment ran a real slice end-to-end on an older seam (selector -> two prepared batches -> a 12-line workflow script with one reviewer agent per batch in parallel -> ingest; 4 pairs recorded, zero Python changes; observations in `kb/log.md`, 2026-06-12). The experiment remains evidence for the orchestration pattern, not for current command names.
-- The orchestration feature is Claude Code-only ([dynamic workflows](../../agentic-systems/claude-code-dynamic-workflows.md)). No comparable scriptable sub-agent surface is known in the other harness this project runs (codex CLI).
+- The execution seams exist and are validated. [ADR 035](../../adr/035-review-jobs-finalize-all-or-nothing-with-derived-artifacts.md) defines queued jobs: selector JSON -> `commonplace-create-review-jobs --input ... --grouping {note,gate}` -> worker output -> `commonplace-finalize-review-job` with optional provenance flags. One experiment ran a real slice end-to-end on an older seam (selector -> two prepared batches -> a 12-line workflow script with one reviewer agent per batch in parallel -> ingest; 4 pairs recorded, zero Python changes; observations in `kb/log.md`, 2026-06-12). The experiment remains evidence for the orchestration pattern, not for current command names.
+- The orchestration feature is Claude Code-only ([dynamic workflows](../../../agentic-systems/claude-code-dynamic-workflows.md)). No comparable scriptable sub-agent surface is known in the other harness this project runs (codex CLI).
 - The workflow script sandbox has no shell or filesystem, so it cannot invoke `commonplace-*` commands; only the parent conversation or sub-agents can.
 - Frictions observed in the experiment: workflow `args` input did not reach the script (data had to be inlined); no token telemetry landed on the review records (the harness reports usage per workflow); the recorded model partition was the orchestrator's assertion. ADR 034 now treats telemetry as optional execution evidence, not review identity.
 
@@ -32,7 +34,7 @@ The interface between the worlds is files and JSON, never calls: creation/listin
 - **Wiring of the deterministic steps.** Parent-interleaved (the conversation runs select/prepare/ingest between workflows — the validated shape) versus coordinator-agent (a sub-agent runs the commands via shell, enabling a self-contained loop-until-no-stale-pairs script). The first keeps agents judgment-only; the second buys script-driven multi-round control flow at the cost of spending LLM calls on deterministic work and blurring the hermetic-reviewer boundary.
 - **Promotion form.** An instruction in `kb/instructions/` describing the procedure (harness-neutral prose, the orchestrator re-derives the script each time) versus a saved workflow script (executable, but vendor-locked and dependent on the `args` mechanism working). The instruction form survives harness churn; the script form is faster to invoke.
 - **Execution metadata at finalize.** `commonplace-finalize-review-job` records known runner/model/effort provenance when output is finalized; future telemetry remains an open evidence question when a harness exposes it. The open choice is how much parent-orchestrator evidence to collect and how to present telemetry gaps.
-- **Output codec.** Sentinel files (today) versus schema-validated agent returns — the trigger question lives in [structured-output codec for the review protocol](./structured-output-codec-for-review-protocol.md); this proposal's medium is the first where that trigger is arguably met.
+- **Output codec.** Sentinel files (today) versus schema-validated agent returns — the trigger question lives in [structured-output codec for the review protocol](../structured-output-codec-for-review-protocol.md); this proposal's medium is the first where that trigger is arguably met.
 
 ## Adoption criteria
 
@@ -48,6 +50,6 @@ Adopt as framework methodology when a second harness ships a comparable scriptab
 
 Relevant Notes:
 
-- [Claude Code dynamic workflows](../../agentic-systems/claude-code-dynamic-workflows.md) — abstracted-from: the single shipped instance of the orchestration surface this design targets
-- [030-harness-facing seams: batch endpoints and runner adapters](../adr/030-harness-facing-seams-batch-endpoints-and-runner-adapters.md) — see-also: the shipped endpoints this design composes; the experiment validating them
-- [structured-output codec for the review protocol](./structured-output-codec-for-review-protocol.md) — see-also: the output-encoding decision this medium puts on the table
+- [Claude Code dynamic workflows](../../../agentic-systems/claude-code-dynamic-workflows.md) — abstracted-from: the single shipped instance of the orchestration surface this design targets
+- [030-harness-facing seams: batch endpoints and runner adapters](../../adr/030-harness-facing-seams-batch-endpoints-and-runner-adapters.md) — see-also: the shipped endpoints this design composes; the experiment validating them
+- [structured-output codec for the review protocol](../structured-output-codec-for-review-protocol.md) — see-also: the output-encoding decision this medium puts on the table

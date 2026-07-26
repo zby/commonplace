@@ -92,6 +92,7 @@ plugins:
         'reference/proposals/anchored-validation-checks-with-declared-dependencies.md': 'reference/adr/050-validation-runs-share-parsed-artifacts-and-collection-indexes.md'
         'reference/proposals/artifact-anchored-validation-over-a-run-scoped-context.md': 'reference/adr/050-validation-runs-share-parsed-artifacts-and-collection-indexes.md'
         'reference/proposals/assertion-force-separate-from-lifecycle-status.md': 'reference/proposals/archive/assertion-force-separate-from-lifecycle-status.md'
+        'reference/proposals/harness-orchestrated-review-sweeps.md': 'reference/proposals/archive/harness-orchestrated-review-sweeps.md'
         'reference/proposals/one-validation-algorithm-over-declared-scopes.md': 'reference/adr/050-validation-runs-share-parsed-artifacts-and-collection-indexes.md'
         'reference/proposals/packet-owned-captures-for-guarded-operation-transitions.md': 'reference/adr/051-full-pass-packets-own-guarded-captures-and-resolutions.md'
         'reference/proposals/reader-facing-banner-for-unreviewed-notes.md': 'reference/proposals/a-reader-facing-banner-for-user-verification.md'
