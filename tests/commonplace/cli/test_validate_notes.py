@@ -488,6 +488,88 @@ traits: []
     assert inbound[target.resolve()] is True
 
 
+def test_library_artifact_cannot_link_to_archived_proposal(tmp_path: Path) -> None:
+    notes = configure_temp_repo(tmp_path)
+    archived = write(
+        tmp_path / "kb/reference/proposals/archive/retired.md",
+        "# Retired proposal\n",
+    )
+    note = write(
+        notes / "source.md",
+        f"""---
+description: Library note linking to a retired proposal that must stay outside the live knowledge graph
+type: kb/types/note.md
+traits: []
+---
+
+# Source
+
+[Retired proposal]({os.path.relpath(archived, notes)})
+""",
+    )
+
+    results = validation.validate_note(note, repo_root=tmp_path)
+
+    assert any(
+        "proposal archive boundary: library artifact links to archived proposal"
+        in item
+        for item in results.fails
+    )
+
+
+def test_proposal_archive_boundary_allows_readme_and_workshop_links(
+    tmp_path: Path,
+) -> None:
+    notes = configure_temp_repo(tmp_path)
+    archive = tmp_path / "kb/reference/proposals/archive"
+    archive_readme = write(archive / "README.md", "# Proposal archive\n")
+    archived = write(archive / "retired.md", "# Retired proposal\n")
+    library_note = write(
+        notes / "source.md",
+        f"""---
+description: Library note entering the proposal archive through its permitted reader-facing README
+type: kb/types/note.md
+traits: []
+---
+
+# Source
+
+[Archive instructions]({os.path.relpath(archive_readme, notes)})
+""",
+    )
+    work = tmp_path / "kb/work"
+    write(work / "COLLECTION.md", "# Workshop collection\n")
+    workshop_note = write(
+        work / "audit.md",
+        f"# Audit\n\n[Retired proposal]({os.path.relpath(archived, work)})\n",
+    )
+    write(
+        archive_readme,
+        "# Proposal archive\n\n[Retired proposal](./retired.md)\n",
+    )
+
+    for path in (library_note, workshop_note, archive_readme):
+        results = validation.validate_note(path, repo_root=tmp_path)
+        assert results.fails == []
+
+
+def test_bare_library_text_cannot_link_to_archived_proposal(tmp_path: Path) -> None:
+    notes = configure_temp_repo(tmp_path)
+    archived = write(
+        tmp_path / "kb/reference/proposals/archive/retired.md",
+        "# Retired proposal\n",
+    )
+    readme = write(
+        notes / "README.md",
+        f"# Notes\n\n[Retired proposal]({os.path.relpath(archived, notes)})\n",
+    )
+
+    results = validation.validate_note(readme, repo_root=tmp_path)
+
+    assert results.note_type == "text"
+    assert any("proposal archive boundary" in item for item in results.fails)
+
+
 def test_structured_claim_requires_evidence_and_reasoning(tmp_path: Path) -> None:
     notes_root = configure_temp_repo(tmp_path)
     note = write(

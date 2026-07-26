@@ -34,7 +34,7 @@ This page documents 1 and 2. The third is not a lesser mechanism: **a type spec'
 
 | Source | Owner | Mechanism | Can dereference? |
 |---|---|---|---|
-| `base` | framework | imperative, applies to every typed note | yes — link health, verbatim quotes |
+| `base` | framework | imperative, applies to every typed note; repository-boundary rules may also cover bare library text | yes — link health, archive boundary, verbatim quotes |
 | `type: <name>` | the type | imperative rules registered for that type | yes — tag-readme marks re-derive from the collection; type specs resolve their declared schemas |
 | `schema` | the type | declarative JSON Schema over the parsed document | **no** |
 
@@ -59,9 +59,10 @@ Every note **with frontmatter** is checked for the following, whatever its type.
 - **Frontmatter parses** — valid delimiters, well-formed YAML.
 - **Title length** within `MAX_NOTE_TITLE_LENGTH`; **filename slug length** within `MAX_NOTE_SLUG_LENGTH` (derived-artifact types are exempt from the slug limit).
 - **Link health** — every local relative link resolves to an existing target. *Warns.*
+- **Proposal archive boundary** — no library artifact links to a file under `kb/reference/proposals/archive/`. The archive README is a permitted target and may link to archived files itself; workshop files under `kb/work/` may also link in. Violations **fail**.
 - **Verbatim quotes** — every `verbatim`-marked quotation resolves against the source it links ([ADR 046](./adr/046-verbatim-quotes-are-validated-against-their-cited-source.md)). A quote absent from its cited source **fails**; an unpairable verbatim citation warns, but only in notes that demonstrably use the convention.
 
-**Bare text opts out entirely.** A file with no frontmatter is typed `text` and gets no structural requirements at all — the type system's own rule, and deliberate: `text` exists to keep capture friction at zero, and it holds pasted traces and imported material whose relative links are broken by construction. Checking it would generate noise on artifacts whose purpose is to be unchecked.
+**Bare text opts out of structural checks.** A file with no frontmatter is typed `text` and gets no title, slug, link-health, quote, type, or schema requirements — deliberate, because `text` keeps capture friction at zero and may hold imported material whose relative links are broken by construction. The proposal archive boundary is the one repository-level exception: bare library READMEs can otherwise make archived designs load-bearing just as readily as typed notes. Non-library outputs such as `kb/reports/` remain outside that rule.
 
 ### Why the two referential checks have different severities
 

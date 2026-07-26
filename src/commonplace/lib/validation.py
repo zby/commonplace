@@ -28,6 +28,7 @@ from commonplace.lib.project_paths import (
     is_collection_dir,
     is_type_definition_content,
     iter_visible_markdown_files,
+    kb_root,
 )
 from commonplace.lib.quote_verification import verify_content
 from commonplace.lib.type_resolver import (
@@ -57,6 +58,8 @@ _TAG_README_FIX_HINT = "see kb/instructions/maintain-curated-indexes.md"
 # validator rule is design debt, not a good general naming scheme. The next
 # report-filename redesign should budget for suffixes and remove this exception.
 _NOTE_SLUG_LIMIT_EXEMPT_TYPES = frozenset({"connect-report"})
+
+_PROPOSAL_ARCHIVE_RELATIVE_PATH = Path("kb/reference/proposals/archive")
 
 
 # A schema violation fails by default — the schema is the contract, so breaking a
@@ -390,6 +393,58 @@ def validate_links_from_document(
             results.warns.append(f"link health: missing target {link}")
     else:
         results.passes.append("link health: all local relative links resolve")
+
+
+def validate_proposal_archive_links(
+    results: CheckResults,
+    path: Path,
+    links: tuple[str, ...],
+    *,
+    repo_root: Path,
+) -> None:
+    """Keep archived proposals from becoming load-bearing library sources."""
+    source = path.resolve()
+    kb = kb_root(repo_root).resolve()
+    archive = (repo_root / _PROPOSAL_ARCHIVE_RELATIVE_PATH).resolve()
+    archive_readme = archive / "README.md"
+    work = kb / "work"
+
+    try:
+        source.relative_to(work)
+        return
+    except ValueError:
+        pass
+
+    if source == archive_readme:
+        return
+
+    try:
+        collection_for_path(source, repo_root)
+    except ValueError:
+        if not is_type_definition_content(source, kb):
+            return
+
+    forbidden: list[str] = []
+    for link in links:
+        target = _resolve_local_link_target(source, link)
+        if target is None or target == archive_readme:
+            continue
+        try:
+            target.relative_to(archive)
+        except ValueError:
+            continue
+        forbidden.append(link)
+
+    if forbidden:
+        for link in forbidden:
+            results.fails.append(
+                "proposal archive boundary: library artifact links to "
+                f"archived proposal {link}"
+            )
+    else:
+        results.passes.append(
+            "proposal archive boundary: no links to archived proposal files"
+        )
 
 
 def validate_quote_citations(results: CheckResults, content: str) -> None:
@@ -744,10 +799,19 @@ def _validate_parsed_note(parsed: ParsedNote, *, run: ValidationRun) -> CheckRes
         body-derived facts (headings, links, dates).
     """
     if parsed.document.frontmatter is None:
-        return CheckResults(
+        results = CheckResults(
             note_type="text",
             passes=["[base] text file: no frontmatter, no structural requirements"],
         )
+        base = CheckResults(note_type="text")
+        validate_proposal_archive_links(
+            base,
+            parsed.path,
+            parsed.document.links,
+            repo_root=run.repo_root,
+        )
+        _merge_labelled(results, base, "base")
+        return results
 
     results = CheckResults(note_type=parsed.note_type)
 
@@ -760,6 +824,12 @@ def _validate_parsed_note(parsed: ParsedNote, *, run: ValidationRun) -> CheckRes
         note_type=parsed.note_type,
     )
     validate_links_from_document(base, parsed.path, parsed.document.links)
+    validate_proposal_archive_links(
+        base,
+        parsed.path,
+        parsed.document.links,
+        repo_root=run.repo_root,
+    )
     validate_verbatim_quotes(
         base,
         parsed.content,

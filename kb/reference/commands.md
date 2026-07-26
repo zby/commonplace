@@ -25,7 +25,7 @@ commonplace-init --root /path/to/project
 
 ### commonplace-validate
 
-Deterministic validator for KB notes. Checks frontmatter validity, schema constraints, link health, verbatim-quote resolution, structural description presence, description length warnings, required sections, and batch signals such as orphan detection. Description discrimination quality is handled by review gates, not deterministic validation.
+Deterministic validator for KB notes. Checks frontmatter validity, schema constraints, link health, the proposal-archive link boundary, verbatim-quote resolution, structural description presence, description length warnings, required sections, and batch signals such as orphan detection. Description discrimination quality is handled by review gates, not deterministic validation.
 
 Findings are labelled with the source that produced them — `[base]` (every typed note), `[type: <name>]` (rules the type owns), `[schema]` (the type's declarative constraints). What each source can express, and what every typed note is checked for regardless of type, is the [validation contract](./validation-contract.md).
 

@@ -56,7 +56,7 @@ Two decisions during implementation that the discussion had not settled:
 - **Note retirement.** The original question 4 for `kb/notes/`. ADR 044 answered maturation by removing the field; decay has no protocol. Notes are revised in place, and no staleness signal routes to a disposal operation.
 - **Source snapshot retirement.** `kb/sources/` has no exit for a wrong or dead capture.
 - **ADR archiving.** Designed in the survey, deliberately unbuilt: superseded and deprecated ADRs are eligible immediately, accepted ones once inbound frontier citations go cold. No cohort exists yet.
-- **Enforcement.** The archive boundary is deterministically checkable but is checked by hand (`rg`) today. It would be the KB's first genuinely mechanical lifecycle rule; nothing else here — banners, status fields, extraction completeness — is checkable without judgment.
+- **Enforcement.** The validator now enforces the archive boundary as the KB's first genuinely mechanical lifecycle rule. Nothing else here — banners, status fields, extraction completeness — is checkable without judgment.
 - **Whether any of this generalizes.** Candidate promotions to `kb/notes/`, each needing a second worked case first: ~~the recomputable-cache versus committed-compression distinction (the strongest candidate)~~ — **promoted 2026-07-25**, see the abstraction below; tiers-as-coordinates; and the workshop deletion bet — that the residue's expected retrieval value does not cover its standing search cost. The [disposal survey](./disposal-and-retirement-survey.md) carries these in full — the tier axes, the cache-mechanism correspondences, and the ADR-archiving sketch — and is the file to mine when a second case arrives.
 
 ## What would close the workshop
