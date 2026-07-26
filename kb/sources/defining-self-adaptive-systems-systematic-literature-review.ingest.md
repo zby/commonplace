@@ -31,7 +31,7 @@ This source is direct evidence for [a proposal-selection loop requires search, e
 1. **Quantified definition gap (9/1,493 primary definition studies)** -- turns the intuition that the field lacks a settled definition into a citable systematic-review result. [quick-win]
 2. **MAPE-K is not a semantic membership test** -- supports keeping proposal-selection architecture separate from self-improving-system category membership. [quick-win]
 3. **Uncertainty is absent from all nine formal studies** -- a sharp warning for any Commonplace profile that claims adaptation without stating its uncertainty model or boundary. [quick-win]
-4. **Domain goals versus adaptation goals** -- provides vocabulary for distinguishing what the managed artifact is for from what the updater is trying to optimise. [quick-win]
+4. **Domain goals versus adaptation goals** -- provides vocabulary for distinguishing what the managed artifact is for from what the updater is trying to optimise. [declined as a second objective level -- see Recommended Next Action]
 5. **Context and system state are indispensable dimensions** -- suggests that future self-ontology work must represent both the environment and the object being adapted. [deep-dive]
 6. **Reproducible review protocol and threats** -- offers a method for auditing future definitional claims: complete-pool analysis, iterative query refinement, multi-reviewer voting, and explicit validity limits. [just-a-reference]
 
@@ -43,4 +43,6 @@ The source snapshot was refreshed from the user's full converted Markdown captur
 
 ## Recommended Next Action
 
-Update [the curated self-improving-systems head](../notes/self-improving-systems-README.md) with the review's explicit uncertainty and domain-goal dimensions, keeping them as profile fields and not as a new single membership criterion.
+Update [the curated self-improving-systems head](../notes/self-improving-systems-README.md) with the review's explicit **uncertainty** dimension, keeping it as a profile field and not as a new single membership criterion. Still open.
+
+**The domain-goal half was taken up and declined.** Adopting domain goals versus adaptation goals as a second objective level was considered while drafting the cluster's objective vocabulary and rejected: adaptation goals are instrumental to the improvement objective rather than a second objective alongside it, so a parallel level would misdescribe the relation. The distinction the split was reaching for is kept in a different shape — a property pursued because it is held to serve the objective is a proximate target, and [what makes it a target rather than a goal is that it is checked for achievement and not for warrant](../notes/a-proximate-target-is-checked-for-achievement-not-for-warrant.md). Read Petrovska's adaptation goals as that level, one rung below the declared objective rather than beside it.
