@@ -24,7 +24,7 @@ Turpin et al. test whether chain-of-thought (CoT) explanations report the factor
 
 ## Connections Found
 
-The paper is direct evidence for [Reflection may lower oversight cost when its rationale is faithful](../notes/reflection-may-lower-oversight-cost-when-its-rationale-is-faithful.md): it demonstrates the target note's predicted failure mode in which an unfaithful rationale can reduce probing while increasing confident errors. It grounds [Reasoning production is not reasoning evaluation](../notes/reasoning-production-is-not-reasoning-evaluation.md) with a concrete process-validity failure, and qualifies [Structure activates higher-quality training distributions](../notes/structure-activates-higher-quality-training-distributions.md): CoT can alter task performance or some bias sensitivity without making the reported process faithful. It also supplies a correlated-error example for [Error correction works with above-chance oracles and decorrelated checks](../notes/error-correction-works-above-chance-oracles-with-decorrelated-checks.md) and a model-level analogue of [Context contamination operates below an agent's compliance reasoning](../notes/context-contamination-operates-below-an-agents-compliance-reasoning.md). [Towards Faithfully Interpretable NLP Systems](./towards-faithfully-interpretable-nlp-systems.md) is the conceptual companion.
+The paper is direct evidence for [Selective revision needs a faithful rationale, not just a legible one](../notes/selective-revision-needs-a-faithful-rationale-not-just-a-legible-one.md): it demonstrates the target note's predicted failure mode in which an unfaithful rationale can reduce probing while increasing confident errors. It grounds [Reasoning production is not reasoning evaluation](../notes/reasoning-production-is-not-reasoning-evaluation.md) with a concrete process-validity failure, and qualifies [Structure activates higher-quality training distributions](../notes/structure-activates-higher-quality-training-distributions.md): CoT can alter task performance or some bias sensitivity without making the reported process faithful. It also supplies a correlated-error example for [Error correction works with above-chance oracles and decorrelated checks](../notes/error-correction-works-above-chance-oracles-with-decorrelated-checks.md) and a model-level analogue of [Context contamination operates below an agent's compliance reasoning](../notes/context-contamination-operates-below-an-agents-compliance-reasoning.md). [Towards Faithfully Interpretable NLP Systems](./towards-faithfully-interpretable-nlp-systems.md) is the conceptual companion.
 
 ## Extractable Value
 
@@ -40,13 +40,13 @@ The experiments use GPT-3.5 and Claude 1.0, 2023-era BIG-Bench Hard and BBQ task
 
 ## Recommended Next Action
 
-Update [Reflection may lower oversight cost when its rationale is faithful](../notes/reflection-may-lower-oversight-cost-when-its-rationale-is-faithful.md) to cite this ingest alongside Jacovi and Goldberg, adding the intervention-based test and the caveat that process structure can improve outputs without making explanations faithful.
+Update [Selective revision needs a faithful rationale, not just a legible one](../notes/selective-revision-needs-a-faithful-rationale-not-just-a-legible-one.md) to cite this ingest alongside Jacovi and Goldberg, adding the intervention-based test and the caveat that process structure can improve outputs without making explanations faithful.
 
 ---
 
 Relevant Notes:
 
-- [Reflection may lower oversight cost when its rationale is faithful](../notes/reflection-may-lower-oversight-cost-when-its-rationale-is-faithful.md) -- evidence: direct behavioral support for the unfaithful-rationale failure mode
+- [Selective revision needs a faithful rationale, not just a legible one](../notes/selective-revision-needs-a-faithful-rationale-not-just-a-legible-one.md) -- evidence: direct behavioral support for the unfaithful-rationale failure mode
 - [Reasoning production is not reasoning evaluation](../notes/reasoning-production-is-not-reasoning-evaluation.md) -- evidence: process-validity failure despite plausible output
 - [Context contamination operates below an agent's compliance reasoning](../notes/context-contamination-operates-below-an-agents-compliance-reasoning.md) -- evidence: hidden features steer output without explicit acknowledgement
 - [Structure activates higher-quality training distributions](../notes/structure-activates-higher-quality-training-distributions.md) -- evidence: process structure is not a faithfulness guarantee
