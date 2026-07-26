@@ -50,7 +50,7 @@ Removes a committed artifact from the KB and leaves nothing dangling behind it: 
    'notes/<old-slug>.md': 'notes/<successor-slug>.md'
    ```
 
-   Skipping this breaks the artifact's public URL with no local symptom.
+   Skipping this breaks the artifact's public URL with no local symptom. Point at a page that exists, never at another redirect key — the plugin emits one hop per entry, so a chain lands on a page that only redirects again. If the successor is itself the target of older entries, repoint those to the new page in the same edit. `pytest tests/commonplace/docs/test_redirect_map_integrity.py` enforces all three conditions.
 
 7. **Delete, then retire its baselines.**
 
