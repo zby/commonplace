@@ -24,7 +24,7 @@ Jacovi and Goldberg argue that explanation quality must separate **plausibility*
 
 ## Connections Found
 
-The paper is direct evidence for [Reflection may lower oversight cost when its rationale is faithful](../notes/reflection-may-lower-oversight-cost-when-its-rationale-is-faithful.md): it supplies the faithful/plausible distinction and the warning that utility can increase without validating the explanation's causal truth. It also gives [Reasoning production is not reasoning evaluation](../notes/reasoning-production-is-not-reasoning-evaluation.md) a non-mathematical instance of process validity being distinct from successful output, and it qualifies [Structured output is easier for humans to review](../notes/structured-output-is-easier-for-humans-to-review.md): readability helps a reviewer inspect an artifact but does not establish faithfulness. [Language Models Don't Always Say What They Think](./language-models-dont-always-say-what-they-think.md) is the empirical companion, testing this distinction with controlled input interventions.
+The paper is direct evidence for [Selective revision needs a faithful rationale, not just a legible one](../notes/selective-revision-needs-a-faithful-rationale-not-just-a-legible-one.md): it supplies the faithful/plausible distinction and the warning that utility can increase without validating the explanation's causal truth. It also gives [Reasoning production is not reasoning evaluation](../notes/reasoning-production-is-not-reasoning-evaluation.md) a non-mathematical instance of process validity being distinct from successful output, and it qualifies [Structured output is easier for humans to review](../notes/structured-output-is-easier-for-humans-to-review.md): readability helps a reviewer inspect an artifact but does not establish faithfulness. [Language Models Don't Always Say What They Think](./language-models-dont-always-say-what-they-think.md) is the empirical companion, testing this distinction with controlled input interventions.
 
 ## Extractable Value
 
@@ -40,13 +40,13 @@ This is a conceptual survey and opinion paper, not a new causal evaluation of ex
 
 ## Recommended Next Action
 
-Update [Reflection may lower oversight cost when its rationale is faithful](../notes/reflection-may-lower-oversight-cost-when-its-rationale-is-faithful.md) to cite this ingest where it distinguishes faithfulness from plausibility, and add the graded-faithfulness caveat without weakening the note's controlled faithful-versus-unfaithful test design.
+Update [Selective revision needs a faithful rationale, not just a legible one](../notes/selective-revision-needs-a-faithful-rationale-not-just-a-legible-one.md) to cite this ingest where it distinguishes faithfulness from plausibility, and add the graded-faithfulness caveat without weakening the note's controlled faithful-versus-unfaithful test design.
 
 ---
 
 Relevant Notes:
 
-- [Reflection may lower oversight cost when its rationale is faithful](../notes/reflection-may-lower-oversight-cost-when-its-rationale-is-faithful.md) -- evidence: supplies the target distinction and oversight boundary
+- [Selective revision needs a faithful rationale, not just a legible one](../notes/selective-revision-needs-a-faithful-rationale-not-just-a-legible-one.md) -- evidence: supplies the target distinction and oversight boundary
 - [Reasoning production is not reasoning evaluation](../notes/reasoning-production-is-not-reasoning-evaluation.md) -- evidence: separates output utility from process validity
 - [Structured output is easier for humans to review](../notes/structured-output-is-easier-for-humans-to-review.md) -- evidence: readability does not entail faithfulness
 - [Language Models Don't Always Say What They Think](./language-models-dont-always-say-what-they-think.md) -- compares-with: controlled behavioral test of the conceptual distinction

@@ -7,14 +7,14 @@ complete
 - [ ] none
 
 ## Goal
-The two external papers that anchor the faithful-vs-plausible distinction are captured as `kb/sources/` ingests, and `kb/notes/reflection-may-lower-oversight-cost-when-its-rationale-is-faithful.md` cites them as in-KB source links where the argument uses them.
+The two external papers that anchor the faithful-vs-plausible distinction are captured as `kb/sources/` ingests, and `kb/notes/selective-revision-needs-a-faithful-rationale-not-just-a-legible-one.md` cites them as in-KB source links where the argument uses them.
 
 ## Context
 - Papers to ingest (links verified 2026-07-22):
   - Jacovi and Goldberg (2020), "Towards Faithfully Interpretable NLP Systems: How Should We Define and Evaluate Faithfulness?", ACL 2020 — <https://arxiv.org/abs/2004.03685>, <https://aclanthology.org/2020.acl-main.386/>. Supplies the faithful-vs-plausible distinction: a faithful explanation reflects the process behind a decision; a plausible one merely convinces a reader.
   - Turpin, Michael, Perez, and Bowman (2023), "Language Models Don't Always Say What They Think: Unfaithful Explanations in Chain-of-Thought Prompting", NeurIPS 2023 — <https://arxiv.org/abs/2305.04388>. Evidence that a fluent chain-of-thought rationale can systematically omit the factors actually driving the answer.
 - Relevant files:
-  - `kb/notes/reflection-may-lower-oversight-cost-when-its-rationale-is-faithful.md` — the note that dropped these citations pending ingestion; "The condition is faithfulness, not legibility" is where they attach.
+  - `kb/notes/selective-revision-needs-a-faithful-rationale-not-just-a-legible-one.md` — the note that dropped these citations pending ingestion; "The condition is faithfulness, not legibility" is where they attach.
   - `kb/sources/llm-agents-are-not-always-faithful-self-evolvers.md` — already-captured neighbor; its related-work section cites Turpin et al., useful for cross-linking the ingests.
 - How to verify / reproduce:
   - Both ingests exist under `kb/sources/` and pass `commonplace-validate`.
