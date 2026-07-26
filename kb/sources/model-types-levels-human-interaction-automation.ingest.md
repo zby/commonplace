@@ -24,7 +24,7 @@ The paper argues that automation changes human work and coordination rather than
 
 ## Connections Found
 
-The source supplies a concrete external precedent for [a self-improving system needs a profile, not a ladder](../notes/a-self-improving-system-needs-a-profile-not-a-ladder.md): autonomy is reported per function and level, while evaluation criteria and human authority remain separate. It also grounds [warranted autonomy is bounded by oracle domain](../notes/warranted-autonomy-is-bounded-by-oracle-domain.md): moving a function toward automation is conditional on evidence about its failure costs and recovery, not on capability alone. No current note cites this specific human-factors matrix, so the connection is a transfer-of-vocabulary candidate rather than a settled Commonplace definition.
+The source supplies a concrete external precedent for [methodological and computational closure track different changes](../notes/methodological-and-computational-closure-track-different-changes.md): autonomy is reported per function and level, while evaluation criteria and human authority remain separate. It also grounds [warranted autonomy is bounded by oracle domain](../notes/warranted-autonomy-is-bounded-by-oracle-domain.md): moving a function toward automation is conditional on evidence about its failure costs and recovery, not on capability alone. No current note cites this specific human-factors matrix, so the connection is a transfer-of-vocabulary candidate rather than a settled Commonplace definition.
 
 ## Extractable Value
 
@@ -43,4 +43,4 @@ The source snapshot was refreshed from the user's full converted Markdown captur
 
 ## Recommended Next Action
 
-Add the four-stage allocation vocabulary as an optional, explicitly human-inclusive sub-profile in [a self-improving system needs a profile, not a ladder](../notes/a-self-improving-system-needs-a-profile-not-a-ladder.md), preserving partial/unknown levels and keeping warranted autonomy as a separate evidence question.
+Add the four-stage allocation vocabulary as an optional, explicitly human-inclusive sub-profile in [methodological and computational closure track different changes](../notes/methodological-and-computational-closure-track-different-changes.md), preserving partial/unknown levels and keeping warranted autonomy as a separate evidence question.

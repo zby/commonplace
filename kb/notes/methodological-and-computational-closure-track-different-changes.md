@@ -56,7 +56,7 @@ The [Commonplace reference case](../reference/commonplace-as-a-reflective-system
 
 Reflectivity does not require methodological closure. It requires a causally connected representation of the system's own behavior that processes inside the declared frame can read and change. A reflective pathway may expose its rules for criticism while leaving the next revision to open-ended judgment. Conversely, a fixed pipeline may settle every operational choice without representing or revising itself.
 
-The properties reinforce each other when the represented object is the improvement methodology itself: an addressable criterion can be revised, then a settled and warranted version can be executed computationally. That is a trajectory through a [multi-part profile](./a-self-improving-system-needs-a-profile-not-a-ladder.md), not one scale of reflectivity or closure.
+The properties reinforce each other when the represented object is the improvement methodology itself: an addressable criterion can be revised, then a settled and warranted version can be executed computationally. That is a trajectory through a [multi-part profile](./self-improving-systems-README.md), not one scale of reflectivity or closure.
 
 ## Scope
 
@@ -76,7 +76,6 @@ The properties reinforce each other when the represented object is the improveme
 
 Relevant Notes:
 
-- [A self-improving system needs a profile, not a ladder](./a-self-improving-system-needs-a-profile-not-a-ladder.md) — grounds: locates the two closure readings under governance and actor allocation
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — grounds: supplies the pathway functions over which both properties are reported
 - [Reflection buys addressability](./reflection-buys-addressability.md) — mechanism: makes retained inputs and criteria available to later deciding processes
 - [A methodology governs its own extension only as far as it settles the meta-decisions it raises](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md) — grounds: supplies the methodological reading of closure

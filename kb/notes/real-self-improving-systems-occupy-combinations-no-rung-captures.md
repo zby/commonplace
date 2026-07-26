@@ -48,7 +48,7 @@ Every row is a reading under a declared boundary. Change the boundary and the re
 
 Relevant Notes:
 
-- [A self-improving system needs a profile, not a ladder](./a-self-improving-system-needs-a-profile-not-a-ladder.md) — grounds: the four dimensions these placements are read against
+- [Self-improving systems](./self-improving-systems-README.md) — see-also: the curated head listing the four dimensions these placements are read against
 - [Self-improvement is relative to a declared objective](./self-improvement-is-relative-to-a-declared-objective.md) — grounds: why each row names its frame, and why no ordering follows from the profile alone
 - [Accumulation counts dependence through the retained result, not through the evidence it caused](./accumulation-counts-dependence-through-the-retained-result.md) — grounds: the cumulativity column's criterion
 - [Reflection buys addressability](./reflection-buys-addressability.md) — grounds: what the reflective column is worth, and what parametric compounding does without it

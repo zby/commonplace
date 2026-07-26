@@ -29,7 +29,7 @@ Membership establishes improvement-directed self-change, not a complete architec
 Classify the remaining questions elsewhere:
 
 - [Reflective system](./reflective-system.md) owns whether the pathway changes itself through a causally connected self-representation; reflection is not required for membership.
-- [The pathway profile](../a-self-improving-system-needs-a-profile-not-a-ladder.md) owns reflective structure, improvement dynamics, governance, and actor allocation; [the cumulativity criterion itself](../accumulation-counts-dependence-through-the-retained-result.md) is held separately.
+- [The pathway profile](../self-improving-systems-README.md) owns reflective structure, improvement dynamics, governance, and actor allocation; [the cumulativity criterion itself](../accumulation-counts-dependence-through-the-retained-result.md) is held separately.
 - [Methodological and computational closure](../methodological-and-computational-closure-track-different-changes.md) owns the two closure readings, and [warranted autonomy](../warranted-autonomy-is-bounded-by-oracle-domain.md) owns when unattended evaluation is trustworthy.
 
 ## Exclusions
@@ -61,7 +61,6 @@ This architecture-neutral choice is consistent with uses of “self-improving”
 Relevant Notes:
 
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](../a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — extends: the named subtype where the improvement criterion is implemented as an evaluator, and the three functions that architecture requires
-- [A self-improving system needs a profile, not a ladder](../a-self-improving-system-needs-a-profile-not-a-ladder.md) — extends: keeps membership distinct from reflective structure, improvement dynamics, governance, and actor allocation
 - [Reflection buys addressability](../reflection-buys-addressability.md) — extends: what routing a change through a readable self-representation adds
 - [Reflective system](./reflective-system.md) — grounds: the causally connected self-representation, and the intercession capability, that reflective self-improvement routes through
 - [Methodological and computational closure track different changes](../methodological-and-computational-closure-track-different-changes.md) — extends: owns governance and actor-allocation readings outside membership

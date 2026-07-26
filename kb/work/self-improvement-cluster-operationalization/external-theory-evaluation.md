@@ -100,7 +100,7 @@ Links:
 - [Reflection buys addressability](../../notes/reflection-buys-addressability.md) — draws-on: the commitment-operation extension that, with retrieval-as-wire, covers semantic self-interpretation
 - [Self-improving system](../../notes/definitions/self-improving-system.md) — tests: the definition whose tense and frame-relativity findings 2–3 concern
 - [Reflective system](../../notes/definitions/reflective-system.md) — draws-on: the provenance discipline finding 6 confirms
-- [A self-improving system needs a profile, not a ladder](../../notes/a-self-improving-system-needs-a-profile-not-a-ladder.md) — tests: the claim findings 1 and 7 concern
+- [Real self-improving systems occupy combinations no single rung captures](../../notes/real-self-improving-systems-occupy-combinations-no-rung-captures.md) — tests: the claim findings 1 and 7 concern
 - [Methodological and computational closure track different changes](../../notes/methodological-and-computational-closure-track-different-changes.md) — tests: the note carrying the closure-collision risk (finding 5)
 - [The definition classifies its boundary cases without ad hoc exceptions](../../notes/the-self-improving-system-definition-classifies-its-boundary-cases.md) — draws-on: read here as an OntoClean-style stress suite
 - [Vocabulary collisions prevented at write time, not read time](../../notes/vocabulary-collisions-prevented-at-write-time-not-read-time.md) — rationale: why finding 5 resolves at the closure note rather than in readers' heads

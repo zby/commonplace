@@ -47,7 +47,7 @@ Giving the unresolved design judgment to an unconstrained model would change all
 
 ## What the classification does not claim
 
-The trace establishes neither whole-pathway computational closure nor improvement beyond the adopted criterion. Human inclusion makes membership cheap; comparison must use [the pathway profile](../notes/a-self-improving-system-needs-a-profile-not-a-ladder.md), whose comparison across time or differently decomposed systems remains [an open measurement problem](../notes/measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md).
+The trace establishes neither whole-pathway computational closure nor improvement beyond the adopted criterion. Human inclusion makes membership cheap; comparison must use [the four-part pathway profile](../notes/self-improving-systems-README.md), whose comparison across time or differently decomposed systems remains [an open measurement problem](../notes/measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md).
 
 ---
 
@@ -60,7 +60,7 @@ Relevant Notes:
 - [Reflective system](../notes/definitions/reflective-system.md) — defined-in: the boundary-parametric causal self-representation criterion discharged here
 - [Self-improving system](../notes/definitions/self-improving-system.md) — defined-in: the evidence-responsive operative self-change criterion and pathway-relative reflective distinction
 - [Methodological and computational closure track different changes](../notes/methodological-and-computational-closure-track-different-changes.md) — rationale: why the human-inclusive reflective attribution is paired with a computational allocation profile
-- [A self-improving system needs a profile, not a ladder](../notes/a-self-improving-system-needs-a-profile-not-a-ladder.md) — rationale: keeps reflective structure, dynamics, governance, and allocation distinct in the classification
+- [Real self-improving systems occupy combinations no single rung captures](../notes/real-self-improving-systems-occupy-combinations-no-rung-captures.md) — rationale: why reflective structure, dynamics, governance, and allocation stay distinct in the classification
 - [Reflective coverage is graded across representational forms](../notes/reflective-coverage-is-graded-across-representational-forms.md) — rationale: the coverage criterion this system meets unevenly, and whose open self-modeling questions autonomous diagnosis would need answered
 - [Warranted autonomy is bounded by oracle domain](../notes/warranted-autonomy-is-bounded-by-oracle-domain.md) — rationale: why moving a function to a computational component does not by itself warrant the decision
 - [A methodology governs its own extension only as far as it settles the meta-decisions it raises](../notes/a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md) — rationale: the methodological-closure property assessed separately from reflectivity

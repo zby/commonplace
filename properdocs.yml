@@ -26,6 +26,7 @@ plugins:
         'instructions/run-review-batches-on-note.md': 'instructions/run-review-batches.md'
         'notes/a-declared-mark-is-an-accelerator-never-a-load-bearing-wall.md': 'reference/mark-semantics.md'
         'notes/a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md': 'notes/an-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trusted-knowledge.md'
+        'notes/a-self-improving-system-needs-a-profile-not-a-ladder.md': 'notes/self-improving-systems-README.md'
         'notes/actionable-theories-and-reflexive-system-construction.md': 'notes/self-improving-systems-README.md'
         'notes/addressable-hypotheses-may-reduce-target-data-under-structured-shifts.md': 'notes/reflection-may-reduce-target-data-under-structured-shifts.md'
         'notes/agent-memory-index.md': 'notes/agent-memory-README.md'

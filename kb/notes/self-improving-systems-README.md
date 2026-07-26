@@ -19,7 +19,7 @@ Evidence may **directly determine** an update that is always adopted, as gradien
 
 ## Pathway profile
 
-After membership and update architecture, [profile the pathway rather than placing it on a ladder](./a-self-improving-system-needs-a-profile-not-a-ladder.md):
+After membership and update architecture, profile the pathway across four parts rather than placing it on a ladder:
 
 - **Reflective structure** — [coverage of represented aspects and forms](./reflective-coverage-is-graded-across-representational-forms.md), plus the separate [addressability profile](./reflection-buys-addressability.md) over retained commitments.
 - **Improvement dynamics** — [cumulativity](./accumulation-counts-dependence-through-the-retained-result.md): dependence through the retained result itself, not through the evidence it caused.

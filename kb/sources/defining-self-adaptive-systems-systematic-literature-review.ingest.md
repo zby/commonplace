@@ -24,7 +24,7 @@ The review searches 1,493 papers, selects 314 relevant papers, and finds only ni
 
 ## Connections Found
 
-This source is direct evidence for [a proposal-selection loop requires search, evaluation, and retention](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md), which already uses this review to caution that loop architecture does not settle category membership. It also reinforces [a self-improving system needs a profile, not a ladder](../notes/a-self-improving-system-needs-a-profile-not-a-ladder.md): the review's missing dimensions (uncertainty, domain versus adaptation goals, context, system state) are precisely reasons to report a multidimensional pathway profile. The review is a limitation/negative-result anchor rather than a replacement definition.
+This source is direct evidence for [a proposal-selection loop requires search, evaluation, and retention](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md), which already uses this review to caution that loop architecture does not settle category membership. It also reinforces [the curated self-improving-systems head](../notes/self-improving-systems-README.md): the review's missing dimensions (uncertainty, domain versus adaptation goals, context, system state) are precisely reasons to report a multidimensional pathway profile. The review is a limitation/negative-result anchor rather than a replacement definition.
 
 ## Extractable Value
 
@@ -43,4 +43,4 @@ The source snapshot was refreshed from the user's full converted Markdown captur
 
 ## Recommended Next Action
 
-Update [a self-improving system needs a profile, not a ladder](../notes/a-self-improving-system-needs-a-profile-not-a-ladder.md) with the review's explicit uncertainty and domain-goal dimensions, keeping them as profile fields and not as a new single membership criterion.
+Update [the curated self-improving-systems head](../notes/self-improving-systems-README.md) with the review's explicit uncertainty and domain-goal dimensions, keeping them as profile fields and not as a new single membership criterion.
