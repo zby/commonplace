@@ -23,6 +23,8 @@ A [reflective system](./definitions/reflective-system.md) may include establishe
 
 Actor allocation restores the missing discrimination. Under a fixed human-inclusive boundary, report each consequential function as human, computational, or joint; computational closure is the no-human endpoint of that profile. Do not replace the profile with a percentage: functions differ in decomposition, authority, and stakes, and cross-system comparison remains [an open measurement problem](./measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md).
 
+The form is inherited rather than invented. [Parasuraman, Sheridan, and Wickens](../sources/model-types-levels-human-interaction-automation.md) report automation per function — information acquisition, analysis, decision and action selection, action implementation — and hold that an allocation is judged by its performance consequences, its reliability, and the cost of the consequences it admits, not by how much of the work the machine has taken over. That shape is what carries across, with three departures. The functions allocated here are the improvement pathway's own — search, evaluation, and retention where the pathway is proposal-selection — rather than task-performance stages. Their within-function ten-level scale is not inherited: the paper's validation is strongest for decision selection, and a graded level per function would reintroduce the percentage this profile refuses. And allocation still establishes nothing about warrant.
+
 ## Four concrete combinations
 
 | Improvement decision | Methodologically closed? | Computationally closed? | Why |
@@ -85,3 +87,4 @@ Relevant Notes:
 - [Increasing computational autonomy relocates human effort to the frontier instead of reducing it](./increasing-computational-autonomy-relocates-human-effort.md) — extends: states the human-side consequence when computational allocation advances
 - [Commonplace as a reflective system](../reference/commonplace-as-a-reflective-system.md) — evidence: applies both closure readings to one observed improvement pathway
 - [The boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — contrasts: states why computational allocation stalls where warranted checking is expensive
+- [A Model for Types and Levels of Human Interaction with Automation](../sources/model-types-levels-human-interaction-automation.md) — evidence: the external per-function allocation precedent, whose within-function level scale is deliberately not inherited

@@ -41,9 +41,7 @@ When the pathway is compared with self-adaptive-systems literature, uncertainty,
 
 ### Actor allocation
 
-**Who performs each improvement function?** Record human, computational, or joint allocation under the declared frame. [The closure owner](./methodological-and-computational-closure-track-different-changes.md) defines computational closure as the no-human endpoint of that allocation, explains why human-inclusive reflectivity makes the profile load-bearing, and keeps literal subsystem closure as an open boundary question.
-
-For a human-inclusive pathway, an optional allocation sub-profile can record which actor performs information acquisition, analysis, decision/action selection, and action implementation. [Parasuraman, Sheridan, and Wickens](../sources/model-types-levels-human-interaction-automation.md) provide the useful four-function form and show why allocation must be evaluated by performance consequences, reliability, and consequence costs. This is a form inheritance, not a within-function autonomy ladder: the improvement functions here are search, evaluation, and retention rather than task-performance stages, and actor allocation does not establish warrant.
+**Who performs each improvement function?** Record human, computational, or joint allocation under the declared frame. [The closure owner](./methodological-and-computational-closure-track-different-changes.md) defines computational closure as the no-human endpoint of that allocation, explains why human-inclusive reflectivity makes the profile load-bearing, carries the inherited four-function allocation form with the three departures Commonplace takes from it, and keeps literal subsystem closure as an open boundary question.
 
 ### The properties can move independently
 
