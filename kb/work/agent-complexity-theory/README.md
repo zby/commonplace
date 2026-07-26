@@ -4,6 +4,8 @@ Working out formal consequences of the [bounded-context orchestration model](../
 
 The goal is theorem sketches and proof outlines suitable for academic collaboration, not KB design notes. Artifacts here are consumed when they mature into a paper or get pitched to collaborators.
 
+**Downstream consumer.** [exo-methodology-pitch](../exo-methodology-pitch/README.md) depends on two families here, and how strongly it can state its case turns on how they resolve. The semantic-retrieval bound decides whether "external distilled artifacts escape re-derivation cost" is an efficiency claim scaling can answer or a lower bound no capability escapes. [No universal distillation](./no-universal-distillation-preserves-all-task-relevant-structure.md) constrains that workshop's own proposal in the other direction: if no bounded summary serves a rich query family, distillation must declare which query family it serves, which is what a per-class contract does. Neither workshop should assume the other's result — record what is proved, not what is hoped.
+
 ## Candidate result families
 
 1. **Semantic retrieval lower bounds** — orchestration cannot replace semantic inspection without a pre-built index
