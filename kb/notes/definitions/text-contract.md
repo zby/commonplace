@@ -36,6 +36,8 @@ Text contract is not trait, status, or [behavioral authority](./behavioral-autho
 
 Profile is not a closed enum. Do not treat "theoretical, descriptive, prescriptive" as an exhaustive list a fourth collection must be argued into — it is a starting library any collection can extend, per ADR 042.
 
+A text-contract profile is not a *pathway* profile. This one is normative: a bundle of quality goals and conventions a collection adopts, which is why it can be read as [a pre-packaged objective function](../technical-constraints-make-kb-objective-choice-engineering.md). The self-improving-systems cluster uses "profile" for the opposite kind of object — a purely descriptive record of what a system's improvement pathway looks like, which [deliberately selects no order over the systems it describes](../self-improvement-is-relative-to-a-declared-objective.md). Both senses stay; "the profile does not select an order" and "profiles are objective-function bundles" are consistent because they are claims about different things.
+
 ## Misuse Cases
 
 - Treating `theoretical`, `descriptive`, and `prescriptive` as document types rather than content-mode profiles.

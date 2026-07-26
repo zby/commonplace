@@ -19,14 +19,14 @@ Evidence may **directly determine** an update that is always adopted, as gradien
 
 ## Pathway profile
 
-After membership and update architecture, profile the pathway across four parts rather than placing it on a ladder:
+After membership and update architecture, profile the pathway across four parts rather than placing it on a ladder. The profile is descriptive and selects no order by itself; any comparison between pathways is indexed to a declared objective. (Not the [text-contract](./definitions/text-contract.md) sense of "profile", which is a normative bundle a collection adopts.)
 
 - **Reflective structure** — [coverage of represented aspects and forms](./reflective-coverage-is-graded-across-representational-forms.md), plus the separate [addressability profile](./reflection-buys-addressability.md) over retained commitments.
 - **Improvement dynamics** — [cumulativity](./accumulation-counts-dependence-through-the-retained-result.md): dependence through the retained result itself, not through the evidence it caused.
 - **Governance** — [what the methodology settles](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md), and [which of those decisions are warranted](./warranted-autonomy-is-bounded-by-oracle-domain.md).
 - **Actor allocation** — human, computational, or joint per function; [allocation carries the comparison](./methodological-and-computational-closure-track-different-changes.md), and computational closure is its no-human endpoint, not a grade of reflectivity.
 
-The four vary independently: each property's note states the entailments it does not license, and the placements below show which combinations actually occur.
+The four do not determine, subsume, or form a monotone progression through one another: each property's note states the entailments it does not license, and the placements below show which combinations actually occur. That is non-entailment, not full independence — coverage is structurally required for some addressability operations, and explicit criteria are what carry a decision to a computational actor.
 
 ### What reflection adds
 
@@ -45,7 +45,7 @@ A pathway is [**reflective**](./definitions/reflective-system.md) when change pa
 
 ## Placements
 
-[Eight cases profiled across the four dimensions](./real-self-improving-systems-occupy-combinations-no-rung-captures.md) — from Ashby's Homeostat to Commonplace itself, including the [Gödel machine](./goedel-machines-are-a-proof-governed-case-of-self-modification.md) as the proof-governed limit. Read every claim at its stated strength: definitions are stipulated and revisable; payoff claims are open hypotheses.
+[Eight cases profiled across selected fields of the four dimensions](./real-self-improving-systems-occupy-combinations-no-rung-captures.md) — from Ashby's Homeostat to Commonplace itself, including the [Gödel machine](./goedel-machines-are-a-proof-governed-case-of-self-modification.md) as the proof-governed limit. Read every claim at its stated strength: definitions are stipulated and revisable; payoff claims are open hypotheses.
 
 ## Base vocabulary and boundary cases
 

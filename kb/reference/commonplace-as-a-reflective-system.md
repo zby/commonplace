@@ -31,7 +31,7 @@ Coverage remains uneven across representational forms, [as reflective coverage m
 - **Lineage and staleness across forms** — mostly absent: freshness tracking covers review inputs, not theory-to-implementation lineage.
 - **Model weights** — selection only: Commonplace can choose a model binding but cannot inspect or edit the provider's weights.
 
-The trace therefore earns modification depth on parts of the prose and symbolic forms and only selection depth on the parametric form. It does not establish global reflectivity over every behavior-bearing component.
+The trace therefore earns modification-grade coverage on parts of the prose and symbolic forms and only selection-grade coverage on the parametric form. It does not establish global reflectivity over every behavior-bearing component.
 
 ## Improvement dynamics
 

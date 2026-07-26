@@ -21,7 +21,7 @@ Within the frame, the repository, commands, validators, review store, and agents
 ## Using the frame
 
 - Any membership, reflectivity, closure, or allocation claim about Commonplace is read against this frame unless the claim declares a different one. The assessment horizon is declared per attribution; the frame fixes who and what, not when.
-- Two consequences of the boundary are standing, not incidental: model weights sit outside, so the parametric form admits selection depth only (Commonplace can rebind a model, not inspect or edit weights); and computational-closure readings under this frame count human dependencies only — how a hosted model's dependence on outside inference infrastructure should read is an acknowledged open question in [the closure note](../notes/methodological-and-computational-closure-track-different-changes.md).
+- Two consequences of the boundary are standing, not incidental: model weights sit outside, so the parametric form admits selection-grade coverage only (Commonplace can rebind a model, not inspect or edit weights); and computational-closure readings under this frame count human dependencies only — how a hosted model's dependence on outside inference infrastructure should read is an acknowledged open question in [the closure note](../notes/methodological-and-computational-closure-track-different-changes.md).
 
 ---
 

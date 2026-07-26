@@ -1,5 +1,5 @@
 ---
-description: "Casebook of eight placements on the pathway profile — Homeostat to Commonplace — showing that reflection, cumulativity, allocation, and warrant are realized in combinations no ordinal rung expresses"
+description: "Casebook of eight placements on selected pathway-profile fields — Homeostat to Commonplace — reflection, cumulativity, allocation, and evidential limit in combinations no rung expresses"
 type: kb/types/note.md
 traits: [title-as-claim, synthesis, has-comparison, has-external-sources]
 tags: [foundations, self-improving-systems]
@@ -7,13 +7,15 @@ tags: [foundations, self-improving-systems]
 
 # Real self-improving systems occupy combinations no single rung captures
 
-The argument that improvement-pathway properties do not entail one another is made where each property is defined. This note supplies the other half: the combinations are not merely permitted by the ontology, they are the ones actually occupied by the systems it has to place. A scale that ordered these eight cases would have to rank a proof-governed rewriter against a randomized relay bank against a repository of human-reviewed prose, and each ordering it produced would contradict another.
+The argument that improvement-pathway properties do not entail one another is made where each property is defined. This note supplies the other half: the combinations are not merely permitted by the ontology, they are the ones actually occupied by the systems it has to place. No canonical ordering follows from the profile alone — a scale over these eight would have to rank a proof-governed rewriter against a randomized relay bank against a repository of human-reviewed prose, and any total order it produced would have to import priorities the descriptive fields do not contain. A declared objective can supply those priorities; the profile cannot.
 
 Every row is a reading under a declared boundary. Change the boundary and the reading changes — most visibly for Commonplace, which is a member at all only under a frame that includes its maintainers, [since attributions are elliptical until their parameters are named](./self-improvement-is-relative-to-a-declared-objective.md).
 
 ## The placements
 
-| System | Update architecture | Reflective | Cumulative | Allocation | Warrant bounded by |
+Selected profile fields, not the whole profile: the governance dimension appears here only through its evidential half, and what each methodology settles is left to the per-system accounts. The last column reads differently by update architecture. For the proposal-selection rows it is oracle domain — what the gate can warrant accepting. For the direct rows there is no gate to hand over, so it names what bounds the update rule's trustworthiness instead, [since warranted autonomy is scoped to pathways with an evaluation to hand over](./warranted-autonomy-is-bounded-by-oracle-domain.md).
+
+| System | Update architecture | Reflective | Cumulative | Allocation | Evidential limit |
 |---|---|---|---|---|---|
 | [Ashby's Homeostat](../sources/ashby-design-for-a-brain-ultrastability.md) | direct, viability-driven | no | no | computational | nothing — retention is negative |
 | Parametric self-improvers | direct, gradient | no | yes | computational | training-time evaluation |
@@ -30,13 +32,13 @@ Every row is a reading under a declared boundary. Change the boundary and the re
 
 **Parametric learners break the equation of reflection with compounding.** They compound reliably through weights nothing inside them can read. This is the deployed default rather than a corner case, which is why an ontology that required reflection for membership would fail on the field's central systems.
 
-**Ailon et al. show cumulativity without either reflection or a gate.** A training phase learns task-relative distribution structure; a stationary regime then retains the tuned structures as the operative basis for later inputs. Its objective is expected running time under a declared input distribution, and distribution shift is the boundary where the retained structure stops being warranted.
+**Ailon et al. show cumulativity without either reflection or a gate.** Its staged training phase is where the accumulation sits: a retained snapshot of a typical instance is built first, and the auxiliary search structures are then constructed against it. The stationary regime that follows retains those structures as the operative basis for later inputs without further improving them. Its objective is expected running time under a declared input distribution, and distribution shift is the boundary where the retained structure stops being warranted.
 
 **DreamCoder and the Gödel machine differ in gate kind, not gate strength.** Both run reject-capable loops; one accepts on statistical program fit, the other only on proof. DreamCoder is also split internally — an inspectable symbolic library alongside an opaque recognition network — so its reflective coverage has to be reported per component rather than as a verdict about the system.
 
 **Knowledge-Centric Self-Improvement is the strongest external case for addressability.** Its appendix traces a claim cited by id, challenged, split into two scoped claims, with the falsified branch retained as a rejection — the read-criticize-revise operations exercised computationally, not just structurally available. Its warrant splits: benchmark oracles are strong for pass/fail, while transfer-worthiness rests only on model debate.
 
-**Exo and Commonplace share a profile and differ in allocation.** Both are reflective, cumulative proposal-selection pathways; Exo's self-representation is unusually literal, the source tree it edits being the organization that determines its behavior, with rebuild-and-restart as the wire from artifact to behavior. Exo is computational throughout, Commonplace joint and varying by decision. That single difference is what carries the comparison, and it is invisible to any measure that scores both as "self-improving."
+**Exo and Commonplace differ most visibly in allocation.** Both are reflective, cumulative proposal-selection pathways; Exo's self-representation is unusually literal, the source tree it edits being the organization that determines its behavior, with rebuild-and-restart as the wire from artifact to behavior. Exo is computational throughout, Commonplace joint and varying by decision. On the coarse fields reported here that is the sharpest difference between them — their warrant cells differ too, and finer readings would separate their governance, search, and protected kernels — and it is invisible to any measure that scores both as "self-improving."
 
 ## Scope
 
@@ -52,7 +54,7 @@ Relevant Notes:
 - [Self-improvement is relative to a declared objective](./self-improvement-is-relative-to-a-declared-objective.md) — grounds: why each row names its frame, and why no ordering follows from the profile alone
 - [Accumulation counts dependence through the retained result, not through the evidence it caused](./accumulation-counts-dependence-through-the-retained-result.md) — grounds: the cumulativity column's criterion
 - [Reflection buys addressability](./reflection-buys-addressability.md) — grounds: what the reflective column is worth, and what parametric compounding does without it
-- [Warranted autonomy is bounded by oracle domain](./warranted-autonomy-is-bounded-by-oracle-domain.md) — grounds: the warrant column, and why computational allocation does not fill it
+- [Warranted autonomy is bounded by oracle domain](./warranted-autonomy-is-bounded-by-oracle-domain.md) — grounds: the evidential-limit column for the proposal-selection rows, why computational allocation does not fill it, and the scope that keeps it off the direct ones
 - [Measuring autonomy well enough to see it improve is an open problem](./measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md) — extends: why these rows still cannot be ordered even after the profile is fixed
 - [Ashby, Design for a Brain — ultrastability](../sources/ashby-design-for-a-brain-ultrastability.md) — evidence: the operative, non-cumulative, non-reflective floor
 - [Self-Improving Algorithms](../sources/self-improving-algorithms.md) — evidence: cumulative retention with no representation and no gate
