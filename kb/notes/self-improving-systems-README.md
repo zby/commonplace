@@ -11,7 +11,7 @@ Selective head: the membership definition, the update architectures, and the fou
 
 ## Membership
 
-A [self-improving system](./definitions/self-improving-system.md) makes operative, evidence-responsive changes to its own behavior-determining organization. Read every attribution against a declared frame: including maintainers can make a development system a human-inclusive member. Membership settles only the category; update architecture and pathway profile remain to be stated.
+A [self-improving system](./definitions/self-improving-system.md) makes operative, evidence-responsive changes to its own behavior-determining organization. Read every attribution against a declared frame of boundary, horizon, and objective: including maintainers can make a development system a human-inclusive member, and [self-improvement is relative to a declared objective](./self-improvement-is-relative-to-a-declared-objective.md) — indexed in the attribution, antecedent in the pathway. Membership settles only the category; update architecture and pathway profile remain to be stated.
 
 ## Update architecture
 
@@ -42,8 +42,6 @@ Reflective structure crosses update architecture. A pathway is [**reflective**](
 - [Methodological and computational closure track different changes](./methodological-and-computational-closure-track-different-changes.md) — settled methodology can still be human-executed, while an unattended model can still improvise; executable, warranted criteria are what let both properties advance together.
 - [Increasing computational autonomy relocates human effort to the frontier instead of reducing it](./increasing-computational-autonomy-relocates-human-effort.md) — the human side: measure improvements per human judgment, not total hours.
 - [Only explicit retention is durable, writable, and addressable](./only-explicit-retention-is-durable-writable-and-addressable.md) — no tacit channel, human or parametric, can carry settled methodology.
-
-Completing particular reflective proposal-selection pathways while separately advancing both closure properties is an engineering direction, not the ontology.
 
 ## Example placements
 

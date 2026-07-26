@@ -26,6 +26,7 @@ The evidence does **not** need to appear in a separate evaluator component. In d
 - **Uninformative triggers.** A timer, a fresh request, an unconditional event — these cause changes without carrying any information about the objective. Change on trigger alone is self-modification, not self-improvement.
 - **Idle evidence.** Evidence that exists but does not causally affect the change makes nothing responsive; a dashboard nobody's update rule or judgment consumes bears on the objective and changes nothing.
 - **Evidence of the wrong thing.** A signal diagnostic of some *other* criterion can drive changes that are responsive — to that other objective. Which objective the evidence bears on decides what the system is directed at, [and directedness is all it decides](./self-improving-system.md).
+- **Objectives specified by the change.** Relabelling the target of an existing update — reading gradient steps on a loss as improvement toward *whatever these weights now do better* — leaves the causal history untouched while making the criterion trivially satisfied. Every operative self-change admits such a relabelling, so causal shaping alone does not screen it out: the objective must also be [specifiable independently of the change it is invoked to license](../self-improvement-is-relative-to-a-declared-objective.md).
 
 ## Misuse Cases
 
@@ -40,3 +41,4 @@ Relevant Notes:
 - [Self-improving system](./self-improving-system.md) — defined-in: the definition whose evidence-responsiveness clause this term sharpens
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](../a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — extends: the subtype where the evidence is consumed by an explicit evaluator
 - [Oracle strength spectrum](../oracle-strength-spectrum.md) — extends: grades what different evidence suppliers can establish, where an evaluator exists to consume them
+- [Self-improvement is relative to a declared objective](../self-improvement-is-relative-to-a-declared-objective.md) — extends: why causal shaping needs independent specifiability beside it, and what the objective's declared standing adds to the attribution

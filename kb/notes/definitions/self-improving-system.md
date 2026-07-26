@@ -44,6 +44,7 @@ Classify the remaining questions elsewhere:
 
 - Treating the proposal-selection improvement loop as the definition rather than a named subtype, which re-smuggles an architecture into semantics.
 - Reporting an autonomy grade without declaring the boundary it was assessed against.
+- Attributing self-improvement without naming the objective it is indexed to, or naming one the pathway's evidence is not diagnostic of — [the first leaves the attribution elliptical, the second makes it false](../self-improvement-is-relative-to-a-declared-objective.md).
 - Reading a dormant improvement pathway as current self-improvement — the dispositional claim (*has* a pathway) and the horizon claim (evidence-responsive change is occurring over this horizon) are different attributions.
 - Treating a helpful change to an external product as self-improvement of the tool that produced it.
 
@@ -70,3 +71,4 @@ Relevant Notes:
 - [Evidence bearing on an improvement objective](./evidence-bearing-on-an-improvement-objective.md) — defined-in: what counts as the evidence, and why no evaluator component is required
 - [Behavioral authority](./behavioral-authority.md) — defined-in: the consumer, channel, and force that operative change requires
 - [The definition classifies its boundary cases without ad hoc exceptions](../the-self-improving-system-definition-classifies-its-boundary-cases.md) — extends: applies the membership clauses to ten cases
+- [Self-improvement is relative to a declared objective](../self-improvement-is-relative-to-a-declared-objective.md) — extends: the objective as a third declared parameter beside boundary and horizon, and the two conditions it carries
