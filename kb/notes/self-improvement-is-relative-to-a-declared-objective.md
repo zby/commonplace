@@ -47,7 +47,6 @@ The blocker is antecedence read as *independent specifiability*: an objective wh
 
 ## Open Questions
 
-- **Objective revision.** When a pathway changes the objective it is directed at, calling that change an improvement requires naming the level at which it is evaluated: the prior objective licensing the transition, a retained higher criterion ranking objectives, an external judgment, or mutual adjustment where the successor better systematizes the evidence the predecessor organized. Deciding what terminates that chain, and whether the last option is a real alternative to a meta-criterion or a disguised instance of one, needs its own treatment.
 - **Checking antecedence.** Independent specifiability is not mechanically testable. Whether it can be operationalized beyond a case-by-case argument — some test on the specification's dependence on the change — is open.
 
 ---
@@ -56,6 +55,7 @@ Relevant Notes:
 
 - [Self-improving system](./definitions/self-improving-system.md) — defined-in: the membership test this note adds a third declared parameter to
 - [Evidence bearing on an improvement objective](./definitions/evidence-bearing-on-an-improvement-objective.md) — defined-in: the objective-indexing and causal-shaping clauses antecedence sharpens
+- [Revising an improvement objective is licensed from outside it or is not improvement](./revising-an-improvement-objective-is-licensed-from-outside-it.md) — extends: what happens when the declared objective is the thing that changes, and why most apparent cases are not that
 - [The definition classifies its boundary cases without ad hoc exceptions](./the-self-improving-system-definition-classifies-its-boundary-cases.md) — grounds: the precedent that a declared parameter changes the attribution rather than the substrate
 - [Methodological and computational closure track different changes](./methodological-and-computational-closure-track-different-changes.md) — grounds: two dimensions moving in opposite directions under one change, the case that defeats aggregation
 - [Real self-improving systems occupy combinations no single rung captures](./real-self-improving-systems-occupy-combinations-no-rung-captures.md) — grounds: the combinations that actually occur, which is why no ordering follows from the profile

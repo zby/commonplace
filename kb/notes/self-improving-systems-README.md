@@ -11,7 +11,7 @@ Selective head: the membership definition, the update architectures, and the fou
 
 ## Membership
 
-A [self-improving system](./definitions/self-improving-system.md) makes operative, evidence-responsive changes to its own behavior-determining organization. Read every attribution against a declared frame of boundary, horizon, and objective: including maintainers can make a development system a human-inclusive member, and [self-improvement is relative to a declared objective](./self-improvement-is-relative-to-a-declared-objective.md) — indexed in the attribution, antecedent in the pathway. Membership settles only the category.
+A [self-improving system](./definitions/self-improving-system.md) makes operative, evidence-responsive changes to its own behavior-determining organization. Read every attribution against a declared frame of boundary, horizon, and objective: including maintainers can make a development system a human-inclusive member, and [self-improvement is relative to a declared objective](./self-improvement-is-relative-to-a-declared-objective.md) — indexed in the attribution, antecedent in the pathway. When the objective itself changes, [the change is improvement only against a level outside it](./revising-an-improvement-objective-is-licensed-from-outside-it.md). Membership settles only the category.
 
 ## Update architecture
 
