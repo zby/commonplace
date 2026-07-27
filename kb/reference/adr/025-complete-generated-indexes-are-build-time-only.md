@@ -1,5 +1,5 @@
 ---
-description: Complete generated listings (the per-collection dir-index and the per-tag generated tail) retire from git and the agent read path and are regenerated at ProperDocs build time for human readers, while agents discover via committed curated heads plus scoped rg; supersedes ADR 003's index-first connect discovery, and adds no new query command because scoped rg recovers what the retired index gave.
+description: "Complete generated listings move to ProperDocs build time; agents discover through curated heads plus scoped path-and-description searches with a 50–250-character soft description warning"
 type: ../types/adr.md
 tags: []
 status: accepted
@@ -29,6 +29,14 @@ Complete generated listings are build-time-only; the agent read path is curated 
 
 This supersedes ADR 003's primary-discovery decision (read `dir-index.md` first). 003's surviving element — curated focused indexes as a discovery surface — is retained as the curated-heads path; complete-index reads are removed from standard connect discovery.
 
+### Amendment: description upper warning (2026-07-28)
+
+The shared description warning band is 50–250 characters, raising the former upper warning from 200. The ceiling is an allowance, not a target: authors should still use the shortest description that changes a read/skip decision, and descriptions above 250 warn rather than fail.
+
+The inherited 200-character ceiling had been justified partly by the cost of complete description listings, but this ADR removed those listings from the agent path. A 2026-07-27 controlled retrieval assay then compared independently written variants under 120, 160, 200, 250, and 300-character allowances. In 44 trials per allowance, 250 was the shortest allowance with no false skips or irrelevant opens; 300 added no retrieval benefit and exceeded the assay's declared 8,000-token estimate at an 80-result slice, while 250 remained within it. The only observed benefit over shorter variants came from distinguishing a same-title source snapshot from its ingest analysis, so the evidence warrants a soft global warning—not a hard maximum or a recommendation that ordinary descriptions approach 250.
+
+The operativity path has two parts. The shared note schema is consumed by `commonplace-validate`, which warns outside the band; writing instructions teach the same allowance before drafting. Agents then consume the resulting descriptions through the scoped path-plus-description searches established by this ADR. Whether explicit artifact-role display can resolve same-title and same-lineage collisions more cheaply than description headroom remains open.
+
 ## Consequences
 
 Easier:
@@ -45,6 +53,7 @@ Risks / watch:
 - Scoped rg has a footgun: a tag that matches zero files makes `xargs` run rg with no path argument, which searches the whole repo. Mitigated by `xargs -r`; recurring trips would be the signal to codify a command.
 - rg yields `path + description`, not the human H1 title; the path stands in for the title in triage. If title-in-output proves necessary, that is the case a command would justify.
 - Description quality stays load-bearing (inherited from 003).
+- Raising the soft ceiling permits up to 50 more characters per pointer. The assay bounded that cost at its observed p95 and 80-result conditions, but the largest current tag slice still needs candidate-set control rather than longer per-item compression.
 
 Deferred (mechanism, not direction):
 - ProperDocs generation mechanism: a `commonplace-refresh-indexes --for-build` mode the hook calls, or a dedicated plugin (must emit both the directory inventory and the per-tag listing).
