@@ -23,6 +23,7 @@ A learning operation distinct from constraining and from source-derived reshapin
 - [brainstorming: how explanatory-reach informs KB design](./brainstorming-how-explanatory-reach-informs-kb-design.md) — working notes applying the explanatory-reach concept to KB design decisions
 - [theory-mediated learning may improve sample efficiency under structured shifts](./theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md) — conjecture: the measurable payoff of a discovered theory is fewer target observations after a shift that preserves the structure it names, conditional on reach-assessment having earned it
 - [selective revision needs a faithful rationale, not just a legible one](./selective-revision-needs-a-faithful-rationale-not-just-a-legible-one.md) — the recorded basis is the surface revision operates on, so an unfaithful rationale repairs the wrong premise; faithfulness is tested by intervention, not by reading
+- [a decomposition earns reach by derivation or by a tested ontology](./a-decomposition-earns-reach-by-derivation-or-by-a-tested-ontology.md) — the two provenances that make a posited carve's claimed scope earned rather than asserted, and why everything else is a free choice that should stay cheap to replace
 
 ## Conditions for discovery
 

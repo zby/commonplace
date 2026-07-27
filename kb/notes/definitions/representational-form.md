@@ -18,6 +18,19 @@ Representational form classifies how a retained artifact's [operative part](./op
 
 Form sets the default inspection method: read natural-language content, test or statically check symbolic artifacts, and probe distributed-parametric artifacts behaviorally.
 
+## Derivation
+
+Two axes generate the categories. **Assigned consequences** — does a defined consumer fix what the artifact does, or is it reinterpreted on each consumption? A formal semantics is sufficient but not necessary: most programming languages have none, and still sit on this side because an implementation adjudicates, so two consumers disagreeing means one of them is wrong. Natural language has no such adjudicator — two readings can both be reasonable — which is [underspecification](../llm-interpretation-errors-README.md), not a defect of any particular text. **Localization** — is there an identifiable unit carrying the content, or is it spread across numerical state with no addressable part?
+
+| | localized | non-localized |
+|---|---|---|
+| **consequences assigned** | symbolic | — |
+| **consequences not assigned** | natural-language | distributed-parametric |
+
+The fourth cell is unoccupied in this domain rather than impossible. Vector symbolic architectures aim at exactly it, binding and bundling being algebraically defined operations over distributed hypervectors. The three-way carve therefore holds while agent systems retain nothing of that shape, and gains a fourth form if they do.
+
+The inspection rule above follows from the axes instead of being stipulated per form: a localized unit with defined semantics can be checked against them (test), a localized unit without them yields its content only to interpretation (read), and a non-localized artifact offers nothing to point at, so only its behavior is observable (probe). [Addressability](../reflection-buys-addressability.md) rides on the localization axis alone, which is why a prompt and a validator are both revisable one item at a time while weights are not.
+
 ## Exclusions
 
 Representational form is not storage substrate. Markdown in a repository can be natural-language, symbolic, or mixed depending on the consumer. A vector store can expose natural-language records while its retrieval behavior depends on distributed-parametric embeddings and ranking.
