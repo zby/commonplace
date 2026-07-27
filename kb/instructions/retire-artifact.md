@@ -23,7 +23,11 @@ Two destinations. **Delete** is the default. **Archive** moves the file into a s
 
    Current assignment — `design-proposal` archives to `kb/reference/proposals/archive/`; every other type deletes.
 
-   If the type spec is silent and you believe archive is right, stop and settle it as a type-level decision rather than deciding per artifact. The test: name the future job that needs this file after retirement and say why no successor can serve it. A dated record of deliberation — what was considered, by whom, against what facts — has such jobs (audit the decision, re-open the design, re-extract a missed piece) and no successor type has a slot for it. A current statement of content does not: its whole value is being true now, its successor carries whatever survived, and what is left is wrong. **Deletion is unrecoverable in practice** — a shallow clone cannot see deleted content, so git history is not the archive and the step 4 extraction gate is the only thing standing between delete and permanent loss.
+   If the type spec is silent and you believe archive is right, stop and settle it as a type-level decision rather than deciding per artifact. The test is what survives a complete extraction (steps 2 and 4). Archive when that residue is **irreproducible observation** — dated measurements of a state that no longer exists, which nobody can re-derive at any price. Delete when it is claims: a successor either carries them or falsifies them, and either way nothing is lost.
+
+   Do not archive on the grounds that the artifact holds deliberation. Options weighed, deciding forces, and free choices belong in the superseding ADR's `## Considered alternatives`, which is required precisely so the frontier keeps them ([adr type spec](../reference/types/adr.md)). An artifact whose only residue is deliberation has an incomplete extraction, not an archiving case.
+
+   **Deletion is unrecoverable in practice** — a shallow clone cannot see deleted content, so git history is not the archive and the step 4 extraction gate is the only thing standing between delete and permanent loss.
 
 2. **Extract first, one piece per commit.** If the artifact holds content worth keeping, move each piece to its new home, retarget that piece's own inbound references, and commit before starting the next. Do not bundle extraction into the retirement — a retirement commit that also moves content cannot be reviewed for either.
 
