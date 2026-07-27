@@ -29,6 +29,7 @@ Core theory that the rest of the KB builds on. These notes define the quality cr
 ### Rationale and design method
 
 - [design rationale management in Commonplace](../reference/design-rationale-management.md) — descriptive companion: how workshops, proposals, ADRs, and contracts distribute constraints, alternatives, and decisions—and what continuity shipped contracts do not enforce
+- [a decomposition earns explanatory-reach by derivation or inheritance](./a-decomposition-earns-explanatory-reach-by-derivation-or-inheritance.md) — three provenances for a carve; only derivation from inherited constraints and inheritance of a tested ontology make its claimed scope earned rather than asserted
 - [Alexander's patterns connect to knowledge system design at multiple levels](./alexander-patterns-and-knowledge-system-design.md) — (speculative) pattern language as document types, generative processes as codification
 
 - [agent context is constrained by soft degradation not hard token limits](./agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md) — the binding constraint is the soft degradation curve, not the hard token limit; agents are in the same soft-bound family as human cognition and organizational learning

@@ -56,9 +56,15 @@ Until then, treating the KB as an instrument is a claim about what the applicati
 
 Relevant Notes:
 
+- [The Commonplace declared frame](./commonplace-declared-frame.md) — part-of: declares the system boundary and actor partition this reading assumes, and deliberately leaves the objective open — which this artifact supplies
 - [Design rationale management in Commonplace](./design-rationale-management.md) — part-of: the full survey of rationale surfaces, their state-to-surface map, and the continuity the shipped contracts do not enforce
 - [Commonplace as a reflective self-improving system](./commonplace-as-a-reflective-system.md) — see-also: the sibling classification of the same repository, assessed for reflectivity and actor allocation rather than for what the application is for
 - [The tag-readme change as an observed causal-connection trace](./tag-readme-trace-observed-causal-connection.md) — see-also: the commit-by-commit record behind the composition instance cited here
 - [The tag-readme trace read as a self-improving loop](./tag-readme-trace-as-self-improving-loop.md) — see-also: the search, evaluation, and retention mapping of the same instance
 - [Use tests a decomposition locally; retained rationale is what makes transfer testable](../notes/use-tests-a-decomposition-locally-rationale-makes-transfer-testable.md) — rationale: why composing successfully here supports replay rather than a rule, and why the rationale must be written at design time or be gone
 - [A decomposition earns explanatory-reach by derivation or inheritance](../notes/a-decomposition-earns-explanatory-reach-by-derivation-or-inheritance.md) — rationale: the two provenance routes the worked instances occupy, and the reason a free choice supports no scope claim
+- [Self-improvement is relative to a declared objective](../notes/self-improvement-is-relative-to-a-declared-objective.md) — rationale: why the objective stated above has to be declared independently of the changes it is invoked to license
+- [Increasing computational autonomy relocates human effort](../notes/increasing-computational-autonomy-relocates-human-effort.md) — rationale: why the measure is work per unit of human judgment rather than the removal of human judgment
+- [History has one chance to become checkable](../notes/history-has-one-chance-to-become-checkable.md) — rationale: the general claim behind retaining rationale at design time rather than expecting to recover it
+- [Selective revision needs a faithful rationale, not just a legible one](../notes/selective-revision-needs-a-faithful-rationale-not-just-a-legible-one.md) — rationale: the worse-than-absent asymmetry and the intervention test behind the faithfulness statement above
+- [The anatomy of a design theory (Gregor and Jones, 2007)](../sources/the-anatomy-of-a-design-theory-gregor-jones-2007.ingest.md) — evidence: makes the built artifact a non-core component of a design theory and records that an artifact alone stays craft knowledge until its principles are abstracted

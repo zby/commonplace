@@ -23,6 +23,7 @@ The organizing framework of the learning-theory area: deployed systems adapt thr
 - [in-context learning presupposes context engineering](./in-context-learning-presupposes-context-engineering.md) — "no continual learning needed" relocates the learning to the system layer rather than eliminating it
 - [choosing what to learn requires both validity and learning-value gates](./choosing-what-to-learn-requires-both-validity-and-learning-value-gates.md) — accumulation policy: true is necessary but not sufficient
 - [abstract an experience only when you can state where the lesson stops](./abstract-an-experience-only-when-you-can-state-the-boundary.md) — the abstract-vs-preserve decision: generalize only when the lesson's boundary is statable, else keep the instance
+- [use tests a decomposition locally; retained rationale makes transfer testable](./use-tests-a-decomposition-locally-rationale-makes-transfer-testable.md) — the design-act case of the same boundary problem: the reasoning leaves no residue in the product, so it is retained at design time or it is gone
 
 ## Feedback and signal quality
 
