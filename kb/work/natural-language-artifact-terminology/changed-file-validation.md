@@ -281,3 +281,81 @@ These files carry the audit and handoff rather than migrated source occurrences.
 | `kb/work/natural-language-artifact-terminology/migration-rows-residual-exceptions.md` | control artifact — no occurrence rows | PASS — `commonplace-validate` (final handoff batch) |
 | `kb/work/natural-language-artifact-terminology/changed-file-validation.md` | control artifact — no occurrence rows | PASS — `commonplace-validate` (final handoff batch) |
 | `kb/work/natural-language-artifact-terminology/lessons-learned.md` | control artifact — no occurrence rows | PASS — `commonplace-validate` (final handoff batch) |
+
+## Verification-remediation addendum
+
+Remediation start: `b2d03311`. Repaired corpus commit: `760bf239`. This addendum covers every file changed by the correction pass; the earlier table remains the audit for the original migration.
+
+### Repaired library Markdown
+
+`commonplace-validate` passed on every file below. The two noted description-length warnings predate the remediation and do not affect the changed body text.
+
+| changed file | reopened row IDs | deterministic validation result |
+|---|---|---|
+| `kb/notes/axes-of-artifact-analysis.md` | SP-0012 | PASS — 1 pre-existing description-length warning |
+| `kb/notes/commitment-not-derivation-creates-new-ground-truth.md` | NT-0029, NT-0030 | PASS — clean |
+| `kb/notes/definitions/actionable-methodology.md` | NT-0036 | PASS — clean |
+| `kb/notes/deploy-time-learning-is-the-missing-middle.md` | NT-0056 | PASS — clean |
+| `kb/notes/improving-an-agentic-system-crosses-the-prose-symbolic-boundary.md` | NT-0091 | PASS — clean |
+| `kb/notes/llm-executed-methodologies-are-metacircular-interpreters.md` | NT-0108, NT-0111 | PASS — clean |
+| `kb/notes/prose-has-no-dereference-reinforce-facts-at-point-of-use.md` | NT-0130, NT-0131, NT-0132 | PASS — clean |
+| `kb/notes/system-definition-artifacts-are-crystallized-reasoning-under-context.md` | NT-0189 | PASS — 1 pre-existing description-length warning |
+| `kb/notes/technical-constraints-make-kb-objective-choice-engineering.md` | NT-0198, NT-0199 | PASS — clean |
+| `kb/notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md` | NT-0218, NT-0220 | PASS — clean |
+| `kb/notes/theory-mediated-self-improvement-needs-interpretation-and-retention.md` | NT-0226, NT-0227 | PASS — clean |
+| `kb/notes/verification-needs-a-typed-target-before-it-needs-an-oracle.md` | NT-0243, NT-0244 | PASS — clean |
+| `kb/notes/world-models-assess-explanatory-reach-through-action-conditioned.md` | NT-0268 | PASS — clean |
+| `kb/reference/adr/021-shipping-model-path-audit-option-e.md` | RT-0020, RT-0021 | PASS — clean |
+| `kb/reference/collections-never-own-frontmatter-semantics.md` | RT-0028 | PASS — clean |
+| `kb/reference/lib-modules.md` | RT-0038 | PASS — clean |
+| `kb/reference/validation-contract.md` | RT-0057 | PASS — clean |
+| `kb/agent-memory-systems/lightweight/trajectory-informed-memory-generation.md` | EX-0019 | PASS — clean |
+| `kb/agent-memory-systems/reviews/AgentFly.md` | EX-0053 | PASS — clean |
+| `kb/agent-memory-systems/reviews/OpenSage.md` | EX-0157 | PASS — clean |
+| `kb/agent-memory-systems/reviews/agent-skills-for-context-engineering.md` | EX-0278 | PASS — clean |
+| `kb/agent-memory-systems/reviews/agentic-local-brain.md` | EX-0308 | PASS — clean |
+| `kb/agent-memory-systems/reviews/autocontext.md` | EX-0371 | PASS — clean |
+| `kb/agent-memory-systems/reviews/basic-memory.md` | EX-0377 | PASS — clean |
+| `kb/agent-memory-systems/reviews/claude-obsidian.md` | EX-0443 | PASS — clean |
+| `kb/agent-memory-systems/reviews/context-constitution.md` | EX-0501 | PASS — clean |
+| `kb/agent-memory-systems/reviews/cortex.md` | EX-0522 | PASS — clean |
+| `kb/agent-memory-systems/reviews/deja-vu.md` | EX-0564 | PASS — clean |
+| `kb/agent-memory-systems/reviews/eidetic.md` | EX-0605 | PASS — clean |
+| `kb/agent-memory-systems/reviews/equipa.md` | EX-0617, EX-0618, EX-0621, EX-0622 | PASS — clean |
+| `kb/agent-memory-systems/reviews/exocomp.md` | EX-0638, EX-0639 | PASS — clean |
+| `kb/agent-memory-systems/reviews/hyalo.md` | EX-0710 | PASS — clean |
+| `kb/agent-memory-systems/reviews/llm-wiki-coordination.md` | EX-0777 | PASS — clean |
+| `kb/agent-memory-systems/reviews/o-o.md` | EX-0850 | PASS — clean |
+| `kb/agent-memory-systems/reviews/quicky-wiki.md` | EX-0918 | PASS — clean |
+| `kb/agent-memory-systems/reviews/sage-wiki.md` | EX-0941 | PASS — clean |
+| `kb/agent-memory-systems/reviews/smriti-mcp.md` | EX-0992, EX-0993 | PASS — clean |
+| `kb/agent-memory-systems/reviews/sparks.md` | EX-1006 | PASS — clean |
+| `kb/agent-memory-systems/reviews/stash.md` | EX-1010, EX-1011 | PASS — clean |
+| `kb/agent-memory-systems/reviews/synthadoc.md` | EX-1032 | PASS — clean |
+| `kb/agent-memory-systems/reviews/virtual-context.md` | EX-1085 | PASS — clean |
+| `kb/agent-memory-systems/trace-learning-techniques-in-related-systems.md` | EX-1115, EX-1117 | PASS — clean |
+
+### Executable and generated surfaces
+
+| changed file | row IDs | verification result |
+|---|---|---|
+| `src/commonplace/lib/systems_matrix.py` | ES-0001–ES-0004 | Focused and full tests pass; active-vocabulary search clean |
+| `tests/commonplace/lib/test_systems_matrix.py` | ES-0005–ES-0018 | 11 focused tests and 483 full-suite tests pass |
+| `tests/commonplace/lib/fixtures/zikkaron_review.md` | ES-0019–ES-0027 | Parsed by focused tests; active-vocabulary search clean |
+| `kb/agent-memory-systems/systems.csv` | ES-0028–ES-0181 | Regenerated; component-count audit 152/152 form, 94/94 distilled form, 151/151 mixed |
+
+### Remediation control and evidence files
+
+| changed file | row ownership | deterministic validation result |
+|---|---|---|
+| `kb/work/natural-language-artifact-terminology/README.md` | control artifact | PASS — clean |
+| `kb/work/natural-language-artifact-terminology/remediation-plan.md` | control artifact | PASS — clean |
+| `kb/work/natural-language-artifact-terminology/migration-rows-spine.md` | SP-0012 | PASS — clean |
+| `kb/work/natural-language-artifact-terminology/migration-rows-notes.md` | NT-0029, NT-0030, NT-0036, NT-0056, NT-0091, NT-0108, NT-0111, NT-0130–NT-0132, NT-0189, NT-0198, NT-0199, NT-0218, NT-0220, NT-0226, NT-0227, NT-0243, NT-0244, NT-0268 | PASS — clean |
+| `kb/work/natural-language-artifact-terminology/migration-rows-reference-instructions-types.md` | RT-0020, RT-0021, RT-0028, RT-0038, RT-0057 | PASS — clean |
+| `kb/work/natural-language-artifact-terminology/migration-rows-external-systems.md` | 32 reopened EX rows listed in the manifest | PASS — clean |
+| `kb/work/natural-language-artifact-terminology/migration-rows-executable-surface.md` | ES-0001–ES-0181 | PASS — clean |
+| `kb/work/natural-language-artifact-terminology/migration-ledger.md` | manifest and reconciliation | PASS — clean |
+| `kb/work/natural-language-artifact-terminology/changed-file-validation.md` | this mapping | PASS — clean |
+
+The historical captures `kb/sources/where-it-lives-architectural-vocabulary-retained-adaptation.md` and `kb/sources/where-it-lives-retained-adaptation-2026-06-23.md` are unchanged from `b2d03311`. `git diff --check` is clean. All 1,903 semantic and executable occurrence rows remain verification-pending.

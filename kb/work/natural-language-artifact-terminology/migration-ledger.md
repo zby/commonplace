@@ -5,86 +5,136 @@
 | field | value |
 |---|---|
 | baseline revision | `b0147dc4` |
-| implemented corpus commit | `f5a4230b` |
-| included roots | `AGENTS.md`; `kb/notes/`; `kb/reference/`; `kb/instructions/`; `kb/types/`; `kb/agent-memory-systems/`; `kb/agentic-systems/` |
-| excluded roots | `kb/sources/`; `kb/reports/`; `kb/articles/`; `kb/work/` other than this migration ledger and lessons record |
-| named exceptions | Captured versions of *Where It Lives Is Not What It Is*: `kb/sources/where-it-lives-architectural-vocabulary-retained-adaptation.md` and `kb/sources/where-it-lives-retained-adaptation-2026-06-23.md`; named `prose` review machinery; `.replaced.*` historical review copies; quotations and historical records that must preserve source vocabulary |
+| first implemented corpus commit | `f5a4230b` |
+| failed-verification handoff and remediation start | `b2d03311` |
+| repaired corpus commit | `760bf239` |
+| semantic scope | `AGENTS.md`; `kb/notes/`; `kb/reference/`; `kb/instructions/`; `kb/types/`; `kb/agent-memory-systems/`; `kb/agentic-systems/` |
+| executable scope added by remediation | `src/commonplace/lib/systems_matrix.py`; `tests/commonplace/lib/test_systems_matrix.py`; `tests/commonplace/lib/fixtures/zikkaron_review.md`; generated `kb/agent-memory-systems/systems.csv` |
+| excluded roots | `kb/sources/`; `kb/reports/`; `kb/articles/`; other `kb/work/` workshops |
+| named exceptions | Captured versions of *Where It Lives Is Not What It Is*; named `prose` review machinery; `.replaced.*` historical review copies; quotations and historical records that must preserve source vocabulary |
 | primary locator | Baseline path plus nearest Markdown heading; line numbers are convenience only |
-| row-table status | Complete implementation handoff; 1,722 rows, all retaining `verification: pending` for the independent session |
+| row-table status | Ready for a fresh independent verification: 1,903 globally unique rows, all retaining `verification: pending` |
 
-The decision order is: use a precise artifact name when available; use **prompt** only for material supplied or explicitly assembled as model input; otherwise use the appropriate **natural-language** category term when representational form matters; preserve **prose** for editorial, quoted, historical, or named-machinery uses.
+The first verification failed because the matrix parser still encoded the old controlled vocabulary and because some editorial uses had been replaced mechanically. The remediation retains or restores **prose** for editorial language, uses precise nouns where the category is not load-bearing, uses unhyphenated **natural language** as an ordinary noun, and reserves hyphenated **natural-language** compounds for category-bearing modifiers.
 
-## Baseline coverage
+## Coverage searches
 
-Counts are occurrences, not matching lines. The targeted queries are intentionally non-overlapping; the broad query contains both targeted sets.
+Counts are occurrences, not matching lines. Baseline counts remain anchored to `b0147dc4`; final counts were recomputed from repaired commit `760bf239`.
 
-| query id | scope | query | baseline hit count | ledger-row count | final hit count | reconciliation |
+| query id | scope | query | baseline hit count | original semantic rows | repaired hit count | reconciliation |
 |---|---|---|---:|---:|---:|---|
-| Q1 | included roots | `\bprose artifacts?\b` (case-insensitive) | 13 | 13 | 0 | Reconciled: all 13 seed occurrences have implementation rows and none survive. |
-| Q2 | included roots | `\bprose (form\|content\|records?\|instructions?\|memory\|knowledge\|commitments?)\b\|\bprose/symbolic\b\|\bprose-to-(code\|prose)\b` (case-insensitive) | 152 | 152 | 3 | Reconciled: 149 changed; 3 survive only in excluded `.replaced.*` historical reviews and have exception rows. |
-| Q3 | included roots | `\bnatural-language (artifacts?\|form\|content\|records?\|instructions?)\b` (case-insensitive) | 4 | 4 | 287 | Reconciled: the 4 pre-existing canonical-compatible uses have preserved comparison rows; the increase is the intended migration result. |
-| Q4 | included roots | `\bprose\b` (case-insensitive residual audit) | 1860 | 1715 | 320 | Reconciled: 1,543 baseline occurrences changed, 172 non-obvious baseline survivors have rows, and 145 ordinary/editorial survivors form the counted obvious class. Three additional rowed occurrences were introduced inside the explicit revision rationale, so total handoff rows do not equal this baseline count. |
+| Q1 | semantic scope | `\bprose artifacts?\b` (case-insensitive) | 13 | 13 | 0 | All seed occurrences remain migrated. |
+| Q2 | semantic scope | `\bprose (form\|content\|records?\|instructions?\|memory\|knowledge\|commitments?)\b\|\bprose/symbolic\b\|\bprose-to-(code\|prose)\b` (case-insensitive) | 152 | 152 | 3 | The three survivors remain confined to two excluded `.replaced.*` historical reviews. |
+| Q3 | semantic scope | `\bnatural-language (artifacts?\|form\|content\|records?\|instructions?)\b` (case-insensitive) | 4 | 4 | 295 | The increase is the intended category migration after grammar repairs; the repairs produce a net eight additional canonical-compound occurrences relative to the failed handoff. |
+| Q4 | semantic scope | `\bprose\b` (case-insensitive residual audit) | 1,860 | 1,715 | 332 | The repaired result restores 12 editorial uses relative to the failed handoff; all other residual classes are unchanged. |
 
-The broader baseline contains 1,860 occurrences across 364 files. Q3 has 4 hits under the narrower workshop query (the broader token `natural-language` occurs 59 times); these pre-existing canonical-compatible uses are comparison evidence rather than replacement candidates unless an edit changes them.
-
-## Occurrence tables
-
-The occurrence rows are split by cohort:
-
-- [migration-rows-spine.md](./migration-rows-spine.md) — 57 rows for `AGENTS.md` and the six vocabulary-spine artifacts.
-- [migration-rows-notes.md](./migration-rows-notes.md) — 273 rows for remaining theory notes, including all four Q3 comparison rows.
-- [migration-rows-reference-instructions-types.md](./migration-rows-reference-instructions-types.md) — 68 rows for current reference documentation, ADRs, instructions, and type guidance.
-- [migration-rows-external-systems.md](./migration-rows-external-systems.md) — 1,149 rows for agent-memory-system and agentic-system reviews/analyses.
-- [migration-rows-residual-exceptions.md](./migration-rows-residual-exceptions.md) — 175 non-obvious deliberate survivors: 172 baseline survivors plus three occurrences introduced by the durable revision rationale.
-
-Row IDs are globally unique. Each source file belongs to one cohort table only; the residual-exceptions table records survivor rows but does not own or edit those source files.
-
-Ellipses in `original text` and `expected final text` delimit exact excerpts from longer lines; they are not replacement text. Each excerpt retains enough neighboring text to reconstruct the occurrence from its stable locator.
-
-## Disposition totals
-
-| disposition | count |
-|---|---:|
-| natural-language | 1,482 |
-| prompt | 1 |
-| precise noun | 64 |
-| preserve prose | 156 |
-| excluded | 19 |
-| **total** | **1,722** |
-
-## Implementation totals
-
-| implementation | count |
-|---|---:|
-| changed | 1,543 |
-| preserved | 179 |
-| pending | 0 |
-| **total** | **1,722** |
-
-## Changed-file validation
-
-The complete 260-file corpus mapping and eight handoff-control rows are in [changed-file-validation.md](./changed-file-validation.md). The final library batch invoked `commonplace-validate` on 259 changed KB artifacts and produced 309 clean validation results after dependency checks; `AGENTS.md` is covered by diff inspection and `git diff --check`.
-
-## Final search and validation evidence
-
-Final targeted counts are Q1 `0`, Q2 `3`, Q3 `287`, and Q4 `320`. The three Q2 survivors are:
-
-- `kb/agent-memory-systems/reviews/echowiki.replaced.2026-07-06.2.md` — `prose knowledge` and `prose instruction`;
-- `kb/agent-memory-systems/reviews/echowiki.replaced.2026-07-06.md` — `prose instructions`.
-
-All are excluded historical replacement reviews. The 320 broad residual occurrences were classified as follows:
+The three Q2 survivors are `prose knowledge` and `prose instruction` in `echowiki.replaced.2026-07-06.2.md`, and `prose instructions` in `echowiki.replaced.2026-07-06.md`. The Q4 residuals reconcile as follows:
 
 | residual class | count | treatment |
 |---|---:|---|
-| ordinary or editorial | 145 | Preserved as the expected obvious residual class; no per-occurrence row required. |
+| ordinary or editorial survivors from the first handoff | 145 | Preserved as the obvious residual class. |
+| editorial uses restored by remediation | 12 | Deliberately restored and rowed among the reopened semantic rows. |
 | named machinery or locator | 73 | Preserved and rowed. |
-| explicit migration rationale | 3 | Introduced deliberately, preserved, and rowed. |
+| explicit migration rationale | 3 | Deliberately introduced, preserved, and rowed. |
 | historical ADR or archived proposal | 80 | Preserved and rowed. |
 | excluded historical replacement | 19 | Excluded and rowed. |
-| **total** | **320** | Fully reconciled. |
+| **total** | **332** | Fully reconciled. |
 
-`git diff --check` is clean. No implementation, schema, validator, or other executable surface changed, so the full Python test suite was not required by the plan.
+## Occurrence tables
+
+The semantic occurrence rows remain split by their original non-overlapping cohorts:
+
+- [migration-rows-spine.md](./migration-rows-spine.md) — 57 rows for `AGENTS.md` and the vocabulary spine.
+- [migration-rows-notes.md](./migration-rows-notes.md) — 273 theory-note rows.
+- [migration-rows-reference-instructions-types.md](./migration-rows-reference-instructions-types.md) — 68 reference, ADR, instruction, and type rows.
+- [migration-rows-external-systems.md](./migration-rows-external-systems.md) — 1,149 external-system rows.
+- [migration-rows-residual-exceptions.md](./migration-rows-residual-exceptions.md) — 175 deliberate survivor rows.
+- [migration-rows-executable-surface.md](./migration-rows-executable-surface.md) — 181 parser, test, fixture, and generated-output rows added by remediation.
+
+Ellipses in excerpts delimit text from longer lines; they are not replacement text. Row IDs are globally unique across all six tables.
+
+## Reopened and added rows
+
+The remediation reopened 58 semantic rows:
+
+`EX-0019`, `EX-0053`, `EX-0157`, `EX-0278`, `EX-0308`, `EX-0371`, `EX-0377`, `EX-0443`, `EX-0501`, `EX-0522`, `EX-0564`, `EX-0605`, `EX-0617`, `EX-0618`, `EX-0621`, `EX-0622`, `EX-0638`, `EX-0639`, `EX-0710`, `EX-0777`, `EX-0850`, `EX-0918`, `EX-0941`, `EX-0992`, `EX-0993`, `EX-1006`, `EX-1010`, `EX-1011`, `EX-1032`, `EX-1085`, `EX-1115`, `EX-1117`, `NT-0029`, `NT-0030`, `NT-0036`, `NT-0056`, `NT-0091`, `NT-0108`, `NT-0111`, `NT-0130`, `NT-0131`, `NT-0132`, `NT-0189`, `NT-0198`, `NT-0199`, `NT-0218`, `NT-0220`, `NT-0226`, `NT-0227`, `NT-0243`, `NT-0244`, `NT-0268`, `RT-0020`, `RT-0021`, `RT-0028`, `RT-0038`, `RT-0057`, and `SP-0012`.
+
+It added executable rows `ES-0001`–`ES-0181`. No existing row ID was reused.
+
+## Reconciled totals
+
+### Semantic rows
+
+| disposition | count |
+|---|---:|
+| natural-language | 1,451 |
+| prompt | 1 |
+| precise noun | 83 |
+| preserve prose | 168 |
+| excluded | 19 |
+| **total** | **1,722** |
+
+| implementation | count |
+|---|---:|
+| changed | 1,531 |
+| preserved | 191 |
+| **total** | **1,722** |
+
+### Executable rows
+
+| surface class | count |
+|---|---:|
+| source code | 4 |
+| test | 14 |
+| fixture | 9 |
+| generated output | 154 |
+| **total** | **181** |
+
+### Whole ledger
+
+| implementation | count |
+|---|---:|
+| changed | 1,712 |
+| preserved | 191 |
+| **total** | **1,903** |
+
+All 1,903 rows have `verification: pending`.
+
+## Systems-matrix evidence
+
+`python3 scripts/build_systems_matrix.py` reported:
+
+```text
+rows written: 152  (code-grounded=152)
+identity (repo/clone) joined: 149/152
+flags: 1
+  - atlas.md: Curation operations: `none` cannot be mixed with controlled values
+```
+
+The Atlas flag predates and is unrelated to this vocabulary migration. A read-only corpus parse then established:
+
+- 152 current review files and 152 CSV rows;
+- 152 authored `natural-language` representational-form leads and 152 populated `form_natural_language` cells;
+- 94 authored `natural-language` distilled-form leads and 94 populated `df_natural_language` cells;
+- 151 mixed `natural-language`/`symbolic` leads and 151 rows retaining both components;
+- no representational-form or distilled-form parser flags;
+- no hand-maintained CSV columns, and three newly generated current-review rows (`exo.md`, `hermes-agent.md`, and `kgai.md`) recorded as `ES-0179`–`ES-0181`.
+
+The active parser, focused test, fixture, schema/type, and generated CSV surfaces contain no `form_prose`, `df_prose`, or controlled backticked `prose` value. No backwards-compatibility alias was added.
+
+## Validation evidence
+
+The remediation validation is mapped file-by-file in [changed-file-validation.md](./changed-file-validation.md).
+
+- `commonplace-validate` passed on every repaired library Markdown artifact. Two unchanged descriptions emit pre-existing length warnings (`axes-of-artifact-analysis.md` and `system-definition-artifacts-are-crystallized-reasoning-under-context.md`); there are no validation failures.
+- `commonplace-validate` passed cleanly on every changed workshop Markdown artifact.
+- `pytest tests/commonplace/lib/test_systems_matrix.py -q`: 11 passed.
+- `pytest -q`: 483 passed.
+- `git diff --check`: clean.
+- Historical *Where It Lives Is Not What It Is* captures are byte-unchanged from remediation start `b2d03311`; no named prose-review machinery changed.
+
+The final semantic-leftover searches found zero body/editorial-frame forms, zero readability tautologies, and zero awkward verb-plus-`in natural-language` forms. The bare-preposition search has one reviewed survivor: “land in natural-language, symbolic, or distributed-parametric forms,” where all three adjectives share the trailing noun `forms`. `ordinary natural-language` has one reviewed survivor, “ordinary natural-language instructions,” where `ordinary` modifies `instructions` rather than the category name.
 
 ## Verification handoff
 
-Independent verification is intentionally not part of this execution session. Every occurrence row says `pending` in its verification column. The verifier should read the ledger and row tables from the handoff commit, compare implemented wording against corpus commit `f5a4230b`, rerun the four searches, and verify the whole-ledger totals before changing any verification field. There are no unresolved implementation cases.
+This execution repaired implementation and evidence; it did not perform the new independent verification. The verifier must start from the committed handoff, compare semantic wording against repaired corpus commit `760bf239`, rerun the migration plan’s entire protocol over the 1,722 semantic rows and 181 executable rows, and only then change verification fields. The workshop remains open and there are no unresolved implementation cases.
