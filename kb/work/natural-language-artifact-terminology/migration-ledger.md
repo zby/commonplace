@@ -14,7 +14,7 @@
 | excluded roots | `kb/sources/`; `kb/reports/`; `kb/articles/`; other `kb/work/` workshops |
 | named exceptions | Captured versions of *Where It Lives Is Not What It Is*; named `prose` review machinery; `.replaced.*` historical review copies; quotations and historical records that must preserve source vocabulary |
 | primary locator | Baseline path plus nearest Markdown heading; line numbers are convenience only |
-| row-table status | Ready for a fresh independent verification: 1,903 globally unique rows, all retaining `verification: pending` |
+| row-table status | Independently verified against corpus commit `548f877e`: 1,903 globally unique rows, all marked `verification: verified` |
 
 The first verification failed because the matrix parser still encoded the old controlled vocabulary and because some editorial uses had been replaced mechanically. The first remediation retains or restores **prose** for editorial language, uses precise nouns where the category is not load-bearing, uses unhyphenated **natural language** as an ordinary noun, and reserves hyphenated **natural-language** compounds for category-bearing modifiers. The next independent verification found four wording-only leftovers; commit `548f877e` repairs those rows without changing the ledger population or dispositions.
 
@@ -62,7 +62,7 @@ The remediation reopened 58 semantic rows:
 
 It added executable rows `ES-0001`–`ES-0181`. No existing row ID was reused.
 
-The second verification reopened four additional existing semantic rows: `EX-0001`, `NT-0109`, `NT-0123`, and `NT-0163`. Their wording and row evidence were corrected in `548f877e`; all four remain verification-pending. Across both correction passes, 62 semantic rows have therefore been reopened.
+The second verification reopened four additional existing semantic rows: `EX-0001`, `NT-0109`, `NT-0123`, and `NT-0163`. Their wording and row evidence were corrected in `548f877e` and left verification-pending for the terminal pass. Across both correction passes, 62 semantic rows were therefore reopened.
 
 ## Reconciled totals
 
@@ -101,7 +101,7 @@ The second verification reopened four additional existing semantic rows: `EX-000
 | preserved | 191 |
 | **total** | **1,903** |
 
-All 1,903 rows have `verification: pending`.
+All 1,903 rows have `verification: verified`.
 
 ## Systems-matrix evidence
 
@@ -138,6 +138,8 @@ The remediation validation is mapped file-by-file in [changed-file-validation.md
 
 The final semantic-leftover searches found zero body/editorial-frame forms, zero readability tautologies, and zero awkward verb-plus-`in natural-language` forms. The bare-preposition search has one reviewed survivor: “land in natural-language, symbolic, or distributed-parametric forms,” where all three adjectives share the trailing noun `forms`. `ordinary natural-language` has one reviewed survivor, “ordinary natural-language instructions,” where `ordinary` modifies `instructions` rather than the category name.
 
-## Verification handoff
+## Independent verification result
 
-This execution repaired implementation and evidence; it did not perform the next independent verification. The verifier must start from the committed handoff, compare semantic wording against current corpus commit `548f877e`, rerun the migration plan’s entire protocol over the 1,722 semantic rows and 181 executable rows, and only then change verification fields. The workshop remains open and there are no unresolved implementation cases.
+Independent verification accepted corpus commit `548f877e`. It reconciled all 1,722 semantic rows and 181 executable rows, confirmed the four final wording corrections, reproduced the migration coverage counts, and found no unrecorded in-scope category use. The systems-matrix contract retains all 152 representational-form and 94 distilled-form natural-language components; the generated matrix and active vocabulary remain aligned. Focused tests pass 11/11, the full suite passes 483/483, deterministic validation is clean for the final correction set, `git diff --check` is clean, and the historical *Where It Lives Is Not What It Is* captures and named prose-review machinery remain unchanged.
+
+The whole 1,903-row ledger is verified. Workshop closure remains a separate action.

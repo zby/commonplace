@@ -14,6 +14,8 @@ Part of the workshop has landed:
 
 The unresolved part is collection and type scope: how a KB should declare collection-local vocabulary, type-specific terminology, imports, collisions, and validation expectations without hardcoding this repo's terms into framework skills.
 
+A second unresolved thread is how to migrate a load-bearing term after its boundary changes. The completed `prose` → `natural-language` workshop produced a [terminology migration method candidate](./terminology-migration-method-candidate.md). It remains provisional: the next vocabulary shift should test the candidate and determine whether a recurring core deserves promotion to an instruction.
+
 A constraint on that design arrived from the distillation migration and is now a library note: [vocabulary collisions are prevented at write time, not resolved at read time](../../notes/vocabulary-collisions-prevented-at-write-time-not-read-time.md) (promoted 2026-07-17 from this workshop's [prose-has-no-scope.md](./prose-has-no-scope.md), which retains the evidence pointers and open policy items). Prose offers no read-time scoping and context assembly is concatenation without a linker, so two senses of one term merge silently whenever notes co-load — and the sub-agent isolation remedy cannot apply to library artifacts that exist to be co-loaded. Consequence for the candidate model: imports, qualified names, and shadowing have no prose implementation; collision *handling* must mean collision *prevention* — a one-term-one-sense invariant across all vocabulary sources that can co-load, with multi-word coinages as the collision-free naming path.
 
 ## Question
@@ -75,6 +77,7 @@ Audience should likely be a KB-level contract rather than a collection-level con
 - A small update to `cp-skill-write` telling it to load collection/type vocabulary policy without naming terms.
 - Optional revisions to type specs if type-specific vocabulary requirements become real.
 - A migration note for consuming projects if active vocabulary becomes part of `commonplace-init`.
+- A tested terminology-migration instruction, but only if another vocabulary shift confirms the provisional method candidate.
 
 ## Closure
 
@@ -96,3 +99,4 @@ Close this workshop when we have a concrete policy proposal that answers:
 - [ADR-022: active vocabulary and write-path first mentions](../../reference/adr/022-active-vocabulary-and-write-path-first-mentions.md) — landed decision for KB-global active vocabulary in `AGENTS.md`.
 - [Writing skill](../../instructions/cp-skill-write/SKILL.md) — current generic write path.
 - [Link vocabulary](../../reference/link-vocabulary.md) — current relationship-label catalogue, including `defined-in`.
+- [Terminology migration method candidate](./terminology-migration-method-candidate.md) — provisional procedure extracted from one fully verified migration and awaiting a second test.

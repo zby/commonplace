@@ -376,3 +376,7 @@ Correction start: `834c5aa7`. Corrected corpus commit: `548f877e`. The four repo
 | `kb/work/natural-language-artifact-terminology/changed-file-validation.md` | this mapping | PASS — clean |
 
 Targeted searches find none of the four rejected forms. Focused systems-matrix tests pass 11/11, the full suite passes 483/483, and all 1,903 globally unique rows still have `verification: pending`.
+
+## Independent verification acceptance
+
+A separate verification pass accepted corpus commit `548f877e`. It reran the row, coverage, semantic, executable-surface, generated-matrix, historical-exclusion, deterministic-validation, and test checks described in the migration plan. All 1,903 occurrence rows are now marked `verified`; workshop closure remains separate.

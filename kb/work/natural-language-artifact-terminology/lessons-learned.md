@@ -2,6 +2,8 @@
 
 This migration records what the `prose` → `natural-language` change taught beyond the vocabulary result itself.
 
+The procedural lessons have been transferred as a provisional [terminology migration method candidate](../vocabulary-governance/terminology-migration-method-candidate.md). They remain workshop material until another vocabulary shift tests whether the method recurs; this file retains the case-specific evidence until this workshop closes.
+
 ## Classification has to precede replacement
 
 The exact `prose artifact(s)` seed exposed four different outcomes: a category replacement, the narrower model-input term `prompt`, a precise artifact noun, and preservation. Expanding from that seed to technical compounds and then to the broad residual audit kept ordinary editorial uses, named review machinery, filenames, and historical records from being swept into the category change. A single replacement rule could not have produced the correct corpus.
