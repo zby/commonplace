@@ -61,7 +61,7 @@ Promotion path: OpenSage can move a trace into several stronger forms: a raw eve
 | Read-back | Explicit memory/history/file pulls plus pushed summaries and message-board diffs in configured runs | Mostly explicit pull through `rg`, indexes, links, skills, and loaded instructions |
 | Governance | Plugin order/config, sandbox constraints, schema/index creation, benchmark rewards, tool summaries | Frontmatter schemas, collection contracts, link vocabulary, deterministic validation, semantic review, git lifecycle |
 
-The strongest alignment is that both systems treat retained artifacts as behavior-shaping surfaces, not as a single generic memory bucket. OpenSage's Skills resemble Commonplace skills: a package of natural-language, metadata, scripts, and dependencies that can change future agent behavior.
+The strongest alignment is that both systems treat retained artifacts as behavior-shaping surfaces, not as a single generic memory bucket. OpenSage's Skills resemble Commonplace skills: a package of natural-language content, metadata, scripts, and dependencies that can change future agent behavior.
 
 The major divergence is governance. Commonplace makes durable claims source-grounded, typed, reviewed, and diffable in a Git repository. OpenSage lets behavior-shaping state accumulate across runtime surfaces: prompt appendices, sandbox files, graph nodes, generated tools, plugin mutations, message-board records, and RL/evaluation outputs. That is stronger for active agent operations and weaker for long-lived epistemic trust.
 

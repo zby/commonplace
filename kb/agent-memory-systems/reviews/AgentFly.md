@@ -101,7 +101,7 @@ Other consumers include the offline trainer, which consumes training rows to upd
 
 ## Curiosity Pass
 
-The repository name and README branding diverge: the requested source is AgentFly, while the README, package name, and clone instructions call the system Memento. The review uses AgentFly as the local review title and names the internal branding in natural-language.
+The repository name and README branding diverge: the requested source is AgentFly, while the README, package name, and clone instructions call the system Memento. The review uses AgentFly as the local review title and names the internal branding in prose.
 
 The README's "continual learning" claim is partly code-grounded and partly operational. The code does implement automatic case accumulation and retriever training data capture; retraining still requires a separate training invocation, and there is no scheduler or closed-loop checkpoint refresh in the inspected files.
 

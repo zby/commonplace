@@ -59,7 +59,7 @@ Promotion path: raw conversation/tool traces can become compacted segment summar
 
 Virtual Context is a strong counterexample to treating "memory" as only a vector store or only a note repository. It manages the provider request path itself: it can remove old raw bulk, inject selected summaries/facts, expose paging tools, and leave restore references for hidden evidence. Commonplace deliberately avoids owning the runtime LLM call; it makes durable knowledge easier to inspect, cite, validate, connect, archive, and revise.
 
-The trust tradeoff is the main divergence. Virtual Context is better at live continuity and token control, but its central retained artifacts are generated summaries, generated facts, embeddings, and database rows. Commonplace is slower and more manual, but a durable claim can be read as natural-language, checked against citations, reviewed, and versioned in git before it becomes high-authority context.
+The trust tradeoff is the main divergence. Virtual Context is better at live continuity and token control, but its central retained artifacts are generated summaries, generated facts, embeddings, and database rows. Commonplace is slower and more manual, but a durable claim can be read as natural language, checked against citations, reviewed, and versioned in git before it becomes high-authority context.
 
 ### Borrowable Ideas
 

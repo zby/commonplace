@@ -17,7 +17,7 @@ That is not the same as [formal symbolic systems assessing explanatory-reach thr
 
 The [formalization boundary](./formal-systems-assess-explanatory-reach-through-causal-and-proof.md) reappears here in a different [representational form](./definitions/representational-form.md): a world model can support reach-assessment only as far as its learned state, action conditioning, training distribution, and evaluation regime cover the intended claim. A model that predicts familiar videos, or succeeds on one robot setting, has not thereby assessed explanatory-reach for arbitrary physical reasoning. The explanatory-reach enters through the counterfactual test surface: what happens when the agent considers an action, shift, or unseen setting the commitment says should still be covered?
 
-So world models belong beside causal/proof obligations, not inside them. If a system's commitment is stored as natural-language, semantic judgment is still needed. If it is stored as a symbolic causal or proof artifact, formal machinery can carry the assessment. If it is stored as a learned predictive artifact, action-conditioned prediction and shift testing can carry part of the assessment.
+So world models belong beside causal/proof obligations, not inside them. If a system's commitment is stored in natural-language form, semantic judgment is still needed. If it is stored as a symbolic causal or proof artifact, formal machinery can carry the assessment. If it is stored as a learned predictive artifact, action-conditioned prediction and shift testing can carry part of the assessment.
 
 ---
 

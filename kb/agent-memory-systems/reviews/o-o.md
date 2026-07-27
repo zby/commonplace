@@ -38,7 +38,7 @@ o-o, from `jahala/o-o`, is a file-native living-document pattern: each `.o-o.htm
 
 **Article file.** The operative object is a bundle: visible article content, citations, document metadata, update contract, prior-research cache, changelog, rendering JavaScript, and executable shell. Its strength is that the behavior-shaping state travels with the readable document. Its weakness is that one file mixes durable knowledge, runtime orchestration, UI, and write policy, so accidental broad edits can damage several authorities at once.
 
-**Update contract.** The `oo-contract` JSON block is stronger than ordinary natural-language documentation because the shell prompt explicitly instructs the update agent to treat it as the instruction source. It controls the future update's subject boundary, source policy, sections, budget, image handling, and allowed mutation area.
+**Update contract.** The `oo-contract` JSON block is stronger than ordinary documentation because the shell prompt explicitly instructs the update agent to treat it as the instruction source. It controls the future update's subject boundary, source policy, sections, budget, image handling, and allowed mutation area.
 
 **Source cache and changelog.** These are compact memory surfaces for future updates. They preserve previous sources and facts well enough for incremental research, but they are not provenance-complete: source-cache facts are not tied to exact article spans, source quotes, retrieval timestamps per fact, extraction prompts, or confidence states.
 

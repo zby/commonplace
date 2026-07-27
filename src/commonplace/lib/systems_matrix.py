@@ -42,7 +42,11 @@ SINGLE_VOCAB = {
 # --- one-hot axes: column -> the controlled backticked token it fires on -------
 # Applicability decides whether a missing token is flagged (worklist) or simply
 # left blank (axis does not apply to this system).
-FORM = {"form_prose": "prose", "form_symbolic": "symbolic", "form_parametric": "parametric"}
+FORM = {
+    "form_natural_language": "natural-language",
+    "form_symbolic": "symbolic",
+    "form_parametric": "parametric",
+}
 
 ONEHOT_AXES = {
     "Lineage": {
@@ -77,7 +81,10 @@ ONEHOT_AXES = {
     "Learning timing": {
         "lt_online": "online", "lt_offline": "offline", "lt_staged": "staged"},
     "Distilled form": {
-        "df_prose": "prose", "df_symbolic": "symbolic", "df_parametric": "parametric"},
+        "df_natural_language": "natural-language",
+        "df_symbolic": "symbolic",
+        "df_parametric": "parametric",
+    },
 }
 
 # Axes applicable only to push/both read-back, to trace-learning systems, and to

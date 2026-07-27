@@ -44,7 +44,7 @@ What the diagnostic does show:
 
 - **Heuristic natural-language guidance with behavioral authority** is almost entirely scarcity-driven. Its value is conditional on the binding constraint — so whether it thins in practice tracks whether that constraint relaxes, not anything intrinsic to natural-language.
 - **Authority-bearing natural-language constraints** (permissions, safety rules, scoping, contracts, commitments) persist for reasons the thought experiment doesn't address — they bind even when facts are abundant and reasoning is free.
-- **Symbolic behavior-shaping artifacts** have a compound motivation: scale decomposition (scarcity-driven, same dynamic as natural-language) plus the [constraining compound](./definitions/constraining.md) (structural, independent of context). Only the structural part would persist under genuine unbounded-context conditions, if those ever arrived.
+- **Symbolic behavior-shaping artifacts** have a compound motivation: scale decomposition (scarcity-driven, the same dynamic as natural-language content) plus the [constraining compound](./definitions/constraining.md) (structural, independent of context). Only the structural part would persist under genuine unbounded-context conditions, if those ever arrived.
 - The [readable-artifact loop](./readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md) evolves asymmetrically across the natural-language/symbolic boundary for reasons partly downstream of this split — symbolic has a structural component that natural-language content lacks, giving it a floor the natural-language form doesn't have — but the full asymmetry story involves iteration dynamics this note doesn't treat.
 
 ---

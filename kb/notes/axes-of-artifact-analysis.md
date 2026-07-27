@@ -38,7 +38,7 @@ The natural-language/symbolic boundary is the phase transition [codification](./
 
 Storage substrate records where retained state persists: repo files, database rows, service-managed objects, graph stores, vector stores with attached records, prompt registries, runtime configuration, audit logs, or model-artifact stores. Substrate is operationally important because it determines permissions, deletion, versioning, rollback, deployment, and latency.
 
-Substrate is not representational form. A repository may contain natural-language workflows, symbolic validators, generated prompt views, route tables, and pointers to checkpoints. A vector store may package readable natural-language records together with distributed-parametric embeddings and ranking behavior. [Cognee](../agent-memory-systems/reviews/cognee.md) keeps natural-language records in a database-backed poly-store; the substrate changed, the natural-language form did not.
+Substrate is not representational form. A repository may contain natural-language workflows, symbolic validators, generated prompt views, route tables, and pointers to checkpoints. A vector store may package natural-language records together with distributed-parametric embeddings and ranking behavior. [Cognee](../agent-memory-systems/reviews/cognee.md) keeps natural-language records in a database-backed poly-store; the substrate changed, the natural-language form did not.
 
 ## Lineage
 

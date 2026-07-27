@@ -66,7 +66,7 @@ The strongest divergence is trust. Cortex can classify, link, infer, and retriev
 
 ### Borrowable Ideas
 
-**Make controlled relationships executable where they already have semantics.** Cortex's OWL/RDF layer is heavier than Commonplace needs for ordinary natural-language notes, but the SPARQL-rule pattern is worth borrowing selectively. If a Commonplace link label declares inverse, symmetric, or transitive semantics, high-value labels could be checked or materialized by validation. Ready only for labels where automation would prevent real review mistakes.
+**Make controlled relationships executable where they already have semantics.** Cortex's OWL/RDF layer is heavier than Commonplace needs for ordinary notes, but the SPARQL-rule pattern is worth borrowing selectively. If a Commonplace link label declares inverse, symmetric, or transitive semantics, high-value labels could be checked or materialized by validation. Ready only for labels where automation would prevent real review mistakes.
 
 **Expose brief/context/read/dossier as named read surfaces.** Commonplace already has search snippets, descriptions, indexes, and full files, but Cortex's presenter names make the intended context budget easy for an agent to choose. A future Commonplace command could expose `brief`, `read`, and `dossier` modes over notes without changing the Markdown substrate. Needs a concrete agent-facing CLI use case.
 

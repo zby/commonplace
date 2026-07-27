@@ -7,7 +7,7 @@ tags: [foundations, constraining]
 
 # LLM-executed methodologies are metacircular interpreters, not compilers
 
-A methodology that LLM agents execute by reading its own artifacts is self-hosting in the interpreter sense, not the compiler sense. The host machine is the LLM plus harness. The methodology is source code in natural-language and structured files. When agents use that methodology to maintain the files that define it, the system is metacircular: the rules for operating the artifact system are themselves artifacts in that system.
+A methodology that LLM agents execute by reading its own artifacts is self-hosting in the interpreter sense, not the compiler sense. The host machine is the LLM plus harness. The methodology is encoded in natural-language content and structured files. When agents use that methodology to maintain the files that define it, the system is metacircular: the rules for operating the artifact system are themselves artifacts in that system.
 
 This distinction matters because compiler self-hosting suggests a binary milestone: the compiler can build itself or it cannot. LLM-executed methodology is gradual. Some rules stay interpreted as natural-language each session, some become structured skills, and some cross into symbolic consumers such as schemas, validators, tests, and commands.
 
@@ -21,7 +21,7 @@ The metacircular part appears when those same artifacts govern edits to themselv
 
 The compiled analogue is [codification](./definitions/codification.md). A practice starts as interpreted natural-language while its meaning is still moving, then moves down the enforcement gradient as it stabilizes: instruction, skill, hook, script, schema, validator, or command. That is why [methodology enforcement is constraining](./methodology-enforcement-is-constraining.md): each step reduces semantic underspecification and execution indeterminism.
 
-This is closer to a JIT than to whole-program compilation. Stable hot paths become symbolic artifacts with assigned consequences; unsettled judgment stays in natural-language where humans and agents can still revise the interpretation cheaply.
+This is closer to a JIT than to whole-program compilation. Stable hot paths become symbolic artifacts with assigned consequences; unsettled judgment stays in natural language where humans and agents can still revise the interpretation cheaply.
 
 ## Self-hosting remains partial
 

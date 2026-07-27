@@ -68,6 +68,8 @@ rg -n -i '\bnatural-language (artifacts?|form|content|records?|instructions?)\b'
 
 See the [migration plan](./plan.md).
 
+The first independent verification found semantic and executable-surface leftovers. See the [verification-remediation plan](./remediation-plan.md) for the correction pass required before verification can be attempted again.
+
 ## Work products
 
 - A migration ledger, split into manifest-backed batch tables if needed, that classifies each category-bearing use as **natural-language term**, **prompt shorthand**, **more precise noun**, or **preserve prose**.

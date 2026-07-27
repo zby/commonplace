@@ -67,7 +67,7 @@ The read-back story is different. Commonplace agents deliberately pull from `rg`
 
 **Router benchmarks for activation descriptions.** The benchmark loop treats skill descriptions as a measurable routing surface, not natural-language taste. Commonplace skills and instructions could use fixture prompts to catch boundary drift. Ready when there are enough skills with ambiguous activation boundaries.
 
-**Claim provenance for volatile numeric claims.** `researcher/claims/index.jsonl` is a small, practical way to keep benchmark/vendor claims from rotting in natural-language. Commonplace could apply this to external-system reviews and comparative notes. Ready now for high-volatility claims.
+**Claim provenance for volatile numeric claims.** `researcher/claims/index.jsonl` is a small, practical way to keep benchmark/vendor claims from rotting in prose. Commonplace could apply this to external-system reviews and comparative notes. Ready now for high-volatility claims.
 
 **Do not borrow the flat marketplace as the whole KB model.** The plugin shape is good for distribution, but Commonplace should keep stronger artifact classes and authority boundaries than "all useful guidance is a skill."
 

@@ -51,7 +51,7 @@ So the contrast is not neural versus symbolic, nor computational expressivity. I
 
 Symbolic systems implement the same pathway wherever the theory space and acceptance criteria are formalized: causal discovery searches for structure whose consequences survive specified interventions, and [DreamCoder](../sources/dreamcoder-wake-sleep-bayesian-program-learning.ingest.md) grows a library of reusable program abstractions that compound across a task family.
 
-DreamCoder also shows what formalization buys, and it is the acceptance test rather than the search. Its retention gate is statistical — an abstraction is kept when it reduces description length — so the decision to retain is mechanical. Nothing plays that role for a theory still in natural-language, where stating where the theory stops remains a judgment, which is why the natural-language route's advantage rests on a capability with no formal proxy. The cost of the formal route is a supplied language, variables, primitives, search procedure, and acceptance test, [worked out in the causal and proof obligations that formal systems check](./formal-systems-assess-explanatory-reach-through-causal-and-proof.md). LLMs take the opposite trade: a far more open-ended theory space before formalization, with weaker guarantees.
+DreamCoder also shows what formalization buys, and it is the acceptance test rather than the search. Its retention gate is statistical — an abstraction is kept when it reduces description length — so the decision to retain is mechanical. Nothing plays that role for a theory still in natural-language form, where stating where the theory stops remains a judgment, which is why the natural-language route's advantage rests on a capability with no formal proxy. The cost of the formal route is a supplied language, variables, primitives, search procedure, and acceptance test, [worked out in the causal and proof obligations that formal systems check](./formal-systems-assess-explanatory-reach-through-causal-and-proof.md). LLMs take the opposite trade: a far more open-ended theory space before formalization, with weaker guarantees.
 
 ## What the negative results actually bound
 
@@ -94,7 +94,7 @@ A generic accuracy gain would not establish the mechanism. Every arm is a retent
 - Whether a theory's explanatory-reach can be estimated from its addressable form before any shift tests it, or whether legibility supplies only a handle on reach established some other way.
 - Whether validating a theory's reach against an informally specified shift is itself target-data-free, or quietly consumes the observations the conjecture claims to save.
 - Whether discovery, codification, validation, and maintenance cost for a *library* of many theories grows faster than the smooth cost curve of parametric scaling as task families accumulate.
-- Why LLM-mediated evaluators appear able to reach-assess claims still in natural-language, which no current theory explains and on which this pathway's advantage rests.
+- Why LLM-mediated evaluators appear able to reach-assess claims still in natural-language form, which no current theory explains and on which this pathway's advantage rests.
 
 ---
 

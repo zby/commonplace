@@ -23,7 +23,7 @@ That is what makes the resulting failure easy to misdiagnose. Facing an unverifi
 
 ## The classification has to be readable by the check
 
-An ontology held only in the maintainers' heads, or described in natural-language *about* the layer, does not do this work. To dispatch a check, the class must be legible in the artifact itself — frontmatter, path, declared type — which is the natural-language-to-symbolic crossing [codification](./definitions/codification.md) names. And the class must assert something structural, [since document types should be verifiable](./document-types-should-be-verifiable.md): a label that adds no checkable information is decoration, and restores the undefined domain under a more confident name.
+An ontology held only in the maintainers' heads, or described in prose *about* the layer, does not do this work. To dispatch a check, the class must be legible in the artifact itself — frontmatter, path, declared type — which is the natural-language-to-symbolic crossing [codification](./definitions/codification.md) names. And the class must assert something structural, [since document types should be verifiable](./document-types-should-be-verifiable.md): a label that adds no checkable information is decoration, and restores the undefined domain under a more confident name.
 
 ## Heterogeneity is what makes the claim bite
 

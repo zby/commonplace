@@ -121,7 +121,7 @@ All 24 migrated files validate clean; all 234 tests pass.
 
 ### Pattern C — Within-collection absolute references
 
-**Example.** `REVIEW-SYSTEM.md`: "Instruction: `kb/instructions/run-review-batches.md`" — a code-formatted text reference from one file in `kb/instructions/` to another. Or inside a note, natural-language text like "see `kb/notes/distillation-is-transformation-not-selection.md`" (rare — notes mostly use markdown links).
+**Example.** `REVIEW-SYSTEM.md`: "Instruction: `kb/instructions/run-review-batches.md`" — a code-formatted text reference from one file in `kb/instructions/` to another. Or inside a note, body text like "see `kb/notes/distillation-is-transformation-not-selection.md`" (rare — notes mostly use markdown links).
 
 **What they are.** Absolute paths as display text (code-fenced or prose), not markdown links. The path is shown to the user as-is.
 
@@ -186,7 +186,7 @@ These are Pattern E variants and Pattern F variants where the display text itsel
 1. **Shared `kb/types/` stays at top level** — do not nest it under `kb/commonplace/`. This keeps B1 frontmatter pointers invariant. Matches current `init_project.py` behavior.
 2. **Collection-local types (B2) use B2b** (confirmed 2026-04-23): migrate to file-relative frontmatter (`type: ../types/...` for notes in subdirectories, `type: ./types/...` for notes at collection root — same convention as markdown links). Extend the type resolver to accept file-relative paths (~1–2h of work, precedent exists for `$ref`). Invariant across source and ship. B1 (global `kb/types/`) stays absolute because file-relative would break across the namespace boundary (shared `kb/types/` lives outside `kb/commonplace/`).
 3. **Rewrite Patterns E and F to Pattern D** — convert `../kb/reference/...` and `kb/reference/...` (absolute URL) links to sibling-relative `../reference/...`. One-time mechanical rewrite, affects a small number of links (Pattern E has 1 known case; F needs a precise count but is bounded).
-4. **Accept cosmetic drift in Pattern C** — natural-language text like "`kb/instructions/run-review-batches.md`" shown to a user reading the shipped file will be inaccurate (the file is at `kb/commonplace/instructions/...`). Either rewrite display text at ship time or live with it. Small population.
+4. **Accept cosmetic drift in Pattern C** — body text like "`kb/instructions/run-review-batches.md`" shown to a user reading the shipped file will be inaccurate (the file is at `kb/commonplace/instructions/...`). Either rewrite display text at ship time or live with it. Small population.
 
 Under these conditions, Option E ships with **zero translation of Pattern-A content (the majority)**, no translation for B1 frontmatter, a bounded one-pass migration for B2 frontmatter, and a one-pass conversion of E/F → D.
 

@@ -34,7 +34,7 @@ Claim-level (no code inspected):
 
 ## Comparison with Our System
 
-Trajectory-Informed Memory Generation is closer to Commonplace than weight-learning systems because the promoted memory is readable natural-language, but it automates the extraction loop around a narrow task-completion oracle. Commonplace treats durable claims as authored and reviewed library artifacts; this system treats successful and failed task trajectories as raw material for automatic operational advice. The tradeoff is throughput versus governance: the paper's loop can mine many runs, while Commonplace keeps stronger review, lineage, and retirement expectations.
+Trajectory-Informed Memory Generation is closer to Commonplace than weight-learning systems because the promoted memory is readable text, but it automates the extraction loop around a narrow task-completion oracle. Commonplace treats durable claims as authored and reviewed library artifacts; this system treats successful and failed task trajectories as raw material for automatic operational advice. The tradeoff is throughput versus governance: the paper's loop can mine many runs, while Commonplace keeps stronger review, lineage, and retirement expectations.
 
 The most direct divergence is read-back. Commonplace generally requires an agent to search, navigate indexes, or follow links; the paper reports task-context-based retrieval that pushes selected tips into the prompt before reasoning. That makes activation more automatic, but it also creates risk from mismatched or stale tips, and the paper snapshot does not document a lifecycle for retiring bad guidance.
 

@@ -39,7 +39,7 @@ Agile was already doing deploy-time learning, with an asymmetry: code and specs 
 
 You deploy with behaviour in prompts, observe what works, codify the understood parts, and the prompts evolve as the code absorbs them. The boundary between code and natural-language moves as understanding accumulates.
 
-The end state also differs. Agile treats natural-language specs as temporary — stories waiting to become code. Deploy-time learning recognises that some parts *should stay in natural-language* because they require judgment deterministic code can't capture. The hybrid is the end state, not a waypoint.
+The end state also differs. Agile treats natural-language specs as temporary — stories waiting to become code. Deploy-time learning recognises that some parts *should stay in natural language* because they require judgment deterministic code can't capture. The hybrid is the end state, not a waypoint.
 
 ## Boundary
 

@@ -209,7 +209,7 @@ A local multi-agent office where trace-learning sits inside the broker/wiki runt
 
 **Extraction.** Artifact extraction prompts for entities and facts, resolves entities, computes deterministic fact IDs, and persists facts to both index state and JSONL logs. Playbook synthesis reads recent execution entries and updates only `## What we've learned`, preserving the authored procedure body.
 
-**Promotion.** Facts, entity briefs, wiki articles, playbooks, and compiled `SKILL.md` files in the git wiki, plus team skills in broker state. The learned forms are readable natural-language and symbolic artifact state, not model weights.
+**Promotion.** Facts, entity briefs, wiki articles, playbooks, and compiled `SKILL.md` files in the git wiki, plus team skills in broker state. The learned forms are readable text and symbolic artifact state, not model weights.
 
 **Scope.** Workspace/team-scoped multi-agent office. The strongest new subtype is the execution-log-to-playbook-skill loop: repeated procedure runs revise a bounded learned section, which then recompiles into the next invokable skill wrapper.
 
@@ -265,7 +265,7 @@ Code-inspected outer loop for evolving a NexAU coding-agent harness against Harb
 
 **Extraction.** Deterministic code computes statistics and change attribution; Agent Debugger turns cleaned traces into per-task root-cause reports; the evolve agent reads those reports plus raw-trace pointers and writes prompt, tool, middleware, skill, sub-agent, or memory changes with prediction-bearing manifests.
 
-**Promotion.** Mixed system-definition artifacts in the experiment workspace: markdown prompts and memories, YAML tool and agent config, Python tool/middleware code, skill packages, and sub-agent definitions. Git commits and `change_manifest.json` make the promotion auditable, but there is no separate curated natural-language content library.
+**Promotion.** Mixed system-definition artifacts in the experiment workspace: markdown prompts and memories, YAML tool and agent config, Python tool/middleware code, skill packages, and sub-agent definitions. Git commits and `change_manifest.json` make the promotion auditable, but there is no separate curated prose library.
 
 **Scope.** Per-experiment benchmark optimization, with Terminal-Bench defaults in the public config. It is closest to Meta-Harness on "harness as learning target," but its distinctive contribution is the component-level mutation menu plus debugger-mediated trace compression before the evolve step.
 

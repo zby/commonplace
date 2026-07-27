@@ -90,7 +90,7 @@ Pull read-back is still useful: an agent can read the latest entry, compute Role
 
 - Whether a future release adds executable crystallization that writes `crystallized.md`, patches canon pages, or records signatures; that would move the promotion path from documented protocol to implemented write-side behavior.
 - Whether the audit grows repair or autofix operations. That would change the write side from manual-only to manual plus automatic validation-driven maintenance.
-- Whether stale consensus and active-agent dormancy rules become code, since those are currently stronger in natural-language than in the audit implementation.
+- Whether stale consensus and active-agent dormancy rules become code, since those are currently stronger in prose than in the audit implementation.
 - Whether any host integration appears, such as an MCP server, pre-commit hook, AGENTS.md installer, or prompt assembler; that would change read-back from pull-only to push or both.
 - Whether L4-L5 semantic audit gets a retained report format with citations; that would create a more Commonplace-like bridge from structural lint to reviewable semantic QA.
 

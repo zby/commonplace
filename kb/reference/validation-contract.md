@@ -26,7 +26,7 @@ A type is verified by **three** mechanisms, and only the first two are the valid
 |---|---|---|---|
 | 1 | `schema` — declarative JSON Schema | validate time | no |
 | 2 | `type_rule` — imperative code the type registers | validate time | no |
-| 3 | **type-conformance review gate** — the type spec's *natural-language body* is the criterion, read by an LLM ([ADR 038](./adr/038-type-conformance-reviews-use-the-type-spec-as-the-gate.md)) | review time | yes |
+| 3 | **type-conformance review gate** — the type spec's *body text* is the criterion, read by an LLM ([ADR 038](./adr/038-type-conformance-reviews-use-the-type-spec-as-the-gate.md)) | review time | yes |
 
 This page documents 1 and 2. The third is not a lesser mechanism: **a type spec's natural-language instructions are an executable criterion, not documentation.** Everything a schema cannot express still binds — it binds at review time. That is why [`type-spec.md`](../types/type-spec.md) tells authors *not* to restate schema rules in body text: the schema already enforces them, so a restatement only spends reviewer judgment re-confirming what is already guaranteed, instead of on the properties only a reviewer can check.
 

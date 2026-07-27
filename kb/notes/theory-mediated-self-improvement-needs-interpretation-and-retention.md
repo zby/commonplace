@@ -45,7 +45,7 @@ Nothing here rebuts that. What it predicts is where to look: the artifact earns 
 - Whether the closure question was ever the interesting one. It framed the human as the thing to remove, when what the human was supplying is the evaluator — [methodological and computational closure track different changes](./methodological-and-computational-closure-track-different-changes.md), and a loop can close computationally while its acceptance gate gets weaker.
 - Whether a deliberately minimal toy pathway, built to be reflective and computationally closed from the start and sized to test the conjecture rather than to be useful, stays autonomous end to end — or whether the human reappears at a different point, designing its objective or judging its results.
 - Whether self-directed theories are harder to reach-assess than domain theories, since the system evaluating the theory is the system the theory describes, and a flattering self-theory has no external oracle to contradict it.
-- Whether condition 3's separable parts can be had at all in natural-language, or whether natural-language theories are addressable only as indivisible documents — replaceable but not rescopable — which would collapse the advantage over wholesale replacement.
+- Whether condition 3's separable parts can be expressed at all in natural language, or whether natural-language theories are addressable only as indivisible documents — replaceable but not rescopable — which would collapse the advantage over wholesale replacement.
 
 ---
 

@@ -59,7 +59,7 @@ Promotion path: authored/imported source material becomes source rows and LLM-ex
 | Read-back | Explicit CLI/dashboard/MCP/search/query pull | Mostly explicit pull through `rg`, indexes, links, skills, commands, and reviews |
 | Lifecycle | Reinforce, challenge, cascade, decay, edit/delete, render/export | Draft, connect, validate, review, replace/archive, promote from workshop to library |
 
-Quicky Wiki is closest to Commonplace at the boundary where source material becomes maintained knowledge. The difference is granularity. Quicky Wiki decomposes sources into claims and lets a database coordinate provenance, confidence, search, and outputs. Commonplace keeps whole artifacts readable, typed, and reviewable as natural-language.
+Quicky Wiki is closest to Commonplace at the boundary where source material becomes maintained knowledge. The difference is granularity. Quicky Wiki decomposes sources into claims and lets a database coordinate provenance, confidence, search, and outputs. Commonplace keeps whole artifacts readable, typed, reviewable, and in natural-language form.
 
 That makes Quicky Wiki better for broad ingestion, dashboard exploration, and confidence-oriented maintenance queues. Commonplace is slower but stronger when the artifact's argument, caveats, source grounding, and replacement history must remain directly inspectable by agents and maintainers.
 

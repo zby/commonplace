@@ -97,7 +97,7 @@ The main push injection point is prompt assembly before role invocation. `build_
 
 Selection complexity is controlled by component boundaries, semantic compaction, budget trimming, role-scoped components, protected hints/dead ends, manifest-first skill discovery, and lexical search. It is not a vector store or learned retriever in the inspected code. Effective precision, context dilution, and whether the receiving model obeys the injected memory remain runtime-quality questions.
 
-Other consumers matter. Human operators inspect run status, reports, trace timelines, context-selection reports, and exported packages. Curators consume playbooks and analyses. Training and distillation pipelines consume traces and datasets. Validators and mutation gates consume symbolic artifacts with stronger authority than ordinary natural-language memory.
+Other consumers matter. Human operators inspect run status, reports, trace timelines, context-selection reports, and exported packages. Curators consume playbooks and analyses. Training and distillation pipelines consume traces and datasets. Validators and mutation gates consume symbolic artifacts with stronger authority than natural-language memory.
 
 ## Curiosity Pass
 

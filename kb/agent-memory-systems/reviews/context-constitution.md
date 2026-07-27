@@ -29,7 +29,7 @@ Context Constitution, from letta-ai, is an authored policy repository for Letta 
 
 ## Artifact analysis
 
-- **Storage substrate:** `files` — The primary retained behavior-shaping state is authored Markdown in a GitHub repository; secondary substrates are only described in natural-language, including Letta memory blocks, MemFS projections, message databases, and model-training use.
+- **Storage substrate:** `files` — The primary retained behavior-shaping state is authored Markdown in a GitHub repository; secondary substrates are only described in prose, including Letta memory blocks, MemFS projections, message databases, and model-training use.
 - **Representational form:** `natural-language` `symbolic` — The Constitution and affordances are natural-language instructions and principles; repository paths, Markdown headings, `/system`, `/skills`, references, Git commits, and the whitespace workflow are symbolic structure. I found no parametric artifact in this checkout.
 - **Lineage:** `authored` — The repository's reviewed artifacts are human-authored public documents and a simple CI workflow. The docs discuss experience-based memory, message history, reflection, and training use, but this checkout does not create durable artifacts from agent traces.
 - **Behavioral authority:** `instruction` `validation` `knowledge` — The Constitution has instruction authority when loaded into prompting or agent guidance; the whitespace workflow has narrow validation authority over Markdown formatting; the README and affordances document also serve as knowledge artifacts for humans or agents learning the Letta context model.

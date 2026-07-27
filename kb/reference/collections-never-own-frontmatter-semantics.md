@@ -15,7 +15,7 @@ The argument is self-containment. If a collection could reinterpret what a schem
 
 - Reading any artifact's frontmatter would require joining two documents — the type spec *and* the local `COLLECTION.md` — instead of one.
 - Moving a file between collections would silently change what its frontmatter asserts, even with every byte of the file unchanged.
-- Validators would check syntax whose meaning they no longer know: the schema keyword would be intact while its semantics floated free in natural-language content the validator does not read.
+- Validators would check syntax whose meaning they no longer know: the schema keyword would be intact while its semantics floated free in body text the validator does not read.
 
 Keeping frontmatter semantics wholly inside the type spec is what makes a committed value mean one thing everywhere, checkable by code that reads only the schema.
 

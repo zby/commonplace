@@ -74,7 +74,7 @@ The main design difference is authority assignment. Commonplace tends to keep re
 
 **Record which memory was injected before rewarding it.** `_injected_episodes_by_task`, `times_injected`, and post-task Q-value updates create an attribution surface. Commonplace review runs could record which guidance was loaded before a run so later quality signals attach to the right artifact. Needs a run-log schema.
 
-**Keep graph/vector machinery below natural-language authority.** EQUIPA's embeddings and PageRank influence selection, while the injected object remains readable natural-language. That is the right direction if Commonplace adds derived search layers.
+**Keep graph/vector machinery subordinate to the injected content.** EQUIPA's embeddings and PageRank influence selection, while the injected object remains readable text. That is the right direction if Commonplace adds derived search layers.
 
 **Persist large outputs as references.** Replacing large tool outputs with preview-plus-path messages is directly borrowable for high-volume snapshot, review, and test-output workflows. Ready where output artifacts are retained on disk and referenced in context.
 
@@ -116,7 +116,7 @@ Authority at consumption is mostly advisory instruction. Injected lessons and ep
 
 ## Curiosity Pass
 
-**The everyday memory is ordinary natural-language despite advanced options.** Embeddings, graph ranking, SIMBA, and GEPA exist, but the common active path is short lesson and episode natural-language content inserted into the next prompt.
+**The everyday memory is ordinary prose despite advanced options.** Embeddings, graph ranking, SIMBA, and GEPA exist, but the common active path is short lesson and episode natural-language content inserted into the next prompt.
 
 **Default feature flags matter.** ForgeSmith lessons and episodes default on, while vector memory, knowledge graph, GEPA A/B testing, and session persistence default off. The implemented design is broader than the default runtime behavior.
 
