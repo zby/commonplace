@@ -71,17 +71,17 @@ We don't encode "assume loaded" in the vocabulary yet — too fragile, depends o
 
 ## When to inline vs. link
 
-**Inline** when:
+**Inline content** when:
 - All reachable readers need the content.
 - The content is short enough that it doesn't distort the host document.
-- The content is tightly fused with the host claim — the argument can't be read meaningfully without it.
+- The content is tightly fused with the host claim — readers need it locally to understand the argument without opening another artifact.
 
 **Link** when:
 - Only some readers need the content (conditional on task, skill, prior knowledge).
 - The content stands as its own unit with its own explanatory-reach.
-- The host document's argument survives without the linked content.
+- The host document remains understandable without loading the target, even when the target supplies load-bearing warrant.
 
-If the host argument doesn't survive without the linked content, don't link — restructure so both are in the same document, or fold one into the other. *Required* content isn't linked; it's co-located.
+If the host cannot be understood without the target's content, state or gloss the needed part locally and optionally link the fuller treatment. This does not make every link non-load-bearing: an inline premise link can remain essential to the argument's warrant while the host prose carries enough of the premise to be understood without dereferencing it.
 
 ## Implications for vocabulary design
 

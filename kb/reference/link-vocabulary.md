@@ -13,6 +13,8 @@ The source collection owns that decision. Each `COLLECTION.md` defines which des
 
 Labels name reader needs rather than ontology edges. A `grounds` link says "follow this if you need to verify the premise." An `implements` link says "follow this if you need the concrete realization." The label is useful only when the source, target, and reason form an articulated relationship.
 
+Every authored direction is a separate reader-aid decision. A link back from the target is welcome when it independently helps readers there; it may use an inverse label such as `contains` / `part-of`, or the same label when the relation is self-dual. Do not add it merely to mirror the first edge. Symmetry means the relation reads the same from either endpoint, not that both endpoints must author it; asymmetry does not prohibit a useful return link with its own reader need.
+
 The articulation test applies to every outbound link:
 
 > `[source] connects to [target] because [specific reason].`

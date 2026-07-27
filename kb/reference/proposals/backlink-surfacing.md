@@ -1,5 +1,5 @@
 ---
-description: "Proposal: how Commonplace could surface inbound links — build-time web rendering for humans, on-demand inversion for agents, curated symmetric labels for tension; committed generated footers and full manual bidirectionality are foreclosed"
+description: "Proposal: surface inbound links through build-time web rendering for humans and on-demand inversion for agents while allowing useful reciprocal links, not mandatory mirroring"
 type: ../types/design-proposal.md
 tags: [links]
 ---
@@ -13,7 +13,7 @@ How Commonplace could deliver the inbound-link view to its readers. Requirements
 - Outbound links are authored: inline prose links plus labelled "Relevant Notes" footers. No inbound visibility exists in the repo; inversion is possible on demand via `rg '<note-slug>' --glob '*.md'`, but agents must think to run it.
 - Nothing generated is committed at any size ([ADR 025](../adr/025-complete-generated-indexes-are-build-time-only.md), refined by ADR 026). Generated listings are materialized only at ProperDocs build time for the web view; curated tag READMEs receive no generated links.
 - Agents discover via curated heads plus scoped `rg`; ADR 025 deliberately added no query command, deferring codification until a recurring failure justifies it.
-- Symmetric link labels (`contradicts`, `contrasts`) are authored at both ends, so tension surfacing already works without machinery.
+- Self-dual link labels (`contradicts`, `contrasts`) may be authored from either or both endpoints when each direction helps its readers. They do not require dual authoring, so a one-sided tension still needs inversion to appear from the other endpoint.
 
 ## Design space, split by consumer
 
@@ -24,7 +24,7 @@ How Commonplace could deliver the inbound-link view to its readers. Requirements
 ## Foreclosed options
 
 - **Committed generated footers** ("Referenced by:" sections written into notes by a sync script) — violates nothing-generated-is-committed; the family precedent (`sync_topic_links.py` Topics footers) was itself retired.
-- **Full manual bidirectionality** (agents author a backlink for every outbound link) — fan-out makes upstream maintenance scale with a note's popularity; [ADR 020](../adr/020-theoretical-default-contrasts-mechanism.md) already decided the forward edge is canonical for exactly this reason.
+- **Mandatory manual bidirectionality** (agents author a backlink for every outbound link) — fan-out makes upstream maintenance scale with a note's popularity. This does not foreclose a reciprocal link that independently serves readers at the other endpoint.
 
 ## Open questions
 

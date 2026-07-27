@@ -36,7 +36,7 @@ Decision-cost argument from [`linking-theory.md`](../../notes/linking-theory.md)
 
 ### ADR 009 has an implicit directional rule worth stating
 
-The audit also surfaced that ADR 009's vocabulary is directionally asymmetric by design: most labels point *upstream* from source to target, one target typically has many downstream users linking up, and the inverse view is the auto-computed backlinks view rather than a manually-maintained set of forward edges. Leaving this implicit risks future label proposals drifting toward "every forward needs a paired backward" — which doesn't match the fan-out structure and would impose maintenance load that doesn't scale.
+The audit also surfaced that ADR 009's vocabulary is directionally asymmetric by design: most labels point *upstream* from source to target, one target typically has many downstream users linking up, and the inverse view is derived from authored links rather than represented by a required paired edge. Leaving this implicit risks future label proposals drifting toward "every forward needs a paired backward" — which doesn't match the fan-out structure and would impose maintenance load that doesn't scale.
 
 ## Decision
 
@@ -61,7 +61,7 @@ The vocabulary splits into two classes by directional shape. New label proposals
 | `exemplifies` (also `example`) | source is a concrete instance of target |
 | `mechanism` | target is source's operational engine |
 
-Each label points *upstream* (toward more fundamental, more general, or more foundational content). Each upstream note typically accumulates many incoming links — so the upstream note cannot, and should not, maintain forward links back to all of them. The forward edge from the downstream side is the canonical representation. The upstream view is the auto-computed backlinks view ([inbound and outbound links serve asymmetric reader needs](../../notes/inbound-and-outbound-links-serve-asymmetric-reader-needs.md)).
+Each label points *upstream* (toward more fundamental, more general, or more foundational content). Each upstream note typically accumulates many incoming links, so it should not be required to maintain forward links back to all of them. The authored edge from the downstream side is sufficient to derive the upstream note's inbound view ([inbound and outbound links serve asymmetric reader needs](../../notes/inbound-and-outbound-links-serve-asymmetric-reader-needs.md)). An upstream note may still author a reciprocal link when that direction independently helps its readers.
 
 **Symmetric labels (self-dual; either end may author):**
 
@@ -105,7 +105,7 @@ Not folded: `rationale` and `justification` are **kept distinct** in the catalog
 ### Not changing
 
 - ADR 009's decisions for the theoretical default remain in force; this ADR extends rather than supersedes.
-- Backlinks remain auto-computed; upstream notes are not required to carry forward links back to their users.
+- Inbound views remain derived on demand from authored links; upstream notes are not required to carry forward links back to their users.
 - Per-destination outbound blocks in each `COLLECTION.md` are updated separately to list the new labels on edges where they fire.
 
 ### Update discipline
