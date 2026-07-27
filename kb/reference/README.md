@@ -183,6 +183,8 @@ Look up how the shipped system is put together: its architecture, type system, a
 - [instruction-generation.md](./instruction-generation.md) — build-time instruction generation flow and `commonplace-init`
 - [review-architecture.md](./review-architecture.md) — how the review subsystem is built: package layout, storage schema, canonical-state-vs-derived-output, freshness mechanism, module map, and invariants (the build-side companion to [README-REVIEW-SYSTEM.md](./README-REVIEW-SYSTEM.md))
 - [lib-modules.md](./lib-modules.md) — internal API reference for `commonplace.lib` modules
+- [freshness-architecture.md](./freshness-architecture.md) — the general freshness substrate: commonplace store, file-text versioning, target baselines, transitions, global status, and the review adapter
+- [freshness-schemas.md](./freshness-schemas.md) — canonical JSON shapes for `commonplace-freshness-status`, `accept`, `ack`, and `retire`
 
 ### Type system and collection model
 
@@ -190,6 +192,8 @@ Look up how the shipped system is put together: its architecture, type system, a
 - [available-types.md](./available-types.md) — catalog of shipped types: global (`text`, `note`, `instruction`, `definition`, `index`) and directory-scoped specialised types
 - [type-loading.md](./type-loading.md) — how authoring skills and validation resolve a type contract through collection-scoped lookup
 - [link-vocabulary.md](./link-vocabulary.md) — linking approach and label catalogue: collection-owned outbound rules, reader-need labels, articulation tests, connect reports, and guidance for `COLLECTION.md` authors
+- [text-contract-profiles.md](./text-contract-profiles.md) — catalogue of the proven, named bundles of quality goal, title conventions, attribution, and link grammar a `COLLECTION.md` may adopt, extend, or start from
+- [collections-never-own-frontmatter-semantics.md](./collections-never-own-frontmatter-semantics.md) — why the collection/type split is asymmetric: a type spec owns frontmatter semantics, `COLLECTION.md` owns only text-level features
 - [definitions/](./definitions/dir-index.md) — vocabulary terms used by the shipped system (e.g., [collection](./definitions/collection.md))
 
 ### Authoring and operator procedures
@@ -199,6 +203,22 @@ Imperative how-to procedures live in [kb/instructions/](../instructions/) rather
 - Each collection's `COLLECTION.md` — register-specific writing conventions, quality goals, and placement rules
 - [README-REVIEW-SYSTEM.md](./README-REVIEW-SYSTEM.md) — how to use the review system: concepts, freshness, the batch workflow, and command surface (the how-it-is-built companion is [review-architecture.md](./review-architecture.md))
 - [FIX-SYSTEM.md](../instructions/FIX-SYSTEM.md) — current fix-system workflow
+- [full-improvement-pass-closure.md](./full-improvement-pass-closure.md) — how the full-improvement workflow reassays final note bytes, routes residual findings, and stops without claiming convergence
+- [harness-sub-agent-model-selection-regression.md](./harness-sub-agent-model-selection-regression.md) — an observed harness regression that removed per-worker model selection and mis-attributed review executions; read before trusting a model partition
+
+### The repository as a worked case
+
+Commonplace runs on its own methodology, so this collection also documents *this repository* as an operating instance — what it has been observed to do, under which declared boundary, and what that does and does not establish. These describe the case, not the surface a consuming project installs.
+
+- [commonplace-declared-frame.md](./commonplace-declared-frame.md) — the declared boundary all the assessments below are made under: what is inside, what is outside, and how to cite or depart from it
+- [commonplace-as-a-reflective-system.md](./commonplace-as-a-reflective-system.md) — classifies the repository as a human-inclusive reflective self-improving system and locates which functions in one observed pathway are human, joint, or computational
+- [commonplace-as-an-instrument.md](./commonplace-as-an-instrument.md) — what the KB application is *for* in the design program: the composition test, two worked provenance instances, and the transfer evidence the repository does not have
+- [design-rationale-management.md](./design-rationale-management.md) — how workshops, proposals, ADRs, contracts, and validators distribute design rationale, and the end-to-end continuity the shipped contracts do not enforce
+- [tag-readme-trace-observed-causal-connection.md](./tag-readme-trace-observed-causal-connection.md) — the ADR-026 change traced commit by commit as one observed instance of causal connection in both directions
+- [tag-readme-trace-as-self-improving-loop.md](./tag-readme-trace-as-self-improving-loop.md) — the same trace mapped onto search, evaluation, and retention, showing which half of each step runs in code
+- [where-change-candidates-come-from-in-commonplace.md](./where-change-candidates-come-from-in-commonplace.md) — how problem-noticing and candidate-drafting happen beyond a maintainer's own judgment
+- [agent-memory-coverage.md](./agent-memory-coverage.md) — how the shipped surfaces realize agent-memory requirements, and where they currently fall short
+- [commonplace-agent-memory-gap-plan.md](./commonplace-agent-memory-gap-plan.md) — the plan for closing those gaps: session traces, candidates, cue activation, behavioral evaluation, lifecycle, import, ranking, and authority
 
 ### Decision history
 
