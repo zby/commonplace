@@ -43,6 +43,8 @@ Library collections do not link **into** `kb/work/` — workshops are sinks, not
 
 When the workshop's question is answered, extract the durable conclusions into the right library collection (`kb/notes/`, `kb/reference/`, `kb/instructions/`, `kb/reference/adr/`), delete the workshop directory, and remove its entry from `kb/work/README.md`. See `kb/notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md` for the rationale.
 
+**No redirect, deliberately.** Workshops are published — `kb/work/` is not in `properdocs.yml`'s `exclude_docs`, because a live workshop is worth showing to someone for consultation. But closure does not add a `redirect_maps` entry the way [retiring a library artifact](../instructions/retire-artifact.md) does. The layer is temporary by design: a workshop URL was never a durable address, and a closed workshop often has several successors or none, so there is frequently no honest target to point at. Dead workshop URLs are an accepted cost, not an oversight — 84 closed workshops have left one redirect between them. Do not "fix" this by back-filling redirects.
+
 ## Types
 
 | type | file | use for |
