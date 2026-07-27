@@ -37,6 +37,7 @@ Out of scope:
 - ordinary editorial uses such as “clear prose,” “body prose,” “in prose,” or “improve the prose”;
 - named review machinery such as the `prose` review bundle and its gates;
 - verbatim quotations, captured sources, frozen snapshots, generated reports, and historical experiment outputs;
+- the captured versions of **Where It Lives Is Not What It Is** (`kb/sources/where-it-lives-architectural-vocabulary-retained-adaptation.md` and `kb/sources/where-it-lives-retained-adaptation-2026-06-23.md`), which retain the paper's historical `prose / symbolic / distributed-parametric` terminology until a separate editorial decision revises the article;
 - filenames and historical ADR wording unless leaving them unchanged would misstate the current system or break current navigation;
 - replacing precise nouns such as note, policy, reflection, record, instruction, or playbook merely because they are natural-language artifacts.
 
@@ -69,7 +70,7 @@ See the [migration plan](./plan.md).
 
 ## Work products
 
-- A migration ledger that classifies each category-bearing use as **natural-language term**, **prompt shorthand**, **more precise noun**, or **preserve prose**.
+- A migration ledger, split into manifest-backed batch tables if needed, that classifies each category-bearing use as **natural-language term**, **prompt shorthand**, **more precise noun**, or **preserve prose**.
 - A lightweight [lessons-learned record](./lessons-learned.md) that can support reusable methodology if the migration earns it.
 - A durable vocabulary decision, likely an ADR or an explicit revision rationale in the representational-form definition, that explains why the category name changed and records **prompt** as a narrower shorthand rather than a synonym.
 - One coherent corpus edit covering the active vocabulary, definitions, theory notes, current reference documentation, instructions, and maintained external-system reviews.

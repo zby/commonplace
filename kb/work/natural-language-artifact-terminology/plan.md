@@ -23,6 +23,8 @@ Create `migration-ledger.md` with one row per category-bearing occurrence. This 
 
 Seed the ledger from exact `prose artifact(s)` hits. Then expand it to technical compounds and contrasts such as `prose form`, `prose/symbolic`, `prose instruction`, `prose record`, and `prose-to-code`. Do not inventory every ordinary use of the word until the targeted categories are covered; the final residual audit catches the remainder.
 
+If one table becomes unwieldy, keep `migration-ledger.md` as a manifest and split the rows into linked batch tables. Row IDs remain globally unique, every occurrence belongs to exactly one batch, and batches own non-overlapping file sets so one file is never edited by two subagents. The manifest records the batch links and reconciled totals; verification may proceed batch by batch but must finish with a whole-ledger coverage check.
+
 Keep [lessons-learned.md](./lessons-learned.md) available during the migration so useful methodological observations are not lost. Let the work determine what is worth recording and what shape any reusable methodology should take.
 
 ## 3. Migrate the vocabulary spine
@@ -50,6 +52,8 @@ Process the maintained library in small groups so each diff can be judged in con
 Preserve each external system's actual architecture. A stored memory record is not necessarily a prompt; a generated system message or assembled model-input view is. Where an artifact has mixed operative parts, name the natural-language and symbolic parts separately.
 
 Do not edit captured sources, generated reports, or historical workshop outputs as part of these cohorts. If a maintained artifact quotes or discusses their old wording, distinguish the quoted source vocabulary from Commonplace's current vocabulary.
+
+In particular, preserve the historical terminology in both captured versions of **Where It Lives Is Not What It Is**. Any future terminology revision to that article is a separate editorial decision, not a mechanical consequence of this corpus migration.
 
 Split each cohort into semantic and simple bulk cases. The primary agent keeps cases that require category judgment, alter a claim, touch the vocabulary spine, or interact with mixed operative parts. Pre-classified cases whose replacement follows directly from the ledger may be assigned to Luna subagents as non-overlapping file batches.
 
