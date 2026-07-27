@@ -2,6 +2,12 @@
 
 This is a classification-led migration, not a global replacement.
 
+## Execution contract
+
+An agent given the goal `Execute kb/work/natural-language-artifact-terminology/plan.md` owns steps 1–8 below. It must read the workshop [README](./README.md), record the starting Git revision, preserve unrelated work, and carry the migration through a committed verification handoff. It may use Luna subagents only under the batching rules in step 4.
+
+The executing agent does **not** independently verify its own table and does not delete the workshop. It fills implementation evidence, leaves verification fields pending, and stops when step 8's handoff is committed. A separate session performs the independent verification protocol at the end of this file.
+
 ## 1. Fix the decision rule
 
 Apply this order to each occurrence:
@@ -15,11 +21,18 @@ This ordering prevents both weak abstractions and overuse of **prompt**. A preci
 
 ## 2. Build the migration ledger
 
-Create `migration-ledger.md` with one row per category-bearing occurrence. This table is the migration's control surface and final deliverable:
+Create `migration-ledger.md` with one row per category-bearing occurrence. Begin it with a manifest recording the baseline revision, included roots, excluded roots and named exceptions, search queries, and candidate counts. This table is the migration's control surface and final deliverable:
 
-| id | location | current wording | classification | replacement | rationale | implementation | verification |
-|---|---|---|---|---|---|---|---|
-| stable row id | `path:line` | quoted phrase | precise noun / prompt / natural-language term / preserve prose | proposed wording | why this category applies | pending / changed / preserved | pending / verified |
+| id | baseline locator | original text | semantic class | disposition | expected final text | rationale | implementation | verification |
+|---|---|---|---|---|---|---|---|---|
+| stable row id | path + nearest heading | exact excerpt | category / model-input use / concrete artifact / editorial or historical use | natural-language / prompt / precise noun / preserve prose / excluded | exact wording or `UNCHANGED` | why this disposition applies | pending / changed / preserved | pending |
+
+Use a path plus nearest stable heading as the primary locator; line numbers may be recorded as conveniences but cannot be the only locator because they drift during editing. Preserve enough exact original text to reconstruct the decision after replacement. The executing agent must not mark any row verified.
+
+Alongside the occurrence rows, keep:
+
+- a coverage table mapping each search query and scope to its baseline hit count, ledger-row count, final hit count, and reconciliation status;
+- a changed-file table mapping each changed file to its row IDs and deterministic validation result.
 
 Seed the ledger from exact `prose artifact(s)` hits. Then expand it to technical compounds and contrasts such as `prose form`, `prose/symbolic`, `prose instruction`, `prose record`, and `prose-to-code`. Do not inventory every ordinary use of the word until the targeted categories are covered; the final residual audit catches the remainder.
 
@@ -97,9 +110,30 @@ Before closure, review the lessons that accumulated and extract any durable meth
 
 Do not delete the workshop yet: the completed migration table remains available for the terminal verification pass.
 
-## 8. Verify the completed table
+## 8. Prepare the verification handoff
 
-The last step of the migration run is a fresh verification of the produced table against the resulting corpus. For every row, confirm that:
+Reconcile the implementation and coverage tables, record the final residual-search outputs and validation results, and ensure every occurrence row has an implementation disposition with verification still pending. Commit the migration, tables, and supporting durable artifacts using explicit paths; do not delete the workshop or remove its active-workshop entry.
+
+The handoff must report:
+
+- baseline and result commit IDs;
+- the ledger manifest and any batch-table paths;
+- counts by disposition and implementation state;
+- changed-file validation results;
+- final targeted and broad residual-search results;
+- any unresolved case that prevents a complete implementation handoff.
+
+The execution goal is complete only when the implementation is committed, no in-scope occurrence remains unclassified or unimplemented, validation is clean, and the table is ready for independent verification. If an unresolved case remains, report the goal as blocked rather than representing the table as complete.
+
+Suggested commit boundaries:
+
+1. canonical vocabulary spine and durable decision;
+2. dependent library migration;
+3. residual audit, deliberate exceptions, and verification handoff.
+
+## Independent verification protocol
+
+This protocol belongs to the separate verification session, not to the agent executing steps 1–8. Verify the produced table against the result commit. For every row, confirm that:
 
 - the recorded location and classification cover the original occurrence;
 - the implemented wording matches the recorded disposition;
@@ -107,12 +141,6 @@ The last step of the migration run is a fresh verification of the produced table
 - changed files pass deterministic validation;
 - targeted and broad residual searches reveal no unrecorded in-scope category uses.
 
-Mark a row `verified` only from this pass, not merely because its implementing agent reported completion. If verification finds an error or missing occurrence, reopen the affected rows, correct the corpus or table, and rerun the verification; the terminal successful action remains verification of the whole table.
+Also reconcile the manifest totals, coverage table, batch membership, and changed-file table. Mark a row `verified` only from this independent pass, not because its implementing agent reported completion. If verification finds an error or missing occurrence, reopen the affected rows, correct the corpus or table, and rerun the verification; the terminal successful action remains verification of the whole table.
 
 Workshop closure—deleting this directory and removing its active-workshop entry—follows acceptance of the verified result rather than being folded into the migration run.
-
-Suggested commit boundaries:
-
-1. canonical vocabulary spine and durable decision;
-2. dependent library migration;
-3. residual audit, deliberate exceptions, and final table verification.
