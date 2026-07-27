@@ -6,9 +6,9 @@ tags: [learning-theory, constraining]
 
 # Codification
 
-The far end of the [constraining](./constraining.md) spectrum — the point where constraining the interpretation space crosses from natural language into a symbolic artifact with formal semantics or assigned consequences. In the main practical KB case, natural language instructions become executable code. More generally, the medium changes from prose interpreted by an LLM or human into a symbolic form interpreted by a runtime, parser, validator, type checker, query engine, or other formal consumer. It is a phase transition: the nature of the artifact changes fundamentally.
+The far end of the [constraining](./constraining.md) spectrum — the point where constraining the interpretation space crosses from natural language into a symbolic artifact with formal semantics or assigned consequences. In the main practical KB case, natural-language instructions become executable code. More generally, the medium changes from natural-language content interpreted by an LLM or human into a symbolic form interpreted by a runtime, parser, validator, type checker, query engine, or other formal consumer. It is a phase transition: the nature of the artifact changes fundamentally.
 
-This is the KB's internal technical use of the word. It is narrower than ordinary "codification," which can mean putting norms into systematic written form, including legal codes, formal policies, or other precise prose. In this KB, prose-to-prose formalization is constraining, but not codification unless the result is a symbolic artifact whose elements have formal semantics or defined operational consequences.
+This is the KB's internal technical use of the word. It is narrower than ordinary "codification," which can mean putting norms into systematic written form, including legal codes, formal policies, or other precise prose. In this KB, natural-language-to-natural-language formalization is constraining, but not codification unless the result is a symbolic artifact whose elements have formal semantics or defined operational consequences.
 
 Codification is not a separate mechanism from constraining; it's what constraining looks like when it goes all the way. Everything below codification on the constraining spectrum (definitions, conventions, structured sections, clearer descriptions) constrains the interpretation space while staying in natural language. Codification leaves natural-language interpretation for a symbolic medium.
 
@@ -26,7 +26,7 @@ Examples: replacing an LLM slug generator with `python-slugify`; moving CSV stat
 
 ## Exclusions
 
-Writing a convention is not codification when it stays in natural language; it constrains interpretation but keeps the LLM or human as the interpreter. Extracting a skill from methodology notes is not codification when the skill remains prose instructions; it is same-medium derivation, [since skills derive from methodology](../skills-derive-from-methodology.md) without a phase change.
+Writing a convention is not codification when it stays in natural language; it constrains interpretation but keeps the LLM or human as the interpreter. Extracting a skill from methodology notes is not codification when the skill remains natural-language instructions; it is same-medium derivation, [since skills derive from methodology](../skills-derive-from-methodology.md) without a phase change.
 
 Turning a rule into legalese, a standards document, or a formal prose policy is not codification in this KB's technical sense. It may be strong constraining, but the artifact still depends on natural-language interpretation.
 
@@ -34,9 +34,9 @@ Structured Markdown, YAML, or JSON is not automatically codification. It becomes
 
 ## Misuse Cases
 
-- Calling every clearer instruction "codified" even though the consumer is still an LLM interpreting prose.
+- Calling every clearer instruction "codified" even though the consumer is still an LLM interpreting natural language.
 - Calling legalistic or policy prose codified in this KB's technical sense just because it is formalized.
-- Calling a prose skill codified merely because it has frontmatter. The frontmatter may be symbolic, but the operative guidance can still be prose.
+- Calling a natural-language skill codified merely because it has frontmatter. The frontmatter may be symbolic, but the operative guidance can still be natural-language.
 - Treating only executable code as codification. Code is the main practical case, but schemas, grammars, tables, and other symbolic artifacts can also codify when their formal semantics drive behavior.
 
 ---
@@ -44,7 +44,7 @@ Structured Markdown, YAML, or JSON is not automatically codification. It becomes
 Relevant Notes:
 
 - [constraining](./constraining.md) — parent mechanism: codification is the far end of the constraining spectrum
-- [skills derive from methodology](../skills-derive-from-methodology.md) — contrasts: same-medium derivation, the reshaping that stays prose where codification crosses into a symbolic artifact
+- [skills derive from methodology](../skills-derive-from-methodology.md) — contrasts: same-medium derivation, the reshaping that stays natural-language where codification crosses into a symbolic artifact
 - [the verifiability gradient](../verifiability-gradient.md) — the ladder across which codification sits at the far end
 - [spec-mining-as-codification](../spec-mining-as-codification.md) — the operational mechanism: observe behavior, extract patterns, write deterministic code
 - [oracle-strength-spectrum](../oracle-strength-spectrum.md) — operational guidance: hard oracles make codification easier, weak oracles resist it

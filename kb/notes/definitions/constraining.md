@@ -34,7 +34,7 @@ Constraining is a gradient, not a single operation. Each step removes some inter
 | Add structured sections | Assign meaning to document positions | Readers know how each part should be interpreted |
 | Add a schema or validator | Make field meanings and invalid values explicit | Unsupported interpretations are rejected |
 | Extract a deterministic function | Move from natural language to executable code, the main practical KB case | One operational interpretation is selected |
-| Create a formal schema, grammar, or route table | Move from prose to a symbolic artifact with assigned consequences | One symbolic interpretation is selected |
+| Create a formal schema, grammar, or route table | Move from natural-language to a symbolic artifact with assigned consequences | One symbolic interpretation is selected |
 
 The last step — [codification](./codification.md) — is the far end of the spectrum where the medium itself changes from natural language to a symbolic artifact with formal semantics. Executable code is the main practical KB case, but codification also includes schemas, grammars, route tables, and other symbolic artifacts when a formal consumer assigns their consequences. It is not a separate mechanism; it is constraining that has crossed a medium boundary and selected an operational interpretation.
 
