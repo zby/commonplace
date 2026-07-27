@@ -14,7 +14,7 @@ Two destinations. **Delete** is the default. **Archive** moves the file into a s
 ## When this does not apply
 
 - **Renaming or moving.** Use `commonplace-relocate-note` or `commonplace-relocate-directory`, which rewrite inbound links for you. Step 9's baseline retirement still applies afterwards: relocation does not re-key or retire baselines, so a rename orphans them exactly as a deletion does.
-- **Closing a workshop.** `kb/work/` is already a sink — no library artifact links into it and it is unpublished — so none of the dangling-reference work below has anything to act on. Its closure protocol is in `kb/work/COLLECTION.md`.
+- **Closing a workshop.** Use the closure protocol in `kb/work/COLLECTION.md` — extract, delete the directory, remove the `kb/work/README.md` entry. Steps 5 and 6 here have nothing to act on, since no library artifact links into a workshop. Steps 8 and 9 are a different matter: `kb/work/` **is** published (only `articles/drafts/`, `reports/`, and four `review-revise-gated` paths are excluded), and workshop files can carry freshness baselines, so a closure leaves dead URLs and orphaned baselines exactly as a deletion here would. The closure protocol does not currently cover either.
 - **Retiring a term** from the project vocabulary. That is an ADR-scale change affecting every occurrence across the corpus, not a single-artifact operation.
 
 ## Steps
