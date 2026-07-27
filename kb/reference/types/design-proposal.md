@@ -11,7 +11,9 @@ schema: ./design-proposal.schema.yaml
 
 Use a design proposal for a finished but unadopted design: the problem, the option space, the forces, and the free choices — without deciding. A design still being worked out stays in the workshop layer (`kb/work/`); a decided and implemented choice becomes an ADR (`../adr/`).
 
-Proposals live under `kb/reference/proposals/`. Once adopted or retired, a proposal is extracted and moved to `proposals/archive/`, which nothing outside it links into ([ADR 056](../adr/056-adopted-and-retired-proposals-archive-out-of-the-frontier.md)); archived files keep this type. This spec enforces only the mechanical core; the full authoring contract — including the judgment clauses no schema checks — is [proposals/README.md](../proposals/README.md).
+Proposals live under `kb/reference/proposals/`. This spec enforces only the mechanical core; the full authoring contract — including the judgment clauses no schema checks — is [proposals/README.md](../proposals/README.md).
+
+**Retirement destination: archive to `kb/reference/proposals/archive/`**, which nothing outside it links into ([ADR 056](../adr/056-adopted-and-retired-proposals-archive-out-of-the-frontier.md)). Archived files keep this type. A proposal becomes eligible once it is fully adopted (its choice ships as an ADR) or retired (a later decision forecloses it); the procedure is [retire an artifact](../../instructions/retire-artifact.md), which reads this line to pick its destination.
 
 ## Frontmatter
 

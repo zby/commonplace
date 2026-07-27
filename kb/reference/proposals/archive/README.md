@@ -10,13 +10,9 @@ Three jobs, all deliberate: **re-extraction** (something current was left behind
 
 Archived files are frozen. Correct them only for link integrity when something they point at moves.
 
-## Rules
+This README is the door: nothing else outside the archive links to files in it, so reaching one means coming through the Contents list below. If a job here turns up something still current, promote it into the frontier rather than linking to it.
 
-- **No library artifact links to files in it.** Two exceptions: this README, the door everyone comes through; and the workshop layer (`kb/work/`), where archive work is actually done and whose files are themselves temporary. ADRs and reference docs name archived proposals by title in prose, never by path.
-- **Archived files may link out.** Each carries a banner pointing to the ADR that adopted or retired it; sinks may cite sources.
-- **Repair by re-extraction, never by linking in.** Promote what was missed into the frontier. A live inbound link would make an archived document load-bearing again and defeat the separation.
-
-Contract: [`../README.md`](../README.md). Decision record: [ADR 056](../../adr/056-adopted-and-retired-proposals-archive-out-of-the-frontier.md).
+What must hold of an archived proposal, and why: [`../README.md`](../README.md). How a proposal gets here: [retire an artifact](../../../instructions/retire-artifact.md). Decision record: [ADR 056](../../adr/056-adopted-and-retired-proposals-archive-out-of-the-frontier.md).
 
 ## Contents
 
