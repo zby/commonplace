@@ -359,3 +359,20 @@ Remediation start: `b2d03311`. Repaired corpus commit: `760bf239`. This addendum
 | `kb/work/natural-language-artifact-terminology/changed-file-validation.md` | this mapping | PASS — clean |
 
 The historical captures `kb/sources/where-it-lives-architectural-vocabulary-retained-adaptation.md` and `kb/sources/where-it-lives-retained-adaptation-2026-06-23.md` are unchanged from `b2d03311`. `git diff --check` is clean. All 1,903 semantic and executable occurrence rows remain verification-pending.
+
+## Second-verification wording correction
+
+Correction start: `834c5aa7`. Corrected corpus commit: `548f877e`. The four reported wording rows were updated without changing row counts, dispositions, executable surfaces, historical captures, or verification state.
+
+| changed file | reopened row IDs | deterministic validation result |
+|---|---|---|
+| `kb/agent-memory-systems/README.md` | EX-0001 | PASS — clean |
+| `kb/notes/llm-executed-methodologies-are-metacircular-interpreters.md` | NT-0109 | PASS — clean |
+| `kb/notes/only-explicit-retention-is-durable-writable-and-addressable.md` | NT-0123 | PASS — clean |
+| `kb/notes/reflective-coverage-is-graded-across-representational-forms.md` | NT-0163 | PASS — clean |
+| `kb/work/natural-language-artifact-terminology/migration-rows-notes.md` | NT-0109, NT-0123, NT-0163 | PASS — clean |
+| `kb/work/natural-language-artifact-terminology/migration-rows-external-systems.md` | EX-0001 | PASS — clean |
+| `kb/work/natural-language-artifact-terminology/migration-ledger.md` | manifest and reconciliation | PASS — clean |
+| `kb/work/natural-language-artifact-terminology/changed-file-validation.md` | this mapping | PASS — clean |
+
+Targeted searches find none of the four rejected forms. Focused systems-matrix tests pass 11/11, the full suite passes 483/483, and all 1,903 globally unique rows still have `verification: pending`.
