@@ -6,7 +6,6 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
-- [natural-language-artifact-terminology](./natural-language-artifact-terminology/README.md) — replacing the technical category “prose artifact/form” with “natural-language artifact/form,” while using “prompt” only for unambiguous model-input consumption paths and preserving ordinary editorial uses of “prose”
 - [first-article-brainstorm](./first-article-brainstorm/README.md) — deciding the first outward article's core spreadable content; diagnosis of the current vocabulary-tour draft, "reflective self-improvement" as anchor phrase, candidate cores and a recommended shape
 - [self-improvement-cluster-operationalization](./self-improvement-cluster-operationalization/README.md) — turning the self-improving-systems cluster into methodology that guides Commonplace's own changes: close the theory's ambiguities first, then audit existing instructions and behavioral-authority artifacts (code, type specs, validators, contracts) against it; also decides the authority-path mix (wired, user-invoked, link-mediated)
 - [exo-methodology-pitch](./exo-methodology-pitch/README.md) — whether the methodology names objective constraints on a self-modifying system's prose layer or a Commonplace house style; Exo is the forcing case, and the deciding move is a convergence survey of the 156 agent-memory-system reviews, which is evidence about us rather than about them
