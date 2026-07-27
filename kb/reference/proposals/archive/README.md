@@ -2,7 +2,7 @@
 
 Adopted and retired design proposals, kept out of the frontier.
 
-Nothing here describes a live design question. Everything still current was extracted before the proposal was archived: shipped behavior into reference docs, the decision-relevant reasoning into the superseding ADR's `## Considered alternatives`, transferable requirements into `kb/notes/`. What remains is design texture — dated current-state anchors, corpus statistics, the dialectic a proposal accumulated while it waited.
+Nothing here describes a live design question. Everything still current was extracted before the proposal was archived: shipped behavior into reference docs, the decision-relevant reasoning into the superseding ADR's `## Considered alternatives`, transferable requirements into `kb/notes/`. What remains is the irreproducible remainder — dated current-state anchors and the corpus measurements a design rested on, which no later reader can re-derive and which are what auditing a shipped commitment needs.
 
 ## What this is for
 

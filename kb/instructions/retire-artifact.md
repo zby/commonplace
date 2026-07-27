@@ -31,7 +31,7 @@ Two destinations. **Delete** is the default. **Archive** moves the file into a s
 
 2. **Extract first, one piece per commit.** If the artifact holds content worth keeping, move each piece to its new home, retarget that piece's own inbound references, and commit before starting the next. Do not bundle extraction into the retirement — a retirement commit that also moves content cannot be reviewed for either.
 
-   Under the archive destination this step is a gate, not an option: what stays behind must be design texture only — dated current-state anchors, corpus statistics, the dialectic the artifact accumulated. Shipped behavior goes to reference docs, decision-relevant reasoning to the superseding ADR's `## Considered alternatives`, transferable requirements to `kb/notes/`.
+   Under the archive destination this step is a gate, not an option. Shipped behavior goes to reference docs, decision-relevant reasoning — options weighed, deciding forces, free choices — to the superseding ADR's `## Considered alternatives`, transferable requirements to `kb/notes/`. What stays behind is the irreproducible remainder: dated current-state anchors and the measurements the design rested on. Deliberation left in an archived file means the extraction is not finished.
 
 3. **Find references that delegate ownership.** Some references do not merely link the artifact; they name it as the owner of a criterion, test, or vocabulary. Retargeting such a link without moving the thing it names leaves a pointer to nothing:
 
