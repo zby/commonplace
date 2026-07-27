@@ -20,7 +20,7 @@ from these theory notes:
 - [designing-agent-memory-systems](../notes/designing-agent-memory-systems.md) — the design-pressure inventory the review contract distills into review-time sections.
 - The **four-field artifact record** every review applies to each system's central artifacts:
   - [storage substrate](../notes/definitions/storage-substrate.md) — where retained state physically lives (files, repo, sqlite, rdbms, vector/graph, kv, in-memory, model-weights, service-object); locates access, versioning, deletion.
-  - [representational form](../notes/definitions/representational-form.md) — natural-language/symbolic / parametric; sets the default inspection method (read / test / probe).
+  - [representational form](../notes/definitions/representational-form.md) — natural-language / symbolic / parametric; sets the default inspection method (read / test / probe).
   - [lineage](../notes/definitions/lineage.md) — authored, imported, or trace-extracted, and what source change invalidates it.
   - [behavioral authority](../notes/definitions/behavioral-authority.md) — who consumes it, through which channel, with what force ([knowledge](../notes/definitions/knowledge-artifact.md) advice vs [system-definition](../notes/definitions/system-definition-artifact.md) instruction / enforcement / routing / validation / ranking / learning).
   - (the record applies at the [operative-part](../notes/definitions/operative-part.md) level of a [retained artifact](../notes/definitions/retained-artifact.md) — a bundled object is split when its parts carry different forms or authorities.)

@@ -9,7 +9,7 @@ tags: [foundations, constraining]
 
 A methodology that LLM agents execute by reading its own artifacts is self-hosting in the interpreter sense, not the compiler sense. The host machine is the LLM plus harness. The methodology is encoded in natural-language content and structured files. When agents use that methodology to maintain the files that define it, the system is metacircular: the rules for operating the artifact system are themselves artifacts in that system.
 
-This distinction matters because compiler self-hosting suggests a binary milestone: the compiler can build itself or it cannot. LLM-executed methodology is gradual. Some rules stay interpreted as natural-language each session, some become structured skills, and some cross into symbolic consumers such as schemas, validators, tests, and commands.
+This distinction matters because compiler self-hosting suggests a binary milestone: the compiler can build itself or it cannot. LLM-executed methodology is gradual. Some rules stay interpreted as natural language each session, some become structured skills, and some cross into symbolic consumers such as schemas, validators, tests, and commands.
 
 ## The interpreter shape
 

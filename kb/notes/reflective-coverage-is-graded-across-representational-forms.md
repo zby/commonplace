@@ -90,7 +90,7 @@ Relevant Notes:
 
 - [Reflective system](./definitions/reflective-system.md) — grounds: supplies the aspect-relative causal self-representation criterion
 - [An action model matters only through its consumption path](./an-action-model-matters-only-through-its-consumption-path.md) — grounds: the model-mediated action case whose self-directed instance raises the open self-modeling questions
-- [Representational form](./definitions/representational-form.md) — defined-in: the natural-language/symbolic / distributed-parametric axis coverage grades over
+- [Representational form](./definitions/representational-form.md) — defined-in: the natural-language / symbolic / distributed-parametric axis coverage grades over
 - [Behavior-determining organization](./definitions/behavior-determining-organization.md) — defined-in: the represented organization whose components and forms a coverage claim spans
 - [Lineage](./definitions/lineage.md) — defined-in: records dependencies that require invalidation, regeneration, retirement, or review across representations
 - [Behavioral authority](./definitions/behavioral-authority.md) — defined-in: identifies the consumer, channel, and force by which one representation governs behavior

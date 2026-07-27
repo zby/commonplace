@@ -49,6 +49,6 @@ Relevant Notes:
 - [Methodological and computational closure track different changes](./methodological-and-computational-closure-track-different-changes.md) — extends: supplies the shared ground for its tacit-expertise and substrate-dependency resolutions
 - [Deploy-time learning is the missing middle](./deploy-time-learning-is-the-missing-middle.md) — extends: adds the addressability property and the human row to its three-timescale media comparison
 - [Retaining the episode keeps a distilled rule re-derivable](./retaining-the-episode-keeps-a-distilled-rule-re-derivable.md) — extends: what the explicit-only regime should retain in which explicit form
-- [Representational form](./definitions/representational-form.md) — defined-in: the natural-language/symbolic / distributed-parametric axis the tacit/explicit divide runs across
+- [Representational form](./definitions/representational-form.md) — defined-in: the natural-language / symbolic / distributed-parametric axis the tacit/explicit divide runs across
 - [Retained artifact](./definitions/retained-artifact.md) — defined-in: the umbrella term for durable behavior-shaping state this note's rows instantiate
 - [Commonplace as a reflective system](../reference/commonplace-as-a-reflective-system.md) — evidence: the recorded selection-only profile line this claim's application rests on
