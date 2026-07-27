@@ -44,7 +44,7 @@ The argument used three things: use exercises the whole configuration at once, t
 ## Scope
 
 - The claim is about testability, not success. A complete and faithful rationale can describe a decomposition that transfers badly; it buys a test, not a result.
-- Retention is required because the reasoning has to cross a boundary — another person, another session, a later self. Within the session that produced the split the rationale is still in context, and the requirement is invisible there, which is part of why it gets skipped.
+- Retention is required because the reasoning has to cross a boundary — another person, another session, a later self. Within the session that produced the split the rationale is still in context, and the requirement is invisible there, which is part of why it gets skipped. The default-off rate is measurable: auditing this repository's own architecture decision records before requiring an alternatives section found 4 of 56 carrying alternatives prose, and none carrying it as a heading ([ADR 056](../reference/adr/056-adopted-and-retired-proposals-archive-out-of-the-frontier.md)).
 - The maintenance cost is unmeasured: rationale drifts as the decomposition is refactored, and drifted rationale is unfaithful rationale. Whether faithful retention stays cheaper than the extensional route at library scale is open.
 
 ## Sources
