@@ -49,7 +49,7 @@ The argument used three things: use exercises the whole configuration at once, t
 
 ## Sources
 
-- Parnas (1972), "On the Criteria To Be Used in Decomposing Systems into Modules", *CACM* 15(12) — two working modularizations of one KWIC program, distinguished by the information-hiding criterion rather than by anything observable in running them.
+- [Parnas (1972), "On the Criteria To Be Used in Decomposing Systems into Modules", *CACM* 15(12)](../sources/parnas-1972-criteria-decomposing-systems-modules.md) — evidence: two working modularizations of one KWIC program, distinguished by the information-hiding criterion rather than by anything observable in running them.
 
 ---
 
